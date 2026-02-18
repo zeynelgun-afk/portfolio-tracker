@@ -1,0 +1,72 @@
+{
+  "SIG-20260218-NVDA": {
+    "max_price": 187.15,
+    "min_price": 179.18,
+    "trailing_stop": 177.7925,
+    "days_tracked": 1,
+    "daily_closes": [
+      {
+        "date": "2026-02-18",
+        "close": 184.97,
+        "high": 187.15,
+        "low": 179.18
+      }
+    ]
+  },
+  "SIG-20260218-AAPL": {
+    "max_price": 266.29,
+    "min_price": 255.54,
+    "trailing_stop": 252.9755,
+    "days_tracked": 1,
+    "daily_closes": [
+      {
+        "date": "2026-02-18",
+        "close": 263.88,
+        "high": 266.29,
+        "low": 255.54
+      }
+    ]
+  },
+  "SIG-20260218-AVGO": {
+    "max_price": 335.75,
+    "min_price": 316.375,
+    "trailing_stop": 318.9625,
+    "days_tracked": 1,
+    "daily_closes": [
+      {
+        "date": "2026-02-18",
+        "close": 332.54,
+        "high": 335.75,
+        "low": 316.375
+      }
+    ]
+  },
+  "SIG-20260218-ANET": {
+    "max_price": 145,
+    "min_price": 140,
+    "trailing_stop": 137.75,
+    "days_tracked": 1,
+    "daily_closes": [
+      {
+        "date": "2026-02-18",
+        "close": 142.58,
+        "high": 145,
+        "low": 140
+      }
+    ]
+  },
+  "SIG-20260218-CCJ": {
+    "max_price": 114.29,
+    "min_price": 107.92,
+    "trailing_stop": 108.5755,
+    "days_tracked": 1,
+    "daily_closes": [
+      {
+        "date": "2026-02-18",
+        "close": 112.94,
+        "high": 114.29,
+        "low": 107.92
+      }
+    ]
+  }
+}
