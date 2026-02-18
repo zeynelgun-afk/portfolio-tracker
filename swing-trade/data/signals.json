@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-02-18T12:05:35.702571",
+  "updated_at": "2026-02-18T12:08:34.764391",
   "scan_date": "2026-02-17",
   "strategy": "momentum_aggressive",
   "strategy_version": "E1",
@@ -17,29 +17,22 @@
     "breadth_pct": 58.1
   },
   "changes": {
-    "buys": [
+    "buys": [],
+    "sells": [],
+    "holds": [
       "APLD",
       "FLNC",
       "IREN",
       "MU",
       "WDC"
-    ],
-    "sells": [
-      "CCJ",
-      "FSLR",
-      "NVDA",
-      "SCCO",
-      "SJM",
-      "ZM"
-    ],
-    "holds": []
+    ]
   },
   "active_signals": [
     {
       "id": "MOM-20260217-FLNC",
       "symbol": "FLNC",
       "strategy": "MOMENTUM",
-      "action": "BUY",
+      "action": "HOLD",
       "entry_price": 17.78,
       "score": 178.19,
       "ret_1w": -8.4,
@@ -54,7 +47,7 @@
       "id": "MOM-20260217-WDC",
       "symbol": "WDC",
       "strategy": "MOMENTUM",
-      "action": "BUY",
+      "action": "HOLD",
       "entry_price": 284.11,
       "score": 169.49,
       "ret_1w": -0.7,
@@ -69,7 +62,7 @@
       "id": "MOM-20260217-APLD",
       "symbol": "APLD",
       "strategy": "MOMENTUM",
-      "action": "BUY",
+      "action": "HOLD",
       "entry_price": 33.56,
       "score": 159.9,
       "ret_1w": -12.3,
@@ -84,7 +77,7 @@
       "id": "MOM-20260217-MU",
       "symbol": "MU",
       "strategy": "MOMENTUM",
-      "action": "BUY",
+      "action": "HOLD",
       "entry_price": 399.78,
       "score": 142.69,
       "ret_1w": 4.2,
@@ -99,7 +92,7 @@
       "id": "MOM-20260217-IREN",
       "symbol": "IREN",
       "strategy": "MOMENTUM",
-      "action": "BUY",
+      "action": "HOLD",
       "entry_price": 40.97,
       "score": 134.08,
       "ret_1w": -11.2,
@@ -200,8 +193,8 @@
       "symbol": "KLAC",
       "score": 66.29,
       "price": 1470.19,
-      "ret_3m": 26.8,
-      "pct_from_52w_high": -12.7
+      "ret_3m": 26.9,
+      "pct_from_52w_high": -12.6
     },
     {
       "symbol": "CCJ",
@@ -218,24 +211,5 @@
       "pct_from_52w_high": -8.5
     }
   ],
-  "recently_sold": [
-    {
-      "symbol": "CCJ"
-    },
-    {
-      "symbol": "FSLR"
-    },
-    {
-      "symbol": "NVDA"
-    },
-    {
-      "symbol": "SCCO"
-    },
-    {
-      "symbol": "SJM"
-    },
-    {
-      "symbol": "ZM"
-    }
-  ]
+  "recently_sold": []
 }
