@@ -2,12 +2,9 @@ name: Swing Trade Scanner
 
 on:
   schedule:
-    # Weekdays: Scan at 11:30 UTC (14:30 TRT, right after US market open stabilizes)
-    - cron: '30 11 * * 1-5'
-    # Weekdays: Track at 21:00 UTC (00:00 TRT, after market close)
-    - cron: '0 21 * * 1-5'
-    # Sunday: Weekly autopsy
-    - cron: '0 10 * * 0'
+    - cron: '30 11 * * 1-5'  # Scan: 14:30 TRT
+    - cron: '0 21 * * 1-5'   # Track: 00:00 TRT
+    - cron: '0 10 * * 0'     # Autopsy: Sunday
   workflow_dispatch:
     inputs:
       action:
@@ -19,6 +16,7 @@ on:
           - scan
           - track
           - autopsy
+          - optimize
 
 permissions:
   contents: write
@@ -34,7 +32,7 @@ jobs:
           python-version: '3.11'
       
       - name: Install dependencies
-        run: pip install requests
+        run: pip install requests yfinance pandas numpy
       
       - name: Determine action
         id: action
@@ -53,24 +51,22 @@ jobs:
         if: steps.action.outputs.action == 'scan'
         env:
           FMP_API_KEY: ${{ secrets.FMP_API_KEY }}
-        run: |
-          cd swing-trade/scripts
-          python3 scanner.py --api-key $FMP_API_KEY --max-signals 5
-      
+        run: python3 swing-trade/scripts/scanner.py --api-key $FMP_API_KEY
+
       - name: Run Tracker
         if: steps.action.outputs.action == 'track'
-        env:
-          FMP_API_KEY: ${{ secrets.FMP_API_KEY }}
-        run: |
-          cd swing-trade/scripts
-          python3 signal_tracker.py --api-key $FMP_API_KEY
-      
+        run: python3 swing-trade/scripts/signal_tracker.py
+
       - name: Run Autopsy
         if: steps.action.outputs.action == 'autopsy'
-        run: |
-          cd swing-trade/scripts
-          python3 autopsy.py --apply --report
-      
+        run: python3 swing-trade/scripts/autopsy.py --apply --report
+
+      - name: Run Optimizer
+        if: steps.action.outputs.action == 'optimize'
+        env:
+          FMP_API_KEY: ${{ secrets.FMP_API_KEY }}
+        run: python3 swing-trade/scripts/optimizer.py --api-key $FMP_API_KEY --passes 5
+
       - name: Commit results
         run: |
           git config user.name "Swing Trade Bot"
@@ -82,6 +78,4 @@ jobs:
             DATE=$(date -u +"%Y-%m-%d")
             git commit -m "🤖 swing-trade: ${ACTION} ${DATE}"
             git push
-          else
-            echo "No changes to commit"
           fi

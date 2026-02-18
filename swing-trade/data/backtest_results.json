@@ -1,1 +1,2452 @@
-[]
+[
+  {
+    "id": "BT-2025-01-10-NVDA",
+    "symbol": "NVDA",
+    "sector": "Technology",
+    "score": 74,
+    "entry_date": "2025-01-10",
+    "entry_price": 135.87,
+    "exit_date": "2025-01-27",
+    "exit_price": 124.04,
+    "exit_reason": "STOP_LOSS",
+    "pnl_pct": -8.71,
+    "pnl_dollars": -2899.57,
+    "days_held": 10,
+    "mfe_pct": 9.61,
+    "mae_pct": -4.71,
+    "capture_ratio": -90.6,
+    "tracking_status": "CLOSED",
+    "exit": {
+      "date": "2025-01-27",
+      "price": 124.04,
+      "reason": "STOP_LOSS",
+      "pnl_pct": -8.71,
+      "days_held": 10
+    },
+    "excursion": {
+      "mfe_pct": 9.61,
+      "mae_pct": -4.71,
+      "capture_ratio": -90.6
+    },
+    "alternative_scenarios": {},
+    "strategy": "MOMENTUM_FUNDAMENTAL",
+    "post_exit": {
+      "left_on_table": 0
+    }
+  },
+  {
+    "id": "BT-2025-01-10-PLTR",
+    "symbol": "PLTR",
+    "sector": "Technology",
+    "score": 70,
+    "entry_date": "2025-01-10",
+    "entry_price": 67.26,
+    "exit_date": "2025-01-27",
+    "exit_price": 75.66,
+    "exit_reason": "TRAILING_STOP",
+    "pnl_pct": 12.49,
+    "pnl_dollars": 4158.0,
+    "days_held": 10,
+    "mfe_pct": 22.27,
+    "mae_pct": -5.74,
+    "capture_ratio": 56.1,
+    "tracking_status": "CLOSED",
+    "exit": {
+      "date": "2025-01-27",
+      "price": 75.66,
+      "reason": "TRAILING_STOP",
+      "pnl_pct": 12.49,
+      "days_held": 10
+    },
+    "excursion": {
+      "mfe_pct": 22.27,
+      "mae_pct": -5.74,
+      "capture_ratio": 56.1
+    },
+    "alternative_scenarios": {},
+    "strategy": "MOMENTUM_FUNDAMENTAL",
+    "post_exit": {
+      "left_on_table": 0
+    }
+  },
+  {
+    "id": "BT-2025-01-27-MSFT",
+    "symbol": "MSFT",
+    "sector": "Technology",
+    "score": 73,
+    "entry_date": "2025-01-27",
+    "entry_price": 431.38,
+    "exit_date": "2025-02-03",
+    "exit_price": 409.49,
+    "exit_reason": "TRAILING_STOP",
+    "pnl_pct": -5.07,
+    "pnl_dollars": -1707.25,
+    "days_held": 5,
+    "mfe_pct": 3.18,
+    "mae_pct": -4.92,
+    "capture_ratio": -159.5,
+    "tracking_status": "CLOSED",
+    "exit": {
+      "date": "2025-02-03",
+      "price": 409.49,
+      "reason": "TRAILING_STOP",
+      "pnl_pct": -5.07,
+      "days_held": 5
+    },
+    "excursion": {
+      "mfe_pct": 3.18,
+      "mae_pct": -4.92,
+      "capture_ratio": -159.5
+    },
+    "alternative_scenarios": {},
+    "strategy": "MOMENTUM_FUNDAMENTAL",
+    "post_exit": {
+      "left_on_table": 0
+    }
+  },
+  {
+    "id": "BT-2025-01-10-META",
+    "symbol": "META",
+    "sector": "Technology",
+    "score": 68,
+    "entry_date": "2025-01-10",
+    "entry_price": 613.92,
+    "exit_date": "2025-02-05",
+    "exit_price": 712.15,
+    "exit_reason": "TARGET_1",
+    "pnl_pct": 16.0,
+    "pnl_dollars": 5304.3,
+    "days_held": 17,
+    "mfe_pct": 16.61,
+    "mae_pct": -4.43,
+    "capture_ratio": 96.3,
+    "tracking_status": "CLOSED",
+    "exit": {
+      "date": "2025-02-05",
+      "price": 712.15,
+      "reason": "TARGET_1",
+      "pnl_pct": 16.0,
+      "days_held": 17
+    },
+    "excursion": {
+      "mfe_pct": 16.61,
+      "mae_pct": -4.43,
+      "capture_ratio": 96.3
+    },
+    "alternative_scenarios": {},
+    "strategy": "MOMENTUM_FUNDAMENTAL",
+    "post_exit": {
+      "left_on_table": 0
+    }
+  },
+  {
+    "id": "BT-2025-02-03-ROKU",
+    "symbol": "ROKU",
+    "sector": "Communication",
+    "score": 71,
+    "entry_date": "2025-02-03",
+    "entry_price": 79.1,
+    "exit_date": "2025-02-11",
+    "exit_price": 84.28,
+    "exit_reason": "TRAILING_STOP",
+    "pnl_pct": 6.55,
+    "pnl_dollars": 2092.72,
+    "days_held": 6,
+    "mfe_pct": 15.82,
+    "mae_pct": -0.29,
+    "capture_ratio": 41.4,
+    "tracking_status": "CLOSED",
+    "exit": {
+      "date": "2025-02-11",
+      "price": 84.28,
+      "reason": "TRAILING_STOP",
+      "pnl_pct": 6.55,
+      "days_held": 6
+    },
+    "excursion": {
+      "mfe_pct": 15.82,
+      "mae_pct": -0.29,
+      "capture_ratio": 41.4
+    },
+    "alternative_scenarios": {},
+    "strategy": "MOMENTUM_FUNDAMENTAL",
+    "post_exit": {
+      "left_on_table": 0
+    }
+  },
+  {
+    "id": "BT-2025-01-27-ABBV",
+    "symbol": "ABBV",
+    "sector": "Healthcare",
+    "score": 71,
+    "entry_date": "2025-01-27",
+    "entry_price": 171.16,
+    "exit_date": "2025-02-24",
+    "exit_price": 198.54,
+    "exit_reason": "TARGET_1",
+    "pnl_pct": 16.0,
+    "pnl_dollars": 5504.45,
+    "days_held": 19,
+    "mfe_pct": 16.17,
+    "mae_pct": -1.79,
+    "capture_ratio": 99.0,
+    "tracking_status": "CLOSED",
+    "exit": {
+      "date": "2025-02-24",
+      "price": 198.54,
+      "reason": "TARGET_1",
+      "pnl_pct": 16.0,
+      "days_held": 19
+    },
+    "excursion": {
+      "mfe_pct": 16.17,
+      "mae_pct": -1.79,
+      "capture_ratio": 99.0
+    },
+    "alternative_scenarios": {},
+    "strategy": "MOMENTUM_FUNDAMENTAL",
+    "post_exit": {
+      "left_on_table": 0
+    }
+  },
+  {
+    "id": "BT-2025-02-10-NVDA",
+    "symbol": "NVDA",
+    "sector": "Technology",
+    "score": 67,
+    "entry_date": "2025-02-10",
+    "entry_price": 133.53,
+    "exit_date": "2025-02-24",
+    "exit_price": 131.93,
+    "exit_reason": "TRAILING_STOP",
+    "pnl_pct": -1.2,
+    "pnl_dollars": -461.81,
+    "days_held": 9,
+    "mfe_pct": 7.39,
+    "mae_pct": -3.36,
+    "capture_ratio": -16.3,
+    "tracking_status": "CLOSED",
+    "exit": {
+      "date": "2025-02-24",
+      "price": 131.93,
+      "reason": "TRAILING_STOP",
+      "pnl_pct": -1.2,
+      "days_held": 9
+    },
+    "excursion": {
+      "mfe_pct": 7.39,
+      "mae_pct": -3.36,
+      "capture_ratio": -16.3
+    },
+    "alternative_scenarios": {},
+    "strategy": "MOMENTUM_FUNDAMENTAL",
+    "post_exit": {
+      "left_on_table": 0
+    }
+  },
+  {
+    "id": "BT-2025-02-18-AVGO",
+    "symbol": "AVGO",
+    "sector": "Technology",
+    "score": 70,
+    "entry_date": "2025-02-18",
+    "entry_price": 226.48,
+    "exit_date": "2025-02-24",
+    "exit_price": 206.87,
+    "exit_reason": "STOP_LOSS",
+    "pnl_pct": -8.66,
+    "pnl_dollars": -2941.55,
+    "days_held": 4,
+    "mfe_pct": 0.24,
+    "mae_pct": -5.64,
+    "capture_ratio": -3664.2,
+    "tracking_status": "CLOSED",
+    "exit": {
+      "date": "2025-02-24",
+      "price": 206.87,
+      "reason": "STOP_LOSS",
+      "pnl_pct": -8.66,
+      "days_held": 4
+    },
+    "excursion": {
+      "mfe_pct": 0.24,
+      "mae_pct": -5.64,
+      "capture_ratio": -3664.2
+    },
+    "alternative_scenarios": {},
+    "strategy": "MOMENTUM_FUNDAMENTAL",
+    "post_exit": {
+      "left_on_table": 0
+    }
+  },
+  {
+    "id": "BT-2025-02-25-PLTR",
+    "symbol": "PLTR",
+    "sector": "Technology",
+    "score": 77,
+    "entry_date": "2025-02-25",
+    "entry_price": 87.84,
+    "exit_date": "2025-02-28",
+    "exit_price": 86.13,
+    "exit_reason": "TRAILING_STOP",
+    "pnl_pct": -1.95,
+    "pnl_dollars": -706.23,
+    "days_held": 3,
+    "mfe_pct": 6.58,
+    "mae_pct": -4.18,
+    "capture_ratio": -29.6,
+    "tracking_status": "CLOSED",
+    "exit": {
+      "date": "2025-02-28",
+      "price": 86.13,
+      "reason": "TRAILING_STOP",
+      "pnl_pct": -1.95,
+      "days_held": 3
+    },
+    "excursion": {
+      "mfe_pct": 6.58,
+      "mae_pct": -4.18,
+      "capture_ratio": -29.6
+    },
+    "alternative_scenarios": {},
+    "strategy": "MOMENTUM_FUNDAMENTAL",
+    "post_exit": {
+      "left_on_table": 0
+    }
+  },
+  {
+    "id": "BT-2025-02-25-META",
+    "symbol": "META",
+    "sector": "Technology",
+    "score": 77,
+    "entry_date": "2025-02-25",
+    "entry_price": 655.43,
+    "exit_date": "2025-03-04",
+    "exit_price": 631.57,
+    "exit_reason": "TRAILING_STOP",
+    "pnl_pct": -3.64,
+    "pnl_dollars": -1312.47,
+    "days_held": 5,
+    "mfe_pct": 4.74,
+    "mae_pct": -2.27,
+    "capture_ratio": -76.8,
+    "tracking_status": "CLOSED",
+    "exit": {
+      "date": "2025-03-04",
+      "price": 631.57,
+      "reason": "TRAILING_STOP",
+      "pnl_pct": -3.64,
+      "days_held": 5
+    },
+    "excursion": {
+      "mfe_pct": 4.74,
+      "mae_pct": -2.27,
+      "capture_ratio": -76.8
+    },
+    "alternative_scenarios": {},
+    "strategy": "MOMENTUM_FUNDAMENTAL",
+    "post_exit": {
+      "left_on_table": 0
+    }
+  },
+  {
+    "id": "BT-2025-02-25-ISRG",
+    "symbol": "ISRG",
+    "sector": "Healthcare",
+    "score": 74,
+    "entry_date": "2025-02-25",
+    "entry_price": 573.74,
+    "exit_date": "2025-03-06",
+    "exit_price": 539.8,
+    "exit_reason": "TRAILING_STOP",
+    "pnl_pct": -5.92,
+    "pnl_dollars": -2172.16,
+    "days_held": 7,
+    "mfe_pct": 2.27,
+    "mae_pct": -4.92,
+    "capture_ratio": -261.1,
+    "tracking_status": "CLOSED",
+    "exit": {
+      "date": "2025-03-06",
+      "price": 539.8,
+      "reason": "TRAILING_STOP",
+      "pnl_pct": -5.92,
+      "days_held": 7
+    },
+    "excursion": {
+      "mfe_pct": 2.27,
+      "mae_pct": -4.92,
+      "capture_ratio": -261.1
+    },
+    "alternative_scenarios": {},
+    "strategy": "MOMENTUM_FUNDAMENTAL",
+    "post_exit": {
+      "left_on_table": 0
+    }
+  },
+  {
+    "id": "BT-2025-03-04-AAPL",
+    "symbol": "AAPL",
+    "sector": "Technology",
+    "score": 78,
+    "entry_date": "2025-03-04",
+    "entry_price": 234.91,
+    "exit_date": "2025-03-11",
+    "exit_price": 221.1,
+    "exit_reason": "TRAILING_STOP",
+    "pnl_pct": -5.88,
+    "pnl_dollars": -2057.12,
+    "days_held": 5,
+    "mfe_pct": 2.31,
+    "mae_pct": -4.96,
+    "capture_ratio": -254.9,
+    "tracking_status": "CLOSED",
+    "exit": {
+      "date": "2025-03-11",
+      "price": 221.1,
+      "reason": "TRAILING_STOP",
+      "pnl_pct": -5.88,
+      "days_held": 5
+    },
+    "excursion": {
+      "mfe_pct": 2.31,
+      "mae_pct": -4.96,
+      "capture_ratio": -254.9
+    },
+    "alternative_scenarios": {},
+    "strategy": "MOMENTUM_FUNDAMENTAL",
+    "post_exit": {
+      "left_on_table": 0
+    }
+  },
+  {
+    "id": "BT-2025-03-04-DIS",
+    "symbol": "DIS",
+    "sector": "Communication",
+    "score": 72,
+    "entry_date": "2025-03-04",
+    "entry_price": 107.82,
+    "exit_date": "2025-03-11",
+    "exit_price": 99.19,
+    "exit_reason": "STOP_LOSS",
+    "pnl_pct": -8.0,
+    "pnl_dollars": -2820.51,
+    "days_held": 5,
+    "mfe_pct": 1.77,
+    "mae_pct": -6.33,
+    "capture_ratio": -451.9,
+    "tracking_status": "CLOSED",
+    "exit": {
+      "date": "2025-03-11",
+      "price": 99.19,
+      "reason": "STOP_LOSS",
+      "pnl_pct": -8.0,
+      "days_held": 5
+    },
+    "excursion": {
+      "mfe_pct": 1.77,
+      "mae_pct": -6.33,
+      "capture_ratio": -451.9
+    },
+    "alternative_scenarios": {},
+    "strategy": "MOMENTUM_FUNDAMENTAL",
+    "post_exit": {
+      "left_on_table": 0
+    }
+  },
+  {
+    "id": "BT-2025-03-18-PLTR",
+    "symbol": "PLTR",
+    "sector": "Technology",
+    "score": 66,
+    "entry_date": "2025-03-18",
+    "entry_price": 83.89,
+    "exit_date": "2025-03-27",
+    "exit_price": 90.32,
+    "exit_reason": "TRAILING_STOP",
+    "pnl_pct": 7.66,
+    "pnl_dollars": 2552.71,
+    "days_held": 7,
+    "mfe_pct": 17.02,
+    "mae_pct": -1.23,
+    "capture_ratio": 45.0,
+    "tracking_status": "CLOSED",
+    "exit": {
+      "date": "2025-03-27",
+      "price": 90.32,
+      "reason": "TRAILING_STOP",
+      "pnl_pct": 7.66,
+      "days_held": 7
+    },
+    "excursion": {
+      "mfe_pct": 17.02,
+      "mae_pct": -1.23,
+      "capture_ratio": 45.0
+    },
+    "alternative_scenarios": {},
+    "strategy": "MOMENTUM_FUNDAMENTAL",
+    "post_exit": {
+      "left_on_table": 0
+    }
+  },
+  {
+    "id": "BT-2025-03-18-SCCO",
+    "symbol": "SCCO",
+    "sector": "Energy",
+    "score": 58,
+    "entry_date": "2025-03-18",
+    "entry_price": 92.84,
+    "exit_date": "2025-03-27",
+    "exit_price": 89.62,
+    "exit_reason": "TRAILING_STOP",
+    "pnl_pct": -3.47,
+    "pnl_dollars": -1159.45,
+    "days_held": 7,
+    "mfe_pct": 4.93,
+    "mae_pct": -2.83,
+    "capture_ratio": -70.4,
+    "tracking_status": "CLOSED",
+    "exit": {
+      "date": "2025-03-27",
+      "price": 89.62,
+      "reason": "TRAILING_STOP",
+      "pnl_pct": -3.47,
+      "days_held": 7
+    },
+    "excursion": {
+      "mfe_pct": 4.93,
+      "mae_pct": -2.83,
+      "capture_ratio": -70.4
+    },
+    "alternative_scenarios": {},
+    "strategy": "MOMENTUM_FUNDAMENTAL",
+    "post_exit": {
+      "left_on_table": 0
+    }
+  },
+  {
+    "id": "BT-2025-03-11-VRTX",
+    "symbol": "VRTX",
+    "sector": "Healthcare",
+    "score": 63,
+    "entry_date": "2025-03-11",
+    "entry_price": 488.34,
+    "exit_date": "2025-03-31",
+    "exit_price": 478.11,
+    "exit_reason": "TRAILING_STOP",
+    "pnl_pct": -2.09,
+    "pnl_dollars": -695.64,
+    "days_held": 14,
+    "mfe_pct": 6.42,
+    "mae_pct": -1.08,
+    "capture_ratio": -32.6,
+    "tracking_status": "CLOSED",
+    "exit": {
+      "date": "2025-03-31",
+      "price": 478.11,
+      "reason": "TRAILING_STOP",
+      "pnl_pct": -2.09,
+      "days_held": 14
+    },
+    "excursion": {
+      "mfe_pct": 6.42,
+      "mae_pct": -1.08,
+      "capture_ratio": -32.6
+    },
+    "alternative_scenarios": {},
+    "strategy": "MOMENTUM_FUNDAMENTAL",
+    "post_exit": {
+      "left_on_table": 0
+    }
+  },
+  {
+    "id": "BT-2025-04-01-AAPL",
+    "symbol": "AAPL",
+    "sector": "Technology",
+    "score": 67,
+    "entry_date": "2025-04-01",
+    "entry_price": 222.22,
+    "exit_date": "2025-04-03",
+    "exit_price": 204.44,
+    "exit_reason": "STOP_LOSS",
+    "pnl_pct": -8.0,
+    "pnl_dollars": -2684.44,
+    "days_held": 2,
+    "mfe_pct": 0.9,
+    "mae_pct": -0.97,
+    "capture_ratio": -892.8,
+    "tracking_status": "CLOSED",
+    "exit": {
+      "date": "2025-04-03",
+      "price": 204.44,
+      "reason": "STOP_LOSS",
+      "pnl_pct": -8.0,
+      "days_held": 2
+    },
+    "excursion": {
+      "mfe_pct": 0.9,
+      "mae_pct": -0.97,
+      "capture_ratio": -892.8
+    },
+    "alternative_scenarios": {},
+    "strategy": "MOMENTUM_FUNDAMENTAL",
+    "post_exit": {
+      "left_on_table": 0
+    }
+  },
+  {
+    "id": "BT-2025-04-01-PLTR",
+    "symbol": "PLTR",
+    "sector": "Technology",
+    "score": 66,
+    "entry_date": "2025-04-01",
+    "entry_price": 84.68,
+    "exit_date": "2025-04-04",
+    "exit_price": 72.36,
+    "exit_reason": "STOP_LOSS",
+    "pnl_pct": -14.55,
+    "pnl_dollars": -4891.06,
+    "days_held": 3,
+    "mfe_pct": 4.4,
+    "mae_pct": -4.33,
+    "capture_ratio": -330.7,
+    "tracking_status": "CLOSED",
+    "exit": {
+      "date": "2025-04-04",
+      "price": 72.36,
+      "reason": "STOP_LOSS",
+      "pnl_pct": -14.55,
+      "days_held": 3
+    },
+    "excursion": {
+      "mfe_pct": 4.4,
+      "mae_pct": -4.33,
+      "capture_ratio": -330.7
+    },
+    "alternative_scenarios": {},
+    "strategy": "MOMENTUM_FUNDAMENTAL",
+    "post_exit": {
+      "left_on_table": 0
+    }
+  },
+  {
+    "id": "BT-2025-04-01-VRTX",
+    "symbol": "VRTX",
+    "sector": "Healthcare",
+    "score": 70,
+    "entry_date": "2025-04-01",
+    "entry_price": 484.74,
+    "exit_date": "2025-04-07",
+    "exit_price": 459.14,
+    "exit_reason": "TRAILING_STOP",
+    "pnl_pct": -5.28,
+    "pnl_dollars": -1766.4,
+    "days_held": 4,
+    "mfe_pct": 2.96,
+    "mae_pct": -2.29,
+    "capture_ratio": -178.6,
+    "tracking_status": "CLOSED",
+    "exit": {
+      "date": "2025-04-07",
+      "price": 459.14,
+      "reason": "TRAILING_STOP",
+      "pnl_pct": -5.28,
+      "days_held": 4
+    },
+    "excursion": {
+      "mfe_pct": 2.96,
+      "mae_pct": -2.29,
+      "capture_ratio": -178.6
+    },
+    "alternative_scenarios": {},
+    "strategy": "MOMENTUM_FUNDAMENTAL",
+    "post_exit": {
+      "left_on_table": 0
+    }
+  },
+  {
+    "id": "BT-2025-04-08-RGLD",
+    "symbol": "RGLD",
+    "sector": "Materials",
+    "score": 67,
+    "entry_date": "2025-04-08",
+    "entry_price": 154.41,
+    "exit_date": "2025-04-11",
+    "exit_price": 179.11,
+    "exit_reason": "TARGET_1",
+    "pnl_pct": 16.0,
+    "pnl_dollars": 4891.66,
+    "days_held": 3,
+    "mfe_pct": 16.74,
+    "mae_pct": 0.0,
+    "capture_ratio": 95.6,
+    "tracking_status": "CLOSED",
+    "exit": {
+      "date": "2025-04-11",
+      "price": 179.11,
+      "reason": "TARGET_1",
+      "pnl_pct": 16.0,
+      "days_held": 3
+    },
+    "excursion": {
+      "mfe_pct": 16.74,
+      "mae_pct": 0.0,
+      "capture_ratio": 95.6
+    },
+    "alternative_scenarios": {},
+    "strategy": "MOMENTUM_FUNDAMENTAL",
+    "post_exit": {
+      "left_on_table": 0
+    }
+  },
+  {
+    "id": "BT-2025-04-15-PLTR",
+    "symbol": "PLTR",
+    "sector": "Technology",
+    "score": 66,
+    "entry_date": "2025-04-15",
+    "entry_price": 98.4,
+    "exit_date": "2025-04-21",
+    "exit_price": 90.53,
+    "exit_reason": "TRAILING_STOP",
+    "pnl_pct": -8.0,
+    "pnl_dollars": -2864.68,
+    "days_held": 3,
+    "mfe_pct": 0.0,
+    "mae_pct": -8.92,
+    "capture_ratio": 0,
+    "tracking_status": "CLOSED",
+    "exit": {
+      "date": "2025-04-21",
+      "price": 90.53,
+      "reason": "TRAILING_STOP",
+      "pnl_pct": -8.0,
+      "days_held": 3
+    },
+    "excursion": {
+      "mfe_pct": 0.0,
+      "mae_pct": -8.92,
+      "capture_ratio": 0
+    },
+    "alternative_scenarios": {},
+    "strategy": "MOMENTUM_FUNDAMENTAL",
+    "post_exit": {
+      "left_on_table": 0
+    }
+  },
+  {
+    "id": "BT-2025-04-08-NOC",
+    "symbol": "NOC",
+    "sector": "Defense",
+    "score": 67,
+    "entry_date": "2025-04-08",
+    "entry_price": 485.74,
+    "exit_date": "2025-04-22",
+    "exit_price": 446.88,
+    "exit_reason": "STOP_LOSS",
+    "pnl_pct": -8.0,
+    "pnl_dollars": -2409.27,
+    "days_held": 9,
+    "mfe_pct": 10.73,
+    "mae_pct": -2.25,
+    "capture_ratio": -74.6,
+    "tracking_status": "CLOSED",
+    "exit": {
+      "date": "2025-04-22",
+      "price": 446.88,
+      "reason": "STOP_LOSS",
+      "pnl_pct": -8.0,
+      "days_held": 9
+    },
+    "excursion": {
+      "mfe_pct": 10.73,
+      "mae_pct": -2.25,
+      "capture_ratio": -74.6
+    },
+    "alternative_scenarios": {},
+    "strategy": "MOMENTUM_FUNDAMENTAL",
+    "post_exit": {
+      "left_on_table": 0
+    }
+  },
+  {
+    "id": "BT-2025-04-23-SPOT",
+    "symbol": "SPOT",
+    "sector": "Communication",
+    "score": 56,
+    "entry_date": "2025-04-23",
+    "entry_price": 592.7,
+    "exit_date": "2025-04-29",
+    "exit_price": 577.3,
+    "exit_reason": "TRAILING_STOP",
+    "pnl_pct": -2.6,
+    "pnl_dollars": -785.4,
+    "days_held": 4,
+    "mfe_pct": 5.87,
+    "mae_pct": 0.0,
+    "capture_ratio": -44.3,
+    "tracking_status": "CLOSED",
+    "exit": {
+      "date": "2025-04-29",
+      "price": 577.3,
+      "reason": "TRAILING_STOP",
+      "pnl_pct": -2.6,
+      "days_held": 4
+    },
+    "excursion": {
+      "mfe_pct": 5.87,
+      "mae_pct": 0.0,
+      "capture_ratio": -44.3
+    },
+    "alternative_scenarios": {},
+    "strategy": "MOMENTUM_FUNDAMENTAL",
+    "post_exit": {
+      "left_on_table": 0
+    }
+  },
+  {
+    "id": "BT-2025-04-08-VRTX",
+    "symbol": "VRTX",
+    "sector": "Healthcare",
+    "score": 59,
+    "entry_date": "2025-04-08",
+    "entry_price": 472.37,
+    "exit_date": "2025-05-06",
+    "exit_price": 434.58,
+    "exit_reason": "STOP_LOSS",
+    "pnl_pct": -8.0,
+    "pnl_dollars": -2418.53,
+    "days_held": 19,
+    "mfe_pct": 8.13,
+    "mae_pct": -4.31,
+    "capture_ratio": -98.4,
+    "tracking_status": "CLOSED",
+    "exit": {
+      "date": "2025-05-06",
+      "price": 434.58,
+      "reason": "STOP_LOSS",
+      "pnl_pct": -8.0,
+      "days_held": 19
+    },
+    "excursion": {
+      "mfe_pct": 8.13,
+      "mae_pct": -4.31,
+      "capture_ratio": -98.4
+    },
+    "alternative_scenarios": {},
+    "strategy": "MOMENTUM_FUNDAMENTAL",
+    "post_exit": {
+      "left_on_table": 0
+    }
+  },
+  {
+    "id": "BT-2025-04-23-PLTR",
+    "symbol": "PLTR",
+    "sector": "Technology",
+    "score": 66,
+    "entry_date": "2025-04-23",
+    "entry_price": 100.82,
+    "exit_date": "2025-05-06",
+    "exit_price": 115.23,
+    "exit_reason": "TRAILING_STOP",
+    "pnl_pct": 14.29,
+    "pnl_dollars": 4337.41,
+    "days_held": 9,
+    "mfe_pct": 24.24,
+    "mae_pct": 0.0,
+    "capture_ratio": 59.0,
+    "tracking_status": "CLOSED",
+    "exit": {
+      "date": "2025-05-06",
+      "price": 115.23,
+      "reason": "TRAILING_STOP",
+      "pnl_pct": 14.29,
+      "days_held": 9
+    },
+    "excursion": {
+      "mfe_pct": 24.24,
+      "mae_pct": 0.0,
+      "capture_ratio": 59.0
+    },
+    "alternative_scenarios": {},
+    "strategy": "MOMENTUM_FUNDAMENTAL",
+    "post_exit": {
+      "left_on_table": 0
+    }
+  },
+  {
+    "id": "BT-2025-05-07-PLTR",
+    "symbol": "PLTR",
+    "sector": "Technology",
+    "score": 66,
+    "entry_date": "2025-05-07",
+    "entry_price": 110.48,
+    "exit_date": "2025-05-13",
+    "exit_price": 120.15,
+    "exit_reason": "TRAILING_STOP",
+    "pnl_pct": 8.75,
+    "pnl_dollars": 2736.61,
+    "days_held": 4,
+    "mfe_pct": 18.21,
+    "mae_pct": 0.0,
+    "capture_ratio": 48.1,
+    "tracking_status": "CLOSED",
+    "exit": {
+      "date": "2025-05-13",
+      "price": 120.15,
+      "reason": "TRAILING_STOP",
+      "pnl_pct": 8.75,
+      "days_held": 4
+    },
+    "excursion": {
+      "mfe_pct": 18.21,
+      "mae_pct": 0.0,
+      "capture_ratio": 48.1
+    },
+    "alternative_scenarios": {},
+    "strategy": "MOMENTUM_FUNDAMENTAL",
+    "post_exit": {
+      "left_on_table": 0
+    }
+  },
+  {
+    "id": "BT-2025-05-14-PANW",
+    "symbol": "PANW",
+    "sector": "Technology",
+    "score": 59,
+    "entry_date": "2025-05-14",
+    "entry_price": 190.9,
+    "exit_date": "2025-05-21",
+    "exit_price": 179.34,
+    "exit_reason": "TRAILING_STOP",
+    "pnl_pct": -6.06,
+    "pnl_dollars": -2080.8,
+    "days_held": 5,
+    "mfe_pct": 2.11,
+    "mae_pct": -0.69,
+    "capture_ratio": -286.8,
+    "tracking_status": "CLOSED",
+    "exit": {
+      "date": "2025-05-21",
+      "price": 179.34,
+      "reason": "TRAILING_STOP",
+      "pnl_pct": -6.06,
+      "days_held": 5
+    },
+    "excursion": {
+      "mfe_pct": 2.11,
+      "mae_pct": -0.69,
+      "capture_ratio": -286.8
+    },
+    "alternative_scenarios": {},
+    "strategy": "MOMENTUM_FUNDAMENTAL",
+    "post_exit": {
+      "left_on_table": 0
+    }
+  },
+  {
+    "id": "BT-2025-04-30-ISRG",
+    "symbol": "ISRG",
+    "sector": "Healthcare",
+    "score": 67,
+    "entry_date": "2025-04-30",
+    "entry_price": 515.8,
+    "exit_date": "2025-05-29",
+    "exit_price": 555.75,
+    "exit_reason": "TIMEOUT",
+    "pnl_pct": 7.75,
+    "pnl_dollars": 2277.15,
+    "days_held": 20,
+    "mfe_pct": 10.25,
+    "mae_pct": -0.61,
+    "capture_ratio": 75.5,
+    "tracking_status": "CLOSED",
+    "exit": {
+      "date": "2025-05-29",
+      "price": 555.75,
+      "reason": "TIMEOUT",
+      "pnl_pct": 7.75,
+      "days_held": 20
+    },
+    "excursion": {
+      "mfe_pct": 10.25,
+      "mae_pct": -0.61,
+      "capture_ratio": 75.5
+    },
+    "alternative_scenarios": {},
+    "strategy": "MOMENTUM_FUNDAMENTAL",
+    "post_exit": {
+      "left_on_table": 0
+    }
+  },
+  {
+    "id": "BT-2025-05-07-META",
+    "symbol": "META",
+    "sector": "Technology",
+    "score": 63,
+    "entry_date": "2025-05-07",
+    "entry_price": 595.46,
+    "exit_date": "2025-06-05",
+    "exit_price": 683.08,
+    "exit_reason": "TIMEOUT",
+    "pnl_pct": 14.71,
+    "pnl_dollars": 4555.81,
+    "days_held": 20,
+    "mfe_pct": 16.35,
+    "mae_pct": -0.85,
+    "capture_ratio": 90.0,
+    "tracking_status": "CLOSED",
+    "exit": {
+      "date": "2025-06-05",
+      "price": 683.08,
+      "reason": "TIMEOUT",
+      "pnl_pct": 14.71,
+      "days_held": 20
+    },
+    "excursion": {
+      "mfe_pct": 16.35,
+      "mae_pct": -0.85,
+      "capture_ratio": 90.0
+    },
+    "alternative_scenarios": {},
+    "strategy": "MOMENTUM_FUNDAMENTAL",
+    "post_exit": {
+      "left_on_table": 0
+    }
+  },
+  {
+    "id": "BT-2025-06-05-ISRG",
+    "symbol": "ISRG",
+    "sector": "Healthcare",
+    "score": 72,
+    "entry_date": "2025-06-05",
+    "entry_price": 558.06,
+    "exit_date": "2025-06-09",
+    "exit_price": 513.42,
+    "exit_reason": "STOP_LOSS",
+    "pnl_pct": -8.0,
+    "pnl_dollars": -2812.62,
+    "days_held": 2,
+    "mfe_pct": 1.09,
+    "mae_pct": -0.41,
+    "capture_ratio": -733.1,
+    "tracking_status": "CLOSED",
+    "exit": {
+      "date": "2025-06-09",
+      "price": 513.42,
+      "reason": "STOP_LOSS",
+      "pnl_pct": -8.0,
+      "days_held": 2
+    },
+    "excursion": {
+      "mfe_pct": 1.09,
+      "mae_pct": -0.41,
+      "capture_ratio": -733.1
+    },
+    "alternative_scenarios": {},
+    "strategy": "MOMENTUM_FUNDAMENTAL",
+    "post_exit": {
+      "left_on_table": 0
+    }
+  },
+  {
+    "id": "BT-2025-05-21-NU",
+    "symbol": "NU",
+    "sector": "Financials",
+    "score": 72,
+    "entry_date": "2025-05-21",
+    "entry_price": 11.99,
+    "exit_date": "2025-06-20",
+    "exit_price": 12.14,
+    "exit_reason": "TIMEOUT",
+    "pnl_pct": 1.25,
+    "pnl_dollars": 405.0,
+    "days_held": 20,
+    "mfe_pct": 6.59,
+    "mae_pct": -2.34,
+    "capture_ratio": 19.0,
+    "tracking_status": "CLOSED",
+    "exit": {
+      "date": "2025-06-20",
+      "price": 12.14,
+      "reason": "TIMEOUT",
+      "pnl_pct": 1.25,
+      "days_held": 20
+    },
+    "excursion": {
+      "mfe_pct": 6.59,
+      "mae_pct": -2.34,
+      "capture_ratio": 19.0
+    },
+    "alternative_scenarios": {},
+    "strategy": "MOMENTUM_FUNDAMENTAL",
+    "post_exit": {
+      "left_on_table": 0
+    }
+  },
+  {
+    "id": "BT-2025-05-29-SYK",
+    "symbol": "SYK",
+    "sector": "Healthcare",
+    "score": 70,
+    "entry_date": "2025-05-29",
+    "entry_price": 379.72,
+    "exit_date": "2025-06-27",
+    "exit_price": 390.84,
+    "exit_reason": "TIMEOUT",
+    "pnl_pct": 2.93,
+    "pnl_dollars": 923.21,
+    "days_held": 20,
+    "mfe_pct": 3.64,
+    "mae_pct": -3.01,
+    "capture_ratio": 80.6,
+    "tracking_status": "CLOSED",
+    "exit": {
+      "date": "2025-06-27",
+      "price": 390.84,
+      "reason": "TIMEOUT",
+      "pnl_pct": 2.93,
+      "days_held": 20
+    },
+    "excursion": {
+      "mfe_pct": 3.64,
+      "mae_pct": -3.01,
+      "capture_ratio": 80.6
+    },
+    "alternative_scenarios": {},
+    "strategy": "MOMENTUM_FUNDAMENTAL",
+    "post_exit": {
+      "left_on_table": 0
+    }
+  },
+  {
+    "id": "BT-2025-06-12-NOC",
+    "symbol": "NOC",
+    "sector": "Defense",
+    "score": 65,
+    "entry_date": "2025-06-12",
+    "entry_price": 493.18,
+    "exit_date": "2025-07-14",
+    "exit_price": 516.97,
+    "exit_reason": "TIMEOUT",
+    "pnl_pct": 4.82,
+    "pnl_dollars": 1570.12,
+    "days_held": 20,
+    "mfe_pct": 5.36,
+    "mae_pct": -3.19,
+    "capture_ratio": 90.0,
+    "tracking_status": "CLOSED",
+    "exit": {
+      "date": "2025-07-14",
+      "price": 516.97,
+      "reason": "TIMEOUT",
+      "pnl_pct": 4.82,
+      "days_held": 20
+    },
+    "excursion": {
+      "mfe_pct": 5.36,
+      "mae_pct": -3.19,
+      "capture_ratio": 90.0
+    },
+    "alternative_scenarios": {},
+    "strategy": "MOMENTUM_FUNDAMENTAL",
+    "post_exit": {
+      "left_on_table": 0
+    }
+  },
+  {
+    "id": "BT-2025-06-20-META",
+    "symbol": "META",
+    "sector": "Technology",
+    "score": 70,
+    "entry_date": "2025-06-20",
+    "entry_price": 681.33,
+    "exit_date": "2025-07-21",
+    "exit_price": 711.91,
+    "exit_reason": "TIMEOUT",
+    "pnl_pct": 4.49,
+    "pnl_dollars": 1467.57,
+    "days_held": 20,
+    "mfe_pct": 9.61,
+    "mae_pct": -0.53,
+    "capture_ratio": 46.7,
+    "tracking_status": "CLOSED",
+    "exit": {
+      "date": "2025-07-21",
+      "price": 711.91,
+      "reason": "TIMEOUT",
+      "pnl_pct": 4.49,
+      "days_held": 20
+    },
+    "excursion": {
+      "mfe_pct": 9.61,
+      "mae_pct": -0.53,
+      "capture_ratio": 46.7
+    },
+    "alternative_scenarios": {},
+    "strategy": "MOMENTUM_FUNDAMENTAL",
+    "post_exit": {
+      "left_on_table": 0
+    }
+  },
+  {
+    "id": "BT-2025-06-27-PLTR",
+    "symbol": "PLTR",
+    "sector": "Technology",
+    "score": 70,
+    "entry_date": "2025-06-27",
+    "entry_price": 130.74,
+    "exit_date": "2025-07-25",
+    "exit_price": 157.7,
+    "exit_reason": "TARGET_1",
+    "pnl_pct": 20.62,
+    "pnl_dollars": 6767.02,
+    "days_held": 19,
+    "mfe_pct": 22.68,
+    "mae_pct": -1.71,
+    "capture_ratio": 90.9,
+    "tracking_status": "CLOSED",
+    "exit": {
+      "date": "2025-07-25",
+      "price": 157.7,
+      "reason": "TARGET_1",
+      "pnl_pct": 20.62,
+      "days_held": 19
+    },
+    "excursion": {
+      "mfe_pct": 22.68,
+      "mae_pct": -1.71,
+      "capture_ratio": 90.9
+    },
+    "alternative_scenarios": {},
+    "strategy": "MOMENTUM_FUNDAMENTAL",
+    "post_exit": {
+      "left_on_table": 0
+    }
+  },
+  {
+    "id": "BT-2025-07-28-VRTX",
+    "symbol": "VRTX",
+    "sector": "Healthcare",
+    "score": 75,
+    "entry_date": "2025-07-28",
+    "entry_price": 460.83,
+    "exit_date": "2025-08-05",
+    "exit_price": 423.96,
+    "exit_reason": "STOP_LOSS",
+    "pnl_pct": -8.0,
+    "pnl_dollars": -3170.51,
+    "days_held": 6,
+    "mfe_pct": 3.02,
+    "mae_pct": -1.59,
+    "capture_ratio": -264.7,
+    "tracking_status": "CLOSED",
+    "exit": {
+      "date": "2025-08-05",
+      "price": 423.96,
+      "reason": "STOP_LOSS",
+      "pnl_pct": -8.0,
+      "days_held": 6
+    },
+    "excursion": {
+      "mfe_pct": 3.02,
+      "mae_pct": -1.59,
+      "capture_ratio": -264.7
+    },
+    "alternative_scenarios": {},
+    "strategy": "MOMENTUM_FUNDAMENTAL",
+    "post_exit": {
+      "left_on_table": 0
+    }
+  },
+  {
+    "id": "BT-2025-07-14-ABBV",
+    "symbol": "ABBV",
+    "sector": "Healthcare",
+    "score": 73,
+    "entry_date": "2025-07-14",
+    "entry_price": 187.02,
+    "exit_date": "2025-08-11",
+    "exit_price": 195.64,
+    "exit_reason": "TIMEOUT",
+    "pnl_pct": 4.61,
+    "pnl_dollars": 1570.27,
+    "days_held": 20,
+    "mfe_pct": 5.5,
+    "mae_pct": -2.76,
+    "capture_ratio": 83.8,
+    "tracking_status": "CLOSED",
+    "exit": {
+      "date": "2025-08-11",
+      "price": 195.64,
+      "reason": "TIMEOUT",
+      "pnl_pct": 4.61,
+      "days_held": 20
+    },
+    "excursion": {
+      "mfe_pct": 5.5,
+      "mae_pct": -2.76,
+      "capture_ratio": 83.8
+    },
+    "alternative_scenarios": {},
+    "strategy": "MOMENTUM_FUNDAMENTAL",
+    "post_exit": {
+      "left_on_table": 0
+    }
+  },
+  {
+    "id": "BT-2025-08-11-FSLR",
+    "symbol": "FSLR",
+    "sector": "Energy",
+    "score": 71,
+    "entry_date": "2025-08-11",
+    "entry_price": 182.13,
+    "exit_date": "2025-08-14",
+    "exit_price": 177.14,
+    "exit_reason": "TRAILING_STOP",
+    "pnl_pct": -2.74,
+    "pnl_dollars": -988.02,
+    "days_held": 3,
+    "mfe_pct": 5.72,
+    "mae_pct": -0.33,
+    "capture_ratio": -47.9,
+    "tracking_status": "CLOSED",
+    "exit": {
+      "date": "2025-08-14",
+      "price": 177.14,
+      "reason": "TRAILING_STOP",
+      "pnl_pct": -2.74,
+      "days_held": 3
+    },
+    "excursion": {
+      "mfe_pct": 5.72,
+      "mae_pct": -0.33,
+      "capture_ratio": -47.9
+    },
+    "alternative_scenarios": {},
+    "strategy": "MOMENTUM_FUNDAMENTAL",
+    "post_exit": {
+      "left_on_table": 0
+    }
+  },
+  {
+    "id": "BT-2025-07-21-META",
+    "symbol": "META",
+    "sector": "Technology",
+    "score": 75,
+    "entry_date": "2025-07-21",
+    "entry_price": 711.91,
+    "exit_date": "2025-08-18",
+    "exit_price": 766.23,
+    "exit_reason": "TIMEOUT",
+    "pnl_pct": 7.63,
+    "pnl_dollars": 2607.31,
+    "days_held": 20,
+    "mfe_pct": 11.68,
+    "mae_pct": -3.05,
+    "capture_ratio": 65.3,
+    "tracking_status": "CLOSED",
+    "exit": {
+      "date": "2025-08-18",
+      "price": 766.23,
+      "reason": "TIMEOUT",
+      "pnl_pct": 7.63,
+      "days_held": 20
+    },
+    "excursion": {
+      "mfe_pct": 11.68,
+      "mae_pct": -3.05,
+      "capture_ratio": 65.3
+    },
+    "alternative_scenarios": {},
+    "strategy": "MOMENTUM_FUNDAMENTAL",
+    "post_exit": {
+      "left_on_table": 0
+    }
+  },
+  {
+    "id": "BT-2025-08-11-ABBV",
+    "symbol": "ABBV",
+    "sector": "Healthcare",
+    "score": 71,
+    "entry_date": "2025-08-11",
+    "entry_price": 195.64,
+    "exit_date": "2025-09-09",
+    "exit_price": 207.25,
+    "exit_reason": "TIMEOUT",
+    "pnl_pct": 5.93,
+    "pnl_dollars": 2134.83,
+    "days_held": 20,
+    "mfe_pct": 7.9,
+    "mae_pct": -0.8,
+    "capture_ratio": 75.0,
+    "tracking_status": "CLOSED",
+    "exit": {
+      "date": "2025-09-09",
+      "price": 207.25,
+      "reason": "TIMEOUT",
+      "pnl_pct": 5.93,
+      "days_held": 20
+    },
+    "excursion": {
+      "mfe_pct": 7.9,
+      "mae_pct": -0.8,
+      "capture_ratio": 75.0
+    },
+    "alternative_scenarios": {},
+    "strategy": "MOMENTUM_FUNDAMENTAL",
+    "post_exit": {
+      "left_on_table": 0
+    }
+  },
+  {
+    "id": "BT-2025-08-18-SCCO",
+    "symbol": "SCCO",
+    "sector": "Energy",
+    "score": 72,
+    "entry_date": "2025-08-18",
+    "entry_price": 93.3,
+    "exit_date": "2025-09-16",
+    "exit_price": 105.53,
+    "exit_reason": "TIMEOUT",
+    "pnl_pct": 13.11,
+    "pnl_dollars": 4709.31,
+    "days_held": 20,
+    "mfe_pct": 15.34,
+    "mae_pct": -3.45,
+    "capture_ratio": 85.5,
+    "tracking_status": "CLOSED",
+    "exit": {
+      "date": "2025-09-16",
+      "price": 105.53,
+      "reason": "TIMEOUT",
+      "pnl_pct": 13.11,
+      "days_held": 20
+    },
+    "excursion": {
+      "mfe_pct": 15.34,
+      "mae_pct": -3.45,
+      "capture_ratio": 85.5
+    },
+    "alternative_scenarios": {},
+    "strategy": "MOMENTUM_FUNDAMENTAL",
+    "post_exit": {
+      "left_on_table": 0
+    }
+  },
+  {
+    "id": "BT-2025-08-18-MSFT",
+    "symbol": "MSFT",
+    "sector": "Technology",
+    "score": 71,
+    "entry_date": "2025-08-18",
+    "entry_price": 515.29,
+    "exit_date": "2025-09-16",
+    "exit_price": 508.09,
+    "exit_reason": "TIMEOUT",
+    "pnl_pct": -1.4,
+    "pnl_dollars": -496.65,
+    "days_held": 20,
+    "mfe_pct": 0.19,
+    "mae_pct": -4.63,
+    "capture_ratio": -736.8,
+    "tracking_status": "CLOSED",
+    "exit": {
+      "date": "2025-09-16",
+      "price": 508.09,
+      "reason": "TIMEOUT",
+      "pnl_pct": -1.4,
+      "days_held": 20
+    },
+    "excursion": {
+      "mfe_pct": 0.19,
+      "mae_pct": -4.63,
+      "capture_ratio": -736.8
+    },
+    "alternative_scenarios": {},
+    "strategy": "MOMENTUM_FUNDAMENTAL",
+    "post_exit": {
+      "left_on_table": 0
+    }
+  },
+  {
+    "id": "BT-2025-09-16-PLTR",
+    "symbol": "PLTR",
+    "sector": "Technology",
+    "score": 70,
+    "entry_date": "2025-09-16",
+    "entry_price": 170.26,
+    "exit_date": "2025-10-03",
+    "exit_price": 173.14,
+    "exit_reason": "TRAILING_STOP",
+    "pnl_pct": 1.69,
+    "pnl_dollars": 645.12,
+    "days_held": 13,
+    "mfe_pct": 10.54,
+    "mae_pct": -5.28,
+    "capture_ratio": 16.1,
+    "tracking_status": "CLOSED",
+    "exit": {
+      "date": "2025-10-03",
+      "price": 173.14,
+      "reason": "TRAILING_STOP",
+      "pnl_pct": 1.69,
+      "days_held": 13
+    },
+    "excursion": {
+      "mfe_pct": 10.54,
+      "mae_pct": -5.28,
+      "capture_ratio": 16.1
+    },
+    "alternative_scenarios": {},
+    "strategy": "MOMENTUM_FUNDAMENTAL",
+    "post_exit": {
+      "left_on_table": 0
+    }
+  },
+  {
+    "id": "BT-2025-09-09-AAPL",
+    "symbol": "AAPL",
+    "sector": "Technology",
+    "score": 76,
+    "entry_date": "2025-09-09",
+    "entry_price": 233.9,
+    "exit_date": "2025-10-07",
+    "exit_price": 255.99,
+    "exit_reason": "TIMEOUT",
+    "pnl_pct": 9.44,
+    "pnl_dollars": 3622.42,
+    "days_held": 20,
+    "mfe_pct": 10.62,
+    "mae_pct": -3.58,
+    "capture_ratio": 88.9,
+    "tracking_status": "CLOSED",
+    "exit": {
+      "date": "2025-10-07",
+      "price": 255.99,
+      "reason": "TIMEOUT",
+      "pnl_pct": 9.44,
+      "days_held": 20
+    },
+    "excursion": {
+      "mfe_pct": 10.62,
+      "mae_pct": -3.58,
+      "capture_ratio": 88.9
+    },
+    "alternative_scenarios": {},
+    "strategy": "MOMENTUM_FUNDAMENTAL",
+    "post_exit": {
+      "left_on_table": 0
+    }
+  },
+  {
+    "id": "BT-2025-09-16-MSFT",
+    "symbol": "MSFT",
+    "sector": "Technology",
+    "score": 71,
+    "entry_date": "2025-09-16",
+    "entry_price": 508.09,
+    "exit_date": "2025-10-14",
+    "exit_price": 512.61,
+    "exit_reason": "TIMEOUT",
+    "pnl_pct": 0.89,
+    "pnl_dollars": 334.59,
+    "days_held": 20,
+    "mfe_pct": 4.32,
+    "mae_pct": -0.79,
+    "capture_ratio": 20.6,
+    "tracking_status": "CLOSED",
+    "exit": {
+      "date": "2025-10-14",
+      "price": 512.61,
+      "reason": "TIMEOUT",
+      "pnl_pct": 0.89,
+      "days_held": 20
+    },
+    "excursion": {
+      "mfe_pct": 4.32,
+      "mae_pct": -0.79,
+      "capture_ratio": 20.6
+    },
+    "alternative_scenarios": {},
+    "strategy": "MOMENTUM_FUNDAMENTAL",
+    "post_exit": {
+      "left_on_table": 0
+    }
+  },
+  {
+    "id": "BT-2025-10-07-FSLR",
+    "symbol": "FSLR",
+    "sector": "Energy",
+    "score": 67,
+    "entry_date": "2025-10-07",
+    "entry_price": 227.89,
+    "exit_date": "2025-10-21",
+    "exit_price": 228.2,
+    "exit_reason": "TRAILING_STOP",
+    "pnl_pct": 0.14,
+    "pnl_dollars": 55.18,
+    "days_held": 10,
+    "mfe_pct": 8.84,
+    "mae_pct": -3.42,
+    "capture_ratio": 1.5,
+    "tracking_status": "CLOSED",
+    "exit": {
+      "date": "2025-10-21",
+      "price": 228.2,
+      "reason": "TRAILING_STOP",
+      "pnl_pct": 0.14,
+      "days_held": 10
+    },
+    "excursion": {
+      "mfe_pct": 8.84,
+      "mae_pct": -3.42,
+      "capture_ratio": 1.5
+    },
+    "alternative_scenarios": {},
+    "strategy": "MOMENTUM_FUNDAMENTAL",
+    "post_exit": {
+      "left_on_table": 0
+    }
+  },
+  {
+    "id": "BT-2025-10-21-META",
+    "symbol": "META",
+    "sector": "Technology",
+    "score": 75,
+    "entry_date": "2025-10-21",
+    "entry_price": 732.67,
+    "exit_date": "2025-10-30",
+    "exit_price": 674.06,
+    "exit_reason": "STOP_LOSS",
+    "pnl_pct": -8.0,
+    "pnl_dollars": -3223.76,
+    "days_held": 7,
+    "mfe_pct": 3.53,
+    "mae_pct": -1.26,
+    "capture_ratio": -226.6,
+    "tracking_status": "CLOSED",
+    "exit": {
+      "date": "2025-10-30",
+      "price": 674.06,
+      "reason": "STOP_LOSS",
+      "pnl_pct": -8.0,
+      "days_held": 7
+    },
+    "excursion": {
+      "mfe_pct": 3.53,
+      "mae_pct": -1.26,
+      "capture_ratio": -226.6
+    },
+    "alternative_scenarios": {},
+    "strategy": "MOMENTUM_FUNDAMENTAL",
+    "post_exit": {
+      "left_on_table": 0
+    }
+  },
+  {
+    "id": "BT-2025-10-07-AVGO",
+    "symbol": "AVGO",
+    "sector": "Technology",
+    "score": 70,
+    "entry_date": "2025-10-07",
+    "entry_price": 335.77,
+    "exit_date": "2025-11-04",
+    "exit_price": 354.88,
+    "exit_reason": "TRAILING_STOP",
+    "pnl_pct": 5.69,
+    "pnl_dollars": 2293.49,
+    "days_held": 20,
+    "mfe_pct": 14.88,
+    "mae_pct": -3.67,
+    "capture_ratio": 38.2,
+    "tracking_status": "CLOSED",
+    "exit": {
+      "date": "2025-11-04",
+      "price": 354.88,
+      "reason": "TRAILING_STOP",
+      "pnl_pct": 5.69,
+      "days_held": 20
+    },
+    "excursion": {
+      "mfe_pct": 14.88,
+      "mae_pct": -3.67,
+      "capture_ratio": 38.2
+    },
+    "alternative_scenarios": {},
+    "strategy": "MOMENTUM_FUNDAMENTAL",
+    "post_exit": {
+      "left_on_table": 0
+    }
+  },
+  {
+    "id": "BT-2025-10-14-MSFT",
+    "symbol": "MSFT",
+    "sector": "Technology",
+    "score": 78,
+    "entry_date": "2025-10-14",
+    "entry_price": 512.61,
+    "exit_date": "2025-11-04",
+    "exit_price": 508.47,
+    "exit_reason": "TRAILING_STOP",
+    "pnl_pct": -0.81,
+    "pnl_dollars": -306.4,
+    "days_held": 15,
+    "mfe_pct": 7.82,
+    "mae_pct": -1.22,
+    "capture_ratio": -10.3,
+    "tracking_status": "CLOSED",
+    "exit": {
+      "date": "2025-11-04",
+      "price": 508.47,
+      "reason": "TRAILING_STOP",
+      "pnl_pct": -0.81,
+      "days_held": 15
+    },
+    "excursion": {
+      "mfe_pct": 7.82,
+      "mae_pct": -1.22,
+      "capture_ratio": -10.3
+    },
+    "alternative_scenarios": {},
+    "strategy": "MOMENTUM_FUNDAMENTAL",
+    "post_exit": {
+      "left_on_table": 0
+    }
+  },
+  {
+    "id": "BT-2025-11-04-PLTR",
+    "symbol": "PLTR",
+    "sector": "Technology",
+    "score": 70,
+    "entry_date": "2025-11-04",
+    "entry_price": 190.74,
+    "exit_date": "2025-11-07",
+    "exit_price": 173.56,
+    "exit_reason": "STOP_LOSS",
+    "pnl_pct": -9.01,
+    "pnl_dollars": -3574.38,
+    "days_held": 3,
+    "mfe_pct": 0.18,
+    "mae_pct": -8.5,
+    "capture_ratio": -4910.0,
+    "tracking_status": "CLOSED",
+    "exit": {
+      "date": "2025-11-07",
+      "price": 173.56,
+      "reason": "STOP_LOSS",
+      "pnl_pct": -9.01,
+      "days_held": 3
+    },
+    "excursion": {
+      "mfe_pct": 0.18,
+      "mae_pct": -8.5,
+      "capture_ratio": -4910.0
+    },
+    "alternative_scenarios": {},
+    "strategy": "MOMENTUM_FUNDAMENTAL",
+    "post_exit": {
+      "left_on_table": 0
+    }
+  },
+  {
+    "id": "BT-2025-11-04-AVGO",
+    "symbol": "AVGO",
+    "sector": "Technology",
+    "score": 70,
+    "entry_date": "2025-11-04",
+    "entry_price": 351.27,
+    "exit_date": "2025-11-13",
+    "exit_price": 335.04,
+    "exit_reason": "TRAILING_STOP",
+    "pnl_pct": -4.62,
+    "pnl_dollars": -1801.3,
+    "days_held": 7,
+    "mfe_pct": 3.67,
+    "mae_pct": -4.17,
+    "capture_ratio": -125.7,
+    "tracking_status": "CLOSED",
+    "exit": {
+      "date": "2025-11-13",
+      "price": 335.04,
+      "reason": "TRAILING_STOP",
+      "pnl_pct": -4.62,
+      "days_held": 7
+    },
+    "excursion": {
+      "mfe_pct": 3.67,
+      "mae_pct": -4.17,
+      "capture_ratio": -125.7
+    },
+    "alternative_scenarios": {},
+    "strategy": "MOMENTUM_FUNDAMENTAL",
+    "post_exit": {
+      "left_on_table": 0
+    }
+  },
+  {
+    "id": "BT-2025-11-11-PLTR",
+    "symbol": "PLTR",
+    "sector": "Technology",
+    "score": 70,
+    "entry_date": "2025-11-11",
+    "entry_price": 190.96,
+    "exit_date": "2025-11-13",
+    "exit_price": 171.8,
+    "exit_reason": "STOP_LOSS",
+    "pnl_pct": -10.03,
+    "pnl_dollars": -3620.59,
+    "days_held": 2,
+    "mfe_pct": 0.0,
+    "mae_pct": -5.53,
+    "capture_ratio": 0,
+    "tracking_status": "CLOSED",
+    "exit": {
+      "date": "2025-11-13",
+      "price": 171.8,
+      "reason": "STOP_LOSS",
+      "pnl_pct": -10.03,
+      "days_held": 2
+    },
+    "excursion": {
+      "mfe_pct": 0.0,
+      "mae_pct": -5.53,
+      "capture_ratio": 0
+    },
+    "alternative_scenarios": {},
+    "strategy": "MOMENTUM_FUNDAMENTAL",
+    "post_exit": {
+      "left_on_table": 0
+    }
+  },
+  {
+    "id": "BT-2025-11-04-MSFT",
+    "symbol": "MSFT",
+    "sector": "Technology",
+    "score": 73,
+    "entry_date": "2025-11-04",
+    "entry_price": 513.37,
+    "exit_date": "2025-11-21",
+    "exit_price": 472.3,
+    "exit_reason": "STOP_LOSS",
+    "pnl_pct": -8.0,
+    "pnl_dollars": -3121.28,
+    "days_held": 13,
+    "mfe_pct": 0.1,
+    "mae_pct": -7.38,
+    "capture_ratio": -8229.7,
+    "tracking_status": "CLOSED",
+    "exit": {
+      "date": "2025-11-21",
+      "price": 472.3,
+      "reason": "STOP_LOSS",
+      "pnl_pct": -8.0,
+      "days_held": 13
+    },
+    "excursion": {
+      "mfe_pct": 0.1,
+      "mae_pct": -7.38,
+      "capture_ratio": -8229.7
+    },
+    "alternative_scenarios": {},
+    "strategy": "MOMENTUM_FUNDAMENTAL",
+    "post_exit": {
+      "left_on_table": 0
+    }
+  },
+  {
+    "id": "BT-2025-11-18-FSLR",
+    "symbol": "FSLR",
+    "sector": "Energy",
+    "score": 71,
+    "entry_date": "2025-11-18",
+    "entry_price": 252.19,
+    "exit_date": "2025-11-21",
+    "exit_price": 243.61,
+    "exit_reason": "TRAILING_STOP",
+    "pnl_pct": -3.4,
+    "pnl_dollars": -1184.04,
+    "days_held": 3,
+    "mfe_pct": 5.0,
+    "mae_pct": -3.16,
+    "capture_ratio": -68.1,
+    "tracking_status": "CLOSED",
+    "exit": {
+      "date": "2025-11-21",
+      "price": 243.61,
+      "reason": "TRAILING_STOP",
+      "pnl_pct": -3.4,
+      "days_held": 3
+    },
+    "excursion": {
+      "mfe_pct": 5.0,
+      "mae_pct": -3.16,
+      "capture_ratio": -68.1
+    },
+    "alternative_scenarios": {},
+    "strategy": "MOMENTUM_FUNDAMENTAL",
+    "post_exit": {
+      "left_on_table": 0
+    }
+  },
+  {
+    "id": "BT-2025-11-25-FSLR",
+    "symbol": "FSLR",
+    "sector": "Energy",
+    "score": 67,
+    "entry_date": "2025-11-25",
+    "entry_price": 260.36,
+    "exit_date": "2025-12-03",
+    "exit_price": 254.05,
+    "exit_reason": "TRAILING_STOP",
+    "pnl_pct": -2.42,
+    "pnl_dollars": -839.23,
+    "days_held": 5,
+    "mfe_pct": 6.06,
+    "mae_pct": -0.14,
+    "capture_ratio": -40.0,
+    "tracking_status": "CLOSED",
+    "exit": {
+      "date": "2025-12-03",
+      "price": 254.05,
+      "reason": "TRAILING_STOP",
+      "pnl_pct": -2.42,
+      "days_held": 5
+    },
+    "excursion": {
+      "mfe_pct": 6.06,
+      "mae_pct": -0.14,
+      "capture_ratio": -40.0
+    },
+    "alternative_scenarios": {},
+    "strategy": "MOMENTUM_FUNDAMENTAL",
+    "post_exit": {
+      "left_on_table": 0
+    }
+  },
+  {
+    "id": "BT-2025-11-18-AAPL",
+    "symbol": "AAPL",
+    "sector": "Technology",
+    "score": 69,
+    "entry_date": "2025-11-18",
+    "entry_price": 267.19,
+    "exit_date": "2025-12-17",
+    "exit_price": 271.59,
+    "exit_reason": "TIMEOUT",
+    "pnl_pct": 1.65,
+    "pnl_dollars": 571.46,
+    "days_held": 20,
+    "mfe_pct": 7.92,
+    "mae_pct": -0.73,
+    "capture_ratio": 20.8,
+    "tracking_status": "CLOSED",
+    "exit": {
+      "date": "2025-12-17",
+      "price": 271.59,
+      "reason": "TIMEOUT",
+      "pnl_pct": 1.65,
+      "days_held": 20
+    },
+    "excursion": {
+      "mfe_pct": 7.92,
+      "mae_pct": -0.73,
+      "capture_ratio": 20.8
+    },
+    "alternative_scenarios": {},
+    "strategy": "MOMENTUM_FUNDAMENTAL",
+    "post_exit": {
+      "left_on_table": 0
+    }
+  },
+  {
+    "id": "BT-2025-11-25-ABBV",
+    "symbol": "ABBV",
+    "sector": "Healthcare",
+    "score": 66,
+    "entry_date": "2025-11-25",
+    "entry_price": 229.95,
+    "exit_date": "2025-12-24",
+    "exit_price": 228.06,
+    "exit_reason": "TIMEOUT",
+    "pnl_pct": -0.82,
+    "pnl_dollars": -288.0,
+    "days_held": 20,
+    "mfe_pct": 0.29,
+    "mae_pct": -4.99,
+    "capture_ratio": -280.9,
+    "tracking_status": "CLOSED",
+    "exit": {
+      "date": "2025-12-24",
+      "price": 228.06,
+      "reason": "TIMEOUT",
+      "pnl_pct": -0.82,
+      "days_held": 20
+    },
+    "excursion": {
+      "mfe_pct": 0.29,
+      "mae_pct": -4.99,
+      "capture_ratio": -280.9
+    },
+    "alternative_scenarios": {},
+    "strategy": "MOMENTUM_FUNDAMENTAL",
+    "post_exit": {
+      "left_on_table": 0
+    }
+  },
+  {
+    "id": "BT-2025-12-03-ISRG",
+    "symbol": "ISRG",
+    "sector": "Healthcare",
+    "score": 72,
+    "entry_date": "2025-12-03",
+    "entry_price": 569.71,
+    "exit_date": "2026-01-02",
+    "exit_price": 561.98,
+    "exit_reason": "TIMEOUT",
+    "pnl_pct": -1.36,
+    "pnl_dollars": -456.07,
+    "days_held": 20,
+    "mfe_pct": 2.41,
+    "mae_pct": -5.62,
+    "capture_ratio": -56.3,
+    "tracking_status": "CLOSED",
+    "exit": {
+      "date": "2026-01-02",
+      "price": 561.98,
+      "reason": "TIMEOUT",
+      "pnl_pct": -1.36,
+      "days_held": 20
+    },
+    "excursion": {
+      "mfe_pct": 2.41,
+      "mae_pct": -5.62,
+      "capture_ratio": -56.3
+    },
+    "alternative_scenarios": {},
+    "strategy": "MOMENTUM_FUNDAMENTAL",
+    "post_exit": {
+      "left_on_table": 0
+    }
+  },
+  {
+    "id": "BT-2025-12-24-ABBV",
+    "symbol": "ABBV",
+    "sector": "Healthcare",
+    "score": 71,
+    "entry_date": "2025-12-24",
+    "entry_price": 228.06,
+    "exit_date": "2026-01-13",
+    "exit_price": 216.34,
+    "exit_reason": "TRAILING_STOP",
+    "pnl_pct": -5.14,
+    "pnl_dollars": -1792.41,
+    "days_held": 12,
+    "mfe_pct": 3.11,
+    "mae_pct": -5.23,
+    "capture_ratio": -165.2,
+    "tracking_status": "CLOSED",
+    "exit": {
+      "date": "2026-01-13",
+      "price": 216.34,
+      "reason": "TRAILING_STOP",
+      "pnl_pct": -5.14,
+      "days_held": 12
+    },
+    "excursion": {
+      "mfe_pct": 3.11,
+      "mae_pct": -5.23,
+      "capture_ratio": -165.2
+    },
+    "alternative_scenarios": {},
+    "strategy": "MOMENTUM_FUNDAMENTAL",
+    "post_exit": {
+      "left_on_table": 0
+    }
+  },
+  {
+    "id": "BT-2026-01-02-ISRG",
+    "symbol": "ISRG",
+    "sector": "Healthcare",
+    "score": 72,
+    "entry_date": "2026-01-02",
+    "entry_price": 561.98,
+    "exit_date": "2026-01-14",
+    "exit_price": 555.57,
+    "exit_reason": "TRAILING_STOP",
+    "pnl_pct": -1.14,
+    "pnl_dollars": -378.19,
+    "days_held": 8,
+    "mfe_pct": 7.46,
+    "mae_pct": -1.06,
+    "capture_ratio": -15.3,
+    "tracking_status": "CLOSED",
+    "exit": {
+      "date": "2026-01-14",
+      "price": 555.57,
+      "reason": "TRAILING_STOP",
+      "pnl_pct": -1.14,
+      "days_held": 8
+    },
+    "excursion": {
+      "mfe_pct": 7.46,
+      "mae_pct": -1.06,
+      "capture_ratio": -15.3
+    },
+    "alternative_scenarios": {},
+    "strategy": "MOMENTUM_FUNDAMENTAL",
+    "post_exit": {
+      "left_on_table": 0
+    }
+  },
+  {
+    "id": "BT-2025-12-17-AAPL",
+    "symbol": "AAPL",
+    "sector": "Technology",
+    "score": 83,
+    "entry_date": "2025-12-17",
+    "entry_price": 271.59,
+    "exit_date": "2026-01-16",
+    "exit_price": 255.37,
+    "exit_reason": "TRAILING_STOP",
+    "pnl_pct": -5.97,
+    "pnl_dollars": -2108.06,
+    "days_held": 20,
+    "mfe_pct": 2.21,
+    "mae_pct": -5.94,
+    "capture_ratio": -270.5,
+    "tracking_status": "CLOSED",
+    "exit": {
+      "date": "2026-01-16",
+      "price": 255.37,
+      "reason": "TRAILING_STOP",
+      "pnl_pct": -5.97,
+      "days_held": 20
+    },
+    "excursion": {
+      "mfe_pct": 2.21,
+      "mae_pct": -5.94,
+      "capture_ratio": -270.5
+    },
+    "alternative_scenarios": {},
+    "strategy": "MOMENTUM_FUNDAMENTAL",
+    "post_exit": {
+      "left_on_table": 0
+    }
+  },
+  {
+    "id": "BT-2026-01-16-AVGO",
+    "symbol": "AVGO",
+    "sector": "Technology",
+    "score": 66,
+    "entry_date": "2026-01-16",
+    "entry_price": 351.71,
+    "exit_date": "2026-01-23",
+    "exit_price": 323.57,
+    "exit_reason": "STOP_LOSS",
+    "pnl_pct": -8.0,
+    "pnl_dollars": -2644.86,
+    "days_held": 4,
+    "mfe_pct": 0.0,
+    "mae_pct": -7.82,
+    "capture_ratio": 0,
+    "tracking_status": "CLOSED",
+    "exit": {
+      "date": "2026-01-23",
+      "price": 323.57,
+      "reason": "STOP_LOSS",
+      "pnl_pct": -8.0,
+      "days_held": 4
+    },
+    "excursion": {
+      "mfe_pct": 0.0,
+      "mae_pct": -7.82,
+      "capture_ratio": 0
+    },
+    "alternative_scenarios": {},
+    "strategy": "MOMENTUM_FUNDAMENTAL",
+    "post_exit": {
+      "left_on_table": 0
+    }
+  },
+  {
+    "id": "BT-2026-01-16-DIS",
+    "symbol": "DIS",
+    "sector": "Communication",
+    "score": 72,
+    "entry_date": "2026-01-16",
+    "entry_price": 111.2,
+    "exit_date": "2026-02-02",
+    "exit_price": 105.15,
+    "exit_reason": "TRAILING_STOP",
+    "pnl_pct": -5.44,
+    "pnl_dollars": -1796.85,
+    "days_held": 10,
+    "mfe_pct": 2.78,
+    "mae_pct": -2.19,
+    "capture_ratio": -195.8,
+    "tracking_status": "CLOSED",
+    "exit": {
+      "date": "2026-02-02",
+      "price": 105.15,
+      "reason": "TRAILING_STOP",
+      "pnl_pct": -5.44,
+      "days_held": 10
+    },
+    "excursion": {
+      "mfe_pct": 2.78,
+      "mae_pct": -2.19,
+      "capture_ratio": -195.8
+    },
+    "alternative_scenarios": {},
+    "strategy": "MOMENTUM_FUNDAMENTAL",
+    "post_exit": {
+      "left_on_table": 0
+    }
+  },
+  {
+    "id": "BT-2026-01-16-NVDA",
+    "symbol": "NVDA",
+    "sector": "Technology",
+    "score": 79,
+    "entry_date": "2026-01-16",
+    "entry_price": 186.23,
+    "exit_date": "2026-02-03",
+    "exit_price": 178.93,
+    "exit_reason": "TRAILING_STOP",
+    "pnl_pct": -3.92,
+    "pnl_dollars": -1292.1,
+    "days_held": 11,
+    "mfe_pct": 4.44,
+    "mae_pct": -4.63,
+    "capture_ratio": -88.4,
+    "tracking_status": "CLOSED",
+    "exit": {
+      "date": "2026-02-03",
+      "price": 178.93,
+      "reason": "TRAILING_STOP",
+      "pnl_pct": -3.92,
+      "days_held": 11
+    },
+    "excursion": {
+      "mfe_pct": 4.44,
+      "mae_pct": -4.63,
+      "capture_ratio": -88.4
+    },
+    "alternative_scenarios": {},
+    "strategy": "MOMENTUM_FUNDAMENTAL",
+    "post_exit": {
+      "left_on_table": 0
+    }
+  },
+  {
+    "id": "BT-2026-01-26-ABBV",
+    "symbol": "ABBV",
+    "sector": "Healthcare",
+    "score": 67,
+    "entry_date": "2026-01-26",
+    "entry_price": 220.77,
+    "exit_date": "2026-02-04",
+    "exit_price": 211.41,
+    "exit_reason": "TRAILING_STOP",
+    "pnl_pct": -4.24,
+    "pnl_dollars": -1282.32,
+    "days_held": 7,
+    "mfe_pct": 4.09,
+    "mae_pct": -1.84,
+    "capture_ratio": -103.8,
+    "tracking_status": "CLOSED",
+    "exit": {
+      "date": "2026-02-04",
+      "price": 211.41,
+      "reason": "TRAILING_STOP",
+      "pnl_pct": -4.24,
+      "days_held": 7
+    },
+    "excursion": {
+      "mfe_pct": 4.09,
+      "mae_pct": -1.84,
+      "capture_ratio": -103.8
+    },
+    "alternative_scenarios": {},
+    "strategy": "MOMENTUM_FUNDAMENTAL",
+    "post_exit": {
+      "left_on_table": 0
+    }
+  },
+  {
+    "id": "BT-2026-02-02-AAPL",
+    "symbol": "AAPL",
+    "sector": "Technology",
+    "score": 64,
+    "entry_date": "2026-02-02",
+    "entry_price": 269.76,
+    "exit_date": "2026-02-13",
+    "exit_price": 258.2,
+    "exit_reason": "TRAILING_STOP",
+    "pnl_pct": -4.28,
+    "pnl_dollars": -1340.68,
+    "days_held": 9,
+    "mfe_pct": 4.04,
+    "mae_pct": -3.55,
+    "capture_ratio": -106.1,
+    "tracking_status": "CLOSED",
+    "exit": {
+      "date": "2026-02-13",
+      "price": 258.2,
+      "reason": "TRAILING_STOP",
+      "pnl_pct": -4.28,
+      "days_held": 9
+    },
+    "excursion": {
+      "mfe_pct": 4.04,
+      "mae_pct": -3.55,
+      "capture_ratio": -106.1
+    },
+    "alternative_scenarios": {},
+    "strategy": "MOMENTUM_FUNDAMENTAL",
+    "post_exit": {
+      "left_on_table": 0
+    }
+  },
+  {
+    "id": "BT-2026-02-09-AVGO",
+    "symbol": "AVGO",
+    "sector": "Technology",
+    "score": 70,
+    "entry_date": "2026-02-09",
+    "entry_price": 343.94,
+    "exit_date": "2026-02-17",
+    "exit_price": 320.17,
+    "exit_reason": "TRAILING_STOP",
+    "pnl_pct": -6.91,
+    "pnl_dollars": -2091.76,
+    "days_held": 5,
+    "mfe_pct": 1.18,
+    "mae_pct": -5.6,
+    "capture_ratio": -584.0,
+    "tracking_status": "CLOSED",
+    "exit": {
+      "date": "2026-02-17",
+      "price": 320.17,
+      "reason": "TRAILING_STOP",
+      "pnl_pct": -6.91,
+      "days_held": 5
+    },
+    "excursion": {
+      "mfe_pct": 1.18,
+      "mae_pct": -5.6,
+      "capture_ratio": -584.0
+    },
+    "alternative_scenarios": {},
+    "strategy": "MOMENTUM_FUNDAMENTAL",
+    "post_exit": {
+      "left_on_table": 0
+    }
+  },
+  {
+    "id": "BT-2026-02-09-ABBV",
+    "symbol": "ABBV",
+    "sector": "Healthcare",
+    "score": 66,
+    "entry_date": "2026-02-09",
+    "entry_price": 223.26,
+    "exit_date": "2026-02-17",
+    "exit_price": 232.86,
+    "exit_reason": "END_OF_BACKTEST",
+    "pnl_pct": 4.3,
+    "pnl_dollars": 1305.6,
+    "days_held": 5,
+    "mfe_pct": 5.37,
+    "mae_pct": 0,
+    "capture_ratio": 0,
+    "tracking_status": "CLOSED",
+    "exit": {
+      "date": "2026-02-17",
+      "price": 232.86,
+      "reason": "END_OF_BACKTEST",
+      "pnl_pct": 4.3,
+      "days_held": 5
+    },
+    "excursion": {
+      "mfe_pct": 5.37,
+      "mae_pct": 0,
+      "capture_ratio": 0
+    },
+    "alternative_scenarios": {},
+    "strategy": "MOMENTUM_FUNDAMENTAL",
+    "post_exit": {
+      "left_on_table": 0
+    }
+  },
+  {
+    "id": "BT-2026-02-17-AAPL",
+    "symbol": "AAPL",
+    "sector": "Technology",
+    "score": 78,
+    "entry_date": "2026-02-17",
+    "entry_price": 263.88,
+    "exit_date": "2026-02-17",
+    "exit_price": 263.88,
+    "exit_reason": "END_OF_BACKTEST",
+    "pnl_pct": 0.0,
+    "pnl_dollars": 0.0,
+    "days_held": 0,
+    "mfe_pct": 0.0,
+    "mae_pct": 0,
+    "capture_ratio": 0,
+    "tracking_status": "CLOSED",
+    "exit": {
+      "date": "2026-02-17",
+      "price": 263.88,
+      "reason": "END_OF_BACKTEST",
+      "pnl_pct": 0.0,
+      "days_held": 0
+    },
+    "excursion": {
+      "mfe_pct": 0.0,
+      "mae_pct": 0,
+      "capture_ratio": 0
+    },
+    "alternative_scenarios": {},
+    "strategy": "MOMENTUM_FUNDAMENTAL",
+    "post_exit": {
+      "left_on_table": 0
+    }
+  },
+  {
+    "id": "BT-2026-02-17-NVDA",
+    "symbol": "NVDA",
+    "sector": "Technology",
+    "score": 74,
+    "entry_date": "2026-02-17",
+    "entry_price": 184.97,
+    "exit_date": "2026-02-17",
+    "exit_price": 184.97,
+    "exit_reason": "END_OF_BACKTEST",
+    "pnl_pct": 0.0,
+    "pnl_dollars": 0.0,
+    "days_held": 0,
+    "mfe_pct": 0.0,
+    "mae_pct": 0,
+    "capture_ratio": 0,
+    "tracking_status": "CLOSED",
+    "exit": {
+      "date": "2026-02-17",
+      "price": 184.97,
+      "reason": "END_OF_BACKTEST",
+      "pnl_pct": 0.0,
+      "days_held": 0
+    },
+    "excursion": {
+      "mfe_pct": 0.0,
+      "mae_pct": 0,
+      "capture_ratio": 0
+    },
+    "alternative_scenarios": {},
+    "strategy": "MOMENTUM_FUNDAMENTAL",
+    "post_exit": {
+      "left_on_table": 0
+    }
+  }
+]

@@ -208,40 +208,62 @@ def generate_recommendations(analysis: dict) -> list:
 
     overall = analysis.get("overall", {})
 
-    # Win rate çok düşük
-    if overall.get("win_rate_pct", 0) < 40:
+    # Win rate çok düşük — ama ÖNCE exit sorununu kontrol et
+    trailing_pct = exit_reasons.get("TRAILING_STOP", {}).get("pct_of_total", 0)
+    stop_pct = exit_reasons.get("STOP_LOSS", {}).get("pct_of_total", 0)
+    panic_pct = exit_reasons.get("PANIC_STOP", {}).get("pct_of_total", 0)
+
+    # Exit sorunları varsa ÖNCE onları düzelt (entry sıkılaştırma son çare)
+    exit_dominated = trailing_pct + stop_pct + panic_pct > 60
+
+    if overall.get("win_rate_pct", 0) < 40 and not exit_dominated:
         recs.append({
             "type": "ENTRY",
             "param": "min_score",
-            "current": 65,
-            "suggested": 75,
+            "current": 55,
+            "suggested": 65,
             "reason": f"Win rate çok düşük (%{overall['win_rate_pct']}). Sinyal kalitesini artır.",
             "confidence": "HIGH"
         })
 
     # Stop loss çok sık tetikleniyor
     exit_reasons = analysis.get("by_exit_reason", {})
-    stop_pct = exit_reasons.get("STOP_LOSS", {}).get("pct_of_total", 0)
-    if stop_pct > 40:
+    stop_pct_val = exit_reasons.get("STOP_LOSS", {}).get("pct_of_total", 0)
+    if stop_pct_val > 25:
         recs.append({
             "type": "EXIT",
             "param": "stop_loss_pct",
-            "current": -7.0,
-            "suggested": -10.0,
-            "reason": f"Stop loss %{stop_pct:.0f} oranında tetikleniyor. Stop'u genilet.",
-            "confidence": "MEDIUM"
+            "current": -8.0,
+            "suggested": -12.0,
+            "reason": f"Stop loss %{stop_pct_val:.0f} tetikleniyor. Stop'u genilet.",
+            "confidence": "HIGH"
         })
 
-    # Trailing stop erken çıkış
-    trail_pct = exit_reasons.get("TRAILING_STOP", {}).get("pct_of_total", 0)
+    # Trailing stop erken çıkış — EN KRİTİK SORUN
+    trail_pct_val = exit_reasons.get("TRAILING_STOP", {}).get("pct_of_total", 0)
     left_on_table = analysis.get("post_exit", {}).get("avg_left_on_table_pct", 0)
-    if trail_pct > 30 and left_on_table > 3:
+    avg_capture = analysis.get("excursion", {}).get("avg_capture_ratio", 0)
+    if trail_pct_val > 20:
+        current_trail = -8.0
+        suggested_trail = -12.0 if trail_pct_val > 40 else -10.0
         recs.append({
             "type": "EXIT",
             "param": "trailing_stop_pct",
-            "current": -5.0,
-            "suggested": -7.0,
-            "reason": f"Trailing stop %{trail_pct:.0f} tetikleniyor ve ortalama %{left_on_table:.1f} masada kalıyor.",
+            "current": current_trail,
+            "suggested": suggested_trail,
+            "reason": f"Trailing stop %{trail_pct_val:.0f} tetikleniyor. Kazançları erkenden kesiyor.",
+            "confidence": "HIGH"
+        })
+
+    # Panic stop kaldırılsın mı?
+    panic_pct_val = exit_reasons.get("PANIC_STOP", {}).get("pct_of_total", 0)
+    if panic_pct_val > 10:
+        recs.append({
+            "type": "EXIT",
+            "param": "disable_panic_stop",
+            "current": False,
+            "suggested": True,
+            "reason": f"Panic stop %{panic_pct_val:.0f} tetikleniyor. Gün-içi noise'dan çıkılıyor.",
             "confidence": "HIGH"
         })
 
