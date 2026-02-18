@@ -1,1654 +1,172 @@
 {
-  "strategy": "momentum_rotation",
-  "run_date": "2026-02-18T11:59:10.399563",
+  "strategy": "momentum_per_stock",
+  "run_date": "2026-02-18T12:20:13.032884",
+  "period": "2025-01-15 to 2026-02-17",
   "params": {
-    "top_n": 10,
-    "rebal_freq": 5,
-    "use_regime": false,
-    "risk_adjust": true
+    "top_n": 5,
+    "rebal_freq": 5
   },
-  "performance": {
-    "initial": 100000,
-    "final": 161745.77,
-    "total_return_pct": 61.75,
-    "annual_return_pct": 52.92,
-    "max_drawdown_pct": -29.38,
-    "total_trades": 143,
-    "win_rate": 53.8
+  "stats": {
+    "total_trades": 65,
+    "win_rate": 52.3,
+    "avg_pnl": 6.71,
+    "avg_win": 28.92,
+    "avg_loss": -17.64,
+    "profit_factor": 1.8,
+    "compound_return": 265.0,
+    "spy_return": 16.5,
+    "avg_days_held": 31.0
   },
-  "daily_equity": [
-    {
-      "date": "2025-01-15",
-      "value": 100000
-    },
-    {
-      "date": "2025-01-16",
-      "value": 100414.24
-    },
-    {
-      "date": "2025-01-17",
-      "value": 100910.26
-    },
-    {
-      "date": "2025-01-21",
-      "value": 108531.04
-    },
-    {
-      "date": "2025-01-22",
-      "value": 109500.38
-    },
-    {
-      "date": "2025-01-23",
-      "value": 111210.63
-    },
-    {
-      "date": "2025-01-24",
-      "value": 111248.65
-    },
-    {
-      "date": "2025-01-27",
-      "value": 108529.72
-    },
-    {
-      "date": "2025-01-28",
-      "value": 110772.13
-    },
-    {
-      "date": "2025-01-29",
-      "value": 109666.9
-    },
-    {
-      "date": "2025-01-30",
-      "value": 110700.62
-    },
-    {
-      "date": "2025-01-31",
-      "value": 110770.19
-    },
-    {
-      "date": "2025-02-03",
-      "value": 111402.78
-    },
-    {
-      "date": "2025-02-04",
-      "value": 116949.04
-    },
-    {
-      "date": "2025-02-05",
-      "value": 115453.03
-    },
-    {
-      "date": "2025-02-06",
-      "value": 116483.94
-    },
-    {
-      "date": "2025-02-07",
-      "value": 115481.19
-    },
-    {
-      "date": "2025-02-10",
-      "value": 120556.26
-    },
-    {
-      "date": "2025-02-11",
-      "value": 113677.07
-    },
-    {
-      "date": "2025-02-12",
-      "value": 115214.96
-    },
-    {
-      "date": "2025-02-13",
-      "value": 122140.11
-    },
-    {
-      "date": "2025-02-14",
-      "value": 124688.58
-    },
-    {
-      "date": "2025-02-18",
-      "value": 123796.1
-    },
-    {
-      "date": "2025-02-19",
-      "value": 124688.47
-    },
-    {
-      "date": "2025-02-20",
-      "value": 119976.54
-    },
-    {
-      "date": "2025-02-21",
-      "value": 113991.01
-    },
-    {
-      "date": "2025-02-24",
-      "value": 111859.87
-    },
-    {
-      "date": "2025-02-25",
-      "value": 106467.24
-    },
-    {
-      "date": "2025-02-26",
-      "value": 106551.69
-    },
-    {
-      "date": "2025-02-27",
-      "value": 103511.33
-    },
-    {
-      "date": "2025-02-28",
-      "value": 106575.52
-    },
-    {
-      "date": "2025-03-03",
-      "value": 104061.64
-    },
-    {
-      "date": "2025-03-04",
-      "value": 100807.01
-    },
-    {
-      "date": "2025-03-05",
-      "value": 102900.0
-    },
-    {
-      "date": "2025-03-06",
-      "value": 97061.89
-    },
-    {
-      "date": "2025-03-07",
-      "value": 96239.78
-    },
-    {
-      "date": "2025-03-10",
-      "value": 88053.99
-    },
-    {
-      "date": "2025-03-11",
-      "value": 88947.27
-    },
-    {
-      "date": "2025-03-12",
-      "value": 92195.78
-    },
-    {
-      "date": "2025-03-13",
-      "value": 89741.04
-    },
-    {
-      "date": "2025-03-14",
-      "value": 95697.21
-    },
-    {
-      "date": "2025-03-17",
-      "value": 97514.13
-    },
-    {
-      "date": "2025-03-18",
-      "value": 94000.18
-    },
-    {
-      "date": "2025-03-19",
-      "value": 96645.72
-    },
-    {
-      "date": "2025-03-20",
-      "value": 96978.16
-    },
-    {
-      "date": "2025-03-21",
-      "value": 98553.3
-    },
-    {
-      "date": "2025-03-24",
-      "value": 103479.06
-    },
-    {
-      "date": "2025-03-25",
-      "value": 103845.14
-    },
-    {
-      "date": "2025-03-26",
-      "value": 99875.32
-    },
-    {
-      "date": "2025-03-27",
-      "value": 96370.18
-    },
-    {
-      "date": "2025-03-28",
-      "value": 93682.8
-    },
-    {
-      "date": "2025-03-31",
-      "value": 93589.43
-    },
-    {
-      "date": "2025-04-01",
-      "value": 97483.26
-    },
-    {
-      "date": "2025-04-02",
-      "value": 98774.06
-    },
-    {
-      "date": "2025-04-03",
-      "value": 95209.65
-    },
-    {
-      "date": "2025-04-04",
-      "value": 90695.48
-    },
-    {
-      "date": "2025-04-07",
-      "value": 89966.21
-    },
-    {
-      "date": "2025-04-08",
-      "value": 89135.88
-    },
-    {
-      "date": "2025-04-09",
-      "value": 93602.32
-    },
-    {
-      "date": "2025-04-10",
-      "value": 92651.65
-    },
-    {
-      "date": "2025-04-11",
-      "value": 93677.59
-    },
-    {
-      "date": "2025-04-14",
-      "value": 96320.26
-    },
-    {
-      "date": "2025-04-15",
-      "value": 97561.63
-    },
-    {
-      "date": "2025-04-16",
-      "value": 95465.31
-    },
-    {
-      "date": "2025-04-17",
-      "value": 97714.98
-    },
-    {
-      "date": "2025-04-21",
-      "value": 96164.76
-    },
-    {
-      "date": "2025-04-22",
-      "value": 98552.88
-    },
-    {
-      "date": "2025-04-23",
-      "value": 102806.89
-    },
-    {
-      "date": "2025-04-24",
-      "value": 105841.31
-    },
-    {
-      "date": "2025-04-25",
-      "value": 100433.91
-    },
-    {
-      "date": "2025-04-28",
-      "value": 101231.83
-    },
-    {
-      "date": "2025-04-29",
-      "value": 100458.59
-    },
-    {
-      "date": "2025-04-30",
-      "value": 101476.16
-    },
-    {
-      "date": "2025-05-01",
-      "value": 101408.72
-    },
-    {
-      "date": "2025-05-02",
-      "value": 102927.76
-    },
-    {
-      "date": "2025-05-05",
-      "value": 103765.37
-    },
-    {
-      "date": "2025-05-06",
-      "value": 104010.9
-    },
-    {
-      "date": "2025-05-07",
-      "value": 103558.69
-    },
-    {
-      "date": "2025-05-08",
-      "value": 102790.81
-    },
-    {
-      "date": "2025-05-09",
-      "value": 101181.55
-    },
-    {
-      "date": "2025-05-12",
-      "value": 101686.41
-    },
-    {
-      "date": "2025-05-13",
-      "value": 102114.75
-    },
-    {
-      "date": "2025-05-14",
-      "value": 105500.29
-    },
-    {
-      "date": "2025-05-15",
-      "value": 108606.83
-    },
-    {
-      "date": "2025-05-16",
-      "value": 109822.99
-    },
-    {
-      "date": "2025-05-19",
-      "value": 109314.5
-    },
-    {
-      "date": "2025-05-20",
-      "value": 109733.18
-    },
-    {
-      "date": "2025-05-21",
-      "value": 108775.16
-    },
-    {
-      "date": "2025-05-22",
-      "value": 108697.45
-    },
-    {
-      "date": "2025-05-23",
-      "value": 108993.85
-    },
-    {
-      "date": "2025-05-27",
-      "value": 110459.33
-    },
-    {
-      "date": "2025-05-28",
-      "value": 110601.72
-    },
-    {
-      "date": "2025-05-29",
-      "value": 109696.62
-    },
-    {
-      "date": "2025-05-30",
-      "value": 107224.82
-    },
-    {
-      "date": "2025-06-02",
-      "value": 107345.36
-    },
-    {
-      "date": "2025-06-03",
-      "value": 107073.52
-    },
-    {
-      "date": "2025-06-04",
-      "value": 105622.79
-    },
-    {
-      "date": "2025-06-05",
-      "value": 104100.18
-    },
-    {
-      "date": "2025-06-06",
-      "value": 106355.74
-    },
-    {
-      "date": "2025-06-09",
-      "value": 105964.67
-    },
-    {
-      "date": "2025-06-10",
-      "value": 104405.83
-    },
-    {
-      "date": "2025-06-11",
-      "value": 105421.96
-    },
-    {
-      "date": "2025-06-12",
-      "value": 105887.57
-    },
-    {
-      "date": "2025-06-13",
-      "value": 105234.49
-    },
-    {
-      "date": "2025-06-16",
-      "value": 106981.69
-    },
-    {
-      "date": "2025-06-17",
-      "value": 105732.36
-    },
-    {
-      "date": "2025-06-18",
-      "value": 106959.16
-    },
-    {
-      "date": "2025-06-20",
-      "value": 107259.57
-    },
-    {
-      "date": "2025-06-23",
-      "value": 109177.76
-    },
-    {
-      "date": "2025-06-24",
-      "value": 109589.72
-    },
-    {
-      "date": "2025-06-25",
-      "value": 108170.15
-    },
-    {
-      "date": "2025-06-26",
-      "value": 111391.43
-    },
-    {
-      "date": "2025-06-27",
-      "value": 111017.95
-    },
-    {
-      "date": "2025-06-30",
-      "value": 112917.88
-    },
-    {
-      "date": "2025-07-01",
-      "value": 109570.04
-    },
-    {
-      "date": "2025-07-02",
-      "value": 110806.26
-    },
-    {
-      "date": "2025-07-03",
-      "value": 111862.13
-    },
-    {
-      "date": "2025-07-07",
-      "value": 115283.63
-    },
-    {
-      "date": "2025-07-08",
-      "value": 115421.96
-    },
-    {
-      "date": "2025-07-09",
-      "value": 115173.63
-    },
-    {
-      "date": "2025-07-10",
-      "value": 114611.56
-    },
-    {
-      "date": "2025-07-11",
-      "value": 114343.26
-    },
-    {
-      "date": "2025-07-14",
-      "value": 118765.94
-    },
-    {
-      "date": "2025-07-15",
-      "value": 119356.35
-    },
-    {
-      "date": "2025-07-16",
-      "value": 121686.67
-    },
-    {
-      "date": "2025-07-17",
-      "value": 125074.63
-    },
-    {
-      "date": "2025-07-18",
-      "value": 125922.29
-    },
-    {
-      "date": "2025-07-21",
-      "value": 124917.38
-    },
-    {
-      "date": "2025-07-22",
-      "value": 120621.68
-    },
-    {
-      "date": "2025-07-23",
-      "value": 122119.12
-    },
-    {
-      "date": "2025-07-24",
-      "value": 122208.58
-    },
-    {
-      "date": "2025-07-25",
-      "value": 122796.83
-    },
-    {
-      "date": "2025-07-28",
-      "value": 122393.44
-    },
-    {
-      "date": "2025-07-29",
-      "value": 119356.35
-    },
-    {
-      "date": "2025-07-30",
-      "value": 122211.18
-    },
-    {
-      "date": "2025-07-31",
-      "value": 122779.95
-    },
-    {
-      "date": "2025-08-01",
-      "value": 119599.51
-    },
-    {
-      "date": "2025-08-04",
-      "value": 122964.61
-    },
-    {
-      "date": "2025-08-05",
-      "value": 123091.23
-    },
-    {
-      "date": "2025-08-06",
-      "value": 125602.15
-    },
-    {
-      "date": "2025-08-07",
-      "value": 124857.68
-    },
-    {
-      "date": "2025-08-08",
-      "value": 125940.54
-    },
-    {
-      "date": "2025-08-11",
-      "value": 125688.82
-    },
-    {
-      "date": "2025-08-12",
-      "value": 127475.16
-    },
-    {
-      "date": "2025-08-13",
-      "value": 125054.24
-    },
-    {
-      "date": "2025-08-14",
-      "value": 124534.42
-    },
-    {
-      "date": "2025-08-15",
-      "value": 123649.25
-    },
-    {
-      "date": "2025-08-18",
-      "value": 124956.91
-    },
-    {
-      "date": "2025-08-19",
-      "value": 120037.39
-    },
-    {
-      "date": "2025-08-20",
-      "value": 119287.98
-    },
-    {
-      "date": "2025-08-21",
-      "value": 119761.54
-    },
-    {
-      "date": "2025-08-22",
-      "value": 123360.45
-    },
-    {
-      "date": "2025-08-25",
-      "value": 125007.08
-    },
-    {
-      "date": "2025-08-26",
-      "value": 126199.4
-    },
-    {
-      "date": "2025-08-27",
-      "value": 124269.66
-    },
-    {
-      "date": "2025-08-28",
-      "value": 126716.25
-    },
-    {
-      "date": "2025-08-29",
-      "value": 125109.67
-    },
-    {
-      "date": "2025-09-02",
-      "value": 124313.77
-    },
-    {
-      "date": "2025-09-03",
-      "value": 122443.89
-    },
-    {
-      "date": "2025-09-04",
-      "value": 123846.41
-    },
-    {
-      "date": "2025-09-05",
-      "value": 123207.04
-    },
-    {
-      "date": "2025-09-08",
-      "value": 126228.19
-    },
-    {
-      "date": "2025-09-09",
-      "value": 128344.86
-    },
-    {
-      "date": "2025-09-10",
-      "value": 129340.72
-    },
-    {
-      "date": "2025-09-11",
-      "value": 131161.81
-    },
-    {
-      "date": "2025-09-12",
-      "value": 135035.94
-    },
-    {
-      "date": "2025-09-15",
-      "value": 137549.34
-    },
-    {
-      "date": "2025-09-16",
-      "value": 136082.64
-    },
-    {
-      "date": "2025-09-17",
-      "value": 136573.52
-    },
-    {
-      "date": "2025-09-18",
-      "value": 139145.1
-    },
-    {
-      "date": "2025-09-19",
-      "value": 142561.79
-    },
-    {
-      "date": "2025-09-22",
-      "value": 143482.08
-    },
-    {
-      "date": "2025-09-23",
-      "value": 144198.04
-    },
-    {
-      "date": "2025-09-24",
-      "value": 142266.55
-    },
-    {
-      "date": "2025-09-25",
-      "value": 140337.45
-    },
-    {
-      "date": "2025-09-26",
-      "value": 140208.65
-    },
-    {
-      "date": "2025-09-29",
-      "value": 144012.89
-    },
-    {
-      "date": "2025-09-30",
-      "value": 145516.65
-    },
-    {
-      "date": "2025-10-01",
-      "value": 144028.79
-    },
-    {
-      "date": "2025-10-02",
-      "value": 145779.86
-    },
-    {
-      "date": "2025-10-03",
-      "value": 146006.73
-    },
-    {
-      "date": "2025-10-06",
-      "value": 147030.93
-    },
-    {
-      "date": "2025-10-07",
-      "value": 149638.2
-    },
-    {
-      "date": "2025-10-08",
-      "value": 149984.4
-    },
-    {
-      "date": "2025-10-09",
-      "value": 151113.6
-    },
-    {
-      "date": "2025-10-10",
-      "value": 143999.44
-    },
-    {
-      "date": "2025-10-13",
-      "value": 148259.57
-    },
-    {
-      "date": "2025-10-14",
-      "value": 148345.93
-    },
-    {
-      "date": "2025-10-15",
-      "value": 149698.89
-    },
-    {
-      "date": "2025-10-16",
-      "value": 147397.62
-    },
-    {
-      "date": "2025-10-17",
-      "value": 146393.62
-    },
-    {
-      "date": "2025-10-20",
-      "value": 145570.81
-    },
-    {
-      "date": "2025-10-21",
-      "value": 143055.09
-    },
-    {
-      "date": "2025-10-22",
-      "value": 139838.26
-    },
-    {
-      "date": "2025-10-23",
-      "value": 146366.05
-    },
-    {
-      "date": "2025-10-24",
-      "value": 151753.39
-    },
-    {
-      "date": "2025-10-27",
-      "value": 154941.97
-    },
-    {
-      "date": "2025-10-28",
-      "value": 151758.55
-    },
-    {
-      "date": "2025-10-29",
-      "value": 157659.86
-    },
-    {
-      "date": "2025-10-30",
-      "value": 154624.27
-    },
-    {
-      "date": "2025-10-31",
-      "value": 160783.77
-    },
-    {
-      "date": "2025-11-03",
-      "value": 163681.54
-    },
-    {
-      "date": "2025-11-04",
-      "value": 156305.12
-    },
-    {
-      "date": "2025-11-05",
-      "value": 163688.52
-    },
-    {
-      "date": "2025-11-06",
-      "value": 157354.86
-    },
-    {
-      "date": "2025-11-07",
-      "value": 156411.82
-    },
-    {
-      "date": "2025-11-10",
-      "value": 158601.7
-    },
-    {
-      "date": "2025-11-11",
-      "value": 154471.26
-    },
-    {
-      "date": "2025-11-12",
-      "value": 150113.12
-    },
-    {
-      "date": "2025-11-13",
-      "value": 138186.64
-    },
-    {
-      "date": "2025-11-14",
-      "value": 138581.23
-    },
-    {
-      "date": "2025-11-17",
-      "value": 136566.02
-    },
-    {
-      "date": "2025-11-18",
-      "value": 135734.95
-    },
-    {
-      "date": "2025-11-19",
-      "value": 136221.23
-    },
-    {
-      "date": "2025-11-20",
-      "value": 127350.36
-    },
-    {
-      "date": "2025-11-21",
-      "value": 127781.66
-    },
-    {
-      "date": "2025-11-24",
-      "value": 135905.67
-    },
-    {
-      "date": "2025-11-25",
-      "value": 136311.49
-    },
-    {
-      "date": "2025-11-26",
-      "value": 139664.0
-    },
-    {
-      "date": "2025-11-28",
-      "value": 141816.26
-    },
-    {
-      "date": "2025-12-01",
-      "value": 141253.56
-    },
-    {
-      "date": "2025-12-02",
-      "value": 139491.85
-    },
-    {
-      "date": "2025-12-03",
-      "value": 141052.08
-    },
-    {
-      "date": "2025-12-04",
-      "value": 143587.66
-    },
-    {
-      "date": "2025-12-05",
-      "value": 144257.81
-    },
-    {
-      "date": "2025-12-08",
-      "value": 147243.48
-    },
-    {
-      "date": "2025-12-09",
-      "value": 148974.67
-    },
-    {
-      "date": "2025-12-10",
-      "value": 150344.37
-    },
-    {
-      "date": "2025-12-11",
-      "value": 150216.82
-    },
-    {
-      "date": "2025-12-12",
-      "value": 141994.76
-    },
-    {
-      "date": "2025-12-15",
-      "value": 137797.21
-    },
-    {
-      "date": "2025-12-16",
-      "value": 136967.48
-    },
-    {
-      "date": "2025-12-17",
-      "value": 133836.09
-    },
-    {
-      "date": "2025-12-18",
-      "value": 136994.46
-    },
-    {
-      "date": "2025-12-19",
-      "value": 140759.52
-    },
-    {
-      "date": "2025-12-22",
-      "value": 142471.89
-    },
-    {
-      "date": "2025-12-23",
-      "value": 143175.51
-    },
-    {
-      "date": "2025-12-24",
-      "value": 143572.23
-    },
-    {
-      "date": "2025-12-26",
-      "value": 143017.33
-    },
-    {
-      "date": "2025-12-29",
-      "value": 142583.51
-    },
-    {
-      "date": "2025-12-30",
-      "value": 141588.87
-    },
-    {
-      "date": "2025-12-31",
-      "value": 140603.55
-    },
-    {
-      "date": "2026-01-02",
-      "value": 144155.0
-    },
-    {
-      "date": "2026-01-05",
-      "value": 145909.84
-    },
-    {
-      "date": "2026-01-06",
-      "value": 148673.25
-    },
-    {
-      "date": "2026-01-07",
-      "value": 146462.52
-    },
-    {
-      "date": "2026-01-08",
-      "value": 146277.32
-    },
-    {
-      "date": "2026-01-09",
-      "value": 150936.19
-    },
-    {
-      "date": "2026-01-12",
-      "value": 153122.96
-    },
-    {
-      "date": "2026-01-13",
-      "value": 153762.68
-    },
-    {
-      "date": "2026-01-14",
-      "value": 153789.81
-    },
-    {
-      "date": "2026-01-15",
-      "value": 154861.39
-    },
-    {
-      "date": "2026-01-16",
-      "value": 153629.37
-    },
-    {
-      "date": "2026-01-20",
-      "value": 151990.88
-    },
-    {
-      "date": "2026-01-21",
-      "value": 154828.49
-    },
-    {
-      "date": "2026-01-22",
-      "value": 156102.12
-    },
-    {
-      "date": "2026-01-23",
-      "value": 155309.31
-    },
-    {
-      "date": "2026-01-26",
-      "value": 155921.82
-    },
-    {
-      "date": "2026-01-27",
-      "value": 159573.01
-    },
-    {
-      "date": "2026-01-28",
-      "value": 163931.71
-    },
-    {
-      "date": "2026-01-29",
-      "value": 163434.79
-    },
-    {
-      "date": "2026-01-30",
-      "value": 157133.85
-    },
-    {
-      "date": "2026-02-02",
-      "value": 160835.6
-    },
-    {
-      "date": "2026-02-03",
-      "value": 162470.12
-    },
-    {
-      "date": "2026-02-04",
-      "value": 157643.01
-    },
-    {
-      "date": "2026-02-05",
-      "value": 154918.63
-    },
-    {
-      "date": "2026-02-06",
-      "value": 160865.25
-    },
-    {
-      "date": "2026-02-09",
-      "value": 161192.38
-    },
-    {
-      "date": "2026-02-10",
-      "value": 158919.53
-    },
-    {
-      "date": "2026-02-11",
-      "value": 162813.82
-    },
-    {
-      "date": "2026-02-12",
-      "value": 160162.34
-    },
-    {
-      "date": "2026-02-13",
-      "value": 161429.34
-    },
-    {
-      "date": "2026-02-17",
-      "value": 161745.77
-    }
-  ],
   "trades": [
-    {
-      "symbol": "SMMT",
-      "entry_date": "2025-01-15",
-      "exit_date": "2025-01-23",
-      "entry_price": 18.2,
-      "exit_price": 24.65,
-      "pnl_pct": 35.44,
-      "pnl_dollar": 3541.05,
-      "exit_reason": "ROTATION",
-      "days_held": 8
-    },
-    {
-      "symbol": "SPOT",
-      "entry_date": "2025-01-15",
-      "exit_date": "2025-01-23",
-      "entry_price": 490.69,
-      "exit_price": 501.5,
-      "pnl_pct": 2.2,
-      "pnl_dollar": 216.2,
-      "exit_reason": "ROTATION",
-      "days_held": 8
-    },
-    {
-      "symbol": "TWLO",
-      "entry_date": "2025-01-15",
-      "exit_date": "2025-01-23",
-      "entry_price": 112.36,
-      "exit_price": 113.4,
-      "pnl_pct": 0.93,
-      "pnl_dollar": 91.52,
-      "exit_reason": "ROTATION",
-      "days_held": 8
-    },
-    {
-      "symbol": "ASTS",
-      "entry_date": "2025-01-23",
-      "exit_date": "2025-01-30",
-      "entry_price": 19.8,
-      "exit_price": 18.21,
-      "pnl_pct": -8.03,
-      "pnl_dollar": -891.99,
-      "exit_reason": "ROTATION",
-      "days_held": 7
-    },
-    {
-      "symbol": "ALK",
-      "entry_date": "2025-01-23",
-      "exit_date": "2025-01-30",
-      "entry_price": 68.85,
-      "exit_price": 74.43,
-      "pnl_pct": 8.1,
-      "pnl_dollar": 898.38,
-      "exit_reason": "ROTATION",
-      "days_held": 7
-    },
-    {
-      "symbol": "GDDY",
-      "entry_date": "2025-01-15",
-      "exit_date": "2025-02-06",
-      "entry_price": 199.17,
-      "exit_price": 210.97,
-      "pnl_pct": 5.92,
-      "pnl_dollar": 590.0,
-      "exit_reason": "ROTATION",
-      "days_held": 22
-    },
-    {
-      "symbol": "FOX",
-      "entry_date": "2025-01-23",
-      "exit_date": "2025-02-06",
-      "entry_price": 45.56,
-      "exit_price": 49.95,
-      "pnl_pct": 9.62,
-      "pnl_dollar": 1069.96,
-      "exit_reason": "ROTATION",
-      "days_held": 14
-    },
     {
       "symbol": "PLTR",
       "entry_date": "2025-01-15",
-      "exit_date": "2025-02-13",
+      "exit_date": "2025-01-23",
       "entry_price": 68.14,
-      "exit_price": 117.91,
-      "pnl_pct": 73.04,
-      "pnl_dollar": 7266.42,
-      "exit_reason": "ROTATION",
-      "days_held": 29
+      "exit_price": 78.98,
+      "pnl_pct": 15.91,
+      "days_held": 8,
+      "entry_score": 166.0
+    },
+    {
+      "symbol": "LUNR",
+      "entry_date": "2025-01-23",
+      "exit_date": "2025-02-21",
+      "entry_price": 22.17,
+      "exit_price": 18.08,
+      "pnl_pct": -18.47,
+      "days_held": 29,
+      "entry_score": 183.2
     },
     {
       "symbol": "SOUN",
       "entry_date": "2025-01-15",
-      "exit_date": "2025-02-13",
+      "exit_date": "2025-02-28",
       "entry_price": 13.89,
-      "exit_price": 15.25,
-      "pnl_pct": 9.79,
-      "pnl_dollar": 977.84,
-      "exit_reason": "ROTATION",
-      "days_held": 29
-    },
-    {
-      "symbol": "IONQ",
-      "entry_date": "2025-01-30",
-      "exit_date": "2025-02-13",
-      "entry_price": 38.81,
-      "exit_price": 38.65,
-      "pnl_pct": -0.41,
-      "pnl_dollar": -45.6,
-      "exit_reason": "ROTATION",
-      "days_held": 14
-    },
-    {
-      "symbol": "ASTS",
-      "entry_date": "2025-02-06",
-      "exit_date": "2025-02-13",
-      "entry_price": 27.12,
-      "exit_price": 30.05,
-      "pnl_pct": 10.8,
-      "pnl_dollar": 1256.97,
-      "exit_reason": "ROTATION",
-      "days_held": 7
-    },
-    {
-      "symbol": "WMT",
-      "entry_date": "2025-01-15",
-      "exit_date": "2025-02-21",
-      "entry_price": 90.47,
-      "exit_price": 93.88,
-      "pnl_pct": 3.77,
-      "pnl_dollar": 374.81,
-      "exit_reason": "ROTATION",
-      "days_held": 37
-    },
-    {
-      "symbol": "LUNR",
-      "entry_date": "2025-01-30",
-      "exit_date": "2025-02-21",
-      "entry_price": 22.42,
-      "exit_price": 18.08,
-      "pnl_pct": -19.38,
-      "pnl_dollar": -2142.08,
-      "exit_reason": "ROTATION",
-      "days_held": 22
-    },
-    {
-      "symbol": "GRMN",
-      "entry_date": "2025-02-13",
-      "exit_date": "2025-02-21",
-      "entry_price": 206.88,
-      "exit_price": 221.12,
-      "pnl_pct": 6.89,
-      "pnl_dollar": 840.69,
-      "exit_reason": "ROTATION",
-      "days_held": 8
-    },
-    {
-      "symbol": "ALK",
-      "entry_date": "2025-02-13",
-      "exit_date": "2025-02-21",
-      "entry_price": 72.54,
-      "exit_price": 70.18,
-      "pnl_pct": -3.25,
-      "pnl_dollar": -396.48,
-      "exit_reason": "ROTATION",
-      "days_held": 8
-    },
-    {
-      "symbol": "TRGP",
-      "entry_date": "2025-02-13",
-      "exit_date": "2025-02-21",
-      "entry_price": 199.73,
-      "exit_price": 195.76,
-      "pnl_pct": -1.99,
-      "pnl_dollar": -241.98,
-      "exit_reason": "ROTATION",
-      "days_held": 8
+      "exit_price": 10.82,
+      "pnl_pct": -22.1,
+      "days_held": 44,
+      "entry_score": 275.2
     },
     {
       "symbol": "SMMT",
       "entry_date": "2025-02-21",
-      "exit_date": "2025-02-28",
+      "exit_date": "2025-03-07",
       "entry_price": 22.12,
-      "exit_price": 20.69,
-      "pnl_pct": -6.46,
-      "pnl_dollar": -736.45,
-      "exit_reason": "ROTATION",
-      "days_held": 7
+      "exit_price": 17.78,
+      "pnl_pct": -19.62,
+      "days_held": 14,
+      "entry_score": 173.7
     },
     {
-      "symbol": "IONQ",
-      "entry_date": "2025-02-21",
-      "exit_date": "2025-02-28",
-      "entry_price": 31.74,
-      "exit_price": 24.57,
-      "pnl_pct": -22.59,
-      "pnl_dollar": -2574.03,
-      "exit_reason": "ROTATION",
-      "days_held": 7
-    },
-    {
-      "symbol": "LYV",
-      "entry_date": "2025-02-21",
-      "exit_date": "2025-02-28",
-      "entry_price": 149.4,
-      "exit_price": 143.36,
-      "pnl_pct": -4.04,
-      "pnl_dollar": -459.04,
-      "exit_reason": "ROTATION",
-      "days_held": 7
-    },
-    {
-      "symbol": "LPLA",
-      "entry_date": "2025-02-13",
-      "exit_date": "2025-03-07",
-      "entry_price": 371.08,
-      "exit_price": 332.77,
-      "pnl_pct": -10.32,
-      "pnl_dollar": -1225.93,
-      "exit_reason": "ROTATION",
-      "days_held": 22
-    },
-    {
-      "symbol": "MMM",
-      "entry_date": "2025-02-21",
-      "exit_date": "2025-03-07",
-      "entry_price": 142.36,
-      "exit_price": 143.65,
-      "pnl_pct": 0.91,
-      "pnl_dollar": 103.69,
-      "exit_reason": "ROTATION",
-      "days_held": 14
-    },
-    {
-      "symbol": "BSX",
-      "entry_date": "2025-02-21",
-      "exit_date": "2025-03-07",
-      "entry_price": 104.49,
-      "exit_price": 99.13,
-      "pnl_pct": -5.13,
-      "pnl_dollar": -584.24,
-      "exit_reason": "ROTATION",
-      "days_held": 14
-    },
-    {
-      "symbol": "TWLO",
+      "symbol": "LUNR",
       "entry_date": "2025-02-28",
       "exit_date": "2025-03-07",
-      "entry_price": 119.93,
-      "exit_price": 106.08,
-      "pnl_pct": -11.55,
-      "pnl_dollar": -1218.8,
-      "exit_reason": "ROTATION",
-      "days_held": 7
+      "entry_price": 14.58,
+      "exit_price": 8.77,
+      "pnl_pct": -39.85,
+      "days_held": 7,
+      "entry_score": 184.4
     },
     {
-      "symbol": "ALK",
-      "entry_date": "2025-02-28",
-      "exit_date": "2025-03-14",
-      "entry_price": 72.28,
-      "exit_price": 53.94,
-      "pnl_pct": -25.37,
-      "pnl_dollar": -2695.98,
-      "exit_reason": "ROTATION",
-      "days_held": 14
-    },
-    {
-      "symbol": "IONQ",
+      "symbol": "PLTR",
       "entry_date": "2025-03-07",
-      "exit_date": "2025-03-14",
-      "entry_price": 20.55,
-      "exit_price": 25.0,
-      "pnl_pct": 21.65,
-      "pnl_dollar": 2082.6,
-      "exit_reason": "ROTATION",
-      "days_held": 7
+      "exit_date": "2025-03-21",
+      "entry_price": 84.91,
+      "exit_price": 90.96,
+      "pnl_pct": 7.13,
+      "days_held": 14,
+      "entry_score": 179.5
     },
     {
-      "symbol": "UAL",
+      "symbol": "IONQ",
       "entry_date": "2025-01-15",
-      "exit_date": "2025-03-21",
-      "entry_price": 104.96,
-      "exit_price": 74.87,
-      "pnl_pct": -28.67,
-      "pnl_dollar": -2858.55,
-      "exit_reason": "ROTATION",
-      "days_held": 65
-    },
-    {
-      "symbol": "HOOD",
-      "entry_date": "2025-02-06",
-      "exit_date": "2025-03-21",
-      "entry_price": 53.17,
-      "exit_price": 44.36,
-      "pnl_pct": -16.57,
-      "pnl_dollar": -1929.39,
-      "exit_reason": "ROTATION",
-      "days_held": 43
-    },
-    {
-      "symbol": "SPOT",
-      "entry_date": "2025-03-07",
-      "exit_date": "2025-03-21",
-      "entry_price": 532.1,
-      "exit_price": 599.94,
-      "pnl_pct": 12.75,
-      "pnl_dollar": 1221.12,
-      "exit_reason": "ROTATION",
-      "days_held": 14
+      "exit_date": "2025-03-28",
+      "entry_price": 39.39,
+      "exit_price": 22.85,
+      "pnl_pct": -41.99,
+      "days_held": 72,
+      "entry_score": 192.7
     },
     {
       "symbol": "APP",
       "entry_date": "2025-01-15",
-      "exit_date": "2025-03-28",
+      "exit_date": "2025-04-04",
       "entry_price": 335.03,
-      "exit_price": 272.38,
-      "pnl_pct": -18.7,
-      "pnl_dollar": -1816.85,
-      "exit_reason": "ROTATION",
-      "days_held": 72
+      "exit_price": 219.37,
+      "pnl_pct": -34.52,
+      "days_held": 79,
+      "entry_score": 317.3
     },
     {
-      "symbol": "RKLB",
-      "entry_date": "2025-01-15",
-      "exit_date": "2025-03-28",
-      "entry_price": 24.87,
-      "exit_price": 18.62,
-      "pnl_pct": -25.13,
-      "pnl_dollar": -2512.5,
-      "exit_reason": "ROTATION",
-      "days_held": 72
-    },
-    {
-      "symbol": "PLTR",
+      "symbol": "ASTS",
       "entry_date": "2025-03-07",
-      "exit_date": "2025-03-28",
-      "entry_price": 84.91,
-      "exit_price": 85.85,
-      "pnl_pct": 1.11,
-      "pnl_dollar": 106.22,
-      "exit_reason": "ROTATION",
-      "days_held": 21
+      "exit_date": "2025-04-04",
+      "entry_price": 33.4,
+      "exit_price": 20.07,
+      "pnl_pct": -39.91,
+      "days_held": 28,
+      "entry_score": 174.5
     },
     {
       "symbol": "HIMS",
       "entry_date": "2025-03-21",
-      "exit_date": "2025-03-28",
+      "exit_date": "2025-04-04",
       "entry_price": 34.75,
-      "exit_price": 29.14,
-      "pnl_pct": -16.14,
-      "pnl_dollar": -1587.63,
-      "exit_reason": "ROTATION",
-      "days_held": 7
+      "exit_price": 25.99,
+      "pnl_pct": -25.21,
+      "days_held": 14,
+      "entry_score": 234.0
     },
     {
-      "symbol": "SMMT",
-      "entry_date": "2025-03-21",
-      "exit_date": "2025-03-28",
-      "entry_price": 19.75,
-      "exit_price": 20.32,
-      "pnl_pct": 2.89,
-      "pnl_dollar": 284.43,
-      "exit_reason": "ROTATION",
-      "days_held": 7
-    },
-    {
-      "symbol": "FOX",
-      "entry_date": "2025-02-28",
-      "exit_date": "2025-04-04",
-      "entry_price": 53.52,
-      "exit_price": 45.5,
-      "pnl_pct": -14.99,
-      "pnl_dollar": -1596.36,
-      "exit_reason": "ROTATION",
-      "days_held": 35
-    },
-    {
-      "symbol": "ASTS",
-      "entry_date": "2025-03-14",
-      "exit_date": "2025-04-04",
-      "entry_price": 28.15,
-      "exit_price": 20.07,
-      "pnl_pct": -28.7,
-      "pnl_dollar": -2739.12,
-      "exit_reason": "ROTATION",
-      "days_held": 21
-    },
-    {
-      "symbol": "TPR",
-      "entry_date": "2025-03-14",
-      "exit_date": "2025-04-04",
-      "entry_price": 69.64,
-      "exit_price": 62.21,
-      "pnl_pct": -10.67,
-      "pnl_dollar": -1018.26,
-      "exit_reason": "ROTATION",
-      "days_held": 21
-    },
-    {
-      "symbol": "NUTX",
-      "entry_date": "2025-03-21",
-      "exit_date": "2025-04-04",
-      "entry_price": 58.17,
-      "exit_price": 71.37,
-      "pnl_pct": 22.69,
-      "pnl_dollar": 2230.8,
-      "exit_reason": "ROTATION",
-      "days_held": 14
-    },
-    {
-      "symbol": "FOXA",
-      "entry_date": "2025-03-07",
-      "exit_date": "2025-04-11",
-      "entry_price": 55.41,
-      "exit_price": 48.67,
-      "pnl_pct": -12.18,
-      "pnl_dollar": -1167.56,
-      "exit_reason": "ROTATION",
-      "days_held": 35
-    },
-    {
-      "symbol": "VRSN",
-      "entry_date": "2025-03-28",
-      "exit_date": "2025-04-11",
-      "entry_price": 248.75,
-      "exit_price": 244.99,
-      "pnl_pct": -1.51,
-      "pnl_dollar": -139.02,
-      "exit_reason": "ROTATION",
-      "days_held": 14
-    },
-    {
-      "symbol": "BRO",
+      "symbol": "HOOD",
       "entry_date": "2025-04-04",
       "exit_date": "2025-04-11",
-      "entry_price": 114.17,
-      "exit_price": 117.99,
-      "pnl_pct": 3.35,
-      "pnl_dollar": 301.93,
-      "exit_reason": "ROTATION",
-      "days_held": 7
+      "entry_price": 34.51,
+      "exit_price": 43.68,
+      "pnl_pct": 26.57,
+      "days_held": 7,
+      "entry_score": 73.2
     },
     {
-      "symbol": "AJG",
-      "entry_date": "2025-04-04",
-      "exit_date": "2025-04-11",
-      "entry_price": 317.09,
-      "exit_price": 331.76,
-      "pnl_pct": 4.63,
-      "pnl_dollar": 410.76,
-      "exit_reason": "ROTATION",
-      "days_held": 7
-    },
-    {
-      "symbol": "WELL",
-      "entry_date": "2025-03-28",
-      "exit_date": "2025-04-21",
-      "entry_price": 151.45,
-      "exit_price": 141.8,
-      "pnl_pct": -6.37,
-      "pnl_dollar": -588.31,
-      "exit_reason": "ROTATION",
-      "days_held": 24
-    },
-    {
-      "symbol": "TMUS",
-      "entry_date": "2025-04-04",
-      "exit_date": "2025-04-21",
-      "entry_price": 245.12,
-      "exit_price": 250.42,
-      "pnl_pct": 2.16,
-      "pnl_dollar": 196.29,
-      "exit_reason": "ROTATION",
-      "days_held": 17
-    },
-    {
-      "symbol": "EVRG",
+      "symbol": "APP",
       "entry_date": "2025-04-11",
       "exit_date": "2025-04-21",
-      "entry_price": 64.64,
-      "exit_price": 65.06,
-      "pnl_pct": 0.65,
-      "pnl_dollar": 60.17,
-      "exit_reason": "ROTATION",
-      "days_held": 10
+      "entry_price": 249.95,
+      "exit_price": 228.13,
+      "pnl_pct": -8.73,
+      "days_held": 10,
+      "entry_score": 89.6
     },
     {
-      "symbol": "SMMT",
-      "entry_date": "2025-04-11",
+      "symbol": "ACHR",
+      "entry_date": "2025-04-21",
       "exit_date": "2025-04-28",
-      "entry_price": 23.24,
-      "exit_price": 24.11,
-      "pnl_pct": 3.74,
-      "pnl_dollar": 350.61,
-      "exit_reason": "ROTATION",
-      "days_held": 17
+      "entry_price": 7.14,
+      "exit_price": 8.53,
+      "pnl_pct": 19.47,
+      "days_held": 7,
+      "entry_score": 83.2
     },
     {
-      "symbol": "PLTR",
+      "symbol": "SMMT",
       "entry_date": "2025-04-04",
       "exit_date": "2025-05-05",
-      "entry_price": 74.01,
-      "exit_price": 123.77,
-      "pnl_pct": 67.23,
-      "pnl_dollar": 6070.72,
-      "exit_reason": "ROTATION",
-      "days_held": 31
+      "entry_price": 17.36,
+      "exit_price": 28.02,
+      "pnl_pct": 61.41,
+      "days_held": 31,
+      "entry_score": 95.6
     },
     {
-      "symbol": "GILD",
-      "entry_date": "2025-03-28",
-      "exit_date": "2025-05-12",
-      "entry_price": 109.51,
-      "exit_price": 101.71,
-      "pnl_pct": -7.13,
-      "pnl_dollar": -663.65,
-      "exit_reason": "ROTATION",
-      "days_held": 45
-    },
-    {
-      "symbol": "MO",
-      "entry_date": "2025-04-11",
-      "exit_date": "2025-05-12",
-      "entry_price": 53.81,
-      "exit_price": 54.1,
-      "pnl_pct": 0.53,
-      "pnl_dollar": 49.59,
-      "exit_reason": "ROTATION",
-      "days_held": 31
-    },
-    {
-      "symbol": "MCK",
+      "symbol": "APP",
       "entry_date": "2025-04-28",
-      "exit_date": "2025-05-19",
-      "entry_price": 697.55,
-      "exit_price": 724.14,
-      "pnl_pct": 3.81,
-      "pnl_dollar": 372.22,
-      "exit_reason": "ROTATION",
-      "days_held": 21
+      "exit_date": "2025-05-12",
+      "entry_price": 284.98,
+      "exit_price": 347.9,
+      "pnl_pct": 22.08,
+      "days_held": 14,
+      "entry_score": 81.8
     },
     {
       "symbol": "ASTS",
@@ -1657,152 +175,78 @@
       "entry_price": 24.75,
       "exit_price": 24.61,
       "pnl_pct": -0.57,
-      "pnl_dollar": -58.66,
-      "exit_reason": "ROTATION",
-      "days_held": 14
-    },
-    {
-      "symbol": "CME",
-      "entry_date": "2025-05-12",
-      "exit_date": "2025-05-19",
-      "entry_price": 266.73,
-      "exit_price": 274.09,
-      "pnl_pct": 2.76,
-      "pnl_dollar": 279.93,
-      "exit_reason": "ROTATION",
-      "days_held": 7
-    },
-    {
-      "symbol": "T",
-      "entry_date": "2025-03-28",
-      "exit_date": "2025-05-27",
-      "entry_price": 27.0,
-      "exit_price": 26.52,
-      "pnl_pct": -1.77,
-      "pnl_dollar": -165.98,
-      "exit_reason": "ROTATION",
-      "days_held": 60
-    },
-    {
-      "symbol": "RGLD",
-      "entry_date": "2025-05-19",
-      "exit_date": "2025-05-27",
-      "entry_price": 171.91,
-      "exit_price": 177.45,
-      "pnl_pct": 3.22,
-      "pnl_dollar": 349.12,
-      "exit_reason": "ROTATION",
-      "days_held": 8
-    },
-    {
-      "symbol": "SMMT",
-      "entry_date": "2025-05-19",
-      "exit_date": "2025-06-03",
-      "entry_price": 24.01,
-      "exit_price": 20.62,
-      "pnl_pct": -14.12,
-      "pnl_dollar": -1542.45,
-      "exit_reason": "ROTATION",
-      "days_held": 15
-    },
-    {
-      "symbol": "COR",
-      "entry_date": "2025-05-27",
-      "exit_date": "2025-06-03",
-      "entry_price": 291.86,
-      "exit_price": 290.03,
-      "pnl_pct": -0.63,
-      "pnl_dollar": -67.73,
-      "exit_reason": "ROTATION",
-      "days_held": 7
-    },
-    {
-      "symbol": "CNP",
-      "entry_date": "2025-05-05",
-      "exit_date": "2025-06-10",
-      "entry_price": 38.21,
-      "exit_price": 35.84,
-      "pnl_pct": -6.2,
-      "pnl_dollar": -642.05,
-      "exit_reason": "ROTATION",
-      "days_held": 36
-    },
-    {
-      "symbol": "RBLX",
-      "entry_date": "2025-06-03",
-      "exit_date": "2025-06-10",
-      "entry_price": 89.95,
-      "exit_price": 93.72,
-      "pnl_pct": 4.19,
-      "pnl_dollar": 448.63,
-      "exit_reason": "ROTATION",
-      "days_held": 7
-    },
-    {
-      "symbol": "CME",
-      "entry_date": "2025-05-27",
-      "exit_date": "2025-06-17",
-      "entry_price": 280.42,
-      "exit_price": 267.18,
-      "pnl_pct": -4.72,
-      "pnl_dollar": -516.33,
-      "exit_reason": "ROTATION",
-      "days_held": 21
-    },
-    {
-      "symbol": "CAH",
-      "entry_date": "2025-06-03",
-      "exit_date": "2025-06-25",
-      "entry_price": 154.12,
-      "exit_price": 162.32,
-      "pnl_pct": 5.32,
-      "pnl_dollar": 565.63,
-      "exit_reason": "ROTATION",
-      "days_held": 22
-    },
-    {
-      "symbol": "DUOL",
-      "entry_date": "2025-06-10",
-      "exit_date": "2025-06-25",
-      "entry_price": 486.02,
-      "exit_price": 397.68,
-      "pnl_pct": -18.18,
-      "pnl_dollar": -1855.14,
-      "exit_reason": "ROTATION",
-      "days_held": 15
-    },
-    {
-      "symbol": "NFLX",
-      "entry_date": "2025-06-10",
-      "exit_date": "2025-06-25",
-      "entry_price": 120.36,
-      "exit_price": 127.53,
-      "pnl_pct": 5.95,
-      "pnl_dollar": 616.02,
-      "exit_reason": "ROTATION",
-      "days_held": 15
-    },
-    {
-      "symbol": "VRSN",
-      "entry_date": "2025-04-21",
-      "exit_date": "2025-07-02",
-      "entry_price": 239.25,
-      "exit_price": 280.34,
-      "pnl_pct": 17.17,
-      "pnl_dollar": 1643.62,
-      "exit_reason": "ROTATION",
-      "days_held": 72
+      "days_held": 14,
+      "entry_score": 209.0
     },
     {
       "symbol": "IONQ",
-      "entry_date": "2025-06-25",
+      "entry_date": "2025-05-19",
+      "exit_date": "2025-05-27",
+      "entry_price": 35.09,
+      "exit_price": 48.04,
+      "pnl_pct": 36.91,
+      "days_held": 8,
+      "entry_score": 35.5
+    },
+    {
+      "symbol": "SMMT",
+      "entry_date": "2025-05-12",
+      "exit_date": "2025-06-03",
+      "entry_price": 25.26,
+      "exit_price": 20.62,
+      "pnl_pct": -18.37,
+      "days_held": 22,
+      "entry_score": 74.6
+    },
+    {
+      "symbol": "ACHR",
+      "entry_date": "2025-05-27",
+      "exit_date": "2025-06-03",
+      "entry_price": 10.92,
+      "exit_price": 9.72,
+      "pnl_pct": -10.99,
+      "days_held": 7,
+      "entry_score": 66.4
+    },
+    {
+      "symbol": "IONQ",
+      "entry_date": "2025-06-03",
+      "exit_date": "2025-06-17",
+      "entry_price": 39.81,
+      "exit_price": 38.04,
+      "pnl_pct": -4.45,
+      "days_held": 14,
+      "entry_score": 81.0
+    },
+    {
+      "symbol": "DUOL",
+      "entry_date": "2025-06-03",
+      "exit_date": "2025-06-17",
+      "entry_price": 513.37,
+      "exit_price": 476.3,
+      "pnl_pct": -7.22,
+      "days_held": 14,
+      "entry_score": 77.7
+    },
+    {
+      "symbol": "ACHR",
+      "entry_date": "2025-06-17",
+      "exit_date": "2025-06-25",
+      "entry_price": 9.92,
+      "exit_price": 9.93,
+      "pnl_pct": 0.1,
+      "days_held": 8,
+      "entry_score": 132.2
+    },
+    {
+      "symbol": "HIMS",
+      "entry_date": "2025-06-17",
       "exit_date": "2025-07-02",
-      "entry_price": 38.11,
-      "exit_price": 44.75,
-      "pnl_pct": 17.42,
-      "pnl_dollar": 1879.12,
-      "exit_reason": "ROTATION",
-      "days_held": 7
+      "entry_price": 59.24,
+      "exit_price": 47.46,
+      "pnl_pct": -19.89,
+      "days_held": 15,
+      "entry_score": 123.6
     },
     {
       "symbol": "APP",
@@ -1811,449 +255,178 @@
       "entry_price": 336.0,
       "exit_price": 346.32,
       "pnl_pct": 3.07,
-      "pnl_dollar": 330.24,
-      "exit_reason": "ROTATION",
-      "days_held": 8
-    },
-    {
-      "symbol": "NFLX",
-      "entry_date": "2025-07-02",
-      "exit_date": "2025-07-10",
-      "entry_price": 128.49,
-      "exit_price": 125.06,
-      "pnl_pct": -2.67,
-      "pnl_dollar": -294.72,
-      "exit_reason": "ROTATION",
-      "days_held": 8
+      "days_held": 8,
+      "entry_score": 119.6
     },
     {
       "symbol": "RKLB",
-      "entry_date": "2025-04-21",
+      "entry_date": "2025-01-15",
       "exit_date": "2025-07-17",
-      "entry_price": 18.65,
+      "entry_price": 24.87,
       "exit_price": 51.33,
-      "pnl_pct": 175.23,
-      "pnl_dollar": 16830.2,
-      "exit_reason": "ROTATION",
-      "days_held": 87
-    },
-    {
-      "symbol": "EBAY",
-      "entry_date": "2025-07-10",
-      "exit_date": "2025-07-17",
-      "entry_price": 76.71,
-      "exit_price": 76.28,
-      "pnl_pct": -0.56,
-      "pnl_dollar": -63.64,
-      "exit_reason": "ROTATION",
-      "days_held": 7
-    },
-    {
-      "symbol": "PM",
-      "entry_date": "2025-03-28",
-      "exit_date": "2025-07-24",
-      "entry_price": 151.19,
-      "exit_price": 158.14,
-      "pnl_pct": 4.6,
-      "pnl_dollar": 423.96,
-      "exit_reason": "ROTATION",
-      "days_held": 118
-    },
-    {
-      "symbol": "NFLX",
-      "entry_date": "2025-07-17",
-      "exit_date": "2025-07-24",
-      "entry_price": 127.42,
-      "exit_price": 118.08,
-      "pnl_pct": -7.33,
-      "pnl_dollar": -915.42,
-      "exit_reason": "ROTATION",
-      "days_held": 7
-    },
-    {
-      "symbol": "CAH",
-      "entry_date": "2025-07-17",
-      "exit_date": "2025-07-24",
-      "entry_price": 158.55,
-      "exit_price": 157.37,
-      "pnl_pct": -0.74,
-      "pnl_dollar": -91.51,
-      "exit_reason": "ROTATION",
-      "days_held": 7
-    },
-    {
-      "symbol": "ASTS",
-      "entry_date": "2025-07-24",
-      "exit_date": "2025-07-31",
-      "entry_price": 60.06,
-      "exit_price": 53.17,
-      "pnl_pct": -11.47,
-      "pnl_dollar": -1398.67,
-      "exit_reason": "ROTATION",
-      "days_held": 7
-    },
-    {
-      "symbol": "JCI",
-      "entry_date": "2025-07-24",
-      "exit_date": "2025-07-31",
-      "entry_price": 110.02,
-      "exit_price": 105.0,
-      "pnl_pct": -4.56,
-      "pnl_dollar": -557.22,
-      "exit_reason": "ROTATION",
-      "days_held": 7
-    },
-    {
-      "symbol": "RBLX",
-      "entry_date": "2025-06-17",
-      "exit_date": "2025-08-07",
-      "entry_price": 101.12,
-      "exit_price": 129.63,
-      "pnl_pct": 28.19,
-      "pnl_dollar": 2965.04,
-      "exit_reason": "ROTATION",
-      "days_held": 51
-    },
-    {
-      "symbol": "HWM",
-      "entry_date": "2025-06-25",
-      "exit_date": "2025-08-07",
-      "entry_price": 175.76,
-      "exit_price": 181.25,
-      "pnl_pct": 3.12,
-      "pnl_dollar": 334.89,
-      "exit_reason": "ROTATION",
-      "days_held": 43
-    },
-    {
-      "symbol": "NET",
-      "entry_date": "2025-07-17",
-      "exit_date": "2025-08-14",
-      "entry_price": 191.25,
-      "exit_price": 195.38,
-      "pnl_pct": 2.16,
-      "pnl_dollar": 268.45,
-      "exit_reason": "ROTATION",
-      "days_held": 28
-    },
-    {
-      "symbol": "JBL",
-      "entry_date": "2025-07-31",
-      "exit_date": "2025-08-14",
-      "entry_price": 223.0,
-      "exit_price": 217.23,
-      "pnl_pct": -2.59,
-      "pnl_dollar": -317.11,
-      "exit_reason": "ROTATION",
-      "days_held": 14
-    },
-    {
-      "symbol": "APP",
-      "entry_date": "2025-08-07",
-      "exit_date": "2025-08-14",
-      "entry_price": 437.34,
-      "exit_price": 433.34,
-      "pnl_pct": -0.91,
-      "pnl_dollar": -112.0,
-      "exit_reason": "ROTATION",
-      "days_held": 7
-    },
-    {
-      "symbol": "NUTX",
-      "entry_date": "2025-04-11",
-      "exit_date": "2025-08-21",
-      "entry_price": 132.03,
-      "exit_price": 96.18,
-      "pnl_pct": -27.15,
-      "pnl_dollar": -2509.5,
-      "exit_reason": "ROTATION",
-      "days_held": 132
-    },
-    {
-      "symbol": "TPR",
-      "entry_date": "2025-08-14",
-      "exit_date": "2025-08-21",
-      "entry_price": 95.0,
-      "exit_price": 97.68,
-      "pnl_pct": 2.82,
-      "pnl_dollar": 351.14,
-      "exit_reason": "ROTATION",
-      "days_held": 7
-    },
-    {
-      "symbol": "RCL",
-      "entry_date": "2025-08-07",
-      "exit_date": "2025-08-28",
-      "entry_price": 307.78,
-      "exit_price": 363.48,
-      "pnl_pct": 18.1,
-      "pnl_dollar": 2227.94,
-      "exit_reason": "ROTATION",
-      "days_held": 21
-    },
-    {
-      "symbol": "JBL",
-      "entry_date": "2025-08-21",
-      "exit_date": "2025-08-28",
-      "entry_price": 204.98,
-      "exit_price": 209.79,
-      "pnl_pct": 2.35,
-      "pnl_dollar": 278.87,
-      "exit_reason": "ROTATION",
-      "days_held": 7
-    },
-    {
-      "symbol": "SOFI",
-      "entry_date": "2025-08-14",
-      "exit_date": "2025-09-05",
-      "entry_price": 23.29,
-      "exit_price": 25.6,
-      "pnl_pct": 9.92,
-      "pnl_dollar": 1233.54,
-      "exit_reason": "ROTATION",
-      "days_held": 22
-    },
-    {
-      "symbol": "PWR",
-      "entry_date": "2025-08-28",
-      "exit_date": "2025-09-05",
-      "entry_price": 385.77,
-      "exit_price": 372.31,
-      "pnl_pct": -3.49,
-      "pnl_dollar": -430.5,
-      "exit_reason": "ROTATION",
-      "days_held": 8
-    },
-    {
-      "symbol": "TASK",
-      "entry_date": "2025-09-05",
-      "exit_date": "2025-09-12",
-      "entry_price": 18.18,
-      "exit_price": 17.36,
-      "pnl_pct": -4.51,
-      "pnl_dollar": -555.14,
-      "exit_reason": "ROTATION",
-      "days_held": 7
-    },
-    {
-      "symbol": "JOBY",
-      "entry_date": "2025-09-05",
-      "exit_date": "2025-09-12",
-      "entry_price": 13.46,
-      "exit_price": 14.0,
-      "pnl_pct": 4.01,
-      "pnl_dollar": 494.1,
-      "exit_reason": "ROTATION",
-      "days_held": 7
-    },
-    {
-      "symbol": "RBLX",
-      "entry_date": "2025-08-14",
-      "exit_date": "2025-09-19",
-      "entry_price": 125.28,
-      "exit_price": 135.18,
-      "pnl_pct": 7.9,
-      "pnl_dollar": 980.1,
-      "exit_reason": "ROTATION",
-      "days_held": 36
+      "pnl_pct": 106.39,
+      "days_held": 183,
+      "entry_score": 241.0
     },
     {
       "symbol": "IONQ",
-      "entry_date": "2025-08-28",
-      "exit_date": "2025-09-19",
-      "entry_price": 43.3,
-      "exit_price": 70.41,
-      "pnl_pct": 62.61,
-      "pnl_dollar": 7916.12,
-      "exit_reason": "ROTATION",
-      "days_held": 22
-    },
-    {
-      "symbol": "NET",
-      "entry_date": "2025-09-05",
-      "exit_date": "2025-09-26",
-      "entry_price": 214.43,
-      "exit_price": 216.34,
-      "pnl_pct": 0.89,
-      "pnl_dollar": 108.87,
-      "exit_reason": "ROTATION",
-      "days_held": 21
-    },
-    {
-      "symbol": "TASK",
-      "entry_date": "2025-09-19",
-      "exit_date": "2025-09-26",
-      "entry_price": 17.54,
-      "exit_price": 17.81,
-      "pnl_pct": 1.54,
-      "pnl_dollar": 219.24,
-      "exit_reason": "ROTATION",
-      "days_held": 7
-    },
-    {
-      "symbol": "LHX",
-      "entry_date": "2025-09-19",
-      "exit_date": "2025-09-26",
-      "entry_price": 282.76,
-      "exit_price": 292.34,
-      "pnl_pct": 3.39,
-      "pnl_dollar": 479.01,
-      "exit_reason": "ROTATION",
-      "days_held": 7
-    },
-    {
-      "symbol": "DLTR",
-      "entry_date": "2025-09-19",
-      "exit_date": "2025-09-26",
-      "entry_price": 95.26,
-      "exit_price": 95.06,
-      "pnl_pct": -0.21,
-      "pnl_dollar": -29.8,
-      "exit_reason": "ROTATION",
-      "days_held": 7
-    },
-    {
-      "symbol": "GEV",
       "entry_date": "2025-06-25",
+      "exit_date": "2025-07-17",
+      "entry_price": 38.11,
+      "exit_price": 44.84,
+      "pnl_pct": 17.66,
+      "days_held": 22,
+      "entry_score": 182.9
+    },
+    {
+      "symbol": "HIMS",
+      "entry_date": "2025-07-10",
+      "exit_date": "2025-07-24",
+      "entry_price": 50.27,
+      "exit_price": 57.32,
+      "pnl_pct": 14.02,
+      "days_held": 14,
+      "entry_score": 130.4
+    },
+    {
+      "symbol": "APLD",
+      "entry_date": "2025-07-17",
+      "exit_date": "2025-07-24",
+      "entry_price": 10.91,
+      "exit_price": 11.2,
+      "pnl_pct": 2.66,
+      "days_held": 7,
+      "entry_score": 124.4
+    },
+    {
+      "symbol": "IONQ",
+      "entry_date": "2025-07-24",
+      "exit_date": "2025-07-31",
+      "entry_price": 43.9,
+      "exit_price": 39.87,
+      "pnl_pct": -9.18,
+      "days_held": 7,
+      "entry_score": 121.4
+    },
+    {
+      "symbol": "ASTS",
+      "entry_date": "2025-07-17",
+      "exit_date": "2025-08-07",
+      "entry_price": 57.45,
+      "exit_price": 47.71,
+      "pnl_pct": -16.95,
+      "days_held": 21,
+      "entry_score": 122.5
+    },
+    {
+      "symbol": "PLTR",
+      "entry_date": "2025-04-04",
+      "exit_date": "2025-08-14",
+      "entry_price": 74.01,
+      "exit_price": 181.02,
+      "pnl_pct": 144.59,
+      "days_held": 132,
+      "entry_score": 106.5
+    },
+    {
+      "symbol": "NUTX",
+      "entry_date": "2025-03-28",
+      "exit_date": "2025-08-21",
+      "entry_price": 51.68,
+      "exit_price": 96.18,
+      "pnl_pct": 86.11,
+      "days_held": 146,
+      "entry_score": 156.6
+    },
+    {
+      "symbol": "IONQ",
+      "entry_date": "2025-08-07",
+      "exit_date": "2025-09-19",
+      "entry_price": 40.49,
+      "exit_price": 70.41,
+      "pnl_pct": 73.89,
+      "days_held": 43,
+      "entry_score": 173.6
+    },
+    {
+      "symbol": "JOBY",
+      "entry_date": "2025-08-14",
+      "exit_date": "2025-09-26",
+      "entry_price": 17.37,
+      "exit_price": 16.11,
+      "pnl_pct": -7.25,
+      "days_held": 43,
+      "entry_score": 150.6
+    },
+    {
+      "symbol": "PLTR",
+      "entry_date": "2025-08-21",
+      "exit_date": "2025-09-26",
+      "entry_price": 156.18,
+      "exit_price": 177.57,
+      "pnl_pct": 13.7,
+      "days_held": 36,
+      "entry_score": 121.2
+    },
+    {
+      "symbol": "STEM",
+      "entry_date": "2025-09-26",
       "exit_date": "2025-10-03",
-      "entry_price": 501.87,
-      "exit_price": 594.3,
-      "pnl_pct": 18.42,
-      "pnl_dollar": 1941.07,
-      "exit_reason": "ROTATION",
-      "days_held": 100
+      "entry_price": 17.86,
+      "exit_price": 22.35,
+      "pnl_pct": 25.14,
+      "days_held": 7,
+      "entry_score": 141.2
+    },
+    {
+      "symbol": "IONQ",
+      "entry_date": "2025-09-26",
+      "exit_date": "2025-10-10",
+      "entry_price": 67.28,
+      "exit_price": 70.65,
+      "pnl_pct": 5.01,
+      "days_held": 14,
+      "entry_score": 130.0
     },
     {
       "symbol": "RKLB",
       "entry_date": "2025-07-24",
-      "exit_date": "2025-10-03",
-      "entry_price": 48.13,
-      "exit_price": 56.16,
-      "pnl_pct": 16.68,
-      "pnl_dollar": 2031.59,
-      "exit_reason": "ROTATION",
-      "days_held": 71
-    },
-    {
-      "symbol": "BK",
-      "entry_date": "2025-09-26",
-      "exit_date": "2025-10-03",
-      "entry_price": 108.51,
-      "exit_price": 105.61,
-      "pnl_pct": -2.68,
-      "pnl_dollar": -374.46,
-      "exit_reason": "ROTATION",
-      "days_held": 7
-    },
-    {
-      "symbol": "RCL",
-      "entry_date": "2025-09-26",
-      "exit_date": "2025-10-10",
-      "entry_price": 325.78,
-      "exit_price": 303.58,
-      "pnl_pct": -6.81,
-      "pnl_dollar": -954.36,
-      "exit_reason": "ROTATION",
-      "days_held": 14
-    },
-    {
-      "symbol": "NET",
-      "entry_date": "2025-10-03",
       "exit_date": "2025-10-17",
-      "entry_price": 216.67,
-      "exit_price": 210.01,
-      "pnl_pct": -3.07,
-      "pnl_dollar": -446.22,
-      "exit_reason": "ROTATION",
-      "days_held": 14
+      "entry_price": 48.13,
+      "exit_price": 66.27,
+      "pnl_pct": 37.69,
+      "days_held": 85,
+      "entry_score": 162.1
     },
     {
-      "symbol": "APH",
-      "entry_date": "2025-07-31",
-      "exit_date": "2025-10-24",
-      "entry_price": 106.16,
-      "exit_price": 133.56,
-      "pnl_pct": 25.81,
-      "pnl_dollar": 3151.52,
-      "exit_reason": "ROTATION",
-      "days_held": 85
-    },
-    {
-      "symbol": "SOFI",
-      "entry_date": "2025-09-12",
-      "exit_date": "2025-10-24",
-      "entry_price": 26.55,
-      "exit_price": 29.01,
-      "pnl_pct": 9.27,
-      "pnl_dollar": 1249.68,
-      "exit_reason": "ROTATION",
-      "days_held": 42
+      "symbol": "APP",
+      "entry_date": "2025-10-03",
+      "exit_date": "2025-11-07",
+      "entry_price": 682.76,
+      "exit_price": 619.93,
+      "pnl_pct": -9.2,
+      "days_held": 35,
+      "entry_score": 120.4
     },
     {
       "symbol": "IONQ",
       "entry_date": "2025-10-17",
-      "exit_date": "2025-10-31",
+      "exit_date": "2025-11-07",
       "entry_price": 62.94,
-      "exit_price": 62.38,
-      "pnl_pct": -0.89,
-      "pnl_dollar": -129.92,
-      "exit_reason": "ROTATION",
-      "days_held": 14
+      "exit_price": 59.27,
+      "pnl_pct": -5.83,
+      "days_held": 21,
+      "entry_score": 210.2
     },
     {
-      "symbol": "APP",
-      "entry_date": "2025-09-26",
-      "exit_date": "2025-11-07",
-      "entry_price": 669.86,
-      "exit_price": 619.93,
-      "pnl_pct": -7.45,
-      "pnl_dollar": -998.6,
-      "exit_reason": "ROTATION",
-      "days_held": 42
-    },
-    {
-      "symbol": "STX",
-      "entry_date": "2025-10-10",
-      "exit_date": "2025-11-07",
-      "entry_price": 213.82,
-      "exit_price": 278.62,
-      "pnl_pct": 30.31,
-      "pnl_dollar": 4341.6,
-      "exit_reason": "ROTATION",
-      "days_held": 28
-    },
-    {
-      "symbol": "NET",
-      "entry_date": "2025-10-24",
-      "exit_date": "2025-11-07",
-      "entry_price": 217.85,
-      "exit_price": 232.81,
-      "pnl_pct": 6.87,
-      "pnl_dollar": 1032.24,
-      "exit_reason": "ROTATION",
-      "days_held": 14
-    },
-    {
-      "symbol": "PLTR",
-      "entry_date": "2025-05-12",
+      "symbol": "HOOD",
+      "entry_date": "2025-07-31",
       "exit_date": "2025-11-14",
-      "entry_price": 118.46,
-      "exit_price": 174.01,
-      "pnl_pct": 46.89,
-      "pnl_dollar": 4721.75,
-      "exit_reason": "ROTATION",
-      "days_held": 186
-    },
-    {
-      "symbol": "IONQ",
-      "entry_date": "2025-11-07",
-      "exit_date": "2025-11-14",
-      "entry_price": 59.27,
-      "exit_price": 47.18,
-      "pnl_pct": -20.4,
-      "pnl_dollar": -3179.67,
-      "exit_reason": "ROTATION",
-      "days_held": 7
+      "entry_price": 103.05,
+      "exit_price": 122.5,
+      "pnl_pct": 18.87,
+      "days_held": 106,
+      "entry_score": 147.4
     },
     {
       "symbol": "RKLB",
@@ -2262,372 +435,198 @@
       "entry_price": 51.64,
       "exit_price": 40.3,
       "pnl_pct": -21.96,
-      "pnl_dollar": -3424.68,
-      "exit_reason": "ROTATION",
-      "days_held": 14
+      "days_held": 14,
+      "entry_score": 213.0
+    },
+    {
+      "symbol": "HOOD",
+      "entry_date": "2025-11-21",
+      "exit_date": "2025-12-01",
+      "entry_price": 107.3,
+      "exit_price": 123.24,
+      "pnl_pct": 14.86,
+      "days_held": 10,
+      "entry_score": 119.5
+    },
+    {
+      "symbol": "APLD",
+      "entry_date": "2025-10-10",
+      "exit_date": "2025-12-15",
+      "entry_price": 33.99,
+      "exit_price": 22.98,
+      "pnl_pct": -32.39,
+      "days_held": 66,
+      "entry_score": 144.1
     },
     {
       "symbol": "ASTS",
       "entry_date": "2025-11-07",
-      "exit_date": "2025-11-21",
+      "exit_date": "2025-12-15",
       "entry_price": 69.19,
-      "exit_price": 51.37,
-      "pnl_pct": -25.76,
-      "pnl_dollar": -4027.32,
-      "exit_reason": "ROTATION",
-      "days_held": 14
+      "exit_price": 67.81,
+      "pnl_pct": -1.99,
+      "days_held": 38,
+      "entry_score": 183.4
     },
     {
-      "symbol": "NEM",
-      "entry_date": "2025-11-14",
-      "exit_date": "2025-11-21",
-      "entry_price": 87.55,
-      "exit_price": 83.25,
-      "pnl_pct": -4.91,
-      "pnl_dollar": -679.01,
-      "exit_reason": "ROTATION",
-      "days_held": 7
-    },
-    {
-      "symbol": "JNJ",
-      "entry_date": "2025-11-14",
-      "exit_date": "2025-12-01",
-      "entry_price": 194.69,
-      "exit_price": 205.34,
-      "pnl_pct": 5.47,
-      "pnl_dollar": 755.88,
-      "exit_reason": "ROTATION",
-      "days_held": 17
-    },
-    {
-      "symbol": "GE",
-      "entry_date": "2025-11-21",
-      "exit_date": "2025-12-01",
-      "entry_price": 287.11,
-      "exit_price": 288.12,
-      "pnl_pct": 0.35,
-      "pnl_dollar": 44.39,
-      "exit_reason": "ROTATION",
-      "days_held": 10
-    },
-    {
-      "symbol": "HOOD",
-      "entry_date": "2025-07-10",
-      "exit_date": "2025-12-08",
-      "entry_price": 98.7,
-      "exit_price": 136.43,
-      "pnl_pct": 38.23,
-      "pnl_dollar": 4376.68,
-      "exit_reason": "ROTATION",
-      "days_held": 151
-    },
-    {
-      "symbol": "TEL",
-      "entry_date": "2025-12-01",
-      "exit_date": "2025-12-08",
-      "entry_price": 225.75,
-      "exit_price": 233.98,
-      "pnl_pct": 3.65,
-      "pnl_dollar": 510.26,
-      "exit_reason": "ROTATION",
-      "days_held": 7
-    },
-    {
-      "symbol": "APLD",
-      "entry_date": "2025-10-24",
-      "exit_date": "2025-12-15",
-      "entry_price": 33.43,
-      "exit_price": 22.98,
-      "pnl_pct": -31.26,
-      "pnl_dollar": -4733.85,
-      "exit_reason": "ROTATION",
-      "days_held": 52
-    },
-    {
-      "symbol": "GLW",
-      "entry_date": "2025-10-31",
-      "exit_date": "2025-12-15",
-      "entry_price": 88.78,
-      "exit_price": 88.11,
-      "pnl_pct": -0.75,
-      "pnl_dollar": -120.75,
-      "exit_reason": "ROTATION",
-      "days_held": 45
-    },
-    {
-      "symbol": "LRCX",
-      "entry_date": "2025-12-01",
-      "exit_date": "2025-12-15",
-      "entry_price": 154.54,
-      "exit_price": 164.3,
-      "pnl_pct": 6.32,
-      "pnl_dollar": 888.56,
-      "exit_reason": "ROTATION",
-      "days_held": 14
-    },
-    {
-      "symbol": "GOOG",
-      "entry_date": "2025-12-08",
-      "exit_date": "2025-12-15",
-      "entry_price": 314.45,
-      "exit_price": 309.32,
-      "pnl_pct": -1.63,
-      "pnl_dollar": -235.98,
-      "exit_reason": "ROTATION",
-      "days_held": 7
-    },
-    {
-      "symbol": "GOOGL",
-      "entry_date": "2025-12-08",
-      "exit_date": "2025-12-15",
-      "entry_price": 313.72,
-      "exit_price": 308.22,
-      "pnl_pct": -1.75,
-      "pnl_dollar": -253.0,
-      "exit_reason": "ROTATION",
-      "days_held": 7
-    },
-    {
-      "symbol": "APH",
-      "entry_date": "2025-11-21",
+      "symbol": "STX",
+      "entry_date": "2025-12-15",
       "exit_date": "2025-12-22",
-      "entry_price": 131.35,
-      "exit_price": 135.14,
-      "pnl_pct": 2.89,
-      "pnl_dollar": 367.95,
-      "exit_reason": "ROTATION",
-      "days_held": 31
+      "entry_price": 284.83,
+      "exit_price": 282.11,
+      "pnl_pct": -0.96,
+      "days_held": 7,
+      "entry_score": 89.0
     },
     {
       "symbol": "MU",
-      "entry_date": "2025-11-21",
+      "entry_date": "2025-12-15",
       "exit_date": "2025-12-22",
-      "entry_price": 207.29,
+      "entry_price": 237.4,
       "exit_price": 276.48,
-      "pnl_pct": 33.38,
-      "pnl_dollar": 4220.71,
-      "exit_reason": "ROTATION",
-      "days_held": 31
-    },
-    {
-      "symbol": "GE",
-      "entry_date": "2025-12-15",
-      "exit_date": "2025-12-22",
-      "entry_price": 300.64,
-      "exit_price": 314.37,
-      "pnl_pct": 4.57,
-      "pnl_dollar": 618.04,
-      "exit_reason": "ROTATION",
-      "days_held": 7
-    },
-    {
-      "symbol": "VTR",
-      "entry_date": "2025-12-22",
-      "exit_date": "2025-12-30",
-      "entry_price": 78.7,
-      "exit_price": 78.37,
-      "pnl_pct": -0.42,
-      "pnl_dollar": -59.37,
-      "exit_reason": "ROTATION",
-      "days_held": 8
-    },
-    {
-      "symbol": "IREN",
-      "entry_date": "2025-09-26",
-      "exit_date": "2026-01-07",
-      "entry_price": 41.86,
-      "exit_price": 43.62,
-      "pnl_pct": 4.22,
-      "pnl_dollar": 589.51,
-      "exit_reason": "ROTATION",
-      "days_held": 103
-    },
-    {
-      "symbol": "COR",
-      "entry_date": "2025-12-15",
-      "exit_date": "2026-01-07",
-      "entry_price": 349.72,
-      "exit_price": 339.83,
-      "pnl_pct": -2.83,
-      "pnl_dollar": -385.83,
-      "exit_reason": "ROTATION",
-      "days_held": 23
-    },
-    {
-      "symbol": "WELL",
-      "entry_date": "2025-12-15",
-      "exit_date": "2026-01-14",
-      "entry_price": 190.47,
-      "exit_price": 188.71,
-      "pnl_pct": -0.92,
-      "pnl_dollar": -126.72,
-      "exit_reason": "ROTATION",
-      "days_held": 30
-    },
-    {
-      "symbol": "VTR",
-      "entry_date": "2026-01-07",
-      "exit_date": "2026-01-14",
-      "entry_price": 75.69,
-      "exit_price": 76.92,
-      "pnl_pct": 1.63,
-      "pnl_dollar": 237.39,
-      "exit_reason": "ROTATION",
-      "days_held": 7
-    },
-    {
-      "symbol": "APLD",
-      "entry_date": "2026-01-07",
-      "exit_date": "2026-01-14",
-      "entry_price": 29.56,
-      "exit_price": 36.1,
-      "pnl_pct": 22.12,
-      "pnl_dollar": 3237.3,
-      "exit_reason": "ROTATION",
-      "days_held": 7
-    },
-    {
-      "symbol": "JNJ",
-      "entry_date": "2025-12-15",
-      "exit_date": "2026-01-22",
-      "entry_price": 214.17,
-      "exit_price": 218.49,
-      "pnl_pct": 2.02,
-      "pnl_dollar": 276.48,
-      "exit_reason": "ROTATION",
-      "days_held": 38
+      "pnl_pct": 16.46,
+      "days_held": 7,
+      "entry_score": 87.3
     },
     {
       "symbol": "NUTX",
-      "entry_date": "2026-01-14",
-      "exit_date": "2026-01-22",
-      "entry_price": 165.9,
-      "exit_price": 159.42,
-      "pnl_pct": -3.91,
-      "pnl_dollar": -596.16,
-      "exit_reason": "ROTATION",
-      "days_held": 8
-    },
-    {
-      "symbol": "IVZ",
-      "entry_date": "2026-01-14",
-      "exit_date": "2026-01-22",
-      "entry_price": 28.02,
-      "exit_price": 29.01,
-      "pnl_pct": 3.5,
-      "pnl_dollar": 538.18,
-      "exit_reason": "ROTATION",
-      "days_held": 8
-    },
-    {
-      "symbol": "TJX",
-      "entry_date": "2026-01-14",
-      "exit_date": "2026-01-22",
-      "entry_price": 154.69,
-      "exit_price": 152.99,
-      "pnl_pct": -1.1,
-      "pnl_dollar": -168.81,
-      "exit_reason": "ROTATION",
-      "days_held": 8
-    },
-    {
-      "symbol": "GOOG",
       "entry_date": "2025-12-22",
-      "exit_date": "2026-02-05",
-      "entry_price": 311.33,
-      "exit_price": 331.33,
-      "pnl_pct": 6.42,
-      "pnl_dollar": 900.0,
-      "exit_reason": "ROTATION",
-      "days_held": 45
-    },
-    {
-      "symbol": "GOOGL",
-      "entry_date": "2025-12-22",
-      "exit_date": "2026-02-05",
-      "entry_price": 309.78,
-      "exit_price": 331.25,
-      "pnl_pct": 6.93,
-      "pnl_dollar": 966.15,
-      "exit_reason": "ROTATION",
-      "days_held": 45
-    },
-    {
-      "symbol": "GM",
-      "entry_date": "2026-01-22",
-      "exit_date": "2026-02-05",
-      "entry_price": 81.14,
-      "exit_price": 83.3,
-      "pnl_pct": 2.66,
-      "pnl_dollar": 414.72,
-      "exit_reason": "ROTATION",
-      "days_held": 14
-    },
-    {
-      "symbol": "NEM",
-      "entry_date": "2026-01-22",
-      "exit_date": "2026-02-12",
-      "entry_price": 121.69,
-      "exit_price": 118.12,
-      "pnl_pct": -2.93,
-      "pnl_dollar": -456.96,
-      "exit_reason": "ROTATION",
-      "days_held": 21
-    },
-    {
-      "symbol": "FOXA",
-      "entry_date": "2026-02-05",
-      "exit_date": "2026-02-12",
-      "entry_price": 65.92,
-      "exit_price": 56.43,
-      "pnl_pct": -14.4,
-      "pnl_dollar": -2230.15,
-      "exit_reason": "ROTATION",
-      "days_held": 7
-    },
-    {
-      "symbol": "WDC",
-      "entry_date": "2025-10-03",
-      "exit_date": "2026-02-17",
-      "entry_price": 131.2,
-      "exit_price": 284.11,
-      "pnl_pct": 116.54,
-      "pnl_dollar": 16972.51,
-      "exit_reason": "END_OF_SIM",
-      "days_held": 137
+      "exit_date": "2025-12-30",
+      "entry_price": 179.55,
+      "exit_price": 182.23,
+      "pnl_pct": 1.49,
+      "days_held": 8,
+      "entry_score": 116.6
     },
     {
       "symbol": "WBD",
-      "entry_date": "2025-12-15",
-      "exit_date": "2026-02-17",
-      "entry_price": 29.71,
-      "exit_price": 28.75,
-      "pnl_pct": -3.23,
-      "pnl_dollar": -444.48,
-      "exit_reason": "END_OF_SIM",
-      "days_held": 64
+      "entry_date": "2025-12-22",
+      "exit_date": "2025-12-30",
+      "entry_price": 28.75,
+      "exit_price": 28.94,
+      "pnl_pct": 0.66,
+      "days_held": 8,
+      "entry_score": 74.1
     },
     {
-      "symbol": "EA",
+      "symbol": "STX",
       "entry_date": "2025-12-30",
-      "exit_date": "2026-02-17",
-      "entry_price": 204.35,
-      "exit_price": 199.53,
-      "pnl_pct": -2.36,
-      "pnl_dollar": -332.58,
-      "exit_reason": "END_OF_SIM",
-      "days_held": 49
+      "exit_date": "2026-01-07",
+      "entry_price": 280.08,
+      "exit_price": 308.26,
+      "pnl_pct": 10.06,
+      "days_held": 8,
+      "entry_score": 93.4
     },
     {
-      "symbol": "HOLX",
+      "symbol": "IREN",
+      "entry_date": "2025-09-19",
+      "exit_date": "2026-01-14",
+      "entry_price": 38.64,
+      "exit_price": 52.88,
+      "pnl_pct": 36.85,
+      "days_held": 117,
+      "entry_score": 132.9
+    },
+    {
+      "symbol": "FLNC",
+      "entry_date": "2025-11-14",
+      "exit_date": "2026-01-14",
+      "entry_price": 17.91,
+      "exit_price": 22.65,
+      "pnl_pct": 26.47,
+      "days_held": 61,
+      "entry_score": 147.9
+    },
+    {
+      "symbol": "APLD",
+      "entry_date": "2025-12-30",
+      "exit_date": "2026-01-22",
+      "entry_price": 24.08,
+      "exit_price": 34.74,
+      "pnl_pct": 44.27,
+      "days_held": 23,
+      "entry_score": 118.1
+    },
+    {
+      "symbol": "STX",
+      "entry_date": "2026-01-14",
+      "exit_date": "2026-01-22",
+      "entry_price": 312.28,
+      "exit_price": 346.53,
+      "pnl_pct": 10.97,
+      "days_held": 8,
+      "entry_score": 105.2
+    },
+    {
+      "symbol": "WBD",
+      "entry_date": "2026-01-14",
+      "exit_date": "2026-01-29",
+      "entry_price": 28.63,
+      "exit_price": 27.6,
+      "pnl_pct": -3.6,
+      "days_held": 15,
+      "entry_score": 126.3
+    },
+    {
+      "symbol": "LMND",
       "entry_date": "2026-01-22",
+      "exit_date": "2026-01-29",
+      "entry_price": 96.57,
+      "exit_price": 91.28,
+      "pnl_pct": -5.48,
+      "days_held": 7,
+      "entry_score": 99.2
+    },
+    {
+      "symbol": "NUTX",
+      "entry_date": "2026-01-07",
+      "exit_date": "2026-02-05",
+      "entry_price": 178.09,
+      "exit_price": 101.97,
+      "pnl_pct": -42.74,
+      "days_held": 29,
+      "entry_score": 130.1
+    },
+    {
+      "symbol": "APLD",
+      "entry_date": "2026-01-29",
+      "exit_date": "2026-02-05",
+      "entry_price": 38.07,
+      "exit_price": 27.84,
+      "pnl_pct": -26.86,
+      "days_held": 7,
+      "entry_score": 110.6
+    },
+    {
+      "symbol": "ASTS",
+      "entry_date": "2026-02-05",
+      "exit_date": "2026-02-12",
+      "entry_price": 93.27,
+      "exit_price": 82.22,
+      "pnl_pct": -11.85,
+      "days_held": 7,
+      "entry_score": 127.1
+    },
+    {
+      "symbol": "STX",
+      "entry_date": "2026-02-05",
+      "exit_date": "2026-02-12",
+      "entry_price": 405.45,
+      "exit_price": 431.17,
+      "pnl_pct": 6.34,
+      "days_held": 7,
+      "entry_score": 121.0
+    },
+    {
+      "symbol": "WDC",
+      "entry_date": "2025-12-01",
       "exit_date": "2026-02-17",
-      "entry_price": 75.11,
-      "exit_price": 75.15,
-      "pnl_pct": 0.05,
-      "pnl_dollar": 8.28,
-      "exit_reason": "END_OF_SIM",
-      "days_held": 26
+      "entry_price": 163.41,
+      "exit_price": 284.11,
+      "pnl_pct": 73.86,
+      "days_held": 78,
+      "entry_score": 123.2
     },
     {
       "symbol": "MU",
@@ -2636,2443 +635,38 @@
       "entry_price": 397.58,
       "exit_price": 399.78,
       "pnl_pct": 0.55,
-      "pnl_dollar": 85.8,
-      "exit_reason": "END_OF_SIM",
-      "days_held": 26
+      "days_held": 26,
+      "entry_score": 98.3
     },
     {
-      "symbol": "ALB",
-      "entry_date": "2026-02-05",
+      "symbol": "IREN",
+      "entry_date": "2026-01-29",
       "exit_date": "2026-02-17",
-      "entry_price": 156.48,
-      "exit_price": 168.92,
-      "pnl_pct": 7.95,
-      "pnl_dollar": 1231.56,
-      "exit_reason": "END_OF_SIM",
-      "days_held": 12
+      "entry_price": 59.84,
+      "exit_price": 40.97,
+      "pnl_pct": -31.53,
+      "days_held": 19,
+      "entry_score": 108.5
     },
     {
-      "symbol": "LRCX",
-      "entry_date": "2026-02-05",
-      "exit_date": "2026-02-17",
-      "entry_price": 213.31,
-      "exit_price": 235.58,
-      "pnl_pct": 10.44,
-      "pnl_dollar": 1603.44,
-      "exit_reason": "END_OF_SIM",
-      "days_held": 12
-    },
-    {
-      "symbol": "GOOGL",
+      "symbol": "APLD",
       "entry_date": "2026-02-12",
       "exit_date": "2026-02-17",
-      "entry_price": 309.0,
-      "exit_price": 302.02,
-      "pnl_pct": -2.26,
-      "pnl_dollar": -355.98,
-      "exit_reason": "END_OF_SIM",
-      "days_held": 5
+      "entry_price": 36.17,
+      "exit_price": 33.56,
+      "pnl_pct": -7.22,
+      "days_held": 5,
+      "entry_score": 159.1
     },
     {
-      "symbol": "CHRW",
+      "symbol": "FLNC",
       "entry_date": "2026-02-12",
       "exit_date": "2026-02-17",
-      "entry_price": 167.78,
-      "exit_price": 177.38,
-      "pnl_pct": 5.72,
-      "pnl_dollar": 912.0,
-      "exit_reason": "END_OF_SIM",
-      "days_held": 5
-    }
-  ],
-  "rebalances": [
-    {
-      "date": "2025-01-15",
-      "action": "REBALANCE",
-      "holdings": [
-        "APP",
-        "RKLB",
-        "PLTR",
-        "WMT",
-        "UAL",
-        "GDDY",
-        "SMMT",
-        "SPOT",
-        "SOUN",
-        "TWLO"
-      ],
-      "top_5_scores": [
-        {
-          "sym": "APP",
-          "score": 2.73,
-          "mom": 317.3
-        },
-        {
-          "sym": "RKLB",
-          "score": 2.32,
-          "mom": 241.0
-        },
-        {
-          "sym": "PLTR",
-          "score": 2.24,
-          "mom": 166.0
-        },
-        {
-          "sym": "WMT",
-          "score": 2.17,
-          "mom": 38.2
-        },
-        {
-          "sym": "UAL",
-          "score": 2.06,
-          "mom": 92.1
-        }
-      ],
-      "regime": "BULL"
-    },
-    {
-      "date": "2025-01-23",
-      "action": "REBALANCE",
-      "holdings": [
-        "APP",
-        "RKLB",
-        "PLTR",
-        "WMT",
-        "UAL",
-        "GDDY",
-        "SOUN",
-        "ASTS",
-        "FOX",
-        "ALK"
-      ],
-      "top_5_scores": [
-        {
-          "sym": "APP",
-          "score": 2.56,
-          "mom": 297.2
-        },
-        {
-          "sym": "SOUN",
-          "score": 2.55,
-          "mom": 411.6
-        },
-        {
-          "sym": "PLTR",
-          "score": 2.22,
-          "mom": 165.1
-        },
-        {
-          "sym": "ASTS",
-          "score": 2.16,
-          "mom": 176.9
-        },
-        {
-          "sym": "UAL",
-          "score": 2.13,
-          "mom": 83.1
-        }
-      ],
-      "regime": "BULL"
-    },
-    {
-      "date": "2025-01-30",
-      "action": "REBALANCE",
-      "holdings": [
-        "APP",
-        "RKLB",
-        "PLTR",
-        "WMT",
-        "UAL",
-        "GDDY",
-        "SOUN",
-        "FOX",
-        "LUNR",
-        "IONQ"
-      ],
-      "top_5_scores": [
-        {
-          "sym": "SOUN",
-          "score": 3.41,
-          "mom": 544.4
-        },
-        {
-          "sym": "APP",
-          "score": 2.71,
-          "mom": 317.4
-        },
-        {
-          "sym": "RKLB",
-          "score": 2.61,
-          "mom": 310.2
-        },
-        {
-          "sym": "PLTR",
-          "score": 2.51,
-          "mom": 191.0
-        },
-        {
-          "sym": "LUNR",
-          "score": 2.34,
-          "mom": 307.0
-        }
-      ],
-      "regime": "BULL"
-    },
-    {
-      "date": "2025-02-06",
-      "action": "REBALANCE",
-      "holdings": [
-        "APP",
-        "RKLB",
-        "PLTR",
-        "WMT",
-        "UAL",
-        "SOUN",
-        "LUNR",
-        "IONQ",
-        "HOOD",
-        "ASTS"
-      ],
-      "top_5_scores": [
-        {
-          "sym": "RKLB",
-          "score": 3.34,
-          "mom": 393.1
-        },
-        {
-          "sym": "SOUN",
-          "score": 3.29,
-          "mom": 517.5
-        },
-        {
-          "sym": "APP",
-          "score": 3.12,
-          "mom": 364.4
-        },
-        {
-          "sym": "LUNR",
-          "score": 2.89,
-          "mom": 381.4
-        },
-        {
-          "sym": "UAL",
-          "score": 2.59,
-          "mom": 101.5
-        }
-      ],
-      "regime": "BULL"
-    },
-    {
-      "date": "2025-02-13",
-      "action": "REBALANCE",
-      "holdings": [
-        "APP",
-        "RKLB",
-        "WMT",
-        "UAL",
-        "LUNR",
-        "HOOD",
-        "LPLA",
-        "GRMN",
-        "ALK",
-        "TRGP"
-      ],
-      "top_5_scores": [
-        {
-          "sym": "APP",
-          "score": 4.02,
-          "mom": 256.3
-        },
-        {
-          "sym": "UAL",
-          "score": 3.0,
-          "mom": 102.8
-        },
-        {
-          "sym": "RKLB",
-          "score": 2.14,
-          "mom": 255.0
-        },
-        {
-          "sym": "LPLA",
-          "score": 1.98,
-          "mom": 34.4
-        },
-        {
-          "sym": "HOOD",
-          "score": 1.88,
-          "mom": 117.2
-        }
-      ],
-      "regime": "BULL"
-    },
-    {
-      "date": "2025-02-21",
-      "action": "REBALANCE",
-      "holdings": [
-        "APP",
-        "RKLB",
-        "UAL",
-        "HOOD",
-        "LPLA",
-        "SMMT",
-        "MMM",
-        "IONQ",
-        "BSX",
-        "LYV"
-      ],
-      "top_5_scores": [
-        {
-          "sym": "APP",
-          "score": 3.03,
-          "mom": 252.5
-        },
-        {
-          "sym": "UAL",
-          "score": 2.73,
-          "mom": 100.4
-        },
-        {
-          "sym": "RKLB",
-          "score": 2.61,
-          "mom": 270.6
-        },
-        {
-          "sym": "SMMT",
-          "score": 2.26,
-          "mom": 173.7
-        },
-        {
-          "sym": "LPLA",
-          "score": 2.1,
-          "mom": 37.4
-        }
-      ],
-      "regime": "BULL"
-    },
-    {
-      "date": "2025-02-28",
-      "action": "REBALANCE",
-      "holdings": [
-        "APP",
-        "RKLB",
-        "UAL",
-        "HOOD",
-        "LPLA",
-        "MMM",
-        "BSX",
-        "ALK",
-        "TWLO",
-        "FOX"
-      ],
-      "top_5_scores": [
-        {
-          "sym": "APP",
-          "score": 2.7,
-          "mom": 238.9
-        },
-        {
-          "sym": "RKLB",
-          "score": 2.54,
-          "mom": 266.3
-        },
-        {
-          "sym": "UAL",
-          "score": 2.38,
-          "mom": 94.9
-        },
-        {
-          "sym": "MMM",
-          "score": 1.85,
-          "mom": 37.1
-        },
-        {
-          "sym": "BSX",
-          "score": 1.72,
-          "mom": 29.7
-        }
-      ],
-      "regime": "BULL"
-    },
-    {
-      "date": "2025-03-07",
-      "action": "REBALANCE",
-      "holdings": [
-        "APP",
-        "RKLB",
-        "UAL",
-        "HOOD",
-        "ALK",
-        "FOX",
-        "PLTR",
-        "FOXA",
-        "IONQ",
-        "SPOT"
-      ],
-      "top_5_scores": [
-        {
-          "sym": "RKLB",
-          "score": 2.64,
-          "mom": 276.2
-        },
-        {
-          "sym": "APP",
-          "score": 2.51,
-          "mom": 237.9
-        },
-        {
-          "sym": "PLTR",
-          "score": 2.12,
-          "mom": 179.5
-        },
-        {
-          "sym": "UAL",
-          "score": 2.05,
-          "mom": 92.1
-        },
-        {
-          "sym": "FOX",
-          "score": 1.99,
-          "mom": 42.6
-        }
-      ],
-      "regime": "BULL"
-    },
-    {
-      "date": "2025-03-14",
-      "action": "REBALANCE",
-      "holdings": [
-        "APP",
-        "RKLB",
-        "UAL",
-        "HOOD",
-        "FOX",
-        "PLTR",
-        "FOXA",
-        "SPOT",
-        "ASTS",
-        "TPR"
-      ],
-      "top_5_scores": [
-        {
-          "sym": "APP",
-          "score": 2.54,
-          "mom": 239.4
-        },
-        {
-          "sym": "RKLB",
-          "score": 2.38,
-          "mom": 252.2
-        },
-        {
-          "sym": "PLTR",
-          "score": 2.31,
-          "mom": 202.9
-        },
-        {
-          "sym": "ASTS",
-          "score": 1.99,
-          "mom": 211.6
-        },
-        {
-          "sym": "FOX",
-          "score": 1.91,
-          "mom": 44.6
-        }
-      ],
-      "regime": "BULL"
-    },
-    {
-      "date": "2025-03-21",
-      "action": "REBALANCE",
-      "holdings": [
-        "APP",
-        "RKLB",
-        "FOX",
-        "PLTR",
-        "FOXA",
-        "ASTS",
-        "TPR",
-        "HIMS",
-        "NUTX",
-        "SMMT"
-      ],
-      "top_5_scores": [
-        {
-          "sym": "APP",
-          "score": 2.54,
-          "mom": 247.5
-        },
-        {
-          "sym": "ASTS",
-          "score": 2.46,
-          "mom": 266.7
-        },
-        {
-          "sym": "RKLB",
-          "score": 2.06,
-          "mom": 218.0
-        },
-        {
-          "sym": "FOX",
-          "score": 2.05,
-          "mom": 45.3
-        },
-        {
-          "sym": "FOXA",
-          "score": 2.0,
-          "mom": 44.7
-        }
-      ],
-      "regime": "BULL"
-    },
-    {
-      "date": "2025-03-28",
-      "action": "REBALANCE",
-      "holdings": [
-        "FOX",
-        "FOXA",
-        "ASTS",
-        "TPR",
-        "NUTX",
-        "VRSN",
-        "GILD",
-        "PM",
-        "WELL",
-        "T"
-      ],
-      "top_5_scores": [
-        {
-          "sym": "ASTS",
-          "score": 1.9,
-          "mom": 213.9
-        },
-        {
-          "sym": "FOX",
-          "score": 1.84,
-          "mom": 40.7
-        },
-        {
-          "sym": "FOXA",
-          "score": 1.7,
-          "mom": 38.6
-        },
-        {
-          "sym": "NUTX",
-          "score": 1.56,
-          "mom": 156.6
-        },
-        {
-          "sym": "TPR",
-          "score": 1.54,
-          "mom": 64.0
-        }
-      ],
-      "regime": "BULL"
-    },
-    {
-      "date": "2025-04-04",
-      "action": "REBALANCE",
-      "holdings": [
-        "FOXA",
-        "VRSN",
-        "GILD",
-        "PM",
-        "WELL",
-        "T",
-        "BRO",
-        "AJG",
-        "TMUS",
-        "PLTR"
-      ],
-      "top_5_scores": [
-        {
-          "sym": "GILD",
-          "score": 1.67,
-          "mom": 41.0
-        },
-        {
-          "sym": "VRSN",
-          "score": 1.48,
-          "mom": 23.3
-        },
-        {
-          "sym": "BRO",
-          "score": 1.44,
-          "mom": 21.9
-        },
-        {
-          "sym": "PM",
-          "score": 1.34,
-          "mom": 39.8
-        },
-        {
-          "sym": "WELL",
-          "score": 1.34,
-          "mom": 31.1
-        }
-      ],
-      "regime": "BULL"
-    },
-    {
-      "date": "2025-04-11",
-      "action": "REBALANCE",
-      "holdings": [
-        "GILD",
-        "PM",
-        "WELL",
-        "T",
-        "TMUS",
-        "PLTR",
-        "MO",
-        "NUTX",
-        "SMMT",
-        "EVRG"
-      ],
-      "top_5_scores": [
-        {
-          "sym": "GILD",
-          "score": 1.41,
-          "mom": 39.7
-        },
-        {
-          "sym": "PM",
-          "score": 1.2,
-          "mom": 39.1
-        },
-        {
-          "sym": "MO",
-          "score": 1.15,
-          "mom": 24.9
-        },
-        {
-          "sym": "T",
-          "score": 1.11,
-          "mom": 31.4
-        },
-        {
-          "sym": "TMUS",
-          "score": 1.07,
-          "mom": 33.2
-        }
-      ],
-      "regime": "BULL"
-    },
-    {
-      "date": "2025-04-21",
-      "action": "REBALANCE",
-      "holdings": [
-        "GILD",
-        "PM",
-        "T",
-        "PLTR",
-        "MO",
-        "NUTX",
-        "SMMT",
-        "VRSN",
-        "RKLB"
-      ],
-      "top_5_scores": [
-        {
-          "sym": "NUTX",
-          "score": 1.57,
-          "mom": 239.8
-        },
-        {
-          "sym": "PLTR",
-          "score": 1.25,
-          "mom": 124.2
-        },
-        {
-          "sym": "T",
-          "score": 1.22,
-          "mom": 35.1
-        },
-        {
-          "sym": "PM",
-          "score": 1.2,
-          "mom": 39.6
-        },
-        {
-          "sym": "VRSN",
-          "score": 1.15,
-          "mom": 24.9
-        }
-      ],
-      "regime": "BULL"
-    },
-    {
-      "date": "2025-04-28",
-      "action": "REBALANCE",
-      "holdings": [
-        "GILD",
-        "PM",
-        "T",
-        "PLTR",
-        "MO",
-        "NUTX",
-        "VRSN",
-        "RKLB",
-        "MCK"
-      ],
-      "top_5_scores": [
-        {
-          "sym": "NUTX",
-          "score": 1.58,
-          "mom": 245.1
-        },
-        {
-          "sym": "PLTR",
-          "score": 1.26,
-          "mom": 126.1
-        },
-        {
-          "sym": "T",
-          "score": 1.25,
-          "mom": 34.8
-        },
-        {
-          "sym": "GILD",
-          "score": 1.21,
-          "mom": 35.2
-        },
-        {
-          "sym": "RKLB",
-          "score": 1.2,
-          "mom": 108.9
-        }
-      ],
-      "regime": "BULL"
-    },
-    {
-      "date": "2025-05-05",
-      "action": "REBALANCE",
-      "holdings": [
-        "GILD",
-        "PM",
-        "T",
-        "MO",
-        "NUTX",
-        "VRSN",
-        "RKLB",
-        "MCK",
-        "ASTS",
-        "CNP"
-      ],
-      "top_5_scores": [
-        {
-          "sym": "NUTX",
-          "score": 2.28,
-          "mom": 360.7
-        },
-        {
-          "sym": "ASTS",
-          "score": 1.84,
-          "mom": 209.0
-        },
-        {
-          "sym": "MCK",
-          "score": 1.38,
-          "mom": 32.1
-        },
-        {
-          "sym": "T",
-          "score": 1.35,
-          "mom": 37.2
-        },
-        {
-          "sym": "CNP",
-          "score": 1.31,
-          "mom": 24.3
-        }
-      ],
-      "regime": "BULL"
-    },
-    {
-      "date": "2025-05-12",
-      "action": "REBALANCE",
-      "holdings": [
-        "PM",
-        "T",
-        "NUTX",
-        "VRSN",
-        "RKLB",
-        "MCK",
-        "ASTS",
-        "CNP",
-        "PLTR",
-        "CME"
-      ],
-      "top_5_scores": [
-        {
-          "sym": "NUTX",
-          "score": 3.63,
-          "mom": 571.4
-        },
-        {
-          "sym": "ASTS",
-          "score": 2.06,
-          "mom": 217.2
-        },
-        {
-          "sym": "RKLB",
-          "score": 1.08,
-          "mom": 98.0
-        },
-        {
-          "sym": "CNP",
-          "score": 1.06,
-          "mom": 20.8
-        },
-        {
-          "sym": "PM",
-          "score": 0.99,
-          "mom": 24.9
-        }
-      ],
-      "regime": "BULL"
-    },
-    {
-      "date": "2025-05-19",
-      "action": "REBALANCE",
-      "holdings": [
-        "PM",
-        "T",
-        "NUTX",
-        "VRSN",
-        "RKLB",
-        "CNP",
-        "PLTR",
-        "SMMT",
-        "RGLD"
-      ],
-      "top_5_scores": [
-        {
-          "sym": "NUTX",
-          "score": 4.1,
-          "mom": 669.1
-        },
-        {
-          "sym": "PM",
-          "score": 1.26,
-          "mom": 33.2
-        },
-        {
-          "sym": "PLTR",
-          "score": 1.01,
-          "mom": 92.4
-        },
-        {
-          "sym": "CNP",
-          "score": 0.98,
-          "mom": 19.5
-        },
-        {
-          "sym": "SMMT",
-          "score": 0.98,
-          "mom": 128.0
-        }
-      ],
-      "regime": "BULL"
-    },
-    {
-      "date": "2025-05-27",
-      "action": "REBALANCE",
-      "holdings": [
-        "PM",
-        "NUTX",
-        "VRSN",
-        "RKLB",
-        "CNP",
-        "PLTR",
-        "SMMT",
-        "COR",
-        "CME"
-      ],
-      "top_5_scores": [
-        {
-          "sym": "NUTX",
-          "score": 3.42,
-          "mom": 554.3
-        },
-        {
-          "sym": "PLTR",
-          "score": 1.74,
-          "mom": 148.1
-        },
-        {
-          "sym": "VRSN",
-          "score": 1.35,
-          "mom": 37.4
-        },
-        {
-          "sym": "PM",
-          "score": 1.31,
-          "mom": 34.3
-        },
-        {
-          "sym": "RKLB",
-          "score": 1.26,
-          "mom": 111.9
-        }
-      ],
-      "regime": "BULL"
-    },
-    {
-      "date": "2025-06-03",
-      "action": "REBALANCE",
-      "holdings": [
-        "PM",
-        "NUTX",
-        "VRSN",
-        "RKLB",
-        "CNP",
-        "PLTR",
-        "CME",
-        "CAH",
-        "RBLX"
-      ],
-      "top_5_scores": [
-        {
-          "sym": "NUTX",
-          "score": 3.44,
-          "mom": 541.7
-        },
-        {
-          "sym": "PLTR",
-          "score": 1.97,
-          "mom": 167.7
-        },
-        {
-          "sym": "VRSN",
-          "score": 1.46,
-          "mom": 41.7
-        },
-        {
-          "sym": "PM",
-          "score": 1.44,
-          "mom": 36.0
-        },
-        {
-          "sym": "RKLB",
-          "score": 1.26,
-          "mom": 112.5
-        }
-      ],
-      "regime": "BULL"
-    },
-    {
-      "date": "2025-06-10",
-      "action": "REBALANCE",
-      "holdings": [
-        "PM",
-        "NUTX",
-        "VRSN",
-        "RKLB",
-        "PLTR",
-        "CME",
-        "CAH",
-        "DUOL",
-        "NFLX"
-      ],
-      "top_5_scores": [
-        {
-          "sym": "NUTX",
-          "score": 3.98,
-          "mom": 634.7
-        },
-        {
-          "sym": "PLTR",
-          "score": 1.74,
-          "mom": 140.5
-        },
-        {
-          "sym": "PM",
-          "score": 1.35,
-          "mom": 33.3
-        },
-        {
-          "sym": "VRSN",
-          "score": 1.33,
-          "mom": 38.7
-        },
-        {
-          "sym": "DUOL",
-          "score": 1.23,
-          "mom": 88.8
-        }
-      ],
-      "regime": "BULL"
-    },
-    {
-      "date": "2025-06-17",
-      "action": "REBALANCE",
-      "holdings": [
-        "PM",
-        "NUTX",
-        "VRSN",
-        "RKLB",
-        "PLTR",
-        "CAH",
-        "DUOL",
-        "NFLX",
-        "RBLX"
-      ],
-      "top_5_scores": [
-        {
-          "sym": "NUTX",
-          "score": 6.39,
-          "mom": 1011.0
-        },
-        {
-          "sym": "PLTR",
-          "score": 2.12,
-          "mom": 162.8
-        },
-        {
-          "sym": "RKLB",
-          "score": 1.59,
-          "mom": 137.0
-        },
-        {
-          "sym": "PM",
-          "score": 1.48,
-          "mom": 36.3
-        },
-        {
-          "sym": "DUOL",
-          "score": 1.35,
-          "mom": 94.6
-        }
-      ],
-      "regime": "BULL"
-    },
-    {
-      "date": "2025-06-25",
-      "action": "REBALANCE",
-      "holdings": [
-        "PM",
-        "NUTX",
-        "VRSN",
-        "RKLB",
-        "PLTR",
-        "RBLX",
-        "IONQ",
-        "GEV",
-        "HWM"
-      ],
-      "top_5_scores": [
-        {
-          "sym": "NUTX",
-          "score": 5.68,
-          "mom": 907.9
-        },
-        {
-          "sym": "PM",
-          "score": 1.83,
-          "mom": 44.9
-        },
-        {
-          "sym": "PLTR",
-          "score": 1.82,
-          "mom": 138.6
-        },
-        {
-          "sym": "IONQ",
-          "score": 1.59,
-          "mom": 182.9
-        },
-        {
-          "sym": "RKLB",
-          "score": 1.31,
-          "mom": 115.3
-        }
-      ],
-      "regime": "BULL"
-    },
-    {
-      "date": "2025-07-02",
-      "action": "REBALANCE",
-      "holdings": [
-        "PM",
-        "NUTX",
-        "RKLB",
-        "PLTR",
-        "RBLX",
-        "GEV",
-        "HWM",
-        "APP",
-        "NFLX"
-      ],
-      "top_5_scores": [
-        {
-          "sym": "NUTX",
-          "score": 7.47,
-          "mom": 884.4
-        },
-        {
-          "sym": "PLTR",
-          "score": 1.93,
-          "mom": 151.1
-        },
-        {
-          "sym": "PM",
-          "score": 1.81,
-          "mom": 45.9
-        },
-        {
-          "sym": "RBLX",
-          "score": 1.58,
-          "mom": 72.4
-        },
-        {
-          "sym": "GEV",
-          "score": 1.51,
-          "mom": 83.3
-        }
-      ],
-      "regime": "BULL"
-    },
-    {
-      "date": "2025-07-10",
-      "action": "REBALANCE",
-      "holdings": [
-        "PM",
-        "NUTX",
-        "RKLB",
-        "PLTR",
-        "RBLX",
-        "GEV",
-        "HWM",
-        "EBAY",
-        "HOOD"
-      ],
-      "top_5_scores": [
-        {
-          "sym": "NUTX",
-          "score": 5.75,
-          "mom": 707.0
-        },
-        {
-          "sym": "PM",
-          "score": 2.35,
-          "mom": 46.5
-        },
-        {
-          "sym": "RBLX",
-          "score": 2.15,
-          "mom": 84.4
-        },
-        {
-          "sym": "PLTR",
-          "score": 2.04,
-          "mom": 148.4
-        },
-        {
-          "sym": "HWM",
-          "score": 1.81,
-          "mom": 68.1
-        }
-      ],
-      "regime": "BULL"
-    },
-    {
-      "date": "2025-07-17",
-      "action": "REBALANCE",
-      "holdings": [
-        "PM",
-        "NUTX",
-        "PLTR",
-        "RBLX",
-        "GEV",
-        "HWM",
-        "HOOD",
-        "NFLX",
-        "NET",
-        "CAH"
-      ],
-      "top_5_scores": [
-        {
-          "sym": "NUTX",
-          "score": 5.91,
-          "mom": 646.9
-        },
-        {
-          "sym": "PLTR",
-          "score": 2.54,
-          "mom": 155.9
-        },
-        {
-          "sym": "RBLX",
-          "score": 2.48,
-          "mom": 85.8
-        },
-        {
-          "sym": "PM",
-          "score": 2.39,
-          "mom": 45.4
-        },
-        {
-          "sym": "GEV",
-          "score": 2.13,
-          "mom": 73.0
-        }
-      ],
-      "regime": "BULL"
-    },
-    {
-      "date": "2025-07-24",
-      "action": "REBALANCE",
-      "holdings": [
-        "NUTX",
-        "PLTR",
-        "RBLX",
-        "GEV",
-        "HWM",
-        "HOOD",
-        "NET",
-        "ASTS",
-        "RKLB",
-        "JCI"
-      ],
-      "top_5_scores": [
-        {
-          "sym": "NUTX",
-          "score": 4.04,
-          "mom": 450.0
-        },
-        {
-          "sym": "PLTR",
-          "score": 2.54,
-          "mom": 147.9
-        },
-        {
-          "sym": "RBLX",
-          "score": 2.38,
-          "mom": 85.5
-        },
-        {
-          "sym": "ASTS",
-          "score": 2.33,
-          "mom": 181.7
-        },
-        {
-          "sym": "HWM",
-          "score": 2.13,
-          "mom": 58.5
-        }
-      ],
-      "regime": "BULL"
-    },
-    {
-      "date": "2025-07-31",
-      "action": "REBALANCE",
-      "holdings": [
-        "NUTX",
-        "PLTR",
-        "RBLX",
-        "GEV",
-        "HWM",
-        "HOOD",
-        "NET",
-        "RKLB",
-        "APH",
-        "JBL"
-      ],
-      "top_5_scores": [
-        {
-          "sym": "NUTX",
-          "score": 4.15,
-          "mom": 442.8
-        },
-        {
-          "sym": "HOOD",
-          "score": 2.65,
-          "mom": 147.4
-        },
-        {
-          "sym": "PLTR",
-          "score": 2.16,
-          "mom": 122.1
-        },
-        {
-          "sym": "RKLB",
-          "score": 2.12,
-          "mom": 166.0
-        },
-        {
-          "sym": "APH",
-          "score": 1.98,
-          "mom": 38.8
-        }
-      ],
-      "regime": "BULL"
-    },
-    {
-      "date": "2025-08-07",
-      "action": "REBALANCE",
-      "holdings": [
-        "NUTX",
-        "PLTR",
-        "GEV",
-        "HOOD",
-        "NET",
-        "RKLB",
-        "APH",
-        "JBL",
-        "APP",
-        "RCL"
-      ],
-      "top_5_scores": [
-        {
-          "sym": "NUTX",
-          "score": 4.26,
-          "mom": 426.3
-        },
-        {
-          "sym": "HOOD",
-          "score": 3.23,
-          "mom": 180.6
-        },
-        {
-          "sym": "RKLB",
-          "score": 2.9,
-          "mom": 228.1
-        },
-        {
-          "sym": "PLTR",
-          "score": 2.9,
-          "mom": 149.8
-        },
-        {
-          "sym": "GEV",
-          "score": 2.05,
-          "mom": 86.4
-        }
-      ],
-      "regime": "BULL"
-    },
-    {
-      "date": "2025-08-14",
-      "action": "REBALANCE",
-      "holdings": [
-        "NUTX",
-        "PLTR",
-        "GEV",
-        "HOOD",
-        "RKLB",
-        "APH",
-        "RCL",
-        "RBLX",
-        "SOFI",
-        "TPR"
-      ],
-      "top_5_scores": [
-        {
-          "sym": "RKLB",
-          "score": 3.6,
-          "mom": 260.7
-        },
-        {
-          "sym": "HOOD",
-          "score": 3.22,
-          "mom": 171.1
-        },
-        {
-          "sym": "PLTR",
-          "score": 2.5,
-          "mom": 119.8
-        },
-        {
-          "sym": "RBLX",
-          "score": 2.27,
-          "mom": 104.5
-        },
-        {
-          "sym": "NUTX",
-          "score": 2.21,
-          "mom": 195.2
-        }
-      ],
-      "regime": "BULL"
-    },
-    {
-      "date": "2025-08-21",
-      "action": "REBALANCE",
-      "holdings": [
-        "PLTR",
-        "GEV",
-        "HOOD",
-        "RKLB",
-        "APH",
-        "RCL",
-        "RBLX",
-        "SOFI",
-        "JBL"
-      ],
-      "top_5_scores": [
-        {
-          "sym": "RKLB",
-          "score": 2.91,
-          "mom": 217.1
-        },
-        {
-          "sym": "HOOD",
-          "score": 2.79,
-          "mom": 153.5
-        },
-        {
-          "sym": "GEV",
-          "score": 2.44,
-          "mom": 101.8
-        },
-        {
-          "sym": "PLTR",
-          "score": 2.36,
-          "mom": 121.2
-        },
-        {
-          "sym": "RCL",
-          "score": 2.05,
-          "mom": 65.7
-        }
-      ],
-      "regime": "BULL"
-    },
-    {
-      "date": "2025-08-28",
-      "action": "REBALANCE",
-      "holdings": [
-        "PLTR",
-        "GEV",
-        "HOOD",
-        "RKLB",
-        "APH",
-        "RBLX",
-        "SOFI",
-        "PWR",
-        "IONQ"
-      ],
-      "top_5_scores": [
-        {
-          "sym": "RKLB",
-          "score": 3.1,
-          "mom": 222.1
-        },
-        {
-          "sym": "HOOD",
-          "score": 3.05,
-          "mom": 169.0
-        },
-        {
-          "sym": "PLTR",
-          "score": 2.82,
-          "mom": 145.9
-        },
-        {
-          "sym": "GEV",
-          "score": 2.79,
-          "mom": 116.1
-        },
-        {
-          "sym": "APH",
-          "score": 2.24,
-          "mom": 44.1
-        }
-      ],
-      "regime": "BULL"
-    },
-    {
-      "date": "2025-09-05",
-      "action": "REBALANCE",
-      "holdings": [
-        "PLTR",
-        "GEV",
-        "HOOD",
-        "RKLB",
-        "APH",
-        "RBLX",
-        "IONQ",
-        "TASK",
-        "JOBY",
-        "NET"
-      ],
-      "top_5_scores": [
-        {
-          "sym": "PLTR",
-          "score": 3.97,
-          "mom": 185.1
-        },
-        {
-          "sym": "HOOD",
-          "score": 3.23,
-          "mom": 177.1
-        },
-        {
-          "sym": "RKLB",
-          "score": 3.05,
-          "mom": 231.3
-        },
-        {
-          "sym": "GEV",
-          "score": 2.74,
-          "mom": 120.8
-        },
-        {
-          "sym": "APH",
-          "score": 2.59,
-          "mom": 54.4
-        }
-      ],
-      "regime": "BULL"
-    },
-    {
-      "date": "2025-09-12",
-      "action": "REBALANCE",
-      "holdings": [
-        "PLTR",
-        "GEV",
-        "HOOD",
-        "RKLB",
-        "APH",
-        "RBLX",
-        "IONQ",
-        "NET",
-        "SOFI"
-      ],
-      "top_5_scores": [
-        {
-          "sym": "PLTR",
-          "score": 3.69,
-          "mom": 168.2
-        },
-        {
-          "sym": "HOOD",
-          "score": 3.26,
-          "mom": 202.2
-        },
-        {
-          "sym": "RKLB",
-          "score": 3.1,
-          "mom": 225.6
-        },
-        {
-          "sym": "SOFI",
-          "score": 2.47,
-          "mom": 121.5
-        },
-        {
-          "sym": "IONQ",
-          "score": 2.36,
-          "mom": 159.4
-        }
-      ],
-      "regime": "BULL"
-    },
-    {
-      "date": "2025-09-19",
-      "action": "REBALANCE",
-      "holdings": [
-        "PLTR",
-        "GEV",
-        "HOOD",
-        "RKLB",
-        "APH",
-        "NET",
-        "SOFI",
-        "TASK",
-        "LHX",
-        "DLTR"
-      ],
-      "top_5_scores": [
-        {
-          "sym": "HOOD",
-          "score": 2.54,
-          "mom": 154.4
-        },
-        {
-          "sym": "PLTR",
-          "score": 2.47,
-          "mom": 114.9
-        },
-        {
-          "sym": "RKLB",
-          "score": 2.23,
-          "mom": 172.9
-        },
-        {
-          "sym": "SOFI",
-          "score": 2.01,
-          "mom": 91.0
-        },
-        {
-          "sym": "APH",
-          "score": 1.93,
-          "mom": 46.5
-        }
-      ],
-      "regime": "BULL"
-    },
-    {
-      "date": "2025-09-26",
-      "action": "REBALANCE",
-      "holdings": [
-        "PLTR",
-        "GEV",
-        "HOOD",
-        "RKLB",
-        "APH",
-        "SOFI",
-        "APP",
-        "BK",
-        "RCL",
-        "IREN"
-      ],
-      "top_5_scores": [
-        {
-          "sym": "PLTR",
-          "score": 2.7,
-          "mom": 115.0
-        },
-        {
-          "sym": "RKLB",
-          "score": 2.55,
-          "mom": 192.5
-        },
-        {
-          "sym": "HOOD",
-          "score": 2.44,
-          "mom": 144.5
-        },
-        {
-          "sym": "SOFI",
-          "score": 2.36,
-          "mom": 109.4
-        },
-        {
-          "sym": "APP",
-          "score": 2.01,
-          "mom": 107.1
-        }
-      ],
-      "regime": "BULL"
-    },
-    {
-      "date": "2025-10-03",
-      "action": "REBALANCE",
-      "holdings": [
-        "PLTR",
-        "HOOD",
-        "APH",
-        "SOFI",
-        "APP",
-        "RCL",
-        "IREN",
-        "NET",
-        "WDC"
-      ],
-      "top_5_scores": [
-        {
-          "sym": "PLTR",
-          "score": 2.9,
-          "mom": 117.3
-        },
-        {
-          "sym": "SOFI",
-          "score": 2.62,
-          "mom": 119.4
-        },
-        {
-          "sym": "HOOD",
-          "score": 2.62,
-          "mom": 153.4
-        },
-        {
-          "sym": "NET",
-          "score": 2.22,
-          "mom": 79.2
-        },
-        {
-          "sym": "APP",
-          "score": 2.22,
-          "mom": 120.4
-        }
-      ],
-      "regime": "BULL"
-    },
-    {
-      "date": "2025-10-10",
-      "action": "REBALANCE",
-      "holdings": [
-        "PLTR",
-        "HOOD",
-        "APH",
-        "SOFI",
-        "APP",
-        "IREN",
-        "NET",
-        "WDC",
-        "STX"
-      ],
-      "top_5_scores": [
-        {
-          "sym": "IREN",
-          "score": 3.07,
-          "mom": 287.5
-        },
-        {
-          "sym": "HOOD",
-          "score": 2.81,
-          "mom": 163.8
-        },
-        {
-          "sym": "NET",
-          "score": 2.67,
-          "mom": 92.3
-        },
-        {
-          "sym": "PLTR",
-          "score": 2.52,
-          "mom": 108.1
-        },
-        {
-          "sym": "APH",
-          "score": 2.41,
-          "mom": 59.7
-        }
-      ],
-      "regime": "BULL"
-    },
-    {
-      "date": "2025-10-17",
-      "action": "REBALANCE",
-      "holdings": [
-        "PLTR",
-        "HOOD",
-        "APH",
-        "SOFI",
-        "APP",
-        "IREN",
-        "WDC",
-        "STX",
-        "IONQ"
-      ],
-      "top_5_scores": [
-        {
-          "sym": "IREN",
-          "score": 3.15,
-          "mom": 311.5
-        },
-        {
-          "sym": "HOOD",
-          "score": 2.67,
-          "mom": 161.9
-        },
-        {
-          "sym": "PLTR",
-          "score": 2.64,
-          "mom": 117.0
-        },
-        {
-          "sym": "APP",
-          "score": 2.6,
-          "mom": 167.3
-        },
-        {
-          "sym": "IONQ",
-          "score": 2.39,
-          "mom": 210.2
-        }
-      ],
-      "regime": "BULL"
-    },
-    {
-      "date": "2025-10-24",
-      "action": "REBALANCE",
-      "holdings": [
-        "PLTR",
-        "HOOD",
-        "APP",
-        "IREN",
-        "WDC",
-        "STX",
-        "IONQ",
-        "APLD",
-        "NET"
-      ],
-      "top_5_scores": [
-        {
-          "sym": "IREN",
-          "score": 3.82,
-          "mom": 384.1
-        },
-        {
-          "sym": "PLTR",
-          "score": 2.38,
-          "mom": 105.3
-        },
-        {
-          "sym": "HOOD",
-          "score": 2.32,
-          "mom": 144.6
-        },
-        {
-          "sym": "APP",
-          "score": 2.3,
-          "mom": 150.6
-        },
-        {
-          "sym": "STX",
-          "score": 2.17,
-          "mom": 101.8
-        }
-      ],
-      "regime": "BULL"
-    },
-    {
-      "date": "2025-10-31",
-      "action": "REBALANCE",
-      "holdings": [
-        "PLTR",
-        "HOOD",
-        "APP",
-        "IREN",
-        "WDC",
-        "STX",
-        "APLD",
-        "NET",
-        "GLW"
-      ],
-      "top_5_scores": [
-        {
-          "sym": "IREN",
-          "score": 3.69,
-          "mom": 377.6
-        },
-        {
-          "sym": "HOOD",
-          "score": 3.07,
-          "mom": 189.7
-        },
-        {
-          "sym": "APLD",
-          "score": 2.65,
-          "mom": 234.8
-        },
-        {
-          "sym": "WDC",
-          "score": 2.53,
-          "mom": 134.9
-        },
-        {
-          "sym": "PLTR",
-          "score": 2.31,
-          "mom": 103.3
-        }
-      ],
-      "regime": "BULL"
-    },
-    {
-      "date": "2025-11-07",
-      "action": "REBALANCE",
-      "holdings": [
-        "PLTR",
-        "HOOD",
-        "IREN",
-        "WDC",
-        "APLD",
-        "GLW",
-        "RKLB",
-        "IONQ",
-        "ASTS"
-      ],
-      "top_5_scores": [
-        {
-          "sym": "IREN",
-          "score": 4.92,
-          "mom": 538.1
-        },
-        {
-          "sym": "APLD",
-          "score": 3.17,
-          "mom": 288.7
-        },
-        {
-          "sym": "HOOD",
-          "score": 3.0,
-          "mom": 204.0
-        },
-        {
-          "sym": "RKLB",
-          "score": 2.66,
-          "mom": 213.0
-        },
-        {
-          "sym": "GLW",
-          "score": 2.43,
-          "mom": 69.3
-        }
-      ],
-      "regime": "BULL"
-    },
-    {
-      "date": "2025-11-14",
-      "action": "REBALANCE",
-      "holdings": [
-        "HOOD",
-        "IREN",
-        "WDC",
-        "APLD",
-        "GLW",
-        "RKLB",
-        "ASTS",
-        "NEM",
-        "JNJ"
-      ],
-      "top_5_scores": [
-        {
-          "sym": "IREN",
-          "score": 3.48,
-          "mom": 401.4
-        },
-        {
-          "sym": "APLD",
-          "score": 3.2,
-          "mom": 298.1
-        },
-        {
-          "sym": "RKLB",
-          "score": 2.01,
-          "mom": 165.6
-        },
-        {
-          "sym": "WDC",
-          "score": 2.0,
-          "mom": 119.8
-        },
-        {
-          "sym": "ASTS",
-          "score": 1.93,
-          "mom": 184.1
-        }
-      ],
-      "regime": "BULL"
-    },
-    {
-      "date": "2025-11-21",
-      "action": "REBALANCE",
-      "holdings": [
-        "HOOD",
-        "IREN",
-        "WDC",
-        "APLD",
-        "GLW",
-        "JNJ",
-        "APH",
-        "MU",
-        "GE"
-      ],
-      "top_5_scores": [
-        {
-          "sym": "IREN",
-          "score": 3.04,
-          "mom": 345.2
-        },
-        {
-          "sym": "APLD",
-          "score": 2.49,
-          "mom": 233.6
-        },
-        {
-          "sym": "WDC",
-          "score": 1.79,
-          "mom": 115.4
-        },
-        {
-          "sym": "GLW",
-          "score": 1.7,
-          "mom": 60.4
-        },
-        {
-          "sym": "APH",
-          "score": 1.65,
-          "mom": 53.0
-        }
-      ],
-      "regime": "BULL"
-    },
-    {
-      "date": "2025-12-01",
-      "action": "REBALANCE",
-      "holdings": [
-        "HOOD",
-        "IREN",
-        "WDC",
-        "APLD",
-        "GLW",
-        "APH",
-        "MU",
-        "LRCX",
-        "TEL"
-      ],
-      "top_5_scores": [
-        {
-          "sym": "IREN",
-          "score": 3.26,
-          "mom": 365.7
-        },
-        {
-          "sym": "APLD",
-          "score": 1.98,
-          "mom": 193.3
-        },
-        {
-          "sym": "WDC",
-          "score": 1.86,
-          "mom": 123.2
-        },
-        {
-          "sym": "LRCX",
-          "score": 1.85,
-          "mom": 91.1
-        },
-        {
-          "sym": "GLW",
-          "score": 1.8,
-          "mom": 63.9
-        }
-      ],
-      "regime": "BULL"
-    },
-    {
-      "date": "2025-12-08",
-      "action": "REBALANCE",
-      "holdings": [
-        "IREN",
-        "WDC",
-        "APLD",
-        "GLW",
-        "APH",
-        "MU",
-        "LRCX",
-        "GOOG",
-        "GOOGL"
-      ],
-      "top_5_scores": [
-        {
-          "sym": "IREN",
-          "score": 2.94,
-          "mom": 332.7
-        },
-        {
-          "sym": "WDC",
-          "score": 2.17,
-          "mom": 144.8
-        },
-        {
-          "sym": "MU",
-          "score": 1.64,
-          "mom": 103.8
-        },
-        {
-          "sym": "LRCX",
-          "score": 1.59,
-          "mom": 78.5
-        },
-        {
-          "sym": "GOOG",
-          "score": 1.54,
-          "mom": 44.5
-        }
-      ],
-      "regime": "BULL"
-    },
-    {
-      "date": "2025-12-15",
-      "action": "REBALANCE",
-      "holdings": [
-        "IREN",
-        "WDC",
-        "APH",
-        "MU",
-        "WBD",
-        "COR",
-        "JNJ",
-        "WELL",
-        "GE"
-      ],
-      "top_5_scores": [
-        {
-          "sym": "WDC",
-          "score": 1.91,
-          "mom": 131.5
-        },
-        {
-          "sym": "IREN",
-          "score": 1.85,
-          "mom": 206.5
-        },
-        {
-          "sym": "WBD",
-          "score": 1.72,
-          "mom": 71.7
-        },
-        {
-          "sym": "COR",
-          "score": 1.49,
-          "mom": 33.9
-        },
-        {
-          "sym": "JNJ",
-          "score": 1.48,
-          "mom": 22.7
-        }
-      ],
-      "regime": "BULL"
-    },
-    {
-      "date": "2025-12-22",
-      "action": "REBALANCE",
-      "holdings": [
-        "IREN",
-        "WDC",
-        "WBD",
-        "COR",
-        "JNJ",
-        "WELL",
-        "GOOG",
-        "GOOGL",
-        "VTR"
-      ],
-      "top_5_scores": [
-        {
-          "sym": "JNJ",
-          "score": 1.84,
-          "mom": 29.0
-        },
-        {
-          "sym": "WBD",
-          "score": 1.76,
-          "mom": 74.1
-        },
-        {
-          "sym": "WELL",
-          "score": 1.5,
-          "mom": 31.2
-        },
-        {
-          "sym": "GOOG",
-          "score": 1.49,
-          "mom": 44.8
-        },
-        {
-          "sym": "WDC",
-          "score": 1.48,
-          "mom": 103.3
-        }
-      ],
-      "regime": "BULL"
-    },
-    {
-      "date": "2025-12-30",
-      "action": "REBALANCE",
-      "holdings": [
-        "IREN",
-        "WDC",
-        "WBD",
-        "COR",
-        "JNJ",
-        "WELL",
-        "GOOG",
-        "GOOGL",
-        "EA"
-      ],
-      "top_5_scores": [
-        {
-          "sym": "EA",
-          "score": 6.12,
-          "mom": 18.6
-        },
-        {
-          "sym": "WBD",
-          "score": 2.0,
-          "mom": 82.4
-        },
-        {
-          "sym": "WDC",
-          "score": 1.96,
-          "mom": 131.9
-        },
-        {
-          "sym": "GOOG",
-          "score": 1.92,
-          "mom": 56.7
-        },
-        {
-          "sym": "GOOGL",
-          "score": 1.91,
-          "mom": 57.5
-        }
-      ],
-      "regime": "BULL"
-    },
-    {
-      "date": "2026-01-07",
-      "action": "REBALANCE",
-      "holdings": [
-        "WDC",
-        "WBD",
-        "JNJ",
-        "WELL",
-        "GOOG",
-        "GOOGL",
-        "EA",
-        "VTR",
-        "APLD"
-      ],
-      "top_5_scores": [
-        {
-          "sym": "EA",
-          "score": 7.89,
-          "mom": 22.7
-        },
-        {
-          "sym": "WBD",
-          "score": 2.39,
-          "mom": 97.2
-        },
-        {
-          "sym": "GOOG",
-          "score": 1.97,
-          "mom": 57.5
-        },
-        {
-          "sym": "GOOGL",
-          "score": 1.95,
-          "mom": 58.0
-        },
-        {
-          "sym": "WDC",
-          "score": 1.84,
-          "mom": 135.5
-        }
-      ],
-      "regime": "BULL"
-    },
-    {
-      "date": "2026-01-14",
-      "action": "REBALANCE",
-      "holdings": [
-        "WDC",
-        "WBD",
-        "JNJ",
-        "GOOG",
-        "GOOGL",
-        "EA",
-        "NUTX",
-        "IVZ",
-        "TJX"
-      ],
-      "top_5_scores": [
-        {
-          "sym": "EA",
-          "score": 8.52,
-          "mom": 24.6
-        },
-        {
-          "sym": "WBD",
-          "score": 3.28,
-          "mom": 126.3
-        },
-        {
-          "sym": "WDC",
-          "score": 1.93,
-          "mom": 149.8
-        },
-        {
-          "sym": "GOOG",
-          "score": 1.77,
-          "mom": 50.2
-        },
-        {
-          "sym": "GOOGL",
-          "score": 1.74,
-          "mom": 50.3
-        }
-      ],
-      "regime": "BULL"
-    },
-    {
-      "date": "2026-01-22",
-      "action": "REBALANCE",
-      "holdings": [
-        "WDC",
-        "WBD",
-        "GOOG",
-        "GOOGL",
-        "EA",
-        "HOLX",
-        "GM",
-        "NEM",
-        "MU"
-      ],
-      "top_5_scores": [
-        {
-          "sym": "EA",
-          "score": 8.13,
-          "mom": 23.0
-        },
-        {
-          "sym": "WBD",
-          "score": 3.05,
-          "mom": 98.7
-        },
-        {
-          "sym": "HOLX",
-          "score": 2.41,
-          "mom": 6.9
-        },
-        {
-          "sym": "WDC",
-          "score": 1.81,
-          "mom": 140.5
-        },
-        {
-          "sym": "GOOG",
-          "score": 1.55,
-          "mom": 44.4
-        }
-      ],
-      "regime": "BULL"
-    },
-    {
-      "date": "2026-01-29",
-      "action": "REBALANCE",
-      "holdings": [
-        "WDC",
-        "WBD",
-        "GOOG",
-        "GOOGL",
-        "EA",
-        "HOLX",
-        "GM",
-        "NEM",
-        "MU"
-      ],
-      "top_5_scores": [
-        {
-          "sym": "EA",
-          "score": 10.69,
-          "mom": 30.7
-        },
-        {
-          "sym": "WBD",
-          "score": 3.16,
-          "mom": 101.1
-        },
-        {
-          "sym": "HOLX",
-          "score": 2.2,
-          "mom": 6.4
-        },
-        {
-          "sym": "MU",
-          "score": 1.79,
-          "mom": 126.6
-        },
-        {
-          "sym": "WDC",
-          "score": 1.77,
-          "mom": 140.7
-        }
-      ],
-      "regime": "BULL"
-    },
-    {
-      "date": "2026-02-05",
-      "action": "REBALANCE",
-      "holdings": [
-        "WDC",
-        "WBD",
-        "EA",
-        "HOLX",
-        "NEM",
-        "MU",
-        "ALB",
-        "FOXA",
-        "LRCX"
-      ],
-      "top_5_scores": [
-        {
-          "sym": "EA",
-          "score": 4.68,
-          "mom": 27.0
-        },
-        {
-          "sym": "WBD",
-          "score": 3.16,
-          "mom": 99.0
-        },
-        {
-          "sym": "MU",
-          "score": 2.29,
-          "mom": 168.7
-        },
-        {
-          "sym": "WDC",
-          "score": 2.19,
-          "mom": 176.1
-        },
-        {
-          "sym": "HOLX",
-          "score": 1.96,
-          "mom": 5.8
-        }
-      ],
-      "regime": "BULL"
-    },
-    {
-      "date": "2026-02-12",
-      "action": "REBALANCE",
-      "holdings": [
-        "WDC",
-        "WBD",
-        "EA",
-        "HOLX",
-        "MU",
-        "ALB",
-        "LRCX",
-        "GOOGL",
-        "CHRW"
-      ],
-      "top_5_scores": [
-        {
-          "sym": "WBD",
-          "score": 3.38,
-          "mom": 107.2
-        },
-        {
-          "sym": "EA",
-          "score": 2.95,
-          "mom": 19.2
-        },
-        {
-          "sym": "HOLX",
-          "score": 2.49,
-          "mom": 7.2
-        },
-        {
-          "sym": "MU",
-          "score": 1.93,
-          "mom": 141.6
-        },
-        {
-          "sym": "ALB",
-          "score": 1.9,
-          "mom": 104.4
-        }
-      ],
-      "regime": "BULL"
+      "entry_price": 17.44,
+      "exit_price": 17.78,
+      "pnl_pct": 1.95,
+      "days_held": 5,
+      "entry_score": 141.5
     }
   ]
 }

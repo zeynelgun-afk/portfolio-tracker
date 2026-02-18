@@ -1,15 +1,11 @@
 {
-  "updated_at": "2026-02-18T12:05:35.702571",
+  "updated_at": "2026-02-18T12:22:02.256956",
   "scan_date": "2026-02-17",
-  "strategy": "momentum_aggressive",
-  "strategy_version": "E1",
+  "strategy": "momentum_per_stock",
+  "version": "E2",
   "universe_size": 593,
-  "valid_symbols": 592,
   "above_200dma": 344,
   "scored": 344,
-  "total_signals": 5,
-  "rebalance": "WEEKLY",
-  "top_n": 5,
   "market": {
     "spy_price": 682.85,
     "spy_200dma": 646.66,
@@ -17,98 +13,86 @@
     "breadth_pct": 58.1
   },
   "changes": {
-    "buys": [
+    "new_buys": [],
+    "sells": [],
+    "holds": [
       "APLD",
       "FLNC",
       "IREN",
       "MU",
       "WDC"
-    ],
-    "sells": [
-      "CCJ",
-      "FSLR",
-      "NVDA",
-      "SCCO",
-      "SJM",
-      "ZM"
-    ],
-    "holds": []
+    ]
   },
   "active_signals": [
     {
-      "id": "MOM-20260217-FLNC",
       "symbol": "FLNC",
-      "strategy": "MOMENTUM",
-      "action": "BUY",
+      "action": "HOLD",
+      "entry_date": "2026-02-17",
       "entry_price": 17.78,
+      "current_price": 17.78,
       "score": 178.19,
+      "unrealized_pnl": 0.0,
+      "days_held": 0,
       "ret_1w": -8.4,
       "ret_1m": -30.3,
       "ret_3m": 9.4,
-      "pct_from_52w_high": -44.8,
-      "weight": 20.0,
-      "generated_at": "2026-02-17",
-      "status": "ACTIVE"
+      "pct_from_52w_high": -44.8
     },
     {
-      "id": "MOM-20260217-WDC",
       "symbol": "WDC",
-      "strategy": "MOMENTUM",
-      "action": "BUY",
+      "action": "HOLD",
+      "entry_date": "2026-02-17",
       "entry_price": 284.11,
+      "current_price": 284.11,
       "score": 169.49,
+      "unrealized_pnl": 0.0,
+      "days_held": 0,
       "ret_1w": -0.7,
       "ret_1m": 27.9,
       "ret_3m": 80.9,
-      "pct_from_52w_high": -2.1,
-      "weight": 20.0,
-      "generated_at": "2026-02-17",
-      "status": "ACTIVE"
+      "pct_from_52w_high": -2.1
     },
     {
-      "id": "MOM-20260217-APLD",
       "symbol": "APLD",
-      "strategy": "MOMENTUM",
-      "action": "BUY",
+      "action": "HOLD",
+      "entry_date": "2026-02-17",
       "entry_price": 33.56,
+      "current_price": 33.56,
       "score": 159.9,
+      "unrealized_pnl": 0.0,
+      "days_held": 0,
       "ret_1w": -12.3,
       "ret_1m": -4.7,
       "ret_3m": 45.5,
-      "pct_from_52w_high": -18.8,
-      "weight": 20.0,
-      "generated_at": "2026-02-17",
-      "status": "ACTIVE"
+      "pct_from_52w_high": -18.8
     },
     {
-      "id": "MOM-20260217-MU",
       "symbol": "MU",
-      "strategy": "MOMENTUM",
-      "action": "BUY",
+      "action": "HOLD",
+      "entry_date": "2026-02-17",
       "entry_price": 399.78,
+      "current_price": 399.78,
       "score": 142.69,
+      "unrealized_pnl": 0.0,
+      "days_held": 0,
       "ret_1w": 4.2,
       "ret_1m": 18.8,
       "ret_3m": 68.8,
-      "pct_from_52w_high": -8.7,
-      "weight": 20.0,
-      "generated_at": "2026-02-17",
-      "status": "ACTIVE"
+      "pct_from_52w_high": -8.7
     },
     {
-      "id": "MOM-20260217-IREN",
       "symbol": "IREN",
-      "strategy": "MOMENTUM",
-      "action": "BUY",
+      "action": "HOLD",
+      "entry_date": "2026-02-17",
       "entry_price": 40.97,
+      "current_price": 40.97,
       "score": 134.08,
+      "unrealized_pnl": 0.0,
+      "days_held": 0,
       "ret_1w": -11.2,
       "ret_1m": -21.0,
       "ret_3m": -15.8,
-      "pct_from_52w_high": -46.4,
-      "weight": 20.0,
-      "generated_at": "2026-02-17",
-      "status": "ACTIVE"
+      "pct_from_52w_high": -46.4
     }
   ],
   "watching": [
@@ -218,24 +202,11 @@
       "pct_from_52w_high": -8.5
     }
   ],
-  "recently_sold": [
-    {
-      "symbol": "CCJ"
-    },
-    {
-      "symbol": "FSLR"
-    },
-    {
-      "symbol": "NVDA"
-    },
-    {
-      "symbol": "SCCO"
-    },
-    {
-      "symbol": "SJM"
-    },
-    {
-      "symbol": "ZM"
-    }
-  ]
+  "lifetime_stats": {
+    "total_closed": 0,
+    "win_rate": 0,
+    "avg_pnl_per_trade": 0,
+    "avg_win": 0,
+    "avg_loss": 0
+  }
 }

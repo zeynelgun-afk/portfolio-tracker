@@ -2,8 +2,7 @@ name: Momentum Scanner
 
 on:
   schedule:
-    - cron: '30 11 * * 5'    # Cuma 14:30 TRT — haftalık scan + rebalance
-    - cron: '0 21 * * 1-5'   # Hafta içi 00:00 TRT — fiyat takibi
+    - cron: '30 11 * * 5'    # Cuma 14:30 TRT — haftalık scan
   workflow_dispatch:
     inputs:
       action:
@@ -13,7 +12,6 @@ on:
         type: choice
         options:
           - scan
-          - track
           - backtest
 
 permissions:
@@ -37,10 +35,8 @@ jobs:
         run: |
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             echo "action=${{ github.event.inputs.action }}" >> $GITHUB_OUTPUT
-          elif [ "$(date +%u)" = "5" ] && [ "${{ github.event.schedule }}" = "30 11 * * 5" ]; then
-            echo "action=scan" >> $GITHUB_OUTPUT
           else
-            echo "action=track" >> $GITHUB_OUTPUT
+            echo "action=scan" >> $GITHUB_OUTPUT
           fi
       
       - name: Run Momentum Scanner
@@ -48,15 +44,10 @@ jobs:
         working-directory: swing-trade/scripts
         run: python3 momentum_scanner.py
       
-      - name: Run Tracker
-        if: steps.action.outputs.action == 'track'
-        working-directory: swing-trade/scripts
-        run: python3 momentum_tracker.py
-      
       - name: Run Backtest
         if: steps.action.outputs.action == 'backtest'
         working-directory: swing-trade/scripts
-        run: python3 momentum_strategy.py --start 2024-01-02 --top 5 --rebal 5 --no-regime --no-risk-adjust
+        run: python3 momentum_strategy.py --start 2024-01-02 --top 5 --rebal 5
       
       - name: Commit results
         run: |
@@ -68,6 +59,6 @@ jobs:
           else
             ACTION="${{ steps.action.outputs.action }}"
             DATE=$(date +%Y-%m-%d)
-            git commit -m "🚀 momentum: ${ACTION} ${DATE}"
+            git commit -m "🚀 momentum ${ACTION} ${DATE}"
             git push
           fi
