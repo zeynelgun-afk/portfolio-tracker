@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-Swing Trade Scanner v3 — Hybrid: yfinance (technicals) + FMP (fundamentals)
-Uses the same scoring engine as the backtester for consistency.
-Reads optimized params from strategy_params.json.
+Swing Trade Scanner v4 — Full US Market (593 symbols)
+Phase 1: yfinance technicals (all 593, ~20s)
+Phase 2: FMP fundamentals (top 30 only, ~60 API calls)
 
 Usage: python3 scanner.py --api-key KEY [--max-signals 5]
 """
@@ -13,6 +13,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
 from fmp_client import FMPClient
+from universe import get_full_universe
 
 try:
     import yfinance as yf
@@ -22,7 +23,6 @@ except ImportError:
     sys.exit("pip install yfinance pandas numpy")
 
 from backtester import (
-    ALL_SYMBOLS, SYMBOL_SECTOR, UNIVERSE,
     add_technicals, score_pullback, score_breakout, get_fundamental_score
 )
 
@@ -42,14 +42,48 @@ def load_params() -> dict:
     }
 
 
+def load_sector_cache() -> dict:
+    path = DATA_DIR / "sector_map.json"
+    if path.exists():
+        with open(path) as f:
+            return json.load(f)
+    return {}
+
+
+def save_sector_cache(cache: dict):
+    DATA_DIR.mkdir(parents=True, exist_ok=True)
+    with open(DATA_DIR / "sector_map.json", "w") as f:
+        json.dump(cache, f, indent=2)
+
+
+def get_sector(sym: str, client: FMPClient, cache: dict) -> str:
+    """Sektörü cache'den veya FMP'den al"""
+    if sym in cache:
+        return cache[sym]
+    try:
+        data = client.profile(sym)
+        if data:
+            sec = data.get("sector", "Unknown") or "Unknown"
+            cache[sym] = sec
+            return sec
+    except:
+        pass
+    cache[sym] = "Unknown"
+    return "Unknown"
+
+
 def run_scan(client: FMPClient, params: dict, max_signals: int = 5):
     rules = params.get("exit_rules", {})
     min_score = params.get("entry_rules", {}).get("min_score", 55)
     weak_sectors = params.get("entry_rules", {}).get("weak_sectors", [])
     disable_bo = params.get("disable_breakout", False)
 
+    ALL_SYMBOLS = get_full_universe()
+    sector_cache = load_sector_cache()
+
     print("=" * 65)
-    print(f"🔍 SWING TRADE SCANNER v3 — {datetime.now().strftime('%Y-%m-%d %H:%M')}")
+    print(f"🔍 SWING TRADE SCANNER v4 — {datetime.now().strftime('%Y-%m-%d %H:%M')}")
+    print(f"   Universe: {len(ALL_SYMBOLS)} US stocks")
     print(f"   Strategy v{params.get('version', 0)} | "
           f"stop={rules.get('stop_loss_pct',-7)}% trail={rules.get('trailing_stop_pct',-7)}% "
           f"hold={rules.get('max_hold_days',30)}d")
@@ -57,15 +91,20 @@ def run_scan(client: FMPClient, params: dict, max_signals: int = 5):
         print(f"   Avoiding: {weak_sectors}")
     print("=" * 65)
 
-    # ── 1. YFINANCE: Daily prices + technicals ──
-    scan_symbols = [s for s in ALL_SYMBOLS if SYMBOL_SECTOR.get(s,"") not in weak_sectors]
-    print(f"\n📥 Downloading prices for {len(scan_symbols)} symbols...")
-    prices = yf.download(scan_symbols, period="1y", progress=False)
+    # ── 1. YFINANCE: 1yr prices + technicals (all symbols) ──
+    print(f"\n📥 Phase 1: Downloading 1yr prices for {len(ALL_SYMBOLS)} symbols...")
+    prices = yf.download(ALL_SYMBOLS, period="1y", progress=False)
     if prices.empty:
         print("❌ No data"); return []
 
+    today = prices.index[-1]
+    today_str = today.strftime('%Y-%m-%d')
+    print(f"   Latest date: {today_str}")
+
+    # Compute technicals
+    print(f"   Computing technicals...")
     sym_data = {}
-    for sym in scan_symbols:
+    for sym in ALL_SYMBOLS:
         try:
             df = pd.DataFrame({
                 'Close': prices['Close'][sym], 'High': prices['High'][sym],
@@ -77,18 +116,19 @@ def run_scan(client: FMPClient, params: dict, max_signals: int = 5):
             sym_data[sym] = df
         except:
             continue
-    print(f"   ✅ {len(sym_data)} symbols ready")
+    print(f"   ✅ {len(sym_data)} symbols with sufficient data")
 
-    # ── 2. TECHNICAL SCORING (today's data) ──
-    print(f"\n🔧 Phase 1: Technical scoring...")
-    today = prices.index[-1]
-    today_str = today.strftime('%Y-%m-%d')
+    # ── 2. TECHNICAL SCORING ──
+    print(f"\n🔧 Phase 1: Technical scoring {len(sym_data)} symbols...")
     candidates = []
+    above_200dma = 0
 
     for sym, df in sym_data.items():
         if today not in df.index: continue
         row = df.loc[today]
         if pd.isna(row.get('EMA200')): continue
+        if row['Close'] < row['EMA200']: continue
+        above_200dma += 1
 
         pb_score, pb_reasons = score_pullback(row, params)
         bo_score, bo_reasons = score_breakout(row, params)
@@ -108,31 +148,37 @@ def run_scan(client: FMPClient, params: dict, max_signals: int = 5):
                 "close": row['Close'],
                 "atr_pct": row.get('ATR_pct', 2.5),
                 "rsi": row.get('RSI', 50),
-                "ema8": row.get('EMA8', 0), "ema21": row.get('EMA21', 0),
-                "ema50": row.get('EMA50', 0), "ema200": row.get('EMA200', 0),
             })
 
     candidates.sort(key=lambda x: x["tech_score"], reverse=True)
-    print(f"   ✅ {len(candidates)} passed technical filter")
+    print(f"   Above 200 DMA: {above_200dma}")
+    print(f"   ✅ {len(candidates)} passed technical filter (score ≥15)")
 
-    # ── 3. FMP FUNDAMENTAL SCORING (top 25) ──
-    top_n = min(25, len(candidates))
-    print(f"\n🔬 Phase 2: Fundamental scan (top {top_n})...")
+    # ── 3. FMP FUNDAMENTAL SCORING (top 30) ──
+    deep_n = min(30, len(candidates))
+    print(f"\n🔬 Phase 2: Deep fundamental scan (top {deep_n})...")
 
-    # Build fund_data for top candidates
     fund_data = {}
-    for cand in candidates[:top_n]:
+    for cand in candidates[:deep_n]:
         sym = cand["symbol"]
+        # Get sector
+        sector = get_sector(sym, client, sector_cache)
+        cand["sector"] = sector
+
+        if sector in weak_sectors:
+            cand["filtered"] = True
+            continue
+
         fg = client.financial_growth(sym, limit=8)
         ratios = client.ratios_ttm(sym)
         if fg:
             fund_data[sym] = {
                 "growth_quarters": [
                     {"date": q["date"],
-                     "rev_growth": q.get("revenueGrowth",0) or 0,
-                     "eps_growth": q.get("epsgrowth",0) or 0,
-                     "fcf_growth": q.get("freeCashFlowGrowth",0) or 0,
-                     "op_income_growth": q.get("operatingIncomeGrowth",0) or 0}
+                     "rev_growth": q.get("revenueGrowth", 0) or 0,
+                     "eps_growth": q.get("epsgrowth", 0) or 0,
+                     "fcf_growth": q.get("freeCashFlowGrowth", 0) or 0,
+                     "op_income_growth": q.get("operatingIncomeGrowth", 0) or 0}
                     for q in fg
                 ],
                 "ratios": ratios or {}
@@ -140,13 +186,12 @@ def run_scan(client: FMPClient, params: dict, max_signals: int = 5):
 
     # Score
     final_signals = []
-    for cand in candidates[:top_n]:
+    for cand in candidates[:deep_n]:
+        if cand.get("filtered"): continue
         sym = cand["symbol"]
         fund_score, fund_reasons = get_fundamental_score(sym, today_str, fund_data)
         total = cand["tech_score"] + fund_score
-
-        print(f"   {sym:>5}: Tech:{cand['tech_score']:>2} + Fund:{fund_score:>2} = {total:>3} "
-              f"({cand['strategy']})")
+        sector = cand.get("sector", "Unknown")
 
         if total >= min_score:
             px = cand["close"]
@@ -173,7 +218,7 @@ def run_scan(client: FMPClient, params: dict, max_signals: int = 5):
                 "tech_score": cand["tech_score"],
                 "fund_score": fund_score,
                 "max_hold_days": rules.get("max_hold_days", 30),
-                "sector": SYMBOL_SECTOR.get(sym, "?"),
+                "sector": sector,
                 "rsi": round(cand["rsi"], 1) if not pd.isna(cand["rsi"]) else None,
                 "thesis": "; ".join(all_reasons[:6]),
                 "generated_at": today_str,
@@ -183,19 +228,26 @@ def run_scan(client: FMPClient, params: dict, max_signals: int = 5):
 
     final_signals.sort(key=lambda x: x["score"], reverse=True)
 
+    # Save sector cache
+    save_sector_cache(sector_cache)
+
     # ── SAVE ──
     signals_out = {
         "updated_at": datetime.now().isoformat(),
         "scan_date": today_str,
         "strategy_version": params.get("version", 0),
-        "total_scanned": len(scan_symbols),
+        "universe_size": len(ALL_SYMBOLS),
+        "valid_symbols": len(sym_data),
+        "above_200dma": above_200dma,
         "passed_technical": len(candidates),
+        "deep_scanned": deep_n,
         "total_signals": len(final_signals),
         "active_signals": final_signals[:max_signals],
         "watching": [
             {"symbol": s["symbol"], "score": s["score"], "sector": s["sector"],
-             "entry_price": s["entry_price"], "strategy": s["strategy"]}
-            for s in final_signals[max_signals:max_signals+10]
+             "entry_price": s["entry_price"], "strategy": s["strategy"],
+             "rsi": s.get("rsi")}
+            for s in final_signals[max_signals:max_signals+15]
         ],
         "recently_closed": []
     }
@@ -207,31 +259,34 @@ def run_scan(client: FMPClient, params: dict, max_signals: int = 5):
     # Append to history
     hist_path = DATA_DIR / "signal_history.json"
     history = json.load(open(hist_path)) if hist_path.exists() else []
-    history.extend(final_signals)
+    history.extend(final_signals[:max_signals])
     with open(hist_path, "w") as f:
         json.dump(history, f, indent=2)
 
     # ── PRINT ──
     print(f"\n{'═' * 65}")
-    print(f"🎯 TOP {min(max_signals, len(final_signals))} SİNYAL (v{params.get('version',0)})")
+    print(f"🎯 TOP {min(max_signals, len(final_signals))} SİNYAL — {len(ALL_SYMBOLS)} hisse tarandı")
     print(f"{'═' * 65}")
 
     for i, s in enumerate(final_signals[:max_signals], 1):
+        rr = (s['target_1'] - s['entry_price']) / (s['entry_price'] - s['stop_loss'])
         print(f"\n{'─' * 65}")
         print(f" {i}. {s['symbol']} ({s['sector']}) — {s['strategy']} Score: {s['score']}")
         print(f"    Entry: ${s['entry_price']:.2f} | Stop: ${s['stop_loss']:.2f} | "
-              f"T1: ${s['target_1']:.2f} | T2: ${s['target_2']:.2f}")
+              f"T1: ${s['target_1']:.2f} ({rr:.1f}R)")
         if s.get('rsi'):
             print(f"    RSI: {s['rsi']} | Confidence: {s['confidence']}/10")
         print(f"    📝 {s['thesis'][:100]}")
 
     if final_signals[max_signals:]:
         print(f"\n📋 WATCHLIST:")
-        for s in final_signals[max_signals:max_signals+5]:
-            print(f"   {s['symbol']} ({s['sector']}) {s['strategy']} "
-                  f"Score:{s['score']} ${s['entry_price']:.2f}")
+        for s in final_signals[max_signals:max_signals+10]:
+            print(f"   {s['symbol']:>5} ({s['sector']}) {s['strategy']:>10} "
+                  f"Score:{s['score']} ${s['entry_price']:.2f} RSI:{s.get('rsi','?')}")
 
-    print(f"\n📡 FMP API calls: {client.call_count}")
+    print(f"\n📊 Market breadth: {above_200dma}/{len(sym_data)} "
+          f"({above_200dma/len(sym_data)*100:.0f}%) above 200 DMA")
+    print(f"📡 FMP API calls: {client.call_count}")
     print(f"💾 signals.json saved")
 
     return final_signals

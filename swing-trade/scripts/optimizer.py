@@ -25,8 +25,9 @@ except ImportError:
     sys.exit("pip install yfinance pandas numpy")
 
 # Import backtest engine components
+from universe import get_full_universe
 from backtester import (
-    ALL_SYMBOLS, SYMBOL_SECTOR, UNIVERSE,
+    ALL_SYMBOLS, SYMBOL_SECTOR,
     add_technicals, fetch_fundamentals,
     score_pullback, score_breakout, get_fundamental_score
 )

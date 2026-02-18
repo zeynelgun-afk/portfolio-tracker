@@ -27,30 +27,16 @@ DATA_DIR = Path(__file__).parent.parent / "data"
 REPORT_DIR = Path(__file__).parent.parent / "reports"
 
 # ═══════════════════════════════════════════════════════════
-# UNIVERSE
+# UNIVERSE (from universe.py)
 # ═══════════════════════════════════════════════════════════
-UNIVERSE = {
-    "Technology": [
-        "NVDA","AMD","AVGO","MRVL","ANET","CRWD","PANW","NOW",
-        "DDOG","NET","PLTR","DELL","SMCI","VRT","COIN",
-        "ADBE","CRM","ORCL","MSFT","GOOGL","META","AMZN","AAPL",
-        "TSM","QCOM","MU","LRCX","AMAT","ARM"
-    ],
-    "Communication": ["NFLX","DIS","SPOT","RBLX","TTWO","TTD","ROKU"],
-    "Energy": ["VST","CEG","CCJ","NRG","GEV","ETN","PWR","FSLR","NEE","SM","FCX","SCCO"],
-    "Healthcare": ["LLY","ABBV","MRNA","REGN","VRTX","ISRG","BSX","SYK"],
-    "Defense": ["LMT","RTX","NOC","GD","LHX","AVAV","AXON"],
-    "Financials": ["GS","MS","V","MA","HOOD","SOFI","NU"],
-    "Materials": ["RGLD","NEM","GOLD","ALB"]
-}
+from universe import get_full_universe
 
-SYMBOL_SECTOR = {}
-ALL_SYMBOLS = []
-for sec, syms in UNIVERSE.items():
-    for s in syms:
-        if s not in SYMBOL_SECTOR:
-            SYMBOL_SECTOR[s] = sec
-            ALL_SYMBOLS.append(s)
+ALL_SYMBOLS = get_full_universe()
+SYMBOL_SECTOR = {}  # Populated from cache
+_cache_path = Path(__file__).parent.parent / "data" / "sector_map.json"
+if _cache_path.exists():
+    import json as _json
+    SYMBOL_SECTOR = _json.load(open(_cache_path))
 
 
 # ═══════════════════════════════════════════════════════════
@@ -121,14 +107,15 @@ def add_technicals(df):
 # FUNDAMENTAL DATA (FMP - quarterly, cached)
 # ═══════════════════════════════════════════════════════════
 
-def fetch_fundamentals(client: FMPClient) -> dict:
+def fetch_fundamentals(client: FMPClient, symbols: list = None) -> dict:
     """Her hisse için çeyreklik fundamental veri çek"""
     fund = {}
-    print(f"\n📊 Fetching fundamentals for {len(ALL_SYMBOLS)} symbols...")
+    fetch_list = symbols or ALL_SYMBOLS
+    print(f"\n📊 Fetching fundamentals for {len(fetch_list)} symbols...")
 
-    for i, sym in enumerate(ALL_SYMBOLS):
+    for i, sym in enumerate(fetch_list):
         if (i + 1) % 15 == 0:
-            print(f"   ... {i+1}/{len(ALL_SYMBOLS)}")
+            print(f"   ... {i+1}/{len(fetch_list)}")
 
         fg = client.financial_growth(sym, limit=8)
         ratios = client.ratios_ttm(sym)
@@ -150,7 +137,7 @@ def fetch_fundamentals(client: FMPClient) -> dict:
                 "op_income_growth": q.get("operatingIncomeGrowth", 0) or 0,
             })
 
-    print(f"   ✅ Got fundamentals for {len(fund)} symbols")
+    print(f"   ✅ Got fundamentals for {len(fund)}/{len(fetch_list)} symbols")
     return fund
 
 
