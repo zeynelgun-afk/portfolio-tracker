@@ -3,8 +3,8 @@ name: Swing Trade Scanner
 on:
   schedule:
     - cron: '30 11 * * 1-5'  # Scan: 14:30 TRT
-    - cron: '0 21 * * 1-5'   # Track: 00:00 TRT
-    - cron: '0 10 * * 0'     # Autopsy: Sunday
+    - cron: '0 21 * * 1-5'   # Track + auto-learn: 00:00 TRT
+    - cron: '0 10 * * 0'     # Full learn cycle: Sunday 13:00 TRT
   workflow_dispatch:
     inputs:
       action:
@@ -15,7 +15,7 @@ on:
         options:
           - scan
           - track
-          - autopsy
+          - learn
           - optimize
 
 permissions:
@@ -44,29 +44,78 @@ jobs:
           elif [ "${{ github.event.schedule }}" = "0 21 * * 1-5" ]; then
             echo "action=track" >> $GITHUB_OUTPUT
           elif [ "${{ github.event.schedule }}" = "0 10 * * 0" ]; then
-            echo "action=autopsy" >> $GITHUB_OUTPUT
+            echo "action=learn" >> $GITHUB_OUTPUT
           fi
       
+      # ── SCAN ──
       - name: Run Scanner
         if: steps.action.outputs.action == 'scan'
         env:
           FMP_API_KEY: ${{ secrets.FMP_API_KEY }}
         run: python3 swing-trade/scripts/scanner.py --api-key $FMP_API_KEY
 
+      # ── TRACK + AUTO-LEARN ──
       - name: Run Tracker
         if: steps.action.outputs.action == 'track'
         run: python3 swing-trade/scripts/signal_tracker.py
 
-      - name: Run Autopsy
-        if: steps.action.outputs.action == 'autopsy'
-        run: python3 swing-trade/scripts/autopsy.py --apply --report
+      - name: Check learning trigger
+        if: steps.action.outputs.action == 'track'
+        id: learn_check
+        run: |
+          if [ -f "swing-trade/data/learning_trigger.json" ]; then
+            echo "trigger=true" >> $GITHUB_OUTPUT
+            echo "🧠 Learning triggered!"
+            cat swing-trade/data/learning_trigger.json
+          else
+            echo "trigger=false" >> $GITHUB_OUTPUT
+          fi
 
-      - name: Run Optimizer
+      - name: Auto-learn (triggered by tracker)
+        if: steps.action.outputs.action == 'track' && steps.learn_check.outputs.trigger == 'true'
+        env:
+          FMP_API_KEY: ${{ secrets.FMP_API_KEY }}
+        run: |
+          echo "═══ AUTO-LEARN: AUTOPSY ═══"
+          python3 swing-trade/scripts/autopsy.py --apply --report
+          
+          echo ""
+          echo "═══ AUTO-LEARN: RE-OPTIMIZE ═══"
+          python3 swing-trade/scripts/optimizer.py --api-key $FMP_API_KEY --passes 3
+          
+          # Remove trigger
+          rm -f swing-trade/data/learning_trigger.json
+          rm -f swing-trade/data/needs_reoptimization.json
+
+      # ── SUNDAY FULL LEARN ──
+      - name: Sunday Full Learning Cycle
+        if: steps.action.outputs.action == 'learn'
+        env:
+          FMP_API_KEY: ${{ secrets.FMP_API_KEY }}
+        run: |
+          echo "═══ PHASE 1: AUTOPSY ═══"
+          python3 swing-trade/scripts/autopsy.py --apply --report || true
+          
+          echo ""
+          echo "═══ PHASE 2: FULL RE-OPTIMIZE (5 passes) ═══"
+          python3 swing-trade/scripts/optimizer.py --api-key $FMP_API_KEY --passes 5
+          
+          echo ""
+          echo "═══ PHASE 3: FRESH SCAN WITH NEW PARAMS ═══"
+          python3 swing-trade/scripts/scanner.py --api-key $FMP_API_KEY
+          
+          # Cleanup triggers
+          rm -f swing-trade/data/learning_trigger.json
+          rm -f swing-trade/data/needs_reoptimization.json
+
+      # ── MANUAL OPTIMIZE ──
+      - name: Run Optimizer Only
         if: steps.action.outputs.action == 'optimize'
         env:
           FMP_API_KEY: ${{ secrets.FMP_API_KEY }}
         run: python3 swing-trade/scripts/optimizer.py --api-key $FMP_API_KEY --passes 5
 
+      # ── COMMIT ──
       - name: Commit results
         run: |
           git config user.name "Swing Trade Bot"
@@ -76,6 +125,12 @@ jobs:
           if [ -n "$CHANGES" ]; then
             ACTION="${{ steps.action.outputs.action }}"
             DATE=$(date -u +"%Y-%m-%d")
+            
+            # Check if learning happened
+            if [ -f "swing-trade/data/optimization_history.json" ] && [ "$ACTION" = "track" ]; then
+              ACTION="track+learn"
+            fi
+            
             git commit -m "🤖 swing-trade: ${ACTION} ${DATE}"
             git push
           fi

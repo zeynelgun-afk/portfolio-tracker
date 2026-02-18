@@ -178,9 +178,39 @@ def track_signals():
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--api-key", default="")  # Not needed for yfinance
+    parser.add_argument("--api-key", default="")
     args = parser.parse_args()
     track_signals()
+    check_learning_trigger()
 
 if __name__ == "__main__":
     main()
+
+
+def check_learning_trigger():
+    """Yeterli veri birikince otomatik öğrenme tetikle"""
+    results = load_json("backtest_results.json") or []
+    params = load_json("strategy_params.json") or {}
+
+    closed = [r for r in results if "exit" in r]
+    if len(closed) < 10:
+        return False
+
+    # Son optimizasyondan beri kaç yeni trade?
+    last_autopsy = params.get("last_autopsy", "2000-01-01")
+    new_trades = [t for t in closed if t["exit"].get("date", "") > last_autopsy]
+
+    if len(new_trades) >= 15:
+        print(f"\n🧠 {len(new_trades)} new trades since last learning — triggering autopsy...")
+
+        # Write trigger file for workflow
+        DATA_DIR.mkdir(parents=True, exist_ok=True)
+        with open(DATA_DIR / "learning_trigger.json", "w") as f:
+            json.dump({
+                "triggered_at": datetime.now().isoformat(),
+                "new_trades": len(new_trades),
+                "total_trades": len(closed),
+                "reason": "sufficient_new_data"
+            }, f, indent=2)
+        return True
+    return False

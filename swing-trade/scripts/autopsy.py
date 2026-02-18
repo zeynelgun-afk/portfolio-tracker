@@ -1,495 +1,297 @@
 #!/usr/bin/env python3
 """
-Trade Autopsy & Parameter Optimizer
-Analyzes closed trades, finds patterns, suggests parameter changes.
+Trade Autopsy v2 — Analyzes closed trades, triggers optimizer if needed.
+Reads from backtest_results.json (signal_tracker output).
 
 Usage:
-    python3 autopsy.py                    # Analiz et
-    python3 autopsy.py --apply            # Parametreleri otomatik güncelle
-    python3 autopsy.py --report           # Haftalık rapor oluştur
+    python3 autopsy.py                    # Analyze
+    python3 autopsy.py --apply            # Auto-apply HIGH confidence changes
+    python3 autopsy.py --report           # Generate markdown report
 """
 
-import json
-import sys
-import argparse
+import json, sys, argparse
 from datetime import datetime
 from pathlib import Path
 from collections import defaultdict
 
-SCRIPT_DIR = Path(__file__).parent
-DATA_DIR = SCRIPT_DIR.parent / "data"
-REPORTS_DIR = SCRIPT_DIR.parent / "reports"
+DATA_DIR = Path(__file__).parent.parent / "data"
+REPORTS_DIR = Path(__file__).parent.parent / "reports"
 
-MIN_TRADES_FOR_OPTIMIZATION = 15  # Minimum trade sayısı parametre değişikliği için
-
-
-def load_json(filename: str) -> any:
-    path = DATA_DIR / filename
-    if path.exists():
-        with open(path) as f:
-            return json.load(f)
-    return None
+MIN_TRADES = 10
 
 
-def save_json(filename: str, data: any):
-    with open(DATA_DIR / filename, "w") as f:
-        json.dump(data, f, indent=2)
+def load_json(f):
+    p = DATA_DIR / f
+    return json.load(open(p)) if p.exists() else None
+
+def save_json(f, data):
+    DATA_DIR.mkdir(parents=True, exist_ok=True)
+    json.dump(data, open(DATA_DIR / f, "w"), indent=2)
 
 
-def analyze_results(results: list) -> dict:
-    """Kapanmış trade'lerin derinlemesine analizi"""
-
+def run_autopsy(apply=False, report=False):
+    results = load_json("backtest_results.json")
     if not results:
-        return {"error": "No results to analyze"}
+        print("📭 No closed trades yet."); return
 
-    analysis = {
-        "total_trades": len(results),
-        "analysis_date": datetime.now().isoformat(),
-    }
+    # Filter valid closed trades
+    trades = [r for r in results if "exit" in r and "pnl_pct" in r.get("exit", {})]
+    if len(trades) < 3:
+        print(f"📭 Only {len(trades)} trades — need more data."); return
 
-    # ═══════════════════════════════════════════════════════════════
-    # 1. GENEL İSTATİSTİKLER
-    # ═══════════════════════════════════════════════════════════════
+    params = load_json("strategy_params.json") or {}
+    rules = params.get("exit_rules", {})
 
-    wins = [r for r in results if r["exit"]["pnl_pct"] > 0]
-    losses = [r for r in results if r["exit"]["pnl_pct"] <= 0]
-    pnls = [r["exit"]["pnl_pct"] for r in results]
+    print(f"{'═' * 60}")
+    print(f"🔬 TRADE AUTOPSY — {datetime.now().strftime('%Y-%m-%d')}")
+    print(f"   Analyzing {len(trades)} closed trades")
+    print(f"{'═' * 60}")
 
-    analysis["overall"] = {
-        "win_count": len(wins),
-        "loss_count": len(losses),
-        "win_rate_pct": round(len(wins) / len(results) * 100, 1),
-        "avg_pnl_pct": round(sum(pnls) / len(pnls), 2),
-        "avg_win_pct": round(sum(r["exit"]["pnl_pct"] for r in wins) / len(wins), 2) if wins else 0,
-        "avg_loss_pct": round(sum(r["exit"]["pnl_pct"] for r in losses) / len(losses), 2) if losses else 0,
-        "best_trade": max(pnls),
-        "worst_trade": min(pnls),
-        "avg_hold_days": round(sum(r["exit"]["days_held"] for r in results) / len(results), 1),
-        "profit_factor": round(
-            abs(sum(r["exit"]["pnl_pct"] for r in wins)) /
-            abs(sum(r["exit"]["pnl_pct"] for r in losses))
-            if losses else 999, 2
-        ),
-    }
+    # ── GENERAL STATS ──
+    pnls = [t["exit"]["pnl_pct"] for t in trades]
+    wins = [t for t in trades if t["exit"]["pnl_pct"] > 0]
+    losses = [t for t in trades if t["exit"]["pnl_pct"] <= 0]
+    win_pnls = [t["exit"]["pnl_pct"] for t in wins]
+    loss_pnls = [t["exit"]["pnl_pct"] for t in losses]
 
-    # Expectancy
-    wr = len(wins) / len(results)
-    avg_w = analysis["overall"]["avg_win_pct"]
-    avg_l = abs(analysis["overall"]["avg_loss_pct"])
-    analysis["overall"]["expectancy"] = round(wr * avg_w - (1 - wr) * avg_l, 2)
+    wr = len(wins) / len(trades) * 100
+    avg_pnl = sum(pnls) / len(pnls)
+    avg_win = sum(win_pnls) / len(win_pnls) if win_pnls else 0
+    avg_loss = sum(loss_pnls) / len(loss_pnls) if loss_pnls else 0
+    pf = abs(sum(win_pnls) / sum(loss_pnls)) if loss_pnls and sum(loss_pnls) != 0 else 99
 
-    # ═══════════════════════════════════════════════════════════════
-    # 2. STRATEJİ BAZLI ANALİZ
-    # ═══════════════════════════════════════════════════════════════
+    print(f"\n  📊 OVERVIEW")
+    print(f"  Trades: {len(trades)} | WR: {wr:.1f}% | Avg: {avg_pnl:+.2f}%")
+    print(f"  Avg Win: +{avg_win:.2f}% | Avg Loss: {avg_loss:.2f}%")
+    print(f"  PF: {pf:.2f} | Best: {max(pnls):+.1f}% | Worst: {min(pnls):+.1f}%")
 
-    by_strategy = defaultdict(list)
-    for r in results:
-        by_strategy[r.get("strategy", "UNKNOWN")].append(r)
+    # ── BY STRATEGY ──
+    by_strat = defaultdict(list)
+    for t in trades:
+        by_strat[t.get("strategy", "UNKNOWN")].append(t)
 
-    analysis["by_strategy"] = {}
-    for strat, trades in by_strategy.items():
-        strat_wins = [t for t in trades if t["exit"]["pnl_pct"] > 0]
-        strat_pnls = [t["exit"]["pnl_pct"] for t in trades]
-        analysis["by_strategy"][strat] = {
-            "count": len(trades),
-            "win_rate_pct": round(len(strat_wins) / len(trades) * 100, 1),
-            "avg_pnl_pct": round(sum(strat_pnls) / len(strat_pnls), 2),
-            "avg_hold_days": round(sum(t["exit"]["days_held"] for t in trades) / len(trades), 1),
-        }
+    print(f"\n  📋 BY STRATEGY")
+    for strat, st in by_strat.items():
+        sw = [t for t in st if t["exit"]["pnl_pct"] > 0]
+        sp = [t["exit"]["pnl_pct"] for t in st]
+        print(f"    {strat:>10}: {len(st)} trades | WR: {len(sw)/len(st)*100:.0f}% | "
+              f"Avg: {sum(sp)/len(sp):+.2f}%")
 
-    # ═══════════════════════════════════════════════════════════════
-    # 3. SEKTÖR BAZLI ANALİZ
-    # ═══════════════════════════════════════════════════════════════
-
+    # ── BY SECTOR ──
     by_sector = defaultdict(list)
-    for r in results:
-        by_sector[r.get("sector", "Unknown")].append(r)
+    for t in trades:
+        by_sector[t.get("sector", "?")].append(t)
 
-    analysis["by_sector"] = {}
-    for sector, trades in by_sector.items():
-        sector_wins = [t for t in trades if t["exit"]["pnl_pct"] > 0]
-        analysis["by_sector"][sector] = {
-            "count": len(trades),
-            "win_rate_pct": round(len(sector_wins) / len(trades) * 100, 1) if trades else 0,
-            "avg_pnl_pct": round(sum(t["exit"]["pnl_pct"] for t in trades) / len(trades), 2),
-        }
+    print(f"\n  🏭 BY SECTOR")
+    for sec in sorted(by_sector, key=lambda s: sum(t["exit"]["pnl_pct"] for t in by_sector[s])/len(by_sector[s]), reverse=True):
+        st = by_sector[sec]
+        sw = [t for t in st if t["exit"]["pnl_pct"] > 0]
+        sp = [t["exit"]["pnl_pct"] for t in st]
+        print(f"    {sec:>15}: {len(st)} | WR: {len(sw)/len(st)*100:.0f}% | "
+              f"Avg: {sum(sp)/len(sp):+.2f}%")
 
-    # ═══════════════════════════════════════════════════════════════
-    # 4. ÇIKIŞ NEDENİ ANALİZİ
-    # ═══════════════════════════════════════════════════════════════
-
+    # ── BY EXIT REASON ──
     by_exit = defaultdict(list)
-    for r in results:
-        by_exit[r["exit"]["reason"]].append(r)
+    for t in trades:
+        by_exit[t["exit"]["reason"]].append(t)
 
-    analysis["by_exit_reason"] = {}
-    for reason, trades in by_exit.items():
-        analysis["by_exit_reason"][reason] = {
-            "count": len(trades),
-            "avg_pnl_pct": round(sum(t["exit"]["pnl_pct"] for t in trades) / len(trades), 2),
-            "pct_of_total": round(len(trades) / len(results) * 100, 1)
-        }
+    print(f"\n  🚪 BY EXIT")
+    for reason in sorted(by_exit, key=lambda r: len(by_exit[r]), reverse=True):
+        st = by_exit[reason]
+        sp = [t["exit"]["pnl_pct"] for t in st]
+        pct = len(st) / len(trades) * 100
+        print(f"    {reason:>15}: {len(st)} ({pct:.0f}%) | Avg: {sum(sp)/len(sp):+.2f}%")
 
-    # ═══════════════════════════════════════════════════════════════
-    # 5. MFE/MAE ANALİZİ (Excursion)
-    # ═══════════════════════════════════════════════════════════════
+    # ── MFE/MAE ──
+    exc_trades = [t for t in trades if "excursion" in t]
+    if exc_trades:
+        mfes = [t["excursion"]["mfe_pct"] for t in exc_trades]
+        maes = [t["excursion"]["mae_pct"] for t in exc_trades]
+        caps = [t["excursion"]["capture_ratio"] for t in exc_trades if t["excursion"].get("capture_ratio", 0) > 0]
+        print(f"\n  📐 MFE/MAE")
+        print(f"    Avg MFE: +{sum(mfes)/len(mfes):.2f}% | Avg MAE: {sum(maes)/len(maes):.2f}%")
+        if caps:
+            print(f"    Capture: {sum(caps)/len(caps):.0f}%")
 
-    mfes = [r["excursion"]["mfe_pct"] for r in results if "excursion" in r]
-    maes = [r["excursion"]["mae_pct"] for r in results if "excursion" in r]
-    captures = [r["excursion"]["capture_ratio"] for r in results
-                if "excursion" in r and r["excursion"]["capture_ratio"] > 0]
+    # ═══════════════════════════════════════════════════════
+    # RECOMMENDATIONS
+    # ═══════════════════════════════════════════════════════
+    recommendations = []
 
-    analysis["excursion"] = {
-        "avg_mfe_pct": round(sum(mfes) / len(mfes), 2) if mfes else 0,
-        "avg_mae_pct": round(sum(maes) / len(maes), 2) if maes else 0,
-        "avg_capture_ratio": round(sum(captures) / len(captures), 1) if captures else 0,
-        "insight": ""
-    }
+    if len(trades) >= MIN_TRADES:
+        # Trailing stop
+        trail_exits = by_exit.get("TRAILING_STOP", [])
+        trail_rate = len(trail_exits) / len(trades) * 100
+        if trail_rate > 55:
+            trail_avg = sum(t["exit"]["pnl_pct"] for t in trail_exits) / len(trail_exits)
+            if trail_avg < 1.0:
+                cur = rules.get("trailing_stop_pct", -7.0)
+                recommendations.append({
+                    "param": "trailing_stop_pct", "current": cur,
+                    "suggested": round(cur - 2, 1),
+                    "reason": f"Trail exits {trail_rate:.0f}% of trades, avg only {trail_avg:+.1f}%",
+                    "confidence": "HIGH"
+                })
 
-    # Capture ratio insight
-    avg_cap = analysis["excursion"]["avg_capture_ratio"]
-    if avg_cap < 30:
-        analysis["excursion"]["insight"] = "Çıkışlar çok erken — kazançların sadece %{:.0f}'ini yakalıyorsun. Trailing stop'u gevşet.".format(avg_cap)
-    elif avg_cap > 80:
-        analysis["excursion"]["insight"] = "Çıkış zamanlaması mükemmel — kazançların %{:.0f}'ini yakalıyorsun.".format(avg_cap)
+        # Stop loss
+        stop_exits = by_exit.get("STOP_LOSS", [])
+        stop_rate = len(stop_exits) / len(trades) * 100
+        if stop_rate > 30:
+            cur = rules.get("stop_loss_pct", -7.0)
+            recommendations.append({
+                "param": "stop_loss_pct", "current": cur,
+                "suggested": round(cur - 2, 1),
+                "reason": f"Stop hit {stop_rate:.0f}% — too tight",
+                "confidence": "HIGH" if stop_rate > 40 else "MEDIUM"
+            })
+
+        # Max hold
+        timeouts = by_exit.get("TIMEOUT", [])
+        if timeouts:
+            to_avg = sum(t["exit"]["pnl_pct"] for t in timeouts) / len(timeouts)
+            cur = rules.get("max_hold_days", 30)
+            if to_avg > 2.0 and cur < 30:
+                recommendations.append({
+                    "param": "max_hold_days", "current": cur,
+                    "suggested": min(30, cur + 5),
+                    "reason": f"Timeouts avg {to_avg:+.1f}% — hold longer",
+                    "confidence": "MEDIUM"
+                })
+
+        # Weak sectors
+        for sec, st in by_sector.items():
+            if len(st) >= 3:
+                sec_avg = sum(t["exit"]["pnl_pct"] for t in st) / len(st)
+                if sec_avg < -2.5:
+                    recommendations.append({
+                        "param": f"weak_sector:{sec}", "current": "active",
+                        "suggested": "filtered",
+                        "reason": f"{sec} avg {sec_avg:+.1f}% over {len(st)} trades",
+                        "confidence": "MEDIUM"
+                    })
+
+        # Min score
+        low = [t for t in trades if t.get("score", 100) < 55]
+        if low:
+            low_wr = len([t for t in low if t["exit"]["pnl_pct"] > 0]) / len(low) * 100
+            if low_wr < 30:
+                cur = params.get("entry_rules", {}).get("min_score", 55)
+                recommendations.append({
+                    "param": "min_score", "current": cur,
+                    "suggested": cur + 5,
+                    "reason": f"Low-score trades WR {low_wr:.0f}%",
+                    "confidence": "HIGH"
+                })
+
+    if recommendations:
+        print(f"\n  💡 RECOMMENDATIONS ({len(recommendations)}):")
+        for r in recommendations:
+            emoji = "🔴" if r["confidence"] == "HIGH" else "🟡"
+            print(f"    {emoji} {r['param']}: {r['current']} → {r['suggested']}")
+            print(f"       {r['reason']}")
     else:
-        analysis["excursion"]["insight"] = "Çıkış zamanlaması orta — kazançların %{:.0f}'ini yakalıyorsun.".format(avg_cap)
+        print(f"\n  ✅ No changes needed")
 
-    # ═══════════════════════════════════════════════════════════════
-    # 6. ALTERNATİF SENARYO ANALİZİ
-    # ═══════════════════════════════════════════════════════════════
+    # ── APPLY ──
+    if apply and recommendations:
+        applied = 0
+        weak = params.get("entry_rules", {}).get("weak_sectors", [])
 
-    alt_totals = defaultdict(list)
-    for r in results:
-        for key, val in r.get("alternative_scenarios", {}).items():
-            if val is not None:
-                alt_totals[key].append(val)
+        for r in recommendations:
+            if r["confidence"] != "HIGH":
+                continue
+            if r["param"] in rules:
+                rules[r["param"]] = r["suggested"]
+                applied += 1
+            elif r["param"] == "min_score":
+                params.setdefault("entry_rules", {})["min_score"] = r["suggested"]
+                applied += 1
+            elif r["param"].startswith("weak_sector:"):
+                sec = r["param"].split(":")[1]
+                if sec not in weak:
+                    weak.append(sec)
+                    applied += 1
 
-    analysis["alternative_scenarios"] = {}
-    for key, vals in alt_totals.items():
-        analysis["alternative_scenarios"][key] = {
-            "avg_pnl_pct": round(sum(vals) / len(vals), 2),
-            "count": len(vals)
-        }
+        if applied:
+            params.setdefault("entry_rules", {})["weak_sectors"] = weak
+            params["version"] = params.get("version", 0) + 1
+            params["last_autopsy"] = datetime.now().strftime("%Y-%m-%d")
+            save_json("strategy_params.json", params)
+            print(f"\n  ✅ Applied {applied} HIGH-confidence changes → v{params['version']}")
 
-    # ═══════════════════════════════════════════════════════════════
-    # 7. POST-EXIT ANALİZİ (Erken çıkış mı?)
-    # ═══════════════════════════════════════════════════════════════
-
-    left_on_table = [r["post_exit"]["left_on_table"]
-                     for r in results
-                     if "post_exit" in r and r["post_exit"].get("left_on_table")]
-
-    analysis["post_exit"] = {
-        "avg_left_on_table_pct": round(sum(left_on_table) / len(left_on_table), 2) if left_on_table else 0,
-        "trades_with_missed_gains": len([x for x in left_on_table if x > 3]),
-        "insight": ""
+    # ── SAVE LESSONS ──
+    lessons = {
+        "date": datetime.now().isoformat(),
+        "trades_analyzed": len(trades),
+        "stats": {"win_rate": round(wr, 1), "avg_pnl": round(avg_pnl, 2), "profit_factor": round(pf, 2)},
+        "recommendations": recommendations,
     }
+    save_json("lessons_learned.json", lessons)
 
-    avg_lot = analysis["post_exit"]["avg_left_on_table_pct"]
-    if avg_lot > 5:
-        analysis["post_exit"]["insight"] = f"Ortalama %{avg_lot:.1f} masada bırakıyorsun. Hold süresini veya trailing stop'u genilet."
+    # ── REPORT ──
+    if report:
+        REPORTS_DIR.mkdir(parents=True, exist_ok=True)
+        rpt = REPORTS_DIR / f"autopsy_{datetime.now().strftime('%Y-%m-%d')}.md"
+        with open(rpt, "w") as f:
+            f.write(f"# Swing Trade Autopsy — {datetime.now().strftime('%Y-%m-%d')}\n\n")
+            f.write(f"## Overview\n")
+            f.write(f"- **Trades:** {len(trades)} | **WR:** {wr:.1f}% | **Avg PnL:** {avg_pnl:+.2f}%\n")
+            f.write(f"- **Avg Win:** +{avg_win:.2f}% | **Avg Loss:** {avg_loss:.2f}% | **PF:** {pf:.2f}\n\n")
 
-    return analysis
+            f.write(f"## By Strategy\n")
+            for strat, st in by_strat.items():
+                sp = [t["exit"]["pnl_pct"] for t in st]
+                sw = [p for p in sp if p > 0]
+                f.write(f"- **{strat}:** {len(st)} trades, WR {len(sw)/len(st)*100:.0f}%, Avg {sum(sp)/len(sp):+.2f}%\n")
 
+            f.write(f"\n## By Sector\n")
+            for sec in sorted(by_sector, key=lambda s: sum(t["exit"]["pnl_pct"] for t in by_sector[s])/len(by_sector[s]), reverse=True):
+                st = by_sector[sec]
+                sp = [t["exit"]["pnl_pct"] for t in st]
+                f.write(f"- **{sec}:** {len(st)} trades, Avg {sum(sp)/len(sp):+.2f}%\n")
 
-def generate_recommendations(analysis: dict) -> list:
-    """Analiz sonuçlarından parametre önerileri üret"""
-    recs = []
+            f.write(f"\n## By Exit Reason\n")
+            for reason, st in sorted(by_exit.items(), key=lambda x: len(x[1]), reverse=True):
+                sp = [t["exit"]["pnl_pct"] for t in st]
+                f.write(f"- **{reason}:** {len(st)} ({len(st)/len(trades)*100:.0f}%), Avg {sum(sp)/len(sp):+.2f}%\n")
 
-    total = analysis.get("total_trades", 0)
-    if total < MIN_TRADES_FOR_OPTIMIZATION:
-        recs.append({
-            "type": "INFO",
-            "message": f"Henüz {total} trade var, minimum {MIN_TRADES_FOR_OPTIMIZATION} gerekli. Öneriler güvenilir değil.",
-            "confidence": "LOW"
-        })
-        return recs
+            if recommendations:
+                f.write(f"\n## Recommendations\n")
+                for r in recommendations:
+                    f.write(f"- [{r['confidence']}] `{r['param']}`: {r['current']} → {r['suggested']} — {r['reason']}\n")
 
-    overall = analysis.get("overall", {})
+        print(f"\n  📝 Report → {rpt.name}")
 
-    # Win rate çok düşük — ama ÖNCE exit sorununu kontrol et
-    trailing_pct = exit_reasons.get("TRAILING_STOP", {}).get("pct_of_total", 0)
-    stop_pct = exit_reasons.get("STOP_LOSS", {}).get("pct_of_total", 0)
-    panic_pct = exit_reasons.get("PANIC_STOP", {}).get("pct_of_total", 0)
+    # ── CHECK: Should we trigger full re-optimization? ──
+    needs_reoptim = False
+    prev_stats = params.get("backtest_stats", {}) or params.get("final_stats", {})
+    if prev_stats:
+        prev_wr = prev_stats.get("win_rate", 0)
+        prev_pf = prev_stats.get("profit_factor", 0)
+        # Trigger if live performance degrades significantly
+        if wr < prev_wr - 10 or (pf < 0.9 and prev_pf >= 1.0):
+            needs_reoptim = True
+            print(f"\n  ⚠️ Performance degraded (WR {prev_wr:.0f}%→{wr:.0f}%, PF {prev_pf:.1f}→{pf:.1f})")
+            print(f"  🔄 Full re-optimization recommended!")
 
-    # Exit sorunları varsa ÖNCE onları düzelt (entry sıkılaştırma son çare)
-    exit_dominated = trailing_pct + stop_pct + panic_pct > 60
-
-    if overall.get("win_rate_pct", 0) < 40 and not exit_dominated:
-        recs.append({
-            "type": "ENTRY",
-            "param": "min_score",
-            "current": 55,
-            "suggested": 65,
-            "reason": f"Win rate çok düşük (%{overall['win_rate_pct']}). Sinyal kalitesini artır.",
-            "confidence": "HIGH"
-        })
-
-    # Stop loss çok sık tetikleniyor
-    exit_reasons = analysis.get("by_exit_reason", {})
-    stop_pct_val = exit_reasons.get("STOP_LOSS", {}).get("pct_of_total", 0)
-    if stop_pct_val > 25:
-        recs.append({
-            "type": "EXIT",
-            "param": "stop_loss_pct",
-            "current": -8.0,
-            "suggested": -12.0,
-            "reason": f"Stop loss %{stop_pct_val:.0f} tetikleniyor. Stop'u genilet.",
-            "confidence": "HIGH"
-        })
-
-    # Trailing stop erken çıkış — EN KRİTİK SORUN
-    trail_pct_val = exit_reasons.get("TRAILING_STOP", {}).get("pct_of_total", 0)
-    left_on_table = analysis.get("post_exit", {}).get("avg_left_on_table_pct", 0)
-    avg_capture = analysis.get("excursion", {}).get("avg_capture_ratio", 0)
-    if trail_pct_val > 20:
-        current_trail = -8.0
-        suggested_trail = -12.0 if trail_pct_val > 40 else -10.0
-        recs.append({
-            "type": "EXIT",
-            "param": "trailing_stop_pct",
-            "current": current_trail,
-            "suggested": suggested_trail,
-            "reason": f"Trailing stop %{trail_pct_val:.0f} tetikleniyor. Kazançları erkenden kesiyor.",
-            "confidence": "HIGH"
-        })
-
-    # Panic stop kaldırılsın mı?
-    panic_pct_val = exit_reasons.get("PANIC_STOP", {}).get("pct_of_total", 0)
-    if panic_pct_val > 10:
-        recs.append({
-            "type": "EXIT",
-            "param": "disable_panic_stop",
-            "current": False,
-            "suggested": True,
-            "reason": f"Panic stop %{panic_pct_val:.0f} tetikleniyor. Gün-içi noise'dan çıkılıyor.",
-            "confidence": "HIGH"
-        })
-
-    # Timeout çok fazla
-    timeout_pct = exit_reasons.get("TIMEOUT", {}).get("pct_of_total", 0)
-    timeout_avg_pnl = exit_reasons.get("TIMEOUT", {}).get("avg_pnl_pct", 0)
-    if timeout_pct > 30 and timeout_avg_pnl < 0:
-        recs.append({
-            "type": "EXIT",
-            "param": "max_hold_days",
-            "current": 15,
-            "suggested": 10,
-            "reason": f"Timeout'lar %{timeout_pct:.0f} ve ortalama {timeout_avg_pnl:+.1f}%. Süresi dolanlarda para kaybediyorsun.",
-            "confidence": "MEDIUM"
-        })
-
-    # Strateji bazlı öneriler
-    by_strat = analysis.get("by_strategy", {})
-    for strat, stats in by_strat.items():
-        if stats["count"] >= 5 and stats["win_rate_pct"] < 30:
-            recs.append({
-                "type": "STRATEGY",
-                "param": f"disable_{strat.lower()}",
-                "reason": f"{strat} stratejisi sadece %{stats['win_rate_pct']} win rate. Devre dışı bırakmayı düşün.",
-                "confidence": "MEDIUM"
-            })
-
-    # Sektör bazlı öneriler
-    by_sector = analysis.get("by_sector", {})
-    for sector, stats in by_sector.items():
-        if stats["count"] >= 3 and stats["avg_pnl_pct"] < -3:
-            recs.append({
-                "type": "SECTOR",
-                "param": f"avoid_{sector.lower().replace(' ', '_')}",
-                "reason": f"{sector} sektöründe ortalama {stats['avg_pnl_pct']:+.1f}% getiri. Bu sektörden kaçın.",
-                "confidence": "MEDIUM" if stats["count"] >= 5 else "LOW"
-            })
-
-    # Alternatif senaryo bazlı
-    alt = analysis.get("alternative_scenarios", {})
-    current_avg = overall.get("avg_pnl_pct", 0)
-    best_alt = None
-    best_alt_pnl = current_avg
-
-    for key, val in alt.items():
-        if val["avg_pnl_pct"] > best_alt_pnl and val["count"] >= 10:
-            best_alt = key
-            best_alt_pnl = val["avg_pnl_pct"]
-
-    if best_alt and best_alt_pnl > current_avg + 1.0:
-        recs.append({
-            "type": "OPTIMIZATION",
-            "param": best_alt,
-            "current_avg_pnl": current_avg,
-            "suggested_avg_pnl": best_alt_pnl,
-            "reason": f"'{best_alt}' parametresiyle ortalama getiri {current_avg:+.1f}%'den {best_alt_pnl:+.1f}%'e çıkar.",
-            "confidence": "HIGH"
-        })
-
-    return recs
-
-
-def apply_recommendations(recs: list, params: dict) -> dict:
-    """Önerileri strategy_params.json'a uygula"""
-    changes = []
-    for rec in recs:
-        if rec.get("confidence") != "HIGH":
-            continue
-        if rec["type"] == "ENTRY" and "suggested" in rec:
-            old = params.get("entry_rules", {}).get(rec["param"])
-            params.setdefault("entry_rules", {})[rec["param"]] = rec["suggested"]
-            changes.append(f"{rec['param']}: {old} → {rec['suggested']}")
-        elif rec["type"] == "EXIT" and "suggested" in rec:
-            old = params.get("exit_rules", {}).get(rec["param"])
-            params.setdefault("exit_rules", {})[rec["param"]] = rec["suggested"]
-            changes.append(f"{rec['param']}: {old} → {rec['suggested']}")
-
-    if changes:
-        # Version bump
-        params["version"] = params.get("version", 1) + 1
-        params["last_updated"] = datetime.now().strftime("%Y-%m-%d")
-        params.setdefault("update_history", []).append({
+    # Signal to workflow
+    if needs_reoptim:
+        save_json("needs_reoptimization.json", {
+            "trigger": "performance_degradation",
             "date": datetime.now().isoformat(),
-            "version": params["version"],
-            "changes": changes
+            "live_wr": round(wr, 1), "live_pf": round(pf, 2),
+            "backtest_wr": prev_stats.get("win_rate"), "backtest_pf": prev_stats.get("profit_factor")
         })
-    return params
 
-
-def generate_report(analysis: dict, recs: list) -> str:
-    """Markdown rapor oluştur"""
-    lines = []
-    o = analysis.get("overall", {})
-
-    lines.append(f"# 📊 Swing Trade Otopsi Raporu")
-    lines.append(f"**Tarih:** {analysis.get('analysis_date', '')[:10]}")
-    lines.append(f"**Toplam Trade:** {analysis.get('total_trades', 0)}")
-    lines.append("")
-
-    lines.append(f"## Genel Performans")
-    lines.append("")
-    lines.append(f"| Metrik | Değer |")
-    lines.append(f"|--------|-------|")
-    lines.append(f"| Win Rate | %{o.get('win_rate_pct', 0)} ({o.get('win_count', 0)}/{analysis.get('total_trades', 0)}) |")
-    lines.append(f"| Ortalama Getiri | {o.get('avg_pnl_pct', 0):+.2f}% |")
-    lines.append(f"| Ort. Kazanç | {o.get('avg_win_pct', 0):+.2f}% |")
-    lines.append(f"| Ort. Kayıp | {o.get('avg_loss_pct', 0):.2f}% |")
-    lines.append(f"| Profit Factor | {o.get('profit_factor', 0)} |")
-    lines.append(f"| Expectancy | {o.get('expectancy', 0):+.2f}% |")
-    lines.append(f"| Ort. Holding | {o.get('avg_hold_days', 0)} gün |")
-    lines.append("")
-
-    # Strateji
-    lines.append(f"## Strateji Bazlı")
-    lines.append("")
-    for strat, stats in analysis.get("by_strategy", {}).items():
-        emoji = "✅" if stats["avg_pnl_pct"] > 0 else "❌"
-        lines.append(f"- {emoji} **{strat}**: {stats['count']} trade, %{stats['win_rate_pct']} WR, {stats['avg_pnl_pct']:+.1f}% avg")
-    lines.append("")
-
-    # Sektör
-    lines.append(f"## Sektör Bazlı")
-    lines.append("")
-    for sector, stats in sorted(analysis.get("by_sector", {}).items(),
-                                 key=lambda x: x[1]["avg_pnl_pct"], reverse=True):
-        emoji = "✅" if stats["avg_pnl_pct"] > 0 else "❌"
-        lines.append(f"- {emoji} **{sector}**: {stats['count']} trade, %{stats['win_rate_pct']} WR, {stats['avg_pnl_pct']:+.1f}%")
-    lines.append("")
-
-    # Excursion
-    exc = analysis.get("excursion", {})
-    lines.append(f"## Giriş/Çıkış Kalitesi")
-    lines.append("")
-    lines.append(f"- Ortalama MFE (en iyi an): +{exc.get('avg_mfe_pct', 0)}%")
-    lines.append(f"- Ortalama MAE (en kötü an): {exc.get('avg_mae_pct', 0)}%")
-    lines.append(f"- Capture Ratio: %{exc.get('avg_capture_ratio', 0)} (kazancın ne kadarını yakalıyorsun)")
-    if exc.get("insight"):
-        lines.append(f"- 💡 {exc['insight']}")
-    lines.append("")
-
-    # Öneriler
-    if recs:
-        lines.append(f"## 🎯 Parametre Önerileri")
-        lines.append("")
-        for rec in recs:
-            conf_emoji = {"HIGH": "🔴", "MEDIUM": "🟡", "LOW": "⚪"}.get(rec.get("confidence"), "⚪")
-            lines.append(f"- {conf_emoji} **[{rec.get('confidence', 'LOW')}]** {rec.get('reason', '')}")
-            if "suggested" in rec:
-                lines.append(f"  - Öneri: `{rec.get('param')}` = {rec['suggested']} (şu an: {rec.get('current')})")
-        lines.append("")
-
-    lines.append("---")
-    lines.append("*Bu rapor otomatik oluşturulmuştur.*")
-
-    return "\n".join(lines)
+    return lessons
 
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--apply", action="store_true", help="HIGH confidence önerileri otomatik uygula")
-    parser.add_argument("--report", action="store_true", help="Rapor oluştur")
+    parser.add_argument("--apply", action="store_true")
+    parser.add_argument("--report", action="store_true")
     args = parser.parse_args()
-
-    # Load data
-    results = load_json("backtest_results.json")
-    if not results:
-        print("📭 No backtest results yet. Run signal_tracker.py first.")
-        return
-
-    # Analyze
-    print(f"🔬 Analyzing {len(results)} closed trades...")
-    analysis = analyze_results(results)
-    recs = generate_recommendations(analysis)
-
-    # Save analysis
-    save_json("lessons_learned.json", {
-        "analysis": analysis,
-        "recommendations": recs,
-        "last_updated": datetime.now().isoformat()
-    })
-    print(f"💾 Analysis saved to lessons_learned.json")
-
-    # Print summary
-    o = analysis.get("overall", {})
-    print(f"\n{'═' * 60}")
-    print(f"📊 OTOPSİ SONUÇLARI")
-    print(f"{'═' * 60}")
-    print(f"  Win Rate: %{o.get('win_rate_pct', 0)}")
-    print(f"  Expectancy: {o.get('expectancy', 0):+.2f}%")
-    print(f"  Profit Factor: {o.get('profit_factor', 0)}")
-    print(f"  Avg Capture: %{analysis.get('excursion', {}).get('avg_capture_ratio', 0)}")
-
-    if recs:
-        print(f"\n🎯 ÖNERİLER ({len(recs)}):")
-        for rec in recs:
-            print(f"  [{rec.get('confidence')}] {rec.get('reason', '')[:80]}")
-
-    # Apply if requested
-    if args.apply:
-        high_recs = [r for r in recs if r.get("confidence") == "HIGH"]
-        if high_recs:
-            params = load_json("strategy_params.json") or {}
-            params = apply_recommendations(recs, params)
-            save_json("strategy_params.json", params)
-            print(f"\n✅ {len(high_recs)} HIGH confidence öneri uygulandı (v{params.get('version', '?')})")
-
-            # Log changes
-            changelog = load_json("param_changelog.json") or []
-            changelog.append({
-                "date": datetime.now().isoformat(),
-                "version": params.get("version"),
-                "changes": params.get("update_history", [{}])[-1].get("changes", []),
-                "trigger": "autopsy"
-            })
-            save_json("param_changelog.json", changelog)
-
-    # Generate report
-    if args.report:
-        REPORTS_DIR.mkdir(parents=True, exist_ok=True)
-        report = generate_report(analysis, recs)
-        date_str = datetime.now().strftime("%Y-%m-%d")
-        report_path = REPORTS_DIR / f"swing_autopsy_{date_str}.md"
-        with open(report_path, "w") as f:
-            f.write(report)
-        print(f"📄 Report: {report_path}")
-
+    run_autopsy(apply=args.apply, report=args.report)
 
 if __name__ == "__main__":
     main()
