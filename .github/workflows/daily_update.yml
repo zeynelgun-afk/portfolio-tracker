@@ -6,6 +6,9 @@ on:
     - cron: '30 21 * * 1-5'
   workflow_dispatch:  # Manuel tetikleme
 
+permissions:
+  contents: write
+
 jobs:
   update:
     runs-on: ubuntu-latest
@@ -13,6 +16,8 @@ jobs:
     steps:
     - name: Checkout repo
       uses: actions/checkout@v4
+      with:
+        token: ${{ github.token }}
 
     - name: Setup Python
       uses: actions/setup-python@v5
