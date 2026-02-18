@@ -377,5 +377,22 @@
     "generated_at": "2026-02-17",
     "expires_at": "2026-02-20",
     "status": "ACTIVE"
+  },
+  {
+    "date": "2026-02-17",
+    "top5": [
+      "FLNC",
+      "WDC",
+      "APLD",
+      "MU",
+      "IREN"
+    ],
+    "scores": {
+      "FLNC": 178.19,
+      "WDC": 169.49,
+      "APLD": 159.9,
+      "MU": 142.69,
+      "IREN": 134.08
+    }
   }
 ]

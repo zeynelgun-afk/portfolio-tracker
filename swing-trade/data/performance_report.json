@@ -1,0 +1,1801 @@
+{
+  "run_date": "2026-02-18T11:46:33.767887",
+  "period": "2025-04-01 to 2026-02-17",
+  "initial_capital": 100000,
+  "final_value": 100989.18,
+  "total_return_pct": 0.99,
+  "annual_return_pct": 1.08,
+  "max_drawdown_pct": -10.73,
+  "total_trades": 53,
+  "win_rate": 45.3,
+  "profit_factor": 1.04,
+  "trades": [
+    {
+      "symbol": "ES",
+      "strategy": "BREAKOUT",
+      "entry_date": "2025-04-01",
+      "exit_date": "2025-04-04",
+      "entry_price": 59.97,
+      "exit_price": 57.03,
+      "exit_reason": "TRAILING_STOP",
+      "shares": 333,
+      "pnl_dollar": -979.02,
+      "pnl_pct": -4.9,
+      "days_held": 3,
+      "mfe_pct": 2.26,
+      "mae_pct": -6.26,
+      "score": 68,
+      "month": "2025-04"
+    },
+    {
+      "symbol": "ATO",
+      "strategy": "BREAKOUT",
+      "entry_date": "2025-04-01",
+      "exit_date": "2025-04-07",
+      "entry_price": 152.41,
+      "exit_price": 141.74,
+      "exit_reason": "STOP_LOSS",
+      "shares": 131,
+      "pnl_dollar": -1397.77,
+      "pnl_pct": -7.0,
+      "days_held": 4,
+      "mfe_pct": 1.73,
+      "mae_pct": -8.62,
+      "score": 67,
+      "month": "2025-04"
+    },
+    {
+      "symbol": "FE",
+      "strategy": "PULLBACK",
+      "entry_date": "2025-04-01",
+      "exit_date": "2025-04-07",
+      "entry_price": 38.82,
+      "exit_price": 36.95,
+      "exit_reason": "TRAILING_STOP",
+      "shares": 515,
+      "pnl_dollar": -963.05,
+      "pnl_pct": -4.82,
+      "days_held": 4,
+      "mfe_pct": 2.35,
+      "mae_pct": -5.08,
+      "score": 65,
+      "month": "2025-04"
+    },
+    {
+      "symbol": "CMS",
+      "strategy": "BREAKOUT",
+      "entry_date": "2025-04-01",
+      "exit_date": "2025-04-07",
+      "entry_price": 73.48,
+      "exit_price": 69.53,
+      "exit_reason": "TRAILING_STOP",
+      "shares": 272,
+      "pnl_dollar": -1074.4,
+      "pnl_pct": -5.38,
+      "days_held": 4,
+      "mfe_pct": 1.74,
+      "mae_pct": -6.18,
+      "score": 64,
+      "month": "2025-04"
+    },
+    {
+      "symbol": "CNP",
+      "strategy": "BREAKOUT",
+      "entry_date": "2025-04-01",
+      "exit_date": "2025-04-09",
+      "entry_price": 36.17,
+      "exit_price": 34.46,
+      "exit_reason": "TRAILING_STOP",
+      "shares": 552,
+      "pnl_dollar": -943.92,
+      "pnl_pct": -4.73,
+      "days_held": 6,
+      "mfe_pct": 2.44,
+      "mae_pct": -5.66,
+      "score": 70,
+      "month": "2025-04"
+    },
+    {
+      "symbol": "ATO",
+      "strategy": "PULLBACK",
+      "entry_date": "2025-04-08",
+      "exit_date": "2025-05-08",
+      "entry_price": 144.45,
+      "exit_price": 164.68,
+      "exit_reason": "TARGET_1",
+      "shares": 131,
+      "pnl_dollar": 2650.13,
+      "pnl_pct": 14.0,
+      "days_held": 21,
+      "mfe_pct": 14.03,
+      "mae_pct": -2.93,
+      "score": 55,
+      "month": "2025-04"
+    },
+    {
+      "symbol": "DUK",
+      "strategy": "PULLBACK",
+      "entry_date": "2025-04-08",
+      "exit_date": "2025-05-12",
+      "entry_price": 111.98,
+      "exit_price": 111.53,
+      "exit_reason": "TRAILING_STOP",
+      "shares": 169,
+      "pnl_dollar": -76.05,
+      "pnl_pct": -0.4,
+      "days_held": 23,
+      "mfe_pct": 7.09,
+      "mae_pct": -3.34,
+      "score": 60,
+      "month": "2025-04"
+    },
+    {
+      "symbol": "ED",
+      "strategy": "PULLBACK",
+      "entry_date": "2025-04-08",
+      "exit_date": "2025-05-12",
+      "entry_price": 103.43,
+      "exit_price": 103.0,
+      "exit_reason": "TRAILING_STOP",
+      "shares": 183,
+      "pnl_dollar": -78.69,
+      "pnl_pct": -0.42,
+      "days_held": 23,
+      "mfe_pct": 7.08,
+      "mae_pct": -2.92,
+      "score": 60,
+      "month": "2025-04"
+    },
+    {
+      "symbol": "FE",
+      "strategy": "PULLBACK",
+      "entry_date": "2025-04-15",
+      "exit_date": "2025-05-29",
+      "entry_price": 39.43,
+      "exit_price": 40.49,
+      "exit_reason": "TIMEOUT",
+      "shares": 495,
+      "pnl_dollar": 524.7,
+      "pnl_pct": 2.69,
+      "days_held": 30,
+      "mfe_pct": 6.47,
+      "mae_pct": -0.87,
+      "score": 61,
+      "month": "2025-04"
+    },
+    {
+      "symbol": "AZO",
+      "strategy": "PULLBACK",
+      "entry_date": "2025-05-14",
+      "exit_date": "2025-06-12",
+      "entry_price": 3645.43,
+      "exit_price": 3636.3,
+      "exit_reason": "TRAILING_STOP",
+      "shares": 5,
+      "pnl_dollar": -45.65,
+      "pnl_pct": -0.25,
+      "days_held": 20,
+      "mfe_pct": 7.26,
+      "mae_pct": -0.7,
+      "score": 55,
+      "month": "2025-05"
+    },
+    {
+      "symbol": "DRI",
+      "strategy": "BREAKOUT",
+      "entry_date": "2025-05-14",
+      "exit_date": "2025-06-27",
+      "entry_price": 202.81,
+      "exit_price": 211.33,
+      "exit_reason": "TIMEOUT",
+      "shares": 96,
+      "pnl_dollar": 817.92,
+      "pnl_pct": 4.2,
+      "days_held": 30,
+      "mfe_pct": 10.05,
+      "mae_pct": -2.65,
+      "score": 61,
+      "month": "2025-05"
+    },
+    {
+      "symbol": "DTE",
+      "strategy": "PULLBACK",
+      "entry_date": "2025-05-14",
+      "exit_date": "2025-06-27",
+      "entry_price": 129.4,
+      "exit_price": 129.4,
+      "exit_reason": "TIMEOUT",
+      "shares": 150,
+      "pnl_dollar": 0.0,
+      "pnl_pct": 0.0,
+      "days_held": 30,
+      "mfe_pct": 4.94,
+      "mae_pct": -0.97,
+      "score": 58,
+      "month": "2025-05"
+    },
+    {
+      "symbol": "ETR",
+      "strategy": "PULLBACK",
+      "entry_date": "2025-05-21",
+      "exit_date": "2025-07-07",
+      "entry_price": 80.95,
+      "exit_price": 80.12,
+      "exit_reason": "TIMEOUT",
+      "shares": 245,
+      "pnl_dollar": -203.35,
+      "pnl_pct": -1.03,
+      "days_held": 30,
+      "mfe_pct": 1.98,
+      "mae_pct": -2.51,
+      "score": 64,
+      "month": "2025-05"
+    },
+    {
+      "symbol": "D",
+      "strategy": "PULLBACK",
+      "entry_date": "2025-05-29",
+      "exit_date": "2025-07-14",
+      "entry_price": 54.77,
+      "exit_price": 55.92,
+      "exit_reason": "TIMEOUT",
+      "shares": 361,
+      "pnl_dollar": 415.15,
+      "pnl_pct": 2.1,
+      "days_held": 30,
+      "mfe_pct": 4.1,
+      "mae_pct": -4.76,
+      "score": 63,
+      "month": "2025-05"
+    },
+    {
+      "symbol": "CINF",
+      "strategy": "BREAKOUT",
+      "entry_date": "2025-07-14",
+      "exit_date": "2025-08-01",
+      "entry_price": 147.66,
+      "exit_price": 144.91,
+      "exit_reason": "TRAILING_STOP",
+      "shares": 134,
+      "pnl_dollar": -368.5,
+      "pnl_pct": -1.86,
+      "days_held": 14,
+      "mfe_pct": 5.52,
+      "mae_pct": -3.61,
+      "score": 68,
+      "month": "2025-07"
+    },
+    {
+      "symbol": "CBOE",
+      "strategy": "BREAKOUT",
+      "entry_date": "2025-06-27",
+      "exit_date": "2025-08-11",
+      "entry_price": 229.0,
+      "exit_price": 253.24,
+      "exit_reason": "TIMEOUT",
+      "shares": 85,
+      "pnl_dollar": 2060.4,
+      "pnl_pct": 10.59,
+      "days_held": 30,
+      "mfe_pct": 11.47,
+      "mae_pct": -0.69,
+      "score": 65,
+      "month": "2025-06"
+    },
+    {
+      "symbol": "EVRG",
+      "strategy": "BREAKOUT",
+      "entry_date": "2025-06-27",
+      "exit_date": "2025-08-11",
+      "entry_price": 67.06,
+      "exit_price": 71.09,
+      "exit_reason": "TIMEOUT",
+      "shares": 293,
+      "pnl_dollar": 1180.79,
+      "pnl_pct": 6.01,
+      "days_held": 30,
+      "mfe_pct": 8.29,
+      "mae_pct": -1.48,
+      "score": 62,
+      "month": "2025-06"
+    },
+    {
+      "symbol": "DUK",
+      "strategy": "BREAKOUT",
+      "entry_date": "2025-06-27",
+      "exit_date": "2025-08-11",
+      "entry_price": 113.95,
+      "exit_price": 122.37,
+      "exit_reason": "TIMEOUT",
+      "shares": 172,
+      "pnl_dollar": 1448.24,
+      "pnl_pct": 7.39,
+      "days_held": 30,
+      "mfe_pct": 9.35,
+      "mae_pct": -1.3,
+      "score": 61,
+      "month": "2025-06"
+    },
+    {
+      "symbol": "CSX",
+      "strategy": "PULLBACK",
+      "entry_date": "2025-08-11",
+      "exit_date": "2025-08-22",
+      "entry_price": 34.96,
+      "exit_price": 34.38,
+      "exit_reason": "TRAILING_STOP",
+      "shares": 590,
+      "pnl_dollar": -342.2,
+      "pnl_pct": -1.66,
+      "days_held": 9,
+      "mfe_pct": 5.74,
+      "mae_pct": -4.68,
+      "score": 60,
+      "month": "2025-08"
+    },
+    {
+      "symbol": "AWK",
+      "strategy": "BREAKOUT",
+      "entry_date": "2025-07-14",
+      "exit_date": "2025-08-25",
+      "entry_price": 140.67,
+      "exit_price": 142.51,
+      "exit_reason": "TIMEOUT",
+      "shares": 141,
+      "pnl_dollar": 259.44,
+      "pnl_pct": 1.31,
+      "days_held": 30,
+      "mfe_pct": 3.74,
+      "mae_pct": -4.08,
+      "score": 71,
+      "month": "2025-07"
+    },
+    {
+      "symbol": "AWK",
+      "strategy": "PULLBACK",
+      "entry_date": "2025-08-25",
+      "exit_date": "2025-09-18",
+      "entry_price": 142.51,
+      "exit_price": 132.54,
+      "exit_reason": "STOP_LOSS",
+      "shares": 146,
+      "pnl_dollar": -1455.62,
+      "pnl_pct": -7.0,
+      "days_held": 17,
+      "mfe_pct": 0.39,
+      "mae_pct": -7.69,
+      "score": 77,
+      "month": "2025-08"
+    },
+    {
+      "symbol": "CINF",
+      "strategy": "PULLBACK",
+      "entry_date": "2025-08-11",
+      "exit_date": "2025-09-23",
+      "entry_price": 148.27,
+      "exit_price": 153.64,
+      "exit_reason": "TIMEOUT",
+      "shares": 139,
+      "pnl_dollar": 746.43,
+      "pnl_pct": 3.62,
+      "days_held": 30,
+      "mfe_pct": 5.2,
+      "mae_pct": -0.19,
+      "score": 74,
+      "month": "2025-08"
+    },
+    {
+      "symbol": "AME",
+      "strategy": "PULLBACK",
+      "entry_date": "2025-08-11",
+      "exit_date": "2025-09-23",
+      "entry_price": 181.94,
+      "exit_price": 186.39,
+      "exit_reason": "TIMEOUT",
+      "shares": 113,
+      "pnl_dollar": 502.85,
+      "pnl_pct": 2.45,
+      "days_held": 30,
+      "mfe_pct": 5.37,
+      "mae_pct": -0.76,
+      "score": 61,
+      "month": "2025-08"
+    },
+    {
+      "symbol": "AFL",
+      "strategy": "BREAKOUT",
+      "entry_date": "2025-08-11",
+      "exit_date": "2025-09-23",
+      "entry_price": 103.07,
+      "exit_price": 107.67,
+      "exit_reason": "TIMEOUT",
+      "shares": 200,
+      "pnl_dollar": 920.0,
+      "pnl_pct": 4.46,
+      "days_held": 30,
+      "mfe_pct": 6.16,
+      "mae_pct": -0.64,
+      "score": 60,
+      "month": "2025-08"
+    },
+    {
+      "symbol": "AZO",
+      "strategy": "BREAKOUT",
+      "entry_date": "2025-09-02",
+      "exit_date": "2025-09-23",
+      "entry_price": 4179.84,
+      "exit_price": 4080.94,
+      "exit_reason": "TRAILING_STOP",
+      "shares": 4,
+      "pnl_dollar": -395.6,
+      "pnl_pct": -2.37,
+      "days_held": 15,
+      "mfe_pct": 4.98,
+      "mae_pct": -5.03,
+      "score": 68,
+      "month": "2025-09"
+    },
+    {
+      "symbol": "CTVA",
+      "strategy": "PULLBACK",
+      "entry_date": "2025-09-23",
+      "exit_date": "2025-10-01",
+      "entry_price": 69.29,
+      "exit_price": 64.44,
+      "exit_reason": "STOP_LOSS",
+      "shares": 298,
+      "pnl_dollar": -1445.3,
+      "pnl_pct": -7.0,
+      "days_held": 6,
+      "mfe_pct": 1.24,
+      "mae_pct": -12.62,
+      "score": 64,
+      "month": "2025-09"
+    },
+    {
+      "symbol": "CINF",
+      "strategy": "PULLBACK",
+      "entry_date": "2025-09-23",
+      "exit_date": "2025-10-16",
+      "entry_price": 153.64,
+      "exit_price": 154.41,
+      "exit_reason": "TRAILING_STOP",
+      "shares": 134,
+      "pnl_dollar": 103.18,
+      "pnl_pct": 0.5,
+      "days_held": 17,
+      "mfe_pct": 8.07,
+      "mae_pct": -2.17,
+      "score": 66,
+      "month": "2025-09"
+    },
+    {
+      "symbol": "GRMN",
+      "strategy": "PULLBACK",
+      "entry_date": "2025-09-23",
+      "exit_date": "2025-10-29",
+      "entry_price": 236.38,
+      "exit_price": 219.83,
+      "exit_reason": "STOP_LOSS",
+      "shares": 87,
+      "pnl_dollar": -1439.85,
+      "pnl_pct": -7.0,
+      "days_held": 26,
+      "mfe_pct": 10.23,
+      "mae_pct": -10.12,
+      "score": 64,
+      "month": "2025-09"
+    },
+    {
+      "symbol": "ED",
+      "strategy": "BREAKOUT",
+      "entry_date": "2025-10-21",
+      "exit_date": "2025-11-03",
+      "entry_price": 100.72,
+      "exit_price": 95.09,
+      "exit_reason": "TRAILING_STOP",
+      "shares": 208,
+      "pnl_dollar": -1171.04,
+      "pnl_pct": -5.59,
+      "days_held": 9,
+      "mfe_pct": 1.52,
+      "mae_pct": -5.97,
+      "score": 70,
+      "month": "2025-10"
+    },
+    {
+      "symbol": "CSX",
+      "strategy": "BREAKOUT",
+      "entry_date": "2025-09-23",
+      "exit_date": "2025-11-04",
+      "entry_price": 33.94,
+      "exit_price": 35.71,
+      "exit_reason": "TIMEOUT",
+      "shares": 608,
+      "pnl_dollar": 1076.16,
+      "pnl_pct": 5.22,
+      "days_held": 30,
+      "mfe_pct": 9.17,
+      "mae_pct": -1.78,
+      "score": 62,
+      "month": "2025-09"
+    },
+    {
+      "symbol": "ETR",
+      "strategy": "BREAKOUT",
+      "entry_date": "2025-09-23",
+      "exit_date": "2025-11-04",
+      "entry_price": 89.66,
+      "exit_price": 94.97,
+      "exit_reason": "TIMEOUT",
+      "shares": 230,
+      "pnl_dollar": 1221.3,
+      "pnl_pct": 5.92,
+      "days_held": 30,
+      "mfe_pct": 8.51,
+      "mae_pct": -0.71,
+      "score": 62,
+      "month": "2025-09"
+    },
+    {
+      "symbol": "APLD",
+      "strategy": "PULLBACK",
+      "entry_date": "2025-11-04",
+      "exit_date": "2025-11-06",
+      "entry_price": 31.06,
+      "exit_price": 31.53,
+      "exit_reason": "TRAILING_STOP",
+      "shares": 653,
+      "pnl_dollar": 306.91,
+      "pnl_pct": 1.51,
+      "days_held": 2,
+      "mfe_pct": 9.14,
+      "mae_pct": -0.35,
+      "score": 63,
+      "month": "2025-11"
+    },
+    {
+      "symbol": "BEN",
+      "strategy": "PULLBACK",
+      "entry_date": "2025-11-04",
+      "exit_date": "2025-11-07",
+      "entry_price": 22.28,
+      "exit_price": 21.46,
+      "exit_reason": "TRAILING_STOP",
+      "shares": 911,
+      "pnl_dollar": -747.02,
+      "pnl_pct": -3.68,
+      "days_held": 3,
+      "mfe_pct": 3.56,
+      "mae_pct": -4.19,
+      "score": 63,
+      "month": "2025-11"
+    },
+    {
+      "symbol": "AVGO",
+      "strategy": "PULLBACK",
+      "entry_date": "2025-11-04",
+      "exit_date": "2025-11-07",
+      "entry_price": 351.27,
+      "exit_price": 338.68,
+      "exit_reason": "TRAILING_STOP",
+      "shares": 57,
+      "pnl_dollar": -717.63,
+      "pnl_pct": -3.58,
+      "days_held": 3,
+      "mfe_pct": 3.67,
+      "mae_pct": -4.17,
+      "score": 61,
+      "month": "2025-11"
+    },
+    {
+      "symbol": "EL",
+      "strategy": "PULLBACK",
+      "entry_date": "2025-11-04",
+      "exit_date": "2025-11-07",
+      "entry_price": 92.53,
+      "exit_price": 86.06,
+      "exit_reason": "STOP_LOSS",
+      "shares": 219,
+      "pnl_dollar": -1416.93,
+      "pnl_pct": -6.99,
+      "days_held": 3,
+      "mfe_pct": 0.0,
+      "mae_pct": -8.9,
+      "score": 61,
+      "month": "2025-11"
+    },
+    {
+      "symbol": "AMGN",
+      "strategy": "BREAKOUT",
+      "entry_date": "2025-11-04",
+      "exit_date": "2025-11-11",
+      "entry_price": 292.57,
+      "exit_price": 333.53,
+      "exit_reason": "TARGET_1",
+      "shares": 69,
+      "pnl_dollar": 2826.24,
+      "pnl_pct": 14.0,
+      "days_held": 5,
+      "mfe_pct": 14.11,
+      "mae_pct": 0.0,
+      "score": 63,
+      "month": "2025-11"
+    },
+    {
+      "symbol": "FSLR",
+      "strategy": "PULLBACK",
+      "entry_date": "2025-11-11",
+      "exit_date": "2025-11-14",
+      "entry_price": 264.15,
+      "exit_price": 245.66,
+      "exit_reason": "STOP_LOSS",
+      "shares": 77,
+      "pnl_dollar": -1423.73,
+      "pnl_pct": -7.0,
+      "days_held": 3,
+      "mfe_pct": 2.35,
+      "mae_pct": -7.72,
+      "score": 66,
+      "month": "2025-11"
+    },
+    {
+      "symbol": "AEE",
+      "strategy": "BREAKOUT",
+      "entry_date": "2025-11-11",
+      "exit_date": "2025-12-08",
+      "entry_price": 104.44,
+      "exit_price": 98.44,
+      "exit_reason": "TRAILING_STOP",
+      "shares": 194,
+      "pnl_dollar": -1164.0,
+      "pnl_pct": -5.74,
+      "days_held": 18,
+      "mfe_pct": 1.35,
+      "mae_pct": -6.24,
+      "score": 62,
+      "month": "2025-11"
+    },
+    {
+      "symbol": "CMS",
+      "strategy": "BREAKOUT",
+      "entry_date": "2025-11-11",
+      "exit_date": "2025-12-10",
+      "entry_price": 74.84,
+      "exit_price": 70.24,
+      "exit_reason": "TRAILING_STOP",
+      "shares": 272,
+      "pnl_dollar": -1251.2,
+      "pnl_pct": -6.15,
+      "days_held": 20,
+      "mfe_pct": 0.92,
+      "mae_pct": -6.51,
+      "score": 63,
+      "month": "2025-11"
+    },
+    {
+      "symbol": "D",
+      "strategy": "PULLBACK",
+      "entry_date": "2025-11-11",
+      "exit_date": "2025-12-10",
+      "entry_price": 60.52,
+      "exit_price": 57.82,
+      "exit_reason": "TRAILING_STOP",
+      "shares": 336,
+      "pnl_dollar": -907.2,
+      "pnl_pct": -4.46,
+      "days_held": 20,
+      "mfe_pct": 2.72,
+      "mae_pct": -4.81,
+      "score": 63,
+      "month": "2025-11"
+    },
+    {
+      "symbol": "AMD",
+      "strategy": "PULLBACK",
+      "entry_date": "2025-12-10",
+      "exit_date": "2025-12-15",
+      "entry_price": 221.42,
+      "exit_price": 206.92,
+      "exit_reason": "TRAILING_STOP",
+      "shares": 87,
+      "pnl_dollar": -1261.5,
+      "pnl_pct": -6.55,
+      "days_held": 3,
+      "mfe_pct": 0.48,
+      "mae_pct": -6.7,
+      "score": 65,
+      "month": "2025-12"
+    },
+    {
+      "symbol": "D",
+      "strategy": "PULLBACK",
+      "entry_date": "2025-12-10",
+      "exit_date": "2025-12-22",
+      "entry_price": 58.06,
+      "exit_price": 56.25,
+      "exit_reason": "TRAILING_STOP",
+      "shares": 333,
+      "pnl_dollar": -602.73,
+      "pnl_pct": -3.12,
+      "days_held": 8,
+      "mfe_pct": 4.17,
+      "mae_pct": -3.81,
+      "score": 57,
+      "month": "2025-12"
+    },
+    {
+      "symbol": "EIX",
+      "strategy": "BREAKOUT",
+      "entry_date": "2025-11-11",
+      "exit_date": "2025-12-24",
+      "entry_price": 57.03,
+      "exit_price": 59.23,
+      "exit_reason": "TIMEOUT",
+      "shares": 357,
+      "pnl_dollar": 785.4,
+      "pnl_pct": 3.86,
+      "days_held": 30,
+      "mfe_pct": 4.89,
+      "mae_pct": -3.51,
+      "score": 66,
+      "month": "2025-11"
+    },
+    {
+      "symbol": "GL",
+      "strategy": "BREAKOUT",
+      "entry_date": "2025-12-10",
+      "exit_date": "2026-01-26",
+      "entry_price": 134.65,
+      "exit_price": 138.08,
+      "exit_reason": "TIMEOUT",
+      "shares": 143,
+      "pnl_dollar": 490.49,
+      "pnl_pct": 2.55,
+      "days_held": 30,
+      "mfe_pct": 7.14,
+      "mae_pct": -0.0,
+      "score": 58,
+      "month": "2025-12"
+    },
+    {
+      "symbol": "ED",
+      "strategy": "BREAKOUT",
+      "entry_date": "2025-12-17",
+      "exit_date": "2026-02-02",
+      "entry_price": 100.21,
+      "exit_price": 105.42,
+      "exit_reason": "TIMEOUT",
+      "shares": 194,
+      "pnl_dollar": 1010.74,
+      "pnl_pct": 5.2,
+      "days_held": 30,
+      "mfe_pct": 7.16,
+      "mae_pct": -3.24,
+      "score": 70,
+      "month": "2025-12"
+    },
+    {
+      "symbol": "AVGO",
+      "strategy": "PULLBACK",
+      "entry_date": "2026-02-02",
+      "exit_date": "2026-02-04",
+      "entry_price": 331.11,
+      "exit_price": 307.93,
+      "exit_reason": "STOP_LOSS",
+      "shares": 59,
+      "pnl_dollar": -1367.62,
+      "pnl_pct": -7.0,
+      "days_held": 2,
+      "mfe_pct": 2.35,
+      "mae_pct": -10.82,
+      "score": 75,
+      "month": "2026-02"
+    },
+    {
+      "symbol": "AFL",
+      "strategy": "PULLBACK",
+      "entry_date": "2025-12-24",
+      "exit_date": "2026-02-09",
+      "entry_price": 110.62,
+      "exit_price": 113.2,
+      "exit_reason": "TIMEOUT",
+      "shares": 175,
+      "pnl_dollar": 451.5,
+      "pnl_pct": 2.33,
+      "days_held": 30,
+      "mfe_pct": 7.86,
+      "mae_pct": -3.89,
+      "score": 67,
+      "month": "2025-12"
+    },
+    {
+      "symbol": "EIX",
+      "strategy": "BREAKOUT",
+      "entry_date": "2025-12-24",
+      "exit_date": "2026-02-09",
+      "entry_price": 59.23,
+      "exit_price": 63.79,
+      "exit_reason": "TIMEOUT",
+      "shares": 327,
+      "pnl_dollar": 1491.12,
+      "pnl_pct": 7.7,
+      "days_held": 30,
+      "mfe_pct": 9.2,
+      "mae_pct": -1.8,
+      "score": 67,
+      "month": "2025-12"
+    },
+    {
+      "symbol": "AVGO",
+      "strategy": "PULLBACK",
+      "entry_date": "2026-02-09",
+      "exit_date": "2026-02-17",
+      "entry_price": 343.94,
+      "exit_price": 319.86,
+      "exit_reason": "STOP_LOSS",
+      "shares": 57,
+      "pnl_dollar": -1372.56,
+      "pnl_pct": -7.0,
+      "days_held": 5,
+      "mfe_pct": 1.18,
+      "mae_pct": -8.03,
+      "score": 61,
+      "month": "2026-02"
+    },
+    {
+      "symbol": "ATO",
+      "strategy": "BREAKOUT",
+      "entry_date": "2026-01-26",
+      "exit_date": "2026-02-17",
+      "entry_price": 168.5,
+      "exit_price": 180.24,
+      "exit_reason": "END_OF_SIM",
+      "shares": 116,
+      "pnl_dollar": 1361.84,
+      "pnl_pct": 6.97,
+      "days_held": 15,
+      "mfe_pct": 7.42,
+      "mae_pct": -2.43,
+      "score": 77,
+      "month": "2026-01"
+    },
+    {
+      "symbol": "D",
+      "strategy": "PULLBACK",
+      "entry_date": "2026-02-02",
+      "exit_date": "2026-02-17",
+      "entry_price": 60.03,
+      "exit_price": 65.65,
+      "exit_reason": "END_OF_SIM",
+      "shares": 326,
+      "pnl_dollar": 1832.12,
+      "pnl_pct": 9.36,
+      "days_held": 10,
+      "mfe_pct": 12.56,
+      "mae_pct": -0.0,
+      "score": 67,
+      "month": "2026-02"
+    },
+    {
+      "symbol": "EVRG",
+      "strategy": "BREAKOUT",
+      "entry_date": "2026-02-09",
+      "exit_date": "2026-02-17",
+      "entry_price": 77.15,
+      "exit_price": 81.51,
+      "exit_reason": "END_OF_SIM",
+      "shares": 257,
+      "pnl_dollar": 1120.52,
+      "pnl_pct": 5.65,
+      "days_held": 5,
+      "mfe_pct": 7.83,
+      "mae_pct": -0.04,
+      "score": 65,
+      "month": "2026-02"
+    },
+    {
+      "symbol": "FSLR",
+      "strategy": "PULLBACK",
+      "entry_date": "2026-02-17",
+      "exit_date": "2026-02-17",
+      "entry_price": 226.05,
+      "exit_price": 226.05,
+      "exit_reason": "END_OF_SIM",
+      "shares": 89,
+      "pnl_dollar": 0.0,
+      "pnl_pct": 0.0,
+      "days_held": 0,
+      "mfe_pct": 0.0,
+      "mae_pct": 0.0,
+      "score": 68,
+      "month": "2026-02"
+    }
+  ],
+  "daily_equity": [
+    {
+      "date": "2025-04-01",
+      "value": 100000
+    },
+    {
+      "date": "2025-04-02",
+      "value": 100240.39
+    },
+    {
+      "date": "2025-04-03",
+      "value": 100714.3
+    },
+    {
+      "date": "2025-04-04",
+      "value": 96323.21
+    },
+    {
+      "date": "2025-04-07",
+      "value": 95090.42
+    },
+    {
+      "date": "2025-04-08",
+      "value": 94909.63
+    },
+    {
+      "date": "2025-04-09",
+      "value": 95566.48
+    },
+    {
+      "date": "2025-04-10",
+      "value": 95506.45
+    },
+    {
+      "date": "2025-04-11",
+      "value": 96406.28
+    },
+    {
+      "date": "2025-04-14",
+      "value": 97558.37
+    },
+    {
+      "date": "2025-04-15",
+      "value": 97628.12
+    },
+    {
+      "date": "2025-04-16",
+      "value": 97430.23
+    },
+    {
+      "date": "2025-04-17",
+      "value": 98523.47
+    },
+    {
+      "date": "2025-04-21",
+      "value": 97820.45
+    },
+    {
+      "date": "2025-04-22",
+      "value": 99516.15
+    },
+    {
+      "date": "2025-04-23",
+      "value": 99062.16
+    },
+    {
+      "date": "2025-04-24",
+      "value": 98597.49
+    },
+    {
+      "date": "2025-04-25",
+      "value": 98140.21
+    },
+    {
+      "date": "2025-04-28",
+      "value": 98652.19
+    },
+    {
+      "date": "2025-04-29",
+      "value": 99288.96
+    },
+    {
+      "date": "2025-04-30",
+      "value": 99482.61
+    },
+    {
+      "date": "2025-05-01",
+      "value": 99216.25
+    },
+    {
+      "date": "2025-05-02",
+      "value": 99137.32
+    },
+    {
+      "date": "2025-05-05",
+      "value": 98897.93
+    },
+    {
+      "date": "2025-05-06",
+      "value": 99535.16
+    },
+    {
+      "date": "2025-05-07",
+      "value": 99779.73
+    },
+    {
+      "date": "2025-05-08",
+      "value": 98365.4
+    },
+    {
+      "date": "2025-05-09",
+      "value": 99210.51
+    },
+    {
+      "date": "2025-05-12",
+      "value": 97360.72
+    },
+    {
+      "date": "2025-05-13",
+      "value": 97433.95
+    },
+    {
+      "date": "2025-05-14",
+      "value": 97390.7
+    },
+    {
+      "date": "2025-05-15",
+      "value": 99256.54
+    },
+    {
+      "date": "2025-05-16",
+      "value": 100019.79
+    },
+    {
+      "date": "2025-05-19",
+      "value": 100368.29
+    },
+    {
+      "date": "2025-05-20",
+      "value": 100126.55
+    },
+    {
+      "date": "2025-05-21",
+      "value": 99168.14
+    },
+    {
+      "date": "2025-05-22",
+      "value": 98508.49
+    },
+    {
+      "date": "2025-05-23",
+      "value": 99033.92
+    },
+    {
+      "date": "2025-05-27",
+      "value": 99424.0
+    },
+    {
+      "date": "2025-05-28",
+      "value": 98657.23
+    },
+    {
+      "date": "2025-05-29",
+      "value": 98943.02
+    },
+    {
+      "date": "2025-05-30",
+      "value": 99716.72
+    },
+    {
+      "date": "2025-06-02",
+      "value": 99952.04
+    },
+    {
+      "date": "2025-06-03",
+      "value": 99836.67
+    },
+    {
+      "date": "2025-06-04",
+      "value": 98797.55
+    },
+    {
+      "date": "2025-06-05",
+      "value": 98587.82
+    },
+    {
+      "date": "2025-06-06",
+      "value": 98960.74
+    },
+    {
+      "date": "2025-06-09",
+      "value": 99186.18
+    },
+    {
+      "date": "2025-06-10",
+      "value": 98916.16
+    },
+    {
+      "date": "2025-06-11",
+      "value": 98763.89
+    },
+    {
+      "date": "2025-06-12",
+      "value": 99450.29
+    },
+    {
+      "date": "2025-06-13",
+      "value": 98632.66
+    },
+    {
+      "date": "2025-06-16",
+      "value": 98814.14
+    },
+    {
+      "date": "2025-06-17",
+      "value": 98121.59
+    },
+    {
+      "date": "2025-06-18",
+      "value": 98036.25
+    },
+    {
+      "date": "2025-06-20",
+      "value": 98423.48
+    },
+    {
+      "date": "2025-06-23",
+      "value": 99240.11
+    },
+    {
+      "date": "2025-06-24",
+      "value": 99193.07
+    },
+    {
+      "date": "2025-06-25",
+      "value": 97858.6
+    },
+    {
+      "date": "2025-06-26",
+      "value": 97943.14
+    },
+    {
+      "date": "2025-06-27",
+      "value": 98359.44
+    },
+    {
+      "date": "2025-06-30",
+      "value": 99460.18
+    },
+    {
+      "date": "2025-07-01",
+      "value": 99912.69
+    },
+    {
+      "date": "2025-07-02",
+      "value": 99044.17
+    },
+    {
+      "date": "2025-07-03",
+      "value": 99379.43
+    },
+    {
+      "date": "2025-07-07",
+      "value": 99253.94
+    },
+    {
+      "date": "2025-07-08",
+      "value": 98642.28
+    },
+    {
+      "date": "2025-07-09",
+      "value": 99075.95
+    },
+    {
+      "date": "2025-07-10",
+      "value": 99976.93
+    },
+    {
+      "date": "2025-07-11",
+      "value": 99503.16
+    },
+    {
+      "date": "2025-07-14",
+      "value": 99463.33
+    },
+    {
+      "date": "2025-07-15",
+      "value": 98124.97
+    },
+    {
+      "date": "2025-07-16",
+      "value": 98985.16
+    },
+    {
+      "date": "2025-07-17",
+      "value": 99166.71
+    },
+    {
+      "date": "2025-07-18",
+      "value": 100021.04
+    },
+    {
+      "date": "2025-07-21",
+      "value": 99863.8
+    },
+    {
+      "date": "2025-07-22",
+      "value": 101191.5
+    },
+    {
+      "date": "2025-07-23",
+      "value": 100454.44
+    },
+    {
+      "date": "2025-07-24",
+      "value": 100402.68
+    },
+    {
+      "date": "2025-07-25",
+      "value": 100669.01
+    },
+    {
+      "date": "2025-07-28",
+      "value": 98914.13
+    },
+    {
+      "date": "2025-07-29",
+      "value": 100483.12
+    },
+    {
+      "date": "2025-07-30",
+      "value": 100376.08
+    },
+    {
+      "date": "2025-07-31",
+      "value": 100516.74
+    },
+    {
+      "date": "2025-08-01",
+      "value": 102102.37
+    },
+    {
+      "date": "2025-08-04",
+      "value": 103243.04
+    },
+    {
+      "date": "2025-08-05",
+      "value": 102253.72
+    },
+    {
+      "date": "2025-08-06",
+      "value": 102515.03
+    },
+    {
+      "date": "2025-08-07",
+      "value": 102992.72
+    },
+    {
+      "date": "2025-08-08",
+      "value": 103152.89
+    },
+    {
+      "date": "2025-08-11",
+      "value": 103275.51
+    },
+    {
+      "date": "2025-08-12",
+      "value": 103611.09
+    },
+    {
+      "date": "2025-08-13",
+      "value": 104999.14
+    },
+    {
+      "date": "2025-08-14",
+      "value": 104812.87
+    },
+    {
+      "date": "2025-08-15",
+      "value": 104071.98
+    },
+    {
+      "date": "2025-08-18",
+      "value": 103745.92
+    },
+    {
+      "date": "2025-08-19",
+      "value": 105281.44
+    },
+    {
+      "date": "2025-08-20",
+      "value": 105309.66
+    },
+    {
+      "date": "2025-08-21",
+      "value": 105248.27
+    },
+    {
+      "date": "2025-08-22",
+      "value": 105323.52
+    },
+    {
+      "date": "2025-08-25",
+      "value": 104453.37
+    },
+    {
+      "date": "2025-08-26",
+      "value": 104718.18
+    },
+    {
+      "date": "2025-08-27",
+      "value": 104716.08
+    },
+    {
+      "date": "2025-08-28",
+      "value": 104129.58
+    },
+    {
+      "date": "2025-08-29",
+      "value": 104174.48
+    },
+    {
+      "date": "2025-09-02",
+      "value": 103536.92
+    },
+    {
+      "date": "2025-09-03",
+      "value": 103723.95
+    },
+    {
+      "date": "2025-09-04",
+      "value": 105063.11
+    },
+    {
+      "date": "2025-09-05",
+      "value": 104625.14
+    },
+    {
+      "date": "2025-09-08",
+      "value": 104236.96
+    },
+    {
+      "date": "2025-09-09",
+      "value": 104325.66
+    },
+    {
+      "date": "2025-09-10",
+      "value": 103935.04
+    },
+    {
+      "date": "2025-09-11",
+      "value": 105927.21
+    },
+    {
+      "date": "2025-09-12",
+      "value": 105611.96
+    },
+    {
+      "date": "2025-09-15",
+      "value": 104623.71
+    },
+    {
+      "date": "2025-09-16",
+      "value": 103725.26
+    },
+    {
+      "date": "2025-09-17",
+      "value": 104106.41
+    },
+    {
+      "date": "2025-09-18",
+      "value": 103837.66
+    },
+    {
+      "date": "2025-09-19",
+      "value": 103649.14
+    },
+    {
+      "date": "2025-09-22",
+      "value": 103433.75
+    },
+    {
+      "date": "2025-09-23",
+      "value": 103360.62
+    },
+    {
+      "date": "2025-09-24",
+      "value": 103188.75
+    },
+    {
+      "date": "2025-09-25",
+      "value": 102135.78
+    },
+    {
+      "date": "2025-09-26",
+      "value": 103669.14
+    },
+    {
+      "date": "2025-09-29",
+      "value": 105338.42
+    },
+    {
+      "date": "2025-09-30",
+      "value": 105311.64
+    },
+    {
+      "date": "2025-10-01",
+      "value": 104221.06
+    },
+    {
+      "date": "2025-10-02",
+      "value": 105856.6
+    },
+    {
+      "date": "2025-10-03",
+      "value": 106847.92
+    },
+    {
+      "date": "2025-10-06",
+      "value": 107773.89
+    },
+    {
+      "date": "2025-10-07",
+      "value": 107225.56
+    },
+    {
+      "date": "2025-10-08",
+      "value": 107635.88
+    },
+    {
+      "date": "2025-10-09",
+      "value": 106661.23
+    },
+    {
+      "date": "2025-10-10",
+      "value": 105145.3
+    },
+    {
+      "date": "2025-10-13",
+      "value": 105439.61
+    },
+    {
+      "date": "2025-10-14",
+      "value": 105934.05
+    },
+    {
+      "date": "2025-10-15",
+      "value": 105914.13
+    },
+    {
+      "date": "2025-10-16",
+      "value": 104498.5
+    },
+    {
+      "date": "2025-10-17",
+      "value": 105532.25
+    },
+    {
+      "date": "2025-10-20",
+      "value": 105784.25
+    },
+    {
+      "date": "2025-10-21",
+      "value": 105167.96
+    },
+    {
+      "date": "2025-10-22",
+      "value": 105110.29
+    },
+    {
+      "date": "2025-10-23",
+      "value": 104784.75
+    },
+    {
+      "date": "2025-10-24",
+      "value": 105228.44
+    },
+    {
+      "date": "2025-10-27",
+      "value": 105447.89
+    },
+    {
+      "date": "2025-10-28",
+      "value": 104089.95
+    },
+    {
+      "date": "2025-10-29",
+      "value": 101172.71
+    },
+    {
+      "date": "2025-10-30",
+      "value": 101858.78
+    },
+    {
+      "date": "2025-10-31",
+      "value": 101937.15
+    },
+    {
+      "date": "2025-11-03",
+      "value": 101840.27
+    },
+    {
+      "date": "2025-11-04",
+      "value": 101544.69
+    },
+    {
+      "date": "2025-11-05",
+      "value": 104610.6
+    },
+    {
+      "date": "2025-11-06",
+      "value": 102532.84
+    },
+    {
+      "date": "2025-11-07",
+      "value": 101866.72
+    },
+    {
+      "date": "2025-11-10",
+      "value": 100801.74
+    },
+    {
+      "date": "2025-11-11",
+      "value": 101808.06
+    },
+    {
+      "date": "2025-11-12",
+      "value": 102557.34
+    },
+    {
+      "date": "2025-11-13",
+      "value": 101199.04
+    },
+    {
+      "date": "2025-11-14",
+      "value": 100746.48
+    },
+    {
+      "date": "2025-11-17",
+      "value": 100362.08
+    },
+    {
+      "date": "2025-11-18",
+      "value": 100435.46
+    },
+    {
+      "date": "2025-11-19",
+      "value": 98966.22
+    },
+    {
+      "date": "2025-11-20",
+      "value": 99623.04
+    },
+    {
+      "date": "2025-11-21",
+      "value": 100364.57
+    },
+    {
+      "date": "2025-11-24",
+      "value": 100739.65
+    },
+    {
+      "date": "2025-11-25",
+      "value": 100644.24
+    },
+    {
+      "date": "2025-11-26",
+      "value": 101528.09
+    },
+    {
+      "date": "2025-11-28",
+      "value": 101636.91
+    },
+    {
+      "date": "2025-12-01",
+      "value": 99449.58
+    },
+    {
+      "date": "2025-12-02",
+      "value": 98523.33
+    },
+    {
+      "date": "2025-12-03",
+      "value": 98343.2
+    },
+    {
+      "date": "2025-12-04",
+      "value": 98115.33
+    },
+    {
+      "date": "2025-12-05",
+      "value": 97719.55
+    },
+    {
+      "date": "2025-12-08",
+      "value": 96718.95
+    },
+    {
+      "date": "2025-12-09",
+      "value": 96879.31
+    },
+    {
+      "date": "2025-12-10",
+      "value": 96933.23
+    },
+    {
+      "date": "2025-12-11",
+      "value": 97696.89
+    },
+    {
+      "date": "2025-12-12",
+      "value": 97350.26
+    },
+    {
+      "date": "2025-12-15",
+      "value": 97685.94
+    },
+    {
+      "date": "2025-12-16",
+      "value": 97203.97
+    },
+    {
+      "date": "2025-12-17",
+      "value": 97602.73
+    },
+    {
+      "date": "2025-12-18",
+      "value": 97749.82
+    },
+    {
+      "date": "2025-12-19",
+      "value": 97286.08
+    },
+    {
+      "date": "2025-12-22",
+      "value": 97248.02
+    },
+    {
+      "date": "2025-12-23",
+      "value": 96775.36
+    },
+    {
+      "date": "2025-12-24",
+      "value": 97063.22
+    },
+    {
+      "date": "2025-12-26",
+      "value": 96519.1
+    },
+    {
+      "date": "2025-12-29",
+      "value": 96702.06
+    },
+    {
+      "date": "2025-12-30",
+      "value": 96954.71
+    },
+    {
+      "date": "2025-12-31",
+      "value": 96416.68
+    },
+    {
+      "date": "2026-01-02",
+      "value": 96629.14
+    },
+    {
+      "date": "2026-01-05",
+      "value": 96936.08
+    },
+    {
+      "date": "2026-01-06",
+      "value": 96877.89
+    },
+    {
+      "date": "2026-01-07",
+      "value": 96211.75
+    },
+    {
+      "date": "2026-01-08",
+      "value": 97144.72
+    },
+    {
+      "date": "2026-01-09",
+      "value": 97154.94
+    },
+    {
+      "date": "2026-01-12",
+      "value": 96822.78
+    },
+    {
+      "date": "2026-01-13",
+      "value": 97020.71
+    },
+    {
+      "date": "2026-01-14",
+      "value": 98029.67
+    },
+    {
+      "date": "2026-01-15",
+      "value": 97742.2
+    },
+    {
+      "date": "2026-01-16",
+      "value": 98126.25
+    },
+    {
+      "date": "2026-01-20",
+      "value": 97230.39
+    },
+    {
+      "date": "2026-01-21",
+      "value": 97287.31
+    },
+    {
+      "date": "2026-01-22",
+      "value": 97158.35
+    },
+    {
+      "date": "2026-01-23",
+      "value": 96831.44
+    },
+    {
+      "date": "2026-01-26",
+      "value": 97805.3
+    },
+    {
+      "date": "2026-01-27",
+      "value": 98239.95
+    },
+    {
+      "date": "2026-01-28",
+      "value": 97825.73
+    },
+    {
+      "date": "2026-01-29",
+      "value": 98229.14
+    },
+    {
+      "date": "2026-01-30",
+      "value": 98511.53
+    },
+    {
+      "date": "2026-02-02",
+      "value": 97972.36
+    },
+    {
+      "date": "2026-02-03",
+      "value": 98312.84
+    },
+    {
+      "date": "2026-02-04",
+      "value": 99156.0
+    },
+    {
+      "date": "2026-02-05",
+      "value": 99928.08
+    },
+    {
+      "date": "2026-02-06",
+      "value": 99894.33
+    },
+    {
+      "date": "2026-02-09",
+      "value": 99150.2
+    },
+    {
+      "date": "2026-02-10",
+      "value": 100142.43
+    },
+    {
+      "date": "2026-02-11",
+      "value": 100907.75
+    },
+    {
+      "date": "2026-02-12",
+      "value": 100963.81
+    },
+    {
+      "date": "2026-02-13",
+      "value": 101760.63
+    },
+    {
+      "date": "2026-02-17",
+      "value": 101711.94
+    }
+  ]
+}

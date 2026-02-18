@@ -1,10 +1,9 @@
-name: Swing Trade Scanner
+name: Momentum Scanner
 
 on:
   schedule:
-    - cron: '30 11 * * 1-5'  # Scan: 14:30 TRT
-    - cron: '0 21 * * 1-5'   # Track + auto-learn: 00:00 TRT
-    - cron: '0 10 * * 0'     # Full learn cycle: Sunday 13:00 TRT
+    - cron: '30 11 * * 5'    # Cuma 14:30 TRT — haftalık scan + rebalance
+    - cron: '0 21 * * 1-5'   # Hafta içi 00:00 TRT — fiyat takibi
   workflow_dispatch:
     inputs:
       action:
@@ -15,14 +14,13 @@ on:
         options:
           - scan
           - track
-          - learn
-          - optimize
+          - backtest
 
 permissions:
   contents: write
 
 jobs:
-  swing-trade:
+  momentum:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -39,98 +37,37 @@ jobs:
         run: |
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             echo "action=${{ github.event.inputs.action }}" >> $GITHUB_OUTPUT
-          elif [ "${{ github.event.schedule }}" = "30 11 * * 1-5" ]; then
+          elif [ "$(date +%u)" = "5" ] && [ "${{ github.event.schedule }}" = "30 11 * * 5" ]; then
             echo "action=scan" >> $GITHUB_OUTPUT
-          elif [ "${{ github.event.schedule }}" = "0 21 * * 1-5" ]; then
+          else
             echo "action=track" >> $GITHUB_OUTPUT
-          elif [ "${{ github.event.schedule }}" = "0 10 * * 0" ]; then
-            echo "action=learn" >> $GITHUB_OUTPUT
           fi
       
-      # ── SCAN ──
-      - name: Run Scanner
+      - name: Run Momentum Scanner
         if: steps.action.outputs.action == 'scan'
-        env:
-          FMP_API_KEY: ${{ secrets.FMP_API_KEY }}
-        run: python3 swing-trade/scripts/scanner.py --api-key $FMP_API_KEY
-
-      # ── TRACK + AUTO-LEARN ──
+        working-directory: swing-trade/scripts
+        run: python3 momentum_scanner.py
+      
       - name: Run Tracker
         if: steps.action.outputs.action == 'track'
-        run: python3 swing-trade/scripts/signal_tracker.py
-
-      - name: Check learning trigger
-        if: steps.action.outputs.action == 'track'
-        id: learn_check
-        run: |
-          if [ -f "swing-trade/data/learning_trigger.json" ]; then
-            echo "trigger=true" >> $GITHUB_OUTPUT
-            echo "🧠 Learning triggered!"
-            cat swing-trade/data/learning_trigger.json
-          else
-            echo "trigger=false" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Auto-learn (triggered by tracker)
-        if: steps.action.outputs.action == 'track' && steps.learn_check.outputs.trigger == 'true'
-        env:
-          FMP_API_KEY: ${{ secrets.FMP_API_KEY }}
-        run: |
-          echo "═══ AUTO-LEARN: AUTOPSY ═══"
-          python3 swing-trade/scripts/autopsy.py --apply --report
-          
-          echo ""
-          echo "═══ AUTO-LEARN: RE-OPTIMIZE ═══"
-          python3 swing-trade/scripts/optimizer.py --api-key $FMP_API_KEY --passes 3
-          
-          # Remove trigger
-          rm -f swing-trade/data/learning_trigger.json
-          rm -f swing-trade/data/needs_reoptimization.json
-
-      # ── SUNDAY FULL LEARN ──
-      - name: Sunday Full Learning Cycle
-        if: steps.action.outputs.action == 'learn'
-        env:
-          FMP_API_KEY: ${{ secrets.FMP_API_KEY }}
-        run: |
-          echo "═══ PHASE 1: AUTOPSY ═══"
-          python3 swing-trade/scripts/autopsy.py --apply --report || true
-          
-          echo ""
-          echo "═══ PHASE 2: FULL RE-OPTIMIZE (5 passes) ═══"
-          python3 swing-trade/scripts/optimizer.py --api-key $FMP_API_KEY --passes 5
-          
-          echo ""
-          echo "═══ PHASE 3: FRESH SCAN WITH NEW PARAMS ═══"
-          python3 swing-trade/scripts/scanner.py --api-key $FMP_API_KEY
-          
-          # Cleanup triggers
-          rm -f swing-trade/data/learning_trigger.json
-          rm -f swing-trade/data/needs_reoptimization.json
-
-      # ── MANUAL OPTIMIZE ──
-      - name: Run Optimizer Only
-        if: steps.action.outputs.action == 'optimize'
-        env:
-          FMP_API_KEY: ${{ secrets.FMP_API_KEY }}
-        run: python3 swing-trade/scripts/optimizer.py --api-key $FMP_API_KEY --passes 5
-
-      # ── COMMIT ──
+        working-directory: swing-trade/scripts
+        run: python3 momentum_tracker.py
+      
+      - name: Run Backtest
+        if: steps.action.outputs.action == 'backtest'
+        working-directory: swing-trade/scripts
+        run: python3 momentum_strategy.py --start 2024-01-02 --top 5 --rebal 5 --no-regime --no-risk-adjust
+      
       - name: Commit results
         run: |
-          git config user.name "Swing Trade Bot"
-          git config user.email "bot@swing-trade.local"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
           git add -A
-          CHANGES=$(git diff --cached --stat)
-          if [ -n "$CHANGES" ]; then
+          if git diff --cached --quiet; then
+            echo "No changes"
+          else
             ACTION="${{ steps.action.outputs.action }}"
-            DATE=$(date -u +"%Y-%m-%d")
-            
-            # Check if learning happened
-            if [ -f "swing-trade/data/optimization_history.json" ] && [ "$ACTION" = "track" ]; then
-              ACTION="track+learn"
-            fi
-            
-            git commit -m "🤖 swing-trade: ${ACTION} ${DATE}"
+            DATE=$(date +%Y-%m-%d)
+            git commit -m "🚀 momentum: ${ACTION} ${DATE}"
             git push
           fi
