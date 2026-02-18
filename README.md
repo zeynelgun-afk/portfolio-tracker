@@ -1,29 +1,31 @@
-# 📊 $100K Simulated Portfolio Tracker
+# 📊 $100K Manual Portfolio Tracker
 
-> **Başlangıç:** 17 Şubat 2026 | **Sermaye:** $100,000 | **Strateji:** Multi-sector value + momentum
+> **Başlangıç:** 17 Şubat 2026 | **Sermaye:** $100,000 | **Strateji:** Manuel portföy takibi - value & energy focus
 
-Simüle edilmiş bir yatırım portföyünün günlük takibi. Gerçek piyasa verileri kullanılarak performans ölçülmektedir.
+Gerçek piyasa verileri kullanılarak manuel olarak yönetilen yatırım portföyünün takibi.
 
 ## 📈 Güncel Durum
 
 | Metrik | Değer |
 |--------|-------|
 | Başlangıç Sermayesi | $100,000 |
-| İlk Gün Performansı | -2.60% |
+| Güncel Değer | ~$101,700 |
+| Net Kar | +$1,700 (+1.70%) |
 | Aktif Pozisyon | 6 hisse |
-| Nakit | $5,130 (%5.1) |
+| Nakit | $5,424 |
+| Son Güncelleme | 18 Şubat 2026 |
 
 ## 🏗️ Portföy Dağılımı
 
-| Hisse | Sektör | Ağırlık | Giriş Fiyatı | Tez |
-|-------|--------|---------|--------------|-----|
-| **SM** | Energy (E&P) | %22 | $21.14 | Güçlü FCF, değerli enerji |
-| **KOS** | Energy (Offshore) | %20 | $1.67 | Deep value, Afrika açık deniz |
-| **MO** | Consumer Staples | %18 | $67.29 | Yüksek temettü, defansif |
-| **XLE** | Energy ETF | %15 | $54.13 | Geniş enerji sektörü maruziyeti |
-| **RGLD** | Gold Royalty | %12 | $277.50 | Düşük riskli altın exposure |
-| **FCX** | Copper Mining | %8 | $60.54 | Bakır talebi, EV/altyapı |
-| 💵 **Nakit** | — | %5 | — | Fırsat fonu |
+| Hisse | Sektör | Adet | Maliyet | Notlar |
+|-------|--------|------|---------|--------|
+| **SM** | Energy (E&P) | 1,040 | $20.67 | 25 Şubat earnings öncesi sat |
+| **KOS** | Energy (Offshore) | 15,276 | $1.617 | DCA ile büyütüldü |
+| **MO** | Consumer Staples | 267 | $67.44 | Yüksek temettü, defansif |
+| **XLE** | Energy ETF | 277 | $53.34 | Geniş enerji sektörü |
+| **RGLD** | Gold Royalty | 22 | $274.40 | Earnings öncesi sat (21 adet satıldı) |
+| **FCX** | Copper Mining | 132 | $59.53 | Bakır talebi, EV/altyapı |
+| 💵 **Nakit** | — | — | — | Fırsat fonu |
 
 ## 📁 Proje Yapısı
 
@@ -31,33 +33,44 @@ Simüle edilmiş bir yatırım portföyünün günlük takibi. Gerçek piyasa ve
 portfolio-tracker/
 ├── README.md                          # Bu dosya
 ├── data/
-│   ├── portfolio.json                 # Portföy pozisyonları
-│   ├── performance_log.csv            # Günlük performans kaydı
-│   ├── transactions.csv               # İşlem geçmişi
+│   ├── portfolio.json                 # Portföy pozisyonları (manuel güncellenir)
 │   └── latest_snapshot.json           # Son durum snapshot
 ├── scripts/
-│   └── update_portfolio.py            # FMP API ile güncelleme scripti
+│   └── update_portfolio.py            # FMP API ile güncel değer hesaplama
 ├── reports/
 │   └── report_YYYY-MM-DD.md           # Günlük/haftalık raporlar
-├── docs/
-│   └── strategy.md                    # Strateji açıklaması
 └── .github/
     └── workflows/
-        └── daily_update.yml           # Otomatik güncelleme (GitHub Actions)
+        └── daily_update.yml           # Otomatik değer güncelleme (opsiyonel)
 ```
+
+## 🔄 İşlem Geçmişi
+
+| Tarih | İşlem | Hisse | Adet | Fiyat | Tutar |
+|-------|-------|-------|------|-------|-------|
+| 2026-02-17 | AL | SM | 1,040 | $20.67 | $21,496.80 |
+| 2026-02-17 | AL | KOS | 11,976 | $1.59 | $19,041.84 |
+| 2026-02-17 | AL | MO | 267 | $67.44 | $18,006.48 |
+| 2026-02-17 | AL | XLE | 277 | $53.34 | $14,775.18 |
+| 2026-02-17 | AL | RGLD | 43 | $274.40 | $11,799.20 |
+| 2026-02-17 | AL | FCX | 132 | $59.53 | $7,857.96 |
+| 2026-02-18 | SAT | RGLD | 21 | $283.56 | $5,954.76 (+3.34%) |
+| 2026-02-18 | AL | KOS | 3,300 | $1.715 | $5,659.50 (DCA) |
+
+## 📋 Bekleyen İşlemler
+
+- **19 Şubat:** RGLD kalan 22 hisse sat
+- **22-23 Şubat:** SM 1,040 hisse sat (earnings öncesi)
 
 ## 🚀 Kullanım
 
 ### Manuel Güncelleme
 ```bash
-# Temel güncelleme
-python3 scripts/update_portfolio.py --api-key YOUR_FMP_KEY
-
-# Detaylı rapor
-python3 scripts/update_portfolio.py --api-key YOUR_FMP_KEY --report --save-report
+# Portföy değerini güncelle
+python3 scripts/update_portfolio.py --api-key YOUR_FMP_KEY --report
 ```
 
-### GitHub Actions (Otomatik)
+### GitHub Actions (Opsiyonel)
 Repo secrets'a `FMP_API_KEY` eklendikten sonra her iş günü otomatik güncellenir.
 
 ## ⚠️ Sorumluluk Reddi
