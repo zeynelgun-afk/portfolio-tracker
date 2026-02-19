@@ -14,3 +14,6 @@ date,action,symbol,shares,price,total,reason
 2026-02-19,SELL,TSLA,28,405.18,11345.07,Agresif,-7.5% zarar - EV sektörü zayıf - Volatil
 2026-02-19,BUY,XLI,114,175.04,19954.56,Agresif,Endüstriyel güçlü - Tech'ten rotate
 2026-02-19,BUY,XLE,268,55.83,14962.44,Agresif,Enerji +22% YTD - Tech'ten rotate
+2026-02-19,SELL,JPM,38,306.73,11655.74,Temettü,-5.3% - Finans sektörü XLF -3.4% zayıf
+2026-02-19,SELL,BAC,223,52.35,11674.05,Temettü,-6.4% - Finans baskı altında
+2026-02-19,BUY,SCHD,829,28.95,23999.55,Temettü,Diversified temettü ETF - Finans yerine
