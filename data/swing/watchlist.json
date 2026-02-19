@@ -1,50 +1,50 @@
 {
-  "last_updated": "2026-02-03T16:00:00Z",
+  "last_updated": "2026-02-18T16:00:00Z",
   "watchlist": [
     {
-      "symbol": "T",
-      "name": "AT&T Inc",
-      "current_price": 26.83,
-      "scan_method": "sector_momentum",
-      "potential_entry": 27.00,
-      "target": 29.70,
-      "stop": 25.65,
-      "risk_reward": 2.0,
-      "urgency": "high",
-      "notes": "Second strongest telecom (+16.7%), similar to VZ play. Alternative if VZ exits.",
-      "catalyst": "Telecom defensive rally"
-    },
-    {
-      "symbol": "CVX",
-      "name": "Chevron Corporation",
-      "current_price": 176.32,
+      "symbol": "CAT",
+      "name": "Caterpillar Inc",
+      "current_price": 751.97,
       "scan_method": "sector_leadership",
-      "potential_entry": 178.00,
-      "target": 195.80,
-      "stop": 169.10,
+      "potential_entry": 760.00,
+      "target": 836.00,
+      "stop": 722.00,
       "risk_reward": 2.0,
       "urgency": "medium",
-      "notes": "Energy sector alternative, +5.3% momentum, similar to XOM.",
-      "catalyst": "Energy sector strength"
+      "notes": "Construction equipment, infrastructure play. Wait for breakout above $760.",
+      "catalyst": "Infrastructure spending, industrial momentum"
     },
     {
       "symbol": "MO",
       "name": "Altria Group",
-      "current_price": 64.16,
+      "current_price": 66.77,
       "scan_method": "sector_leadership",
-      "potential_entry": 65.00,
-      "target": 71.50,
-      "stop": 61.75,
+      "potential_entry": 67.50,
+      "target": 74.25,
+      "stop": 64.13,
       "risk_reward": 2.0,
       "urgency": "low",
-      "notes": "Tobacco sector consolidating after rally, wait for breakout confirmation.",
-      "catalyst": "Defensive sector positioning"
+      "notes": "Tobacco still strong (+16.5% in portfolio), but momentum slowing vs earlier.",
+      "catalyst": "Defensive positioning, dividend yield"
+    },
+    {
+      "symbol": "BA",
+      "name": "Boeing Company",
+      "current_price": 238.93,
+      "scan_method": "rsi_oversold",
+      "potential_entry": 235.00,
+      "target": 258.50,
+      "stop": 223.25,
+      "risk_reward": 2.0,
+      "urgency": "high",
+      "notes": "Aerospace recovery play, but weak momentum (-1.5%). Wait for reversal signal.",
+      "catalyst": "Commercial aviation recovery"
     }
   ],
   "scan_criteria": {
-    "sector_momentum_min": 5.0,
-    "volume_increase_min": 1.3,
+    "sector_focus": "Industrials, Defense, Infrastructure",
+    "momentum_min": 2.0,
     "min_risk_reward": 2.0,
-    "focus": "Defensive sectors (Energy, Telecom, Tobacco) during Growth→Value rotation"
+    "theme": "Value/Industrial rotation continues, following XLI +10.8% success"
   }
 }

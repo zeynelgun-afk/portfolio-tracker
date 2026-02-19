@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-02-03T16:00:00Z",
+  "last_updated": "2026-02-18T16:00:00Z",
   "active_positions": [
     {
       "id": "SWING-003",
@@ -9,23 +9,28 @@
       "entry_price": 46.25,
       "shares": 151,
       "cost_basis": 6983.75,
-      "current_price": 46.25,
-      "current_value": 6983.75,
-      "unrealized_pnl": 0.00,
-      "unrealized_pnl_pct": 0.00,
+      "current_price": 48.05,
+      "current_value": 7255.55,
+      "unrealized_pnl": 271.80,
+      "unrealized_pnl_pct": 3.89,
       "target_price": 50.88,
       "stop_loss": 43.94,
-      "days_held": 0,
+      "days_held": 11,
       "max_hold_days": 10,
-      "entry_reason": "Strongest telecom momentum (+17.6% in 5 days), defensive rotation leader, high yield defensive play",
+      "entry_reason": "Strongest telecom momentum (+17.6% in 5 days), defensive rotation leader",
       "scan_method": "sector_momentum",
-      "catalyst": "Growth→Value rotation, defensive positioning, telecom sector strength",
+      "catalyst": "Defensive rotation continues",
       "risk_reward_ratio": 2.0,
-      "urgency": "high",
+      "urgency": "medium",
+      "status": "Near target, consider taking profit soon",
       "daily_notes": [
         {
           "date": "2026-02-03",
-          "note": "Entry at close $46.25. Telecom rally hottest sector, riding defensive wave. Target 5-10 days."
+          "note": "Entry at close $46.25. Telecom rally hottest sector."
+        },
+        {
+          "date": "2026-02-18",
+          "note": "Now $48.05 (+3.89%), target $50.88 only +5.9% away. Hold for target or trail stop."
         }
       ]
     },
@@ -37,34 +42,95 @@
       "entry_price": 142.78,
       "shares": 49,
       "cost_basis": 6996.22,
-      "current_price": 142.78,
-      "current_value": 6996.22,
-      "unrealized_pnl": 0.00,
-      "unrealized_pnl_pct": 0.00,
+      "current_price": 150.68,
+      "current_value": 7383.32,
+      "unrealized_pnl": 387.10,
+      "unrealized_pnl_pct": 5.53,
       "target_price": 157.06,
       "stop_loss": 135.64,
+      "days_held": 11,
+      "max_hold_days": 12,
+      "entry_reason": "Energy sector leadership, portfolio energy +23.7%",
+      "scan_method": "sector_leadership",
+      "catalyst": "Energy dominance continues",
+      "risk_reward_ratio": 2.0,
+      "urgency": "medium",
+      "status": "Strong performance, near target",
+      "daily_notes": [
+        {
+          "date": "2026-02-03",
+          "note": "Entry at close $142.78. Energy best sector."
+        },
+        {
+          "date": "2026-02-18",
+          "note": "Now $150.68 (+5.53%), target $157.06 only +4.2% away. Holding for target."
+        }
+      ]
+    },
+    {
+      "id": "SWING-005",
+      "symbol": "GE",
+      "name": "General Electric",
+      "entry_date": "2026-02-18",
+      "entry_price": 329.58,
+      "shares": 21,
+      "cost_basis": 6921.18,
+      "current_price": 329.58,
+      "current_value": 6921.18,
+      "unrealized_pnl": 0.00,
+      "unrealized_pnl_pct": 0.00,
+      "target_price": 362.54,
+      "stop_loss": 313.10,
+      "days_held": 0,
+      "max_hold_days": 10,
+      "entry_reason": "Strongest industrial momentum (+4.2%), XLI portfolio +10.8%, diversified industrial leader",
+      "scan_method": "sector_leadership",
+      "catalyst": "Industrial sector strength, infrastructure spending narrative",
+      "risk_reward_ratio": 2.0,
+      "urgency": "high",
+      "daily_notes": [
+        {
+          "date": "2026-02-18",
+          "note": "Entry at close $329.58. Following XLI industrial strength. Aviation/Power/Renewable exposure. Target 7-10 days."
+        }
+      ]
+    },
+    {
+      "id": "SWING-006",
+      "symbol": "LMT",
+      "name": "Lockheed Martin Corporation",
+      "entry_date": "2026-02-18",
+      "entry_price": 649.81,
+      "shares": 10,
+      "cost_basis": 6498.10,
+      "current_price": 649.81,
+      "current_value": 6498.10,
+      "unrealized_pnl": 0.00,
+      "unrealized_pnl_pct": 0.00,
+      "target_price": 714.79,
+      "stop_loss": 617.32,
       "days_held": 0,
       "max_hold_days": 12,
-      "entry_reason": "Energy sector leadership (+5% momentum), portfolio energy position +23.7%, oil prices supportive",
-      "scan_method": "sector_leadership",
-      "catalyst": "Energy sector dominance continues, LNG expansion projects, value rotation",
+      "entry_reason": "Defense subset of industrials (+3.2% momentum), defense budget supportive, geopolitical backdrop",
+      "scan_method": "sector_subset",
+      "catalyst": "Defense spending, industrial sector rotation, geopolitical tensions",
       "risk_reward_ratio": 2.0,
       "urgency": "medium",
       "daily_notes": [
         {
-          "date": "2026-02-03",
-          "note": "Entry at close $142.78. Energy best sector in portfolio (+23.7%), riding sector momentum. Target 7-12 days."
+          "date": "2026-02-18",
+          "note": "Entry at close $649.81. Defense play within broader industrial strength. High margins, stable. Target 10-12 days."
         }
       ]
     }
   ],
   "summary": {
-    "total_positions": 2,
-    "total_capital_deployed": 13979.97,
-    "total_current_value": 13979.97,
-    "total_unrealized_pnl": 0.00,
-    "total_unrealized_pnl_pct": 0.00,
-    "available_slots": 3,
+    "total_positions": 4,
+    "total_capital_deployed": 27399.25,
+    "total_current_value": 28058.15,
+    "total_unrealized_pnl": 658.90,
+    "total_unrealized_pnl_pct": 2.40,
+    "available_slots": 1,
     "max_positions": 5
   }
 }
