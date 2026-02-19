@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-02-12T16:00:00Z",
+  "last_updated": "2026-02-13T16:00:00Z",
   "note": "SWING TRADES ARE SIMULATION ONLY - Tracking % gain/loss (MAX: 10 positions)",
   "active_positions": [
     {
@@ -7,78 +7,81 @@
       "symbol": "VZ",
       "entry_date": "2026-02-03",
       "entry_price": 46.25,
-      "current_price": 49.46,
-      "unrealized_pnl_pct": 6.94,
       "target_price": 50.88,
-      "stop_loss": 43.94,
-      "days_held": 9,
-      "status": "Good +6.94%, near target"
+      "stop_loss": 43.94
     },
     {
       "id": "SWING-004",
       "symbol": "XOM",
       "entry_date": "2026-02-03",
       "entry_price": 142.78,
-      "current_price": 149.93,
-      "unrealized_pnl_pct": 5.01,
       "target_price": 157.06,
-      "stop_loss": 135.64,
-      "days_held": 9,
-      "status": "Good +5.01%"
+      "stop_loss": 135.64
     },
     {
       "id": "SWING-008",
       "symbol": "WMT",
       "entry_date": "2026-02-06",
       "entry_price": 131.18,
-      "current_price": 133.64,
-      "unrealized_pnl_pct": 1.88,
       "target_price": 144.30,
-      "stop_loss": 124.62,
-      "days_held": 6,
-      "status": "Small gain +1.88%"
+      "stop_loss": 124.62
     },
     {
       "id": "SWING-010",
       "symbol": "NEM",
       "entry_date": "2026-02-12",
       "entry_price": 118.12,
-      "current_price": 118.12,
-      "unrealized_pnl_pct": 0.00,
       "target_price": 129.93,
       "stop_loss": 112.21,
-      "days_held": 0,
-      "entry_reason": "Strong momentum +8.8% (5 days), gold mining leader, safe haven demand defensive play",
-      "scan_method": "commodity_momentum",
-      "catalyst": "Gold price strength, defensive positioning, materials sector rotation opportunity",
-      "thesis": "En büyük altın üreticisi, commodity strength, gold fiyatları güçlü",
+      "entry_reason": "Strong momentum +8.8%, gold mining leader, safe haven demand",
+      "catalyst": "Gold price strength, materials sector rotation",
+      "thesis": "En büyük altın üreticisi, commodity strength",
       "timeframe": "7-10 gün",
-      "risk": "Gold price reversal",
-      "status": "New entry"
+      "risk": "Gold price reversal"
     },
     {
       "id": "SWING-011",
       "symbol": "NVDA",
       "entry_date": "2026-02-12",
       "entry_price": 186.94,
-      "current_price": 186.94,
-      "unrealized_pnl_pct": 0.00,
       "target_price": 205.63,
       "stop_loss": 177.59,
-      "days_held": 0,
-      "entry_reason": "Strong momentum +8.8% (5 days), AI chip recovery, tech sector bounce beginning",
-      "scan_method": "tech_recovery",
-      "catalyst": "AI chip demand continues, data center buildout, tech sector recovery",
-      "thesis": "Data center demand güçlü, AI buildout devam, technical bounce from oversold, market leader in AI narrative",
+      "entry_reason": "Strong momentum +8.8%, AI chip recovery",
+      "catalyst": "Tech sector bounce, AI buildout continues",
+      "thesis": "Data center demand güçlü, AI narrative leader",
       "timeframe": "7-10 gün",
-      "risk": "Growth rotation continues negative",
-      "status": "New entry"
+      "risk": "Growth rotation continues"
+    },
+    {
+      "id": "SWING-012",
+      "symbol": "UNH",
+      "entry_date": "2026-02-13",
+      "entry_price": 293.19,
+      "target_price": 322.51,
+      "stop_loss": 278.53,
+      "entry_reason": "Strongest momentum +6.0%, healthcare insurance leader",
+      "catalyst": "Healthcare sector strength, defensive positioning, managed care momentum",
+      "thesis": "Largest US health insurer, Optum growth, Medicare Advantage expansion",
+      "timeframe": "7-12 gün",
+      "risk": "Healthcare policy uncertainty"
+    },
+    {
+      "id": "SWING-013",
+      "symbol": "LMT",
+      "entry_date": "2026-02-13",
+      "entry_price": 652.58,
+      "target_price": 717.84,
+      "stop_loss": 619.95,
+      "entry_reason": "Solid momentum +4.7%, defense industry leader",
+      "catalyst": "Defense sector momentum, industrial rotation, geopolitical support",
+      "thesis": "Aerospace & defense giant, stable cash flow, high-margin contracts",
+      "timeframe": "10-12 gün",
+      "risk": "Budget concerns"
     }
   ],
   "summary": {
-    "total_positions": 5,
-    "avg_unrealized_pnl_pct": 2.77,
-    "available_slots": 5,
+    "total_positions": 7,
+    "available_slots": 3,
     "max_positions": 10
   }
 }
