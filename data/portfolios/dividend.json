@@ -1,80 +1,127 @@
 {
   "portfolio_name": "Değer + Temettü",
-  "id": "dividend",
-  "start_date": "2026-02-19",
+  "start_date": "2026-01-02",
   "initial_capital": 100000,
   "currency": "USD",
-  "strategy": "Düşük P/E, yüksek temettü yield, güçlü FCF. Yıllık %8-12 + temettü geliri hedef.",
-  "last_updated": "2026-02-19",
-  "positions": [],
+  "strategy": "Düşük P/E (<20), temettü yield >3%, güçlü FCF. Hedef: %8-12 + temettü",
+  "last_updated": "2026-01-02",
+  "positions": [
+    {
+      "symbol": "T",
+      "name": "AT&T Inc",
+      "sector": "Telecom",
+      "shares": 448,
+      "cost_basis": 27.88,
+      "entry_date": "2026-01-02",
+      "entry_reason": "Yüksek temettü (~6% yield), stabil nakit akışı, düşük değerleme",
+      "catalyst": "5G altyapı yatırımları tamamlanıyor, borç azalıyor",
+      "target_price": 32.00,
+      "stop_loss": 25.00,
+      "dividend_yield": 6.2
+    },
+    {
+      "symbol": "VZ",
+      "name": "Verizon Communications",
+      "sector": "Telecom",
+      "shares": 260,
+      "cost_basis": 48.05,
+      "entry_date": "2026-01-02",
+      "entry_reason": "Güvenilir temettü (~5% yield), pazar lideri, güçlü FCF",
+      "catalyst": "5G monetizasyonu, fiber genişlemesi",
+      "target_price": 55.00,
+      "stop_loss": 43.00,
+      "dividend_yield": 5.0
+    },
+    {
+      "symbol": "MO",
+      "name": "Altria Group",
+      "sector": "Tobacco",
+      "shares": 187,
+      "cost_basis": 66.77,
+      "entry_date": "2026-01-02",
+      "entry_reason": "Premium yield (~8%), pricing power, güçlü marka portföyü",
+      "catalyst": "Alternatif ürünler (iQOS), pazar payı koruması",
+      "target_price": 76.00,
+      "stop_loss": 60.00,
+      "dividend_yield": 8.3
+    },
+    {
+      "symbol": "PM",
+      "name": "Philip Morris International",
+      "sector": "Tobacco",
+      "shares": 68,
+      "cost_basis": 182.67,
+      "entry_date": "2026-01-02",
+      "entry_reason": "iQOS smoke-free transformation, global pricing power",
+      "catalyst": "IQOS adoption acceleration, FDA MRTP pathway",
+      "target_price": 210.00,
+      "stop_loss": 165.00,
+      "dividend_yield": 4.5
+    },
+    {
+      "symbol": "XOM",
+      "name": "Exxon Mobil Corporation",
+      "sector": "Energy",
+      "shares": 82,
+      "cost_basis": 150.68,
+      "entry_date": "2026-01-02",
+      "entry_reason": "Energy super major, güçlü FCF, düzenli buyback + temettü",
+      "catalyst": "Petrol fiyatları destekleyici, LNG projesi expansion",
+      "target_price": 175.00,
+      "stop_loss": 135.00,
+      "dividend_yield": 3.2
+    },
+    {
+      "symbol": "CVX",
+      "name": "Chevron Corporation",
+      "sector": "Energy",
+      "shares": 67,
+      "cost_basis": 183.87,
+      "entry_date": "2026-01-02",
+      "entry_reason": "Temettü aristokrat, güçlü bilanço, LNG exposure",
+      "catalyst": "Permian üretimi artışı, LNG capacity expansion",
+      "target_price": 215.00,
+      "stop_loss": 165.00,
+      "dividend_yield": 3.5
+    },
+    {
+      "symbol": "JPM",
+      "name": "JPMorgan Chase & Co",
+      "sector": "Financials",
+      "shares": 40,
+      "cost_basis": 308.78,
+      "entry_date": "2026-01-02",
+      "entry_reason": "En güçlü banka, yüksek ROE, NII benefit yüksek faizden",
+      "catalyst": "Faiz oranları yüksek kalıyor, trading revenues güçlü",
+      "target_price": 360.00,
+      "stop_loss": 280.00,
+      "dividend_yield": 2.1
+    },
+    {
+      "symbol": "BAC",
+      "name": "Bank of America Corp",
+      "sector": "Financials",
+      "shares": 234,
+      "cost_basis": 53.36,
+      "entry_date": "2026-01-02",
+      "entry_reason": "Düşük değerleme, NII hassasiyeti yüksek faize, güçlü brand",
+      "catalyst": "Faiz geliri optimization, deposit mix improvement",
+      "target_price": 62.00,
+      "stop_loss": 48.00,
+      "dividend_yield": 2.5
+    }
+  ],
   "cash": {
-    "amount": 100000,
-    "notes": "Henüz pozisyon açılmadı"
+    "amount": 596.72,
+    "notes": "Initial allocation - 8 positions"
   },
   "transaction_history": [],
-  "pending_actions": [],
-  "closed_positions": [],
-  "dividends_received": [],
   "risk_limits": {
-    "max_positions": 15,
-    "max_single_position_pct": 10.0,
+    "max_single_position_pct": 15.0,
+    "max_sector_weight_pct": 40.0,
+    "min_cash_pct": 0.5,
     "min_dividend_yield": 3.0,
-    "max_pe_ratio": 20.0,
-    "max_debt_equity": 1.5
+    "max_debt_to_equity": 1.5
   },
-  "entry_criteria": [
-    "P/E < sektör ortalaması",
-    "Temettü yield > %3",
-    "Temettü büyüme > %5/yıl (3 yıl)",
-    "D/E < 1.5",
-    "FCF pozitif ve büyüyen"
-  ],
-  "exit_criteria": [
-    "Temettü kesintisi",
-    "FCF negatife dönerse",
-    "D/E > 2.0 aşarsa",
-    "P/E > 30 aşırı yükselirse"
-  ],
-  "position_template": {
-    "_comment": "Her pozisyon bu yapıda olmalı",
-    "symbol": "",
-    "name": "",
-    "sector": "",
-    "shares": 0,
-    "cost_basis": 0,
-    "entry_date": "",
-    "entry_reason": "Neden alındı - tez açıklaması",
-    "catalyst": "Tetikleyici olay (earnings, breakout, vb.)",
-    "target_price": null,
-    "stop_loss": null,
-    "notes": ""
-  },
-  "transaction_template": {
-    "_comment": "Her işlem bu yapıda olmalı",
-    "date": "YYYY-MM-DD",
-    "type": "BUY/SELL",
-    "symbol": "",
-    "shares": 0,
-    "price": 0,
-    "amount": 0,
-    "reason": "Neden alındı/satıldı - detaylı açıklama",
-    "catalyst": "Tetikleyici olay",
-    "notes": ""
-  },
-  "closed_position_template": {
-    "_comment": "Kapatılan her pozisyon bu yapıda olmalı",
-    "symbol": "",
-    "name": "",
-    "entry_date": "",
-    "entry_price": 0,
-    "entry_reason": "Neden alındı",
-    "exit_date": "",
-    "exit_price": 0,
-    "exit_reason": "Neden satıldı",
-    "shares": 0,
-    "pnl": 0,
-    "pnl_pct": 0,
-    "hold_days": 0,
-    "lessons": "Çıkarılan dersler"
-  }
+  "id": "dividend"
 }

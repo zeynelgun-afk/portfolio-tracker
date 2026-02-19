@@ -1,79 +1,118 @@
 {
   "portfolio_name": "Agresif Büyüme",
-  "id": "aggressive",
-  "start_date": "2026-02-19",
+  "start_date": "2026-01-02",
   "initial_capital": 100000,
   "currency": "USD",
-  "strategy": "Momentum + Earnings Surprise, AI/Tech ağırlıklı. Yıllık %30+ hedef.",
-  "last_updated": "2026-02-19",
-  "positions": [],
+  "strategy": "Momentum + earnings surprise, AI/tech ağırlıklı. Hedef: Yıllık %30+",
+  "last_updated": "2026-01-02",
+  "positions": [
+    {
+      "symbol": "GOOGL",
+      "name": "Alphabet Inc",
+      "sector": "Technology",
+      "shares": 41,
+      "cost_basis": 303.33,
+      "entry_date": "2026-01-02",
+      "entry_reason": "En güçlü 3M momentum (+10.3%), AI search dominant, cloud growth",
+      "catalyst": "AI integration momentum, cloud revenue acceleration",
+      "target_price": 365.00,
+      "stop_loss": 279.00
+    },
+    {
+      "symbol": "NVDA",
+      "name": "NVIDIA Corporation",
+      "sector": "Technology",
+      "shares": 66,
+      "cost_basis": 187.98,
+      "entry_date": "2026-01-02",
+      "entry_reason": "AI chip leader, data center demand surge, positive 3M momentum",
+      "catalyst": "AI data center buildout acceleration, H100/H200 demand",
+      "target_price": 225.00,
+      "stop_loss": 173.00
+    },
+    {
+      "symbol": "AMD",
+      "name": "Advanced Micro Devices",
+      "sector": "Technology",
+      "shares": 62,
+      "cost_basis": 200.12,
+      "entry_date": "2026-01-02",
+      "entry_reason": "AI chip competitor gaining share, MI300 ramp-up",
+      "catalyst": "MI300 adoption, data center CPU/GPU wins",
+      "target_price": 240.00,
+      "stop_loss": 184.00
+    },
+    {
+      "symbol": "AMZN",
+      "name": "Amazon.com Inc",
+      "sector": "Technology",
+      "shares": 61,
+      "cost_basis": 204.79,
+      "entry_date": "2026-01-02",
+      "entry_reason": "AWS AI services growth, e-commerce dominant, stable momentum",
+      "catalyst": "AWS AI/ML services expansion, retail efficiency gains",
+      "target_price": 245.00,
+      "stop_loss": 188.00
+    },
+    {
+      "symbol": "TSLA",
+      "name": "Tesla Inc",
+      "sector": "Consumer Cyclical",
+      "shares": 30,
+      "cost_basis": 411.32,
+      "entry_date": "2026-01-02",
+      "entry_reason": "EV leader, FSD progress, energy storage growth",
+      "catalyst": "Cybertruck ramp, FSD adoption, energy storage demand",
+      "target_price": 495.00,
+      "stop_loss": 378.00
+    },
+    {
+      "symbol": "META",
+      "name": "Meta Platforms Inc",
+      "sector": "Technology",
+      "shares": 19,
+      "cost_basis": 643.22,
+      "entry_date": "2026-01-02",
+      "entry_reason": "AI-driven ad efficiency, Reality Labs improving, cost discipline",
+      "catalyst": "AI ad targeting ROI improvement, Llama ecosystem growth",
+      "target_price": 772.00,
+      "stop_loss": 591.00
+    },
+    {
+      "symbol": "AVGO",
+      "name": "Broadcom Inc",
+      "sector": "Technology",
+      "shares": 37,
+      "cost_basis": 333.51,
+      "entry_date": "2026-01-02",
+      "entry_reason": "AI networking chips, VMware synergies emerging",
+      "catalyst": "Custom AI chip wins, VMware integration benefits",
+      "target_price": 400.00,
+      "stop_loss": 307.00
+    },
+    {
+      "symbol": "APP",
+      "name": "AppLovin Corporation",
+      "sector": "Technology",
+      "shares": 30,
+      "cost_basis": 404.39,
+      "entry_date": "2026-01-02",
+      "entry_reason": "AI-powered mobile advertising platform, strong growth",
+      "catalyst": "AXON AI ad engine adoption, gaming monetization",
+      "target_price": 485.00,
+      "stop_loss": 372.00
+    }
+  ],
   "cash": {
-    "amount": 100000,
-    "notes": "Henüz pozisyon açılmadı"
+    "amount": 1224.81,
+    "notes": "Initial allocation - 8 positions"
   },
   "transaction_history": [],
-  "pending_actions": [],
-  "closed_positions": [],
   "risk_limits": {
-    "max_positions": 10,
     "max_single_position_pct": 15.0,
-    "stop_loss_pct": -8.0,
-    "trailing_stop_trigger_pct": 20.0,
-    "trailing_stop_pct": -10.0
+    "max_sector_weight_pct": 80.0,
+    "min_cash_pct": 1.0,
+    "stop_loss_pct": -8.0
   },
-  "entry_criteria": [
-    "Earnings beat > %10",
-    "RS line yükselişte",
-    "Fiyat 50MA üzerinde",
-    "Volume ortalamanın 1.5x üzerinde",
-    "Sektör: AI, tech, semiconductor, cloud"
-  ],
-  "exit_criteria": [
-    "%8 stop-loss",
-    "%20+ kazançta trailing stop %10",
-    "Momentum kırılması (50MA altına kapanış)",
-    "Earnings miss"
-  ],
-  "position_template": {
-    "_comment": "Her pozisyon bu yapıda olmalı",
-    "symbol": "",
-    "name": "",
-    "sector": "",
-    "shares": 0,
-    "cost_basis": 0,
-    "entry_date": "",
-    "entry_reason": "Neden alındı - tez açıklaması",
-    "catalyst": "Tetikleyici olay (earnings, breakout, vb.)",
-    "target_price": null,
-    "stop_loss": null,
-    "notes": ""
-  },
-  "transaction_template": {
-    "_comment": "Her işlem bu yapıda olmalı",
-    "date": "YYYY-MM-DD",
-    "type": "BUY/SELL",
-    "symbol": "",
-    "shares": 0,
-    "price": 0,
-    "amount": 0,
-    "reason": "Neden alındı/satıldı - detaylı açıklama",
-    "catalyst": "Tetikleyici olay",
-    "notes": ""
-  },
-  "closed_position_template": {
-    "_comment": "Kapatılan her pozisyon bu yapıda olmalı",
-    "symbol": "",
-    "name": "",
-    "entry_date": "",
-    "entry_price": 0,
-    "entry_reason": "Neden alındı",
-    "exit_date": "",
-    "exit_price": 0,
-    "exit_reason": "Neden satıldı",
-    "shares": 0,
-    "pnl": 0,
-    "pnl_pct": 0,
-    "hold_days": 0,
-    "lessons": "Çıkarılan dersler"
-  }
+  "id": "aggressive"
 }
