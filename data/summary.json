@@ -1,36 +1,35 @@
 {
-  "last_updated": "2026-01-08",
+  "last_updated": "2026-01-13",
   "total_capital": 300000.00,
-  "total_value": 300797.71,
-  "total_gain_loss": 797.71,
-  "total_gain_loss_pct": 0.27,
+  "total_value": 303655.38,
+  "total_gain_loss": 3655.38,
+  "total_gain_loss_pct": 1.22,
   "portfolios": {
     "aggressive": {
       "name": "Agresif Büyüme",
-      "value": 99492.94,
+      "value": 101602.80,
       "cost_basis": 100000.00,
-      "gain_loss": -507.06,
-      "gain_loss_pct": -0.51,
+      "gain_loss": 1602.80,
+      "gain_loss_pct": 1.60,
       "positions": 7,
       "cash": 12597.25,
-      "alerts": ["AMD sold at -8.41% loss, $12.6K cash needs redeployment"]
+      "alerts": ["$12.6K cash needs deployment - AMZN add planned for tomorrow"]
     },
     "dividend": {
       "name": "Değer + Temettü",
-      "value": 99955.75,
+      "value": 100498.02,
       "cost_basis": 100000.00,
-      "gain_loss": -44.25,
-      "gain_loss_pct": -0.04,
+      "gain_loss": 498.02,
+      "gain_loss_pct": 0.50,
       "positions": 8,
-      "cash": 648.12,
-      "alerts": ["Tobacco sector still weak (MO -2.5%)"]
+      "cash": 648.12
     },
     "rotation": {
       "name": "Sektör Rotasyonu",
-      "value": 101349.02,
+      "value": 101554.56,
       "cost_basis": 100000.00,
-      "gain_loss": 1349.02,
-      "gain_loss_pct": 1.35,
+      "gain_loss": 1554.56,
+      "gain_loss_pct": 1.55,
       "positions": 5,
       "cash": 286.62
     }
