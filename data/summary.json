@@ -1,37 +1,39 @@
 {
-  "last_updated": "2026-01-13",
+  "last_updated": "2026-01-16",
   "total_capital": 300000.00,
-  "total_value": 303655.38,
-  "total_gain_loss": 3655.38,
-  "total_gain_loss_pct": 1.22,
+  "total_value": 302556.47,
+  "total_gain_loss": 2556.47,
+  "total_gain_loss_pct": 0.85,
   "portfolios": {
     "aggressive": {
       "name": "Agresif Büyüme",
-      "value": 101602.80,
+      "value": 98753.33,
       "cost_basis": 100000.00,
-      "gain_loss": 1602.80,
-      "gain_loss_pct": 1.60,
+      "gain_loss": -1246.67,
+      "gain_loss_pct": -1.25,
       "positions": 7,
-      "cash": 12597.25,
-      "alerts": ["$12.6K cash needs deployment - AMZN add planned for tomorrow"]
+      "cash": 764.75,
+      "alerts": ["APP crashed -8%, META -4.6%, first time clearly negative", "AMZN buy timing poor"]
     },
     "dividend": {
       "name": "Değer + Temettü",
-      "value": 100498.02,
+      "value": 101752.46,
       "cost_basis": 100000.00,
-      "gain_loss": 498.02,
-      "gain_loss_pct": 0.50,
+      "gain_loss": 1752.46,
+      "gain_loss_pct": 1.75,
       "positions": 8,
-      "cash": 648.12
+      "cash": 648.12,
+      "alerts": ["Tobacco rally: MO +7.8%, PM +8.3%", "BEST performer today"]
     },
     "rotation": {
       "name": "Sektör Rotasyonu",
-      "value": 101554.56,
+      "value": 102050.68,
       "cost_basis": 100000.00,
-      "gain_loss": 1554.56,
-      "gain_loss_pct": 1.55,
+      "gain_loss": 2050.68,
+      "gain_loss_pct": 2.05,
       "positions": 5,
-      "cash": 286.62
+      "cash": 286.62,
+      "alerts": ["XLI +5.7%, XLE +4.5%", "Sector diversification winning"]
     }
   }
 }
