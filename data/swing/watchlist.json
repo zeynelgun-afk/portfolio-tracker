@@ -1,32 +1,29 @@
 {
-  "last_updated": "2026-02-04T16:00:00Z",
+  "last_updated": "2026-02-06T16:00:00Z",
   "watchlist": [
     {
+      "symbol": "KO",
+      "current_price": 79.03,
+      "momentum_5d": 5.6,
+      "notes": "Consumer staples, good momentum. Alternative to WMT."
+    },
+    {
       "symbol": "MO",
-      "current_price": 65.16,
-      "momentum_3d": 5.1,
-      "potential_entry": 66.00,
-      "target": 72.60,
-      "stop": 62.70,
-      "notes": "Tobacco strong momentum, similar to CAT. Second choice."
+      "current_price": 65.40,
+      "momentum_5d": 5.5,
+      "notes": "Tobacco strong, similar momentum to KO."
     },
     {
       "symbol": "JPM",
-      "current_price": 317.27,
-      "momentum_3d": 3.7,
-      "potential_entry": 320.00,
-      "target": 352.00,
-      "stop": 304.00,
-      "notes": "Financials recovery, good momentum."
+      "current_price": 322.40,
+      "momentum_5d": 5.4,
+      "notes": "Bank alternative to BAC, similar momentum."
     },
     {
-      "symbol": "JNJ",
-      "current_price": 234.47,
-      "momentum_3d": 3.2,
-      "potential_entry": 236.00,
-      "target": 259.60,
-      "stop": 224.20,
-      "notes": "Healthcare defensive, steady momentum."
+      "symbol": "PG",
+      "current_price": 159.17,
+      "momentum_5d": 4.9,
+      "notes": "Consumer staples giant, solid momentum."
     }
   ]
 }
