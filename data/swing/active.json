@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-02-13T16:00:00Z",
+  "last_updated": "2026-02-17T16:00:00Z",
   "note": "SWING TRADES ARE SIMULATION ONLY - Tracking % gain/loss (MAX: 10 positions)",
   "active_positions": [
     {
@@ -33,11 +33,9 @@
       "entry_price": 118.12,
       "target_price": 129.93,
       "stop_loss": 112.21,
-      "entry_reason": "Strong momentum +8.8%, gold mining leader, safe haven demand",
+      "entry_reason": "Strong momentum +8.8%, gold mining leader",
       "catalyst": "Gold price strength, materials sector rotation",
-      "thesis": "En büyük altın üreticisi, commodity strength",
-      "timeframe": "7-10 gün",
-      "risk": "Gold price reversal"
+      "thesis": "En büyük altın üreticisi, commodity strength"
     },
     {
       "id": "SWING-011",
@@ -47,10 +45,8 @@
       "target_price": 205.63,
       "stop_loss": 177.59,
       "entry_reason": "Strong momentum +8.8%, AI chip recovery",
-      "catalyst": "Tech sector bounce, AI buildout continues",
-      "thesis": "Data center demand güçlü, AI narrative leader",
-      "timeframe": "7-10 gün",
-      "risk": "Growth rotation continues"
+      "catalyst": "Tech sector bounce, AI buildout",
+      "thesis": "Data center demand, AI narrative leader"
     },
     {
       "id": "SWING-012",
@@ -60,10 +56,8 @@
       "target_price": 322.51,
       "stop_loss": 278.53,
       "entry_reason": "Strongest momentum +6.0%, healthcare insurance leader",
-      "catalyst": "Healthcare sector strength, defensive positioning, managed care momentum",
-      "thesis": "Largest US health insurer, Optum growth, Medicare Advantage expansion",
-      "timeframe": "7-12 gün",
-      "risk": "Healthcare policy uncertainty"
+      "catalyst": "Healthcare sector strength, defensive positioning",
+      "thesis": "Largest US health insurer, Medicare Advantage expansion"
     },
     {
       "id": "SWING-013",
@@ -73,15 +67,39 @@
       "target_price": 717.84,
       "stop_loss": 619.95,
       "entry_reason": "Solid momentum +4.7%, defense industry leader",
-      "catalyst": "Defense sector momentum, industrial rotation, geopolitical support",
-      "thesis": "Aerospace & defense giant, stable cash flow, high-margin contracts",
-      "timeframe": "10-12 gün",
-      "risk": "Budget concerns"
+      "catalyst": "Defense sector momentum, geopolitical support",
+      "thesis": "Aerospace & defense giant, stable cash flow"
+    },
+    {
+      "id": "SWING-014",
+      "symbol": "AMT",
+      "entry_date": "2026-02-17",
+      "entry_price": 193.09,
+      "target_price": 212.40,
+      "stop_loss": 183.44,
+      "entry_reason": "Strongest momentum +8.2%, REIT tower infrastructure leader",
+      "catalyst": "5G network expansion, infrastructure demand, REIT sector strength",
+      "thesis": "Cell tower leasing leader, 5G buildout beneficiary, recurring revenue model, dividend growth",
+      "timeframe": "7-10 gün",
+      "risk": "Interest rate sensitivity"
+    },
+    {
+      "id": "SWING-015",
+      "symbol": "T",
+      "entry_date": "2026-02-17",
+      "entry_price": 28.68,
+      "target_price": 31.55,
+      "stop_loss": 27.25,
+      "entry_reason": "Solid momentum +4.6%, telecom recovery, VZ benzeri performans",
+      "catalyst": "Telecom sector strength (VZ success pattern), defensive positioning, dividend appeal",
+      "thesis": "High dividend yield ~6%, debt reduction progress, fiber buildout investment",
+      "timeframe": "7-10 gün",
+      "risk": "Competitive pressure, capex burden"
     }
   ],
   "summary": {
-    "total_positions": 7,
-    "available_slots": 3,
+    "total_positions": 9,
+    "available_slots": 1,
     "max_positions": 10
   }
 }
