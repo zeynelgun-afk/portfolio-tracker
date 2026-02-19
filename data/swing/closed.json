@@ -1,59 +1,43 @@
 {
-  "closed_trades": {
-    "description": "Kapatılmış swing trade'ler - tam geçmiş",
-    "trades": [],
-    "trade_template": {
-      "id": "SW-001",
-      "symbol": "",
-      "name": "",
-      "entry_date": "YYYY-MM-DD",
-      "entry_price": 0,
-      "entry_reason": "Neden alındı",
-      "scan_method": "Hangi tarama yöntemiyle bulundu",
-      "catalyst": "Tetikleyici olay",
-      "exit_date": "YYYY-MM-DD",
-      "exit_price": 0,
-      "exit_reason": "Neden satıldı (stop-loss / target / tez bozulması / süre doldu)",
-      "shares": 0,
-      "position_size": 0,
-      "pnl": 0,
-      "pnl_pct": 0,
-      "hold_days": 0,
-      "lessons": "Bu trade'den çıkarılan dersler"
+  "last_updated": "2026-01-02",
+  "closed_positions": [],
+  "statistics": {
+    "total_trades": 0,
+    "winning_trades": 0,
+    "losing_trades": 0,
+    "win_rate": 0.0,
+    "avg_gain": 0.0,
+    "avg_loss": 0.0,
+    "avg_hold_days": 0.0,
+    "total_realized_pnl": 0.0,
+    "best_trade": null,
+    "worst_trade": null
+  },
+  "by_method": {
+    "rsi_oversold": {
+      "trades": 0,
+      "win_rate": 0.0,
+      "avg_pnl": 0.0
     },
-    "stats": {
-      "total_trades": 0,
-      "winners": 0,
-      "losers": 0,
-      "win_rate": 0,
-      "avg_win_pct": 0,
-      "avg_loss_pct": 0,
-      "avg_hold_days": 0,
-      "best_trade": null,
-      "worst_trade": null,
-      "total_pnl": 0,
-      "by_method": {
-        "rsi_oversold": {
-          "trades": 0,
-          "win_rate": 0,
-          "pnl": 0
-        },
-        "earnings_momentum": {
-          "trades": 0,
-          "win_rate": 0,
-          "pnl": 0
-        },
-        "breakout": {
-          "trades": 0,
-          "win_rate": 0,
-          "pnl": 0
-        },
-        "sector_leader": {
-          "trades": 0,
-          "win_rate": 0,
-          "pnl": 0
-        }
-      }
+    "earnings_momentum": {
+      "trades": 0,
+      "win_rate": 0.0,
+      "avg_pnl": 0.0
+    },
+    "breakout": {
+      "trades": 0,
+      "win_rate": 0.0,
+      "avg_pnl": 0.0
+    },
+    "sector_leadership": {
+      "trades": 0,
+      "win_rate": 0.0,
+      "avg_pnl": 0.0
+    },
+    "momentum_continuation": {
+      "trades": 0,
+      "win_rate": 0.0,
+      "avg_pnl": 0.0
     }
   }
 }

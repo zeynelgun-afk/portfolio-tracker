@@ -1,41 +1,70 @@
 {
-  "swing_trades": {
-    "description": "Aktif swing trade pozisyonları",
-    "start_date": "2026-02-19",
-    "rules": {
-      "max_concurrent": 5,
+  "last_updated": "2026-01-02T09:30:00Z",
+  "active_positions": [
+    {
+      "id": "SWING-001",
+      "symbol": "GOOGL",
+      "name": "Alphabet Inc",
+      "entry_date": "2026-01-02",
+      "entry_price": 315.15,
+      "shares": 25,
+      "cost_basis": 7878.75,
+      "current_price": 315.15,
+      "current_value": 7878.75,
+      "unrealized_pnl": 0.00,
+      "unrealized_pnl_pct": 0.00,
+      "target_price": 346.00,
+      "stop_loss": 299.00,
+      "days_held": 0,
       "max_hold_days": 15,
-      "position_size_min": 5000,
-      "position_size_max": 10000,
-      "stop_loss_pct": -5.0,
-      "take_profit_pct": 10.0,
-      "risk_reward_min": 2.0
+      "entry_reason": "3M momentum leader (+10.3%), AI search integration catalyst",
+      "scan_method": "momentum_continuation",
+      "catalyst": "AI narrative momentum, cloud AI services growth",
+      "risk_reward_ratio": 2.0,
+      "urgency": "medium",
+      "daily_notes": [
+        {
+          "date": "2026-01-02",
+          "note": "Entry at market open $315.15, positioned for 7-10 day swing. AI momentum strong, consolidation breakout expected."
+        }
+      ]
     },
-    "scan_methods": [
-      "RSI oversold pullback (RSI < 30, kaliteli hisse)",
-      "Earnings surprise / momentum (beat > %10, gap up)",
-      "Breakout (volume 2x+ ortalama, direnci kırma)",
-      "Sektör liderliği rotasyonu (en güçlü sektörün liderleri)"
-    ],
-    "active": [],
-    "active_template": {
-      "symbol": "",
-      "name": "",
-      "entry_date": "YYYY-MM-DD",
-      "entry_price": 0,
-      "shares": 0,
-      "position_size": 0,
-      "entry_reason": "Neden alındı - hangi tarama yöntemiyle bulundu",
-      "scan_method": "RSI oversold / earnings momentum / breakout / sektör liderliği",
-      "catalyst": "Tetikleyici olay",
-      "stop_loss": 0,
-      "target_price": 0,
-      "risk_reward": 0,
-      "max_hold_date": "YYYY-MM-DD",
-      "daily_notes": {
-        "YYYY-MM-DD": "Günlük gözlem"
-      }
-    },
-    "last_scan_date": ""
+    {
+      "id": "SWING-002",
+      "symbol": "APP",
+      "name": "AppLovin Corporation",
+      "entry_date": "2026-01-02",
+      "entry_price": 618.32,
+      "shares": 11,
+      "cost_basis": 6801.52,
+      "current_price": 618.32,
+      "current_value": 6801.52,
+      "unrealized_pnl": 0.00,
+      "unrealized_pnl_pct": 0.00,
+      "target_price": 680.00,
+      "stop_loss": 587.00,
+      "days_held": 0,
+      "max_hold_days": 15,
+      "entry_reason": "AXON AI ad engine momentum, mobile gaming monetization strength, high volatility swing play",
+      "scan_method": "earnings_momentum",
+      "catalyst": "Q4 earnings preview, AXON AI adoption acceleration",
+      "risk_reward_ratio": 2.0,
+      "urgency": "high",
+      "daily_notes": [
+        {
+          "date": "2026-01-02",
+          "note": "Entry at open $618.32, high beta momentum stock. Targeting 5-8 day quick swing before potential Q4 earnings volatility."
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "total_positions": 2,
+    "total_capital_deployed": 14680.27,
+    "total_current_value": 14680.27,
+    "total_unrealized_pnl": 0.00,
+    "total_unrealized_pnl_pct": 0.00,
+    "available_slots": 3,
+    "max_positions": 5
   }
 }
