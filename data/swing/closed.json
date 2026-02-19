@@ -1,130 +1,96 @@
 {
-  "last_updated": "2026-02-17",
-  "closed_positions": [
+  "son_guncelleme": "2026-02-18",
+  "kapatilan_pozisyonlar": [
     {
       "id": "SWING-001",
-      "symbol": "GOOGL",
-      "entry_date": "2026-01-02",
-      "exit_date": "2026-02-03",
-      "entry_price": 315.15,
-      "exit_price": 339.71,
-      "pnl_pct": 7.79,
-      "hold_days": 23,
-      "exit_reason": "Near target, took profit",
-      "scan_method": "momentum_continuation",
-      "outcome": "WIN",
-      "lessons": {
-        "what_worked": [
-          "Momentum continuation strategy validated - AI narrative sustained",
-          "Entry timing at +10.3% 3M momentum was strong signal",
-          "Tech sector positioning before rotation started"
-        ],
-        "what_didnt_work": [
-          "Held too long (23 days vs 7-10 target) - could have exited earlier",
-          "Didn't trail stop as approached target"
-        ],
-        "next_time_do": [
-          "Set trailing stop at +5% to lock gains",
-          "Stick to timeframe - exit at 10 days even if below target"
-        ],
-        "next_time_avoid": [
-          "Holding beyond planned timeframe hoping for full target"
-        ]
-      }
+      "sembol": "GOOGL",
+      "giris_tarihi": "2026-01-02",
+      "cikis_tarihi": "2026-02-03",
+      "giris_fiyati": 315.15,
+      "cikis_fiyati": 339.71,
+      "kar_zarar_yuzde": 7.79,
+      "tutulan_gun": 23,
+      "cikis_nedeni": "Hedefe yakın, kar reali edildi",
+      "sonuc": "KAZANÇ",
+      "ders": "Momentum devam stratejisi çalıştı. AI hikayesi güçlü kaldı."
     },
     {
       "id": "SWING-007",
-      "symbol": "CAT",
-      "entry_date": "2026-02-04",
-      "exit_date": "2026-02-11",
-      "entry_price": 691.82,
-      "exit_price": 775.00,
-      "pnl_pct": 12.02,
-      "hold_days": 7,
-      "exit_reason": "Target hit - exceeded to $775 vs $761 target",
-      "scan_method": "sector_leadership",
-      "outcome": "WIN",
-      "lessons": {
-        "what_worked": [
-          "Perfect sector leadership timing - XLI +10.8% validated thesis",
-          "Strong entry momentum (+5.2%) continued as predicted",
-          "Industrial sector rotation caught at right moment",
-          "Quick 7-day execution exactly as planned"
-        ],
-        "what_didnt_work": [
-          "Nothing - textbook execution"
-        ],
-        "next_time_do": [
-          "Replicate this pattern: Strong sector + momentum confirmation",
-          "Use portfolio sector performance as validation",
-          "Stick to 7-10 day timeframe for momentum plays"
-        ],
-        "next_time_avoid": [
-          "N/A - perfect trade"
-        ],
-        "key_insight": "Sector leadership + portfolio validation = highest probability setup"
-      }
+      "sembol": "CAT",
+      "giris_tarihi": "2026-02-04",
+      "cikis_tarihi": "2026-02-11",
+      "giris_fiyati": 691.82,
+      "cikis_fiyati": 775.00,
+      "kar_zarar_yuzde": 12.02,
+      "tutulan_gun": 7,
+      "cikis_nedeni": "Hedef vurdu ($761 hedef, $775'te çıkış)",
+      "sonuc": "KAZANÇ",
+      "ders": "Endüstriyel sektör momentumu mükemmel çalıştı. +5.2% giriş momentumu devam etti. 7 günde +12% hedef tutturuldu."
     },
     {
       "id": "SWING-009",
-      "symbol": "BAC",
-      "entry_date": "2026-02-06",
-      "exit_date": "2026-02-12",
-      "entry_price": 56.53,
-      "exit_price": 52.52,
-      "pnl_pct": -7.09,
-      "hold_days": 6,
-      "exit_reason": "Stop-loss hit ($53.70 stop breached)",
-      "scan_method": "sector_momentum",
-      "outcome": "LOSS",
-      "lessons": {
-        "what_worked": [
-          "Stop-loss discipline maintained - cut at -7% preventing worse",
-          "Recognized sector reversal and exited"
-        ],
-        "what_didnt_work": [
-          "Financials sector momentum was false signal - reversed quickly",
-          "Entry timing poor - caught falling knife",
-          "Sector had 6.3% momentum but was late-stage, not early"
-        ],
-        "next_time_do": [
-          "Check if momentum is early-stage or late-stage exhaustion",
-          "Wait for 2-3 day confirmation before entry",
-          "Correlate with broader financial index (XLF) performance"
-        ],
-        "next_time_avoid": [
-          "Chasing sector momentum without depth check",
-          "Entering financials without rate environment analysis",
-          "Ignoring that 6.3% might be near peak, not beginning"
-        ],
-        "key_insight": "Not all momentum is equal - distinguish early vs late stage"
-      }
+      "sembol": "BAC",
+      "giris_tarihi": "2026-02-06",
+      "cikis_tarihi": "2026-02-12",
+      "giris_fiyati": 56.53,
+      "cikis_fiyati": 52.52,
+      "kar_zarar_yuzde": -7.09,
+      "tutulan_gun": 6,
+      "cikis_nedeni": "Stop-loss vurdu",
+      "sonuc": "ZARAR",
+      "ders": "Finans sektörü momentumu ters döndü. Stop-loss doğru çalıştı ama geç kesildi."
+    },
+    {
+      "id": "SWING-003",
+      "sembol": "VZ",
+      "giris_tarihi": "2026-02-03",
+      "cikis_tarihi": "2026-02-18",
+      "giris_fiyati": 46.25,
+      "cikis_fiyati": 48.05,
+      "kar_zarar_yuzde": 3.89,
+      "tutulan_gun": 15,
+      "cikis_nedeni": "Zaman çerçevesi aşıldı (15 gün, hedef 10 gündü), kar reali edildi",
+      "sonuc": "KAZANÇ",
+      "ders": "Zaman çerçevesini aştık ama yine de karlıydı. 10-12. günde çıkmalıydık."
+    },
+    {
+      "id": "SWING-004",
+      "sembol": "XOM",
+      "giris_tarihi": "2026-02-03",
+      "cikis_tarihi": "2026-02-18",
+      "giris_fiyati": 142.78,
+      "cikis_fiyati": 150.68,
+      "kar_zarar_yuzde": 5.53,
+      "tutulan_gun": 15,
+      "cikis_nedeni": "Zaman çerçevesi aşıldı (15 gün, hedef 10 gündü), kar reali edildi",
+      "sonuc": "KAZANÇ",
+      "ders": "İyi kar ama fazla uzun tutuldu. Zaman disiplini gerekli."
+    },
+    {
+      "id": "SWING-008",
+      "sembol": "WMT",
+      "giris_tarihi": "2026-02-06",
+      "cikis_tarihi": "2026-02-18",
+      "giris_fiyati": 131.18,
+      "cikis_fiyati": 126.62,
+      "kar_zarar_yuzde": -3.48,
+      "tutulan_gun": 12,
+      "cikis_nedeni": "Zaman çerçevesi aşıldı (12 gün, hedef 10 gündü), zarar kesildi",
+      "sonuc": "ZARAR",
+      "ders": "Daha erken kesmeliydi. Zaman çerçevesi kuralı daha büyük kayıptan korudu."
     }
   ],
-  "statistics": {
-    "total_trades": 3,
-    "winning_trades": 2,
-    "losing_trades": 1,
-    "win_rate": 66.7,
-    "avg_pnl_pct": 4.24,
-    "best_trade": {"symbol": "CAT", "pnl_pct": 12.02},
-    "worst_trade": {"symbol": "BAC", "pnl_pct": -7.09}
+  "istatistikler": {
+    "toplam_islem": 6,
+    "kazanan_islem": 4,
+    "kaybeden_islem": 2,
+    "kazanma_orani": 66.7,
+    "toplam_kar_zarar_yuzde": 17.66,
+    "ortalama_kar_zarar_yuzde": 2.94,
+    "en_iyi_islem": {"sembol": "CAT", "kar_yuzde": 12.02},
+    "en_kotu_islem": {"sembol": "BAC", "kayip_yuzde": -7.09}
   },
-  "meta_lessons": {
-    "pattern_recognition": [
-      "Sector leadership (CAT) > Sector momentum (BAC)",
-      "Portfolio validation crucial - XLI +10.8% confirmed CAT",
-      "Early momentum better than late momentum"
-    ],
-    "execution": [
-      "Stop-loss discipline saved us from worse BAC loss",
-      "Timeframe discipline needed - don't overstay",
-      "Trailing stops could improve exits"
-    ],
-    "selection": [
-      "Strong entry momentum (8-10%) most reliable",
-      "Sector-based selection working better than individual stock",
-      "Defensive sectors outperformed during Feb rotation"
-    ]
+  "yeni_ders": {
+    "zaman_disiplini": "18 Şubat'ta zaman çerçevesi kuralı uygulandı - VZ, XOM (kar) ve WMT (zarar) 10 günü aştığı için kapatıldı. Kural çalışıyor!"
   }
 }
