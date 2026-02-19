@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-02-19T15:14:28.316830",
+  "son_guncelleme": "2026-02-19T19:41:15.926442",
   "not": "SWING TRADE SADECE SİMÜLASYON - Sadece % kazanç/kayıp takibi (MAX: 10 pozisyon)",
   "aktif_pozisyonlar": [
     {
@@ -7,10 +7,10 @@
       "sembol": "NEM",
       "giris_tarihi": "2026-02-12",
       "giris_fiyati": 118.12,
-      "guncel_fiyat": 124.69,
-      "guncel_kar_zarar_yuzde": 5.562140196410424,
+      "guncel_fiyat": 124.97,
+      "guncel_kar_zarar_yuzde": 5.799187267185908,
       "hedef_fiyat": 129.93,
-      "stop_loss": 120.9493,
+      "stop_loss": 121.2209,
       "tutulan_gun": 7,
       "giris_nedeni": "Güçlü momentum +8.8%, altın madenciliği lideri, güvenli liman talebi",
       "katalizor": "Altın fiyat gücü, malzeme sektörü rotasyonu",
@@ -18,15 +18,15 @@
       "zaman_cercevesi": "7-10 gün",
       "risk": "Altın fiyat dönüşü",
       "durum": "Trailing stop aktif - break-even seviyesinde",
-      "son_guncelleme": "2026-02-19T14:16:45.683606"
+      "son_guncelleme": "2026-02-19T19:41:14.015574"
     },
     {
       "id": "SWING-011",
       "sembol": "NVDA",
       "giris_tarihi": "2026-02-12",
       "giris_fiyati": 186.94,
-      "guncel_fiyat": 187.98,
-      "guncel_kar_zarar_yuzde": 0.5563282336578539,
+      "guncel_fiyat": 186.6197,
+      "guncel_kar_zarar_yuzde": -0.17133839734674394,
       "hedef_fiyat": 205.63,
       "stop_loss": 177.59,
       "tutulan_gun": 7,
@@ -36,15 +36,15 @@
       "zaman_cercevesi": "7-10 gün",
       "risk": "Büyüme rotasyonu devam ederse",
       "durum": "Normal aralıkta",
-      "son_guncelleme": "2026-02-19T14:16:45.955910"
+      "son_guncelleme": "2026-02-19T19:41:14.310317"
     },
     {
       "id": "SWING-012",
       "sembol": "UNH",
       "giris_tarihi": "2026-02-13",
       "giris_fiyati": 293.19,
-      "guncel_fiyat": 288.2,
-      "guncel_kar_zarar_yuzde": -1.7019680070943788,
+      "guncel_fiyat": 288.1555,
+      "guncel_kar_zarar_yuzde": -1.717145878099519,
       "hedef_fiyat": 322.51,
       "stop_loss": 278.53,
       "tutulan_gun": 6,
@@ -54,15 +54,15 @@
       "zaman_cercevesi": "7-12 gün",
       "risk": "Sağlık politikası belirsizliği",
       "durum": "Küçük kayıp, normal aralık",
-      "son_guncelleme": "2026-02-19T14:16:46.591505"
+      "son_guncelleme": "2026-02-19T19:41:14.606594"
     },
     {
       "id": "SWING-013",
       "sembol": "LMT",
       "giris_tarihi": "2026-02-13",
       "giris_fiyati": 652.58,
-      "guncel_fiyat": 649.81,
-      "guncel_kar_zarar_yuzde": -0.42446903061695046,
+      "guncel_fiyat": 662.87,
+      "guncel_kar_zarar_yuzde": 1.5768181678874564,
       "hedef_fiyat": 717.84,
       "stop_loss": 619.95,
       "tutulan_gun": 6,
@@ -72,15 +72,15 @@
       "zaman_cercevesi": "10-12 gün",
       "risk": "Bütçe endişeleri",
       "durum": "Minimal kayıp, normal aralık",
-      "son_guncelleme": "2026-02-19T14:16:46.796896"
+      "son_guncelleme": "2026-02-19T19:41:14.902098"
     },
     {
       "id": "SWING-015",
       "sembol": "T",
       "giris_tarihi": "2026-02-17",
       "giris_fiyati": 28.68,
-      "guncel_fiyat": 27.88,
-      "guncel_kar_zarar_yuzde": -2.7894002789400303,
+      "guncel_fiyat": 27.8799,
+      "guncel_kar_zarar_yuzde": -2.789748953974897,
       "hedef_fiyat": 31.55,
       "stop_loss": 27.25,
       "tutulan_gun": 2,
@@ -90,15 +90,15 @@
       "zaman_cercevesi": "7-10 gün",
       "risk": "Rekabet baskısı",
       "durum": "Küçük kayıp, stop'a yakın",
-      "son_guncelleme": "2026-02-19T14:16:50.012131"
+      "son_guncelleme": "2026-02-19T19:41:15.322302"
     },
     {
       "id": "SWING-016",
       "sembol": "GE",
       "giris_tarihi": "2026-02-18",
       "giris_fiyati": 329.58,
-      "guncel_fiyat": 329.58,
-      "guncel_kar_zarar_yuzde": 0.0,
+      "guncel_fiyat": 334.56,
+      "guncel_kar_zarar_yuzde": 1.511014017840894,
       "hedef_fiyat": 362.54,
       "stop_loss": 313.1,
       "tutulan_gun": 1,
@@ -108,15 +108,15 @@
       "zaman_cercevesi": "7-10 gün",
       "risk": "Piyasa zayıflığı, ekonomik yavaşlama",
       "durum": "Yeni giriş",
-      "son_guncelleme": "2026-02-19T14:16:50.207838"
+      "son_guncelleme": "2026-02-19T19:41:15.618250"
     },
     {
       "id": "SWING-017",
       "sembol": "DUK",
       "giris_tarihi": "2026-02-19",
       "giris_fiyati": 126.71,
-      "guncel_fiyat": 126.71,
-      "guncel_kar_zarar_yuzde": 0.0,
+      "guncel_fiyat": 125.87,
+      "guncel_kar_zarar_yuzde": -0.6629311025175513,
       "hedef_fiyat": 139.38,
       "stop_loss": 120.38,
       "tutulan_gun": 0,
@@ -126,13 +126,13 @@
       "zaman_cercevesi": "7-10 gün",
       "risk": "Faiz oranı yükselmesi, düzenleme riski",
       "durum": "Yeni giriş",
-      "son_guncelleme": "2026-02-19T15:14:28.316567"
+      "son_guncelleme": "2026-02-19T19:41:15.926414"
     }
   ],
   "ozet": {
     "toplam_pozisyon": 7,
     "bos_slot": 3,
     "maksimum_pozisyon": 10,
-    "ortalama_kar_zarar_yuzde": 0.17180444477384552
+    "ortalama_kar_zarar_yuzde": 0.5065507315679353
   }
 }
