@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-02-19T12:24:34.041595",
+  "son_guncelleme": "2026-02-19T14:16:50.207950",
   "not": "SWING TRADE SADECE SİMÜLASYON - Sadece % kazanç/kayıp takibi (MAX: 10 pozisyon)",
   "aktif_pozisyonlar": [
     {
@@ -10,7 +10,7 @@
       "guncel_fiyat": 124.69,
       "guncel_kar_zarar_yuzde": 5.562140196410424,
       "hedef_fiyat": 129.93,
-      "stop_loss": 118.12,
+      "stop_loss": 120.9493,
       "tutulan_gun": 7,
       "giris_nedeni": "Güçlü momentum +8.8%, altın madenciliği lideri, güvenli liman talebi",
       "katalizor": "Altın fiyat gücü, malzeme sektörü rotasyonu",
@@ -18,7 +18,7 @@
       "zaman_cercevesi": "7-10 gün",
       "risk": "Altın fiyat dönüşü",
       "durum": "Trailing stop aktif - break-even seviyesinde",
-      "son_guncelleme": "2026-02-19T12:24:32.573413"
+      "son_guncelleme": "2026-02-19T14:16:45.683606"
     },
     {
       "id": "SWING-011",
@@ -36,7 +36,7 @@
       "zaman_cercevesi": "7-10 gün",
       "risk": "Büyüme rotasyonu devam ederse",
       "durum": "Normal aralıkta",
-      "son_guncelleme": "2026-02-19T12:24:32.798437"
+      "son_guncelleme": "2026-02-19T14:16:45.955910"
     },
     {
       "id": "SWING-012",
@@ -54,7 +54,7 @@
       "zaman_cercevesi": "7-12 gün",
       "risk": "Sağlık politikası belirsizliği",
       "durum": "Küçük kayıp, normal aralık",
-      "son_guncelleme": "2026-02-19T12:24:32.998682"
+      "son_guncelleme": "2026-02-19T14:16:46.591505"
     },
     {
       "id": "SWING-013",
@@ -72,7 +72,7 @@
       "zaman_cercevesi": "10-12 gün",
       "risk": "Bütçe endişeleri",
       "durum": "Minimal kayıp, normal aralık",
-      "son_guncelleme": "2026-02-19T12:24:33.204892"
+      "son_guncelleme": "2026-02-19T14:16:46.796896"
     },
     {
       "id": "SWING-014",
@@ -90,7 +90,7 @@
       "zaman_cercevesi": "7-10 gün",
       "risk": "Faiz oranı hassasiyeti",
       "durum": "Stop yakın, dikkatle izle",
-      "son_guncelleme": "2026-02-19T12:24:33.407299"
+      "son_guncelleme": "2026-02-19T14:16:46.994783"
     },
     {
       "id": "SWING-015",
@@ -108,7 +108,7 @@
       "zaman_cercevesi": "7-10 gün",
       "risk": "Rekabet baskısı",
       "durum": "Küçük kayıp, stop'a yakın",
-      "son_guncelleme": "2026-02-19T12:24:33.616231"
+      "son_guncelleme": "2026-02-19T14:16:50.012131"
     },
     {
       "id": "SWING-016",
@@ -126,7 +126,7 @@
       "zaman_cercevesi": "7-10 gün",
       "risk": "Piyasa zayıflığı, ekonomik yavaşlama",
       "durum": "Yeni giriş",
-      "son_guncelleme": "2026-02-19T12:24:34.041500"
+      "son_guncelleme": "2026-02-19T14:16:50.207838"
     }
   ],
   "ozet": {

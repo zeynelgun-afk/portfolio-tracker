@@ -3,8 +3,8 @@
 Portfolio Tracker - TAM OTOMATİK GÜNCELLEYİCİ
 - 4 Portföy güncelleme (TAM TÜRKÇE)
 - Swing Trade otomatik kontrol
+- TRAİLİNG STOP mekanizması (ZAMAN KISITLAMASI YOK)
 - Stop-loss/Target otomatik kapama
-- Timeframe disiplin kontrolü
 
 Kullanım:
     python3 update_all_portfolios.py
@@ -46,66 +46,43 @@ PORTFOLIOS = {
     "rotation": "Sektör Rotasyonu"
 }
 
-# Swing trade kuralları
+# Swing trade kuralları - YENİ: ZAMAN KISITLAMASI YOK!
 SWING_RULES = {
-    "target_pct": 10,
-    "stop_pct": 5,
-    "max_days": 10,
-    "trailing_stop_trigger": 5
+    "target_pct": 10,              # %10 hedef
+    "stop_pct": 5,                 # %5 stop
+    "trailing_stop_trigger": 5,    # %5 kar → trailing aktive
+    "trailing_distance": 3         # En yüksekten %3 aşağı trail
 }
 
 # TÜRKÇE sektör çevirisi - TAM KAPSAMLI
 SECTOR_TURKISH = {
-    # Teknoloji
     "Technology": "Teknoloji",
     "Tech": "Teknoloji",
-    
-    # Telekomünikasyon
     "Telecom": "Telekomünikasyon",
     "Telecommunications": "Telekomünikasyon",
-    
-    # Enerji
     "Energy": "Enerji",
     "Oil & Gas": "Petrol ve Gaz",
     "Energy ETF": "Enerji ETF",
-    
-    # Finans
     "Financials": "Finans",
     "Financial Services": "Finansal Hizmetler",
     "Banks": "Bankacılık",
-    
-    # Sağlık
     "Healthcare": "Sağlık",
     "Health Care": "Sağlık",
     "Pharmaceuticals": "İlaç",
-    
-    # Tüketici
     "Consumer": "Tüketici",
     "Consumer Staples": "Temel Tüketim",
     "Consumer Discretionary": "İsteğe Bağlı Tüketim",
     "Consumer Cyclical": "Döngüsel Tüketim",
-    
-    # Endüstriyel
     "Industrials": "Endüstriyel",
     "Industrial": "Endüstriyel",
-    
-    # Malzeme
     "Materials": "Malzeme",
     "Basic Materials": "Temel Malzeme",
-    
-    # Kamu Hizmetleri
     "Utilities": "Kamu Hizmetleri",
     "Utility": "Kamu Hizmetleri",
-    
-    # Gayrimenkul
     "Real Estate": "Gayrimenkul",
     "REITs": "Gayrimenkul Yatırım Ortaklığı",
-    
-    # Savunma
     "Defense": "Savunma",
     "Aerospace & Defense": "Havacılık ve Savunma",
-    
-    # Diğer
     "Mining": "Madencilik",
     "Tobacco": "Tütün",
     "Communication Services": "İletişim Hizmetleri",
@@ -168,7 +145,6 @@ def update_portfolio(name: str, display_name: str) -> dict:
         cost_basis = pos.get("maliyet_baz", pos.get("cost_basis", 0))
         sector = pos.get("sektor", pos.get("sector", ""))
         
-        # Sektörü Türkçeleştir (eğer İngilizce ise)
         sector_tr = to_turkish_sector(sector)
         
         print(f"  🔄 {symbol}...", end=" ")
@@ -187,7 +163,7 @@ def update_portfolio(name: str, display_name: str) -> dict:
         updated_pos = {
             "sembol": symbol,
             "isim": pos.get("isim", pos.get("name", "")),
-            "sektor": sector_tr,  # TÜRKÇE
+            "sektor": sector_tr,
             "adet": shares,
             "maliyet_baz": cost_basis,
             "guncel_fiyat": current_price,
@@ -223,7 +199,6 @@ def update_portfolio(name: str, display_name: str) -> dict:
     for pos in updated_positions:
         pos["agirlik_yuzde"] = (pos["guncel_deger"] / total_value * 100) if total_value > 0 else 0
     
-    # Sektör ağırlıkları (TÜRKÇE)
     sector_weights = {}
     for pos in updated_positions:
         sector_tr = pos["sektor"]
@@ -242,7 +217,7 @@ def update_portfolio(name: str, display_name: str) -> dict:
         "toplam_getiri_yuzde": total_return_pct,
         "pozisyon_sayisi": len(updated_positions),
         "pozisyonlar": updated_positions,
-        "sektor_agirliklari": sector_weights,  # TÜRKÇE
+        "sektor_agirliklari": sector_weights,
         "nakit_agirlik_yuzde": (cash / total_value * 100) if total_value > 0 else 0
     }
     
@@ -250,7 +225,6 @@ def update_portfolio(name: str, display_name: str) -> dict:
     print(f"  📈 Getiri: ${total_pnl:,.2f} ({total_return_pct:+.2f}%)")
     print(f"  💵 Nakit: ${cash:,.2f} ({result['nakit_agirlik_yuzde']:.1f}%)")
     
-    # TAM TÜRKÇE portföy kaydet
     portfolio_updated = {
         "portfoy_adi": display_name,
         "baslangic_sermaye": initial_capital,
@@ -330,7 +304,7 @@ def generate_portfolio_summary(results: dict):
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# SWING TRADE OTOMATİK KONTROL
+# SWING TRADE - TRAİLİNG STOP KONTROL (ZAMAN KISITLAMASI YOK!)
 # ═══════════════════════════════════════════════════════════════════════════════
 
 def calculate_days_held(entry_date_str: str) -> int:
@@ -347,9 +321,9 @@ def calculate_days_held(entry_date_str: str) -> int:
 
 
 def update_swing_positions():
-    """Swing pozisyonlarını güncelle ve otomatik çıkışları kontrol et"""
+    """Swing pozisyonlarını güncelle - TRAİLİNG STOP AKTİF"""
     print(f"\n{'='*70}")
-    print(f"🎯 SWING TRADE OTOMATİK KONTROL")
+    print(f"🎯 SWING TRADE - TRAİLİNG STOP KONTROL")
     print(f"{'='*70}\n")
     
     active_path = SWING_DIR / "active.json"
@@ -372,7 +346,7 @@ def update_swing_positions():
         print("✅ Aktif pozisyon yok")
         return
     
-    print(f"📊 {len(positions)} aktif pozisyon kontrol ediliyor...\n")
+    print(f"📊 {len(positions)} aktif pozisyon - Trailing stop kontrol...\n")
     
     to_close = []
     updated_positions = []
@@ -393,9 +367,9 @@ def update_swing_positions():
         pnl_pct = ((current_price - entry_price) / entry_price * 100) if entry_price > 0 else 0
         days_held = calculate_days_held(entry_date)
         
+        # ÇIKIŞ KONTROL - Sadece stop ve target (ZAMAN YOK!)
         target_hit = current_price >= target_price
         stop_hit = current_price <= stop_loss
-        timeframe_exceed = days_held > SWING_RULES["max_days"]
         
         pos["guncel_fiyat"] = current_price
         pos["guncel_kar_zarar_yuzde"] = pnl_pct
@@ -407,22 +381,12 @@ def update_swing_positions():
         if target_hit:
             exit_reason = f"Hedef vurdu (${target_price:.2f})"
             emoji = "🎯"
-            print(f"{emoji} ${current_price:.2f} TARGET HIT! {pnl_pct:+.1f}%")
+            print(f"{emoji} ${current_price:.2f} TARGET! {pnl_pct:+.1f}% ({days_held} gün)")
             
         elif stop_hit:
             exit_reason = f"Stop-loss vurdu (${stop_loss:.2f})"
             emoji = "🛑"
-            print(f"{emoji} ${current_price:.2f} STOP HIT! {pnl_pct:+.1f}%")
-            
-        elif timeframe_exceed and pnl_pct > 0:
-            exit_reason = f"Zaman çerçevesi aşıldı ({days_held} gün, hedef {SWING_RULES['max_days']} gündü), kar alındı"
-            emoji = "⏰"
-            print(f"{emoji} ${current_price:.2f} ZAMAN AŞIMI (karlı) {pnl_pct:+.1f}%")
-            
-        elif timeframe_exceed and pnl_pct < 0:
-            exit_reason = f"Zaman çerçevesi aşıldı ({days_held} gün, hedef {SWING_RULES['max_days']} gündü), zarar kesildi"
-            emoji = "⏰"
-            print(f"{emoji} ${current_price:.2f} ZAMAN AŞIMI (zararlı) {pnl_pct:+.1f}%")
+            print(f"{emoji} ${current_price:.2f} STOP! {pnl_pct:+.1f}% ({days_held} gün)")
         
         if exit_reason:
             closed_pos = {
@@ -445,18 +409,40 @@ def update_swing_positions():
             action_items.append(f"🔴 KAPANDI: {symbol} {pnl_pct:+.1f}% - {exit_reason}")
             
         else:
+            # POZİSYON AÇIK - TRAİLİNG STOP KONTROL
             emoji = "🟢" if pnl_pct >= 0 else "🔴"
             
-            if pnl_pct >= SWING_RULES["trailing_stop_trigger"] and stop_loss < entry_price:
-                pos["stop_loss"] = entry_price
-                action_items.append(f"📈 TRAILING: {symbol} stop ${entry_price:.2f} (break-even)")
-                print(f"{emoji} ${current_price:.2f} ({pnl_pct:+.1f}%) TRAILING AKTIVE")
+            # TRAİLİNG STOP MEKANİZMASI
+            if pnl_pct >= SWING_RULES["trailing_stop_trigger"]:
+                # %5+ kar → Trailing stop aktive
+                
+                # En yüksek fiyatı takip et
+                highest_price = pos.get("en_yuksek_fiyat", current_price)
+                if current_price > highest_price:
+                    highest_price = current_price
+                    pos["en_yuksek_fiyat"] = highest_price
+                
+                # Trailing stop hesapla (en yüksekten %3 aşağı)
+                trailing_stop = highest_price * (1 - SWING_RULES["trailing_distance"] / 100)
+                
+                # Stop'u güncelle (sadece yukarı çek)
+                if trailing_stop > stop_loss:
+                    old_stop = stop_loss
+                    pos["stop_loss"] = trailing_stop
+                    action_items.append(f"📈 TRAILING: {symbol} stop ${old_stop:.2f} → ${trailing_stop:.2f} (peak: ${highest_price:.2f})")
+                    print(f"{emoji} ${current_price:.2f} ({pnl_pct:+.1f}%) ⬆️ TRAILING: ${old_stop:.2f} → ${trailing_stop:.2f}")
+                else:
+                    # Stop zaten yukarıda
+                    stop_distance_pct = ((current_price - stop_loss) / current_price * 100)
+                    print(f"{emoji} ${current_price:.2f} ({pnl_pct:+.1f}%) 🛡️ Trailing aktif (stop: ${stop_loss:.2f}, {stop_distance_pct:.1f}% aşağı)")
             else:
+                # Henüz trailing aktive değil
                 status = "Normal" if abs(pnl_pct) < 3 else ("Stop yakın!" if current_price < stop_loss * 1.02 else "İyi")
-                print(f"{emoji} ${current_price:.2f} ({pnl_pct:+.1f}%) {status}")
+                print(f"{emoji} ${current_price:.2f} ({pnl_pct:+.1f}%, {days_held} gün) {status}")
             
             updated_positions.append(pos)
     
+    # Kapatılanları closed.json'a taşı
     if to_close:
         print(f"\n{'='*70}")
         print(f"🔴 OTOMATİK KAPATILAN POZİSYONLAR: {len(to_close)}")
@@ -465,8 +451,9 @@ def update_swing_positions():
         for closed_pos in to_close:
             sym = closed_pos["sembol"]
             pnl = closed_pos["kar_zarar_yuzde"]
+            days = closed_pos["tutulan_gun"]
             reason = closed_pos["cikis_nedeni"]
-            print(f"  ✅ {sym}: {pnl:+.2f}% - {reason}")
+            print(f"  ✅ {sym}: {pnl:+.2f}% ({days} gün) - {reason}")
             
             closed_data["kapatilan_pozisyonlar"].append(closed_pos)
         
@@ -522,6 +509,7 @@ def update_swing_positions():
         print(f"     Ortalama: {stats['ortalama_kar_zarar_yuzde']:+.2f}%")
     
     print(f"\n✅ active.json güncellendi")
+    print(f"\n💡 NOT: ZAMAN KISITLAMASI YOK - Trailing stop ile yönetiliyor!")
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -566,17 +554,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-def ensure_entry_info(pos: dict, current_date: str) -> dict:
-    """Pozisyonda giriş bilgisi yoksa ekle"""
-    if "giris_tarihi" not in pos:
-        pos["giris_tarihi"] = current_date
-    
-    if "giris_fiyati" not in pos:
-        pos["giris_fiyati"] = pos.get("maliyet_baz", pos.get("guncel_fiyat", 0))
-    
-    if "giris_nedeni" not in pos:
-        pos["giris_nedeni"] = f"Otomatik ekleme - {pos.get('sektor', 'Bilinmeyen sektör')}"
-    
-    return pos
