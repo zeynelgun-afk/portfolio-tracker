@@ -1,0 +1,159 @@
+{
+  "portfolio_name": "Dengeli Portföy",
+  "start_date": "2026-02-17",
+  "initial_capital": 100000,
+  "currency": "USD",
+  "strategy": "Multi-sector value + momentum blend. Enerji + emtia + defansif gelir",
+  "last_updated": "2026-02-18",
+  "positions": [
+    {
+      "symbol": "SM",
+      "name": "SM Energy Company",
+      "sector": "Energy",
+      "shares": 1040,
+      "cost_basis": 20.67,
+      "entry_date": "2026-02-17",
+      "notes": "Oil & gas E&P - SELL before Feb 25 earnings"
+    },
+    {
+      "symbol": "KOS",
+      "name": "Kosmos Energy Ltd",
+      "sector": "Energy",
+      "shares": 15276,
+      "cost_basis": 1.617,
+      "entry_date": "2026-02-17",
+      "notes": "Offshore Africa exposure - Added 3,300 shares @ $1.715 on 2026-02-18"
+    },
+    {
+      "symbol": "MO",
+      "name": "Altria Group Inc",
+      "sector": "Consumer Staples",
+      "shares": 267,
+      "cost_basis": 67.44,
+      "entry_date": "2026-02-17",
+      "notes": "High dividend yield, defensive"
+    },
+    {
+      "symbol": "XLE",
+      "name": "Energy Select Sector SPDR Fund",
+      "sector": "Energy ETF",
+      "shares": 277,
+      "cost_basis": 53.34,
+      "entry_date": "2026-02-17",
+      "notes": "Broad energy sector exposure"
+    },
+    {
+      "symbol": "RGLD",
+      "name": "Royal Gold Inc",
+      "sector": "Basic Materials",
+      "shares": 22,
+      "cost_basis": 274.4,
+      "entry_date": "2026-02-17",
+      "notes": "Gold royalty - Sold 21 shares @ $283.56 on 2026-02-18. SELL remaining before earnings"
+    },
+    {
+      "symbol": "FCX",
+      "name": "Freeport-McMoRan Inc",
+      "sector": "Basic Materials",
+      "shares": 132,
+      "cost_basis": 59.53,
+      "entry_date": "2026-02-17",
+      "notes": "Copper exposure, EV/infrastructure demand"
+    }
+  ],
+  "cash": {
+    "amount": 5424.5,
+    "notes": "Updated after RGLD partial sale and KOS addition on 2026-02-18"
+  },
+  "transaction_history": [
+    {
+      "date": "2026-02-17",
+      "type": "BUY",
+      "symbol": "SM",
+      "shares": 1040,
+      "price": 20.67,
+      "amount": 21496.8
+    },
+    {
+      "date": "2026-02-17",
+      "type": "BUY",
+      "symbol": "KOS",
+      "shares": 11976,
+      "price": 1.59,
+      "amount": 19041.84
+    },
+    {
+      "date": "2026-02-17",
+      "type": "BUY",
+      "symbol": "MO",
+      "shares": 267,
+      "price": 67.44,
+      "amount": 18006.48
+    },
+    {
+      "date": "2026-02-17",
+      "type": "BUY",
+      "symbol": "XLE",
+      "shares": 277,
+      "price": 53.34,
+      "amount": 14775.18
+    },
+    {
+      "date": "2026-02-17",
+      "type": "BUY",
+      "symbol": "RGLD",
+      "shares": 43,
+      "price": 274.4,
+      "amount": 11799.2
+    },
+    {
+      "date": "2026-02-17",
+      "type": "BUY",
+      "symbol": "FCX",
+      "shares": 132,
+      "price": 59.53,
+      "amount": 7857.96
+    },
+    {
+      "date": "2026-02-18",
+      "type": "SELL",
+      "symbol": "RGLD",
+      "shares": 21,
+      "price": 283.56,
+      "amount": 5954.76,
+      "notes": "Partial exit before earnings, +3.34% profit"
+    },
+    {
+      "date": "2026-02-18",
+      "type": "BUY",
+      "symbol": "KOS",
+      "shares": 3300,
+      "price": 1.715,
+      "amount": 5659.5,
+      "notes": "DCA - lowering cost basis during VIX spike"
+    }
+  ],
+  "pending_actions": [
+    {
+      "date": "2026-02-19",
+      "action": "SELL",
+      "symbol": "RGLD",
+      "shares": 22,
+      "reason": "Exit remaining position before earnings"
+    },
+    {
+      "date": "2026-02-22",
+      "action": "SELL",
+      "symbol": "SM",
+      "shares": 1040,
+      "reason": "Exit 2-3 days before Feb 25 earnings"
+    }
+  ],
+  "risk_limits": {
+    "max_single_position_pct": 30.0,
+    "max_sector_weight_pct": 50.0,
+    "min_cash_pct": 5.0,
+    "stop_loss_pct": -15.0
+  },
+  "id": "balanced"
+}

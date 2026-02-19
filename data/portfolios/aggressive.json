@@ -1,0 +1,37 @@
+{
+  "portfolio_name": "Agresif Büyüme",
+  "id": "aggressive",
+  "start_date": "2026-02-19",
+  "initial_capital": 100000,
+  "currency": "USD",
+  "strategy": "Momentum + Earnings Surprise, AI/Tech ağırlıklı. Yıllık %30+ hedef.",
+  "last_updated": "2026-02-19",
+  "positions": [],
+  "cash": {
+    "amount": 100000,
+    "notes": "Henüz pozisyon açılmadı"
+  },
+  "transaction_history": [],
+  "pending_actions": [],
+  "closed_positions": [],
+  "risk_limits": {
+    "max_positions": 10,
+    "max_single_position_pct": 15.0,
+    "stop_loss_pct": -8.0,
+    "trailing_stop_trigger_pct": 20.0,
+    "trailing_stop_pct": -10.0
+  },
+  "entry_criteria": [
+    "Earnings beat > %10",
+    "RS line yükselişte",
+    "Fiyat 50MA üzerinde",
+    "Volume ortalamanın 1.5x üzerinde",
+    "Sektör: AI, tech, semiconductor, cloud"
+  ],
+  "exit_criteria": [
+    "%8 stop-loss",
+    "%20+ kazançta trailing stop %10",
+    "Momentum kırılması (50MA altına kapanış)",
+    "Earnings miss"
+  ]
+}

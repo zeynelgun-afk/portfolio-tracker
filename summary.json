@@ -1,0 +1,54 @@
+{
+  "summary": {
+    "last_updated": "2026-02-19",
+    "total_capital": 400000,
+    "portfolios": {
+      "balanced": {
+        "name": "Dengeli Portföy",
+        "initial_capital": 100000,
+        "current_value": 103096.25,
+        "pnl": 3096.25,
+        "pnl_pct": 3.10,
+        "status": "active",
+        "positions_count": 6
+      },
+      "aggressive": {
+        "name": "Agresif Büyüme",
+        "initial_capital": 100000,
+        "current_value": 100000,
+        "pnl": 0,
+        "pnl_pct": 0,
+        "status": "cash - pozisyon bekleniyor",
+        "positions_count": 0
+      },
+      "dividend": {
+        "name": "Değer + Temettü",
+        "initial_capital": 100000,
+        "current_value": 100000,
+        "pnl": 0,
+        "pnl_pct": 0,
+        "status": "cash - pozisyon bekleniyor",
+        "positions_count": 0
+      },
+      "rotation": {
+        "name": "Sektör Rotasyonu",
+        "initial_capital": 100000,
+        "current_value": 100000,
+        "pnl": 0,
+        "pnl_pct": 0,
+        "status": "cash - pozisyon bekleniyor",
+        "positions_count": 0
+      }
+    },
+    "swing": {
+      "active_trades": 0,
+      "total_pnl": 0,
+      "win_rate": 0
+    },
+    "combined": {
+      "total_value": 403096.25,
+      "total_pnl": 3096.25,
+      "total_pnl_pct": 0.77
+    }
+  }
+}

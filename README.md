@@ -1,82 +1,61 @@
-# 📊 $100K Manual Portfolio Tracker
+# 📊 Zeynel's Portfolio Tracker
 
-> **Başlangıç:** 17 Şubat 2026 | **Sermaye:** $100,000 | **Strateji:** Manuel portföy takibi - value & energy focus
+4 ayrı portföy + swing trade sistemi için günlük takip reposu.  
+Başlangıç: **17 Şubat 2026** | Toplam sermaye: **$400,000**
 
-Gerçek piyasa verileri kullanılarak manuel olarak yönetilen yatırım portföyünün takibi.
+## Portföyler
 
-## 📈 Güncel Durum
+| # | Ad | Strateji | Sermaye | Hedef | Durum |
+|---|-----|----------|---------|-------|-------|
+| 1 | **Dengeli** | Multi-sector value + momentum blend | $100,000 | Stabil büyüme | ✅ Aktif |
+| 2 | **Agresif Büyüme** | Momentum, AI/tech, earnings surprise | $100,000 | Yıllık %30+ | ⏳ Pozisyon bekleniyor |
+| 3 | **Değer + Temettü** | Düşük P/E, yüksek yield, güçlü FCF | $100,000 | Yıllık %8-12 + temettü | ⏳ Pozisyon bekleniyor |
+| 4 | **Sektör Rotasyonu** | Makro döngüye göre sektör ETF rotasyonu | $100,000 | S&P 500 + %5 | ⏳ Pozisyon bekleniyor |
 
-| Metrik | Değer |
-|--------|-------|
-| Başlangıç Sermayesi | $100,000 |
-| Güncel Değer | ~$101,700 |
-| Net Kar | +$1,700 (+1.70%) |
-| Aktif Pozisyon | 6 hisse |
-| Nakit | $5,424 |
-| Son Güncelleme | 18 Şubat 2026 |
+## Swing Trade Sistemi
 
-## 🏗️ Portföy Dağılımı
+Ayrı nakit havuzu, günlük tarama:
+- RSI oversold pullback
+- Earnings surprise / momentum
+- Breakout (volume + fiyat)
+- Sektör liderliği rotasyonu
 
-| Hisse | Sektör | Adet | Maliyet | Notlar |
-|-------|--------|------|---------|--------|
-| **SM** | Energy (E&P) | 1,040 | $20.67 | 25 Şubat earnings öncesi sat |
-| **KOS** | Energy (Offshore) | 15,276 | $1.617 | DCA ile büyütüldü |
-| **MO** | Consumer Staples | 267 | $67.44 | Yüksek temettü, defansif |
-| **XLE** | Energy ETF | 277 | $53.34 | Geniş enerji sektörü |
-| **RGLD** | Gold Royalty | 22 | $274.40 | Earnings öncesi sat (21 adet satıldı) |
-| **FCX** | Copper Mining | 132 | $59.53 | Bakır talebi, EV/altyapı |
-| 💵 **Nakit** | — | — | — | Fırsat fonu |
-
-## 📁 Proje Yapısı
+## Repo Yapısı
 
 ```
 portfolio-tracker/
-├── README.md                          # Bu dosya
 ├── data/
-│   ├── portfolio.json                 # Portföy pozisyonları (manuel güncellenir)
-│   └── latest_snapshot.json           # Son durum snapshot
+│   ├── portfolios/
+│   │   ├── balanced.json        # Portföy 1: Dengeli (mevcut)
+│   │   ├── aggressive.json      # Portföy 2: Agresif Büyüme
+│   │   ├── dividend.json        # Portföy 3: Değer + Temettü
+│   │   └── rotation.json        # Portföy 4: Sektör Rotasyonu
+│   ├── swing/
+│   │   ├── active.json          # Aktif swing pozisyonlar
+│   │   ├── watchlist.json       # Günlük tarama sonuçları
+│   │   └── closed.json          # Kapatılmış swing trade'ler
+│   ├── daily-logs/
+│   │   └── YYYY-MM-DD.json      # Günlük tüm portföy snapshot'ları
+│   ├── latest_snapshot.json     # Son fiyat snapshot'ı (Dengeli)
+│   ├── portfolio.json           # Legacy - Dengeli portföy orijinal
+│   ├── performance_log.csv      # Dengeli portföy performans geçmişi
+│   └── transactions.csv         # Dengeli portföy işlem geçmişi
 ├── scripts/
-│   └── update_portfolio.py            # FMP API ile güncel değer hesaplama
+│   └── update_portfolio.py      # FMP API ile fiyat güncelleme
 ├── reports/
-│   └── report_YYYY-MM-DD.md           # Günlük/haftalık raporlar
-└── .github/
-    └── workflows/
-        └── daily_update.yml           # Otomatik değer güncelleme (opsiyonel)
+│   └── report_YYYY-MM-DD.md     # Günlük/haftalık raporlar
+├── docs/
+│   └── strategy.md              # Trading kuralları
+├── summary.json                 # Genel özet (4 portföy + swing)
+└── README.md
 ```
 
-## 🔄 İşlem Geçmişi
+## Günlük Rutin
 
-| Tarih | İşlem | Hisse | Adet | Fiyat | Tutar |
-|-------|-------|-------|------|-------|-------|
-| 2026-02-17 | AL | SM | 1,040 | $20.67 | $21,496.80 |
-| 2026-02-17 | AL | KOS | 11,976 | $1.59 | $19,041.84 |
-| 2026-02-17 | AL | MO | 267 | $67.44 | $18,006.48 |
-| 2026-02-17 | AL | XLE | 277 | $53.34 | $14,775.18 |
-| 2026-02-17 | AL | RGLD | 43 | $274.40 | $11,799.20 |
-| 2026-02-17 | AL | FCX | 132 | $59.53 | $7,857.96 |
-| 2026-02-18 | SAT | RGLD | 21 | $283.56 | $5,954.76 (+3.34%) |
-| 2026-02-18 | AL | KOS | 3,300 | $1.715 | $5,659.50 (DCA) |
+1. **Sabah (piyasa açılmadan)**: Swing tarama, watchlist güncelleme
+2. **Piyasa saatlerinde**: Aktif pozisyon takibi, stop-loss kontrol
+3. **Kapanış sonrası**: Fiyat güncelleme, günlük log, P&L hesaplama
+4. **Pazar günleri**: Haftalık strateji değerlendirmesi
 
-## 📋 Bekleyen İşlemler
-
-- **19 Şubat:** RGLD kalan 22 hisse sat
-- **22-23 Şubat:** SM 1,040 hisse sat (earnings öncesi)
-
-## 🚀 Kullanım
-
-### Manuel Güncelleme
-```bash
-# Portföy değerini güncelle
-python3 scripts/update_portfolio.py --api-key YOUR_FMP_KEY --report
-```
-
-### GitHub Actions (Opsiyonel)
-Repo secrets'a `FMP_API_KEY` eklendikten sonra her iş günü otomatik güncellenir.
-
-## ⚠️ Sorumluluk Reddi
-
-Bu tamamen **simüle edilmiş** bir portföydür. Gerçek para kullanılmamaktadır. Yatırım tavsiyesi değildir. Eğitim ve strateji test amaçlıdır.
-
----
-
-*FMP (Financial Modeling Prep) API ile güçlendirilmiştir.*
+## API
+- Financial Modeling Prep (FMP)

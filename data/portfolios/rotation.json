@@ -1,0 +1,47 @@
+{
+  "portfolio_name": "Sektör Rotasyonu",
+  "id": "rotation",
+  "start_date": "2026-02-19",
+  "initial_capital": 100000,
+  "currency": "USD",
+  "strategy": "Makro döngüye göre sektör ETF/hisse rotasyonu. S&P 500'ü yıllık %5+ geçmek hedef.",
+  "last_updated": "2026-02-19",
+  "positions": [],
+  "cash": {
+    "amount": 100000,
+    "notes": "Henüz pozisyon açılmadı"
+  },
+  "transaction_history": [],
+  "pending_actions": [],
+  "closed_positions": [],
+  "current_cycle_phase": "",
+  "risk_limits": {
+    "max_positions": 8,
+    "rebalance_frequency": "quarterly",
+    "max_single_position_pct": 25.0
+  },
+  "sector_universe": [
+    {"ticker": "XLE", "sector": "Energy"},
+    {"ticker": "XLF", "sector": "Financials"},
+    {"ticker": "XLK", "sector": "Technology"},
+    {"ticker": "XLV", "sector": "Healthcare"},
+    {"ticker": "XLI", "sector": "Industrials"},
+    {"ticker": "XLP", "sector": "Consumer Staples"},
+    {"ticker": "XLU", "sector": "Utilities"},
+    {"ticker": "XLY", "sector": "Consumer Discretionary"},
+    {"ticker": "XLB", "sector": "Materials"},
+    {"ticker": "XLRE", "sector": "Real Estate"},
+    {"ticker": "XLC", "sector": "Communication Services"}
+  ],
+  "entry_criteria": [
+    "Sektör momentum skoru pozitif",
+    "Ekonomik döngü pozisyonuna uygun",
+    "Relative strength vs SPY pozitif",
+    "Breadth indikatörleri destekleyici"
+  ],
+  "exit_criteria": [
+    "Sektör momentum kaybedince",
+    "Döngü değişiminde",
+    "RS line SPY altına düşünce"
+  ]
+}

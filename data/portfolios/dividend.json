@@ -1,0 +1,38 @@
+{
+  "portfolio_name": "Değer + Temettü",
+  "id": "dividend",
+  "start_date": "2026-02-19",
+  "initial_capital": 100000,
+  "currency": "USD",
+  "strategy": "Düşük P/E, yüksek temettü yield, güçlü FCF. Yıllık %8-12 + temettü geliri hedef.",
+  "last_updated": "2026-02-19",
+  "positions": [],
+  "cash": {
+    "amount": 100000,
+    "notes": "Henüz pozisyon açılmadı"
+  },
+  "transaction_history": [],
+  "pending_actions": [],
+  "closed_positions": [],
+  "dividends_received": [],
+  "risk_limits": {
+    "max_positions": 15,
+    "max_single_position_pct": 10.0,
+    "min_dividend_yield": 3.0,
+    "max_pe_ratio": 20.0,
+    "max_debt_equity": 1.5
+  },
+  "entry_criteria": [
+    "P/E < sektör ortalaması",
+    "Temettü yield > %3",
+    "Temettü büyüme > %5/yıl (3 yıl)",
+    "D/E < 1.5",
+    "FCF pozitif ve büyüyen"
+  ],
+  "exit_criteria": [
+    "Temettü kesintisi",
+    "FCF negatife dönerse",
+    "D/E > 2.0 aşarsa",
+    "P/E > 30 aşırı yükselirse"
+  ]
+}

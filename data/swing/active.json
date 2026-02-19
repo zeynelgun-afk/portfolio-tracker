@@ -1,0 +1,23 @@
+{
+  "swing_trades": {
+    "description": "Aktif swing trade pozisyonları",
+    "start_date": "2026-02-19",
+    "rules": {
+      "max_concurrent": 5,
+      "max_hold_days": 15,
+      "position_size_min": 5000,
+      "position_size_max": 10000,
+      "stop_loss_pct": -5.0,
+      "take_profit_pct": 10.0,
+      "risk_reward_min": 2.0
+    },
+    "scan_methods": [
+      "RSI oversold pullback (RSI < 30, kaliteli hisse)",
+      "Earnings surprise / momentum (beat > %10, gap up)",
+      "Breakout (volume 2x+ ortalama, direnci kırma)",
+      "Sektör liderliği rotasyonu (en güçlü sektörün liderleri)"
+    ],
+    "active": [],
+    "last_scan_date": ""
+  }
+}

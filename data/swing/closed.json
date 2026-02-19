@@ -1,0 +1,15 @@
+{
+  "closed_trades": {
+    "description": "Kapatılmış swing trade'ler",
+    "trades": [],
+    "stats": {
+      "total_trades": 0,
+      "winners": 0,
+      "losers": 0,
+      "win_rate": 0,
+      "avg_win_pct": 0,
+      "avg_loss_pct": 0,
+      "total_pnl": 0
+    }
+  }
+}
