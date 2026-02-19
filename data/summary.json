@@ -1,74 +1,73 @@
 {
-  "last_updated": "2026-02-18",
-  "simulation_period": "2026-01-02 to 2026-02-18",
-  "trading_days": 33,
-  "total_capital": 300000.00,
-  "total_value": 308830.46,
-  "total_gain_loss": 8830.46,
-  "total_gain_loss_pct": 2.94,
+  "son_guncelleme": "2026-02-18",
+  "simulasyon_donemi": "2 Ocak 2026 - 18 Şubat 2026",
+  "islem_gunleri": 33,
+  "toplam_sermaye": 300000.00,
+  "toplam_deger": 308830.46,
+  "toplam_kar_zarar": 8830.46,
+  "toplam_kar_zarar_yuzde": 2.94,
   "benchmark_spy": 0.46,
   "alpha": 2.49,
-  "portfolios": {
-    "aggressive": {
-      "name": "Agresif Büyüme",
-      "value": 91373.64,
-      "cost_basis": 100000.00,
-      "gain_loss": -8626.36,
-      "gain_loss_pct": -8.63,
-      "positions": 6,
-      "cash": 10223.15,
-      "status": "FAILED - Growth collapse",
-      "realized_losses": -3941.00
+  "portfolyolar": {
+    "agresif": {
+      "isim": "Agresif Büyüme",
+      "deger": 91373.64,
+      "maliyet": 100000.00,
+      "kar_zarar": -8626.36,
+      "kar_zarar_yuzde": -8.63,
+      "pozisyon_sayisi": 6,
+      "nakit": 10223.15,
+      "durum": "BAŞARISIZ - Büyüme çöküşü"
     },
-    "dividend": {
-      "name": "Değer + Temettü",
-      "value": 112351.42,
-      "cost_basis": 100000.00,
-      "gain_loss": 12351.42,
-      "gain_loss_pct": 12.35,
-      "positions": 8,
-      "cash": 648.12,
-      "status": "SUCCESS - Best performer"
+    "temettü": {
+      "isim": "Değer + Temettü",
+      "deger": 112351.42,
+      "maliyet": 100000.00,
+      "kar_zarar": 12351.42,
+      "kar_zarar_yuzde": 12.35,
+      "pozisyon_sayisi": 8,
+      "nakit": 648.12,
+      "durum": "BAŞARILI - En iyi performans"
     },
-    "rotation": {
-      "name": "Sektör Rotasyonu",
-      "value": 105105.40,
-      "cost_basis": 100000.00,
-      "gain_loss": 5105.40,
-      "gain_loss_pct": 5.11,
-      "positions": 5,
-      "cash": 286.62,
-      "status": "SUCCESS - Solid outperformance"
+    "rotasyon": {
+      "isim": "Sektör Rotasyonu",
+      "deger": 105105.40,
+      "maliyet": 100000.00,
+      "kar_zarar": 5105.40,
+      "kar_zarar_yuzde": 5.11,
+      "pozisyon_sayisi": 5,
+      "nakit": 286.62,
+      "durum": "BAŞARILI - Sağlam performans"
     }
   },
-  "transactions_summary": {
-    "total_trades": 3,
-    "amd_sold": {
-      "date": "2026-01-08",
-      "loss": -1033.45,
-      "loss_pct": -8.41,
-      "outcome": "Good decision (stop-loss worked)"
+  "islem_ozeti": {
+    "toplam_islem": 3,
+    "amd_satildi": {
+      "tarih": "2026-01-08",
+      "kayip": -1033.45,
+      "kayip_yuzde": -8.41,
+      "sonuc": "İyi karar (stop-loss çalıştı)"
     },
-    "amzn_add": {
-      "date": "2026-01-14",
-      "invested": 11832.50,
-      "current_loss": -2787.00,
-      "outcome": "Bad timing"
+    "amzn_eklendi": {
+      "tarih": "2026-01-14",
+      "yatirim": 11832.50,
+      "guncel_kayip": -2787.00,
+      "sonuc": "Kötü timing"
     },
-    "app_sold": {
-      "date": "2026-02-10",
-      "loss": -2908.00,
-      "loss_pct": -23.52,
-      "outcome": "Good decision (cut loss)"
+    "app_satildi": {
+      "tarih": "2026-02-10",
+      "kayip": -2908.00,
+      "kayip_yuzde": -23.52,
+      "sonuc": "İyi karar (kayıp kesildi)"
     }
   },
-  "key_lessons": [
-    "Stop-losses work (AMD success)",
-    "Diversification saves portfolios (Div +12%, Agg -8%)",
-    "Momentum chasing dangerous (APP, AMZN)",
-    "Sector rotation real & powerful",
-    "Value > Growth during rotation",
-    "Position sizing critical"
+  "onemli_dersler": [
+    "Stop-loss'lar çalışıyor (AMD başarısı)",
+    "Çeşitlendirme portfolyoyu kurtarıyor (Temettü +12%, Agresif -8%)",
+    "Momentum takibi tehlikeli (APP, AMZN)",
+    "Sektör rotasyonu gerçek ve güçlü",
+    "Değer > Büyüme rotasyon sırasında",
+    "Pozisyon büyüklüğü kritik"
   ],
-  "final_verdict": "SUCCESS - Beat SPY by +2.49%, survived growth crash"
+  "nihai_karar": "BAŞARILI - SPY'ı +2.49% geçtik, büyüme çöküşünden kurtulduk"
 }

@@ -1,48 +1,48 @@
 {
-  "last_updated": "2026-02-17T16:00:00Z",
-  "note": "Potential swing candidates for next trades",
-  "watchlist": [
+  "son_guncelleme": "2026-02-18T16:00:00Z",
+  "not": "Bir sonraki işlemler için potansiyel swing adayları",
+  "izleme_listesi": [
     {
-      "symbol": "DUK",
-      "current_price": 126.71,
-      "momentum_5d": 3.4,
-      "sector": "Utilities - Electric",
-      "notes": "Defensive utility, steady momentum"
+      "sembol": "DUK",
+      "guncel_fiyat": 126.71,
+      "momentum_5gun": 3.4,
+      "sektor": "Utilities - Elektrik",
+      "notlar": "Savunmacı kamu hizmeti, istikrarlı momentum"
     },
     {
-      "symbol": "SPG",
-      "current_price": 202.01,
-      "momentum_5d": 2.9,
-      "sector": "REITs - Malls",
-      "notes": "Mall REIT, retail recovery play"
+      "sembol": "SPG",
+      "guncel_fiyat": 202.01,
+      "momentum_5gun": 2.9,
+      "sektor": "REITs - Alışveriş Merkezleri",
+      "notlar": "AVM REIT'i, perakende toparlanma oyunu"
     },
     {
-      "symbol": "NEE",
-      "current_price": 92.71,
-      "momentum_5d": 2.1,
-      "sector": "Utilities - Clean Energy",
-      "notes": "Clean energy utility, infrastructure play"
+      "sembol": "NEE",
+      "guncel_fiyat": 92.71,
+      "momentum_5gun": 2.1,
+      "sektor": "Utilities - Temiz Enerji",
+      "notlar": "Temiz enerji kamu hizmeti, altyapı oyunu"
     },
     {
-      "symbol": "PM",
-      "current_price": 183.65,
-      "momentum_5d": 0.5,
-      "sector": "Consumer Staples - Tobacco",
-      "notes": "Tobacco defensive, similar to MO in portfolio"
+      "sembol": "PM",
+      "guncel_fiyat": 183.65,
+      "momentum_5gun": 0.5,
+      "sektor": "Tüketim - Tütün",
+      "notlar": "Tütün savunmacı, portfolyodaki MO'ya benzer"
     }
   ],
-  "excluded": [
+  "haric_tutulanlar": [
     {
-      "symbol": "GOOGL",
-      "reason": "Negative momentum -6.7%, tech weakness continues"
+      "sembol": "GOOGL",
+      "neden": "Negatif momentum -6.7%, tech zayıflığı devam ediyor"
     },
     {
-      "symbol": "META",
-      "reason": "Negative momentum -3.0%, tech sector still weak"
+      "sembol": "META",
+      "neden": "Negatif momentum -3.0%, tech sektörü hala zayıf"
     },
     {
-      "symbol": "AXP",
-      "reason": "Negative momentum -5.1%, financials under pressure"
+      "sembol": "AXP",
+      "neden": "Negatif momentum -5.1%, finansal baskı altında"
     }
   ]
 }
