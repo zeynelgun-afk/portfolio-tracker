@@ -1,32 +1,32 @@
 {
   "tarih": "2026-02-19",
-  "zaman_damgasi": "2026-02-19T12:21:12.333070",
+  "zaman_damgasi": "2026-02-19T14:42:04.226052",
   "toplam_sermaye": 400000,
-  "toplam_deger": 411898.30999999994,
-  "toplam_kar_zarar": 11898.30999999994,
-  "toplam_getiri_yuzde": 2.974577499999985,
+  "toplam_deger": 415232.94500000007,
+  "toplam_kar_zarar": 15232.945000000065,
+  "toplam_getiri_yuzde": 3.808236250000016,
   "portfolyolar": {
     "balanced": {
-      "deger": 103096.25,
-      "getiri_yuzde": 3.09625,
+      "deger": 106001.33500000002,
+      "getiri_yuzde": 6.0013350000000205,
       "nakit": 5424.5,
       "pozisyon_sayisi": 6
     },
     "aggressive": {
-      "deger": 91345.24,
-      "getiri_yuzde": -8.654759999999994,
+      "deger": 90774.33300000001,
+      "getiri_yuzde": -9.225666999999987,
       "nakit": 1339.85,
       "pozisyon_sayisi": 8
     },
     "dividend": {
-      "deger": 112351.42,
-      "getiri_yuzde": 12.351419999999997,
+      "deger": 113333.2348,
+      "getiri_yuzde": 13.333234800000005,
       "nakit": 648.12,
       "pozisyon_sayisi": 8
     },
     "rotation": {
-      "deger": 105105.39999999998,
-      "getiri_yuzde": 5.105399999999979,
+      "deger": 105124.0422,
+      "getiri_yuzde": 5.124042199999996,
       "nakit": 286.62,
       "pozisyon_sayisi": 5
     }

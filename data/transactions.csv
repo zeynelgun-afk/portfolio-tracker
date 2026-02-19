@@ -5,3 +5,4 @@ date,action,symbol,shares,price,total,reason
 2026-02-17,BUY,XLE,277,54.13,14994.01,"Initial position - Energy sector ETF"
 2026-02-17,BUY,RGLD,43,277.50,11932.50,"Initial position - Gold royalty"
 2026-02-17,BUY,FCX,132,60.54,7991.28,"Initial position - Copper play"
+2026-02-19,SELL,KOS,6000,1.85,11124.00,Dengeli,Risk azaltma - Yüksek borç ve negatif finansallar
