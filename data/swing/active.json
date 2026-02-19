@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-02-11T16:00:00Z",
+  "last_updated": "2026-02-12T16:00:00Z",
   "note": "SWING TRADES ARE SIMULATION ONLY - Tracking % gain/loss (MAX: 10 positions)",
   "active_positions": [
     {
@@ -7,54 +7,78 @@
       "symbol": "VZ",
       "entry_date": "2026-02-03",
       "entry_price": 46.25,
-      "current_price": 48.97,
-      "unrealized_pnl_pct": 5.88,
+      "current_price": 49.46,
+      "unrealized_pnl_pct": 6.94,
       "target_price": 50.88,
       "stop_loss": 43.94,
-      "days_held": 8,
-      "status": "Good progress, +3.9% to target"
+      "days_held": 9,
+      "status": "Good +6.94%, near target"
     },
     {
       "id": "SWING-004",
       "symbol": "XOM",
       "entry_date": "2026-02-03",
       "entry_price": 142.78,
-      "current_price": 154.53,
-      "unrealized_pnl_pct": 8.23,
+      "current_price": 149.93,
+      "unrealized_pnl_pct": 5.01,
       "target_price": 157.06,
       "stop_loss": 135.64,
-      "days_held": 8,
-      "status": "Strong +8.23%, only +1.6% to target"
+      "days_held": 9,
+      "status": "Good +5.01%"
     },
     {
       "id": "SWING-008",
       "symbol": "WMT",
       "entry_date": "2026-02-06",
       "entry_price": 131.18,
-      "current_price": 128.77,
-      "unrealized_pnl_pct": -1.84,
+      "current_price": 133.64,
+      "unrealized_pnl_pct": 1.88,
       "target_price": 144.30,
       "stop_loss": 124.62,
-      "days_held": 5,
-      "status": "Small loss -1.84%, monitor"
+      "days_held": 6,
+      "status": "Small gain +1.88%"
     },
     {
-      "id": "SWING-009",
-      "symbol": "BAC",
-      "entry_date": "2026-02-06",
-      "entry_price": 56.53,
-      "current_price": 53.83,
-      "unrealized_pnl_pct": -4.78,
-      "target_price": 62.18,
-      "stop_loss": 53.70,
-      "days_held": 5,
-      "status": "Near stop ($53.83 vs $53.70), watch closely!"
+      "id": "SWING-010",
+      "symbol": "NEM",
+      "entry_date": "2026-02-12",
+      "entry_price": 118.12,
+      "current_price": 118.12,
+      "unrealized_pnl_pct": 0.00,
+      "target_price": 129.93,
+      "stop_loss": 112.21,
+      "days_held": 0,
+      "entry_reason": "Strong momentum +8.8% (5 days), gold mining leader, safe haven demand defensive play",
+      "scan_method": "commodity_momentum",
+      "catalyst": "Gold price strength, defensive positioning, materials sector rotation opportunity",
+      "thesis": "En büyük altın üreticisi, commodity strength, gold fiyatları güçlü",
+      "timeframe": "7-10 gün",
+      "risk": "Gold price reversal",
+      "status": "New entry"
+    },
+    {
+      "id": "SWING-011",
+      "symbol": "NVDA",
+      "entry_date": "2026-02-12",
+      "entry_price": 186.94,
+      "current_price": 186.94,
+      "unrealized_pnl_pct": 0.00,
+      "target_price": 205.63,
+      "stop_loss": 177.59,
+      "days_held": 0,
+      "entry_reason": "Strong momentum +8.8% (5 days), AI chip recovery, tech sector bounce beginning",
+      "scan_method": "tech_recovery",
+      "catalyst": "AI chip demand continues, data center buildout, tech sector recovery",
+      "thesis": "Data center demand güçlü, AI buildout devam, technical bounce from oversold, market leader in AI narrative",
+      "timeframe": "7-10 gün",
+      "risk": "Growth rotation continues negative",
+      "status": "New entry"
     }
   ],
   "summary": {
-    "total_positions": 4,
-    "avg_unrealized_pnl_pct": 1.87,
-    "available_slots": 6,
+    "total_positions": 5,
+    "avg_unrealized_pnl_pct": 2.77,
+    "available_slots": 5,
     "max_positions": 10
   }
 }
