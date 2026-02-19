@@ -54,22 +54,62 @@ SWING_RULES = {
     "trailing_stop_trigger": 5
 }
 
-# TÜRKÇE sektör çevirisi
+# TÜRKÇE sektör çevirisi - TAM KAPSAMLI
 SECTOR_TURKISH = {
+    # Teknoloji
     "Technology": "Teknoloji",
-    "Telecom": "Telekomünikasyon", 
+    "Tech": "Teknoloji",
+    
+    # Telekomünikasyon
+    "Telecom": "Telekomünikasyon",
+    "Telecommunications": "Telekomünikasyon",
+    
+    # Enerji
     "Energy": "Enerji",
+    "Oil & Gas": "Petrol ve Gaz",
+    "Energy ETF": "Enerji ETF",
+    
+    # Finans
     "Financials": "Finans",
+    "Financial Services": "Finansal Hizmetler",
+    "Banks": "Bankacılık",
+    
+    # Sağlık
     "Healthcare": "Sağlık",
+    "Health Care": "Sağlık",
+    "Pharmaceuticals": "İlaç",
+    
+    # Tüketici
     "Consumer": "Tüketici",
-    "Industrials": "Endüstriyel",
-    "Materials": "Malzeme",
-    "Utilities": "Kamu Hizmetleri",
-    "Real Estate": "Gayrimenkul",
     "Consumer Staples": "Temel Tüketim",
+    "Consumer Discretionary": "İsteğe Bağlı Tüketim",
+    "Consumer Cyclical": "Döngüsel Tüketim",
+    
+    # Endüstriyel
+    "Industrials": "Endüstriyel",
+    "Industrial": "Endüstriyel",
+    
+    # Malzeme
+    "Materials": "Malzeme",
+    "Basic Materials": "Temel Malzeme",
+    
+    # Kamu Hizmetleri
+    "Utilities": "Kamu Hizmetleri",
+    "Utility": "Kamu Hizmetleri",
+    
+    # Gayrimenkul
+    "Real Estate": "Gayrimenkul",
+    "REITs": "Gayrimenkul Yatırım Ortaklığı",
+    
+    # Savunma
     "Defense": "Savunma",
+    "Aerospace & Defense": "Havacılık ve Savunma",
+    
+    # Diğer
     "Mining": "Madencilik",
-    "Tobacco": "Tütün"
+    "Tobacco": "Tütün",
+    "Communication Services": "İletişim Hizmetleri",
+    "Transportation": "Ulaşım"
 }
 
 

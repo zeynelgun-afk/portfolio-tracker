@@ -54,7 +54,7 @@
     {
       "sembol": "XLE",
       "isim": "Energy Select Sector SPDR Fund",
-      "sektor": "Energy ETF",
+      "sektor": "Enerji ETF",
       "adet": 277,
       "maliyet_baz": 53.34,
       "guncel_fiyat": 54.78,
@@ -69,7 +69,7 @@
     {
       "sembol": "RGLD",
       "isim": "Royal Gold Inc",
-      "sektor": "Basic Materials",
+      "sektor": "Temel Malzeme",
       "adet": 22,
       "maliyet_baz": 274.4,
       "guncel_fiyat": 277.77,
@@ -84,7 +84,7 @@
     {
       "sembol": "FCX",
       "isim": "Freeport-McMoRan Inc",
-      "sektor": "Basic Materials",
+      "sektor": "Temel Malzeme",
       "adet": 132,
       "maliyet_baz": 59.53,
       "guncel_fiyat": 62.53,
