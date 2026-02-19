@@ -1,67 +1,67 @@
 {
-  "last_updated": "2026-01-02T09:30:00Z",
+  "last_updated": "2026-02-03T16:00:00Z",
   "active_positions": [
     {
-      "id": "SWING-001",
-      "symbol": "GOOGL",
-      "name": "Alphabet Inc",
-      "entry_date": "2026-01-02",
-      "entry_price": 315.15,
-      "shares": 25,
-      "cost_basis": 7878.75,
-      "current_price": 315.15,
-      "current_value": 7878.75,
+      "id": "SWING-003",
+      "symbol": "VZ",
+      "name": "Verizon Communications",
+      "entry_date": "2026-02-03",
+      "entry_price": 46.25,
+      "shares": 151,
+      "cost_basis": 6983.75,
+      "current_price": 46.25,
+      "current_value": 6983.75,
       "unrealized_pnl": 0.00,
       "unrealized_pnl_pct": 0.00,
-      "target_price": 346.00,
-      "stop_loss": 299.00,
+      "target_price": 50.88,
+      "stop_loss": 43.94,
       "days_held": 0,
-      "max_hold_days": 15,
-      "entry_reason": "3M momentum leader (+10.3%), AI search integration catalyst",
-      "scan_method": "momentum_continuation",
-      "catalyst": "AI narrative momentum, cloud AI services growth",
-      "risk_reward_ratio": 2.0,
-      "urgency": "medium",
-      "daily_notes": [
-        {
-          "date": "2026-01-02",
-          "note": "Entry at market open $315.15, positioned for 7-10 day swing. AI momentum strong, consolidation breakout expected."
-        }
-      ]
-    },
-    {
-      "id": "SWING-002",
-      "symbol": "APP",
-      "name": "AppLovin Corporation",
-      "entry_date": "2026-01-02",
-      "entry_price": 618.32,
-      "shares": 11,
-      "cost_basis": 6801.52,
-      "current_price": 618.32,
-      "current_value": 6801.52,
-      "unrealized_pnl": 0.00,
-      "unrealized_pnl_pct": 0.00,
-      "target_price": 680.00,
-      "stop_loss": 587.00,
-      "days_held": 0,
-      "max_hold_days": 15,
-      "entry_reason": "AXON AI ad engine momentum, mobile gaming monetization strength, high volatility swing play",
-      "scan_method": "earnings_momentum",
-      "catalyst": "Q4 earnings preview, AXON AI adoption acceleration",
+      "max_hold_days": 10,
+      "entry_reason": "Strongest telecom momentum (+17.6% in 5 days), defensive rotation leader, high yield defensive play",
+      "scan_method": "sector_momentum",
+      "catalyst": "Growth→Value rotation, defensive positioning, telecom sector strength",
       "risk_reward_ratio": 2.0,
       "urgency": "high",
       "daily_notes": [
         {
-          "date": "2026-01-02",
-          "note": "Entry at open $618.32, high beta momentum stock. Targeting 5-8 day quick swing before potential Q4 earnings volatility."
+          "date": "2026-02-03",
+          "note": "Entry at close $46.25. Telecom rally hottest sector, riding defensive wave. Target 5-10 days."
+        }
+      ]
+    },
+    {
+      "id": "SWING-004",
+      "symbol": "XOM",
+      "name": "Exxon Mobil Corporation",
+      "entry_date": "2026-02-03",
+      "entry_price": 142.78,
+      "shares": 49,
+      "cost_basis": 6996.22,
+      "current_price": 142.78,
+      "current_value": 6996.22,
+      "unrealized_pnl": 0.00,
+      "unrealized_pnl_pct": 0.00,
+      "target_price": 157.06,
+      "stop_loss": 135.64,
+      "days_held": 0,
+      "max_hold_days": 12,
+      "entry_reason": "Energy sector leadership (+5% momentum), portfolio energy position +23.7%, oil prices supportive",
+      "scan_method": "sector_leadership",
+      "catalyst": "Energy sector dominance continues, LNG expansion projects, value rotation",
+      "risk_reward_ratio": 2.0,
+      "urgency": "medium",
+      "daily_notes": [
+        {
+          "date": "2026-02-03",
+          "note": "Entry at close $142.78. Energy best sector in portfolio (+23.7%), riding sector momentum. Target 7-12 days."
         }
       ]
     }
   ],
   "summary": {
     "total_positions": 2,
-    "total_capital_deployed": 14680.27,
-    "total_current_value": 14680.27,
+    "total_capital_deployed": 13979.97,
+    "total_current_value": 13979.97,
     "total_unrealized_pnl": 0.00,
     "total_unrealized_pnl_pct": 0.00,
     "available_slots": 3,

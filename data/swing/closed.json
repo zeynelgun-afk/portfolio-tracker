@@ -1,41 +1,85 @@
 {
-  "last_updated": "2026-01-02",
-  "closed_positions": [],
+  "last_updated": "2026-02-03",
+  "closed_positions": [
+    {
+      "id": "SWING-001",
+      "symbol": "GOOGL",
+      "entry_date": "2026-01-02",
+      "exit_date": "2026-02-03",
+      "entry_price": 315.15,
+      "exit_price": 339.71,
+      "shares": 25,
+      "cost_basis": 7878.75,
+      "exit_proceeds": 8492.75,
+      "pnl": 614.00,
+      "pnl_pct": 7.79,
+      "hold_days": 23,
+      "exit_reason": "Near target (+7.79%), took profit at +1.9% from $346 target",
+      "scan_method": "momentum_continuation",
+      "outcome": "WIN",
+      "lessons": "Momentum continuation worked well. AI narrative strong. Held slightly too long (target was 7-10 days, held 23), but profitable."
+    },
+    {
+      "id": "SWING-002",
+      "symbol": "APP",
+      "entry_date": "2026-01-02",
+      "exit_date": "2026-02-03",
+      "entry_price": 618.32,
+      "exit_price": 461.79,
+      "shares": 11,
+      "cost_basis": 6801.52,
+      "exit_proceeds": 5079.69,
+      "pnl": -1721.83,
+      "pnl_pct": -25.32,
+      "hold_days": 23,
+      "exit_reason": "Stop-loss breached badly ($587 stop, exited $461.79). Momentum collapse during growth→value rotation.",
+      "scan_method": "earnings_momentum",
+      "outcome": "LOSS",
+      "lessons": "CRITICAL: Stop-loss must be honored immediately. High beta momentum stocks dangerous during regime change. Should have cut at -5% ($587), not -25%. Lesson: Set automatic stops, don't hope for recovery."
+    }
+  ],
   "statistics": {
-    "total_trades": 0,
-    "winning_trades": 0,
-    "losing_trades": 0,
-    "win_rate": 0.0,
-    "avg_gain": 0.0,
-    "avg_loss": 0.0,
-    "avg_hold_days": 0.0,
-    "total_realized_pnl": 0.0,
-    "best_trade": null,
-    "worst_trade": null
+    "total_trades": 2,
+    "winning_trades": 1,
+    "losing_trades": 1,
+    "win_rate": 50.0,
+    "avg_gain": 614.00,
+    "avg_loss": -1721.83,
+    "avg_hold_days": 23.0,
+    "total_realized_pnl": -1107.83,
+    "best_trade": {
+      "symbol": "GOOGL",
+      "pnl": 614.00,
+      "pnl_pct": 7.79
+    },
+    "worst_trade": {
+      "symbol": "APP",
+      "pnl": -1721.83,
+      "pnl_pct": -25.32
+    }
   },
   "by_method": {
-    "rsi_oversold": {
-      "trades": 0,
-      "win_rate": 0.0,
-      "avg_pnl": 0.0
+    "momentum_continuation": {
+      "trades": 1,
+      "wins": 1,
+      "win_rate": 100.0,
+      "avg_pnl": 614.00
     },
     "earnings_momentum": {
-      "trades": 0,
+      "trades": 1,
+      "wins": 0,
       "win_rate": 0.0,
-      "avg_pnl": 0.0
+      "avg_pnl": -1721.83
     },
-    "breakout": {
+    "sector_momentum": {
       "trades": 0,
+      "wins": 0,
       "win_rate": 0.0,
       "avg_pnl": 0.0
     },
     "sector_leadership": {
       "trades": 0,
-      "win_rate": 0.0,
-      "avg_pnl": 0.0
-    },
-    "momentum_continuation": {
-      "trades": 0,
+      "wins": 0,
       "win_rate": 0.0,
       "avg_pnl": 0.0
     }
