@@ -17,3 +17,7 @@ date,action,symbol,shares,price,total,reason
 2026-02-19,SELL,JPM,38,306.73,11655.74,Temettü,-5.3% - Finans sektörü XLF -3.4% zayıf
 2026-02-19,SELL,BAC,223,52.35,11674.05,Temettü,-6.4% - Finans baskı altında
 2026-02-19,BUY,SCHD,829,28.95,23999.55,Temettü,Diversified temettü ETF - Finans yerine
+2026-02-19,SELL,XLK,138,139.50,19251.00,Rotasyon,-3.3% - Tech sektörü zayıf
+2026-02-19,SELL,XLF,364,52.12,18971.68,Rotasyon,-5.1% - Finans sektörü baskı
+2026-02-19,BUY,XLE,358,55.83,19987.14,Rotasyon,Enerji +22% momentum - Pozisyon artırma
+2026-02-19,BUY,XLI,102,175.04,17854.08,Rotasyon,Endüstriyel +11% güçlü - Pozisyon artırma
