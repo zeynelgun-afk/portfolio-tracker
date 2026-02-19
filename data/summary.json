@@ -1,55 +1,74 @@
 {
-  "last_updated": "2026-02-06",
+  "last_updated": "2026-02-18",
+  "simulation_period": "2026-01-02 to 2026-02-18",
+  "trading_days": 33,
   "total_capital": 300000.00,
-  "total_value": 308096.48,
-  "total_gain_loss": 8096.48,
-  "total_gain_loss_pct": 2.70,
+  "total_value": 308830.46,
+  "total_gain_loss": 8830.46,
+  "total_gain_loss_pct": 2.94,
+  "benchmark_spy": 0.46,
+  "alpha": 2.49,
   "portfolios": {
     "aggressive": {
       "name": "Agresif Büyüme",
-      "value": 91542.37,
+      "value": 91373.64,
       "cost_basis": 100000.00,
-      "gain_loss": -8457.63,
-      "gain_loss_pct": -8.46,
-      "positions": 7,
-      "cash": 764.75,
-      "alerts": [
-        "🚨 APP DISASTER: -34% (-$4,232) - SELL RECOMMENDED",
-        "⚠️ AMZN underwater: -9% (-$2,206)",
-        "Portfolio destroyed by growth collapse",
-        "Worst performer by 20%"
-      ]
+      "gain_loss": -8626.36,
+      "gain_loss_pct": -8.63,
+      "positions": 6,
+      "cash": 10223.15,
+      "status": "FAILED - Growth collapse",
+      "realized_losses": -3941.00
     },
     "dividend": {
       "name": "Değer + Temettü",
-      "value": 111709.85,
+      "value": 112351.42,
       "cost_basis": 100000.00,
-      "gain_loss": 11709.85,
-      "gain_loss_pct": 11.71,
+      "gain_loss": 12351.42,
+      "gain_loss_pct": 12.35,
       "positions": 8,
       "cash": 648.12,
-      "alerts": [
-        "🌟 BEST PERFORMER: +11.7%",
-        "XOM +21.5%, VZ +16.3%, MO +14.1%",
-        "Value rotation dominating"
-      ]
+      "status": "SUCCESS - Best performer"
     },
     "rotation": {
       "name": "Sektör Rotasyonu",
-      "value": 104844.26,
+      "value": 105105.40,
       "cost_basis": 100000.00,
-      "gain_loss": 4844.26,
-      "gain_loss_pct": 4.84,
+      "gain_loss": 5105.40,
+      "gain_loss_pct": 5.11,
       "positions": 5,
       "cash": 286.62,
-      "alerts": [
-        "Solid +4.8%, diversification working",
-        "XLE +16.7%, XLI +9.6%"
-      ]
+      "status": "SUCCESS - Solid outperformance"
     }
   },
-  "critical_decisions": {
-    "monday_feb_10": "SELL APP (cut -34% loss)",
-    "consider": "AMZN position review, portfolio rebalance"
-  }
+  "transactions_summary": {
+    "total_trades": 3,
+    "amd_sold": {
+      "date": "2026-01-08",
+      "loss": -1033.45,
+      "loss_pct": -8.41,
+      "outcome": "Good decision (stop-loss worked)"
+    },
+    "amzn_add": {
+      "date": "2026-01-14",
+      "invested": 11832.50,
+      "current_loss": -2787.00,
+      "outcome": "Bad timing"
+    },
+    "app_sold": {
+      "date": "2026-02-10",
+      "loss": -2908.00,
+      "loss_pct": -23.52,
+      "outcome": "Good decision (cut loss)"
+    }
+  },
+  "key_lessons": [
+    "Stop-losses work (AMD success)",
+    "Diversification saves portfolios (Div +12%, Agg -8%)",
+    "Momentum chasing dangerous (APP, AMZN)",
+    "Sector rotation real & powerful",
+    "Value > Growth during rotation",
+    "Position sizing critical"
+  ],
+  "final_verdict": "SUCCESS - Beat SPY by +2.49%, survived growth crash"
 }
