@@ -1,66 +1,53 @@
 {
-  "last_updated": "2026-02-18T16:00:00Z",
-  "note": "SWING TRADES ARE SIMULATION ONLY - Tracking % gain/loss, no real capital",
+  "last_updated": "2026-02-04T16:00:00Z",
+  "note": "SWING TRADES ARE SIMULATION ONLY - Tracking % gain/loss",
   "active_positions": [
     {
       "id": "SWING-003",
       "symbol": "VZ",
       "entry_date": "2026-02-03",
       "entry_price": 46.25,
-      "current_price": 48.05,
-      "unrealized_pnl_pct": 3.89,
+      "current_price": 47.01,
+      "unrealized_pnl_pct": 1.64,
       "target_price": 50.88,
       "stop_loss": 43.94,
-      "days_held": 11,
+      "days_held": 1,
       "entry_reason": "Telecom momentum (+17.6% in 5 days)",
       "scan_method": "sector_momentum",
-      "status": "Near target (+3.89%)"
+      "status": "Up +1.64%, holding"
     },
     {
       "id": "SWING-004",
       "symbol": "XOM",
       "entry_date": "2026-02-03",
       "entry_price": 142.78,
-      "current_price": 150.68,
-      "unrealized_pnl_pct": 5.53,
+      "current_price": 146.61,
+      "unrealized_pnl_pct": 2.68,
       "target_price": 157.06,
       "stop_loss": 135.64,
-      "days_held": 11,
+      "days_held": 1,
       "entry_reason": "Energy sector leadership",
       "scan_method": "sector_leadership",
-      "status": "Near target (+5.53%)"
+      "status": "Up +2.68%, holding"
     },
     {
-      "id": "SWING-005",
-      "symbol": "GE",
-      "entry_date": "2026-02-18",
-      "entry_price": 329.58,
-      "current_price": 329.58,
+      "id": "SWING-007",
+      "symbol": "CAT",
+      "entry_date": "2026-02-04",
+      "entry_price": 691.82,
+      "current_price": 691.82,
       "unrealized_pnl_pct": 0.00,
-      "target_price": 362.54,
-      "stop_loss": 313.10,
+      "target_price": 761.00,
+      "stop_loss": 657.23,
       "days_held": 0,
-      "entry_reason": "Industrial momentum (+4.2%), XLI +10.8%",
+      "entry_reason": "Strongest momentum +5.2% (3 days), Industrials leader, XLI +10.8% in portfolio",
       "scan_method": "sector_leadership",
-      "status": "New entry"
-    },
-    {
-      "id": "SWING-006",
-      "symbol": "LMT",
-      "entry_date": "2026-02-18",
-      "entry_price": 649.81,
-      "current_price": 649.81,
-      "unrealized_pnl_pct": 0.00,
-      "target_price": 714.79,
-      "stop_loss": 617.32,
-      "days_held": 0,
-      "entry_reason": "Defense subset of industrials",
-      "scan_method": "sector_subset",
+      "catalyst": "Infrastructure spending, construction equipment demand, industrial sector strength",
       "status": "New entry"
     }
   ],
   "summary": {
-    "total_positions": 4,
-    "avg_unrealized_pnl_pct": 2.36
+    "total_positions": 3,
+    "avg_unrealized_pnl_pct": 1.44
   }
 }

@@ -1,50 +1,32 @@
 {
-  "last_updated": "2026-02-18T16:00:00Z",
+  "last_updated": "2026-02-04T16:00:00Z",
   "watchlist": [
     {
-      "symbol": "CAT",
-      "name": "Caterpillar Inc",
-      "current_price": 751.97,
-      "scan_method": "sector_leadership",
-      "potential_entry": 760.00,
-      "target": 836.00,
-      "stop": 722.00,
-      "risk_reward": 2.0,
-      "urgency": "medium",
-      "notes": "Construction equipment, infrastructure play. Wait for breakout above $760.",
-      "catalyst": "Infrastructure spending, industrial momentum"
-    },
-    {
       "symbol": "MO",
-      "name": "Altria Group",
-      "current_price": 66.77,
-      "scan_method": "sector_leadership",
-      "potential_entry": 67.50,
-      "target": 74.25,
-      "stop": 64.13,
-      "risk_reward": 2.0,
-      "urgency": "low",
-      "notes": "Tobacco still strong (+16.5% in portfolio), but momentum slowing vs earlier.",
-      "catalyst": "Defensive positioning, dividend yield"
+      "current_price": 65.16,
+      "momentum_3d": 5.1,
+      "potential_entry": 66.00,
+      "target": 72.60,
+      "stop": 62.70,
+      "notes": "Tobacco strong momentum, similar to CAT. Second choice."
     },
     {
-      "symbol": "BA",
-      "name": "Boeing Company",
-      "current_price": 238.93,
-      "scan_method": "rsi_oversold",
-      "potential_entry": 235.00,
-      "target": 258.50,
-      "stop": 223.25,
-      "risk_reward": 2.0,
-      "urgency": "high",
-      "notes": "Aerospace recovery play, but weak momentum (-1.5%). Wait for reversal signal.",
-      "catalyst": "Commercial aviation recovery"
+      "symbol": "JPM",
+      "current_price": 317.27,
+      "momentum_3d": 3.7,
+      "potential_entry": 320.00,
+      "target": 352.00,
+      "stop": 304.00,
+      "notes": "Financials recovery, good momentum."
+    },
+    {
+      "symbol": "JNJ",
+      "current_price": 234.47,
+      "momentum_3d": 3.2,
+      "potential_entry": 236.00,
+      "target": 259.60,
+      "stop": 224.20,
+      "notes": "Healthcare defensive, steady momentum."
     }
-  ],
-  "scan_criteria": {
-    "sector_focus": "Industrials, Defense, Infrastructure",
-    "momentum_min": 2.0,
-    "min_risk_reward": 2.0,
-    "theme": "Value/Industrial rotation continues, following XLI +10.8% success"
-  }
+  ]
 }
