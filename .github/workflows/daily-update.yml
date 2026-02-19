@@ -1,9 +1,9 @@
 name: 📊 Günlük Portföy Güncellemesi
 
 on:
-  # Her hafta içi 13:00 UTC (16:00 Türkiye saati)
+  # Her hafta içi 19:00 UTC (22:00 Türkiye saati)
   schedule:
-    - cron: '0 13 * * 1-5'
+    - cron: '0 19 * * 1-5'
   
   # Manuel tetikleme için
   workflow_dispatch:
