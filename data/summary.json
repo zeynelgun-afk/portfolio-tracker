@@ -1,34 +1,34 @@
 {
-  "last_updated": "2026-01-05",
+  "last_updated": "2026-01-06",
   "total_capital": 300000.00,
-  "total_value": 303284.23,
-  "total_gain_loss": 3284.23,
-  "total_gain_loss_pct": 1.09,
+  "total_value": 301277.16,
+  "total_gain_loss": 1277.16,
+  "total_gain_loss_pct": 0.43,
   "portfolios": {
     "aggressive": {
       "name": "Agresif Büyüme",
-      "value": 100920.20,
+      "value": 100048.76,
       "cost_basis": 100000.00,
-      "gain_loss": 920.20,
-      "gain_loss_pct": 0.92,
+      "gain_loss": 48.76,
+      "gain_loss_pct": 0.05,
       "positions": 8,
       "cash": 1339.85
     },
     "dividend": {
       "name": "Değer + Temettü",
-      "value": 101164.49,
+      "value": 99534.12,
       "cost_basis": 100000.00,
-      "gain_loss": 1164.49,
-      "gain_loss_pct": 1.16,
+      "gain_loss": -465.88,
+      "gain_loss_pct": -0.47,
       "positions": 8,
       "cash": 648.12
     },
     "rotation": {
       "name": "Sektör Rotasyonu",
-      "value": 101199.54,
+      "value": 101694.28,
       "cost_basis": 100000.00,
-      "gain_loss": 1199.54,
-      "gain_loss_pct": 1.20,
+      "gain_loss": 1694.28,
+      "gain_loss_pct": 1.69,
       "positions": 5,
       "cash": 286.62
     }
