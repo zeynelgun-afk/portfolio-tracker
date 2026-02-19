@@ -1,0 +1,34 @@
+{
+  "tarih": "2026-02-19",
+  "zaman_damgasi": "2026-02-19T12:21:12.333070",
+  "toplam_sermaye": 400000,
+  "toplam_deger": 411898.30999999994,
+  "toplam_kar_zarar": 11898.30999999994,
+  "toplam_getiri_yuzde": 2.974577499999985,
+  "portfolyolar": {
+    "balanced": {
+      "deger": 103096.25,
+      "getiri_yuzde": 3.09625,
+      "nakit": 5424.5,
+      "pozisyon_sayisi": 6
+    },
+    "aggressive": {
+      "deger": 91345.24,
+      "getiri_yuzde": -8.654759999999994,
+      "nakit": 1339.85,
+      "pozisyon_sayisi": 8
+    },
+    "dividend": {
+      "deger": 112351.42,
+      "getiri_yuzde": 12.351419999999997,
+      "nakit": 648.12,
+      "pozisyon_sayisi": 8
+    },
+    "rotation": {
+      "deger": 105105.39999999998,
+      "getiri_yuzde": 5.105399999999979,
+      "nakit": 286.62,
+      "pozisyon_sayisi": 5
+    }
+  }
+}
