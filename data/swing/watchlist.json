@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-02-19T16:25:21.831275",
+  "son_guncelleme": "2026-02-19T19:52:31.125184",
   "not": "Bir sonraki işlemler için potansiyel swing adayları",
   "izleme_listesi": [
     {
@@ -62,34 +62,60 @@
       "portfoy": "Agresif Büyüme",
       "ekleme_tarihi": "2026-02-19",
       "son_kontrol": null
+    }
+  ],
+  "ai_infrastructure_candidates": [
+    {
+      "sembol": "NET",
+      "guncel_fiyat": 110.5,
+      "52w_high": 125.0,
+      "52w_low": 65.0,
+      "sektor": "Infrastructure - CDN/Security/Edge Computing",
+      "p_e": 200.0,
+      "revenue_growth": 30.0,
+      "analist_hedef": 125.0,
+      "analist_upside": 13.0,
+      "notlar": "CDN, edge computing, security. AI apps'in altyapısı. Zero Trust Network Access (ZTNA) lideri.",
+      "ai_relationship": "AI BENEFICIARY - AI apps Cloudflare kullanıyor (CDN, DDoS protection, edge compute)",
+      "ai_disruption_risk": "DÜŞÜK - AI replace edemez, kullanır",
+      "competitive_moat": "Network effects, global infrastructure, developer ecosystem",
+      "risk": "Pahalı valuation (P/E ~200), rekabet (Fastly, Akamai)",
+      "izleme_nedeni": "AI infrastructure play, güçlü büyüme, düşük AI disruption riski",
+      "giris_sartlari": "Tech recovery (XLK +3%) + NET $105 altı giriş + Q1 earnings beat",
+      "hedef_giris": "$100-110",
+      "hedef_fiyat": 130.0,
+      "stop_loss": 95.0,
+      "urgency": "medium",
+      "portfoy": "Agresif Büyüme veya Dengeli",
+      "ekleme_tarihi": "2026-02-19",
+      "kategori": "AI Infrastructure",
+      "son_kontrol": null
     },
     {
-      "sembol": "FIG",
-      "guncel_fiyat": 24.7,
-      "52w_high": 142.92,
-      "52w_low": 19.85,
-      "dusen_yuzde": -82.7,
-      "sektor": "Software - Design Tools",
-      "momentum_5gun": -3.8,
-      "p_e": -11.51,
-      "revenue_growth": 40.0,
-      "analist_hedef": 52.11,
-      "analist_upside": 111.0,
-      "notlar": "Q4 beat, +40% revenue growth, Anthropic partnership (17 Şubat), AI-powered design tools",
-      "risk": "KARLILIIK YOK (EBITDA -116% margin), IPO hype çöküşü, dar TAM, AI disruption riski",
-      "izleme_nedeni": "Yüksek upside (+111%) ama riskli. $20 support tutarsa + tech recovery GİRİŞ.",
-      "giris_sartlari": "$20 support tut + XLK +3% + Q1 earnings beat (20 Mart) veya yeni AI feature",
-      "hedef_giris": "$22-25",
-      "hedef_fiyat": 40.0,
-      "stop_loss": 19.0,
-      "urgency": "low",
-      "portfoy": "Agresif Büyüme (küçük pozisyon %3-5)",
+      "sembol": "PANW",
+      "guncel_fiyat": 380.0,
+      "52w_high": 415.0,
+      "52w_low": 270.0,
+      "sektor": "Cybersecurity - Network Security/Cloud Security",
+      "p_e": 45.0,
+      "revenue_growth": 20.0,
+      "analist_hedef": 425.0,
+      "analist_upside": 12.0,
+      "notlar": "Cybersecurity lider. AI-powered threat detection. Platformize strateji başarılı.",
+      "ai_relationship": "AI BENEFICIARY - AI güvenlik tehditleri artırıyor, AI-powered security solutions",
+      "ai_disruption_risk": "DÜŞÜK - Güvenlik AI ile daha kritik oluyor",
+      "competitive_moat": "Platform approach, AI security, cloud leadership",
+      "risk": "Rekabet (CRWD, ZS), valuation",
+      "izleme_nedeni": "Cybersecurity essential, AI threat landscape genişliyor, güçlü platform",
+      "giris_sartlari": "Correction'da (pullback) + Q1 earnings positive + $360-370 giriş",
+      "hedef_giris": "$360-380",
+      "hedef_fiyat": 425.0,
+      "stop_loss": 340.0,
+      "urgency": "medium",
+      "portfoy": "Agresif Büyüme veya Dengeli",
       "ekleme_tarihi": "2026-02-19",
-      "son_kontrol": null,
-      "katalizor_tarihleri": {
-        "q1_earnings": "2026-03-20",
-        "next_product_launch": "TBD"
-      }
+      "kategori": "Cybersecurity",
+      "son_kontrol": null
     }
   ]
 }
