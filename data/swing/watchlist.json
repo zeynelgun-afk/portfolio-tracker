@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-02-19T18:30:00Z",
+  "son_guncelleme": "2026-02-19T16:25:21.831275",
   "not": "Bir sonraki işlemler için potansiyel swing adayları",
   "izleme_listesi": [
     {
@@ -36,6 +36,60 @@
     {
       "sembol": "AXP",
       "neden": "Negatif momentum -5.1%, finansal baskı altında"
+    }
+  ],
+  "tech_recovery_candidates": [
+    {
+      "sembol": "AMD",
+      "guncel_fiyat": 199.99,
+      "52w_high": 267.08,
+      "52w_low": 76.48,
+      "dusen_yuzde": -25.1,
+      "sektor": "Semiconductors - AI Chips",
+      "momentum_5gun": -3.8,
+      "p_e": 50.2,
+      "revenue_growth": 32.0,
+      "analist_hedef": 287.2,
+      "analist_upside": 43.6,
+      "notlar": "Q1 2026 guidance güçlü (+32%), data center +60% büyüme, OpenAI partnership",
+      "risk": "Nvidia rekabeti (Meta anlaşması), tech sektör momentum zayıf",
+      "izleme_nedeni": "Tech recovery + $195 support tutarsa GİRİŞ. 2 saat önce sattık, 2-3 hafta bekle.",
+      "giris_sartlari": "XLK +3% üstü + AMD $195 support tut + pozitif katalizör",
+      "hedef_giris": "$195-200",
+      "hedef_fiyat": 235.0,
+      "stop_loss": 185.0,
+      "urgency": "medium",
+      "portfoy": "Agresif Büyüme",
+      "ekleme_tarihi": "2026-02-19",
+      "son_kontrol": null
+    },
+    {
+      "sembol": "FIG",
+      "guncel_fiyat": 24.7,
+      "52w_high": 142.92,
+      "52w_low": 19.85,
+      "dusen_yuzde": -82.7,
+      "sektor": "Software - Design Tools",
+      "momentum_5gun": -3.8,
+      "p_e": -11.51,
+      "revenue_growth": 40.0,
+      "analist_hedef": 52.11,
+      "analist_upside": 111.0,
+      "notlar": "Q4 beat, +40% revenue growth, Anthropic partnership (17 Şubat), AI-powered design tools",
+      "risk": "KARLILIIK YOK (EBITDA -116% margin), IPO hype çöküşü, dar TAM, AI disruption riski",
+      "izleme_nedeni": "Yüksek upside (+111%) ama riskli. $20 support tutarsa + tech recovery GİRİŞ.",
+      "giris_sartlari": "$20 support tut + XLK +3% + Q1 earnings beat (20 Mart) veya yeni AI feature",
+      "hedef_giris": "$22-25",
+      "hedef_fiyat": 40.0,
+      "stop_loss": 19.0,
+      "urgency": "low",
+      "portfoy": "Agresif Büyüme (küçük pozisyon %3-5)",
+      "ekleme_tarihi": "2026-02-19",
+      "son_kontrol": null,
+      "katalizor_tarihleri": {
+        "q1_earnings": "2026-03-20",
+        "next_product_launch": "TBD"
+      }
     }
   ]
 }
