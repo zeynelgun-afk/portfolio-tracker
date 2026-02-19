@@ -9,7 +9,7 @@
     {
       "sembol": "SM",
       "isim": "SM Energy Company",
-      "sektor": "Energy",
+      "sektor": "Enerji",
       "adet": 1040,
       "maliyet_baz": 20.67,
       "guncel_fiyat": 23.4,
@@ -24,7 +24,7 @@
     {
       "sembol": "KOS",
       "isim": "Kosmos Energy Ltd",
-      "sektor": "Energy",
+      "sektor": "Enerji",
       "adet": 15276,
       "maliyet_baz": 1.617,
       "guncel_fiyat": 1.7,
@@ -39,7 +39,7 @@
     {
       "sembol": "MO",
       "isim": "Altria Group Inc",
-      "sektor": "Consumer Staples",
+      "sektor": "Temel Tüketim",
       "adet": 267,
       "maliyet_baz": 67.44,
       "guncel_fiyat": 66.77,

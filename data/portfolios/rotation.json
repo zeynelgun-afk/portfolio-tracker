@@ -9,7 +9,7 @@
     {
       "sembol": "XLE",
       "isim": "Energy Select Sector SPDR Fund",
-      "sektor": "Energy",
+      "sektor": "Enerji",
       "adet": 438,
       "maliyet_baz": 45.65,
       "guncel_fiyat": 54.78,
@@ -24,7 +24,7 @@
     {
       "sembol": "XLF",
       "isim": "Financial Select Sector SPDR Fund",
-      "sektor": "Financials",
+      "sektor": "Finans",
       "adet": 364,
       "maliyet_baz": 54.93,
       "guncel_fiyat": 52.59,
@@ -39,7 +39,7 @@
     {
       "sembol": "XLK",
       "isim": "Technology Select Sector SPDR Fund",
-      "sektor": "Technology",
+      "sektor": "Teknoloji",
       "adet": 138,
       "maliyet_baz": 144.3,
       "guncel_fiyat": 140.91,
@@ -54,7 +54,7 @@
     {
       "sembol": "XLV",
       "isim": "Health Care Select Sector SPDR Fund",
-      "sektor": "Healthcare",
+      "sektor": "Sağlık",
       "adet": 128,
       "maliyet_baz": 155.51,
       "guncel_fiyat": 157.67,
@@ -69,7 +69,7 @@
     {
       "sembol": "XLI",
       "isim": "Industrial Select Sector SPDR Fund",
-      "sektor": "Industrials",
+      "sektor": "Endüstriyel",
       "adet": 126,
       "maliyet_baz": 157.98,
       "guncel_fiyat": 175.04,

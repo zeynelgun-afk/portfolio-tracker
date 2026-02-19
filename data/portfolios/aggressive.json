@@ -9,7 +9,7 @@
     {
       "sembol": "GOOGL",
       "isim": "Alphabet Inc",
-      "sektor": "Technology",
+      "sektor": "Teknoloji",
       "adet": 39,
       "maliyet_baz": 315.15,
       "guncel_fiyat": 303.33,
@@ -24,7 +24,7 @@
     {
       "sembol": "NVDA",
       "isim": "NVIDIA Corporation",
-      "sektor": "Technology",
+      "sektor": "Teknoloji",
       "adet": 66,
       "maliyet_baz": 188.85,
       "guncel_fiyat": 187.98,
@@ -39,7 +39,7 @@
     {
       "sembol": "AMD",
       "isim": "Advanced Micro Devices",
-      "sektor": "Technology",
+      "sektor": "Teknoloji",
       "adet": 55,
       "maliyet_baz": 223.47,
       "guncel_fiyat": 200.12,
@@ -54,7 +54,7 @@
     {
       "sembol": "AMZN",
       "isim": "Amazon.com Inc",
-      "sektor": "Technology",
+      "sektor": "Teknoloji",
       "adet": 55,
       "maliyet_baz": 226.5,
       "guncel_fiyat": 204.79,
@@ -84,7 +84,7 @@
     {
       "sembol": "META",
       "isim": "Meta Platforms Inc",
-      "sektor": "Technology",
+      "sektor": "Teknoloji",
       "adet": 19,
       "maliyet_baz": 650.41,
       "guncel_fiyat": 643.22,
@@ -99,7 +99,7 @@
     {
       "sembol": "AVGO",
       "isim": "Broadcom Inc",
-      "sektor": "Technology",
+      "sektor": "Teknoloji",
       "adet": 35,
       "maliyet_baz": 347.62,
       "guncel_fiyat": 333.51,
@@ -114,7 +114,7 @@
     {
       "sembol": "APP",
       "isim": "AppLovin Corporation",
-      "sektor": "Technology",
+      "sektor": "Teknoloji",
       "adet": 20,
       "maliyet_baz": 618.32,
       "guncel_fiyat": 404.39,

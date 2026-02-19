@@ -9,7 +9,7 @@
     {
       "sembol": "T",
       "isim": "AT&T Inc",
-      "sektor": "Telecom",
+      "sektor": "Telekomünikasyon",
       "adet": 514,
       "maliyet_baz": 24.28,
       "guncel_fiyat": 27.88,
@@ -24,7 +24,7 @@
     {
       "sembol": "VZ",
       "isim": "Verizon Communications",
-      "sektor": "Telecom",
+      "sektor": "Telekomünikasyon",
       "adet": 313,
       "maliyet_baz": 39.83,
       "guncel_fiyat": 48.05,
@@ -39,7 +39,7 @@
     {
       "sembol": "MO",
       "isim": "Altria Group",
-      "sektor": "Tobacco",
+      "sektor": "Tütün",
       "adet": 218,
       "maliyet_baz": 57.31,
       "guncel_fiyat": 66.77,
@@ -54,7 +54,7 @@
     {
       "sembol": "PM",
       "isim": "Philip Morris International",
-      "sektor": "Tobacco",
+      "sektor": "Tütün",
       "adet": 77,
       "maliyet_baz": 160.3,
       "guncel_fiyat": 182.67,
@@ -69,7 +69,7 @@
     {
       "sembol": "XOM",
       "isim": "Exxon Mobil Corporation",
-      "sektor": "Energy",
+      "sektor": "Enerji",
       "adet": 102,
       "maliyet_baz": 121.84,
       "guncel_fiyat": 150.68,
@@ -84,7 +84,7 @@
     {
       "sembol": "CVX",
       "isim": "Chevron Corporation",
-      "sektor": "Energy",
+      "sektor": "Enerji",
       "adet": 80,
       "maliyet_baz": 154.39,
       "guncel_fiyat": 183.87,
@@ -99,7 +99,7 @@
     {
       "sembol": "JPM",
       "isim": "JPMorgan Chase & Co",
-      "sektor": "Financials",
+      "sektor": "Finans",
       "adet": 38,
       "maliyet_baz": 324.02,
       "guncel_fiyat": 308.78,
@@ -114,7 +114,7 @@
     {
       "sembol": "BAC",
       "isim": "Bank of America Corp",
-      "sektor": "Financials",
+      "sektor": "Finans",
       "adet": 223,
       "maliyet_baz": 55.95,
       "guncel_fiyat": 53.36,
