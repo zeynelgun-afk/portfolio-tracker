@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-02-19T14:16:50.207950",
+  "son_guncelleme": "2026-02-19T15:14:28.316830",
   "not": "SWING TRADE SADECE SİMÜLASYON - Sadece % kazanç/kayıp takibi (MAX: 10 pozisyon)",
   "aktif_pozisyonlar": [
     {
@@ -75,24 +75,6 @@
       "son_guncelleme": "2026-02-19T14:16:46.796896"
     },
     {
-      "id": "SWING-014",
-      "sembol": "AMT",
-      "giris_tarihi": "2026-02-17",
-      "giris_fiyati": 193.09,
-      "guncel_fiyat": 186.62,
-      "guncel_kar_zarar_yuzde": -3.3507690714174734,
-      "hedef_fiyat": 212.4,
-      "stop_loss": 183.44,
-      "tutulan_gun": 2,
-      "giris_nedeni": "En güçlü momentum +8.2%, REIT kule altyapısı lideri",
-      "katalizor": "5G ağ genişlemesi, altyapı talebi",
-      "tez": "Hücre kulesi kiralama lideri, 5G inşaat faydalanıcısı",
-      "zaman_cercevesi": "7-10 gün",
-      "risk": "Faiz oranı hassasiyeti",
-      "durum": "Stop yakın, dikkatle izle",
-      "son_guncelleme": "2026-02-19T14:16:46.994783"
-    },
-    {
       "id": "SWING-015",
       "sembol": "T",
       "giris_tarihi": "2026-02-17",
@@ -127,12 +109,30 @@
       "risk": "Piyasa zayıflığı, ekonomik yavaşlama",
       "durum": "Yeni giriş",
       "son_guncelleme": "2026-02-19T14:16:50.207838"
+    },
+    {
+      "id": "SWING-017",
+      "sembol": "DUK",
+      "giris_tarihi": "2026-02-19",
+      "giris_fiyati": 126.71,
+      "guncel_fiyat": 126.71,
+      "guncel_kar_zarar_yuzde": 0.0,
+      "hedef_fiyat": 139.38,
+      "stop_loss": 120.38,
+      "tutulan_gun": 0,
+      "giris_nedeni": "Güçlü momentum +3.4%, savunmacı utilities sektörü, istikrarlı nakit akışı",
+      "katalizor": "Elektrik kamu hizmeti lideri, temiz enerji geçişi faydalanıcısı",
+      "tez": "Duke Energy - Carolina'da dominant pozisyon, düzenli temettü ödemesi, savunmacı pozisyonlama",
+      "zaman_cercevesi": "7-10 gün",
+      "risk": "Faiz oranı yükselmesi, düzenleme riski",
+      "durum": "Yeni giriş",
+      "son_guncelleme": "2026-02-19T15:14:28.316567"
     }
   ],
   "ozet": {
     "toplam_pozisyon": 7,
     "bos_slot": 3,
     "maksimum_pozisyon": 10,
-    "ortalama_kar_zarar_yuzde": -0.3068768511429364
+    "ortalama_kar_zarar_yuzde": 0.17180444477384552
   }
 }

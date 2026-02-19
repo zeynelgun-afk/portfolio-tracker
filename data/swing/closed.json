@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-02-18",
+  "son_guncelleme": "2026-02-19",
   "kapatilan_pozisyonlar": [
     {
       "id": "SWING-001",
@@ -20,7 +20,7 @@
       "giris_tarihi": "2026-02-04",
       "cikis_tarihi": "2026-02-11",
       "giris_fiyati": 691.82,
-      "cikis_fiyati": 775.00,
+      "cikis_fiyati": 775.0,
       "kar_zarar_yuzde": 12.02,
       "tutulan_gun": 7,
       "cikis_nedeni": "Hedef vurdu ($761 hedef, $775'te çıkış)",
@@ -78,17 +78,36 @@
       "cikis_nedeni": "Zaman çerçevesi aşıldı (12 gün, hedef 10 gündü), zarar kesildi",
       "sonuc": "ZARAR",
       "ders": "Daha erken kesmeliydi. Zaman çerçevesi kuralı daha büyük kayıptan korudu."
+    },
+    {
+      "id": "SWING-014",
+      "sembol": "AMT",
+      "giris_tarihi": "2026-02-17",
+      "cikis_tarihi": "2026-02-19",
+      "giris_fiyati": 193.09,
+      "cikis_fiyati": 186.62,
+      "kar_zarar_yuzde": -3.3507690714174734,
+      "tutulan_gun": 2,
+      "cikis_nedeni": "Stop-loss riski çok yüksek - 1.7% mesafe kaldı, zarar kesildi",
+      "sonuc": "ZARAR",
+      "ders": "REIT faiz hassasiyeti doğrulandı. Stop-loss'a yaklaşınca daha erken kes. 2 günde -3.4% kayıp fazla hızlı."
     }
   ],
   "istatistikler": {
-    "toplam_islem": 6,
+    "toplam_islem": 7,
     "kazanan_islem": 4,
-    "kaybeden_islem": 2,
-    "kazanma_orani": 66.7,
-    "toplam_kar_zarar_yuzde": 17.66,
-    "ortalama_kar_zarar_yuzde": 2.94,
-    "en_iyi_islem": {"sembol": "CAT", "kar_yuzde": 12.02},
-    "en_kotu_islem": {"sembol": "BAC", "kayip_yuzde": -7.09}
+    "kaybeden_islem": 3,
+    "kazanma_orani": 57.1,
+    "toplam_kar_zarar_yuzde": 15.31,
+    "ortalama_kar_zarar_yuzde": 2.19,
+    "en_iyi_islem": {
+      "sembol": "CAT",
+      "kar_yuzde": 12.02
+    },
+    "en_kotu_islem": {
+      "sembol": "BAC",
+      "kayip_yuzde": -7.09
+    }
   },
   "yeni_ders": {
     "zaman_disiplini": "18 Şubat'ta zaman çerçevesi kuralı uygulandı - VZ, XOM (kar) ve WMT (zarar) 10 günü aştığı için kapatıldı. Kural çalışıyor!"
