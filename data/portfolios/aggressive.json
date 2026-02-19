@@ -2,7 +2,7 @@
   "portfoy_adi": "Agresif Büyüme",
   "baslangic_sermaye": 100000,
   "nakit": {
-    "miktar": 1339.85,
+    "miktar": 8073.72,
     "para_birimi": "USD"
   },
   "pozisyonlar": [
@@ -22,7 +22,7 @@
       "giris_tarihi": "2026-01-02",
       "giris_fiyati": 315.15,
       "giris_nedeni": "Başlangıç pozisyonu - Agresif büyüme portföyü - Teknoloji",
-      "agirlik_yuzde": 12.931854866947907
+      "agirlik_yuzde": 12.931854582024755
     },
     {
       "sembol": "NVDA",
@@ -40,61 +40,7 @@
       "giris_tarihi": "2026-01-02",
       "giris_fiyati": 188.85,
       "giris_nedeni": "Başlangıç pozisyonu - Agresif büyüme portföyü - Teknoloji",
-      "agirlik_yuzde": 13.520011212861235
-    },
-    {
-      "sembol": "AMD",
-      "isim": "Advanced Micro Devices",
-      "sektor": "Teknoloji",
-      "adet": 55,
-      "maliyet_baz": 223.47,
-      "guncel_fiyat": 199.39,
-      "yatirim": 12290.85,
-      "guncel_deger": 10966.449999999999,
-      "kar_zarar": -1324.4000000000015,
-      "kar_zarar_yuzde": -10.77549559224953,
-      "gunluk_degisim_yuzde": -0.36478,
-      "son_guncelleme": "2026-02-19T14:41:59.112280",
-      "giris_tarihi": "2026-01-02",
-      "giris_fiyati": 223.47,
-      "giris_nedeni": "Başlangıç pozisyonu - Agresif büyüme portföyü - Teknoloji",
-      "agirlik_yuzde": 12.081003117918804
-    },
-    {
-      "sembol": "AMZN",
-      "isim": "Amazon.com Inc",
-      "sektor": "Teknoloji",
-      "adet": 55,
-      "maliyet_baz": 226.5,
-      "guncel_fiyat": 203.11,
-      "yatirim": 12457.5,
-      "guncel_deger": 11171.050000000001,
-      "kar_zarar": -1286.449999999999,
-      "kar_zarar_yuzde": -10.326710816777034,
-      "gunluk_degisim_yuzde": -0.82035,
-      "son_guncelleme": "2026-02-19T14:41:59.326479",
-      "giris_tarihi": "2026-01-02",
-      "giris_fiyati": 226.5,
-      "giris_nedeni": "Başlangıç pozisyonu - Agresif büyüme portföyü - Teknoloji",
-      "agirlik_yuzde": 12.306397227947684
-    },
-    {
-      "sembol": "TSLA",
-      "isim": "Tesla Inc",
-      "sektor": "Döngüsel Tüketim",
-      "adet": 28,
-      "maliyet_baz": 438.07,
-      "guncel_fiyat": 405.181,
-      "yatirim": 12265.96,
-      "guncel_deger": 11345.068,
-      "kar_zarar": -920.8919999999998,
-      "kar_zarar_yuzde": -7.507704248179515,
-      "gunluk_degisim_yuzde": -1.49251,
-      "son_guncelleme": "2026-02-19T14:41:59.441510",
-      "giris_tarihi": "2026-01-02",
-      "giris_fiyati": 438.07,
-      "giris_nedeni": "Başlangıç pozisyonu - Agresif büyüme portföyü - Döngüsel Tüketim",
-      "agirlik_yuzde": 12.498101197835293
+      "agirlik_yuzde": 13.520010914979439
     },
     {
       "sembol": "META",
@@ -112,7 +58,7 @@
       "giris_tarihi": "2026-01-02",
       "giris_fiyati": 650.41,
       "giris_nedeni": "Başlangıç pozisyonu - Agresif büyüme portföyü - Teknoloji",
-      "agirlik_yuzde": 13.432277161430642
+      "agirlik_yuzde": 13.432276865481857
     },
     {
       "sembol": "AVGO",
@@ -130,28 +76,48 @@
       "giris_tarihi": "2026-01-02",
       "giris_fiyati": 347.62,
       "giris_nedeni": "Başlangıç pozisyonu - Agresif büyüme portföyü - Teknoloji",
-      "agirlik_yuzde": 12.755863488415825
+      "agirlik_yuzde": 12.755863207370233
     },
     {
-      "sembol": "APP",
-      "isim": "AppLovin Corporation",
-      "sektor": "Teknoloji",
-      "adet": 20,
-      "maliyet_baz": 618.32,
-      "guncel_fiyat": 408.415,
-      "yatirim": 12366.400000000001,
-      "guncel_deger": 8168.3,
-      "kar_zarar": -4198.100000000001,
-      "kar_zarar_yuzde": -33.94763229395783,
-      "gunluk_degisim_yuzde": 0.99533,
-      "son_guncelleme": "2026-02-19T14:42:00.037631",
-      "giris_tarihi": "2026-01-02",
-      "giris_fiyati": 618.32,
-      "giris_nedeni": "Başlangıç pozisyonu - Agresif büyüme portföyü - Teknoloji",
-      "agirlik_yuzde": 8.99846876319102
+      "sembol": "XLI",
+      "ad": "Industrials Select Sector SPDR",
+      "adet": 114,
+      "maliyet_baz": 175.04,
+      "yatirim": 19954.559999999998,
+      "guncel_fiyat": 175.04,
+      "guncel_deger": 19954.559999999998,
+      "kar_zarar": 0,
+      "kar_zarar_yuzde": 0,
+      "giris_tarihi": "2026-02-19",
+      "son_guncelleme": "2026-02-19T14:58:19.979583",
+      "agirlik_yuzde": 21.98260113940796,
+      "sektor": "Endüstriyel",
+      "entry_reason": "Endüstriyel +11% YTD güçlü - Tech'ten rotate",
+      "catalyst": "Savunma + altyapı harcamaları",
+      "target_price": 195.0,
+      "stop_loss": 166.0
+    },
+    {
+      "sembol": "XLE",
+      "ad": "Energy Select Sector SPDR",
+      "adet": 268,
+      "maliyet_baz": 55.83,
+      "yatirim": 14962.439999999999,
+      "guncel_fiyat": 55.83,
+      "guncel_deger": 14962.439999999999,
+      "kar_zarar": 0,
+      "kar_zarar_yuzde": 0,
+      "giris_tarihi": "2026-02-19",
+      "son_guncelleme": "2026-02-19T14:58:19.979981",
+      "agirlik_yuzde": 16.48311717183056,
+      "sektor": "Enerji",
+      "entry_reason": "Enerji +22% YTD en güçlü - Tech'ten rotate",
+      "catalyst": "İran gerginliği + petrol desteği",
+      "target_price": 62.0,
+      "stop_loss": 53.0
     }
   ],
-  "son_guncelleme": "2026-02-19T14:42:00.038062",
-  "toplam_deger": 90774.33300000001,
-  "toplam_getiri_yuzde": -9.225666999999987
+  "son_guncelleme": "2026-02-19T14:58:19.980152",
+  "toplam_deger": 90774.33499999999,
+  "toplam_getiri_yuzde": -9.225665000000008
 }
