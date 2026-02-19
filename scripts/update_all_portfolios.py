@@ -199,6 +199,14 @@ def update_portfolio(name: str, display_name: str) -> dict:
             "son_guncelleme": datetime.now().isoformat()
         }
         
+        # Giriş bilgisini koru/ekle
+        if "giris_tarihi" not in updated_pos:
+            updated_pos["giris_tarihi"] = pos.get("giris_tarihi", datetime.now().strftime("%Y-%m-%d"))
+        if "giris_fiyati" not in updated_pos:
+            updated_pos["giris_fiyati"] = pos.get("giris_fiyati", cost_basis)
+        if "giris_nedeni" not in updated_pos:
+            updated_pos["giris_nedeni"] = pos.get("giris_nedeni", f"Otomatik ekleme - {sector_tr}")
+        
         updated_positions.append(updated_pos)
         
         emoji = "🟢" if pnl_pct >= 0 else "🔴"
@@ -558,3 +566,17 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+def ensure_entry_info(pos: dict, current_date: str) -> dict:
+    """Pozisyonda giriş bilgisi yoksa ekle"""
+    if "giris_tarihi" not in pos:
+        pos["giris_tarihi"] = current_date
+    
+    if "giris_fiyati" not in pos:
+        pos["giris_fiyati"] = pos.get("maliyet_baz", pos.get("guncel_fiyat", 0))
+    
+    if "giris_nedeni" not in pos:
+        pos["giris_nedeni"] = f"Otomatik ekleme - {pos.get('sektor', 'Bilinmeyen sektör')}"
+    
+    return pos
