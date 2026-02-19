@@ -10,101 +10,101 @@
       "symbol": "GOOGL",
       "name": "Alphabet Inc",
       "sector": "Technology",
-      "shares": 41,
-      "cost_basis": 303.33,
+      "shares": 39,
+      "cost_basis": 315.15,
       "entry_date": "2026-01-02",
       "entry_reason": "En güçlü 3M momentum (+10.3%), AI search dominant, cloud growth",
       "catalyst": "AI integration momentum, cloud revenue acceleration",
-      "target_price": 365.00,
-      "stop_loss": 279.00
+      "target_price": 378.00,
+      "stop_loss": 290.00
     },
     {
       "symbol": "NVDA",
       "name": "NVIDIA Corporation",
       "sector": "Technology",
       "shares": 66,
-      "cost_basis": 187.98,
+      "cost_basis": 188.85,
       "entry_date": "2026-01-02",
       "entry_reason": "AI chip leader, data center demand surge, positive 3M momentum",
       "catalyst": "AI data center buildout acceleration, H100/H200 demand",
-      "target_price": 225.00,
-      "stop_loss": 173.00
+      "target_price": 227.00,
+      "stop_loss": 174.00
     },
     {
       "symbol": "AMD",
       "name": "Advanced Micro Devices",
       "sector": "Technology",
-      "shares": 62,
-      "cost_basis": 200.12,
+      "shares": 55,
+      "cost_basis": 223.47,
       "entry_date": "2026-01-02",
       "entry_reason": "AI chip competitor gaining share, MI300 ramp-up",
       "catalyst": "MI300 adoption, data center CPU/GPU wins",
-      "target_price": 240.00,
-      "stop_loss": 184.00
+      "target_price": 268.00,
+      "stop_loss": 206.00
     },
     {
       "symbol": "AMZN",
       "name": "Amazon.com Inc",
       "sector": "Technology",
-      "shares": 61,
-      "cost_basis": 204.79,
+      "shares": 55,
+      "cost_basis": 226.50,
       "entry_date": "2026-01-02",
       "entry_reason": "AWS AI services growth, e-commerce dominant, stable momentum",
       "catalyst": "AWS AI/ML services expansion, retail efficiency gains",
-      "target_price": 245.00,
-      "stop_loss": 188.00
+      "target_price": 272.00,
+      "stop_loss": 208.00
     },
     {
       "symbol": "TSLA",
       "name": "Tesla Inc",
       "sector": "Consumer Cyclical",
-      "shares": 30,
-      "cost_basis": 411.32,
+      "shares": 28,
+      "cost_basis": 438.07,
       "entry_date": "2026-01-02",
       "entry_reason": "EV leader, FSD progress, energy storage growth",
       "catalyst": "Cybertruck ramp, FSD adoption, energy storage demand",
-      "target_price": 495.00,
-      "stop_loss": 378.00
+      "target_price": 526.00,
+      "stop_loss": 403.00
     },
     {
       "symbol": "META",
       "name": "Meta Platforms Inc",
       "sector": "Technology",
       "shares": 19,
-      "cost_basis": 643.22,
+      "cost_basis": 650.41,
       "entry_date": "2026-01-02",
       "entry_reason": "AI-driven ad efficiency, Reality Labs improving, cost discipline",
       "catalyst": "AI ad targeting ROI improvement, Llama ecosystem growth",
-      "target_price": 772.00,
-      "stop_loss": 591.00
+      "target_price": 781.00,
+      "stop_loss": 598.00
     },
     {
       "symbol": "AVGO",
       "name": "Broadcom Inc",
       "sector": "Technology",
-      "shares": 37,
-      "cost_basis": 333.51,
+      "shares": 35,
+      "cost_basis": 347.62,
       "entry_date": "2026-01-02",
       "entry_reason": "AI networking chips, VMware synergies emerging",
       "catalyst": "Custom AI chip wins, VMware integration benefits",
-      "target_price": 400.00,
-      "stop_loss": 307.00
+      "target_price": 417.00,
+      "stop_loss": 320.00
     },
     {
       "symbol": "APP",
       "name": "AppLovin Corporation",
       "sector": "Technology",
-      "shares": 30,
-      "cost_basis": 404.39,
+      "shares": 20,
+      "cost_basis": 618.32,
       "entry_date": "2026-01-02",
       "entry_reason": "AI-powered mobile advertising platform, strong growth",
       "catalyst": "AXON AI ad engine adoption, gaming monetization",
-      "target_price": 485.00,
-      "stop_loss": 372.00
+      "target_price": 742.00,
+      "stop_loss": 569.00
     }
   ],
   "cash": {
-    "amount": 1224.81,
+    "amount": 1339.85,
     "notes": "Initial allocation - 8 positions"
   },
   "transaction_history": [],
