@@ -18,6 +18,24 @@
       "Sektör liderliği rotasyonu (en güçlü sektörün liderleri)"
     ],
     "active": [],
+    "active_template": {
+      "symbol": "",
+      "name": "",
+      "entry_date": "YYYY-MM-DD",
+      "entry_price": 0,
+      "shares": 0,
+      "position_size": 0,
+      "entry_reason": "Neden alındı - hangi tarama yöntemiyle bulundu",
+      "scan_method": "RSI oversold / earnings momentum / breakout / sektör liderliği",
+      "catalyst": "Tetikleyici olay",
+      "stop_loss": 0,
+      "target_price": 0,
+      "risk_reward": 0,
+      "max_hold_date": "YYYY-MM-DD",
+      "daily_notes": {
+        "YYYY-MM-DD": "Günlük gözlem"
+      }
+    },
     "last_scan_date": ""
   }
 }

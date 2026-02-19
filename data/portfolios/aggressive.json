@@ -33,5 +33,47 @@
     "%20+ kazançta trailing stop %10",
     "Momentum kırılması (50MA altına kapanış)",
     "Earnings miss"
-  ]
+  ],
+  "position_template": {
+    "_comment": "Her pozisyon bu yapıda olmalı",
+    "symbol": "",
+    "name": "",
+    "sector": "",
+    "shares": 0,
+    "cost_basis": 0,
+    "entry_date": "",
+    "entry_reason": "Neden alındı - tez açıklaması",
+    "catalyst": "Tetikleyici olay (earnings, breakout, vb.)",
+    "target_price": null,
+    "stop_loss": null,
+    "notes": ""
+  },
+  "transaction_template": {
+    "_comment": "Her işlem bu yapıda olmalı",
+    "date": "YYYY-MM-DD",
+    "type": "BUY/SELL",
+    "symbol": "",
+    "shares": 0,
+    "price": 0,
+    "amount": 0,
+    "reason": "Neden alındı/satıldı - detaylı açıklama",
+    "catalyst": "Tetikleyici olay",
+    "notes": ""
+  },
+  "closed_position_template": {
+    "_comment": "Kapatılan her pozisyon bu yapıda olmalı",
+    "symbol": "",
+    "name": "",
+    "entry_date": "",
+    "entry_price": 0,
+    "entry_reason": "Neden alındı",
+    "exit_date": "",
+    "exit_price": 0,
+    "exit_reason": "Neden satıldı",
+    "shares": 0,
+    "pnl": 0,
+    "pnl_pct": 0,
+    "hold_days": 0,
+    "lessons": "Çıkarılan dersler"
+  }
 }

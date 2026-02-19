@@ -2,6 +2,23 @@
   "watchlist": {
     "description": "Günlük tarama sonuçları - potansiyel swing trade adayları",
     "last_updated": "",
-    "candidates": []
+    "candidates": [],
+    "candidate_template": {
+      "symbol": "",
+      "name": "",
+      "sector": "",
+      "scan_method": "Hangi yöntemle bulundu",
+      "scan_date": "YYYY-MM-DD",
+      "current_price": 0,
+      "entry_zone": "Hedef giriş aralığı (ör: $45-47)",
+      "stop_loss": 0,
+      "target_price": 0,
+      "risk_reward": 0,
+      "reason": "Neden izleme listesinde",
+      "catalyst": "Beklenen tetikleyici",
+      "urgency": "high / medium / low",
+      "status": "watching / triggered / expired",
+      "notes": ""
+    }
   }
 }
