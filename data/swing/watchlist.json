@@ -1,29 +1,48 @@
 {
-  "last_updated": "2026-02-06T16:00:00Z",
+  "last_updated": "2026-02-17T16:00:00Z",
+  "note": "Potential swing candidates for next trades",
   "watchlist": [
     {
-      "symbol": "KO",
-      "current_price": 79.03,
-      "momentum_5d": 5.6,
-      "notes": "Consumer staples, good momentum. Alternative to WMT."
+      "symbol": "DUK",
+      "current_price": 126.71,
+      "momentum_5d": 3.4,
+      "sector": "Utilities - Electric",
+      "notes": "Defensive utility, steady momentum"
     },
     {
-      "symbol": "MO",
-      "current_price": 65.40,
-      "momentum_5d": 5.5,
-      "notes": "Tobacco strong, similar momentum to KO."
+      "symbol": "SPG",
+      "current_price": 202.01,
+      "momentum_5d": 2.9,
+      "sector": "REITs - Malls",
+      "notes": "Mall REIT, retail recovery play"
     },
     {
-      "symbol": "JPM",
-      "current_price": 322.40,
-      "momentum_5d": 5.4,
-      "notes": "Bank alternative to BAC, similar momentum."
+      "symbol": "NEE",
+      "current_price": 92.71,
+      "momentum_5d": 2.1,
+      "sector": "Utilities - Clean Energy",
+      "notes": "Clean energy utility, infrastructure play"
     },
     {
-      "symbol": "PG",
-      "current_price": 159.17,
-      "momentum_5d": 4.9,
-      "notes": "Consumer staples giant, solid momentum."
+      "symbol": "PM",
+      "current_price": 183.65,
+      "momentum_5d": 0.5,
+      "sector": "Consumer Staples - Tobacco",
+      "notes": "Tobacco defensive, similar to MO in portfolio"
+    }
+  ],
+  "excluded": [
+    {
+      "symbol": "GOOGL",
+      "reason": "Negative momentum -6.7%, tech weakness continues"
+    },
+    {
+      "symbol": "META",
+      "reason": "Negative momentum -3.0%, tech sector still weak"
+    },
+    {
+      "symbol": "AXP",
+      "reason": "Negative momentum -5.1%, financials under pressure"
     }
   ]
 }
