@@ -6,3 +6,5 @@ date,action,symbol,shares,price,total,reason
 2026-02-17,BUY,RGLD,43,277.50,11932.50,"Initial position - Gold royalty"
 2026-02-17,BUY,FCX,132,60.54,7991.28,"Initial position - Copper play"
 2026-02-19,SELL,KOS,6000,1.85,11124.00,Dengeli,Risk azaltma - Yüksek borç ve negatif finansallar
+2026-02-19,SELL,FCX,132,60.17,7943.10,Dengeli,Zayıf performans - Çin talebi risk - Overvalued P/E 40x
+2026-02-19,BUY,XLI,85,175.04,14878.40,Dengeli,Endüstriyel sektör güçlü +11% YTD - FCX yerine

@@ -2,7 +2,7 @@
   "portfoy_adi": "Dengeli Portföy",
   "baslangic_sermaye": 100000,
   "nakit": {
-    "miktar": 16548.5,
+    "miktar": 9613.2,
     "para_birimi": "USD"
   },
   "pozisyonlar": [
@@ -22,7 +22,7 @@
       "giris_tarihi": "2026-02-17",
       "giris_fiyati": 20.67,
       "giris_nedeni": "Initial position - Oil & gas E&P",
-      "agirlik_yuzde": 23.34083811302942
+      "agirlik_yuzde": 23.340838113029424
     },
     {
       "sembol": "KOS",
@@ -58,7 +58,7 @@
       "giris_tarihi": "2026-02-17",
       "giris_fiyati": 67.44,
       "giris_nedeni": "Initial position - Dividend defensive",
-      "agirlik_yuzde": 17.048239062272184
+      "agirlik_yuzde": 17.048239062272188
     },
     {
       "sembol": "XLE",
@@ -76,7 +76,7 @@
       "giris_tarihi": "2026-02-17",
       "giris_fiyati": 53.34,
       "giris_nedeni": "Initial position - Energy sector ETF",
-      "agirlik_yuzde": 14.589353992569997
+      "agirlik_yuzde": 14.58935399257
     },
     {
       "sembol": "RGLD",
@@ -94,28 +94,25 @@
       "giris_tarihi": "2026-02-17",
       "giris_fiyati": 274.4,
       "giris_nedeni": "Initial position - Gold royalty",
-      "agirlik_yuzde": 5.692532079902578
+      "agirlik_yuzde": 5.692532079902579
     },
     {
-      "sembol": "FCX",
-      "isim": "Freeport-McMoRan Inc",
-      "sektor": "Temel Malzeme",
-      "adet": 132,
-      "maliyet_baz": 59.53,
-      "guncel_fiyat": 60.175,
-      "yatirim": 7857.96,
-      "guncel_deger": 7943.099999999999,
-      "kar_zarar": 85.13999999999942,
-      "kar_zarar_yuzde": 1.0834873173189914,
-      "gunluk_degisim_yuzde": -3.76619,
-      "son_guncelleme": "2026-02-19T14:41:58.500951",
-      "giris_tarihi": "2026-02-17",
-      "giris_fiyati": 59.53,
-      "giris_nedeni": "Initial position - Copper play",
-      "agirlik_yuzde": 7.493396191661169
+      "sembol": "XLI",
+      "ad": "Industrials Select Sector SPDR",
+      "adet": 85,
+      "maliyet_baz": 175.04,
+      "yatirim": 14878.4,
+      "guncel_fiyat": 175.04,
+      "guncel_deger": 14878.4,
+      "kar_zarar": 0,
+      "kar_zarar_yuzde": 0,
+      "giris_tarihi": "2026-02-19",
+      "son_guncelleme": "2026-02-19T14:54:22.798222",
+      "agirlik_yuzde": 14.03604964031821,
+      "sektor": "Endüstriyel"
     }
   ],
-  "son_guncelleme": "2026-02-19T14:48:55.949366",
-  "toplam_deger": 106001.335,
-  "toplam_getiri_yuzde": 6.001335000000006
+  "son_guncelleme": "2026-02-19T14:54:22.798419",
+  "toplam_deger": 106001.33499999999,
+  "toplam_getiri_yuzde": 6.001334999999992
 }
