@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-02-03",
+  "last_updated": "2026-02-11",
   "closed_positions": [
     {
       "id": "SWING-001",
@@ -10,22 +10,35 @@
       "exit_price": 339.71,
       "pnl_pct": 7.79,
       "hold_days": 23,
-      "exit_reason": "Near target (+7.79%), took profit",
+      "exit_reason": "Near target, took profit",
       "scan_method": "momentum_continuation",
+      "outcome": "WIN"
+    },
+    {
+      "id": "SWING-007",
+      "symbol": "CAT",
+      "entry_date": "2026-02-04",
+      "exit_date": "2026-02-11",
+      "entry_price": 691.82,
+      "exit_price": 775.00,
+      "pnl_pct": 12.02,
+      "hold_days": 7,
+      "exit_reason": "Target hit ($761 target, exited $775)",
+      "scan_method": "sector_leadership",
       "outcome": "WIN",
-      "lessons": "Momentum continuation worked. AI narrative strong."
+      "lessons": "Industrial sector momentum worked perfectly. +5.2% entry momentum continued. Quick 7-day swing achieved +12%."
     }
   ],
   "statistics": {
-    "total_trades": 1,
-    "winning_trades": 1,
+    "total_trades": 2,
+    "winning_trades": 2,
     "losing_trades": 0,
     "win_rate": 100.0,
-    "avg_pnl_pct": 7.79,
-    "avg_hold_days": 23.0,
+    "avg_pnl_pct": 9.91,
+    "avg_hold_days": 15.0,
     "best_trade": {
-      "symbol": "GOOGL",
-      "pnl_pct": 7.79
+      "symbol": "CAT",
+      "pnl_pct": 12.02
     },
     "worst_trade": null
   },
@@ -35,6 +48,12 @@
       "wins": 1,
       "win_rate": 100.0,
       "avg_pnl_pct": 7.79
+    },
+    "sector_leadership": {
+      "trades": 1,
+      "wins": 1,
+      "win_rate": 100.0,
+      "avg_pnl_pct": 12.02
     }
   }
 }

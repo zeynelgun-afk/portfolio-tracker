@@ -1,82 +1,60 @@
 {
-  "last_updated": "2026-02-06T16:00:00Z",
-  "note": "SWING TRADES ARE SIMULATION ONLY - Tracking % gain/loss",
+  "last_updated": "2026-02-11T16:00:00Z",
+  "note": "SWING TRADES ARE SIMULATION ONLY - Tracking % gain/loss (MAX: 10 positions)",
   "active_positions": [
     {
       "id": "SWING-003",
       "symbol": "VZ",
       "entry_date": "2026-02-03",
       "entry_price": 46.25,
-      "current_price": 46.31,
-      "unrealized_pnl_pct": 0.13,
+      "current_price": 48.97,
+      "unrealized_pnl_pct": 5.88,
       "target_price": 50.88,
       "stop_loss": 43.94,
-      "days_held": 3,
-      "entry_reason": "Telecom momentum (+17.6% in 5 days)",
-      "scan_method": "sector_momentum",
-      "status": "Slow mover, +0.13%"
+      "days_held": 8,
+      "status": "Good progress, +3.9% to target"
     },
     {
       "id": "SWING-004",
       "symbol": "XOM",
       "entry_date": "2026-02-03",
       "entry_price": 142.78,
-      "current_price": 148.06,
-      "unrealized_pnl_pct": 3.70,
+      "current_price": 154.53,
+      "unrealized_pnl_pct": 8.23,
       "target_price": 157.06,
       "stop_loss": 135.64,
-      "days_held": 3,
-      "entry_reason": "Energy sector leadership",
-      "scan_method": "sector_leadership",
-      "status": "Good +3.70%, holding"
-    },
-    {
-      "id": "SWING-007",
-      "symbol": "CAT",
-      "entry_date": "2026-02-04",
-      "entry_price": 691.82,
-      "current_price": 726.20,
-      "unrealized_pnl_pct": 4.97,
-      "target_price": 761.00,
-      "stop_loss": 657.23,
-      "days_held": 2,
-      "entry_reason": "Industrial momentum +5.2%, XLI +10.8%",
-      "scan_method": "sector_leadership",
-      "status": "Strong +4.97%, near target"
+      "days_held": 8,
+      "status": "Strong +8.23%, only +1.6% to target"
     },
     {
       "id": "SWING-008",
       "symbol": "WMT",
       "entry_date": "2026-02-06",
       "entry_price": 131.18,
-      "current_price": 131.18,
-      "unrealized_pnl_pct": 0.00,
+      "current_price": 128.77,
+      "unrealized_pnl_pct": -1.84,
       "target_price": 144.30,
       "stop_loss": 124.62,
-      "days_held": 0,
-      "entry_reason": "Strongest momentum +10.1% (5 days), consumer defensive leader, value rotation",
-      "scan_method": "momentum_defensive",
-      "catalyst": "Consumer retail strength, omnichannel power, defensive sector winning",
-      "status": "New entry"
+      "days_held": 5,
+      "status": "Small loss -1.84%, monitor"
     },
     {
       "id": "SWING-009",
       "symbol": "BAC",
       "entry_date": "2026-02-06",
       "entry_price": 56.53,
-      "current_price": 56.53,
-      "unrealized_pnl_pct": 0.00,
+      "current_price": 53.83,
+      "unrealized_pnl_pct": -4.78,
       "target_price": 62.18,
       "stop_loss": 53.70,
-      "days_held": 0,
-      "entry_reason": "Financials recovery +6.3% momentum, banking sector rotation, rate environment supportive",
-      "scan_method": "sector_momentum",
-      "catalyst": "Financial sector recovery, large cap stability",
-      "status": "New entry"
+      "days_held": 5,
+      "status": "Near stop ($53.83 vs $53.70), watch closely!"
     }
   ],
   "summary": {
-    "total_positions": 5,
-    "avg_unrealized_pnl_pct": 1.76
+    "total_positions": 4,
+    "avg_unrealized_pnl_pct": 1.87,
+    "available_slots": 6,
+    "max_positions": 10
   }
 }
