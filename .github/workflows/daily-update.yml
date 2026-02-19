@@ -41,21 +41,33 @@ jobs:
       
       - name: 📝 Değişiklikleri Commit Et
         run: |
+          # Git yapılandırması
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           
+          # Remote değişiklikleri al (varsa)
+          git pull --rebase origin main || true
+          
           # Değişiklikleri ekle
-          git add data/portfolios/*.json
-          git add data/swing/*.json
-          git add data/*.json
+          git add data/portfolios/*.json || true
+          git add data/swing/*.json || true
+          git add data/*.json || true
           
           # Commit (değişiklik varsa)
-          git diff --quiet && git diff --staged --quiet || \
+          if ! git diff --quiet --cached; then
             git commit -m "🤖 Otomatik güncelleme: $(date +'%Y-%m-%d %H:%M') UTC"
+            echo "✅ Commit oluşturuldu"
+          else
+            echo "ℹ️  Değişiklik yok, commit atlandı"
+          fi
       
       - name: 🚀 GitHub'a Push
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: main
+        run: |
+          # Push et (değişiklik varsa)
+          if git log origin/main..HEAD --oneline | grep -q .; then
+            git push origin main
+            echo "✅ Push başarılı"
+          else
+            echo "ℹ️  Push edilecek değişiklik yok"
+          fi
 
