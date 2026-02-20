@@ -2,7 +2,7 @@
   "portfoy_adi": "Agresif Büyüme",
   "baslangic_sermaye": 100000,
   "nakit": {
-    "miktar": 87510.55,
+    "miktar": 78459.2,
     "para_birimi": "USD"
   },
   "pozisyonlar": [
@@ -18,11 +18,11 @@
       "kar_zarar": 0.0,
       "kar_zarar_yuzde": 0.0,
       "gunluk_degisim_yuzde": 0.0,
-      "son_guncelleme": "2026-02-20T20:08:31.028858",
+      "son_guncelleme": "2026-02-20T20:22:00.933748",
       "giris_tarihi": "2026-02-20",
       "giris_fiyati": 14.61,
       "giris_nedeni": "Yarım pozisyon - Satellite comm pullback fırsatı",
-      "agirlik_yuzde": 4.99662
+      "agirlik_yuzde": 5.49
     },
     {
       "sembol": "BKSY",
@@ -36,26 +36,24 @@
       "kar_zarar": 0.0,
       "kar_zarar_yuzde": 0.0,
       "gunluk_degisim_yuzde": 0.0,
-      "son_guncelleme": "2026-02-20T20:08:31.028874",
+      "son_guncelleme": "2026-02-20T20:22:00.933768",
       "giris_tarihi": "2026-02-20",
       "giris_fiyati": 19.77,
       "giris_nedeni": "Yarım pozisyon - Real-time satellite imagery pullback",
-      "agirlik_yuzde": 7.49283
+      "agirlik_yuzde": 8.24
     }
   ],
-  "son_guncelleme": "2026-02-20T20:08:31.028876",
-  "toplam_deger": 100000.0,
-  "toplam_getiri_yuzde": 0.0,
-  "notes": [
+  "son_guncelleme": "2026-02-20T20:22:00.933769",
+  "toplam_deger": 90948.65,
+  "toplam_getiri_yuzde": -9.05,
+  "gerceklesen_zarar": -1321.51,
+  "kapali_pozisyonlar": [
     {
-      "date": "2026-02-20T20:08:31.028877",
-      "type": "format_fix",
-      "content": "Format SM Energy örneği ile TAM AYNI yapıldı"
-    },
-    {
-      "date": "2026-02-20T19:55:18",
-      "type": "entry",
-      "content": "İLK GİRİŞLER: GILT $14.61 + BKSY $19.77 = $12,489.45"
+      "tarih": "2026-02-19",
+      "aciklama": "Eski pozisyonlar kapatıldı (GOOGL, NVDA, META, AVGO, XLI, XLE)",
+      "toplam_maliyet": 84196.44,
+      "satis_degeri": 82874.93,
+      "gerceklesen_pnl": -1321.51
     }
   ],
   "transactions": [
@@ -76,6 +74,15 @@
       "fiyat": 19.77,
       "tutar": 7492.83,
       "aciklama": "Agresif portföy - Yarım pozisyon girişi (bugün -%5.4 düşüş)"
+    },
+    {
+      "tarih": "2026-02-19",
+      "islem_tipi": "SATIŞ (Toplu)",
+      "sembol": "GOOGL, NVDA, META, AVGO, XLI, XLE",
+      "adet": "Tümü",
+      "fiyat": 0,
+      "tutar": 82874.93,
+      "aciklama": "Eski pozisyonlar kapatıldı - Gerçekleşen zarar: -$1,321.51"
     }
   ],
   "watchlist": [
@@ -126,6 +133,18 @@
       "oncelik": "yuksek",
       "durum": "beklemede",
       "not": "Mevcut pozisyonun 2. yarısı - $18-19 bekle"
+    }
+  ],
+  "notes": [
+    {
+      "date": "2026-02-20T20:22:00.933774",
+      "type": "correction",
+      "content": "DÜZELTME: Eski pozisyonlardan gerçekleşen zarar (-$1,321.51) eklendi. Portföy başlangıca göre -$9,051.35 (-9.05%) zarar ediyor."
+    },
+    {
+      "date": "2026-02-20T19:55:18",
+      "type": "entry",
+      "content": "İLK GİRİŞLER: GILT $14.61 + BKSY $19.77 = $12,489.45"
     }
   ]
 }
