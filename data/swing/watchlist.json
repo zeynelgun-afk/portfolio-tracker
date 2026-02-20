@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-02-19T19:52:31.125184",
+  "son_guncelleme": "2026-02-20T16:38:37.752802",
   "not": "Bir sonraki işlemler için potansiyel swing adayları",
   "izleme_listesi": [
     {
@@ -117,5 +117,107 @@
       "kategori": "Cybersecurity",
       "son_kontrol": null
     }
-  ]
+  ],
+  "adaylar": [
+    {
+      "sembol": "ABBV",
+      "isim": "AbbVie Inc.",
+      "sektor": "Healthcare",
+      "fiyat_tahmini": 224.7,
+      "oncelik": "high",
+      "sebep": "Rinvoq ve Skyrizi blockbuster ilaçlar, %17+ yıllık EPS büyüme, 3% temettü, Dividend King",
+      "katalizor": "Healthcare rotasyonu güçleniyor, yaşlanan nüfus demografisi",
+      "risk": "İlaç patent süreleri, düzenleme riskleri",
+      "hedef_giris": "210-220$ bölgesi pullback'te",
+      "tarama_yontemi": "Web search - Top 2026 stocks",
+      "eklenme_tarihi": "2026-02-20",
+      "notlar": "Motley Fool top 3 healthcare pick, Dividend King statüsü güçlü"
+    },
+    {
+      "sembol": "LLY",
+      "isim": "Eli Lilly",
+      "sektor": "Healthcare",
+      "fiyat_tahmini": 850.0,
+      "oncelik": "high",
+      "sebep": "GLP-1 ağırlık kaybı ilaçları (orforglipron, Retatrutide), %25 yıllık büyüme",
+      "katalizor": "FDA onayı yaklaşıyor, triple agonist tarihte en iyi satıcı olabilir",
+      "risk": "Değerleme yüksek, rekabet (Novo Nordisk)",
+      "hedef_giris": "800-820$ bölgesi düzeltmede",
+      "tarama_yontemi": "Web search - Healthcare leaders 2026",
+      "eklenme_tarihi": "2026-02-20",
+      "notlar": "Wall Street %25 yıllık büyüme bekliyor, GLP-1 market lideri"
+    },
+    {
+      "sembol": "BMY",
+      "isim": "Bristol Myers Squibb",
+      "sektor": "Healthcare",
+      "fiyat_tahmini": 55.0,
+      "oncelik": "medium",
+      "sebep": "Onkoloji momentum güçlü, Q4 earnings güçlü, pipeline dolu",
+      "katalizor": "Patent expiry'lere rağmen onkoloji portföyü büyüyor",
+      "risk": "Eliquis ve Opdivo patent sona eriyor (generic rekabet)",
+      "hedef_giris": "50-52$ bölgesi",
+      "tarama_yontemi": "Web search - Healthcare value plays",
+      "eklenme_tarihi": "2026-02-20",
+      "notlar": "Değerleme ucuz, turnaround hikayesi"
+    },
+    {
+      "sembol": "TSM",
+      "isim": "Taiwan Semiconductor",
+      "sektor": "Technology",
+      "fiyat_tahmini": 190.0,
+      "oncelik": "high",
+      "sebep": "AI chip üretim lideri, NVDA/AMD/AVGO için üretim yapıyor, %30 revenue büyüme 2026",
+      "katalizor": "AI buildout, 2024-2029 AI chip revenue %60 CAGR",
+      "risk": "Çin-Tayvan geopolitik risk, değerleme premium",
+      "hedef_giris": "175-185$ tech düzeltmesinde",
+      "tarama_yontemi": "Web search - AI infrastructure plays",
+      "eklenme_tarihi": "2026-02-20",
+      "notlar": "Motley Fool top AI pick, NVDA supply chain kritik oyuncu"
+    },
+    {
+      "sembol": "EXPE",
+      "isim": "Expedia Group",
+      "sektor": "Consumer Cyclical",
+      "fiyat_tahmini": 200.0,
+      "oncelik": "medium",
+      "sebep": "+55% yıllık rally, ATH'den %10 pullback, %27 EPS büyüme 2025, %20 büyüme 2026",
+      "katalizor": "Travel demand güçlü, 50-day MA desteğinde",
+      "risk": "Tüketici harcamaları yavaşlarsa etkilenir",
+      "hedef_giris": "190-200$ bölgesi (50-day MA)",
+      "tarama_yontemi": "Zacks Momentum Screen - Strong Buy",
+      "eklenme_tarihi": "2026-02-20",
+      "notlar": "RSI en düşük seviyelerde, pullback alım fırsatı"
+    },
+    {
+      "sembol": "OXY",
+      "isim": "Occidental Petroleum",
+      "sektor": "Energy",
+      "fiyat_tahmini": 58.0,
+      "oncelik": "medium",
+      "sebep": "Warren Buffett büyük pozisyon (Berkshire Hathaway), ABD-İran krizi enerji destekliyor",
+      "katalizor": "Crude oil fiyat güçlü, Buffett endorsement",
+      "risk": "Petrol fiyat volatilitesi",
+      "hedef_giris": "55-57$ bölgesi",
+      "tarama_yontemi": "Sektör analizi - Energy momentum",
+      "eklenme_tarihi": "2026-02-20",
+      "notlar": "Berkshire pozisyonu %25+, karbon yakalama teknolojisi"
+    },
+    {
+      "sembol": "CRWD",
+      "isim": "CrowdStrike",
+      "sektor": "Technology",
+      "fiyat_tahmini": 380.0,
+      "oncelik": "high",
+      "sebep": "Cybersecurity lideri, AI-powered endpoint protection, cloud-native platform",
+      "katalizor": "Siber güvenlik bütçeleri artıyor, enterprise adoption",
+      "risk": "Değerleme premium, rekabet yoğun",
+      "hedef_giris": "350-370$ tech düzeltmesinde",
+      "tarama_yontemi": "Growth stock screening",
+      "eklenme_tarihi": "2026-02-20",
+      "notlar": "ARR growth güçlü, net retention >120%"
+    }
+  ],
+  "toplam_aday": 7,
+  "yuksek_oncelik_aday": 4
 }

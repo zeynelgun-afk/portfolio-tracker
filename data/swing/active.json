@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-02-20T16:26:31.492668",
+  "son_guncelleme": "2026-02-20T16:36:55.511599",
   "not": "SWING TRADE SADECE SİMÜLASYON - Sadece % kazanç/kayıp takibi (MAX: 10 pozisyon)",
   "aktif_pozisyonlar": [
     {
@@ -18,7 +18,21 @@
       "zaman_cercevesi": "7-10 gün",
       "risk": "Altın fiyat dönüşü",
       "durum": "Trailing stop aktif - break-even seviyesinde",
-      "son_guncelleme": "2026-02-19T19:41:14.015574"
+      "son_guncelleme": "2026-02-19T19:41:14.015574",
+      "partial_exit_plan": {
+        "hedef_ulasildiginda": {
+          "aksiyon": "%50 POZİSYONU SAT",
+          "satis_fiyati": 129.93,
+          "sebep": "Kar garantiye al"
+        },
+        "kalan_50_icin": {
+          "aksiyon": "TRAİLİNG STOP AKTIF",
+          "baslangic_trailing_stop": 123.43,
+          "trailing_yuzde": 5,
+          "aciklama": "Zirveden -%5 düşünce sat"
+        },
+        "durum": "Hedef bekleniyor"
+      }
     },
     {
       "id": "SWING-011",
@@ -36,7 +50,21 @@
       "zaman_cercevesi": "7-10 gün",
       "risk": "Büyüme rotasyonu devam ederse",
       "durum": "Normal aralıkta",
-      "son_guncelleme": "2026-02-19T19:41:14.310317"
+      "son_guncelleme": "2026-02-19T19:41:14.310317",
+      "partial_exit_plan": {
+        "hedef_ulasildiginda": {
+          "aksiyon": "%50 POZİSYONU SAT",
+          "satis_fiyati": 205.63,
+          "sebep": "Kar garantiye al"
+        },
+        "kalan_50_icin": {
+          "aksiyon": "TRAİLİNG STOP AKTIF",
+          "baslangic_trailing_stop": 195.35,
+          "trailing_yuzde": 5,
+          "aciklama": "Zirveden -%5 düşünce sat"
+        },
+        "durum": "Hedef bekleniyor"
+      }
     },
     {
       "id": "SWING-012",
@@ -54,7 +82,21 @@
       "zaman_cercevesi": "7-12 gün",
       "risk": "Sağlık politikası belirsizliği",
       "durum": "Küçük kayıp, normal aralık",
-      "son_guncelleme": "2026-02-19T19:41:14.606594"
+      "son_guncelleme": "2026-02-19T19:41:14.606594",
+      "partial_exit_plan": {
+        "hedef_ulasildiginda": {
+          "aksiyon": "%50 POZİSYONU SAT",
+          "satis_fiyati": 322.51,
+          "sebep": "Kar garantiye al"
+        },
+        "kalan_50_icin": {
+          "aksiyon": "TRAİLİNG STOP AKTIF",
+          "baslangic_trailing_stop": 306.38,
+          "trailing_yuzde": 5,
+          "aciklama": "Zirveden -%5 düşünce sat"
+        },
+        "durum": "Hedef bekleniyor"
+      }
     },
     {
       "id": "SWING-013",
@@ -72,7 +114,21 @@
       "zaman_cercevesi": "10-12 gün",
       "risk": "Bütçe endişeleri",
       "durum": "Minimal kayıp, normal aralık",
-      "son_guncelleme": "2026-02-19T19:41:14.902098"
+      "son_guncelleme": "2026-02-19T19:41:14.902098",
+      "partial_exit_plan": {
+        "hedef_ulasildiginda": {
+          "aksiyon": "%50 POZİSYONU SAT",
+          "satis_fiyati": 717.84,
+          "sebep": "Kar garantiye al"
+        },
+        "kalan_50_icin": {
+          "aksiyon": "TRAİLİNG STOP AKTIF",
+          "baslangic_trailing_stop": 681.95,
+          "trailing_yuzde": 5,
+          "aciklama": "Zirveden -%5 düşünce sat"
+        },
+        "durum": "Hedef bekleniyor"
+      }
     },
     {
       "id": "SWING-015",
@@ -90,7 +146,21 @@
       "zaman_cercevesi": "7-10 gün",
       "risk": "Rekabet baskısı",
       "durum": "Küçük kayıp, stop'a yakın",
-      "son_guncelleme": "2026-02-19T19:41:15.322302"
+      "son_guncelleme": "2026-02-19T19:41:15.322302",
+      "partial_exit_plan": {
+        "hedef_ulasildiginda": {
+          "aksiyon": "%50 POZİSYONU SAT",
+          "satis_fiyati": 31.55,
+          "sebep": "Kar garantiye al"
+        },
+        "kalan_50_icin": {
+          "aksiyon": "TRAİLİNG STOP AKTIF",
+          "baslangic_trailing_stop": 29.97,
+          "trailing_yuzde": 5,
+          "aciklama": "Zirveden -%5 düşünce sat"
+        },
+        "durum": "Hedef bekleniyor"
+      }
     },
     {
       "id": "SWING-016",
@@ -108,7 +178,21 @@
       "zaman_cercevesi": "7-10 gün",
       "risk": "Piyasa zayıflığı, ekonomik yavaşlama",
       "durum": "Yeni giriş",
-      "son_guncelleme": "2026-02-19T19:41:15.618250"
+      "son_guncelleme": "2026-02-19T19:41:15.618250",
+      "partial_exit_plan": {
+        "hedef_ulasildiginda": {
+          "aksiyon": "%50 POZİSYONU SAT",
+          "satis_fiyati": 362.54,
+          "sebep": "Kar garantiye al"
+        },
+        "kalan_50_icin": {
+          "aksiyon": "TRAİLİNG STOP AKTIF",
+          "baslangic_trailing_stop": 344.41,
+          "trailing_yuzde": 5,
+          "aciklama": "Zirveden -%5 düşünce sat"
+        },
+        "durum": "Hedef bekleniyor"
+      }
     },
     {
       "id": "SWING-017",
@@ -126,7 +210,21 @@
       "zaman_cercevesi": "7-10 gün",
       "risk": "Faiz oranı yükselmesi, düzenleme riski",
       "durum": "Yeni giriş",
-      "son_guncelleme": "2026-02-19T19:41:15.926414"
+      "son_guncelleme": "2026-02-19T19:41:15.926414",
+      "partial_exit_plan": {
+        "hedef_ulasildiginda": {
+          "aksiyon": "%50 POZİSYONU SAT",
+          "satis_fiyati": 139.38,
+          "sebep": "Kar garantiye al"
+        },
+        "kalan_50_icin": {
+          "aksiyon": "TRAİLİNG STOP AKTIF",
+          "baslangic_trailing_stop": 132.41,
+          "trailing_yuzde": 5,
+          "aciklama": "Zirveden -%5 düşünce sat"
+        },
+        "durum": "Hedef bekleniyor"
+      }
     },
     {
       "id": "SWING-018",
@@ -144,7 +242,21 @@
       "zaman_cercevesi": "7-12 gün",
       "risk": "Healthcare düzenlemeleri, Medicare reimbursement değişiklikleri",
       "durum": "Yeni giriş - Güçlü momentum",
-      "son_guncelleme": "2026-02-20T16:26:31.492653"
+      "son_guncelleme": "2026-02-20T16:26:31.492653",
+      "partial_exit_plan": {
+        "hedef_ulasildiginda": {
+          "aksiyon": "%50 POZİSYONU SAT",
+          "satis_fiyati": 164.7,
+          "sebep": "Kar garantiye al"
+        },
+        "kalan_50_icin": {
+          "aksiyon": "TRAİLİNG STOP AKTIF",
+          "baslangic_trailing_stop": 156.46,
+          "trailing_yuzde": 5,
+          "aciklama": "Zirveden -%5 düşünce sat"
+        },
+        "durum": "Hedef bekleniyor"
+      }
     }
   ],
   "ozet": {
