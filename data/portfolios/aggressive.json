@@ -1,117 +1,61 @@
 {
-  "portfolio_name": "Agresif Büyüme Portföyü",
-  "initial_capital": 100000,
-  "currency": "USD",
-  "start_date": "2026-02-20",
-  "strategy": "LPTH-tarzı micro-cap momentum + pullback mix",
-  "positions": [
-    {
-      "symbol": "GILT",
-      "name": "Gilat Satellite Networks",
-      "entry_date": "2026-02-20T19:55:18",
-      "entry_price": 14.61,
-      "shares": 342,
-      "cost_basis": 4996.62,
-      "current_price": 14.61,
-      "current_value": 4996.62,
-      "unrealized_pnl": 0.0,
-      "unrealized_pnl_pct": 0.0,
-      "stop_loss": 13.0,
-      "target_price": 19.0,
-      "position_type": "half",
-      "remaining_to_add": 5000,
-      "sector": "Technology - Satellite Communications",
-      "entry_reason": "Pullback sonrası giriş, hedef $14.00'a %4 üzerinde",
-      "catalyst": "Satellite comm sektör güçlü, 3M +37% momentum",
-      "status": "active"
-    },
-    {
-      "symbol": "BKSY",
-      "name": "BlackSky Technology",
-      "entry_date": "2026-02-20T19:55:18",
-      "entry_price": 19.77,
-      "shares": 379,
-      "cost_basis": 7492.83,
-      "current_price": 19.77,
-      "current_value": 7492.83,
-      "unrealized_pnl": 0.0,
-      "unrealized_pnl_pct": 0.0,
-      "stop_loss": 17.0,
-      "target_price": 25.0,
-      "position_type": "half",
-      "remaining_to_add": 7500,
-      "sector": "Defense - Space/Satellite",
-      "entry_reason": "Güçlü pullback sonrası, bugün -%5.4 düşüş fırsatı",
-      "catalyst": "Real-time satellite imagery, 3M +35% trend",
-      "status": "active"
-    }
-  ],
-  "watchlist": [
-    {
-      "symbol": "NNDM",
-      "name": "Nano Dimension",
-      "priority": "medium",
-      "entry_target": 1.95,
-      "stop_loss": 1.8,
-      "target_price": 2.6,
-      "position_size": 12000,
-      "sector": "Technology - Advanced Manufacturing",
-      "status": "watching",
-      "wait_reason": "Momentum pozitif, pullback yok"
-    },
-    {
-      "symbol": "VUZI",
-      "name": "Vuzix",
-      "priority": "high",
-      "entry_target": 2.75,
-      "stop_loss": 2.5,
-      "target_price": 3.8,
-      "position_size": 15000,
-      "sector": "Technology - Augmented Reality",
-      "status": "watching",
-      "note": "Kontrarian play, 52W %40 pozisyon"
-    }
-  ],
-  "transactions": [
-    {
-      "date": "2026-02-20T19:55:18",
-      "type": "BUY",
-      "symbol": "GILT",
-      "shares": 342,
-      "price": 14.61,
-      "amount": 4996.62,
-      "notes": "İlk yarım pozisyon - pullback fırsatı"
-    },
-    {
-      "date": "2026-02-20T19:55:18",
-      "type": "BUY",
-      "symbol": "BKSY",
-      "shares": 379,
-      "price": 19.77,
-      "amount": 7492.83,
-      "notes": "İlk yarım pozisyon - bugün -%5.4 düşüş"
-    }
-  ],
-  "summary": {
-    "total_invested": 12489.45,
-    "current_value": 12489.45,
-    "cash": 87510.55,
-    "total_portfolio_value": 100000.0,
-    "unrealized_pnl": 0.0,
-    "unrealized_pnl_pct": 0.0,
-    "positions_count": 2,
-    "last_updated": "2026-02-20T20:01:26.175318"
+  "portfoy_adi": "Agresif Büyüme",
+  "baslangic_sermaye": 100000,
+  "nakit": {
+    "miktar": 87510.55,
+    "para_birimi": "USD"
   },
+  "pozisyonlar": [
+    {
+      "sembol": "GILT",
+      "isim": "Gilat Satellite Networks Ltd.",
+      "sektor": "Teknoloji",
+      "adet": 342,
+      "maliyet_baz": 14.61,
+      "guncel_fiyat": 14.61,
+      "yatirim": 4996.62,
+      "guncel_deger": 4996.62,
+      "kar_zarar": 0.0,
+      "kar_zarar_yuzde": 0.0,
+      "gunluk_degisim_yuzde": 0.0,
+      "son_guncelleme": "2026-02-20T20:08:31.028858",
+      "giris_tarihi": "2026-02-20",
+      "giris_fiyati": 14.61,
+      "giris_nedeni": "Yarım pozisyon - Satellite comm pullback fırsatı",
+      "agirlik_yuzde": 4.99662
+    },
+    {
+      "sembol": "BKSY",
+      "isim": "BlackSky Technology Inc.",
+      "sektor": "Savunma",
+      "adet": 379,
+      "maliyet_baz": 19.77,
+      "guncel_fiyat": 19.77,
+      "yatirim": 7492.83,
+      "guncel_deger": 7492.83,
+      "kar_zarar": 0.0,
+      "kar_zarar_yuzde": 0.0,
+      "gunluk_degisim_yuzde": 0.0,
+      "son_guncelleme": "2026-02-20T20:08:31.028874",
+      "giris_tarihi": "2026-02-20",
+      "giris_fiyati": 19.77,
+      "giris_nedeni": "Yarım pozisyon - Real-time satellite imagery pullback",
+      "agirlik_yuzde": 7.49283
+    }
+  ],
+  "son_guncelleme": "2026-02-20T20:08:31.028876",
+  "toplam_deger": 100000.0,
+  "toplam_getiri_yuzde": 0.0,
   "notes": [
     {
-      "date": "2026-02-20T22:15:00",
-      "type": "cleanup",
-      "content": "Portföy dosyası temizlendi - eski veriler silindi"
+      "date": "2026-02-20T20:08:31.028877",
+      "type": "format_fix",
+      "content": "Format SM Energy örneği ile TAM AYNI yapıldı"
     },
     {
       "date": "2026-02-20T19:55:18",
       "type": "entry",
-      "content": "İLK GİRİŞLER: GILT $14.61 (342 adet, $4,996.62) + BKSY $19.77 (379 adet, $7,492.83). Toplam $12,489.45 yatırıldı."
+      "content": "İLK GİRİŞLER: GILT $14.61 + BKSY $19.77 = $12,489.45"
     }
   ]
 }
