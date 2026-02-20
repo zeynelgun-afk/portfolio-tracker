@@ -116,40 +116,173 @@
 
 ---
 
-## 💼 PORTFÖY DURUMU (Dengeli $100K)
-
-### **Pozisyonlar (Son Fiyat)**
-
-| Sembol | Fiyat | Günlük | 1 Hafta | 1 Ay | YTD | Durum |
-|--------|-------|--------|---------|------|-----|-------|
-| ⚡ **SM** | $23.48 | +0.00% | +12.88% | +28.80% | +22.74% | ⚪ |
-| ⚡ **KOS** | $1.77 | +0.00% | +9.26% | +46.28% | +98.25% | ⚪ |
-| 🚬 **MO** | $67.99 | +0.00% | +1.75% | +11.19% | +18.64% | ⚪ |
-| 🛢️ **XLE** | $55.18 | +0.00% | +2.30% | +15.92% | +20.88% | ⚪ |
-| 👑 **RGLD** | $271.78 | +0.00% | -2.09% | -2.13% | +22.91% | ⚪ |
-| ⛏️ **FCX** | $62.58 | +0.00% | +2.33% | +4.17% | +20.50% | ⚪ |
-
-### **Sektör Analizi**
-
-**⚡ ENERJİ (SM, KOS, XLE):**
-- ✅ **Güçlü performans** — ABD-İran gerginliği destekliyor
-- SM Energy + KOS: Upstream oyuncuları WTI yükselişinden faydalanıyor
-- XLE: Sektör ETF'i güvenli alana alım pozisyonu
-
-**👑 METALLERCİLER (RGLD, FCX):**
-- RGLD: Altın $5,000+ → Royalty modelinde kazanç artışı
-- FCX: Bakır talep endişeleri (Çin yavaşlaması)
-
-**🚬 TÜTÜN (MO):**
-- Defansif pozisyon — risk-off ortamda iyi tutuyor
-- Yüksek temettü verimi makul
-
-**📊 Portföy Net Durum:**
-- Başlangıç: $100,000
-- Şu Anki Değer: ~$102,500 (tahmini)
-- Net Kazanç: +%2.5 (enerji sektörü katkısı)
 
 ---
+
+## 💼 PORTFÖY DURUMU — 4 PORTFÖY + SWING TRADE
+
+### **📊 GENEL ÖZET (Toplam: $400K Başlangıç)**
+
+| Portföy | Başlangıç | Güncel Değer | Nakit | Net Kazanç | Getiri % | Pozisyon |
+|---------|-----------|--------------|-------|------------|----------|----------|
+| **1. Dengeli** | $100,000 | $105,420 | $9,613 | $+5,420 | +5.42% | 6 |
+| **2. Agresif Büyüme** | $100,000 | $90,949 | $8,074 | $-9,051 | -9.05% | 6 |
+| **3. Değer + Temettü** | $100,000 | $115,447 | $648 | $+15,447 | +15.45% | 7 |
+| **4. Sektör Rotasyonu** | $100,000 | $104,823 | $668 | $+4,823 | +4.82% | 3 |
+| **TOPLAM** | **$400,000** | **$416,638** | — | **$+16,638** | **+4.16%** | **22** |
+
+**🎯 En İyi Performans:** Değer + Temettü (+15.45%)  
+**⚠️ En Zayıf:** Agresif Büyüme (-9.05%) — Tech düzeltmesi etkisi
+
+---
+
+### **1️⃣ DENGELİ PORTFÖY ($100K → $105,420)**
+
+**Strateji:** Multi-sektör value + momentum blend  
+**Getiri:** +5.42% | **Nakit:** $9,613
+
+| Sembol | Sektör | Fiyat | Adet | Değer | Getiri % | Ağırlık | Durum |
+|--------|--------|-------|------|-------|----------|---------|-------|
+| ⚡ **SM** | Enerji | $23.48 | 1,040 | $24,419 | +16.13% | 23.7% | 🟢 |
+| ⚡ **KOS** | Enerji | $1.77 | 9,276 | $16,419 | +10.70% | 15.8% | 🟢 |
+| 🚬 **MO** | Temel Tüketim | $67.99 | 267 | $18,153 | +0.24% | 17.1% | 🟢 |
+| 🛢️ **XLE** | Enerji ETF | $55.18 | 277 | $15,285 | +3.56% | 14.5% | 🟢 |
+| ⛏️ **RGLD** | Temel Malzeme | $271.78 | 22 | $5,979 | -1.68% | 5.6% | 🔴 |
+| 🏭 **XLI** | Endüstriyel | $176.34 | 85 | $14,989 | +0.49% | 14.2% | 🟢 |
+
+**💡 Analiz:**
+- **Enerji baskın** (SM +16.1%, KOS +10.7%, XLE +3.6%) → ABD-İran gerginliği destekliyor
+- **MO defensif** (+0.24%) → Risk-off ortamda tutundu
+- **RGLD zayıf** (-1.68%) → Kısa vadeli düzeltme, ama altın $5K+
+- **XLI yeni giriş** (19 Şubat) → Endüstriyel momentum
+
+---
+
+### **2️⃣ AGRESİF BÜYÜME ($100K → $90,949)**
+
+**Strateji:** Momentum + earnings surprise, AI/tech ağırlıklı  
+**Getiri:** -9.05% | **Nakit:** $8,074
+
+| Sembol | Sektör | Fiyat | Adet | Değer | Getiri % | Ağırlık | Durum |
+|--------|--------|-------|------|-------|----------|---------|-------|
+| 🔍 **GOOGL** | Teknoloji | $302.85 | 39 | $11,811 | -3.75% | 13.0% | 🔴 |
+| 🖥️ **NVDA** | Teknoloji | $187.90 | 66 | $12,401 | -1.20% | 13.5% | 🔴 |
+| 🔍 **META** | Teknoloji | $644.78 | 19 | $12,251 | -1.11% | 13.4% | 🔴 |
+| 💾 **AVGO** | Teknoloji | $333.99 | 35 | $11,690 | -4.21% | 12.8% | 🔴 |
+| 💻 **XLI** | Endüstriyel | $176.34 | 114 | $20,103 | +0.49% | 22.0% | 🟢 |
+| 💻 **XLE** | Enerji | $55.18 | 268 | $14,788 | -1.06% | 16.3% | 🔴 |
+
+**💡 Analiz:**
+- **Tech düzeltmesi devam ediyor** → AI disruption endişesi
+- **NVDA/META/GOOGL** en çok etkilenen
+- **Strateji:** DIP ALIM fırsatı bekle, henüz erken
+- **Risk:** Software sektörü -20% YTD
+
+---
+
+### **3️⃣ DEĞER + TEMETTÜ ($100K → $115,447)**
+
+**Strateji:** P/E <20, temettü yield >3%, güçlü FCF  
+**Getiri:** +15.45% ⭐ **EN İYİ!** | **Nakit:** $648
+
+| Sembol | Sektör | Fiyat | Adet | Değer | Getiri % | Temettü | Durum |
+|--------|--------|-------|------|-------|----------|---------|-------|
+| 💰 **T** | Telekomünikasyon | $27.88 | 514 | $14,330 | +14.83% | ~3% | 🟢 |
+| 💰 **VZ** | Telekomünikasyon | $48.64 | 313 | $15,224 | +22.36% | ~6% | 🟢 |
+| 💰 **MO** | Tütün | $67.99 | 218 | $14,822 | +17.97% | ~5% | 🟢 |
+| 💰 **PM** | Tütün | $183.50 | 77 | $14,130 | +13.89% | ~5% | 🟢 |
+| 💰 **XOM** | Enerji | $150.97 | 102 | $15,399 | +24.38% | ~4% | 🟢 |
+| 💰 **CVX** | Enerji | $184.78 | 80 | $14,782 | +20.33% | ~4% | 🟢 |
+| 💰 **SCHD** | Temettü ETF | $31.57 | 829 | $26,172 | +8.74% | ~4% | 🟢 |
+
+**💡 Analiz:**
+- **EN İYİ PERFORMANS** +15.4% → Defansif + temettü stratejisi çalıştı
+- **Energy oyuncuları güçlü** (CVX, XOM) → Petrol yükselişi
+- **Tobacco/Telecom** sabit gelir sağlıyor
+- **Risk-off ortamda ideal portföy**
+
+---
+
+### **4️⃣ SEKTÖR ROTASYONU ($100K → $104,823)**
+
+**Strateji:** Makro döngüye göre sektör ETF rotasyonu  
+**Getiri:** +4.82% | **Nakit:** $668
+
+| Sembol | Sektör | Fiyat | Adet | Değer | Getiri % | Ağırlık | Durum |
+|--------|--------|-------|------|-------|----------|---------|-------|
+| ⚡ **XLE** | Enerji | $55.18 | 796 | $43,923 | +9.98% | 41.9% | 🟢 |
+| 🏥 **XLV** | Sağlık | $157.26 | 128 | $20,129 | +0.84% | 19.1% | 🟢 |
+| 🏭 **XLI** | Endüstriyel | $176.34 | 228 | $40,206 | +6.23% | 38.3% | 🟢 |
+
+**💡 Analiz:**
+- **Energy (XLE)** lider → Jeopolitik destek
+- **Industrials (XLI)** yeni eklendi → Momentum güçlü
+- **Healthcare (XLV)** defansif → Risk-off destekçisi
+- **Strateji:** Çeyreklik rebalance (sonraki: Mart)
+
+---
+
+### **📈 SWING TRADE POZİSYONLARI**
+
+**Strateji:** RSI oversold, breakout, earnings momentum  
+**Aktif:** 7/10 pozisyon | **Ortalama Getiri:** 0.51%
+
+| ID | Sembol | Giriş | Güncel | Getiri % | Günler | Hedef | Stop | Durum |
+|-----|--------|-------|--------|----------|--------|-------|------|-------|
+| 010 | **NEM** | $118.12 | $125.40 | +6.16% | 7d | $129.93 | $121.22 | 🚀 |
+| 011 | **NVDA** | $186.94 | $187.90 | +0.51% | 7d | $205.63 | $177.59 | ⚪ |
+| 012 | **UNH** | $293.19 | $289.93 | -1.11% | 6d | $322.51 | $278.53 | ⚪ |
+| 013 | **LMT** | $652.58 | $666.51 | +2.13% | 6d | $717.84 | $619.95 | 🟢 |
+| 015 | **T** | $28.68 | $27.88 | -2.79% | 2d | $31.55 | $27.25 | 🟡 |
+| 016 | **GE** | $329.58 | $334.74 | +1.57% | 1d | $362.54 | $313.10 | ⚪ |
+| 017 | **DUK** | $126.71 | $126.37 | -0.27% | 0d | $139.38 | $120.38 | ⚪ |
+
+**💡 Swing Trade Analizi:**
+
+**🚀 Performans Liderleri:**
+- **NEM +5.8%** → Altın madenciliği, $5K+ altın destekliyor
+- **GE +1.5%** → Endüstriyel momentum, altyapı hikayesi
+- **LMT +1.6%** → Savunma sanayi, jeopolitik destek
+
+**⚠️ Risk Altındakiler:**
+- **T -2.8%** → Stop-loss'a yakın, telecom baskısı
+- **UNH -1.7%** → Sağlık sektörü zayıf
+- **NVDA -0.2%** → Tech düzeltmesi devam
+
+**📌 Aksiyonlar:**
+- NEM: Trailing stop aktif, break-even'de tut
+- T: Stop-loss kontrol et, $27.25 altı SAT
+- NVDA: DIP alım fırsatı ama sabırlı ol
+
+---
+
+### **🎯 PORTFÖY STRATEJİK ÖNERİLER**
+
+**Dengeli Portföy:**
+- ✅ Enerji pozisyonlarını TUTA (ABD-İran destek devam)
+- ⚠️ RGLD: $4,850 stop koy, ama uzun vadeli bullish
+- 🔄 XLI: Endüstriyel momentum takip et
+
+**Agresif Büyüme:**
+- ⏳ Henüz DIP alım yapma, daha fazla düşüş olabilir
+- 🎯 NVDA $170-175 bandında agresif giriş yap
+- 📊 Tech breadth izle (şu an %30 over 50MA)
+
+**Değer + Temettü:**
+- ✅ Mükemmel! Hiç dokunma 🏆
+- 💰 Temettü geliri reinvest et
+- 📈 XOM/CVX: $160/$190 hedef
+
+**Sektör Rotasyonu:**
+- 🔄 Mart rebalance hazırlığı:
+  - XLE → %40 (enerji devam)
+  - XLF → %30 (financial ekleme planla)
+  - XLV → %30 (healthcare tut)
+
+**Swing Trade:**
+- NEM: Profit-taking $129+ kır
+- T: Stop-loss execute if $27.25 kırılır
+- GE: Hold, target $362
 
 ## 📰 GECE HABERLERİ (Son 24 Saat)
 
