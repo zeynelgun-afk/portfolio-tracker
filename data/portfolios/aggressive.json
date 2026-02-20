@@ -58,13 +58,13 @@
   ],
   "transactions": [
     {
-      "tarih": "2026-02-20",
-      "islem_tipi": "ALIŞ",
-      "sembol": "GILT",
-      "adet": 342,
-      "fiyat": 14.61,
-      "tutar": 4996.62,
-      "aciklama": "Agresif portföy - Yarım pozisyon girişi (pullback fırsatı)"
+      "tarih": "2026-02-19",
+      "islem_tipi": "SATIŞ (Toplu)",
+      "sembol": "GOOGL, NVDA, META, AVGO, XLI, XLE",
+      "adet": "Tümü",
+      "fiyat": 0,
+      "tutar": 82874.93,
+      "aciklama": "Eski pozisyonlar kapatıldı - Gerçekleşen zarar: -$1,321.51"
     },
     {
       "tarih": "2026-02-20",
@@ -76,13 +76,13 @@
       "aciklama": "Agresif portföy - Yarım pozisyon girişi (bugün -%5.4 düşüş)"
     },
     {
-      "tarih": "2026-02-19",
-      "islem_tipi": "SATIŞ (Toplu)",
-      "sembol": "GOOGL, NVDA, META, AVGO, XLI, XLE",
-      "adet": "Tümü",
-      "fiyat": 0,
-      "tutar": 82874.93,
-      "aciklama": "Eski pozisyonlar kapatıldı - Gerçekleşen zarar: -$1,321.51"
+      "tarih": "2026-02-20",
+      "islem_tipi": "ALIŞ",
+      "sembol": "GILT",
+      "adet": 342,
+      "fiyat": 14.61,
+      "tutar": 4996.62,
+      "aciklama": "Agresif portföy - Yarım pozisyon girişi (pullback fırsatı)"
     }
   ],
   "watchlist": [
