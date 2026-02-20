@@ -117,5 +117,89 @@
   ],
   "son_guncelleme": "2026-02-19T19:41:10.355739",
   "toplam_deger": 90948.65,
-  "toplam_getiri_yuzde": -9.051350000000005
+  "toplam_getiri_yuzde": -9.051350000000005,
+  "notes": [
+    {
+      "date": "2026-02-20T17:07:47.162634",
+      "type": "research",
+      "content": "LPTH-tarzı micro-cap adaylar belirlendi: NNDM, BKSY, GILT, SSYS, VUZI. Toplam $60K hedef (% 60 aggressive portföy). Momentum + pullback + kontrarian mix."
+    }
+  ],
+  "watchlist": [
+    {
+      "symbol": "NNDM",
+      "name": "Nano Dimension (3D Electronics Printing)",
+      "entry_target": 2.0,
+      "stop_loss": 1.8,
+      "target_price": 2.6,
+      "position_size": 15000,
+      "sector": "Technology - Advanced Manufacturing",
+      "thesis": "3D printed electronics, güçlü YTD +30%, niche pazar lideri",
+      "catalyst": "Savunma + aerospace uygulamaları, teknoloji patentleri",
+      "risk": "Orta - proven momentum, stable trend",
+      "priority": "high",
+      "added_date": "2026-02-20T17:07:47.162656",
+      "status": "watching"
+    },
+    {
+      "symbol": "BKSY",
+      "name": "BlackSky Technology (Satellite Imagery)",
+      "entry_target": 19.0,
+      "stop_loss": 17.0,
+      "target_price": 25.0,
+      "position_size": 15000,
+      "sector": "Defense - Space/Satellite",
+      "thesis": "Real-time satellite imagery, savunma + commercial dual use",
+      "catalyst": "Pullback sonrası -25% 1M, 3M +36% güçlü trend",
+      "risk": "Orta-Yüksek - pullback consolidation fırsatı",
+      "priority": "high",
+      "added_date": "2026-02-20T17:07:47.162661",
+      "status": "watching"
+    },
+    {
+      "symbol": "GILT",
+      "name": "Gilat Satellite Networks",
+      "entry_target": 14.5,
+      "stop_loss": 13.0,
+      "target_price": 19.0,
+      "position_size": 12000,
+      "sector": "Technology - Satellite Communications",
+      "thesis": "Established satellite comm player, 1 yıl +92%",
+      "catalyst": "Pullback -16% 1M, 3M +38% momentum intact",
+      "risk": "Orta - pullback giriş fırsatı",
+      "priority": "medium",
+      "added_date": "2026-02-20T17:07:47.162665",
+      "status": "watching"
+    },
+    {
+      "symbol": "SSYS",
+      "name": "Stratasys (3D Printing)",
+      "entry_target": 10.5,
+      "stop_loss": 9.5,
+      "target_price": 13.5,
+      "position_size": 10000,
+      "sector": "Technology - Additive Manufacturing",
+      "thesis": "3D printing leader, dengeli momentum +17% YTD",
+      "catalyst": "Industrial + aerospace adoption",
+      "risk": "Orta - stable trend",
+      "priority": "medium",
+      "added_date": "2026-02-20T17:07:47.162666",
+      "status": "watching"
+    },
+    {
+      "symbol": "VUZI",
+      "name": "Vuzix (AR Glasses - KONTRARİAN)",
+      "entry_target": 2.7,
+      "stop_loss": 2.5,
+      "target_price": 3.8,
+      "position_size": 8000,
+      "sector": "Technology - Augmented Reality",
+      "thesis": "AR glasses, YTD -26% kontrarian dönüş oyunu",
+      "catalyst": "3M +38% ama YTD negatif, potansiyel turnaround",
+      "risk": "Yüksek - kontrarian bet, fundamentaller şüpheli",
+      "priority": "low",
+      "added_date": "2026-02-20T17:07:47.162668",
+      "status": "watching"
+    }
+  ]
 }
