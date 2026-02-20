@@ -1,73 +1,87 @@
 {
-  "son_guncelleme": "2026-02-18",
-  "simulasyon_donemi": "2 Ocak 2026 - 18 Şubat 2026",
-  "islem_gunleri": 33,
-  "toplam_sermaye": 300000.00,
-  "toplam_deger": 308830.46,
-  "toplam_kar_zarar": 8830.46,
-  "toplam_kar_zarar_yuzde": 2.94,
-  "benchmark_spy": 0.46,
-  "alpha": 2.49,
+  "son_guncelleme": "2026-02-20",
+  "simulasyon_donemi": "17 Şubat 2026 - 20 Şubat 2026",
+  "islem_gunleri": 4,
+  "toplam_sermaye": 400000.0,
+  "toplam_deger": 416637.98999999993,
+  "toplam_kar_zarar": 16637.989999999932,
+  "toplam_kar_zarar_yuzde": 4.159497499999984,
+  "benchmark_spy": 0.0,
+  "alpha": 4.159497499999984,
   "portfolyolar": {
+    "dengeli": {
+      "isim": "Dengeli Portföy",
+      "deger": 105419.575,
+      "maliyet": 100000.0,
+      "kar_zarar": 5419.574999999997,
+      "kar_zarar_yuzde": 0,
+      "pozisyon_sayisi": 6,
+      "nakit": {
+        "miktar": 9613.2,
+        "para_birimi": "USD"
+      },
+      "durum": "KAYIPLI"
+    },
     "agresif": {
       "isim": "Agresif Büyüme",
-      "deger": 91373.64,
-      "maliyet": 100000.00,
-      "kar_zarar": -8626.36,
-      "kar_zarar_yuzde": -8.63,
+      "deger": 90948.65,
+      "maliyet": 100000.0,
+      "kar_zarar": -9051.350000000006,
+      "kar_zarar_yuzde": 0,
       "pozisyon_sayisi": 6,
-      "nakit": 10223.15,
-      "durum": "BAŞARISIZ - Büyüme çöküşü"
+      "nakit": {
+        "miktar": 8073.72,
+        "para_birimi": "USD"
+      },
+      "durum": "BAŞARILI"
     },
     "temettü": {
       "isim": "Değer + Temettü",
-      "deger": 112351.42,
-      "maliyet": 100000.00,
-      "kar_zarar": 12351.42,
-      "kar_zarar_yuzde": 12.35,
-      "pozisyon_sayisi": 8,
-      "nakit": 648.12,
-      "durum": "BAŞARILI - En iyi performans"
+      "deger": 115446.78499999999,
+      "maliyet": 100000.0,
+      "kar_zarar": 15446.784999999989,
+      "kar_zarar_yuzde": 0,
+      "pozisyon_sayisi": 7,
+      "nakit": {
+        "miktar": 648.12,
+        "para_birimi": "USD"
+      },
+      "durum": "BAŞARILI - En iyi performans 🏆"
     },
     "rotasyon": {
       "isim": "Sektör Rotasyonu",
-      "deger": 105105.40,
-      "maliyet": 100000.00,
-      "kar_zarar": 5105.40,
-      "kar_zarar_yuzde": 5.11,
-      "pozisyon_sayisi": 5,
-      "nakit": 286.62,
+      "deger": 104822.98,
+      "maliyet": 100000.0,
+      "kar_zarar": 4822.979999999996,
+      "kar_zarar_yuzde": 0,
+      "pozisyon_sayisi": 3,
+      "nakit": {
+        "miktar": 668.0800000000054,
+        "para_birimi": "USD"
+      },
       "durum": "BAŞARILI - Sağlam performans"
+    },
+    "swing_trade": {
+      "isim": "Swing Trade (Simülasyon)",
+      "pozisyon_sayisi": 7,
+      "ortalama_getiri_yuzde": 0.5065507315679353,
+      "durum": "Simülasyon - Sadece % takibi"
     }
   },
-  "islem_ozeti": {
-    "toplam_islem": 3,
-    "amd_satildi": {
-      "tarih": "2026-01-08",
-      "kayip": -1033.45,
-      "kayip_yuzde": -8.41,
-      "sonuc": "İyi karar (stop-loss çalıştı)"
-    },
-    "amzn_eklendi": {
-      "tarih": "2026-01-14",
-      "yatirim": 11832.50,
-      "guncel_kayip": -2787.00,
-      "sonuc": "Kötü timing"
-    },
-    "app_satildi": {
-      "tarih": "2026-02-10",
-      "kayip": -2908.00,
-      "kayip_yuzde": -23.52,
-      "sonuc": "İyi karar (kayıp kesildi)"
-    }
-  },
-  "onemli_dersler": [
-    "Stop-loss'lar çalışıyor (AMD başarısı)",
-    "Çeşitlendirme portfolyoyu kurtarıyor (Temettü +12%, Agresif -8%)",
-    "Momentum takibi tehlikeli (APP, AMZN)",
-    "Sektör rotasyonu gerçek ve güçlü",
-    "Değer > Büyüme rotasyon sırasında",
-    "Pozisyon büyüklüğü kritik"
+  "son_islemler_19_subat": [
+    "FCX satış → XLI alım (Dengeli)",
+    "APP, AMD, AMZN, TSLA satış → XLI, XLE alım (Agresif)",
+    "JPM, BAC satış → SCHD alım (Temettü)",
+    "XLK, XLF satış → XLE, XLI alım (Rotasyon)",
+    "DUK swing trade girişi"
   ],
-  "nihai_karar": "BAŞARILI - SPY'ı +2.49% geçtik, büyüme çöküşünden kurtulduk"
+  "onemli_dersler": [
+    "19 Şubat BÜYÜK RESTRUKTÜRİNG - Tech'ten Enerji+Endüstri'ye rotasyon",
+    "Değer + Temettü portföyü +15.45% ile açık ara lider 🏆",
+    "Agresif portföy -%9.05 - Tech düzeltmesi acı verdi",
+    "Enerji sektörü ABD-İran krizi ile güçleniyor",
+    "Swing trade ortalama +%0.51 - T (AT&T) stop-loss'a yakın ⚠️",
+    "Finans sektörü (JPM, BAC, XLF) satıldı - zayıflık gösteriyor"
+  ],
+  "nihai_karar": "BAŞARILI - 400K'dan 416.6K'ya (+%4.16), Değer stratejisi kazandırdı"
 }
