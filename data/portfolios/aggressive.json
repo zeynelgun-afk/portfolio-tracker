@@ -231,7 +231,7 @@
       "entry_date": "2026-02-20T19:55:18.720515",
       "entry_price": 14.61,
       "shares": 342,
-      "cost_basis": 5000,
+      "cost_basis": 4996.62,
       "stop_loss": 13.0,
       "target_price": 19.0,
       "entry_reason": "Pullback sonrası giriş, hedef $14.00'a %4 üzerinde, 1M -%16 pullback devam ediyor. Yarım pozisyon (kalan $5K $14 civarı bekliyor).",
@@ -247,7 +247,7 @@
       "entry_date": "2026-02-20T19:55:18.720515",
       "entry_price": 19.77,
       "shares": 379,
-      "cost_basis": 7500,
+      "cost_basis": 7492.83,
       "stop_loss": 17.0,
       "target_price": 25.0,
       "entry_reason": "Güçlü pullback sonrası, bugün -%5.4 düşüş fırsat yarattı. Hedef $18-20 aralığında. Yarım pozisyon (kalan $7.5K $18-19 bekliyor).",
@@ -265,7 +265,7 @@
       "symbol": "GILT",
       "shares": 342,
       "price": 14.61,
-      "amount": 5000,
+      "amount": 4996.62,
       "reason": "Agresif portföy ilk yarım pozisyon girişi - pullback fırsatı"
     },
     {
@@ -274,14 +274,14 @@
       "symbol": "BKSY",
       "shares": 379,
       "price": 19.77,
-      "amount": 7500,
+      "amount": 7492.83,
       "reason": "Agresif portföy ilk yarım pozisyon girişi - bugün -%5.4 düşüş"
     }
   ],
   "summary": {
-    "total_invested": 12500,
+    "total_invested": 12489.45,
     "positions_count": 2,
-    "cash_remaining": 87500,
+    "cash_remaining": 87510.55,
     "last_updated": "2026-02-20T19:55:18.720515"
   }
 }
