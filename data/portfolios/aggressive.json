@@ -57,5 +57,75 @@
       "type": "entry",
       "content": "İLK GİRİŞLER: GILT $14.61 + BKSY $19.77 = $12,489.45"
     }
+  ],
+  "transactions": [
+    {
+      "tarih": "2026-02-20",
+      "islem_tipi": "ALIŞ",
+      "sembol": "GILT",
+      "adet": 342,
+      "fiyat": 14.61,
+      "tutar": 4996.62,
+      "aciklama": "Agresif portföy - Yarım pozisyon girişi (pullback fırsatı)"
+    },
+    {
+      "tarih": "2026-02-20",
+      "islem_tipi": "ALIŞ",
+      "sembol": "BKSY",
+      "adet": 379,
+      "fiyat": 19.77,
+      "tutar": 7492.83,
+      "aciklama": "Agresif portföy - Yarım pozisyon girişi (bugün -%5.4 düşüş)"
+    }
+  ],
+  "watchlist": [
+    {
+      "sembol": "NNDM",
+      "isim": "Nano Dimension",
+      "hedef_giris": 1.95,
+      "stop_loss": 1.8,
+      "hedef_fiyat": 2.6,
+      "pozisyon_buyuklugu": 12000,
+      "sektor": "Teknoloji",
+      "oncelik": "orta",
+      "durum": "beklemede",
+      "not": "Momentum pozitif, pullback yok - $1.90-2.00 bekle"
+    },
+    {
+      "sembol": "VUZI",
+      "isim": "Vuzix Corporation",
+      "hedef_giris": 2.75,
+      "stop_loss": 2.5,
+      "hedef_fiyat": 3.8,
+      "pozisyon_buyuklugu": 15000,
+      "sektor": "Teknoloji",
+      "oncelik": "yuksek",
+      "durum": "beklemede",
+      "not": "Kontrarian play, 52W %40 pozisyon, teknik skor 5/7"
+    },
+    {
+      "sembol": "GILT",
+      "isim": "Gilat Satellite Networks (2. yarı)",
+      "hedef_giris": 14.0,
+      "stop_loss": 13.0,
+      "hedef_fiyat": 19.0,
+      "pozisyon_buyuklugu": 5000,
+      "sektor": "Teknoloji",
+      "oncelik": "yuksek",
+      "durum": "beklemede",
+      "not": "Mevcut pozisyonun 2. yarısı - $14 civarı bekle"
+    },
+    {
+      "sembol": "BKSY",
+      "isim": "BlackSky Technology (2. yarı)",
+      "hedef_giris": 18.5,
+      "stop_loss": 17.0,
+      "hedef_fiyat": 25.0,
+      "pozisyon_buyuklugu": 7500,
+      "sektor": "Savunma",
+      "oncelik": "yuksek",
+      "durum": "beklemede",
+      "not": "Mevcut pozisyonun 2. yarısı - $18-19 bekle"
+    }
   ]
 }
