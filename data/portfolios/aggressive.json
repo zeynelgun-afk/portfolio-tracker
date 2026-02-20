@@ -120,6 +120,11 @@
   "toplam_getiri_yuzde": -9.051350000000005,
   "notes": [
     {
+      "date": "2026-02-20T19:24:11.437702",
+      "type": "entry_timing",
+      "content": "GİRİŞ ZAMANLAMA ANALİZİ: GILT 5/9 skor (yarım al), BKSY 4/9 skor (yarım al), NNDM 1/9 skor (bekle). BUGÜN: GILT $5K + BKSY $7.5K = $12.5K yarım pozisyon aç. Kalan yarıyı pullback devam ederse ekle."
+    },
+    {
       "date": "2026-02-20T18:49:48.888561",
       "type": "technical_analysis",
       "content": "Teknik analiz tamamlandı. VUZI HIGH'a yükseldi (5/7 skor), SSYS watchlist'ten çıkarıldı (1/7 skor). Yeni öncelik: VUZI > BKSY > GILT > NNDM."
@@ -146,7 +151,11 @@
       "added_date": "2026-02-20T17:07:47.162656",
       "status": "watching",
       "technical_score": "4/7",
-      "technical_note": "Güçlü trend ama pullback bekle"
+      "technical_note": "Güçlü trend ama pullback bekle",
+      "entry_status": "BEKLE",
+      "entry_price_today": 2.04,
+      "timing_score": "1/9",
+      "wait_reason": "Momentum pozitif, pullback yok"
     },
     {
       "symbol": "BKSY",
@@ -163,7 +172,10 @@
       "added_date": "2026-02-20T17:07:47.162661",
       "status": "watching",
       "technical_score": "4/7",
-      "technical_note": "Pullback fırsatı, 3M +35%"
+      "technical_note": "Pullback fırsatı, 3M +35%",
+      "entry_status": "BUGÜN YARIM AL",
+      "entry_price_today": 20.27,
+      "timing_score": "4/9"
     },
     {
       "symbol": "GILT",
@@ -180,7 +192,10 @@
       "added_date": "2026-02-20T17:07:47.162665",
       "status": "watching",
       "technical_score": "4/7",
-      "technical_note": "Pullback bitiyor olabilir"
+      "technical_note": "Pullback bitiyor olabilir",
+      "entry_status": "BUGÜN YARIM AL",
+      "entry_price_today": 14.76,
+      "timing_score": "5/9"
     },
     {
       "symbol": "VUZI",
