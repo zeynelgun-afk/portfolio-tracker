@@ -63,9 +63,10 @@
     },
     "swing_trade": {
       "isim": "Swing Trade (Simülasyon)",
-      "pozisyon_sayisi": 7,
-      "ortalama_getiri_yuzde": 0.5065507315679353,
-      "durum": "Simülasyon - Sadece % takibi"
+      "pozisyon_sayisi": 8,
+      "ortalama_getiri_yuzde": 0.44323189012194336,
+      "bos_slot": 2,
+      "durum": "8/10 pozisyon - DVA eklendi 🆕"
     }
   },
   "son_islemler_19_subat": [
@@ -81,7 +82,11 @@
     "Agresif portföy -%9.05 - Tech düzeltmesi acı verdi",
     "Enerji sektörü ABD-İran krizi ile güçleniyor",
     "Swing trade ortalama +%0.51 - T (AT&T) stop-loss'a yakın ⚠️",
-    "Finans sektörü (JPM, BAC, XLF) satıldı - zayıflık gösteriyor"
+    "Finans sektörü (JPM, BAC, XLF) satıldı - zayıflık gösteriyor",
+    "DVA: Şubat 2026'nın en iyi performansı +34% - Healthcare momentum güçlü"
   ],
-  "nihai_karar": "BAŞARILI - 400K'dan 416.6K'ya (+%4.16), Değer stratejisi kazandırdı"
+  "nihai_karar": "BAŞARILI - 400K'dan 416.6K'ya (+%4.16), Değer stratejisi kazandırdı",
+  "son_islemler_20_subat": [
+    "DVA swing trade girişi (Şubat'ın en iyi hissesi +34%)"
+  ]
 }
