@@ -21,3 +21,5 @@ date,action,symbol,shares,price,total,reason
 2026-02-19,SELL,XLF,364,52.12,18971.68,Rotasyon,-5.1% - Finans sektörü baskı
 2026-02-19,BUY,XLE,358,55.83,19987.14,Rotasyon,Enerji +22% momentum - Pozisyon artırma
 2026-02-19,BUY,XLI,102,175.04,17854.08,Rotasyon,Endüstriyel +11% güçlü - Pozisyon artırma
+2026-02-20,BUY,GILT,342,14.61,4996.62,"Agresif portföy - Yarım pozisyon girişi (pullback fırsatı)"
+2026-02-20,BUY,BKSY,379,19.77,7492.83,"Agresif portföy - Yarım pozisyon girişi (-%5.4 düşüş)"
