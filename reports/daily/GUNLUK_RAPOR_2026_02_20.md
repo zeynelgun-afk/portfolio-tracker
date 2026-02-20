@@ -727,6 +727,4 @@ su)
 
 ---
 
-*Günlük Rapor v2.0 — FMP Premium API + Web Search + GitHub Portföyler*  
-*4 Portföy ($400K) + Swing Trade (7 pozisyon) — Tam Türkçe*
-
+*FINZORA AI tarafından hazırlanmıştır.*
