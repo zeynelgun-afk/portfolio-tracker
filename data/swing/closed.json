@@ -28,19 +28,6 @@
       "ders": "Endüstriyel sektör momentumu mükemmel çalıştı. +5.2% giriş momentumu devam etti. 7 günde +12% hedef tutturuldu."
     },
     {
-      "id": "SWING-009",
-      "sembol": "BAC",
-      "giris_tarihi": "2026-02-06",
-      "cikis_tarihi": "2026-02-12",
-      "giris_fiyati": 56.53,
-      "cikis_fiyati": 52.52,
-      "kar_zarar_yuzde": -7.09,
-      "tutulan_gun": 6,
-      "cikis_nedeni": "Stop-loss vurdu",
-      "sonuc": "ZARAR",
-      "ders": "Finans sektörü momentumu ters döndü. Stop-loss doğru çalıştı ama geç kesildi."
-    },
-    {
       "id": "SWING-003",
       "sembol": "VZ",
       "giris_tarihi": "2026-02-03",
