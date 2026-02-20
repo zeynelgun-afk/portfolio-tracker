@@ -1,4 +1,4 @@
-# 📊 GÜNLÜK RAPOR — 20 FEBRUARY 2026
+# 📊 GÜNLÜK RAPOR — 20 Şubat 2026
 
 *Hazırlandı: 10:30 Türkiye Saati | Perşembe gecesi → Cuma sabahı*
 
