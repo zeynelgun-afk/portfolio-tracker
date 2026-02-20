@@ -119,6 +119,7 @@
 
 ---
 
+
 ## 💼 PORTFÖY DURUMU — 4 PORTFÖY + SWING TRADE
 
 ### **📊 GENEL ÖZET (Toplam: 400,000$ Başlangıç)**
@@ -143,12 +144,12 @@
 
 | Sembol | Sektör | Fiyat | Adet | Değer | Getiri | Ağırlık | Durum |
 |--------|--------|-------|------|-------|--------|---------|-------|
-| ⚡ **SM** | Enerji | 23.48$ | 1,040 | 24,419$ | **+16.1%** | 23.7% | 🟢 |
-| ⚡ **KOS** | Enerji | 1.77$ | 9,276 | 16,419$ | **+10.7%** | 15.8% | 🟢 |
-| 🚬 **MO** | Tütün | 67.99$ | 267 | 18,153$ | +0.2% | 17.1% | 🟢 |
-| 🛢️ **XLE** | Enerji ETF | 55.18$ | 277 | 15,285$ | +3.6% | 14.5% | 🟢 |
-| ⛏️ **RGLD** | Altın Royalty | 271.78$ | 22 | 5,979$ | -1.7% | 5.6% | 🔴 |
-| 🏭 **XLI** | Sanayi ETF | 176.34$ | 85 | 14,989$ | +0.5% | 14.2% | 🟢 |
+| ⚡ **SM** | Enerji | 23.48$ | 1,040 | 24,419$ | +16.13% | 23.7% | 🟢 |
+| ⚡ **KOS** | Enerji | 1.77$ | 9,276 | 16,419$ | +10.70% | 15.8% | 🟢 |
+| 🚬 **MO** | Temel Tüketim | 67.99$ | 267 | 18,153$ | +0.24% | 17.1% | 🟢 |
+| ⚡ **XLE** | Enerji ETF | 55.18$ | 277 | 15,285$ | +3.56% | 14.5% | 🟢 |
+| ⛏️ **RGLD** | Temel Malzeme | 271.78$ | 22 | 5,979$ | -1.68% | 5.6% | 🔴 |
+| 🏭 **XLI** | Endüstriyel | 176.34$ | 85 | 14,989$ | +0.49% | 14.2% | 🟢 |
 
 **💡 Analiz:**
 - **Enerji hakimiyeti:** SM +16.1%, KOS +10.7%, XLE +3.6% → ABD-İran krizi destekliyor
@@ -158,7 +159,237 @@
 
 ---
 
-[Diğer portföyler için aynı detay...]
+### **2️⃣ AGRESİF BÜYÜME PORTFÖYÜ (100K → 90,949$)**
+
+**Strateji:** Momentum + kazanç sürprizi, AI/teknoloji ağırlıklı  
+**Getiri:** -9.05% | **Nakit:** 8,074$
+
+| Sembol | Sektör | Fiyat | Adet | Değer | Getiri | Ağırlık | Durum |
+|--------|--------|-------|------|-------|--------|---------|-------|
+| 🔍 **GOOGL** | Teknoloji | 302.85$ | 39 | 11,811$ | -3.75% | 13.0% | 🔴 |
+| 🖥️ **NVDA** | Teknoloji | 187.90$ | 66 | 12,401$ | -1.20% | 13.5% | 🔴 |
+| 🔍 **META** | Teknoloji | 644.78$ | 19 | 12,251$ | -1.11% | 13.4% | 🔴 |
+| 💾 **AVGO** | Teknoloji | 333.99$ | 35 | 11,690$ | -4.21% | 12.8% | 🔴 |
+| 🏭 **XLI** | Endüstriyel | 176.34$ | 114 | 20,103$ | +0.49% | 22.0% | 🟢 |
+| 🏭 **XLE** | Enerji | 55.18$ | 268 | 14,788$ | -1.06% | 16.3% | 🔴 |
+
+**💡 Analiz:**
+- **Teknoloji düzeltmesi devam ediyor** → AI yazılım şirketlerinin işini kaybetmesi endişesi
+- **NVDA/META/GOOGL** en çok etkilenen → Değerlemeler düşüyor
+- **AVGO** en kötü performans → Yüksek değerleme (P/E: 35) baskı altında
+- **Strateji:** DIP ALIM fırsatı bekle, henüz erken (yazılım sektörü -20% YTD)
+
+**🎯 Ne Zaman Alım?**
+- NVDA 170-175$ bandında → Agresif giriş
+- META 600$ altına düşerse → Değer fırsatı
+- GOOGL 280-290$ bandında → Uzun vade için ideal
+- Breadth göstergesi: %30 over 50MA → Henüz dip değil, %20'nin altını bekle
+
+---
+
+### **3️⃣ DEĞER + TEMETTÜ PORTFÖYÜ (100K → 115,447$)** ⭐
+
+**Strateji:** Düşük P/E (<20), temettü verimi >%3, güçlü nakit akışı  
+**Getiri:** +15.45% **EN İYİ PERFORMANS!** | **Nakit:** 648$
+
+| Sembol | Sektör | Fiyat | Adet | Değer | Getiri | Temettü Verimi | Durum |
+|--------|--------|-------|------|-------|--------|----------------|-------|
+| 💰 **T** | Telekomünikasyon | 27.88$ | 514 | 14,330$ | +14.83% | ~%5.5 | 🟢 |
+| 💰 **VZ** | Telekomünikasyon | 48.64$ | 313 | 15,224$ | +22.36% | ~%6.0 | 🟢 |
+| 💰 **MO** | Tütün | 67.99$ | 218 | 14,822$ | +17.97% | ~%5.0 | 🟢 |
+| 💰 **PM** | Tütün | 183.50$ | 77 | 14,130$ | +13.89% | ~%5.0 | 🟢 |
+| 💰 **XOM** | Enerji | 150.97$ | 102 | 15,399$ | +24.38% | ~%4.2 | 🟢 |
+| 💰 **CVX** | Enerji | 184.78$ | 80 | 14,782$ | +20.33% | ~%4.2 | 🟢 |
+| 💰 **SCHD** | Temettü ETF | 31.57$ | 829 | 26,172$ | +8.74% | ~%4.0 | 🟢 |
+
+**💡 Analiz:**
+- **MÜKEMMEL PERFORMANS** +15.45% → Defansif + temettü stratejisi tam çalıştı! 🏆
+- **Enerji oyuncuları en güçlü:** XOM +24.4%, CVX +20.3% → Petrol yükselişi direkt fayda
+- **Telecom/Tütün sabit gelir:** VZ +22.4%, MO +18.0% → Yüksek temettü + savunmacı
+- **Risk-off ortamda ideal:** Piyasa düşerken bu portföy yükseliyor
+
+**📊 Sektör Dağılımı:**
+- Enerji: %26 (XOM, CVX) → Petrol 70$+ destekliyor
+- Telekomünikasyon: %26 (VZ, T) → Temettü verimi yüksek
+- Tütün: %25 (MO, PM) → Defansif + fiyatlama gücü
+- Temettü ETF: %23 (SCHD) → Çeşitlendirme
+
+**💰 Yıllık Temettü Geliri Tahmini:**
+- Toplam portföy değeri: 115,447$
+- Ortalama temettü verimi: ~%4.5
+- Yıllık temettü geliri: **~5,195$**
+- Aylık pasif gelir: **~433$**
+
+**🎯 Strateji:**
+- ✅ **Hiç dokunma!** Mükemmel çalışıyor
+- 💰 Temettü gelirini otomatik reinvest et (temettü aristocrat'ları ekle)
+- 📈 XOM 160$, CVX 190$ hedef → Petrol momentumu devam ederse
+- 🔄 SCHD'yi tut, çeşitlendirme için ideal (105 hisse içeriyor)
+
+---
+
+### **4️⃣ SEKTÖR ROTASYONU PORTFÖYÜ (100K → 104,823$)**
+
+**Strateji:** Makro döngüye göre sektör ETF rotasyonu (çeyreklik rebalance)  
+**Getiri:** +4.82% | **Nakit:** 668$
+
+| Sembol | Sektör | Fiyat | Adet | Değer | Getiri | Ağırlık | Durum |
+|--------|--------|-------|------|-------|--------|---------|-------|
+| ⚡ **XLE** | Enerji | 55.18$ | 796 | 43,923$ | +9.98% | 41.9% | 🟢 |
+| 🏥 **XLV** | Sağlık | 157.26$ | 128 | 20,129$ | +0.84% | 19.1% | 🟢 |
+| 🏭 **XLI** | Endüstriyel | 176.34$ | 228 | 40,206$ | +6.23% | 38.3% | 🟢 |
+
+**💡 Analiz:**
+- **Enerji (XLE) lider:** +10.0% → ABD-İran krizi + petrol yükselişi destekliyor
+- **Sanayi (XLI) güçlü:** +6.2% → Altyapı harcamaları + endüstriyel momentum
+- **Sağlık (XLV) savunmacı:** +0.8% → Risk-off ortamda tutunuyor
+
+**📊 Sektör Analizi:**
+
+**⚡ Enerji (XLE) - %42 Ağırlık**
+- **Neden güçlü?** Petrol 66$+ (6 aylık zirve), ABD-İran krizi
+- **İçeriği:** XOM, CVX, COP, SLB → Entegre petrol devleri
+- **Hedef:** WTI 70$+ senaryosunda 60$ hedef (şu an 55.18$)
+- **Risk:** Diplomatik çözüm bulunursa petrol düşer → -%10-15
+
+**🏭 Sanayi (XLI) - %38 Ağırlık**
+- **Neden güçlü?** Altyapı yasası harcamaları, Trump'ın üretim politikaları
+- **İçeriği:** CAT, DE, UNP, HON, GE → Makine + taşımacılık
+- **Hedef:** Ekonomi güçlü kalırsa momentum devam
+- **Risk:** Durgunluk endişesi başlarsa ilk satılacak sektör
+
+**🏥 Sağlık (XLV) - %19 Ağırlık**
+- **Neden var?** Savunmacı, yaşlanan nüfus uzun vade destekleyici
+- **İçeriği:** UNH, JNJ, LLY, ABBV → İlaç + sigorta
+- **Hedef:** Risk-off ortamda outperform
+- **Risk:** İlaç fiyat düzenlemeleri (politik risk)
+
+**🔄 Mart Rebalance Planı (Çeyreklik Strateji):**
+
+**Mevcut Dağılım:** XLE %42, XLI %38, XLV %19
+
+**Yeni Hedef Dağılım (Mart 2026):**
+- XLE %40 → Az sat (-%2)
+- XLI %35 → Az sat (-%3)
+- XLV %10 → Çok sat (-%9)
+- **XLF (Finans) %15** → YENİ EKLE! 🆕
+
+**Neden XLF (Finans) Ekliyoruz?**
+- Fed faiz yüksek kalıyor → Bankalar net faiz marjı kazançlı
+- Kredi talebi artıyor → Ekonomi güçlü sinyali
+- Teknoloji düzeltmesi → Değer sektörlerine (finans) rotasyon başlayabilir
+- XLF içeriği: JPM, BAC, WFC, GS → Büyük bankalar
+
+**📅 Rebalance Zamanlaması:**
+- **Ne zaman?** Mart ayı ilk haftası (28 Şubat - 7 Mart arası)
+- **Neden şimdi değil?** Enerji momentumu güçlü, ABD-İran krizi devam ediyor
+- **Tetikleyici:** WTI 62$ altına düşerse veya 15 Mart'ta Fed toplantısı sonrası
+
+---
+
+### **📈 SWING TRADE POZİSYONLARI**
+
+**Strateji:** RSI aşırı satım, kırılım, kazanç momentumu  
+**Aktif:** 7/10 pozisyon | **Ortalama Getiri:** +0.51%
+
+| ID | Sembol | Giriş | Güncel | Getiri % | Günler | Hedef | Stop | Durum |
+|-----|--------|-------|--------|----------|--------|-------|------|-------|
+| 010 | **NEM** | 118.12$ | 125.40$ | +6.16% | 7g | 129.93$ | 121.22$ | 🚀 |
+| 011 | **NVDA** | 186.94$ | 187.90$ | +0.51% | 7g | 205.63$ | 177.59$ | ⚪ |
+| 012 | **UNH** | 293.19$ | 289.93$ | -1.11% | 6g | 322.51$ | 278.53$ | ⚪ |
+| 013 | **LMT** | 652.58$ | 666.51$ | +2.13% | 6g | 717.84$ | 619.95$ | 🟢 |
+| 015 | **T** | 28.68$ | 27.88$ | -2.79% | 2g | 31.55$ | 27.25$ | 🟡 |
+| 016 | **GE** | 329.58$ | 334.74$ | +1.57% | 1g | 362.54$ | 313.10$ | ⚪ |
+| 017 | **DUK** | 126.71$ | 126.37$ | -0.27% | 0g | 139.38$ | 120.38$ | ⚪ |
+
+**💡 Swing Trade Analizi:**
+
+**🚀 Performans Liderleri:**
+
+**1. NEM (Newmont Mining) +6.16%** 🥇
+- **Giriş:** 118.12$ (12 Şubat) → **Güncel:** 125.40$ | **Hedef:** 129.93$
+- **Tez:** Dünyanın en büyük altın üreticisi, altın 5K+ direkt fayda
+- **Katalizör:** Güvenli liman talebi, merkez bankası alımları
+- **Aksiyon:** 🎯 **Trailing stop aktif!** 129$ üzeri kar realizasyonu yap
+- **Risk:** Altın 4,850$ altına düşerse momentum bozulur
+
+**2. LMT (Lockheed Martin) +2.13%** 🥈
+- **Giriş:** 652.58$ (13 Şubat) → **Güncel:** 666.51$ | **Hedef:** 717.84$
+- **Tez:** Savunma sanayi lideri, jeopolitik kriz destekliyor
+- **Katalizör:** ABD-İran gerginliği, savunma bütçesi artışları
+- **Aksiyon:** ✅ **TUT** → Jeopolitik kriz devam ederken güçlü
+- **Risk:** Barış anlaşması olursa -%5-8 düşüş olabilir
+
+**3. GE (General Electric) +1.57%** 🥉
+- **Giriş:** 329.58$ (18 Şubat) → **Güncel:** 334.74$ | **Hedef:** 362.54$
+- **Tez:** Endüstriyel çeşitlendirme, havacılık + enerji + yenilenebilir
+- **Katalizör:** CAT gibi başarı potansiyeli (CAT'den +12% kazandık)
+- **Aksiyon:** ✅ **TUT** → Yeni giriş, momentum güçlü
+- **Risk:** Ekonomik yavaşlama endişesi başlarsa baskı görür
+
+---
+
+**⚠️ Risk Altındakiler:**
+
+**1. T (AT&T) -2.79%** ⚠️ **STOP-LOSS YAKIN!**
+- **Giriş:** 28.68$ (17 Şubat) → **Güncel:** 27.88$ | **Stop:** 27.25$
+- **Durum:** Stop-loss'a sadece 0.63$ uzaklıkta (-%2.3)
+- **Sorun:** Telecom sektörü baskı altında, rekabet artıyor
+- **Aksiyon:** 🔴 **ACİL!** 27.25$ kırılırsa hemen SAT, daha fazla kayıp bekleme
+- **Alternatif:** Çıktıktan sonra VZ'ye bakabilirsin (daha güçlü)
+
+**2. UNH (UnitedHealth) -1.11%**
+- **Giriş:** 293.19$ (13 Şubat) → **Güncel:** 289.93$ | **Stop:** 278.53$
+- **Durum:** Normal kayıp aralığında, henüz endişe yok
+- **Sorun:** Sağlık sektörü defansif ama tech rotasyonunda zayıf kalıyor
+- **Aksiyon:** ⏳ **BEKLE** → Stop henüz uzak, 3-4 gün daha ver
+
+**3. NVDA (Nvidia) +0.51%**
+- **Giriş:** 186.94$ (12 Şubat) → **Güncel:** 187.90$ | **Hedef:** 205.63$
+- **Durum:** Minimal kazanç, yatay hareket
+- **Sorun:** Tech düzeltmesi devam ediyor, AI korkusu baskı yapıyor
+- **Aksiyon:** ⏳ **SABIR** → 170-175$ dip fırsatı bekle, henüz dip değil
+
+**4. DUK (Duke Energy) -0.27%**
+- **Giriş:** 126.71$ (19 Şubat) → **Güncel:** 126.37$ | **Hedef:** 139.38$
+- **Durum:** Yeni giriş, henüz 1 gün geçti
+- **Aksiyon:** ⏳ **BEKLE** → Utilities yavaş hareket eder, 7-10 gün ver
+
+---
+
+**📊 Swing Trade İstatistikleri:**
+
+| Metrik | Değer |
+|--------|-------|
+| Toplam pozisyon | 7/10 aktif |
+| Ortalama getiri | +0.51% |
+| Kazanan pozisyon | 3 (NEM, LMT, GE) |
+| Kaybeden pozisyon | 3 (T, UNH, DUK) |
+| Nötr | 1 (NVDA) |
+| Toplam tutulan gün | Ortalama 4.4 gün |
+| En uzun | NEM (7 gün) |
+| En yeni | DUK (0 gün) |
+
+**🎯 Bugün Yapılacak Aksiyonlar:**
+
+1. **T (AT&T) ACİL!**
+   - 27.25$ stop-loss seviyesini alarm kur
+   - Kırılırsa HEMEN SAT, beklemeden çık
+   - Kaybı kes: -%5 limit, daha fazlası kabul edilemez
+
+2. **NEM (Newmont) Kar Realizasyonu**
+   - 129$ hedef seviyesine yakın
+   - 129.50$ üzeri görürsen %50 sat (3.5$ kazanç koru)
+   - Kalan %50'yi trailing stop ile tut (124$ seviyesinde)
+
+3. **GE (General Electric) İzle**
+   - Yeni giriş, momentum takip et
+   - 340$ üzeri kırılırsa güçlü momentum sinyali
+   - 325$ altına düşerse stop-loss koy
+
+4. **NVDA (Nvidia) Bekle**
+   - 170-175$ bandına düşene kadar ek alım yapma
+   - Tech breadth göstergesi %20 altına düşerse agresif gir
 
 ---
 
