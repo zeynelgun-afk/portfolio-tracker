@@ -220,7 +220,7 @@
 
 ## 🎯 PAZARTESİ İÇİN PORTFÖY STRATEJİSİ
 
-### 🥇 TEMETTÜhave PORTFÖYÜ
+### 🥇 TEMETTÜ PORTFÖYÜ
 **Durum:** +15.24% - Mükemmel! 🌟
 
 **Aksiyon:** Değişiklik YOK
