@@ -628,6 +628,3 @@ Stop:   $17.00
 
 ---
 
-**Hazırlayan:** Portfolio Tracker AI  
-**Kaynak:** FMP API, Web Search, Market News, Supreme Court Documents  
-**Veri Güncelliği:** 21 Şubat 2026, 14:15 TR
