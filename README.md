@@ -56,13 +56,22 @@ portfolio-tracker/
 
 ### Piyasa Kapanışı Sonrası
 1. **Fiyat Güncelle** → `scripts/update_all_portfolios.py`
-2. **Günlük Rapor** → `reports/daily/DAILY_REPORT_YYYY-MM-DD.md`
+2. **Saat 14:00 - Günlük Rapor (ZORUNLU) → `reports/daily/DAILY_REPORT_YYYY-MM-DD.md`
 3. **GitHub Push** → Tüm değişiklikleri kaydet
+### Piyasa Açılışı
+1. **Swing tarama → watchlist güncelle  
+2. **Pozisyon yönetimi, portföylerin durumu güncelleme
+3. **Fırsat takibi, gerekli ise hisse ekleme, çıkarma  (portföy ruhuna uygun)
+4. Kapanışa doğru Fiyat güncelle ,günlük log yaz.
+5. Summary güncelle
+6. Git commit + push
 
+### Cumartesi Günü
+1. **Saat 14:00 - Günlük Rapor, haber odaklı rapor yazılır (ZORUNLU) → `reports/daily/DAILY_REPORT_YYYY-MM-DD.md`
 ### Pazar Günü
 1. **Haftalık Rapor** → `reports/weekly/WEEKLY_REPORT_YYYY-MM-DD.md`
-2. **Strateji Review** → Sektör rotasyonu, balon riski, portföy dengeleme
-3. **Watchlist Güncelle** → `data/swing/watchlist.json`
+2. **Strateji değerlendirmesi** → Sektör rotasyonu, balon riski, portföy dengeleme
+3. **İzleme listesi güncelleme** → `data/swing/watchlist.json`
 
 ---
 
