@@ -25,28 +25,298 @@
 
 ---
 
-## 🗞️ ANA HABERLER VE GELİŞMELER
+## 🏛️ TARİFE KARARI: DERİNLEMESİNE ANALİZ
 
-### 1. 🏛️ SUPREME COURT TARİFE KARARI (20 Şubat)
+### **KARAR DETAYLARI**
 
-**Ana Başlık:** Supreme Court, Trump'ın tarifelerini 6-3 kararla iptal etti
+**Supreme Court 6-3 Kararı (20 Şubat 2026)**
 
-**Detaylar:**
-- Supreme Court ruled that the government had exceeded its authority in using federal emergency powers to impose tariffs
-- Companies like Costco and Toyota will try to recoup an estimated $170 billion in levies they have already paid
-- Trump yeni %10 küresel tarife uygulayacağını açıkladı
+**Çoğunluk (6):** Chief Justice John Roberts + Neil Gorsuch, Amy Coney Barrett, Sonia Sotomayor, Elena Kagan, Ketanji Brown Jackson
 
-**Piyasa Tepkisi:**
-- S&P 500 rose 0.69% to 6,909.51, Nasdaq gained 0.90% to 22,886.07, and Dow added 0.47% to 49,625.97
-- Etsy gained 8.39% to close at $52.18 after its Q4 earnings beat expectations
-- Alphabet jumped more than 4% and Micron Technology advanced on AI-memory optimism
+**Azınlık (3):** Clarence Thomas, Samuel Alito, Brett Kavanaugh
 
-**Portföyümüze Etkisi:**
-✅ **Pozitif** - E-ticaret ve tech şirketler toparlama
-✅ **Pozitif** - Tüketici fiyatları baskısı azalabilir
-⚠️ **Risk** - Yeni tarife politikası belirsizliği
+**Ana Bulgu:**
+> "Based on two words separated by 16 others in IEEPA—'regulate' and 'importation'—the President asserts the independent power to impose tariffs on imports from any country, of any product, at any rate, for any amount of time. Those words cannot bear such weight."
+> — Chief Justice John Roberts
+
+**Yasal Gerekçe:**
+- **IEEPA (1977 yasası)** "regulate" ve "importation" kelimelerini içerir ancak "tariff" veya "duty" kelimelerini içermez
+- Hiçbir başkan daha önce IEEPA'yı tarife için kullanmadı
+- Anayasa vergilendirme yetkisini açıkça Kongre'ye veriyor
+- **Major Questions Doctrine:** Büyük ekonomik etkili kararlar için Kongre'nin açık yetki vermesi gerekir
 
 ---
+
+### **💰 $175 MİLYAR İADE MESELESİ**
+
+**Tarife Geliri (2025-2026):**
+```
+2025 Yıllık:        $200+ milyar (IEEPA tarifeleri)
+Ocak 2026:          $30 milyar (%304 artış Y/Y)
+YTD (Şubat 14):     $124 milyar
+```
+
+**İade Talebi:**
+- Costco, Toyota gibi büyük şirketler → toplam **$175 milyar iade** talep edebilir
+- Supreme Court iade konusunda **KARAR VERMEDİ** → mahkemeler yıllarca uğraşacak
+
+**Trump'ın Tutumu:**
+> "I guess it has to get litigated for the next two years. So they write this terrible, defective decision, totally defective."
+
+**Gerçekçi Senaryo:**
+- İade süreci **2-5 yıl** sürebilir
+- Court of International Trade (CIT) her vakayı inceleyecek
+- Sadece protesto eden şirketler iade alabilir
+- Customs and Border Protection sistemi yüklenecek
+
+**Etki:**
+- Şirketler nakit akışı belirsizliği yaşayacak
+- Bazı şirketler hukuk masrafından vazgeçebilir
+- İade alanlara vergi uygulanabilir
+
+---
+
+### **🔧 TRUMP'IN YENİ TARİFE ARAÇLARI**
+
+Trump hemen 3 alternatif yol açıkladı:
+
+#### **1. SECTION 122 (Trade Act 1974) — HEMEN UYGULADIĞI**
+
+**Özellikler:**
+```
+Maksimum Oran:     %15
+Maksimum Süre:     150 gün (Kongre onayı olmadan)
+Gereklilik:        ABD'nin büyük ticaret açığı olduğunu göstermek
+Kullanım:          HİÇ kullanılmadı (tarihi ilk)
+```
+
+**Trump'ın Hamlesi:**
+- 20 Şubat'ta hemen %10 global tarife açıkladı
+- "Over and above our normal tariffs" (mevcut tarifelerin üstüne)
+- 3 gün içinde yürürlüğe girecek
+
+**Kısıtlamalar:**
+⚠️ Sadece 150 gün (5 ay) → 20 Temmuz 2026'da bitecek
+⚠️ Kongre'den uzatma alması gerekecek (zor)
+⚠️ Maksimum %15 (eski IEEPA'da sınır yoktu)
+
+---
+
+#### **2. SECTION 232 (Trade Expansion Act 1962) — NATIONAL SECURITY**
+
+**Özellikler:**
+```
+Maksimum Oran:     SINIR YOK ✅
+Maksimum Süre:     SINIR YOK ✅
+Gereklilik:        Commerce Dept. soruşturması (270 gün)
+Kullanım:          Trump 1. döneminde kullandı
+```
+
+**Trump'ın Mevcut Section 232 Tarifeleri:**
+- **Çelik & Alüminyum:** %50 (2018'den beri)
+- **Otomobil & Parça:** Çeşitli oranlar (2019 soruşturmasına dayanarak)
+- **Bakır ürünleri**
+- **Mutfak dolapları, banyo mobilyaları**
+
+**Avantajlar:**
+✅ Oran sınırı yok
+✅ Süre sınırı yok
+✅ Commerce Dept. kendi soruşturmasını yapar (kontrol edilebilir)
+
+**Dezavantajlar:**
+⚠️ Sektör bazlı (ülke bazlı değil) → Brezilya'ya %50 koyamaz
+⚠️ 270 günlük soruşturma gerekli → yavaş
+⚠️ "National security" bahanesi zayıf olabilir (WTO itiraz eder)
+
+---
+
+#### **3. SECTION 301 (Trade Act 1974) — UNFAIR TRADE PRACTICES**
+
+**Özellikler:**
+```
+Maksimum Oran:     SINIR YOK
+Maksimum Süre:     SINIR YOK
+Gereklilik:        USTR soruşturması (unfair practices bulması)
+Kullanım:          Çin'e karşı yaygın kullanıldı
+```
+
+**Trump'ın Mevcut Section 301 Tarifeleri:**
+- **Çin:** Çeşitli ürünlerde %10-125 (2018-2025 ticaret savaşı)
+- **Dijital hizmet vergileri** (Hindistan, Fransa vb)
+
+**Avantajlar:**
+✅ Oran sınırı yok
+✅ Süre sınırı yok
+✅ Spesifik ülkeleri hedefleyebilir
+
+**Dezavantajlar:**
+⚠️ USTR'nin "unfair practice" bulması gerekli
+⚠️ 180 günlük soruşturma + public hearings
+⚠️ WTO kurallarına uygunluk sorunu
+
+---
+
+### **📊 KARŞILAŞTIRMA TABLOSU**
+
+| Özellik | IEEPA (İPTAL EDİLDİ) | Section 122 | Section 232 | Section 301 |
+|---------|---------------------|------------|-------------|-------------|
+| **Oran Sınırı** | YOK ❌ | %15 | YOK ✅ | YOK ✅ |
+| **Süre Sınırı** | YOK ❌ | 150 gün | YOK ✅ | YOK ✅ |
+| **Hız** | ANINDA | 3 gün | 270 gün | 180 gün |
+| **Kapsam** | Tüm ülkeler | Tüm ülkeler | Sektör bazlı | Ülke bazlı |
+| **Soruşturma** | YOK | YOK | Commerce | USTR |
+| **Kongre Onayı** | YOK | 150 gün sonra | YOK | YOK |
+| **Kullanım** | 2025-2026 | İLK KEZ | Yaygın | Yaygın |
+
+---
+
+### **🎯 GELECEKİ SENARYO ANALİZİ**
+
+#### **SENARYO 1: "TRUMP KAZANDI" (Olasılık: %30)**
+
+**Gelişme:**
+- Section 122 ile %10 global tarife → 150 gün
+- Kongre bunu 6 ay daha uzatır (Cumhuriyetçi çoğunluk)
+- Section 232 soruşturmaları → çelik, alüminyum, otomotiv, elektronik, ilaç sektörlerinde yeni tarifeler
+- Section 301 → Çin, AB, Hindistan'a karşı yeni soruşturmalar
+
+**Sonuç:**
+- Tarife geliri 2026'da $150-200 milyar seviyesinde (IEEPA'ya yakın)
+- Ama daha yavaş, daha karmaşık, daha çok soruşturma
+
+**Piyasa Etkisi:**
+- Tüketici şirketleri olumsuz (Costco, Target, Walmart)
+- E-ticaret şirketleri olumsuz (Amazon, Etsy)
+- Yerli üretim olumlu (US Steel, Alcoa)
+
+---
+
+#### **SENARYO 2: "KONGRE BLOKE ETTİ" (Olasılık: %40)**
+
+**Gelişme:**
+- Section 122 → 150 gün sonra sona eriyor
+- Kongre uzatmayı reddediyor (midterm 2026 baskısı)
+- Section 232/301 soruşturmaları yavaş ilerliyor
+- Mahkemeler bazı Section 232 tarifelerini de iptal ediyor
+
+**Sonuç:**
+- Tarife geliri 2026 H2'de düşüyor → $50-80 milyar/yıl
+- Sadece çelik, alüminyum gibi core tarif eler kalıyor
+- Trade war yavaşlıyor
+
+**Piyasa Etkisi:**
+- Tüketici güveni yükseliyor
+- E-ticaret rallisi
+- Dolar zayıflıyor (ticaret açığı büyüyor)
+
+---
+
+#### **SENARYO 3: "KAOS" (Olasılık: %30)**
+
+**Gelişme:**
+- Her 150 günde bir Section 122 yenilemesi → belirsizlik
+- AB, Çin, Meksika misilleme başlatıyor
+- WTO Trump'ın Section 232 tarifelerini iptal ediyor
+- Fed faiz indiremiyor (ithal enflasyon)
+
+**Sonuç:**
+- Global trade war 2.0
+- Recession riski %50+
+- Volatilite patlaması
+
+**Piyasa Etkisi:**
+- VIX 30+ (korku endeksi)
+- Safe haven: USD, altın, tahvil yükseliyor
+- Risk assets: hisse, emerging markets düşüyor
+
+---
+
+### **💼 PORTFÖYÜMÜZE ETKİLER**
+
+#### **✅ POZİTİF SEKTÖRLER**
+
+**1. Enerji (XOM, CVX, XLE, SM, KOS)**
+- Tarife savaşı → jeopolitik risk → petrol premium
+- İran gerilimiyle birlikte çift katalizör
+- **Strateji:** TUT, momentum güçlü
+
+**2. Savunmacı (MO, VZ, T, XLP)**
+- Tarife belirsizliği → defensive play
+- Temettü güvenliği
+- **Strateji:** TUT, temettü akışı kesintisiz
+
+**3. Yerli Üretim (eğer alırsak)**
+- Çelik: US Steel, Nucor
+- Kimya: Dow, DuPont
+- **Strateji:** Watchlist'e ekle
+
+---
+
+#### **⚠️ RISKLI SEKTÖRLER**
+
+**1. E-Ticaret (Amazon, Etsy, eBay)**
+- Tarife maliyetleri yükselir
+- Tüketici harcamaları düşer
+- **Portföyümüzde YOK** ✅
+
+**2. Tech (Apple, Dell)**
+- Çin'den ithalat yoğun
+- Section 301 riski
+- **Portföyümüzde:** Agresif'te micro-cap (GILT, BKSY) → satellite tech (daha az etkilenir)
+
+**3. Perakende (Costco, Target)**
+- İthalat yoğun
+- Kar marjları düşer
+- **Portföyümüzde YOK** ✅
+
+---
+
+### **🎯 AKSİYON PLANI**
+
+**PAZARTESİ:**
+1. Tarife haberlerini takip et
+2. Section 122 executive order detaylarını oku
+3. Etkilenen sektörleri listele
+
+**1 HAFTA:**
+- Commerce Dept. Section 232 soruşturma listesini izle
+- USTR Section 301 announcement'ları takip et
+- Misilleme haberleri (AB, Çin, Meksika)
+
+**150 GÜN (Temmuz 20):**
+- Section 122'nin uzatılıp uzatılmadığını kontrol et
+- Kongre oylamasını takip et
+- Pozisyon ayarlaması (gerekirse)
+
+---
+
+### **📚 ANA ÇIKARIMLAR**
+
+1. **Supreme Court Trump'ı durdurdu AMA yavaşlattı sadece**
+   - IEEPA kapalı → Section 122, 232, 301 açık
+   - Tarife savaşı bitmedi, şekil değiştirdi
+
+2. **Kısa vadeli belirsizlik arttı**
+   - Section 122 → 150 gün geçici
+   - Kongre uzatacak mı? Belirsiz
+   - Piyasalar volatiliteyi sevmez
+
+3. **Uzun vadeli tarife seviyesi benzer olabilir**
+   - Treasury Secretary Bessent: "virtually unchanged tariff revenue in 2026"
+   - Ama daha yavaş, daha karmaşık süreç
+
+4. **$175 milyar iade meselesi yıllarca sürecek**
+   - Şirketler nakit beklemeli
+   - Bazıları hukuk masrafından vazgeçecek
+
+5. **Portföyümüz iyi konumlanmış**
+   - Enerji & defensive ağırlıklı
+   - E-ticaret & perakende yok
+   - Tech minimal (micro-cap satellite)
+
+---
+
+## 🗞️ DİĞER ANA HABERLER
 
 ### 2. 🛢️ İRAN-ABD GERİLİMİ VE PETROL FİYATLARI
 
@@ -214,7 +484,7 @@
 ### **ÇARŞAMBA-CUMA**
 - İran gelişmelerini izle
 - Petrol fiyat hareketleri
-- Trump yeni tarife detayları
+- Trump yeni tarife detayları (Section 122 executive order)
 
 ---
 
@@ -308,8 +578,9 @@ Stop:   $17.00
    - Micro-cap tech (GILT, BKSY) etkilenir
 
 3. **Tarife Belirsizliği**
-   - Trump yeni %10 küresel tarife
-   - Uygulama detayları belli değil
+   - Section 122 geçici (150 gün)
+   - Kongre uzatacak mı?
+   - Misilleme riski (AB, Çin, Meksika)
 
 ### 🟡 Orta Risk
 1. **Fed Duruşu**
@@ -327,16 +598,17 @@ Stop:   $17.00
 1. **Enerji dominansı** - Portföyümüzün en güçlü yanı
 2. **Temettü stratejisi çalışıyor** - 7/7 pozisyon kar ediyor
 3. **Çeşitlendirme** - 4 farklı strateji risk dağıtıyor
+4. **Tarife kararı bizim için iyi** - E-ticaret & perakende yok
 
 ### ⚠️ Dikkat Edilmesi Gerekenler
 1. **Kar realizasyonu şart** - Zirve pozisyonları sat
 2. **Agresif portföy toparlanması** - Yeni strateji test aşamasında
-3. **Jeopolitik riskler** - İran gelişmeleri yakından izle
+3. **Jeopolitik riskler** - İran + tarife belirsizliği
 
 ### 🎯 Pazartesi Öncelikleri
 1. ✅ **Dengeli:** Kar realizasyonu limit emirleri (MO, RGLD, XLE)
 2. ✅ **Agresif:** Fiyat izleme (GILT, BKSY tamamlama)
-3. ✅ **Tümü:** İran haberlerini takip et
+3. ✅ **Tümü:** İran + tarife haberlerini takip et
 
 ---
 
@@ -347,6 +619,7 @@ Stop:   $17.00
 3. **Temettü + value stratejisi recession-proof** - En güçlü performans
 4. **Micro-cap volatilite yönetimi kritik** - Yarım pozisyon stratejisi işliyor
 5. **Kar realizasyonu disiplini şart** - %85+ 52W pozisyonlar satılmalı
+6. **Trump durdurulamaz ama yavaşlatılabilir** - Section 122/232/301 yavaş ama etkili
 
 ---
 
@@ -356,5 +629,5 @@ Stop:   $17.00
 ---
 
 **Hazırlayan:** Portfolio Tracker AI  
-**Kaynak:** FMP API, Web Search, Market News  
-**Veri Güncelliği:** 21 Şubat 2026, 13:30 TR
+**Kaynak:** FMP API, Web Search, Market News, Supreme Court Documents  
+**Veri Güncelliği:** 21 Şubat 2026, 14:15 TR
