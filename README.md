@@ -1,87 +1,13 @@
-# 📊 Portfolio Tracker -  Yatırım Takip Sistemi
+# 📊 Portfolio Tracker
 
-Bu repo  profesyonel portföy yönetimi ve swing trade simülasyonunu takip eder.
+> **4 Portföy Simülasyonu** - Dengeli, Agresif, Temettü, Rotasyon  
+> **Başlangıç:** 17 Şubat 2026 | **Toplam Sermaye:** $400,000
 
-## 🎯 Sistem Yapısı
-
-### 4 Ana Portföy ($400K Toplam - Başlangıç: 17 Şubat 2026)
-
-#### 1. Dengeli Portföy ($100K)
-- **Dosya:** `data/portfolios/balanced.json`
-- **Ruh:** Dengeli, risk/ödül balanced, çeşitlendirilmiş
-- **Strateji:** **SADECE HİSSE** - Multi-sector value + momentum blend
-- **Alım Kuralları:**
-  - ✅ Çeşitli sektörlerden hisseler
-  - ✅ Değer + Büyüme karışımı
-  - ✅ Temettü ödemeyenler de olabilir
-  - ❌ Long yönlü ETF YASAK
-  - ✅ Hedge için satış yönlü ETF (SQQQ, SPXU, SH)
-- **Aktif:** SM, KOS, MO, RGLD, FCX
-- **Hedef:** Yıllık %60+ getiri
-- **Risk:** Max 7 pozisyon, %8 stop-loss
-- **Orijinal veriler:** `data/portfolio.json`, `performance_log.csv`, `transactions.csv`
-
-#### 2. Agresif Büyüme ($100K)
-- **Dosya:** `data/portfolios/aggressive.json`
-- **Ruh:** Büyüme hisseleri, momentum, yüksek risk/yüksek ödül
-- **Strateji:** **SADECE BÜYÜME HİSSELERİ** - Momentum + earnings surprise, AI/tech ağırlıklı
-- **Alım Kuralları:**
-  - ✅ Momentum hisseleri (50MA üzeri, RS yükseliş)
-  - ✅ Earnings surprise (>%10)
-  - ✅ AI, tech, innovation odaklı
-  - ❌ Long yönlü ETF, değer hisseleri, defensive hisseler YASAK
-  - ✅ Hedge için satış yönlü ETF
-- **Aktif:** NVDA, META, GOOGL, AVGO
-- **Hedef:** Yıllık %100+ getiri
-- **Risk:** Max 8 pozisyon, %8 stop-loss
-
-#### 3. Değer + Temettü ($100K)
-- **Dosya:** `data/portfolios/dividend.json`
-- **Ruh:** Değer hisseleri, yüksek temettü, istikrar
-- **Strateji:** **SADECE DEĞER/TEMETTÜ HİSSELERİ** - Düşük P/E, yüksek temettü, güçlü FCF
-- **Alım Kuralları:**
-  - ✅ P/E < 20, temettü yield > %3, güçlü FCF, D/E < 1.5
-  - ✅ **İSTİSNA:** Temettü ETF'leri İZİN VERİLİR (SCHD, VYM, DVY)
-  - ❌ Sektör ETF'leri, büyüme hisseleri YASAK
-  - ✅ Hedge için satış yönlü ETF
-- **Aktif:** SCHD, XOM, VZ, CVX, MO, T, PM
-- **Hedef:** Yıllık %35+ getiri + temettü
-- **Risk:** Max 10 pozisyon
-
-#### 4. Sektör Rotasyonu ($100K)
-- **Dosya:** `data/portfolios/rotation.json`
-- **Ruh:** Sektör ETF'leriyle makro döngü takibi
-- **Strateji:** **SADECE SEKTÖR ETF'LERİ** - Makro döngüye göre rotasyon
-- **Alım Kuralları:**
-  - ✅ SADECE sektör ETF'leri (XLE, XLF, XLK, XLV, XLI, XLP, XLU, XLY, XLB, XLRE, XLC)
-  - ✅ Çeyreklik rebalance
-  - ❌ Bireysel hisseler, kaldıraçlı ETF'ler YASAK
-  - ✅ Hedge için satış yönlü ETF
-- **Aktif:** XLE, XLI, XLV
-- **Hedef:** S&P 500'ü yıllık %20+ geçmek
-- **Risk:** Max 8 pozisyon
-
-### 🛡️ Hedge Kuralları (Tüm Portföyler)
-
-**İzin Verilen Satış Yönlü ETF'ler:**
-- SQQQ (Nasdaq 3x Short)
-- SPXU (S&P 500 3x Short)
-- SH (S&P 500 Short)
-- PSQ (Nasdaq Short)
-- QID (Nasdaq 2x Short)
-- TZA (Russell 2000 3x Short)
-
-**Kullanım:** Piyasa düşüş beklentisinde portföy hedge'i için, kısa vadeli (max 2 hafta)
-
-### Swing Trade Sistemi
-- **Klasör:** `data/swing/`
-- **Max Pozisyon:** 10 eşzamanlı
-- **Position Size:** $5K-10K per trade
-- **Kurallar:** %10 target, %5 stop, 7-10 gün hedef
-- **Yöntemler:** RSI oversold, earnings momentum, breakout, sektör liderliği
+---
 
 ## 📁 Klasör Yapısı
 
+```
 portfolio-tracker/
 ├── data/
 │   ├── portfolios/          # 4 ana portföy
@@ -106,105 +32,122 @@ portfolio-tracker/
 ├── docs/                    # Dokümantasyon
 │   ├── PORTFOLIO_DATA_SKILL.md  # JSON şema (KRİTİK)
 │   └── strategy.md
-├── scripts/                 # Otomasyon scriptleri
-│   ├── update_portfolio.py
-│   └── update_all_portfolios.py
 ├── PORTFOY_KURALLARI.md     # Portföy yönetim kuralları
 └── README.md                # Bu dosya
 ```
 
-## 🎯 Veri Kayıt Kuralları
+---
 
-### Her Pozisyon Açıldığında ZORUNLU:
-- `giris_tarihi`, `giris_fiyati`, `adet`
-- `giris_nedeni`: Neden alındı (detaylı tez)
-- `katalizor`: Tetikleyici olay
-- `hedef_fiyat`, `stop_loss`
+## 💼 4 Portföy Stratejisi
 
-### Her Pozisyon Kapatıldığında ZORUNLU:
-- `cikis_tarihi`, `cikis_fiyati`
-- `cikis_nedeni`: Neden satıldı
-- `kar_zarar`, `kar_zarar_yuzde`, `tutulan_gun`
-- `dersler`: Bu trade'den çıkarılan dersler
+| Portföy | Sermaye | Strateji | Hedef |
+|---------|---------|----------|-------|
+| **Dengeli** | $100K | Multi-sector value + momentum | Yıllık %15-20 |
+| **Agresif** | $100K | Micro-cap AI disruption | Yıllık %30+ |
+| **Temettü** | $100K | Düşük P/E, yüksek temettü | Yıllık %8-12 + temettü |
+| **Rotasyon** | $100K | Sektör ETF makro rotasyonu | S&P 500 + %5 |
+
+---
 
 ## 🔄 Günlük Rutin
 
 ### Piyasa Kapanışı Sonrası
-1. **Fiyat Güncelle** → `scripts/update_all_portfolios.py`
-2. **Saat 14:00 - Günlük Rapor (ZORUNLU) → `reports/daily/DAILY_REPORT_YYYY-MM-DD.md`
+1. **Fiyat Güncelle** → FMP API ile manuel güncelleme
+2. **Günlük Rapor** → `reports/daily/DAILY_REPORT_YYYY-MM-DD.md`
 3. **GitHub Push** → Tüm değişiklikleri kaydet
-### Piyasa Açılışı
-1. **Swing tarama → watchlist güncelle  
-2. **Pozisyon yönetimi, portföylerin durumu güncelleme
-3. **Fırsat takibi, gerekli ise hisse ekleme, çıkarma  (portföy ruhuna uygun)
-4. Kapanışa doğru Fiyat güncelle ,günlük log yaz.
-5. Summary güncelle
-6. Git commit + push
 
-### Cumartesi Günü
-1. **Saat 14:00 - Günlük Rapor, haber odaklı rapor yazılır (ZORUNLU) → `reports/daily/DAILY_REPORT_YYYY-MM-DD.md`
 ### Pazar Günü
 1. **Haftalık Rapor** → `reports/weekly/WEEKLY_REPORT_YYYY-MM-DD.md`
-2. **Strateji değerlendirmesi** → Sektör rotasyonu, balon riski, portföy dengeleme
-3. **İzleme listesi güncelleme** → `data/swing/watchlist.json`
+2. **Strateji Review** → Sektör rotasyonu, balon riski, portföy dengeleme
+3. **Watchlist Güncelle** → `data/swing/watchlist.json`
 
 ---
 
-## 📊 API & Araçlar
+## 📊 Veri Dosyaları
 
-- **FMP API:** Financial Modeling Prep
-- **API Key:** `g1GFJZtV5rCP49UCir4WuP56VjhmA6F8`
-- **GitHub:** https://github.com/zeynelgun-afk/portfolio-tracker
-- **Token:** `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`
+### Portföy JSON Yapısı
+```json
+{
+  "portfoy_adi": "Dengeli Portföy",
+  "baslangic_sermaye": 100000,
+  "nakit": {"miktar": 12345.67, "para_birimi": "USD"},
+  "pozisyonlar": [...],
+  "transactions": [...],
+  "son_guncelleme": "2026-02-21T19:41:06"
+}
+```
 
-## 🎓 Genel Kurallar
+### Pozisyon Zorunlu Alanlar
+- `sembol`, `isim`, `sektor`
+- `adet`, `maliyet_baz`, `guncel_fiyat`
+- `yatirim`, `guncel_deger`, `kar_zarar`
+- `giris_tarihi`, `giris_fiyati`, `giris_nedeni`
 
-1. ✅ **PORTFÖY RUHUNA SADAKAT** - Tüm işlemler portföy kurallarına uygun yapılmalıdır
-2. ✅ Somut, veriye dayalı öneriler
-3. ✅ Her öneride risk/ödül oranı belirt
-4. ✅ Portföy değişikliklerinde korelasyon kontrol
-5. ✅ Büyük kararları adımlara böl
-6. ✅ Her değişiklikte Git commit + push
-7. ✅ **Saat 14:00'de günlük rapor yaz (reports/daily/)**
+**Detaylı şema:** `docs/PORTFOLIO_DATA_SKILL.md`
 
-## 📋 Portföy Özet Tablosu
+---
 
-| Portföy | Long İzin | ETF İzin | Hedge İzin | Max Pozisyon | Hedef Getiri |
-|---------|-----------|----------|------------|--------------|--------------|
-| Dengeli | Hisse | ❌ | Short ETF ✅ | 7 | %60+ |
-| Agresif Büyüme | Büyüme Hisse | ❌ | Short ETF ✅ | 8 | %100+ |
-| Değer + Temettü | Değer/Temettü Hisse | Sadece Temettü ETF ✅ | Short ETF ✅ | 10 | %35+ |
-| Sektör Rotasyonu | ❌ | Sektör ETF ✅ | Short ETF ✅ | 8 | S&P+20% |
+## 🎯 Swing Trade Kuralları
 
-## 📈 Performans Takibi
+| Kural | Değer |
+|-------|-------|
+| Max eşzamanlı pozisyon | 10 |
+| Stop-loss | %5 |
+| Kar hedefi | %10 |
+| Min R:R oranı | 2:1 |
+| Max tutma süresi | 15 gün |
 
-Tüm performans metrikleri `data/summary.json` dosyasında takip edilir.
+**Detaylı kurallar:** `data/swing/README.md`
 
-## 📝 Rapor Sistemi
+---
 
-### Günlük Raporlar (Pazartesi-Cumartesi)
-- **Klasör:** `reports/daily/`
-- **Format:** `DAILY_REPORT_YYYY-MM-DD.md`
-- **Zaman:** Her gün saat 14:00
-- **Hafta Sonu:** Cumartesi günleri haber odaklı rapor
+## 📈 Raporlar
 
-### Haftalık Raporlar (Pazar)
-- **Klasör:** `reports/weekly/`
-- **Format:** `WEEKLY_REPORT_YYYY-MM-DD.md`
-- **İçerik:** Haftalık performans, strateji değerlendirmesi, önümüzdeki hafta planı
+### Günlük Rapor (Pazartesi-Cumartesi)
+- Format: `reports/daily/DAILY_REPORT_YYYY-MM-DD.md`
+- İçerik: Portföy performansı, önemli haberler, swing durumu
+- **Cumartesi özel:** Haber odaklı derinlemesine analiz
 
-## ⚠️ Geçiş Dönemi Notu
+### Haftalık Rapor (Pazar)
+- Format: `reports/weekly/WEEKLY_REPORT_YYYY-MM-DD.md`
+- İçerik: Haftalık özet, sektör rotasyonu, önümüzdeki hafta stratejisi
 
-Mevcut ETF pozisyonları (Dengeli ve Agresif'teki XLE, XLI) tutulabilir, ancak:
-- ✅ Yeni alımlarda KURALLARA UYULMALIDIR
-- ✅ ETF'ler satılırsa, yerine KURAL UYGUN pozisyonlar alınmalıdır
-- ✅ Rebalance'da kurallara uygun pozisyonlara geçilmelidir
+---
 
-***
+## 📋 Git Commit Formatı
 
+```
+[TİP] PORTFÖY - SEMBOL @FİYAT - AÇIKLAMA
 
-**Kurallar Güncelleme:** 19 Şubat 2026  
-**README Güncelleme:** 21 Şubat 2026  
-**Dil:** Türkçe
+Örnekler:
+[ALIŞ] Dengeli - SM @20.67 - Oil & gas başlangıç pozisyonu
+[SATIŞ] Agresif - AMD @199.39 - Stop-loss tetiklendi
+[GÜNCELLEME] Tüm portföyler - 21 Şubat kapanış fiyatları
+[SWING-GİRİŞ] NEM @118.12 - Altın momentum breakout
+```
 
-***
+---
+
+## 🔗 API & Araçlar
+
+- **FMP API:** Financial Modeling Prep (Premium plan)
+- **Git:** Versiyon kontrolü ve yedekleme
+- **Manuel güncelleme:** Direkt JSON düzenleme
+
+---
+
+## 📚 Dokümantasyon
+
+| Dosya | Açıklama |
+|-------|----------|
+| `docs/PORTFOLIO_DATA_SKILL.md` | JSON şema ve güncelleme kuralları (KRİTİK) |
+| `docs/strategy.md` | Genel portföy stratejisi |
+| `docs/SWING_TRADE_RULES.md` | Swing trade detaylı kurallar |
+| `PORTFOY_KURALLARI.md` | Yönetim kuralları ve ilkeler |
+| `ACTIVE_FILES.md` | Aktif dosyalar listesi |
+
+---
+
+**Son Güncelleme:** 21 Şubat 2026  
+**Durum:** ✅ Aktif  
+**Simülasyon Dönemi:** 17 Şubat 2026 - Devam Ediyor
