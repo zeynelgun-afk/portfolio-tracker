@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-02-22T19:30:00",
+  "son_guncelleme": "2026-02-22T19:58:17.204913",
   "not": "Pazar watchlist güncellemesi - Prediction markets + haftalık insights",
   "izleme_listesi": [
     {
@@ -69,6 +69,23 @@
       "hedef_fiyat": 60.0,
       "stop_loss": 45.0,
       "katalizor": "Iran escalation premium, crude oil güçlü, Buffett backing"
+    },
+    {
+      "sembol": "AVGO",
+      "guncel_fiyat": 332.65,
+      "momentum_5gun": 4.06,
+      "sektor": "Teknoloji - Yarı İletken & Altyapı Yazılımı",
+      "notlar": "custom asic (google tpu, meta mtia) + vmware yazılım geliri çift motorlu büyüme. fcf $27B/yıl, gross margin %68, piotroski 8/9. nvidia müşterilerinin capex riski broadcom'a dolaylı fayda sağlayabilir — custom asic'e kayış senaryosu. dcf $267 vs fiyat $333 → %20 overvalued ama büyüme primi haklı olabilir. nvidia earnings sonrası sektör genelinde pullback fırsatı bekleniyor.",
+      "urgency": "medium",
+      "ekleme_tarihi": "2026-02-22",
+      "son_kontrol": "2026-02-22",
+      "hedef_giris": "315-320",
+      "hedef_fiyat": 370.0,
+      "stop_loss": 295.0,
+      "katalizor": "nvidia earnings sonrası semicon pullback, custom asic talebi, vmware sinerjisi",
+      "portfoy_hedef": "Dengeli veya Rotasyon",
+      "teknik_not": "sma200=$315 destek, sma50=$342 direnç. rsi 49 nötr. adx 17 trendless — konsolidasyon bölgesinde. $315-320 ideal giriş.",
+      "risk": "ai capex yavaşlaması, vmware entegrasyon gecikmeleri, yüksek çarpan baskısı"
     }
   ],
   "aggressive_watchlist": [
@@ -82,8 +99,8 @@
       "ekleme_tarihi": "2026-02-22",
       "son_kontrol": "2026-02-22",
       "hedef_giris": "1.90-2.00",
-      "hedef_fiyat": 2.50,
-      "stop_loss": 1.80,
+      "hedef_fiyat": 2.5,
+      "stop_loss": 1.8,
       "katalizor": "Defense spending, micro-cap momentum, tech recovery",
       "portfoy": "Agresif Büyüme"
     },
@@ -97,8 +114,8 @@
       "ekleme_tarihi": "2026-02-22",
       "son_kontrol": "2026-02-22",
       "hedef_giris": "2.70-2.80",
-      "hedef_fiyat": 3.50,
-      "stop_loss": 2.60,
+      "hedef_fiyat": 3.5,
+      "stop_loss": 2.6,
       "katalizor": "AR/VR adoption, enterprise deals, micro-cap momentum",
       "portfoy": "Agresif Büyüme"
     }
@@ -150,6 +167,25 @@
       "notlar": "Portföyden satıldı (19 Şubat). Tech recovery bekle, 2-3 hafta.",
       "urgency": "low",
       "wait_until": "2026-03-12"
+    },
+    {
+      "sembol": "ALAB",
+      "guncel_fiyat": 129.68,
+      "52w_high": 262.9,
+      "dusen_yuzde": -50.7,
+      "sektor": "Teknoloji - AI Connectivity/Networking",
+      "momentum_5gun": 2.64,
+      "notlar": "ai altyapısı connectivity çözümleri. gross margin %76 çok yüksek ama q4 net gelir -%51 düştü. gelirin %61'i çin+tayvan → jeopolitik risk yüksek. dcf negatif. tüm ma'ların altında. rsi 40 henüz oversold değil. $100-110 ve rsi<30 bekleniyor.",
+      "giris_sartlari": "rsi<30 + $100-110 fiyat aralığı + hacim artışıyla dönüş konfirmasyonu + nvidia earnings sonrası netlik",
+      "hedef_giris": "100-110",
+      "hedef_fiyat": 150.0,
+      "stop_loss": 90.0,
+      "urgency": "low",
+      "portfoy": "Agresif Büyüme (küçük pozisyon)",
+      "ekleme_tarihi": "2026-02-22",
+      "son_kontrol": "2026-02-22",
+      "wait_until": "2026-03-15",
+      "risk": "q4 net gelir düşüşü, çin/tayvan coğrafi yoğunlaşma, dcf negatif, tüm ma'lar altında"
     }
   ],
   "prediction_markets_insights": {
@@ -157,6 +193,6 @@
     "iran": "Polymarket %12 (bu hafta düşük) → Enerji premium kısa vadede stabil",
     "tariff": "SCOTUS ruling (20 Şubat) → Domestic producers güvenli, import-heavy riskli. DIS pozitif (domestic entertainment)."
   },
-  "toplam_aday": 7,
+  "toplam_aday": 11,
   "yuksek_oncelik_aday": 4
 }
