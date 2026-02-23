@@ -27,3 +27,5 @@ date,action,symbol,shares,price,total,reason
 2026-02-23,BUY,NNDM,2550,1.96,4998.0,"Giriş bölgesi yakalandı - Agresif portföy - 3D baskı teknoloji watchlist hedefi"
 2026-02-23,SELL,NVDA,1,192.33,192.33,"Earnings öncesi çıkış - Swing - +%3.4 kâr güvenceye alındı, gap-down riski kaçınıldı"
 2026-02-23,BUY,PLTR,39,128.42,5008.38,"RSI 33 oversold giriş - Agresif portföy - AI/savunma momentum geri dönüş tezi"
+2026-02-23,BUY,GILT,347,14.39,4993.33,"Yarım pozisyon tamamlandı - Agresif portföy - RSI 41 destek"
+2026-02-23,BUY,SHOP,41,119.88,4915.08,"SMA200 destek giriş - Agresif portföy - E-ticaret altyapı lideri"

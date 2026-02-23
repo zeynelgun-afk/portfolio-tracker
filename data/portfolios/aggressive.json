@@ -2,7 +2,7 @@
   "portfoy_adi": "Agresif Büyüme",
   "baslangic_sermaye": 100000,
   "nakit": {
-    "miktar": 68452.82,
+    "miktar": 58544.41,
     "para_birimi": "USD"
   },
   "pozisyonlar": [
@@ -10,19 +10,19 @@
       "sembol": "GILT",
       "isim": "Gilat Satellite Networks Ltd.",
       "sektor": "Teknoloji",
-      "adet": 342,
-      "maliyet_baz": 14.61,
-      "guncel_fiyat": 14.45,
-      "yatirim": 4996.62,
-      "guncel_deger": 4941.9,
-      "kar_zarar": -54.72,
-      "kar_zarar_yuzde": -1.1,
+      "adet": 689,
+      "maliyet_baz": 14.4992,
+      "guncel_fiyat": 14.39,
+      "yatirim": 9989.95,
+      "guncel_deger": 9914.71,
+      "kar_zarar": -75.24,
+      "kar_zarar_yuzde": -0.75,
       "gunluk_degisim_yuzde": 0,
-      "son_guncelleme": "2026-02-23T14:32:54.882874",
+      "son_guncelleme": "2026-02-23T14:50:28.497621",
       "giris_tarihi": "2026-02-20",
       "giris_fiyati": 14.61,
-      "giris_nedeni": "Yarım pozisyon - Satellite comm pullback fırsatı",
-      "agirlik_yuzde": 5.44
+      "giris_nedeni": "Yarım pozisyon tamamlandı. RSI 41, SMA200 üzeri destek. Orijinal: 342 adet @$14.61, ek: 347 adet @$14.39. Ortalama maliyet: $14.50",
+      "agirlik_yuzde": 10.93
     },
     {
       "sembol": "BKSY",
@@ -40,7 +40,7 @@
       "giris_tarihi": "2026-02-20",
       "giris_fiyati": 19.77,
       "giris_nedeni": "Yarım pozisyon - Real-time satellite imagery pullback",
-      "agirlik_yuzde": 8.11
+      "agirlik_yuzde": 8.12
     },
     {
       "sembol": "NNDM",
@@ -77,11 +77,29 @@
       "giris_fiyati": 128.42,
       "giris_nedeni": "RSI 33 aşırı satım bölgesi, SMA200 yakınında destek. AI veri analitiği ve savunma sektörü lider oyuncusu, US government contract büyümesi güçlü. SMA50 geri dönüş hedefleniyor. Güçlü earnings beat geçmişi.",
       "agirlik_yuzde": 5.52
+    },
+    {
+      "sembol": "SHOP",
+      "isim": "Shopify Inc.",
+      "sektor": "Teknoloji",
+      "adet": 41,
+      "maliyet_baz": 119.88,
+      "guncel_fiyat": 119.88,
+      "yatirim": 4915.08,
+      "guncel_deger": 4915.08,
+      "kar_zarar": 0.0,
+      "kar_zarar_yuzde": 0.0,
+      "gunluk_degisim_yuzde": -5.0079,
+      "son_guncelleme": "2026-02-23T14:50:28.497621",
+      "giris_tarihi": "2026-02-23",
+      "giris_fiyati": 119.88,
+      "giris_nedeni": "RSI 42.6, SMA200 -%13.8 altında destek bölgesi. E-ticaret altyapısı büyümesi, merchant solutions geliri artıyor. Yakın vadeli earnings riski yok. SMA200'e dönüş hedefleniyor.",
+      "agirlik_yuzde": 5.42
     }
   ],
-  "son_guncelleme": "2026-02-23T14:47:41.021880",
-  "toplam_deger": 90765.07,
-  "toplam_getiri_yuzde": -9.23,
+  "son_guncelleme": "2026-02-23T14:50:28.497621",
+  "toplam_deger": 90744.55,
+  "toplam_getiri_yuzde": -9.26,
   "gerceklesen_zarar": -1321.51,
   "kapali_pozisyonlar": [
     {
@@ -162,6 +180,11 @@
       "date": "2026-02-23T14:47:41.021880",
       "type": "entry",
       "content": "ALIŞ PLTR: 39 adet @$128.42 = $5008.38. Stop: $118.15, Hedef: $147.68. RSI 33 oversold, NVDA earnings sonrası slot kullanıldı."
+    },
+    {
+      "date": "2026-02-23T14:50:28.497621",
+      "type": "entry",
+      "content": "GILT yarım pozisyon tamamlandı (+347 adet @$14.39). SHOP yeni giriş 41 adet @$119.88. Nakit kalan: $58,544.41"
     }
   ]
 }
