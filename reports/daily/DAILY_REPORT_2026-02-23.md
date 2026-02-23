@@ -1,63 +1,59 @@
-# 📊 günlük rapor — 23 şubat 2026 (pazartesi)
+# Günlük Rapor — 23 Şubat 2026, Pazartesi
 
-> **piyasa durumu:** new york kapalı (17:30'da açılacak)  
-> **güncelleme saati:** 14:12 türkiye / 11:12 utc  
-> **kaynak:** finzora ai
-
----
-
-## 🕐 seans bekleniyor
-
-piyasa 17:30'da açılacak. veriler güncellenecek, pozisyon değerlendirmesi seans sonrası yapılacak.
+**Piyasa Durumu:** New York Kapalı (17:30'da açılacak)
+**Güncelleme:** 14:12 Türkiye / 11:12 UTC
+**Kaynak:** Finzora AI
 
 ---
 
-## 🔬 makro perspektif — citrini research (22 şubat 2026)
+## Seans Öncesi Değerlendirme
 
-**"2028 global intelligence crisis" — özet ve portföy etkisi**
+New York piyasası henüz açılmadı. Aşağıdaki analizler seans öncesi makro perspektifi kapsamaktadır. Pozisyon güncellemeleri ve portföy değerlendirmesi seans sonrasında yapılacak.
 
-citrini research ve alap shah'ın 22 şubat'ta yayınladığı spekülatif senaryo analizi finansal çevrelerde geniş yankı uyandırdı. bir tahmin değil, bir düşünce egzersizi olarak çerçevelenmiş ama sol kuyruk risklerini iyi modelliyor.
+---
 
-**senaryonun özü:**
+## Makro Perspektif: Citrini Research — 22 Şubat 2026
 
-yapay zekanın "olumlu" ilerlemeye devam etmesi durumunda bile ekonomik kriz tetiklenebilir:
+Citrini Research ve Alap Shah'ın birlikte kaleme aldığı "The 2028 Global Intelligence Crisis" başlıklı rapor, 22 Şubat'ta yayımlandı ve finansal çevrelerde hızla yayıldı. Rapor bir tahmin değil, bilinçli olarak çerçevelenmiş bir senaryo analizi. Temel motivasyonu şu soruya yanıt aramak: yapay zeka boğalığı doğru çıksa bile bu ekonomi için aşağı yönlü bir risk olabilir mi?
 
-- 2026 sonunda s&p 8.000, nasdaq 30.000'e ulaşır (euphoria zirvesi)
-- ai destekli agentic kodlama araçları mid-market saas ürünlerini haftalar içinde çoğaltabilir hale gelir
-- kurumsal şirketler yazılım aboneliklerini iptal etmeye başlar → saas gelirleri çöker
-- şirketler marjını korumak için işten çıkarma yapıp tasarrufu ai'ye yatırır → beyaz yaka işsizliği artar
-- beyaz yakalar gdp'nin %75'ini oluşturan tüketici harcamalarını keser → "ghost gdp" (kayıtlara giren ama ekonomide dolaşmayan çıktı)
-- agentic commerce gelişir: makineler sigorta, seyahat, gayrimenkul gibi sektörlerdeki "sürtünme primini" yok eder
-- doordash, amerikan express, geleneksel sigorta şirketleri gibi "alışkanlık aracıları" çöker
+**Senaryonun özeti**
 
-**neden önemli — portföy bağlamı:**
+Rapor, 2028 Haziran'ından geriye dönük yazılmış kurgusal bir makro memo formatında sunuluyor. Temel mekanizma şöyle işliyor:
 
-| citrini senaryosunda kazananlar | citrini senaryosunda kaybedenler |
+Agentic kodlama araçları 2025 sonunda önemli bir yetenek sıçraması yapıyor. Nitelikli bir geliştirici, Claude Code veya Codex kullanarak orta ölçekli bir SaaS ürününün temel işlevselliğini haftalar içinde kopyalayabiliyor. Kurumsal şirketlerin yazılım harcamaları için bütçe görüşmeleri başladığında, satın alma yöneticileri artında masaya farklı bir güçle oturuyor. Yenileme fiyatlarında ciddi indirimler koparılıyor, uzun kuyruklu SaaS ürünleri ise müşteri kaybediyor.
+
+ServiceNow'un Q3 2026 raporu bu kırılganlığı somutlaştırıyor: net yeni ACV büyümesi yüzde 23'ten 14'e geriliyor, şirket yüzde 15 işten çıkarma açıklıyor, hisse yüzde 18 düşüyor. Buradaki kritik ironi şu: müşterilerindeki AI destekli işten çıkarmalar, ServiceNow'un kendi lisans gelirini mekanik olarak yok ediyor. Çalışanı azalan müşteri, lisansını da iptal ediyor.
+
+Kurumsal düzeyde de benzer bir döngü başlıyor. Şirketler marjını korumak için işten çıkarıyor, tasarrufu AI'ye yatırıyor, AI bir sonraki işten çıkarma dalgasını mümkün kılıyor. Her şirketin bireysel kararı rasyonel, kolektif sonuç ise yıkıcı.
+
+Tüketici tarafında tablo daha da karmaşık. Beyaz yaka çalışanlar GDP'nin yaklaşık yüzde 75'ini oluşturan tüketici harcamalarının bel kemiğini oluşturuyor. Bu kesimin geliri ve harcaması yapısal olarak baskılanınca raporda "ghost GDP" olarak adlandırılan bir tablo ortaya çıkıyor: milli gelir hesaplarında büyüme kaydediliyor ama para gerçek ekonomide dolaşmıyor.
+
+Agentic ticaret ise aracılık modellerine dayalı şirketleri doğrudan tehdit ediyor. Makineler sigorta yenilemelerinde pasif müşteri davranışını, seyahat platformlarındaki komisyon marjlarını ve gayrimenkul işlemlerindeki bilgi asimetrisini ortadan kaldırıyor. Raporun ifadesiyle: "insanların 'ilişki' dediği şeyin büyük bölümü, aslında yüzü olan bir sürtünmeydi."
+
+**Portföy bağlamında değerlendirme**
+
+| Senaryoda kazananlar | Senaryoda kaybedenler |
 |---|---|
-| fiziksel ai (robot, sensör) | geleneksel saas |
-| emtia (altın, enerji) | kredi kartı şirketleri (ma, v, axp) |
-| savunmacı sektörler | geleneksel sigorta, gayrimenkul komisyoncuları |
-| stablecoin altyapısı | aracılık modeliyle yaşayan şirketler |
+| Fiziksel AI (robot, sensör teknolojisi) | Geleneksel SaaS |
+| Emtia (altın, enerji) | Kredi kartı şirketleri (MA, V, AXP) |
+| Savunmacı sektörler | Geleneksel sigorta, gayrimenkul komisyoncuları |
+| Stablecoin altyapısı | Alışkanlık aracılığıyla para kazanan her model |
 
-**mevcut portföylerimize etkisi:**
+Mevcut portföy bu senaryonun kazanan tarafıyla büyük ölçüde örtüşüyor. RGLD, XLE, SM, MO, SCHD, T gibi emtia ve savunmacı ağırlıklı pozisyonlar senaryo ile uyumlu. Agresif portföydeki BKSY uydu/fiziksel teknoloji tarafında yer aldığından nötr-olumlu sayılabilir. Büyük SaaS pozisyonu, AXP ya da geleneksel reit ağırlığı olmadığından kırılgan alanlara maruziyetimiz düşük.
 
-- **olumlu:** rgld, xle, sm, mo, schd, t — savunmacı ve emtia ağırlığı senaryoyla uyumlu ✅
-- **dikkat:** agresif portföyde bksy (uydu teknolojisi) — fiziksel ai tarafında sayılabilir, nötr/olumlu
-- **yokluğumuz iyi:** büyük saas, axp, geleneksel reit'ler portföyde yok
-
-**önemli not:** bu bir senaryo analizi, tahmin değil. citrini kendisi de yazıyor: "bazı senaryolar gerçekleşmeyecek." ancak sol kuyruk riskini portföyde fiyatlamak için iyi bir referans noktası.
+Önemli bir not: Citrini bu senaryonun kesinlikle gerçekleşeceğini söylemiyor. Rapor, sol kuyruk riskini fiyatlamak için bir çerçeve sunuyor. Portföy yapısını bu risk altında da test etmek, strateji bütünlüğü açısından sağlıklı bir alıştırma.
 
 ---
 
-## 📋 seans sonrası aksiyon planı
+## Seans Sonrası Aksiyon Planı
 
-seans açılınca değerlendirilecekler:
+Seans açılınca öncelikli takip edilecekler:
 
-1. **nem trailing stop** → $121.22 seviyesi izle
-2. **kos kar al** → güçlü ivme devam ederse %50 sat planını değerlendir
-3. **bksy/gilt** → geri çekilme devam ederse tamamlama fırsatı
-4. **t (at&t)** → $27.25 zarar durdur izle
+1. **NEM trailing stop** — $121.22 seviyesi izlenecek, tetiklenirse çıkış yapılacak
+2. **KOS kar al** — Güçlü momentum devam ederse yüzde 50 satış planı değerlendirilecek
+3. **BKSY / GILT** — Geri çekilme süreceğine dair sinyal gelirse tamamlama fırsatı değerlendirilecek
+4. **T (AT&T)** — $27.25 stop seviyesi izlenmeye devam edecek
 
 ---
 
-sonraki güncelleme
+Sonraki Güncelleme
