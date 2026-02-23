@@ -1,8 +1,8 @@
 # 📊 günlük rapor — 23 şubat 2026 (pazartesi)
 
-> **piyasa durumu:** new york açık  
+> **piyasa durumu:** new york kapalı (17:30'da açılacak)  
 > **güncelleme saati:** 14:12 türkiye / 11:12 utc  
-> **kaynak:** fmp api canlı veriler
+> **kaynak:** finzora ai
 
 ---
 
