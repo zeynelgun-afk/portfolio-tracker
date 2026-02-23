@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-02-23T14:32:54.882874",
+  "son_guncelleme": "2026-02-23T14:44:07.121043",
   "not": "SWING TRADE SADECE SİMÜLASYON - Sadece % kazanç/kayıp takibi (MAX: 10 pozisyon)",
   "aktif_pozisyonlar": [
     {
@@ -10,7 +10,7 @@
       "guncel_fiyat": 124.64,
       "guncel_kar_zarar_yuzde": 5.52,
       "hedef_fiyat": 129.93,
-      "stop_loss": 121.2209,
+      "stop_loss": 122.5,
       "tutulan_gun": 11,
       "giris_nedeni": "Güçlü momentum +8.8%, altın madenciliği lideri, güvenli liman talebi",
       "katalizor": "Altın fiyat gücü, malzeme sektörü rotasyonu",
@@ -18,7 +18,7 @@
       "zaman_cercevesi": "7-10 gün",
       "risk": "Altın fiyat dönüşü",
       "durum": "⚠️ Trailing stop'a YAKIN ($-1.30 ara)",
-      "son_guncelleme": "2026-02-23T14:32:54.882874",
+      "son_guncelleme": "2026-02-23T14:44:07.121043",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
@@ -27,7 +27,7 @@
         },
         "kalan_50_icin": {
           "aksiyon": "TRAİLİNG STOP AKTIF",
-          "baslangic_trailing_stop": 123.43,
+          "baslangic_trailing_stop": 122.5,
           "trailing_yuzde": 5,
           "aciklama": "Zirveden -%5 düşünce sat"
         },

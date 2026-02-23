@@ -23,3 +23,5 @@ date,action,symbol,shares,price,total,reason
 2026-02-19,BUY,XLI,102,175.04,17854.08,Rotasyon,Endüstriyel +11% güçlü - Pozisyon artırma
 2026-02-20,BUY,GILT,342,14.61,4996.62,"Agresif portföy - Yarım pozisyon girişi (pullback fırsatı)"
 2026-02-20,BUY,BKSY,379,19.77,7492.83,"Agresif portföy - Yarım pozisyon girişi (-%5.4 düşüş)"
+
+2026-02-23,BUY,NNDM,2550,1.96,4998.0,"Giriş bölgesi yakalandı - Agresif portföy - 3D baskı teknoloji watchlist hedefi"

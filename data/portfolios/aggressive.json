@@ -2,7 +2,7 @@
   "portfoy_adi": "Agresif Büyüme",
   "baslangic_sermaye": 100000,
   "nakit": {
-    "miktar": 78459.2,
+    "miktar": 73461.2,
     "para_birimi": "USD"
   },
   "pozisyonlar": [
@@ -41,9 +41,27 @@
       "giris_fiyati": 19.77,
       "giris_nedeni": "Yarım pozisyon - Real-time satellite imagery pullback",
       "agirlik_yuzde": 8.11
+    },
+    {
+      "sembol": "NNDM",
+      "isim": "Nano Dimension Ltd.",
+      "sektor": "Teknoloji",
+      "adet": 2550,
+      "maliyet_baz": 1.96,
+      "guncel_fiyat": 1.96,
+      "yatirim": 4998.0,
+      "guncel_deger": 4998.0,
+      "kar_zarar": 0.0,
+      "kar_zarar_yuzde": 0.0,
+      "gunluk_degisim_yuzde": 0.0,
+      "son_guncelleme": "2026-02-23T14:44:07.121043",
+      "giris_tarihi": "2026-02-23",
+      "giris_fiyati": 1.96,
+      "giris_nedeni": "Giriş bölgesi $1.90-2.00 tutturuldu. Micro-cap 3D baskı teknoloji şirketi, savunma ve uzay sektörü müşteri tabanı güçleniyor. Watchlist hedefine ulaşıldı.",
+      "agirlik_yuzde": 5.51
     }
   ],
-  "son_guncelleme": "2026-02-23T14:32:54.882874",
+  "son_guncelleme": "2026-02-23T14:44:07.121043",
   "toplam_deger": 90765.07,
   "toplam_getiri_yuzde": -9.23,
   "gerceklesen_zarar": -1321.51,
@@ -116,6 +134,11 @@
       "date": "2026-02-20T19:55:18",
       "type": "entry",
       "content": "İLK GİRİŞLER: GILT $14.61 + BKSY $19.77 = $12,489.45"
+    },
+    {
+      "date": "2026-02-23T14:44:07.121043",
+      "type": "entry",
+      "content": "ALIŞ NNDM: 2550 adet @$1.96 = $4998.0. Stop: $1.86, Hedef: $2.16. Giriş bölgesi yakalandı."
     }
   ]
 }
