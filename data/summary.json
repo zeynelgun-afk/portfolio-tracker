@@ -3,18 +3,18 @@
   "simulasyon_donemi": "17 Şubat 2026 - 24 Şubat 2026",
   "islem_gunleri": 5,
   "toplam_sermaye": 400000.0,
-  "toplam_deger": 419877.04,
-  "toplam_kar_zarar": 19877.03999999998,
-  "toplam_kar_zarar_yuzde": 4.969259999999995,
+  "toplam_deger": 421059.02,
+  "toplam_kar_zarar": 21059.02,
+  "toplam_kar_zarar_yuzde": 5.26,
   "benchmark_spy": 0.0,
   "alpha": 4.969259999999995,
   "portfolyolar": {
     "dengeli": {
       "isim": "Dengeli Portföy",
-      "deger": 108752.37999999999,
+      "deger": 108974.7,
       "maliyet": 100000,
-      "kar_zarar": 8752.37999999999,
-      "kar_zarar_yuzde": 8.75237999999999,
+      "kar_zarar": 8974.7,
+      "kar_zarar_yuzde": 8.97,
       "pozisyon_sayisi": 6,
       "nakit": {
         "miktar": 9613.2,
@@ -24,10 +24,10 @@
     },
     "agresif": {
       "isim": "Agresif Büyüme",
-      "deger": 91051.9,
+      "deger": 90765.07,
       "maliyet": 100000,
-      "kar_zarar": -8948.100000000006,
-      "kar_zarar_yuzde": -8.948100000000005,
+      "kar_zarar": -9234.93,
+      "kar_zarar_yuzde": -9.23,
       "pozisyon_sayisi": 2,
       "nakit": {
         "miktar": 78459.2,
@@ -37,10 +37,10 @@
     },
     "temettü": {
       "isim": "Değer + Temettü",
-      "deger": 115238.79999999999,
+      "deger": 116199.35,
       "maliyet": 100000,
-      "kar_zarar": 15238.799999999988,
-      "kar_zarar_yuzde": 15.238799999999989,
+      "kar_zarar": 16199.35,
+      "kar_zarar_yuzde": 16.2,
       "pozisyon_sayisi": 7,
       "nakit": {
         "miktar": 648.12,
@@ -50,10 +50,10 @@
     },
     "rotasyon": {
       "isim": "Sektör Rotasyonu",
-      "deger": 104833.96,
+      "deger": 105119.9,
       "maliyet": 100000,
-      "kar_zarar": 4833.960000000006,
-      "kar_zarar_yuzde": 4.8339600000000065,
+      "kar_zarar": 5119.9,
+      "kar_zarar_yuzde": 5.12,
       "pozisyon_sayisi": 3,
       "nakit": {
         "miktar": 668.0800000000054,

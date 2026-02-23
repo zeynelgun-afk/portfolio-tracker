@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-02-23T11:21:14.828862",
+  "son_guncelleme": "2026-02-23T14:32:54.882874",
   "not": "SWING TRADE SADECE SİMÜLASYON - Sadece % kazanç/kayıp takibi (MAX: 10 pozisyon)",
   "aktif_pozisyonlar": [
     {
@@ -7,8 +7,8 @@
       "sembol": "NEM",
       "giris_tarihi": "2026-02-12",
       "giris_fiyati": 118.12,
-      "guncel_fiyat": 122.13,
-      "guncel_kar_zarar_yuzde": 3.3948526921774387,
+      "guncel_fiyat": 124.64,
+      "guncel_kar_zarar_yuzde": 5.52,
       "hedef_fiyat": 129.93,
       "stop_loss": 121.2209,
       "tutulan_gun": 11,
@@ -18,7 +18,7 @@
       "zaman_cercevesi": "7-10 gün",
       "risk": "Altın fiyat dönüşü",
       "durum": "⚠️ Trailing stop'a YAKIN ($-1.30 ara)",
-      "son_guncelleme": "2026-02-23T11:21:14.828642",
+      "son_guncelleme": "2026-02-23T14:32:54.882874",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
@@ -39,8 +39,8 @@
       "sembol": "NVDA",
       "giris_tarihi": "2026-02-12",
       "giris_fiyati": 186.94,
-      "guncel_fiyat": 189.82,
-      "guncel_kar_zarar_yuzde": 1.5406012624371432,
+      "guncel_fiyat": 193.36,
+      "guncel_kar_zarar_yuzde": 3.43,
       "hedef_fiyat": 205.63,
       "stop_loss": 177.59,
       "tutulan_gun": 11,
@@ -50,7 +50,7 @@
       "zaman_cercevesi": "7-10 gün",
       "risk": "Büyüme rotasyonu devam ederse",
       "durum": "⚠️ Trailing stop'a YAKIN ($-5.53 ara)",
-      "son_guncelleme": "2026-02-23T11:21:14.828719",
+      "son_guncelleme": "2026-02-23T14:32:54.882874",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
@@ -71,8 +71,8 @@
       "sembol": "UNH",
       "giris_tarihi": "2026-02-13",
       "giris_fiyati": 293.19,
-      "guncel_fiyat": 290,
-      "guncel_kar_zarar_yuzde": -1.0880316518298707,
+      "guncel_fiyat": 289.06,
+      "guncel_kar_zarar_yuzde": -1.41,
       "hedef_fiyat": 322.51,
       "stop_loss": 278.53,
       "tutulan_gun": 10,
@@ -82,7 +82,7 @@
       "zaman_cercevesi": "7-12 gün",
       "risk": "Sağlık politikası belirsizliği",
       "durum": "⚠️ Trailing stop'a YAKIN ($-16.38 ara)",
-      "son_guncelleme": "2026-02-23T11:21:14.828744",
+      "son_guncelleme": "2026-02-23T14:32:54.882874",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
@@ -103,8 +103,8 @@
       "sembol": "LMT",
       "giris_tarihi": "2026-02-13",
       "giris_fiyati": 652.58,
-      "guncel_fiyat": 658.26,
-      "guncel_kar_zarar_yuzde": 0.8703913696404962,
+      "guncel_fiyat": 657.57,
+      "guncel_kar_zarar_yuzde": 0.76,
       "hedef_fiyat": 717.84,
       "stop_loss": 619.95,
       "tutulan_gun": 10,
@@ -114,7 +114,7 @@
       "zaman_cercevesi": "10-12 gün",
       "risk": "Bütçe endişeleri",
       "durum": "⚠️ Trailing stop'a YAKIN ($-23.69 ara)",
-      "son_guncelleme": "2026-02-23T11:21:14.828765",
+      "son_guncelleme": "2026-02-23T14:32:54.882874",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
@@ -135,8 +135,8 @@
       "sembol": "T",
       "giris_tarihi": "2026-02-17",
       "giris_fiyati": 28.68,
-      "guncel_fiyat": 27.98,
-      "guncel_kar_zarar_yuzde": -2.4407252440725222,
+      "guncel_fiyat": 28.31,
+      "guncel_kar_zarar_yuzde": -1.29,
       "hedef_fiyat": 31.55,
       "stop_loss": 27.25,
       "tutulan_gun": 6,
@@ -146,7 +146,7 @@
       "zaman_cercevesi": "7-10 gün",
       "risk": "Rekabet baskısı",
       "durum": "⚠️ Trailing stop'a YAKIN ($-1.99 ara)",
-      "son_guncelleme": "2026-02-23T11:21:14.828779",
+      "son_guncelleme": "2026-02-23T14:32:54.882874",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
@@ -167,8 +167,8 @@
       "sembol": "GE",
       "giris_tarihi": "2026-02-18",
       "giris_fiyati": 329.58,
-      "guncel_fiyat": 343.22,
-      "guncel_kar_zarar_yuzde": 4.1386006432429285,
+      "guncel_fiyat": 339.74,
+      "guncel_kar_zarar_yuzde": 3.08,
       "hedef_fiyat": 362.54,
       "stop_loss": 313.1,
       "tutulan_gun": 5,
@@ -178,7 +178,7 @@
       "zaman_cercevesi": "7-10 gün",
       "risk": "Piyasa zayıflığı, ekonomik yavaşlama",
       "durum": "⚠️ Trailing stop'a YAKIN ($-1.19 ara)",
-      "son_guncelleme": "2026-02-23T11:21:14.828794",
+      "son_guncelleme": "2026-02-23T14:32:54.882874",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
@@ -199,8 +199,8 @@
       "sembol": "DUK",
       "giris_tarihi": "2026-02-19",
       "giris_fiyati": 126.71,
-      "guncel_fiyat": 126.78,
-      "guncel_kar_zarar_yuzde": 0.05524425854313581,
+      "guncel_fiyat": 127.42,
+      "guncel_kar_zarar_yuzde": 0.56,
       "hedef_fiyat": 139.38,
       "stop_loss": 120.38,
       "tutulan_gun": 4,
@@ -210,7 +210,7 @@
       "zaman_cercevesi": "7-10 gün",
       "risk": "Faiz oranı yükselmesi, düzenleme riski",
       "durum": "⚠️ Trailing stop'a YAKIN ($-5.63 ara)",
-      "son_guncelleme": "2026-02-23T11:21:14.828809",
+      "son_guncelleme": "2026-02-23T14:32:54.882874",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
@@ -231,8 +231,8 @@
       "sembol": "DVA",
       "giris_tarihi": "2026-02-20",
       "giris_fiyati": 149.73,
-      "guncel_fiyat": 150.73,
-      "guncel_kar_zarar_yuzde": 0.6678688305616777,
+      "guncel_fiyat": 153.93,
+      "guncel_kar_zarar_yuzde": 2.81,
       "hedef_fiyat": 164.7,
       "stop_loss": 142.24,
       "tutulan_gun": 3,
@@ -242,7 +242,7 @@
       "zaman_cercevesi": "7-12 gün",
       "risk": "Healthcare düzenlemeleri, Medicare reimbursement değişiklikleri",
       "durum": "⚠️ Trailing stop'a YAKIN ($-5.73 ara)",
-      "son_guncelleme": "2026-02-23T11:21:14.828825",
+      "son_guncelleme": "2026-02-23T14:32:54.882874",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
