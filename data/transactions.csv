@@ -25,3 +25,5 @@ date,action,symbol,shares,price,total,reason
 2026-02-20,BUY,BKSY,379,19.77,7492.83,"Agresif portföy - Yarım pozisyon girişi (-%5.4 düşüş)"
 
 2026-02-23,BUY,NNDM,2550,1.96,4998.0,"Giriş bölgesi yakalandı - Agresif portföy - 3D baskı teknoloji watchlist hedefi"
+2026-02-23,SELL,NVDA,1,192.33,192.33,"Earnings öncesi çıkış - Swing - +%3.4 kâr güvenceye alındı, gap-down riski kaçınıldı"
+2026-02-23,BUY,PLTR,39,128.42,5008.38,"RSI 33 oversold giriş - Agresif portföy - AI/savunma momentum geri dönüş tezi"

@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-02-19",
+  "son_guncelleme": "2026-02-23",
   "kapatilan_pozisyonlar": [
     {
       "id": "SWING-001",
@@ -78,6 +78,19 @@
       "cikis_nedeni": "Stop-loss riski çok yüksek - 1.7% mesafe kaldı, zarar kesildi",
       "sonuc": "ZARAR",
       "ders": "REIT faiz hassasiyeti doğrulandı. Stop-loss'a yaklaşınca daha erken kes. 2 günde -3.4% kayıp fazla hızlı."
+    },
+    {
+      "id": "SWING-011",
+      "sembol": "NVDA",
+      "giris_tarihi": "2026-02-12",
+      "cikis_tarihi": "2026-02-23",
+      "giris_fiyati": 186.94,
+      "cikis_fiyati": 192.33,
+      "kar_zarar_yuzde": 2.88,
+      "tutulan_gun": 11,
+      "cikis_nedeni": "Earnings öncesi çıkış — 26 Şubat NVDA earnings riski, +%3.4 kâr güvenceye alındı. Gap-down riski (%10-15 olası) alınmadı.",
+      "sonuc": "KAZANÇ",
+      "ders": "Earnings öncesi kâr realizasyonu doğru strateji. Swing pozisyonda kazanç varken earnings riskine girmek R:R bozar. Earnings sonrası temiz giriş için slot açık tutuldu."
     }
   ],
   "istatistikler": {

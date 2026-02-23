@@ -2,7 +2,7 @@
   "portfoy_adi": "Agresif Büyüme",
   "baslangic_sermaye": 100000,
   "nakit": {
-    "miktar": 73461.2,
+    "miktar": 68452.82,
     "para_birimi": "USD"
   },
   "pozisyonlar": [
@@ -59,9 +59,27 @@
       "giris_fiyati": 1.96,
       "giris_nedeni": "Giriş bölgesi $1.90-2.00 tutturuldu. Micro-cap 3D baskı teknoloji şirketi, savunma ve uzay sektörü müşteri tabanı güçleniyor. Watchlist hedefine ulaşıldı.",
       "agirlik_yuzde": 5.51
+    },
+    {
+      "sembol": "PLTR",
+      "isim": "Palantir Technologies Inc.",
+      "sektor": "Teknoloji",
+      "adet": 39,
+      "maliyet_baz": 128.42,
+      "guncel_fiyat": 128.42,
+      "yatirim": 5008.38,
+      "guncel_deger": 5008.38,
+      "kar_zarar": 0.0,
+      "kar_zarar_yuzde": 0.0,
+      "gunluk_degisim_yuzde": -5.04,
+      "son_guncelleme": "2026-02-23T14:47:41.021880",
+      "giris_tarihi": "2026-02-23",
+      "giris_fiyati": 128.42,
+      "giris_nedeni": "RSI 33 aşırı satım bölgesi, SMA200 yakınında destek. AI veri analitiği ve savunma sektörü lider oyuncusu, US government contract büyümesi güçlü. SMA50 geri dönüş hedefleniyor. Güçlü earnings beat geçmişi.",
+      "agirlik_yuzde": 5.52
     }
   ],
-  "son_guncelleme": "2026-02-23T14:44:07.121043",
+  "son_guncelleme": "2026-02-23T14:47:41.021880",
   "toplam_deger": 90765.07,
   "toplam_getiri_yuzde": -9.23,
   "gerceklesen_zarar": -1321.51,
@@ -139,6 +157,11 @@
       "date": "2026-02-23T14:44:07.121043",
       "type": "entry",
       "content": "ALIŞ NNDM: 2550 adet @$1.96 = $4998.0. Stop: $1.86, Hedef: $2.16. Giriş bölgesi yakalandı."
+    },
+    {
+      "date": "2026-02-23T14:47:41.021880",
+      "type": "entry",
+      "content": "ALIŞ PLTR: 39 adet @$128.42 = $5008.38. Stop: $118.15, Hedef: $147.68. RSI 33 oversold, NVDA earnings sonrası slot kullanıldı."
     }
   ]
 }
