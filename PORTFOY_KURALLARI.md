@@ -1,183 +1,90 @@
-# 📋 PORTFÖY YÖNETİM KURALLARI
+# PORTFÖY YÖNETİM KURALLARI
 
-**Son Güncelleme:** 19 Şubat 2026
-
----
-
-## 🎯 TEMEL KURALLAR
-
-### 1. PORTFÖY RUHUNA SADAKAT
-
-Her portföyün adı onun ruhunu, stratejisini ve tarzını yansıtır. **TÜM İŞLEMLER PORTFÖY RUHUNA UYGUN YAPILMALIDIR.**
+> **son güncelleme**: 24 şubat 2026
 
 ---
 
-## 📊 PORTFÖY BAZLI KURALLAR
+## temel kural
 
-### 1️⃣ **DENGELİ PORTFÖY**
-
-**Ruh:** Dengeli, risk/ödül balanced, çeşitlendirilmiş
-
-**Alım Kuralları:**
-- ✅ **SADECE HİSSE AL** (ETF YOK!)
-- ✅ Çeşitli sektörlerden hisseler
-- ✅ Değer + Büyüme karışımı
-- ✅ Temettü ödemeyenler de olabilir
-- ✅ Hedge için SATIŞ yönlü ETF alınabilir (SQQQ, SPXU, SH vs.)
-
-**Yasak:**
-- ❌ Long yönlü ETF (XLE, XLI, SPY vs.)
-- ❌ Kripto, kaldıraçlı pozisyonlar
-
-**Mevcut Durum (19 Şubat):**
-- ⚠️ XLE, XLI var (ETF) - Bundan sonra SADECE hisse
-- ✅ SM, KOS, MO, RGLD (hisse) - doğru
-
-**Hedef:**
-- Yıllık %60+ getiri
-- %8 stop-loss
-- Max 7 pozisyon
----
-
-### 2️⃣ **AGRESİF BÜYÜME PORTFÖYÜ**
-
-**Ruh:** Büyüme hisseleri, momentum, yüksek risk/yüksek ödül
-
-**Alım Kuralları:**
-- ✅ **SADECE BÜYÜME HİSSELERİ AL** (ETF YOK!)
-- ✅ Momentum hisseleri
-- ✅ Earnings surprise (>%10)
-- ✅ AI, tech, innovation
-- ✅ 50MA üzeri, RS yükseliş
-- ✅ Hedge için SATIŞ yönlü ETF alınabilir
-
-**Yasak:**
-- ❌ Long yönlü ETF (XLK, QQQ, ARKK vs.)
-- ❌ Değer hisseleri, temettü aristokratları
-- ❌ Defensive hisseler
-
-**Mevcut Durum (19 Şubat):**
-- ⚠️ XLI, XLE var (ETF) - Bundan sonra SADECE hisse
-- ✅ NVDA, META, GOOGL, AVGO (büyüme hisseleri) - doğru
-
-**Hedef:**
-- Yıllık %100+ getiri
-- Max 8 pozisyon
-- %8 stop-loss
+her portföyün adı onun ruhunu, stratejisini ve tarzını yansıtır. tüm işlemler portföy ruhuna uygun yapılmalıdır.
 
 ---
 
-### 3️⃣ **DEĞER + TEMETTÜ PORTFÖYÜ**
+## portföy bazlı kurallar
 
-**Ruh:** Değer hisseleri, yüksek temettü, istikrar
+### 1. dengeli portföy ($100K)
 
-**Alım Kuralları:**
-- ✅ **SADECE DEĞER/TEMETTÜ HİSSELERİ AL** (ETF YOK!)
-- ✅ P/E < 20
-- ✅ Temettü yield > %3
-- ✅ Güçlü FCF
-- ✅ D/E < 1.5
-- ✅ Hedge için SATIŞ yönlü ETF alınabilir
+**ruh**: dengeli, risk/ödül balanced, çeşitlendirilmiş, multi-sector value + momentum
 
-**İstisna:**
-- 🤔 **SCHD gibi temettü ETF'leri tartışmalı**
-  - Ruh: Temettü odaklı ✅
-  - Ama ETF ❌
-  - **Karar:** Temettü ETF'leri İZİN VERİLEBİLİR (SCHD, VYM, DVY)
-  - Sadece temettü odaklı ETF'ler, sektör ETF'leri değil
+| kural | değer |
+|-------|-------|
+| izin verilen | hisseler + sektör ETF (XLE vb. mevcut, yeni alımlarda hisse tercih et) |
+| hedge | short ETF izin verilir (SQQQ, SH, SPXU) |
+| max pozisyon | 7 |
+| stop-loss | %8 |
+| hedef getiri | yıllık %15-20 |
 
-**Yasak:**
-- ❌ Sektör ETF'leri (XLE, XLF vs.)
-- ❌ Büyüme hisseleri
-- ❌ Temettü ödemeyen hisseler
+### 2. agresif büyüme ($100K)
 
-**Mevcut Durum (19 Şubat):**
-- ✅ SCHD (temettü ETF) - İZİN VERİLDİ
-- ✅ XOM, VZ, CVX, MO, T, PM (değer/temettü hisseleri) - doğru
+**ruh**: büyüme hisseleri, momentum, yüksek risk/yüksek ödül, AI/tech ağırlıklı
 
-**Hedef:**
-- Yıllık %35 + temettü
-- Max 10 pozisyon
+| kural | değer |
+|-------|-------|
+| izin verilen | sadece büyüme hisseleri (ETF yok) |
+| giriş kriterleri | earnings beat >%10, RS yükseliş, SMA50 üzeri, volume 1.5x+ |
+| hedge | short ETF izin verilir |
+| max pozisyon | 10 |
+| stop-loss | %8 |
+| hedef getiri | yıllık %30+ |
 
----
+**yasak**: değer hisseleri, temettü aristokratları, defensive sektörler
 
-### 4️⃣ **SEKTÖR ROTASYONU PORTFÖYÜ**
+### 3. değer + temettü ($100K)
 
-**Ruh:** Sektör ETF'leriyle makro döngü takibi
+**ruh**: değer hisseleri, yüksek temettü, istikrar, güçlü FCF
 
-**Alım Kuralları:**
-- ✅ **SADECE SEKTÖR ETF'LERİ AL**
-- ✅ XLE, XLF, XLK, XLV, XLI, XLP, XLU, XLY, XLB, XLRE, XLC
-- ✅ Makro döngüye göre rotasyon
-- ✅ Çeyreklik rebalance
+| kural | değer |
+|-------|-------|
+| izin verilen | değer/temettü hisseleri + temettü ETF'leri (SCHD, VYM, DVY) |
+| giriş kriterleri | P/E < 20, temettü yield > %3, D/E < 1.5, FCF pozitif |
+| hedge | short ETF izin verilir |
+| max pozisyon | 15 |
+| hedef getiri | yıllık %8-12 + temettü |
 
-**Yasak:**
-- ❌ Bireysel hisseler
-- ❌ Kaldıraçlı ETF'ler (TQQQ, SOXL vs.)
+**yasak**: sektör ETF'leri, büyüme hisseleri, temettü ödemeyen hisseler
+**çıkış**: temettü kesintisi veya fundamentaller bozulursa
 
-**Mevcut Durum (19 Şubat):**
-- ✅ XLE, XLI, XLV (sektör ETF'leri) - DOĞRU! ✅
+### 4. sektör rotasyonu ($100K)
 
-**Hedef:**
-- S&P 500'ü yıllık %20+ geçmek
-- Max 8 pozisyon
+**ruh**: sektör ETF'leriyle makro döngü takibi
 
----
+| kural | değer |
+|-------|-------|
+| izin verilen | sadece sektör ETF'leri (XLE, XLF, XLK, XLV, XLI, XLP, XLU, XLY, XLB, XLRE, XLC) |
+| rebalance | çeyreklik |
+| max pozisyon | 8 |
+| hedef | S&P 500'ü yıllık %5+ geçmek |
 
-## 🛡️ HEDGE KURALLARI
-
-**Tüm Portföylerde İzin Verilen:**
-- ✅ SATIŞ YÖNLÜ ETF'LER (Inverse/Short ETF)
-  - SQQQ (Nasdaq 3x Short)
-  - SPXU (S&P 500 3x Short)
-  - SH (S&P 500 Short)
-  - PSQ (Nasdaq Short)
-  - QID (Nasdaq 2x Short)
-  - TZA (Russell 2000 3x Short)
-
-**Kullanım:**
-- Piyasa düşüş beklentisinde
-- Portföy hedge'i için
-- Kısa vadeli (max 2 hafta)
+**yasak**: bireysel hisseler, kaldıraçlı ETF'ler
 
 ---
 
-## 📝 ÖNEMLİ NOTLAR
+## hedge kuralları
 
-### Mevcut Portföylerdeki ETF Durumu:
-
-**Dengeli:**
-- XLE, XLI var → Bundan sonra SADECE hisse
-
-**Agresif Büyüme:**
-- XLI, XLE var → Bundan sonra SADECE büyüme hisseleri
-
-**Değer + Temettü:**
-- SCHD var → İZİN VERİLDİ (temettü ETF)
-
-**Sektör Rotasyonu:**
-- XLE, XLI, XLV var → DOĞRU! ✅
-
-### Geçiş Dönemi:
-
-Mevcut ETF pozisyonları tutulabilir, ancak:
-- ✅ Yeni alımlarda KURALLARA UY
-- ✅ ETF'ler satılırsa, yerine HİSSE al
-- ✅ Rebalance'da kurallara uygun pozisyonlara geç
+tüm portföylerde izin verilen short ETF'ler: SQQQ, SPXU, SH, PSQ, QID, TZA
+kullanım: piyasa düşüş beklentisinde, max 2 hafta
 
 ---
 
-## 🎯 ÖZET
+## özet tablo
 
-| Portföy | Long İzin | ETF İzin | Hedge İzin |
-|---------|-----------|----------|------------|
-| Dengeli | Hisse | ❌ | Short ETF ✅ |
-| Agresif Büyüme | Büyüme Hisse | ❌ | Short ETF ✅ |
-| Değer + Temettü | Değer/Temettü Hisse | Sadece Temettü ETF | Short ETF ✅ |
-| Sektör Rotasyonu | ❌ | Sektör ETF ✅ | Short ETF ✅ |
+| portföy | long izin | ETF izin | hedge | max poz |
+|---------|-----------|----------|-------|---------|
+| dengeli | hisse (+ mevcut ETF) | geçiş döneminde evet | short ETF | 7 |
+| agresif | büyüme hisse | hayır | short ETF | 10 |
+| temettü | değer/temettü hisse | sadece temettü ETF | short ETF | 15 |
+| rotasyon | hayır | sektör ETF | short ETF | 8 |
 
 ---
 
-**Son Güncelleme:** 19 Şubat 2026  
-**Onaylayan:** Zeynel  
-**Uygulama Başlangıç:** 19 Şubat 2026
+> son güncelleme: 24 şubat 2026 | finzora ai
