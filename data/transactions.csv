@@ -30,4 +30,6 @@ date,action,symbol,shares,price,total,reason
 2026-02-23,BUY,GILT,347,14.39,4993.33,"Yarım pozisyon tamamlandı - Agresif portföy - RSI 41 destek"
 2026-02-23,BUY,SHOP,41,119.88,4915.08,"SMA200 destek giriş - Agresif portföy - E-ticaret altyapı lideri"
 2026-02-24,SELL,NEM,1,120.64,120.64,"Stop-loss tetiklendi - Swing SWING-010 kapatıldı"
-2026-02-24,SELL,UNH,1,277.65,277.65,"Stop-loss tetiklendi - Swing SWING-012 kapatıldı"
+2026-02-24,SELL,UNH,1,277.65,277.65,"Stop-loss tetiklendi - Swing SWING-012 kapatıldı"2026-02-24,BUY,ANET,93,128.62,11961.66,"AI/data center networking lideri - bulut devleri altyapı harcaması artıyor - RSI"
+2026-02-24,BUY,RKLB,146,68.44,9992.24,"Uzay ekonomisi büyüme oyunu - Electron roket başarı serisi + Neutron geliştirme "
+2026-02-24,BUY,CELH,140,49.76,6966.4,"Enerji içecek büyüme hikayesi - Monster ve Red Bull'a alternatif - SMA50 ve SMA2"

@@ -2,7 +2,7 @@
   "portfoy_adi": "Agresif Büyüme",
   "baslangic_sermaye": 100000,
   "nakit": {
-    "miktar": 58544.41,
+    "miktar": 29624.11,
     "para_birimi": "USD"
   },
   "pozisyonlar": [
@@ -95,9 +95,63 @@
       "giris_fiyati": 119.88,
       "giris_nedeni": "RSI 42.6, SMA200 -%13.8 altında destek bölgesi. E-ticaret altyapısı büyümesi, merchant solutions geliri artıyor. Yakın vadeli earnings riski yok. SMA200'e dönüş hedefleniyor.",
       "agirlik_yuzde": 5.31
+    },
+    {
+      "sembol": "ANET",
+      "isim": "Arista Networks, Inc.",
+      "sektor": "Teknoloji",
+      "adet": 93,
+      "maliyet_baz": 128.62,
+      "guncel_fiyat": 128.62,
+      "yatirim": 11961.66,
+      "guncel_deger": 11961.66,
+      "kar_zarar": 0.0,
+      "kar_zarar_yuzde": 0.0,
+      "gunluk_degisim_yuzde": 0.0,
+      "son_guncelleme": "2026-02-24T16:32:57.138431",
+      "giris_tarihi": "2026-02-24",
+      "giris_fiyati": 128.62,
+      "giris_nedeni": "AI/data center networking lideri - bulut devleri altyapı harcaması artıyor - RSI 42.9 oversold bounce bölgesinde - SMA200 üzerinde sağlam trend - analist hedefi $177 (+%37 upside) - Altman Z-score 16.1 finansal güç",
+      "agirlik_yuzde": 13.14
+    },
+    {
+      "sembol": "RKLB",
+      "isim": "Rocket Lab USA, Inc.",
+      "sektor": "Havacılık ve Savunma",
+      "adet": 146,
+      "maliyet_baz": 68.44,
+      "guncel_fiyat": 68.44,
+      "yatirim": 9992.24,
+      "guncel_deger": 9992.24,
+      "kar_zarar": 0.0,
+      "kar_zarar_yuzde": 0.0,
+      "gunluk_degisim_yuzde": 0.0,
+      "son_guncelleme": "2026-02-24T16:32:57.138431",
+      "giris_tarihi": "2026-02-24",
+      "giris_fiyati": 68.44,
+      "giris_nedeni": "Uzay ekonomisi büyüme oyunu - Electron roket başarı serisi + Neutron geliştirme katalizörü - savunma kontratları artıyor - RSI 43.8 bounce bölgesi - SMA200 üzerinde güçlü yapı - analist hedefi $87 (+%27 upside)",
+      "agirlik_yuzde": 10.98
+    },
+    {
+      "sembol": "CELH",
+      "isim": "Celsius Holdings, Inc.",
+      "sektor": "Tüketim",
+      "adet": 140,
+      "maliyet_baz": 49.76,
+      "guncel_fiyat": 49.76,
+      "yatirim": 6966.4,
+      "guncel_deger": 6966.4,
+      "kar_zarar": 0.0,
+      "kar_zarar_yuzde": 0.0,
+      "gunluk_degisim_yuzde": 0.0,
+      "son_guncelleme": "2026-02-24T16:32:57.138431",
+      "giris_tarihi": "2026-02-24",
+      "giris_fiyati": 49.76,
+      "giris_nedeni": "Enerji içecek büyüme hikayesi - Monster ve Red Bull'a alternatif - SMA50 ve SMA200 üzerinde çift destek - RSI 54 sağlıklı nötr bölge - analist hedefi $65 (+%30 upside) - portföye tüketim sektörü çeşitlendirmesi",
+      "agirlik_yuzde": 7.65
     }
   ],
-  "son_guncelleme": "2026-02-24T15:17:00.915967",
+  "son_guncelleme": "2026-02-24T16:32:57.138431",
   "toplam_deger": 91043.0,
   "toplam_getiri_yuzde": -8.96,
   "gerceklesen_zarar": -1321.51,
@@ -185,6 +239,21 @@
       "date": "2026-02-23T14:50:28.497621",
       "type": "entry",
       "content": "GILT yarım pozisyon tamamlandı (+347 adet @$14.39). SHOP yeni giriş 41 adet @$119.88. Nakit kalan: $58,544.41"
+    },
+    {
+      "date": "2026-02-24T16:32:57.138431",
+      "type": "entry",
+      "content": "ANET alımı - Arista Networks, Inc. - $128.62 x 93 adet = $11,961.66"
+    },
+    {
+      "date": "2026-02-24T16:32:57.138431",
+      "type": "entry",
+      "content": "RKLB alımı - Rocket Lab USA, Inc. - $68.44 x 146 adet = $9,992.24"
+    },
+    {
+      "date": "2026-02-24T16:32:57.138431",
+      "type": "entry",
+      "content": "CELH alımı - Celsius Holdings, Inc. - $49.76 x 140 adet = $6,966.40"
     }
   ]
 }
