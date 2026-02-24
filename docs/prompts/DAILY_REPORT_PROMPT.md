@@ -232,21 +232,30 @@ summary['benchmark_spy'] = SPY_baslangictan_beri
 summary['alpha'] = toplam_kar_zarar_yuzde - benchmark_spy
 ```
 
-### 3d. doğrulama kontrolleri
+### 3d. doğrulama kontrolleri (KATMAN 1 + 2a)
 
-güncelleme sonrası şu kontrolleri yap — hata varsa düzelt:
+güncelleme sonrası doğrulama yap — detaylı kurallar: `docs/SELF_VALIDATION.md`
 
 ```
+KATMAN 1 — VERİ DOĞRULAMA (FMP yanıtları):
+✓ tüm batch-quote yanıtları dolu mu? (boş [] → sembol kontrol et)
+✓ fiyatlar > 0 ve mantıklı aralıkta mı?
+✓ |changesPercentage| > %20 olan var mı? → haber teyidi yap
+✓ fiyat tarihi dünün tarihi mi? (hafta sonu → cuma beklenir)
+
+KATMAN 2a — SAYISAL TUTARLILIK:
 ✓ yatirim = adet × maliyet_baz (sabit, değişmemeli)
 ✓ guncel_deger = adet × guncel_fiyat
 ✓ kar_zarar = guncel_deger - yatirim
 ✓ nakit.miktar = doğru (trade olmadıysa değişmemeli)
 ✓ toplam_deger = sum(guncel_deger) + nakit
-✓ agirlik toplamı + nakit ağırlığı ≈ %100
-✓ summary toplam = 4 portföy toplamı
+✓ agirlik toplamı + nakit ağırlığı ≈ %100 (±%0.5)
+✓ summary toplam = 4 portföy toplamı (kesin eşitlik)
 ✓ swing trailing stop'lar sadece yukarı gitmiş
 ✓ tüm son_guncelleme bugünün tarihi
 ```
+
+hata bulunursa → düzelt ve "validation: ⚠️ şu düzeltildi: ..." notu ekle
 
 ### 3e. after-hours kontrol (varsa)
 
@@ -1797,6 +1806,7 @@ her aksiyon önerisinde:
 ```markdown
 ---
 
+> validation: [✅ tüm kontroller geçti / ⚠️ X sorun düzeltildi — detay yukarıda]
 > günlük rapor sonu | finzora ai | [bugünün tarihi] [saat]
 > NYSE açılış: bugün 17:30 (TR) | kapanış: 00:00 (TR)
 > sonraki: seans içi aksiyon (SESSION_ACTION_PROMPT) → TR 18:00+
@@ -1816,3 +1826,21 @@ her aksiyon önerisinde:
 - [ ] aksiyon önerilerinde fiyat seviyesi var mı?
 - [ ] cuma günü haftalık bakış eklendi mi?
 - [ ] rapor sonu satırı var mı?
+- [ ] validation özeti eklendi mi? (docs/SELF_VALIDATION.md kurallarına göre)
+
+### self-validation son kontrol (KATMAN 2b + 3d)
+
+raporu tamamlamadan önce şu soruları sor:
+
+```
+METIN-VERİ UYUMU (katman 2b):
+- rapordaki her yorum bir veriye mi dayanıyor?
+- "güçlü/zayıf/düştü/yükseldi" ifadeleri rakamlarla tutarlı mı?
+- çelişkili ifadeler var mı? (bir yerde "risk-off" başka yerde "agresif al")
+
+BIAS KONTROLÜ (katman 3d):
+- sadece "al" destekleyen verileri mi topladım?
+- zarar eden pozisyonlara fazla hoşgörülü müyüm?
+- dünkü büyük harekete aşırı tepki mi veriyorum?
+- "izle" deyip somut tetikleyici belirtmediğim yer var mı?
+```

@@ -41,6 +41,7 @@ portfolio-tracker/
 │   ├── DOSYA_SISTEMI.md               # bu dosya
 │   ├── SWING_TRADE_RULES.md           # swing kuralları
 │   ├── PREDICTION_MARKETS_GUIDE.md    # prediction markets rehberi
+│   ├── SELF_VALIDATION.md             # 3 katmanlı doğrulama sistemi
 │   └── prompts/
 │       └── DAILY_REPORT_PROMPT.md     # ⭐ sabah raporu master prompt v2.2
 │
@@ -82,6 +83,7 @@ portfolio-tracker/
 | `docs/prompts/DAILY_REPORT_PROMPT.md` | ⭐ sabah raporu prompt v2.2 |
 | `docs/SWING_TRADE_RULES.md` | swing giriş/çıkış kuralları |
 | `docs/PREDICTION_MARKETS_GUIDE.md` | kalshi/polymarket rehberi |
+| `docs/SELF_VALIDATION.md` | veri/analiz/karar doğrulama kuralları |
 | `FMP_SKILL.md` (project file) | FMP API endpoint referansı |
 
 ---

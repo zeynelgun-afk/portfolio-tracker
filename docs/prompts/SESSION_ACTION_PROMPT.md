@@ -678,4 +678,35 @@ POWER HOUR (FAZ 3: TR 23:00-00:00)
 
 ---
 
+## SELF-VALIDATION (seans içi)
+
+detaylı kurallar: `docs/SELF_VALIDATION.md`
+
+### her FMP çağrısından sonra (katman 1)
+```
+✓ yanıt boş değil mi?
+✓ fiyatlar mantıklı mı? (> 0, < 100K, |değişim| < %50)
+✓ |changesPercentage| > %20 → haber teyidi yap
+```
+
+### her karar önerisinde (katman 3)
+```
+✓ "SAT" diyorsan → somut neden var mı? (stop, tez, veri)
+✓ "AL" diyorsan → RSI/SMA/momentum destekliyor mu?
+✓ portföy kurallarıyla uyumlu mu?
+✓ nakit yeterli mi?
+✓ karşıt argüman düşündün mü? (teyit yanılgısı)
+✓ dünkü hareket yüzünden aşırı tepki mi veriyorsun? (yakınlık yanılgısı)
+✓ "herkes alıyor" mantığıyla mı öneriyorsun? (FOMO)
+```
+
+### JSON güncelleme sonrası (katman 2a)
+```
+✓ sayısal tutarlılık (yatirim, guncel_deger, kar_zarar, nakit)
+✓ trailing stop sadece yukarı gitmiş
+✓ ağırlık toplamı ≈ %100
+```
+
+---
+
 > son güncelleme: 24 şubat 2026 | finzora ai
