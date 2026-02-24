@@ -397,12 +397,41 @@ websearch → "stock market news today {bugünün tarihi}"
 websearch → "overnight market news asia europe"
 # asya/avrupa piyasaları sabah kapanmış olur, bilgi mevcuttur
 
+# --- prediction markets (sentiment göstergesi) ---
+websearch → "kalshi fed rate cut probability" veya "kalshi fed funds rate"
+websearch → "polymarket tariff" veya "polymarket geopolitical" (gündemde olay varsa)
+# fed rate probabilities: portföy stratejisi için kritik sinyal
+# jeopolitik risk: enerji + defensive pozisyonları etkiler
+
 # opsiyonel (önemli olay varsa):
 websearch → "fed news today" veya "earnings results after hours"
-# dün kapanıştan sonra açıklanan earnings sonuçları
 ```
 
-**toplam: 5-7 websearch**
+**toplam: 6-9 websearch**
+
+### 1c. prediction markets analizi
+
+```
+kaynak: docs/PREDICTION_MARKETS_GUIDE.md (detaylı rehber)
+
+kontrol listesi:
+1. Kalshi Fed Rate → sonraki FOMC kararı olasılıkları
+   - hold/cut/hike oranları
+   - geçen haftaya göre değişim (>%10 değişim → önemli sinyal)
+   
+2. Polymarket → gündemdeki jeopolitik/makro olay
+   - iran escalation, tariff, seçim vb.
+   - volume kontrolü: <$10K güvenilmez, $1M+ güvenilir
+   - ani %10+ swing → whale manipulation olabilir
+
+aksiyon tetikleyicileri:
+- fed rate cut odds > %30 → defensive azalt, cyclical ekle
+- iran escalation > %50 → enerji pozisyonlarını koru/artır
+- tariff risk yükseliyor → import-heavy sektörlerden uzak dur
+
+önemli: prediction markets TEK BAŞINA karar sebebi değil,
+FMP data + teknik analiz + haberlerle birlikte kullanılır
+```
 
 ### 1c. veri bulunamazsa yedek plan
 
@@ -583,6 +612,18 @@ doğrulama: [sorun yok / şu düzeltildi: ...]
 
 (dün kapanıştan sonra + gece + sabah gelişmeleri: after-hours earnings, asya haberleri, makro veri)
 
+### prediction markets sinyalleri
+
+**fed rate** (kalshi): sonraki FOMC [tarih] → hold %XX / cut %XX / hike %XX
+değişim: [↑↓] %X (geçen haftaya göre) | volume: $XM
+→ [portföy etkisi: defensive/cyclical dengesi ne yönde olmalı]
+
+**jeopolitik risk** (polymarket): [gündemdeki olay] → %XX
+değişim: [↑↓] %X | volume: $XM
+→ [portföy etkisi: enerji/defensive pozisyonları nasıl etkileniyor]
+
+(prediction markets verisi bulunamazsa veya önemli değişim yoksa → "PM sinyalleri stabil, önemli değişim yok" yaz)
+
 ### strateji notu (bugünün seansı için)
 
 [2-3 cümle: futures'a ve gece haberlerine göre bugün nasıl bir açılış bekliyoruz?
@@ -605,6 +646,7 @@ raporu yazmadan önce şunları doğrula:
 - [ ] risk skoru hesaplaması tutarlı mı?
 - [ ] SPY trend açıklaması SMA50/SMA200/RSI verileriyle uyuşuyor mu?
 - [ ] gece gelişmeleri gerçekten dün akşam/gece haberleri mi?
+- [ ] prediction markets kontrol edildi mi? (kalshi fed rate + varsa polymarket)
 - [ ] strateji notu bugünün seansına yönelik mi? (dünü anlatmıyor, bugünü planlıyor)
 
 
