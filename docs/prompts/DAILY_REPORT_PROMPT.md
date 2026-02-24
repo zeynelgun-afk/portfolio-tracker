@@ -215,7 +215,27 @@ RSI < 30   → "aşırı satım bölgesi, fırsat olabilir"
 RSI 40-60  → "nötr"
 ```
 
-### haber değerlendirme kuralları
+### sektör göreceli güç analizi (relative strength)
+
+```
+KURAL: piyasa düşerken düşmeyen/yükselen sektör = güçlü para akışı sinyali
+
+HESAPLAMA:
+  sektor_rs = sektor_degisim - SPY_degisim
+
+  SPY düşerken (SPY < -%0.5):
+    sektor_rs > +1.0%  → 🔥 GÜÇ SEKTÖR — "piyasa düşerken para buraya akıyor"
+    sektor_rs > +0.5%  → 💪 dirençli — "piyasaya göre belirgin üstün performans"
+
+  SPY yükselirken (SPY > +%0.5):
+    sektor_rs < -1.0%  → ⚠️ ZAYIF SEKTÖR — "yükselişe katılamıyor, çıkış var"
+    sektor_rs < -0.5%  → 📉 geride kalıyor
+
+  ÖNEMLİ: bu sektörleri raporda özel olarak vurgula:
+  - portföyümüzdeki pozisyonlarla eşleştir (enerji güçlüyse SM, KOS, XLE nasıl?)
+  - swing watchlist için fırsat mı? (güçlü sektörden yeni aday?)
+  - rotasyon portföyü için sinyal mi? (güçlü sektöre ağırlık artır?)
+```
 
 websearch'ten gelen haberleri şu filtreyle değerlendir:
 1. **portföy etkisi** — haber bizim pozisyonlarımızı doğrudan etkiliyor mu?
@@ -256,13 +276,14 @@ websearch'ten gelen haberleri şu filtreyle değerlendir:
 
 ### sektör performansı (dün)
 
-| sektör | değişim % | | sektör | değişim % |
-|--------|-----------|---|--------|-----------|
-| [en iyi 1] | +%X.XX 🟢 | | [en kötü 1] | -%X.XX 🔴 |
-| [en iyi 2] | +%X.XX 🟢 | | [en kötü 2] | -%X.XX 🔴 |
-| [en iyi 3] | +%X.XX | | [en kötü 3] | -%X.XX |
+| sektör | değişim % | RS (vs SPY) | | sektör | değişim % | RS (vs SPY) |
+|--------|-----------|-------------|---|--------|-----------|-------------|
+| [en iyi 1] | +%X.XX 🟢 | +%X.XX | | [en kötü 1] | -%X.XX 🔴 | -%X.XX |
+| [en iyi 2] | +%X.XX 🟢 | +%X.XX | | [en kötü 2] | -%X.XX 🔴 | -%X.XX |
+| [en iyi 3] | +%X.XX | +%X.XX | | [en kötü 3] | -%X.XX | -%X.XX |
 
 (11 sektörü en iyi → en kötü sırayla listele, en iyi 3 ve en kötü 3'ü vurgula)
+(RS = sektör değişimi - SPY değişimi. 🔥 işareti: piyasa düşerken RS > +1%)
 
 ### piyasa hareketi (dün)
 
