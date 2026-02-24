@@ -164,69 +164,7 @@
       "gerceklesen_pnl": -1321.51
     }
   ],
-  "watchlist": [
-    {
-      "sembol": "NNDM",
-      "isim": "Nano Dimension",
-      "hedef_giris": 1.95,
-      "stop_loss": 1.8,
-      "hedef_fiyat": 2.6,
-      "pozisyon_buyuklugu": 12000,
-      "sektor": "Teknoloji",
-      "oncelik": "orta",
-      "durum": "beklemede",
-      "not": "Momentum pozitif, pullback yok - $1.90-2.00 bekle"
-    },
-    {
-      "sembol": "VUZI",
-      "isim": "Vuzix Corporation",
-      "hedef_giris": 2.75,
-      "stop_loss": 2.5,
-      "hedef_fiyat": 3.8,
-      "pozisyon_buyuklugu": 15000,
-      "sektor": "Teknoloji",
-      "oncelik": "yuksek",
-      "durum": "beklemede",
-      "not": "Kontrarian play, 52W %40 pozisyon, teknik skor 5/7"
-    },
-    {
-      "sembol": "GILT",
-      "isim": "Gilat Satellite Networks (2. yarı)",
-      "hedef_giris": 14.0,
-      "stop_loss": 13.0,
-      "hedef_fiyat": 19.0,
-      "pozisyon_buyuklugu": 5000,
-      "sektor": "Teknoloji",
-      "oncelik": "yuksek",
-      "durum": "beklemede",
-      "not": "Mevcut pozisyonun 2. yarısı - $14 civarı bekle"
-    },
-    {
-      "sembol": "BKSY",
-      "isim": "BlackSky Technology (2. yarı)",
-      "hedef_giris": 18.5,
-      "stop_loss": 17.0,
-      "hedef_fiyat": 25.0,
-      "pozisyon_buyuklugu": 7500,
-      "sektor": "Savunma",
-      "oncelik": "yuksek",
-      "durum": "beklemede",
-      "not": "Mevcut pozisyonun 2. yarısı - $18-19 bekle"
-    },
-    {
-      "sembol": "IREN",
-      "isim": "IREN Limited",
-      "sektor": "Bitcoin Madenciliği / AI Data Center",
-      "guncel_fiyat": 43.94,
-      "hedef_giris": "38-40",
-      "hedef_fiyat": 67.75,
-      "stop_loss": 34.0,
-      "neden": "Bitcoin madenciliği + AI data center dönüşümü - analist hedefi $67.75 (+%54 upside) - SMA200 $34.73 üzerinde - RSI 47.4 nötr - negatif FCF nedeniyle $38-40 giriş bekle",
-      "urgency": "medium",
-      "ekleme_tarihi": "2026-02-24",
-      "son_kontrol": "2026-02-24"
-    }
-  ],
+  "watchlist": [],
   "notes": [
     {
       "date": "2026-02-20T20:22:00.933774",
@@ -272,6 +210,11 @@
       "date": "2026-02-24T16:40:08.488331",
       "type": "market_note",
       "content": "IREN watchlist'e eklendi - $38-40 giriş hedefi - Bitcoin madenciliği + AI data center dönüşümü"
+    },
+    {
+      "date": "2026-02-24T16:47:15.973744",
+      "type": "format_fix",
+      "content": "Watchlist data/watchlist.json'a taşındı — portföy içi watchlist kaldırıldı"
     }
   ]
 }

@@ -67,7 +67,7 @@ FAZ 2: MID-SESSION (TR 19:00-22:00) — ana seans
   öncelik: ANALİZ + KARAR
   - tam teknik analiz (RSI, SMA, sektör RS)
   - yeni pozisyon fırsatları değerlendir
-  - swing watchlist tarama
+  - watchlist tarama (tüm portföyler + swing)
   - portföy rebalance değerlendirmesi
   - prediction markets güncellemesi
   
@@ -398,13 +398,13 @@ kontrol 3: yön korelasyonu
 
 ## 3d. yeni pozisyon fırsatları
 
-### swing watchlist tarama
+### watchlist tarama (merkezi)
 
 **aday kaynakları**:
 1. sabah raporundaki güçlü sektörlerden (RS > +1.0%)
 2. biggest-gainers listesinden (momentum)
 3. earnings beat eden hisselerden (BMO sonuçları açılışta gelir)
-4. mevcut watchlist'ten tetiklenen seviyeler
+4. merkezi watchlist'ten (`data/watchlist.json`) tetiklenen seviyeler
 
 **filtre kriterleri**:
 ```
@@ -521,12 +521,17 @@ for swing active:
 
 ## 4c. watchlist güncellemesi
 
-`data/swing/watchlist.json` güncelle:
+`data/watchlist.json` güncelle (tek merkezi watchlist — tüm portföyler + swing):
 ```
 - mevcut adayların fiyatlarını güncelle
-- tetiklenen giriş seviyesi varsa → "urgency": "high" yap
+- tetiklenen giriş seviyesi varsa → "urgency": "high" yap + ⚠️ WATCHLIST ALARMI ver
+- her adayın hedef_portfoy alanını kontrol et (swing/agresif/dengeli/temettü/rotasyon)
 - artık geçerli olmayan adayları haric_tutulanlar'a taşı (neden ile)
-- yeni aday varsa ekle (tüm alanlar: sembol, guncel_fiyat, momentum_5gun, sektor, notlar, urgency, hedef_giris, hedef_fiyat, stop_loss)
+- yeni aday varsa ekle (zorunlu alanlar: sembol, guncel_fiyat, sektor, hedef_portfoy, hedef_giris, hedef_fiyat, stop_loss, urgency, ekleme_tarihi)
+- portföy watchlist adayları da burada (IREN, AVGO, AMD vb.)
+
+⚠️ ÖNEMLİ: data/swing/watchlist.json KALDIRILDI — artık tek watchlist data/watchlist.json
+⚠️ ÖNEMLİ: portföy JSON'larında watchlist[] KULLANILMAZ — her şey merkezi dosyada
 ```
 
 ## 4d. git commit + push
@@ -542,7 +547,7 @@ git commit -m "[SWING-ÇIKIŞ] SEMBOL @FİYAT - sonuç +/-%X"
 git commit -m "[GÜNCELLEME] seans içi fiyat güncellemesi - {tarih}"
 
 # watchlist güncellemesi:
-git commit -m "[WATCHLIST] swing tarama güncellendi - {yeni aday varsa belirt}"
+git commit -m "[WATCHLIST] merkezi watchlist güncellendi - {yeni aday varsa belirt}"
 ```
 
 ---
@@ -632,7 +637,7 @@ MID-SESSION (FAZ 2: TR 19:00-22:00)
 │
 ├─ SWING TARAMA (30 dk)
 │  ├─ stop/hedef/trailing güncelle
-│  ├─ watchlist fiyat kontrol
+│  ├─ data/watchlist.json fiyat kontrol (tüm portföyler + swing)
 │  ├─ yeni aday tarama (güçlü sektörlerden)
 │  └─ boş slot varsa → en iyi adayı değerlendir
 │
@@ -661,7 +666,7 @@ POWER HOUR (FAZ 3: TR 23:00-00:00)
 │
 └─ GÜNCELLEME + COMMIT
    ├─ trade varsa → JSON güncelle + commit
-   ├─ watchlist güncelle + commit
+   ├─ data/watchlist.json güncelle + commit
    └─ fiyat güncelleme (seans içi — final güncelleme yarın 14:00 raporda)
 ```
 
@@ -678,7 +683,7 @@ POWER HOUR (FAZ 3: TR 23:00-00:00)
 ## otomatik yapılabilecek işlemler (onay gerekmez)
 - fiyat güncellemesi (tüm JSON'lar)
 - trailing stop yukarı güncelleme
-- watchlist fiyat güncellemesi
+- data/watchlist.json fiyat güncellemesi (merkezi)
 - tutulan_gun artırma
 - ağırlık yüzdesi yeniden hesaplama
 

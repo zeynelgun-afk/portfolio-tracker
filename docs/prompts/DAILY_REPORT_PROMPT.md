@@ -501,7 +501,7 @@ HESAPLAMA:
 
   ÖNEMLİ: bu sektörleri raporda özel olarak vurgula:
   - portföyümüzdeki pozisyonlarla eşleştir (enerji güçlüyse SM, KOS, XLE nasıl?)
-  - swing watchlist için fırsat mı? (güçlü sektörden yeni aday?)
+  - merkezi watchlist için fırsat mı? (güçlü sektörden yeni aday? portföy adayları?)
   - rotasyon portföyü için sinyal mi? (güçlü sektöre ağırlık artır?)
 ```
 
@@ -1017,7 +1017,7 @@ zirve tespiti:
 
 ### watchlist'ten fırsat
 
-(data/swing/watchlist.json'dan urgency="high" olanları kontrol et)
+(data/watchlist.json'dan urgency="high" olanları kontrol et — tüm portföyler + swing)
 - **[SEMBOL]** — hedef giriş: $XX-XX, güncel: $XX.XX, [giriş koşulu sağlandı mı?]
 
 ### swing istatistik
@@ -1060,7 +1060,7 @@ eğer stop tetiklendiyse:
 - [ ] trailing stop güncellenmesi gereken pozisyon var mı?
 - [ ] trailing stop sadece yukarı mı hareket etti? (aşağı çekilmediyse OK)
 - [ ] stop tetiklenen pozisyon closed.json'a taşındı mı?
-- [ ] watchlist'teki high urgency adaylar kontrol edildi mi?
+- [ ] data/watchlist.json'daki high urgency adaylar kontrol edildi mi? (tüm portföyler + swing)
 - [ ] swing istatistik (ortalama, en iyi, en kötü) doğru mu?
 
 
@@ -1751,7 +1751,7 @@ bugün toparlanma şansı var. temettü portföy +%16.6 ile lider."]
 - [ ] [aksiyon 3: örn. SHOP $115 altına düşerse stop değerlendir]
 
 **seans ortası** (TR 19:00-22:00):
-- [ ] [aksiyon 1: örn. swing watchlist'teki SEMBOL hedefe yaklaştı mı?]
+- [ ] [aksiyon 1: örn. merkezi watchlist'teki SEMBOL hedefe yaklaştı mı?]
 - [ ] [aksiyon 2: varsa yeni giriş planı — limit emir fiyatı: $XX.XX]
 
 **kapanışa doğru** (TR 23:00-00:00):

@@ -253,12 +253,15 @@ agirlik_yuzde = (guncel_deger / toplam_deger) × 100  [her pozisyon için]
 
 ---
 
-### 2c. `data/swing/watchlist.json` — İzleme Listesi
+### 2c. `data/watchlist.json` — Merkezi İzleme Listesi
+
+> ⚠️ **TEK WATCHLIST**: Tüm portföyler ve swing trade adayları bu dosyada tutulur.
+> `data/swing/watchlist.json` KALDIRILDI. Portföy JSON'larında `watchlist[]` KULLANILMAZ.
 
 ```json
 {
-  "son_guncelleme": "2026-02-20T16:48:07.288589",
-  "not": "Bir sonraki işlemler için potansiyel swing adayları",
+  "son_guncelleme": "2026-02-24T...",
+  "not": "Tüm portföyler ve swing trade için tek merkezi watchlist",
   "izleme_listesi": [
     {
       "sembol": "SPG",
@@ -267,19 +270,34 @@ agirlik_yuzde = (guncel_deger / toplam_deger) × 100  [her pozisyon için]
       "sektor": "REITs - Alışveriş Merkezleri",
       "notlar": "AVM REIT'i, perakende toparlanma oyunu",
       "urgency": "medium",
+      "hedef_portfoy": "swing",
       "ekleme_tarihi": "2026-02-20",
-      "son_kontrol": null,
+      "son_kontrol": "2026-02-24",
       "hedef_giris": "195-200",
       "hedef_fiyat": 220.0,
       "stop_loss": 190.0
+    },
+    {
+      "sembol": "IREN",
+      "guncel_fiyat": 43.94,
+      "sektor": "Bitcoin Madenciliği / AI Data Center",
+      "notlar": "Bitcoin + AI data center dual katalizör",
+      "urgency": "medium",
+      "hedef_portfoy": "agresif",
+      "ekleme_tarihi": "2026-02-24",
+      "son_kontrol": "2026-02-24",
+      "hedef_giris": "38-40",
+      "hedef_fiyat": 67.75,
+      "stop_loss": 34.00
     }
   ],
   "haric_tutulanlar": [
     {
       "sembol": "GOOGL",
-      "neden": "Negatif momentum -6.7%, tech zayıflığı devam ediyor"
+      "neden": "Negatif momentum, tech zayıflığı"
     }
-  ]
+  ],
+  "prediction_markets_insights": {...}
 }
 ```
 
@@ -293,6 +311,7 @@ agirlik_yuzde = (guncel_deger / toplam_deger) × 100  [her pozisyon için]
 | `sektor` | string | Türkçe sektör |
 | `notlar` | string | Türkçe gözlemler |
 | `urgency` | string | `"high"` / `"medium"` / `"low"` |
+| `hedef_portfoy` | string | **ZORUNLU** — `"swing"` / `"agresif"` / `"dengeli"` / `"temettü"` / `"rotasyon"` |
 | `ekleme_tarihi` | date | Watchlist'e eklenme tarihi |
 | `son_kontrol` | date/null | Son kontrol tarihi veya null |
 | `hedef_giris` | string | Fiyat aralığı (örn. `"195-200"`) |
