@@ -1,423 +1,204 @@
-# 📂 PORTFOLIO TRACKER - DOSYA SİSTEMİ DOKÜMANTASYONU
+# PORTFOLIO TRACKER — DOSYA SİSTEMİ
 
-**Son Güncelleme:** 19 Şubat 2026  
-**Versiyon:** 2.0  
-**Durum:** Tam Türkçe
+> **son güncelleme**: 24 şubat 2026
+> **repo**: https://github.com/zeynelgun-afk/portfolio-tracker
 
 ---
 
-## 🗂️ KLASÖR YAPISI
+## klasör yapısı
 
 ```
 portfolio-tracker/
-├── data/                          # Tüm veri dosyaları
-│   ├── portfolios/               # 4 ana portföy
-│   │   ├── balanced.json         # Dengeli Portföy
-│   │   ├── aggressive.json       # Agresif Büyüme
-│   │   ├── dividend.json         # Değer + Temettü
-│   │   └── rotation.json         # Sektör Rotasyonu
+│
+├── data/
+│   ├── portfolios/                    # 4 ana portföy ($400K toplam)
+│   │   ├── balanced.json              # dengeli portföy ($100K)
+│   │   ├── aggressive.json            # agresif büyüme ($100K)
+│   │   ├── dividend.json              # değer + temettü ($100K)
+│   │   └── rotation.json              # sektör rotasyonu ($100K)
 │   │
-│   ├── swing/                    # Swing trade sistemi
-│   │   ├── active.json           # Aktif pozisyonlar
-│   │   ├── closed.json           # Kapatılmış trade'ler
-│   │   ├── watchlist.json        # İzleme listesi
-│   │   ├── OZET_*.md            # Periyodik özet raporlar
-│   │   ├── DERSLER_SABLON.md    # Ders çıkarma şablonu
-│   │   └── README.md            # Swing sistem dökümantasyonu
+│   ├── swing/                         # swing trade sistemi
+│   │   ├── active.json                # aktif pozisyonlar (max 10)
+│   │   ├── closed.json                # kapatılmış trade'ler + istatistikler
+│   │   ├── watchlist.json             # izleme listesi + adaylar
+│   │   ├── README.md                  # swing sistem açıklaması
+│   │   ├── DERSLER_SABLON.md          # ders çıkarma şablonu
+│   │   ├── AI_DISRUPTION_REHBERI.md   # AI disruption analizi
+│   │   ├── TECH_RECOVERY_PLAYBOOK.md  # tech toparlanma planı
+│   │   └── OZET_18_SUBAT.md           # periyodik özet
 │   │
-│   ├── logs/                     # Günlük loglar
-│   │   └── *.md                 # Tarih bazlı log dosyaları
+│   ├── logs/                          # günlük loglar (tarih bazlı)
+│   │   ├── 2026-01-02.md ... 2026-02-10-18-FINAL.md
+│   │   └── DAILY_2026-02-23.md        # son günlük log
 │   │
-│   ├── portfolio.json            # ESKİ tek portföy (legacy)
-│   ├── portfolio_summary.json    # Güncel 4 portföy özeti
-│   ├── summary.json              # Genel özet
-│   ├── latest_snapshot.json      # Son anlık görüntü
-│   ├── transactions.csv          # İşlem geçmişi
-│   └── performance_log.csv       # Performans logu
+│   ├── summary.json                   # 4 portföy + swing genel özet
+│   ├── transactions.csv               # TÜM işlemler (tek kaynak)
+│   ├── performance_log.csv            # günlük performans geçmişi
+│   ├── latest_snapshot.json           # son anlık görüntü
+│   └── portfolio.json                 # eski tek portföy (legacy)
 │
-├── scripts/                      # Otomasyon scriptleri
-│   ├── update_all_portfolios.py # Ana güncelleme scripti
-│   ├── update_portfolio.py       # ESKİ script (legacy)
-│   └── README.md                # Script dökümantasyonu
+├── docs/                              # dokümantasyon
+│   ├── PORTFOLIO_DATA_SKILL.md        # ⭐ ana veri yapısı referansı
+│   ├── DOSYA_SISTEMI.md               # bu dosya
+│   ├── SWING_TRADE_RULES.md           # swing kuralları
+│   ├── PREDICTION_MARKETS_GUIDE.md    # prediction markets rehberi
+│   ├── FMP_API_LESSONS_LEARNED.md     # FMP API dersleri
+│   ├── strategy.md                    # genel strateji notu
+│   ├── AGGRESSIVE_MICRO_CAP_STRATEGY.md    # tek seferlik analiz
+│   ├── BALANCED_PORTFOLIO_TECHNICAL_ANALYSIS.md  # tek seferlik analiz
+│   ├── ENTRY_TIMING_DECISION.md       # tek seferlik analiz
+│   ├── TECHNICAL_ANALYSIS_MICRO_CAPS.md    # tek seferlik analiz
+│   └── prompts/
+│       ├── DAILY_REPORT_PROMPT.md     # ⭐ sabah raporu master prompt v2.2
+│       └── eski/                      # eski bölüm dosyaları (arşiv)
+│           └── BOLUM_1-6.md
 │
-├── docs/                         # Dokümantasyon
-│   ├── DOSYA_SISTEMI.md         # Bu dosya
-│   └── strategy.md              # Strateji dokümantasyonu
+├── reports/                           # oluşturulan raporlar
+│   ├── daily/
+│   │   ├── DAILY_REPORT_2026-02-20.md
+│   │   ├── DAILY_REPORT_2026-02-21.md
+│   │   ├── DAILY_REPORT_2026-02-23.md
+│   │   ├── DAILY_REPORT_2026-02-24.md # son rapor
+│   │   └── eski/                      # eski versiyon raporlar
+│   ├── weekly/
+│   │   └── WEEKLY_REPORT_2026-02-23.md
+│   ├── monthly/
+│   ├── report_2026-02-18.md           # eski format rapor
+│   └── README.md
 │
-├── reports/                      # Oluşturulan raporlar
-│   └── report_*.md              # Tarihli raporlar
-│
-└── README.md                     # Ana README
+├── ACTIVE_FILES.md                    # aktif dosya listesi
+├── AI_DISRUPTION_OZET.md              # AI disruption özet notu
+├── PORTFOY_KURALLARI.md               # portföy kuralları özet
+├── README.md                          # ana README
+└── .gitignore
 ```
 
 ---
 
-## 📊 4 PORTFÖY SİSTEMİ
+## kritik dosyalar — ne nerede?
 
-### 📁 `data/portfolios/`
+### veri dosyaları (her gün güncellenen)
 
-Her portföy ayrı bir JSON dosyasında tutulur.
+| dosya | içerik | güncelleme sıklığı |
+|-------|--------|-------------------|
+| `data/portfolios/*.json` | 4 portföy pozisyonları, fiyatlar, k/z | günlük (kapanış sonrası) |
+| `data/swing/active.json` | açık swing pozisyonları (max 10) | günlük + trade anında |
+| `data/swing/closed.json` | kapatılmış trade'ler + istatistikler | trade kapatıldığında |
+| `data/swing/watchlist.json` | izleme listesi, adaylar, urgency | günlük tarama sonrası |
+| `data/summary.json` | 4 portföy + swing genel özet | günlük |
+| `data/transactions.csv` | ⚠️ TÜM işlemler — TEK KAYNAK | her alış/satışta |
+| `data/performance_log.csv` | günlük toplam portföy değeri | günlük |
 
-#### **Portföy Dosya Yapısı:**
+### referans dosyaları (ara sıra güncellenen)
 
-```json
-{
-  "portfoy_adi": "Dengeli Portföy",
-  "baslangic_sermaye": 100000,
-  "nakit": {
-    "miktar": 5424.50,
-    "para_birimi": "USD"
-  },
-  "pozisyonlar": [
-    {
-      "sembol": "SM",
-      "isim": "SM Energy Company",
-      "sektor": "Enerji",
-      "giris_tarihi": "2026-02-17",
-      "giris_fiyati": 21.14,
-      "giris_nedeni": "Initial position - Oil & gas E&P",
-      "adet": 1040,
-      "maliyet_baz": 20.67,
-      "guncel_fiyat": 23.40,
-      "yatirim": 21496.80,
-      "guncel_deger": 24336.00,
-      "kar_zarar": 2839.20,
-      "kar_zarar_yuzde": 13.21,
-      "gunluk_degisim_yuzde": 7.93,
-      "son_guncelleme": "2026-02-19T12:21:07",
-      "agirlik_yuzde": 23.61
-    }
-  ],
-  "son_guncelleme": "2026-02-19T12:21:07",
-  "toplam_deger": 103096.25,
-  "toplam_getiri_yuzde": 3.10
-}
-```
+| dosya | içerik | not |
+|-------|--------|-----|
+| `docs/PORTFOLIO_DATA_SKILL.md` | ⭐ JSON şemaları, hesaplama kuralları, sektör isimleri | ana referans — project file olarak da yüklü |
+| `docs/SWING_TRADE_RULES.md` | swing giriş kriterleri, stop/target kuralları | aktif referans |
+| `docs/PREDICTION_MARKETS_GUIDE.md` | kalshi/polymarket kullanım rehberi | aktif referans |
+| `docs/prompts/DAILY_REPORT_PROMPT.md` | sabah raporu master prompt v2.2 | günlük rapor üretiminde kullanılır |
+| `FMP_SKILL.md` (project file) | FMP API endpoint referansı | project file olarak yüklü, repoda değil |
 
-#### **Pozisyon Alanları:**
+### raporlar (otomatik üretilen)
 
-| Alan | Tip | Açıklama |
-|------|-----|----------|
-| `sembol` | string | Ticker symbol (AAPL, GOOGL) |
-| `isim` | string | Şirket adı |
-| `sektor` | string | Sektör (TÜRKÇE) |
-| `giris_tarihi` | string | Ne zaman alındı (YYYY-MM-DD) |
-| `giris_fiyati` | number | Kaç dolardan alındı |
-| `giris_nedeni` | string | Neden alındı (tez) |
-| `adet` | number | Kaç hisse |
-| `maliyet_baz` | number | Ortalama maliyet |
-| `guncel_fiyat` | number | Şu anki fiyat |
-| `yatirim` | number | Toplam yatırım (adet × maliyet) |
-| `guncel_deger` | number | Şu anki değer (adet × fiyat) |
-| `kar_zarar` | number | Dolar bazında K/Z |
-| `kar_zarar_yuzde` | number | Yüzde bazında K/Z |
-| `gunluk_degisim_yuzde` | number | Bugünkü değişim % |
-| `son_guncelleme` | string | Son güncelleme zamanı |
-| `agirlik_yuzde` | number | Portföy içinde ağırlık % |
-
-#### **4 Portföy:**
-
-| Dosya | Portföy | Başlangıç | Strateji |
-|-------|---------|-----------|----------|
-| `balanced.json` | Dengeli | $100K | Multi-sector value + momentum |
-| `aggressive.json` | Agresif Büyüme | $100K | Tech/AI ağırlıklı momentum |
-| `dividend.json` | Değer + Temettü | $100K | Yüksek temettü + değer |
-| `rotation.json` | Sektör Rotasyonu | $100K | Sektör ETF rotasyonu |
-
-**TOPLAM:** $400K başlangıç sermayesi
+| dosya | içerik | sıklık |
+|-------|--------|--------|
+| `reports/daily/DAILY_REPORT_*.md` | sabah raporu — piyasa + portföy + swing + earnings | her iş günü |
+| `reports/weekly/WEEKLY_REPORT_*.md` | haftalık strateji değerlendirmesi | pazar günü |
 
 ---
 
-## 🎯 SWING TRADE SİSTEMİ
+## veri akışı
 
-### 📁 `data/swing/`
-
-Kısa vadeli (7-10 gün) trade'ler için sistem.
-
-#### **1. active.json - Aktif Pozisyonlar**
-
-```json
-{
-  "son_guncelleme": "2026-02-19T12:24:32Z",
-  "not": "SWING TRADE SADECE SİMÜLASYON",
-  "aktif_pozisyonlar": [
-    {
-      "id": "SWING-010",
-      "sembol": "NEM",
-      "giris_tarihi": "2026-02-12",
-      "giris_fiyati": 118.12,
-      "guncel_fiyat": 124.69,
-      "guncel_kar_zarar_yuzde": 5.56,
-      "hedef_fiyat": 129.93,
-      "stop_loss": 118.12,
-      "tutulan_gun": 6,
-      "giris_nedeni": "Güçlü momentum +8.8%",
-      "katalizor": "Altın fiyat gücü",
-      "tez": "Dünyanın en büyük altın üreticisi",
-      "zaman_cercevesi": "7-10 gün",
-      "risk": "Altın fiyat dönüşü",
-      "durum": "Trailing stop aktif"
-    }
-  ],
-  "ozet": {
-    "toplam_pozisyon": 7,
-    "bos_slot": 3,
-    "maksimum_pozisyon": 10,
-    "ortalama_kar_zarar_yuzde": -0.30
-  }
-}
+```
+FMP API (fiyat verisi)
+    │
+    ▼
+data/portfolios/*.json  ←→  data/transactions.csv
+    │                              │
+    ▼                              ▼
+data/summary.json           data/performance_log.csv
+    │
+    ▼
+reports/daily/DAILY_REPORT_*.md
 ```
 
-**Maksimum:** 10 eşzamanlı pozisyon  
-**Otomatik Kontrol:** Stop-loss, target, timeframe
+### günlük rutin
 
-#### **2. closed.json - Kapatılmış Trade'ler**
+1. **sabah** (seans öncesi): rapor oluştur → `reports/daily/`
+2. **seans sırasında**: stop/target kontrol, trade kararları
+3. **kapanış sonrası**: FMP'den fiyat çek → JSON güncelle → summary güncelle → git push
 
-```json
-{
-  "son_guncelleme": "2026-02-18",
-  "kapatilan_pozisyonlar": [
-    {
-      "id": "SWING-007",
-      "sembol": "CAT",
-      "giris_tarihi": "2026-02-04",
-      "cikis_tarihi": "2026-02-11",
-      "giris_fiyati": 691.82,
-      "cikis_fiyati": 775.00,
-      "kar_zarar_yuzde": 12.02,
-      "tutulan_gun": 7,
-      "cikis_nedeni": "Hedef vurdu",
-      "sonuc": "KAZANÇ",
-      "ders": "Endüstriyel momentum mükemmel çalıştı"
-    }
-  ],
-  "istatistikler": {
-    "toplam_islem": 6,
-    "kazanan_islem": 4,
-    "kaybeden_islem": 2,
-    "kazanma_orani": 66.7,
-    "toplam_kar_zarar_yuzde": 17.66,
-    "ortalama_kar_zarar_yuzde": 2.94,
-    "en_iyi_islem": {"sembol": "CAT", "kar_yuzde": 12.02},
-    "en_kotu_islem": {"sembol": "BAC", "kayip_yuzde": -7.09}
-  }
-}
-```
+### trade akışı
 
-**Otomatik:** İstatistikler güncellenir
+**yeni pozisyon açılışı**:
+1. portföy JSON'unda `pozisyonlar[]` dizisine ekle
+2. `nakit.miktar` azalt
+3. portföy `transactions[]` listesine ekle
+4. `data/transactions.csv` satır ekle
+5. `data/summary.json` güncelle
+6. git commit: `[ALIŞ] PORTFÖY - SEMBOL @FİYAT - NEDEN`
 
-#### **3. watchlist.json - İzleme Listesi**
-
-```json
-{
-  "son_guncelleme": "2026-02-18T16:00:00Z",
-  "not": "Potansiyel swing adayları",
-  "izleme_listesi": [
-    {
-      "sembol": "DUK",
-      "guncel_fiyat": 126.71,
-      "momentum_5gun": 3.4,
-      "sektor": "Utilities - Elektrik",
-      "notlar": "Savunmacı kamu hizmeti"
-    }
-  ],
-  "haric_tutulanlar": [
-    {
-      "sembol": "GOOGL",
-      "neden": "Negatif momentum -6.7%"
-    }
-  ]
-}
-```
-
-**Kullanım:** Günlük tarama sonuçları
+**pozisyon kapatma**:
+1. `pozisyonlar[]` listesinden kaldır
+2. `nakit.miktar` artır
+3. portföy `transactions[]` listesine ekle
+4. `data/transactions.csv` satır ekle
+5. swing ise → `data/swing/closed.json`'a ekle
+6. `data/summary.json` güncelle
+7. git commit: `[SATIŞ] PORTFÖY - SEMBOL @FİYAT - NEDEN`
 
 ---
 
-## 📈 PERFORMANS TAKİP
+## dosya durumları
 
-### **performance_log.csv**
+### aktif — günlük kullanılan
+- `data/portfolios/*.json` — 4 portföy
+- `data/swing/active.json`, `closed.json`, `watchlist.json` — swing sistemi
+- `data/summary.json` — genel özet
+- `data/transactions.csv` — işlem kaydı
+- `docs/PORTFOLIO_DATA_SKILL.md` — veri yapısı referansı
+- `docs/prompts/DAILY_REPORT_PROMPT.md` — rapor prompt'u
+- `reports/daily/` — günlük raporlar
 
-Günlük portföy performansı.
+### referans — ihtiyaç halinde
+- `docs/SWING_TRADE_RULES.md` — swing kuralları
+- `docs/PREDICTION_MARKETS_GUIDE.md` — prediction markets
+- `docs/FMP_API_LESSONS_LEARNED.md` — API notları
 
-```csv
-date,portfolio_value,daily_return_pct,cumulative_return_pct,cash,notes
-2026-02-17,403500.00,,0.88,12000,Initial setup
-2026-02-18,405120.50,0.40,1.28,12000,Market up
-2026-02-19,411898.31,1.65,2.97,12000,Strong day
+### legacy / tek seferlik — taşınabilir
+- `data/portfolio.json` — eski tek portföy dosyası
+- `data/GUNLUK_RAPOR_STRATEJI.md`, `_v2.md` — eski rapor stratejileri (data klasöründe olmamalı)
+- `data/FMP_NEWS_ENDPOINTS_PREMIUM.md` — eski FMP notu (data klasöründe olmamalı)
+- `docs/AGGRESSIVE_MICRO_CAP_STRATEGY.md` — 20 şubat tek seferlik analiz
+- `docs/BALANCED_PORTFOLIO_TECHNICAL_ANALYSIS.md` — 20 şubat tek seferlik analiz
+- `docs/ENTRY_TIMING_DECISION.md` — 20 şubat tek seferlik analiz
+- `docs/TECHNICAL_ANALYSIS_MICRO_CAPS.md` — 20 şubat tek seferlik analiz
+- `docs/strategy.md` — eski 35 satırlık strateji notu
+- `AI_DISRUPTION_OZET.md` — root'ta olmamalı
+- `ACTIVE_FILES.md` — root'ta, eski olabilir
+- `PORTFOY_KURALLARI.md` — root'ta, PORTFOLIO_DATA_SKILL ile çakışıyor olabilir
+- `reports/report_2026-02-18.md` — eski format rapor
+
+---
+
+## git commit formatı
+
 ```
+[TİP] PORTFÖY - SEMBOL @FİYAT - AÇIKLAMA
 
-### **transactions.csv**
-
-Tüm alım/satım işlemleri.
-
-```csv
-date,action,symbol,shares,price,total,reason
-2026-02-17,BUY,SM,1040,21.14,21985.60,"Initial position - Oil & gas"
-2026-02-18,SELL,AMD,50,200.12,10006.00,"Stop-loss hit"
+örnekler:
+[ALIŞ] Dengeli - SM @20.67 - oil & gas başlangıç pozisyonu
+[SATIŞ] Agresif - AMD @199.39 - stop-loss tetiklendi -%10.8
+[GÜNCELLEME] tüm portföyler - 24 şubat kapanış fiyatları
+[SWING-GİRİŞ] NEM @118.12 - altın momentum breakout
+[SWING-ÇIKIŞ] CAT @775.00 - hedef tutturuldu +%12
+[REBALANCE] rotasyon - tech'ten enerji+endüstriye rotasyon
+[SABAH RAPORU] 24 şubat 2026 - risk-off, temettü güçlü
+[HAFTALIK RAPOR] 23 şubat 2026 - hafta değerlendirmesi
+[PROMPT] v2.2 - sektör RS analizi eklendi
 ```
 
 ---
 
-## 🤖 OTOMASYON SCRİPTLERİ
-
-### 📁 `scripts/`
-
-#### **update_all_portfolios.py** ⭐ ANA SCRİPT
-
-**Çalıştırma:**
-```bash
-python3 scripts/update_all_portfolios.py
-```
-
-**Ne yapar:**
-1. **4 Portföyü Günceller:**
-   - FMP API'den fiyatları çeker
-   - K/Z hesaplar
-   - Ağırlıkları günceller
-   - Dosyaları kaydeder
-
-2. **Swing Trade Otomasyonu:**
-   - Aktif pozisyonları kontrol eder
-   - Stop-loss/target kontrol
-   - Timeframe disiplin (10 gün)
-   - Trailing stop aktive
-   - Otomatik kapatma
-
-3. **Raporlama:**
-   - Portföy özeti
-   - Swing özeti
-   - Action items
-
-**Seçenekler:**
-```bash
-# Sadece portföyler
-python3 scripts/update_all_portfolios.py --portfolios-only
-
-# Sadece swing
-python3 scripts/update_all_portfolios.py --swing-only
-```
-
----
-
-## 📁 ÖZET DOSYALARI
-
-### **portfolio_summary.json**
-
-4 portföyün özet durumu.
-
-```json
-{
-  "tarih": "2026-02-19",
-  "toplam_sermaye": 400000,
-  "toplam_deger": 411898.31,
-  "toplam_kar_zarar": 11898.31,
-  "toplam_getiri_yuzde": 2.97,
-  "portfolyolar": {
-    "balanced": {"deger": 103096.25, "getiri_yuzde": 3.10},
-    "aggressive": {"deger": 91345.24, "getiri_yuzde": -8.65},
-    "dividend": {"deger": 112351.42, "getiri_yuzde": 12.35},
-    "rotation": {"deger": 105105.40, "getiri_yuzde": 5.11}
-  }
-}
-```
-
----
-
-## ❌ OLMAYAN SİSTEMLER
-
-### **1. Alert Sistemi**
-```
-📁 data/alerts.json
-```
-**Eksik:** Fiyat/teknik alertler.
-
-**Kullanım Senaryoları:**
-- RSI 30'un altına düştü
-- 50MA kesişmesi
-- Hacim spike
-- Haber alertleri
-
-### **2. Detaylı Watchlist Tracking**
-```
-📁 data/watchlist_detailed.json
-```
-**Eksik:** Adayların detaylı takibi.
-
-**İçermeli:**
-- Teknik seviyeler
-- Momentum tracking
-- Katalızör takibi
-- Scoring sistemi
-
-### **3. Backtest Sonuçları**
-```
-📁 data/backtests/
-```
-**Eksik:** Stratejilerin backtest sonuçları.
-
-### **4. Risk Metrikleri**
-```
-📁 data/risk_metrics.json
-```
-**Eksik:** VaR, Sharpe ratio, beta vb.
-
----
-
-## 🔧 YAPILACAKLAR
-
-### **Öncelik 1 - YÜKSEK:**
-- [ ] Alert sistemi
-- [ ] Risk metrikleri
-- [ ] Detaylı watchlist tracking
-
-### **Öncelik 2 - ORTA:**
-- [ ] Detaylı watchlist
-- [ ] Backtest kayıtları
-- [ ] Sektör analizi
-
-### **Öncelik 3 - DÜŞÜK:**
-- [ ] Grafik verisi
-- [ ] Benchmark karşılaştırma
-- [ ] Dividend tracking
-
----
-
-## 📊 DOSYA BOYUTLARI
-
-| Dosya | Boyut | Açıklama |
-|-------|-------|----------|
-| `active.json` | ~5KB | 7-10 pozisyon |
-| `closed.json` | ~3KB | Tüm geçmiş |
-| `aggressive.json` | ~5KB | 8 pozisyon |
-| `balanced.json` | ~4KB | 6 pozisyon |
-| `dividend.json` | ~5KB | 8 pozisyon |
-| `rotation.json` | ~3KB | 5 ETF |
-
-**TOPLAM VERİ:** ~50KB (çok küçük, hızlı)
-
----
-
-## 🔄 GÜNCELLEME SIKLIĞI
-
-| Dosya | Güncelleme | Yöntem |
-|-------|-----------|--------|
-| Portföyler | Günlük | Script |
-| Swing active | Her run | Script |
-| Swing closed | Trade sonrası | Script |
-| Watchlist | Haftalık | Manuel/Script |
-| Logs | Olay bazlı | Manuel |
-
----
-
-## 💾 YEDEKLEME
-
-**Git:** Tüm dosyalar GitHub'da  
-**Sıklık:** Her commit (otomatik)  
-**Geçmiş:** Tam commit history
-
----
-
-**Son Güncelleme:** 19 Şubat 2026  
-**Yazar:** Portfolio Tracker System  
-**Versiyon:** 2.0 - Tam Türkçe
+> son güncelleme: 24 şubat 2026 | finzora ai
