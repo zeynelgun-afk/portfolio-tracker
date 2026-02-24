@@ -1,88 +1,56 @@
 {
-  "son_guncelleme": "2026-02-23",
+  "son_guncelleme": "2026-02-24",
   "simulasyon_donemi": "17 Şubat 2026 - 24 Şubat 2026",
-  "islem_gunleri": 5,
+  "islem_gunleri": 6,
   "toplam_sermaye": 400000.0,
-  "toplam_deger": 421059.02,
-  "toplam_kar_zarar": 21059.02,
-  "toplam_kar_zarar_yuzde": 5.26,
-  "benchmark_spy": 0.0,
-  "alpha": 4.969259999999995,
+  "toplam_deger": 419343.93,
+  "toplam_kar_zarar": 19343.93,
+  "toplam_kar_zarar_yuzde": 4.84,
+  "benchmark_spy": -1.02,
+  "alpha": 5.86,
   "portfolyolar": {
     "dengeli": {
       "isim": "Dengeli Portföy",
-      "deger": 108974.7,
+      "deger": 107211.14,
       "maliyet": 100000,
-      "kar_zarar": 8974.7,
-      "kar_zarar_yuzde": 8.97,
+      "kar_zarar": 7211.14,
+      "kar_zarar_yuzde": 7.21,
       "pozisyon_sayisi": 6,
-      "nakit": {
-        "miktar": 9613.2,
-        "para_birimi": "USD"
-      },
       "durum": "BAŞARILI"
     },
     "agresif": {
       "isim": "Agresif Büyüme",
-      "deger": 90765.07,
+      "deger": 90770.19,
       "maliyet": 100000,
-      "kar_zarar": -9234.93,
+      "kar_zarar": -9229.81,
       "kar_zarar_yuzde": -9.23,
-      "pozisyon_sayisi": 2,
-      "nakit": {
-        "miktar": 78459.2,
-        "para_birimi": "USD"
-      },
+      "pozisyon_sayisi": 5,
       "durum": "KAYIPLI"
     },
     "temettü": {
       "isim": "Değer + Temettü",
-      "deger": 116199.35,
+      "deger": 116640.76,
       "maliyet": 100000,
-      "kar_zarar": 16199.35,
-      "kar_zarar_yuzde": 16.2,
+      "kar_zarar": 16640.76,
+      "kar_zarar_yuzde": 16.64,
       "pozisyon_sayisi": 7,
-      "nakit": {
-        "miktar": 648.12,
-        "para_birimi": "USD"
-      },
       "durum": "BAŞARILI - En iyi performans 🏆"
     },
     "rotasyon": {
       "isim": "Sektör Rotasyonu",
-      "deger": 105119.9,
+      "deger": 104721.84,
       "maliyet": 100000,
-      "kar_zarar": 5119.9,
-      "kar_zarar_yuzde": 5.12,
+      "kar_zarar": 4721.84,
+      "kar_zarar_yuzde": 4.72,
       "pozisyon_sayisi": 3,
-      "nakit": {
-        "miktar": 668.0800000000054,
-        "para_birimi": "USD"
-      },
       "durum": "BAŞARILI"
     },
     "swing_trade": {
       "isim": "Swing Trade (Simülasyon)",
-      "pozisyon_sayisi": 8,
-      "ortalama_getiri_yuzde": 0.8923502700875534,
-      "bos_slot": 2,
-      "durum": "8/10 pozisyon aktif"
+      "pozisyon_sayisi": 7,
+      "ortalama_getiri_yuzde": 0.99,
+      "bos_slot": 3,
+      "durum": "7/10 pozisyon aktif"
     }
-  },
-  "son_islemler_24_subat": [
-    "Günlük fiyat güncellemesi - KOS +21.47% 🔥",
-    "T (AT&T) zarar durdur güvenli (+$0.73 ara)",
-    "NEM trailing stop yakın (izleniyor)"
-  ],
-  "onemli_dersler": [
-    "24 Şubat - KOS muazzam ivme +21.47%, haftalık toplam +33% 🔥",
-    "Dengeli portföy +8.75% (KOS etkisi güçlü)",
-    "Temettü portföy +15.24% - lider pozisyonunu koruyor 🏆",
-    "Agresif portföy -8.95% (mikro-sermaye düzeltmesi beklentiliydi)",
-    "T (AT&T) zarar durdur güvenli - pozisyon korunuyor",
-    "NEM trailing stop yakın - yarın tetiklenebilir",
-    "Savunmacı strateji çalışıyor - değer kazandırıyor",
-    "BKSY -7.19% düzeltmesi sağlıklı - yarım pozisyon riski sınırlıyor"
-  ],
-  "nihai_karar": "BAŞARILI - 400K'dan 419.9K'ya (+4.97%), Temettü portföy lider"
+  }
 }
