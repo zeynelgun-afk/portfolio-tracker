@@ -1,6 +1,6 @@
-# SEANS İÇİ AKSİYON PROMPT — v1.1
+# SEANS İÇİ AKSİYON PROMPT — v1.2
 
-> **versiyon**: 1.1 | **son güncelleme**: 24 şubat 2026
+> **versiyon**: 1.2 | **son güncelleme**: 24 şubat 2026
 > **çalışma zamanı**: NYSE açıldıktan sonra (TR 17:30+), tercihen açılıştan 30-60dk sonra
 > **ön koşul**: o günün sabah raporu zaten yazılmış olmalı
 > **perspektif**: PİYASA AÇIK — GERÇEK ZAMANLI KARAR VE AKSİYON
@@ -9,6 +9,20 @@
 > **dil**: küçük harf türkçe, teknik terimler ingilizce kalabilir
 > **kaynak atfı**: sadece "finzora ai" kullan
 > **format kuralları**: em dash kullanma
+
+---
+
+> ## ⛔ KRİTİK KURAL — SEANS İÇİNDE RAPOR YAZILMAZ
+> 
+> **seans içinde hiçbir rapor (.md) hazırlanmaz ve githuba gönderilmez.**
+> 
+> repoya gidecek raporlar yalnızca üç türdür:
+> - `DAILY_YYYY-MM-DD.md` → piyasa kapanışı sonrası (gece)
+> - `WEEKLY_YYYY-MM-DD.md` → pazar günü
+> - `MONTHLY_YYYY-MM.md` → ay sonu
+> 
+> seans içi analizler, kararlar ve gözlemler **sadece chat'te kalır.**
+> json/csv değişiklikleri repoya gider ama rapor dosyası asla.
 
 ---
 
