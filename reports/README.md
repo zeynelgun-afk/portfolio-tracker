@@ -96,14 +96,7 @@ Raporlar otomatik oluşturulur:
 
 ---
 
-## 📊 RAPOR KAYNAKLARI
 
-### FMP Premium API:
-- `/stable/news/stock` - Hisse haberleri
-- `/stable/news/general-latest` - Genel piyasa
-- `/stable/news/forex` - Forex haberleri
-- `/stable/news/crypto` - Crypto haberleri
-- `/stable/quote` - Fiyat verileri
 
 ### Web Search:
 - Asya borsaları
