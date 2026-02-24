@@ -1,6 +1,6 @@
-# SEANS İÇİ AKSİYON PROMPT — v1.0
+# SEANS İÇİ AKSİYON PROMPT — v1.1
 
-> **versiyon**: 1.0 | **oluşturma**: 24 şubat 2026
+> **versiyon**: 1.1 | **son güncelleme**: 24 şubat 2026
 > **çalışma zamanı**: NYSE açıldıktan sonra (TR 17:30+), tercihen açılıştan 30-60dk sonra
 > **ön koşul**: o günün sabah raporu zaten yazılmış olmalı
 > **perspektif**: PİYASA AÇIK — GERÇEK ZAMANLI KARAR VE AKSİYON
@@ -32,6 +32,62 @@ kullanıcı şunlardan birini söylediğinde bu prompt devreye girer:
 - "piyasa nasıl, ne yapıyoruz?"
 - "açılış sonrası analiz"
 - veya doğrudan bu prompt dosyasını referans verdiğinde
+
+---
+
+## SEANS FAZLARİ — NE ZAMAN NE YAPILIR
+
+bu prompt seans boyunca birden fazla kez çalıştırılabilir.
+her faz farklı önceliklere sahip:
+
+```
+FAZ 1: AÇILIŞ (TR 17:30-18:30) — ilk 60 dakika
+  öncelik: ACİL KONTROL
+  - gap-up/gap-down kontrolü
+  - stop-loss tetiklenen var mı?
+  - BMO earnings sonuçları (açılış öncesi açıklananlar)
+  - sabah raporundaki acil aksiyonları uygula
+  - ilk 15dk aşırı volatil olabilir → büyük karar verme, izle
+  
+FAZ 2: MID-SESSION (TR 19:00-22:00) — ana seans
+  öncelik: ANALİZ + KARAR
+  - tam teknik analiz (RSI, SMA, sektör RS)
+  - yeni pozisyon fırsatları değerlendir
+  - swing watchlist tarama
+  - portföy rebalance değerlendirmesi
+  - prediction markets güncellemesi
+  
+FAZ 3: POWER HOUR (TR 23:00-00:00) — son saat
+  öncelik: FİNAL AKSİYONLAR
+  - kapanışa yakın kar alma/pozisyon ayarlama
+  - bugün AMC earnings açıklayacak hisseleri not et
+  - trailing stop'ları final güncelle
+  - kapanış öncesi son fiyat kontrolü
+  - yarının sabah raporu için not düş
+```
+
+## TEKRAR ÇALIŞTIRMA — API OPTİMİZASYONU
+
+aynı seansta 2. veya 3. kez çalıştırıldığında tam veri toplama gereksiz:
+
+```
+İLK ÇALIŞTIRMA (FAZ 1):
+  → tam veri toplama: ~88 FMP + 6-9 websearch
+  
+TEKRAR ÇALIŞTIRMA (FAZ 2/3):
+  → sadece değişenleri çek:
+    - batch-quote (1 call — tüm fiyatlar)
+    - sector-performance-snapshot (1 call)
+    - varsa tetiklenen pozisyon için RSI (1-3 call)
+    - websearch sadece yeni haber/PM varsa (0-2)
+  → toplam: ~3-6 FMP + 0-2 websearch (minimal)
+  
+SEANS API BÜTÇESİ:
+  ilk çalıştırma:  ~88 FMP + ~8 websearch
+  2. çalıştırma:   ~5 FMP + ~1 websearch  
+  3. çalıştırma:   ~5 FMP + ~1 websearch
+  toplam seans:    ~100 FMP (günlük rapor ile birlikte ~200 / 2,500 = %8 güvenli)
+```
 
 ---
 
@@ -112,7 +168,26 @@ for symbol in unique_symbols:
 
 **toplam**: ~1 (batch) + 3×N (teknik) — N = benzersiz sembol sayısı (~25 = ~76 call)
 
-## 1c. haber kontrolü (portföy hisseleri)
+## 1c. prediction markets + haber kontrolü (portföy hisseleri)
+
+### prediction markets (canlı sentiment)
+
+```
+websearch → "kalshi fed rate probability today"
+websearch → "polymarket" + gündemdeki olay (tariff/iran/election vb.)
+
+kontrol:
+- sabah raporundaki PM verileriyle karşılaştır
+- >%10 değişim varsa → önemli sinyal, strateji etkisini değerlendir
+- volume spike var mı? (<$10K güvenilmez, $1M+ güvenilir)
+
+aksiyon tetikleyicileri (docs/PREDICTION_MARKETS_GUIDE.md):
+- fed rate cut odds > %30 → defensive azalt, cyclical ekle
+- iran escalation > %50 → enerji pozisyonlarını koru/artır
+- ani %10+ swing → whale manipulation olabilir, teyit bekle
+```
+
+### haber kontrolü
 
 ```python
 # portföy hisselerinin haberleri
@@ -502,9 +577,16 @@ aksiyonlar:
 📌 swing adayı: SEMBOL — neden, giriş seviyesi, R:R
 📌 portföy adayı: SEMBOL — hangi portföye, neden
 
+### prediction markets güncellemesi (sabahtan değişim)
+- fed rate cut: %XX → %XX (↑↓%X) — [etkisi: ...]
+- [gündemdeki olay]: %XX → %XX — [etkisi: ...]
+(değişim < %5 ise → "PM stabil, önemli değişim yok")
+
 ### sonraki kontrol
+- seans fazı: [şu an faz 1/2/3 — bir sonraki faz ne zaman]
 - saat XX:XX'de kontrol edilecek: [neden — earnings AMC, makro veri, vb.]
-- kapanış güncellemesi: [JSON fiyat güncelleme planı]
+- bugün AMC earnings: [hangi hisseler kapanıştan sonra raporlayacak — portföy/sektör etkisi]
+- kapanış güncellemesi: [JSON fiyat güncelleme yarın 14:00 günlük raporda yapılacak]
 ```
 
 ---
@@ -512,11 +594,11 @@ aksiyonlar:
 # KARAR AĞACI — HIZLI REFERANS
 
 ```
-SEANS AÇILDI
+SEANS AÇILDI (FAZ 1: TR 17:30-18:30)
 │
 ├─ ACİL KONTROL (ilk 5 dk)
 │  ├─ stop-loss tetiklenen var mı? → SAT
-│  ├─ gap-down > %5 olan var mı? → değerlendir
+│  ├─ gap-down > %5 olan var mı? → değerlendir (ilk 15dk bekle)
 │  └─ sabah BMO earnings sonuçları → etki analizi
 │
 ├─ PİYASA DURUMU (ilk 15 dk)
@@ -524,10 +606,15 @@ SEANS AÇILDI
 │  ├─ sektör RS → güçlü/zayıf sektörler
 │  └─ VIX yönü → volatilite beklentisi
 │
+├─ SABAH PLANI UYGULAMASI (30 dk)
+│  └─ günlük rapordaki acil aksiyonları uygula
+│
+MID-SESSION (FAZ 2: TR 19:00-22:00)
+│
 ├─ PORTFÖY TARAMA (30 dk)
 │  ├─ her pozisyon: fiyat, RSI, SMA kontrol
 │  ├─ uyarı tetikleyicileri kontrol
-│  └─ sabah planındaki aksiyonları uygula
+│  └─ korelasyon kontrolü (sektör yoğunlaşması)
 │
 ├─ SWING TARAMA (30 dk)
 │  ├─ stop/hedef/trailing güncelle
@@ -535,16 +622,33 @@ SEANS AÇILDI
 │  ├─ yeni aday tarama (güçlü sektörlerden)
 │  └─ boş slot varsa → en iyi adayı değerlendir
 │
+├─ PREDİCTION MARKETS (5 dk)
+│  ├─ kalshi fed rate → sabahtan değişim?
+│  ├─ polymarket gündem → ani hareket?
+│  └─ >%10 değişim → strateji etkisini değerlendir
+│
 ├─ FIRSATLAR (15 dk)
 │  ├─ güçlü RS sektörlerinden aday
 │  ├─ earnings beat momentum
 │  ├─ dip alım fırsatları (RSI < 30 + kaliteli hisse)
 │  └─ portföy dengeleme ihtiyacı
 │
+POWER HOUR (FAZ 3: TR 23:00-00:00)
+│
+├─ FİNAL AKSİYONLAR
+│  ├─ bekleyen kar alma / pozisyon ayarlama
+│  ├─ trailing stop'ları final güncelle
+│  └─ kapanış öncesi son fiyat kontrolü
+│
+├─ YARIN HAZIRLIK
+│  ├─ bugün AMC earnings açıklayacak hisseler → not et
+│  ├─ yarının sabah raporu için flag'ler
+│  └─ after-hours izlenecek hisseler
+│
 └─ GÜNCELLEME + COMMIT
    ├─ trade varsa → JSON güncelle + commit
    ├─ watchlist güncelle + commit
-   └─ fiyat güncelleme + commit
+   └─ fiyat güncelleme (seans içi — final güncelleme yarın 14:00 raporda)
 ```
 
 ---
