@@ -14,13 +14,13 @@
 
 ## SEANS ÖNCESİ vs SEANS İÇİ — FARK
 
-| | sabah raporu (seans öncesi) | seans içi aksiyon (bu prompt) |
+| | günlük rapor (TR ~14:00) | seans içi aksiyon (bu prompt) |
 |---|---|---|
-| **ne zaman** | NYSE açılmadan önce | NYSE açıldıktan 30-60dk sonra |
-| **fiyat** | dünün kapanışı | bugünün canlı fiyatı |
-| **amaç** | analiz + plan | karar + uygulama |
-| **çıktı** | rapor dosyası (.md) | JSON güncelleme + trade emirleri |
-| **ton** | "bugün şunu izleyeceğiz" | "şu anda şunu yapıyoruz" |
+| **ne zaman** | NYSE açılmadan ~3.5 saat önce | NYSE açıldıktan 30-60dk sonra |
+| **fiyat** | dünün kapanışı (final) | bugünün canlı fiyatı |
+| **amaç** | değerlendirme + JSON güncelleme + plan | karar + uygulama |
+| **çıktı** | rapor dosyası (.md) + JSON güncelleme | trade emirleri + JSON |
+| **ton** | "dün şu oldu, bugün şunu yapacağız" | "şu anda şunu yapıyoruz" |
 
 ---
 

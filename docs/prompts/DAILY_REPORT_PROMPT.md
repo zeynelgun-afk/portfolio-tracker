@@ -1,20 +1,26 @@
-# GÜNLÜK RAPOR MASTER PROMPT — v2.1 (Seans Öncesi Sabah Raporu)
+# GÜNLÜK RAPOR MASTER PROMPT — v2.3 (Kapanış Değerlendirmesi + Seans Öncesi Plan)
 
-> **versiyon**: 2.1 | **son güncelleme**: 24 şubat 2026
+> **versiyon**: 2.3 | **son güncelleme**: 24 şubat 2026
 > **çıktı dosyası**: `reports/daily/DAILY_REPORT_YYYY-MM-DD.md`
-> **çalışma zamanı**: her iş günü seans öncesi (türkiye ~09:00-15:00 arası, NYSE 17:30'da açılır)
-> **perspektif**: DÜN NE OLDU + BUGÜN NE YAPACAĞIZ
+> **çalışma zamanı**: her iş günü TR ~14:00 (NYSE kapanışından ~14 saat sonra, açılıştan ~3.5 saat önce)
+> **perspektif**: DÜNÜN KAPANIŞ DEĞERLENDİRMESİ + JSON FİNAL GÜNCELLEME + BUGÜN NE YAPACAĞIZ
 > **fiyat verisi**: dünün kapanış fiyatları (FMP quote = son kapanış)
 > **dil**: küçük harf türkçe, teknik terimler ingilizce kalabilir
 > **kaynak atfı**: sadece "finzora ai" kullan
 > **format kuralları**: em dash kullanma, doğal yazım hataları kabul edilir
-> **git commit**: `[SABAH RAPORU] DD Ay YYYY - kısa özet`
+> **git commit**: `[GÜNLÜK RAPOR] DD Ay YYYY - kısa özet`
 >
 > **⚠️ ZAMAN BİLİNCİ**:
-> - rapor yazıldığında NYSE KAPALI (new york kapalı)
-> - FMP fiyatları = dünün kapanışı
-> - pre-market 16:00-17:30 TR saati (rapor yazıldıktan sonra başlar)
+> - rapor TR ~14:00'da yazılır — NYSE dün 00:00 TR'de kapandı, bugün 17:30 TR'de açılacak
+> - FMP fiyatları = dünün kapanışı (kesinleşmiş final fiyatlar)
+> - after-hours: dün 00:00-02:00 TR arası olmuş (AMC earnings sonuçları gelebilir)
+> - pre-market: bugün 16:00-17:30 TR (rapor yazıldıktan ~2 saat sonra başlar)
 > - bugünün seansı 17:30 TR'de açılır, 00:00 TR'de kapanır
+>
+> **BU PROMPT 3 İŞİ BİRDEN YAPAR**:
+> 1. dünün kapanış değerlendirmesi (ne oldu, plan tuttu mu, dersler)
+> 2. JSON final güncelleme (tüm dosyalar kapanış fiyatıyla, doğrulama)
+> 3. bugünün seans planı (futures, haberler, aksiyon listesi)
 
 ---
 
@@ -22,43 +28,66 @@
 
 | bölüm | içerik | sıklık | FMP call | websearch |
 |-------|--------|--------|----------|-----------|
+| 0. kapanış değerlendirmesi | plan tuttu mu, dersler, JSON final güncelleme | günlük | 0* | 0-1 |
 | 1. piyasa görünümü | dünün kapanışı, futures, sektörler, risk, gece haberleri | günlük | ~12 | 5-7 |
 | 2. portföy takibi | 4 portföy detay, RSI, SMA, uyarılar | günlük | ~73 | 0 |
 | 3. swing trade | stop/hedef kontrol, bugünün aksiyon kararları | günlük | 0* | 0 |
 | 4. earnings takvimi | dün gece sonuçları, bugün BMO/AMC, haftalık takvim | günlük | 5-15 | 2-4 |
 | 5. CANSLIM tarama | 7 kriterli büyüme hissesi taraması | **haftalık** | 80-100 | 1-2 |
 | 6. sonuç + aksiyon | sentez, bugünün seansı için plan | günlük | 0 | 0 |
-| **günlük toplam** | | | **~90-100** | **7-11** |
+| **günlük toplam** | | | **~90-100** | **7-12** |
 | **haftalık ek** | (CANSLIM dahil) | | **+80-100** | **+1-2** |
 
+*bölüm 0 verileri bölüm 1-2'de çekilir, ekstra call gerekmez
 *bölüm 3 verileri bölüm 2'de zaten çekilir, ekstra call gerekmez
 
-**⚠️ API bütçesi**: günlük ~100 call / 2,500 limit = **%4** (güvenli)
+**⚠️ API bütçesi**: günlük rapor ~100 + seans içi ~88 = ~190 / 2,500 limit = **%7.6** (güvenli)
 
 ---
 
 ## ÇALIŞTIRMA ADIM SIRASI
 
 ```
-SABAH RAPORU (seans öncesi, TR ~09:00-15:00):
-1. repo'yu çek (git pull)
-2. tüm portföy + swing JSON dosyalarını oku
-3. benzersiz sembol listesi çıkar (portföy + swing birleşik)
-4. FMP'den toplu veri çek (dünün kapanış fiyatları + teknik göstergeler)
-5. websearch: pre-market futures, gece haberleri, asya/avrupa piyasaları
-6. bölüm 1-6'yı sırayla yaz
-7. JSON dosyalarını güncelle (dünün kapanış fiyatıyla)
-8. raporu kaydet → reports/daily/DAILY_REPORT_YYYY-MM-DD.md
-9. git commit + push
+GÜNLÜK RAPOR (TR ~14:00):
+
+FАZE 0 — KAPANIŞ DEĞERLENDİRMESİ
+0a. repo'yu çek (git pull)
+0b. dünkü raporu oku (reports/daily/DAILY_REPORT_DÜNÜN_TARİHİ.md)
+0c. dünün aksiyonları uygulandı mı? plan tuttu mu?
+0d. dünün dersleri: doğru/yanlış kararlar, kaçırılan fırsatlar
+
+FАZE 1 — VERİ TOPLAMA + JSON FİNAL GÜNCELLEME
+1a. tüm portföy + swing JSON dosyalarını oku
+1b. benzersiz sembol listesi çıkar (portföy + swing birleşik)
+1c. FMP'den toplu veri çek (dünün kapanış fiyatları + teknik göstergeler)
+1d. JSON dosyalarını güncelle (kapanış fiyatıyla — final güncelleme)
+1e. doğrulama kontrolleri yap (hesaplama tutarlılığı)
+1f. summary.json güncelle
+
+FАZE 2 — PİYASA ANALİZİ + YENİ GÜN PLANI
+2a. websearch: pre-market futures, gece haberleri, after-hours sonuçları
+2b. sektör performansı + RS analizi
+2c. bölüm 1-6'yı sırayla yaz
+2d. raporu kaydet → reports/daily/DAILY_REPORT_YYYY-MM-DD.md
+2e. git commit + push (JSON güncellemeleri + rapor birlikte)
 
 SEANS SIRASINDA (TR 17:30-00:00):
+→ SESSION_ACTION_PROMPT.md kullan
 → rapordaki aksiyon planını uygula
-→ stop-loss emirlerini kontrol et
-→ earnings sonuçlarını takip et
+```
 
-SEANS SONRASI (TR ~00:00+):
-→ sadece JSON fiyat güncellemesi + kısa git commit
-→ tam rapor YARILMAZ, sabah yazılır
+---
+
+## 3 PROMPT SİSTEMİ — BİR GÜNÜN AKIŞI
+
+```
+TR 14:00  →  GÜNLÜK RAPOR (bu prompt)
+              kapanış değerlendirmesi + JSON final güncelleme + yeni gün planı
+
+TR 18:00+ →  SEANS İÇİ AKSİYON (SESSION_ACTION_PROMPT.md)
+              canlı fiyat, karar + uygulama
+
+(ertesi gün TR 14:00 → tekrar bu prompt)
 ```
 
 ---
@@ -94,6 +123,151 @@ benzersiz = sorted(semboller)
 ```
 
 
+
+---
+---
+
+# BÖLÜM 0: KAPANIŞ DEĞERLENDİRMESİ + JSON FİNAL GÜNCELLEME
+
+> **amaç**: dünkü seansı değerlendir, plan tuttu mu kontrol et, JSON'ları final güncelle
+> **tahmini FMP call**: 0 (bölüm 1-2'de zaten çekilecek veriler kullanılır)
+> **tahmini websearch**: 0-1 (after-hours sonuçları gerekirse)
+> **not**: bu bölüm rapor dosyasına yazılır + JSON güncelleme yapılır
+
+---
+
+## ADIM 1 — DÜNKÜ RAPORU OKU
+
+```
+1. dünün raporunu aç: reports/daily/DAILY_REPORT_{DÜN_TARİH}.md
+2. bölüm 6'daki aksiyon planını bul:
+   - 🔴 acil aksiyonlar → hangisi uygulandı?
+   - 🟡 izlenenler → tetiklendi mi?
+   - 🟢 fırsatlar → değerlendirildi mi?
+3. dün seans içi prompt (SESSION_ACTION) kullanıldıysa → yapılan trade'leri not et
+```
+
+eğer dünkü rapor yoksa veya ilk raporse → bu adımı atla, "önceki rapor yok" notu düş
+
+---
+
+## ADIM 2 — PLAN DEĞERLENDİRMESİ
+
+```markdown
+## 0. dünün değerlendirmesi
+
+### plan gerçekleşme
+
+| aksiyon | plan | sonuç | not |
+|---------|------|-------|-----|
+| [acil 1] | [planlanmış aksiyon] | ✅ yapıldı / ❌ yapılmadı / ⏳ devam ediyor | [kısa açıklama] |
+| [acil 2] | ... | ... | ... |
+| [izle 1] | ... | ... | ... |
+
+(dün aksiyon planı yoksa veya ilk raporse → "ilk rapor, önceki plan yok" yaz)
+
+### dünün performans özeti
+
+- portföy toplam değişim: +/-$X,XXX (+/-%X.XX)
+- SPY dün: +/-%X.XX → alpha: +/-%X.XX
+- en iyi performans: SEMBOL (+%X.XX) — [neden]
+- en kötü performans: SEMBOL (-%X.XX) — [neden]
+
+### dersler
+
+- ✅ doğru karar: [ne yapıldı, neden doğruydu]
+- ❌ yanlış karar: [ne yapıldı, neden yanlıştı, bir dahaki sefere ne farklı]
+- 🔍 kaçırılan fırsat: [ne oldu, fark edildi mi, neden girilmedi]
+- (her gün ders olmak zorunda değil — sıradan günlerde "rutin gün, özel ders yok" yaz)
+```
+
+---
+
+## ADIM 3 — JSON FİNAL GÜNCELLEME
+
+bu adımda FMP'den çekilen kapanış fiyatlarıyla (bölüm 1-2'de zaten çekilecek) tüm JSON'ları güncelle:
+
+### 3a. portföy JSON'ları
+
+```python
+for portfolio in [balanced, aggressive, dividend, rotation]:
+    for pozisyon in portfolio['pozisyonlar']:
+        pozisyon['guncel_fiyat'] = quote['price']
+        pozisyon['gunluk_degisim_yuzde'] = quote['changesPercentage']
+        pozisyon['guncel_deger'] = pozisyon['adet'] * pozisyon['guncel_fiyat']
+        pozisyon['kar_zarar'] = pozisyon['guncel_deger'] - pozisyon['yatirim']
+        pozisyon['kar_zarar_yuzde'] = (pozisyon['kar_zarar'] / pozisyon['yatirim']) * 100
+        pozisyon['son_guncelleme'] = datetime.now().isoformat()
+    
+    toplam_deger = sum(p['guncel_deger'] for p in pozisyonlar) + nakit['miktar']
+    portfolio['toplam_deger'] = toplam_deger
+    portfolio['toplam_getiri_yuzde'] = ((toplam_deger - 100000) / 100000) * 100
+    
+    for pozisyon in portfolio['pozisyonlar']:
+        pozisyon['agirlik_yuzde'] = (pozisyon['guncel_deger'] / toplam_deger) * 100
+```
+
+### 3b. swing active.json
+
+```python
+for pozisyon in aktif_pozisyonlar:
+    pozisyon['guncel_fiyat'] = quote['price']
+    pozisyon['guncel_kar_zarar_yuzde'] = ((guncel - giris) / giris) * 100
+    pozisyon['tutulan_gun'] = (today - giris_tarihi).days
+    
+    # trailing stop güncelle (sadece yukarı)
+    if guncel_fiyat > önceki_zirve:
+        yeni_trailing = guncel_fiyat * 0.95
+        if yeni_trailing > mevcut_trailing:
+            trailing_stop = yeni_trailing
+```
+
+### 3c. summary.json
+
+```python
+summary['toplam_deger'] = dengeli + agresif + temettü + rotasyon
+summary['toplam_kar_zarar'] = toplam_deger - 400000
+summary['toplam_kar_zarar_yuzde'] = (toplam_kar_zarar / 400000) * 100
+summary['benchmark_spy'] = SPY_baslangictan_beri
+summary['alpha'] = toplam_kar_zarar_yuzde - benchmark_spy
+```
+
+### 3d. doğrulama kontrolleri
+
+güncelleme sonrası şu kontrolleri yap — hata varsa düzelt:
+
+```
+✓ yatirim = adet × maliyet_baz (sabit, değişmemeli)
+✓ guncel_deger = adet × guncel_fiyat
+✓ kar_zarar = guncel_deger - yatirim
+✓ nakit.miktar = doğru (trade olmadıysa değişmemeli)
+✓ toplam_deger = sum(guncel_deger) + nakit
+✓ agirlik toplamı + nakit ağırlığı ≈ %100
+✓ summary toplam = 4 portföy toplamı
+✓ swing trailing stop'lar sadece yukarı gitmiş
+✓ tüm son_guncelleme bugünün tarihi
+```
+
+### 3e. after-hours kontrol (varsa)
+
+```
+- dün AMC earnings açıklayan portföy/swing hissesi var mı?
+- after-hours'ta > %3 hareket eden portföy hissesi var mı?
+- after-hours'ta > %5 hareket eden swing hissesi var mı?
+→ varsa not düş, bölüm 2-3'te dikkat çek
+→ after-hours fiyatı JSON'lara YAZILMAZ (sadece normal kapanış geçerli)
+```
+
+---
+
+## ADIM 4 — KALİTE KONTROL
+
+- [ ] dünkü rapordaki aksiyonlar değerlendirildi mi?
+- [ ] dersler yazıldı mı? (sıradan günlerde "rutin" notu yeterli)
+- [ ] tüm JSON dosyaları kapanış fiyatıyla güncellendi mi?
+- [ ] doğrulama kontrolleri yapıldı mı?
+- [ ] summary.json güncellendi mi?
+- [ ] after-hours önemli hareket varsa not düşüldü mü?
 
 ---
 ---
@@ -246,6 +420,37 @@ websearch'ten gelen haberleri şu filtreyle değerlendir:
 ---
 
 ## ADIM 3 — RAPOR ÇIKTI FORMATI
+
+```markdown
+## 0. dünün değerlendirmesi
+
+### plan gerçekleşme ({dünün tarihi})
+
+| aksiyon | plan | sonuç | not |
+|---------|------|-------|-----|
+| [acil 1] | [ne planlanmıştı] | ✅/❌/⏳ | [kısa açıklama] |
+| [izle 1] | ... | ... | ... |
+
+(ilk raporse veya dün aksiyon yoksa → "önceki rapor yok / rutin gün" yaz)
+
+### dünün performans özeti
+
+- portföy toplam değişim: +/-$X,XXX (+/-%X.XX)
+- SPY dün: +/-%X.XX → alpha: +/-%X.XX
+- en iyi: SEMBOL (+%X.XX) — [neden]
+- en kötü: SEMBOL (-%X.XX) — [neden]
+
+### dersler
+
+- ✅ doğru karar: [açıklama]
+- ❌ yanlış karar: [açıklama + bir dahaki sefere ne farklı]
+- (sıradan gün → "rutin gün, özel ders yok")
+
+### JSON güncelleme durumu
+
+✅ 4 portföy + swing active + summary güncellendi (kapanış fiyatlarıyla)
+doğrulama: [sorun yok / şu düzeltildi: ...]
+```
 
 ```markdown
 ## 1. piyasa görünümü
@@ -1482,9 +1687,10 @@ her aksiyon önerisinde:
 ```markdown
 ---
 
-> sabah raporu sonu | finzora ai | [bugünün tarihi] [saat]
+> günlük rapor sonu | finzora ai | [bugünün tarihi] [saat]
 > NYSE açılış: bugün 17:30 (TR) | kapanış: 00:00 (TR)
-> sonraki rapor: yarın seans öncesi
+> sonraki: seans içi aksiyon (SESSION_ACTION_PROMPT) → TR 18:00+
+> sonraki rapor: yarın ~14:00 TR
 ```
 
 ---
