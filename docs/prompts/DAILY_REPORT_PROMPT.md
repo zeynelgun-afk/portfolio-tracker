@@ -1,12 +1,20 @@
-# GÜNLÜK RAPOR MASTER PROMPT — v2.0
+# GÜNLÜK RAPOR MASTER PROMPT — v2.1 (Seans Öncesi Sabah Raporu)
 
-> **versiyon**: 2.0 | **son güncelleme**: 24 şubat 2026
+> **versiyon**: 2.1 | **son güncelleme**: 24 şubat 2026
 > **çıktı dosyası**: `reports/daily/DAILY_REPORT_YYYY-MM-DD.md`
-> **çalışma zamanı**: her iş günü NYSE kapanışından sonra (türkiye ~23:00+)
+> **çalışma zamanı**: her iş günü seans öncesi (türkiye ~09:00-15:00 arası, NYSE 17:30'da açılır)
+> **perspektif**: DÜN NE OLDU + BUGÜN NE YAPACAĞIZ
+> **fiyat verisi**: dünün kapanış fiyatları (FMP quote = son kapanış)
 > **dil**: küçük harf türkçe, teknik terimler ingilizce kalabilir
 > **kaynak atfı**: sadece "finzora ai" kullan
 > **format kuralları**: em dash kullanma, doğal yazım hataları kabul edilir
-> **git commit**: `[GÜNLÜK RAPOR] DD Ay YYYY - kısa özet`
+> **git commit**: `[SABAH RAPORU] DD Ay YYYY - kısa özet`
+>
+> **⚠️ ZAMAN BİLİNCİ**:
+> - rapor yazıldığında NYSE KAPALI (new york kapalı)
+> - FMP fiyatları = dünün kapanışı
+> - pre-market 16:00-17:30 TR saati (rapor yazıldıktan sonra başlar)
+> - bugünün seansı 17:30 TR'de açılır, 00:00 TR'de kapanır
 
 ---
 
@@ -14,13 +22,13 @@
 
 | bölüm | içerik | sıklık | FMP call | websearch |
 |-------|--------|--------|----------|-----------|
-| 1. piyasa görünümü | makro tablo, sektörler, risk, haberler | günlük | ~12 | 3-5 |
+| 1. piyasa görünümü | dünün kapanışı, futures, sektörler, risk, gece haberleri | günlük | ~12 | 5-7 |
 | 2. portföy takibi | 4 portföy detay, RSI, SMA, uyarılar | günlük | ~73 | 0 |
-| 3. swing trade | stop/hedef kontrol, aksiyon kararları | günlük | 0* | 0 |
-| 4. earnings takvimi | 7 günlük earnings, portföy etkisi | günlük | 5-15 | 1-2 |
+| 3. swing trade | stop/hedef kontrol, bugünün aksiyon kararları | günlük | 0* | 0 |
+| 4. earnings takvimi | dün gece sonuçları, bugün BMO/AMC, haftalık takvim | günlük | 5-15 | 2-4 |
 | 5. CANSLIM tarama | 7 kriterli büyüme hissesi taraması | **haftalık** | 80-100 | 1-2 |
-| 6. sonuç + aksiyon | sentez, öncelikler, yarının planı | günlük | 0 | 0 |
-| **günlük toplam** | | | **~90-100** | **4-7** |
+| 6. sonuç + aksiyon | sentez, bugünün seansı için plan | günlük | 0 | 0 |
+| **günlük toplam** | | | **~90-100** | **7-11** |
 | **haftalık ek** | (CANSLIM dahil) | | **+80-100** | **+1-2** |
 
 *bölüm 3 verileri bölüm 2'de zaten çekilir, ekstra call gerekmez
@@ -32,14 +40,25 @@
 ## ÇALIŞTIRMA ADIM SIRASI
 
 ```
+SABAH RAPORU (seans öncesi, TR ~09:00-15:00):
 1. repo'yu çek (git pull)
 2. tüm portföy + swing JSON dosyalarını oku
 3. benzersiz sembol listesi çıkar (portföy + swing birleşik)
-4. FMP'den toplu veri çek (batch-quote + teknik göstergeler)
-5. bölüm 1-6'yı sırayla yaz
-6. JSON dosyalarını güncelle (fiyat, k/z, ağırlık, trailing stop)
-7. raporu kaydet → reports/daily/DAILY_REPORT_YYYY-MM-DD.md
-8. git commit + push
+4. FMP'den toplu veri çek (dünün kapanış fiyatları + teknik göstergeler)
+5. websearch: pre-market futures, gece haberleri, asya/avrupa piyasaları
+6. bölüm 1-6'yı sırayla yaz
+7. JSON dosyalarını güncelle (dünün kapanış fiyatıyla)
+8. raporu kaydet → reports/daily/DAILY_REPORT_YYYY-MM-DD.md
+9. git commit + push
+
+SEANS SIRASINDA (TR 17:30-00:00):
+→ rapordaki aksiyon planını uygula
+→ stop-loss emirlerini kontrol et
+→ earnings sonuçlarını takip et
+
+SEANS SONRASI (TR ~00:00+):
+→ sadece JSON fiyat güncellemesi + kısa git commit
+→ tam rapor YARILMAZ, sabah yazılır
 ```
 
 ---
@@ -79,19 +98,22 @@ benzersiz = sorted(semboller)
 ---
 ---
 
-# BÖLÜM 1: PİYASA GÖRÜNÜMÜ
+# BÖLÜM 1: PİYASA GÖRÜNÜMÜ (dünün özeti + bugünün beklentisi)
 
-> **amaç**: günün makro resmini çiz, risk ortamını değerlendir, portföy kararlarını destekle
+> **amaç**: dünün kapanışını özetle, gece gelişmelerini ekle, bugünün seansı için beklenti oluştur
 > **tahmini FMP call**: 12-16
-> **tahmini websearch**: 3-5
+> **tahmini websearch**: 5-7
 
 ---
 
 ## ADIM 1 — VERİ TOPLAMA
 
-### 1a. FMP API çağrıları
+### 1a. FMP API çağrıları (dünün kapanış verileri)
 
 ```
+# ⚠️ rapor seans öncesi yazıldığı için FMP verileri = DÜNün kapanışı
+# bu normal ve beklenen durum
+
 # --- endeksler (1 call) ---
 batch-quote → symbols=SPY,QQQ,DIA
 # SPY = S&P 500 proxy, QQQ = NASDAQ proxy, DIA = Dow proxy
@@ -128,22 +150,29 @@ biggest-losers → limit=5
 
 **toplam: ~12 FMP call**
 
-### 1b. WebSearch aramaları
+### 1b. WebSearch aramaları (bugünün beklentisi için kritik)
 
 ```
 # --- VIX + DXY (FMP'de doğrudan yok) ---
-websearch → "VIX index close today {tarih}"
+websearch → "VIX index close today {dünün tarihi}"
 websearch → "US dollar index DXY today"
 
-# --- günün haberleri ---
-websearch → "stock market today {tarih} recap"
-websearch → "market moving news today stocks"
+# --- pre-market + futures (SABAH RAPORU İÇİN KRİTİK) ---
+websearch → "stock market futures today pre-market"
+# S&P 500 futures, NASDAQ futures, Dow futures
+# bu veri bugünün açılış yönünü gösterir
+
+# --- gece gelişmeleri ---
+websearch → "stock market news today {bugünün tarihi}"
+websearch → "overnight market news asia europe"
+# asya/avrupa piyasaları sabah kapanmış olur, bilgi mevcuttur
 
 # opsiyonel (önemli olay varsa):
-websearch → "fed news today" veya "earnings news today"
+websearch → "fed news today" veya "earnings results after hours"
+# dün kapanıştan sonra açıklanan earnings sonuçları
 ```
 
-**toplam: 3-5 websearch**
+**toplam: 5-7 websearch**
 
 ### 1c. veri bulunamazsa yedek plan
 
@@ -201,10 +230,10 @@ websearch'ten gelen haberleri şu filtreyle değerlendir:
 ```markdown
 ## 1. piyasa görünümü
 
-### makro tablo
+### dünün kapanışı ({dünün tarihi}, {gün adı})
 
-| gösterge | değer | günlük değişim | sinyal |
-|----------|-------|----------------|--------|
+| gösterge | kapanış | günlük değişim | sinyal |
+|----------|---------|----------------|--------|
 | S&P 500 (SPY) | $XXX.XX | ▲/▼ %X.XX | |
 | NASDAQ (QQQ) | $XXX.XX | ▲/▼ %X.XX | |
 | Dow Jones (DIA) | $XXX.XX | ▲/▼ %X.XX | |
@@ -216,7 +245,16 @@ websearch'ten gelen haberleri şu filtreyle değerlendir:
 | USD/TRY | XX.XX | ▲/▼ %X.XX | |
 | DXY | XXX.XX | ▲/▼ %X.XX | |
 
-### sektör performansı
+### bugünün öncü göstergeleri
+
+| gösterge | değer | sinyal |
+|----------|-------|--------|
+| S&P 500 futures | ▲/▼ %X.XX | [pozitif/negatif/düz açılış beklentisi] |
+| NASDAQ futures | ▲/▼ %X.XX | |
+| asya piyasaları | [nikkei/hang seng durum] | [risk-on/off sinyali] |
+| avrupa piyasaları | [dax/ftse durum] | |
+
+### sektör performansı (dün)
 
 | sektör | değişim % | | sektör | değişim % |
 |--------|-----------|---|--------|-----------|
@@ -226,13 +264,13 @@ websearch'ten gelen haberleri şu filtreyle değerlendir:
 
 (11 sektörü en iyi → en kötü sırayla listele, en iyi 3 ve en kötü 3'ü vurgula)
 
-### piyasa hareketi
+### piyasa hareketi (dün)
 
-**günün kazananları** (biggest-gainers'dan top 5):
+**dünün kazananları** (biggest-gainers'dan top 5):
 | ticker | değişim % | hacim |
 (tabloya hacim de ekle, anormal hacim genellikle haberi olan hissedir)
 
-**günün kaybedenleri** (biggest-losers'dan top 5):
+**dünün kaybedenleri** (biggest-losers'dan top 5):
 | ticker | değişim % | hacim |
 
 ### risk değerlendirmesi
@@ -243,16 +281,20 @@ websearch'ten gelen haberleri şu filtreyle değerlendir:
   - trend: [güçlü yükseliş / kısa vadeli zayıflık / düşüş trendi / ...]
 - **kritik seviyeler**: destek $XXX, direnç $XXX
 
-### günün önemli haberleri
+### gece gelişmeleri + bugünün beklentisi
 
 1. **[başlık]** — [1-2 cümle: ne oldu + portföyümüze etkisi]
 2. **[başlık]** — [1-2 cümle]
 3. **[başlık]** — [1-2 cümle]
 
-### strateji notu
+(dün kapanıştan sonra + gece + sabah gelişmeleri: after-hours earnings, asya haberleri, makro veri)
 
-[2-3 cümle: bugünkü piyasa ortamına göre yarın ne dikkat etmeliyiz?
-savunmacı mı kalmalıyız, fırsat mı kollamalıyız, hangi sektörler güçlü?]
+### strateji notu (bugünün seansı için)
+
+[2-3 cümle: futures'a ve gece haberlerine göre bugün nasıl bir açılış bekliyoruz?
+savunmacı mı kalmalıyız, fırsat mı kollamalıyız?
+hangi sektörler bugün güçlü/zayıf olabilir?
+bugünkü seans için dikkat edilmesi gereken saatler (earnings açıklaması, makro veri gibi)]
 ```
 
 ---
@@ -261,20 +303,23 @@ savunmacı mı kalmalıyız, fırsat mı kollamalıyız, hangi sektörler güçl
 
 raporu yazmadan önce şunları doğrula:
 - [ ] tüm FMP verileri başarıyla geldi mi? (boş [] dönmediyse OK)
+- [ ] FMP fiyatları dünün kapanışı mı? (piyasa şu an kapalı, bu beklenen)
 - [ ] VIX ve DXY websearch'ten alındıysa değer mantıklı mı?
-- [ ] sektör performansı tarihi bugün mü?
+- [ ] sektör performansı tarihi dünün tarihi mi?
+- [ ] pre-market futures bilgisi websearch'ten alındı mı?
+- [ ] asya/avrupa piyasa bilgisi eklendi mi?
 - [ ] risk skoru hesaplaması tutarlı mı?
 - [ ] SPY trend açıklaması SMA50/SMA200/RSI verileriyle uyuşuyor mu?
-- [ ] haberler gerçekten bugüne ait mi? (eski haber ekleme)
-- [ ] strateji notu portföyümüzle bağlantılı mı?
+- [ ] gece gelişmeleri gerçekten dün akşam/gece haberleri mi?
+- [ ] strateji notu bugünün seansına yönelik mi? (dünü anlatmıyor, bugünü planlıyor)
 
 
 ---
 ---
 
-# BÖLÜM 2: PORTFÖY TAKİBİ
+# BÖLÜM 2: PORTFÖY TAKİBİ (dünün kapanışı ile güncel durum)
 
-> **amaç**: 4 portföyün güncel durumunu fiyat + teknik verilerle raporla, uyarıları işaretle
+> **amaç**: 4 portföyün dünün kapanışına göre güncel durumunu raporla, bugün dikkat edilecek seviyeleri belirle
 > **tahmini FMP call**: ~85-100 (benzersiz hisse sayısına bağlı)
 > **tahmini websearch**: 0
 
@@ -480,9 +525,9 @@ nakit > %50 (agresif)    → "piyasa netleşince kademeli giriş planla"
 ---
 ---
 
-# BÖLÜM 3: SWING TRADE DURUMU
+# BÖLÜM 3: SWING TRADE DURUMU (bugünün seansında ne yapacağız?)
 
-> **amaç**: aktif swing pozisyonların stop/hedef kontrolü, süre takibi, aksiyon kararları
+> **amaç**: aktif swing pozisyonların dünün kapanışına göre stop/hedef kontrolü, bugün alınacak aksiyonlar
 > **tahmini FMP call**: ~15-20 (swing sembolleri bölüm 2'de zaten çekilmişse 0)
 > **tahmini websearch**: 0-2 (sadece önemli haber varsa)
 
@@ -677,11 +722,11 @@ eğer stop tetiklendiyse:
 ---
 ---
 
-# BÖLÜM 4: EARNINGS TAKVİMİ
+# BÖLÜM 4: EARNINGS TAKVİMİ (bugün + önümüzdeki 7 gün)
 
-> **amaç**: önümüzdeki 7 günün önemli earnings açıklamalarını listele, portföy etkisini değerlendir
+> **amaç**: bugün açıklanacak earnings'leri öne çıkar, dün after-hours sonuçlarını özetle, haftalık takvim
 > **tahmini FMP call**: 5-15 (takvim + portföy hissesi tahminleri)
-> **tahmini websearch**: 1-2
+> **tahmini websearch**: 2-4
 
 ---
 
@@ -735,9 +780,16 @@ for e in portfoy_earnings:
     })
 ```
 
-### 1d. haftanın önemli earnings'leri için bağlam (1-2 websearch)
+### 1d. haftanın önemli earnings'leri için bağlam (2-4 websearch)
 
 ```
+# SABAH RAPORU İÇİN KRİTİK:
+websearch → "earnings results after hours yesterday {dünün tarihi}"
+# dün kapanıştan sonra (AMC) açıklanan sonuçlar — bugünün açılışını etkiler
+
+websearch → "earnings today before market open {bugünün tarihi}"
+# bugün piyasa açılmadan (BMO) açıklanacak sonuçlar
+
 websearch → "earnings this week {tarih} most important"
 websearch → "earnings preview week {tarih}"
 ```
@@ -809,7 +861,7 @@ DEĞERLENDİRME ÖLÇEĞİ:
 ## ADIM 4 — RAPOR ÇIKTI FORMATI
 
 ```markdown
-## 4. earnings takvimi (önümüzdeki 7 gün)
+## 4. earnings takvimi
 
 ### ⚡ portföy hisselerimizin earnings'leri
 
@@ -826,17 +878,45 @@ DEĞERLENDİRME ÖLÇEĞİ:
 
 ---
 
-### earnings takvimi (piyasa değeri > $2B)
+### 🔔 dün gece açıklanan sonuçlar (after-hours)
+
+(dün AMC açıklananlar — bugünün açılışını doğrudan etkiler)
+
+| şirket | ticker | EPS gerçekleşen | EPS beklenti | sürpriz | after-hours hareket |
+|--------|--------|-----------------|--------------|---------|---------------------|
+| [isim] | [SYM] | $X.XX | $X.XX | beat/miss | ▲/▼ %X.XX |
+
+**bugüne etkisi**: [bu sonuçlar bugünün seansında hangi sektörleri/hisseleri etkiler?]
+
+(websearch'ten gelir, FMP'de after-hours sonuçlar gecikebilir)
+
+---
+
+### bugün açıklanacak earnings (BMO — piyasa açılışı öncesi)
+
+| şirket | ticker | piyasa değeri | EPS tahmini | gelir tahmini | sektör |
+|--------|--------|---------------|-------------|---------------|--------|
+
+⚠️ **dikkat**: BMO sonuçları TR 15:00-17:00 arası açıklanır, seansı doğrudan etkiler
+
+---
+
+### bugün kapanış sonrası (AMC — yarını etkiler)
+
+| şirket | ticker | piyasa değeri | EPS tahmini | gelir tahmini | sektör |
+|--------|--------|---------------|-------------|---------------|--------|
+
+---
+
+### earnings takvimi (önümüzdeki 7 gün, piyasa değeri > $2B)
 
 #### [gün adı], [tarih]
 
-**piyasa açılışı öncesi (BMO):**
-| şirket | ticker | piyasa değeri | EPS tahmini | gelir tahmini | sektör |
-|--------|--------|---------------|-------------|---------------|--------|
+**BMO:**
+| şirket | ticker | sektör |
 
-**piyasa kapanışı sonrası (AMC):**
-| şirket | ticker | piyasa değeri | EPS tahmini | gelir tahmini | sektör |
-|--------|--------|---------------|-------------|---------------|--------|
+**AMC:**
+| şirket | ticker | sektör |
 
 (her gün için ayrı tablo, sadece önemli şirketler)
 
@@ -857,7 +937,7 @@ DEĞERLENDİRME ÖLÇEĞİ:
 ### portföy için earnings riski
 
 [1-3 cümle: bu haftaki earnings portföyümüzü nasıl etkiler?
-pozisyon almadan önce earnings tarihini kontrol et.
+bugün BMO açıklanacak sonuçlar açılışı nasıl etkileyebilir?
 earnings öncesi yeni swing girişi riskli olabilir.]
 ```
 
@@ -1235,9 +1315,9 @@ haftada 1 kez = günlük ortalama ~14 call (7 güne böl)
 ---
 ---
 
-# BÖLÜM 6: SONUÇ VE AKSİYON PLANI
+# BÖLÜM 6: SONUÇ VE AKSİYON PLANI (bugünün seansı için)
 
-> **amaç**: tüm bölümleri sentezle, yarının önceliklerini belirle
+> **amaç**: tüm bölümleri sentezle, bugünün seansındaki öncelikleri belirle
 > **tahmini FMP call**: 0 (tüm veri önceki bölümlerden geliyor)
 > **tahmini websearch**: 0
 
@@ -1265,14 +1345,15 @@ TOPLA:
 
 ### günün özeti
 
-**tarih**: [gün adı], [tarih]
-**toplam portföy**: $XXX,XXX (+$XX,XXX / +%X.XX)
-**günlük değişim**: [+/-$X,XXX] | SPY: [+/-%X.XX]
+**tarih**: [gün adı], [bugünün tarihi] (seans öncesi rapor)
+**toplam portföy** (dünün kapanışı): $XXX,XXX (+$XX,XXX / +%X.XX)
+**dünkü değişim**: [+/-$X,XXX] | SPY dün: [+/-%X.XX]
 **risk ortamı**: [Risk-On 🟢 / Risk-Off 🔴 / Nötr ⚪]
+**futures**: S&P [+/-%X.XX] | NASDAQ [+/-%X.XX] → [pozitif/negatif/düz açılış beklentisi]
 
-**bir cümlede bugün**: [bugünü özetleyen tek cümle.
-örnek: "tech satışına rağmen savunmacı pozisyonlar portföyü korudu,
-temettü portföy +%16.6 ile liderliğini sürdürüyor"]
+**bir cümlede durum**: [dünü + bugünün beklentisini özetleyen tek cümle.
+örnek: "dün tech satışı agresif portföyü vurdu ama futures pozitif,
+bugün toparlanma şansı var. temettü portföy +%16.6 ile lider."]
 
 ### portföy skor kartı
 
@@ -1312,21 +1393,29 @@ temettü portföy +%16.6 ile liderliğini sürdürüyor"]
 
 ---
 
-### yarının planı
+### bugünün seansı için plan
 
-**piyasa öncesi kontrol** (08:00-09:30 EST / 16:00-17:30 TR):
-- [ ] [kontrol 1: örn. NEM pre-market fiyatı, stop tetiklendi mi?]
-- [ ] [kontrol 2: örn. önemli earnings sonucu açıklandı mı?]
-- [ ] [kontrol 3: örn. futures durumu, gap up/down riski]
+**pre-market** (TR 16:00-17:30):
+- [ ] [kontrol 1: örn. BMO earnings sonuçları açıklandı mı?]
+- [ ] [kontrol 2: örn. futures yönü rapordakiyle uyuşuyor mu?]
+- [ ] [kontrol 3: örn. NEM pre-market fiyatı, stop seviyesine yakın mı?]
 
-**piyasa saatlerinde** (09:30-16:00 EST / 17:30-00:00 TR):
-- [ ] [aksiyon 1: örn. NEM stop tetiklenirse kapat]
-- [ ] [aksiyon 2: örn. SHOP $115 altına düşerse stop değerlendir]
-- [ ] [aksiyon 3: varsa yeni giriş planı]
+**seans açılışı** (TR 17:30 — ilk 30 dakika):
+- [ ] [aksiyon 1: örn. açılış gap varsa panik satış YAPMA, 15 dk bekle]
+- [ ] [aksiyon 2: örn. NEM stop $122.50 tetiklenirse kapat]
+- [ ] [aksiyon 3: örn. SHOP $115 altına düşerse stop değerlendir]
+
+**seans ortası** (TR 19:00-22:00):
+- [ ] [aksiyon 1: örn. swing watchlist'teki SEMBOL hedefe yaklaştı mı?]
+- [ ] [aksiyon 2: varsa yeni giriş planı — limit emir fiyatı: $XX.XX]
+
+**kapanışa doğru** (TR 23:00-00:00):
+- [ ] [bekleyen emir: örn. kapanışta kısmi kar al SEMBOL %50]
+- [ ] [not: bugün AMC earnings açıklanacak hisseler, yarını etkiler]
 
 **kapanış sonrası**:
-- [ ] fiyat güncellemesi + günlük rapor
-- [ ] [varsa özel görev: earnings analizi, rebalance hesabı, vb.]
+- [ ] fiyat güncellemesi (JSON + git push)
+- [ ] [varsa: AMC earnings sonuçlarını kontrol et]
 
 ---
 
@@ -1372,8 +1461,9 @@ her aksiyon önerisinde:
 ```markdown
 ---
 
-> rapor sonu | finzora ai | [tarih] [saat]
-> sonraki güncelleme: [yarının tarihi] kapanış sonrası
+> sabah raporu sonu | finzora ai | [bugünün tarihi] [saat]
+> NYSE açılış: bugün 17:30 (TR) | kapanış: 00:00 (TR)
+> sonraki rapor: yarın seans öncesi
 ```
 
 ---
@@ -1381,9 +1471,11 @@ her aksiyon önerisinde:
 ## ADIM 5 — KALİTE KONTROL
 
 - [ ] günün özeti tüm bölümlerden bilgi içeriyor mu?
+- [ ] futures bilgisi eklendi mi? (sabah raporu için kritik)
+- [ ] "dünün kapanışı" ve "bugünün beklentisi" net ayrılmış mı?
 - [ ] acil aksiyonlar gerçekten acil mi? (her gün acil aksiyon olmak zorunda değil)
 - [ ] fırsatlar somut koşula bağlı mı? ("güzel hisse" değil, "$XX altına düşerse")
-- [ ] yarının planı spesifik mi? (genel "piyasayı izle" değil)
+- [ ] bugünün planı seans saatlerine göre bölünmüş mü? (pre-market / açılış / orta / kapanış)
 - [ ] aksiyon önerilerinde fiyat seviyesi var mı?
 - [ ] cuma günü haftalık bakış eklendi mi?
 - [ ] rapor sonu satırı var mı?
