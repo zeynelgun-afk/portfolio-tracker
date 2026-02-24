@@ -3,9 +3,9 @@
   "simulasyon_donemi": "17 Şubat 2026 - 24 Şubat 2026",
   "islem_gunleri": 6,
   "toplam_sermaye": 400000.0,
-  "toplam_deger": 417829.03,
-  "toplam_kar_zarar": 17829.03,
-  "toplam_kar_zarar_yuzde": 4.46,
+  "toplam_deger": 419771.07,
+  "toplam_kar_zarar": 19771.07,
+  "toplam_kar_zarar_yuzde": 4.94,
   "benchmark_spy": -1.02,
   "alpha": 5.86,
   "portfolyolar": {
