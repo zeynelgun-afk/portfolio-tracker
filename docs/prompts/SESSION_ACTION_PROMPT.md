@@ -288,7 +288,26 @@ her swing pozisyonu için:
 6. HİÇBİR TETİK YOK → ✅ TUT, trailing kontrol et
 ```
 
-## 3c. yeni pozisyon fırsatları
+## 3c. portföyler arası korelasyon kontrolü
+
+yeni pozisyon açmadan önce veya mevcut durumu değerlendirirken:
+
+```
+kontrol 1: aynı hisse birden fazla portföyde var mı?
+- swing + portföy çakışması kabul edilebilir (farklı zaman ufku)
+- iki portföyde aynı hisse → bilinçli karar mı yoksa hata mı?
+
+kontrol 2: sektör yoğunlaşması
+- 4 portföy toplamında bir sektörün toplam ağırlığı > %30 → uyar
+- örnek: dengeli'de XLE + rotasyon'da XLE + swing'de enerji hissesi = aşırı enerji exposure
+
+kontrol 3: yön korelasyonu
+- tüm portföyler aynı yönde mi hareket ediyor? (çeşitlendirme çalışıyor mu?)
+- temettü portföyü piyasa düşerken yükseliyorsa → hedge fonksiyonu çalışıyor ✅
+- hepsi aynı anda düşüyorsa → korelasyon riski ⚠️
+```
+
+## 3d. yeni pozisyon fırsatları
 
 ### swing watchlist tarama
 
@@ -344,7 +363,7 @@ her swing pozisyonu için:
 - mevcut pozisyonlarda zayıf sektör varsa → rotasyon düşün
 - çeyreklik rebalance zamanı yaklaşıyor mu?
 
-## 3d. satış/çıkış değerlendirmesi
+## 3e. satış/çıkış değerlendirmesi
 
 **portföy hissesi satış nedenleri**:
 ```
