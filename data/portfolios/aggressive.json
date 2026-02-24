@@ -212,6 +212,19 @@
       "oncelik": "yuksek",
       "durum": "beklemede",
       "not": "Mevcut pozisyonun 2. yarısı - $18-19 bekle"
+    },
+    {
+      "sembol": "IREN",
+      "isim": "IREN Limited",
+      "sektor": "Bitcoin Madenciliği / AI Data Center",
+      "guncel_fiyat": 43.94,
+      "hedef_giris": "38-40",
+      "hedef_fiyat": 67.75,
+      "stop_loss": 34.0,
+      "neden": "Bitcoin madenciliği + AI data center dönüşümü - analist hedefi $67.75 (+%54 upside) - SMA200 $34.73 üzerinde - RSI 47.4 nötr - negatif FCF nedeniyle $38-40 giriş bekle",
+      "urgency": "medium",
+      "ekleme_tarihi": "2026-02-24",
+      "son_kontrol": "2026-02-24"
     }
   ],
   "notes": [
@@ -254,6 +267,11 @@
       "date": "2026-02-24T16:32:57.138431",
       "type": "entry",
       "content": "CELH alımı - Celsius Holdings, Inc. - $49.76 x 140 adet = $6,966.40"
+    },
+    {
+      "date": "2026-02-24T16:40:08.488331",
+      "type": "market_note",
+      "content": "IREN watchlist'e eklendi - $38-40 giriş hedefi - Bitcoin madenciliği + AI data center dönüşümü"
     }
   ]
 }
