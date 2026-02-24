@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-02-24T15:17:00.915967",
+  "son_guncelleme": "2026-02-24T20:29:48.381345",
   "not": "SWING TRADE SADECE SİMÜLASYON - Sadece % kazanç/kayıp takibi (MAX: 10 pozisyon)",
   "aktif_pozisyonlar": [
     {
@@ -156,6 +156,105 @@
         "kalan_50_icin": {
           "aksiyon": "TRAİLİNG STOP AKTIF",
           "baslangic_trailing_stop": 156.46,
+          "trailing_yuzde": 5,
+          "aciklama": "Zirveden -%5 düşünce sat"
+        },
+        "durum": "Hedef bekleniyor"
+      }
+    },
+    {
+      "id": "SWING-019",
+      "sembol": "CTSH",
+      "giris_tarihi": "2026-02-24",
+      "giris_fiyati": 61.36,
+      "guncel_fiyat": 61.36,
+      "guncel_kar_zarar_yuzde": 0.0,
+      "hedef_fiyat": 67.5,
+      "stop_loss": 58.29,
+      "tutulan_gun": 0,
+      "giris_nedeni": "RSI 22.5 aşırı satım, IT consulting devi $29.6B market cap, 52W low'a yakın ($60.23), Morgan Stanley konferansı katalizör olabilir, AI-driven workplace services kontratı haberi pozitif",
+      "katalizor": "Morgan Stanley TMT Konferansı sunumu + yeni AI workplace kontratı",
+      "tez": "Büyük IT consulting şirketi, AI entegrasyon haberleri pozitif, oversold bounce beklentisi",
+      "zaman_cercevesi": "7-10 gün",
+      "risk": "Tech sektörü genelinde satış baskısı devam edebilir, 52W low kırılırsa trend bozulur",
+      "durum": "Giriş yapıldı - RSI oversold bounce bekleniyor",
+      "tarama_yontemi": "RSI oversold",
+      "son_guncelleme": "2026-02-24T20:29:48.381345",
+      "partial_exit_plan": {
+        "hedef_ulasildiginda": {
+          "aksiyon": "%50 POZİSYONU SAT",
+          "satis_fiyati": 67.5,
+          "sebep": "Kar garantiye al"
+        },
+        "kalan_50_icin": {
+          "aksiyon": "TRAİLİNG STOP AKTİF",
+          "baslangic_trailing_stop": 64.13,
+          "trailing_yuzde": 5,
+          "aciklama": "Zirveden -%5 düşünce sat"
+        },
+        "durum": "Hedef bekleniyor"
+      }
+    },
+    {
+      "id": "SWING-020",
+      "sembol": "ZS",
+      "giris_tarihi": "2026-02-24",
+      "giris_fiyati": 150.29,
+      "guncel_fiyat": 150.29,
+      "guncel_kar_zarar_yuzde": 0.0,
+      "hedef_fiyat": 165.32,
+      "stop_loss": 142.78,
+      "tutulan_gun": 0,
+      "giris_nedeni": "RSI 26.7 aşırı satım, cybersecurity lideri $24B market cap, bugün +4.9% bounce başladı, zero trust & AI agent security büyüme alanı, ATH'den -%55 düşüş aşırı",
+      "katalizor": "Zero trust security talebi artışı, AI agent güvenlik pazarı genişlemesi",
+      "tez": "Cybersecurity sektöründe lider, oversold durumda güçlü bounce başladı, sektör uzun vadede büyüme trendinde",
+      "zaman_cercevesi": "7-10 gün",
+      "risk": "Anthropic AI tool haberi cybersecurity hisselerini baskılıyor, analist downgrade'i devam edebilir",
+      "durum": "Giriş yapıldı - Bounce başladı, momentum takibi",
+      "tarama_yontemi": "RSI oversold",
+      "son_guncelleme": "2026-02-24T20:29:48.381345",
+      "partial_exit_plan": {
+        "hedef_ulasildiginda": {
+          "aksiyon": "%50 POZİSYONU SAT",
+          "satis_fiyati": 165.32,
+          "sebep": "Kar garantiye al"
+        },
+        "kalan_50_icin": {
+          "aksiyon": "TRAİLİNG STOP AKTİF",
+          "baslangic_trailing_stop": 157.03,
+          "trailing_yuzde": 5,
+          "aciklama": "Zirveden -%5 düşünce sat"
+        },
+        "durum": "Hedef bekleniyor"
+      }
+    },
+    {
+      "id": "SWING-021",
+      "sembol": "SOFI",
+      "giris_tarihi": "2026-02-24",
+      "giris_fiyati": 18.51,
+      "guncel_fiyat": 18.51,
+      "guncel_kar_zarar_yuzde": 0.0,
+      "hedef_fiyat": 20.36,
+      "stop_loss": 17.58,
+      "tutulan_gun": 0,
+      "giris_nedeni": "RSI 27.8 aşırı satım, fintech lideri $23.4B market cap, bugün +1.6% toparlanma, 50M+ günlük hacim (likidite çok yüksek), ATH'den -%43 düşüş",
+      "katalizor": "Fintech sektörü toparlanma beklentisi, yüksek hacim alıcı ilgisi gösteriyor",
+      "tez": "Digital banking ve yatırım platformu, güçlü büyüme hikayesi, aşırı satılmış durumda bounce potansiyeli yüksek",
+      "zaman_cercevesi": "5-7 gün",
+      "risk": "Spekülatif hisse, volatilite yüksek, genel tech satışı devam edebilir, profitability endişeleri",
+      "durum": "Giriş yapıldı - Yüksek hacim bounce beklentisi",
+      "tarama_yontemi": "RSI oversold / momentum",
+      "son_guncelleme": "2026-02-24T20:29:48.381345",
+      "partial_exit_plan": {
+        "hedef_ulasildiginda": {
+          "aksiyon": "%50 POZİSYONU SAT",
+          "satis_fiyati": 20.36,
+          "sebep": "Kar garantiye al"
+        },
+        "kalan_50_icin": {
+          "aksiyon": "TRAİLİNG STOP AKTİF",
+          "baslangic_trailing_stop": 19.34,
           "trailing_yuzde": 5,
           "aciklama": "Zirveden -%5 düşünce sat"
         },

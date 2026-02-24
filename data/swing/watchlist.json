@@ -1,0 +1,68 @@
+{
+  "son_guncelleme": "2026-02-24T20:30:10.971340",
+  "not": "Bir sonraki işlemler için potansiyel swing adayları",
+  "izleme_listesi": [
+    {
+      "sembol": "WDAY",
+      "guncel_fiyat": 129.29,
+      "momentum_5gun": -6.2,
+      "sektor": "Teknoloji - Kurumsal Yazılım",
+      "notlar": "RSI 17.4 aşırı düşük, SaaS devi ama düşüş çok sert (-54% ATH'den). Q4 earnings yaklaşıyor - earnings sonrası değerlendir. Düşen bıçağı tutma riski yüksek.",
+      "urgency": "high",
+      "ekleme_tarihi": "2026-02-24",
+      "son_kontrol": "2026-02-24",
+      "hedef_giris": "125-128",
+      "hedef_fiyat": 142.0,
+      "stop_loss": 120.0
+    },
+    {
+      "sembol": "FIS",
+      "guncel_fiyat": 48.03,
+      "momentum_5gun": -3.8,
+      "sektor": "Finans - Fintech Altyapı",
+      "notlar": "RSI 29.9, Q4 earnings miss haberi geldi ama fiyatta zaten yansımış. 52W low'a yakın ($46.16). Earnings reaksiyonu izlenmeli.",
+      "urgency": "medium",
+      "ekleme_tarihi": "2026-02-24",
+      "son_kontrol": "2026-02-24",
+      "hedef_giris": "46-47",
+      "hedef_fiyat": 52.8,
+      "stop_loss": 44.0
+    },
+    {
+      "sembol": "IQV",
+      "guncel_fiyat": 164.99,
+      "momentum_5gun": -8.1,
+      "sektor": "Sağlık - Klinik Araştırma",
+      "notlar": "RSI 27.7, sağlık sektörü CRO lideri $28B market cap. Sağlık sektörü savunmacı özelliği güçlü. ATH'den -%33 düşüş.",
+      "urgency": "medium",
+      "ekleme_tarihi": "2026-02-24",
+      "son_kontrol": "2026-02-24",
+      "hedef_giris": "158-162",
+      "hedef_fiyat": 181.5,
+      "stop_loss": 152.0
+    },
+    {
+      "sembol": "EXPE",
+      "guncel_fiyat": 197.28,
+      "momentum_5gun": -5.4,
+      "sektor": "Tüketim Döngüsel - Seyahat",
+      "notlar": "RSI 31.3, online seyahat devi. Yaz sezonu yaklaşıyor - mevsimsel katalizör. ATH'den -%35 düşüş.",
+      "urgency": "low",
+      "ekleme_tarihi": "2026-02-24",
+      "son_kontrol": "2026-02-24",
+      "hedef_giris": "190-195",
+      "hedef_fiyat": 217.0,
+      "stop_loss": 187.0
+    }
+  ],
+  "haric_tutulanlar": [
+    {
+      "sembol": "INTC",
+      "neden": "RSI 51 nötr bölgede, momentum güçlü ama giriş için geç. Pullback bekle."
+    },
+    {
+      "sembol": "RDDT",
+      "neden": "RSI 33.4 ama temel değerleme çok yüksek, spekülatif risk fazla"
+    }
+  ]
+}
