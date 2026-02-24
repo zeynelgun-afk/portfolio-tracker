@@ -260,7 +260,62 @@ güncelleme sonrası şu kontrolleri yap — hata varsa düzelt:
 
 ---
 
-## ADIM 4 — KALİTE KONTROL
+## ADIM 4 — DÜNKÜ AMC EARNINGS ANALİZİ
+
+dün seans kapandıktan sonra (AMC = after market close) açıklanan önemli finansal tablolar.
+rapor TR ~14:00'da yazıldığında bu sonuçlar zaten hazır olur.
+
+### 4a. hangi earnings'lere bakılır?
+
+```
+öncelik 1: portföy veya swing hisselerimizin earnings'i (doğrudan etki)
+öncelik 2: sektör liderleri ve mega-cap'ler (dolaylı etki)
+           örn: NVDA → tüm tech/AI sektörünü etkiler
+           örn: WMT → tüm perakende/consumer sektörünü etkiler
+öncelik 3: aynı sektördeki rakipler (karşılaştırma)
+```
+
+### 4b. veri toplama
+
+```python
+# websearch ile AMC sonuçları
+# "SEMBOL earnings results Q4 2025" veya "{DATE} after hours earnings"
+
+# FMP'den analyst estimates (karşılaştırma için)
+estimates = fmp_get("analyst-estimates", {"symbol": SEMBOL, "period": "quarter", "limit": 4})
+
+# after-market fiyat hareketi
+ah_quote = fmp_get("aftermarket-quote", {"symbol": SEMBOL})
+```
+
+### 4c. her earnings için analiz formatı
+
+```
+SEMBOL — [şirket adı]
+  EPS:     gerçekleşen $X.XX vs beklenen $X.XX → beat/miss %X
+  gelir:   gerçekleşen $X.XXB vs beklenen $X.XXB → beat/miss %X
+  guidance: yükseltildi / korundu / düşürüldü / verilmedi
+  AH fiyat: $XXX (±%X after-hours hareketi)
+  
+  etki değerlendirmesi:
+  - portföy etkisi: [doğrudan: hangi portföyde var / dolaylı: aynı sektör]
+  - sektör etkisi: [pozitif/negatif/nötr — neden]
+  - aksiyon: [bugün açılışta ne yapılacak — tut/ekle/azalt/izle]
+```
+
+### 4d. ne zaman derinlemesine incelenir?
+
+```
+- portföy/swing hissemiz → her zaman detaylı analiz
+- mega-cap sektör lideri (NVDA, AAPL, MSFT, AMZN vb.) → sektör etkisi yaz
+- earnings beat > %15 veya miss > %10 → sektör genelinde ne anlama geliyor
+- guidance değişikliği → forward beklentiler nasıl etkilendi
+- sıradan bir şirketin beklentiye yakın sonucu → atla, zaman harcama
+```
+
+---
+
+## ADIM 5 — KALİTE KONTROL
 
 - [ ] dünkü rapordaki aksiyonlar değerlendirildi mi?
 - [ ] dersler yazıldı mı? (sıradan günlerde "rutin" notu yeterli)
@@ -268,6 +323,7 @@ güncelleme sonrası şu kontrolleri yap — hata varsa düzelt:
 - [ ] doğrulama kontrolleri yapıldı mı?
 - [ ] summary.json güncellendi mi?
 - [ ] after-hours önemli hareket varsa not düşüldü mü?
+- [ ] dünkü AMC earnings sonuçları incelendi mi? (varsa)
 
 ---
 ---
@@ -450,6 +506,18 @@ websearch'ten gelen haberleri şu filtreyle değerlendir:
 
 ✅ 4 portföy + swing active + summary güncellendi (kapanış fiyatlarıyla)
 doğrulama: [sorun yok / şu düzeltildi: ...]
+
+### dün gece earnings (AMC)
+
+(earnings yoksa veya portföyü etkilemiyorsa → "dün AMC'de portföyü etkileyen earnings yok" yaz)
+
+**SEMBOL** — [şirket adı]
+- EPS: $X.XX vs beklenen $X.XX → ✅ beat +%X / ❌ miss -%X
+- gelir: $X.XXB vs beklenen $X.XXB → ✅/❌
+- guidance: yükseltildi / korundu / düşürüldü
+- AH hareket: ±%X
+- portföy etkisi: [doğrudan / dolaylı — hangi sektör/portföy]
+- aksiyon: [bugün açılışta: tut/ekle/azalt/izle]
 ```
 
 ```markdown
