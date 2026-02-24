@@ -1,166 +1,105 @@
 # SWING TRADE KURALLARI
 
-## 🎯 GİRİŞ KRİTERLERİ
-- Güçlü momentum: Son 5 gün +3% üzeri
-- Volume artışı: Ortalama volume'ün 1.2x+ üzeri
-- Market cap: Minimum $2B (kaliteli şirketler)
-- Maksimum pozisyon: 10
-- Pozisyon tutma süresi: 7-15 gün
+> son güncelleme: 24 şubat 2026
 
-## 💰 ÇIKIŞ STRATEJİSİ (HİBRİT YAKLAŞIM)
+## giriş kriterleri
 
-### 1. HEDEF FİYATA ULAŞINCA
-**%50 POZİSYONU SAT**
-- Kar garantiye al
-- Başlangıç yatırımını geri çek
-- Risk/reward oranını iyileştir
+- güçlü momentum: son 5 gün +%3 üzeri
+- volume artışı: ortalama volume'ün 1.2x+ üzeri
+- market cap: minimum $2B
+- maksimum eşzamanlı pozisyon: 10
+- tavsiye tutma süresi: 7-10 gün (kesin üst limit yok — trailing stop ile yönetilir)
 
-**Kalan %50 → TRAİLİNG STOP**
-- Trailing stop: Zirveden -%5
-- Momentum devam ederse ekstra kazanç
-- "Let your winners run" stratejisi
+## çıkış stratejisi (hibrit yaklaşım)
 
-### 2. STOP-LOSS KIRILIRSA
-**%100 POZİSYONU SAT**
-- Hemen çık, beklemeden
-- Kayıp maksimum -%5 ile sınırlı
-- Sermayeyi koru, başka fırsatlara bak
+### 1. hedef fiyata ulaşınca (+%10)
 
-### 3. TRAİLİNG STOP NASIL ÇALIŞIR?
+**%50 pozisyonu sat** — kar garantiye al, risk/reward iyileşir
 
-**Örnek: DVA**
+**kalan %50 → trailing stop** — zirveden -%5, momentum devam ederse ekstra kazanç
+
+### 2. stop-loss kırılırsa (-%5)
+
+**%100 pozisyonu sat** — hemen çık, beklemeden. kayıp -%5 ile sınırlı
+
+### 3. trailing stop nasıl çalışır?
+
+trailing stop = fiyatı takip eden yükselen stop. fiyat yükseldikçe stop da yükselir, asla düşmez.
+
 ```
-Giriş: $149.73
-Hedef: $164.70 (+10%)
-Initial Stop: $142.24 (-5%)
+örnek: DVA
+giriş: $149.73
+hedef: $164.70 (+%10)
+initial stop: $142.24 (-%5)
 
-ADIM 1: Hedef $164.70'e ulaştı
+ADIM 1: hedef $164.70'e ulaştı
 → %50 sat: $164.70 (kar garantilendi)
-→ Trailing stop kur: $156.47 (hedeften -%5)
+→ trailing stop kur: $156.47 (hedeften -%5)
 
-ADIM 2: Fiyat yükselmeye devam ediyor
-$170'e çıktı → Trailing stop: $161.50'ye yükselt
-$175'e çıktı → Trailing stop: $166.25'e yükselt
-$180'e çıktı → Trailing stop: $171.00'e yükselt
+ADIM 2: fiyat yükselmeye devam ediyor
+$170 → trailing stop: $161.50
+$175 → trailing stop: $166.25
+$180 → trailing stop: $171.00
 
-ADIM 3: Geri düşüş başladı
-$180 → $177 → $174 → $171 → STOP TETİKLENDİ!
-→ Kalan %50'yi $171'de sat
+ADIM 3: geri düşüş başladı
+$180 → $177 → $174 → $171 → STOP TETİKLENDİ
+→ kalan %50'yi $171'de sat
 
 SONUÇ:
-- İlk %50: $164.70'de sattık (+10%)
-- İkinci %50: $171'de sattık (+14.2%)
-- Toplam ortalama: +12.1% ✅
+- ilk %50: $164.70'de (+%10)
+- ikinci %50: $171'de (+%14.2)
+- toplam ortalama: +%12.1 ✅
 ```
 
-## 📊 RİSK YÖNETİMİ
+**önemli**: trailing stop sadece yukarı hareket eder, asla aşağı çekilmez. fiyat yeni zirve yaptıkça stop otomatik yükselir. bu yüzden kesin gün sınırı gerekmiyor — pozisyon kazandırdığı sürece trailing stop ile tutulur.
 
-### Pozisyon Büyüklüğü
-- Her pozisyon: $5,000 - $10,000
-- Maksimum kayıp risk: $250-500 per trade
-- Total exposure: $50K-80K (8-10 pozisyon)
+### 4. trailing stop aktifleşme kuralı
 
-### Stop-Loss Kuralları
-- Initial stop: Girişten -%5
-- ASLA stop-loss'u aşağı çekme!
-- Yukarı çekmek serbest (trailing)
-- Stop kırılırsa: HEMEN SAT (duygusal karar yok!)
+- +%5 kar → trailing stop aktifleşir (zirveden -%5)
+- hedefe ulaşmamış ama karlı → trailing stop ile korunur
+- hedefe ulaşmış → %50 sat + kalan trailing
 
-### Kar Realizasyonu
-- Hedef +10%: %50 sat, %50 trail
-- Eğer hızlı +15% olursa: %75 sat, %25 trail
-- Eğer +20% olursa: %100 sat (büyük kazanç, risk alma)
+## risk yönetimi
 
-## ⏰ ZAMAN YÖNETİMİ
+### pozisyon büyüklüğü
+- her pozisyon: $5,000 - $10,000
+- maksimum kayıp risk: $250-500 per trade
+- total exposure: $50K-80K (8-10 pozisyon)
 
-### Tutma Süresi
-- Optimal: 7-12 gün
-- Maksimum: 15 gün
-- 15 gün sonra momentum yoksa → çık
+### stop-loss kuralları
+- initial stop: girişten -%5
+- ASLA stop-loss'u aşağı çekme
+- yukarı çekmek serbest (trailing)
+- stop kırılırsa: HEMEN SAT (duygusal karar yok)
 
-### Günlük Kontrol
-- Sabah: Stop-loss kontrol
-- Gün içi: Hedef fiyat kontrol
-- Kapanış: Trailing stop ayarla
+### kar realizasyonu
+- hedef +%10: %50 sat, %50 trail
+- hızlı +%15: %75 sat, %25 trail
+- +%20: %100 sat
 
-## 🎯 ÖRNEKLER
+## günlük checklist
 
-### Başarılı Trade (NEM - Devam Ediyor)
-```
-Giriş: $118.12 (12 Şubat)
-Şu an: $123.68 (+5.80%)
-Hedef: $129.93
+sabah:
+- [ ] stop-loss'ları kontrol et
+- [ ] trailing stop'ları güncelle (dünün zirvesine göre)
+- [ ] hedef fiyata yakın olanları işaretle
 
-PLAN:
-1. $129.93'e ulaşırsa → %50 sat
-2. Kalan %50 trailing stop: $123.43
-3. Momentum devam ederse $135-140 hedef
-```
-
-### Stop-Loss Örneği (T - Risk Altında)
-```
-Giriş: $28.68 (17 Şubat)
-Şu an: $27.61 (-2.79%)
-Stop: $27.25
-
-DURUM: ⚠️ ACİL!
-- Stop'a 0.36$ uzaklıkta
-- $27.25 kırılırsa → %100 SAT
-- -%5 kayıp kabul edilebilir
-- Toparlanma bekleme, kes ve geç
-```
-
-## 📝 GÜNLÜK CHECKLIST
-
-### Her Sabah:
-- [ ] Stop-loss'ları kontrol et
-- [ ] Hedef fiyata yakın olanları işaretle
-- [ ] Trailing stop'ları güncelle
-
-### Gün İçinde:
-- [ ] Hedef fiyat alarmları kur
-- [ ] Stop-loss alarmları aktif
+gün içi:
+- [ ] stop/hedef alarmları aktif
 - [ ] %50 sat/trail kararları hazır
 
-### Akşam:
-- [ ] Güncel fiyatları kaydet
-- [ ] Trailing stop'ları ayarla
-- [ ] Yarın için plan yap
+akşam:
+- [ ] güncel fiyatları kaydet
+- [ ] trailing stop'ları ayarla
+- [ ] yarın için plan yap
 
-## 🏆 BAŞARI KRİTERLERİ
+## prensipler
 
-**İyi Trade:**
-- Win rate: >%60
-- Average gain: >%8
-- Max drawdown: <%5
-- Hold time: 7-12 gün
-
-**Başarısız Trade:**
-- Stop-loss'a takılanlar (kabul edilebilir)
-- 15+ gün tutup kar yok (stratejisiz)
-- Stop'u aşağı çekip daha fazla kayıp
-
-## 💡 PRENSİPLER
-
-1. **"Kar garantiye al, sonra risk al"**
-   - Hedef fiyatta %50 sat = Garanti
-   - Kalan %50 trail = Bonus fırsatı
-
-2. **"Kayıpları hızlı kes, kazananları sürdür"**
-   - Stop-loss -%5: Acımadan kes
-   - Trailing stop: Momentum devam etsin
-
-3. **"Plan yap, plana uy"**
-   - Giriş öncesi hedef/stop belirle
-   - Duygusal kararlar alma
-   - Kurallara sadık kal
-
-4. **"Sermayeyi koru, fırsat çok"**
-   - Kayıp trade'leri kabul et
-   - Başka fırsatlar gelecek
-   - Risk yönetimi #1 öncelik
+1. **kar garantiye al, sonra risk al** — hedefte %50 sat = garanti, kalan %50 trail = bonus
+2. **kayıpları hızlı kes, kazananları sürdür** — stop -%5 acımadan kes, trailing ile momentum sürsün
+3. **plan yap, plana uy** — giriş öncesi hedef/stop belirle, duygusal karar yok
+4. **sermayeyi koru** — kayıp trade'leri kabul et, fırsat her zaman var
 
 ---
 
-*Son güncelleme: 20 Şubat 2026*
-*Tüm kurallar simülasyon amaçlıdır, gerçek para riski yoktur.*
+> tüm kurallar simülasyon amaçlıdır

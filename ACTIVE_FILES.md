@@ -46,7 +46,7 @@
 | `active.json` | **Açık swing pozisyonları** - Max 10 pozisyon, giriş/hedef/stop, tutulan gün, kar/zarar tracking |
 | `closed.json` | **Kapanmış trade'ler** - Geçmiş performans, kazanç/zarar oranları, tutulan gün istatistikleri, çıkarılan dersler |
 | `watchlist.json` | **İzleme listesi** - Günlük tarama sonuçları, potansiyel swing adayları, urgency seviyeleri |
-| `README.md` | Swing trade kuralları - %5 stop, %10 target, max 15 gün, tarama yöntemleri |
+| `README.md` | Swing trade kuralları - %5 stop, %10 target, trailing stop, tarama yöntemleri |
 | `TECH_RECOVERY_PLAYBOOK.md` | Tech düzeltme stratejisi - Nasıl ve ne zaman giriş yapılır |
 | `AI_DISRUPTION_REHBERI.md` | AI disruption fırsatları - Hangi sektörler/şirketler risk altında |
 | `DERSLER_SABLON.md` | Trade kapanışında kullanılan ders şablonu |

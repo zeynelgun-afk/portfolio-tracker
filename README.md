@@ -95,7 +95,7 @@ portfolio-tracker/
 | Stop-loss | %5 |
 | Kar hedefi | %10 |
 | Min R:R oranı | 2:1 |
-| Max tutma süresi | 15 gün |
+| Tutma süresi | 7-10 gün tavsiye (trailing stop ile yönetilir) |
 
 **Detaylı kurallar:** `data/swing/README.md`
 

@@ -733,7 +733,7 @@ eğer stop tetiklendiyse:
 
 - [ ] tüm aktif pozisyonların fiyatı güncellendi mi?
 - [ ] stop mesafe hesaplamaları doğru mu?
-- [ ] 15 gün kuralını aşan pozisyon var mı?
+- [ ] trailing stop güncellenmesi gereken pozisyon var mı?
 - [ ] trailing stop sadece yukarı mı hareket etti? (aşağı çekilmediyse OK)
 - [ ] stop tetiklenen pozisyon closed.json'a taşındı mı?
 - [ ] watchlist'teki high urgency adaylar kontrol edildi mi?

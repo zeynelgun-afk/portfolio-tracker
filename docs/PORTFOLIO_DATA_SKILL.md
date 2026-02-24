@@ -446,8 +446,7 @@ date,action,symbol,shares,price,total,reason
 | Stop-loss | %5 |
 | Kar hedefi | %10 |
 | Min R:R oranı | 2:1 |
-| Max tutma süresi | 15 gün |
-| Tavsiye tutma süresi | 7-10 gün |
+| Tavsiye tutma süresi | 7-10 gün (kesin üst limit yok, trailing stop ile yönetilir) |
 
 ---
 
