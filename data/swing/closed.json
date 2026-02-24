@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-02-23",
+  "son_guncelleme": "2026-02-24",
   "kapatilan_pozisyonlar": [
     {
       "id": "SWING-001",
@@ -91,6 +91,32 @@
       "cikis_nedeni": "Earnings öncesi çıkış — 26 Şubat NVDA earnings riski, +%3.4 kâr güvenceye alındı. Gap-down riski (%10-15 olası) alınmadı.",
       "sonuc": "KAZANÇ",
       "ders": "Earnings öncesi kâr realizasyonu doğru strateji. Swing pozisyonda kazanç varken earnings riskine girmek R:R bozar. Earnings sonrası temiz giriş için slot açık tutuldu."
+    },
+    {
+      "id": "SWING-010",
+      "sembol": "NEM",
+      "giris_tarihi": "2026-02-12",
+      "cikis_tarihi": "2026-02-24",
+      "giris_fiyati": 118.12,
+      "cikis_fiyati": 120.64,
+      "kar_zarar_yuzde": 2.13,
+      "tutulan_gun": 12,
+      "cikis_nedeni": "Trailing stop tetiklendi - altın fiyatlarında düzeltme",
+      "sonuc": "KAZANÇ",
+      "ders": "Trailing stop $122.50'da tetiklendi, giriş fiyatının üzerinde çıkış sağlandı. Trailing stop disiplini çalıştı."
+    },
+    {
+      "id": "SWING-012",
+      "sembol": "UNH",
+      "giris_tarihi": "2026-02-13",
+      "cikis_tarihi": "2026-02-24",
+      "giris_fiyati": 293.19,
+      "cikis_fiyati": 277.65,
+      "kar_zarar_yuzde": -5.3,
+      "tutulan_gun": 11,
+      "cikis_nedeni": "Stop-loss tetiklendi - sağlık sektörü baskısı devam ediyor",
+      "sonuc": "ZARAR",
+      "ders": "Healthcare düzeltmesi beklentinin ötesinde sürdü. Sektör rotasyonu riski dikkate alınmalı."
     }
   ],
   "istatistikler": {

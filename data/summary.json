@@ -3,52 +3,52 @@
   "simulasyon_donemi": "17 Şubat 2026 - 24 Şubat 2026",
   "islem_gunleri": 6,
   "toplam_sermaye": 400000.0,
-  "toplam_deger": 419343.93,
-  "toplam_kar_zarar": 19343.93,
-  "toplam_kar_zarar_yuzde": 4.84,
+  "toplam_deger": 417829.03,
+  "toplam_kar_zarar": 17829.03,
+  "toplam_kar_zarar_yuzde": 4.46,
   "benchmark_spy": -1.02,
   "alpha": 5.86,
   "portfolyolar": {
     "dengeli": {
       "isim": "Dengeli Portföy",
-      "deger": 107211.14,
+      "deger": 106427.58,
       "maliyet": 100000,
-      "kar_zarar": 7211.14,
-      "kar_zarar_yuzde": 7.21,
+      "kar_zarar": 6427.58,
+      "kar_zarar_yuzde": 6.43,
       "pozisyon_sayisi": 6,
       "durum": "BAŞARILI"
     },
     "agresif": {
       "isim": "Agresif Büyüme",
-      "deger": 90770.19,
+      "deger": 91282.63,
       "maliyet": 100000,
-      "kar_zarar": -9229.81,
-      "kar_zarar_yuzde": -9.23,
+      "kar_zarar": -8717.37,
+      "kar_zarar_yuzde": -8.72,
       "pozisyon_sayisi": 5,
       "durum": "KAYIPLI"
     },
     "temettü": {
       "isim": "Değer + Temettü",
-      "deger": 116640.76,
+      "deger": 116008.56,
       "maliyet": 100000,
-      "kar_zarar": 16640.76,
-      "kar_zarar_yuzde": 16.64,
+      "kar_zarar": 16008.56,
+      "kar_zarar_yuzde": 16.01,
       "pozisyon_sayisi": 7,
       "durum": "BAŞARILI - En iyi performans 🏆"
     },
     "rotasyon": {
       "isim": "Sektör Rotasyonu",
-      "deger": 104721.84,
+      "deger": 104110.26,
       "maliyet": 100000,
-      "kar_zarar": 4721.84,
-      "kar_zarar_yuzde": 4.72,
+      "kar_zarar": 4110.26,
+      "kar_zarar_yuzde": 4.11,
       "pozisyon_sayisi": 3,
       "durum": "BAŞARILI"
     },
     "swing_trade": {
       "isim": "Swing Trade (Simülasyon)",
       "pozisyon_sayisi": 7,
-      "ortalama_getiri_yuzde": 0.99,
+      "ortalama_getiri_yuzde": -0.26,
       "bos_slot": 3,
       "durum": "7/10 pozisyon aktif"
     }

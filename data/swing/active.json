@@ -1,78 +1,14 @@
 {
-  "son_guncelleme": "2026-02-24T10:35:49.119715",
+  "son_guncelleme": "2026-02-24T14:45:09.166410",
   "not": "SWING TRADE SADECE SİMÜLASYON - Sadece % kazanç/kayıp takibi (MAX: 10 pozisyon)",
   "aktif_pozisyonlar": [
-    {
-      "id": "SWING-010",
-      "sembol": "NEM",
-      "giris_tarihi": "2026-02-12",
-      "giris_fiyati": 118.12,
-      "guncel_fiyat": 124.25,
-      "guncel_kar_zarar_yuzde": 5.19,
-      "hedef_fiyat": 129.93,
-      "stop_loss": 122.5,
-      "tutulan_gun": 12,
-      "giris_nedeni": "Güçlü momentum +8.8%, altın madenciliği lideri, güvenli liman talebi",
-      "katalizor": "Altın fiyat gücü, malzeme sektörü rotasyonu",
-      "tez": "Dünyanın en büyük altın üreticisi, emtia gücü",
-      "zaman_cercevesi": "7-10 gün",
-      "risk": "Altın fiyat dönüşü",
-      "durum": "⚠️ Stop'a çok yakın ($1.75 ara)",
-      "son_guncelleme": "2026-02-24T10:35:49.119715",
-      "partial_exit_plan": {
-        "hedef_ulasildiginda": {
-          "aksiyon": "%50 POZİSYONU SAT",
-          "satis_fiyati": 129.93,
-          "sebep": "Kar garantiye al"
-        },
-        "kalan_50_icin": {
-          "aksiyon": "TRAİLİNG STOP AKTIF",
-          "baslangic_trailing_stop": 122.5,
-          "trailing_yuzde": 5,
-          "aciklama": "Zirveden -%5 düşünce sat"
-        },
-        "durum": "Hedef bekleniyor"
-      }
-    },
-    {
-      "id": "SWING-012",
-      "sembol": "UNH",
-      "giris_tarihi": "2026-02-13",
-      "giris_fiyati": 293.19,
-      "guncel_fiyat": 282.34,
-      "guncel_kar_zarar_yuzde": -3.7,
-      "hedef_fiyat": 322.51,
-      "stop_loss": 278.53,
-      "tutulan_gun": 11,
-      "giris_nedeni": "En güçlü momentum +6.0%, sağlık sigortası lideri",
-      "katalizor": "Sağlık sektörü gücü, savunmacı pozisyonlama",
-      "tez": "ABD'nin en büyük sağlık sigortacısı, Medicare Advantage genişlemesi",
-      "zaman_cercevesi": "7-12 gün",
-      "risk": "Sağlık politikası belirsizliği",
-      "durum": "Normal - stop ara: $3.81",
-      "son_guncelleme": "2026-02-24T10:35:49.119715",
-      "partial_exit_plan": {
-        "hedef_ulasildiginda": {
-          "aksiyon": "%50 POZİSYONU SAT",
-          "satis_fiyati": 322.51,
-          "sebep": "Kar garantiye al"
-        },
-        "kalan_50_icin": {
-          "aksiyon": "TRAİLİNG STOP AKTIF",
-          "baslangic_trailing_stop": 306.38,
-          "trailing_yuzde": 5,
-          "aciklama": "Zirveden -%5 düşünce sat"
-        },
-        "durum": "Hedef bekleniyor"
-      }
-    },
     {
       "id": "SWING-013",
       "sembol": "LMT",
       "giris_tarihi": "2026-02-13",
       "giris_fiyati": 652.58,
-      "guncel_fiyat": 660.62,
-      "guncel_kar_zarar_yuzde": 1.23,
+      "guncel_fiyat": 654.135,
+      "guncel_kar_zarar_yuzde": 0.24,
       "hedef_fiyat": 717.84,
       "stop_loss": 619.95,
       "tutulan_gun": 11,
@@ -81,8 +17,8 @@
       "tez": "Havacılık & savunma devi, istikrarlı nakit akışı",
       "zaman_cercevesi": "10-12 gün",
       "risk": "Bütçe endişeleri",
-      "durum": "Normal - stop ara: $40.67",
-      "son_guncelleme": "2026-02-24T10:35:49.119715",
+      "durum": "Normal - stop ara: $34.18",
+      "son_guncelleme": "2026-02-24T14:44:24.999489",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
@@ -103,8 +39,8 @@
       "sembol": "T",
       "giris_tarihi": "2026-02-17",
       "giris_fiyati": 28.68,
-      "guncel_fiyat": 28.535,
-      "guncel_kar_zarar_yuzde": -0.51,
+      "guncel_fiyat": 28.655,
+      "guncel_kar_zarar_yuzde": -0.09,
       "hedef_fiyat": 31.55,
       "stop_loss": 27.25,
       "tutulan_gun": 7,
@@ -113,8 +49,8 @@
       "tez": "Yüksek temettü verimi ~%6, borç azaltma ilerlemesi",
       "zaman_cercevesi": "7-10 gün",
       "risk": "Rekabet baskısı",
-      "durum": "⚠️ Stop'a çok yakın ($1.29 ara)",
-      "son_guncelleme": "2026-02-24T10:35:49.119715",
+      "durum": "⚠️ Stop'a çok yakın ($1.41 ara)",
+      "son_guncelleme": "2026-02-24T14:44:24.999489",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
@@ -135,8 +71,8 @@
       "sembol": "GE",
       "giris_tarihi": "2026-02-18",
       "giris_fiyati": 329.58,
-      "guncel_fiyat": 338.99,
-      "guncel_kar_zarar_yuzde": 2.86,
+      "guncel_fiyat": 333.58,
+      "guncel_kar_zarar_yuzde": 1.21,
       "hedef_fiyat": 362.54,
       "stop_loss": 313.1,
       "tutulan_gun": 6,
@@ -145,8 +81,8 @@
       "tez": "Havacılık, Enerji, Yenilenebilir Enerji çeşitlendirmesi. CAT benzeri başarı potansiyeli (+12% kazandırdı)",
       "zaman_cercevesi": "7-10 gün",
       "risk": "Piyasa zayıflığı, ekonomik yavaşlama",
-      "durum": "Normal - stop ara: $25.89",
-      "son_guncelleme": "2026-02-24T10:35:49.119715",
+      "durum": "Normal - stop ara: $20.48",
+      "son_guncelleme": "2026-02-24T14:44:24.999489",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
@@ -167,8 +103,8 @@
       "sembol": "DUK",
       "giris_tarihi": "2026-02-19",
       "giris_fiyati": 126.71,
-      "guncel_fiyat": 127.79,
-      "guncel_kar_zarar_yuzde": 0.85,
+      "guncel_fiyat": 127.1222,
+      "guncel_kar_zarar_yuzde": 0.33,
       "hedef_fiyat": 139.38,
       "stop_loss": 120.38,
       "tutulan_gun": 5,
@@ -177,8 +113,8 @@
       "tez": "Duke Energy - Carolina'da dominant pozisyon, düzenli temettü ödemesi, savunmacı pozisyonlama",
       "zaman_cercevesi": "7-10 gün",
       "risk": "Faiz oranı yükselmesi, düzenleme riski",
-      "durum": "Normal - stop ara: $7.41",
-      "son_guncelleme": "2026-02-24T10:35:49.119715",
+      "durum": "Normal - stop ara: $6.74",
+      "son_guncelleme": "2026-02-24T14:44:24.999489",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
@@ -199,8 +135,8 @@
       "sembol": "DVA",
       "giris_tarihi": "2026-02-20",
       "giris_fiyati": 149.73,
-      "guncel_fiyat": 151.28,
-      "guncel_kar_zarar_yuzde": 1.04,
+      "guncel_fiyat": 149.23,
+      "guncel_kar_zarar_yuzde": -0.33,
       "hedef_fiyat": 164.7,
       "stop_loss": 142.24,
       "tutulan_gun": 4,
@@ -209,8 +145,8 @@
       "tez": "DaVita - ABD'nin en büyük böbrek diyaliz şirketi, stabil nakit akışı, yaşlanan nüfus faydalanıcısı",
       "zaman_cercevesi": "7-12 gün",
       "risk": "Healthcare düzenlemeleri, Medicare reimbursement değişiklikleri",
-      "durum": "Normal - stop ara: $9.04",
-      "son_guncelleme": "2026-02-24T10:35:49.119715",
+      "durum": "Normal - stop ara: $6.99",
+      "son_guncelleme": "2026-02-24T14:44:24.999489",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
@@ -228,9 +164,9 @@
     }
   ],
   "ozet": {
-    "toplam_pozisyon": 8,
-    "bos_slot": 2,
+    "toplam_pozisyon": 5,
+    "bos_slot": 5,
     "maksimum_pozisyon": 10,
-    "ortalama_kar_zarar_yuzde": 0.99
+    "ortalama_kar_zarar_yuzde": 0.27
   }
 }

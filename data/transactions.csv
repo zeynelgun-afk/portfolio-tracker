@@ -29,3 +29,5 @@ date,action,symbol,shares,price,total,reason
 2026-02-23,BUY,PLTR,39,128.42,5008.38,"RSI 33 oversold giriş - Agresif portföy - AI/savunma momentum geri dönüş tezi"
 2026-02-23,BUY,GILT,347,14.39,4993.33,"Yarım pozisyon tamamlandı - Agresif portföy - RSI 41 destek"
 2026-02-23,BUY,SHOP,41,119.88,4915.08,"SMA200 destek giriş - Agresif portföy - E-ticaret altyapı lideri"
+2026-02-24,SELL,NEM,1,120.64,120.64,"Stop-loss tetiklendi - Swing SWING-010 kapatıldı"
+2026-02-24,SELL,UNH,1,277.65,277.65,"Stop-loss tetiklendi - Swing SWING-012 kapatıldı"
