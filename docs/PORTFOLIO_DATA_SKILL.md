@@ -1,7 +1,7 @@
 # PORTFOLIO TRACKER — VERİ YAPISI VE GÜNCELLEME KURALLARI
 
 > **Repo**: https://github.com/zeynelgun-afk/portfolio-tracker  
-> **Son doğrulama**: Şubat 2026  
+> **Son doğrulama**: 25 Şubat 2026  
 > **Amaç**: Tüm JSON dosyalarının tutarlı ve doğru güncellenmesi için tek referans kaynak
 
 ---
@@ -146,12 +146,13 @@ agirlik_yuzde = (guncel_deger / toplam_deger) × 100  [her pozisyon için]
 >
 > Bu dosya şunları içerir:
 > - Hisse seçim kriterleri (beta, ATR%, hacim filtreleri)
-> - 5 giriş stratejisi (RSI oversold, breakout, pullback, earnings momentum, sektör rotasyonu)
-> - ATR tabanlı dinamik stop-loss yönetimi
-> - Kademeli çıkış planı (3 aşamalı)
+> - 6 giriş stratejisi (RSI oversold, breakout, pullback, earnings momentum, earnings catalyst, sektör rotasyonu)
+> - ATR tabanlı dinamik stop-loss yönetimi (sabit %5 stop DEĞİL)
+> - Kademeli çıkış planı (3 aşamalı: %50 hedefte, trailing stop, final çıkış)
 > - Pozisyon boyutlandırma (%1 risk kuralı)
 > - `active.json`, `closed.json`, `watchlist.json` dosya şemaları
 > - Tarama yöntemleri ve performans takibi
+> - Temel analiz minimum filtreleri (çöp eleme)
 
 ### Dosya Yolları
 | Dosya | Açıklama |
@@ -159,7 +160,76 @@ agirlik_yuzde = (guncel_deger / toplam_deger) × 100  [her pozisyon için]
 | `data/swing/active.json` | Açık pozisyonlar (max 10) |
 | `data/swing/closed.json` | Kapanmış pozisyonlar |
 | `data/swing/watchlist.json` | İzleme listesi |
-| `docs/SWING_TRADE_RULES.md` | Tüm kurallar ve şemalar |
+| `docs/SWING_TRADE_RULES.md` | **Tüm kurallar ve şemalar (MASTER dosya)** |
+
+### Kritik ATR Tabanlı Yaklaşım Hatırlatması
+
+**⚠️ Sabit %5 stop-loss kullanma!** Swing trade artık **ATR (Average True Range) tabanlı dinamik stop-loss** kullanıyor:
+
+```
+Initial Stop = Giriş fiyatı - (2.0 × ATR14)
+Hedef = Giriş + (2 × risk mesafesi) → Min R:R = 2:1
+```
+
+**Neden ATR?**
+- $10 hisse için %5 = $0.50, ama ATR $0.30 ise gereksiz geniş stop
+- $500 hisse için %5 = $25, ama ATR $15 ise çok dar stop, whipsaw riski
+
+### Zorunlu Yeni Alanlar (active.json)
+
+Her swing pozisyonu açıldığında **mutlaka** doldurulması gereken yeni alanlar:
+
+| Alan | Açıklama |
+|------|---------|
+| `atr_giris` | Giriş anındaki ATR(14) değeri (FMP API'den) |
+| `risk_tutar` | Dolar cinsinden risk miktarı |
+| `rr_orani` | Hedeflenen R:R oranı (örn. `"2.5:1"`) |
+| `tarama_yontemi` | **6 yöntemden biri** (aşağıda) |
+
+### Tarama Yöntemleri (Güncellenmiş Liste)
+
+| Yöntem Kodu | Açıklama |
+|-------------|----------|
+| `"RSI oversold"` | RSI(14) < 30 + dönüş teyidi + hacim 1.5x+ |
+| `"breakout"` | 50SMA/direnç kırılımı + hacim 1.5x+ + ADX > 25 |
+| `"pullback"` | Trend içi 20EMA geri çekilme + RSI 40-60 |
+| `"earnings momentum"` | Earnings beat >%10 sonrası geri çekilme girişi |
+| `"earnings catalyst"` | **YENİ** — Earnings öncesi 2-3 gün, son 4Q beat ≥%75 |
+| `"sektor rotasyonu"` | Sektör ETF 5g >%3 performans + hisse RS güçlü |
+
+### Kapanmış Pozisyonlar — Yeni Zorunlu Alanlar (closed.json)
+
+| Alan | Açıklama |
+|------|---------|
+| `cikis_yontemi` | `"hedef"`, `"trailing_stop"`, `"tez_bozuldu"`, `"earnings_oncesi"` |
+| `tarama_yontemi` | Girişte kullanılan yöntem (performans analizi için) |
+| `gercek_rr` | Gerçekleşen R:R oranı (örn. `"3.2:1"`) |
+
+### Watchlist — Yeni Zorunlu Alanlar (watchlist.json)
+
+| Alan | Açıklama |
+|------|---------|
+| `beta` | 1.0+ olmalı (swing trade evreni kriteri) |
+| `atr_yuzde` | %2+ olmalı (yeterli fiyat hareketi) |
+| `tahmini_rr` | Tahmini R:R oranı |
+
+### Temel Analiz Filtreleri (Çöp Eleme)
+
+Her aday için FMP API ile kontrol et:
+
+| Filtre | Kriter | FMP Endpoint |
+|--------|--------|-------------|
+| Gelir trendi | Son çeyrek YoY revenue > %0 | `income-statement` (quarter) |
+| Kârlılık | EBITDA > 0 | `income-statement` (quarter) |
+| Borç kontrolü | D/E < 3.0 | `ratios-ttm` |
+| Analist görüşü | Consensus "strongSell" DEĞİL | `grades-consensus` |
+
+### Hariç Tutulan Sektörler
+
+Swing trade için **asla girme**:
+- Utilities (düşük volatilite)
+- REITs (faiz duyarlı, dar range)
+- Defensive hisseler (beta < 0.8)
 
 ---
 
@@ -308,9 +378,9 @@ date,action,symbol,shares,price,total,reason
 Örnekler:
 [ALIŞ] Dengeli - SM @20.67 - Oil & gas başlangıç pozisyonu
 [SATIŞ] Agresif - AMD @199.39 - Stop-loss tetiklendi -%10.8
-[GÜNCELLEME] Tüm portföyler - 20 Şubat kapanış fiyatları
-[SWING-GİRİŞ] NEM @118.12 - Altın momentum breakout
-[SWING-ÇIKIŞ] CAT @775.00 - Hedef tutturuldu +12%
+[GÜNCELLEME] Tüm portföyler - 25 Şubat kapanış fiyatları
+[SWING-GİRİŞ] AAPL @180.50 - Earnings catalyst stratejisi, 4Q beat %100
+[SWING-ÇIKIŞ] NEM @129.93 - İlk hedef (%50 pozisyon), R:R 2.5:1
 [REBALANCE] Rotasyon - Tech'ten Enerji+Endüstriye rotasyon
 ```
 
@@ -329,3 +399,5 @@ date,action,symbol,shares,price,total,reason
 | `summary.json`'ı güncellemeyi unutmak | Her portföy değişikliğinde summary güncelle |
 | `giris_nedeni` İngilizce bırakmak | Türkçe ve detaylı olmalı |
 | Timestamp yerine sadece tarih yazmak | `son_guncelleme` datetime, `giris_tarihi` date |
+| Swing trade'de sabit %5 stop kullanmak | ATR tabanlı dinamik stop kullan: `2.0 × ATR14` |
+| Swing'de `atr_giris`, `risk_tutar`, `rr_orani` eksik bırakmak | ZORUNLU alanlar, mutlaka doldur |
