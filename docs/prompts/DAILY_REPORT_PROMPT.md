@@ -1,4 +1,4 @@
-# GÜNLÜK RAPOR MASTER PROMPT — v3.1 (Temizlenmiş)
+# GÜNLÜK RAPOR MASTER PROMPT — v3.2
 
 > ⚠️ **ÇALIŞMA MODU**: Bu prompt FAZ FAZ işlenir. Tüm fazları tek seferde yapmaya ÇALIŞMA.
 >
@@ -9,10 +9,10 @@
 
 ---
 
-> **versiyon**: 3.1 | **son güncelleme**: 25 şubat 2026
+> **versiyon**: 3.2 | **son güncelleme**: 25 şubat 2026
 > **çıktı dosyası**: `reports/daily/DAILY_REPORT_YYYY-MM-DD.md`
 > **çalışma zamanı**: TR ~14:00 (NYSE dün kapandı, bugün 17:30 açılacak)
-> **dil**: küçük harf türkçe
+> **dil**: küçük harf türkçe ama **dilbilgisi kurallarına uygun** (cümle başı büyük, cümle sonu nokta, şirket/ticker tutarlı)
 > **kaynak**: sadece "finzora ai"
 > **git commit**: `[GÜNLÜK RAPOR] DD Ay YYYY - kısa özet`
 
