@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-02-25T09:44:10.287504",
+  "son_guncelleme": "2026-02-25T10:19:37.219456",
   "not": "SWING TRADE SADECE SİMÜLASYON - Sadece % kazanç/kayıp takibi (MAX: 10 pozisyon)",
   "aktif_pozisyonlar": [
     {
@@ -18,7 +18,7 @@
       "zaman_cercevesi": "10-12 gün",
       "risk": "Bütçe endişeleri",
       "durum": "Normal",
-      "son_guncelleme": "2026-02-25T09:44:10.287504",
+      "son_guncelleme": "2026-02-25T10:19:37.219456",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
@@ -50,7 +50,7 @@
       "zaman_cercevesi": "7-10 gün",
       "risk": "Rekabet baskısı",
       "durum": "Normal",
-      "son_guncelleme": "2026-02-25T09:44:10.287504",
+      "son_guncelleme": "2026-02-25T10:19:37.219456",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
@@ -82,7 +82,7 @@
       "zaman_cercevesi": "7-10 gün",
       "risk": "Piyasa zayıflığı, ekonomik yavaşlama",
       "durum": "Normal",
-      "son_guncelleme": "2026-02-25T09:44:10.287504",
+      "son_guncelleme": "2026-02-25T10:19:37.219456",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
@@ -114,7 +114,7 @@
       "zaman_cercevesi": "7-10 gün",
       "risk": "Faiz oranı yükselmesi, düzenleme riski",
       "durum": "Normal",
-      "son_guncelleme": "2026-02-25T09:44:10.287504",
+      "son_guncelleme": "2026-02-25T10:19:37.219456",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
@@ -146,7 +146,7 @@
       "zaman_cercevesi": "7-12 gün",
       "risk": "Healthcare düzenlemeleri, Medicare reimbursement değişiklikleri",
       "durum": "Normal",
-      "son_guncelleme": "2026-02-25T09:44:10.287504",
+      "son_guncelleme": "2026-02-25T10:19:37.219456",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
@@ -179,7 +179,7 @@
       "risk": "Tech sektörü genelinde satış baskısı devam edebilir, 52W low kırılırsa trend bozulur",
       "durum": "Normal",
       "tarama_yontemi": "RSI oversold",
-      "son_guncelleme": "2026-02-25T09:44:10.287504",
+      "son_guncelleme": "2026-02-25T10:19:37.219456",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
@@ -212,7 +212,7 @@
       "risk": "Anthropic AI tool haberi cybersecurity hisselerini baskılıyor, analist downgrade'i devam edebilir",
       "durum": "Normal",
       "tarama_yontemi": "RSI oversold",
-      "son_guncelleme": "2026-02-25T09:44:10.287504",
+      "son_guncelleme": "2026-02-25T10:19:37.219456",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
@@ -245,7 +245,7 @@
       "risk": "Spekülatif hisse, volatilite yüksek, genel tech satışı devam edebilir, profitability endişeleri",
       "durum": "Normal",
       "tarama_yontemi": "RSI oversold / momentum",
-      "son_guncelleme": "2026-02-25T09:44:10.287504",
+      "son_guncelleme": "2026-02-25T10:19:37.219456",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
