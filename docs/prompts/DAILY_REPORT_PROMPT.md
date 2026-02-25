@@ -1,1514 +1,380 @@
-# GÜNLÜK RAPOR MASTER PROMPT — v2.4 (Kapanış Değerlendirmesi + Seans Öncesi Plan)
+# GÜNLÜK RAPOR PROMPT v3.0 — SADELEŞTİRİLMİŞ
 
-> ⚠️ **ÇALIŞMA MODU — MUTLAKA OKU**:
-> Bu prompt FAZ FAZ işlenir. Her fazı tamamlayıp dosyaları commit ettikten sonra bir sonraki faza geç.
-> Tüm fazları tek seferde yapmaya ÇALIŞMA — sistem durur.
->
-> **FAZ SIRASI**:
-> 1. FAZ 0 → repo oku, dünkü raporu değerlendir (commit gerekmez)
-> 2. FAZ 1 → FMP'den veri çek + JSON güncelle + git push
-> 3. FAZ 2 → piyasa analizi + raporu yaz + git push
->
-> Her fazda SADECE O FAZIN işlerini yap. Sonraki faza geçmeden önce commit et.
+> **çalışma zamanı**: TR ~14:00 (NYSE dün kapandı, bugün 17:30'da açılacak)
+> **çıktı**: `reports/daily/DAILY_REPORT_YYYY-MM-DD.md`
+> **dil**: küçük harf türkçe
+> **kaynak**: sadece "finzora ai"
 
 ---
 
-> **versiyon**: 2.4 | **son güncelleme**: 25 şubat 2026
-> **çıktı dosyası**: `reports/daily/DAILY_REPORT_YYYY-MM-DD.md`
-> **çalışma zamanı**: her iş günü TR ~14:00 (NYSE kapanışından ~14 saat sonra, açılıştan ~3.5 saat önce)
-> **perspektif**: DÜNÜN KAPANIŞ DEĞERLENDİRMESİ + JSON FİNAL GÜNCELLEME + BUGÜN NE YAPACAĞIZ
-> **fiyat verisi**: dünün kapanış fiyatları (FMP quote = son kapanış)
-> **dil**: küçük harf türkçe, teknik terimler ingilizce kalabilir
-> **kaynak atfı**: sadece "finzora ai" kullan
-> **format kuralları**: em dash kullanma, doğal yazım hataları kabul edilir
-> **git commit**: `[GÜNLÜK RAPOR] DD Ay YYYY - kısa özet`
->
-> **⚠️ ZAMAN BİLİNCİ**:
-> - rapor TR ~14:00'da yazılır — NYSE dün 00:00 TR'de kapandı, bugün 17:30 TR'de açılacak
-> - FMP fiyatları = dünün kapanışı (kesinleşmiş final fiyatlar)
-> - after-hours: dün 00:00-02:00 TR arası olmuş (AMC earnings sonuçları gelebilir)
-> - pre-market: bugün 16:00-17:30 TR (rapor yazıldıktan ~2 saat sonra başlar)
-> - bugünün seansı 17:30 TR'de açılır, 00:00 TR'de kapanır
->
-> **BU PROMPT 3 İŞİ BİRDEN YAPAR**:
-> 1. dünün kapanış değerlendirmesi (ne oldu, plan tuttu mu, dersler)
-> 2. JSON final güncelleme (tüm dosyalar kapanış fiyatıyla, doğrulama)
-> 3. bugünün seans planı (futures, haberler, aksiyon listesi)
-
----
-
-## GENEL BAKIŞ
-
-| bölüm | içerik | sıklık | FMP call | websearch |
-|-------|--------|--------|----------|-----------|
-| 0. kapanış değerlendirmesi | plan tuttu mu, dersler, JSON final güncelleme | günlük | 0* | 0-1 |
-| 1. piyasa görünümü | dünün kapanışı, futures, sektörler, risk, gece haberleri | günlük | ~12 | 5-7 |
-| 2. portföy takibi | 4 portföy detay, RSI, SMA, uyarılar | günlük | ~73 | 0 |
-| 3. swing trade | stop/hedef kontrol, bugünün aksiyon kararları | günlük | 0* | 0 |
-| 4. earnings takvimi | dün gece sonuçları, bugün BMO/AMC, haftalık takvim | günlük | 5-15 | 2-4 |
-| 5. sonuç + aksiyon | sentez, bugünün seansı için plan | günlük | 0 | 0 |
-| **günlük toplam** | | | **~20-30** | **7-12** |
-
-*bölüm 0 verileri bölüm 1-2'de çekilir, ekstra call gerekmez
-*bölüm 3 verileri bölüm 2'de zaten çekilir, ekstra call gerekmez
-
-> **not**: haftalık CANSLIM taraması bu prompttan kaldırıldı. büyüme hissesi fırsatları için agresif portföy tezini ve sektör liderliğini bölüm 2'de değerlendir.
-
-**⚠️ API bütçesi**: günlük rapor ~100 + seans içi ~88 = ~190 / 2,500 limit = **%7.6** (güvenli)
-
----
-
-## ÇALIŞTIRMA ADIM SIRASI
-
-> ⚡ HER FAZ AYRI ÇALIŞTIRILIR — faz bitmeden sonrakine geçme
+## ⚠️ 3 FAZLI ÇALIŞMA - HER FAZ AYRI COMMIT
 
 ```
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-FAZ 0 — OKUMA + DEĞERLENDİRME (commit yok)
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-0a. repo'yu çek (git pull)
-0b. dünkü raporu oku (reports/daily/DAILY_REPORT_DÜNÜN_TARİHİ.md)
-0c. dünün aksiyonları uygulandı mı? plan tuttu mu?
-0d. dünün dersleri: doğru/yanlış kararlar, kaçırılan fırsatlar
-→ ÇIKTI: sohbette kısa özet yaz, dosyaya yazma
-→ DEVAM: "faz 0 tamam, faz 1'e geç" de
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-FAZ 1 — VERİ ÇEKME + JSON GÜNCELLEME
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-1a. tüm portföy + swing JSON dosyalarını oku
-1b. benzersiz sembol listesi çıkar
-1c. FMP'den toplu veri çek (batch-quote + teknik göstergeler)
-1d. JSON dosyalarını güncelle (kapanış fiyatı + hesaplamalar)
-1e. doğrulama kontrolleri yap
-1f. summary.json güncelle
-→ GIT COMMIT + PUSH: "[GÜNCELLEME] DD Ay - kapanış fiyatları"
-→ DEVAM: "faz 1 tamam, faz 2'ye geç" de
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-FAZ 2 — RAPOR YAZMA (bölüm 0-6)
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-2a. websearch: pre-market futures, gece haberleri
-2b. sektör performansı analizi
-2c. bölüm 0-6'yı sırayla yaz (faz 1 verilerini kullan, FMP'yi tekrar çekme)
-2d. raporu kaydet → reports/daily/DAILY_REPORT_YYYY-MM-DD.md
-→ GIT COMMIT + PUSH: "[GÜNLÜK RAPOR] DD Ay YYYY - kısa özet"
-→ BİTTİ
-
-SEANS SIRASINDA (TR 17:30-00:00):
-→ SESSION_ACTION_PROMPT.md kullan
-→ rapordaki aksiyon planını uygula
+FAZ 0: repo oku, dünkü raporu değerlendir (commit yok)
+FAZ 1: FMP veri çek → JSON güncelle → git push
+FAZ 2: rapor yaz → git push
 ```
+
+**Her fazı bitir, commit et, sonrakine geç. Tek seferde yapma - sistem durur.**
 
 ---
 
-## 3 PROMPT SİSTEMİ — BİR GÜNÜN AKIŞI
+## FAZ 0 — OKUMA (commit yok)
 
+```bash
+git pull
+cat reports/daily/DAILY_REPORT_[DÜN].md
 ```
-TR 14:00  →  GÜNLÜK RAPOR (bu prompt) — 3 FAZDA çalıştır
-              FAZ 0: okuma/değerlendirme (5 dk)
-              FAZ 1: JSON güncelleme + commit (10 dk)
-              FAZ 2: rapor yazma + commit (15 dk)
 
-TR 18:00+ →  SEANS İÇİ AKSİYON (SESSION_ACTION_PROMPT.md)
-              canlı fiyat, karar + uygulama
+**oku ve değerlendir**:
+- dünkü plan tuttu mu?
+- hangi kararlar doğru/yanlış çıktı?
+- kaçırılan fırsatlar?
 
-(ertesi gün TR 14:00 → tekrar bu prompt)
-
-```
+→ sohbette özet ver, "faz 1'e geç" de
 
 ---
 
-## BENZERSİZ SEMBOL LİSTESİ (tüm bölümler için ortak)
+## FAZ 1 — VERİ ÇEKME + JSON GÜNCELLEME
 
-bölüm 2 ve 3 aynı sembol havuzunu kullanır. tekrar FMP call yapma.
-her çalıştırmada JSON dosyalarından dinamik olarak oluştur:
+### adım 1a: sembolleri topla
 
 ```python
-import json
+import json, glob
 
-semboller = set()
-
-# 4 portföyden
-for dosya in ["balanced.json", "aggressive.json", "dividend.json", "rotation.json"]:
-    with open(f"data/portfolios/{dosya}") as f:
-        port = json.load(f)
-    for pos in port['pozisyonlar']:
-        semboller.add(pos['sembol'])
-
-# swing aktif pozisyonlardan
-with open("data/swing/active.json") as f:
-    swing = json.load(f)
-for pos in swing['aktif_pozisyonlar']:
-    semboller.add(pos['sembol'])
-
-# benchmark
-semboller.add("SPY")
-
-benzersiz = sorted(semboller)
-# bu liste bölüm 1 (SPY teknik), bölüm 2 (portföy), bölüm 3 (swing) için kullanılır
+symbols = set()
+for f in glob.glob("data/portfolios/*.json") + glob.glob("data/swing/*.json"):
+    with open(f) as fp:
+        d = json.load(fp)
+        for p in d.get('pozisyonlar', []) + d.get('aktif_pozisyonlar', []):
+            symbols.add(p['sembol'])
 ```
 
-
-
----
----
-
-# BÖLÜM 0: KAPANIŞ DEĞERLENDİRMESİ + JSON FİNAL GÜNCELLEME
-
-> **amaç**: dünkü seansı değerlendir, plan tuttu mu kontrol et, JSON'ları final güncelle
-> **tahmini FMP call**: 0 (bölüm 1-2'de zaten çekilecek veriler kullanılır)
-> **tahmini websearch**: 0-1 (after-hours sonuçları gerekirse)
-> **not**: bu bölüm rapor dosyasına yazılır + JSON güncelleme yapılır
-
----
-
-## ADIM 1 — DÜNKÜ RAPORU OKU
-
-```
-1. dünün raporunu aç: reports/daily/DAILY_REPORT_{DÜN_TARİH}.md
-2. bölüm 6'daki aksiyon planını bul:
-   - 🔴 acil aksiyonlar → hangisi uygulandı?
-   - 🟡 izlenenler → tetiklendi mi?
-   - 🟢 fırsatlar → değerlendirildi mi?
-3. dün seans içi prompt (SESSION_ACTION) kullanıldıysa → yapılan trade'leri not et
-```
-
-eğer dünkü rapor yoksa veya ilk raporse → bu adımı atla, "önceki rapor yok" notu düş
-
----
-
-## ADIM 2 — PLAN DEĞERLENDİRMESİ
-
-```markdown
-## 0. dünün değerlendirmesi
-
-### plan gerçekleşme
-
-| aksiyon | plan | sonuç | not |
-|---------|------|-------|-----|
-| [acil 1] | [planlanmış aksiyon] | ✅ yapıldı / ❌ yapılmadı / ⏳ devam ediyor | [kısa açıklama] |
-| [acil 2] | ... | ... | ... |
-| [izle 1] | ... | ... | ... |
-
-(dün aksiyon planı yoksa veya ilk raporse → "ilk rapor, önceki plan yok" yaz)
-
-### dünün performans özeti
-
-- portföy toplam değişim: +/-$X,XXX (+/-%X.XX)
-- SPY dün: +/-%X.XX → alpha: +/-%X.XX
-- en iyi performans: SEMBOL (+%X.XX) — [neden]
-- en kötü performans: SEMBOL (-%X.XX) — [neden]
-
-### dersler
-
-- ✅ doğru karar: [ne yapıldı, neden doğruydu]
-- ❌ yanlış karar: [ne yapıldı, neden yanlıştı, bir dahaki sefere ne farklı]
-- 🔍 kaçırılan fırsat: [ne oldu, fark edildi mi, neden girilmedi]
-- (her gün ders olmak zorunda değil — sıradan günlerde "rutin gün, özel ders yok" yaz)
-```
-
----
-
-## ADIM 3 — JSON FİNAL GÜNCELLEME
-
-bu adımda FMP'den çekilen kapanış fiyatlarıyla (bölüm 1-2'de zaten çekilecek) tüm JSON'ları güncelle:
-
-### 3a. portföy JSON'ları
+### adım 1b: FMP toplu çek
 
 ```python
-for portfolio in [balanced, aggressive, dividend, rotation]:
-    for pozisyon in portfolio['pozisyonlar']:
-        pozisyon['guncel_fiyat'] = quote['price']
-        pozisyon['gunluk_degisim_yuzde'] = quote['changesPercentage']
-        pozisyon['guncel_deger'] = pozisyon['adet'] * pozisyon['guncel_fiyat']
-        pozisyon['kar_zarar'] = pozisyon['guncel_deger'] - pozisyon['yatirim']
-        pozisyon['kar_zarar_yuzde'] = (pozisyon['kar_zarar'] / pozisyon['yatirim']) * 100
-        pozisyon['son_guncelleme'] = datetime.now().isoformat()
+import requests
+from datetime import datetime
+
+API_KEY = "g1GFJZtV5rCP49UCir4WuP56VjhmA6F8"
+BASE = "https://financialmodelingprep.com/stable"
+
+symbols_str = ",".join(symbols)
+
+# tek call - tüm fiyatlar
+quotes = requests.get(f"{BASE}/batch-quote", 
+    params={"symbols": symbols_str, "apikey": API_KEY}).json()
+
+# tek call - tüm RSI
+rsi_data = {}
+for sym in symbols:
+    r = requests.get(f"{BASE}/technical-indicators/rsi",
+        params={"symbol": sym, "periodLength": 14, "timeframe": "1day", "apikey": API_KEY}).json()
+    rsi_data[sym] = r[0]['rsi'] if r else None
+
+# tek call - tüm SMA
+sma_data = {}
+for sym in symbols:
+    for period in [20, 50, 200]:
+        s = requests.get(f"{BASE}/technical-indicators/sma",
+            params={"symbol": sym, "periodLength": period, "timeframe": "1day", "apikey": API_KEY}).json()
+        sma_data[f"{sym}_{period}"] = s[0]['sma'] if s else None
+```
+
+### adım 1c: JSON güncelle
+
+**portföy dosyaları** (`data/portfolios/*.json`):
+
+```python
+for poz in data['pozisyonlar']:
+    q = next(x for x in quotes if x['symbol'] == poz['sembol'])
+    poz['guncel_fiyat'] = q['price']
+    poz['gunluk_degisim_yuzde'] = q['changesPercentage']
+    poz['guncel_deger'] = poz['adet'] * q['price']
+    poz['kar_zarar'] = poz['guncel_deger'] - poz['yatirim']
+    poz['kar_zarar_yuzde'] = (poz['kar_zarar'] / poz['yatirim']) * 100
+    poz['son_guncelleme'] = datetime.now().isoformat()
+
+toplam = sum(p['guncel_deger'] for p in data['pozisyonlar']) + data['nakit']['miktar']
+data['toplam_deger'] = toplam
+data['toplam_getiri_yuzde'] = ((toplam - data['baslangic_sermaye']) / data['baslangic_sermaye']) * 100
+
+for poz in data['pozisyonlar']:
+    poz['agirlik_yuzde'] = (poz['guncel_deger'] / toplam) * 100
+```
+
+**swing dosyası** (`data/swing/active.json`):
+
+```python
+from datetime import datetime, date
+
+for poz in data['aktif_pozisyonlar']:
+    q = next(x for x in quotes if x['symbol'] == poz['sembol'])
+    poz['guncel_fiyat'] = q['price']
+    poz['guncel_kar_zarar_yuzde'] = ((q['price'] - poz['giris_fiyati']) / poz['giris_fiyati']) * 100
     
-    toplam_deger = sum(p['guncel_deger'] for p in pozisyonlar) + nakit['miktar']
-    portfolio['toplam_deger'] = toplam_deger
-    portfolio['toplam_getiri_yuzde'] = ((toplam_deger - 100000) / 100000) * 100
+    giris = datetime.strptime(poz['giris_tarihi'], "%Y-%m-%d").date()
+    poz['tutulan_gun'] = (date.today() - giris).days
     
-    for pozisyon in portfolio['pozisyonlar']:
-        pozisyon['agirlik_yuzde'] = (pozisyon['guncel_deger'] / toplam_deger) * 100
+    poz['son_guncelleme'] = datetime.now().isoformat()
 ```
 
-### 3b. swing active.json
+**summary.json**:
 
 ```python
-for pozisyon in aktif_pozisyonlar:
-    pozisyon['guncel_fiyat'] = quote['price']
-    pozisyon['guncel_kar_zarar_yuzde'] = ((guncel - giris) / giris) * 100
-    pozisyon['tutulan_gun'] = (today - giris_tarihi).days
-    
-    # trailing stop güncelle (sadece yukarı)
-    if guncel_fiyat > önceki_zirve:
-        yeni_trailing = guncel_fiyat * 0.95
-        if yeni_trailing > mevcut_trailing:
-            trailing_stop = yeni_trailing
+summary['toplam_deger'] = sum(port['toplam_deger'] for port in portfolios.values())
+summary['toplam_kar_zarar'] = summary['toplam_deger'] - 400000
+summary['toplam_kar_zarar_yuzde'] = (summary['toplam_kar_zarar'] / 400000) * 100
 ```
 
-### 3c. summary.json
+### adım 1d: git push
 
-```python
-summary['toplam_deger'] = dengeli + agresif + temettü + rotasyon
-summary['toplam_kar_zarar'] = toplam_deger - 400000
-summary['toplam_kar_zarar_yuzde'] = (toplam_kar_zarar / 400000) * 100
-summary['benchmark_spy'] = SPY_baslangictan_beri
-summary['alpha'] = toplam_kar_zarar_yuzde - benchmark_spy
+```bash
+git add data/
+git commit -m "[GÜNCELLEME] $(date +%d) $(date +%B | tr 'A-Z' 'a-z') - kapanış fiyatları"
+git push
 ```
 
-### 3d. doğrulama kontrolleri (KATMAN 1 + 2a)
-
-güncelleme sonrası doğrulama yap — detaylı kurallar: `docs/SELF_VALIDATION.md`
-
-```
-KATMAN 1 — VERİ DOĞRULAMA (FMP yanıtları):
-✓ tüm batch-quote yanıtları dolu mu? (boş [] → sembol kontrol et)
-✓ fiyatlar > 0 ve mantıklı aralıkta mı?
-✓ |changesPercentage| > %20 olan var mı? → haber teyidi yap
-✓ fiyat tarihi dünün tarihi mi? (hafta sonu → cuma beklenir)
-
-KATMAN 2a — SAYISAL TUTARLILIK:
-✓ yatirim = adet × maliyet_baz (sabit, değişmemeli)
-✓ guncel_deger = adet × guncel_fiyat
-✓ kar_zarar = guncel_deger - yatirim
-✓ nakit.miktar = doğru (trade olmadıysa değişmemeli)
-✓ toplam_deger = sum(guncel_deger) + nakit
-✓ agirlik toplamı + nakit ağırlığı ≈ %100 (±%0.5)
-✓ summary toplam = 4 portföy toplamı (kesin eşitlik)
-✓ swing trailing stop'lar sadece yukarı gitmiş
-✓ tüm son_guncelleme bugünün tarihi
-```
-
-hata bulunursa → düzelt ve "validation: ⚠️ şu düzeltildi: ..." notu ekle
-
-### 3e. after-hours kontrol (varsa)
-
-```
-- dün AMC earnings açıklayan portföy/swing hissesi var mı?
-- after-hours'ta > %3 hareket eden portföy hissesi var mı?
-- after-hours'ta > %5 hareket eden swing hissesi var mı?
-→ varsa not düş, bölüm 2-3'te dikkat çek
-→ after-hours fiyatı JSON'lara YAZILMAZ (sadece normal kapanış geçerli)
-```
+→ "faz 1 tamam, faz 2'ye geç" de
 
 ---
 
-## ADIM 4 — DÜNKÜ AMC EARNINGS ANALİZİ
+## FAZ 2 — RAPOR YAZMA
 
-dün seans kapandıktan sonra (AMC = after market close) açıklanan önemli finansal tablolar.
-rapor TR ~14:00'da yazıldığında bu sonuçlar zaten hazır olur.
-
-### 4a. hangi earnings'lere bakılır?
+### web search (5-7 call)
 
 ```
-öncelik 1: portföy veya swing hisselerimizin earnings'i (doğrudan etki)
-öncelik 2: sektör liderleri ve mega-cap'ler (dolaylı etki)
-           örn: NVDA → tüm tech/AI sektörünü etkiler
-           örn: WMT → tüm perakende/consumer sektörünü etkiler
-öncelik 3: aynı sektördeki rakipler (karşılaştırma)
+1. "S&P 500 futures pre-market [BUGÜN]"
+2. "NASDAQ futures today [BUGÜN]"
+3. "sector performance yesterday [DÜN]"
+4. "earnings results after hours [DÜN gecesi]"
+5. "[kritik sembol] news today" (varsa)
 ```
 
-### 4b. veri toplama
-
-```python
-# websearch ile AMC sonuçları
-# "SEMBOL earnings results Q4 2025" veya "{DATE} after hours earnings"
-
-# FMP'den analyst estimates (karşılaştırma için)
-estimates = fmp_get("analyst-estimates", {"symbol": SEMBOL, "period": "quarter", "limit": 4})
-
-# after-market fiyat hareketi
-ah_quote = fmp_get("aftermarket-quote", {"symbol": SEMBOL})
-```
-
-### 4c. her earnings için analiz formatı
-
-```
-SEMBOL — [şirket adı]
-  EPS:     gerçekleşen $X.XX vs beklenen $X.XX → beat/miss %X
-  gelir:   gerçekleşen $X.XXB vs beklenen $X.XXB → beat/miss %X
-  guidance: yükseltildi / korundu / düşürüldü / verilmedi
-  AH fiyat: $XXX (±%X after-hours hareketi)
-  
-  etki değerlendirmesi:
-  - portföy etkisi: [doğrudan: hangi portföyde var / dolaylı: aynı sektör]
-  - sektör etkisi: [pozitif/negatif/nötr — neden]
-  - aksiyon: [bugün açılışta ne yapılacak — tut/ekle/azalt/izle]
-```
-
-### 4d. ne zaman derinlemesine incelenir?
-
-```
-- portföy/swing hissemiz → her zaman detaylı analiz
-- mega-cap sektör lideri (NVDA, AAPL, MSFT, AMZN vb.) → sektör etkisi yaz
-- earnings beat > %15 veya miss > %10 → sektör genelinde ne anlama geliyor
-- guidance değişikliği → forward beklentiler nasıl etkilendi
-- sıradan bir şirketin beklentiye yakın sonucu → atla, zaman harcama
-```
-
----
-
-## ADIM 5 — KALİTE KONTROL
-
-- [ ] dünkü rapordaki aksiyonlar değerlendirildi mi?
-- [ ] dersler yazıldı mı? (sıradan günlerde "rutin" notu yeterli)
-- [ ] tüm JSON dosyaları kapanış fiyatıyla güncellendi mi?
-- [ ] doğrulama kontrolleri yapıldı mı?
-- [ ] summary.json güncellendi mi?
-- [ ] after-hours önemli hareket varsa not düşüldü mü?
-- [ ] dünkü AMC earnings sonuçları incelendi mi? (varsa)
-
----
----
-
-# BÖLÜM 1: PİYASA GÖRÜNÜMÜ (dünün özeti + bugünün beklentisi)
-
-> **amaç**: dünün kapanışını özetle, gece gelişmelerini ekle, bugünün seansı için beklenti oluştur
-> **tahmini FMP call**: 12-16
-> **tahmini websearch**: 5-7
-
----
-
-## ADIM 1 — VERİ TOPLAMA
-
-### 1a. FMP API çağrıları (dünün kapanış verileri)
-
-```
-# ⚠️ rapor seans öncesi yazıldığı için FMP verileri = DÜNün kapanışı
-# bu normal ve beklenen durum
-
-# --- endeksler (1 call) ---
-batch-quote → symbols=SPY,QQQ,DIA
-# SPY = S&P 500 proxy, QQQ = NASDAQ proxy, DIA = Dow proxy
-
-# --- emtia (2 call) ---
-quote → symbol=GCUSD          # altın
-quote → symbol=CLUSD          # WTI ham petrol
-
-# --- forex (2 call) ---
-quote → symbol=EURUSD
-quote → symbol=USDTRY
-
-# --- tahvil (1 call) ---
-treasury-rates → from={bugün}, to={bugün}
-# dönen veriden 'month10' = 10 yıllık yield (ondalık, örn: 4.25 = %4.25)
-# eğer boş dönerse → websearch yedek: "us 10 year treasury yield today"
-
-# --- sektör performansı (1 call) ---
-sector-performance-snapshot → date={bugün}
-# 11 sektör tek call'da gelir
-# ⚠️ date parametresi ZORUNLU, yoksa 404 döner
-
-# --- SPY teknik (3 call) ---
-technical-indicators/sma → symbol=SPY, periodLength=50, timeframe=1day
-technical-indicators/sma → symbol=SPY, periodLength=200, timeframe=1day
-technical-indicators/rsi → symbol=SPY, periodLength=14, timeframe=1day
-# sadece son 1 değeri kullan (limit=1 yok ama ilk eleman en güncel)
-
-# --- piyasa hareketi (2 call) ---
-biggest-gainers → limit=5
-biggest-losers → limit=5
-# ⚠️ doğru isim: "biggest-gainers", "biggest-losers" (market- prefix'i YOK)
-```
-
-**toplam: ~12 FMP call**
-
-### 1b. WebSearch aramaları (bugünün beklentisi için kritik)
-
-```
-# --- VIX + DXY (FMP'de doğrudan yok) ---
-websearch → "VIX index close today {dünün tarihi}"
-websearch → "US dollar index DXY today"
-
-# --- pre-market + futures (SABAH RAPORU İÇİN KRİTİK) ---
-websearch → "stock market futures today pre-market"
-# S&P 500 futures, NASDAQ futures, Dow futures
-# bu veri bugünün açılış yönünü gösterir
-
-# --- gece gelişmeleri ---
-websearch → "stock market news today {bugünün tarihi}"
-websearch → "overnight market news asia europe"
-# asya/avrupa piyasaları sabah kapanmış olur, bilgi mevcuttur
-
-# --- prediction markets (sentiment göstergesi) ---
-websearch → "kalshi fed rate cut probability" veya "kalshi fed funds rate"
-websearch → "polymarket tariff" veya "polymarket geopolitical" (gündemde olay varsa)
-# fed rate probabilities: portföy stratejisi için kritik sinyal
-# jeopolitik risk: enerji + defensive pozisyonları etkiler
-
-# opsiyonel (önemli olay varsa):
-websearch → "fed news today" veya "earnings results after hours"
-```
-
-**toplam: 6-9 websearch**
-
-### 1c. prediction markets analizi
-
-```
-kaynak: docs/PREDICTION_MARKETS_GUIDE.md (detaylı rehber)
-
-kontrol listesi:
-1. Kalshi Fed Rate → sonraki FOMC kararı olasılıkları
-   - hold/cut/hike oranları
-   - geçen haftaya göre değişim (>%10 değişim → önemli sinyal)
-   
-2. Polymarket → gündemdeki jeopolitik/makro olay
-   - iran escalation, tariff, seçim vb.
-   - volume kontrolü: <$10K güvenilmez, $1M+ güvenilir
-   - ani %10+ swing → whale manipulation olabilir
-
-aksiyon tetikleyicileri:
-- fed rate cut odds > %30 → defensive azalt, cyclical ekle
-- iran escalation > %50 → enerji pozisyonlarını koru/artır
-- tariff risk yükseliyor → import-heavy sektörlerden uzak dur
-
-önemli: prediction markets TEK BAŞINA karar sebebi değil,
-FMP data + teknik analiz + haberlerle birlikte kullanılır
-```
-
-### 1c. veri bulunamazsa yedek plan
-
-| veri | birincil kaynak | yedek |
-|------|-----------------|-------|
-| VIX | websearch | FMP quote UVXY (ters proxy, ama yeterli gösterge) |
-| DXY | websearch | FMP quote EURUSD (ters çevir: DXY güçlü = EUR/USD düşük) |
-| 10Y yield | treasury-rates | websearch "10 year yield today" |
-| sektör perf | sector-performance-snapshot | websearch "sector performance today" |
-
----
-
-## ADIM 2 — ANALİZ KURALLARI
-
-### risk duyarlılığı nasıl belirlenir
-
-```
-3 ANA GÖSTERGEYE BAK:
-
-1. VIX:  < 18 → Risk-On  |  18-25 → Nötr  |  > 25 → Risk-Off
-2. SEKTÖR: günün en iyi 3 sektörü döngüsel mi savunmacı mı?
-   - döngüsel lider (tech, finans, tüketim) → Risk-On
-   - savunmacı lider (utilities, staples, healthcare) → Risk-Off
-3. ALTIN + HISSE: ikisi birlikte yükseliyorsa → Nötr
-   - altın ↑ hisse ↓ → Risk-Off  |  altın ↓ hisse ↑ → Risk-On
-
-SONUÇ: 3 göstergeden 2'si aynı yöne işaret ediyorsa o yönü seç, yoksa Nötr
-```
-
-### S&P 500 trend nasıl belirlenir
-
-```
-SPY fiyat > SMA50 > SMA200      → "güçlü yükseliş trendi"
-SPY fiyat > SMA50, < SMA200     → "toparlanma aşaması"
-SPY fiyat < SMA50, > SMA200     → "kısa vadeli zayıflık, ana trend sağlam"
-SPY fiyat < SMA50 < SMA200      → "düşüş trendi"
-
-RSI > 70   → "aşırı alım bölgesi, dikkat"
-RSI < 30   → "aşırı satım bölgesi, fırsat olabilir"
-RSI 40-60  → "nötr"
-```
-
-### sektör göreceli güç analizi (relative strength)
-
-```
-KURAL: piyasa düşerken düşmeyen/yükselen sektör = güçlü para akışı sinyali
-
-HESAPLAMA:
-  sektor_rs = sektor_degisim - SPY_degisim
-
-  SPY düşerken (SPY < -%0.5):
-    sektor_rs > +1.0%  → 🔥 GÜÇ SEKTÖR — "piyasa düşerken para buraya akıyor"
-    sektor_rs > +0.5%  → 💪 dirençli — "piyasaya göre belirgin üstün performans"
-
-  SPY yükselirken (SPY > +%0.5):
-    sektor_rs < -1.0%  → ⚠️ ZAYIF SEKTÖR — "yükselişe katılamıyor, çıkış var"
-    sektor_rs < -0.5%  → 📉 geride kalıyor
-
-  ÖNEMLİ: bu sektörleri raporda özel olarak vurgula:
-  - portföyümüzdeki pozisyonlarla eşleştir (enerji güçlüyse SM, KOS, XLE nasıl?)
-  - merkezi watchlist için fırsat mı? (güçlü sektörden yeni aday? portföy adayları?)
-  - rotasyon portföyü için sinyal mi? (güçlü sektöre ağırlık artır?)
-```
-
-websearch'ten gelen haberleri şu filtreyle değerlendir:
-1. **portföy etkisi** — haber bizim pozisyonlarımızı doğrudan etkiliyor mu?
-2. **sektör etkisi** — enerji, savunma, tech, telecom, sağlık sektörlerimiz etkileniyor mu?
-3. **makro etki** — faiz, enflasyon, istihdam, jeopolitik gibi geniş çaplı mı?
-4. **sadece en önemli 3-5 haber** — kalabalık yapma, her habere 1-2 cümle etki analizi yaz
-
----
-
-## ADIM 3 — RAPOR ÇIKTI FORMATI
+### rapor formatı
 
 ```markdown
-## 0. dünün değerlendirmesi
+# günlük rapor — DD ay YYYY
 
-### plan gerçekleşme ({dünün tarihi})
-
-| aksiyon | plan | sonuç | not |
-|---------|------|-------|-----|
-| [acil 1] | [ne planlanmıştı] | ✅/❌/⏳ | [kısa açıklama] |
-| [izle 1] | ... | ... | ... |
-
-(ilk raporse veya dün aksiyon yoksa → "önceki rapor yok / rutin gün" yaz)
-
-### dünün performans özeti
-
-- portföy toplam değişim: +/-$X,XXX (+/-%X.XX)
-- SPY dün: +/-%X.XX → alpha: +/-%X.XX
-- en iyi: SEMBOL (+%X.XX) — [neden]
-- en kötü: SEMBOL (-%X.XX) — [neden]
-
-### dersler
-
-- ✅ doğru karar: [açıklama]
-- ❌ yanlış karar: [açıklama + bir dahaki sefere ne farklı]
-- (sıradan gün → "rutin gün, özel ders yok")
-
-### JSON güncelleme durumu
-
-✅ 4 portföy + swing active + summary güncellendi (kapanış fiyatlarıyla)
-doğrulama: [sorun yok / şu düzeltildi: ...]
-
-### dün gece earnings (AMC)
-
-(earnings yoksa veya portföyü etkilemiyorsa → "dün AMC'de portföyü etkileyen earnings yok" yaz)
-
-**SEMBOL** — [şirket adı]
-- EPS: $X.XX vs beklenen $X.XX → ✅ beat +%X / ❌ miss -%X
-- gelir: $X.XXB vs beklenen $X.XXB → ✅/❌
-- guidance: yükseltildi / korundu / düşürüldü
-- AH hareket: ±%X
-- portföy etkisi: [doğrudan / dolaylı — hangi sektör/portföy]
-- aksiyon: [bugün açılışta: tut/ekle/azalt/izle]
-```
-
-```markdown
-## 1. piyasa görünümü
-
-### dünün kapanışı ({dünün tarihi}, {gün adı})
-
-| gösterge | kapanış | günlük değişim | sinyal |
-|----------|---------|----------------|--------|
-| S&P 500 (SPY) | $XXX.XX | ▲/▼ %X.XX | |
-| NASDAQ (QQQ) | $XXX.XX | ▲/▼ %X.XX | |
-| Dow Jones (DIA) | $XXX.XX | ▲/▼ %X.XX | |
-| VIX | XX.XX | ▲/▼ X.XX | [düşük korku / orta / yüksek korku] |
-| US 10Y yield | %X.XX | ▲/▼ X bp | |
-| altın (XAU) | $X,XXX | ▲/▼ %X.XX | |
-| WTI petrol | $XX.XX | ▲/▼ %X.XX | |
-| EUR/USD | X.XXXX | ▲/▼ %X.XX | |
-| USD/TRY | XX.XX | ▲/▼ %X.XX | |
-| DXY | XXX.XX | ▲/▼ %X.XX | |
-
-### bugünün öncü göstergeleri
-
-| gösterge | değer | sinyal |
-|----------|-------|--------|
-| S&P 500 futures | ▲/▼ %X.XX | [pozitif/negatif/düz açılış beklentisi] |
-| NASDAQ futures | ▲/▼ %X.XX | |
-| asya piyasaları | [nikkei/hang seng durum] | [risk-on/off sinyali] |
-| avrupa piyasaları | [dax/ftse durum] | |
-
-### sektör performansı (dün)
-
-| sektör | değişim % | RS (vs SPY) | | sektör | değişim % | RS (vs SPY) |
-|--------|-----------|-------------|---|--------|-----------|-------------|
-| [en iyi 1] | +%X.XX 🟢 | +%X.XX | | [en kötü 1] | -%X.XX 🔴 | -%X.XX |
-| [en iyi 2] | +%X.XX 🟢 | +%X.XX | | [en kötü 2] | -%X.XX 🔴 | -%X.XX |
-| [en iyi 3] | +%X.XX | +%X.XX | | [en kötü 3] | -%X.XX | -%X.XX |
-
-(11 sektörü en iyi → en kötü sırayla listele, en iyi 3 ve en kötü 3'ü vurgula)
-(RS = sektör değişimi - SPY değişimi. 🔥 işareti: piyasa düşerken RS > +1%)
-
-### piyasa hareketi (dün)
-
-**dünün kazananları** (biggest-gainers'dan top 5):
-| ticker | değişim % | hacim |
-(tabloya hacim de ekle, anormal hacim genellikle haberi olan hissedir)
-
-**dünün kaybedenleri** (biggest-losers'dan top 5):
-| ticker | değişim % | hacim |
-
-### risk değerlendirmesi
-
-- **risk duyarlılığı**: [RISK-ON 🟢 / RISK-OFF 🔴 / NÖTR ⚪]
-  - gerekçe: [yukarıdaki skor tablosuna göre 2-3 cümle]
-- **SPY teknik durum**: $XXX.XX | SMA50: $XXX | SMA200: $XXX | RSI: XX
-  - trend: [güçlü yükseliş / kısa vadeli zayıflık / düşüş trendi / ...]
-- **kritik seviyeler**: destek $XXX, direnç $XXX
-
-### gece gelişmeleri + bugünün beklentisi
-
-1. **[başlık]** — [1-2 cümle: ne oldu + portföyümüze etkisi]
-2. **[başlık]** — [1-2 cümle]
-3. **[başlık]** — [1-2 cümle]
-
-(dün kapanıştan sonra + gece + sabah gelişmeleri: after-hours earnings, asya haberleri, makro veri)
-
-### prediction markets sinyalleri
-
-**fed rate** (kalshi): sonraki FOMC [tarih] → hold %XX / cut %XX / hike %XX
-değişim: [↑↓] %X (geçen haftaya göre) | volume: $XM
-→ [portföy etkisi: defensive/cyclical dengesi ne yönde olmalı]
-
-**jeopolitik risk** (polymarket): [gündemdeki olay] → %XX
-değişim: [↑↓] %X | volume: $XM
-→ [portföy etkisi: enerji/defensive pozisyonları nasıl etkileniyor]
-
-(prediction markets verisi bulunamazsa veya önemli değişim yoksa → "PM sinyalleri stabil, önemli değişim yok" yaz)
-
-### strateji notu (bugünün seansı için)
-
-[2-3 cümle: futures'a ve gece haberlerine göre bugün nasıl bir açılış bekliyoruz?
-savunmacı mı kalmalıyız, fırsat mı kollamalıyız?
-hangi sektörler bugün güçlü/zayıf olabilir?
-bugünkü seans için dikkat edilmesi gereken saatler (earnings açıklaması, makro veri gibi)]
-```
+*new york kapalı | bir sonraki seans: bugün 17:30 tr | hazırlayan: finzora ai*
 
 ---
 
-## ADIM 4 — KALİTE KONTROL
+## 0. dünkü plan gerçekleşme
 
-raporu yazmadan önce şunları doğrula:
-- [ ] tüm FMP verileri başarıyla geldi mi? (boş [] dönmediyse OK)
-- [ ] FMP fiyatları dünün kapanışı mı? (piyasa şu an kapalı, bu beklenen)
-- [ ] VIX ve DXY websearch'ten alındıysa değer mantıklı mı?
-- [ ] sektör performansı tarihi dünün tarihi mi?
-- [ ] pre-market futures bilgisi websearch'ten alındı mı?
-- [ ] asya/avrupa piyasa bilgisi eklendi mi?
-- [ ] risk skoru hesaplaması tutarlı mı?
-- [ ] SPY trend açıklaması SMA50/SMA200/RSI verileriyle uyuşuyor mu?
-- [ ] gece gelişmeleri gerçekten dün akşam/gece haberleri mi?
-- [ ] prediction markets kontrol edildi mi? (kalshi fed rate + varsa polymarket)
-- [ ] strateji notu bugünün seansına yönelik mi? (dünü anlatmıyor, bugünü planlıyor)
+| aksiyon | plan | gerçekleşen | sonuç |
+|---------|------|-------------|-------|
+| [örnek] | NEM %50 sat @$130 | tutmadı, $124.5'ta | hedefe ulaşmadı |
 
+**performans özeti**:
+- toplam: $XXX,XXX (+%X.XX)
+- en iyi: [portföy] +%X.XX
+- en zayıf: [portföy] -%X.XX
+- swing: X/10 aktif, ort %X.XX
 
----
----
+**dersler**:
+- ✅ [doğru karar]
+- ❌ [yanlış karar]
+- 💡 [içgörü]
 
-# BÖLÜM 2: PORTFÖY TAKİBİ (dünün kapanışı ile güncel durum)
-
-> **amaç**: 4 portföyün dünün kapanışına göre güncel durumunu raporla, bugün dikkat edilecek seviyeleri belirle
-> **tahmini FMP call**: ~85-100 (benzersiz hisse sayısına bağlı)
-> **tahmini websearch**: 0
+**JSON durumu**: ✅ tüm dosyalar güncellendi (faz 1)
 
 ---
 
-## ADIM 1 — BENZERSİZ SEMBOL LİSTESİ ÇIKAR
+## 1. piyasa — dünkü kapanış + bugünkü görünüm
 
-aynı hisse birden fazla portföyde olabilir (MO, XLE, XLI gibi).
-önce tüm portföylerden benzersiz sembol listesi çıkar, FMP call'ları tekrar etme.
+### dünkü kapanış (new york 00:00 tr)
 
-```
-mevcut benzersiz semboller (şubat 2026 itibarıyla):
-dengeli:  SM, KOS, MO, XLE, RGLD, XLI
-agresif:  GILT, BKSY, NNDM, PLTR, SHOP
-temettü:  T, VZ, MO, PM, XOM, CVX, SCHD
-rotasyon: XLE, XLV, XLI
+| ticker | kapanış | değişim |
+|--------|---------|---------|
+| SPY | $XXX.XX | +X.XX% |
+| QQQ | $XXX.XX | +X.XX% |
+| IWM | $XXX.XX | +X.XX% |
 
-benzersiz: SM, KOS, MO, XLE, RGLD, XLI, GILT, BKSY, NNDM, PLTR, SHOP,
-           T, VZ, PM, XOM, CVX, SCHD, XLV
-toplam: ~18 benzersiz sembol
-```
+**sektör hareketi**: [en güçlü 3] vs [en zayıf 3]
 
-⚠️ bu liste pozisyon açılıp kapandıkça değişir.
-her çalıştırmada JSON dosyalarından dinamik olarak çıkar.
+### bugünkü futures (pre-market önü)
 
----
+[web search sonucu]
 
-## ADIM 2 — VERİ TOPLAMA
+### gece haberleri (AMC earnings, FED konuşması, vb)
 
-her benzersiz sembol için 4 FMP call:
+[web search sonucu - max 3-4 madde]
 
-```python
-for symbol in benzersiz_semboller:
-    # 1. güncel fiyat (batch ile toplu çekilebilir → 1 call)
-    # 2. RSI 14-günlük
-    fmp_get("technical-indicators/rsi", {"symbol": symbol, "periodLength": 14, "timeframe": "1day"})
-    # 3. SMA 50-günlük
-    fmp_get("technical-indicators/sma", {"symbol": symbol, "periodLength": 50, "timeframe": "1day"})
-    # 4. SMA 200-günlük
-    fmp_get("technical-indicators/sma", {"symbol": symbol, "periodLength": 200, "timeframe": "1day"})
-```
-
-**optimizasyon:**
-```python
-# fiyatlar tek seferde (1 call)
-batch-quote → symbols=SM,KOS,MO,XLE,RGLD,XLI,GILT,...
-
-# haftalık değişim tek seferde (her biri 1 call ama batch yok)
-# alternatif: batch-quote'taki previousClose'dan hesapla
-# veya stock-price-change endpoint'i (sembol başı 1 call)
-stock-price-change → symbol=SM   # 1D, 5D, 1M, 3M, ... hepsi döner
-```
-
-**call hesabı:**
-- batch-quote: 1 call (tüm semboller)
-- RSI: 18 call (sembol başı)
-- SMA50: 18 call
-- SMA200: 18 call
-- stock-price-change: 18 call
-- **toplam: ~73 call** (18 benzersiz sembol için)
+**bugünkü risk**: [en büyük katalizör/risk]
 
 ---
 
-## ADIM 3 — UYARI KURALLARI
-
-her hisseyi şu kurallara göre işaretle:
-
-```
-GÜNLÜK HAREKET:
-  günlük düşüş ≥ %3        → 🔴 SERT DÜŞÜŞ
-  günlük düşüş %1.5-%3     → 🟡 düşüş
-  günlük değişim -%1.5/+%1.5 arası → ⚪ nötr
-  günlük yükseliş %1.5-%3  → 🟡 yükseliş
-  günlük yükseliş ≥ %3     → 🟢 GÜÇLÜ YÜKSELİŞ
-
-RSI:
-  RSI > 70                  → ⚠️ AŞIRI ALIM — kar realizasyonu düşün
-  RSI 60-70                 → dikkat, aşırı alıma yaklaşıyor
-  RSI 40-60                 → nötr
-  RSI 30-40                 → zayıf, izle
-  RSI < 30                  → ⚠️ AŞIRI SATIM — fırsat olabilir
-
-SMA POZİSYONU:
-  fiyat > SMA50 > SMA200    → 📈 güçlü trend (tüm hareketli ortalamalar üzerinde)
-  fiyat > SMA50, < SMA200   → 📊 toparlanma (kısa vade pozitif, uzun vade henüz değil)
-  fiyat < SMA50, > SMA200   → 📉 kısa vadeli zayıflık (SMA50 altına düşmüş)
-  fiyat < SMA50 < SMA200    → ⛔ düşüş trendi (her iki ortalama üzerinde)
-
-ÖZEL DURUMLAR:
-  fiyat SMA200'e %2'den yakın → 📌 KRİTİK SEVİYE — SMA200 test ediliyor
-  SMA50 ile SMA200 arası %3'ten az → 📌 GOLDEN/DEATH CROSS yakın
-  haftalık düşüş ≥ %5        → 🔴 HAFTALIK KAYIP uyarısı
-```
-
----
-
-## ADIM 4 — RAPOR ÇIKTI FORMATI
-
-### her portföy için ayrı tablo + yorum
-
-```markdown
 ## 2. portföy takibi
 
-### genel özet
+### dengeli portföy
 
-| portföy | değer | k/z $ | k/z % | nakit | nakit % | durum |
-|---------|-------|-------|-------|-------|---------|-------|
-| dengeli | $XXX,XXX | +$X,XXX | +%X.XX | $X,XXX | %XX | [emoji] |
-| agresif | $XXX,XXX | -$X,XXX | -%X.XX | $XX,XXX | %XX | [emoji] |
-| temettü | $XXX,XXX | +$XX,XXX | +%XX.XX | $XXX | %X | [emoji] 🏆 |
-| rotasyon | $XXX,XXX | +$X,XXX | +%X.XX | $XXX | %X | [emoji] |
-| **toplam** | **$XXX,XXX** | **+$XX,XXX** | **+%X.XX** | | | |
+| sembol | adet | maliyet | güncel | k/z % | RSI | SMA20 | SMA50 | durum |
+|--------|------|---------|--------|-------|-----|-------|-------|-------|
+| SM | X | $XX.XX | $XX.XX | +X.X% | XX | ✅/❌ | ✅/❌ | [not] |
 
-durum emojileri: 🟢 k/z > +%5 | 🟡 k/z %0-%5 | 🔴 k/z < %0
+**toplam**: $XXX,XXX (+%X.XX) | **ağırlık**: en büyük [XX%] | **nakit**: $X,XXX
 
----
+**portföy notu**: [1-2 cümle]
 
-### 2a. dengeli portföy ($100K başlangıç)
+**sektör dağılımı**: enerji XX%, tütün XX%, ...
 
-| sembol | fiyat | günlük % | haftalık % | RSI | SMA50 | SMA200 | trend | k/z % | ağırlık | uyarı |
-|--------|-------|----------|------------|-----|-------|--------|-------|-------|---------|-------|
-| SM | $XX.XX | ▼ %X.XX | %X.XX | XX | $XX.XX | $XX.XX | 📈/📉 | +%X.XX | %XX | [varsa] |
-| KOS | ... | | | | | | | | | |
-| ... | | | | | | | | | | |
-
-**portföy notu:** [2-3 cümle: bugün ne oldu, dikkat çeken hareket, varsa aksiyon önerisi]
-
-**sektör dağılımı:** enerji %XX | temel tüketim %XX | emtia %XX | endüstriyel %XX | nakit %XX
+**uyarılar**:
+- 🔴 [kritik uyarı]
+- 🟡 [dikkat gereken]
+- ✅ [sorunsuz]
 
 ---
 
-### 2b. agresif büyüme ($100K başlangıç)
-
-(aynı tablo formatı)
-
-**portföy notu:** [2-3 cümle]
-**nakit durumu:** $XX,XXX (%XX) — [yüksek nakit oranı değerlendirmesi]
+*[agresif, temettü, rotasyon için tekrar]*
 
 ---
 
-### 2c. değer + temettü ($100K başlangıç) 🏆
+## 3. swing trade
 
-(aynı tablo formatı)
+| id | sembol | giriş | güncel | k/z % | stop | hedef | gün | durum |
+|----|--------|-------|--------|-------|------|-------|-----|-------|
+| SWING-XXX | XXX | $XX | $XX | +X% | $XX | $XX | X | [not] |
 
-**portföy notu:** [2-3 cümle]
+**aktif**: X/10 | **ortalama**: +%X.XX
 
----
+**bugünün swing aksiyonları**:
+- 🔴 [hemen yapılacak]
+- 🟡 [izlenecek]
+- ✅ [sorunsuz]
 
-### 2d. sektör rotasyonu ($100K başlangıç)
+**watchlist** (X aday): [sembol, sembol, ...]
 
-(aynı tablo formatı)
-
-**portföy notu:** [2-3 cümle]
-**sektör ağırlıkları:** XLE %XX | XLV %XX | XLI %XX | nakit %X
-
----
-
-### uyarı özeti
-
-tüm portföylerden uyarı gerektiren hisseleri topla:
-
-🔴 **acil dikkat:**
-- [SEMBOL] — [neden: stop yakın / sert düşüş / RSI aşırı / ...]
-
-⚠️ **izlenmesi gereken:**
-- [SEMBOL] — [neden]
-
-🟢 **fırsat:**
-- [SEMBOL] — [neden: RSI oversold / destek test / ...]
-```
+**istatistik**: kazanç X/X (XX%), kayıp X/X, toplam P&L %XX
 
 ---
 
-## ADIM 5 — AKSİYON ÖNERİLERİ
-
-uyarılara göre somut aksiyon öner:
-
-```
-KURAL SETİ:
-
-RSI > 75 + k/z > %20     → "kısmi kar realizasyonu düşünülebilir"
-RSI < 30 + trend 📈      → "ek alım fırsatı olabilir (mevcut pozisyon varsa)"
-RSI < 30 + trend ⛔      → "bıçak düşerken tutma, dip onayı bekle"
-günlük -%5+              → "stop-loss kontrol et, panik satış yapma"
-haftalık -%10+           → "tez bozuldu mu değerlendir, bozulduysa çık"
-fiyat < SMA200 + RSI < 35 → "uzun vadeli destek kırılmış, dikkatli ol"
-nakit > %50 (agresif)    → "piyasa netleşince kademeli giriş planla"
-```
-
----
-
-## ADIM 6 — KALİTE KONTROL
-
-- [ ] tüm semboller güncel fiyatla güncellendi mi?
-- [ ] k/z hesaplamaları tutarlı mı? (guncel_deger - yatirim)
-- [ ] ağırlık yüzdeleri toplamı %100'e yakın mı? (nakit dahil)
-- [ ] RSI ve SMA verileri bugüne ait mi?
-- [ ] uyarı kuralları doğru uygulandı mı?
-- [ ] her portföy notu spesifik mi? (genel laf değil, bugüne özel)
-- [ ] JSON dosyaları güncellenip git push yapıldı mı?
-
-
----
----
-
-# BÖLÜM 3: SWING TRADE DURUMU (bugünün seansında ne yapacağız?)
-
-> **amaç**: aktif swing pozisyonların dünün kapanışına göre stop/hedef kontrolü, bugün alınacak aksiyonlar
-> **tahmini FMP call**: ~15-20 (swing sembolleri bölüm 2'de zaten çekilmişse 0)
-> **tahmini websearch**: 0-2 (sadece önemli haber varsa)
-
----
-
-## ADIM 1 — VERİ TOPLAMA
-
-swing sembollerinin çoğu bölüm 2'de zaten çekilmiş olacak.
-eğer çekilmediyse (portföyde olmayan swing hisseleri):
-
-```python
-# swing'e özel semboller (portföylerde olmayan)
-# mevcut: NEM, UNH, LMT, GE, DUK, DVA — hiçbiri 4 portföyde yok
-# bu semboller bölüm 2'nin benzersiz listesine DAHİL EDİLMELİ
-# böylece ekstra call gerekmez
-
-# eğer bölüm 2'de dahil edilmediyse:
-batch-quote → symbols=NEM,UNH,LMT,GE,DUK,DVA
-# + RSI, SMA50, SMA200 (sembol başı 3 call)
-```
-
-**⚠️ optimizasyon**: bölüm 2'deki benzersiz sembol listesini oluştururken
-swing aktif pozisyonlarını da dahil et. böylece bölüm 3 için ekstra call gerekmez.
-
----
-
-## ADIM 2 — HER POZİSYON İÇİN KONTROL
-
-```python
-for pozisyon in aktif_pozisyonlar:
-    # active.json'dan oku:
-    giris_fiyati = pozisyon['giris_fiyati']
-    stop_loss = pozisyon['stop_loss']
-    hedef_fiyat = pozisyon['hedef_fiyat']
-    giris_tarihi = pozisyon['giris_tarihi']
-    
-    # FMP'den gelen güncel veri:
-    guncel_fiyat = fmp_quote[symbol]['price']
-    rsi = fmp_rsi[symbol]
-    
-    # hesaplamalar:
-    kar_zarar_pct = ((guncel_fiyat - giris_fiyati) / giris_fiyati) * 100
-    stop_mesafe = guncel_fiyat - stop_loss
-    stop_mesafe_pct = (stop_mesafe / guncel_fiyat) * 100
-    hedef_mesafe = hedef_fiyat - guncel_fiyat
-    hedef_mesafe_pct = (hedef_mesafe / guncel_fiyat) * 100
-    tutulan_gun = (bugun - giris_tarihi).days
-    # max süre sınırı yok, tavsiye 7-10 gün
-```
-
----
-
-## ADIM 3 — UYARI VE AKSİYON KURALLARI
-
-```
-STOP-LOSS KONTROL:
-  fiyat ≤ stop_loss                    → 🔴 STOP TETİKLENDİ — pozisyonu kapat
-  stop mesafe < %1 (veya < $1.50)      → 🔴 STOP ÇOK YAKIN — yarın açılışta karar ver
-  stop mesafe %1-%3                    → 🟡 stop yakın, izle
-  stop mesafe > %3                     → 🟢 güvenli
-
-HEDEF KONTROL:
-  fiyat ≥ hedef_fiyat                  → 🎯 HEDEFE ULAŞTI — partial exit planını uygula
-  hedef mesafe < %2                    → 🟢 hedefe yakın, trailing stop sıkılaştır
-  hedef mesafe %2-%5                   → normal, bekle
-
-SÜRE TAKİBİ (zorunlu değil, bilgilendirme):
-  tutulan_gun > 14                     → ℹ️ uzun süredir tutuluyor, tezi yeniden değerlendir
-  tutulan_gun > 10                     → ℹ️ tavsiye süre aşıldı (7-10 gün)
-  tutulan_gun ≤ 10                     → normal
-
-RSI KONTROL (swing özel):
-  RSI > 75 + kar > %5                  → momentum aşırı, kısmi kar al
-  RSI < 30 + zarar > %3               → zayıflık devam, stop sıkılaştır
-
-BİLEŞİK AKSİYON KARARLARI:
-  stop yakın + zarar büyüyor           → "güçlü çıkış sinyali, yarın kapat"
-  hedefe yakın + RSI > 65              → "partial exit: %50 sat, kalan trailing stop"
-  zarar > %3 + tutulan > 10 gün       → "tez çalışmıyor, çıkış düşün"
-  kar > %7 + süre < 5 gün             → "erken hedef, trailing stop ile kal"
-```
-
----
-
-## ADIM 4 — TRAİLİNG STOP GÜNCELLEME
-
-```
-trailing stop kuralı (her pozisyon için):
-
-eğer pozisyon karda ve zirve yaptıysa:
-  yeni_trailing_stop = zirve_fiyat × 0.95  (zirveden -%5)
-  
-  eğer yeni_trailing_stop > mevcut_stop_loss:
-    stop_loss = yeni_trailing_stop  ← GÜNCELLE (active.json'da)
-    durum notu ekle: "trailing stop yükseltildi: $XX.XX → $YY.YY"
-  
-  eğer yeni_trailing_stop ≤ mevcut_stop_loss:
-    değişiklik yapma (stop sadece yukarı hareket eder)
-
-zirve tespiti:
-  son 5 günün en yüksek fiyatı (FMP historical-price-eod/light ile)
-  veya batch-quote'taki dayHigh değerini izle
-```
-
----
-
-## ADIM 5 — RAPOR ÇIKTI FORMATI
-
-```markdown
-## 3. swing trade durumu
-
-**aktif: X/10 slot | ortalama k/z: +%X.XX | boş slot: X**
-
-### pozisyon tablosu
-
-| id | sembol | giriş | güncel | k/z % | gün | stop | stop mesafe | hedef | hedef mesafe | RSI | durum |
-|----|--------|-------|--------|-------|-----|------|-------------|-------|-------------|-----|-------|
-| 010 | NEM | $118.12 | $124.25 | +5.19% | 12 | $122.50 | $1.75 (1.4%) | $129.93 | $5.68 (4.6%) | XX | 🔴/🟡/🟢 |
-| ... | | | | | | | | | | | | |
-
-### aksiyon gerektiren pozisyonlar
-
-(sadece uyarı olan pozisyonları listele, her biri için somut öneri)
-
-🔴 **acil aksiyon:**
-- **[SEMBOL]** (SWING-XXX) — [durum açıklaması]
-  - **öneri**: [somut aksiyon: kapat / trailing stop güncelle / partial exit]
-  - **gerekçe**: [neden bu aksiyonu öneriyorsun]
-
-🟡 **izlenmesi gereken:**
-- **[SEMBOL]** (SWING-XXX) — [durum]
-  - yarın dikkat: [ne olursa aksiyon alınır]
-
-🟢 **iyi giden:**
-- **[SEMBOL]** (SWING-XXX) — [kısa durum notu]
-
-### trailing stop güncellemeleri
-
-(bugün güncellenen stop'lar varsa listele)
-| sembol | eski stop | yeni stop | sebep |
-|--------|-----------|-----------|-------|
-
-### watchlist'ten fırsat
-
-(data/watchlist.json'dan urgency="high" olanları kontrol et — tüm portföyler + swing)
-- **[SEMBOL]** — hedef giriş: $XX-XX, güncel: $XX.XX, [giriş koşulu sağlandı mı?]
-
-### swing istatistik
-
-| metrik | değer |
-|--------|-------|
-| aktif pozisyon | X/10 |
-| ortalama k/z | +%X.XX |
-| en iyi | SEMBOL +%X.XX |
-| en kötü | SEMBOL -%X.XX |
-| stop tetiklenen (bugün) | X adet |
-| hedefe ulaşan (bugün) | X adet |
-| ortalama tutma süresi | X gün |
-```
-
----
-
-## ADIM 6 — JSON GÜNCELLEME
-
-rapor yazıldıktan sonra `data/swing/active.json` güncelle:
-1. `guncel_fiyat` → FMP'den gelen fiyat
-2. `guncel_kar_zarar_yuzde` → yeniden hesapla
-3. `tutulan_gun` → bugüne göre güncelle
-4. `stop_loss` → trailing stop değiştiyse güncelle
-5. `durum` → güncel durum metni
-6. `son_guncelleme` → datetime.now().isoformat()
-
-eğer stop tetiklendiyse:
-1. pozisyonu `active.json`'dan kaldır
-2. `closed.json`'a taşı (tüm zorunlu alanlarla: cikis_tarihi, cikis_fiyati, sonuc, ders)
-3. `data/transactions.csv`'ye SELL satırı ekle
-4. git commit: `[SWING-ÇIKIŞ] SEMBOL @FİYAT - Stop tetiklendi / Hedefe ulaştı`
-
----
-
-## ADIM 7 — KALİTE KONTROL
-
-- [ ] tüm aktif pozisyonların fiyatı güncellendi mi?
-- [ ] stop mesafe hesaplamaları doğru mu?
-- [ ] trailing stop güncellenmesi gereken pozisyon var mı?
-- [ ] trailing stop sadece yukarı mı hareket etti? (aşağı çekilmediyse OK)
-- [ ] stop tetiklenen pozisyon closed.json'a taşındı mı?
-- [ ] data/watchlist.json'daki high urgency adaylar kontrol edildi mi? (tüm portföyler + swing)
-- [ ] swing istatistik (ortalama, en iyi, en kötü) doğru mu?
-
-
----
----
-
-# BÖLÜM 4: EARNINGS TAKVİMİ (bugün + önümüzdeki 7 gün)
-
-> **amaç**: bugün açıklanacak earnings'leri öne çıkar, dün after-hours sonuçlarını özetle, haftalık takvim
-> **tahmini FMP call**: 5-15 (takvim + portföy hissesi tahminleri)
-> **tahmini websearch**: 2-4
-
----
-
-## ADIM 1 — VERİ TOPLAMA
-
-### 1a. earnings takvimi (1 call)
-
-```python
-from datetime import datetime, timedelta
-
-bugun = datetime.now().strftime("%Y-%m-%d")
-yedi_gun_sonra = (datetime.now() + timedelta(days=7)).strftime("%Y-%m-%d")
-
-earnings = fmp_get("earnings-calendar", {
-    "from": bugun,
-    "to": yedi_gun_sonra
-})
-# dönen veri: date, symbol, eps, epsEstimated, revenue, revenueEstimated, time (bmo/amc)
-```
-
-### 1b. filtreleme
-
-```python
-# sadece piyasa değeri > $2B şirketleri al
-# earnings-calendar'da marketCap alanı yoksa → profile endpoint ile kontrol et
-# ama bu çok call harcar, alternatif:
-
-# YÖNTEİM 1 (verimli): bilinen büyük şirketleri websearch ile teyit et
-# YÖNTEM 2 (kesin): her earnings hissesi için profile çek — ÇOK PAHALI, yapma
-
-# PRATİK ÇÖZÜM: earnings-calendar zaten büyük şirketleri döner
-# elle filtrele: tanınmayan/micro-cap isimleri çıkar
-# mega-cap (FAANG, top 50) ve sektörümüzle ilgili olanları öne çıkar
-```
-
-### 1c. portföy hisselerinin earnings kontrolü (opsiyonel, 0-5 call)
-
-```python
-# portföy + swing hisselerimizin earnings'i bu hafta mı?
-portfoy_semboller = ["SM","KOS","MO","XLE","RGLD","XLI","GILT","BKSY",
-                      "NNDM","PLTR","SHOP","T","VZ","PM","XOM","CVX",
-                      "SCHD","XLV","NEM","UNH","LMT","GE","DUK","DVA"]
-
-# earnings takviminden bu sembolleri filtrele
-portfoy_earnings = [e for e in earnings if e['symbol'] in portfoy_semboller]
-
-# eğer varsa, analyst-estimates ile EPS tahmini çek
-for e in portfoy_earnings:
-    estimates = fmp_get("analyst-estimates", {
-        "symbol": e['symbol'], "period": "quarter", "limit": 1
-    })
-```
-
-### 1d. haftanın önemli earnings'leri için bağlam (2-4 websearch)
-
-```
-# SABAH RAPORU İÇİN KRİTİK:
-websearch → "earnings results after hours yesterday {dünün tarihi}"
-# dün kapanıştan sonra (AMC) açıklanan sonuçlar — bugünün açılışını etkiler
-
-websearch → "earnings today before market open {bugünün tarihi}"
-# bugün piyasa açılmadan (BMO) açıklanacak sonuçlar
-
-websearch → "earnings this week {tarih} most important"
-websearch → "earnings preview week {tarih}"
-```
-
----
-
-## ADIM 2 — ÖNEMLİ EARNINGS SEÇME KRİTERLERİ
-
-tüm earnings listesinden "haftanın en kritik 5-7 earnings"ini seç:
-
-```
-ÖNCELİK SIRASI:
-
-1. PORTFÖY HİSSELERİMİZ (en yüksek öncelik)
-   - bizim portföy veya swing'deki herhangi bir hisse raporluyorsa → mutlaka dahil et
-
-2. SEKTÖR ETKİSİ
-   - enerji sektörü earnings (portföyümüzde enerji ağırlığı yüksek)
-   - savunma sektörü (BKSY, LMT bağlantısı)
-   - telecom (T, VZ bağlantısı)
-   - tech mega-cap (PLTR, SHOP için yön gösterici)
-
-3. PİYASA ETKİSİ
-   - mega-cap earnings (AAPL, MSFT, NVDA, AMZN, GOOGL, META, TSLA)
-   - bu şirketler tüm piyasayı etkiler
-
-4. MACRO BELİRLEYİCİLER
-   - banka earnings → finans sektörü sağlığı
-   - perakende earnings → tüketici harcaması
-   - endüstriyel earnings → ekonomik aktivite
-```
-
----
-
-## ADIM 3 — SÜRPRİZ BEKLENTİSİ DEĞERLENDİRME
-
-`earnings-surprises` endpoint'i Premium'da yok. alternatif yöntem:
-
-```
-SÜRPRİZ OLASILIK DEĞERLENDİRME KRİTERLERİ:
-
-POZİTİF SÜRPRİZ BEKLENTİSİ (beat):
-- hisse son 3 ayda piyasadan iyi performans gösterdi (insider bilgi sızıntısı olabilir)
-- şirket son 4 çeyrekte üst üste beat etti (geçmiş pattern)
-- sektör rüzgarı arkasından esiyor (örn: enerji fiyatları yükseldi → enerji şirketleri beat eder)
-- analist tahminleri son 30 günde yukarı revize edildi
-- yönetim son earnings call'da iyimser guidance verdi
-- websearch'te "whisper number" veya "beat expectations" beklentisi var mı?
-
-NEGATİF SÜRPRİZ BEKLENTİSİ (miss):
-- hisse son 3 ayda piyasadan kötü performans gösterdi
-- sektörde ters rüzgar var (örn: tech harcamaları düşüyor)
-- analist tahminleri son 30 günde aşağı revize edildi
-- makro ortam şirkete olumsuz (faiz ↑ → borçlu şirketler, dolar ↑ → ihracatçılar)
-
-DEĞERLENDİRME ÖLÇEĞİ:
-  "yüksek beat olasılığı"  — 3+ pozitif kriter karşılanıyor
-  "olası beat"             — 1-2 pozitif kriter
-  "belirsiz"               — karışık sinyaller
-  "olası miss"             — 1-2 negatif kriter
-  "yüksek miss riski"      — 3+ negatif kriter
-
-⚠️ BU TAHMİN DEĞİL, OLASI SENARYO: kesinlik iddia etme,
-"bu kriterlere bakarak X olasılığı yüksek görünüyor" şeklinde yaz
-```
-
----
-
-## ADIM 4 — RAPOR ÇIKTI FORMATI
-
-```markdown
 ## 4. earnings takvimi
 
-### ⚡ portföy hisselerimizin earnings'leri
+### dün gece (AMC sonuçları)
 
-(eğer bu hafta portföy/swing hissemiz raporluyorsa)
+| sembol | actual EPS | expected | fark | AH fiyat | etki |
+|--------|------------|----------|------|----------|------|
+| XXX | $X.XX | $X.XX | +XX% | +X% | [portföy/watchlist etkisi] |
 
-| tarih | şirket | ticker | portföy | EPS tahmini | gelir tahmini | zamanlama |
-|-------|--------|--------|---------|-------------|---------------|-----------|
-| XX/XX | [isim] | [SYM] | [hangi portföy] | $X.XX | $X.XXB | BMO/AMC |
+### bugün
 
-**etki analizi**: [bu earnings portföyümüzü nasıl etkiler, ne yapmalıyız]
-**senaryo**: beat → [portföy etkisi] | miss → [portföy etkisi]
+**BMO (09:00 tr önce)**: [semboller]
+**AMC (00:00-02:00 tr gece)**: [semboller]
 
-(eğer bu hafta yoksa: "bu hafta portföy hisselerimizden raporlayan yok ✅")
+**portföy etkisi**: [hangi pozisyonlar etkilenecek]
 
----
+### bu hafta özet
 
-### 🔔 dün gece açıklanan sonuçlar (after-hours)
-
-(dün AMC açıklananlar — bugünün açılışını doğrudan etkiler)
-
-| şirket | ticker | EPS gerçekleşen | EPS beklenti | sürpriz | after-hours hareket |
-|--------|--------|-----------------|--------------|---------|---------------------|
-| [isim] | [SYM] | $X.XX | $X.XX | beat/miss | ▲/▼ %X.XX |
-
-**bugüne etkisi**: [bu sonuçlar bugünün seansında hangi sektörleri/hisseleri etkiler?]
-
-(websearch'ten gelir, FMP'de after-hours sonuçlar gecikebilir)
+[Mon-Fri critical earnings]
 
 ---
 
-### bugün açıklanacak earnings (BMO — piyasa açılışı öncesi)
+## 5. sonuç
 
-| şirket | ticker | piyasa değeri | EPS tahmini | gelir tahmini | sektör |
-|--------|--------|---------------|-------------|---------------|--------|
+### özet
 
-⚠️ **dikkat**: BMO sonuçları TR 15:00-17:00 arası açıklanır, seansı doğrudan etkiler
+[3-4 cümle - genel durum, fırsatlar, riskler]
 
----
+### bugünün aksiyonları (17:30 tr açılış → 00:00 tr kapanış)
 
-### bugün kapanış sonrası (AMC — yarını etkiler)
+**hemen yapılacak (seans açılışında)**:
+1. [aksiyon - tetikleyici - hedef]
 
-| şirket | ticker | piyasa değeri | EPS tahmini | gelir tahmini | sektör |
-|--------|--------|---------------|-------------|---------------|--------|
+**izlenecek**:
+2. [koşul] → [aksiyon]
 
----
+**pasif (alarm kur)**:
+3. [fiyat seviyesi] → [değerlendir]
 
-### earnings takvimi (önümüzdeki 7 gün, piyasa değeri > $2B)
+### sonraki güncelleme
 
-#### [gün adı], [tarih]
-
-**BMO:**
-| şirket | ticker | sektör |
-
-**AMC:**
-| şirket | ticker | sektör |
-
-(her gün için ayrı tablo, sadece önemli şirketler)
+[cuma ise] → hafta sonu özet raporu
+[değilse] → yarın kapanış raporu
 
 ---
 
-### haftanın en kritik 5-7 earnings
+*finzora ai ile hazırlanmıştır | veri kaynağı: fmp api*
+```
 
-1. **[ŞİRKET] ([TICKER])** — [tarih] [BMO/AMC]
-   - **neden önemli**: [portföy bağlantısı veya piyasa etkisi]
-   - **beklenti**: [EPS tahmini, gelir tahmini]
-   - **sürpriz değerlendirmesi**: [yüksek beat olasılığı / belirsiz / miss riski]
-   - **dikkat**: [bu earningsten sonra ne izlemeliyiz]
+### git push
 
-2. **[ŞİRKET] ([TICKER])** — ...
+```bash
+git add reports/daily/
+git commit -m "[GÜNLÜK RAPOR] $(date +%d) $(date +%B | tr 'A-Z' 'a-z') YYYY - [kısa özet]"
+git push
+```
 
-...
+→ BİTTİ ✅
 
-### portföy için earnings riski
+---
 
-[1-3 cümle: bu haftaki earnings portföyümüzü nasıl etkiler?
-bugün BMO açıklanacak sonuçlar açılışı nasıl etkileyebilir?
-earnings öncesi yeni swing girişi riskli olabilir.]
+## ÖNEMLİ NOTLAR
+
+### fiyat kaynaklarını karıştırma
+
+- **portföy JSON'ları**: FMP'den çekilmiş kapanış fiyatları (faz 1'de)
+- **rapor yazdığında**: JSON'dan oku, FMP'yi TEKRAR ÇEKME
+- tek istisna: futures, haberler (websearch)
+
+### stop/hedef kontrolü
+
+```python
+# swing için
+if guncel_fiyat <= stop_loss:
+    durum = "🔴 STOP TETİKLENDİ"
+elif guncel_fiyat >= hedef_fiyat:
+    durum = "🟢 HEDEF TUTTURULDU"
+elif guncel_fiyat >= hedef_fiyat * 0.95:
+    durum = "🟡 HEDEFE YAKIN"
+```
+
+### RSI/SMA göstergeleri
+
+```python
+if rsi < 30: rsi_durum = "oversold ⚠️"
+elif rsi > 70: rsi_durum = "overbought ⚠️"
+else: rsi_durum = "normal"
+
+sma_check = {
+    20: "✅" if guncel > sma20 else "❌",
+    50: "✅" if guncel > sma50 else "❌",
+    200: "✅" if guncel > sma200 else "❌"
+}
+```
+
+### dosya doğrulama (faz 1 sonrası)
+
+```python
+# her portföy için
+assert data['toplam_deger'] > 0
+assert abs(sum(p['agirlik_yuzde'] for p in data['pozisyonlar']) + (data['nakit']['miktar']/data['toplam_deger']*100) - 100) < 0.1
+
+# swing için
+assert len(data['aktif_pozisyonlar']) <= 10
+assert all(p['stop_loss'] < p['giris_fiyati'] < p['hedef_fiyat'] for p in data['aktif_pozisyonlar'])
 ```
 
 ---
 
-## ADIM 5 — KALİTE KONTROL
+## API BÜTÇE
 
-- [ ] earnings-calendar verisi bu haftanın tarihlerini kapsıyor mu?
-- [ ] portföy hisselerimizin earnings'i kontrol edildi mi?
-- [ ] mega-cap earnings'ler listede mi? (FAANG varsa kaçırılmamalı)
-- [ ] sektörümüzle ilgili earnings'ler vurgulandı mı?
-- [ ] sürpriz değerlendirmesi somut kriterlere dayalı mı? (subjektif tahmin değil)
-- [ ] BMO/AMC ayrımı doğru mu?
-- [ ] "portföy için earnings riski" bölümü spesifik mi?
+| faz | endpoint | call sayısı |
+|-----|----------|-------------|
+| 1 | batch-quote | 1 |
+| 1 | RSI | ~15 |
+| 1 | SMA (20,50,200) | ~45 |
+| **toplam faz 1** | | **~61** |
+| 2 | websearch | 5-7 |
+| **günlük toplam** | | **~20-30 FMP + 5-7 web** |
 
-
----
----
-
-# BÖLÜM 5: SONUÇ VE AKSİYON PLANI (bugünün seansı için)
-
-> **amaç**: tüm bölümleri sentezle, bugünün seansındaki öncelikleri belirle
-> **tahmini FMP call**: 0 (tüm veri önceki bölümlerden geliyor)
-> **tahmini websearch**: 0
+**oran**: 30/2500 = %1.2 günlük limit
 
 ---
 
-## ADIM 1 — GÜNÜN ÖZETİ
+## HATA AYIKLAMA
 
-önceki 5 bölümden çıkan bilgileri sentezle:
-
-```
-TOPLA:
-- bölüm 1'den: risk duyarlılığı, SPY trend, en önemli haber
-- bölüm 2'den: portföy toplam değer/k/z, en iyi/en kötü hisse, uyarılar
-- bölüm 3'ten: swing aksiyon gerektiren pozisyonlar, stop durumları
-- bölüm 4'ten: yarın/bu hafta önemli earnings
-```
-
----
-
-## ADIM 2 — RAPOR ÇIKTI FORMATI
-
-```markdown
-## 5. sonuç ve aksiyon planı
-
-### günün özeti
-
-**tarih**: [gün adı], [bugünün tarihi] (seans öncesi rapor)
-**toplam portföy** (dünün kapanışı): $XXX,XXX (+$XX,XXX / +%X.XX)
-**dünkü değişim**: [+/-$X,XXX] | SPY dün: [+/-%X.XX]
-**risk ortamı**: [Risk-On 🟢 / Risk-Off 🔴 / Nötr ⚪]
-**futures**: S&P [+/-%X.XX] | NASDAQ [+/-%X.XX] → [pozitif/negatif/düz açılış beklentisi]
-
-**bir cümlede durum**: [dünü + bugünün beklentisini özetleyen tek cümle.
-örnek: "dün tech satışı agresif portföyü vurdu ama futures pozitif,
-bugün toparlanma şansı var. temettü portföy +%16.6 ile lider."]
-
-### portföy skor kartı
-
-| portföy | değer | k/z % | günlük | trend | not |
-|---------|-------|-------|--------|-------|-----|
-| dengeli | $XXX,XXX | +%X.XX | ▲/▼ | [iyileşiyor/kötüleşiyor/stabil] | [1 kelime] |
-| agresif | $XXX,XXX | -%X.XX | ▲/▼ | | |
-| temettü | $XXX,XXX | +%XX.XX | ▲/▼ | | 🏆 |
-| rotasyon | $XXX,XXX | +%X.XX | ▲/▼ | | |
-| swing | X/10 aktif | +%X.XX ort | | | |
-
----
-
-### 🔴 acil aksiyonlar (bugün/yarın yapılması gereken)
-
-(bu bölüm boş olabilir — her gün acil aksiyon olmak zorunda değil)
-
-1. **[AKSİYON]** — [SEMBOL] ([portföy/swing])
-   - durum: [neden acil]
-   - öneri: [somut aksiyon + fiyat seviyesi]
-   - zamanlama: [yarın açılışta / kapanışa kadar / bu hafta]
-
-2. ...
-
-### 🟡 izlenmesi gerekenler (bu hafta)
-
-1. **[SEMBOL]** — [kısa açıklama]
-   - tetikleyici: [ne olursa aksiyon alınır]
-
-2. ...
-
-### 🟢 fırsatlar
-
-1. **[SEMBOL]** — [kısa açıklama]
-   - koşul: [hangi fiyat/RSI/olay gerçekleşirse giriş düşünülür]
-   - hedef portföy: [agresif / swing / dengeli]
-
----
-
-### bugünün seansı için plan
-
-**pre-market** (TR 16:00-17:30):
-- [ ] [kontrol 1: örn. BMO earnings sonuçları açıklandı mı?]
-- [ ] [kontrol 2: örn. futures yönü rapordakiyle uyuşuyor mu?]
-- [ ] [kontrol 3: örn. NEM pre-market fiyatı, stop seviyesine yakın mı?]
-
-**seans açılışı** (TR 17:30 — ilk 30 dakika):
-- [ ] [aksiyon 1: örn. açılış gap varsa panik satış YAPMA, 15 dk bekle]
-- [ ] [aksiyon 2: örn. NEM stop $122.50 tetiklenirse kapat]
-- [ ] [aksiyon 3: örn. SHOP $115 altına düşerse stop değerlendir]
-
-**seans ortası** (TR 19:00-22:00):
-- [ ] [aksiyon 1: örn. merkezi watchlist'teki SEMBOL hedefe yaklaştı mı?]
-- [ ] [aksiyon 2: varsa yeni giriş planı — limit emir fiyatı: $XX.XX]
-
-**kapanışa doğru** (TR 23:00-00:00):
-- [ ] [bekleyen emir: örn. kapanışta kısmi kar al SEMBOL %50]
-- [ ] [not: bugün AMC earnings açıklanacak hisseler, yarını etkiler]
-
-**kapanış sonrası**:
-- [ ] fiyat güncellemesi (JSON + git push)
-- [ ] [varsa: AMC earnings sonuçlarını kontrol et]
-
----
-
-### haftalık bakış (sadece cuma raporu)
-
-(pazartesi-perşembe raporlarında bu bölüm olmaz, sadece cuma günü ekle)
-
-- haftanın en iyi hissesi: [SEMBOL] +%XX
-- haftanın en kötü hissesi: [SEMBOL] -%XX
-- haftalık toplam portföy değişimi: +/-$XX,XXX (+/-%X.XX)
-- haftanın dersi: [1 cümle]
-- gelecek hafta dikkat: [earnings, makro olay, teknik seviye]
-```
-
----
-
-## ADIM 3 — AKSİYON ÖNCELİKLENDİRME KURALLARI
-
-```
-ÖNCELİK SIRASI (yukarıdan aşağıya):
-
-1. STOP TETİKLENEN POZİSYON      → hemen kapat, tartışma yok
-2. HEDEFE ULAŞAN POZİSYON        → partial exit planını uygula
-3. STOP'A ÇOK YAKIN (<%1)        → yarın açılışta karar ver
-4. SÜRE AŞIMI + ZARAR            → tezi değerlendir, çıkış düşün
-5. EARNINGS ÖNCESİ POZİSYON      → hedge veya küçült
-6. RSI AŞIRI ALIM + BÜYÜK KAR    → kısmi kar al
-7. RSI AŞIRI SATIM + GÜÇLÜ TREND → fırsat, giriş planla
-8. WATCHLIST GİRİŞ KOŞULU SAĞLANDI → giriş planla
-9. REBALANCE İHTİYACI             → hesapla, planla
-10. YENİ ARAŞTIRMA                → not al, acele etme
-
-her aksiyon önerisinde:
-- somut fiyat seviyesi ver (sadece "izle" deme)
-- hangi portföy/swing olduğunu belirt
-- risk/ödül oranını hatırlat
-```
-
----
-
-## ADIM 4 — RAPOR SONU
-
-```markdown
----
-
-> validation: [✅ tüm kontroller geçti / ⚠️ X sorun düzeltildi — detay yukarıda]
-> günlük rapor sonu | finzora ai | [bugünün tarihi] [saat]
-> NYSE açılış: bugün 17:30 (TR) | kapanış: 00:00 (TR)
-> sonraki: seans içi aksiyon (SESSION_ACTION_PROMPT) → TR 18:00+
-> sonraki rapor: yarın ~14:00 TR
-```
-
----
-
-## ADIM 5 — KALİTE KONTROL
-
-- [ ] günün özeti tüm bölümlerden bilgi içeriyor mu?
-- [ ] futures bilgisi eklendi mi? (sabah raporu için kritik)
-- [ ] "dünün kapanışı" ve "bugünün beklentisi" net ayrılmış mı?
-- [ ] acil aksiyonlar gerçekten acil mi? (her gün acil aksiyon olmak zorunda değil)
-- [ ] fırsatlar somut koşula bağlı mı? ("güzel hisse" değil, "$XX altına düşerse")
-- [ ] bugünün planı seans saatlerine göre bölünmüş mü? (pre-market / açılış / orta / kapanış)
-- [ ] aksiyon önerilerinde fiyat seviyesi var mı?
-- [ ] cuma günü haftalık bakış eklendi mi?
-- [ ] rapor sonu satırı var mı?
-- [ ] validation özeti eklendi mi? (docs/SELF_VALIDATION.md kurallarına göre)
-
-### self-validation son kontrol (KATMAN 2b + 3d)
-
-raporu tamamlamadan önce şu soruları sor:
-
-```
-METIN-VERİ UYUMU (katman 2b):
-- rapordaki her yorum bir veriye mi dayanıyor?
-- "güçlü/zayıf/düştü/yükseldi" ifadeleri rakamlarla tutarlı mı?
-- çelişkili ifadeler var mı? (bir yerde "risk-off" başka yerde "agresif al")
-
-BIAS KONTROLÜ (katman 3d):
-- sadece "al" destekleyen verileri mi topladım?
-- zarar eden pozisyonlara fazla hoşgörülü müyüm?
-- dünkü büyük harekete aşırı tepki mi veriyorum?
-- "izle" deyip somut tetikleyici belirtmediğim yer var mı?
-```
+**"sistem durdu"** → fazları ayrı çalıştır, tek seferde yapma
+**"fiyat güncel değil"** → faz 1'i tekrar çalıştır
+**"JSON tutarsız"** → doğrulama hatası, manuel kontrol et
+**"rapor yarım kaldı"** → faz 2'yi tek başına çalıştır (faz 1 verileri kullanır)
