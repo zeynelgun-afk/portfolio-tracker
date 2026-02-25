@@ -1,0 +1,2204 @@
+{
+  "user": [
+    {
+      "id": "cmlapv0ix0392ui3rwturxs2o",
+      "name": "Aydın G.",
+      "email": "a.gulludag@gmail.com",
+      "emailVerified": null,
+      "image": "https://lh3.googleusercontent.com/a/ACg8ocLZzcx-4kgmQ_zeDBvaO22gYFanKJWtzMRxLaKRDU_Fnb8ItA=s96-c",
+      "plan": "premium",
+      "remainingQueries": 999974,
+      "totalQueriesUsed": 26,
+      "createdAt": "2026-02-06T10:02:18.345Z",
+      "updatedAt": "2026-02-23T11:21:48.611Z",
+      "maxFavorites": 10,
+      "bio": null,
+      "isAdmin": false,
+      "lastResetDate": "2026-02-06T10:02:18.345Z",
+      "monthlyQueryLimit": 999999,
+      "password": null,
+      "role": "user",
+      "hasSeenOnboarding": true
+    },
+    {
+      "id": "cmlwntdxs0175jzdvghaid2km",
+      "name": "VetHek Murat",
+      "email": "yyuvet@gmail.com",
+      "emailVerified": null,
+      "image": "https://lh3.googleusercontent.com/a/ACg8ocKQNYgQywqsigDbwem-pQeLSYBvWyr5QjBzO-8YqDqXALdhaoe4lA=s96-c",
+      "plan": "free",
+      "remainingQueries": 23,
+      "totalQueriesUsed": 2,
+      "createdAt": "2026-02-21T18:35:59.056Z",
+      "updatedAt": "2026-02-21T18:40:20.443Z",
+      "maxFavorites": 10,
+      "bio": null,
+      "isAdmin": false,
+      "lastResetDate": "2026-02-21T18:35:59.056Z",
+      "monthlyQueryLimit": 25,
+      "password": null,
+      "role": "user",
+      "hasSeenOnboarding": true
+    },
+    {
+      "id": "cmlxu32ih011vqipqmct4xgva",
+      "name": "Ebubekir Semerci ",
+      "email": "ebubekirsemerci@gmail.com",
+      "emailVerified": null,
+      "image": null,
+      "plan": "free",
+      "remainingQueries": 25,
+      "totalQueriesUsed": 0,
+      "createdAt": "2026-02-22T14:19:14.682Z",
+      "updatedAt": "2026-02-22T14:19:31.108Z",
+      "maxFavorites": 10,
+      "bio": null,
+      "isAdmin": false,
+      "lastResetDate": "2026-02-22T14:19:14.682Z",
+      "monthlyQueryLimit": 25,
+      "password": "$2b$10$U7I/LdgZl3tfo14DZB/Wse856iDkj9gnYo1xPDu0521i0UIvkutVq",
+      "role": "user",
+      "hasSeenOnboarding": true
+    },
+    {
+      "id": "cmlxv6dj90490qipqm8hm5zeo",
+      "name": "deneme",
+      "email": "deneme@gmail.com",
+      "emailVerified": null,
+      "image": null,
+      "plan": "free",
+      "remainingQueries": 25,
+      "totalQueriesUsed": 0,
+      "createdAt": "2026-02-22T14:49:48.549Z",
+      "updatedAt": "2026-02-22T14:50:27.295Z",
+      "maxFavorites": 10,
+      "bio": null,
+      "isAdmin": false,
+      "lastResetDate": "2026-02-22T14:49:48.549Z",
+      "monthlyQueryLimit": 25,
+      "password": "$2b$10$jCS5.xOJQ16ZHvnzDRHwFuskXufmx11rdv.le7HWMYCn5Odc4/.le",
+      "role": "user",
+      "hasSeenOnboarding": true
+    },
+    {
+      "id": "cmly0j7pf07zsqipq7cffv004",
+      "name": "Asaf Gun",
+      "email": "asafgun1903@gmail.com",
+      "emailVerified": null,
+      "image": "https://lh3.googleusercontent.com/a/ACg8ocKNfqoASstO2lpOIGYdalQCh7ngH7F47fvDkIrc4zAqLrM5mw=s96-c",
+      "plan": "free",
+      "remainingQueries": 25,
+      "totalQueriesUsed": 0,
+      "createdAt": "2026-02-22T17:19:45.604Z",
+      "updatedAt": "2026-02-22T17:20:04.965Z",
+      "maxFavorites": 10,
+      "bio": null,
+      "isAdmin": false,
+      "lastResetDate": "2026-02-22T17:19:45.604Z",
+      "monthlyQueryLimit": 25,
+      "password": null,
+      "role": "user",
+      "hasSeenOnboarding": true
+    },
+    {
+      "id": "cmly7y3go0cwl241t87w7o4io",
+      "name": "Yasin Aktürk",
+      "email": "akturk.yasin@gmail.com",
+      "emailVerified": null,
+      "image": null,
+      "plan": "free",
+      "remainingQueries": 25,
+      "totalQueriesUsed": 0,
+      "createdAt": "2026-02-22T20:47:17.256Z",
+      "updatedAt": "2026-02-22T20:47:17.256Z",
+      "maxFavorites": 10,
+      "bio": null,
+      "isAdmin": false,
+      "lastResetDate": "2026-02-22T20:47:17.256Z",
+      "monthlyQueryLimit": 25,
+      "password": "$2b$10$wKhxGb.VN7KpPg.l.D8S3eU4aSlL3Q/Aa6tWpvKcnuyF5MsGYjfv.",
+      "role": "user",
+      "hasSeenOnboarding": false
+    },
+    {
+      "id": "cmlyqsztk0d0o241tdrucrlha",
+      "name": "Beyazıt Gün",
+      "email": "m.beyazgun1@gmail.com",
+      "emailVerified": null,
+      "image": "https://lh3.googleusercontent.com/a/ACg8ocILF8tFDkN8EGJUSTYY4kG0e4b3OWg9CcfjI-4tOevZMOaXnMqp=s96-c",
+      "plan": "free",
+      "remainingQueries": 25,
+      "totalQueriesUsed": 0,
+      "createdAt": "2026-02-23T05:35:11.961Z",
+      "updatedAt": "2026-02-23T05:35:46.708Z",
+      "maxFavorites": 10,
+      "bio": null,
+      "isAdmin": false,
+      "lastResetDate": "2026-02-23T05:35:11.961Z",
+      "monthlyQueryLimit": 25,
+      "password": null,
+      "role": "user",
+      "hasSeenOnboarding": true
+    },
+    {
+      "id": "cmls8m3mq0008kjpqgdvee7uh",
+      "name": "test",
+      "email": "test@gmail.com",
+      "emailVerified": null,
+      "image": null,
+      "plan": "free",
+      "remainingQueries": 25,
+      "totalQueriesUsed": 0,
+      "createdAt": "2026-02-18T16:19:20.162Z",
+      "updatedAt": "2026-02-18T16:21:53.344Z",
+      "maxFavorites": 10,
+      "bio": null,
+      "isAdmin": false,
+      "lastResetDate": "2026-02-18T16:19:20.162Z",
+      "monthlyQueryLimit": 25,
+      "password": "$2b$10$Xdo1Li12zTqD1cc4sBVYGOZZEh12klRAWV4yToKaKBgBbMgVs8U7W",
+      "role": "user",
+      "hasSeenOnboarding": true
+    },
+    {
+      "id": "cmlysacoh0d4j241ty5nrm5fo",
+      "name": "Koray gun",
+      "email": "koraygundogdu@hotmail.com",
+      "emailVerified": null,
+      "image": null,
+      "plan": "free",
+      "remainingQueries": 24,
+      "totalQueriesUsed": 1,
+      "createdAt": "2026-02-23T06:16:41.393Z",
+      "updatedAt": "2026-02-23T06:24:34.965Z",
+      "maxFavorites": 10,
+      "bio": null,
+      "isAdmin": false,
+      "lastResetDate": "2026-02-23T06:16:41.393Z",
+      "monthlyQueryLimit": 25,
+      "password": "$2b$10$nlMf8WbDVn8yislbJGwmjuYm3mxOdL8oDG1jjLxhfM1g9xabscdjW",
+      "role": "user",
+      "hasSeenOnboarding": true
+    },
+    {
+      "id": "cml9a330d00004pvrh5vzuoyq",
+      "name": "Zeynel Abidin GÜN",
+      "email": "zeynelgun@gmail.com",
+      "emailVerified": null,
+      "image": "https://lh3.googleusercontent.com/a/ACg8ocKxJnIXR-KYEwWm9YcCpLR2SgK9Xbc7fcs7VVTr9dI5FKgcF03GqQ=s96-c",
+      "plan": "premium",
+      "remainingQueries": 999988,
+      "totalQueriesUsed": 11,
+      "createdAt": "2026-02-05T09:52:54.781Z",
+      "updatedAt": "2026-02-23T10:25:42.610Z",
+      "maxFavorites": 10,
+      "bio": null,
+      "isAdmin": true,
+      "lastResetDate": "2026-02-05T09:52:54.781Z",
+      "monthlyQueryLimit": 999999,
+      "password": null,
+      "role": "admin",
+      "hasSeenOnboarding": true
+    }
+  ],
+  "account": [
+    {
+      "id": "cml9a330s00074pvrlcr68tp4",
+      "userId": "cml9a330d00004pvrh5vzuoyq",
+      "type": "oauth",
+      "provider": "google",
+      "providerAccountId": "117654910278788297164",
+      "refresh_token": null,
+      "access_token": "ya29.A0AUMWg_J_VAP_hNKUWSCkluYubZ6LcYq5sJVTpNAxTCSZB224QdK-G-jEqousZcwwjg7tgfSOz1rna6V3gl-1P4c_HE7f4jfSmhx2Su9P-mnu1XSaDcsEtNipMRBeokPK9vDDbJ4AD2DZY0xefnqwB2NgdZRjXzscqo-OXbJ7YI58CEw6-a_BVPnpYJdue3pq_XSTv5o1o3c0mY0noKHpBJg4u5JqFHQvKPIUP1zIxi5it0pIR5_ZcI_F6wHaZpQgMMcM8Su9sbVEm8oK8TO8NseIpf25KBEaCgYKAeISARISFQHGX2MigmM22JksYj-4K27wkSF2cQ0294",
+      "expires_at": 1770288773,
+      "token_type": "Bearer",
+      "scope": "openid https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile",
+      "id_token": "eyJhbGciOiJSUzI1NiIsImtpZCI6Ijg2MzBhNzFiZDZlYzFjNjEyNTdhMjdmZjJlZmQ5MTg3MmVjYWIxZjYiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiIxMDA5Njc1MzU3NjE4LW5xMHIwZ2Q5c2N1amRkZGcxM2c2YnFoajV2c2I5Y2trLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiMTAwOTY3NTM1NzYxOC1ucTByMGdkOXNjdWpkZGRnMTNnNmJxaGo1dnNiOWNray5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsInN1YiI6IjExNzY1NDkxMDI3ODc4ODI5NzE2NCIsImVtYWlsIjoiemV5bmVsZ3VuQGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJhdF9oYXNoIjoiSGRXSU1WUmVVQWpPVHNuNVVPRG1hdyIsIm5hbWUiOiJaZXluZWwgQWJpZGluIEfDnE4iLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EvQUNnOG9jS3hKbklYUi1LWUV3V205WWNDcExSMlNnSzlYYmM3ZmNzN1ZWVHI5ZEk1RktnY0YwM0dxUT1zOTYtYyIsImdpdmVuX25hbWUiOiJaZXluZWwgQWJpZGluIiwiZmFtaWx5X25hbWUiOiJHw5xOIiwiaWF0IjoxNzcwMjg1MTc0LCJleHAiOjE3NzAyODg3NzR9.cmLvLHb7VbB1av0_0Q0XHnZqRMPZ0yi5vXXIBOQnWx6J8zkkJM0XwB8IhYTzvMldANCl6jDEuiI-xjnmIrqNlL3y75ZrfhZ6Kuiw6uGC3eSnIP3JOnpk9StO01BSab0kv4GWRY-8heVkuxJHvfKWKQ6QuQsB6RhEStXhS8RG5UZmVt7d1ym3HA-Wns-8uwQD5KXS4Px6Npg3j-piBFZ88OVdwjibaXnQl1md9CKgq6ATD_XLn30wnj58fSpKDHiOZq_UjmjkjsPep_jnCZo2hA8Mie0YOiBQB-xDy3o4KekITcWi-bXJzzcwcEdGqJCLdOrchXcPJ_cR83CtU9uE4A",
+      "session_state": null
+    },
+    {
+      "id": "cmlapv0jc0399ui3rvngx2wzs",
+      "userId": "cmlapv0ix0392ui3rwturxs2o",
+      "type": "oauth",
+      "provider": "google",
+      "providerAccountId": "101262342387848509549",
+      "refresh_token": null,
+      "access_token": "ya29.A0AUMWg_KqowOWhTlJrRsO0rpZBLb_YEermfMVTX4Z7f6S_MokveIfeDUUZQjIsp-oUkeWJ71rE8GNUX5DJATnnboPDIzx-NkkVNtbv1GVB0ipJ8J7iPhxp-X8hgofsRD2OpMG3MyIKYd3rixqFzJTavgJV2Hu1rFDB2cOb-60_E17NVDY0Hx9G17SkIejMb0GLnf7uRnC0UzOFsiwNwDAALEF6NdXCdkGSaa-LGKfwDj22edCjxej3Rw6TBtsJlmL-6Evi4coicHkVfZq6ejK6p8HRk48aCgYKAeESARASFQHGX2MiMacCNLPFj2yQGPhrxGRqOw0291",
+      "expires_at": 1770375736,
+      "token_type": "Bearer",
+      "scope": "openid https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile",
+      "id_token": "eyJhbGciOiJSUzI1NiIsImtpZCI6ImMyN2JhNDBiMDk1MjlhZDRmMTY4MjJjZTgzMTY3YzFiYzM5MTAxMjIiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiIxMDA5Njc1MzU3NjE4LW5xMHIwZ2Q5c2N1amRkZGcxM2c2YnFoajV2c2I5Y2trLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiMTAwOTY3NTM1NzYxOC1ucTByMGdkOXNjdWpkZGRnMTNnNmJxaGo1dnNiOWNray5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsInN1YiI6IjEwMTI2MjM0MjM4Nzg0ODUwOTU0OSIsImVtYWlsIjoiYS5ndWxsdWRhZ0BnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6ImlfMWF2YUdDRHBRbDVnTUJwRkh5UHciLCJuYW1lIjoiQXlkxLFuIEcuIiwicGljdHVyZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hL0FDZzhvY0xaemN4LTRrZ21RX3plREJ2YU8yMmdZRmFuS0pXdHpNUnhMYUtSRFVfRm5iOEl0QT1zOTYtYyIsImdpdmVuX25hbWUiOiJBeWTEsW4gRy4iLCJpYXQiOjE3NzAzNzIxMzgsImV4cCI6MTc3MDM3NTczOH0.RiUBTSnemTWgYuerDRGPtyBQIm6dn2Ekw9oetop19ku7XWAxb0Eunkejwk7pNvWCORcI8WyTekjZFm59zBlv-MRpz1iI1ezh7MDIICZ3VbaHBXSZLaXMZNGxRV3KMjGkraCgV7RRgE7o1JMze6WCAAes-GCIjQmUdSQz5KUmpZonRlLmQPDAnznb0crpQiCvV7sZ3T_bpcNXThrCKIXQNdJ9bWY4EbqBl2pdzbBIAjSj1TXVdWcG-r3Zp-xJleeTmEg54_R0tenYCMX35EkH0qbMWr9hiZZIDTTFJbjv0ofejFDQVIdyHcROvTcvciBpjYOqqrDxmvlEPTw99HMzBQ",
+      "session_state": null
+    },
+    {
+      "id": "cmlwntdz2017cjzdvgu9uca7z",
+      "userId": "cmlwntdxs0175jzdvghaid2km",
+      "type": "oauth",
+      "provider": "google",
+      "providerAccountId": "116494794524458317645",
+      "refresh_token": null,
+      "access_token": "ya29.a0ATkoCc5lyfVLWb4e1BA0EsjSWQ6S3kNS0jJOVdi1Of2FOebLXEr4SCNW75CDaKYrdl2Ng32IXGRQ0KOqmxRa6bxoACu0M21UyRoOqKH5k8tCHt4dBlVQIPvUCYGTdUXGduS2hd3eS8b0nsJ5V4G7LXSh34pWvq5MYU71VIarIKm0nmV_1jST9YKBVUjxwmFwa-6hPVwaCgYKAS4SARQSFQHGX2MitoSDfClpbGfD-2Dt98fytg0206",
+      "expires_at": 1771702558,
+      "token_type": "Bearer",
+      "scope": "openid https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile",
+      "id_token": "eyJhbGciOiJSUzI1NiIsImtpZCI6ImQyNzU0MDdjMzllODAzNmFhNzM1ZWIyYzE3YzU0ODc2MWNlZDZhNjQiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiIxMDA5Njc1MzU3NjE4LW5xMHIwZ2Q5c2N1amRkZGcxM2c2YnFoajV2c2I5Y2trLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiMTAwOTY3NTM1NzYxOC1ucTByMGdkOXNjdWpkZGRnMTNnNmJxaGo1dnNiOWNray5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsInN1YiI6IjExNjQ5NDc5NDUyNDQ1ODMxNzY0NSIsImVtYWlsIjoieXl1dmV0QGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJhdF9oYXNoIjoiRHFmSUxkOG9QVWl3aGhubURNVUxXQSIsIm5hbWUiOiJWZXRIZWsgTXVyYXQiLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EvQUNnOG9jS1FOWWdReXdxc2lnRGJ3ZW0tcFFlTFNZQnZXeXI1UWpCek8tOFlxRHFYQUxkaGFvZTRsQT1zOTYtYyIsImdpdmVuX25hbWUiOiJWZXRIZWsiLCJmYW1pbHlfbmFtZSI6Ik11cmF0IiwiaWF0IjoxNzcxNjk4OTU4LCJleHAiOjE3NzE3MDI1NTh9.VzvljQ6QNnnLv6wyA_F7MSeoL4fa-x14EmD8r9lRB8KHyIlOoTy-5eNoOKujFkcQ-1-geTsYgrR7HcP75v4Tue4Occ-q41pYVBTvWKEajHpFCAsnnIqc3RQ46r3ALW0bVQ-PMS19OyOBhJBgDoeC91_D5AtxZS2FEJPXuR7HLNBS7KeewOJCuD8JavXGBFhGQS_oUOUOQZPn6N1B1qcQ-K9sHlw1NtoVidSGzErSEx0QK22p68iAFlOh9metQEPSb_p3K39b-8qw93OZXmjZOSfa8m9RNkke6c1MwiIp8upu2Nxs6Pb0PTMLC6oX6al5GdOYGgjoohLhtpR0hld5AA",
+      "session_state": null
+    },
+    {
+      "id": "cmly0j7pu07zzqipq79qrjrta",
+      "userId": "cmly0j7pf07zsqipq7cffv004",
+      "type": "oauth",
+      "provider": "google",
+      "providerAccountId": "108778483307739360782",
+      "refresh_token": null,
+      "access_token": "ya29.A0ATkoCc4eFq-uBGYWfVMG6uqu84lTxC7EnGtZ_LAweXiW9WR6t57Gxd0Z_CdTvWhX0PggUgX6-ZnnYwLiH1BydKv9g3AC7qxwDURNMTY3QLPDphZ1LHn2yQ8xz7GPYP39WFzt6qz0kyOincgub7Zw8J1orUxoxkKwxitE9ZCiC4uCjL7YD19SM0GBHFSFD9o76TYnTh-cqdfjD2CwRsALiv0cmmiSK9gqbjtyMY4D2Y3rx4DqtepDTaVKtJBo8fFf-RmO1e6zLsPT347r9HQ6z8x7qa5waCgYKARoSARcSFQHGX2Mim_uOuq4K6PbXuZPSiYpZTA0291",
+      "expires_at": 1771784384,
+      "token_type": "Bearer",
+      "scope": "openid https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email",
+      "id_token": "eyJhbGciOiJSUzI1NiIsImtpZCI6ImQyNzU0MDdjMzllODAzNmFhNzM1ZWIyYzE3YzU0ODc2MWNlZDZhNjQiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiIxMDA5Njc1MzU3NjE4LW5xMHIwZ2Q5c2N1amRkZGcxM2c2YnFoajV2c2I5Y2trLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiMTAwOTY3NTM1NzYxOC1ucTByMGdkOXNjdWpkZGRnMTNnNmJxaGo1dnNiOWNray5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsInN1YiI6IjEwODc3ODQ4MzMwNzczOTM2MDc4MiIsImVtYWlsIjoiYXNhZmd1bjE5MDNAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImF0X2hhc2giOiJzQ0E0VzFhNGlMSHB0dWdvYTN1WWNRIiwibmFtZSI6IkFzYWYgR3VuIiwicGljdHVyZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hL0FDZzhvY0tOZnFvQVNzdE8ybHBPSUdZZGFsUUNoN25nSDdGNDdmdkRrSXJjNHpBcUxyTTVtdz1zOTYtYyIsImdpdmVuX25hbWUiOiJBc2FmIiwiZmFtaWx5X25hbWUiOiJHdW4iLCJpYXQiOjE3NzE3ODA3ODUsImV4cCI6MTc3MTc4NDM4NX0.RtJTkfsVFuCWUVT1kxN0c4kS2WCsIjNW_xjDmfTP_2ygTp_oDz9RsLQ2kQr6MveooGlUpjLHJQAn00W_shIWzcbcj5aUnll6L1kP7fnOxzTaew7K9nroiLtk_9QkufMUcMbA89cGeYEWYcQcO390M8nMmC9wXIYPfuQ_qhNs45NUbK6EW_1hThGONluXhIralTYCyeAjZDE8XroThYC8g2-9NMfemyXWlnEj94XBx2TvuEiev-qwF1qhCxAgZO9F0pts1l7ZULqc5hXksPEruj1-hMZOEi5ctXFm11YKOQjz3lvBHDD2wZjeXCShmziq0lzUikqSlxkPiuJaXC9u2A",
+      "session_state": null
+    },
+    {
+      "id": "cmlyqszu50d0v241t00puc9f2",
+      "userId": "cmlyqsztk0d0o241tdrucrlha",
+      "type": "oauth",
+      "provider": "google",
+      "providerAccountId": "113429983124876336627",
+      "refresh_token": null,
+      "access_token": "ya29.A0ATkoCc6kb61vAo92tvxuEu4Akf_T3LV2cgSCG4peyRsqNBxWkiNgvskvekDkeo706lL7OmxDFgQ3wmhp4YCyd9prtR2B8jKiiZMgyS82bI5bBfedTCRGPc_ZWTIWSIt2Wz4Vr5O4Gr1cDQ1WooCbpj-4jpxtHeUnQnyHsZPwd9O_qBUnATSR8oSZDudIHzgkwihnT-K4OWbV3tZ5RvCuaCRs1UKDwI2Ux9V_lkWTnxBi_3mId3pZd17Z3Xxwub3LHUMf7GWofr8mIVbahaNpoy5wCZk4EgaCgYKAa8SARUSFQHGX2Miwa9drjnGDpvGNxAscv04GA0293",
+      "expires_at": 1771828510,
+      "token_type": "Bearer",
+      "scope": "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile openid",
+      "id_token": "eyJhbGciOiJSUzI1NiIsImtpZCI6ImQyNzU0MDdjMzllODAzNmFhNzM1ZWIyYzE3YzU0ODc2MWNlZDZhNjQiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiIxMDA5Njc1MzU3NjE4LW5xMHIwZ2Q5c2N1amRkZGcxM2c2YnFoajV2c2I5Y2trLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiMTAwOTY3NTM1NzYxOC1ucTByMGdkOXNjdWpkZGRnMTNnNmJxaGo1dnNiOWNray5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsInN1YiI6IjExMzQyOTk4MzEyNDg3NjMzNjYyNyIsImVtYWlsIjoibS5iZXlhemd1bjFAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImF0X2hhc2giOiJVcFNyZDZLaFJSUTlSVXhQbnEzSEJBIiwibmFtZSI6IkJleWF6xLF0IEfDvG4iLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EvQUNnOG9jSUxGOHRGRGtOOEVHSlVTVFlZNGtHMGU0YjNPV2c5Q2NmakktNHRPZXZaTU9hWG5NcXA9czk2LWMiLCJnaXZlbl9uYW1lIjoiQmV5YXrEsXQiLCJmYW1pbHlfbmFtZSI6IkfDvG4iLCJpYXQiOjE3NzE4MjQ5MTEsImV4cCI6MTc3MTgyODUxMX0.tGxHmLDaLCKfr8S5POk1RliPq0AyZyrjeHV1ZTxG2hhSpdlymneMKFwfJzK7xfL7GM3UFl_opPE0bss1980apbMQZbZGQAEmpYlXkABVylGRmIldR2FoOgG3bpxyjgrClxOg3Dm9oQ1DN6TWLOBwCzdx9RNWfPgIwAq47_Ts4X8pIuFHdrYKe3--YuQS-L_oNNFAKBlLZfcs51dTqVVB6mb_aW4jzuGsd2DFDjcdzf3731SZcHUMXQ8oy5ZujjMAn9_kW6vPAs1ar9kVv16RN0ND2PIm210hey5EL_LiF9gk9NISX26R6E455cb1iB1Lt2eNxlQpVPylqMsQtGO2BQ",
+      "session_state": null
+    }
+  ],
+  "session": [],
+  "userSettings": [
+    {
+      "id": "cmlb7zkb200013f9hwt9fi3mf",
+      "userId": "cmlapv0ix0392ui3rwturxs2o",
+      "emailNotifications": true,
+      "dailyPicksAlert": true,
+      "weeklyReport": false,
+      "language": "tr",
+      "createdAt": "2026-02-06T18:29:43.694Z",
+      "updatedAt": "2026-02-06T18:29:43.694Z",
+      "earningsSurpriseAlert": true,
+      "insiderTradeAlert": true,
+      "aiPortfolioAlert": true,
+      "showEarningsWithoutEstimates": false,
+      "earningsHighlightThreshold": 15,
+      "lastNotificationsClearedAt": "1970-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "cmls8mqo4000qkjpqyb1ghcdq",
+      "userId": "cmls8m3mq0008kjpqgdvee7uh",
+      "emailNotifications": true,
+      "dailyPicksAlert": true,
+      "weeklyReport": false,
+      "language": "tr",
+      "createdAt": "2026-02-18T16:19:50.020Z",
+      "updatedAt": "2026-02-18T16:19:50.020Z",
+      "earningsSurpriseAlert": true,
+      "insiderTradeAlert": true,
+      "aiPortfolioAlert": true,
+      "showEarningsWithoutEstimates": false,
+      "earningsHighlightThreshold": 15,
+      "lastNotificationsClearedAt": "1970-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "cmlwnwlsp017xjzdv8q8s5slt",
+      "userId": "cmlwntdxs0175jzdvghaid2km",
+      "emailNotifications": true,
+      "dailyPicksAlert": true,
+      "weeklyReport": true,
+      "language": "tr",
+      "createdAt": "2026-02-21T18:38:29.210Z",
+      "updatedAt": "2026-02-21T18:41:13.626Z",
+      "earningsSurpriseAlert": true,
+      "insiderTradeAlert": true,
+      "aiPortfolioAlert": true,
+      "showEarningsWithoutEstimates": false,
+      "earningsHighlightThreshold": 15,
+      "lastNotificationsClearedAt": "1970-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "cmlxv9nnw049rqipqqmypwcmp",
+      "userId": "cmlxv6dj90490qipqm8hm5zeo",
+      "emailNotifications": true,
+      "dailyPicksAlert": true,
+      "weeklyReport": false,
+      "language": "tr",
+      "createdAt": "2026-02-22T14:52:21.645Z",
+      "updatedAt": "2026-02-22T14:52:21.645Z",
+      "earningsSurpriseAlert": true,
+      "insiderTradeAlert": true,
+      "aiPortfolioAlert": true,
+      "showEarningsWithoutEstimates": false,
+      "earningsHighlightThreshold": 15,
+      "lastNotificationsClearedAt": "1970-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "cmlb67jn3005d1211m1updeuu",
+      "userId": "cml9a330d00004pvrh5vzuoyq",
+      "emailNotifications": true,
+      "dailyPicksAlert": true,
+      "weeklyReport": true,
+      "language": "tr",
+      "createdAt": "2026-02-06T17:39:56.847Z",
+      "updatedAt": "2026-02-22T16:43:03.679Z",
+      "earningsSurpriseAlert": true,
+      "insiderTradeAlert": true,
+      "aiPortfolioAlert": true,
+      "showEarningsWithoutEstimates": false,
+      "earningsHighlightThreshold": 15,
+      "lastNotificationsClearedAt": "1970-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "cmly0u2vz0815qipqg42kyw2p",
+      "userId": "cmly0j7pf07zsqipq7cffv004",
+      "emailNotifications": true,
+      "dailyPicksAlert": true,
+      "weeklyReport": true,
+      "language": "tr",
+      "createdAt": "2026-02-22T17:28:12.576Z",
+      "updatedAt": "2026-02-22T17:28:19.039Z",
+      "earningsSurpriseAlert": true,
+      "insiderTradeAlert": true,
+      "aiPortfolioAlert": true,
+      "showEarningsWithoutEstimates": false,
+      "earningsHighlightThreshold": 15,
+      "lastNotificationsClearedAt": "1970-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "cmlyqupy00d17241tqsmq05ab",
+      "userId": "cmlyqsztk0d0o241tdrucrlha",
+      "emailNotifications": true,
+      "dailyPicksAlert": true,
+      "weeklyReport": false,
+      "language": "tr",
+      "createdAt": "2026-02-23T05:36:32.472Z",
+      "updatedAt": "2026-02-23T05:36:32.472Z",
+      "earningsSurpriseAlert": true,
+      "insiderTradeAlert": true,
+      "aiPortfolioAlert": true,
+      "showEarningsWithoutEstimates": false,
+      "earningsHighlightThreshold": 15,
+      "lastNotificationsClearedAt": "1970-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "cmlysf9mw0d5e241t2riqva9e",
+      "userId": "cmlysacoh0d4j241ty5nrm5fo",
+      "emailNotifications": true,
+      "dailyPicksAlert": true,
+      "weeklyReport": false,
+      "language": "tr",
+      "createdAt": "2026-02-23T06:20:30.728Z",
+      "updatedAt": "2026-02-23T06:20:30.728Z",
+      "earningsSurpriseAlert": true,
+      "insiderTradeAlert": true,
+      "aiPortfolioAlert": true,
+      "showEarningsWithoutEstimates": false,
+      "earningsHighlightThreshold": 15,
+      "lastNotificationsClearedAt": "2026-02-23T06:20:30.728Z"
+    }
+  ],
+  "favorite": [
+    {
+      "id": "cmlapv0j50396ui3r7od1he31",
+      "userId": "cmlapv0ix0392ui3rwturxs2o",
+      "symbol": "AMZN",
+      "note": "Varsayılan Takip Listesi",
+      "targetPrice": null,
+      "alertPrice": null,
+      "alertEnabled": false,
+      "createdAt": "2026-02-06T10:02:18.353Z",
+      "updatedAt": "2026-02-06T10:02:18.353Z"
+    },
+    {
+      "id": "cmlapv0j50397ui3r87y3mfsd",
+      "userId": "cmlapv0ix0392ui3rwturxs2o",
+      "symbol": "MSFT",
+      "note": "Varsayılan Takip Listesi",
+      "targetPrice": null,
+      "alertPrice": null,
+      "alertEnabled": false,
+      "createdAt": "2026-02-06T10:02:18.353Z",
+      "updatedAt": "2026-02-06T10:02:18.353Z"
+    },
+    {
+      "id": "cmlb2n6no000ke114zz9pvlwr",
+      "userId": "cml9a330d00004pvrh5vzuoyq",
+      "symbol": "AMD",
+      "note": "Advanced Micro Devices Inc. (AMD), bilgisayar işlemcileri ve grafik kartları üreticisi olarak faaliyet göstermektedir. Özellikle masaüstü ve mobil bilgisayarlar, veri merkezleri, oyun konsolları gibi alanlarda işlemci ve grafik çözümleri sunmaktadır. Şirket, Intel ve Nvidia gibi büyük teknoloji firmalarıyla rekabet etmektedir. AMD, NASDAQ Borsası'nda \"AMD\" kodu ile işlem görmektedir.",
+      "targetPrice": null,
+      "alertPrice": null,
+      "alertEnabled": false,
+      "createdAt": "2026-02-06T16:00:08.052Z",
+      "updatedAt": "2026-02-08T20:13:32.920Z"
+    },
+    {
+      "id": "cmlatsbd903oqui3rxc7k79zg",
+      "userId": "cmlapv0ix0392ui3rwturxs2o",
+      "symbol": "BE",
+      "note": "",
+      "targetPrice": null,
+      "alertPrice": null,
+      "alertEnabled": false,
+      "createdAt": "2026-02-06T11:52:10.894Z",
+      "updatedAt": "2026-02-06T11:53:36.305Z"
+    },
+    {
+      "id": "cmlatk5v703nhui3rmiaa2cfd",
+      "userId": "cmlapv0ix0392ui3rwturxs2o",
+      "symbol": "NXT",
+      "note": "",
+      "targetPrice": null,
+      "alertPrice": null,
+      "alertEnabled": false,
+      "createdAt": "2026-02-06T11:45:50.515Z",
+      "updatedAt": "2026-02-06T11:46:39.775Z"
+    },
+    {
+      "id": "cmlb43fjs001112112qtwq2nh",
+      "userId": "cml9a330d00004pvrh5vzuoyq",
+      "symbol": "TSLA",
+      "note": "Tesla Inc. (TSLA), elektrikli otomobil ve temiz enerji teknolojileri alanında faaliyet gösteren Amerikan bir şirkettir. Elektrikli araç, güneş enerjisi panelleri ve batarya depolama sistemleri üretmektedir. Şirket, Elon Musk tarafından 2003 yılında kurulmuş olup, NASDAQ NMS - GLOBAL MARKET'te işlem görmektedir.",
+      "targetPrice": null,
+      "alertPrice": null,
+      "alertEnabled": false,
+      "createdAt": "2026-02-06T16:40:45.688Z",
+      "updatedAt": "2026-02-06T16:40:48.119Z"
+    },
+    {
+      "id": "cmldoxo9i001f9lwtweu19qpm",
+      "userId": "cml9a330d00004pvrh5vzuoyq",
+      "symbol": "GRC",
+      "note": "",
+      "targetPrice": null,
+      "alertPrice": null,
+      "alertEnabled": false,
+      "createdAt": "2026-02-08T11:59:41.334Z",
+      "updatedAt": "2026-02-08T12:00:29.875Z"
+    },
+    {
+      "id": "cmlatlv6o03nqui3rm0cuqar3",
+      "userId": "cmlapv0ix0392ui3rwturxs2o",
+      "symbol": "PAHC",
+      "note": "",
+      "targetPrice": null,
+      "alertPrice": null,
+      "alertEnabled": false,
+      "createdAt": "2026-02-06T11:47:09.984Z",
+      "updatedAt": "2026-02-06T11:47:28.627Z"
+    },
+    {
+      "id": "cmlqp26ni009fv8v9y4ezz37e",
+      "userId": "cmlapv0ix0392ui3rwturxs2o",
+      "symbol": "SHIP",
+      "note": null,
+      "targetPrice": null,
+      "alertPrice": null,
+      "alertEnabled": false,
+      "createdAt": "2026-02-17T14:24:12.079Z",
+      "updatedAt": "2026-02-17T14:24:12.079Z"
+    },
+    {
+      "id": "cmlrtsieg00a711j622yjnmq7",
+      "userId": "cmlapv0ix0392ui3rwturxs2o",
+      "symbol": "MRNA",
+      "note": null,
+      "targetPrice": null,
+      "alertPrice": null,
+      "alertEnabled": false,
+      "createdAt": "2026-02-18T09:24:25.001Z",
+      "updatedAt": "2026-02-18T09:24:25.001Z"
+    },
+    {
+      "id": "cmls8m3mv0009kjpqftjan531",
+      "userId": "cmls8m3mq0008kjpqgdvee7uh",
+      "symbol": "AAPL",
+      "note": "Varsayılan Takip Listesi",
+      "targetPrice": null,
+      "alertPrice": null,
+      "alertEnabled": false,
+      "createdAt": "2026-02-18T16:19:20.168Z",
+      "updatedAt": "2026-02-18T16:19:20.168Z"
+    },
+    {
+      "id": "cmls8m3mv000akjpq1cnjn9po",
+      "userId": "cmls8m3mq0008kjpqgdvee7uh",
+      "symbol": "TSLA",
+      "note": "Varsayılan Takip Listesi",
+      "targetPrice": null,
+      "alertPrice": null,
+      "alertEnabled": false,
+      "createdAt": "2026-02-18T16:19:20.168Z",
+      "updatedAt": "2026-02-18T16:19:20.168Z"
+    },
+    {
+      "id": "cmls8m3mv000bkjpq0q38kg4b",
+      "userId": "cmls8m3mq0008kjpqgdvee7uh",
+      "symbol": "NVDA",
+      "note": "Varsayılan Takip Listesi",
+      "targetPrice": null,
+      "alertPrice": null,
+      "alertEnabled": false,
+      "createdAt": "2026-02-18T16:19:20.168Z",
+      "updatedAt": "2026-02-18T16:19:20.168Z"
+    },
+    {
+      "id": "cmls8m3mv000ckjpq79d21g96",
+      "userId": "cmls8m3mq0008kjpqgdvee7uh",
+      "symbol": "AMZN",
+      "note": "Varsayılan Takip Listesi",
+      "targetPrice": null,
+      "alertPrice": null,
+      "alertEnabled": false,
+      "createdAt": "2026-02-18T16:19:20.168Z",
+      "updatedAt": "2026-02-18T16:19:20.168Z"
+    },
+    {
+      "id": "cmls8m3mv000dkjpqrir2tuc4",
+      "userId": "cmls8m3mq0008kjpqgdvee7uh",
+      "symbol": "MSFT",
+      "note": "Varsayılan Takip Listesi",
+      "targetPrice": null,
+      "alertPrice": null,
+      "alertEnabled": false,
+      "createdAt": "2026-02-18T16:19:20.168Z",
+      "updatedAt": "2026-02-18T16:19:20.168Z"
+    },
+    {
+      "id": "cmluzgshl035p132fez4k94el",
+      "userId": "cmls8m3mq0008kjpqgdvee7uh",
+      "symbol": "SOFI",
+      "note": null,
+      "targetPrice": null,
+      "alertPrice": null,
+      "alertEnabled": false,
+      "createdAt": "2026-02-20T14:26:34.425Z",
+      "updatedAt": "2026-02-20T14:26:34.425Z"
+    },
+    {
+      "id": "cmlw815ac003baycwpqs9wwef",
+      "userId": "cml9a330d00004pvrh5vzuoyq",
+      "symbol": "OPEN",
+      "note": null,
+      "targetPrice": null,
+      "alertPrice": null,
+      "alertEnabled": false,
+      "createdAt": "2026-02-21T11:14:07.236Z",
+      "updatedAt": "2026-02-21T11:14:07.236Z"
+    },
+    {
+      "id": "cmlwntdyp0176jzdvgicla77p",
+      "userId": "cmlwntdxs0175jzdvghaid2km",
+      "symbol": "AAPL",
+      "note": "Varsayılan Takip Listesi",
+      "targetPrice": null,
+      "alertPrice": null,
+      "alertEnabled": false,
+      "createdAt": "2026-02-21T18:35:59.089Z",
+      "updatedAt": "2026-02-21T18:35:59.089Z"
+    },
+    {
+      "id": "cmlwntdyp0177jzdvbgxcdmht",
+      "userId": "cmlwntdxs0175jzdvghaid2km",
+      "symbol": "TSLA",
+      "note": "Varsayılan Takip Listesi",
+      "targetPrice": null,
+      "alertPrice": null,
+      "alertEnabled": false,
+      "createdAt": "2026-02-21T18:35:59.089Z",
+      "updatedAt": "2026-02-21T18:35:59.089Z"
+    },
+    {
+      "id": "cmlwntdyp0178jzdv05y70fd3",
+      "userId": "cmlwntdxs0175jzdvghaid2km",
+      "symbol": "NVDA",
+      "note": "Varsayılan Takip Listesi",
+      "targetPrice": null,
+      "alertPrice": null,
+      "alertEnabled": false,
+      "createdAt": "2026-02-21T18:35:59.089Z",
+      "updatedAt": "2026-02-21T18:35:59.089Z"
+    },
+    {
+      "id": "cmlwntdyp0179jzdvhxoa40vc",
+      "userId": "cmlwntdxs0175jzdvghaid2km",
+      "symbol": "AMZN",
+      "note": "Varsayılan Takip Listesi",
+      "targetPrice": null,
+      "alertPrice": null,
+      "alertEnabled": false,
+      "createdAt": "2026-02-21T18:35:59.089Z",
+      "updatedAt": "2026-02-21T18:35:59.089Z"
+    },
+    {
+      "id": "cmlwntdyp017ajzdvl6zx6thh",
+      "userId": "cmlwntdxs0175jzdvghaid2km",
+      "symbol": "MSFT",
+      "note": "Varsayılan Takip Listesi",
+      "targetPrice": null,
+      "alertPrice": null,
+      "alertEnabled": false,
+      "createdAt": "2026-02-21T18:35:59.089Z",
+      "updatedAt": "2026-02-21T18:35:59.089Z"
+    },
+    {
+      "id": "cmlwnxp1c018ajzdv3blxk273",
+      "userId": "cmlwntdxs0175jzdvghaid2km",
+      "symbol": "UBER",
+      "note": null,
+      "targetPrice": null,
+      "alertPrice": null,
+      "alertEnabled": false,
+      "createdAt": "2026-02-21T18:39:20.064Z",
+      "updatedAt": "2026-02-21T18:39:20.064Z"
+    },
+    {
+      "id": "cmlwnz9f5055cjzdvoinsg4pj",
+      "userId": "cmlwntdxs0175jzdvghaid2km",
+      "symbol": "JOBY",
+      "note": null,
+      "targetPrice": null,
+      "alertPrice": null,
+      "alertEnabled": false,
+      "createdAt": "2026-02-21T18:40:33.137Z",
+      "updatedAt": "2026-02-21T18:40:33.137Z"
+    },
+    {
+      "id": "cmlxu32iq011wqipqnj4vdzky",
+      "userId": "cmlxu32ih011vqipqmct4xgva",
+      "symbol": "AAPL",
+      "note": "Varsayılan Takip Listesi",
+      "targetPrice": null,
+      "alertPrice": null,
+      "alertEnabled": false,
+      "createdAt": "2026-02-22T14:19:14.691Z",
+      "updatedAt": "2026-02-22T14:19:14.691Z"
+    },
+    {
+      "id": "cmlxu32iq011xqipq6aaiwqkw",
+      "userId": "cmlxu32ih011vqipqmct4xgva",
+      "symbol": "TSLA",
+      "note": "Varsayılan Takip Listesi",
+      "targetPrice": null,
+      "alertPrice": null,
+      "alertEnabled": false,
+      "createdAt": "2026-02-22T14:19:14.691Z",
+      "updatedAt": "2026-02-22T14:19:14.691Z"
+    },
+    {
+      "id": "cmlxu32iq011yqipqrfvq82r0",
+      "userId": "cmlxu32ih011vqipqmct4xgva",
+      "symbol": "NVDA",
+      "note": "Varsayılan Takip Listesi",
+      "targetPrice": null,
+      "alertPrice": null,
+      "alertEnabled": false,
+      "createdAt": "2026-02-22T14:19:14.691Z",
+      "updatedAt": "2026-02-22T14:19:14.691Z"
+    },
+    {
+      "id": "cmlxu32iq011zqipq849qvmdw",
+      "userId": "cmlxu32ih011vqipqmct4xgva",
+      "symbol": "AMZN",
+      "note": "Varsayılan Takip Listesi",
+      "targetPrice": null,
+      "alertPrice": null,
+      "alertEnabled": false,
+      "createdAt": "2026-02-22T14:19:14.691Z",
+      "updatedAt": "2026-02-22T14:19:14.691Z"
+    },
+    {
+      "id": "cmlxu32iq0120qipq8dmn3tw7",
+      "userId": "cmlxu32ih011vqipqmct4xgva",
+      "symbol": "MSFT",
+      "note": "Varsayılan Takip Listesi",
+      "targetPrice": null,
+      "alertPrice": null,
+      "alertEnabled": false,
+      "createdAt": "2026-02-22T14:19:14.691Z",
+      "updatedAt": "2026-02-22T14:19:14.691Z"
+    },
+    {
+      "id": "cmlxv6djg0491qipqcdyvhhad",
+      "userId": "cmlxv6dj90490qipqm8hm5zeo",
+      "symbol": "AAPL",
+      "note": "Varsayılan Takip Listesi",
+      "targetPrice": null,
+      "alertPrice": null,
+      "alertEnabled": false,
+      "createdAt": "2026-02-22T14:49:48.556Z",
+      "updatedAt": "2026-02-22T14:49:48.556Z"
+    },
+    {
+      "id": "cmlxv6djg0492qipqh5seg2ms",
+      "userId": "cmlxv6dj90490qipqm8hm5zeo",
+      "symbol": "TSLA",
+      "note": "Varsayılan Takip Listesi",
+      "targetPrice": null,
+      "alertPrice": null,
+      "alertEnabled": false,
+      "createdAt": "2026-02-22T14:49:48.556Z",
+      "updatedAt": "2026-02-22T14:49:48.556Z"
+    },
+    {
+      "id": "cmlxv6djg0493qipqyw6ibsyt",
+      "userId": "cmlxv6dj90490qipqm8hm5zeo",
+      "symbol": "NVDA",
+      "note": "Varsayılan Takip Listesi",
+      "targetPrice": null,
+      "alertPrice": null,
+      "alertEnabled": false,
+      "createdAt": "2026-02-22T14:49:48.556Z",
+      "updatedAt": "2026-02-22T14:49:48.556Z"
+    },
+    {
+      "id": "cmlxv6djg0494qipqu5v9lpst",
+      "userId": "cmlxv6dj90490qipqm8hm5zeo",
+      "symbol": "AMZN",
+      "note": "Varsayılan Takip Listesi",
+      "targetPrice": null,
+      "alertPrice": null,
+      "alertEnabled": false,
+      "createdAt": "2026-02-22T14:49:48.556Z",
+      "updatedAt": "2026-02-22T14:49:48.556Z"
+    },
+    {
+      "id": "cmlxv6djg0495qipqrqdg6rti",
+      "userId": "cmlxv6dj90490qipqm8hm5zeo",
+      "symbol": "MSFT",
+      "note": "Varsayılan Takip Listesi",
+      "targetPrice": null,
+      "alertPrice": null,
+      "alertEnabled": false,
+      "createdAt": "2026-02-22T14:49:48.556Z",
+      "updatedAt": "2026-02-22T14:49:48.556Z"
+    },
+    {
+      "id": "cmly0j7pl07ztqipqt1ic0kg7",
+      "userId": "cmly0j7pf07zsqipq7cffv004",
+      "symbol": "AAPL",
+      "note": "Varsayılan Takip Listesi",
+      "targetPrice": null,
+      "alertPrice": null,
+      "alertEnabled": false,
+      "createdAt": "2026-02-22T17:19:45.610Z",
+      "updatedAt": "2026-02-22T17:19:45.610Z"
+    },
+    {
+      "id": "cmly0j7pl07zuqipq9vqxktho",
+      "userId": "cmly0j7pf07zsqipq7cffv004",
+      "symbol": "TSLA",
+      "note": "Varsayılan Takip Listesi",
+      "targetPrice": null,
+      "alertPrice": null,
+      "alertEnabled": false,
+      "createdAt": "2026-02-22T17:19:45.610Z",
+      "updatedAt": "2026-02-22T17:19:45.610Z"
+    },
+    {
+      "id": "cmly0j7pl07zvqipqfdo61xi5",
+      "userId": "cmly0j7pf07zsqipq7cffv004",
+      "symbol": "NVDA",
+      "note": "Varsayılan Takip Listesi",
+      "targetPrice": null,
+      "alertPrice": null,
+      "alertEnabled": false,
+      "createdAt": "2026-02-22T17:19:45.610Z",
+      "updatedAt": "2026-02-22T17:19:45.610Z"
+    },
+    {
+      "id": "cmly0j7pl07zwqipqieqx5u1n",
+      "userId": "cmly0j7pf07zsqipq7cffv004",
+      "symbol": "AMZN",
+      "note": "Varsayılan Takip Listesi",
+      "targetPrice": null,
+      "alertPrice": null,
+      "alertEnabled": false,
+      "createdAt": "2026-02-22T17:19:45.610Z",
+      "updatedAt": "2026-02-22T17:19:45.610Z"
+    },
+    {
+      "id": "cmly0j7pl07zxqipqlpu3wd70",
+      "userId": "cmly0j7pf07zsqipq7cffv004",
+      "symbol": "MSFT",
+      "note": "Varsayılan Takip Listesi",
+      "targetPrice": null,
+      "alertPrice": null,
+      "alertEnabled": false,
+      "createdAt": "2026-02-22T17:19:45.610Z",
+      "updatedAt": "2026-02-22T17:19:45.610Z"
+    },
+    {
+      "id": "cmly6doqh0077241tuxf65vzs",
+      "userId": "cml9a330d00004pvrh5vzuoyq",
+      "symbol": "AVGO",
+      "note": null,
+      "targetPrice": null,
+      "alertPrice": null,
+      "alertEnabled": false,
+      "createdAt": "2026-02-22T20:03:25.433Z",
+      "updatedAt": "2026-02-22T20:03:25.433Z"
+    },
+    {
+      "id": "cmly7y3gw0cwm241twqy8b6yv",
+      "userId": "cmly7y3go0cwl241t87w7o4io",
+      "symbol": "AAPL",
+      "note": "Varsayılan Takip Listesi",
+      "targetPrice": null,
+      "alertPrice": null,
+      "alertEnabled": false,
+      "createdAt": "2026-02-22T20:47:17.265Z",
+      "updatedAt": "2026-02-22T20:47:17.265Z"
+    },
+    {
+      "id": "cmly7y3gw0cwn241tgom8pl5t",
+      "userId": "cmly7y3go0cwl241t87w7o4io",
+      "symbol": "TSLA",
+      "note": "Varsayılan Takip Listesi",
+      "targetPrice": null,
+      "alertPrice": null,
+      "alertEnabled": false,
+      "createdAt": "2026-02-22T20:47:17.265Z",
+      "updatedAt": "2026-02-22T20:47:17.265Z"
+    },
+    {
+      "id": "cmly7y3gw0cwo241t8z4mdd77",
+      "userId": "cmly7y3go0cwl241t87w7o4io",
+      "symbol": "NVDA",
+      "note": "Varsayılan Takip Listesi",
+      "targetPrice": null,
+      "alertPrice": null,
+      "alertEnabled": false,
+      "createdAt": "2026-02-22T20:47:17.265Z",
+      "updatedAt": "2026-02-22T20:47:17.265Z"
+    },
+    {
+      "id": "cmly7y3gw0cwp241twtnpa2fj",
+      "userId": "cmly7y3go0cwl241t87w7o4io",
+      "symbol": "AMZN",
+      "note": "Varsayılan Takip Listesi",
+      "targetPrice": null,
+      "alertPrice": null,
+      "alertEnabled": false,
+      "createdAt": "2026-02-22T20:47:17.265Z",
+      "updatedAt": "2026-02-22T20:47:17.265Z"
+    },
+    {
+      "id": "cmly7y3gw0cwq241tyvairvdy",
+      "userId": "cmly7y3go0cwl241t87w7o4io",
+      "symbol": "MSFT",
+      "note": "Varsayılan Takip Listesi",
+      "targetPrice": null,
+      "alertPrice": null,
+      "alertEnabled": false,
+      "createdAt": "2026-02-22T20:47:17.265Z",
+      "updatedAt": "2026-02-22T20:47:17.265Z"
+    },
+    {
+      "id": "cmly83ll60cy2241tfegniupn",
+      "userId": "cml9a330d00004pvrh5vzuoyq",
+      "symbol": "GILT",
+      "note": null,
+      "targetPrice": null,
+      "alertPrice": null,
+      "alertEnabled": false,
+      "createdAt": "2026-02-22T20:51:34.026Z",
+      "updatedAt": "2026-02-22T20:51:34.026Z"
+    },
+    {
+      "id": "cmly85p180cyj241tsaghuzrq",
+      "userId": "cml9a330d00004pvrh5vzuoyq",
+      "symbol": "BKSY",
+      "note": null,
+      "targetPrice": null,
+      "alertPrice": null,
+      "alertEnabled": false,
+      "createdAt": "2026-02-22T20:53:11.805Z",
+      "updatedAt": "2026-02-22T20:53:11.805Z"
+    },
+    {
+      "id": "cmlyqsztr0d0p241tl65us67v",
+      "userId": "cmlyqsztk0d0o241tdrucrlha",
+      "symbol": "AAPL",
+      "note": "Varsayılan Takip Listesi",
+      "targetPrice": null,
+      "alertPrice": null,
+      "alertEnabled": false,
+      "createdAt": "2026-02-23T05:35:11.967Z",
+      "updatedAt": "2026-02-23T05:35:11.967Z"
+    },
+    {
+      "id": "cmlyqsztr0d0q241t41urk52t",
+      "userId": "cmlyqsztk0d0o241tdrucrlha",
+      "symbol": "TSLA",
+      "note": "Varsayılan Takip Listesi",
+      "targetPrice": null,
+      "alertPrice": null,
+      "alertEnabled": false,
+      "createdAt": "2026-02-23T05:35:11.967Z",
+      "updatedAt": "2026-02-23T05:35:11.967Z"
+    },
+    {
+      "id": "cmlyqsztr0d0r241thb3wgc7p",
+      "userId": "cmlyqsztk0d0o241tdrucrlha",
+      "symbol": "NVDA",
+      "note": "Varsayılan Takip Listesi",
+      "targetPrice": null,
+      "alertPrice": null,
+      "alertEnabled": false,
+      "createdAt": "2026-02-23T05:35:11.967Z",
+      "updatedAt": "2026-02-23T05:35:11.967Z"
+    },
+    {
+      "id": "cmlyqsztr0d0s241tptviuydw",
+      "userId": "cmlyqsztk0d0o241tdrucrlha",
+      "symbol": "AMZN",
+      "note": "Varsayılan Takip Listesi",
+      "targetPrice": null,
+      "alertPrice": null,
+      "alertEnabled": false,
+      "createdAt": "2026-02-23T05:35:11.967Z",
+      "updatedAt": "2026-02-23T05:35:11.967Z"
+    },
+    {
+      "id": "cmlyqsztr0d0t241te0ndv39o",
+      "userId": "cmlyqsztk0d0o241tdrucrlha",
+      "symbol": "MSFT",
+      "note": "Varsayılan Takip Listesi",
+      "targetPrice": null,
+      "alertPrice": null,
+      "alertEnabled": false,
+      "createdAt": "2026-02-23T05:35:11.967Z",
+      "updatedAt": "2026-02-23T05:35:11.967Z"
+    },
+    {
+      "id": "cmlysacoo0d4k241tv9ojokut",
+      "userId": "cmlysacoh0d4j241ty5nrm5fo",
+      "symbol": "AAPL",
+      "note": "Varsayılan Takip Listesi",
+      "targetPrice": null,
+      "alertPrice": null,
+      "alertEnabled": false,
+      "createdAt": "2026-02-23T06:16:41.401Z",
+      "updatedAt": "2026-02-23T06:16:41.401Z"
+    },
+    {
+      "id": "cmlysacoo0d4l241txldm1ean",
+      "userId": "cmlysacoh0d4j241ty5nrm5fo",
+      "symbol": "TSLA",
+      "note": "Varsayılan Takip Listesi",
+      "targetPrice": null,
+      "alertPrice": null,
+      "alertEnabled": false,
+      "createdAt": "2026-02-23T06:16:41.401Z",
+      "updatedAt": "2026-02-23T06:16:41.401Z"
+    },
+    {
+      "id": "cmlysacoo0d4m241tbidfwmsz",
+      "userId": "cmlysacoh0d4j241ty5nrm5fo",
+      "symbol": "NVDA",
+      "note": "Varsayılan Takip Listesi",
+      "targetPrice": null,
+      "alertPrice": null,
+      "alertEnabled": false,
+      "createdAt": "2026-02-23T06:16:41.401Z",
+      "updatedAt": "2026-02-23T06:16:41.401Z"
+    },
+    {
+      "id": "cmlysacoo0d4n241ttokrvej6",
+      "userId": "cmlysacoh0d4j241ty5nrm5fo",
+      "symbol": "AMZN",
+      "note": "Varsayılan Takip Listesi",
+      "targetPrice": null,
+      "alertPrice": null,
+      "alertEnabled": false,
+      "createdAt": "2026-02-23T06:16:41.401Z",
+      "updatedAt": "2026-02-23T06:16:41.401Z"
+    },
+    {
+      "id": "cmlysacoo0d4o241t6z1szjfl",
+      "userId": "cmlysacoh0d4j241ty5nrm5fo",
+      "symbol": "MSFT",
+      "note": "Varsayılan Takip Listesi",
+      "targetPrice": null,
+      "alertPrice": null,
+      "alertEnabled": false,
+      "createdAt": "2026-02-23T06:16:41.401Z",
+      "updatedAt": "2026-02-23T06:16:41.401Z"
+    },
+    {
+      "id": "cmlz15wjf0023if8pkx6sfgtq",
+      "userId": "cml9a330d00004pvrh5vzuoyq",
+      "symbol": "ARM",
+      "note": null,
+      "targetPrice": null,
+      "alertPrice": null,
+      "alertEnabled": false,
+      "createdAt": "2026-02-23T10:25:10.395Z",
+      "updatedAt": "2026-02-23T10:25:10.395Z"
+    },
+    {
+      "id": "cmlshte03007cwex6swfgk34u",
+      "userId": "cml9a330d00004pvrh5vzuoyq",
+      "symbol": "MU",
+      "note": "MU, Micron Technology Inc. şirketinin hisse senedi sembolüdür. Micron, bilgi teknolojisi sektöründe faaliyet göstermektedir ve önde gelen bir yarı iletken bellek üreticisidir. Şirket, DRAM, NAND flash ve NOR flash bellek çözümleri sunmaktadır. Micron'un ürün portföyü, kişisel bilgisayarlar, mobil cihazlar, sunucular ve veri merkezleri gibi çeşitli pazarlara hitap etmektedir. \n\nSon dönemde Micron, 5G teknolojisi ve yapay zeka uygulamaları için yüksek performanslı bellek çözümleri geliştirmeye odaklanmıştır. Ayrıca, şirket, üretim süreçlerini iyileştirerek maliyet etkinliğini artırmaya ve çevresel sürdürülebilirliğe yönelik yatırımlar yapmaktadır.\n\nMicron, sektördeki konumunu güçlendirmek ve müşteri taleplerini karşılamak için sürekli yenilik ve Ar-Ge çalışmaları yürütmektedir. Şirket, geleceğin teknolojileri için kritik öneme sahip bellek çözümlerini sunmaya devam etmektedir.",
+      "targetPrice": null,
+      "alertPrice": null,
+      "alertEnabled": false,
+      "createdAt": "2026-02-18T20:36:56.739Z",
+      "updatedAt": "2026-02-23T10:52:50.475Z"
+    },
+    {
+      "id": "cml9a330j00014pvrvi16uekn",
+      "userId": "cml9a330d00004pvrh5vzuoyq",
+      "symbol": "AAPL",
+      "note": "Varsayılan Takip Listesi",
+      "targetPrice": null,
+      "alertPrice": null,
+      "alertEnabled": false,
+      "createdAt": "2026-02-05T09:52:54.787Z",
+      "updatedAt": "2026-02-05T09:52:54.787Z"
+    },
+    {
+      "id": "cmlapv0j50393ui3r2my626y1",
+      "userId": "cmlapv0ix0392ui3rwturxs2o",
+      "symbol": "AAPL",
+      "note": "Varsayılan Takip Listesi",
+      "targetPrice": null,
+      "alertPrice": null,
+      "alertEnabled": false,
+      "createdAt": "2026-02-06T10:02:18.353Z",
+      "updatedAt": "2026-02-06T10:02:18.353Z"
+    },
+    {
+      "id": "cmlapv0j50394ui3rlgml6m87",
+      "userId": "cmlapv0ix0392ui3rwturxs2o",
+      "symbol": "TSLA",
+      "note": "Varsayılan Takip Listesi",
+      "targetPrice": null,
+      "alertPrice": null,
+      "alertEnabled": false,
+      "createdAt": "2026-02-06T10:02:18.353Z",
+      "updatedAt": "2026-02-06T10:02:18.353Z"
+    },
+    {
+      "id": "cmlapv0j50395ui3r1jrr34ei",
+      "userId": "cmlapv0ix0392ui3rwturxs2o",
+      "symbol": "NVDA",
+      "note": "Varsayılan Takip Listesi",
+      "targetPrice": null,
+      "alertPrice": null,
+      "alertEnabled": false,
+      "createdAt": "2026-02-06T10:02:18.353Z",
+      "updatedAt": "2026-02-06T10:02:18.353Z"
+    }
+  ],
+  "query": [],
+  "dismissedNotification": [],
+  "tradePortfolio": [
+    {
+      "id": "cmlt2u8fl01k0wex68myo5d0h",
+      "userId": "cml9a330d00004pvrh5vzuoyq",
+      "name": "B",
+      "balance": 100000,
+      "riskMode": 1,
+      "createdAt": "2026-02-19T06:25:28.114Z",
+      "updatedAt": "2026-02-19T06:25:28.114Z"
+    },
+    {
+      "id": "cmlt34enq0006vnmr61veytc4",
+      "userId": "cmls8m3mq0008kjpqgdvee7uh",
+      "name": "BB",
+      "balance": 100000,
+      "riskMode": 1,
+      "createdAt": "2026-02-19T06:33:22.742Z",
+      "updatedAt": "2026-02-19T06:33:22.742Z"
+    },
+    {
+      "id": "cmlxvbg70078xqipqeyi320m1",
+      "userId": "cmlxv6dj90490qipqm8hm5zeo",
+      "name": "d",
+      "balance": 100000,
+      "riskMode": 1,
+      "createdAt": "2026-02-22T14:53:45.273Z",
+      "updatedAt": "2026-02-22T14:53:45.273Z"
+    }
+  ],
+  "activeTrade": [
+    {
+      "id": "cmlt34urq0008vnmr21ubhvyw",
+      "portfolioId": "cmlt34enq0006vnmr61veytc4",
+      "ticker": "AMD",
+      "entryPrice": 200.12,
+      "atr": 7.54,
+      "stopLoss": 192.575476,
+      "target": 222.753572,
+      "quantity": 18,
+      "riskValue": 135.8014319999999,
+      "allocPercent": 3.60216,
+      "createdAt": "2026-02-19T06:33:43.622Z",
+      "updatedAt": "2026-02-19T06:33:43.622Z"
+    },
+    {
+      "id": "cmlt35vpf000fvnmrqlakn0f4",
+      "portfolioId": "cmlt34enq0006vnmr61veytc4",
+      "ticker": "AAPL",
+      "entryPrice": 264.35,
+      "atr": 2.81,
+      "stopLoss": 260.6358825,
+      "target": 275.4923525,
+      "quantity": 30,
+      "riskValue": 111.4235250000013,
+      "allocPercent": 7.930500000000001,
+      "createdAt": "2026-02-19T06:34:31.492Z",
+      "updatedAt": "2026-02-19T06:35:03.424Z"
+    }
+  ],
+  "tradeJournal": [
+    {
+      "id": "cmlt36l8m000nvnmrk9xaxcl2",
+      "portfolioId": "cmlt34enq0006vnmr61veytc4",
+      "ticker": "AAPL",
+      "entryPrice": 264.35,
+      "exitPrice": 270,
+      "quantity": 8,
+      "allocPercent": 10.0453,
+      "pnl": 45.19999999999982,
+      "rrScore": 1.521222739991374,
+      "exitDate": "2026-02-19T06:35:03.424Z",
+      "notes": null
+    }
+  ],
+  "dailyPick": [],
+  "swingTradePosition": [],
+  "report": [
+    {
+      "id": "cmlqhtq2c09ylly9e3tu5t52t",
+      "type": "DAILY",
+      "title": "Günlük Kazanç Raporu Analizi - 17 Şubat 2026 ",
+      "content": {
+        "markdown": "## 📊 GERÇEK PİYASA VERİLERİ (Son 24 Saat)\n\n### Kazanç Raporları - Pozitif Sürpriz Yapanlar\n\n| Sembol | Şirket Adı | Beklenen EPS | Gerçek EPS | EPS Sürpriz % | Beklenen Gelir | Gerçek Gelir | Gelir Sürpriz % | Son Çeyrek YoY Gelir Büyümesi % | Son Çeyrek YoY EPS Büyümesi % | Hisse Fiyat Tepkisi |\n|--------|------------|--------------|------------|---------------|----------------|--------------|-----------------|--------------------------------|------------------------------|-------------------|\n| CDNS | Cadence Design Systems | 1.90 | 2.05 | +7.9% | $1.42B | $1.50B | +5.6% | +18.4% | +12.6% | +6.2% (Seans Sonrası) |\n| CE | Celanese | 0.89 | 1.02 | +14.6% | $2.25B | $2.35B | +4.4% | +15.8% | +9.1% | +4.8% (Seans Sonrası) |\n| CEG | Constellation Energy | 2.18 | 2.32 | +6.4% | $5.60B | $5.75B | +2.7% | +17.2% | +11.5% | +3.9% (Seans Sonrası) |\n| CEVA | CEVA Inc. | 0.19 | 0.22 | +15.8% | $0.03B | $0.03B | +0.0% | +14.3% | +10.0% | +7.1% (Seans Sonrası) |\n| CHCT | Community Healthcare Trust | 0.57 | 0.62 | +8.8% | $0.03B | $0.03B | +0.0% | +12.0% | +8.8% | +4.5% (Seans Sonrası) |\n| CNH | CNH Industrial | 0.11 | 0.13 | +18.2% | $4.89B | $5.00B | +2.2% | +16.3% | +18.2% | +5.1% (Seans Sonrası) |\n| CPKF | Chesapeake Utilities | 0.82 | 0.88 | +7.3% | $0.02B | $0.02B | +0.0% | +13.6% | +7.3% | +3.8% (Seans Sonrası) |\n| CRNT | Ceragon Networks | 0.03 | 0.04 | +33.3% | $0.08B | $0.08B | +0.0% | +17.6% | +33.3% | +9.2% (Seans Sonrası) |\n| DFIN | Donnelley Financial Solutions | 0.40 | 0.44 | +10.0% | $0.16B | $0.17B | +6.3% | +14.3% | +10.0% | +5.1% (Seans Sonrası) |\n\n**Pozitif Sürpriz Nedenleri:**\n- CDNS, CE ve CEG: Güçlü talep ve operasyonel verimlilik iyileşmeleri sayesinde beklentilerin üzerinde performans gösterdi.\n- CEVA ve CHCT: Yeni ürün lansmanları ve pazar payı kazanımları, finansal sonuçlarda olumlu yansıma yarattı.\n- CNH: Tarım ve inşaat ekipmanı talebindeki artış, şirketin gelir ve karını destekledi.\n- CPKF: Doğal gaz dağıtım operasyonlarındaki iyileşmeler, karlılığı artırdı.\n- CRNT: 5G altyapı yatırımlarındaki hız, şirketin büyümesini hızlandırdı.\n- DFIN: Kurumsal çözümler ve dijital dönüşüm projeleri, gelir ve kâr marjlarını iyileştirdi.\n\n### Hızlı Büyüme Gösteren Şirketler\n\n| Sembol | Şirket Adı | Beklenen EPS | Gerçek EPS | EPS Sürpriz % | Beklenen Gelir | Gerçek Gelir | Gelir Sürpriz % | Son Çeyrek YoY Gelir Büyümesi % | Son Çeyrek YoY EPS Büyümesi % | Hisse Fiyat Tepkisi |\n|--------|------------|--------------|------------|---------------|----------------|--------------|-----------------|--------------------------------|------------------------------|-------------------|\n| CDNS | Cadence Design Systems | 1.90 | 2.05 | +7.9% | $1.42B | $1.50B | +5.6% | +18.4% | +12.6% | +6.2% (Seans Sonrası) |\n| CE | Celanese | 0.89 | 1.02 | +14.6% | $2.25B | $2.35B | +4.4% | +15.8% | +9.1% | +4.8% (Seans Sonrası) |\n| CEG | Constellation Energy | 2.18 | 2.32 | +6.4% | $5.60B | $5.75B | +2.7% | +17.2% | +11.5% | +3.9% (Seans Sonrası) |\n| CNH | CNH Industrial | 0.11 | 0.13 | +18.2% | $4.89B | $5.00B | +2.2% | +16.3% | +18.2% | +5.1% (Seans Sonrası) |\n| CRNT | Ceragon Networks | 0.03 | 0.04 | +33.3% | $0.08B | $0.08B | +0.0% | +17.6% | +33.3% | +9.2% (Seans Sonrası) |\n| DFIN | Donnelley Financial Solutions | 0.40 | 0.44 | +10.0% | $0.16B | $0.17B | +6.3% | +14.3% | +10.0% | +5.1% (Seans Sonrası) |\n\n**Yüksek Potansiyel Şirketler:**\nCDNS, CE, CEG, CNH ve CRNT hem yüksek büyüme hem de pozitif sürpriz göstererek öne çıkan şirketler. Bu şirketler, güçlü operasyonel performansları ve sektörel trendlerle yatırımcılar için cazip fırsatlar sunuyor.\n\n### Sektör Bazlı Analiz ve Momentum Değerlendirmesi\n\n**Teknoloji Sektörü:**\nTeknoloji sektörü, yapay zeka (AI) ve dijital dönüşüm yatırımlarının öne çıktığı bir dönemden geçiyor. CDNS, CEVA ve CRNT gibi şirketler, bu trendlerden güç alarak güçlü büyüme ve karlılık performansı gösterdi. Sektördeki diğer şirketlerin de benzer katalizörlerle öne çıkması bekleniyor.\n\n**Fintech Sektörü:** \nFintech şirketleri, dijitalleşme ve yeni teknolojilerin etkisiyle hızlı bir dönüşüm geçiriyor. DFIN gibi şirketler, kurumsal çözümler ve yazılım ürünleriyle öne çıkıyor. Sektördeki şirketlerin, operasyonel verimlilikteki iyileşmeler ve yeni iş modellerinden faydalanması bekleniyor.\n\n**Havacılık/Savunma Sektörü:**\nHavacılık ve savunma sektörü, pandemi sonrası toparlanma sürecini yaşıyor. CEG gibi enerji şirketleri, savunma ve uzay projelerindeki güçlü talep nedeniyle öne çıkıyor. Sektördeki diğer şirketlerin de yeni program kazanımları ve operasyonel iyileşmelerle büyümesi bekleniyor.\n\n**Sağlık Sektörü:**\nSağlık sektörü, yeni ilaç ve tedavi yöntemleri geliştirme çabalarıyla öne çıkıyor. CEVA ve CHCT gibi şirketler, sağlık teknolojileri ve altyapı yatırımlarıyla sektördeki büyüme trendlerine katkı sağlıyor. Sektördeki diğer şirketlerin de Ar-Ge ve inovasyon yatırımlarıyla ön plana çıkması bekleniyor.\n\n**Tüketici Sektörü:**\nTüketici sektörü, ekonomik toparlanma ve değişen tüketici tercihlerine uyum sağlama çabalarıyla meşgul. CE ve CNH gibi şirketler, dayanıklı tüketim ve otomotiv segmentlerindeki güçlü talep nedeniyle öne çıkıyor. Sektördeki diğer şirketlerin de marka gücü ve operasyonel esneklikle büyümesi bekleniyor.\n\n### Agresif Büyüme Odaklı Yatırımcı Tavsiyeleri\n\n**Odaklanılması Gerekenler:**\n- Teknoloji sektöründeki yapay zeka (AI) ve dijital dönüşüm trendlerinden faydalanan şirketler (CDNS, CEVA, CRNT)\n- Fintech ve kurumsal çözümler alanındaki güçlü büyüme gösteren şirketler (DFIN)\n- Havacılık/savunma ve enerji sektörlerindeki yüksek talep gören şirketler (CEG)\n- Sağlık teknolojileri ve altyapı yatırımlarıyla öne çıkan şirketler (CHCT)\n\n**Kaçınılması Gerekenler:**\n- Operasyonel zorluklarla karşı karşıya olan tüketici şirketleri\n- Marj baskısı yaşayan ve hacim kaybı olan endüstriyel şirketler\n- Makroekonomik risklere (faiz oranları, enflasyon vb.) yüksek derecede maruz kalan şirketler\n\n### Pazar Senaryoları ve Kısa Vadeli Tahminler\n\n**İyimser Senaryo (%40 olasılık):**\nFed'in faiz artışlarını durdurması ve enflasyonun kontrol altına alınması durumunda, piyasalar toparlanma eğilimine girebilir. Teknoloji, fintech ve savunma sektörleri öncülüğünde güçlü bir yükseliş trendi başlayabilir. Bu senaryoda, NASDAQ Bileşik Endeksi'nin 3 ay içinde %12-15 arasında yükselmesi bekleniyor.\n\n**Baz Senaryo (%35 olasılık):**\nFed'in sıkı para politikasını sürdürmesi ve enflasyonun yüksek seyretmeye devam etmesi durumunda, piyasalarda dalgalı bir seyir hakim olabilir. Sektörel ayrışmanın devam etmesi ve oynaklığın yüksek kalması bekleniyor. Bu senaryoda, NASDAQ Bileşik Endeksi'nin 3 ay içinde %5-8 arasında dalgalanması öngörülüyor.\n\n**Kötümser Senaryo (%25 olasılık):**\nEnflasyonun kontrol altına alınamaması ve Fed'in daha agresif faiz artışlarına gitmesi durumunda, piyasalarda sert satışlar yaşanabilir. Teknoloji ve tüketici hisselerinin önemli ölçüde değer kaybetmesi bekleniyor. Bu senaryoda, NASDAQ Bileşik Endeksi'nin 3 ay içinde %10-15 arasında gerilemesi öngörülüyor.\n\n### Detaylı Şirket-Spesifik İncelemeler\n\n**CDNS (Cadence Design Systems)**\n*Büyüme Katalizörleri:*\n- Yapay zeka (AI) ve dijital dönüşüm yatırımlarındaki güçlü talep\n- Yeni ürün lansmanları ve müşteri kazanımları\n- Operasyonel verimlilikte sağlanan iyileşmeler\n\n*Risk Faktörleri:* \n- Makroekonomik belirsizlikler ve yatırım iştahındaki dalgalanmalar\n- Rekabetçi baskılar ve fiyat baskısı\n- Tedarik zinciri sorunlarının devam etmesi\n\n**CE (Celanese)**\n*Büyüme Katalizörleri:*\n- Dayanıklı tüketim ve otomotiv sektörlerindeki güçlü talep\n- Yeni ürün geliştirme ve inovasyon yatırımları\n- Operasyonel iyileştirmeler ve maliyet kontrolü\n\n*Risk Faktörleri:*\n- Hammadde fiyatlarındaki dalgalanmalar\n- Ekonomik yavaşlama ve tüketici harcamalarındaki düşüş\n- Rekabetçi baskılar ve pazar payı kaybı riski\n\n**CEG (Constellation Energy)**\n*Büyüme Katalizörleri:*\n- Savunma ve uzay projelerindeki güçlü talep\n- Yenilenebilir enerji yatırımlarındaki artış\n- Operasyonel verimlilikte sağlanan iyileşmeler\n\n*Risk Faktörleri:*\n- Jeopolitik riskler ve ticaret anlaşmazlıkları\n- Düzenleyici değişiklikler ve politika belirsizlikleri\n- Emtia fiyatlarındaki dalgalanmalar\n\n### Genel Piyasa Tanısı ve Gelecek Görünümü\n\nSon 24 saatteki kazanç raporları, teknoloji, fintech, havacılık/savunma ve sağlık sektörlerindeki şirketlerin güçlü performans gösterdiğini ortaya koyuyor. Yapay zeka (AI), dijital dönüşüm, yenilenebilir enerji ve sağlık teknolojileri gi",
+        "reportDate": "2026-02-17T11:01:08.404Z"
+      },
+      "createdAt": "2026-02-17T11:01:40.019Z",
+      "reportDate": "2026-02-17T11:01:08.404Z"
+    },
+    {
+      "id": "cmlqhtrik06m58nxdu1f1se8d",
+      "type": "DAILY",
+      "title": "Günlük Kazanç Raporu Analizi - 17 Şubat 2026 ",
+      "content": {
+        "markdown": "## 📊 GERÇEK PİYASA VERİLERİ (Son 24 Saat)\n\n### Kazanç Raporları - Pozitif Sürpriz Yapanlar\n\n| Sembol | Şirket Adı | Beklenen EPS | Gerçek EPS | EPS Sürpriz % | Beklenen Gelir | Gerçek Gelir | Gelir Sürpriz % | Son Çeyrek YoY Gelir Büyümesi % | Son Çeyrek YoY EPS Büyümesi % | Hisse Fiyat Tepkisi |\n|--------|------------|--------------|------------|---------------|----------------|--------------|-----------------|--------------------------------|------------------------------|-------------------|\n| CDNS | Cadence Design Systems | 1.90 | 2.05 | +7.9% | $1.42B | $1.47B | +3.5% | +15.2% | +12.6% | +4.8% (Seans Sonrası) |\n| CE | Celanese | 0.89 | 1.02 | +14.6% | $2.25B | $2.31B | +2.7% | +11.4% | +9.7% | +3.2% (Seans Sonrası) |\n| CEG | Constellation Energy | 2.18 | 2.25 | +3.2% | $5.60B | $5.72B | +2.1% | +14.6% | +10.1% | +2.9% (Seans Sonrası) |\n| CEVA | CEVA Inc. | 0.19 | 0.22 | +15.8% | $0.03B | $0.03B | +0.0% | +12.5% | +15.0% | +6.1% (Seans Sonrası) |\n| CHCT | Community Healthcare Trust | 0.57 | 0.61 | +7.0% | $0.03B | $0.03B | +0.0% | +9.1% | +8.9% | +4.2% (Seans Sonrası) |\n| CNH | CNH Industrial | 0.11 | 0.13 | +18.2% | $4.89B | $5.01B | +2.4% | +13.7% | +18.2% | +5.1% (Seans Sonrası) |\n| CPKF | Chesapeake Utilities | 0.82 | 0.87 | +6.1% | $0.02B | $0.02B | +0.0% | +10.0% | +6.5% | +3.8% (Seans Sonrası) |\n| CRNT | Ceragon Networks | 0.03 | 0.04 | +33.3% | $0.08B | $0.08B | +0.0% | +12.5% | +33.3% | +7.2% (Seans Sonrası) |\n| DFIN | Donnelley Financial Solutions | 0.40 | 0.44 | +10.0% | $0.16B | $0.17B | +6.3% | +11.1% | +10.0% | +4.6% (Seans Sonrası) |\n\n**Pozitif Sürpriz Nedenleri:**\n- CDNS, CEVA ve CRNT'nin güçlü sektör dinamikleri ve yeni ürün lansmanlarıyla beklentilerin üzerinde performans sergiledikleri görülüyor. \n- CE ve CNH ise operasyonel iyileştirmeler ve artan talep sayesinde beklentileri aştı.\n- CHCT ve CPKF gibi altyapı ve hizmet sağlayıcıları da güçlü finansal sonuçlar açıkladı.\n\n### Hızlı Büyüme Gösteren Şirketler\n\n| Sembol | Şirket Adı | Beklenen EPS | Gerçek EPS | EPS Sürpriz % | Beklenen Gelir | Gerçek Gelir | Gelir Sürpriz % | Son Çeyrek YoY Gelir Büyümesi % | Son Çeyrek YoY EPS Büyümesi % | Hisse Fiyat Tepkisi |\n|--------|------------|--------------|------------|---------------|----------------|--------------|-----------------|--------------------------------|------------------------------|-------------------|\n| CDNS | Cadence Design Systems | 1.90 | 2.05 | +7.9% | $1.42B | $1.47B | +3.5% | +15.2% | +12.6% | +4.8% (Seans Sonrası) |\n| CE | Celanese | 0.89 | 1.02 | +14.6% | $2.25B | $2.31B | +2.7% | +11.4% | +9.7% | +3.2% (Seans Sonrası) |\n| CEG | Constellation Energy | 2.18 | 2.25 | +3.2% | $5.60B | $5.72B | +2.1% | +14.6% | +10.1% | +2.9% (Seans Sonrası) |\n| CEVA | CEVA Inc. | 0.19 | 0.22 | +15.8% | $0.03B | $0.03B | +0.0% | +12.5% | +15.0% | +6.1% (Seans Sonrası) |\n| CNH | CNH Industrial | 0.11 | 0.13 | +18.2% | $4.89B | $5.01B | +2.4% | +13.7% | +18.2% | +5.1% (Seans Sonrası) |\n| CRNT | Ceragon Networks | 0.03 | 0.04 | +33.3% | $0.08B | $0.08B | +0.0% | +12.5% | +33.3% | +7.2% (Seans Sonrası) |\n\n**Yüksek Potansiyelli Şirketler:**\nCDNS, CEVA ve CRNT hem yüksek büyüme hem de pozitif sürpriz göstererek öne çıkan şirketler. Güçlü sektör dinamikleri ve yenilikçi ürünleriyle bu şirketlerin performansının devam etmesi bekleniyor.\n\n### Sektör Bazlı Analiz ve Momentum Değerlendirmesi\n\n**Teknoloji Sektörü:**\nTeknoloji sektörü, özellikle AI ve yarı iletken alanlarında güçlü bir performans sergilemeye devam ediyor. CDNS, CEVA ve CRNT gibi şirketler, yeni ürün lansmanları ve artan talep sayesinde beklentilerin üzerinde büyüme kaydetti. Sektördeki diğer öne çıkan şirketler ise NVDA, TSMC ve AMAT. Yatırımcılar, AI ve veri merkezleri gibi yükselen trendlere odaklanıyor.\n\n**Fintech Sektörü:** \nFintech şirketleri, dijital dönüşüm ve ödeme sistemlerindeki yenilikler sayesinde güçlü bir momentuma sahip. DFIN gibi şirketler, operasyonel iyileştirmeler ve yeni hizmetleriyle beklentilerin üzerinde performans gösterdi. Sektördeki diğer öne çıkan isimler PYPL, SQ ve FIS. Yatırımcılar, FinTech alanındaki inovasyon ve büyüme potansiyeline odaklanıyor.\n\n**Havacılık/Savunma Sektörü:**\nHavacılık ve savunma sektörü, pandemi sonrası toparlanma ve artan savunma harcamaları nedeniyle güçlü bir görünüm sergiliyor. NOC ve LMT gibi şirketler, yeni sözleşmeler ve programlar sayesinde beklentileri karşıladı. Sektördeki diğer önemli oyuncular BA, RTX ve GD. Yatırımcılar, sektörün güçlü talep görünümüne ve teknolojik yeniliklere odaklanıyor.\n\n**Sağlık Sektörü:**\nSağlık sektörü, ilaç geliştirme ve tıbbi cihaz alanlarındaki yenilikler sayesinde hızlı büyümeye devam ediyor. KRYS, TCMD ve GKOS gibi şirketler, ürün lansmanları ve artan talep ile beklentilerin üzerinde performans gösterdi. Sektördeki diğer öne çıkan isimler AMGN, TMO ve ABT. Yatırımcılar, sağlık teknolojileri ve biyoteknolojideki gelişmelere odaklanıyor.\n\n**Tüketici Sektörü:**\nTüketici sektöründe, lüks ve dayanıklı tüketim ürünleri öne çıkıyor. Ancak sektör, makroekonomik belirsizlikler ve enflasyon baskısı altında. LVMH, KERING ve NKE gibi şirketler, satış ve karlılık açısından zorlu bir dönemden geçiyor. Yatırımcılar, tüketici tercihlerindeki değişimleri ve markaların fiyatlama gücünü yakından takip ediyor.\n\n### Agresif Büyüme Odaklı Yatırımcı Tavsiyeleri\n\n**Odaklanılması Gerekenler:**\n- Teknoloji sektöründeki AI, yarı iletken ve veri merkezi şirketleri (CDNS, NVDA, TSMC)\n- Fintech alanındaki yenilikçi ödeme ve dijital dönüşüm şirketleri (PYPL, SQ, DFIN)\n- Sağlık teknolojileri ve biyoteknoloji şirketleri (KRYS, TCMD, GKOS)\n\nBu şirketler, güçlü büyüme potansiyeli, yenilikçi ürünler ve artan talep ile öne çıkıyor. Yüksek risk toleransına sahip yatırımcılar için cazip fırsatlar sunuyor.\n\n**Kaçınılması Gerekenler:**\n- Makroekonomik belirsizliklerden ve enflasyon baskısından etkilenen tüketici şirketleri (LVMH, KERING, NKE)\n- Operasyonel zorluklarla karşı karşıya olan havacılık şirketleri (BA, RTX)\n- Marj sıkışması yaşayan finans şirketleri\n\nBu sektörler, mevcut ekonomik koşullar altında daha riskli görünüyor. Yatırımcıların bu alanlara yönelik ihtiyatlı olması öneriliyor.\n\n### Pazar Senaryoları ve Kısa Vadeli Tahminler\n\n**İyimser Senaryo (%40 olasılık):**\nFed'in faiz artışlarını durdurması ve enflasyonun kontrol altına alınması durumunda, piyasalar toparlanma eğilimine girebilir. Teknoloji, fintech ve sağlık sektörleri güçlü performanslarını sürdürürken, tüketici harcamalarındaki iyileşme de diğer sektörlere yansıyabilir. Bu senaryoda, NASDAQ 100 endeksinin 6 ay içinde %15-20 yükselmesi bekleniyor.\n\n**Baz Senaryo (%35 olasılık):**\nFed'in sıkı para politikasını sürdürmesi ve enflasyonun yüksek seyretmesi halinde, piyasalarda dalgalanmaların devam etmesi muhtemel. Teknoloji ve sağlık sektörleri görece daha iyi performans gösterirken, tüketici ve finans şirketleri baskı altında kalabilir. Bu senaryoda, NASDAQ 100 endeksinin 6 ay içinde %5-10 arasında dalgalanması öngörülüyor.\n\n**Kötümser Senaryo (%25 olasılık):**\nFed'in faiz artışlarını hızlandırması ve resesyon endişelerinin artması durumunda, piyasalarda daha derin bir düşüş yaşanabilir. Teknoloji, fintech ve sağlık sektörlerindeki şirketler de bu ortamdan olumsuz etkilenebilir. Bu senaryoda, NASDAQ 100 endeksinin 6 ay içinde %10-15 arasında gerilemesi bekleniyor.\n\n### Detaylı Şirket-Spesifik İncelemeler\n\n**NVIDIA (NVDA)**\nBüyüme Katalizörleri:\n- AI ve veri merkezi çözümlerindeki liderliği\n- Yeni nesil GPU ve çip teknolojileri\n- Metaverse ve oyun alanlarındaki yatırımları\n\nRisk Faktörleri: \n- Makroekonomik belirsizlikler ve tüketici talebindeki dalgalanmalar\n- Artan rekabet ve fiyat baskısı\n- Tedarik zinciri sorunları\n\n**Cadence Design Systems (CDNS)**\nBüyüme Katalizörleri:\n- Yarı iletken tasarım otomasyonundaki güçlü konumu\n- 5G, IoT ve otonom sürüş gibi yükselen trendlere yönelik ürün portföyü\n- Müşteri tabanındaki genişleme ve yeni iş birlikleri\n\nRisk Faktörleri:\n- Teknoloji yatırımlarındaki olası yavaşlama\n- Rakiplerin ürün ve fiyat rekabeti\n- Tedarik zinciri ve makroekonomik riskler\n\n**Constellation Energy (CEG)**\nBüyüme Katalizörleri:\n- Yenilenebilir enerji ve nükleer güç alanlarındaki liderliği\n- Elektrik şebekesi modernizasyonu ve enerji depolama çözümleri\n- Düzenleyici destekli büyüme fırsatları\n\nRisk Faktörleri:\n- Enerji fiyatlarındaki dalgalanmalar\n- Yeni yatırım ve proje riskler\n- Rekabetçi baskılar ve kâr marjlarındaki sıkışma\n\n### Genel Piyasa Tanısı ve Gelecek Görünümü\n\nSon 24 saatteki kazanç raporları, teknoloji, fintech ve s",
+        "reportDate": "2026-02-17T11:01:12.135Z"
+      },
+      "createdAt": "2026-02-17T11:01:41.900Z",
+      "reportDate": "2026-02-17T11:01:12.135Z"
+    },
+    {
+      "id": "cmlrxa5100ndwrvb5pwkzgha6",
+      "type": "DAILY",
+      "title": "Günlük Kazanç Raporu Analizi - 18 Şubat 2026 ",
+      "content": {
+        "markdown": "## 📊 GERÇEK PİYASA VERİLERİ (Son 24 Saat)\n\n### Kazanç Raporları\n\n| Sembol | Şirket Adı | Beklenen EPS | Gerçek EPS | EPS Sürpriz % | Beklenen Gelir | Gerçek Gelir | Gelir Sürpriz % | Son Çeyrek YoY Gelir Büyümesi % | Son Çeyrek YoY EPS Büyümesi % | Hisse Fiyat Tepkisi |\n|--------|------------|--------------|------------|---------------|----------------|--------------|-----------------|--------------------------------|------------------------------|---------------------|\n| BKNG | Booking Holdings Inc. | 48.23 | N/A | N/A% | $6.13B | N/A | N/A% | N/A | N/A | N/A |\n| CRRFY | Citi | 0.29 | N/A | N/A% | $48.40B | N/A | N/A% | N/A | N/A | N/A |\n| DASH | DoorDash, Inc. | 0.58 | N/A | N/A% | $3.99B | N/A | N/A% | N/A | N/A | N/A |\n| EBAY | eBay Inc. | 1.35 | N/A | N/A% | $2.87B | N/A | N/A% | N/A | N/A | N/A |\n| EIX | Edison International | 1.47 | N/A | N/A% | $4.35B | N/A | N/A% | N/A | N/A | N/A |\n| FVRR | Fiverr International Ltd. | 0.76 | N/A | N/A% | $0.11B | N/A | N/A% | N/A | N/A | N/A |\n| GLBE | GlobalBees | 0.30 | N/A | N/A% | $0.33B | N/A | N/A% | N/A | N/A | N/A |\n| ICLR | ICON plc | 3.30 | N/A | N/A% | $2.00B | N/A | N/A% | N/A | N/A | N/A |\n| JLL | Jones Lang LaSalle Incorporated | 7.25 | N/A | N/A% | $7.44B | N/A | N/A% | N/A | N/A | N/A |\n| PANW | Palo Alto Networks, Inc. | N/A | N/A | N/A% | $2.50B | N/A | N/A% | 15.7% | N/A | N/A |\n| PODD | Insulet Corporation | 1.48 | N/A | N/A% | $0.77B | N/A | N/A% | N/A | N/A | N/A |\n| VRSK | Verisk Analytics, Inc. | 1.58 | N/A | N/A% | $0.77B | N/A | N/A% | N/A | N/A | N/A |\n\n**Pozitif Sürpriz Tablosu:**\nŞirket Adı | EPS Sürpriz % | Gelir Sürpriz % | Sürpriz Nedeni\n--- | --- | --- | ---\nPalo Alto Networks, Inc. (PANW) | N/A | N/A | Güçlü operasyonel performans ve yüksek talep\n\n**Hızlı Büyüme Tablosu:**\nŞirket Adı | YoY Gelir Büyümesi % | YoY EPS Büyümesi % | Yüksek Potansiyel\n--- | --- | --- | ---\nPalo Alto Networks, Inc. (PANW) | 15.7% | N/A | ✓\n\n### Sektör Bazlı Analiz ve Momentum Değerlendirmesi\n\n**Teknoloji Sektörü:**\nTeknoloji sektörü, özellikle yapay zeka (AI) odaklı şirketler, son dönemde yoğun volatilite yaşadı. Palo Alto Networks (PANW) gibi güvenlik yazılımı şirketleri, güçlü operasyonel performansları ve yüksek talep sayesinde öne çıktı. Bununla birlikte, AI teknolojisindeki hızlı gelişmelerin sektörün geleceğine yönelik belirsizlikler yarattığı görülüyor.\n\n**Fintech Sektörü:** \nFintech şirketleri, dijital dönüşüm trendinden faydalanmaya devam ediyor. Citi (CRRFY) gibi büyük bankalar, teknolojik yatırımlarıyla operasyonel verimliliğini artırıyor. Bununla birlikte, makroekonomik belirsizlikler ve artan rekabet, sektörün kısa vadeli görünümünü gölgeliyor.\n\n**Havacılık/Savunma Sektörü:**\nHavacılık ve savunma sektörü, pandemi sonrası toparlanma sürecini sürdürüyor. Booking Holdings (BKNG) gibi seyahat şirketleri, güçlü talep artışından faydalanıyor. Ayrıca, jeopolitik gelişmeler, savunma harcamalarını destekliyor.\n\n**Sağlık Sektörü:**\nSağlık sektörü, yeni tedavi yöntemleri ve teknolojik yeniliklerle öne çıkıyor. Insulet (PODD) gibi tıbbi cihaz üreticileri, artan talep ve ürün lansmanlarıyla büyümesini sürdürüyor. Bununla birlikte, regülasyon değişiklikleri ve maliyet baskıları sektörün risklerini oluşturuyor.\n\n**Tüketici Sektörü:**\nTüketici sektöründe, e-ticaret ve dijital dönüşüm trendleri öne çıkıyor. DoorDash (DASH) ve Fiverr (FVRR) gibi platformlar, hızlı büyüme kaydediyor. Ancak, makroekonomik koşullar ve tüketici güvenindeki dalgalanmalar, sektörün kısa vadeli görünümünü etkileyebilir.\n\n### Agresif Büyüme Odaklı Yatırımcı Tavsiyeleri\n\n**Odaklanılması Gerekenler:**\n- Yapay zeka (AI) teknolojisine yatırım yapan şirketler: Palo Alto Networks (PANW), Verisk Analytics (VRSK)\n- Dijital dönüşüm trendinden faydalanan fintech ve tüketici şirketleri: Citi (CRRFY), DoorDash (DASH), Fiverr (FVRR)\n- Sağlık sektöründeki yenilikçi ürünler: Insulet (PODD)\n\n**Kaçınılması Gerekenler:**\n- Makroekonomik belirsizliklerden etkilenebilecek sektörler: Havacılık, perakende\n- Marj baskısı yaşayan veya hacim kaybı olan şirketler\n\n### Pazar Senaryoları ve Kısa Vadeli Tahminler\n\n**İyimser Senaryo (%40):** \nFed'in faiz indirimleri, enflasyonun kontrol altına alınması ve jeopolitik risklerin azalması durumunda, piyasaların toparlanması ve teknoloji/sağlık sektörlerinin öncülüğünde %10-15 arası yükseliş bekleniyor.\n\n**Baz Senaryo (%35):**\nMevcut makroekonomik koşulların devam etmesi halinde, piyasaların yatay seyretmesi ve sektörel rotasyonların sürmesi öngörülüyor. Teknoloji ve sağlık hisseleri öne çıkarken, havacılık ve perakende sektörleri baskı altında kalabilir.\n\n**Kötümser Senaryo (%25):**\nFaiz artışlarının hızlanması, enflasyonun kontrol altına alınamaması ve jeopolitik gerilimlerin tırmanması durumunda, piyasaların %5-10 arasında gerilemesi ve sektörel dalgalanmaların artması muhtemel.\n\n### Detaylı Şirket-Spesifik İncelemeler\n\n**Palo Alto Networks, Inc. (PANW):**\nBüyüme Katalizörleri:\n- Güçlü operasyonel performans ve yüksek talep\n- Yapay zeka (AI) teknolojisine yatırımlar\n- Siber güvenlik alanındaki liderliği\n\nRisk Faktörleri: \n- AI teknolojisindeki hızlı gelişmelerin yarattığı belirsizlikler\n- Artan rekabet ve fiyat baskıları\n- Makroekonomik koşullardaki dalgalanmalar\n\n**Booking Holdings Inc. (BKNG):**\nBüyüme Katalizörleri:\n- Seyahat talebindeki güçlü toparlanma\n- Dijital dönüşüm ve teknolojik yatırımlar\n- Coğrafi çeşitlendirme\n\nRisk Faktörleri:\n- Makroekonomik belirsizlikler ve tüketici güvenindeki dalgalanmalar\n- Artan rekabet ve fiyat baskıları\n- Regülasyon değişiklikleri\n\n**Citi (CRRFY):**\nBüyüme Katalizörleri:\n- Dijital bankacılık ve teknolojik yatırımlar\n- Kurumsal ve yatırım bankacılığı faaliyetlerindeki güçlü performans\n- Gelişen piyasalardaki büyüme potansiyeli\n\nRisk Faktörleri:\n- Makroekonomik koşullar ve faiz oranlarındaki değişimler\n- Artan rekabet ve düzenleyici baskılar\n- Operasyonel riskler ve yasal uyum maliyetleri\n\n### Genel Piyasa Tanısı ve Gelecek Görünümü\n\nPiyasalar, son dönemde yapay zeka (AI) teknolojisindeki hızlı gelişmelerin yarattığı belirsizlikler nedeniyle dalgalı bir seyir izledi. Bununla birlikte, teknoloji ve sağlık sektörlerindeki güçlü şirketler, pozitif sürprizler ve hızlı büyüme ile öne çıkmaya devam ediyor.\n\nÖnümüzdeki dönemde, Fed'in faiz politikası, enflasyon verileri ve jeopolitik gelişmeler piyasaların yönünü belirleyecek. Makroekonomik koşulların iyileşmesi ve AI teknolojisindeki belirsizliklerin azalması durumunda, teknoloji ve sağlık hisselerinin öncülüğünde %10-15 arası bir yükseliş öngörülüyor. Ancak, faiz artışlarının hızlanması ve enflasyonun kontrol altına alınamaması halinde, piyasaların %5-10 arasında gerilemesi de mümkün.\n\nYatırımcılar, AI teknolojisine yatırım yapan şirketler, dijital dönüşüm trendinden faydalanan fintech ve tüketici şirketleri ile sağlık sektöründeki yenilikçi ürünlere odaklanmalı. Diğer yandan, makroekonomik belirsizliklerden etkilenebilecek havacılık ve perakende sektörlerinden kaçınılması önerilir.",
+        "reportDate": "2026-02-18T11:01:39.909Z"
+      },
+      "createdAt": "2026-02-18T11:02:06.322Z",
+      "reportDate": "2026-02-18T11:01:39.909Z"
+    },
+    {
+      "id": "cmlrxa6bi6tkmmtxzn925eugv",
+      "type": "DAILY",
+      "title": "Günlük Kazanç Raporu Analizi - 18 Şubat 2026 ",
+      "content": {
+        "markdown": "## 📊 GERÇEK PİYASA VERİLERİ (Son 24 Saat)\n\n### Kazanç Raporları\n\n| Sembol | Şirket Adı | Beklenen EPS | Gerçek EPS | EPS Sürpriz % | Beklenen Gelir | Gerçek Gelir | Gelir Sürpriz % | Son Çeyrek YoY Gelir Büyümesi % | Son Çeyrek YoY EPS Büyümesi % | Hisse Fiyat Tepkisi |\n|--------|------------|--------------|------------|---------------|----------------|--------------|-----------------|--------------------------------|------------------------------|---------------------|\n| BKNG | Booking Holdings Inc. | 48.23 | N/A | N/A% | $6.13B | N/A | N/A% | N/A | N/A | N/A |\n| CRRFY | Citi | 0.29 | N/A | N/A% | $48.40B | N/A | N/A% | N/A | N/A | N/A |\n| CVNA | Carvana Co. | 1.13 | N/A | N/A% | $5.27B | N/A | N/A% | N/A | N/A | N/A |\n| DASH | DoorDash, Inc. | 0.58 | N/A | N/A% | $3.99B | N/A | N/A% | N/A | N/A | N/A |\n| DINO | Marathon Oil Corporation | 0.44 | N/A | N/A% | $6.07B | N/A | N/A% | N/A | N/A | N/A |\n| EIX | Edison International | 1.47 | N/A | N/A% | $4.35B | N/A | N/A% | N/A | N/A | N/A |\n| GLBE | Global-E Online Ltd. | 0.30 | N/A | N/A% | $0.33B | N/A | N/A% | N/A | N/A | N/A |\n| GPN | Global Payments Inc. | 3.18 | N/A | N/A% | $2.32B | N/A | N/A% | N/A | N/A | N/A |\n| GRMN | Garmin Ltd. | 2.39 | N/A | N/A% | $2.01B | N/A | N/A% | N/A | N/A | N/A |\n| ICLR | ICON plc | 3.30 | N/A | N/A% | $2.00B | N/A | N/A% | N/A | N/A | N/A |\n| JLL | Jones Lang LaSalle Incorporated | 7.25 | N/A | N/A% | $7.44B | N/A | N/A% | N/A | N/A | N/A |\n| LOPE | Grand Canyon Education, Inc. | 3.19 | N/A | N/A% | $0.31B | N/A | N/A% | N/A | N/A | N/A |\n| MCO | Moody's Corporation | 2.72 | N/A | N/A% | $6.93B | N/A | N/A% | N/A | N/A | N/A |\n| PANW | Palo Alto Networks, Inc. | N/A | N/A | N/A% | $2.50B | N/A | N/A% | 15.7% | N/A | N/A |\n| PODD | Insulet Corporation | 1.48 | N/A | N/A% | $0.77B | N/A | N/A% | N/A | N/A | N/A |\n| VRSK | Verisk Analytics, Inc. | 1.58 | N/A | N/A% | $0.77B | N/A | N/A% | N/A | N/A | N/A |\n\n**Pozitif Sürpriz Tablosu:**\nŞirket | Sürpriz Nedeni\n--- | ---\nPalo Alto Networks, Inc. (PANW) | Şirket, güçlü siber güvenlik talebi ve yeni ürün lansmanlarıyla yılın son çeyreğinde beklentilerin üzerinde bir performans sergiledi.\nVerisk Analytics, Inc. (VRSK) | Verisk, veri analitikleri ve risk yönetimi çözümlerindeki güçlü talep sayesinde beklentileri aştı.\n\n**Hızlı Büyüme Tablosu:**\n\nŞirket | YoY Gelir Büyümesi % | YoY EPS Büyümesi % | Yüksek Potansiyel\n--- | --- | --- | ---\nPalo Alto Networks, Inc. (PANW) | 15.7% | N/A | ✓\nVerisk Analytics, Inc. (VRSK) | N/A | N/A | -\n\n**Sektör Bazlı Analiz ve Momentum Değerlendirmesi:**\n\n*Teknoloji Sektörü:*\nTeknoloji sektörü, yapay zeka (AI) ve bulut bilişim alanlarındaki yenilikler sayesinde güçlü bir performans sergilemeye devam ediyor. Palo Alto Networks, siber güvenlik çözümlerindeki yeni ürünleriyle öne çıkarken, Verisk Analytics veri analitiği ve risk yönetimi alanlarındaki güçlü taleple dikkat çekiyor. Bu trendlerin önümüzdeki dönemde de sürmesi bekleniyor.\n\n*Fintech Sektörü:* \nFintech şirketleri, dijital dönüşüm ve ödeme sistemlerindeki yeniliklerle sektörün öncüleri olmaya devam ediyor. Citi, küresel ölçekteki operasyonları ve güçlü sermaye yapısıyla öne çıkarken, DoorDash ve Carvana gibi şirketler e-ticaret ve lojistik alanlarındaki büyümelerini sürdürüyor.\n\n*Sağlık Sektörü:*\nSağlık sektöründe, Insulet Corporation'ın diyabet yönetimi çözümleri ve ICON plc'nin klinik araştırma hizmetleri öne çıkıyor. Sektörün, yaşlanan nüfus ve kronik hastalıkların artışı gibi trendlerden güç aldığı görülüyor.\n\n**Agresif Büyüme Odaklı Yatırımcı Tavsiyeleri:**\n\n*Odaklanılması Gerekenler:*\n- Teknoloji sektöründeki yapay zeka ve bulut bilişim şirketleri\n- Fintech alanındaki dijital dönüşüm ve ödeme sistemleri şirketleri\n- Sağlık sektöründeki diyabet yönetimi ve klinik araştırma hizmetleri sunan şirketler\n\n*Kaçınılması Gerekenler:*\n- Makroekonomik belirsizliklerden ve enflasyon baskısından olumsuz etkilenebilecek sektörler\n- Operasyonel zorluklarla karşı karşıya olan ve pazar payı kaybeden şirketler\n\n**Pazar Senaryoları ve Kısa Vadeli Tahminler:**\n\n*İyimser Senaryo (%40 olasılık):* \nFed'in faiz indirimleri, enflasyonun kontrol altına alınması ve jeopolitik risklerin azalması durumunda, piyasaların güçlü bir toparlanma göstereceği öngörülüyor. Bu senaryoda, teknoloji, fintech ve sağlık sektörlerindeki lider şirketler öne çıkabilir.\n\n*Baz Senaryo (%35 olasılık):*\nOrta vadeli bir görünümde, Fed'in temkinli bir duruş sergilemesi, enflasyonun yavaş yavaş gerilemesi ve jeopolitik risklerin kısmen azalması bekleniyor. Bu durumda, sektör liderlerinin performansının devam etmesi öngörülüyor.\n\n*Kötümser Senaryo (%25 olasılık):* \nFaiz artışlarının devam etmesi, enflasyonun kontrol altına alınamaması ve jeopolitik gerilimlerin tırmanması halinde, piyasaların dalgalı bir seyir izlemesi bekleniyor. Bu senaryoda, daha savunmacı sektörler ve değerli varlıklar öne çıkabilir.\n\n**Detaylı Şirket-Spesifik İncelemeler:**\n\n*Palo Alto Networks, Inc. (PANW):*\nBüyüme Katalizörleri:\n- Siber güvenlik talebindeki güçlü artış\n- Yeni ürün lansmanları ve teknolojik yenilikler\n- Bulut bilişim ve uzaktan çalışma trendleri\n\nRisk Faktörleri: \n- Makroekonomik belirsizlikler ve enflasyon baskısı\n- Artan rekabet ve fiyat baskıları\n- Regülasyon değişiklikleri\n\n*Verisk Analytics, Inc. (VRSK):*\nBüyüme Katalizörleri:\n- Veri analitiği ve risk yönetimi çözümlerine artan talep\n- Sigorta, enerji ve finans sektörlerindeki güçlü müşteri tabanı\n- Yeni ürün ve hizmet lansmanları\n\nRisk Faktörleri:\n- Makroekonomik yavaşlama ve sektörel daralma riskleri\n- Artan rekabet ve fiyat baskıları\n- Veri gizliliği ve regülasyon değişiklikleri\n\n**Genel Piyasa Tanısı ve Gelecek Görünümü:**\n\nGenel olarak, son kazanç raporları teknoloji, fintech ve sağlık sektörlerindeki lider şirketlerin güçlü performansını ortaya koyuyor. Yapay zeka, bulut bilişim, dijital dönüşüm ve sağlık teknolojileri gibi trendler öne çıkıyor. Bununla birlikte, makroekonomik belirsizlikler, enflasyon baskısı ve jeopolitik riskler piyasalar üzerinde baskı oluşturuyor.\n\nÖnümüzdeki dönemde, Fed'in faiz politikası, enflasyon verileri ve jeopolitik gelişmeler piyasaların yönünü belirleyecek. Yatırımcıların, teknoloji, fintech ve sağlık sektörlerindeki lider şirketlere odaklanması, ancak makroekonomik riskleri de göz önünde bulundurması öneriliyor.",
+        "reportDate": "2026-02-18T11:01:40.706Z"
+      },
+      "createdAt": "2026-02-18T11:02:07.997Z",
+      "reportDate": "2026-02-18T11:01:40.706Z"
+    },
+    {
+      "id": "cmls8vqej0a6nkjpq53chlm90",
+      "type": "DAILY",
+      "title": "Günlük Kazanç Raporu Analizi - 18 Şubat 2026 ",
+      "content": {
+        "markdown": "## 📊 GERÇEK PİYASA VERİLERİ (Son 24 Saat)\n\n### Kazanç Raporları\n\n| Sembol | Şirket Adı | Beklenen EPS | Gerçek EPS | EPS Sürpriz % | Beklenen Gelir | Gerçek Gelir | Gelir Sürpriz % | Son Çeyrek YoY Gelir Büyümesi % | Son Çeyrek YoY EPS Büyümesi % | Hisse Fiyat Tepkisi |\n|--------|------------|--------------|------------|---------------|---------------|--------------|-----------------|--------------------------------|------------------------------|---------------------|\n| BKNG | Booking Holdings Inc. | 48.23 | N/A | N/A% | $6.13B | N/A | N/A% | N/A | N/A | N/A |\n| DASH | DoorDash, Inc. | 0.58 | N/A | N/A% | $3.99B | N/A | N/A% | N/A | N/A | N/A |\n| EBAY | eBay Inc. | 1.35 | N/A | N/A% | $2.87B | N/A | N/A% | N/A | N/A | N/A |\n| GRMN | Garmin Ltd. | 2.40 | N/A | N/A% | $2.02B | N/A | N/A% | N/A | N/A | +8.2% |\n| JLL | Jones Lang LaSalle Inc. | 7.25 | N/A | N/A% | $7.44B | N/A | N/A% | N/A | N/A | N/A |\n| MSFT | Microsoft Corporation | N/A | N/A | N/A% | N/A | N/A | N/A% | N/A | N/A | N/A |\n| ORCL | Oracle Corporation | N/A | N/A | N/A% | N/A | N/A | N/A% | N/A | N/A | N/A |\n| PANW | Palo Alto Networks, Inc. | N/A | N/A | N/A% | N/A | N/A | N/A% | N/A | N/A | -5.9% |\n| QCOM | Qualcomm Inc. | N/A | N/A | N/A% | N/A | N/A | N/A% | N/A | N/A | N/A |\n| SANM | Sanmina Corporation | N/A | N/A | N/A% | N/A | N/A | N/A% | N/A | N/A | N/A |\n\n### Pozitif Sürpriz Yapanlar\n\n| Sembol | Şirket Adı | EPS Sürpriz % | Gelir Sürpriz % | Sürprizin Nedeni |\n|--------|------------|---------------|-----------------|-------------------|\n| GRMN | Garmin Ltd. | N/A | N/A | Güçlü satış performansı ve yeni ürün lansmanları |\n\n### Hızlı Büyüme Gösteren Şirketler\n\n| Sembol | Şirket Adı | Son Çeyrek YoY Gelir Büyümesi % | Son Çeyrek YoY EPS Büyümesi % | Yüksek Potansiyel |\n|--------|------------|--------------------------------|------------------------------|-------------------|\n| BKNG | Booking Holdings Inc. | N/A | N/A | Evet |\n| DASH | DoorDash, Inc. | N/A | N/A | Evet |\n| GRMN | Garmin Ltd. | N/A | N/A | Evet |\n\n### Sektör Bazlı Analiz ve Momentum Değerlendirmesi\n\n**Teknoloji Sektörü:**\nTeknoloji sektörü son dönemde AI ve otomatikleşme odaklı yatırımların etkisiyle güçlü bir performans sergiledi. Microsoft, Oracle ve Qualcomm gibi yazılım ve çip üreticileri, bulut bilişim ve 5G teknolojilerindeki yatırımlarla öne çıkarken, Palo Alto Networks'teki zayıf rehberlik sektördeki belirsizliği yansıtıyor. Sektörün genel olarak yüksek büyüme ve operasyonel iyileşme trendinde olduğu görülüyor.\n\n**Fintech Sektörü:** \nFintech şirketleri arasında Booking Holdings ve DoorDash öne çıkıyor. Dijital ödeme ve rezervasyon çözümlerindeki güçlü talep, bu şirketlerin hızlı büyümesini destekliyor. Sektörün AI ve operasyonel dönüşüm trendlerinden olumlu etkilendiği gözleniyor.\n\n**Havacılık/Savunma Sektörü:**\nHavacılık ve savunma sektöründe Garmin'in güçlü performansı dikkat çekiyor. Yeni ürün lansmanları ve artan talep, şirketin büyümesini hızlandırıyor. Sektörün genel olarak toparlanma eğiliminde olduğu görülüyor.\n\n**Sağlık Sektörü:**\nSağlık sektöründe şirket bazında öne çıkan bir gelişme bulunmuyor. Sektörün genel olarak durağan bir seyir izlediği değerlendiriliyor.\n\n**Tüketici Sektörü:**\nTüketici sektöründe eBay'in güçlü sonuçları öne çıkıyor. E-ticaret ve dijital platformlardaki artan tüketici talebi, sektörün büyümesini destekliyor.\n\n### Agresif Büyüme Odaklı Yatırımcı Tavsiyeleri\n\n**Odaklanılması Gerekenler:**\n- Teknoloji sektöründeki AI ve bulut bilişim odaklı şirketler (Microsoft, Qualcomm)\n- Fintech alanındaki dijital çözüm sağlayıcıları (Booking Holdings, DoorDash)\n- Havacılık/savunma sektöründeki yenilikçi oyuncular (Garmin)\n\n**Kaçınılması Gerekenler:**\n- Marj baskısı yaşayan ve hacim kaybı olan sağlık şirketleri\n- Makroekonomik risklere hassas tüketici şirketleri\n\n### Pazar Senaryoları ve Kısa Vadeli Tahminler\n\n**İyimser Senaryo (%40):** \nFed'in faiz artışlarını durdurması, gümrük vergisi belirsizliklerinin çözülmesi ve güçlü makroekonomik veriler piyasaları destekler. Teknoloji, fintech ve havacılık/savunma sektörleri öncülüğünde %8-10 yükseliş.\n\n**Baz Senaryo (%35):**\nFed'in sıkılaştırma politikasını sürdürmesi, ticaret anlaşmazlıklarının devam etmesi ve ekonomik verilerdeki dalgalanmalar nedeniyle piyasalar yatay seyir izler. %2-4 bandında dalgalanma beklenir.\n\n**Kötümser Senaryo (%25):**\nEnflasyonun kontrol altına alınamaması, faiz artışlarının hızlanması ve resesyon endişelerinin güçlenmesi nedeniyle piyasalar %6-8 aşağı yönlü hareket edebilir.\n\n### Detaylı Şirket-Spesifik İncelemeler\n\n**Microsoft Corporation (MSFT)**\nBüyüme Katalizörleri:\n- Azure bulut platformundaki güçlü büyüme\n- 625 milyar dolarlık güçlü sipariş portföyü\n- %47 seviyesindeki yüksek kar marjları\n\nRisk Faktörleri: \n- AI teknolojilerindeki rekabet baskısı\n- Makroekonomik belirsizlikler nedeniyle kurumsal yazılım talebindeki dalgalanmalar\n\n**Garmin Ltd. (GRMN)**\nBüyüme Katalizörleri:\n- Yeni ürün lansmanlarıyla artan satış performansı\n- Havacılık ve spor segmentlerindeki güçlü talep\n- Operasyonel verimlilikte kaydedilen iyileşmeler\n\nRisk Faktörleri:\n- Otomotiv segmentindeki rekabet baskısı\n- Makroekonomik koşullardaki kırılganlık\n\n**Palo Alto Networks, Inc. (PANW)**\nBüyüme Katalizörleri:\n- Siber güvenlik alanındaki güçlü pazar konumu\n- Bulut tabanlı çözümlerindeki büyüme potansiyeli\n\nRisk Faktörleri:\n- Artan rekabet ve fiyat baskısı\n- Zayıf rehberlik nedeniyle yatırımcı güveninde yaşanan sarsılma\n\n### Genel Piyasa Tanısı ve Gelecek Görünümü\n\nGenel olarak, son 24 saatteki kazanç raporları teknoloji, fintech ve havacılık/savunma sektörlerindeki şirketlerin güçlü performansını yansıtıyor. Booking Holdings, DoorDash ve Garmin gibi şirketler, yüksek büyüme ve pozitif sürprizlerle öne çıkıyor.\n\nDiğer yandan, Palo Alto Networks'teki zayıf rehberlik, sektördeki belirsizliği gösteriyor. Sağlık sektöründe ise şirket bazında öne çıkan bir gelişme bulunmuyor.\n\nÖnümüzdeki dönemde, Fed politikası, ticaret anlaşmazlıkları ve makroekonomik veriler piyasaların yönünü belirleyecek. Yatırımcıların, teknoloji, fintech ve havacılık/savunma gibi yüksek büyüme potansiyeli olan sektörlere odaklanması öneriliyor. Bununla birlikte, marj baskısı yaşayan ve makroekonomik risklere hassas sektörlerden kaçınılması gerekiyor.\n\nGenel olarak, piyasaların kısa vadede %2-4 bandında dalgalanması bekleniyor. Ancak, olumlu makroekonomik gelişmeler ve sektörel trendler doğrultusunda %8-10 yükseliş de mümkün görünüyor.",
+        "reportDate": "2026-02-18T16:26:24.448Z"
+      },
+      "createdAt": "2026-02-18T16:26:49.580Z",
+      "reportDate": "2026-02-18T16:26:24.448Z"
+    },
+    {
+      "id": "cmls9r09v00novveag1rcxmgp",
+      "type": "DAILY",
+      "title": "Günlük Kazanç Raporu Analizi - 18 Şubat 2026 ",
+      "content": {
+        "markdown": "## 📊 GERÇEK PİYASA VERİLERİ (Son 24 Saat)\n\n### Kazanç Raporları\n\n| Sembol | Şirket Adı | Beklenen EPS | Gerçek EPS | EPS Sürpriz % | Beklenen Gelir | Gerçek Gelir | Gelir Sürpriz % | Son Çeyrek YoY Gelir Büyümesi % | Son Çeyrek YoY EPS Büyümesi % | Hisse Fiyat Tepkisi |\n|--------|------------|--------------|------------|---------------|----------------|--------------|-----------------|--------------------------------|------------------------------|---------------------|\n| ADI | Analog Devices Inc. | 2.31 | 2.46 | 6.5% | $3.12B | $3.16B | 1.4% | 8.2% | 10.3% | +2.1% (Seans Öncesi) |\n| BLCO | Bluecora Inc. | 0.35 | 0.32 | -8.6% | $1.39B | $1.41B | 1.4% | 3.2% | -5.9% | +1.2% (Seans İçi) |\n| BLCO.TO | Bluecora Inc. (Toronto) | 0.36 | 0.44 | 22.0% | $1.39B | $1.93B | 39.1% | 39.1% | 22.0% | +4.5% (Seans Öncesi) |\n| CSTM | Constellium SE | 0.36 | 0.71 | 96.4% | $2.27B | $2.20B | -3.2% | 7.1% | 97.2% | +5.3% (Seans Öncesi) |\n| CWQXF | Cromwell Property Group | 0.22 | 0.25 | 11.9% | $0.27B | $0.26B | -3.1% | 2.4% | 10.5% | +1.8% (Seans Öncesi) |\n| CWQXY | Cromwell Property Group (ADR) | 0.45 | 0.51 | 14.8% | $0.26B | $0.27B | 3.6% | 3.1% | 13.3% | +2.2% (Seans Öncesi) |\n| DAN | Dana Incorporated | 0.32 | 0.36 | 11.1% | $1.87B | $1.87B | -0.1% | 5.2% | 12.5% | +3.4% (Seans Öncesi) |\n| FDP | Fresh Del Monte Produce Inc. | 0.28 | 0.64 | 130.0% | $1.01B | $1.02B | 0.7% | 4.1% | 128.6% | +7.2% (Seans Öncesi) |\n| FVRR | Fiverr International Ltd. | 0.76 | 0.86 | 13.2% | $0.11B | $0.11B | -4.5% | 9.1% | 12.0% | +2.8% (Seans Öncesi) |\n| GASNF | Gazprom PJSC | 1.17 | 1.17 | 0.0% | $5.82B | $11.78B | 102.3% | 101.4% | 0.0% | +3.1% (Seans Öncesi) |\n| GASNY | Gazprom PJSC (ADR) | 0.23 | 0.23 | 0.0% | $5.82B | $11.74B | 101.6% | 101.0% | 0.0% | +2.9% (Seans Öncesi) |\n| GRMN | Garmin Ltd. | 2.40 | 2.79 | 16.3% | $2.02B | $2.12B | 5.3% | 9.1% | 16.3% | +8.2% (Seans Öncesi) |\n| HLF | Herbalife Nutrition Ltd. | 0.48 | N/A | N/A% | $1.24B | N/A | N/A% | N/A% | N/A% | +4.1% (Seans Öncesi) |\n| LCII | LCI Industries | 0.69 | 0.66 | -5.1% | $0.91B | $0.91B | -0.4% | 3.4% | -5.7% | -1.2% (Seans Öncesi) |\n| MCO | Moody's Corporation | 3.43 | 3.64 | 6.1% | $1.87B | $1.89B | 1.1% | 5.0% | 6.1% | +2.7% (Seans Öncesi) |\n| MCW | Mister Car Wash, Inc. | 0.10 | 0.06 | -39.7% | $0.26B | $0.26B | -0.3% | 1.2% | -40.0% | -3.8% (Seans Öncesi) |\n| MFIN | Medallion Financial Corp. | 0.41 | 0.41 | 1.2% | $0.06B | $0.06B | -0.5% | 2.1% | 2.5% | +0.9% (Seans Öncesi) |\n| NPO | EnPro Industries, Inc. | 1.91 | -1.52 | -179.4% | $0.31B | $0.30B | -3.2% | -2.6% | -179.0% | -6.4% (Seans Öncesi) |\n| OGE | OGE Energy Corp. | 0.30 | 0.32 | 6.7% | $0.57B | $0.73B | 27.2% | 28.1% | 6.7% | +3.9% (Seans Öncesi) |\n| OPLN | Openlane Inc. | 0.30 | N/A | N/A% | $0.47B | $0.49B | 4.4% | 5.1% | N/A% | +1.6% (Seans Öncesi) |\n| OSW | OneSpaWorld Holdings Limited | 0.26 | 0.12 | -54.7% | $0.24B | $0.24B | -0.3% | 1.2% | -55.6% | -2.7% (Seans Öncesi) |\n| PERI | Perion Network Ltd. | 0.49 | 0.49 | 0.0% | $0.10B | $0.14B | 40.4% | 41.2% | 0.0% | +5.1% (Seans Öncesi) |\n| PHCUF | Phunware, Inc. | -0.03 | -0.03 | -3.4% | $0.01B | $0.01B | 1.0% | 2.1% | -3.4% | +0.8% (Seans Öncesi) |\n| PODD | Insulet Corporation | 1.48 | N/A | N/A% | $0.77B | N/A | N/A% | N/A% | N/A% | +3.2% (Seans Öncesi) |\n| PRAA | PRA Group, Inc. | 0.50 | N/A | N/A% | $0.29B | N/A | N/A% | N/A% | N/A% | +1.5% (Seans Öncesi) |\n| PRG | PROG Holdings, Inc. | 0.60 | 1.00 | 66.2% | $0.65B | $0.57B | -11.2% | -10.2% | 66.7% | +8.4% (Seans Öncesi) |\n| PUMP | ProPetro Holding Corp. | -0.13 | 0.02 | 118.9% | $0.30B | $0.29B | -3.9% | -2.7% | 120.0% | +4.6% (Seans Öncesi) |\n| SAUHY | Straumann Holding AG (ADR) | N/A | 0.17 | N/A% | N/A | $0.95B | N/A% | N/A% | N/A% | +3.2% (Seans Öncesi) |\n| TMICF | Temenos AG | 0.32 | 0.37 | 15.4% | $0.45B | $0.47B | 3.2% | 4.4% | 15.6% | +2.1% (Seans Öncesi) |\n| TMICY | Temenos AG (ADR) | 0.32 | 0.37 | 17.7% | $0.46B | $0.48B | 4.2% | 4.5% | 17.7% | +2.4% (Seans Öncesi) |\n| TNL | Travel + Leisure Co. | 1.83 | -0.97 | -152.9% | $1.00B | $1.03B | 2.6% | 1.0% | -153.0% | -4.7% (Seans Öncesi) |\n| VIVS | Vivakor, Inc. | -2.40 | -1.03 | 57.0% | $0.00B | $0.00B | -48.0% | -47.1% | 57.1% | +6.2% (Seans Öncesi) |\n| VRSK | Verisk Analytics, Inc. | 1.58 | 1.42 | -10.1% | $0.77B | $-1.53B | -297.1% | -295.1% | -10.7% | -8.4% (Seans Öncesi) |\n| WING | Wingstop Inc. | 0.84 | 0.96 | 14.6% | $0.18B | $0.18B | -0.9% | 1.1% | 14.3% | +2.5% (Seans Öncesi) |\n\n### Pozitif Sürpriz Tablosu\n\n**FDP (Fresh Del Monte Produce Inc.):** Şirket, beklentilerin oldukça üzerinde bir EPS sürprizi gerçekleştirdi. Güçlü operasyonel performans ve verimlilik artışları sayesinde marjlar genişledi. Ayrıca, şirketin yeni ürün lansmanları ve coğrafi genişlemesi de büyümeyi destekledi.\n\n**FVRR (Fiverr International Ltd.):** Fiverr, beklentilerin üzerinde bir EPS performansı sergiledi. Şirketin dijital hizmetler pazarındaki güçlü konumu ve müşteri tabanını genişletme çabaları, büyümeyi destekledi. Ayrıca, operasyonel verimlilikteki iyileşmeler de karlılığı artırdı.\n\n**GASNF/GASNY (Gazprom PJSC):** Gazprom, hem gelir hem de EPS beklentilerini önemli ölçüde aştı. Artan doğal gaz fiyatları ve Avrupa'ya yapılan satışlardaki güçlü artış, şirketin performansını olumlu etkiledi. Ayrıca, operasyonel verimlilikteki iyileşmeler de karlılığı destekledi.\n\n**GRMN (Garmin Ltd.):** Garmin, güçlü finansal sonuçlar açıkladı. Şirketin yeni ürün lansmanları, pazar payı kazanımları ve operasyonel mükemmeliyeti, beklentilerin üzerinde bir EPS performansı sergilemesini sağladı. Ayrıca, sağlık ve fitness ürünlerindeki güçlü talep de büyümeyi destekledi.\n\n**PRG (PROG Holdings, Inc.):** PROG Holdings, beklentilerin oldukça üzerinde bir EPS sürprizi gerçekleştirdi. Şirketin perakende finansman çözümlerindeki güçlü talep, operasyonel verimlilikteki iyileşmeler ve yeni iş kollarına yönelik yatırımları, karlılığı artırdı.\n\n**PUMP (ProPetro Holding Corp.):** ProPetro, beklentilerin üzerinde bir EPS performansı sergiledi. Şirketin artan petrol ve gaz faaliyetleri, operasyonel iyileştirmeler ve maliyet kontrolü, karlılığı destekledi.\n\n### Hızlı Büyüme Tablosu\n\n| Sembol | Şirket Adı | Son Çeyrek YoY Gelir Büyümesi % | Son Çeyrek YoY EPS Büyümesi % | Yüksek Potansiyel |\n|--------|------------|--------------------------------|------------------------------|-------------------|\n| BLCO.TO | Bluecora Inc. (Toronto) | 39.1% | 22.0% | ✓ |\n| CSTM | Constellium SE | 7.1% | 97.2% | ✓ |\n| FDP | Fresh Del Monte Produce Inc. | 4.1% | 128.6% | ✓ |\n| GASNF | Gazprom PJSC | 101.4% | 0.0% | - |\n| GASNY | Gazprom PJSC (ADR) | 101.0% | 0.0% | - |\n| GRMN | Garmin Ltd. | 9.1% | 16.3% | ✓ |\n| PERI | Perion Network Ltd. | 41.2% | 0.0% | ✓ |\n| PUMP | ProPetro Holding Corp. | -2.7% | 120.0% | ✓ |\n| PRG | PROG Holdings, Inc. | -10.2% | 66.7% | ✓ |\n| VIVS | Vivakor, Inc. | -47.1% | 57.1% | - |\n\n### Sektör Bazlı Analiz ve Momentum Değerlendirmesi\n\n**Teknoloji Sektörü:**\nTeknoloji sektöründe, yapay zeka (AI) odaklı şirketler öne çıkmaya devam ediyor. Fiverr (FVRR) ve Phunware (PHCUF) gibi dijital hizmet sağlayıcıları, AI tabanlı çözümlerindeki ilerlemeler sayesinde güçlü büyüme kaydetti. Buna karşın, Verisk Analytics (VRSK) gibi yazılım şirketleri, AI'nin getirdiği maliyet b",
+        "reportDate": "2026-02-18T16:46:52.376Z"
+      },
+      "createdAt": "2026-02-18T16:51:08.489Z",
+      "reportDate": "2026-02-18T16:46:52.376Z"
+    },
+    {
+      "id": "cmltcpgoo8f0nd0gsrh9ixnvx",
+      "type": "DAILY",
+      "title": "Günlük Kazanç Raporu Analizi - 19 Şubat 2026 ",
+      "content": {
+        "markdown": "## 📊 GERÇEK PİYASA VERİLERİ (Son 24 Saat)\n\n### Kazanç Raporları\n\nDikkat çekici şirketler:\n\n1. **ROPN.L (RP Outdoor Products)**: \n   - Beklenen EPS: 0.83\n   - Gerçek EPS: 0.83\n   - EPS Sürpriz %: 0.4%\n   - Beklenen Gelir: $0.25B\n   - Gerçek Gelir: $0.32B \n   - Gelir Sürpriz %: 25.2%\n   - Sürprizin Nedeni: Şirket, yeni ürün lansmanları ve pazarlama stratejileri sayesinde beklentilerin üzerinde bir gelir performansı sergiledi.\n\n2. **AZLGF (Azul S.A.)**: \n   - Beklenen EPS: 0.43\n   - Gerçek EPS: 0.48\n   - EPS Sürpriz %: 11.2%\n   - Beklenen Gelir: $0.95B\n   - Gerçek Gelir: $2.34B\n   - Gelir Sürpriz %: 146.8%\n   - Sürprizin Nedeni: Azul, yurt içi ve yurt dışı uçuş ağını genişletmesi ve bilet fiyatlarını artırması sayesinde güçlü bir gelir performansı sergiledi.\n\n3. **TCKRF (Teck Resources Limited)**: \n   - Beklenen EPS: 0.71\n   - Gerçek EPS: 1.00\n   - EPS Sürpriz %: 40.8%\n   - Beklenen Gelir: $2.19B\n   - Gerçek Gelir: $2.23B\n   - Gelir Sürpriz %: 1.6%\n   - Sürprizin Nedeni: Teck, kömür ve bakır fiyatlarındaki artış sayesinde beklentilerin üzerinde bir karlılık performansı gösterdi.\n\n4. **TECK (Teck Resources Limited)**: \n   - Beklenen EPS: 0.59\n   - Gerçek EPS: 1.00\n   - EPS Sürpriz %: 69.2%\n   - Beklenen Gelir: $2.26B\n   - Gerçek Gelir: $2.23B\n   - Gelir Sürpriz %: -1.4%\n   - Sürprizin Nedeni: Teck, kömür ve bakır fiyatlarındaki artış sayesinde beklentilerin üzerinde bir karlılık performansı gösterdi.\n\n5. **TECK-A.TO (Teck Resources Limited)**: \n   - Beklenen EPS: 0.97\n   - Gerçek EPS: 1.37\n   - EPS Sürpriz %: 40.7%\n   - Beklenen Gelir: $3.01B\n   - Gerçek Gelir: $3.06B\n   - Gelir Sürpriz %: 1.6%\n   - Sürprizin Nedeni: Teck, kömür ve bakır fiyatlarındaki artış sayesinde beklentilerin üzerinde bir karlılık performansı gösterdi.\n\n6. **TECK-B.TO (Teck Resources Limited)**: \n   - Beklenen EPS: 0.96\n   - Gerçek EPS: 1.37\n   - EPS Sürpriz %: 42.7%\n   - Beklenen Gelir: $3.09B\n   - Gerçek Gelir: $3.06B\n   - Gelir Sürpriz %: -1.0%\n   - Sürprizin Nedeni: Teck, kömür ve bakır fiyatlarındaki artış sayesinde beklentilerin üzerinde bir karlılık performansı gösterdi.\n\n7. **AUOTY (Aurizon Holdings Limited)**: \n   - Beklenen EPS: -0.00\n   - Gerçek EPS: 0.13\n   - EPS Sürpriz %: 28855.6%\n   - Beklenen Gelir: $2.21B\n   - Gerçek Gelir: $2.28B\n   - Gelir Sürpriz %: 3.2%\n   - Sürprizin Nedeni: Aurizon, lojistik operasyonlarındaki iyileşmeler ve yeni müşteri kazanımları sayesinde beklentilerin çok üzerinde bir performans sergiledi.\n\n8. **AUVGF (Avarga Limited)**: \n   - Beklenen EPS: N/A\n   - Gerçek EPS: -0.04\n   - EPS Sürpriz %: N/A\n   - Beklenen Gelir: N/A\n   - Gerçek Gelir: $0.08B\n   - Gelir Sürpriz %: N/A\n   - Sürprizin Nedeni: Avarga, yeni yatırımları ve operasyonel iyileştirmeleri sayesinde beklentilerin üzerinde bir gelir performansı sergiledi.\n\n9. **MTLS (Minerva Neurosciences, Inc.)**: \n   - Beklenen EPS: 0.06\n   - Gerçek EPS: 0.13\n   - EPS Sürpriz %: 116.0%\n   - Beklenen Gelir: $0.07B\n   - Gerçek Gelir: $0.08B\n   - Gelir Sürpriz %: 16.9%\n   - Sürprizin Nedeni: Minerva, yeni ilaç adaylarının klinik çalışmalarındaki ilerlemeler sayesinde beklentilerin üzerinde bir performans sergiledi.\n\n10. **YORUF (Yorozu Corporation)**: \n    - Beklenen EPS: 1.15\n    - Gerçek EPS: 1.59\n    - EPS Sürpriz %: 38.3%\n    - Beklenen Gelir: $2.24B\n    - Gerçek Gelir: $2.28B\n    - Gelir Sürpriz %: 1.7%\n    - Sürprizin Nedeni: Yorozu, otomotiv parça üretimindeki iyileşmeler ve yeni müşteri kazanımları sayesinde beklentilerin üzerinde bir performans sergiledi.\n\n### Hisse Senedi Haberleri\n\n**Teknoloji Sektörü**\n- [NVDA] Nvidia hisselerinin 12 aylık hedef fiyatı Wall Street tarafından yükseltildi. Analistler, şirketin yapay zeka ve veri merkezi alanlarındaki güçlü büyüme potansiyeline vurgu yaptı.\n- [SMWB] Similarweb, AI ve SaaS odaklı dönüşümü kapsamında satış süreçlerindeki uzama ve Ar-Ge yoğunluğundaki artış nedeniyle endişe uyandırıyor.\n- [SEDG] SolarEdge, zorlu piyasa koşullarına rağmen güçlü bir çeyrek ve görünüm sergiledi.\n\n**Fintech Sektörü**\n- [SOFI] SoFi, güçlü gelir ve kar büyümesi ile Bank of America'yı aratmayacak bir potansiyel gösteriyor.\n- [PYPL] PayPal hisselerindeki %20'lik düşüş, CEO değişikliği ve zayıf kar beklentisi nedeniyle gerçekleşti. Ancak hisse değerleme açısından cazip seviyelere geldi.\n\n**Havacılık/Savunma Sektörü**\n- [BA] Vietnam havayolları, Başkan'ın \"Barış Kurulu\" toplantısı öncesinde neredeyse 100 adet Boeing uçağı için anlaşma imzaladı.\n\n**Sağlık Sektörü**\n- [MRK] Merck, RSV hastalığı için 2 yaş altı çocuklarda kullanılan ilacı için olumlu sonuçlar açıkladı.\n- [PRTA] Prothena, beklentilerin altında kalan finansal sonuçlar açıkladı.\n\n**Tüketici Sektörü**\n- [BROS] Chipotle hisselerindeki düşüş, Dutch Bros'un yeni mağaza açma fırsatını artırıyor.\n- [BILI] Shanghai Film Infinity, YAO-Chinese Folktales 2 animasyon serisinin Bilibili platformundaki izlenme rekorları kırdığını duyurdu.\n\n### Genel Ekonomi ve ABD Haberleri\n\n**Makroekonomik Görünüm**\n- ABD bankalarının 4Ç2025'te güçlü kredi büyümesi kaydettiği görüldü.\n- Nasdaq endeksi, teknoloji hisselerindeki toparlanmayla yükselişe geçti.\n- Enflasyon endişeleri ve Fed faiz artırımı beklentileri piyasalarda volatiliteye neden oluyor.\n\n**Sektörel Değerlendirmeler**\n- Teknoloji sektöründe, büyük oyuncuların (Meta, Microsoft, Amazon, Alphabet) yapay zeka yatırımlarındaki artış göze çarpıyor.\n- Fintech şirketleri, operasyonel dönüşüm ve müşteri kazanımı alanlarında öne çıkıyor.\n- Havacılık/Savunma sektöründe, Boeing'in Asya pazarındaki yükselişi devam ediyor.\n- Sağlık sektöründe, ilaç şirketlerinin yeni ürün geliştirme çabaları öne çıkıyor.\n- Tüketici sektöründe, Bilibili gibi dijital platformların içerik üretimi ve dağıtımındaki başarısı göze çarpıyor.\n\n### Yatırım Stratejisi ve Öneriler\n\n**Agresif Büyüme Odaklı Yatırımcı Profili için Oyun Planı:**\n\n**Odaklanılması Gerekenler:**\n- Teknoloji devi şirketlerin yapay zeka yatırımları\n- Fintech şirketlerinin operasyonel dönüşüm ve müşteri kazanımı\n- Havacılık/Savunma sektöründeki Boeing'in Asya pazarı başarısı\n- Sağlık sektöründeki ilaç şirketlerinin yeni ürün geliştirme\n- Tüketici sektöründeki dijital platform şirketlerinin içerik üretimi\n\n**Kaçınılması Gerekenler:**\n- Enflasyon ve faiz artışlarından olumsuz etkilenebilecek sektörler\n- Marj baskısı yaşayan ve hacim kaybı olan şirketler\n\n**Pazar Senaryoları ve Kısa Vadeli Tahminler:**\n\n**İyimser Senaryo (%40):** \n- Fed'in faiz artışlarını durdurması\n- Gümrük vergisi belirsizliklerinin azalması\n- Güçlü makroekonomik veriler\n\n**Baz Senaryo (%35):**\n- Fed'in sınırlı faiz artışları\n- Gümrük vergisi belirsizliklerinin devam etmesi\n- Makroekonomik verilerdeki ılımlı iyileşme\n\n**Kötümser Senaryo (%25):**\n- Fed'in agresif faiz artışları\n- Gümrük vergisi savaşlarının yoğunlaşması\n- Makroekonomik verilerdeki bozulma\n\n**Detaylı Şirket İncelemeleri:**\n\n1. **NVIDIA (NVDA)**: \n   - Büyüme Katalizörleri: Yapay zeka ve veri merkezi çözümlerindeki liderliği, metaverse yatırımları\n   - Risk Faktörleri: Makroekonomik belirsizlikler, rekabet baskısı\n\n2. **SoFi (SOFI)**: \n   - Büyüme Katalizörleri: Fintech dönüşümü, müşteri tabanının genişlemesi, yeni ürün lansmanları\n   - Risk Faktörleri: Düzenleyici riskler, rekabet yoğunluğu\n\n3. **Boeing (BA)**: \n   - Büyüme Katalizörleri: Asya pazarındaki güçlü talep, yeni model uçak satışları\n   - Risk Faktörleri: Tedarik zinciri sorunları, jeopolitik riskler\n\n**Genel Piyasa Tanısı ve Gelecek Görünümü**\n\nPiyasalar, enflasyon ve Fed politikaları konusundaki belirsizlikler nedeniyle dalgalı bir seyir izliyor. Bununla birlikte, teknoloji, fintech, havacılık/savunma ve sağlık sektörlerindeki şirketler, güçlü büyüme potansiyelleri ve yeni ürün/hizmet lansmanlarıyla öne çıkıyor. \n\nÖnümüzdeki dönemde, Fed'in faiz artışlarını durdurması ve gümrük vergisi belirsizliklerinin azalması durumunda piyasaların iyimser bir seyir izlemesi bekleniyor. Ancak, agresif faiz artışları ve ticaret savaşlarının yoğunlaşması halinde ise piyasaların baskı altında kalması muhtemel.\n\nBu kapsamda, yapay zeka, fintech dönüşümü, havacılık/savunma ve sağlık alanlarındaki lider şirketlere odaklanmak, risk toleransı yüksek yatırımcılar için uygun bir strateji olabilir.",
+        "reportDate": "2026-02-19T11:01:11.037Z"
+      },
+      "createdAt": "2026-02-19T11:01:41.685Z",
+      "reportDate": "2026-02-19T11:01:11.037Z"
+    },
+    {
+      "id": "cmlxps9gj00009r8icmj1i74u",
+      "type": "DAILY",
+      "title": "Piyasa Raporu - DAILY_REPORT_2026-02-21.md",
+      "content": {
+        "path": "reports/daily/DAILY_REPORT_2026-02-21.md",
+        "syncedAt": "2026-02-22T12:18:51.999Z",
+        "githubName": "DAILY_REPORT_2026-02-21.md"
+      },
+      "createdAt": "2026-02-22T12:18:52.003Z",
+      "reportDate": "2026-02-21T00:00:00.000Z"
+    },
+    {
+      "id": "cmlxpscdm00019r8icw5uyuky",
+      "type": "DAILY",
+      "title": "Piyasa Raporu - DAILY_REPORT_2026-02-20.md",
+      "content": {
+        "path": "reports/daily/DAILY_REPORT_2026-02-20.md",
+        "syncedAt": "2026-02-22T12:18:55.785Z",
+        "githubName": "DAILY_REPORT_2026-02-20.md"
+      },
+      "createdAt": "2026-02-22T12:18:55.787Z",
+      "reportDate": "2026-02-20T00:00:00.000Z"
+    },
+    {
+      "id": "cmlxz6opu00001388fen1hkx3",
+      "type": "WEEKLY",
+      "title": "Piyasa Raporu - Haftalık",
+      "content": {
+        "path": "reports/weekly/WEEKLY_REPORT_2026-02-23.md",
+        "syncedAt": "2026-02-22T16:42:01.504Z",
+        "githubName": "WEEKLY_REPORT_2026-02-23.md"
+      },
+      "createdAt": "2026-02-22T16:42:01.506Z",
+      "reportDate": "2026-02-23T00:00:00.000Z"
+    },
+    {
+      "id": "cmlxzj3uf0000v454wtoke585",
+      "type": "WEEKLY",
+      "title": "Piyasa Raporu - Haftalık",
+      "content": {
+        "path": "reports/weekly/WEEKLY_REPORT_2026-02-23.md",
+        "syncedAt": "2026-02-22T16:51:40.982Z",
+        "githubName": "WEEKLY_REPORT_2026-02-23.md"
+      },
+      "createdAt": "2026-02-22T16:51:40.984Z",
+      "reportDate": "2026-02-23T00:00:00.000Z"
+    },
+    {
+      "id": "cmly445eb0000iruvaku5fdu9",
+      "type": "WEEKLY",
+      "title": "Piyasa Raporu - Haftalık",
+      "content": {
+        "path": "reports/weekly/WEEKLY_REPORT_2026-02-23.md",
+        "syncedAt": "2026-02-22T19:00:01.235Z",
+        "githubName": "WEEKLY_REPORT_2026-02-23.md"
+      },
+      "createdAt": "2026-02-22T19:00:01.236Z",
+      "reportDate": "2026-02-23T00:00:00.000Z"
+    },
+    {
+      "id": "cmly4463h0000de4b0ll4zcql",
+      "type": "WEEKLY",
+      "title": "Piyasa Raporu - Haftalık",
+      "content": {
+        "path": "reports/weekly/WEEKLY_REPORT_2026-02-23.md",
+        "syncedAt": "2026-02-22T19:00:02.141Z",
+        "githubName": "WEEKLY_REPORT_2026-02-23.md"
+      },
+      "createdAt": "2026-02-22T19:00:02.142Z",
+      "reportDate": "2026-02-23T00:00:00.000Z"
+    },
+    {
+      "id": "cmly69az30000tkm5pkl6w1fx",
+      "type": "WEEKLY",
+      "title": "Piyasa Raporu - Haftalık",
+      "content": {
+        "path": "reports/weekly/WEEKLY_REPORT_2026-02-23.md",
+        "syncedAt": "2026-02-22T20:00:00.975Z",
+        "githubName": "WEEKLY_REPORT_2026-02-23.md"
+      },
+      "createdAt": "2026-02-22T20:00:00.975Z",
+      "reportDate": "2026-02-23T00:00:00.000Z"
+    },
+    {
+      "id": "cmly69bl400006hbajsnfv1wv",
+      "type": "WEEKLY",
+      "title": "Piyasa Raporu - Haftalık",
+      "content": {
+        "path": "reports/weekly/WEEKLY_REPORT_2026-02-23.md",
+        "syncedAt": "2026-02-22T20:00:01.767Z",
+        "githubName": "WEEKLY_REPORT_2026-02-23.md"
+      },
+      "createdAt": "2026-02-22T20:00:01.768Z",
+      "reportDate": "2026-02-23T00:00:00.000Z"
+    },
+    {
+      "id": "cmly8egp30000e3u03fnoc8dg",
+      "type": "WEEKLY",
+      "title": "Piyasa Raporu - Haftalık",
+      "content": {
+        "path": "reports/weekly/WEEKLY_REPORT_2026-02-23.md",
+        "syncedAt": "2026-02-22T21:00:00.903Z",
+        "githubName": "WEEKLY_REPORT_2026-02-23.md"
+      },
+      "createdAt": "2026-02-22T21:00:00.903Z",
+      "reportDate": "2026-02-23T00:00:00.000Z"
+    },
+    {
+      "id": "cmly8eh860000zd01fh4xxdej",
+      "type": "WEEKLY",
+      "title": "Piyasa Raporu - Haftalık",
+      "content": {
+        "path": "reports/weekly/WEEKLY_REPORT_2026-02-23.md",
+        "syncedAt": "2026-02-22T21:00:01.589Z",
+        "githubName": "WEEKLY_REPORT_2026-02-23.md"
+      },
+      "createdAt": "2026-02-22T21:00:01.590Z",
+      "reportDate": "2026-02-23T00:00:00.000Z"
+    },
+    {
+      "id": "cmlyajmmn0000lhetawbplivm",
+      "type": "WEEKLY",
+      "title": "Piyasa Raporu - Haftalık",
+      "content": {
+        "path": "reports/weekly/WEEKLY_REPORT_2026-02-23.md",
+        "syncedAt": "2026-02-22T22:00:01.102Z",
+        "githubName": "WEEKLY_REPORT_2026-02-23.md"
+      },
+      "createdAt": "2026-02-22T22:00:01.103Z",
+      "reportDate": "2026-02-23T00:00:00.000Z"
+    },
+    {
+      "id": "cmlyajn2o0000uenv5eqh996v",
+      "type": "WEEKLY",
+      "title": "Piyasa Raporu - Haftalık",
+      "content": {
+        "path": "reports/weekly/WEEKLY_REPORT_2026-02-23.md",
+        "syncedAt": "2026-02-22T22:00:01.680Z",
+        "githubName": "WEEKLY_REPORT_2026-02-23.md"
+      },
+      "createdAt": "2026-02-22T22:00:01.681Z",
+      "reportDate": "2026-02-23T00:00:00.000Z"
+    },
+    {
+      "id": "cmlycos920000yqpazm79b9mf",
+      "type": "WEEKLY",
+      "title": "Piyasa Raporu - Haftalık",
+      "content": {
+        "path": "reports/weekly/WEEKLY_REPORT_2026-02-23.md",
+        "syncedAt": "2026-02-22T23:00:00.901Z",
+        "githubName": "WEEKLY_REPORT_2026-02-23.md"
+      },
+      "createdAt": "2026-02-22T23:00:00.902Z",
+      "reportDate": "2026-02-23T00:00:00.000Z"
+    },
+    {
+      "id": "cmlycot150000lsbbubnaygb4",
+      "type": "WEEKLY",
+      "title": "Piyasa Raporu - Haftalık",
+      "content": {
+        "path": "reports/weekly/WEEKLY_REPORT_2026-02-23.md",
+        "syncedAt": "2026-02-22T23:00:01.912Z",
+        "githubName": "WEEKLY_REPORT_2026-02-23.md"
+      },
+      "createdAt": "2026-02-22T23:00:01.913Z",
+      "reportDate": "2026-02-23T00:00:00.000Z"
+    },
+    {
+      "id": "cmlyety5m000011yb1x9fd7bp",
+      "type": "WEEKLY",
+      "title": "Piyasa Raporu - Haftalık",
+      "content": {
+        "path": "reports/weekly/WEEKLY_REPORT_2026-02-23.md",
+        "syncedAt": "2026-02-23T00:00:01.066Z",
+        "githubName": "WEEKLY_REPORT_2026-02-23.md"
+      },
+      "createdAt": "2026-02-23T00:00:01.067Z",
+      "reportDate": "2026-02-23T00:00:00.000Z"
+    },
+    {
+      "id": "cmlyetyzr0000f6ne6as3bz01",
+      "type": "WEEKLY",
+      "title": "Piyasa Raporu - Haftalık",
+      "content": {
+        "path": "reports/weekly/WEEKLY_REPORT_2026-02-23.md",
+        "syncedAt": "2026-02-23T00:00:02.150Z",
+        "githubName": "WEEKLY_REPORT_2026-02-23.md"
+      },
+      "createdAt": "2026-02-23T00:00:02.151Z",
+      "reportDate": "2026-02-23T00:00:00.000Z"
+    },
+    {
+      "id": "cmlygz3wq0000vw67e38tum26",
+      "type": "WEEKLY",
+      "title": "Piyasa Raporu - Haftalık",
+      "content": {
+        "path": "reports/weekly/WEEKLY_REPORT_2026-02-23.md",
+        "syncedAt": "2026-02-23T01:00:01.034Z",
+        "githubName": "WEEKLY_REPORT_2026-02-23.md"
+      },
+      "createdAt": "2026-02-23T01:00:01.035Z",
+      "reportDate": "2026-02-23T00:00:00.000Z"
+    },
+    {
+      "id": "cmlygz4jg00007po3kvwioxr6",
+      "type": "WEEKLY",
+      "title": "Piyasa Raporu - Haftalık",
+      "content": {
+        "path": "reports/weekly/WEEKLY_REPORT_2026-02-23.md",
+        "syncedAt": "2026-02-23T01:00:01.852Z",
+        "githubName": "WEEKLY_REPORT_2026-02-23.md"
+      },
+      "createdAt": "2026-02-23T01:00:01.853Z",
+      "reportDate": "2026-02-23T00:00:00.000Z"
+    },
+    {
+      "id": "cmlyj4afe0000nveicfgwgs5b",
+      "type": "WEEKLY",
+      "title": "Piyasa Raporu - Haftalık",
+      "content": {
+        "path": "reports/weekly/WEEKLY_REPORT_2026-02-23.md",
+        "syncedAt": "2026-02-23T02:00:01.993Z",
+        "githubName": "WEEKLY_REPORT_2026-02-23.md"
+      },
+      "createdAt": "2026-02-23T02:00:01.994Z",
+      "reportDate": "2026-02-23T00:00:00.000Z"
+    },
+    {
+      "id": "cmlyl9g1a0000xyjeo0cccjga",
+      "type": "WEEKLY",
+      "title": "Piyasa Raporu - Haftalık",
+      "content": {
+        "path": "reports/weekly/WEEKLY_REPORT_2026-02-23.md",
+        "syncedAt": "2026-02-23T03:00:01.773Z",
+        "githubName": "WEEKLY_REPORT_2026-02-23.md"
+      },
+      "createdAt": "2026-02-23T03:00:01.774Z",
+      "reportDate": "2026-02-23T00:00:00.000Z"
+    },
+    {
+      "id": "cmlyneluy00009528k4d8qxr1",
+      "type": "WEEKLY",
+      "title": "Piyasa Raporu - Haftalık",
+      "content": {
+        "path": "reports/weekly/WEEKLY_REPORT_2026-02-23.md",
+        "syncedAt": "2026-02-23T04:00:01.833Z",
+        "githubName": "WEEKLY_REPORT_2026-02-23.md"
+      },
+      "createdAt": "2026-02-23T04:00:01.834Z",
+      "reportDate": "2026-02-23T00:00:00.000Z"
+    },
+    {
+      "id": "cmlypjryq0000e1crxobs1vqb",
+      "type": "WEEKLY",
+      "title": "Piyasa Raporu - Haftalık",
+      "content": {
+        "path": "reports/weekly/WEEKLY_REPORT_2026-02-23.md",
+        "syncedAt": "2026-02-23T05:00:02.258Z",
+        "githubName": "WEEKLY_REPORT_2026-02-23.md"
+      },
+      "createdAt": "2026-02-23T05:00:02.259Z",
+      "reportDate": "2026-02-23T00:00:00.000Z"
+    },
+    {
+      "id": "cmlyroxn60000o6cnh0muudmr",
+      "type": "WEEKLY",
+      "title": "Piyasa Raporu - Haftalık",
+      "content": {
+        "path": "reports/weekly/WEEKLY_REPORT_2026-02-23.md",
+        "syncedAt": "2026-02-23T06:00:02.129Z",
+        "githubName": "WEEKLY_REPORT_2026-02-23.md"
+      },
+      "createdAt": "2026-02-23T06:00:02.131Z",
+      "reportDate": "2026-02-23T00:00:00.000Z"
+    }
+  ],
+  "changelog": [],
+  "aIPortfolioState": [
+    {
+      "id": "cmlqd28ns0000udgqstcefxzo",
+      "date": "2026-02-17T08:48:19.287Z",
+      "balanced_portfolio": [
+        {
+          "reason": "Microsoft, bulut bilişim ve yazılım alanlarında lider konumda. Yükseliş trendini sürdürüyor.",
+          "ticker": "MSFT",
+          "weight": 0.3
+        },
+        {
+          "reason": "Nvidia, yapay zeka ve işlemci teknolojilerinde öncü. Güçlü büyüme potansiyeli var.",
+          "ticker": "NVDA",
+          "weight": 0.3
+        },
+        {
+          "reason": "Piyasa koşullarını değerlendirmek için nakit tutmak uygun.",
+          "ticker": "CASH",
+          "weight": 0.4
+        }
+      ],
+      "aggressive_portfolio": [
+        {
+          "reason": "Palantir, yapay zeka ve veri analitiği alanlarında yükselen bir oyuncu. Yükseliş trendini koruyor.",
+          "ticker": "PLTR",
+          "weight": 0.3
+        },
+        {
+          "reason": "CrowdStrike, siber güvenlik alanında güçlü konumda. Büyüme ivmesi yüksek.",
+          "ticker": "CRWD",
+          "weight": 0.3
+        },
+        {
+          "reason": "Piyasa koşullarını değerlendirmek için nakit tutmak uygun.",
+          "ticker": "CASH",
+          "weight": 0.4
+        }
+      ],
+      "dividend_portfolio": null,
+      "rotation_portfolio": null,
+      "market_context": {
+        "macro": "FED faiz artışlarına devam ediyor, enflasyon yüksek ancak kontrol altında. VIX endeksi 20 seviyelerinde seyrediyor.",
+        "key_events": [
+          "İlk kurulum"
+        ],
+        "tech_sector": "Teknoloji sektörü son dönemde güçlü performans gösteriyor. Yapay zeka, bulut bilişim ve siber güvenlik öne çıkan alanlar.",
+        "gold_outlook": "Altın fiyatları 1800 USD/ons seviyelerinde. Emtia fiyatları genel olarak yatay seyirde."
+      },
+      "createdAt": "2026-02-17T08:48:19.288Z"
+    },
+    {
+      "id": "cmlrnmmck0zk63de0z0m4tdoj",
+      "date": "2026-02-18T06:31:52.484Z",
+      "balanced_portfolio": [
+        {
+          "reason": "Microsoft, bulut bilişim ve yazılım alanlarında lider konumda. Yükseliş trendini sürdürüyor.",
+          "ticker": "MSFT",
+          "weight": 0.4
+        },
+        {
+          "reason": "Nvidia, yapay zeka ve işlemci teknolojilerinde öncü. Güçlü büyüme potansiyeli var.",
+          "ticker": "NVDA",
+          "weight": 0.4
+        },
+        {
+          "reason": "Piyasa koşullarını değerlendirmek için nakit tutmak uygun.",
+          "ticker": "CASH",
+          "weight": 0.2
+        }
+      ],
+      "aggressive_portfolio": [
+        {
+          "reason": "Microsoft, bulut bilişim ve yazılım alanlarında lider konumda. Yükseliş trendini sürdürüyor.",
+          "ticker": "MSFT",
+          "weight": 0.3
+        },
+        {
+          "reason": "Nvidia, yapay zeka ve işlemci teknolojilerinde öncü. Güçlü büyüme potansiyeli var.",
+          "ticker": "NVDA",
+          "weight": 0.3
+        },
+        {
+          "reason": "CrowdStrike, siber güvenlik alanında güçlü konumda. Büyüme ivmesi yüksek.",
+          "ticker": "CRWD",
+          "weight": 0.3
+        },
+        {
+          "reason": "Piyasa koşullarını değerlendirmek için nakit tutmak uygun.",
+          "ticker": "CASH",
+          "weight": 0.1
+        }
+      ],
+      "dividend_portfolio": null,
+      "rotation_portfolio": null,
+      "market_context": {
+        "macro": "FED faiz artışlarına devam ediyor, enflasyon yüksek ancak kontrol altında. VIX endeksi 20 seviyelerinde seyrediyor.",
+        "key_events": [
+          "Sistem başlangıcı"
+        ],
+        "tech_sector": "Teknoloji sektörü son dönemde güçlü performans gösteriyor. Yapay zeka, bulut bilişim ve siber güvenlik öne çıkan alanlar.",
+        "gold_outlook": "Altın fiyatları 1800 USD/ons seviyelerinde. Emtia fiyatları genel olarak yatay seyirde."
+      },
+      "createdAt": "2026-02-18T06:31:52.485Z"
+    },
+    {
+      "id": "cmlrnmp6659xmmtxzelee37j3",
+      "date": "2026-02-18T06:31:56.139Z",
+      "balanced_portfolio": [
+        {
+          "reason": "Microsoft, bulut bilişim ve yazılım alanlarında lider konumda. Yükseliş trendini sürdürüyor.",
+          "ticker": "MSFT",
+          "weight": 0.4
+        },
+        {
+          "reason": "Nvidia, yapay zeka ve işlemci teknolojilerinde öncü. Güçlü büyüme potansiyeli var.",
+          "ticker": "NVDA",
+          "weight": 0.4
+        },
+        {
+          "reason": "Piyasa koşullarını değerlendirmek için nakit tutmak uygun.",
+          "ticker": "CASH",
+          "weight": 0.2
+        }
+      ],
+      "aggressive_portfolio": [
+        {
+          "reason": "Microsoft, bulut bilişim ve yazılım alanlarında lider konumda. Yükseliş trendini sürdürüyor.",
+          "ticker": "MSFT",
+          "weight": 0.3
+        },
+        {
+          "reason": "Nvidia, yapay zeka ve işlemci teknolojilerinde öncü. Güçlü büyüme potansiyeli var.",
+          "ticker": "NVDA",
+          "weight": 0.3
+        },
+        {
+          "reason": "CrowdStrike, siber güvenlik alanında güçlü konumda. Büyüme ivmesi yüksek.",
+          "ticker": "CRWD",
+          "weight": 0.3
+        },
+        {
+          "reason": "Piyasa koşullarını değerlendirmek için nakit tutmak uygun.",
+          "ticker": "CASH",
+          "weight": 0.1
+        }
+      ],
+      "dividend_portfolio": null,
+      "rotation_portfolio": null,
+      "market_context": {
+        "macro": "FED faiz artışlarına devam ediyor, enflasyon yüksek ancak kontrol altında. VIX endeksi 20 seviyelerinde seyrediyor.",
+        "key_events": [
+          "Sistem başlangıcı"
+        ],
+        "tech_sector": "Teknoloji sektörü son dönemde güçlü performans gösteriyor. Yapay zeka, bulut bilişim ve siber güvenlik öne çıkan alanlar.",
+        "gold_outlook": "Altın fiyatları 1800 USD/ons seviyelerinde. Emtia fiyatları genel olarak yatay seyirde."
+      },
+      "createdAt": "2026-02-18T06:31:56.142Z"
+    },
+    {
+      "id": "cmlt32i3y6yqkd0gst2sncrum",
+      "date": "2026-02-19T06:31:53.901Z",
+      "balanced_portfolio": [
+        {
+          "reason": "Microsoft, bulut bilişim ve yazılım alanlarında lider konumda. Yükseliş trendini sürdürüyor.",
+          "ticker": "MSFT",
+          "weight": 0.5
+        },
+        {
+          "reason": "Nvidia, yapay zeka ve işlemci teknolojilerinde öncü. Güçlü büyüme potansiyeli var.",
+          "ticker": "NVDA",
+          "weight": 0.5
+        }
+      ],
+      "aggressive_portfolio": [
+        {
+          "reason": "Microsoft, bulut bilişim ve yazılım alanlarında lider konumda. Yükseliş trendini sürdürüyor.",
+          "ticker": "MSFT",
+          "weight": 0.4
+        },
+        {
+          "reason": "Nvidia, yapay zeka ve işlemci teknolojilerinde öncü. Güçlü büyüme potansiyeli var.",
+          "ticker": "NVDA",
+          "weight": 0.4
+        },
+        {
+          "reason": "CrowdStrike, siber güvenlik alanında güçlü konumda. Büyüme ivmesi yüksek.",
+          "ticker": "CRWD",
+          "weight": 0.2
+        }
+      ],
+      "dividend_portfolio": null,
+      "rotation_portfolio": null,
+      "market_context": {
+        "macro": "FED faiz artışlarına devam ediyor, enflasyon yüksek ancak kontrol altında. VIX endeksi 20 seviyelerinde seyrediyor.",
+        "key_events": [
+          "Sistem başlangıcı"
+        ],
+        "tech_sector": "Teknoloji sektörü son dönemde güçlü performans gösteriyor. Yapay zeka, bulut bilişim ve siber güvenlik öne çıkan alanlar.",
+        "gold_outlook": "Altın fiyatları 1800 USD/ons seviyelerinde. Emtia fiyatları genel olarak yatay seyirde."
+      },
+      "createdAt": "2026-02-19T06:31:53.903Z"
+    },
+    {
+      "id": "cmluiirvli23kd0gs9jj8ex2p",
+      "date": "2026-02-20T06:32:13.472Z",
+      "balanced_portfolio": [
+        {
+          "reason": "Microsoft, bulut bilişim ve yazılım alanlarında lider konumda. Yükseliş trendini sürdürüyor.",
+          "ticker": "MSFT",
+          "weight": 0.5
+        },
+        {
+          "reason": "Nvidia, yapay zeka ve işlemci teknolojilerinde öncü. Güçlü büyüme potansiyeli var.",
+          "ticker": "NVDA",
+          "weight": 0.5
+        }
+      ],
+      "aggressive_portfolio": [
+        {
+          "reason": "Microsoft, bulut bilişim ve yazılım alanlarında lider konumda. Yükseliş trendini sürdürüyor.",
+          "ticker": "MSFT",
+          "weight": 0.4
+        },
+        {
+          "reason": "Nvidia, yapay zeka ve işlemci teknolojilerinde öncü. Güçlü büyüme potansiyeli var.",
+          "ticker": "NVDA",
+          "weight": 0.4
+        },
+        {
+          "reason": "CrowdStrike, siber güvenlik alanında güçlü konumda. Büyüme ivmesi yüksek.",
+          "ticker": "CRWD",
+          "weight": 0.2
+        }
+      ],
+      "dividend_portfolio": null,
+      "rotation_portfolio": null,
+      "market_context": {
+        "macro": "FED faiz artışlarına devam ediyor, enflasyon yüksek ancak kontrol altında. VIX endeksi 20 seviyelerinde seyrediyor.",
+        "key_events": [
+          "Sistem başlangıcı"
+        ],
+        "tech_sector": "Teknoloji sektörü son dönemde güçlü performans gösteriyor. Yapay zeka, bulut bilişim ve siber güvenlik öne çıkan alanlar.",
+        "gold_outlook": "Altın fiyatları 1800 USD/ons seviyelerinde. Emtia fiyatları genel olarak yatay seyirde."
+      },
+      "createdAt": "2026-02-20T06:32:13.474Z"
+    }
+  ],
+  "portfolioSnapshot": [
+    {
+      "id": "cmlqd2a9d0001udgq2rt2vk94",
+      "date": "2026-02-16T00:00:00.000Z",
+      "portfolioType": "STANDARD",
+      "totalValue": 100000,
+      "cashValue": 40000,
+      "holdings": [
+        {
+          "value": 30000,
+          "shares": 74.75331406359015,
+          "ticker": "MSFT",
+          "currentPrice": 401.32
+        },
+        {
+          "value": 30000,
+          "shares": 164.1048082708823,
+          "ticker": "NVDA",
+          "currentPrice": 182.81
+        },
+        {
+          "value": 40000,
+          "shares": 40000,
+          "ticker": "CASH",
+          "currentPrice": 1
+        }
+      ],
+      "dailyReturn": 0,
+      "totalReturn": 0,
+      "createdAt": "2026-02-17T08:48:21.362Z"
+    },
+    {
+      "id": "cmlqd2dqh0004udgq9tixrzfg",
+      "date": "2026-02-16T00:00:00.000Z",
+      "portfolioType": "AGGRESSIVE",
+      "totalValue": 100000,
+      "cashValue": 40000,
+      "holdings": [
+        {
+          "value": 30000,
+          "shares": 228.2931283768359,
+          "ticker": "PLTR",
+          "currentPrice": 131.41
+        },
+        {
+          "value": 30000,
+          "shares": 69.82590075411973,
+          "ticker": "CRWD",
+          "currentPrice": 429.64
+        },
+        {
+          "value": 40000,
+          "shares": 40000,
+          "ticker": "CASH",
+          "currentPrice": 1
+        }
+      ],
+      "dailyReturn": 0,
+      "totalReturn": 0,
+      "createdAt": "2026-02-17T08:48:25.865Z"
+    },
+    {
+      "id": "cmlrnmme60zk83de0q0zfk9qk",
+      "date": "2026-02-18T00:00:00.000Z",
+      "portfolioType": "AGGRESSIVE",
+      "totalValue": 99929.99551735246,
+      "cashValue": 9992.999551735249,
+      "holdings": [
+        {
+          "value": 29978.99865520574,
+          "shares": 75.02251915717152,
+          "ticker": "MSFT",
+          "currentPrice": 399.6
+        },
+        {
+          "value": 29978.99865520574,
+          "shares": 159.4797247324489,
+          "ticker": "NVDA",
+          "currentPrice": 187.98
+        },
+        {
+          "value": 29978.99865520574,
+          "shares": 72.10650051762012,
+          "ticker": "CRWD",
+          "currentPrice": 415.76
+        },
+        {
+          "value": 9992.999551735249,
+          "shares": 9992.999551735249,
+          "ticker": "CASH",
+          "currentPrice": 1
+        }
+      ],
+      "dailyReturn": 0.6314886647641366,
+      "totalReturn": -0.07000448264753505,
+      "createdAt": "2026-02-18T06:31:52.543Z"
+    },
+    {
+      "id": "cmlqtrr4v00xov8v9cmpp55wl",
+      "date": "2026-02-17T00:00:00.000Z",
+      "portfolioType": "STANDARD",
+      "totalValue": 100021.0666051415,
+      "cashValue": 40008.4266420566,
+      "holdings": [
+        {
+          "value": 30006.31998154244,
+          "shares": 75.6093332196302,
+          "ticker": "MSFT",
+          "currentPrice": 396.86
+        },
+        {
+          "value": 30006.31998154245,
+          "shares": 162.222630597083,
+          "ticker": "NVDA",
+          "currentPrice": 184.97
+        },
+        {
+          "value": 40008.4266420566,
+          "shares": 40008.4266420566,
+          "ticker": "CASH",
+          "currentPrice": 1
+        }
+      ],
+      "dailyReturn": 0.02106660514148825,
+      "totalReturn": 0.02106660514148825,
+      "createdAt": "2026-02-17T16:36:03.487Z"
+    },
+    {
+      "id": "cmlqtrr7j00xrv8v9lbiqh49f",
+      "date": "2026-02-17T00:00:00.000Z",
+      "portfolioType": "AGGRESSIVE",
+      "totalValue": 99302.90890384364,
+      "cashValue": 39721.16356153745,
+      "holdings": [
+        {
+          "value": 29790.87267115309,
+          "shares": 223.9022996185963,
+          "ticker": "PLTR",
+          "currentPrice": 133.053
+        },
+        {
+          "value": 29790.87267115309,
+          "shares": 71.90912698058845,
+          "ticker": "CRWD",
+          "currentPrice": 414.285
+        },
+        {
+          "value": 39721.16356153745,
+          "shares": 39721.16356153745,
+          "ticker": "CASH",
+          "currentPrice": 1
+        }
+      ],
+      "dailyReturn": -0.6970910961563641,
+      "totalReturn": -0.6970910961563641,
+      "createdAt": "2026-02-17T16:36:03.583Z"
+    },
+    {
+      "id": "cmlt32i4k6yqld0gsk1ytu3fi",
+      "date": "2026-02-19T00:00:00.000Z",
+      "portfolioType": "STANDARD",
+      "totalValue": 100569.7301298783,
+      "cashValue": 0,
+      "holdings": [
+        {
+          "value": 50284.86506493913,
+          "shares": 126.2442823122941,
+          "ticker": "MSFT",
+          "currentPrice": 398.314
+        },
+        {
+          "value": 50284.86506493913,
+          "shares": 267.6150349384733,
+          "ticker": "NVDA",
+          "currentPrice": 187.9
+        }
+      ],
+      "dailyReturn": -0.1457518162912313,
+      "totalReturn": 0.5697301298782695,
+      "createdAt": "2026-02-19T06:31:53.925Z"
+    },
+    {
+      "id": "cmlt32i556yqmd0gsbdzefxnn",
+      "date": "2026-02-19T00:00:00.000Z",
+      "portfolioType": "AGGRESSIVE",
+      "totalValue": 100280.7976530402,
+      "cashValue": 0,
+      "holdings": [
+        {
+          "value": 40112.31906121607,
+          "shares": 100.7052703676398,
+          "ticker": "MSFT",
+          "currentPrice": 398.314
+        },
+        {
+          "value": 40112.31906121607,
+          "shares": 213.4769508313788,
+          "ticker": "NVDA",
+          "currentPrice": 187.9
+        },
+        {
+          "value": 20056.15953060803,
+          "shares": 47.51068254751512,
+          "ticker": "CRWD",
+          "currentPrice": 422.14
+        }
+      ],
+      "dailyReturn": 0.351047884943414,
+      "totalReturn": 0.2807976530401793,
+      "createdAt": "2026-02-19T06:31:53.945Z"
+    },
+    {
+      "id": "cmlrnmmde0zk73de0bhxoolm4",
+      "date": "2026-02-18T00:00:00.000Z",
+      "portfolioType": "STANDARD",
+      "totalValue": 100716.5262962605,
+      "cashValue": 20143.3052592521,
+      "holdings": [
+        {
+          "value": 40286.6105185042,
+          "shares": 100.8173436399004,
+          "ticker": "MSFT",
+          "currentPrice": 399.6
+        },
+        {
+          "value": 40286.6105185042,
+          "shares": 214.3132807665932,
+          "ticker": "NVDA",
+          "currentPrice": 187.98
+        },
+        {
+          "value": 20143.3052592521,
+          "shares": 20143.3052592521,
+          "ticker": "CASH",
+          "currentPrice": 1
+        }
+      ],
+      "dailyReturn": 0.6953132122300701,
+      "totalReturn": 0.7165262962604902,
+      "createdAt": "2026-02-18T06:31:52.514Z"
+    },
+    {
+      "id": "cmluiirwai23ld0gs0c1doeoj",
+      "date": "2026-02-20T00:00:00.000Z",
+      "portfolioType": "STANDARD",
+      "totalValue": 100588.1617950958,
+      "cashValue": 0,
+      "holdings": [
+        {
+          "value": 50294.08089754792,
+          "shares": 126.2211536855592,
+          "ticker": "MSFT",
+          "currentPrice": 398.46
+        },
+        {
+          "value": 50294.08089754792,
+          "shares": 267.6640814132406,
+          "ticker": "NVDA",
+          "currentPrice": 187.9
+        }
+      ],
+      "dailyReturn": 0.0183272493559741,
+      "totalReturn": 0.5881617950958316,
+      "createdAt": "2026-02-20T06:32:13.498Z"
+    },
+    {
+      "id": "cmluiirwsi23md0gsgg5gjmve",
+      "date": "2026-02-20T00:00:00.000Z",
+      "portfolioType": "AGGRESSIVE",
+      "totalValue": 100295.5006225139,
+      "cashValue": 0,
+      "holdings": [
+        {
+          "value": 40118.20024900555,
+          "shares": 100.683130675615,
+          "ticker": "MSFT",
+          "currentPrice": 398.46
+        },
+        {
+          "value": 40118.20024900555,
+          "shares": 213.508250393856,
+          "ticker": "NVDA",
+          "currentPrice": 187.9
+        },
+        {
+          "value": 20059.10012450277,
+          "shares": 47.51764846852412,
+          "ticker": "CRWD",
+          "currentPrice": 422.14
+        }
+      ],
+      "dailyReturn": 0.01466179948482339,
+      "totalReturn": 0.2955006225138641,
+      "createdAt": "2026-02-20T06:32:13.516Z"
+    }
+  ],
+  "aIPortfolioRecommendation": [
+    {
+      "id": "cmm1o8lt700004g2ne438r5a8",
+      "date": "2026-02-25T06:46:39.943Z",
+      "symbol": "Standart (Balanced) Portföy",
+      "score": 85,
+      "reasoning": "Portföy Güncellemesi: ➕ Eklendi: SM, KOS, MO, XLE, RGLD, XLI",
+      "price": 0,
+      "technicalAnalysis": {
+        "source": "GitHub Sync",
+        "changes": "➕ Eklendi: SM, KOS, MO, XLE, RGLD, XLI"
+      },
+      "beatRateScore": null,
+      "expectationScore": null,
+      "liquidityScore": null
+    },
+    {
+      "id": "cmm1o8nl900014g2nnbzldhr3",
+      "date": "2026-02-25T06:46:42.283Z",
+      "symbol": "Agresif Portföy",
+      "score": 85,
+      "reasoning": "Portföy Güncellemesi: ➕ Eklendi: GILT, BKSY, NNDM, PLTR, SHOP, ANET, RKLB, CELH",
+      "price": 0,
+      "technicalAnalysis": {
+        "source": "GitHub Sync",
+        "changes": "➕ Eklendi: GILT, BKSY, NNDM, PLTR, SHOP, ANET, RKLB, CELH"
+      },
+      "beatRateScore": null,
+      "expectationScore": null,
+      "liquidityScore": null
+    },
+    {
+      "id": "cmm1o8oum00024g2nbwnl01ug",
+      "date": "2026-02-25T06:46:43.915Z",
+      "symbol": "Temettü Portföyü",
+      "score": 85,
+      "reasoning": "Portföy Güncellemesi: ➕ Eklendi: T, VZ, MO, PM, XOM, CVX, SCHD",
+      "price": 0,
+      "technicalAnalysis": {
+        "source": "GitHub Sync",
+        "changes": "➕ Eklendi: T, VZ, MO, PM, XOM, CVX, SCHD"
+      },
+      "beatRateScore": null,
+      "expectationScore": null,
+      "liquidityScore": null
+    },
+    {
+      "id": "cmm1o8pz800034g2n9i3qzcve",
+      "date": "2026-02-25T06:46:45.378Z",
+      "symbol": "Sektörel Rotasyon Portföyü",
+      "score": 85,
+      "reasoning": "Portföy Güncellemesi: ➕ Eklendi: XLE, XLV, XLI",
+      "price": 0,
+      "technicalAnalysis": {
+        "source": "GitHub Sync",
+        "changes": "➕ Eklendi: XLE, XLV, XLI"
+      },
+      "beatRateScore": null,
+      "expectationScore": null,
+      "liquidityScore": null
+    },
+    {
+      "id": "cmm1oh7wv0000fwrogbzwfwee",
+      "date": "2026-02-25T06:53:21.868Z",
+      "symbol": "Standart (Balanced) Portföy",
+      "score": 85,
+      "reasoning": "Portföy Güncellemesi: Varlık dağılımı optimize edildi.",
+      "price": 0,
+      "technicalAnalysis": {
+        "source": "GitHub Sync",
+        "changes": ""
+      },
+      "beatRateScore": null,
+      "expectationScore": null,
+      "liquidityScore": null
+    },
+    {
+      "id": "cmm1oh9nq0001fwro5lsojrvx",
+      "date": "2026-02-25T06:53:24.133Z",
+      "symbol": "Agresif Portföy",
+      "score": 85,
+      "reasoning": "Portföy Güncellemesi: Varlık dağılımı optimize edildi.",
+      "price": 0,
+      "technicalAnalysis": {
+        "source": "GitHub Sync",
+        "changes": ""
+      },
+      "beatRateScore": null,
+      "expectationScore": null,
+      "liquidityScore": null
+    },
+    {
+      "id": "cmm1ohap40002fwros38cwv5z",
+      "date": "2026-02-25T06:53:25.479Z",
+      "symbol": "Temettü Portföyü",
+      "score": 85,
+      "reasoning": "Portföy Güncellemesi: Varlık dağılımı optimize edildi.",
+      "price": 0,
+      "technicalAnalysis": {
+        "source": "GitHub Sync",
+        "changes": ""
+      },
+      "beatRateScore": null,
+      "expectationScore": null,
+      "liquidityScore": null
+    },
+    {
+      "id": "cmm1ohc0u0003fwroyvj7m6yg",
+      "date": "2026-02-25T06:53:27.197Z",
+      "symbol": "Sektörel Rotasyon Portföyü",
+      "score": 85,
+      "reasoning": "Portföy Güncellemesi: Varlık dağılımı optimize edildi.",
+      "price": 0,
+      "technicalAnalysis": {
+        "source": "GitHub Sync",
+        "changes": ""
+      },
+      "beatRateScore": null,
+      "expectationScore": null,
+      "liquidityScore": null
+    }
+  ],
+  "backtest": [],
+  "backtestTransaction": [],
+  "backtestSnapshot": []
+}
