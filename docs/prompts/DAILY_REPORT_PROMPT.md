@@ -1,6 +1,20 @@
-# GÜNLÜK RAPOR MASTER PROMPT — v2.3 (Kapanış Değerlendirmesi + Seans Öncesi Plan)
+# GÜNLÜK RAPOR MASTER PROMPT — v2.4 (Kapanış Değerlendirmesi + Seans Öncesi Plan)
 
-> **versiyon**: 2.3 | **son güncelleme**: 24 şubat 2026
+> ⚠️ **ÇALIŞMA MODU — MUTLAKA OKU**:
+> Bu prompt FAZ FAZ işlenir. Her fazı tamamlayıp dosyaları commit ettikten sonra bir sonraki faza geç.
+> Tüm fazları tek seferde yapmaya ÇALIŞMA — sistem durur.
+>
+> **FAZ SIRASI**:
+> 1. FAZ 0 → repo oku, dünkü raporu değerlendir (commit gerekmez)
+> 2. FAZ 1 → FMP'den veri çek + JSON güncelle + git push
+> 3. FAZ 2 → piyasa analizi + raporu yaz + git push
+> 4. (isteğe bağlı, sadece pazartesi) FAZ 3 → CANSLIM tarama + git push
+>
+> Her fazda SADECE O FAZIN işlerini yap. Sonraki faza geçmeden önce commit et.
+
+---
+
+> **versiyon**: 2.4 | **son güncelleme**: 25 şubat 2026
 > **çıktı dosyası**: `reports/daily/DAILY_REPORT_YYYY-MM-DD.md`
 > **çalışma zamanı**: her iş günü TR ~14:00 (NYSE kapanışından ~14 saat sonra, açılıştan ~3.5 saat önce)
 > **perspektif**: DÜNÜN KAPANIŞ DEĞERLENDİRMESİ + JSON FİNAL GÜNCELLEME + BUGÜN NE YAPACAĞIZ
@@ -47,29 +61,46 @@
 
 ## ÇALIŞTIRMA ADIM SIRASI
 
-```
-GÜNLÜK RAPOR (TR ~14:00):
+> ⚡ HER FAZ AYRI ÇALIŞTIRILIR — faz bitmeden sonrakine geçme
 
-FАZE 0 — KAPANIŞ DEĞERLENDİRMESİ
+```
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+FAZ 0 — OKUMA + DEĞERLENDİRME (commit yok)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 0a. repo'yu çek (git pull)
 0b. dünkü raporu oku (reports/daily/DAILY_REPORT_DÜNÜN_TARİHİ.md)
 0c. dünün aksiyonları uygulandı mı? plan tuttu mu?
 0d. dünün dersleri: doğru/yanlış kararlar, kaçırılan fırsatlar
+→ ÇIKTI: sohbette kısa özet yaz, dosyaya yazma
+→ DEVAM: "faz 0 tamam, faz 1'e geç" de
 
-FАZE 1 — VERİ TOPLAMA + JSON FİNAL GÜNCELLEME
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+FAZ 1 — VERİ ÇEKME + JSON GÜNCELLEME
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 1a. tüm portföy + swing JSON dosyalarını oku
-1b. benzersiz sembol listesi çıkar (portföy + swing birleşik)
-1c. FMP'den toplu veri çek (dünün kapanış fiyatları + teknik göstergeler)
-1d. JSON dosyalarını güncelle (kapanış fiyatıyla — final güncelleme)
-1e. doğrulama kontrolleri yap (hesaplama tutarlılığı)
+1b. benzersiz sembol listesi çıkar
+1c. FMP'den toplu veri çek (batch-quote + teknik göstergeler)
+1d. JSON dosyalarını güncelle (kapanış fiyatı + hesaplamalar)
+1e. doğrulama kontrolleri yap
 1f. summary.json güncelle
+→ GIT COMMIT + PUSH: "[GÜNCELLEME] DD Ay - kapanış fiyatları"
+→ DEVAM: "faz 1 tamam, faz 2'ye geç" de
 
-FАZE 2 — PİYASA ANALİZİ + YENİ GÜN PLANI
-2a. websearch: pre-market futures, gece haberleri, after-hours sonuçları
-2b. sektör performansı + RS analizi
-2c. bölüm 1-6'yı sırayla yaz
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+FAZ 2 — RAPOR YAZMA (bölüm 0-6)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+2a. websearch: pre-market futures, gece haberleri
+2b. sektör performansı analizi
+2c. bölüm 0-6'yı sırayla yaz (faz 1 verilerini kullan, FMP'yi tekrar çekme)
 2d. raporu kaydet → reports/daily/DAILY_REPORT_YYYY-MM-DD.md
-2e. git commit + push (JSON güncellemeleri + rapor birlikte)
+→ GIT COMMIT + PUSH: "[GÜNLÜK RAPOR] DD Ay YYYY - kısa özet"
+→ BİTTİ
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+FAZ 3 — CANSLIM TARAMA (sadece pazartesi, isteğe bağlı)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+→ BÖLÜM 5'teki talimatları uygula (ayrı oturum önerilir)
+→ GIT COMMIT + PUSH: "[CANSLIM] Haftalık tarama - top 5"
 
 SEANS SIRASINDA (TR 17:30-00:00):
 → SESSION_ACTION_PROMPT.md kullan
@@ -81,13 +112,17 @@ SEANS SIRASINDA (TR 17:30-00:00):
 ## 3 PROMPT SİSTEMİ — BİR GÜNÜN AKIŞI
 
 ```
-TR 14:00  →  GÜNLÜK RAPOR (bu prompt)
-              kapanış değerlendirmesi + JSON final güncelleme + yeni gün planı
+TR 14:00  →  GÜNLÜK RAPOR (bu prompt) — 3 FAZDA çalıştır
+              FAZ 0: okuma/değerlendirme (5 dk)
+              FAZ 1: JSON güncelleme + commit (10 dk)
+              FAZ 2: rapor yazma + commit (15 dk)
 
 TR 18:00+ →  SEANS İÇİ AKSİYON (SESSION_ACTION_PROMPT.md)
               canlı fiyat, karar + uygulama
 
 (ertesi gün TR 14:00 → tekrar bu prompt)
+
+⚠️ PAZARTESI EKLENTISI: FAZ 2 bittikten sonra ayrı oturumda FAZ 3 (CANSLIM)
 ```
 
 ---
