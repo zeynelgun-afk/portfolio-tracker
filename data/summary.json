@@ -3,9 +3,9 @@
   "simulasyon_donemi": "17 Şubat 2026 - 25 Şubat 2026",
   "islem_gunleri": 7,
   "toplam_sermaye": 400000.0,
-  "toplam_deger": 418585.7,
-  "toplam_kar_zarar": 18585.7,
-  "toplam_kar_zarar_yuzde": 4.65,
+  "toplam_deger": 418543.46,
+  "toplam_kar_zarar": 18543.46,
+  "toplam_kar_zarar_yuzde": 4.64,
   "benchmark_spy": 0.66,
   "alpha": 4.96,
   "portfolyolar": {
@@ -50,13 +50,13 @@
     },
     "rotasyon": {
       "isim": "Sektör Rotasyonu",
-      "deger": 104074.94,
+      "deger": 104032.7,
       "maliyet": 100000,
-      "kar_zarar": 4074.94,
-      "kar_zarar_yuzde": 4.07,
-      "pozisyon_sayisi": 3,
+      "kar_zarar": 4032.7,
+      "kar_zarar_yuzde": 4.03,
+      "pozisyon_sayisi": 5,
       "nakit": {
-        "miktar": 668.0800000000054,
+        "miktar": 558.42,
         "para_birimi": "USD"
       },
       "durum": "BAŞARILI"

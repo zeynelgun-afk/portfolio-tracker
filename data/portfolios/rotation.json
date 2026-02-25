@@ -2,7 +2,7 @@
   "portfoy_adi": "Sektör Rotasyonu",
   "baslangic_sermaye": 100000,
   "nakit": {
-    "miktar": 668.0800000000054,
+    "miktar": 558.42,
     "para_birimi": "USD"
   },
   "pozisyonlar": [
@@ -22,25 +22,25 @@
       "giris_tarihi": "2026-01-02",
       "giris_fiyati": 45.65,
       "giris_nedeni": "Initial position - Energy sector ETF",
-      "agirlik_yuzde": 41.54
+      "agirlik_yuzde": 41.55
     },
     {
       "sembol": "XLV",
       "isim": "Health Care Select Sector SPDR Fund",
       "sektor": "Sağlık",
-      "adet": 128,
+      "adet": 64,
       "maliyet_baz": 155.51,
-      "guncel_fiyat": 158.47,
-      "yatirim": 19905.28,
-      "guncel_deger": 20284.16,
-      "kar_zarar": 378.88,
-      "kar_zarar_yuzde": 1.9,
+      "guncel_fiyat": 158.14,
+      "yatirim": 9952.64,
+      "guncel_deger": 10120.96,
+      "kar_zarar": 168.32,
+      "kar_zarar_yuzde": 1.69,
       "gunluk_degisim_yuzde": 0.38006,
-      "son_guncelleme": "2026-02-25T15:11:22.968136",
+      "son_guncelleme": "2026-02-25T16:32:08.691634",
       "giris_tarihi": "2026-01-02",
       "giris_fiyati": 155.51,
       "giris_nedeni": "Başlangıç pozisyonu - Sektör rotasyon portföyü - Sağlık",
-      "agirlik_yuzde": 19.49
+      "agirlik_yuzde": 9.73
     },
     {
       "sembol": "XLI",
@@ -58,10 +58,75 @@
       "giris_tarihi": "2026-01-02",
       "giris_fiyati": 157.98,
       "giris_nedeni": "Başlangıç pozisyonu - Sektör rotasyon portföyü - Endüstriyel",
-      "agirlik_yuzde": 38.33
+      "agirlik_yuzde": 38.35
+    },
+    {
+      "sembol": "XLB",
+      "isim": "State Street Materials Select Sector SPDR ETF",
+      "sektor": "Temel Malzemeler ETF",
+      "adet": 94,
+      "maliyet_baz": 53.05,
+      "guncel_fiyat": 53.05,
+      "yatirim": 4986.7,
+      "guncel_deger": 4986.7,
+      "kar_zarar": 0.0,
+      "kar_zarar_yuzde": 0.0,
+      "gunluk_degisim_yuzde": 0,
+      "son_guncelleme": "2026-02-25T16:32:08.691634",
+      "giris_tarihi": "2026-02-25",
+      "giris_fiyati": 53.05,
+      "giris_nedeni": "Sektör rotasyonu - YTD +%15 güçlü momentum, altın/emtia gücü devam, RSI 63 sağlıklı bölgede",
+      "agirlik_yuzde": 4.79
+    },
+    {
+      "sembol": "XLP",
+      "isim": "State Street Consumer Staples Select Sector SPDR ETF",
+      "sektor": "Temel Tüketim ETF",
+      "adet": 59,
+      "maliyet_baz": 88.88,
+      "guncel_fiyat": 88.88,
+      "yatirim": 5243.92,
+      "guncel_deger": 5243.92,
+      "kar_zarar": 0.0,
+      "kar_zarar_yuzde": 0.0,
+      "gunluk_degisim_yuzde": 0,
+      "son_guncelleme": "2026-02-25T16:32:08.691634",
+      "giris_tarihi": "2026-02-25",
+      "giris_fiyati": 88.88,
+      "giris_nedeni": "Sektör rotasyonu - YTD +%14.4 güçlü defensif momentum, tariff ortamında dayanıklı, RSI 66 sağlıklı",
+      "agirlik_yuzde": 5.04
     }
   ],
-  "son_guncelleme": "2026-02-25T15:11:22.968136",
-  "toplam_deger": 104074.94,
-  "toplam_getiri_yuzde": 4.07
+  "son_guncelleme": "2026-02-25T16:32:08.691634",
+  "toplam_deger": 104032.7,
+  "toplam_getiri_yuzde": 4.03,
+  "transactions": [
+    {
+      "tarih": "2026-02-25",
+      "islem_tipi": "SATIŞ",
+      "sembol": "XLV",
+      "adet": 64,
+      "fiyat": 158.14,
+      "tutar": 10120.96,
+      "aciklama": "Sektör rotasyonu - XLV zayıf momentum (YTD +%1.7), pozisyon yarıya indirildi"
+    },
+    {
+      "tarih": "2026-02-25",
+      "islem_tipi": "ALIŞ",
+      "sembol": "XLB",
+      "adet": 94,
+      "fiyat": 53.05,
+      "tutar": 4986.7,
+      "aciklama": "Sektör rotasyonu - Temel malzemeler güçlü momentum YTD +%15"
+    },
+    {
+      "tarih": "2026-02-25",
+      "islem_tipi": "ALIŞ",
+      "sembol": "XLP",
+      "adet": 59,
+      "fiyat": 88.88,
+      "tutar": 5243.92,
+      "aciklama": "Sektör rotasyonu - Temel tüketim defensif güç YTD +%14.4"
+    }
+  ]
 }
