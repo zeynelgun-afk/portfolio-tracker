@@ -17,15 +17,16 @@ data/
 │   └── rotation.json        # sektör rotasyonu ($100K) — makro döngü ETF
 ├── swing/
 │   ├── active.json          # açık swing pozisyonları (max 10)
-│   └── closed.json          # kapatılmış trade'ler + dersler
+│   ├── closed.json          # kapatılmış trade'ler + dersler
+│   └── watchlist.json       # swing trade izleme listesi
 ├── watchlist.json           # ⭐ merkezi izleme listesi (tüm portföyler + swing)
 ├── summary.json             # genel portföy özeti
 └── transactions.csv         # tüm alış/satış işlemleri (tek kaynak)
 
 docs/
-├── PORTFOLIO_DATA_SKILL.md  # ⭐ JSON şema kuralları (KRİTİK — her güncelleme öncesi oku)
+├── PORTFOLIO_DATA_SKILL.md  # ⭐ portföy JSON şemaları + hesaplama kuralları
+├── SWING_TRADE_RULES.md     # ⭐ swing trade kural seti v2.0 + JSON şemaları
 ├── DOSYA_SISTEMI.md         # dosya yapısı detayları
-├── SWING_TRADE_RULES.md     # swing trade kuralları
 ├── PREDICTION_MARKETS_GUIDE.md  # kalshi/polymarket rehberi
 ├── SELF_VALIDATION.md       # veri doğrulama sistemi
 └── prompts/
@@ -53,25 +54,33 @@ detaylı kurallar: `PORTFOY_KURALLARI.md`
 
 ---
 
-## swing trade
+## swing trade (v2.0)
 
 | kural | değer |
 |-------|-------|
 | max eşzamanlı | 10 |
-| stop-loss | %5 |
-| kar hedefi | %10 |
+| stop-loss | ATR tabanlı dinamik (2.0 × ATR14) |
+| kar hedefi | kademeli: %50 hedefte sat + %50 trailing stop |
 | min R:R | 2:1 |
-| çıkış | hedefe ulaşınca %50 sat + kalan trailing stop (-%5) |
+| hisse filtre | beta 1.0+, ATR% 2+, hacim 500K+, cap $2B+ |
+| giriş | 5 yöntem, min 2 teyit zorunlu |
+| yasak sektörler | utilities, REITs, beta < 0.8 |
 
-detaylı kurallar: `docs/SWING_TRADE_RULES.md`
+detaylı kurallar + JSON şemaları: `docs/SWING_TRADE_RULES.md`
 
 ---
 
-## merkezi watchlist
+## dokümantasyon haritası
 
-`data/watchlist.json` — tüm portföy ve swing adayları tek dosyada.
-her adayda `hedef_portfoy` alanı hangi stratejiye ait olduğunu belirtir.
-portföy JSON'larında ayrı watchlist tutulmaz.
+| konu | tek kaynak |
+|------|-----------|
+| portföy JSON şemaları, hesaplama kuralları | `docs/PORTFOLIO_DATA_SKILL.md` |
+| swing trade kuralları + JSON şemaları | `docs/SWING_TRADE_RULES.md` |
+| dosya yapısı | `docs/DOSYA_SISTEMI.md` |
+| portföy stratejileri | `PORTFOY_KURALLARI.md` |
+| prediction markets | `docs/PREDICTION_MARKETS_GUIDE.md` |
+| veri doğrulama | `docs/SELF_VALIDATION.md` |
+| FMP API | `FMP_SKILL.md` (project file) |
 
 ---
 
@@ -108,8 +117,10 @@ API referansı: `FMP_SKILL.md` (proje dosyası)
 [SWING-GİRİŞ] SEMBOL @FİYAT - neden
 [SWING-ÇIKIŞ] SEMBOL @FİYAT - sonuç +/-%X
 [WATCHLIST] merkezi watchlist güncellendi - detay
+[DOKÜMAN] açıklama
+[REBALANCE] Portföy - rotasyon detayı
 ```
 
 ---
 
-> son güncelleme: 24 şubat 2026 | finzora ai
+> son güncelleme: 25 şubat 2026 | finzora ai
