@@ -139,184 +139,27 @@ agirlik_yuzde = (guncel_deger / toplam_deger) × 100  [her pozisyon için]
 
 ---
 
-## 2. SWING TRADE DOSYALARI ŞEMASI
+## 2. SWING TRADE
 
-### 2a. `data/swing/active.json` — Açık Pozisyonlar
+> **Swing trade ile ilgili tüm kurallar, dosya şemaları ve stratejiler tek bir yerde:**
+> 📄 **`docs/SWING_TRADE_RULES.md`**
+>
+> Bu dosya şunları içerir:
+> - Hisse seçim kriterleri (beta, ATR%, hacim filtreleri)
+> - 5 giriş stratejisi (RSI oversold, breakout, pullback, earnings momentum, sektör rotasyonu)
+> - ATR tabanlı dinamik stop-loss yönetimi
+> - Kademeli çıkış planı (3 aşamalı)
+> - Pozisyon boyutlandırma (%1 risk kuralı)
+> - `active.json`, `closed.json`, `watchlist.json` dosya şemaları
+> - Tarama yöntemleri ve performans takibi
 
-```json
-{
-  "son_guncelleme": "2026-02-20T16:36:55.511599",
-  "not": "SWING TRADE SADECE SİMÜLASYON - Sadece % kazanç/kayıp takibi (MAX: 10 pozisyon)",
-  "aktif_pozisyonlar": [
-    {
-      "id": "SWING-001",
-      "sembol": "NEM",
-      "giris_tarihi": "2026-02-12",
-      "giris_fiyati": 118.12,
-      "guncel_fiyat": 124.97,
-      "guncel_kar_zarar_yuzde": 5.80,
-      "hedef_fiyat": 129.93,
-      "stop_loss": 112.21,
-      "tutulan_gun": 7,
-      "giris_nedeni": "Güçlü momentum, altın madenciliği lideri, güvenli liman talebi",
-      "katalizor": "Altın fiyat gücü, malzeme sektörü rotasyonu",
-      "tez": "Dünyanın en büyük altın üreticisi, emtia gücü",
-      "zaman_cercevesi": "7-10 gün",
-      "risk": "Altın fiyat dönüşü, dolar güçlenmesi",
-      "durum": "Normal aralıkta",
-      "tarama_yontemi": "RSI oversold / momentum",
-      "son_guncelleme": "2026-02-20T19:41:14.015574",
-      "partial_exit_plan": {
-        "hedef_ulasildiginda": {
-          "aksiyon": "%50 POZİSYONU SAT",
-          "satis_fiyati": 129.93,
-          "sebep": "Kar garantiye al"
-        },
-        "kalan_50_icin": {
-          "aksiyon": "TRAİLİNG STOP AKTİF",
-          "baslangic_trailing_stop": 123.43,
-          "trailing_yuzde": 5,
-          "aciklama": "Zirveden -%5 düşünce sat"
-        },
-        "durum": "Hedef bekleniyor"
-      }
-    }
-  ]
-}
-```
-
-#### Aktif Pozisyon — Zorunlu Alanlar
-
-| Alan | Türü | Açıklama |
-|------|------|---------|
-| `id` | string | `"SWING-NNN"` formatında sıralı ID |
-| `sembol` | string | Büyük harf ticker |
-| `giris_tarihi` | date | `"YYYY-MM-DD"` |
-| `giris_fiyati` | float | Giriş fiyatı |
-| `guncel_fiyat` | float | Güncel kapanış fiyatı |
-| `guncel_kar_zarar_yuzde` | float | `((guncel - giris) / giris) × 100` |
-| `hedef_fiyat` | float | %10 hedef (min) |
-| `stop_loss` | float | %5 stop (max) |
-| `tutulan_gun` | int | Giriş tarihinden itibaren geçen gün |
-| `giris_nedeni` | string | Türkçe, detaylı neden |
-| `katalizor` | string | Türkçe, tetikleyici olay |
-| `tez` | string | Türkçe, yatırım tezi |
-| `zaman_cercevesi` | string | Örn: `"7-10 gün"` |
-| `risk` | string | Türkçe, ana riskler |
-| `durum` | string | Güncel durum açıklaması |
-| `tarama_yontemi` | string | Tarama yöntemi (bkz. yöntemler) |
-| `son_guncelleme` | datetime | Her güncellemede yenile |
-
-#### Tarama Yöntemleri (`tarama_yontemi` değerleri)
-- `"RSI oversold"` — RSI < 30 veya aşırı satım
-- `"earnings momentum"` — Kazanç sürprizi sonrası ivme
-- `"breakout"` — Direnç kırılımı
-- `"sektor liderligi"` — Sektör rotasyonunda öncü
-- `"momentum"` — Fiyat + hacim momentum taraması
-
----
-
-### 2b. `data/swing/closed.json` — Kapanmış Pozisyonlar
-
-```json
-{
-  "son_guncelleme": "2026-02-20",
-  "kapatilan_pozisyonlar": [
-    {
-      "id": "SWING-001",
-      "sembol": "GOOGL",
-      "giris_tarihi": "2026-01-02",
-      "cikis_tarihi": "2026-02-03",
-      "giris_fiyati": 315.15,
-      "cikis_fiyati": 339.71,
-      "kar_zarar_yuzde": 7.79,
-      "tutulan_gun": 23,
-      "cikis_nedeni": "Hedefe yakın, kar reali edildi",
-      "sonuc": "KAZANÇ",
-      "ders": "Momentum devam stratejisi çalıştı."
-    }
-  ]
-}
-```
-
-#### Kapanmış Pozisyon — Zorunlu Alanlar
-
-| Alan | Türü | Açıklama |
-|------|------|---------|
-| `cikis_tarihi` | date | `"YYYY-MM-DD"` |
-| `cikis_fiyati` | float | Çıkış fiyatı |
-| `kar_zarar_yuzde` | float | `((cikis - giris) / giris) × 100` |
-| `tutulan_gun` | int | Giriş → çıkış arası gün |
-| `cikis_nedeni` | string | Türkçe, neden çıkıldı |
-| `sonuc` | string | `"KAZANÇ"` veya `"ZARAR"` |
-| `ders` | string | Türkçe, bu trade'den çıkarılan ders |
-
----
-
-### 2c. `data/watchlist.json` — Merkezi İzleme Listesi
-
-> ⚠️ **TEK WATCHLIST**: Tüm portföyler ve swing trade adayları bu dosyada tutulur.
-> `data/swing/watchlist.json` KALDIRILDI. Portföy JSON'larında `watchlist[]` KULLANILMAZ.
-
-```json
-{
-  "son_guncelleme": "2026-02-24T...",
-  "not": "Tüm portföyler ve swing trade için tek merkezi watchlist",
-  "izleme_listesi": [
-    {
-      "sembol": "SPG",
-      "guncel_fiyat": 202.01,
-      "momentum_5gun": 2.9,
-      "sektor": "REITs - Alışveriş Merkezleri",
-      "notlar": "AVM REIT'i, perakende toparlanma oyunu",
-      "urgency": "medium",
-      "hedef_portfoy": "swing",
-      "ekleme_tarihi": "2026-02-20",
-      "son_kontrol": "2026-02-24",
-      "hedef_giris": "195-200",
-      "hedef_fiyat": 220.0,
-      "stop_loss": 190.0
-    },
-    {
-      "sembol": "IREN",
-      "guncel_fiyat": 43.94,
-      "sektor": "Bitcoin Madenciliği / AI Data Center",
-      "notlar": "Bitcoin + AI data center dual katalizör",
-      "urgency": "medium",
-      "hedef_portfoy": "agresif",
-      "ekleme_tarihi": "2026-02-24",
-      "son_kontrol": "2026-02-24",
-      "hedef_giris": "38-40",
-      "hedef_fiyat": 67.75,
-      "stop_loss": 34.00
-    }
-  ],
-  "haric_tutulanlar": [
-    {
-      "sembol": "GOOGL",
-      "neden": "Negatif momentum, tech zayıflığı"
-    }
-  ],
-  "prediction_markets_insights": {...}
-}
-```
-
-#### Watchlist Aday — Alanlar
-
-| Alan | Türü | Açıklama |
-|------|------|---------|
-| `sembol` | string | Ticker |
-| `guncel_fiyat` | float | Güncel fiyat |
-| `momentum_5gun` | float | 5 günlük % değişim |
-| `sektor` | string | Türkçe sektör |
-| `notlar` | string | Türkçe gözlemler |
-| `urgency` | string | `"high"` / `"medium"` / `"low"` |
-| `hedef_portfoy` | string | **ZORUNLU** — `"swing"` / `"agresif"` / `"dengeli"` / `"temettü"` / `"rotasyon"` |
-| `ekleme_tarihi` | date | Watchlist'e eklenme tarihi |
-| `son_kontrol` | date/null | Son kontrol tarihi veya null |
-| `hedef_giris` | string | Fiyat aralığı (örn. `"195-200"`) |
-| `hedef_fiyat` | float | Hedef çıkış fiyatı |
-| `stop_loss` | float | Stop seviyesi |
+### Dosya Yolları
+| Dosya | Açıklama |
+|-------|----------|
+| `data/swing/active.json` | Açık pozisyonlar (max 10) |
+| `data/swing/closed.json` | Kapanmış pozisyonlar |
+| `data/swing/watchlist.json` | İzleme listesi |
+| `docs/SWING_TRADE_RULES.md` | Tüm kurallar ve şemalar |
 
 ---
 
@@ -457,19 +300,7 @@ date,action,symbol,shares,price,total,reason
 
 ---
 
-## 7. SWING TRADE KURALLARI (Sayısal Sınırlar)
-
-| Kural | Değer |
-|-------|-------|
-| Max eşzamanlı pozisyon | 10 |
-| Stop-loss | %5 |
-| Kar hedefi | %10 |
-| Min R:R oranı | 2:1 |
-| Tavsiye tutma süresi | 7-10 gün (kesin üst limit yok, trailing stop ile yönetilir) |
-
----
-
-## 8. GIT COMMIT FORMAT
+## 7. GIT COMMIT FORMAT
 
 ```
 [TİP] PORTFÖY - SEMBOL @FİYAT - AÇIKLAMA
@@ -485,7 +316,7 @@ date,action,symbol,shares,price,total,reason
 
 ---
 
-## 9. SIKÇA YAPILAN HATALAR (YAPMA!)
+## 8. SIKÇA YAPILAN HATALAR (YAPMA!)
 
 | Hata | Doğrusu |
 |------|---------|

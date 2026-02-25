@@ -275,3 +275,189 @@ if (profile['beta'] >= 1.0 and
 | Relative Strength | Hissenin sektör/endeks karşısındaki göreceli gücü |
 | ATR% | (ATR / fiyat) × 100 — fiyata göre normalize volatilite |
 | Expectancy | (Win% × Ort kazanç) - (Loss% × Ort kayıp) — sistemin beklenen değeri |
+
+---
+
+## 12. DOSYA ŞEMALARI (JSON Yapıları)
+
+> Bu bölüm swing trade JSON dosyalarının veri yapısını tanımlar.
+
+### 12a. `data/swing/active.json` — Açık Pozisyonlar
+
+```json
+{
+  "son_guncelleme": "2026-02-20T16:36:55.511599",
+  "not": "SWING TRADE SADECE SİMÜLASYON - Sadece % kazanç/kayıp takibi (MAX: 10 pozisyon)",
+  "aktif_pozisyonlar": [
+    {
+      "id": "SWING-001",
+      "sembol": "NEM",
+      "giris_tarihi": "2026-02-12",
+      "giris_fiyati": 118.12,
+      "guncel_fiyat": 124.97,
+      "guncel_kar_zarar_yuzde": 5.80,
+      "hedef_fiyat": 129.93,
+      "stop_loss": 112.21,
+      "tutulan_gun": 7,
+      "giris_nedeni": "Güçlü momentum, altın madenciliği lideri, güvenli liman talebi",
+      "katalizor": "Altın fiyat gücü, malzeme sektörü rotasyonu",
+      "tez": "Dünyanın en büyük altın üreticisi, emtia gücü",
+      "zaman_cercevesi": "7-10 gün",
+      "risk": "Altın fiyat dönüşü, dolar güçlenmesi",
+      "durum": "Normal aralıkta",
+      "tarama_yontemi": "breakout",
+      "atr_giris": 3.45,
+      "risk_tutar": 690,
+      "rr_orani": "2.5:1",
+      "son_guncelleme": "2026-02-20T19:41:14.015574",
+      "partial_exit_plan": {
+        "hedef_ulasildiginda": {
+          "aksiyon": "%50 POZİSYONU SAT",
+          "satis_fiyati": 129.93,
+          "sebep": "Kar garantiye al"
+        },
+        "kalan_50_icin": {
+          "aksiyon": "TRAİLİNG STOP AKTİF",
+          "baslangic_trailing_stop": 123.43,
+          "trailing_yuzde": 5,
+          "aciklama": "Zirveden 2xATR düşünce sat"
+        },
+        "durum": "Hedef bekleniyor"
+      }
+    }
+  ]
+}
+```
+
+#### Aktif Pozisyon — Zorunlu Alanlar
+
+| Alan | Türü | Açıklama |
+|------|------|---------|
+| `id` | string | `"SWING-NNN"` formatında sıralı ID |
+| `sembol` | string | Büyük harf ticker |
+| `giris_tarihi` | date | `"YYYY-MM-DD"` |
+| `giris_fiyati` | float | Giriş fiyatı |
+| `guncel_fiyat` | float | Güncel kapanış fiyatı |
+| `guncel_kar_zarar_yuzde` | float | `((guncel - giris) / giris) × 100` |
+| `hedef_fiyat` | float | Giriş + (2 × risk mesafesi) minimum |
+| `stop_loss` | float | Giriş - (2 × ATR14) |
+| `tutulan_gun` | int | Giriş tarihinden itibaren geçen gün |
+| `giris_nedeni` | string | Türkçe, detaylı neden |
+| `katalizor` | string | Türkçe, tetikleyici olay |
+| `tez` | string | Türkçe, yatırım tezi |
+| `zaman_cercevesi` | string | Örn: `"7-10 gün"` |
+| `risk` | string | Türkçe, ana riskler |
+| `durum` | string | Güncel durum açıklaması |
+| `tarama_yontemi` | string | **ZORUNLU** — 5 yöntemden biri (bkz. Bölüm 2) |
+| `atr_giris` | float | **ZORUNLU** — giriş anındaki ATR(14) değeri |
+| `risk_tutar` | float | **ZORUNLU** — dolar cinsinden risk miktarı |
+| `rr_orani` | string | **ZORUNLU** — hedeflenen R:R oranı |
+| `son_guncelleme` | datetime | Her güncellemede yenile |
+
+#### Tarama Yöntemleri (`tarama_yontemi` değerleri)
+- `"RSI oversold"` — RSI < 30, dönüş teyidi + hacim artışı
+- `"earnings momentum"` — Kazanç sürprizi >%10 sonrası geri çekilme girişi
+- `"breakout"` — 50SMA/direnç kırılımı + hacim 1.5x+ + ADX > 25
+- `"pullback"` — Trend içi 20EMA'ya geri çekilme, RSI 40-60
+- `"sektor rotasyonu"` — Sektör ETF'i 5g >%3, hisse RS güçlü
+
+---
+
+### 12b. `data/swing/closed.json` — Kapanmış Pozisyonlar
+
+```json
+{
+  "son_guncelleme": "2026-02-20",
+  "kapatilan_pozisyonlar": [
+    {
+      "id": "SWING-001",
+      "sembol": "GOOGL",
+      "giris_tarihi": "2026-01-02",
+      "cikis_tarihi": "2026-02-03",
+      "giris_fiyati": 315.15,
+      "cikis_fiyati": 339.71,
+      "kar_zarar_yuzde": 7.79,
+      "tutulan_gun": 23,
+      "cikis_nedeni": "Hedefe yakın, kar realize edildi",
+      "cikis_yontemi": "hedef",
+      "tarama_yontemi": "breakout",
+      "gercek_rr": "2.3:1",
+      "sonuc": "KAZANÇ",
+      "ders": "Momentum devam stratejisi çalıştı."
+    }
+  ]
+}
+```
+
+#### Kapanmış Pozisyon — Zorunlu Alanlar
+
+| Alan | Türü | Açıklama |
+|------|------|---------|
+| `id` | string | Orijinal SWING ID |
+| `sembol` | string | Ticker |
+| `giris_tarihi` | date | `"YYYY-MM-DD"` |
+| `cikis_tarihi` | date | `"YYYY-MM-DD"` |
+| `giris_fiyati` | float | Giriş fiyatı |
+| `cikis_fiyati` | float | Çıkış fiyatı |
+| `kar_zarar_yuzde` | float | `((cikis - giris) / giris) × 100` |
+| `tutulan_gun` | int | Giriş → çıkış arası gün |
+| `cikis_nedeni` | string | Türkçe, neden çıkıldı |
+| `cikis_yontemi` | string | **ZORUNLU** — `"hedef"`, `"trailing_stop"`, `"tez_bozuldu"`, `"earnings_oncesi"` |
+| `tarama_yontemi` | string | **ZORUNLU** — girişte kullanılan yöntem |
+| `gercek_rr` | string | **ZORUNLU** — gerçekleşen R:R oranı |
+| `sonuc` | string | `"KAZANÇ"` veya `"ZARAR"` |
+| `ders` | string | Türkçe, bu trade'den çıkarılan ders |
+
+---
+
+### 12c. `data/swing/watchlist.json` — İzleme Listesi
+
+```json
+{
+  "son_guncelleme": "2026-02-20T16:48:07.288589",
+  "not": "Bir sonraki işlemler için potansiyel swing adayları",
+  "izleme_listesi": [
+    {
+      "sembol": "SPG",
+      "guncel_fiyat": 202.01,
+      "beta": 1.45,
+      "atr_yuzde": 2.8,
+      "sektor": "Tüketim Döngüsel",
+      "notlar": "Breakout setup oluşuyor, 50SMA üzeri kapanış bekleniyor",
+      "tarama_yontemi": "breakout",
+      "urgency": "medium",
+      "ekleme_tarihi": "2026-02-20",
+      "son_kontrol": null,
+      "hedef_giris": "195-200",
+      "hedef_fiyat": 220.0,
+      "stop_loss": 190.0,
+      "tahmini_rr": "2.5:1"
+    }
+  ],
+  "haric_tutulanlar": [
+    {
+      "sembol": "DUK",
+      "neden": "Utility sektörü - swing trade evreni dışı (beta < 1.0, ATR% < 2)"
+    }
+  ]
+}
+```
+
+#### Watchlist Aday — Alanlar
+
+| Alan | Türü | Açıklama |
+|------|------|---------|
+| `sembol` | string | Ticker |
+| `guncel_fiyat` | float | Güncel fiyat |
+| `beta` | float | **ZORUNLU** — 1.0+ olmalı |
+| `atr_yuzde` | float | **ZORUNLU** — %2+ olmalı |
+| `sektor` | string | Türkçe sektör |
+| `notlar` | string | Türkçe gözlemler |
+| `tarama_yontemi` | string | Hangi yöntemle tarandı |
+| `urgency` | string | `"high"` / `"medium"` / `"low"` |
+| `ekleme_tarihi` | date | Watchlist'e eklenme tarihi |
+| `son_kontrol` | date/null | Son kontrol tarihi |
+| `hedef_giris` | string | Fiyat aralığı (örn. `"195-200"`) |
+| `hedef_fiyat` | float | Hedef çıkış fiyatı |
+| `stop_loss` | float | ATR tabanlı stop seviyesi |
+| `tahmini_rr` | string | Tahmini R:R oranı |
