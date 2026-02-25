@@ -3,9 +3,9 @@
   "simulasyon_donemi": "17 Şubat 2026 - 25 Şubat 2026",
   "islem_gunleri": 7,
   "toplam_sermaye": 400000.0,
-  "toplam_deger": 418543.46,
-  "toplam_kar_zarar": 18543.46,
-  "toplam_kar_zarar_yuzde": 4.64,
+  "toplam_deger": 418535.64,
+  "toplam_kar_zarar": 18535.64,
+  "toplam_kar_zarar_yuzde": 4.63,
   "benchmark_spy": 0.66,
   "alpha": 4.96,
   "portfolyolar": {
@@ -37,13 +37,13 @@
     },
     "temettü": {
       "isim": "Değer + Temettü",
-      "deger": 115670.89,
+      "deger": 115663.07,
       "maliyet": 100000,
-      "kar_zarar": 15670.89,
-      "kar_zarar_yuzde": 15.67,
+      "kar_zarar": 15663.07,
+      "kar_zarar_yuzde": 15.66,
       "pozisyon_sayisi": 7,
       "nakit": {
-        "miktar": 648.12,
+        "miktar": 8371.68,
         "para_birimi": "USD"
       },
       "durum": "BAŞARILI"

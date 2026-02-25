@@ -41,3 +41,4 @@ date,action,symbol,shares,price,total,reason
 2026-02-25,SELL,XLV,64,158.14,10120.96,"Sektör rotasyonu - XLV zayıf momentum, pozisyon yarıya indirildi"
 2026-02-25,BUY,XLB,94,53.05,4986.7,"Sektör rotasyonu - Temel malzemeler güçlü momentum YTD +%15"
 2026-02-25,BUY,XLP,59,88.88,5243.92,"Sektör rotasyonu - Temel tüketim defensif güç YTD +%14.4"
+2026-02-25,SELL,VZ,156,49.51,7723.56,"Kısmi kar alma - RSI 73 aşırı alım, %24 kâr, nakit oluşturma"
