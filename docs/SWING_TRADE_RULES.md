@@ -18,6 +18,19 @@ Swing trade adayı olabilmek için bir hissenin aşağıdaki **tüm** kriterleri
 | Beta | 1.0+ | Yeterli hareket potansiyeli (volatilite) |
 | ATR% (14 gün ATR / fiyat × 100) | %2+ | Günlük yeterli fiyat hareketi |
 
+### Temel analiz minimum filtresi (çöp eleme)
+
+Swing trade teknik ağırlıklıdır ama **temelden bozuk hisselere teknik sinyal üzerine girmek** en büyük tuzaktır. aşağıdaki filtreler "en iyiyi bulmak" için değil, **en kötüleri elemek** içindir. FMP API'den tek seferde çekilir, taramaya 10 saniye ekler.
+
+| filtre | kriter | FMP endpoint | neden |
+|--------|--------|-------------|-------|
+| gelir trendi | son çeyrek revenue YoY > %0 | `income-statement` (quarter) | küçülen şirkete swing girme |
+| kârlılık | EBITDA > 0 (son çeyrek) | `income-statement` (quarter) | para yakan şirkete girme |
+| borç kontrolü | D/E < 3.0 | `ratios-ttm` | aşırı kaldıraçlı şirket batma riski |
+| analist görüşü | consensus "strongSell" DEĞİL | `grades-consensus` | herkesin sattığı hisseye karşı gitme |
+
+> **NOT**: bu filtreler eleme amaçlıdır, geçmesi yeterli şart değildir. teknik giriş sinyali + teyitler hala zorunludur.
+
 ### Hariç tutulacak sektörler (swing trade için uygunsuz):
 - **Utilities** (kamu hizmetleri) — düşük volatilite, yavaş hareket
 - **REITs** — faiz oranına duyarlı, dar range
@@ -29,7 +42,7 @@ Swing trade adayı olabilmek için bir hissenin aşağıdaki **tüm** kriterleri
 
 ---
 
-## 2. GİRİŞ STRATEJİLERİ (5 Yöntem)
+## 2. GİRİŞ STRATEJİLERİ (6 Yöntem)
 
 Her giriş için minimum **2 teyit** gerekir. Tek gösterge ile giriş yapılmaz.
 
@@ -49,13 +62,29 @@ Her giriş için minimum **2 teyit** gerekir. Tek gösterge ile giriş yapılmaz
 - **Teyitler**: RSI 40-60 aralığında (sağlıklı geri çekilme), trend bozulmamış
 - **Giriş**: EMA'dan seken ilk yeşil mum kapanışında
 
-### 2d. Earnings Momentum (Kazanç İvmesi)
+### 2d. Earnings Momentum (Kazanç İvmesi — Earnings Sonrası)
 - **Tetik**: Earnings beat > %10, guidance yükseltme
 - **Teyitler**: Gap-up + yüksek hacim, sektör desteği
 - **Giriş**: Earnings sonrası ilk geri çekilme (gap fill kısmen veya tamamen)
 - **UYARI**: Earnings günü girme. minimum 1 gün bekle
 
-### 2e. Sektör Rotasyonu Lideri
+### 2e. Earnings Catalyst (Earnings Öncesi Giriş)
+- **Tetik**: 3-7 gün içinde earnings açıklaması var
+- **Ön koşullar** (hepsi gerekli):
+  - Son 4 çeyrek beat oranı ≥ %75 (4'te en az 3'ü beat etmiş) — `analyst-estimates` ile kontrol
+  - Sektör momentum'u pozitif (sektördeki diğer earnings'ler iyi gelmiş)
+  - Whisper number / Street consensus'tan yüksek beklenti sinyalleri
+  - Hisse earnings öncesi aşırı rally yapmamış (son 5 günde < %5 yükseliş)
+- **Teyitler**: RSI 40-65 aralığında (aşırı alım değil), hacim normale yakın
+- **Giriş**: Earnings'ten 2-3 gün önce, teknik destek yakınında
+- **Risk yönetimi**:
+  - Gap-down riski var, stop-loss gap'te tetiklenmeyebilir — bunu kabul ederek giriyorsun
+  - Earnings sonrası ilk 30 dakika işlem yapma, volatilite oturmasını bekle
+  - Beat gelirse: kademeli çıkış planı uygula (bölüm 4)
+  - Miss gelirse: açılışta değerlendir, panik satma ama tezi tekrar kontrol et
+- **UYARI**: Bu en riskli stratejidir. diğer 5 yöntemden farklı olarak binary sonuç (beat/miss) var. sadece güçlü tarihsel beat oranı olan şirketlerde kullan
+
+### 2f. Sektör Rotasyonu Lideri
 - **Tetik**: Sektör ETF'i 5 günlük > %3 performans
 - **Teyitler**: Hisse sektör ETF'inden daha güçlü (relative strength), hacim artışı
 - **Giriş**: Sektördeki en güçlü 2-3 hisseden seç
@@ -153,7 +182,10 @@ Pozisyon büyüklüğü = (Portföy × Risk%) / (Giriş fiyatı - Stop fiyatı)
 5. Yaklaşan earnings/haber var mı?
 
 ### Önemli kurallar:
-- **Earnings öncesi kural**: Eğer açık pozisyonda 5 gün içinde earnings varsa, pozisyonun en az %50'sini kapat veya stop'u sıkılaştır
+- **Mevcut pozisyon + yaklaşan earnings**: Eğer açık pozisyonda 5 gün içinde earnings varsa:
+  - Kârdaysan: giriş tezi güçlüyse tut (earnings catalyst gibi değerlendir), değilse %50 kapat
+  - Zarardaysan: ya tamamen kapat ya da tez hala geçerliyse stop sıkılaştırıp tut
+  - Her durumda earnings tarihini `durum` alanına yaz
 - **Korelasyon kontrolü**: Aynı sektörden 3'ten fazla pozisyon açma
 - **Kayıp serisi kuralı**: 3 ardışık kayıp sonrası 2 gün trade'e ara ver, stratejiyi gözden geçir
 - **Momentum bozulması**: Hisse giriş tezini kaybederse (sektör zayıfladı, haber geldi) bekleme, stop'u sıkılaştır
@@ -170,6 +202,7 @@ Her trade açılırken `tarama_yontemi` alanı ZORUNLU doldurulur:
 | `breakout` | Direnç/SMA kırılımı | 50SMA, hacim 1.5x+, ADX |
 | `pullback` | Trend içi geri çekilme | 20EMA, RSI 40-60, trend |
 | `earnings momentum` | Earnings beat sonrası | EPS surprise, guidance, gap |
+| `earnings catalyst` | Earnings öncesi giriş | Son 4Q beat oranı ≥%75, sektör momentum, whisper |
 | `sektor rotasyonu` | Sektör liderliği | Sektör ETF RS, hacim |
 
 ### Yöntem bazlı performans takibi
@@ -357,6 +390,7 @@ if (profile['beta'] >= 1.0 and
 #### Tarama Yöntemleri (`tarama_yontemi` değerleri)
 - `"RSI oversold"` — RSI < 30, dönüş teyidi + hacim artışı
 - `"earnings momentum"` — Kazanç sürprizi >%10 sonrası geri çekilme girişi
+- `"earnings catalyst"` — Earnings öncesi giriş, son 4Q beat oranı ≥%75
 - `"breakout"` — 50SMA/direnç kırılımı + hacim 1.5x+ + ADX > 25
 - `"pullback"` — Trend içi 20EMA'ya geri çekilme, RSI 40-60
 - `"sektor rotasyonu"` — Sektör ETF'i 5g >%3, hisse RS güçlü
