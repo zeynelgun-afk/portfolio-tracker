@@ -2,7 +2,7 @@
   "portfoy_adi": "Agresif Büyüme",
   "baslangic_sermaye": 100000,
   "nakit": {
-    "miktar": 29624.11,
+    "miktar": 19910.71,
     "para_birimi": "USD"
   },
   "pozisyonlar": [
@@ -149,9 +149,27 @@
       "giris_fiyati": 49.76,
       "giris_nedeni": "Enerji içecek büyüme hikayesi - Monster ve Red Bull'a alternatif - SMA50 ve SMA200 üzerinde çift destek - RSI 54 sağlıklı nötr bölge - analist hedefi $65 (+%30 upside) - portföye tüketim sektörü çeşitlendirmesi",
       "agirlik_yuzde": 7.72
+    },
+    {
+      "sembol": "TYL",
+      "isim": "Tyler Technologies, Inc.",
+      "sektor": "Teknoloji",
+      "adet": 30,
+      "maliyet_baz": 323.78,
+      "guncel_fiyat": 323.78,
+      "yatirim": 9713.4,
+      "guncel_deger": 9713.4,
+      "kar_zarar": 0.0,
+      "kar_zarar_yuzde": 0.0,
+      "gunluk_degisim_yuzde": 0.0,
+      "son_guncelleme": "2026-02-25T15:01:14.467625",
+      "giris_tarihi": "2026-02-25",
+      "giris_fiyati": 323.78,
+      "giris_nedeni": "Devlet yazılım platformu + AI entegrasyonu (Axon paraleli). %98 müşteri retention, SaaS +%20 büyüme, TTM FCF 638M$, 1B$ buyback programı. Q4 earnings miss tek seferlik (Texas kontratı). AWS/Anthropic/OpenAI ortaklıkları, agentic AI pilotları Q1 başlıyor. DCF değer: $429. EV/Revenue 5.8x.",
+      "agirlik_yuzde": 10.56
     }
   ],
-  "son_guncelleme": "2026-02-25T11:09:33.415669",
+  "son_guncelleme": "2026-02-25T15:01:14.467625",
   "toplam_deger": 91972.9,
   "toplam_getiri_yuzde": -8.03,
   "gerceklesen_zarar": -1321.51,
@@ -215,6 +233,11 @@
       "date": "2026-02-24T16:47:15.973744",
       "type": "format_fix",
       "content": "Watchlist data/watchlist.json'a taşındı — portföy içi watchlist kaldırıldı"
+    },
+    {
+      "date": "2026-02-25T15:01:14.467625",
+      "type": "entry",
+      "content": "ALIŞ TYL: 30 adet @$323.78 = $9713.4. Stop: $270, Hedef: $430. Devlet yazılımı + AI entegrasyonu, Axon paraleli tez. DCF $429, EV/Rev 5.8x."
     }
   ]
 }

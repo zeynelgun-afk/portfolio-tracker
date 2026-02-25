@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-02-24T18:17:26.678020",
+  "son_guncelleme": "2026-02-25T15:01:32.877654",
   "not": "Tüm portföyler ve swing trade için tek merkezi watchlist. Her adayda hedef_portfoy alanı hangi portföye/stratejiye ait olduğunu belirtir.",
   "izleme_listesi": [
     {
@@ -147,6 +147,33 @@
       "hedef_fiyat": 67.75,
       "stop_loss": 34.0,
       "notlar": "bitcoin madenciliği + AI data center dual katalizör"
+    },
+    {
+      "sembol": "MNDY",
+      "guncel_fiyat": 75.34,
+      "sektor": "Teknoloji",
+      "hedef_portfoy": "agresif",
+      "urgency": "medium",
+      "ekleme_tarihi": "2026-02-25",
+      "son_kontrol": "2026-02-25",
+      "hedef_giris": "68-72",
+      "hedef_fiyat": 120.0,
+      "stop_loss": 62.0,
+      "notlar": "SaaS workflow + AI pivot. EV/Rev 2.2x, %89 gross margin, 1.5B$ cash, RSI 28 oversold. Ama 4x guidance miss + 2027 hedef geri çekildi. $68-72 bandında giriş düşün."
+    },
+    {
+      "sembol": "VRNS",
+      "guncel_fiyat": 21.71,
+      "sektor": "Teknoloji",
+      "hedef_portfoy": "agresif",
+      "urgency": "low",
+      "ekleme_tarihi": "2026-02-25",
+      "son_kontrol": "2026-02-25",
+      "hedef_giris": "18-20",
+      "hedef_fiyat": 35.0,
+      "stop_loss": 16.0,
+      "notlar": "AI cybersecurity, SaaS dönüşümü devam. Hala zarar ediyor, kârlılık gelene kadar bekle. CY27'de %100 SaaS hedefi.",
+      "wait_until": "2026-06-01"
     }
   ],
   "haric_tutulanlar": [
@@ -188,6 +215,6 @@
     "iran": "Polymarket %12 (bu hafta düşük) → Enerji premium kısa vadede stabil",
     "tariff": "SCOTUS ruling (20 Şubat) → Domestic producers güvenli, import-heavy riskli. DIS pozitif (domestic entertainment)."
   },
-  "toplam_aday": 11,
+  "toplam_aday": 13,
   "yuksek_oncelik_aday": 2
 }

@@ -28,9 +28,9 @@
       "maliyet": 100000,
       "kar_zarar": -8027.1,
       "kar_zarar_yuzde": -8.03,
-      "pozisyon_sayisi": 8,
+      "pozisyon_sayisi": 9,
       "nakit": {
-        "miktar": 29624.11,
+        "miktar": 19910.71,
         "para_birimi": "USD"
       },
       "durum": "KAYIPLI"
@@ -69,5 +69,8 @@
       "durum": "8/10 pozisyon aktif"
     }
   },
-  "spy_baslangic_fiyati": 682.85
+  "spy_baslangic_fiyati": 682.85,
+  "son_islemler": [
+    "[ALIŞ] Agresif - TYL @$323.78 x30 = $9,713.40 - Devlet yazılım + AI moat, Axon paraleli"
+  ]
 }
