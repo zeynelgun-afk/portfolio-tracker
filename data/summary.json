@@ -3,18 +3,18 @@
   "simulasyon_donemi": "17 Şubat 2026 - 25 Şubat 2026",
   "islem_gunleri": 7,
   "toplam_sermaye": 400000.0,
-  "toplam_deger": 422466.61,
-  "toplam_kar_zarar": 22466.61,
-  "toplam_kar_zarar_yuzde": 5.62,
+  "toplam_deger": 418585.7,
+  "toplam_kar_zarar": 18585.7,
+  "toplam_kar_zarar_yuzde": 4.65,
   "benchmark_spy": 0.66,
   "alpha": 4.96,
   "portfolyolar": {
     "dengeli": {
       "isim": "Dengeli Portföy",
-      "deger": 108789.71,
+      "deger": 105736.83,
       "maliyet": 100000,
-      "kar_zarar": 8789.71,
-      "kar_zarar_yuzde": 8.79,
+      "kar_zarar": 5736.83,
+      "kar_zarar_yuzde": 5.74,
       "pozisyon_sayisi": 6,
       "nakit": {
         "miktar": 9613.2,
@@ -24,10 +24,10 @@
     },
     "agresif": {
       "isim": "Agresif Büyüme",
-      "deger": 91972.9,
+      "deger": 93103.04,
       "maliyet": 100000,
-      "kar_zarar": -8027.1,
-      "kar_zarar_yuzde": -8.03,
+      "kar_zarar": -6896.96,
+      "kar_zarar_yuzde": -6.9,
       "pozisyon_sayisi": 9,
       "nakit": {
         "miktar": 19910.71,
@@ -37,10 +37,10 @@
     },
     "temettü": {
       "isim": "Değer + Temettü",
-      "deger": 116617.52,
+      "deger": 115670.89,
       "maliyet": 100000,
-      "kar_zarar": 16617.52,
-      "kar_zarar_yuzde": 16.62,
+      "kar_zarar": 15670.89,
+      "kar_zarar_yuzde": 15.67,
       "pozisyon_sayisi": 7,
       "nakit": {
         "miktar": 648.12,
@@ -50,10 +50,10 @@
     },
     "rotasyon": {
       "isim": "Sektör Rotasyonu",
-      "deger": 105086.48,
+      "deger": 104074.94,
       "maliyet": 100000,
-      "kar_zarar": 5086.48,
-      "kar_zarar_yuzde": 5.09,
+      "kar_zarar": 4074.94,
+      "kar_zarar_yuzde": 4.07,
       "pozisyon_sayisi": 3,
       "nakit": {
         "miktar": 668.0800000000054,
@@ -64,7 +64,7 @@
     "swing_trade": {
       "isim": "Swing Trade (Simülasyon)",
       "pozisyon_sayisi": 8,
-      "ortalama_getiri_yuzde": 0.94,
+      "ortalama_getiri_yuzde": 0.26,
       "bos_slot": 2,
       "durum": "8/10 pozisyon aktif"
     }
