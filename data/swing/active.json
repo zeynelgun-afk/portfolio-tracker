@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-02-25T10:36:59.330345",
+  "son_guncelleme": "2026-02-25T11:09:47.241383",
   "not": "SWING TRADE SADECE SİMÜLASYON - Sadece % kazanç/kayıp takibi (MAX: 10 pozisyon)",
   "aktif_pozisyonlar": [
     {
@@ -17,8 +17,8 @@
       "tez": "Havacılık & savunma devi, istikrarlı nakit akışı",
       "zaman_cercevesi": "10-12 gün",
       "risk": "Bütçe endişeleri",
-      "durum": "Normal",
-      "son_guncelleme": "2026-02-25T10:36:59.330345",
+      "durum": "⏰ SÜRE AŞIMI YAKLAŞIYOR",
+      "son_guncelleme": "2026-02-25T11:09:47.241072",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
@@ -49,8 +49,8 @@
       "tez": "Yüksek temettü verimi ~%6, borç azaltma ilerlemesi",
       "zaman_cercevesi": "7-10 gün",
       "risk": "Rekabet baskısı",
-      "durum": "Normal",
-      "son_guncelleme": "2026-02-25T10:36:59.330345",
+      "durum": "✅ normal aralıkta",
+      "son_guncelleme": "2026-02-25T11:09:47.241178",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
@@ -81,8 +81,8 @@
       "tez": "Havacılık, Enerji, Yenilenebilir Enerji çeşitlendirmesi. CAT benzeri başarı potansiyeli (+12% kazandırdı)",
       "zaman_cercevesi": "7-10 gün",
       "risk": "Piyasa zayıflığı, ekonomik yavaşlama",
-      "durum": "Normal",
-      "son_guncelleme": "2026-02-25T10:36:59.330345",
+      "durum": "🟡 HEDEFE YAKIN",
+      "son_guncelleme": "2026-02-25T11:09:47.241230",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
@@ -113,8 +113,8 @@
       "tez": "Duke Energy - Carolina'da dominant pozisyon, düzenli temettü ödemesi, savunmacı pozisyonlama",
       "zaman_cercevesi": "7-10 gün",
       "risk": "Faiz oranı yükselmesi, düzenleme riski",
-      "durum": "Normal",
-      "son_guncelleme": "2026-02-25T10:36:59.330345",
+      "durum": "✅ normal aralıkta",
+      "son_guncelleme": "2026-02-25T11:09:47.241253",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
@@ -145,8 +145,8 @@
       "tez": "DaVita - ABD'nin en büyük böbrek diyaliz şirketi, stabil nakit akışı, yaşlanan nüfus faydalanıcısı",
       "zaman_cercevesi": "7-12 gün",
       "risk": "Healthcare düzenlemeleri, Medicare reimbursement değişiklikleri",
-      "durum": "Normal",
-      "son_guncelleme": "2026-02-25T10:36:59.330345",
+      "durum": "✅ normal aralıkta",
+      "son_guncelleme": "2026-02-25T11:09:47.241292",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
@@ -177,9 +177,9 @@
       "tez": "Büyük IT consulting şirketi, AI entegrasyon haberleri pozitif, oversold bounce beklentisi",
       "zaman_cercevesi": "7-10 gün",
       "risk": "Tech sektörü genelinde satış baskısı devam edebilir, 52W low kırılırsa trend bozulur",
-      "durum": "Normal",
+      "durum": "✅ normal aralıkta",
       "tarama_yontemi": "RSI oversold",
-      "son_guncelleme": "2026-02-25T10:36:59.330345",
+      "son_guncelleme": "2026-02-25T11:09:47.241320",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
@@ -210,9 +210,9 @@
       "tez": "Cybersecurity sektöründe lider, oversold durumda güçlü bounce başladı, sektör uzun vadede büyüme trendinde",
       "zaman_cercevesi": "7-10 gün",
       "risk": "Anthropic AI tool haberi cybersecurity hisselerini baskılıyor, analist downgrade'i devam edebilir",
-      "durum": "Normal",
+      "durum": "✅ normal aralıkta",
       "tarama_yontemi": "RSI oversold",
-      "son_guncelleme": "2026-02-25T10:36:59.330345",
+      "son_guncelleme": "2026-02-25T11:09:47.241342",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
@@ -243,9 +243,9 @@
       "tez": "Digital banking ve yatırım platformu, güçlü büyüme hikayesi, aşırı satılmış durumda bounce potansiyeli yüksek",
       "zaman_cercevesi": "5-7 gün",
       "risk": "Spekülatif hisse, volatilite yüksek, genel tech satışı devam edebilir, profitability endişeleri",
-      "durum": "Normal",
+      "durum": "✅ normal aralıkta",
       "tarama_yontemi": "RSI oversold / momentum",
-      "son_guncelleme": "2026-02-25T10:36:59.330345",
+      "son_guncelleme": "2026-02-25T11:09:47.241367",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
