@@ -12,17 +12,17 @@
       "sektor": "Enerji",
       "adet": 796,
       "maliyet_baz": 50.228442211055274,
-      "guncel_fiyat": 54.865,
+      "guncel_fiyat": 55.1,
       "yatirim": 39981.84,
-      "guncel_deger": 43672.54,
-      "kar_zarar": 3690.7,
-      "kar_zarar_yuzde": 9.23,
-      "gunluk_degisim_yuzde": -0.52,
-      "son_guncelleme": "2026-02-24T15:17:00.915967",
+      "guncel_deger": 43859.6,
+      "kar_zarar": 3877.76,
+      "kar_zarar_yuzde": 9.7,
+      "gunluk_degisim_yuzde": -0.09,
+      "son_guncelleme": "2026-02-25T09:44:10.287504",
       "giris_tarihi": "2026-01-02",
       "giris_fiyati": 45.65,
       "giris_nedeni": "Initial position - Energy sector ETF",
-      "agirlik_yuzde": 41.72
+      "agirlik_yuzde": 41.74
     },
     {
       "sembol": "XLV",
@@ -30,17 +30,17 @@
       "sektor": "Sağlık",
       "adet": 128,
       "maliyet_baz": 155.51,
-      "guncel_fiyat": 157.88,
+      "guncel_fiyat": 157.87,
       "yatirim": 19905.28,
-      "guncel_deger": 20208.64,
-      "kar_zarar": 303.36,
+      "guncel_deger": 20207.36,
+      "kar_zarar": 302.08,
       "kar_zarar_yuzde": 1.52,
       "gunluk_degisim_yuzde": -0.42,
-      "son_guncelleme": "2026-02-24T15:17:00.915967",
+      "son_guncelleme": "2026-02-25T09:44:10.287504",
       "giris_tarihi": "2026-01-02",
       "giris_fiyati": 155.51,
       "giris_nedeni": "Başlangıç pozisyonu - Sektör rotasyon portföyü - Sağlık",
-      "agirlik_yuzde": 19.31
+      "agirlik_yuzde": 19.23
     },
     {
       "sembol": "XLI",
@@ -48,20 +48,20 @@
       "sektor": "Endüstriyel",
       "adet": 228,
       "maliyet_baz": 165.61210526315787,
-      "guncel_fiyat": 175.99,
+      "guncel_fiyat": 176.98,
       "yatirim": 37759.56,
-      "guncel_deger": 40125.72,
-      "kar_zarar": 2366.16,
-      "kar_zarar_yuzde": 6.27,
-      "gunluk_degisim_yuzde": 0.66,
-      "son_guncelleme": "2026-02-24T15:17:00.915967",
+      "guncel_deger": 40351.44,
+      "kar_zarar": 2591.88,
+      "kar_zarar_yuzde": 6.86,
+      "gunluk_degisim_yuzde": 1.23,
+      "son_guncelleme": "2026-02-25T09:44:10.287504",
       "giris_tarihi": "2026-01-02",
       "giris_fiyati": 157.98,
       "giris_nedeni": "Başlangıç pozisyonu - Sektör rotasyon portföyü - Endüstriyel",
-      "agirlik_yuzde": 38.33
+      "agirlik_yuzde": 38.4
     }
   ],
-  "son_guncelleme": "2026-02-24T15:17:00.915967",
-  "toplam_deger": 104674.98,
-  "toplam_getiri_yuzde": 4.67
+  "son_guncelleme": "2026-02-25T09:44:10.287504",
+  "toplam_deger": 105086.48,
+  "toplam_getiri_yuzde": 5.09
 }
