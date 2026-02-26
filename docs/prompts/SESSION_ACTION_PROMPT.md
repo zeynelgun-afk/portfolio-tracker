@@ -166,7 +166,7 @@ losers = fmp_get("biggest-losers", {"limit": 10})
 
 **tüm portföy + swing sembollerini birleştir** (benzersiz liste):
 ```python
-# 4 portföy JSON + swing active.json oku
+# 3 portföy JSON + swing active.json oku
 # benzersiz sembol listesi çıkar
 # batch quote çek
 quotes = fmp_get("batch-quote", {"symbols": "SM,KOS,MO,XLE,RGLD,..."})
@@ -387,8 +387,8 @@ kontrol 1: aynı hisse birden fazla portföyde var mı?
 - iki portföyde aynı hisse → bilinçli karar mı yoksa hata mı?
 
 kontrol 2: sektör yoğunlaşması
-- 4 portföy toplamında bir sektörün toplam ağırlığı > %30 → uyar
-- örnek: dengeli'de XLE + rotasyon'da XLE + swing'de enerji hissesi = aşırı enerji exposure
+- 3 portföy toplamında bir sektörün toplam ağırlığı > %30 → uyar
+- örnek: dengeli'de XLE + agresif'te tech hisseler + swing'de enerji hissesi = aşırı exposure
 
 kontrol 3: yön korelasyonu
 - tüm portföyler aynı yönde mi hareket ediyor? (çeşitlendirme çalışıyor mu?)
@@ -447,7 +447,9 @@ kontrol 3: yön korelasyonu
 - temettü artış geçmişi
 - güçlü sektör RS (özellikle consumer defensive, utilities, healthcare)
 
-**sektör rotasyonu**: makro döngüye göre ETF
+**agresif momentum**: aylık %5 hedef, 3 sinyal tipi
+- earnings momentum, breakout, mean reversion
+- pozisyonlarda zayıf sinyal varsa → hızlı çık, fırsat maliyetini düşün
 - RS analizi en güçlü sektör ETF'leri
 - mevcut pozisyonlarda zayıf sektör varsa → rotasyon düşün
 - çeyreklik rebalance zamanı yaklaşıyor mu?
@@ -525,7 +527,7 @@ for swing active:
 ```
 - mevcut adayların fiyatlarını güncelle
 - tetiklenen giriş seviyesi varsa → "urgency": "high" yap + ⚠️ WATCHLIST ALARMI ver
-- her adayın hedef_portfoy alanını kontrol et (swing/agresif/dengeli/temettü/rotasyon)
+- her adayın hedef_portfoy alanını kontrol et (swing/agresif/dengeli/temettü)
 - artık geçerli olmayan adayları haric_tutulanlar'a taşı (neden ile)
 - yeni aday varsa ekle (zorunlu alanlar: sembol, guncel_fiyat, sektor, hedef_portfoy, hedef_giris, hedef_fiyat, stop_loss, urgency, ekleme_tarihi)
 - portföy watchlist adayları da burada (IREN, AVGO, AMD vb.)
@@ -576,7 +578,6 @@ zayıf sektörler (RS): ...
 | dengeli | $XXX | ±%X | ✅/⚠️/🔴 |
 | agresif | $XXX | ±%X | ... |
 | temettü | $XXX | ±%X | ... |
-| rotasyon | $XXX | ±%X | ... |
 | **toplam** | **$XXX** | **±%X** | |
 
 dikkat gerektiren pozisyonlar:

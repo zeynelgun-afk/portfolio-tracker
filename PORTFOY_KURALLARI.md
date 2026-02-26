@@ -1,45 +1,64 @@
 # PORTFÖY YÖNETİM KURALLARI
 
-> **son güncelleme**: 24 şubat 2026
+> **son güncelleme**: 26 şubat 2026
 
 ---
 
-## temel kural
+## yapı
 
-her portföyün adı onun ruhunu, stratejisini ve tarzını yansıtır. tüm işlemler portföy ruhuna uygun yapılmalıdır.
+3 aktif portföy, toplam $600K simülasyon sermayesi.
+
+| portföy | sermaye | ağırlık |
+|---------|---------|---------|
+| dengeli | $100K | %17 |
+| agresif momentum | $400K | %66 |
+| değer + temettü | $100K | %17 |
+
+> rotasyon portföyü ($100K) 26 şubat 2026'da kapatıldı → arşiv: `data/archive/`
 
 ---
 
-## portföy bazlı kurallar
-
-### 1. dengeli portföy ($100K)
+## 1. dengeli portföy ($100K)
 
 **ruh**: dengeli, risk/ödül balanced, çeşitlendirilmiş, multi-sector value + momentum
 
 | kural | değer |
 |-------|-------|
-| izin verilen | hisseler + sektör ETF (XLE vb. mevcut, yeni alımlarda hisse tercih et) |
+| izin verilen | hisseler + sektör ETF |
 | hedge | short ETF izin verilir (SQQQ, SH, SPXU) |
 | max pozisyon | 7 |
 | stop-loss | %8 |
 | hedef getiri | yıllık %15-20 |
 
-### 2. agresif büyüme ($100K)
+---
 
-**ruh**: büyüme hisseleri, momentum, yüksek risk/yüksek ödül, AI/tech ağırlıklı
+## 2. agresif momentum ($400K) ⭐ ANA PORTFÖY
+
+**ruh**: yüksek frekanslı momentum trading, aylık %5 net getiri hedefi
 
 | kural | değer |
 |-------|-------|
-| izin verilen | sadece büyüme hisseleri (ETF yok) |
-| giriş kriterleri | earnings beat >%10, RS yükseliş, SMA50 üzeri, volume 1.5x+ |
-| hedge | short ETF izin verilir |
-| max pozisyon | 10 |
-| stop-loss | %8 |
-| hedef getiri | yıllık %30+ |
+| izin verilen | büyüme hisseleri (ETF yok) |
+| sinyal tipleri | earnings momentum, breakout, mean reversion |
+| max pozisyon | 8 |
+| pozisyon büyüklüğü | $40K-$60K (%10-15) |
+| tutma süresi | 3-7 gün (max 10) |
+| stop-loss | %4 (sıkı) |
+| kar hedefi | %8-12 (kademeli çıkış) |
+| R:R minimum | 2:1 |
+| aylık max drawdown | %8 |
+| günlük max kayıp | %2 |
+| hedef getiri | aylık %5 (yıllık ~%80) |
+
+**kademeli çıkış**: +%4'te breakeven stop → +%6'da %33 sat → +%10'da %33 sat → kalan trailing
 
 **yasak**: değer hisseleri, temettü aristokratları, defensive sektörler
 
-### 3. değer + temettü ($100K)
+detay: `docs/AGGRESSIVE_MOMENTUM_STRATEGY.md`
+
+---
+
+## 3. değer + temettü ($100K)
 
 **ruh**: değer hisseleri, yüksek temettü, istikrar, güçlü FCF
 
@@ -54,19 +73,6 @@ her portföyün adı onun ruhunu, stratejisini ve tarzını yansıtır. tüm iş
 **yasak**: sektör ETF'leri, büyüme hisseleri, temettü ödemeyen hisseler
 **çıkış**: temettü kesintisi veya fundamentaller bozulursa
 
-### 4. sektör rotasyonu ($100K)
-
-**ruh**: sektör ETF'leriyle makro döngü takibi
-
-| kural | değer |
-|-------|-------|
-| izin verilen | sadece sektör ETF'leri (XLE, XLF, XLK, XLV, XLI, XLP, XLU, XLY, XLB, XLRE, XLC) |
-| rebalance | çeyreklik |
-| max pozisyon | 8 |
-| hedef | S&P 500'ü yıllık %5+ geçmek |
-
-**yasak**: bireysel hisseler, kaldıraçlı ETF'ler
-
 ---
 
 ## hedge kuralları
@@ -76,15 +82,14 @@ kullanım: piyasa düşüş beklentisinde, max 2 hafta
 
 ---
 
-## özet tablo
+## özet
 
 | portföy | long izin | ETF izin | hedge | max poz |
 |---------|-----------|----------|-------|---------|
-| dengeli | hisse (+ mevcut ETF) | geçiş döneminde evet | short ETF | 7 |
-| agresif | büyüme hisse | hayır | short ETF | 10 |
-| temettü | değer/temettü hisse | sadece temettü ETF | short ETF | 15 |
-| rotasyon | hayır | sektör ETF | short ETF | 8 |
+| dengeli | hisse + ETF | evet | short ETF | 7 |
+| agresif | büyüme hisse | hayır | short ETF | 8 |
+| temettü | değer/temettü hisse | temettü ETF | short ETF | 15 |
 
 ---
 
-> son güncelleme: 24 şubat 2026 | finzora ai
+> son güncelleme: 26 şubat 2026 | finzora ai

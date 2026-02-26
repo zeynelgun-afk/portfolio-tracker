@@ -9,7 +9,7 @@
 
 ---
 
-> **versiyon**: 3.2 | **son güncelleme**: 25 şubat 2026
+> **versiyon**: 3.3 | **son güncelleme**: 26 şubat 2026
 > **çıktı dosyası**: `reports/daily/DAILY_REPORT_YYYY-MM-DD.md`
 > **çalışma zamanı**: TR ~14:00 (NYSE dün kapandı, bugün 17:30 açılacak)
 > **dil**: küçük harf türkçe ama **dilbilgisi kurallarına uygun** (cümle başı büyük, cümle sonu nokta, şirket/ticker tutarlı)
@@ -36,7 +36,7 @@
 |-------|--------|-----|-----------|
 | 0. değerlendirme | plan tuttu mu, dersler, JSON | 0* | 0-1 |
 | 1. piyasa | kapanış, futures, sektör, risk | ~12 | 5-7 |
-| 2. portföy | 4 portföy detay, RSI, SMA | ~73 | 0 |
+| 2. portföy | 3 portföy detay, RSI, SMA | ~73 | 0 |
 | 3. swing | stop/hedef, aksiyonlar | 0* | 0 |
 | 4. earnings | dün gece, bugün, haftalık | 5-15 | 2-4 |
 | 5. sonuç | özet + aksiyon planı | 0 | 0 |
@@ -88,8 +88,8 @@ import json
 
 semboller = set()
 
-# 4 portföyden
-for dosya in ["balanced.json", "aggressive.json", "dividend.json", "rotation.json"]:
+# 3 portföyden
+for dosya in ["balanced.json", "aggressive.json", "dividend.json"]:
     with open(f"data/portfolios/{dosya}") as f:
         for pos in json.load(f)['pozisyonlar']:
             semboller.add(pos['sembol'])
@@ -182,7 +182,7 @@ for pozisyon in aktif_pozisyonlar:
 ### 3c. summary.json
 
 ```python
-summary['toplam_deger'] = dengeli + agresif + temettü + rotasyon
+summary['toplam_deger'] = dengeli + agresif + temettü
 summary['toplam_kar_zarar_yuzde'] = ((toplam_deger - 400000) / 400000) * 100
 summary['alpha'] = toplam_kar_zarar_yuzde - benchmark_spy
 ```
@@ -202,7 +202,7 @@ KATMAN 2 — TUTARLILIK:
 ✓ kar_zarar = guncel_deger - yatirim
 ✓ toplam_deger = sum(guncel) + nakit
 ✓ ağırlık toplamı ≈ %100
-✓ summary = 4 portföy toplamı
+✓ summary = 3 portföy toplamı
 ✓ son_guncelleme bugün
 ```
 
@@ -377,7 +377,7 @@ sectors_sorted = sorted(sectors, key=lambda x: x['change'], reverse=True)
 strongest_3 = sectors_sorted[:3]
 weakest_3 = sectors_sorted[-3:]
 
-# rotasyon sinyali
+# sektör rotasyon sinyali
 if "Technology" in strongest_3 and "Utilities" in weakest_3:
     rotation = "risk-on / büyüme"
 elif "Utilities" in strongest_3 and "Technology" in weakest_3:
@@ -418,7 +418,7 @@ elif "Utilities" in strongest_3 and "Technology" in weakest_3:
 2. [Sektör] -X.XX%
 3. [Sektör] -X.XX%
 
-**rotasyon sinyali**: [risk-on/risk-off/karışık]
+**sektör rotasyon sinyali**: [risk-on/risk-off/karışık]
 
 ### piyasa hareketi
 
@@ -454,7 +454,7 @@ elif "Utilities" in strongest_3 and "Technology" in weakest_3:
 
 # BÖLÜM 2: PORTFÖY TAKİBİ
 
-> **amaç**: 4 portföy detay, uyarılar, aksiyonlar
+> **amaç**: 3 portföy detay, uyarılar, aksiyonlar
 
 ## ADIM 1 — SEMBOL LİSTESİ
 
@@ -527,7 +527,7 @@ elif gunluk_degisim < -5:
 - ✅ [sorunsuz]
 ```
 
-*[agresif, temettü, rotasyon için tekrar]*
+*[agresif, temettü için tekrar]*
 
 ### genel özet
 
@@ -736,7 +736,7 @@ SEMBOL — [şirket]
 - [ ] tüm semboller güncel fiyatla güncellendi?
 - [ ] k/z hesaplamaları tutarlı?
 - [ ] ağırlık toplamı ≈ %100?
-- [ ] summary = 4 portföy toplamı?
+- [ ] summary = 3 portföy toplamı?
 
 **rapor kontrol**:
 - [ ] tüm bölümler (0-5) yazıldı?

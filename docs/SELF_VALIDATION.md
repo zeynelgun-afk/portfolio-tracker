@@ -120,7 +120,7 @@ her rapor bölümü yazıldıktan sonra kendi kendine kontrol:
 ✓ kar_zarar_yuzde = (kar_zarar / yatirim) × 100
 ✓ yatirim = adet × maliyet_baz (sabit, asla değişmez)
 ✓ nakit: trade olmadıysa değişmemiş olmalı
-✓ summary toplam = 4 portföy toplamı (kesin eşitlik)
+✓ summary toplam = 3 portföy toplamı (kesin eşitlik)
 ```
 
 ### 2b. metin-veri uyumu
@@ -188,7 +188,6 @@ yeni pozisyon önerisi için:
 ✓ hangi portföye öneriliyor → o portföyün kurallarıyla uyumlu mu?
   - agresif portföye temettü hissesi önerme
   - temettü portföyüne growth/momentum hissesi önerme
-  - rotasyon portföyüne bireysel hisse önerme (ETF olmalı)
   - dengeli portföye tek sektörde %30+ yoğunlaşma yaratacak hisse önerme
 
 ✓ nakit yeterli mi? (önerilen alım tutarı > mevcut nakit → uyar)
