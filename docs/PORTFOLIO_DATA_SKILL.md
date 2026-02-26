@@ -23,9 +23,8 @@
 | Portföy | Dosya |
 |---------|-------|
 | Dengeli ($100K) | `data/portfolios/balanced.json` |
-| Agresif Büyüme ($100K) | `data/portfolios/aggressive.json` |
+| Agresif ($400K) | `data/portfolios/aggressive.json` |
 | Değer + Temettü ($100K) | `data/portfolios/dividend.json` |
-| Sektör Rotasyonu ($100K) | `data/portfolios/rotation.json` |
 
 ### Portföy JSON Şeması (Tam Yapı)
 
@@ -308,7 +307,7 @@ agirlik_yuzde = (guncel_deger / toplam_deger) × 100  [her pozisyon için]
   "son_guncelleme": "2026-02-20",
   "simulasyon_donemi": "17 Şubat 2026 - 20 Şubat 2026",
   "islem_gunleri": 4,
-  "toplam_sermaye": 400000.0,
+  "toplam_sermaye": 600000.0,
   "toplam_deger": 416637.99,
   "toplam_kar_zarar": 16637.99,
   "toplam_kar_zarar_yuzde": 4.16,
@@ -330,7 +329,6 @@ agirlik_yuzde = (guncel_deger / toplam_deger) × 100  [her pozisyon için]
     },
     "agresif": {...},
     "temettü": {...},
-    "rotasyon": {...},
     "swing_trade": {
       "isim": "Swing Trade (Simülasyon)",
       "pozisyon_sayisi": 5,
@@ -347,7 +345,7 @@ agirlik_yuzde = (guncel_deger / toplam_deger) × 100  [her pozisyon için]
 ### Summary Hesaplama Kuralları
 
 ```
-toplam_deger = dengeli.deger + agresif.deger + temettü.deger + rotasyon.deger
+toplam_deger = dengeli.deger + agresif.deger + temettü.deger
 toplam_kar_zarar = toplam_deger - toplam_sermaye
 toplam_kar_zarar_yuzde = (toplam_kar_zarar / toplam_sermaye) × 100
 alpha = toplam_kar_zarar_yuzde - benchmark_spy
