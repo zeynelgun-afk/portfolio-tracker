@@ -1,4 +1,4 @@
-# SEANS İÇİ AKSİYON PROMPT — v1.2
+# SEANS İÇİ AKSİYON PROMPT — v1.3
 
 > **versiyon**: 1.3 | **son güncelleme**: 26 şubat 2026
 > **çalışma zamanı**: NYSE açıldıktan sonra (TR 17:30+), tercihen açılıştan 30-60dk sonra
@@ -430,37 +430,24 @@ kontrol 3: yön korelasyonu
 
 **her portföy için ayrı filtre**:
 
-**dengeli portföy**: multi-sector value + momentum
+**dengeli portföy** ($100K): multi-sector value + momentum
 - güçlü sektör RS gösteren hisseler
 - P/E makul (<25), momentum pozitif
 - mevcut sektör dağılımıyla çakışmayan
 
-**agresif momentum ($400K)**: aylık %5 hedef, 3 sinyal tipi
+**agresif portföy** ($400K): aylık %5 hedef, 3 sinyal tipi
 - earnings momentum: beat >%15, guidance yükseltme, post-earnings pullback'te giriş
 - breakout: 52W high yakını, dar range konsolidasyon, volume 1.5x+
 - mean reversion: RSI <30, SMA200 üzeri, sektör/piyasa kaynaklı düşüş (hisse bazlı değil)
-- pozisyon büyüklüğü: $40K-$60K, max 8 eşzamanlı pozisyon
-- ⚠️ $320K nakit mevcut — kaliteli sinyal varsa kademeli giriş fırsatı
+- pozisyon büyüklüğü: $40K-$60K (%10-15), max 8 eşzamanlı pozisyon
+- nakit oranı yüksekse ve kaliteli sinyal varsa → kademeli giriş fırsatı
+- trade execution kuralları: `docs/AGGRESSIVE_MOMENTUM_STRATEGY.md`
 
-**değer + temettü**: düşük P/E, yüksek temettü, güçlü FCF
+**değer + temettü portföyü** ($100K): düşük P/E, yüksek temettü, güçlü FCF
 - P/E < 20, temettü yield > %3
 - D/E < 1.5, FCF pozitif
 - temettü artış geçmişi
 - güçlü sektör RS (özellikle consumer defensive, utilities, healthcare)
-
-**agresif momentum**: $400K sermaye, aylık %5 hedef, 3 sinyal tipi
-- earnings momentum, breakout, mean reversion
-- pozisyon büyüklüğü: $40K-$60K (%10-15)
-- tutma süresi: 3-7 gün (max 10)
-- stop-loss: %4 (sıkı), kar hedefi: %8-12 (kademeli çıkış)
-- kademeli çıkış: +%4 breakeven → +%6 %33 sat → +%10 %33 sat → kalan trailing
-- günlük max kayıp %2, haftalık %4, aylık %8 drawdown limiti
-- pozisyonlarda zayıf sinyal varsa → hızlı çık, fırsat maliyetini düşün
-- ⚠️ nakit oranı yüksekse ve kaliteli sinyal varsa → kademeli giriş fırsatı
-- detay: `docs/AGGRESSIVE_MOMENTUM_STRATEGY.md`
-- RS analizi en güçlü sektör ETF'leri
-- mevcut pozisyonlarda zayıf sektör varsa → rotasyon düşün
-- çeyreklik rebalance zamanı yaklaşıyor mu?
 
 ## 3e. satış/çıkış değerlendirmesi
 
