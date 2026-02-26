@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-02-25T21:39:17.030091",
+  "son_guncelleme": "2026-02-26T10:41:28.216442",
   "not": "Bir sonraki işlemler için potansiyel swing adayları - ATR tabanlı filtreleme uygulandı",
   "izleme_listesi": [
     {
@@ -94,6 +94,81 @@
       "stop_loss": 185.0,
       "katalizor": "AI chip talebi, data center büyümesi, güçlü earnings momentum",
       "risk": "Yüksek değerleme (P/S 25x), AI talep doygunluğu endişesi, earnings volatilitesi"
+    },
+    {
+      "sembol": "CRWD",
+      "guncel_fiyat": 363.31,
+      "momentum_5gun": 0,
+      "sektor": "Siber Güvenlik",
+      "notlar": "AI güvenlik teması, sektör lideri, endpoint + cloud security. Kurucu-CEO George Kurtz. 3 mart earnings — sonrası değerlendir. Goldman Sachs AI beneficiary listesinde.",
+      "urgency": "high",
+      "ekleme_tarihi": "2026-02-26",
+      "son_kontrol": null,
+      "hedef_giris": "3 mart earnings sonrası",
+      "hedef_fiyat": null,
+      "stop_loss": null,
+      "kategori": "agresif_portfoy",
+      "ai_katman": "siber güvenlik"
+    },
+    {
+      "sembol": "NOW",
+      "guncel_fiyat": 104.23,
+      "momentum_5gun": 0,
+      "sektor": "Kurumsal Yazılım",
+      "notlar": "ServiceNow — NVIDIA CEO endorsement: 'kimse onlardan daha iyi hizmet veremez'. Enterprise workflow AI entegrasyonu lideri. Domain-specific moat güçlü.",
+      "urgency": "medium",
+      "ekleme_tarihi": "2026-02-26",
+      "son_kontrol": null,
+      "hedef_giris": "800-850",
+      "hedef_fiyat": null,
+      "stop_loss": null,
+      "kategori": "agresif_portfoy",
+      "ai_katman": "veri katmanı / kurumsal omurga"
+    },
+    {
+      "sembol": "SNOW",
+      "guncel_fiyat": 169.21,
+      "momentum_5gun": 0,
+      "sektor": "Veri Altyapısı",
+      "notlar": "Snowflake — data cloud + AI/ML pipeline altyapısı. Proprietary veri avantajı güçlü. T. Rowe Price 'linchpin teknoloji' kategorisinde.",
+      "urgency": "medium",
+      "ekleme_tarihi": "2026-02-26",
+      "son_kontrol": null,
+      "hedef_giris": "160-170",
+      "hedef_fiyat": null,
+      "stop_loss": null,
+      "kategori": "agresif_portfoy",
+      "ai_katman": "veri katmanı / kurumsal omurga"
+    },
+    {
+      "sembol": "RBRK",
+      "guncel_fiyat": 52.16,
+      "momentum_5gun": 0,
+      "sektor": "Siber Güvenlik / Veri Koruma",
+      "notlar": "Rubrik — data security + backup. Diğer siber güvenlik isimlerine kıyasla daha makul valuasyon. AI çağında veri koruması kritik.",
+      "urgency": "medium",
+      "ekleme_tarihi": "2026-02-26",
+      "son_kontrol": null,
+      "hedef_giris": "55-60",
+      "hedef_fiyat": null,
+      "stop_loss": null,
+      "kategori": "agresif_portfoy",
+      "ai_katman": "siber güvenlik"
+    },
+    {
+      "sembol": "NET",
+      "guncel_fiyat": 171.79,
+      "momentum_5gun": 0,
+      "sektor": "Siber Güvenlik / Edge Computing",
+      "notlar": "Cloudflare — edge computing + güvenlik + AI traffic altyapısı. CDN üzerinden AI model serving potansiyeli. Kurucu-CEO Matthew Prince.",
+      "urgency": "low",
+      "ekleme_tarihi": "2026-02-26",
+      "son_kontrol": null,
+      "hedef_giris": "120-130",
+      "hedef_fiyat": null,
+      "stop_loss": null,
+      "kategori": "agresif_portfoy",
+      "ai_katman": "siber güvenlik"
     }
   ],
   "haric_tutulanlar": [
@@ -108,6 +183,14 @@
     {
       "sembol": "FIS",
       "neden": "Beta 0.92 < 1.0 (düşük volatilite, swing trade için uygun değil)"
+    }
+  ],
+  "stratejik_notlar": [
+    {
+      "tarih": "2026-02-26",
+      "baslik": "AI 3 Katmanlı Yatırım Tezi",
+      "icerik": "Goldman Sachs + T. Rowe Price framework'üne dayalı: (1) Siber güvenlik — zorunluluk (CRWD, ZS, NET, RBRK), (2) Veri katmanı — AI yakıtı (PLTR, SNOW, NOW, MSFT), (3) Hyperscaler — altyapı ($500B+ capex). Orchestration riskli düşük moat yazılımlardan (SHOP gibi) kaçın, domain-specific moat'u olanlara odaklan.",
+      "kaynak": "GS Matthew Martino, T. Rowe Price Tony Wang, NVDA CEO Jensen Huang earnings call"
     }
   ]
 }

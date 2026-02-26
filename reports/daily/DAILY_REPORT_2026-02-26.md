@@ -345,7 +345,67 @@ bugünkü seans nvidia sonrası "sell the news" ve salesforce software endişesi
 
 ---
 
-## 5. sonuç
+## 5. stratejik not — ai yazılımı bitirmiyor, yeniden yazıyor
+
+### framework: 3 katmanlı ai yatırım tezi
+
+goldman sachs (matthew martino) ve t. rowe price (tony wang) raporlarına dayanan ve portföy yöneticimizin kendi analiziyle harmanlanan framework. agentic ai yazılım sektöründe gerçek bir baskı yaratıyor ama bu "sektörün sonu" değil — değerin nerede biriktiğini yeniden yazıyor. orchestration riskine karşı savunmasız, düşük farklılaşmalı, veri avantajı olmayan şirketler tehlikede. ama domain-specific moat'u olan, proprietary veriye sahip, ai'yı üzerine katan şirketler güçleniyor.
+
+**katman 1 — siber güvenlik (zorunluluk)**
+
+ai çağı yeni saldırı vektörleri üretiyor, savunma harcaması zorunlu artıyor. kurucu-ceo avantajı + ai güvenlik teması.
+- **crwd** (crowdstrike) — sektör lideri, 3 mart earnings, endpoint + cloud security
+- **zs** (zscaler) — zero trust lideri, swing'de +%3.60, rsi 31.9 oversold
+- **net** (cloudflare) — edge computing + güvenlik, ai traffic altyapısı
+- **rbrk** (rubrik) — data security + backup, daha makul valuasyon
+
+**katman 2 — veri katmanı ve kurumsal omurga (yakıt)**
+
+ai'nın yakıtı proprietary veri, veriye sahip olanlar pazarlık gücünü koruyor.
+- **pltr** (palantir) — zaten portföyde, kurumsal hassas veriyi ai'ya dönüştürme lideri
+- **snow** (snowflake) — data cloud, ai/ml pipeline altyapısı
+- **now** (servicenow) — nvidia ceo endorsement: "kimse onlardan daha iyi hizmet veremez". enterprise workflow ai entegrasyonu
+- **msft** (microsoft) — azure + copilot + openai ortaklığı, satış baskısına rağmen temeller sağlam
+
+**katman 3 — hyperscaler platformları (altyapı)**
+
+2026 capex taahhütleri $500b+ ile altyapı dominasyonu devam ediyor. goldman sachs'ın "ai trade faz 2-3" diye tanımladığı alan tam burası. msft azure, amzn aws, googl cloud liderliğini koruyor.
+
+### shop kararı — çıkış
+
+shop'u agresif portföyden satma kararı aldık. gerekçe:
+
+| kriter | shop durumu |
+|--------|------------|
+| ai moat | zayıf — e-ticaret workflow'u ai agent'larla bypass riski |
+| orchestration riski | yüksek — düşük farklılaşma |
+| proprietary veri | sınırlı — merchant data var ama savunulabilir değil |
+| teknik görünüm | kötü — tüm sma altında, rsi 43.3 |
+| k/z | breakeven (+%0.36) — zarar yok |
+
+**aksiyon**: bugünkü seansda shop sat, nakdi crwd/now/snow fırsatı için tut.
+
+### agresif portföy watchlist güncellemesi
+
+mevcut watchlist'e eklenen ai-güçlenen adaylar:
+
+| sembol | katman | giriş hedefi | not |
+|--------|--------|-------------|-----|
+| crwd | siber güvenlik | 3 mart earnings sonrası | sektör lideri, ai güvenlik |
+| now | kurumsal omurga | $800-850 arası | nvidia ceo endorsement |
+| snow | veri katmanı | $160-170 arası | data cloud + ai pipeline |
+| rbrk | siber güvenlik | $55-60 arası | data security, makul valuasyon |
+| net | siber güvenlik | $120-130 arası | edge + ai traffic |
+
+### kaynak notlar
+
+- goldman sachs: "ai platform ve productivity beneficiary framework" — ai trade'in sonraki fazları
+- t. rowe price: "linchpin teknoloji filtresi" — hardware + hyperscaler liderliğini koruyor, yazılımda seçici ol
+- nvidia ceo jensen huang: "piyasalar yanıldı, servicenow gibi domain-specific yazılımlar güçlenecek"
+
+---
+
+## 6. sonuç
 
 ### özet
 
