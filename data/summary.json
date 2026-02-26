@@ -1,76 +1,64 @@
 {
   "son_guncelleme": "2026-02-26",
-  "simulasyon_donemi": "17 Şubat 2026 - 25 Şubat 2026",
-  "islem_gunleri": 7,
-  "toplam_sermaye": 400000.0,
-  "toplam_deger": 421233.86,
-  "toplam_kar_zarar": 21233.86,
-  "toplam_kar_zarar_yuzde": 5.31,
-  "benchmark_spy": 1.51,
-  "alpha": 3.8,
+  "simulasyon_donemi": "17 Şubat 2026 - devam",
+  "islem_gunleri": 9,
+  "toplam_sermaye": 600000,
+  "toplam_deger": 616621.77,
+  "toplam_kar_zarar": 16621.77,
+  "toplam_kar_zarar_yuzde": 2.77,
+  "benchmark_spy": 0.0,
+  "alpha": 2.77,
   "portfolyolar": {
     "dengeli": {
       "isim": "Dengeli Portföy",
+      "sermaye": 100000,
       "deger": 106990.61,
-      "maliyet": 100000,
-      "kar_zarar": 5736.83,
+      "kar_zarar": 6990.610000000001,
       "kar_zarar_yuzde": 6.99,
       "pozisyon_sayisi": 6,
       "nakit": {
         "miktar": 9613.2,
         "para_birimi": "USD"
       },
-      "durum": "BAŞARILI"
+      "durum": "AKTİF"
     },
     "agresif": {
-      "isim": "Agresif Büyüme",
-      "deger": 93324.55,
-      "maliyet": 100000,
-      "kar_zarar": -6896.96,
-      "kar_zarar_yuzde": -6.68,
+      "isim": "Agresif Momentum (%5/ay)",
+      "sermaye": 400000,
+      "deger": 393324.55000000005,
+      "kar_zarar": -6675.449999999953,
+      "kar_zarar_yuzde": -1.6688624999999884,
       "pozisyon_sayisi": 9,
       "nakit": {
-        "miktar": 19910.71,
+        "miktar": 319910.71,
         "para_birimi": "USD"
       },
-      "durum": "KAYIPLI"
+      "strateji": "Aylık %5 momentum - 3 sinyal tipi",
+      "durum": "AKTİF - YENİ SERMAYE"
     },
     "temettü": {
       "isim": "Değer + Temettü",
+      "sermaye": 100000,
       "deger": 116306.61,
-      "maliyet": 100000,
-      "kar_zarar": 15663.07,
+      "kar_zarar": 16306.61,
       "kar_zarar_yuzde": 16.31,
       "pozisyon_sayisi": 7,
       "nakit": {
         "miktar": 8371.68,
         "para_birimi": "USD"
       },
-      "durum": "BAŞARILI"
+      "durum": "AKTİF"
     },
     "rotasyon": {
-      "isim": "Sektör Rotasyonu",
-      "deger": 104612.09,
-      "maliyet": 100000,
-      "kar_zarar": 4032.7,
-      "kar_zarar_yuzde": 4.61,
-      "pozisyon_sayisi": 5,
-      "nakit": {
-        "miktar": 558.42,
-        "para_birimi": "USD"
-      },
-      "durum": "BAŞARILI"
-    },
-    "swing_trade": {
-      "isim": "Swing Trade (Simülasyon)",
-      "pozisyon_sayisi": 8,
-      "ortalama_getiri_yuzde": 0.26,
-      "bos_slot": 2,
-      "durum": "8/10 pozisyon aktif"
+      "isim": "Sektör Rotasyonu (KAPATILDI)",
+      "durum": "KAPATILDI",
+      "kapanma_tarihi": "2026-02-26",
+      "son_deger": 104612.09,
+      "son_getiri_yuzde": 4.61,
+      "neden": "Agresif stratejiye sermaye aktarımı"
     }
   },
-  "spy_baslangic_fiyati": 682.85,
-  "son_islemler": [
-    "[ALIŞ] Agresif - TYL @$323.78 x30 = $9,713.40 - Devlet yazılım + AI moat, Axon paraleli"
+  "yapisal_degisiklikler": [
+    "2026-02-26: Rotasyon portföyü kapatıldı, agresif portföye $300K yeni sermaye eklendi. Toplam simülasyon $400K → $600K."
   ]
 }

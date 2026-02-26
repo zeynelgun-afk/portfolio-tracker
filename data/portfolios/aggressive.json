@@ -1,8 +1,8 @@
 {
   "portfoy_adi": "Agresif Büyüme",
-  "baslangic_sermaye": 100000,
+  "baslangic_sermaye": 400000,
   "nakit": {
-    "miktar": 19910.71,
+    "miktar": 319910.71,
     "para_birimi": "USD"
   },
   "pozisyonlar": [
@@ -22,7 +22,7 @@
       "giris_tarihi": "2026-02-20",
       "giris_fiyati": 14.61,
       "giris_nedeni": "Yarım pozisyon tamamlandı. RSI 41, SMA200 üzeri destek. Orijinal: 342 adet @$14.61, ek: 347 adet @$14.39. Ortalama maliyet: $14.50",
-      "agirlik_yuzde": 11.71,
+      "agirlik_yuzde": 2.78,
       "stop_loss": 14.57,
       "hedef_fiyat": 17.13,
       "sinyal_tipi": "mean_reversion",
@@ -66,7 +66,7 @@
       "giris_tarihi": "2026-02-20",
       "giris_fiyati": 19.77,
       "giris_nedeni": "Yarım pozisyon - Real-time satellite imagery pullback",
-      "agirlik_yuzde": 8.2,
+      "agirlik_yuzde": 1.95,
       "stop_loss": 18.98,
       "hedef_fiyat": 21.8,
       "sinyal_tipi": "breakout",
@@ -110,7 +110,7 @@
       "giris_tarihi": "2026-02-23",
       "giris_fiyati": 1.96,
       "giris_nedeni": "Giriş bölgesi $1.90-2.00 tutturuldu. Micro-cap 3D baskı teknoloji şirketi, savunma ve uzay sektörü müşteri tabanı güçleniyor. Watchlist hedefine ulaşıldı.",
-      "agirlik_yuzde": 5.27,
+      "agirlik_yuzde": 1.25,
       "stop_loss": 1.88,
       "hedef_fiyat": 2.15,
       "sinyal_tipi": "mean_reversion",
@@ -154,7 +154,7 @@
       "giris_tarihi": "2026-02-23",
       "giris_fiyati": 128.42,
       "giris_nedeni": "RSI 33 aşırı satım bölgesi, SMA200 yakınında destek. AI veri analitiği ve savunma sektörü lider oyuncusu, US government contract büyümesi güçlü. SMA50 geri dönüş hedefleniyor. Güçlü earnings beat geçmişi.",
-      "agirlik_yuzde": 5.61,
+      "agirlik_yuzde": 1.33,
       "stop_loss": 129.06,
       "hedef_fiyat": 147.0,
       "sinyal_tipi": "mean_reversion",
@@ -198,7 +198,7 @@
       "giris_tarihi": "2026-02-23",
       "giris_fiyati": 119.88,
       "giris_nedeni": "RSI 42.6, SMA200 -%13.8 altında destek bölgesi. E-ticaret altyapısı büyümesi, merchant solutions geliri artıyor. Yakın vadeli earnings riski yok. SMA200'e dönüş hedefleniyor.",
-      "agirlik_yuzde": 5.29,
+      "agirlik_yuzde": 1.25,
       "stop_loss": 115.08,
       "hedef_fiyat": 133.0,
       "sinyal_tipi": "mean_reversion",
@@ -242,7 +242,7 @@
       "giris_tarihi": "2026-02-24",
       "giris_fiyati": 128.62,
       "giris_nedeni": "AI/data center networking lideri - bulut devleri altyapı harcaması artıyor - RSI 42.9 oversold bounce bölgesinde - SMA200 üzerinde sağlam trend - analist hedefi $177 (+%37 upside) - Altman Z-score 16.1 finansal güç",
-      "agirlik_yuzde": 13.24,
+      "agirlik_yuzde": 3.14,
       "stop_loss": 123.48,
       "hedef_fiyat": 146.0,
       "sinyal_tipi": "earnings_momentum",
@@ -286,7 +286,7 @@
       "giris_tarihi": "2026-02-24",
       "giris_fiyati": 68.44,
       "giris_nedeni": "Uzay ekonomisi büyüme oyunu - Electron roket başarı serisi + Neutron geliştirme katalizörü - savunma kontratları artıyor - RSI 43.8 bounce bölgesi - SMA200 üzerinde güçlü yapı - analist hedefi $87 (+%27 upside)",
-      "agirlik_yuzde": 10.98,
+      "agirlik_yuzde": 2.61,
       "stop_loss": 65.7,
       "hedef_fiyat": 77.0,
       "sinyal_tipi": "breakout",
@@ -330,7 +330,7 @@
       "giris_tarihi": "2026-02-24",
       "giris_fiyati": 49.76,
       "giris_nedeni": "Enerji içecek büyüme hikayesi - Monster ve Red Bull'a alternatif - SMA50 ve SMA200 üzerinde çift destek - RSI 54 sağlıklı nötr bölge - analist hedefi $65 (+%30 upside) - portföye tüketim sektörü çeşitlendirmesi",
-      "agirlik_yuzde": 7.59,
+      "agirlik_yuzde": 1.8,
       "stop_loss": 47.77,
       "hedef_fiyat": 55.15,
       "sinyal_tipi": "mean_reversion",
@@ -374,7 +374,7 @@
       "giris_tarihi": "2026-02-25",
       "giris_fiyati": 323.78,
       "giris_nedeni": "Devlet yazılım platformu + AI entegrasyonu (Axon paraleli). %98 müşteri retention, SaaS +%20 büyüme, TTM FCF 638M$, 1B$ buyback programı. Q4 earnings miss tek seferlik (Texas kontratı). AWS/Anthropic/OpenAI ortaklıkları, agentic AI pilotları Q1 başlıyor. DCF değer: $429. EV/Revenue 5.8x.",
-      "agirlik_yuzde": 10.77,
+      "agirlik_yuzde": 2.56,
       "stop_loss": 310.83,
       "hedef_fiyat": 369.0,
       "sinyal_tipi": "breakout",
@@ -403,9 +403,9 @@
       "stop_tipi": "sabit_%4"
     }
   ],
-  "son_guncelleme": "2026-02-26T12:57:58.021017",
-  "toplam_deger": 93324.55,
-  "toplam_getiri_yuzde": -6.68,
+  "son_guncelleme": "2026-02-26T13:27:16.564127",
+  "toplam_deger": 393324.55000000005,
+  "toplam_getiri_yuzde": -1.6688624999999884,
   "gerceklesen_zarar": -1321.51,
   "kapali_pozisyonlar": [
     {
@@ -472,6 +472,11 @@
       "date": "2026-02-25T15:01:14.467625",
       "type": "entry",
       "content": "ALIŞ TYL: 30 adet @$323.78 = $9713.4. Stop: $270, Hedef: $430. Devlet yazılımı + AI entegrasyonu, Axon paraleli tez. DCF $429, EV/Rev 5.8x."
+    },
+    {
+      "date": "2026-02-26T13:27:16.564127",
+      "type": "rebalance",
+      "content": "Sermaye $100K → $400K artırıldı. $300K yeni nakit eklendi. Aylık %5 agresif momentum stratejisi aktif. Rotasyon portföyü kapatıldı."
     }
   ],
   "strateji": {
@@ -494,7 +499,10 @@
       "mean_reversion"
     ],
     "baslangic_tarihi": "2026-02-26",
-    "dokuman": "docs/AGGRESSIVE_MOMENTUM_STRATEGY.md"
+    "dokuman": "docs/AGGRESSIVE_MOMENTUM_STRATEGY.md",
+    "sermaye": 400000,
+    "sermaye_degisiklik_tarihi": "2026-02-26",
+    "sermaye_notu": "$100K → $400K sermaye artırımı. $300K yeni nakit eklendi."
   },
   "aylik_performans": {
     "2026-02": {
@@ -506,5 +514,16 @@
       "kayip_sayisi": 0,
       "not": "Strateji geçiş ayı - mevcut pozisyonlar devralındı"
     }
-  }
+  },
+  "transactions": [
+    {
+      "tarih": "2026-02-26",
+      "islem_tipi": "SERMAYE_ARTIRIMI",
+      "sembol": "-",
+      "adet": 0,
+      "fiyat": 0,
+      "tutar": 300000,
+      "aciklama": "Portföy yeniden yapılandırma - $300K yeni sermaye eklendi. Rotasyon portföyü kapatıldı, agresif momentum stratejisine geçiş."
+    }
+  ]
 }

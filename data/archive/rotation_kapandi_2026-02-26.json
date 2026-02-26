@@ -97,7 +97,7 @@
       "agirlik_yuzde": 5.02
     }
   ],
-  "son_guncelleme": "2026-02-26T10:15:55.987434",
+  "son_guncelleme": "2026-02-26T13:27:16.564127",
   "toplam_deger": 104612.09,
   "toplam_getiri_yuzde": 4.61,
   "transactions": [
@@ -128,5 +128,7 @@
       "tutar": 5243.92,
       "aciklama": "Sektör rotasyonu - Temel tüketim defensif güç YTD +%14.4"
     }
-  ]
+  ],
+  "kapanma_tarihi": "2026-02-26",
+  "kapanma_nedeni": "Portföy yapısı değişikliği - Agresif stratejiye sermaye aktarımı için kapatıldı"
 }
