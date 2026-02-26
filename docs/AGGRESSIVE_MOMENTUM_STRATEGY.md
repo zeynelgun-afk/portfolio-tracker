@@ -27,8 +27,8 @@ Temel prensip: **küçük ama sık kazançlar > büyük ama nadir kazançlar**
 | Aylık getiri hedefi | %5 ($5,000) |
 | Max eşzamanlı pozisyon | 8 |
 | Pozisyon büyüklüğü | Sermayenin %10-15 ($10K-$15K) |
-| Ortalama tutma süresi | 3-7 gün |
-| Max tutma süresi | 10 gün |
+| Tipik tutma süresi | 3-10 gün (momentum devam ettiği sürece uzayabilir) |
+| Çıkış kriteri | Fiyat aksiyonu bazlı (sabit süre limiti yok) |
 | Stop-loss | %4 (sıkı) |
 | Kar hedefi | %8-12 (kademeli çıkış) |
 | Min R:R oranı | 2:1 |
@@ -109,9 +109,11 @@ Pozisyon +%10'da → %33 daha sat, trailing stop %4'e genişlet
 Kalan %34        → trailing stop ile koştur (max profit)
 ```
 
-### Zamana Dayalı Çıkış
-- 7. gün: pozisyon kârda değilse → değerlendir, kataliz yoksa çık
-- 10. gün: ne olursa olsun pozisyonu kapat (max tutma süresi)
+### Momentum Bazlı Çıkış Değerlendirmesi
+- Momentum devam ettiği sürece pozisyonu taşı (RSI 40+, SMA50 üzeri, hacim stabil)
+- Kademeli çıkış otomatik olarak sermaye verimliliğini sağlar (%66 erken realize)
+- Momentum kaybı sinyalleri: RSI düşüşe geçti + hacim azalıyor + SMA50'ye yaklaşıyor → çık
+- Sideways giden pozisyonda süre değil fırsat maliyeti değerlendir → daha iyi sinyal varsa rotasyon yap
 
 ---
 
@@ -201,7 +203,7 @@ Her ay sonu aşağıdaki metrikler raporlanır:
 2. **Bu hafta**: Zayıf pozisyonları değerlendir (NNDM: -%1.5, zaman ver veya kes)
 3. **Gelecek hafta**: Yeni sinyal sistemiyle ilk taramalar
 4. **1 ay içinde**: Portföy tamamen yeni stratejiye geçmiş olacak
-5. **Takip**: Her pozisyonda max 10 gün kuralı uygulanmaya başlayacak
+5. **Takip**: Momentum bazlı çıkış kriterleri uygulanmaya başlayacak (sabit süre limiti yok)
 
 ---
 
