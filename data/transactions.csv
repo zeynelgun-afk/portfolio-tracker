@@ -44,3 +44,4 @@ date,action,symbol,shares,price,total,reason
 2026-02-25,SELL,VZ,156,49.51,7723.56,"Kısmi kar alma - RSI 73 aşırı alım, %24 kâr, nakit oluşturma"2026-02-26,SELL,CELH,46,56.62,2604.52,"Agresif - kademeli çıkış %33 - Q4 earnings rally - strateji kuralı"
 2026-02-26,SELL,TYL,10,351.09,3510.90,"Agresif - kademeli çıkış %33 - momentum devam - strateji kuralı"
 2026-02-26,SELL,ZS,0,164.03,0,"Swing %50 kısmi çıkış - hedefe ulaştı +9.1% - trailing stop aktif"
+2026-02-26,SELL,CELH,94,54.44,5117.36,"Agresif - trailing stop tetiklendi $54.92 - kalan %67 tam çıkış"
