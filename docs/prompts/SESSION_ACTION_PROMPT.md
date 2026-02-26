@@ -1,6 +1,6 @@
 # SEANS İÇİ AKSİYON PROMPT — v1.2
 
-> **versiyon**: 1.2 | **son güncelleme**: 24 şubat 2026
+> **versiyon**: 1.3 | **son güncelleme**: 26 şubat 2026
 > **çalışma zamanı**: NYSE açıldıktan sonra (TR 17:30+), tercihen açılıştan 30-60dk sonra
 > **ön koşul**: o günün sabah raporu zaten yazılmış olmalı
 > **perspektif**: PİYASA AÇIK — GERÇEK ZAMANLI KARAR VE AKSİYON
@@ -435,11 +435,12 @@ kontrol 3: yön korelasyonu
 - P/E makul (<25), momentum pozitif
 - mevcut sektör dağılımıyla çakışmayan
 
-**agresif büyüme**: tech/AI momentum, earnings surprise
-- earnings beat > %10
-- RS yükseliş trendi
-- fiyat SMA50 üzerinde, volume 1.5x+
-- ⚠️ mevcut nakit oranı yüksekse (%50+) ve piyasa toparlanıyorsa → kademeli giriş fırsatı
+**agresif momentum ($400K)**: aylık %5 hedef, 3 sinyal tipi
+- earnings momentum: beat >%15, guidance yükseltme, post-earnings pullback'te giriş
+- breakout: 52W high yakını, dar range konsolidasyon, volume 1.5x+
+- mean reversion: RSI <30, SMA200 üzeri, sektör/piyasa kaynaklı düşüş (hisse bazlı değil)
+- pozisyon büyüklüğü: $40K-$60K, max 8 eşzamanlı pozisyon
+- ⚠️ $320K nakit mevcut — kaliteli sinyal varsa kademeli giriş fırsatı
 
 **değer + temettü**: düşük P/E, yüksek temettü, güçlü FCF
 - P/E < 20, temettü yield > %3
@@ -447,9 +448,16 @@ kontrol 3: yön korelasyonu
 - temettü artış geçmişi
 - güçlü sektör RS (özellikle consumer defensive, utilities, healthcare)
 
-**agresif momentum**: aylık %5 hedef, 3 sinyal tipi
+**agresif momentum**: $400K sermaye, aylık %5 hedef, 3 sinyal tipi
 - earnings momentum, breakout, mean reversion
+- pozisyon büyüklüğü: $40K-$60K (%10-15)
+- tutma süresi: 3-7 gün (max 10)
+- stop-loss: %4 (sıkı), kar hedefi: %8-12 (kademeli çıkış)
+- kademeli çıkış: +%4 breakeven → +%6 %33 sat → +%10 %33 sat → kalan trailing
+- günlük max kayıp %2, haftalık %4, aylık %8 drawdown limiti
 - pozisyonlarda zayıf sinyal varsa → hızlı çık, fırsat maliyetini düşün
+- ⚠️ nakit oranı yüksekse ve kaliteli sinyal varsa → kademeli giriş fırsatı
+- detay: `docs/AGGRESSIVE_MOMENTUM_STRATEGY.md`
 - RS analizi en güçlü sektör ETF'leri
 - mevcut pozisyonlarda zayıf sektör varsa → rotasyon düşün
 - çeyreklik rebalance zamanı yaklaşıyor mu?
@@ -458,7 +466,7 @@ kontrol 3: yön korelasyonu
 
 **portföy hissesi satış nedenleri**:
 ```
-1. stop-loss tetiklendi (portföy tipine göre: agresif %8, diğerleri %10-15)
+1. stop-loss tetiklendi (agresif momentum %4, dengeli %8, temettü %10-15)
 2. tez bozuldu (temel verilerde kötüleşme)
 3. sektör RS sürekli zayıf (3+ gün negatif RS, trend dönüşü)
 4. daha iyi fırsat var (aynı sektörde/temada daha güçlü alternatif)
@@ -729,4 +737,4 @@ detaylı kurallar: `docs/SELF_VALIDATION.md`
 
 ---
 
-> son güncelleme: 24 şubat 2026 | finzora ai
+> son güncelleme: 26 şubat 2026 | finzora ai
