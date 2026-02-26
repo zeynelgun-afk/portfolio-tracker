@@ -22,7 +22,33 @@
       "giris_tarihi": "2026-02-20",
       "giris_fiyati": 14.61,
       "giris_nedeni": "Yarım pozisyon tamamlandı. RSI 41, SMA200 üzeri destek. Orijinal: 342 adet @$14.61, ek: 347 adet @$14.39. Ortalama maliyet: $14.50",
-      "agirlik_yuzde": 11.71
+      "agirlik_yuzde": 11.71,
+      "stop_loss": 14.57,
+      "hedef_fiyat": 17.13,
+      "sinyal_tipi": "mean_reversion",
+      "max_tutma_gun": 10,
+      "strateji_notu": "SMA200 üzeri, uydu teknolojisi momentum",
+      "risk_yuzde": 8.13,
+      "odul_yuzde": 8.01,
+      "rr_orani": 0.98,
+      "partial_exit": {
+        "seviye_1": {
+          "fiyat": 15.37,
+          "oran_yuzde": 33,
+          "durum": "bekliyor"
+        },
+        "seviye_2": {
+          "fiyat": 15.95,
+          "oran_yuzde": 33,
+          "durum": "bekliyor"
+        },
+        "seviye_3": {
+          "tur": "trailing_stop",
+          "trailing_yuzde": 4,
+          "durum": "bekliyor"
+        }
+      },
+      "stop_tipi": "breakeven"
     },
     {
       "sembol": "BKSY",
@@ -40,7 +66,33 @@
       "giris_tarihi": "2026-02-20",
       "giris_fiyati": 19.77,
       "giris_nedeni": "Yarım pozisyon - Real-time satellite imagery pullback",
-      "agirlik_yuzde": 8.2
+      "agirlik_yuzde": 8.2,
+      "stop_loss": 18.98,
+      "hedef_fiyat": 21.8,
+      "sinyal_tipi": "breakout",
+      "max_tutma_gun": 10,
+      "strateji_notu": "Savunma sektörü, satellite imagery büyümesi",
+      "risk_yuzde": 5.99,
+      "odul_yuzde": 7.97,
+      "rr_orani": 1.33,
+      "partial_exit": {
+        "seviye_1": {
+          "fiyat": 20.96,
+          "oran_yuzde": 33,
+          "durum": "bekliyor"
+        },
+        "seviye_2": {
+          "fiyat": 21.75,
+          "oran_yuzde": 33,
+          "durum": "bekliyor"
+        },
+        "seviye_3": {
+          "tur": "trailing_stop",
+          "trailing_yuzde": 4,
+          "durum": "bekliyor"
+        }
+      },
+      "stop_tipi": "sabit_%4"
     },
     {
       "sembol": "NNDM",
@@ -58,7 +110,33 @@
       "giris_tarihi": "2026-02-23",
       "giris_fiyati": 1.96,
       "giris_nedeni": "Giriş bölgesi $1.90-2.00 tutturuldu. Micro-cap 3D baskı teknoloji şirketi, savunma ve uzay sektörü müşteri tabanı güçleniyor. Watchlist hedefine ulaşıldı.",
-      "agirlik_yuzde": 5.27
+      "agirlik_yuzde": 5.27,
+      "stop_loss": 1.88,
+      "hedef_fiyat": 2.15,
+      "sinyal_tipi": "mean_reversion",
+      "max_tutma_gun": 10,
+      "strateji_notu": "Micro-cap riskli, sıkı takip",
+      "risk_yuzde": 2.59,
+      "odul_yuzde": 11.4,
+      "rr_orani": 4.4,
+      "partial_exit": {
+        "seviye_1": {
+          "fiyat": 2.08,
+          "oran_yuzde": 33,
+          "durum": "bekliyor"
+        },
+        "seviye_2": {
+          "fiyat": 2.16,
+          "oran_yuzde": 33,
+          "durum": "bekliyor"
+        },
+        "seviye_3": {
+          "tur": "trailing_stop",
+          "trailing_yuzde": 4,
+          "durum": "bekliyor"
+        }
+      },
+      "stop_tipi": "sabit_%4"
     },
     {
       "sembol": "PLTR",
@@ -76,7 +154,33 @@
       "giris_tarihi": "2026-02-23",
       "giris_fiyati": 128.42,
       "giris_nedeni": "RSI 33 aşırı satım bölgesi, SMA200 yakınında destek. AI veri analitiği ve savunma sektörü lider oyuncusu, US government contract büyümesi güçlü. SMA50 geri dönüş hedefleniyor. Güçlü earnings beat geçmişi.",
-      "agirlik_yuzde": 5.61
+      "agirlik_yuzde": 5.61,
+      "stop_loss": 129.06,
+      "hedef_fiyat": 147.0,
+      "sinyal_tipi": "mean_reversion",
+      "max_tutma_gun": 10,
+      "strateji_notu": "RSI oversold bounce, AI/savunma lider",
+      "risk_yuzde": 3.82,
+      "odul_yuzde": 9.55,
+      "rr_orani": 2.5,
+      "partial_exit": {
+        "seviye_1": {
+          "fiyat": 136.13,
+          "oran_yuzde": 33,
+          "durum": "bekliyor"
+        },
+        "seviye_2": {
+          "fiyat": 141.26,
+          "oran_yuzde": 33,
+          "durum": "bekliyor"
+        },
+        "seviye_3": {
+          "tur": "trailing_stop",
+          "trailing_yuzde": 4,
+          "durum": "bekliyor"
+        }
+      },
+      "stop_tipi": "breakeven"
     },
     {
       "sembol": "SHOP",
@@ -94,7 +198,33 @@
       "giris_tarihi": "2026-02-23",
       "giris_fiyati": 119.88,
       "giris_nedeni": "RSI 42.6, SMA200 -%13.8 altında destek bölgesi. E-ticaret altyapısı büyümesi, merchant solutions geliri artıyor. Yakın vadeli earnings riski yok. SMA200'e dönüş hedefleniyor.",
-      "agirlik_yuzde": 5.29
+      "agirlik_yuzde": 5.29,
+      "stop_loss": 115.08,
+      "hedef_fiyat": 133.0,
+      "sinyal_tipi": "mean_reversion",
+      "max_tutma_gun": 10,
+      "strateji_notu": "SMA200'e dönüş hedefi",
+      "risk_yuzde": 4.35,
+      "odul_yuzde": 10.55,
+      "rr_orani": 2.43,
+      "partial_exit": {
+        "seviye_1": {
+          "fiyat": 127.07,
+          "oran_yuzde": 33,
+          "durum": "bekliyor"
+        },
+        "seviye_2": {
+          "fiyat": 131.87,
+          "oran_yuzde": 33,
+          "durum": "bekliyor"
+        },
+        "seviye_3": {
+          "tur": "trailing_stop",
+          "trailing_yuzde": 4,
+          "durum": "bekliyor"
+        }
+      },
+      "stop_tipi": "sabit_%4"
     },
     {
       "sembol": "ANET",
@@ -112,7 +242,33 @@
       "giris_tarihi": "2026-02-24",
       "giris_fiyati": 128.62,
       "giris_nedeni": "AI/data center networking lideri - bulut devleri altyapı harcaması artıyor - RSI 42.9 oversold bounce bölgesinde - SMA200 üzerinde sağlam trend - analist hedefi $177 (+%37 upside) - Altman Z-score 16.1 finansal güç",
-      "agirlik_yuzde": 13.24
+      "agirlik_yuzde": 13.24,
+      "stop_loss": 123.48,
+      "hedef_fiyat": 146.0,
+      "sinyal_tipi": "earnings_momentum",
+      "max_tutma_gun": 10,
+      "strateji_notu": "AI/data center networking, güçlü fundamentals",
+      "risk_yuzde": 7.08,
+      "odul_yuzde": 9.87,
+      "rr_orani": 1.39,
+      "partial_exit": {
+        "seviye_1": {
+          "fiyat": 136.34,
+          "oran_yuzde": 33,
+          "durum": "bekliyor"
+        },
+        "seviye_2": {
+          "fiyat": 141.48,
+          "oran_yuzde": 33,
+          "durum": "bekliyor"
+        },
+        "seviye_3": {
+          "tur": "trailing_stop",
+          "trailing_yuzde": 4,
+          "durum": "bekliyor"
+        }
+      },
+      "stop_tipi": "sabit_%4"
     },
     {
       "sembol": "RKLB",
@@ -130,7 +286,33 @@
       "giris_tarihi": "2026-02-24",
       "giris_fiyati": 68.44,
       "giris_nedeni": "Uzay ekonomisi büyüme oyunu - Electron roket başarı serisi + Neutron geliştirme katalizörü - savunma kontratları artıyor - RSI 43.8 bounce bölgesi - SMA200 üzerinde güçlü yapı - analist hedefi $87 (+%27 upside)",
-      "agirlik_yuzde": 10.98
+      "agirlik_yuzde": 10.98,
+      "stop_loss": 65.7,
+      "hedef_fiyat": 77.0,
+      "sinyal_tipi": "breakout",
+      "max_tutma_gun": 10,
+      "strateji_notu": "Uzay sektörü momentum, yüksek büyüme",
+      "risk_yuzde": 6.41,
+      "odul_yuzde": 9.69,
+      "rr_orani": 1.51,
+      "partial_exit": {
+        "seviye_1": {
+          "fiyat": 72.55,
+          "oran_yuzde": 33,
+          "durum": "bekliyor"
+        },
+        "seviye_2": {
+          "fiyat": 75.28,
+          "oran_yuzde": 33,
+          "durum": "bekliyor"
+        },
+        "seviye_3": {
+          "tur": "trailing_stop",
+          "trailing_yuzde": 4,
+          "durum": "bekliyor"
+        }
+      },
+      "stop_tipi": "sabit_%4"
     },
     {
       "sembol": "CELH",
@@ -148,7 +330,33 @@
       "giris_tarihi": "2026-02-24",
       "giris_fiyati": 49.76,
       "giris_nedeni": "Enerji içecek büyüme hikayesi - Monster ve Red Bull'a alternatif - SMA50 ve SMA200 üzerinde çift destek - RSI 54 sağlıklı nötr bölge - analist hedefi $65 (+%30 upside) - portföye tüketim sektörü çeşitlendirmesi",
-      "agirlik_yuzde": 7.59
+      "agirlik_yuzde": 7.59,
+      "stop_loss": 47.77,
+      "hedef_fiyat": 55.15,
+      "sinyal_tipi": "mean_reversion",
+      "max_tutma_gun": 10,
+      "strateji_notu": "Tüketim büyüme hikayesi, oversold bounce",
+      "risk_yuzde": 5.61,
+      "odul_yuzde": 8.97,
+      "rr_orani": 1.6,
+      "partial_exit": {
+        "seviye_1": {
+          "fiyat": 52.75,
+          "oran_yuzde": 33,
+          "durum": "bekliyor"
+        },
+        "seviye_2": {
+          "fiyat": 54.74,
+          "oran_yuzde": 33,
+          "durum": "bekliyor"
+        },
+        "seviye_3": {
+          "tur": "trailing_stop",
+          "trailing_yuzde": 4,
+          "durum": "bekliyor"
+        }
+      },
+      "stop_tipi": "sabit_%4"
     },
     {
       "sembol": "TYL",
@@ -166,10 +374,36 @@
       "giris_tarihi": "2026-02-25",
       "giris_fiyati": 323.78,
       "giris_nedeni": "Devlet yazılım platformu + AI entegrasyonu (Axon paraleli). %98 müşteri retention, SaaS +%20 büyüme, TTM FCF 638M$, 1B$ buyback programı. Q4 earnings miss tek seferlik (Texas kontratı). AWS/Anthropic/OpenAI ortaklıkları, agentic AI pilotları Q1 başlıyor. DCF değer: $429. EV/Revenue 5.8x.",
-      "agirlik_yuzde": 10.77
+      "agirlik_yuzde": 10.77,
+      "stop_loss": 310.83,
+      "hedef_fiyat": 369.0,
+      "sinyal_tipi": "breakout",
+      "max_tutma_gun": 10,
+      "strateji_notu": "Govtech lideri, stabil büyüme",
+      "risk_yuzde": 7.25,
+      "odul_yuzde": 10.11,
+      "rr_orani": 1.4,
+      "partial_exit": {
+        "seviye_1": {
+          "fiyat": 343.21,
+          "oran_yuzde": 33,
+          "durum": "bekliyor"
+        },
+        "seviye_2": {
+          "fiyat": 356.16,
+          "oran_yuzde": 33,
+          "durum": "bekliyor"
+        },
+        "seviye_3": {
+          "tur": "trailing_stop",
+          "trailing_yuzde": 4,
+          "durum": "bekliyor"
+        }
+      },
+      "stop_tipi": "sabit_%4"
     }
   ],
-  "son_guncelleme": "2026-02-26T10:15:55.987434",
+  "son_guncelleme": "2026-02-26T12:57:58.021017",
   "toplam_deger": 93324.55,
   "toplam_getiri_yuzde": -6.68,
   "gerceklesen_zarar": -1321.51,
@@ -239,5 +473,38 @@
       "type": "entry",
       "content": "ALIŞ TYL: 30 adet @$323.78 = $9713.4. Stop: $270, Hedef: $430. Devlet yazılımı + AI entegrasyonu, Axon paraleli tez. DCF $429, EV/Rev 5.8x."
     }
-  ]
+  ],
+  "strateji": {
+    "isim": "Agresif Momentum - Aylık %5",
+    "aylik_hedef_yuzde": 5.0,
+    "max_esanli_pozisyon": 8,
+    "pozisyon_buyuklugu_yuzde": "10-15",
+    "ortalama_tutma_gun": "3-7",
+    "max_tutma_gun": 10,
+    "stop_loss_yuzde": 4.0,
+    "kar_hedefi_yuzde": "8-12",
+    "min_rr_orani": "2:1",
+    "min_win_rate_yuzde": 55,
+    "aylik_max_drawdown_yuzde": 8.0,
+    "gunluk_max_kayip_yuzde": 2.0,
+    "haftalik_max_kayip_yuzde": 4.0,
+    "sinyal_tipleri": [
+      "earnings_momentum",
+      "breakout",
+      "mean_reversion"
+    ],
+    "baslangic_tarihi": "2026-02-26",
+    "dokuman": "docs/AGGRESSIVE_MOMENTUM_STRATEGY.md"
+  },
+  "aylik_performans": {
+    "2026-02": {
+      "baslangic_deger": 100000,
+      "guncel_deger": 93324.55,
+      "net_getiri_yuzde": -6.68,
+      "trade_sayisi": 0,
+      "kazanc_sayisi": 0,
+      "kayip_sayisi": 0,
+      "not": "Strateji geçiş ayı - mevcut pozisyonlar devralındı"
+    }
+  }
 }
