@@ -2,7 +2,7 @@
   "portfoy_adi": "Dengeli Portföy",
   "baslangic_sermaye": 100000,
   "nakit": {
-    "miktar": 9613.2,
+    "miktar": 20048.7,
     "para_birimi": "USD"
   },
   "pozisyonlar": [
@@ -28,19 +28,19 @@
       "sembol": "KOS",
       "isim": "Kosmos Energy Ltd",
       "sektor": "Enerji",
-      "adet": 9276,
+      "adet": 4638,
       "maliyet_baz": 1.617,
       "guncel_fiyat": 2.25,
-      "yatirim": 14999.292,
-      "guncel_deger": 20871.0,
-      "kar_zarar": 5871.7080000000005,
+      "yatirim": 7499.646,
+      "guncel_deger": 10435.5,
+      "kar_zarar": 2935.8540000000003,
       "kar_zarar_yuzde": 39.15,
       "gunluk_degisim_yuzde": 2.27273,
-      "son_guncelleme": "2026-02-27T14:52:47.406726",
+      "son_guncelleme": "2026-02-27T15:09:12.686655",
       "giris_tarihi": "2026-02-17",
       "giris_fiyati": 1.617,
       "giris_nedeni": "Initial position - Deep value offshore",
-      "agirlik_yuzde": 19.13
+      "agirlik_yuzde": 9.56
     },
     {
       "sembol": "MO",
@@ -115,7 +115,7 @@
       "agirlik_yuzde": 13.64
     }
   ],
-  "son_guncelleme": "2026-02-27T14:52:47.406749",
+  "son_guncelleme": "2026-02-27T15:09:12.686674",
   "toplam_deger": 109127.86,
   "toplam_getiri_yuzde": 9.13
 }
