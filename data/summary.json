@@ -1,65 +1,59 @@
 {
-  "son_guncelleme": "2026-02-26",
-  "simulasyon_donemi": "17 Şubat 2026 - 26 Şubat 2026",
-  "islem_gunleri": 8,
+  "son_guncelleme": "2026-02-27",
+  "simulasyon_donemi": "17 Şubat 2026 - 27 Şubat 2026",
+  "islem_gunleri": 7,
   "toplam_sermaye": 600000,
-  "toplam_deger": 618013.07,
-  "toplam_kar_zarar": 18013.07,
+  "toplam_deger": 618000.1,
+  "toplam_kar_zarar": 18000.1,
   "toplam_kar_zarar_yuzde": 3.0,
-  "benchmark_spy": 0.0,
-  "alpha": 2.6,
+  "benchmark_spy": 0.93,
+  "alpha": 2.07,
   "portfolyolar": {
     "dengeli": {
       "isim": "Dengeli Portföy",
-      "sermaye": 100000,
-      "deger": 107292.89,
-      "kar_zarar": 7292.89,
+      "deger": 107288.8,
+      "maliyet": 100000,
+      "kar_zarar": 7288.8,
       "kar_zarar_yuzde": 7.29,
       "pozisyon_sayisi": 6,
       "nakit": {
         "miktar": 9613.2,
         "para_birimi": "USD"
       },
-      "durum": "AKTİF"
+      "durum": "BAŞARILI"
     },
     "agresif": {
-      "isim": "Agresif Momentum (%5/ay)",
-      "sermaye": 400000,
-      "deger": 394752.77,
-      "kar_zarar": -5247.23,
-      "kar_zarar_yuzde": -1.31,
-      "pozisyon_sayisi": 9,
+      "isim": "Agresif Büyüme Portföyü",
+      "deger": 394966.52,
+      "maliyet": 400000,
+      "kar_zarar": -5033.48,
+      "kar_zarar_yuzde": -1.26,
+      "pozisyon_sayisi": 8,
       "nakit": {
-        "miktar": 326026.13,
+        "miktar": 331143.49,
         "para_birimi": "USD"
       },
-      "durum": "AKTİF - kademeli çıkışlar uygulanıyor"
+      "durum": "NAKİT AĞIRLIKLI"
     },
     "temettü": {
       "isim": "Değer + Temettü Portföyü",
-      "sermaye": 100000,
-      "deger": 115967.41,
-      "kar_zarar": 15967.41,
-      "kar_zarar_yuzde": 15.97,
+      "deger": 115744.78,
+      "maliyet": 100000,
+      "kar_zarar": 15744.78,
+      "kar_zarar_yuzde": 15.74,
       "pozisyon_sayisi": 7,
       "nakit": {
         "miktar": 8371.68,
         "para_birimi": "USD"
       },
-      "durum": "AKTİF"
+      "durum": "ŞAMPİYON"
     },
     "swing_trade": {
       "isim": "Swing Trade (Simülasyon)",
       "pozisyon_sayisi": 8,
-      "ortalama_getiri_yuzde": 2.73,
+      "ortalama_getiri_yuzde": 2.72,
       "bos_slot": 2,
       "durum": "8/10 pozisyon aktif"
     }
-  },
-  "son_islemler": [
-    "26 Şub - CELH %33 kısmi satış @$56.62 (+13.8%) - Agresif kademeli çıkış",
-    "26 Şub - TYL %33 kısmi satış @$351.09 (+8.4%) - Agresif kademeli çıkış",
-    "26 Şub - ZS %50 kısmi çıkış @$164.03 (+9.1%) - Swing hedefe ulaştı",
-    "26 Şub - CELH kalan %67 satış @$54.44 (+9.4%) - Trailing stop tetiklendi"
-  ]
+  }
 }
