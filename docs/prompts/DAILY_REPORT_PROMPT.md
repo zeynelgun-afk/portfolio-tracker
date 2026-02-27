@@ -9,7 +9,7 @@
 
 ---
 
-> **versiyon**: 3.3 | **son güncelleme**: 26 şubat 2026
+> **versiyon**: 3.4 | **son güncelleme**: 27 şubat 2026
 > **çıktı dosyası**: `reports/daily/DAILY_REPORT_YYYY-MM-DD.md`
 > **çalışma zamanı**: TR ~14:00 (NYSE dün kapandı, bugün 17:30 açılacak)
 > **dil**: küçük harf türkçe ama **dilbilgisi kurallarına uygun** (cümle başı büyük, cümle sonu nokta, şirket/ticker tutarlı)
@@ -38,9 +38,9 @@
 | 1. piyasa | kapanış, futures, sektör, risk | ~12 | 5-7 |
 | 2. portföy | 3 portföy detay, RSI, SMA | ~73 | 0 |
 | 3. swing | stop/hedef, aksiyonlar | 0* | 0 |
-| 4. earnings | dün gece, bugün, haftalık | 5-15 | 2-4 |
+| 4. earnings | dün gece, bugün, haftalık | 5-15 | 3-6 |
 | 5. sonuç | özet + aksiyon planı | 0 | 0 |
-| **toplam** | | **~20-30** | **7-12** |
+| **toplam** | | **~20-30** | **8-14** |
 
 *bölüm 0 ve 3 verileri bölüm 1-2'de zaten çekilir
 
@@ -242,10 +242,20 @@ for sym in AMC_earnings:
 
 ```markdown
 SEMBOL — [şirket adı]
-  EPS:     $X.XX vs $X.XX → beat/miss %X
-  gelir:   $X.XXB vs $X.XXB → beat/miss %X
-  guidance: yükseltildi / korundu / düşürüldü / verilmedi
-  AH fiyat: $XXX (±%X)
+  EPS:       $X.XX vs beklenti $X.XX → beat/miss %X
+  gelir:     $X.XXB vs beklenti $X.XXB → beat/miss %X
+  guidance:  yükseltildi / korundu / düşürüldü / verilmedi
+  
+  beklenti kalitesi:
+  - konsensüs çıtası: yüksek / orta / düşük
+  - son 90 gün revizyon: yukarı ↑ / sabit → / aşağı ↓
+  - whisper: konsensüsün üstünde/altında (varsa)
+  - beat kalitesi: [güçlü / zayıf / yanıltıcı]
+  
+  piyasa tepkisi:
+  - AH fiyat: $XXX (±%X)
+  - pre-market: $XXX (±%X) [ertesi sabah]
+  - tepki yorumu: [pozitif / nötr / negatif — neden]
   
   etki:
   - portföy: [doğrudan/dolaylı — hangi hisse]
@@ -253,18 +263,108 @@ SEMBOL — [şirket adı]
   - aksiyon: [tut/ekle/azalt/izle]
 ```
 
-**örnek**:
+**⚠️ BEKLENTİ KALİTESİ ANALİZİ — KURALLAR**:
+
+piyasa sadece "beat mi miss mi" sorusuna cevap aramaz. asıl soru şudur:
+**"beklentiler ne kadar yüksekti ve beat gerçekten kaliteli mi?"**
+
+| durum | beat | beklenti çıtası | piyasa tepkisi | örnek |
+|-------|------|-----------------|----------------|-------|
+| güçlü beat | evet (%5+) | düşük-orta | 🟢 güçlü yükseliş | düşük beklentiyi aşan sürpriz |
+| zayıf beat | evet (<%3) | zaten yüksek | 🔴 satış ("sell the news") | NVDA Şub 2026 |
+| yanıltıcı beat | evet | aşağı revize edilmiş | 🔴 satış | düşürülen çıtayı aşmak kolay |
+| kaliteli miss | hayır | çok yüksek | 🟡 sınırlı düşüş | beklentiler şişmişti |
+| gerçek miss | hayır | orta-düşük | 🔴 sert satış | gerçek sorun var |
+
+**kontrol adımları**:
+
+```
+1. son 90 günde analist tahminleri yukarı mı aşağı mı revize edildi?
+   → yukarı: çıta yüksek, beat zor → beat gelse bile "priced in" riski
+   → aşağı: çıta düşük, beat kolay → beat gelse bile "düşürülen çıtayı aşmak" riski
+   → sabit: normal beklenti → beat/miss gerçek sinyal
+
+2. hisse bilanço öncesi son 30 günde ne kadar yükseldi?
+   → %10+ yükseliş: piyasa zaten fiyatladı → beat = "sell the news"
+   → düz/düşüş: beklenti düşük → beat = gerçek sürpriz potansiyeli
+
+3. guidance kalitesi:
+   → beat + guidance yükseltildi = en güçlü sinyal
+   → beat + guidance korundu = nötr (piyasa daha fazlasını istiyordu)
+   → beat + guidance düşürüldü = 🔴 en tehlikeli (rakamlar iyi ama gelecek kötü)
+
+4. whisper number (piyasanın gerçek beklentisi):
+   → konsensüs vs whisper farkı büyükse, whisper'ı baz al
+   → websearch ile "SEMBOL earnings whisper" kontrol et
+```
+
+**⚠️ PRE-MARKET FİYATLAMA — KURALLAR**:
+
+after-hours tepkisi ile pre-market tepkisi farklı olabilir. her ikisi de raporlanmalı:
+
+```
+1. AH tepkisi (dün gece 00:00-02:00 TR):
+   → ilk refleks, düşük hacim, manipülasyona açık
+   → genelde abartılı (hem yukarı hem aşağı)
+
+2. pre-market tepkisi (bugün 16:00-17:30 TR):
+   → kurumsal oyuncular devrede, daha güvenilir sinyal
+   → gece boyu analist notları hazırlanmış, piyasa sindirmiş
+   → AH ile PM arasındaki fark önemli:
+     - AH +%5 → PM +%2 = "ilk heyecan soğudu, temkinli ol"
+     - AH -%3 → PM +%1 = "piyasa abarttı, toparlanma sinyali"
+     - AH +%2 → PM +%5 = "analist yükseltmeleri geldi, momentum güçlü"
+
+3. hacim kontrolü:
+   → PM hacmi normalin 2x+ ise → güçlü sinyal
+   → PM hacmi düşükse → güvenilirliği düşük, seans açılışını bekle
+```
+
+**örnek — "beat ama sat" senaryosu (NVDA Şub 2026)**:
 ```
 NVDA — NVIDIA
-  EPS:     $1.62 vs $1.53 → beat %5.9
-  gelir:   $68.2B vs $65.7B → beat %3.8
-  guidance: Q1 $70B vs $67B — yükseltildi
-  AH fiyat: $985 (+%4.2)
+  EPS:       $1.62 vs beklenti $1.53 → beat %5.9
+  gelir:     $68.1B vs beklenti $66.2B → beat %2.9
+  guidance:  Q1 $78B — güçlü
   
+  beklenti kalitesi:
+  - konsensüs çıtası: çok yüksek (son 90g sürekli yukarı revizyon ↑)
+  - hisse bilanço öncesi 30g: +%12 yükselmiş (fiyatlanmış)
+  - whisper: $1.65+ (konsensüs $1.53'ün çok üstünde)
+  - beat kalitesi: zayıf — konsensüsü aştı ama whisper'ı tutturamadı
+
+  piyasa tepkisi:
+  - AH fiyat: +%0.5 (soğuk karşılandı)
+  - pre-market: -%2 (analist notları: "peak margins" endişesi)
+  - tepki yorumu: negatif — "sell the news", çıta zaten çok yüksekti
+
   etki:
-  - portföy: dolaylı — PLTR, SHOP, ANET pozitif etki
-  - sektör: AI/tech güçlü, chipmaker rallysi
-  - aksiyon: PLTR tut, SHOP trailing güncelle
+  - portföy: dolaylı — PLTR, ANET basınç altında
+  - sektör: AI/chip "priced in" sinyali, yazılıma rotasyon başlayabilir
+  - aksiyon: tech pozisyonlarında savunmacı kal
+```
+
+**örnek — "beat ve uç" senaryosu (DELL Şub 2026)**:
+```
+DELL — Dell Technologies
+  EPS:       $3.89 vs beklenti $3.53 → beat %10.2
+  gelir:     $33.4B vs beklenti $31.7B → beat %5.4
+  guidance:  FY27 $138-142B (konsensüsün çok üstünde)
+
+  beklenti kalitesi:
+  - konsensüs çıtası: orta (son 90g hafif yukarı revizyon ↑)
+  - hisse bilanço öncesi 30g: -%5 düşmüş (beklenti düşük)
+  - beat kalitesi: güçlü — hem konsensüsü hem whisper'ı aştı
+
+  piyasa tepkisi:
+  - AH fiyat: +%8
+  - pre-market: +%12 (analist yükseltmeleri peş peşe)
+  - tepki yorumu: pozitif — düşük beklenti + güçlü beat = gerçek sürpriz
+
+  etki:
+  - portföy: dolaylı — AI altyapı tezi güçlendi (ANET destekler)
+  - sektör: sunucu/altyapı güçlü, yazılım AI harcaması devam
+  - aksiyon: ANET tut, altyapı teması izle
 ```
 
 ### 4d. derinlemesine analiz
@@ -642,14 +742,19 @@ for sym in [portföy + swing earnings]:
     est = fmp_get("analyst-estimates", {"symbol": sym, "period": "quarter", "limit": 1})
 ```
 
-## ADIM 2 — WebSearch (2-4 call)
+## ADIM 2 — WebSearch (3-6 call)
 
 ```
 1. "[critical stock] earnings results [dün gece]"
-2. "earnings calendar today [bugün]"
-3. "[portföy hissesi] guidance [dün]" (gerekirse)
-4. "tech earnings [bu hafta]" (gerekirse)
+2. "[critical stock] pre-market price today" (pre-market fiyatlaması)
+3. "[critical stock] earnings whisper expectations" (beklenti kalitesi)
+4. "earnings calendar today [bugün]"
+5. "[portföy hissesi] guidance analyst reaction [dün]" (gerekirse)
+6. "tech earnings [bu hafta]" (gerekirse)
 ```
+
+**⚠️ pre-market araması zorunlu** — AH tepkisi tek başına yetmez.
+analist notları gece boyunca yayınlanır, PM fiyatı daha güvenilir sinyaldir.
 
 ## ADIM 3 — RAPOR FORMATI
 
@@ -661,11 +766,20 @@ for sym in [portföy + swing earnings]:
 [earnings formatı — her hisse için]
 
 SEMBOL — [şirket]
-  EPS:     $X.XX vs $X.XX → beat/miss %X
-  gelir:   $X.XXB vs $X.XXB → beat/miss %X
-  guidance: [durum]
-  AH:      $XXX (±%X)
-  
+  EPS:       $X.XX vs beklenti $X.XX → beat/miss %X
+  gelir:     $X.XXB vs beklenti $X.XXB → beat/miss %X
+  guidance:  [durum]
+
+  beklenti kalitesi:
+  - konsensüs çıtası: [yüksek/orta/düşük]
+  - son 90g revizyon: [↑/→/↓]
+  - beat kalitesi: [güçlü/zayıf/yanıltıcı]
+
+  piyasa tepkisi:
+  - AH: $XXX (±%X)
+  - pre-market: $XXX (±%X)
+  - tepki yorumu: [pozitif/nötr/negatif — neden]
+
   etki:
   - portföy: [doğrudan/dolaylı]
   - sektör: [etki]
