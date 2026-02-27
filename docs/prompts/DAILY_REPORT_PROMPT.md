@@ -9,7 +9,7 @@
 
 ---
 
-> **versiyon**: 3.4 | **son güncelleme**: 27 şubat 2026
+> **versiyon**: 3.5 | **son güncelleme**: 27 şubat 2026
 > **çıktı dosyası**: `reports/daily/DAILY_REPORT_YYYY-MM-DD.md`
 > **çalışma zamanı**: TR ~14:00 (NYSE dün kapandı, bugün 17:30 açılacak)
 > **dil**: küçük harf türkçe ama **dilbilgisi kurallarına uygun** (cümle başı büyük, cümle sonu nokta, şirket/ticker tutarlı)
@@ -36,15 +36,16 @@
 |-------|--------|-----|-----------|
 | 0. değerlendirme | plan tuttu mu, dersler, JSON | 0* | 0-1 |
 | 1. piyasa | kapanış, futures, sektör, risk | ~12 | 5-7 |
-| 2. portföy | 3 portföy detay, RSI, SMA | ~73 | 0 |
-| 3. swing | stop/hedef, aksiyonlar | 0* | 0 |
-| 4. earnings | dün gece, bugün, haftalık | 5-15 | 3-6 |
-| 5. sonuç | özet + aksiyon planı | 0 | 0 |
-| **toplam** | | **~20-30** | **8-14** |
+| 2. haber/yorum | piyasa haberleri, portföy haberleri, analist notları, makro yorum | 2-4 | 4-6 |
+| 3. portföy | 3 portföy detay, RSI, SMA | ~73 | 0 |
+| 4. swing | stop/hedef, aksiyonlar | 0* | 0 |
+| 5. earnings | dün gece, bugün, haftalık | 5-15 | 3-6 |
+| 6. sonuç | özet + aksiyon planı | 0 | 0 |
+| **toplam** | | **~22-34** | **12-20** |
 
-*bölüm 0 ve 3 verileri bölüm 1-2'de zaten çekilir
+*bölüm 0, 4 verileri bölüm 1-3'te zaten çekilir
 
-**API bütçesi**: ~190 / 2,500 = %7.6 (güvenli)
+**API bütçesi**: ~200 / 2,500 = %8 (güvenli)
 
 ---
 
@@ -73,8 +74,8 @@ FAZ 1 — VERİ + JSON GÜNCELLEME
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 FAZ 2 — RAPOR YAZMA
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-→ websearch: futures, sektör, haberler
-→ bölüm 0-5'i yaz
+→ websearch: futures, sektör, haberler, analist notları
+→ bölüm 0-6'yı yaz
 → raporu kaydet
 → GIT COMMIT + PUSH: "[GÜNLÜK RAPOR] DD ay - özet"
 ```
@@ -114,7 +115,7 @@ benzersiz = sorted(semboller)
 
 ```
 1. reports/daily/DAILY_REPORT_{DÜN}.md'yi aç
-2. bölüm 5'teki aksiyon planını bul
+2. bölüm 6'daki aksiyon planını bul
 3. uygulandı mı kontrol et
 ```
 
@@ -212,7 +213,7 @@ KATMAN 2 — TUTARLILIK:
 - dün AMC earnings portföy/swing hissesi?
 - after-hours > %3 portföy hissesi?
 - after-hours > %5 swing hissesi?
-→ not düş, bölüm 2-3'te belirt
+→ not düş, bölüm 3-4'te belirt
 ```
 
 ## ADIM 4 — DÜN GECE EARNINGS
@@ -531,9 +532,9 @@ elif "Utilities" in strongest_3 and "Technology" in weakest_3:
 - DXY: XX.X → [dolar güçlü/zayıf]
 - 10Y: X.XX% → [tahvil akışı var/yok]
 
-### gece gelişmeleri + bugünün beklentisi
+### gece gelişmeleri (kısa özet)
 
-[websearch sonuçları — 3-4 madde]
+[1-2 cümle — detaylar bölüm 2'de]
 
 ### prediction markets sinyalleri
 
@@ -552,7 +553,176 @@ elif "Utilities" in strongest_3 and "Technology" in weakest_3:
 ---
 ---
 
-# BÖLÜM 2: PORTFÖY TAKİBİ
+# BÖLÜM 2: HABER VE YORUM ANALİZİ
+
+> **amaç**: günün piyasa haberlerini, portföy hisselerine özel gelişmeleri, analist notlarını ve makro yorumları tek yerde topla
+> **zaman**: bölüm 1 (piyasa) yazıldıktan hemen sonra, portföy bölümünden önce
+> **önem**: bu bölüm gün içi aksiyon kararlarına doğrudan girdi sağlar
+
+## ADIM 1 — VERİ TOPLAMA
+
+### 2a. FMP API (2-4 call)
+
+```python
+# portföy hisselerinin haberleri
+# tüm portföylerden benzersiz semboller
+all_symbols = "SM,KOS,MO,XLE,RGLD,FCX,GILT,BKSY,PLTR,SHOP,..."  # güncel listeyi kullan
+portfolio_news = fmp_get("news/stock", {"symbols": all_symbols, "limit": 30})
+
+# genel piyasa makaleleri
+market_articles = fmp_get("fmp-articles", {"limit": 15})
+
+# insider trading (portföy hisseleri — haftada 1-2 kez yeterli)
+# insider = fmp_get("insider-trading", {"symbol": "SEMBOL", "limit": 10})
+
+# upgrades/downgrades (portföy hisseleri)
+for sym in critical_symbols:
+    grades = fmp_get("upgrades-downgrades", {"symbol": sym, "limit": 5})
+```
+
+### 2b. WebSearch (4-6 call)
+
+```
+1. "stock market news today [BUGÜN TARİHİ]"
+2. "wall street analyst notes today"
+3. "[KRİTİK HİSSE] news today" (portföyümüzü etkileyen spesifik hisse)
+4. "economic data release today [BUGÜN]"
+5. "geopolitical risk markets [BUGÜN]" (gerekirse)
+6. "[SEKTÖR] sector news today" (portföy ağırlıklı sektör — gerekirse)
+```
+
+### 2c. kaynak önceliği
+
+```
+öncelik sırası:
+1. resmi şirket açıklamaları / SEC filings
+2. reuters, bloomberg, wsj, ft — büyük ajanslar
+3. CNBC, marketwatch — piyasa odaklı
+4. FMP news API — otomatik toplanan
+5. analist raporları / upgrades-downgrades
+6. sosyal medya / forum — SADECE doğrulanmış bilgi
+```
+
+## ADIM 2 — SINIFLANDIRMA
+
+her haber şu kategorilerden birine yerleştirilir:
+
+| kategori | açıklama | önem |
+|----------|----------|------|
+| 🔴 acil | portföy hissesini doğrudan etkileyen (earnings miss, CEO istifa, FDA karar) | raporda ilk sıra |
+| 🟠 yüksek | sektörümüzü etkileyen (petrol ambargosu, tech regülasyon, faiz kararı) | detaylı analiz |
+| 🟡 orta | genel piyasa (makro veri, jeopolitik, sentiment) | kısa yorum |
+| 🟢 düşük | dolaylı etki (uzak sektör haberi, küçük şirket) | sadece listeleme |
+
+### filtreleme kuralları
+
+```
+dahil et:
+✓ portföy hisselerimizin herhangi birini adıyla veya ticker'ıyla anıyorsa
+✓ portföy sektörlerimizi etkileyen makro gelişmeler
+✓ Fed, ECB, BoJ kararları veya beklentileri
+✓ önemli ekonomik veri açıklamaları (CPI, PPI, NFP, GDP)
+✓ jeopolitik olaylar (ticaret savaşı, yaptırım, savaş/barış)
+✓ büyük IPO, M&A, iflas haberleri
+✓ analist upgrade/downgrade portföy hisselerinde
+✓ insider trading sinyalleri (büyük alım/satım)
+
+hariç tut:
+✗ portföyümüzle alakasız penny stock haberleri
+✗ kripto haberleri (portföyde kripto yoksa)
+✗ sponsorlu içerik / reklam
+✗ eski haberler (>48 saat)
+✗ söylenti bazlı, doğrulanmamış bilgiler
+```
+
+## ADIM 3 — ETKİ ANALİZİ
+
+her önemli haber (🔴 ve 🟠) için:
+
+```
+1. NE OLDU — 1 cümle faktüel özet
+2. KİMİ ETKİLİYOR — hangi portföy, hangi hisse(ler)
+3. NASIL ETKİLİYOR — pozitif/negatif/nötr + gerekçe
+4. NE YAPMALI — aksiyon önerisi (tut/al/sat/izle)
+5. ZAMAN ÇERÇEVESİ — etki ne kadar sürer (anlık/kısa/orta vade)
+```
+
+## ADIM 4 — RAPOR FORMATI
+
+```markdown
+## 2. haber ve yorum analizi
+
+### 🔴 portföyü doğrudan etkileyen gelişmeler
+
+**[SEMBOL] — [başlık]** ([kaynak], [tarih])
+etki: [pozitif ✅ / negatif ❌ / nötr ➡️] | portföy: [dengeli/agresif/temettü/swing]
+[2-3 cümle analiz — ne oldu, neden önemli, ne yapmalı]
+aksiyon: [tut/izle/al/sat + koşul]
+
+**[SEMBOL] — [başlık]** ([kaynak], [tarih])
+etki: ...
+...
+
+(yoksa: "portföy hisselerinde doğrudan etki yaratacak gelişme yok")
+
+### 🟠 sektör ve makro gelişmeler
+
+| gelişme | etki | ilgili portföy | yorum |
+|---------|------|----------------|-------|
+| [başlık] | ✅/❌/➡️ | [portföy/hisse] | [1 cümle] |
+| [başlık] | ✅/❌/➡️ | [portföy/hisse] | [1 cümle] |
+| [başlık] | ✅/❌/➡️ | [portföy/hisse] | [1 cümle] |
+
+### 📊 analist notları ve grade değişiklikleri
+
+| tarih | sembol | kurum | önceki | yeni | hedef fiyat | yorum |
+|-------|--------|-------|--------|------|-------------|-------|
+| [tarih] | [SYM] | [kurum] | [hold] | [buy] | $XXX | [1 cümle] |
+
+(FMP upgrades-downgrades + websearch sonuçları — yoksa "son 24 saatte portföy hisselerinde grade değişikliği yok")
+
+### 🌍 jeopolitik ve makro yorum
+
+[2-4 cümle — genel piyasa atmosferi, risk algısı, ana temalar]
+- [tema 1]: [yorum]
+- [tema 2]: [yorum]
+
+### 📰 diğer önemli haberler
+
+1. [başlık] — [1 cümle yorum]
+2. [başlık] — [1 cümle yorum]
+3. [başlık] — [1 cümle yorum]
+
+### bugünün veri takvimi
+
+| saat (TR) | veri | beklenti | önceki | potansiyel etki |
+|-----------|------|----------|--------|-----------------|
+| XX:XX | [veri adı] | X.X% | X.X% | [yüksek/orta/düşük] |
+
+(economic-calendar + websearch — yoksa "bugün önemli veri açıklaması yok")
+
+### haber özeti skoru
+
+📊 **genel sentiment**: [pozitif / negatif / nötr / karışık]
+portföy etkisi: [olumlu / olumsuz / nötr] — [1 cümle gerekçe]
+```
+
+## ADIM 5 — KALİTE KONTROL
+
+```
+✓ her haber kaynağı belirtildi mi?
+✓ etki analizi veri destekli mi? (sadece yorum değil)
+✓ portföy hisselerine özel haberler atlanmadı mı?
+✓ analist notları FMP + websearch çapraz kontrol edildi mi?
+✓ "pozitif" dediğin haber gerçekten pozitif mi? (başlık yanıltıcı olabilir)
+✓ bugünün veri takvimi doğru mu? (saat + beklenti)
+✓ genel sentiment skoru haberlerin toplamıyla tutarlı mı?
+```
+
+---
+---
+
+# BÖLÜM 3: PORTFÖY TAKİBİ
 
 > **amaç**: 3 portföy detay, uyarılar, aksiyonlar
 
@@ -604,9 +774,9 @@ elif gunluk_degisim < -5:
 ### her portföy için tablo
 
 ```markdown
-## 2. portföy takibi
+## 3. portföy takibi
 
-### 2a. dengeli portföy ($100K başlangıç)
+### 3a. dengeli portföy ($100K başlangıç)
 
 | sembol | fiyat | k/z | RSI | 20 | 50 | 200 | durum |
 |--------|-------|-----|-----|----|----|-----|-------|
@@ -659,13 +829,13 @@ nakit > %50 (agresif) → kademeli giriş planla
 ---
 ---
 
-# BÖLÜM 3: SWING TRADE
+# BÖLÜM 4: SWING TRADE
 
 > **amaç**: aktif pozisyonlar stop/hedef, aksiyonlar
 
 ## ADIM 1 — VERİ
 
-swing sembolleri bölüm 2'de zaten çekildi (ekstra call yok)
+swing sembolleri bölüm 3'te zaten çekildi (ekstra call yok)
 
 ## ADIM 2 — KONTROL
 
@@ -688,7 +858,7 @@ for pozisyon in aktif_pozisyonlar:
 ## ADIM 3 — RAPOR FORMATI
 
 ```markdown
-## 3. swing trade durumu
+## 4. swing trade durumu
 
 | id | sembol | giriş | güncel | k/z | stop | hedef | gün | durum |
 |----|--------|-------|--------|-----|------|-------|-----|-------|
@@ -720,7 +890,7 @@ for pozisyon in aktif_pozisyonlar:
 ---
 ---
 
-# BÖLÜM 4: EARNINGS TAKVİMİ
+# BÖLÜM 5: EARNINGS TAKVİMİ
 
 > **amaç**: dün gece + bugün + haftalık
 
@@ -759,7 +929,7 @@ analist notları gece boyunca yayınlanır, PM fiyatı daha güvenilir sinyaldir
 ## ADIM 3 — RAPOR FORMATI
 
 ```markdown
-## 4. earnings takvimi
+## 5. earnings takvimi
 
 ### dün gece (AMC) — sonuçlar
 
@@ -804,12 +974,12 @@ SEMBOL — [şirket]
 ---
 ---
 
-# BÖLÜM 5: SONUÇ + AKSİYON
+# BÖLÜM 6: SONUÇ + AKSİYON
 
 > **amaç**: özet, bugün ne yapacağız
 
 ```markdown
-## 5. sonuç
+## 6. sonuç
 
 ### özet
 
@@ -853,7 +1023,9 @@ SEMBOL — [şirket]
 - [ ] summary = 3 portföy toplamı?
 
 **rapor kontrol**:
-- [ ] tüm bölümler (0-5) yazıldı?
+- [ ] tüm bölümler (0-6) yazıldı?
+- [ ] haber bölümü: portföy haberleri + analist notları + makro yorum dahil?
+- [ ] haber bölümü: etki analizi veri destekli?
 - [ ] earnings formatı doğru?
 - [ ] aksiyon planı net?
 - [ ] websearch sonuçları dahil?
