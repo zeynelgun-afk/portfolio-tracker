@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-02-27T12:26:16.011992",
+  "son_guncelleme": "2026-02-27T14:53:08.231461",
   "not": "SWING TRADE SADECE SİMÜLASYON - Sadece % kazanç/kayıp takibi (MAX: 10 pozisyon)",
   "aktif_pozisyonlar": [
     {
@@ -7,8 +7,8 @@
       "sembol": "LMT",
       "giris_tarihi": "2026-02-13",
       "giris_fiyati": 652.58,
-      "guncel_fiyat": 641.63,
-      "guncel_kar_zarar_yuzde": -1.68,
+      "guncel_fiyat": 650.5,
+      "guncel_kar_zarar_yuzde": -0.32,
       "hedef_fiyat": 717.84,
       "stop_loss": 619.95,
       "tutulan_gun": 14,
@@ -18,7 +18,7 @@
       "zaman_cercevesi": "10-12 gün",
       "risk": "Bütçe endişeleri",
       "durum": "Normal aralıkta",
-      "son_guncelleme": "2026-02-27T12:26:16.011992",
+      "son_guncelleme": "2026-02-27T14:53:08.231407",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
@@ -39,8 +39,8 @@
       "sembol": "T",
       "giris_tarihi": "2026-02-17",
       "giris_fiyati": 28.68,
-      "guncel_fiyat": 27.445,
-      "guncel_kar_zarar_yuzde": -4.31,
+      "guncel_fiyat": 27.615,
+      "guncel_kar_zarar_yuzde": -3.71,
       "hedef_fiyat": 31.55,
       "stop_loss": 27.25,
       "tutulan_gun": 10,
@@ -50,7 +50,7 @@
       "zaman_cercevesi": "7-10 gün",
       "risk": "Rekabet baskısı",
       "durum": "⚠️ Stop-loss'a yaklaşıyor",
-      "son_guncelleme": "2026-02-27T12:26:16.011992",
+      "son_guncelleme": "2026-02-27T14:53:08.231423",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
@@ -71,8 +71,8 @@
       "sembol": "GE",
       "giris_tarihi": "2026-02-18",
       "giris_fiyati": 329.58,
-      "guncel_fiyat": 340.84,
-      "guncel_kar_zarar_yuzde": 3.42,
+      "guncel_fiyat": 339.73,
+      "guncel_kar_zarar_yuzde": 3.08,
       "hedef_fiyat": 362.54,
       "stop_loss": 329.58,
       "tutulan_gun": 9,
@@ -82,7 +82,7 @@
       "zaman_cercevesi": "7-10 gün",
       "risk": "Piyasa zayıflığı, ekonomik yavaşlama",
       "durum": "Kar bölgesinde",
-      "son_guncelleme": "2026-02-27T12:26:16.011992",
+      "son_guncelleme": "2026-02-27T14:53:08.231431",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
@@ -103,8 +103,8 @@
       "sembol": "DUK",
       "giris_tarihi": "2026-02-19",
       "giris_fiyati": 126.71,
-      "guncel_fiyat": 129.23,
-      "guncel_kar_zarar_yuzde": 1.99,
+      "guncel_fiyat": 130.09,
+      "guncel_kar_zarar_yuzde": 2.67,
       "hedef_fiyat": 139.38,
       "stop_loss": 120.38,
       "tutulan_gun": 8,
@@ -114,7 +114,7 @@
       "zaman_cercevesi": "7-10 gün",
       "risk": "Faiz oranı yükselmesi, düzenleme riski",
       "durum": "Kar bölgesinde",
-      "son_guncelleme": "2026-02-27T12:26:16.011992",
+      "son_guncelleme": "2026-02-27T14:53:08.231437",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
@@ -135,8 +135,8 @@
       "sembol": "DVA",
       "giris_tarihi": "2026-02-20",
       "giris_fiyati": 149.73,
-      "guncel_fiyat": 152.54,
-      "guncel_kar_zarar_yuzde": 1.88,
+      "guncel_fiyat": 152.95,
+      "guncel_kar_zarar_yuzde": 2.15,
       "hedef_fiyat": 164.7,
       "stop_loss": 142.24,
       "tutulan_gun": 7,
@@ -146,7 +146,7 @@
       "zaman_cercevesi": "7-12 gün",
       "risk": "Healthcare düzenlemeleri, Medicare reimbursement değişiklikleri",
       "durum": "Kar bölgesinde",
-      "son_guncelleme": "2026-02-27T12:26:16.011992",
+      "son_guncelleme": "2026-02-27T14:53:08.231442",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
@@ -167,8 +167,8 @@
       "sembol": "CTSH",
       "giris_tarihi": "2026-02-24",
       "giris_fiyati": 61.36,
-      "guncel_fiyat": 64.97,
-      "guncel_kar_zarar_yuzde": 5.88,
+      "guncel_fiyat": 62.9579,
+      "guncel_kar_zarar_yuzde": 2.6,
       "hedef_fiyat": 67.5,
       "stop_loss": 58.29,
       "tutulan_gun": 3,
@@ -177,9 +177,9 @@
       "tez": "Büyük IT consulting şirketi, AI entegrasyon haberleri pozitif, oversold bounce beklentisi",
       "zaman_cercevesi": "7-10 gün",
       "risk": "Tech sektörü genelinde satış baskısı devam edebilir, 52W low kırılırsa trend bozulur",
-      "durum": "Güçlü kar bölgesinde",
+      "durum": "Kar bölgesinde",
       "tarama_yontemi": "RSI oversold",
-      "son_guncelleme": "2026-02-27T12:26:16.011992",
+      "son_guncelleme": "2026-02-27T14:53:08.231448",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
@@ -196,48 +196,12 @@
       }
     },
     {
-      "id": "SWING-020",
-      "sembol": "ZS",
-      "giris_tarihi": "2026-02-24",
-      "giris_fiyati": 150.29,
-      "guncel_fiyat": 167.36,
-      "guncel_kar_zarar_yuzde": 11.36,
-      "hedef_fiyat": 165.32,
-      "stop_loss": 142.78,
-      "tutulan_gun": 3,
-      "giris_nedeni": "RSI 26.7 aşırı satım, cybersecurity lideri $24B market cap, bugün +4.9% bounce başladı, zero trust & AI agent security büyüme alanı, ATH'den -%55 düşüş aşırı",
-      "katalizor": "Zero trust security talebi artışı, AI agent güvenlik pazarı genişlemesi",
-      "tez": "Cybersecurity sektöründe lider, oversold durumda güçlü bounce başladı, sektör uzun vadede büyüme trendinde",
-      "zaman_cercevesi": "7-10 gün",
-      "risk": "Anthropic AI tool haberi cybersecurity hisselerini baskılıyor, analist downgrade'i devam edebilir",
-      "durum": "🎯 HEDEF AŞILDI!",
-      "tarama_yontemi": "RSI oversold",
-      "son_guncelleme": "2026-02-27T12:26:16.011992",
-      "partial_exit_plan": {
-        "hedef_ulasildiginda": {
-          "aksiyon": "%50 POZİSYONU SAT",
-          "satis_fiyati": 165.32,
-          "sebep": "Kar garantiye al",
-          "gerceklesen_tarih": "2026-02-26",
-          "gerceklesen_fiyat": 164.03
-        },
-        "kalan_50_icin": {
-          "aksiyon": "TRAİLİNG STOP AKTİF",
-          "baslangic_trailing_stop": 157.14,
-          "trailing_yuzde": 5,
-          "aciklama": "Zirveden -%5 düşünce sat",
-          "zirve_fiyat": 165.41
-        },
-        "durum": "KISMI SATIŞ YAPILDI - %50 @$164.03"
-      }
-    },
-    {
       "id": "SWING-021",
       "sembol": "SOFI",
       "giris_tarihi": "2026-02-24",
       "giris_fiyati": 18.51,
-      "guncel_fiyat": 19.1,
-      "guncel_kar_zarar_yuzde": 3.19,
+      "guncel_fiyat": 17.7199,
+      "guncel_kar_zarar_yuzde": -4.27,
       "hedef_fiyat": 20.36,
       "stop_loss": 17.58,
       "tutulan_gun": 3,
@@ -246,9 +210,9 @@
       "tez": "Digital banking ve yatırım platformu, güçlü büyüme hikayesi, aşırı satılmış durumda bounce potansiyeli yüksek",
       "zaman_cercevesi": "5-7 gün",
       "risk": "Spekülatif hisse, volatilite yüksek, genel tech satışı devam edebilir, profitability endişeleri",
-      "durum": "Kar bölgesinde",
+      "durum": "⚠️ Stop-loss'a yaklaşıyor",
       "tarama_yontemi": "RSI oversold / momentum",
-      "son_guncelleme": "2026-02-27T12:26:16.011992",
+      "son_guncelleme": "2026-02-27T14:53:08.231453",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
@@ -266,9 +230,9 @@
     }
   ],
   "ozet": {
-    "toplam_pozisyon": 5,
-    "bos_slot": 5,
+    "toplam_pozisyon": 7,
+    "bos_slot": 3,
     "maksimum_pozisyon": 10,
-    "ortalama_kar_zarar_yuzde": 0.29
+    "ortalama_kar_zarar_yuzde": 0.31
   }
 }

@@ -1,6 +1,35 @@
 {
-  "son_guncelleme": "2026-02-24",
+  "son_guncelleme": "2026-02-27",
   "kapatilan_pozisyonlar": [
+    {
+      "id": "SWING-020",
+      "sembol": "ZS",
+      "giris_tarihi": "2026-02-24",
+      "cikis_tarihi": "2026-02-27",
+      "giris_fiyati": 150.29,
+      "cikis_fiyati": 144.21,
+      "partial_exits": [
+        {
+          "tarih": "2026-02-26",
+          "fiyat": 164.03,
+          "oran": 0.5,
+          "kar_zarar_yuzde": 9.14,
+          "sebep": "Hedef fiyat tutturuldu, %50 kar reali"
+        },
+        {
+          "tarih": "2026-02-27",
+          "fiyat": 144.21,
+          "oran": 0.5,
+          "kar_zarar_yuzde": -4.05,
+          "sebep": "Trailing stop tetiklendi (zirveden -%5)"
+        }
+      ],
+      "kar_zarar_yuzde": 2.55,
+      "tutulan_gun": 3,
+      "cikis_nedeni": "Kısmi satış stratejisi: %50 hedefte, %50 trailing stop",
+      "sonuc": "KAZANÇ",
+      "ders": "Partial exit stratejisi çalıştı. Hedef tutturulduğunda %50 satıp kalanı trailing stop ile korumak riski azalttı. Cybersecurity sektöründe ani düşüş oldu ama zararı sınırladık."
+    },
     {
       "id": "SWING-001",
       "sembol": "GOOGL",

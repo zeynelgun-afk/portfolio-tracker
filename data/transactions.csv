@@ -45,3 +45,4 @@ date,action,symbol,shares,price,total,reason
 2026-02-26,SELL,TYL,10,351.09,3510.90,"Agresif - kademeli çıkış %33 - momentum devam - strateji kuralı"
 2026-02-26,SELL,ZS,0,164.03,0,"Swing %50 kısmi çıkış - hedefe ulaştı +9.1% - trailing stop aktif"
 2026-02-26,SELL,CELH,94,54.44,5117.36,"Agresif - trailing stop tetiklendi $54.92 - kalan %67 tam çıkış"
+2026-02-27,SELL,ZS,0.5,144.21,72.105,"Swing Trade - Trailing stop tetiklendi (kalan %50 pozisyon) - Kısmi satış stratejisi başarılı: ilk %50 @$164.03 (+9.1%), kalan %50 @$144.21 (-4.1%) = ortalama +2.5%"
