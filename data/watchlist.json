@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-02-26T16:59:19.064110",
+  "son_guncelleme": "2026-02-28T08:20:41.197444",
   "not": "Tüm portföyler ve swing trade için tek merkezi watchlist. Her adayda hedef_portfoy alanı hangi portföye/stratejiye ait olduğunu belirtir.",
   "izleme_listesi": [
     {
@@ -81,99 +81,69 @@
       "notlar": "custom ASIC + VMware çift motor, FCF $27B. NVDA earnings sonrası pullback bekle"
     },
     {
-      "sembol": "VUZI",
-      "guncel_fiyat": 3.06,
-      "sektor": "Teknoloji",
+      "sembol": "CEG",
+      "guncel_fiyat": 329.88,
+      "sektor": "Utilities",
+      "hedef_portfoy": "agresif",
+      "urgency": "high",
+      "ekleme_tarihi": "2026-02-28",
+      "son_kontrol": "2026-02-28",
+      "hedef_giris": "320-330",
+      "hedef_fiyat": 370.0,
+      "stop_loss": 305.0,
+      "notlar": "Constellation Energy - nükleer enerji momentum, RSI 64.6 ideal, 1M +14.6%, AI datacenter enerji talebi. Haftalık +12.2% güçlü momentum."
+    },
+    {
+      "sembol": "MRK",
+      "guncel_fiyat": 123.78,
+      "sektor": "Sağlık",
+      "hedef_portfoy": "agresif",
+      "urgency": "high",
+      "ekleme_tarihi": "2026-02-28",
+      "son_kontrol": "2026-02-28",
+      "hedef_giris": "122-125",
+      "hedef_fiyat": 136.0,
+      "stop_loss": 114.0,
+      "notlar": "Merck - pharma leader, RSI 65 ideal giriş, 1M +15.8%, beta 0.30 düşük volatilite. 52w high yakın, güçlü momentumda."
+    },
+    {
+      "sembol": "HWM",
+      "guncel_fiyat": 262.53,
+      "sektor": "Endüstriyel",
       "hedef_portfoy": "agresif",
       "urgency": "medium",
-      "ekleme_tarihi": "2026-02-22",
-      "son_kontrol": "2026-02-26",
-      "hedef_giris": "2.70-2.80",
-      "hedef_fiyat": 3.5,
-      "stop_loss": 2.6,
-      "notlar": "micro-cap AR smart glasses, enterprise adoption"
+      "ekleme_tarihi": "2026-02-28",
+      "son_kontrol": "2026-02-28",
+      "hedef_giris": "245-250",
+      "hedef_fiyat": 280.0,
+      "stop_loss": 240.0,
+      "notlar": "Howmet Aerospace - savunma momentum, 1M +24.5% güçlü. RSI 77 aşırı alım, $245-250 pullback bekle. 52w high'da."
     },
     {
-      "sembol": "AMD",
-      "guncel_fiyat": 202.6599,
-      "sektor": "Teknoloji",
-      "hedef_portfoy": "agresif",
-      "urgency": "low",
-      "ekleme_tarihi": "2026-02-19",
-      "son_kontrol": "2026-02-26",
-      "hedef_giris": "195-200",
-      "hedef_fiyat": 235.0,
-      "stop_loss": 185.0,
-      "notlar": "19 Şub satıldı, mart ortası tech recovery bekle",
-      "wait_until": "2026-03-12"
-    },
-    {
-      "sembol": "TSLA",
-      "guncel_fiyat": 405.86,
-      "sektor": "Teknoloji",
-      "hedef_portfoy": "agresif",
-      "urgency": "low",
-      "ekleme_tarihi": "2026-02-19",
-      "son_kontrol": "2026-02-26",
-      "hedef_giris": "?",
-      "hedef_fiyat": null,
-      "stop_loss": null,
-      "notlar": "19 Şub satıldı, mart ortası tech recovery bekle",
-      "wait_until": "2026-03-12"
-    },
-    {
-      "sembol": "ALAB",
-      "guncel_fiyat": 123.9788,
-      "sektor": "Teknoloji",
-      "hedef_portfoy": "agresif",
-      "urgency": "low",
-      "ekleme_tarihi": "2026-02-22",
-      "son_kontrol": "2026-02-26",
-      "hedef_giris": "100-110",
-      "hedef_fiyat": 150.0,
-      "stop_loss": 90.0,
-      "notlar": "AI connectivity, gross margin %76. RSI<30 + $100-110 bekle",
-      "wait_until": "2026-03-15"
-    },
-    {
-      "sembol": "IREN",
-      "guncel_fiyat": 43.8372,
-      "sektor": "Teknoloji",
+      "sembol": "GEV",
+      "guncel_fiyat": 873.6,
+      "sektor": "Utilities",
       "hedef_portfoy": "agresif",
       "urgency": "medium",
-      "ekleme_tarihi": "2026-02-24",
-      "son_kontrol": "2026-02-26",
-      "hedef_giris": "38-40",
-      "hedef_fiyat": 67.75,
-      "stop_loss": 34.0,
-      "notlar": "bitcoin madenciliği + AI data center dual katalizör"
+      "ekleme_tarihi": "2026-02-28",
+      "son_kontrol": "2026-02-28",
+      "hedef_giris": "820-840",
+      "hedef_fiyat": 950.0,
+      "stop_loss": 800.0,
+      "notlar": "GE Vernova - nükleer enerji infra, 1M +22.8%, 3M +45.7%. RSI 72.6 aşırı alım, pullback bekle $820-840."
     },
     {
-      "sembol": "MNDY",
-      "guncel_fiyat": 75.5209,
-      "sektor": "Teknoloji",
+      "sembol": "EQIX",
+      "guncel_fiyat": 974.26,
+      "sektor": "REITs",
       "hedef_portfoy": "agresif",
       "urgency": "medium",
-      "ekleme_tarihi": "2026-02-25",
-      "son_kontrol": "2026-02-26",
-      "hedef_giris": "68-72",
-      "hedef_fiyat": 120.0,
-      "stop_loss": 62.0,
-      "notlar": "SaaS workflow + AI pivot. EV/Rev 2.2x, %89 gross margin, 1.5B$ cash, RSI 28 oversold. Ama 4x guidance miss + 2027 hedef geri çekildi. $68-72 bandında giriş düşün."
-    },
-    {
-      "sembol": "VRNS",
-      "guncel_fiyat": 22.8331,
-      "sektor": "Teknoloji",
-      "hedef_portfoy": "agresif",
-      "urgency": "low",
-      "ekleme_tarihi": "2026-02-25",
-      "son_kontrol": "2026-02-26",
-      "hedef_giris": "18-20",
-      "hedef_fiyat": 35.0,
-      "stop_loss": 16.0,
-      "notlar": "AI cybersecurity, SaaS dönüşümü devam. Hala zarar ediyor, kârlılık gelene kadar bekle. CY27'de %100 SaaS hedefi.",
-      "wait_until": "2026-06-01"
+      "ekleme_tarihi": "2026-02-28",
+      "son_kontrol": "2026-02-28",
+      "hedef_giris": "920-940",
+      "hedef_fiyat": 1050.0,
+      "stop_loss": 900.0,
+      "notlar": "Equinix - datacenter REIT, AI altyapı oyunu, 1M +19.4%, 3M +29.3%. RSI 74 aşırı alım, pullback bekle."
     }
   ],
   "haric_tutulanlar": [
@@ -208,13 +178,41 @@
     {
       "sembol": "BKSY",
       "neden": "Zaten agresif portföyde pozisyon var"
+    },
+    {
+      "sembol": "VUZI",
+      "neden": "Micro-cap çok riskli, agresif portföy min mktcap $500M"
+    },
+    {
+      "sembol": "AMD",
+      "neden": "Tech sektörü AI bubble korkusuyla zayıf, Mart ortası teknik toparlanma bekle"
+    },
+    {
+      "sembol": "TSLA",
+      "neden": "Tech sektörü AI bubble korkusuyla zayıf, Mart ortası teknik toparlanma bekle"
+    },
+    {
+      "sembol": "ALAB",
+      "neden": "Tech sektörü AI bubble korkusuyla zayıf, Mart ortası teknik toparlanma bekle"
+    },
+    {
+      "sembol": "IREN",
+      "neden": "Bitcoin madenciliği spekülatif, sektör-agnostik stratejiye uygun değil"
+    },
+    {
+      "sembol": "MNDY",
+      "neden": "SaaS zayıflığı, guidance miss ve/veya kârlılık henüz yok"
+    },
+    {
+      "sembol": "VRNS",
+      "neden": "SaaS zayıflığı, guidance miss ve/veya kârlılık henüz yok"
     }
   ],
   "prediction_markets_insights": {
-    "fed_rate": "Kalshi %64 rate cut (Mart 2026) → Defensive tilt doğru, ama cut gelirse cyclical rotate",
-    "iran": "Polymarket %12 (bu hafta düşük) → Enerji premium kısa vadede stabil",
-    "tariff": "SCOTUS ruling (20 Şubat) → Domestic producers güvenli, import-heavy riskli. DIS pozitif (domestic entertainment)."
+    "fed_rate": "Kalshi %64 rate cut (Mart 2026) → Risk-on sentiment, ama kısmi",
+    "iran": "Polymarket İran-ABD krizi deadline 1-6 Mart → Enerji/savunma premium devam, nükleer enerji (CEG, GEV) alternatif oyun",
+    "ai_infrastructure": "AI datacenter enerji talebi artıyor → CEG/GEV/EQIX AI altyapı katalizörü"
   },
-  "toplam_aday": 13,
-  "yuksek_oncelik_aday": 2
+  "toplam_aday": 11,
+  "yuksek_oncelik_aday": 4
 }
