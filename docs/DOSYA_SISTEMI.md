@@ -13,7 +13,7 @@ portfolio-tracker/
 ├── data/
 │   ├── portfolios/                    # 3 ana portföy ($600K toplam)
 │   │   ├── balanced.json              # dengeli portföy ($100K)
-│   │   ├── aggressive.json            # agresif momentum ($400K)
+│   │   ├── aggressive.json            # agresif büyüme ($400K)
 │   │   └── dividend.json              # değer + temettü ($100K)
 │   │
 │   ├── swing/                         # swing trade sistemi
@@ -32,7 +32,7 @@ portfolio-tracker/
 │   └── transactions.csv               # tüm işlemler — tek kaynak
 │
 ├── docs/                              # dokümantasyon
-│   ├── AGGRESSIVE_MOMENTUM_STRATEGY.md # ⭐ agresif momentum strateji detayları
+│   ├── AGGRESSIVE_STRATEGY.md          # ⭐ agresif büyüme strateji detayları
 │   ├── PORTFOLIO_DATA_SKILL.md        # ⭐ portföy JSON şemaları + hesaplama kuralları
 │   ├── SWING_TRADE_RULES.md           # ⭐ swing trade kural seti v2.0 + JSON şemaları
 │   ├── BALANCED_STRATEGY.md           # dengeli portföy stratejisi
@@ -62,7 +62,7 @@ her konu tek bir yerde yaşar, tekrar edilmez:
 
 | konu | tek kaynak |
 |------|-----------|
-| agresif momentum strateji | `docs/AGGRESSIVE_MOMENTUM_STRATEGY.md` |
+| agresif büyüme strateji | `docs/AGGRESSIVE_STRATEGY.md` |
 | portföy JSON şemaları | `docs/PORTFOLIO_DATA_SKILL.md` |
 | swing trade her şey | `docs/SWING_TRADE_RULES.md` |
 | portföy stratejileri | `PORTFOY_KURALLARI.md` |

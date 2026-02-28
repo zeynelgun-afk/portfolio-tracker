@@ -11,7 +11,7 @@
 | portföy | sermaye | ağırlık |
 |---------|---------|---------|
 | dengeli | $100K | %17 |
-| agresif momentum | $400K | %66 |
+| agresif büyüme | $400K | %66 |
 | değer + temettü | $100K | %17 |
 
 > rotasyon portföyü ($100K) 26 şubat 2026'da kapatıldı → arşiv: `data/archive/`
@@ -32,29 +32,31 @@
 
 ---
 
-## 2. agresif momentum ($400K) ⭐ ANA PORTFÖY
+## 2. agresif büyüme ($400K) ⭐ ANA PORTFÖY
 
-**ruh**: yüksek frekanslı momentum trading, aylık %5 net getiri hedefi
+**ruh**: sektör-agnostik momentum + katalizör bazlı büyüme, yıllık %30+ hedef
 
 | kural | değer |
 |-------|-------|
-| izin verilen | büyüme hisseleri (ETF yok) |
-| sinyal tipleri | earnings momentum, breakout, mean reversion |
-| max pozisyon | 8 |
-| pozisyon büyüklüğü | $40K-$60K (%10-15) |
-| tutma süresi | 3-7 gün (max 10) |
-| stop-loss | %4 (sıkı) |
-| kar hedefi | %8-12 (kademeli çıkış) |
+| izin verilen | HERHANGİ bir sektörden güçlü momentum hisseler |
+| sektör kısıtı | YOK — enerji, sağlık, finans, savunma, tech hepsi olabilir |
+| giriş kriterleri | güçlü katalizör + teknik momentum + fundamental filtre |
+| max pozisyon | 10 |
+| min sektör dengesi | minimum 3 farklı sektör |
+| pozisyon büyüklüğü | max %10 ($40K) |
+| çıkış kriteri | stop-loss / hedef / momentum kaybı (sabit süre yok) |
+| stop-loss | %8 (katı) |
+| kar hedefi | minimum %10 |
 | R:R minimum | 2:1 |
-| aylık max drawdown | %8 |
-| günlük max kayıp | %2 |
-| hedef getiri | aylık %5 (yıllık ~%80) |
+| hedef getiri | yıllık %30+ |
 
-**kademeli çıkış**: +%4'te breakeven stop → +%6'da %33 sat → +%10'da %33 sat → kalan trailing
+**katalizörler**: earnings beat >%10, teknik breakout, M&A duyurusu, contract win, jeopolitik tetikleyici
 
-**yasak**: değer hisseleri, temettü aristokratları, defensive sektörler
+**kademeli çıkış**: +%5-7'de %33 sat → +%10-12'de %33 sat → kalan trailing stop
 
-detay: `docs/AGGRESSIVE_MOMENTUM_STRATEGY.md`
+**yasak**: katalizör olmadan almak, tek sektöre >%40 exposure, stop-loss gevşetmek
+
+detay: `docs/AGGRESSIVE_STRATEGY.md`
 
 ---
 

@@ -11,7 +11,7 @@
 | portföy | sermaye | strateji | hedef |
 |---------|---------|----------|-------|
 | **dengeli** | $100K | multi-sector value + momentum | %15-20/yıl |
-| **agresif momentum** | $400K | aylık %5 momentum (3 sinyal tipi) | %80/yıl |
+| **agresif büyüme** | $400K | sektör-agnostik momentum + katalizör | %30+/yıl |
 | **değer + temettü** | $100K | düşük P/E (<20), temettü >%3 | %8-12/yıl + temettü |
 
 > sektör rotasyonu portföyü 26 şubat 2026'da kapatıldı → `data/archive/`
@@ -57,24 +57,27 @@ reports/
 
 ---
 
-## agresif momentum stratejisi ($400K)
+## agresif büyüme stratejisi ($400K)
 
 ana portföy — toplam sermayenin %67'si.
 
 | parametre | değer |
 |-----------|-------|
-| aylık hedef | %5 ($20,000) |
-| max eşzamanlı pozisyon | 8 |
-| pozisyon büyüklüğü | %10-15 ($40K-$60K) |
-| tutma süresi | 3-7 gün (max 10) |
-| stop-loss | %4 |
-| kar hedefi | %8-12 (kademeli çıkış) |
+| yıllık hedef | %30+ |
+| max eşzamanlı pozisyon | 10 |
+| pozisyon büyüklüğü | max %10 ($40K) |
+| çıkış kriteri | stop-loss / hedef / momentum kaybı |
+| stop-loss | %8 |
+| kar hedefi | minimum %10 |
 | R:R minimum | 2:1 |
-| aylık max drawdown | %8 |
+| sektör kısıtı | YOK — herhangi bir sektör |
+| min sektör dengesi | 3 farklı sektör |
 
-**3 sinyal tipi**: earnings momentum, technical breakout, mean reversion
+**giriş kriterleri**: güçlü katalizör (earnings, M&A, contract, jeopolitik) + teknik momentum + risk-ödül dengesi
 
-detay: `docs/AGGRESSIVE_MOMENTUM_STRATEGY.md`
+**sektörler**: enerji, sağlık, finans, savunma, tüketici, materials, industrial, teknoloji vs — önemli olan momentum!
+
+detay: `docs/AGGRESSIVE_STRATEGY.md`
 
 ---
 
@@ -95,7 +98,7 @@ detay: `docs/SWING_TRADE_RULES.md`
 
 | konu | kaynak |
 |------|--------|
-| agresif momentum strateji detayları | `docs/AGGRESSIVE_MOMENTUM_STRATEGY.md` |
+| agresif büyüme strateji detayları | `docs/AGGRESSIVE_STRATEGY.md` |
 | portföy JSON şemaları, hesaplama kuralları | `docs/PORTFOLIO_DATA_SKILL.md` |
 | swing trade kuralları + JSON şemaları | `docs/SWING_TRADE_RULES.md` |
 | portföy bazlı strateji kuralları | `PORTFOY_KURALLARI.md` |
