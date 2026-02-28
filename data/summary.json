@@ -1,20 +1,20 @@
 {
   "son_guncelleme": "2026-02-27",
   "simulasyon_donemi": "17 Şubat 2026 - 27 Şubat 2026",
-  "islem_gunleri": 8,
-  "toplam_sermaye": 600000.0,
-  "toplam_deger": 618520.66,
+  "islem_gunleri": 9,
+  "toplam_sermaye": 400000.0,
+  "toplam_deger": 621335.02,
+  "toplam_kar_zarar": 221335.02,
+  "toplam_kar_zarar_yuzde": 55.33,
   "benchmark_spy": 0.93,
-  "toplam_kar_zarar": 18520.660000000033,
-  "toplam_kar_zarar_yuzde": 3.09,
-  "alpha": 2.16,
+  "alpha": 54.4,
   "portfolyolar": {
     "dengeli": {
       "isim": "Dengeli Portföy",
-      "deger": 109127.86,
+      "deger": 110486.24,
       "maliyet": 100000,
-      "kar_zarar": 9127.86,
-      "kar_zarar_yuzde": 9.13,
+      "kar_zarar": 10486.24,
+      "kar_zarar_yuzde": 10.49,
       "pozisyon_sayisi": 6,
       "nakit": {
         "miktar": 20048.7,
@@ -23,11 +23,11 @@
       "durum": "BAŞARILI"
     },
     "agresif": {
-      "isim": "Agresif Büyüme Portföyü",
-      "deger": 392756.08,
+      "isim": "Agresif Büyüme",
+      "deger": 393934.98,
       "maliyet": 400000,
-      "kar_zarar": -7243.919999999984,
-      "kar_zarar_yuzde": -1.81,
+      "kar_zarar": -6065.02,
+      "kar_zarar_yuzde": -1.52,
       "pozisyon_sayisi": 8,
       "nakit": {
         "miktar": 331143.49,
@@ -36,11 +36,11 @@
       "durum": "NAKİT AĞIRLIKLI"
     },
     "temettü": {
-      "isim": "Değer + Temettü Portföyü",
-      "deger": 116636.72,
+      "isim": "Değer + Temettü",
+      "deger": 116913.8,
       "maliyet": 100000,
-      "kar_zarar": 16636.72,
-      "kar_zarar_yuzde": 16.64,
+      "kar_zarar": 16913.8,
+      "kar_zarar_yuzde": 16.91,
       "pozisyon_sayisi": 7,
       "nakit": {
         "miktar": 8371.68,
@@ -51,7 +51,7 @@
     "swing_trade": {
       "isim": "Swing Trade (Simülasyon)",
       "pozisyon_sayisi": 7,
-      "ortalama_getiri_yuzde": 0.31,
+      "ortalama_getiri_yuzde": 1.56,
       "bos_slot": 3,
       "durum": "7/10 pozisyon aktif"
     }
