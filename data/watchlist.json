@@ -1,84 +1,90 @@
 {
-  "son_guncelleme": "2026-02-28T08:20:41.197444",
+  "son_guncelleme": "2026-02-28T09:00:03.280289",
   "not": "Tüm portföyler ve swing trade için tek merkezi watchlist. Her adayda hedef_portfoy alanı hangi portföye/stratejiye ait olduğunu belirtir.",
   "izleme_listesi": [
     {
       "sembol": "SPG",
-      "guncel_fiyat": 203.43,
+      "guncel_fiyat": 203.85,
       "sektor": "REITs",
       "hedef_portfoy": "swing",
       "urgency": "medium",
       "ekleme_tarihi": "2026-02-20",
-      "son_kontrol": "2026-02-26",
+      "son_kontrol": "2026-02-28",
       "hedef_giris": "195-200",
       "hedef_fiyat": 220.0,
       "stop_loss": 190.0,
-      "notlar": "AVM REIT, temettü %4.5, perakende toparlanma"
+      "notlar": "AVM REIT, temettü %4.5, perakende toparlanma",
+      "momentum_5gun": 0
     },
     {
       "sembol": "NEE",
-      "guncel_fiyat": 93.62,
+      "guncel_fiyat": 93.77,
       "sektor": "Kamu Hizmetleri",
       "hedef_portfoy": "swing",
       "urgency": "low",
       "ekleme_tarihi": "2026-02-20",
-      "son_kontrol": "2026-02-26",
+      "son_kontrol": "2026-02-28",
       "hedef_giris": "88-92",
       "hedef_fiyat": 102.0,
       "stop_loss": 85.0,
-      "notlar": "temiz enerji, defensive play"
+      "notlar": "temiz enerji, defensive play",
+      "momentum_5gun": 0
     },
     {
       "sembol": "DIS",
-      "guncel_fiyat": 105.85,
+      "guncel_fiyat": 106.045,
       "sektor": "İletişim",
       "hedef_portfoy": "swing",
       "urgency": "high",
       "ekleme_tarihi": "2026-02-22",
-      "son_kontrol": "2026-02-26",
+      "son_kontrol": "2026-02-28",
       "hedef_giris": "108-112",
       "hedef_fiyat": 125.0,
       "stop_loss": 105.0,
-      "notlar": "tariff ruling pozitif, theme parks güçlü, streaming toparlanma"
+      "notlar": "tariff ruling pozitif, theme parks güçlü, streaming toparlanma",
+      "momentum_5gun": 0
     },
     {
       "sembol": "BMY",
-      "guncel_fiyat": 60.73,
+      "guncel_fiyat": 62.37,
       "sektor": "Sağlık",
       "hedef_portfoy": "swing",
       "urgency": "high",
       "ekleme_tarihi": "2026-02-20",
-      "son_kontrol": "2026-02-26",
+      "son_kontrol": "2026-02-28",
       "hedef_giris": "58-62",
       "hedef_fiyat": 68.0,
       "stop_loss": 55.0,
-      "notlar": "1M +%11.3 güçlü momentum, turnaround value play"
+      "notlar": "1M +%11.3 güçlü momentum, turnaround value play",
+      "momentum_5gun": 0
     },
     {
       "sembol": "OXY",
-      "guncel_fiyat": 51.46,
+      "guncel_fiyat": 53.08,
       "sektor": "Enerji",
       "hedef_portfoy": "swing",
       "urgency": "medium",
       "ekleme_tarihi": "2026-02-20",
-      "son_kontrol": "2026-02-26",
+      "son_kontrol": "2026-02-28",
       "hedef_giris": "48-52",
       "hedef_fiyat": 60.0,
       "stop_loss": 45.0,
-      "notlar": "1M +%20 momentum, Buffett %25+ stake, iran premium"
+      "notlar": "1M +%20 momentum, Buffett %25+ stake, iran premium",
+      "momentum_5gun": 0
     },
     {
       "sembol": "AVGO",
-      "guncel_fiyat": 312.87,
+      "guncel_fiyat": 319.55,
       "sektor": "Teknoloji",
       "hedef_portfoy": "dengeli",
       "urgency": "medium",
       "ekleme_tarihi": "2026-02-22",
-      "son_kontrol": "2026-02-26",
+      "son_kontrol": "2026-02-28",
       "hedef_giris": "315-320",
       "hedef_fiyat": 370.0,
       "stop_loss": 295.0,
-      "notlar": "custom ASIC + VMware çift motor, FCF $27B. NVDA earnings sonrası pullback bekle"
+      "notlar": "custom ASIC + VMware çift motor, FCF $27B. NVDA earnings sonrası pullback bekle",
+      "momentum_5gun": 0
     },
     {
       "sembol": "CEG",
@@ -91,7 +97,8 @@
       "hedef_giris": "320-330",
       "hedef_fiyat": 370.0,
       "stop_loss": 305.0,
-      "notlar": "Constellation Energy - nükleer enerji momentum, RSI 64.6 ideal, 1M +14.6%, AI datacenter enerji talebi. Haftalık +12.2% güçlü momentum."
+      "notlar": "Constellation Energy - nükleer enerji momentum, RSI 64.6 ideal, 1M +14.6%, AI datacenter enerji talebi. Haftalık +12.2% güçlü momentum.",
+      "momentum_5gun": 0
     },
     {
       "sembol": "MRK",
@@ -104,7 +111,8 @@
       "hedef_giris": "122-125",
       "hedef_fiyat": 136.0,
       "stop_loss": 114.0,
-      "notlar": "Merck - pharma leader, RSI 65 ideal giriş, 1M +15.8%, beta 0.30 düşük volatilite. 52w high yakın, güçlü momentumda."
+      "notlar": "Merck - pharma leader, RSI 65 ideal giriş, 1M +15.8%, beta 0.30 düşük volatilite. 52w high yakın, güçlü momentumda.",
+      "momentum_5gun": 0
     },
     {
       "sembol": "HWM",
@@ -117,7 +125,8 @@
       "hedef_giris": "245-250",
       "hedef_fiyat": 280.0,
       "stop_loss": 240.0,
-      "notlar": "Howmet Aerospace - savunma momentum, 1M +24.5% güçlü. RSI 77 aşırı alım, $245-250 pullback bekle. 52w high'da."
+      "notlar": "Howmet Aerospace - savunma momentum, 1M +24.5% güçlü. RSI 77 aşırı alım, $245-250 pullback bekle. 52w high'da.",
+      "momentum_5gun": 0
     },
     {
       "sembol": "GEV",
@@ -130,7 +139,8 @@
       "hedef_giris": "820-840",
       "hedef_fiyat": 950.0,
       "stop_loss": 800.0,
-      "notlar": "GE Vernova - nükleer enerji infra, 1M +22.8%, 3M +45.7%. RSI 72.6 aşırı alım, pullback bekle $820-840."
+      "notlar": "GE Vernova - nükleer enerji infra, 1M +22.8%, 3M +45.7%. RSI 72.6 aşırı alım, pullback bekle $820-840.",
+      "momentum_5gun": 0
     },
     {
       "sembol": "EQIX",
@@ -143,7 +153,8 @@
       "hedef_giris": "920-940",
       "hedef_fiyat": 1050.0,
       "stop_loss": 900.0,
-      "notlar": "Equinix - datacenter REIT, AI altyapı oyunu, 1M +19.4%, 3M +29.3%. RSI 74 aşırı alım, pullback bekle."
+      "notlar": "Equinix - datacenter REIT, AI altyapı oyunu, 1M +19.4%, 3M +29.3%. RSI 74 aşırı alım, pullback bekle.",
+      "momentum_5gun": 0
     }
   ],
   "haric_tutulanlar": [
