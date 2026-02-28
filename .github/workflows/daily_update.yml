@@ -52,11 +52,22 @@ jobs:
             echo "has_changes=false" >> $GITHUB_OUTPUT
           fi
       
-      - name: Commit and push changes
+      - name: Pull latest changes
         if: steps.check_changes.outputs.has_changes == 'true'
         run: |
-          git add -A
-          git commit -m "[AUTO] Fiyat güncellemesi - $(date +'%d %b %Y %H:%M UTC')"
-          git push
+          git pull --rebase origin main
+      
+      - name: Commit and push changes (with retry)
+        if: steps.check_changes.outputs.has_changes == 'true'
+        uses: nick-invision/retry@v2
+        with:
+          timeout_minutes: 2
+          max_attempts: 3
+          retry_wait_seconds: 5
+          command: |
+            git add -A
+            git commit -m "[AUTO] Fiyat güncellemesi - $(date +'%d %b %Y %H:%M UTC')" || true
+            git pull --rebase origin main
+            git push
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
