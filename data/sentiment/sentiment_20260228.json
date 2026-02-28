@@ -1,0 +1,226 @@
+{
+  "date": "2026-02-28T08:35:43.696017",
+  "summary": {
+    "total_symbols": 26,
+    "bullish_count": 0,
+    "bearish_count": 0,
+    "neutral_count": 26,
+    "bullish_pct": 0.0
+  },
+  "portfolio_sentiment": {
+    "dengeli": 0.0,
+    "agresif": 0.0,
+    "deger": 0.0,
+    "swing": 0.0
+  },
+  "quotes": [
+    {
+      "symbol": "BKSY",
+      "price": 18.85,
+      "daily_change_pct": 0,
+      "momentum_sentiment": "NEUTRAL",
+      "analyst_rec": "N/A",
+      "volume": 1556676
+    },
+    {
+      "symbol": "GE",
+      "price": 342.26,
+      "daily_change_pct": 0,
+      "momentum_sentiment": "NEUTRAL",
+      "analyst_rec": "N/A",
+      "volume": 3561418
+    },
+    {
+      "symbol": "SOFI",
+      "price": 17.76,
+      "daily_change_pct": 0,
+      "momentum_sentiment": "NEUTRAL",
+      "analyst_rec": "N/A",
+      "volume": 113291925
+    },
+    {
+      "symbol": "TYL",
+      "price": 354.69,
+      "daily_change_pct": 0,
+      "momentum_sentiment": "NEUTRAL",
+      "analyst_rec": "N/A",
+      "volume": 831420
+    },
+    {
+      "symbol": "MO",
+      "price": 69.04,
+      "daily_change_pct": 0,
+      "momentum_sentiment": "NEUTRAL",
+      "analyst_rec": "N/A",
+      "volume": 12252131
+    },
+    {
+      "symbol": "SHOP",
+      "price": 120.73,
+      "daily_change_pct": 0,
+      "momentum_sentiment": "NEUTRAL",
+      "analyst_rec": "N/A",
+      "volume": 9771521
+    },
+    {
+      "symbol": "CTSH",
+      "price": 64.43,
+      "daily_change_pct": 0,
+      "momentum_sentiment": "NEUTRAL",
+      "analyst_rec": "N/A",
+      "volume": 10131114
+    },
+    {
+      "symbol": "DUK",
+      "price": 130.85,
+      "daily_change_pct": 0,
+      "momentum_sentiment": "NEUTRAL",
+      "analyst_rec": "N/A",
+      "volume": 3098501
+    },
+    {
+      "symbol": "NNDM",
+      "price": 1.88,
+      "daily_change_pct": 0,
+      "momentum_sentiment": "NEUTRAL",
+      "analyst_rec": "N/A",
+      "volume": 889968
+    },
+    {
+      "symbol": "T",
+      "price": 28,
+      "daily_change_pct": 0,
+      "momentum_sentiment": "NEUTRAL",
+      "analyst_rec": "N/A",
+      "volume": 29256922
+    },
+    {
+      "symbol": "VZ",
+      "price": 50.14,
+      "daily_change_pct": 0,
+      "momentum_sentiment": "NEUTRAL",
+      "analyst_rec": "N/A",
+      "volume": 23335168
+    },
+    {
+      "symbol": "RGLD",
+      "price": 299.79,
+      "daily_change_pct": 0,
+      "momentum_sentiment": "NEUTRAL",
+      "analyst_rec": "N/A",
+      "volume": 899012
+    },
+    {
+      "symbol": "XLI",
+      "price": 177.14,
+      "daily_change_pct": 0,
+      "momentum_sentiment": "NEUTRAL",
+      "analyst_rec": "N/A",
+      "volume": 9684113
+    },
+    {
+      "symbol": "SCHD",
+      "price": 31.77,
+      "daily_change_pct": 0,
+      "momentum_sentiment": "NEUTRAL",
+      "analyst_rec": "N/A",
+      "volume": 17197240
+    },
+    {
+      "symbol": "DVA",
+      "price": 156.3,
+      "daily_change_pct": 0,
+      "momentum_sentiment": "NEUTRAL",
+      "analyst_rec": "N/A",
+      "volume": 810232
+    },
+    {
+      "symbol": "XLE",
+      "price": 55.92,
+      "daily_change_pct": 0,
+      "momentum_sentiment": "NEUTRAL",
+      "analyst_rec": "N/A",
+      "volume": 58941721
+    },
+    {
+      "symbol": "CVX",
+      "price": 186.75,
+      "daily_change_pct": 0,
+      "momentum_sentiment": "NEUTRAL",
+      "analyst_rec": "N/A",
+      "volume": 7489986
+    },
+    {
+      "symbol": "PLTR",
+      "price": 137.19,
+      "daily_change_pct": 0,
+      "momentum_sentiment": "NEUTRAL",
+      "analyst_rec": "N/A",
+      "volume": 55784657
+    },
+    {
+      "symbol": "XOM",
+      "price": 152.595,
+      "daily_change_pct": 0,
+      "momentum_sentiment": "NEUTRAL",
+      "analyst_rec": "N/A",
+      "volume": 15640030
+    },
+    {
+      "symbol": "SM",
+      "price": 23.13,
+      "daily_change_pct": 0,
+      "momentum_sentiment": "NEUTRAL",
+      "analyst_rec": "N/A",
+      "volume": 9337284
+    },
+    {
+      "symbol": "GILT",
+      "price": 15.9,
+      "daily_change_pct": 0,
+      "momentum_sentiment": "NEUTRAL",
+      "analyst_rec": "N/A",
+      "volume": 710362
+    },
+    {
+      "symbol": "ANET",
+      "price": 133.5,
+      "daily_change_pct": 0,
+      "momentum_sentiment": "NEUTRAL",
+      "analyst_rec": "N/A",
+      "volume": 5336209
+    },
+    {
+      "symbol": "PM",
+      "price": 186.83,
+      "daily_change_pct": 0,
+      "momentum_sentiment": "NEUTRAL",
+      "analyst_rec": "N/A",
+      "volume": 2962054
+    },
+    {
+      "symbol": "KOS",
+      "price": 2.33,
+      "daily_change_pct": 0,
+      "momentum_sentiment": "NEUTRAL",
+      "analyst_rec": "N/A",
+      "volume": 23522404
+    },
+    {
+      "symbol": "RKLB",
+      "price": 69.1,
+      "daily_change_pct": 0,
+      "momentum_sentiment": "NEUTRAL",
+      "analyst_rec": "N/A",
+      "volume": 25624315
+    },
+    {
+      "symbol": "LMT",
+      "price": 658.08,
+      "daily_change_pct": 0,
+      "momentum_sentiment": "NEUTRAL",
+      "analyst_rec": "N/A",
+      "volume": 1384758
+    }
+  ]
+}
