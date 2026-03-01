@@ -134,19 +134,7 @@
       "sonuc": "KAZANÇ",
       "ders": "Trailing stop $122.50'da tetiklendi, giriş fiyatının üzerinde çıkış sağlandı. Trailing stop disiplini çalıştı."
     },
-    {
-      "id": "SWING-012",
-      "sembol": "UNH",
-      "giris_tarihi": "2026-02-13",
-      "cikis_tarihi": "2026-02-24",
-      "giris_fiyati": 293.19,
-      "cikis_fiyati": 277.65,
-      "kar_zarar_yuzde": -5.3,
-      "tutulan_gun": 11,
-      "cikis_nedeni": "Stop-loss tetiklendi - sağlık sektörü baskısı devam ediyor",
-      "sonuc": "ZARAR",
-      "ders": "Healthcare düzeltmesi beklentinin ötesinde sürdü. Sektör rotasyonu riski dikkate alınmalı."
-    }
+    
   ],
   "istatistikler": {
     "toplam_islem": 7,
