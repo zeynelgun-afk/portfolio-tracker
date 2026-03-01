@@ -92,8 +92,9 @@
       "giris_fiyati": 19.77,
       "giris_nedeni": "Yarım pozisyon - Real-time satellite imagery pullback",
       "agirlik_yuzde": 1.81,
-      "stop_loss": 18.98,
+      "stop_loss": 17.90,
       "hedef_fiyat": 21.8,
+      "iran_krizi_notu": "Satellite imagery savunma talebi artacak. Stop genişletildi, savaş rallisi bekleniyor.",
       "sinyal_tipi": "breakout",
       "max_tutma_gun": 10,
       "strateji_notu": "Savunma sektörü, satellite imagery büyümesi",
@@ -136,8 +137,9 @@
       "giris_fiyati": 1.96,
       "giris_nedeni": "Giriş bölgesi $1.90-2.00 tutturuldu. Micro-cap 3D baskı teknoloji şirketi, savunma ve uzay sektörü müşteri tabanı güçleniyor. Watchlist hedefine ulaşıldı.",
       "agirlik_yuzde": 1.22,
-      "stop_loss": 1.88,
+      "stop_loss": 1.80,
       "hedef_fiyat": 2.15,
+      "iran_krizi_notu": "Savunma/uzay müşteri tabanı potansiyel pozitif. Stop genişletildi, volatilite tamponu.",
       "sinyal_tipi": "mean_reversion",
       "max_tutma_gun": 10,
       "strateji_notu": "Micro-cap riskli, sıkı takip",
@@ -180,8 +182,9 @@
       "giris_fiyati": 128.42,
       "giris_nedeni": "RSI 33 aşırı satım bölgesi, SMA200 yakınında destek. AI veri analitiği ve savunma sektörü lider oyuncusu, US government contract büyümesi güçlü. SMA50 geri dönüş hedefleniyor. Güçlü earnings beat geçmişi.",
       "agirlik_yuzde": 1.36,
-      "stop_loss": 129.06,
+      "stop_loss": 131.00,
       "hedef_fiyat": 147.0,
+      "iran_krizi_notu": "AI/Savunma lider, savaş döneminde güçlü. Stop breakeven üzeri, kar korunuyor.",
       "sinyal_tipi": "mean_reversion",
       "max_tutma_gun": 10,
       "strateji_notu": "RSI oversold bounce, AI/savunma lider",
@@ -386,9 +389,20 @@
       "durum": "Kısmi satış yapıldı (%33), trailing stop aktif"
     }
   ],
-  "son_guncelleme": "2026-02-28T09:18:08.668155",
+  "son_guncelleme": "2026-03-01T12:00:00.000000",
   "toplam_deger": 393934.98,
   "toplam_getiri_yuzde": -1.52,
+  "iran_krizi_hazirligi": {
+    "tarih": "2026-03-01",
+    "durum": "Pazartesi açılış öncesi stop-loss ayarlamaları",
+    "degisiklikler": [
+      "BKSY stop $18.98 → $17.90 (satellite savunma teması)",
+      "NNDM stop $1.88 → $1.80 (volatilite tamponu)",
+      "PLTR stop $129.06 → $131.00 (breakeven üzeri kar koruma)"
+    ],
+    "firsatlar": ["PLTR", "RKLB", "GILT", "BKSY - savunma/uzay teması"],
+    "riskler": ["SHOP", "ANET - tech baskısı devam edebilir"]
+  },
   "gerceklesen_zarar": -1321.51,
   "kapali_pozisyonlar": [
     {

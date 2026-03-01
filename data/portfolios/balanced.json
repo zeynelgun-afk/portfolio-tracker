@@ -115,7 +115,21 @@
       "agirlik_yuzde": 13.63
     }
   ],
-  "son_guncelleme": "2026-02-28T09:18:08.664891",
+  "son_guncelleme": "2026-03-01T12:00:00.000000",
   "toplam_deger": 110486.24,
-  "toplam_getiri_yuzde": 10.49
+  "toplam_getiri_yuzde": 10.49,
+  "iran_krizi_hazirligi": {
+    "tarih": "2026-03-01",
+    "durum": "Enerji ağırlıklı portföy - İran krizinden maksimum fayda bekleniyor",
+    "enerji_pozisyonlari": {
+      "KOS": "+44% - Petrol $80+ senaryosunda +20-30% ek potansiyel",
+      "SM": "+12% - Oil E&P, petrol spike faydalanıcısı",
+      "XLE": "+5% - Sektör ETF, diversifiye enerji maruziyeti"
+    },
+    "kar_alma_plani": {
+      "KOS_50_seviyesi": "KOS +50% ($2.45+) seviyesinde %25 sat",
+      "petrol_90_ustu": "Petrol $90+ olursa enerji pozisyonlarında kademeli kar al"
+    },
+    "guvenli_limanlar": ["RGLD +9% - Altın rallisi devam edecek", "MO +2% - Savunmacı temettü"]
+  }
 }
