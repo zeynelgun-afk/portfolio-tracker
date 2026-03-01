@@ -133,22 +133,22 @@
       "cikis_nedeni": "Trailing stop tetiklendi - altın fiyatlarında düzeltme",
       "sonuc": "KAZANÇ",
       "ders": "Trailing stop $122.50'da tetiklendi, giriş fiyatının üzerinde çıkış sağlandı. Trailing stop disiplini çalıştı."
-    },
+    }
   ],
   "istatistikler": {
-    "toplam_islem": 7,
-    "kazanan_islem": 4,
+    "toplam_islem": 9,
+    "kazanan_islem": 7,
     "kaybeden_islem": 2,
-    "kazanma_orani": 57.1,
-    "toplam_kar_zarar_yuzde": 15.31,
-    "ortalama_kar_zarar_yuzde": 2.19,
+    "kazanma_orani": 77.78,
+    "toplam_kar_zarar_yuzde": 29.96,
+    "ortalama_kar_zarar_yuzde": 3.33,
     "en_iyi_islem": {
       "sembol": "CAT",
       "kar_yuzde": 12.02
     },
     "en_kotu_islem": {
-      "sembol": "BAC",
-      "kayip_yuzde": -7.09
+      "sembol": "AMT",
+      "kayip_yuzde": -3.35
     }
   },
   "yeni_ders": {
