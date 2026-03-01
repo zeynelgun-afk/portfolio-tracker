@@ -1,7 +1,88 @@
 {
-  "son_guncelleme": "2026-02-28T09:18:08.685400",
+  "son_guncelleme": "2026-03-01T12:30:00.000000",
   "not": "Tüm portföyler ve swing trade için tek merkezi watchlist. Her adayda hedef_portfoy alanı hangi portföye/stratejiye ait olduğunu belirtir.",
+  "iran_krizi_notu": {
+    "tarih": "2026-03-01",
+    "durum": "İran-ABD savaşı başladı (28 Şubat). Pazartesi yüksek volatilite bekleniyor.",
+    "tema": "Savunma + Enerji ağırlıklı watchlist. Petrol $80+ senaryosunda enerji hisseleri %10-20 ek potansiyel.",
+    "oncelik_sirasi": ["RTX", "NOC", "HAL", "DVN", "OXY"]
+  },
   "izleme_listesi": [
+    {
+      "sembol": "RTX",
+      "guncel_fiyat": 202.62,
+      "sektor": "Savunma",
+      "hedef_portfoy": "swing",
+      "urgency": "🔴 CRITICAL",
+      "ekleme_tarihi": "2026-03-01",
+      "son_kontrol": "2026-03-01",
+      "hedef_giris": "195-205",
+      "hedef_fiyat": 230.0,
+      "stop_loss": 190.0,
+      "notlar": "Raytheon - Patriot füze, Tomahawk cruise missile üreticisi. İran saldırılarında kritik savunma sistemi. RSI 56.9 ideal giriş. $272B mktcap.",
+      "iran_katalizor": "Patriot sistemleri İran misilleme savunmasında kullanılıyor",
+      "momentum_5gun": 0
+    },
+    {
+      "sembol": "NOC",
+      "guncel_fiyat": 724.38,
+      "sektor": "Savunma",
+      "hedef_portfoy": "swing",
+      "urgency": "🔴 CRITICAL",
+      "ekleme_tarihi": "2026-03-01",
+      "son_kontrol": "2026-03-01",
+      "hedef_giris": "700-730",
+      "hedef_fiyat": 820.0,
+      "stop_loss": 680.0,
+      "notlar": "Northrop Grumman - B-2 bomber, Global Hawk drone, uzay sistemleri. RSI 61.1 ideal. $102B mktcap.",
+      "iran_katalizor": "Stealth bomber ve drone sistemleri İran operasyonlarında aktif",
+      "momentum_5gun": 0
+    },
+    {
+      "sembol": "HAL",
+      "guncel_fiyat": 36.00,
+      "sektor": "Enerji Servis",
+      "hedef_portfoy": "swing",
+      "urgency": "🔴 CRITICAL",
+      "ekleme_tarihi": "2026-03-01",
+      "son_kontrol": "2026-03-01",
+      "hedef_giris": "34-37",
+      "hedef_fiyat": 42.0,
+      "stop_loss": 32.0,
+      "notlar": "Halliburton - Oilfield services lideri. Petrol spike'ında drilling aktivitesi artacak. RSI 63.6. $30B mktcap.",
+      "iran_katalizor": "Hormuz riski = Domestic üretim artışı = Servis talebi",
+      "momentum_5gun": 0
+    },
+    {
+      "sembol": "DVN",
+      "guncel_fiyat": 43.53,
+      "sektor": "Enerji E&P",
+      "hedef_portfoy": "dengeli",
+      "urgency": "high",
+      "ekleme_tarihi": "2026-03-01",
+      "son_kontrol": "2026-03-01",
+      "hedef_giris": "41-44",
+      "hedef_fiyat": 52.0,
+      "stop_loss": 39.0,
+      "notlar": "Devon Energy - Shale oil E&P, Permian + Delaware basin. RSI 59.5 ideal. $27B mktcap. Petrol $80+ senaryosunda +%20 potansiyel.",
+      "iran_katalizor": "US domestic shale üretimi stratejik öncelik kazanacak",
+      "momentum_5gun": 0
+    },
+    {
+      "sembol": "EOG",
+      "guncel_fiyat": 124.08,
+      "sektor": "Enerji E&P",
+      "hedef_portfoy": "dengeli",
+      "urgency": "high",
+      "ekleme_tarihi": "2026-03-01",
+      "son_kontrol": "2026-03-01",
+      "hedef_giris": "118-125",
+      "hedef_fiyat": 145.0,
+      "stop_loss": 112.0,
+      "notlar": "EOG Resources - Premium shale operator, düşük breakeven. RSI 65.9. $67B mktcap. Kaliteli enerji oyunu.",
+      "iran_katalizor": "Permian basin lideri, petrol spike faydalanıcısı",
+      "momentum_5gun": 0
+    },
     {
       "sembol": "SPG",
       "guncel_fiyat": 203.85,
@@ -63,13 +144,14 @@
       "guncel_fiyat": 53.08,
       "sektor": "Enerji",
       "hedef_portfoy": "swing",
-      "urgency": "medium",
+      "urgency": "🔴 CRITICAL",
       "ekleme_tarihi": "2026-02-20",
-      "son_kontrol": "2026-02-28",
-      "hedef_giris": "48-52",
-      "hedef_fiyat": 60.0,
-      "stop_loss": 45.0,
-      "notlar": "1M +%20 momentum, Buffett %25+ stake, iran premium",
+      "son_kontrol": "2026-03-01",
+      "hedef_giris": "50-54",
+      "hedef_fiyat": 65.0,
+      "stop_loss": 47.0,
+      "notlar": "Occidental - Buffett %25+ stake, Permian basin güçlü. Petrol $80+ = +%25 upside potansiyeli.",
+      "iran_katalizor": "Petrol spike doğrudan faydalanıcı, Buffett backing güven veriyor",
       "momentum_5gun": 0
     },
     {
@@ -89,15 +171,16 @@
     {
       "sembol": "CEG",
       "guncel_fiyat": 329.88,
-      "sektor": "Utilities",
-      "hedef_portfoy": "agresif",
-      "urgency": "high",
+      "sektor": "Nükleer Enerji",
+      "hedef_portfoy": "swing",
+      "urgency": "🔴 CRITICAL",
       "ekleme_tarihi": "2026-02-28",
-      "son_kontrol": "2026-02-28",
-      "hedef_giris": "320-330",
-      "hedef_fiyat": 370.0,
-      "stop_loss": 305.0,
-      "notlar": "Constellation Energy - nükleer enerji momentum, RSI 64.6 ideal, 1M +14.6%, AI datacenter enerji talebi. Haftalık +12.2% güçlü momentum.",
+      "son_kontrol": "2026-03-01",
+      "hedef_giris": "320-335",
+      "hedef_fiyat": 380.0,
+      "stop_loss": 300.0,
+      "notlar": "Constellation Energy - ABD'nin en büyük nükleer santral operatörü. Petrol riski = Nükleer alternatif talebi. AI datacenter enerji talebi devam.",
+      "iran_katalizor": "Orta Doğu petrol riski → Domestic nükleer enerji stratejik öncelik",
       "momentum_5gun": 0
     },
     {
@@ -117,15 +200,16 @@
     {
       "sembol": "HWM",
       "guncel_fiyat": 262.53,
-      "sektor": "Endüstriyel",
-      "hedef_portfoy": "agresif",
-      "urgency": "medium",
+      "sektor": "Savunma",
+      "hedef_portfoy": "swing",
+      "urgency": "🔴 CRITICAL",
       "ekleme_tarihi": "2026-02-28",
-      "son_kontrol": "2026-02-28",
-      "hedef_giris": "245-250",
-      "hedef_fiyat": 280.0,
+      "son_kontrol": "2026-03-01",
+      "hedef_giris": "250-265",
+      "hedef_fiyat": 300.0,
       "stop_loss": 240.0,
-      "notlar": "Howmet Aerospace - savunma momentum, 1M +24.5% güçlü. RSI 77 aşırı alım, $245-250 pullback bekle. 52w high'da.",
+      "notlar": "Howmet Aerospace - Savunma/havacılık parça üreticisi. F-35, jet motor bileşenleri. 1M +24.5% güçlü momentum devam edecek.",
+      "iran_katalizor": "Savunma üretim artışı, F-35 parça talebi yükselecek",
       "momentum_5gun": 0
     },
     {
@@ -220,10 +304,21 @@
     }
   ],
   "prediction_markets_insights": {
-    "fed_rate": "Kalshi %64 rate cut (Mart 2026) → Risk-on sentiment, ama kısmi",
-    "iran": "Polymarket İran-ABD krizi deadline 1-6 Mart → Enerji/savunma premium devam, nükleer enerji (CEG, GEV) alternatif oyun",
-    "ai_infrastructure": "AI datacenter enerji talebi artıyor → CEG/GEV/EQIX AI altyapı katalizörü"
+    "iran_savas": {
+      "rejim_degisikligi_mart": "Kalshi %63, Polymarket %28 - Belirsizlik yüksek",
+      "rejim_degisikligi_2026": "Polymarket %51 - Yılsonuna kadar olasılık orta-yüksek",
+      "abd_kara_isgali": "Düşük olasılık - Hava operasyonu ağırlıklı",
+      "hormuz_kapanmasi": "Kritik izleme - Kapanırsa petrol $100+"
+    },
+    "petrol_senaryolari": {
+      "sinirli_catisma": "Petrol $75-85, enerji pozisyonları tut",
+      "hormuz_tirmani": "Petrol $90-100+, agresif enerji al",
+      "deeskalasyon": "Petrol $65-70, enerji kar al"
+    },
+    "savunma_talebi": "Savunma harcamaları artacak - RTX, NOC, LMT, GD en büyük faydalanıcılar",
+    "nukleer_alternatif": "Petrol riski → Nükleer enerji stratejik önem kazanıyor - CEG, GEV"
   },
-  "toplam_aday": 11,
-  "yuksek_oncelik_aday": 4
+  "toplam_aday": 16,
+  "yuksek_oncelik_aday": 8,
+  "iran_krizi_critical": ["RTX", "NOC", "HAL", "OXY", "HWM", "CEG", "DVN", "EOG"]
 }
