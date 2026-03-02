@@ -31,10 +31,10 @@
     },
     "temettü": {
       "isim": "Değer + Temettü Portföyü",
-      "deger": 116908.25,
+      "deger": 117274.48,
       "maliyet": 100000,
-      "kar_zarar": 16908.25,
-      "kar_zarar_yuzde": 16.91,
+      "kar_zarar": 17274.479999999996,
+      "kar_zarar_yuzde": 17.27,
       "pozisyon_sayisi": 7,
       "nakit": {
         "miktar": 8371.68,
@@ -48,7 +48,5 @@
       "durum": "6/10 pozisyon aktif",
       "ortalama_getiri_yuzde": 2.96
     }
-  },
-  "benchmark_spy": 5.13,
-  "alpha": -1.36
+  }
 }
