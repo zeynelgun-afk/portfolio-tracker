@@ -48,17 +48,17 @@
       "sektor": "Tütün",
       "adet": 218,
       "maliyet_baz": 57.31,
-      "guncel_fiyat": 69.08,
+      "guncel_fiyat": 69.015,
       "yatirim": 12493.58,
-      "guncel_deger": 15059.44,
-      "kar_zarar": 2565.8600000000006,
-      "kar_zarar_yuzde": 20.54,
+      "guncel_deger": 15045.27,
+      "kar_zarar": 2551.69,
+      "kar_zarar_yuzde": 20.42,
       "gunluk_degisim_yuzde": 0,
-      "son_guncelleme": "2026-03-02T19:38:02.987386",
+      "son_guncelleme": "2026-03-02T20:43:34.944997",
       "giris_tarihi": "2026-01-02",
       "giris_fiyati": 57.31,
       "giris_nedeni": "Initial position - Dividend defensive",
-      "agirlik_yuzde": 12.84
+      "agirlik_yuzde": 12.82
     },
     {
       "sembol": "PM",
@@ -76,7 +76,7 @@
       "giris_tarihi": "2026-01-02",
       "giris_fiyati": 160.3,
       "giris_nedeni": "Başlangıç pozisyonu - Temettü + değer portföyü - Tütün",
-      "agirlik_yuzde": 12.16
+      "agirlik_yuzde": 12.15
     },
     {
       "sembol": "XOM",
@@ -84,17 +84,17 @@
       "sektor": "Enerji",
       "adet": 102,
       "maliyet_baz": 121.84,
-      "guncel_fiyat": 154.31,
+      "guncel_fiyat": 154.4475,
       "yatirim": 12427.68,
-      "guncel_deger": 15739.62,
-      "kar_zarar": 3311.9400000000005,
-      "kar_zarar_yuzde": 26.65,
+      "guncel_deger": 15753.64,
+      "kar_zarar": 3325.96,
+      "kar_zarar_yuzde": 26.76,
       "gunluk_degisim_yuzde": 0,
-      "son_guncelleme": "2026-03-02T19:38:02.987386",
+      "son_guncelleme": "2026-03-02T20:43:34.944997",
       "giris_tarihi": "2026-01-02",
       "giris_fiyati": 121.84,
       "giris_nedeni": "Başlangıç pozisyonu - Temettü + değer portföyü - Enerji",
-      "agirlik_yuzde": 13.42
+      "agirlik_yuzde": 13.43
     },
     {
       "sembol": "CVX",
@@ -102,17 +102,17 @@
       "sektor": "Enerji",
       "adet": 80,
       "maliyet_baz": 154.39,
-      "guncel_fiyat": 189.09,
+      "guncel_fiyat": 189.59,
       "yatirim": 12351.199999999999,
-      "guncel_deger": 15127.2,
-      "kar_zarar": 2776.000000000002,
-      "kar_zarar_yuzde": 22.48,
+      "guncel_deger": 15167.2,
+      "kar_zarar": 2816.0,
+      "kar_zarar_yuzde": 22.8,
       "gunluk_degisim_yuzde": 0,
-      "son_guncelleme": "2026-03-02T19:38:02.987386",
+      "son_guncelleme": "2026-03-02T20:43:34.944997",
       "giris_tarihi": "2026-01-02",
       "giris_fiyati": 154.39,
       "giris_nedeni": "Başlangıç pozisyonu - Temettü + değer portföyü - Enerji",
-      "agirlik_yuzde": 12.9
+      "agirlik_yuzde": 12.93
     },
     {
       "sembol": "SCHD",
@@ -130,12 +130,12 @@
       "giris_tarihi": "2026-01-02",
       "giris_fiyati": 28.95,
       "giris_nedeni": "Otomatik ekleme - Temettü ETF",
-      "agirlik_yuzde": 22.53
+      "agirlik_yuzde": 22.52
     }
   ],
-  "son_guncelleme": "2026-03-02T19:38:02.987386",
-  "toplam_deger": 117273.71,
-  "toplam_getiri_yuzde": 17.27,
+  "son_guncelleme": "2026-03-02T20:43:34.944997",
+  "toplam_deger": 117313.56,
+  "toplam_getiri_yuzde": 17.31,
   "transactions": [
     {
       "tarih": "2026-02-25",
