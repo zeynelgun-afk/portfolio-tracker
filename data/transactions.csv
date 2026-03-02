@@ -47,3 +47,5 @@ date,action,symbol,shares,price,total,reason
 2026-02-26,SELL,CELH,94,54.44,5117.36,"Agresif - trailing stop tetiklendi $54.92 - kalan %67 tam çıkış"
 2026-02-27,SELL,ZS,0.5,144.21,72.105,"Swing Trade - Trailing stop tetiklendi (kalan %50 pozisyon) - Kısmi satış stratejisi başarılı: ilk %50 @$164.03 (+9.1%), kalan %50 @$144.21 (-4.1%) = ortalama +2.5%"
 2026-02-27,SELL,KOS,4638,2.25,10435.50,"Dengeli - Kar reali %50 pozisyon - Hedef aşıldı (%39 kar), RSI 67.4 yüksek, pullback riski - Risk yönetimi stratejisi, kalan yarıya trailing stop $2.05"
+
+2026-03-02,SELL,SOFI,1,17.38,17.38,"Swing çıkış - Stop-loss tetiklendi - iran risk-off fintech satışı"
