@@ -133,19 +133,6 @@
       "cikis_nedeni": "Trailing stop tetiklendi - altın fiyatlarında düzeltme",
       "sonuc": "KAZANÇ",
       "ders": "Trailing stop $122.50'da tetiklendi, giriş fiyatının üzerinde çıkış sağlandı. Trailing stop disiplini çalıştı."
-    },
-    {
-      "id": "SWING-021",
-      "sembol": "SOFI",
-      "giris_tarihi": "2026-02-24",
-      "cikis_tarihi": "2026-03-02",
-      "giris_fiyati": 18.51,
-      "cikis_fiyati": 17.38,
-      "kar_zarar_yuzde": -6.1,
-      "tutulan_gun": 6,
-      "cikis_nedeni": "Stop-loss tetiklendi - iran krizi risk-off ortamında fintech satışı, gap-down ile stop altına düştü",
-      "sonuc": "ZARAR",
-      "ders": "Fintech hisseleri jeopolitik risk-off ortamında aşırı kırılgan. Yüksek beta pozisyonlarda stop mesafesi daha geniş tutulmalı veya kriz öncesi çıkış değerlendirilmeli."
     }
   ],
   "istatistikler": {

@@ -48,7 +48,6 @@ date,action,symbol,shares,price,total,reason
 2026-02-27,SELL,ZS,0.5,144.21,72.105,"Swing Trade - Trailing stop tetiklendi (kalan %50 pozisyon) - Kısmi satış stratejisi başarılı: ilk %50 @$164.03 (+9.1%), kalan %50 @$144.21 (-4.1%) = ortalama +2.5%"
 2026-02-27,SELL,KOS,4638,2.25,10435.50,"Dengeli - Kar reali %50 pozisyon - Hedef aşıldı (%39 kar), RSI 67.4 yüksek, pullback riski - Risk yönetimi stratejisi, kalan yarıya trailing stop $2.05"
 
-2026-03-02,SELL,SOFI,1,17.38,17.38,"Swing çıkış - Stop-loss tetiklendi - iran risk-off fintech satışı"
 2026-03-02,BUY,HAL,1,36.245,36.245,"Swing giris - Iran krizi petrol fiyatlarini $79+'ya tasidi, yuksek petrol = daha fazla sondaj "
 2026-03-02,BUY,KTOS,1,96.41,96.41,"Swing giris - Iran operasyonunda drone ve insansiz hava araclari yogun kullanildi. KTOS insans"
 2026-03-02,BUY,CEG,1,328.56,328.56,"Swing giris - Iran krizi enerji guvenligi endiselerini artirdi. CEG ABD'nin en buyuk nukleer o"
