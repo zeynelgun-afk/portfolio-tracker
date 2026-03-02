@@ -16,13 +16,13 @@
       "yatirim": 12479.92,
       "guncel_deger": 14392,
       "kar_zarar": 1912.08,
-      "kar_zarar_yuzde": 15.32,
-      "gunluk_degisim_yuzde": 0,
-      "son_guncelleme": "2026-02-28T09:18:08.671052",
+      "kar_zarar_yuzde": 15.32125205930807,
+      "gunluk_degisim_yuzde": 1.9665,
+      "son_guncelleme": "2026-03-02T10:42:01.064701",
       "giris_tarihi": "2026-01-02",
       "giris_fiyati": 24.28,
       "giris_nedeni": "Başlangıç pozisyonu - Temettü + değer portföyü - Telekomünikasyon",
-      "agirlik_yuzde": 12.31
+      "agirlik_yuzde": 12.309870365740515
     },
     {
       "sembol": "VZ",
@@ -34,13 +34,13 @@
       "yatirim": 6253.31,
       "guncel_deger": 7871.9800000000005,
       "kar_zarar": 1618.67,
-      "kar_zarar_yuzde": 25.89,
-      "gunluk_degisim_yuzde": 0,
-      "son_guncelleme": "2026-02-28T09:18:08.671052",
+      "kar_zarar_yuzde": 25.88501129801657,
+      "gunluk_degisim_yuzde": 2.55676,
+      "son_guncelleme": "2026-03-02T10:42:01.064707",
       "giris_tarihi": "2026-01-02",
       "giris_fiyati": 39.83,
       "giris_nedeni": "Başlangıç pozisyonu - Temettü + değer portföyü - Telekomünikasyon",
-      "agirlik_yuzde": 6.73
+      "agirlik_yuzde": 6.733119324743053
     },
     {
       "sembol": "MO",
@@ -52,13 +52,13 @@
       "yatirim": 12493.58,
       "guncel_deger": 15050.720000000001,
       "kar_zarar": 2557.1400000000012,
-      "kar_zarar_yuzde": 20.47,
-      "gunluk_degisim_yuzde": 0,
-      "son_guncelleme": "2026-02-28T09:18:08.671052",
+      "kar_zarar_yuzde": 20.467632175885544,
+      "gunluk_degisim_yuzde": -0.61897,
+      "son_guncelleme": "2026-03-02T10:42:01.064709",
       "giris_tarihi": "2026-01-02",
       "giris_fiyati": 57.31,
       "giris_nedeni": "Initial position - Dividend defensive",
-      "agirlik_yuzde": 12.87
+      "agirlik_yuzde": 12.873291558578245
     },
     {
       "sembol": "PM",
@@ -70,13 +70,13 @@
       "yatirim": 12343.1,
       "guncel_deger": 14385.910000000002,
       "kar_zarar": 2042.8100000000013,
-      "kar_zarar_yuzde": 16.55,
-      "gunluk_degisim_yuzde": 0,
-      "son_guncelleme": "2026-02-28T09:18:08.671052",
+      "kar_zarar_yuzde": 16.550218340611362,
+      "gunluk_degisim_yuzde": -0.35733,
+      "son_guncelleme": "2026-03-02T10:42:01.064711",
       "giris_tarihi": "2026-01-02",
       "giris_fiyati": 160.3,
       "giris_nedeni": "Başlangıç pozisyonu - Temettü + değer portföyü - Tütün",
-      "agirlik_yuzde": 12.3
+      "agirlik_yuzde": 12.304661422541006
     },
     {
       "sembol": "XOM",
@@ -88,13 +88,13 @@
       "yatirim": 12427.68,
       "guncel_deger": 15564.69,
       "kar_zarar": 3137.01,
-      "kar_zarar_yuzde": 25.24,
-      "gunluk_degisim_yuzde": 0,
-      "son_guncelleme": "2026-02-28T09:18:08.671052",
+      "kar_zarar_yuzde": 25.242120814182535,
+      "gunluk_degisim_yuzde": 2.72991,
+      "son_guncelleme": "2026-03-02T10:42:01.064712",
       "giris_tarihi": "2026-01-02",
       "giris_fiyati": 121.84,
       "giris_nedeni": "Başlangıç pozisyonu - Temettü + değer portföyü - Enerji",
-      "agirlik_yuzde": 13.31
+      "agirlik_yuzde": 13.312904126107403
     },
     {
       "sembol": "CVX",
@@ -106,13 +106,13 @@
       "yatirim": 12351.199999999999,
       "guncel_deger": 14940.0,
       "kar_zarar": 2588.800000000001,
-      "kar_zarar_yuzde": 20.96,
-      "gunluk_degisim_yuzde": 0,
-      "son_guncelleme": "2026-02-28T09:18:08.671052",
+      "kar_zarar_yuzde": 20.959906729710482,
+      "gunluk_degisim_yuzde": 1.40639,
+      "son_guncelleme": "2026-03-02T10:42:01.064713",
       "giris_tarihi": "2026-01-02",
       "giris_fiyati": 154.39,
       "giris_nedeni": "Başlangıç pozisyonu - Temettü + değer portföyü - Enerji",
-      "agirlik_yuzde": 12.78
+      "agirlik_yuzde": 12.778589720967434
     },
     {
       "sembol": "SCHD",
@@ -124,18 +124,18 @@
       "yatirim": 23999.55,
       "guncel_deger": 26337.329999999998,
       "kar_zarar": 2337.779999999999,
-      "kar_zarar_yuzde": 9.74,
-      "gunluk_degisim_yuzde": 0,
-      "son_guncelleme": "2026-02-28T09:18:08.671052",
+      "kar_zarar_yuzde": 9.740932642487042,
+      "gunluk_degisim_yuzde": 0.82513,
+      "son_guncelleme": "2026-03-02T10:42:01.064715",
       "giris_tarihi": "2026-01-02",
       "giris_fiyati": 28.95,
       "giris_nedeni": "Otomatik ekleme - Temettü ETF",
-      "agirlik_yuzde": 22.53
+      "agirlik_yuzde": 22.527037109486425
     }
   ],
-  "son_guncelleme": "2026-02-28T09:18:08.671052",
+  "son_guncelleme": "2026-03-02T10:42:01.064717",
   "toplam_deger": 116914.31,
-  "toplam_getiri_yuzde": 16.91,
+  "toplam_getiri_yuzde": 16.914309999999997,
   "transactions": [
     {
       "tarih": "2026-02-25",

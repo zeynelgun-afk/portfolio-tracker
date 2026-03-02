@@ -16,13 +16,13 @@
       "yatirim": 21496.800000000003,
       "guncel_deger": 24055.2,
       "kar_zarar": 2558.399999999998,
-      "kar_zarar_yuzde": 11.9,
-      "gunluk_degisim_yuzde": 0,
-      "son_guncelleme": "2026-02-28T09:18:08.664891",
+      "kar_zarar_yuzde": 11.90130624092887,
+      "gunluk_degisim_yuzde": 9.46522,
+      "son_guncelleme": "2026-03-02T10:42:01.062040",
       "giris_tarihi": "2026-02-17",
       "giris_fiyati": 20.67,
       "giris_nedeni": "Initial position - Oil & gas E&P",
-      "agirlik_yuzde": 21.77
+      "agirlik_yuzde": 21.77212293585156
     },
     {
       "sembol": "KOS",
@@ -34,13 +34,13 @@
       "yatirim": 7499.646,
       "guncel_deger": 10806.54,
       "kar_zarar": 3306.894000000001,
-      "kar_zarar_yuzde": 44.09,
-      "gunluk_degisim_yuzde": 0,
-      "son_guncelleme": "2026-02-28T09:18:08.664891",
+      "kar_zarar_yuzde": 44.0940012368584,
+      "gunluk_degisim_yuzde": 5.90909,
+      "son_guncelleme": "2026-03-02T10:42:01.062062",
       "giris_tarihi": "2026-02-17",
       "giris_fiyati": 1.617,
       "giris_nedeni": "Initial position - Deep value offshore",
-      "agirlik_yuzde": 9.78
+      "agirlik_yuzde": 9.78089217263616
     },
     {
       "sembol": "MO",
@@ -52,13 +52,13 @@
       "yatirim": 18006.48,
       "guncel_deger": 18433.68,
       "kar_zarar": 427.2000000000007,
-      "kar_zarar_yuzde": 2.37,
-      "gunluk_degisim_yuzde": 0,
-      "son_guncelleme": "2026-02-28T09:18:08.664891",
+      "kar_zarar_yuzde": 2.3724792408066473,
+      "gunluk_degisim_yuzde": -0.61897,
+      "son_guncelleme": "2026-03-02T10:42:01.062065",
       "giris_tarihi": "2026-02-17",
       "giris_fiyati": 67.44,
       "giris_nedeni": "Initial position - Dividend defensive",
-      "agirlik_yuzde": 16.68
+      "agirlik_yuzde": 16.684140939179397
     },
     {
       "sembol": "XLE",
@@ -70,13 +70,13 @@
       "yatirim": 14775.18,
       "guncel_deger": 15489.84,
       "kar_zarar": 714.6599999999999,
-      "kar_zarar_yuzde": 4.84,
-      "gunluk_degisim_yuzde": 0,
-      "son_guncelleme": "2026-02-28T09:18:08.664891",
+      "kar_zarar_yuzde": 4.836895388076489,
+      "gunluk_degisim_yuzde": 1.58038,
+      "son_guncelleme": "2026-03-02T10:42:01.062067",
       "giris_tarihi": "2026-02-17",
       "giris_fiyati": 53.34,
       "giris_nedeni": "Initial position - Energy sector ETF",
-      "agirlik_yuzde": 14.02
+      "agirlik_yuzde": 14.019700552756614
     },
     {
       "sembol": "RGLD",
@@ -88,13 +88,13 @@
       "yatirim": 6036.799999999999,
       "guncel_deger": 6595.38,
       "kar_zarar": 558.5800000000008,
-      "kar_zarar_yuzde": 9.25,
-      "gunluk_degisim_yuzde": 0,
-      "son_guncelleme": "2026-02-28T09:18:08.664891",
+      "kar_zarar_yuzde": 9.25291545189506,
+      "gunluk_degisim_yuzde": 1.83776,
+      "son_guncelleme": "2026-03-02T10:42:01.062068",
       "giris_tarihi": "2026-02-17",
       "giris_fiyati": 274.4,
       "giris_nedeni": "Initial position - Gold royalty",
-      "agirlik_yuzde": 5.97
+      "agirlik_yuzde": 5.969413023739427
     },
     {
       "sembol": "XLI",
@@ -106,18 +106,18 @@
       "yatirim": 14878.4,
       "guncel_deger": 15056.9,
       "kar_zarar": 178.5,
-      "kar_zarar_yuzde": 1.2,
-      "gunluk_degisim_yuzde": 0,
-      "son_guncelleme": "2026-02-28T09:18:08.664891",
+      "kar_zarar_yuzde": 1.1997257769652652,
+      "gunluk_degisim_yuzde": 0.24901,
+      "son_guncelleme": "2026-03-02T10:42:01.062070",
       "giris_tarihi": "2026-02-19",
       "giris_fiyati": 175.04,
       "giris_nedeni": "Otomatik ekleme - Endüstriyel",
-      "agirlik_yuzde": 13.63
+      "agirlik_yuzde": 13.62785085273967
     }
   ],
-  "son_guncelleme": "2026-03-01T12:00:00.000000",
+  "son_guncelleme": "2026-03-02T10:42:01.062073",
   "toplam_deger": 110486.24,
-  "toplam_getiri_yuzde": 10.49,
+  "toplam_getiri_yuzde": 10.486240000000006,
   "iran_krizi_hazirligi": {
     "tarih": "2026-03-01",
     "durum": "Enerji ağırlıklı portföy - İran krizinden maksimum fayda bekleniyor",
@@ -130,6 +130,9 @@
       "KOS_50_seviyesi": "KOS +50% ($2.45+) seviyesinde %25 sat",
       "petrol_90_ustu": "Petrol $90+ olursa enerji pozisyonlarında kademeli kar al"
     },
-    "guvenli_limanlar": ["RGLD +9% - Altın rallisi devam edecek", "MO +2% - Savunmacı temettü"]
+    "guvenli_limanlar": [
+      "RGLD +9% - Altın rallisi devam edecek",
+      "MO +2% - Savunmacı temettü"
+    ]
   }
 }
