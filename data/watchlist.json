@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-03-02T14:43:45.896297",
+  "son_guncelleme": "2026-03-02T15:17:08.302330",
   "not": "Tüm portföyler ve swing trade için tek merkezi watchlist. Her adayda hedef_portfoy alanı hangi portföye/stratejiye ait olduğunu belirtir.",
   "iran_krizi_notu": {
     "tarih": "2026-03-01",
@@ -42,21 +42,6 @@
       "stop_loss": 680.0,
       "notlar": "Northrop Grumman - B-2 bomber, Global Hawk drone, uzay sistemleri. RSI 61.1 ideal. $102B mktcap.",
       "iran_katalizor": "Stealth bomber ve drone sistemleri İran operasyonlarında aktif",
-      "momentum_5gun": 0
-    },
-    {
-      "sembol": "HAL",
-      "guncel_fiyat": 35.35,
-      "sektor": "Enerji Servis",
-      "hedef_portfoy": "swing",
-      "urgency": "🔴 CRITICAL",
-      "ekleme_tarihi": "2026-03-01",
-      "son_kontrol": "2026-03-02",
-      "hedef_giris": "34-37",
-      "hedef_fiyat": 42.0,
-      "stop_loss": 32.0,
-      "notlar": "Halliburton - Oilfield services lideri. Petrol spike'ında drilling aktivitesi artacak. RSI 63.6. $30B mktcap.",
-      "iran_katalizor": "Hormuz riski = Domestic üretim artışı = Servis talebi",
       "momentum_5gun": 0
     },
     {
@@ -172,21 +157,6 @@
       "hedef_fiyat": 370.0,
       "stop_loss": 295.0,
       "notlar": "custom ASIC + VMware çift motor, FCF $27B. NVDA earnings sonrası pullback bekle",
-      "momentum_5gun": 0
-    },
-    {
-      "sembol": "CEG",
-      "guncel_fiyat": 327.1287,
-      "sektor": "Nükleer Enerji",
-      "hedef_portfoy": "swing",
-      "urgency": "🔴 CRITICAL",
-      "ekleme_tarihi": "2026-02-28",
-      "son_kontrol": "2026-03-02",
-      "hedef_giris": "320-335",
-      "hedef_fiyat": 380.0,
-      "stop_loss": 300.0,
-      "notlar": "Constellation Energy - ABD'nin en büyük nükleer santral operatörü. Petrol riski = Nükleer alternatif talebi. AI datacenter enerji talebi devam.",
-      "iran_katalizor": "Orta Doğu petrol riski → Domestic nükleer enerji stratejik öncelik",
       "momentum_5gun": 0
     },
     {
@@ -307,6 +277,18 @@
     {
       "sembol": "VRNS",
       "neden": "SaaS zayıflığı, guidance miss ve/veya kârlılık henüz yok"
+    },
+    {
+      "sembol": "HAL",
+      "neden": "Swing pozisyon acildi - 2026-03-02"
+    },
+    {
+      "sembol": "CEG",
+      "neden": "Swing pozisyon acildi - 2026-03-02"
+    },
+    {
+      "sembol": "KTOS",
+      "neden": "Swing pozisyon acildi - 2026-03-02"
     }
   ],
   "prediction_markets_insights": {

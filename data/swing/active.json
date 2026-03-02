@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-03-02T15:06:56.104476",
+  "son_guncelleme": "2026-03-02T15:17:08.302330",
   "not": "SWING TRADE SADECE SİMÜLASYON - Sadece % kazanç/kayıp takibi (MAX: 10 pozisyon)",
   "iran_krizi_hazirligi": {
     "tarih": "2026-03-01",
@@ -200,6 +200,105 @@
           "baslangic_trailing_stop": 60.28,
           "trailing_yuzde": 5,
           "aciklama": "Zirveden -%5 düşünce sat"
+        },
+        "durum": "Hedef bekleniyor"
+      }
+    },
+    {
+      "id": "SWING-020",
+      "sembol": "HAL",
+      "giris_tarihi": "2026-03-02",
+      "giris_fiyati": 36.245,
+      "guncel_fiyat": 36.245,
+      "guncel_kar_zarar_yuzde": 0.0,
+      "hedef_fiyat": 42.0,
+      "stop_loss": 34.36,
+      "tutulan_gun": 0,
+      "giris_nedeni": "Iran krizi petrol fiyatlarini $79+'ya tasidi, yuksek petrol = daha fazla sondaj aktivitesi = HAL servis gelirleri artar. Watchlist hedef giris araliginda.",
+      "katalizor": "Iran-ABD savasi, petrol $79+ rally, Hormuz Bogazi risk altinda",
+      "tez": "Dunyanin en buyuk enerji servis sirketlerinden. Petrol fiyat yukselisi dogrudan sondaj ve tamamlama hizmetlerine olan talebi artirir.",
+      "zaman_cercevesi": "7-14 gun",
+      "risk": "Ani ateskes petrol fiyatlarini dusurur, enerji servisleri hizla geri cekilir",
+      "durum": "Giris yapildi, iran katalizoru aktif",
+      "tarama_yontemi": "sektor liderligi",
+      "son_guncelleme": "2026-03-02T15:17:08.302330",
+      "partial_exit_plan": {
+        "hedef_ulasildiginda": {
+          "aksiyon": "%50 POZISYONU SAT",
+          "satis_fiyati": 42.0,
+          "sebep": "Kar garantiye al"
+        },
+        "kalan_50_icin": {
+          "aksiyon": "TRAILING STOP AKTIF",
+          "baslangic_trailing_stop": 34.43,
+          "trailing_yuzde": 5,
+          "aciklama": "Zirveden -%5 dusunce sat"
+        },
+        "durum": "Hedef bekleniyor"
+      }
+    },
+    {
+      "id": "SWING-021",
+      "sembol": "KTOS",
+      "giris_tarihi": "2026-03-02",
+      "giris_fiyati": 96.41,
+      "guncel_fiyat": 96.41,
+      "guncel_kar_zarar_yuzde": 0.0,
+      "hedef_fiyat": 112.0,
+      "stop_loss": 91.59,
+      "tutulan_gun": 0,
+      "giris_nedeni": "Iran operasyonunda drone ve insansiz hava araclari yogun kullanildi. KTOS insansiz sistemler ve hipersonik silahlar uretiyor. RSI 50.6 ile rally basinda.",
+      "katalizor": "Iran savasi drone kullanimi, savunma butcesi artisi beklentisi, +12% bugunki momentum",
+      "tez": "Insansiz savas sistemleri uretiminde lider. Iran operasyonu drone savasinin onemini kanitladi, uzun vadeli savunma harcamalari artacak.",
+      "zaman_cercevesi": "7-14 gun",
+      "risk": "Savunma rallisi hizla soguyabilir, kucuk-orta boy sirket volatilitesi yuksek",
+      "durum": "Giris yapildi, savunma drone katalizoru aktif",
+      "tarama_yontemi": "momentum",
+      "son_guncelleme": "2026-03-02T15:17:08.302330",
+      "partial_exit_plan": {
+        "hedef_ulasildiginda": {
+          "aksiyon": "%50 POZISYONU SAT",
+          "satis_fiyati": 112.0,
+          "sebep": "Kar garantiye al"
+        },
+        "kalan_50_icin": {
+          "aksiyon": "TRAILING STOP AKTIF",
+          "baslangic_trailing_stop": 91.59,
+          "trailing_yuzde": 5,
+          "aciklama": "Zirveden -%5 dusunce sat"
+        },
+        "durum": "Hedef bekleniyor"
+      }
+    },
+    {
+      "id": "SWING-022",
+      "sembol": "CEG",
+      "giris_tarihi": "2026-03-02",
+      "giris_fiyati": 328.56,
+      "guncel_fiyat": 328.56,
+      "guncel_kar_zarar_yuzde": 0.0,
+      "hedef_fiyat": 380.0,
+      "stop_loss": 312.13,
+      "tutulan_gun": 0,
+      "giris_nedeni": "Iran krizi enerji guvenligi endiselerini artirdi. CEG ABD'nin en buyuk nukleer operatoru. Microsoft AI data center anlasmasi ikinci katalizor. Watchlist hedef giris araliginda.",
+      "katalizor": "Iran enerji krizi nukleer talebi artiriyor, Microsoft AI data center anlasmasi, 1M +21% momentum",
+      "tez": "Nukleer enerji 'yerli ve temiz' enerji olarak yeniden gundemde. Petrol soku nukleer alternatif argümanini guclendiriyor. AI data center elektrik talebi yapısal artista.",
+      "zaman_cercevesi": "7-14 gun",
+      "risk": "Nukleer duzenleme riski, tech/AI harcama yavaslama endisesi",
+      "durum": "Giris yapildi, nukleer enerji guvenligi katalizoru aktif",
+      "tarama_yontemi": "sektor liderligi",
+      "son_guncelleme": "2026-03-02T15:17:08.302330",
+      "partial_exit_plan": {
+        "hedef_ulasildiginda": {
+          "aksiyon": "%50 POZISYONU SAT",
+          "satis_fiyati": 380.0,
+          "sebep": "Kar garantiye al"
+        },
+        "kalan_50_icin": {
+          "aksiyon": "TRAILING STOP AKTIF",
+          "baslangic_trailing_stop": 312.13,
+          "trailing_yuzde": 5,
+          "aciklama": "Zirveden -%5 dusunce sat"
         },
         "durum": "Hedef bekleniyor"
       }
