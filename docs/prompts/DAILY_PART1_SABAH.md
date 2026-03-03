@@ -1,10 +1,12 @@
 # GÜNLÜK RAPOR PART 1 — SABAH RAPORU v1.0
 
 > **versiyon**: 1.0 | **son güncelleme**: 3 mart 2026
+> **çıktı dosyası**: `reports/daily/DAILY_SABAH_YYYY-MM-DD.md`
 > **çalışma zamanı**: TR ~14:00 (NYSE dün 00:00'da kapandı, bugün 17:30 açılacak)
 > **amaç**: piyasa analizi + haberler + tarama + günün planı
-> **çıktı**: sadece chat'te paylaş, github'a push ETME
 > **dil**: küçük harf türkçe, dilbilgisi kurallarına uygun
+> **kaynak**: sadece "finzora ai"
+> **git commit**: `[SABAH RAPORU] DD Ay YYYY - kısa özet`
 
 ---
 
@@ -50,9 +52,11 @@ ADIM 4 — FİNVİZ TARAMA (ücretsiz)
   → agresif portföy adayları: earnings beat > %10, RS yükselen
   → sonuçları mevcut watchlist ile karşılaştır
 
-ADIM 5 — ANALİZ VE PLAN
+ADIM 5 — ANALİZ, PLAN VE KAYIT
   → tüm verileri sentezle
-  → chat'te raporla (aşağıdaki format)
+  → raporu yaz (aşağıdaki format)
+  → reports/daily/DAILY_SABAH_YYYY-MM-DD.md olarak kaydet
+  → GIT COMMIT + PUSH: "[SABAH RAPORU] DD Ay YYYY - kısa özet"
 ```
 
 ---
@@ -217,20 +221,24 @@ urgency değişmeli: [sembol — eski → yeni]
 
 - [risk 1]
 - [fırsat 1]
+
+---
+
+*finzora ai | fmp api | new york kapalı*
 ```
 
 ---
 
 ## KURALLAR
 
-- bu rapor github'a push edilmez
-- sadece chat'te paylaşılır
-- veri güncellemesi yapma (part 2'de yapılacak)
-- JSON dosyalarına dokunma
-- amacı: sabah bilgilendirme + günün planını oluşturma
+- rapor github'a push edilir (`reports/daily/DAILY_SABAH_YYYY-MM-DD.md`)
+- JSON dosyalarına dokunma (veri güncellemesi part 2'de yapılacak)
+- amacı: sabah bilgilendirme + günün planını oluşturma + Finviz tarama
 - finviz taramasını websearch ile yap (ücretsiz versiyon)
 
 ---
 
 **API KEY**: g1GFJZtV5rCP49UCir4WuP56VjhmA6F8
 **BASE URL**: https://financialmodelingprep.com/stable
+**REPO**: https://github.com/zeynelgun-afk/portfolio-tracker
+**TOKEN**: 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
