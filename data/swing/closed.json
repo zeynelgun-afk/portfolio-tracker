@@ -133,6 +133,32 @@
       "cikis_nedeni": "Trailing stop tetiklendi - altın fiyatlarında düzeltme",
       "sonuc": "KAZANÇ",
       "ders": "Trailing stop $122.50'da tetiklendi, giriş fiyatının üzerinde çıkış sağlandı. Trailing stop disiplini çalıştı."
+    },
+    {
+      "id": "SWING-013",
+      "sembol": "LMT",
+      "giris_tarihi": "2026-02-13",
+      "cikis_tarihi": "2026-03-03",
+      "giris_fiyati": 652.58,
+      "cikis_fiyati": 661.92,
+      "kar_zarar_yuzde": 1.43,
+      "tutulan_gun": 18,
+      "cikis_nedeni": "18 gün tutuldu, savunma rallisi soğudu, hedefe ulaşma ihtimali düşük. Kâr realize edildi",
+      "sonuc": "KAZANÇ",
+      "ders": "Savunma sektörü rallileri kısa ömürlü. 18 gün tutmak swing için fazla — 10 gün sonra momentum yoksa çık."
+    },
+    {
+      "id": "SWING-016",
+      "sembol": "GE",
+      "giris_tarihi": "2026-02-18",
+      "cikis_tarihi": "2026-03-03",
+      "giris_fiyati": 329.58,
+      "cikis_fiyati": 335.13,
+      "kar_zarar_yuzde": 1.68,
+      "tutulan_gun": 13,
+      "cikis_nedeni": "13 gün tutuldu, bugün -%3 düşüş, stop-loss'a çok yakın. Kâr korunarak çıkıldı",
+      "sonuc": "KAZANÇ",
+      "ders": "Endüstriyel momentum yavaşladığında erken çıkmak doğru karar. Stop'a yaklaşmayı beklemek gereksiz risk."
     }
   ],
   "istatistikler": {

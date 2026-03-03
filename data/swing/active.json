@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-03-03T18:39:32.594739",
+  "son_guncelleme": "2026-03-03T18:42:38.892123",
   "not": "SWING TRADE SADECE SİMÜLASYON - Sadece % kazanç/kayıp takibi (MAX: 10 pozisyon)",
   "iran_krizi_hazirligi": {
     "tarih": "2026-03-01",
@@ -11,38 +11,6 @@
     ]
   },
   "aktif_pozisyonlar": [
-    {
-      "id": "SWING-013",
-      "sembol": "LMT",
-      "giris_tarihi": "2026-02-13",
-      "giris_fiyati": 652.58,
-      "guncel_fiyat": 665.45,
-      "guncel_kar_zarar_yuzde": 1.97,
-      "hedef_fiyat": 750.0,
-      "stop_loss": 625.0,
-      "tutulan_gun": 18,
-      "giris_nedeni": "Sağlam momentum +4.7%, savunma sanayi lideri",
-      "katalizor": "İRAN SAVAŞI - Savunma harcamaları artacak, F-35/füze kontratları",
-      "tez": "Havacılık & savunma devi, istikrarlı nakit akışı",
-      "zaman_cercevesi": "10-12 gün",
-      "risk": "Bütçe endişeleri",
-      "durum": "✅ Normal aralıkta",
-      "son_guncelleme": "2026-03-03T17:45:31.282756",
-      "partial_exit_plan": {
-        "hedef_ulasildiginda": {
-          "aksiyon": "%50 POZİSYONU SAT",
-          "satis_fiyati": 717.84,
-          "sebep": "Kar garantiye al"
-        },
-        "kalan_50_icin": {
-          "aksiyon": "TRAİLİNG STOP AKTIF",
-          "baslangic_trailing_stop": 642.6,
-          "trailing_yuzde": 5,
-          "aciklama": "Zirveden -%5 düşünce sat"
-        },
-        "durum": "Hedef bekleniyor"
-      }
-    },
     {
       "id": "SWING-015",
       "sembol": "T",
@@ -69,38 +37,6 @@
         "kalan_50_icin": {
           "aksiyon": "TRAİLİNG STOP AKTIF",
           "baslangic_trailing_stop": 26.95,
-          "trailing_yuzde": 5,
-          "aciklama": "Zirveden -%5 düşünce sat"
-        },
-        "durum": "Hedef bekleniyor"
-      }
-    },
-    {
-      "id": "SWING-016",
-      "sembol": "GE",
-      "giris_tarihi": "2026-02-18",
-      "giris_fiyati": 329.58,
-      "guncel_fiyat": 336,
-      "guncel_kar_zarar_yuzde": 1.95,
-      "hedef_fiyat": 362.54,
-      "stop_loss": 329.58,
-      "tutulan_gun": 13,
-      "giris_nedeni": "En güçlü momentum +5.1%, endüstriyel çeşitlendirme lideri",
-      "katalizor": "Endüstriyel momentum devam ediyor, altyapı hikayesi",
-      "tez": "Havacılık, Enerji, Yenilenebilir Enerji çeşitlendirmesi. CAT benzeri başarı potansiyeli (+12% kazandırdı)",
-      "zaman_cercevesi": "7-10 gün",
-      "risk": "Piyasa zayıflığı, ekonomik yavaşlama",
-      "durum": "⚠️ Stop-loss yakın (1.9%)",
-      "son_guncelleme": "2026-03-03T17:45:31.282756",
-      "partial_exit_plan": {
-        "hedef_ulasildiginda": {
-          "aksiyon": "%50 POZİSYONU SAT",
-          "satis_fiyati": 362.54,
-          "sebep": "Kar garantiye al"
-        },
-        "kalan_50_icin": {
-          "aksiyon": "TRAİLİNG STOP AKTIF",
-          "baslangic_trailing_stop": 328.36,
           "trailing_yuzde": 5,
           "aciklama": "Zirveden -%5 düşünce sat"
         },

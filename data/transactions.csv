@@ -53,3 +53,5 @@ date,action,symbol,shares,price,total,reason
 2026-03-02,BUY,CEG,1,328.56,328.56,"Swing giris - Iran krizi enerji guvenligi endiselerini artirdi. CEG ABD'nin en buyuk nukleer o"
 2026-03-02,SELL,KOS,1159,2.33,2700.47,"Kismi kar alma %25 - dengeli portfoy - +44% kardan koruma"
 2026-03-03,BUY,LASR,74,67.69,5009.06,"Yarim pozisyon - Agresif portfoy - Savunma lazer silah, iran savasi katalizoru"
+2026-03-03,SELL,LMT,1,661.92,661.92,"18 gün tutuldu, savunma rallisi soğudu, hedefe ulaşma ihtimali düşük. Kâr realize edildi"
+2026-03-03,SELL,GE,1,335.13,335.13,"13 gün tutuldu, bugün -%3 düşüş, stop-loss'a çok yakın. Kâr korunarak çıkıldı"
