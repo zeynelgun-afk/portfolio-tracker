@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-03-02T21:29:05.929023",
+  "son_guncelleme": "2026-03-03T10:46:09.001035",
   "not": "SWING TRADE SADECE SİMÜLASYON - Sadece % kazanç/kayıp takibi (MAX: 10 pozisyon)",
   "iran_krizi_hazirligi": {
     "tarih": "2026-03-01",
@@ -20,14 +20,14 @@
       "guncel_kar_zarar_yuzde": 3.7,
       "hedef_fiyat": 750.0,
       "stop_loss": 625.0,
-      "tutulan_gun": 17,
+      "tutulan_gun": 18,
       "giris_nedeni": "Sağlam momentum +4.7%, savunma sanayi lideri",
       "katalizor": "İRAN SAVAŞI - Savunma harcamaları artacak, F-35/füze kontratları",
       "tez": "Havacılık & savunma devi, istikrarlı nakit akışı",
       "zaman_cercevesi": "10-12 gün",
       "risk": "Bütçe endişeleri",
       "durum": "✅ Normal aralıkta",
-      "son_guncelleme": "2026-03-02T21:29:05.929023",
+      "son_guncelleme": "2026-03-03T10:46:09.001035",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
@@ -52,14 +52,14 @@
       "guncel_kar_zarar_yuzde": -2.34,
       "hedef_fiyat": 31.55,
       "stop_loss": 27.25,
-      "tutulan_gun": 13,
+      "tutulan_gun": 14,
       "giris_nedeni": "Sağlam momentum +4.6%, telecom toparlanması",
       "katalizor": "Telecom sektör gücü (VZ başarısı), savunmacı pozisyon",
       "tez": "Yüksek temettü verimi ~%6, borç azaltma ilerlemesi",
       "zaman_cercevesi": "7-10 gün",
       "risk": "Rekabet baskısı",
       "durum": "✅ Normal aralıkta",
-      "son_guncelleme": "2026-03-02T21:29:05.929023",
+      "son_guncelleme": "2026-03-03T10:46:09.001035",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
@@ -84,14 +84,14 @@
       "guncel_kar_zarar_yuzde": 4.9,
       "hedef_fiyat": 362.54,
       "stop_loss": 329.58,
-      "tutulan_gun": 12,
+      "tutulan_gun": 13,
       "giris_nedeni": "En güçlü momentum +5.1%, endüstriyel çeşitlendirme lideri",
       "katalizor": "Endüstriyel momentum devam ediyor, altyapı hikayesi",
       "tez": "Havacılık, Enerji, Yenilenebilir Enerji çeşitlendirmesi. CAT benzeri başarı potansiyeli (+12% kazandırdı)",
       "zaman_cercevesi": "7-10 gün",
       "risk": "Piyasa zayıflığı, ekonomik yavaşlama",
       "durum": "🎯 Hedefe yakın (4.9%)",
-      "son_guncelleme": "2026-03-02T21:29:05.929023",
+      "son_guncelleme": "2026-03-03T10:46:09.001035",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
@@ -116,14 +116,14 @@
       "guncel_kar_zarar_yuzde": 3.88,
       "hedef_fiyat": 139.38,
       "stop_loss": 120.38,
-      "tutulan_gun": 11,
+      "tutulan_gun": 12,
       "giris_nedeni": "Güçlü momentum +3.4%, savunmacı utilities sektörü, istikrarlı nakit akışı",
       "katalizor": "Elektrik kamu hizmeti lideri, temiz enerji geçişi faydalanıcısı",
       "tez": "Duke Energy - Carolina'da dominant pozisyon, düzenli temettü ödemesi, savunmacı pozisyonlama",
       "zaman_cercevesi": "7-10 gün",
       "risk": "Faiz oranı yükselmesi, düzenleme riski",
       "durum": "✅ Normal aralıkta",
-      "son_guncelleme": "2026-03-02T21:29:05.929023",
+      "son_guncelleme": "2026-03-03T10:46:09.001035",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
@@ -148,14 +148,14 @@
       "guncel_kar_zarar_yuzde": 2.84,
       "hedef_fiyat": 164.7,
       "stop_loss": 142.24,
-      "tutulan_gun": 10,
+      "tutulan_gun": 11,
       "giris_nedeni": "Şubat 2026'nın EN İYİ HİSSESİ +34%! Healthcare sektör momentumu güçlü",
       "katalizor": "1 ay +44% momentum, Healthcare sektör rotasyonu, kidney dialysis lideri",
       "tez": "DaVita - ABD'nin en büyük böbrek diyaliz şirketi, stabil nakit akışı, yaşlanan nüfus faydalanıcısı",
       "zaman_cercevesi": "7-12 gün",
       "risk": "Healthcare düzenlemeleri, Medicare reimbursement değişiklikleri",
       "durum": "✅ Normal aralıkta",
-      "son_guncelleme": "2026-03-02T21:29:05.929023",
+      "son_guncelleme": "2026-03-03T10:46:09.001035",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
@@ -180,7 +180,7 @@
       "guncel_kar_zarar_yuzde": 3.49,
       "hedef_fiyat": 67.5,
       "stop_loss": 58.29,
-      "tutulan_gun": 6,
+      "tutulan_gun": 7,
       "giris_nedeni": "RSI 22.5 aşırı satım, IT consulting devi $29.6B market cap, 52W low'a yakın ($60.23), Morgan Stanley konferansı katalizör olabilir, AI-driven workplace services kontratı haberi pozitif",
       "katalizor": "Morgan Stanley TMT Konferansı sunumu + yeni AI workplace kontratı",
       "tez": "Büyük IT consulting şirketi, AI entegrasyon haberleri pozitif, oversold bounce beklentisi",
@@ -188,7 +188,7 @@
       "risk": "Tech sektörü genelinde satış baskısı devam edebilir, 52W low kırılırsa trend bozulur",
       "durum": "✅ Normal aralıkta",
       "tarama_yontemi": "RSI oversold",
-      "son_guncelleme": "2026-03-02T21:29:05.929023",
+      "son_guncelleme": "2026-03-03T10:46:09.001035",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
@@ -213,7 +213,7 @@
       "guncel_kar_zarar_yuzde": -0.76,
       "hedef_fiyat": 42.0,
       "stop_loss": 34.36,
-      "tutulan_gun": 0,
+      "tutulan_gun": 1,
       "giris_nedeni": "Iran krizi petrol fiyatlarini $79+'ya tasidi, yuksek petrol = daha fazla sondaj aktivitesi = HAL servis gelirleri artar. Watchlist hedef giris araliginda.",
       "katalizor": "Iran-ABD savasi, petrol $79+ rally, Hormuz Bogazi risk altinda",
       "tez": "Dunyanin en buyuk enerji servis sirketlerinden. Petrol fiyat yukselisi dogrudan sondaj ve tamamlama hizmetlerine olan talebi artirir.",
@@ -221,7 +221,7 @@
       "risk": "Ani ateskes petrol fiyatlarini dusurur, enerji servisleri hizla geri cekilir",
       "durum": "✅ Normal aralıkta",
       "tarama_yontemi": "sektor liderligi",
-      "son_guncelleme": "2026-03-02T21:29:05.929023",
+      "son_guncelleme": "2026-03-03T10:46:09.001035",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZISYONU SAT",
@@ -246,7 +246,7 @@
       "guncel_kar_zarar_yuzde": -5.9,
       "hedef_fiyat": 112.0,
       "stop_loss": 93.5,
-      "tutulan_gun": 0,
+      "tutulan_gun": 1,
       "giris_nedeni": "Iran operasyonunda drone ve insansiz hava araclari yogun kullanildi. KTOS insansiz sistemler ve hipersonik silahlar uretiyor. RSI 50.6 ile rally basinda.",
       "katalizor": "Iran savasi drone kullanimi, savunma butcesi artisi beklentisi, +12% bugunki momentum",
       "tez": "Insansiz savas sistemleri uretiminde lider. Iran operasyonu drone savasinin onemini kanitladi, uzun vadeli savunma harcamalari artacak.",
@@ -254,7 +254,7 @@
       "risk": "Savunma rallisi hizla soguyabilir, kucuk-orta boy sirket volatilitesi yuksek",
       "durum": "🔴 STOP-LOSS TETİKLENDİ!",
       "tarama_yontemi": "momentum",
-      "son_guncelleme": "2026-03-02T21:29:05.929023",
+      "son_guncelleme": "2026-03-03T10:46:09.001035",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZISYONU SAT",
@@ -279,7 +279,7 @@
       "guncel_kar_zarar_yuzde": -0.43,
       "hedef_fiyat": 380.0,
       "stop_loss": 312.13,
-      "tutulan_gun": 0,
+      "tutulan_gun": 1,
       "giris_nedeni": "Iran krizi enerji guvenligi endiselerini artirdi. CEG ABD'nin en buyuk nukleer operatoru. Microsoft AI data center anlasmasi ikinci katalizor. Watchlist hedef giris araliginda.",
       "katalizor": "Iran enerji krizi nukleer talebi artiriyor, Microsoft AI data center anlasmasi, 1M +21% momentum",
       "tez": "Nukleer enerji 'yerli ve temiz' enerji olarak yeniden gundemde. Petrol soku nukleer alternatif argümanini guclendiriyor. AI data center elektrik talebi yapısal artista.",
@@ -287,7 +287,7 @@
       "risk": "Nukleer duzenleme riski, tech/AI harcama yavaslama endisesi",
       "durum": "✅ Normal aralıkta",
       "tarama_yontemi": "sektor liderligi",
-      "son_guncelleme": "2026-03-02T21:29:05.929023",
+      "son_guncelleme": "2026-03-03T10:46:09.001035",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZISYONU SAT",
@@ -312,7 +312,7 @@
       "guncel_kar_zarar_yuzde": -0.65,
       "hedef_fiyat": 20.36,
       "stop_loss": 17.58,
-      "tutulan_gun": 6,
+      "tutulan_gun": 7,
       "giris_nedeni": "Fintech lideri, SoFi Bank lisansi ile guclenen gelir modeli, Q4 earnings beat sonrasi momentum",
       "katalizor": "Q4 earnings beat, banka lisansi buyume ivmesi, fintech sektoru rotasyonu",
       "tez": "SoFi dijital bankacilik ve fintech platformu. Bank charter ile net faiz geliri hizla buyuyor. Kredi kalitesi stabil.",
@@ -320,7 +320,7 @@
       "risk": "Jeopolitik risk-off ortaminda fintech basincı, yuksek beta, iran krizi devam ederse baski surer",
       "durum": "✅ Normal aralıkta",
       "tarama_yontemi": "earnings momentum",
-      "son_guncelleme": "2026-03-02T21:29:05.929023",
+      "son_guncelleme": "2026-03-03T10:46:09.001035",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZISYONU SAT",
