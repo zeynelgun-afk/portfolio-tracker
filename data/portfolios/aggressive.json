@@ -27,7 +27,7 @@
   },
   "baslangic_sermaye": 400000,
   "nakit": {
-    "miktar": 331143.49,
+    "miktar": 326134.43,
     "para_birimi": "USD"
   },
   "pozisyonlar": [
@@ -387,9 +387,53 @@
       "stop_tipi": "sabit_%4",
       "trailing_stop": 340.56,
       "durum": "Kısmi satış yapıldı (%33), trailing stop aktif"
+    },
+    {
+      "sembol": "LASR",
+      "isim": "nLIGHT, Inc.",
+      "sektor": "Savunma / Yarı İletken",
+      "adet": 74,
+      "maliyet_baz": 67.69,
+      "guncel_fiyat": 67.69,
+      "yatirim": 5009.06,
+      "guncel_deger": 5009.06,
+      "kar_zarar": 0.0,
+      "kar_zarar_yuzde": 0.0,
+      "gunluk_degisim_yuzde": 20.47,
+      "son_guncelleme": "2026-03-03T14:00:05.453779",
+      "giris_tarihi": "2026-03-03",
+      "giris_fiyati": 67.69,
+      "giris_nedeni": "Yarım pozisyon - Yüksek enerjili lazer silah sistemleri üreticisi. İran savaşı directed energy weapons talebini patlattı. Gelir büyümesi +%71 YoY, zarar daralıyor (EPS -$0.52 -> -$0.10), Q4 FCF ilk kez pozitife döndü ($15.9M). Analist konsensus Strong Buy, hedef $75. Bilanço temiz (nakit $99M > borç $36M). 52 hafta zirvesinde giriş riski yüksek, bu yüzden yarım lot.",
+      "agirlik_yuzde": 1.26,
+      "stop_loss": 65.0,
+      "hedef_fiyat": 75.0,
+      "sinyal_tipi": "breakout",
+      "max_tutma_gun": 10,
+      "strateji_notu": "Savunma lazer silah teması + iran savaşı katalizörü. ATH girişi riskli, yarım lot ile risk sınırlı.",
+      "risk_yuzde": 3.97,
+      "odul_yuzde": 10.8,
+      "rr_orani": 2.72,
+      "partial_exit": {
+        "seviye_1": {
+          "fiyat": 71.0,
+          "oran_yuzde": 33,
+          "durum": "bekliyor"
+        },
+        "seviye_2": {
+          "fiyat": 74.5,
+          "oran_yuzde": 33,
+          "durum": "bekliyor"
+        },
+        "seviye_3": {
+          "tur": "trailing_stop",
+          "trailing_yuzde": 4,
+          "durum": "bekliyor"
+        }
+      },
+      "stop_tipi": "sabit_%4"
     }
   ],
-  "son_guncelleme": "2026-03-03T10:46:09.001035",
+  "son_guncelleme": "2026-03-03T14:00:05.453779",
   "toplam_deger": 396249.29,
   "toplam_getiri_yuzde": -0.94,
   "iran_krizi_hazirligi": {
@@ -492,6 +536,11 @@
       "date": "2026-02-26T16:55:45.167225",
       "type": "exit",
       "content": "CELH tam çıkış tamamlandı. İlk %33 @$56.62 (+13.8%), kalan %67 @$54.44 (+9.4%). Toplam realize: $2,604.52 + $5,117.36 = $7,721.88. Earnings gap-up sonrası trailing stop disiplini uygulandı."
+    },
+    {
+      "date": "2026-03-03T14:00:05.453779",
+      "type": "entry",
+      "content": "LASR yarım pozisyon giriş: 74 adet @$67.69. Savunma/lazer silah teması, iran savaşı directed energy weapons talebi. ATH riski yüzünden yarım lot. Stop $65.0, hedef $75.0, R:R 2.72:1"
     }
   ],
   "aylik_performans": {
@@ -541,6 +590,15 @@
       "fiyat": 54.44,
       "tutar": 5117.36,
       "aciklama": "Trailing stop tetiklendi ($54.92) - kalan %67 tam çıkış - toplam CELH karı: +9.4%"
+    },
+    {
+      "tarih": "2026-03-03",
+      "islem_tipi": "ALIŞ",
+      "sembol": "LASR",
+      "adet": 74,
+      "fiyat": 67.69,
+      "tutar": 5009.06,
+      "aciklama": "Yarım pozisyon - Agresif portföy - Savunma lazer silah, iran savaşı katalizörü"
     }
   ]
 }
