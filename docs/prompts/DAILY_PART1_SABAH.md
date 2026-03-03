@@ -1,4 +1,4 @@
-# GÜNLÜK RAPOR PART 1 — SABAH BRİEFİNG v1.0
+# GÜNLÜK RAPOR PART 1 — SABAH RAPORU v1.0
 
 > **versiyon**: 1.0 | **son güncelleme**: 3 mart 2026
 > **çalışma zamanı**: TR ~14:00 (NYSE dün 00:00'da kapandı, bugün 17:30 açılacak)

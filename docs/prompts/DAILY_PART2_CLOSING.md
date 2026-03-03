@@ -2,8 +2,8 @@
 
 > **versiyon**: 1.0 | **son güncelleme**: 3 mart 2026
 > **çıktı dosyası**: `reports/daily/DAILY_REPORT_YYYY-MM-DD.md`
-> **çalışma zamanı**: TR ~00:30-01:00 (NYSE az önce kapandı)
-> **ön koşul**: part 1 (sabah briefing) aynı gün çalıştırılmış olmalı
+> **çalışma zamanı**: TR ~09:00 (NYSE dün gece 00:00'da kapandı, bugün 17:30 açılacak)
+> **ön koşul**: part 1 (sabah raporu) aynı gün veya bir önceki gün çalıştırılmış olmalı
 > **dil**: küçük harf türkçe, dilbilgisi kurallarına uygun
 > **kaynak**: sadece "finzora ai"
 > **git commit 1**: `[GÜNCELLEME] DD Ay - kapanış fiyatları`
@@ -13,10 +13,12 @@
 
 ## ZAMAN BİLİNCİ
 
-- rapor TR ~00:30-01:00'da yazılır — NYSE az önce kapandı (00:00 TR)
-- FMP fiyatları = bugünün kapanışı (kesinleşmiş)
-- after-hours: 00:00-02:00 TR (şu an aktif olabilir)
-- sabah briefingdeki plan bugünün seansında uygulandı
+- rapor TR ~09:00'da yazılır — NYSE dün gece 00:00'da kapandı
+- FMP fiyatları = dünün kapanışı (kesinleşmiş)
+- after-hours: dün 00:00-02:00 TR (tamamlanmış)
+- pre-market: bugün 16:00-17:30 TR (henüz başlamadı)
+- bugünün seansı: 17:30-00:00 TR
+- sabah raporundaki plan dünün seansında uygulandı
 
 ---
 
@@ -45,7 +47,7 @@ ADIM 3 — JSON GÜNCELLEME
 
 ADIM 4 — RAPOR YAZ
   → bölüm 1-5'i sırayla yaz (format aşağıda)
-  → sabah briefingdeki planla karşılaştır (bölüm 4)
+  → sabah raporundaki planla karşılaştır (bölüm 4)
   → reports/daily/DAILY_REPORT_YYYY-MM-DD.md olarak kaydet
   → GIT COMMIT + PUSH: "[GÜNLÜK RAPOR] DD Ay YYYY - kısa özet"
 ```
@@ -159,7 +161,7 @@ aktif pozisyonlar, stop/hedef kontrolü, aksiyonlar.
 
 ### BÖLÜM 4: DÜNÜN DEĞERLENDİRMESİ
 
-sabah briefingdeki plan tuttu mu, dersler.
+sabah raporundaki plan tuttu mu, dersler.
 
 ```markdown
 ## 4. günün değerlendirmesi
@@ -211,11 +213,11 @@ sabah briefingdeki plan tuttu mu, dersler.
 
 ### sonraki güncelleme
 
-[yarın sabah briefing / cumartesi haftalık / ay sonu aylık]
+[yarın sabah raporu / cumartesi haftalık / ay sonu aylık]
 
 ---
 
-*finzora ai | fmp api | new york kapandı*
+*finzora ai | fmp api | new york kapalı*
 ```
 
 ---
