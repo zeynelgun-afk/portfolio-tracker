@@ -27,7 +27,7 @@
   },
   "baslangic_sermaye": 400000,
   "nakit": {
-    "miktar": 326134.43,
+    "miktar": 284112.23,
     "para_birimi": "USD"
   },
   "pozisyonlar": [
@@ -35,19 +35,19 @@
       "sembol": "GILT",
       "isim": "Gilat Satellite Networks Ltd.",
       "sektor": "Teknoloji",
-      "adet": 689,
-      "maliyet_baz": 14.4992,
-      "guncel_fiyat": 17.195,
-      "yatirim": 9989.95,
-      "guncel_deger": 11847.355,
-      "kar_zarar": 1857.4049999999988,
-      "kar_zarar_yuzde": 18.59,
+      "adet": 1378,
+      "maliyet_baz": 15.9,
+      "guncel_fiyat": 17.3,
+      "yatirim": 21909.65,
+      "guncel_deger": 23839.4,
+      "kar_zarar": 1929.75,
+      "kar_zarar_yuzde": 8.81,
       "gunluk_degisim_yuzde": 0,
-      "son_guncelleme": "2026-03-03T17:45:31.278016",
+      "son_guncelleme": "2026-03-03T18:48:49.902750",
       "giris_tarihi": "2026-02-20",
       "giris_fiyati": 14.61,
       "giris_nedeni": "Yarım pozisyon tamamlandı. RSI 41, SMA200 üzeri destek. Orijinal: 342 adet @$14.61, ek: 347 adet @$14.39. Ortalama maliyet: $14.50",
-      "agirlik_yuzde": 2.99,
+      "agirlik_yuzde": 6.02,
       "stop_loss": 14.57,
       "hedef_fiyat": 17.13,
       "sinyal_tipi": "mean_reversion",
@@ -431,11 +431,29 @@
         }
       },
       "stop_tipi": "sabit_%4"
+    },
+    {
+      "sembol": "MRK",
+      "isim": "Merck & Co., Inc.",
+      "sektor": "Sağlık",
+      "adet": 250,
+      "maliyet_baz": 120.41,
+      "guncel_fiyat": 120.41,
+      "yatirim": 30102.5,
+      "guncel_deger": 30102.5,
+      "kar_zarar": 0.0,
+      "kar_zarar_yuzde": 0.0,
+      "gunluk_degisim_yuzde": -0.82,
+      "son_guncelleme": "2026-03-03T18:48:49.902750",
+      "giris_tarihi": "2026-03-03",
+      "giris_fiyati": 120.41,
+      "giris_nedeni": "Sağlık sektörü çeşitlendirmesi. 50MA ve 200MA üzerinde güçlü teknik. Keytruda patent kaybı endişeleri fiyatlanmış, pipeline güçlü (Winrevair). Watchlist'te 'high' urgency ile agresif portföy için işaretliydi. Hedef giriş aralığının ($122-125) altında giriş fırsatı.",
+      "agirlik_yuzde": 7.6
     }
   ],
-  "son_guncelleme": "2026-03-03T17:45:31.278016",
-  "toplam_deger": 395919.37,
-  "toplam_getiri_yuzde": -1.02,
+  "son_guncelleme": "2026-03-03T18:48:49.902750",
+  "toplam_deger": 395991.72,
+  "toplam_getiri_yuzde": -1.0,
   "iran_krizi_hazirligi": {
     "tarih": "2026-03-01",
     "durum": "Pazartesi açılış öncesi stop-loss ayarlamaları",
@@ -541,6 +559,11 @@
       "date": "2026-03-03T14:00:05.453779",
       "type": "entry",
       "content": "LASR yarım pozisyon giriş: 74 adet @$67.69. Savunma/lazer silah teması, iran savaşı directed energy weapons talebi. ATH riski yüzünden yarım lot. Stop $65.0, hedef $75.0, R:R 2.72:1"
+    },
+    {
+      "date": "2026-03-03T18:48:49.902750",
+      "type": "entry",
+      "content": "GILT yarım pozisyon tamamlandı (689 hisse daha @ $17.30, toplam 1378 hisse). MRK yeni pozisyon açıldı (250 hisse @ $120.41) — sağlık sektörü çeşitlendirmesi."
     }
   ],
   "aylik_performans": {
@@ -599,6 +622,24 @@
       "fiyat": 67.69,
       "tutar": 5009.06,
       "aciklama": "Yarım pozisyon - Agresif portföy - Savunma lazer silah, iran savaşı katalizörü"
+    },
+    {
+      "tarih": "2026-03-03",
+      "islem_tipi": "ALIŞ",
+      "sembol": "GILT",
+      "adet": 689,
+      "fiyat": 17.3,
+      "tutar": 11919.7,
+      "aciklama": "Yarım pozisyon tamamlama - Agresif portföy - Pullback fırsatı"
+    },
+    {
+      "tarih": "2026-03-03",
+      "islem_tipi": "ALIŞ",
+      "sembol": "MRK",
+      "adet": 250,
+      "fiyat": 120.41,
+      "tutar": 30102.5,
+      "aciklama": "Yeni pozisyon - Agresif portföy - Sağlık sektörü çeşitlendirmesi"
     }
   ]
 }

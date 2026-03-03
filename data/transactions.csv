@@ -55,3 +55,5 @@ date,action,symbol,shares,price,total,reason
 2026-03-03,BUY,LASR,74,67.69,5009.06,"Yarim pozisyon - Agresif portfoy - Savunma lazer silah, iran savasi katalizoru"
 2026-03-03,SELL,LMT,1,661.92,661.92,"18 gün tutuldu, savunma rallisi soğudu, hedefe ulaşma ihtimali düşük. Kâr realize edildi"
 2026-03-03,SELL,GE,1,335.13,335.13,"13 gün tutuldu, bugün -%3 düşüş, stop-loss'a çok yakın. Kâr korunarak çıkıldı"
+2026-03-03,BUY,GILT,689,17.3,11919.70,"Yarım pozisyon tamamlama - Agresif portföy - Pullback fırsatı"
+2026-03-03,BUY,MRK,250,120.41,30102.5,"Yeni pozisyon - Agresif portföy - Sağlık sektörü çeşitlendirmesi"
