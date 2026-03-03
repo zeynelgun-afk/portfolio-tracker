@@ -2,19 +2,6 @@
   "son_guncelleme": "2026-03-03",
   "kapatilan_pozisyonlar": [
     {
-      "id": "SWING-021",
-      "sembol": "KTOS",
-      "giris_tarihi": "2026-03-02",
-      "cikis_tarihi": "2026-03-03",
-      "giris_fiyati": 96.41,
-      "cikis_fiyati": 90.24,
-      "kar_zarar_yuzde": -6.4,
-      "tutulan_gun": 1,
-      "cikis_nedeni": "Stop-loss tetiklendi ($93.50). Savas rallisi sogumasi",
-      "sonuc": "ZARAR",
-      "ders": "Savas temali momentum girisleri cok volatil. Gec giris riski yuksek."
-    },
-    {
       "id": "SWING-020",
       "sembol": "ZS",
       "giris_tarihi": "2026-02-24",
