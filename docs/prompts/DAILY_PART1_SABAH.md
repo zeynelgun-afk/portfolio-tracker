@@ -181,8 +181,24 @@ SEMBOL — [şirket]
 
 ### agresif portföy adayları
 
+kriter: earnings beat >%10, RS yükselen, beta >1.2, market cap 00M-0B, 50MA üzeri, hacim 1.5x+
+
 | sembol | fiyat | neden | sektör | earnings |
 |--------|-------|-------|--------|----------|
+
+### dengeli portföy adayları
+
+kriter: multi-sector value + momentum blend, makul değerleme, güçlü momentum, mevcut pozisyonlarla düşük korelasyon
+
+| sembol | fiyat | neden | sektör | p/e | momentum |
+|--------|-------|-------|--------|-----|----------|
+
+### temettü portföy adayları
+
+kriter: p/e <20, temettü yield >%3, güçlü FCF, D/E <1.5, temettü büyüme geçmişi
+
+| sembol | fiyat | yield | p/e | sektör | neden |
+|--------|-------|-------|-----|--------|-------|
 
 ### sektör heatmap özeti
 
