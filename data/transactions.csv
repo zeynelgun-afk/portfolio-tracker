@@ -57,3 +57,5 @@ date,action,symbol,shares,price,total,reason
 2026-03-03,SELL,GE,1,335.13,335.13,"13 gün tutuldu, bugün -%3 düşüş, stop-loss'a çok yakın. Kâr korunarak çıkıldı"
 2026-03-03,BUY,GILT,689,17.3,11919.70,"Yarım pozisyon tamamlama - Agresif portföy - Pullback fırsatı"
 2026-03-03,BUY,MRK,250,120.41,30102.5,"Yeni pozisyon - Agresif portföy - Sağlık sektörü çeşitlendirmesi"
+2026-03-04,SELL,HAL,0,34.33,34.33,"Swing çıkış - Stop-loss tetiklendi"
+2026-03-04,SELL,KTOS,0,88.38,88.38,"Swing çıkış - Stop-loss tetiklendi - Override zararı büyüttü"
