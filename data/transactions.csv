@@ -59,3 +59,6 @@ date,action,symbol,shares,price,total,reason
 2026-03-03,BUY,MRK,250,120.41,30102.5,"Yeni pozisyon - Agresif portföy - Sağlık sektörü çeşitlendirmesi"
 2026-03-04,SELL,HAL,0,34.33,34.33,"Swing çıkış - Stop-loss tetiklendi"
 2026-03-04,SELL,KTOS,0,88.38,88.38,"Swing çıkış - Stop-loss tetiklendi - Override zararı büyüttü"
+2026-03-04,SELL,KOS,1739,2.46,4277.94,"Kar realizasyonu - Dengeli - %50 pozisyon"
+2026-03-04,SELL,MRK,250,120.51,30127.50,"Agresif->Temettu transfer"
+2026-03-04,BUY,MRK,250,120.41,30102.5,"Temettu portfoyune transfer"

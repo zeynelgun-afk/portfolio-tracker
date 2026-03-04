@@ -2,7 +2,7 @@
   "portfoy_adi": "Dengeli Portföy",
   "baslangic_sermaye": 100000,
   "nakit": {
-    "miktar": 22749.17,
+    "miktar": 27027.11,
     "para_birimi": "USD"
   },
   "pozisyonlar": [
@@ -22,25 +22,25 @@
       "giris_tarihi": "2026-02-17",
       "giris_fiyati": 20.67,
       "giris_nedeni": "Initial position - Oil & gas E&P",
-      "agirlik_yuzde": 22.63
+      "agirlik_yuzde": 22.64
     },
     {
       "sembol": "KOS",
       "isim": "Kosmos Energy Ltd",
       "sektor": "Enerji",
-      "adet": 3479,
+      "adet": 1740,
       "maliyet_baz": 1.617,
-      "guncel_fiyat": 2.47,
-      "yatirim": 5625.54,
-      "guncel_deger": 8593.130000000001,
-      "kar_zarar": 2967.590000000001,
-      "kar_zarar_yuzde": 52.75,
+      "guncel_fiyat": 2.46,
+      "yatirim": 2813.58,
+      "guncel_deger": 4280.4,
+      "kar_zarar": 1466.82,
+      "kar_zarar_yuzde": 52.13,
       "gunluk_degisim_yuzde": 0,
-      "son_guncelleme": "2026-03-04T19:39:25.845679",
+      "son_guncelleme": "2026-03-04T19:55:41.768596",
       "giris_tarihi": "2026-02-17",
       "giris_fiyati": 1.617,
       "giris_nedeni": "Initial position - Deep value offshore",
-      "agirlik_yuzde": 7.7
+      "agirlik_yuzde": 3.84
     },
     {
       "sembol": "MO",
@@ -58,7 +58,7 @@
       "giris_tarihi": "2026-02-17",
       "giris_fiyati": 67.44,
       "giris_nedeni": "Initial position - Dividend defensive",
-      "agirlik_yuzde": 16.4
+      "agirlik_yuzde": 16.41
     },
     {
       "sembol": "XLE",
@@ -94,7 +94,7 @@
       "giris_tarihi": "2026-02-17",
       "giris_fiyati": 274.4,
       "giris_nedeni": "Initial position - Gold royalty",
-      "agirlik_yuzde": 5.58
+      "agirlik_yuzde": 5.59
     },
     {
       "sembol": "XLI",
@@ -115,9 +115,9 @@
       "agirlik_yuzde": 13.4
     }
   ],
-  "son_guncelleme": "2026-03-04T19:39:25.845679",
-  "toplam_deger": 111640.82,
-  "toplam_getiri_yuzde": 11.64,
+  "son_guncelleme": "2026-03-04T19:55:41.768596",
+  "toplam_deger": 111606.03,
+  "toplam_getiri_yuzde": 11.61,
   "iran_krizi_hazirligi": {
     "tarih": "2026-03-01",
     "durum": "Enerji ağırlıklı portföy - İran krizinden maksimum fayda bekleniyor",
@@ -144,6 +144,15 @@
       "fiyat": 2.33,
       "tutar": 2700.47,
       "aciklama": "Kismi kar alma (%25) - +44% kardan koruma, iran krizi volatilitesinde risk yonetimi"
+    },
+    {
+      "tarih": "2026-03-04",
+      "islem_tipi": "SATIŞ",
+      "sembol": "KOS",
+      "adet": 1739,
+      "fiyat": 2.46,
+      "tutar": 4277.94,
+      "aciklama": "Kâr realizasyonu - %50 pozisyon satışı - +52% getiri, RSI 68 overbought yakını"
     }
   ],
   "notes": [
@@ -151,6 +160,11 @@
       "date": "2026-03-02T20:39:40.510657",
       "type": "rebalance",
       "content": "KOS %25 kismi satis (1159 hisse @$2.33). Realize kar: $826.37. Kalan 3479 hisse tutulmaya devam."
+    },
+    {
+      "date": "2026-03-04T19:55:41.768596",
+      "type": "rebalance",
+      "content": "KOS %50 kâr alma: 1739 hisse @ $2.46. Kalan 1740 hisse trailing stop ile."
     }
   ]
 }

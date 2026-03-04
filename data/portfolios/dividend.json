@@ -1,6 +1,6 @@
 {
   "portfoy_adi": "Değer + Temettü",
-  "baslangic_sermaye": 100000,
+  "baslangic_sermaye": 130102.5,
   "nakit": {
     "miktar": 8371.68,
     "para_birimi": "USD"
@@ -22,7 +22,7 @@
       "giris_tarihi": "2026-01-02",
       "giris_fiyati": 24.28,
       "giris_nedeni": "Başlangıç pozisyonu - Temettü + değer portföyü - Telekomünikasyon",
-      "agirlik_yuzde": 12.8
+      "agirlik_yuzde": 10.17
     },
     {
       "sembol": "VZ",
@@ -40,7 +40,7 @@
       "giris_tarihi": "2026-01-02",
       "giris_fiyati": 39.83,
       "giris_nedeni": "Başlangıç pozisyonu - Temettü + değer portföyü - Telekomünikasyon",
-      "agirlik_yuzde": 6.9
+      "agirlik_yuzde": 5.48
     },
     {
       "sembol": "MO",
@@ -58,7 +58,7 @@
       "giris_tarihi": "2026-01-02",
       "giris_fiyati": 57.31,
       "giris_nedeni": "Initial position - Dividend defensive",
-      "agirlik_yuzde": 12.85
+      "agirlik_yuzde": 10.21
     },
     {
       "sembol": "PM",
@@ -76,7 +76,7 @@
       "giris_tarihi": "2026-01-02",
       "giris_fiyati": 160.3,
       "giris_nedeni": "Başlangıç pozisyonu - Temettü + değer portföyü - Tütün",
-      "agirlik_yuzde": 11.85
+      "agirlik_yuzde": 9.42
     },
     {
       "sembol": "XOM",
@@ -94,7 +94,7 @@
       "giris_tarihi": "2026-01-02",
       "giris_fiyati": 121.84,
       "giris_nedeni": "Başlangıç pozisyonu - Temettü + değer portföyü - Enerji",
-      "agirlik_yuzde": 13.13
+      "agirlik_yuzde": 10.43
     },
     {
       "sembol": "CVX",
@@ -112,7 +112,7 @@
       "giris_tarihi": "2026-01-02",
       "giris_fiyati": 154.39,
       "giris_nedeni": "Başlangıç pozisyonu - Temettü + değer portföyü - Enerji",
-      "agirlik_yuzde": 12.79
+      "agirlik_yuzde": 10.16
     },
     {
       "sembol": "SCHD",
@@ -130,12 +130,30 @@
       "giris_tarihi": "2026-01-02",
       "giris_fiyati": 28.95,
       "giris_nedeni": "Otomatik ekleme - Temettü ETF",
-      "agirlik_yuzde": 22.48
+      "agirlik_yuzde": 17.86
+    },
+    {
+      "sembol": "MRK",
+      "isim": "Merck & Co., Inc.",
+      "sektor": "Sağlık / İlaç",
+      "adet": 250,
+      "maliyet_baz": 120.41,
+      "guncel_fiyat": 120.51,
+      "yatirim": 30102.5,
+      "guncel_deger": 30127.5,
+      "kar_zarar": 25.0,
+      "kar_zarar_yuzde": 0.08,
+      "gunluk_degisim_yuzde": 0,
+      "son_guncelleme": "2026-03-04T19:55:41.768596",
+      "giris_tarihi": "2026-03-03",
+      "giris_fiyati": 120.41,
+      "giris_nedeni": "Agresif portföyden transfer. Yüksek temettü + savunmacı sağlık.",
+      "agirlik_yuzde": 20.57
     }
   ],
-  "son_guncelleme": "2026-03-04T19:39:25.857468",
-  "toplam_deger": 116331.57,
-  "toplam_getiri_yuzde": 16.33,
+  "son_guncelleme": "2026-03-04T19:55:41.768596",
+  "toplam_deger": 146459.07,
+  "toplam_getiri_yuzde": 12.57,
   "transactions": [
     {
       "tarih": "2026-02-25",
@@ -145,6 +163,22 @@
       "fiyat": 49.51,
       "tutar": 7723.56,
       "aciklama": "Kısmi kar alma - RSI 73 aşırı alım + %24 kâr, nakit oluşturma"
+    },
+    {
+      "tarih": "2026-03-04",
+      "islem_tipi": "ALIŞ",
+      "sembol": "MRK",
+      "adet": 250,
+      "fiyat": 120.41,
+      "tutar": 30102.5,
+      "aciklama": "Agresif portföyden transfer - Sağlık temettü hissesi"
+    }
+  ],
+  "notes": [
+    {
+      "date": "2026-03-04T19:55:41.768596",
+      "type": "entry",
+      "content": "MRK 250 hisse agresif portföyden transfer."
     }
   ]
 }
