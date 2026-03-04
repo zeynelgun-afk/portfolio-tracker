@@ -8,18 +8,29 @@
 
 ## 1. piyasa durumu
 
-### son kapanış (salı 3 mart)
+### dün kapanış (salı 3 mart)
 
 | ticker | kapanış | değişim | not |
 |--------|---------|---------|-----|
 | SPY | $680.33 | -%0.88 | SMA50 altında devam |
 | QQQ | $601.58 | -%1.07 | tech baskısı sürüyor |
 | IWM | $259.24 | -%1.73 | küçük şirketler en kötü |
-| VIX | 23.07 | yüksek | risk-off devam |
+| DIA | $485.52 | -%0.83 | |
+| VIX | 23.07 | yüksek | risk-off |
 
-**emtia**: altın $5,197 | WTI $75.01 (+%0.60) | iran krizi 5. günde devam
+### bugün premarket (17:30 açılış öncesi)
 
-**genel tablo**: risk-off dominant. SPY SMA50 altında tutunmaya çalışıyor, ancak SMA200 üzeri yapısal yükseliş trendi korunuyor. S&P 6,800 kritik destek bölgesi.
+| ticker | premarket | fark | hacim |
+|--------|-----------|------|-------|
+| SPY | $682.79 | +%0.36 | 528K |
+| QQQ | $604.43 | +%0.47 | 785K |
+| IWM | $261.41 | +%0.84 | 245K |
+| DIA | $486.89 | +%0.28 | 48K |
+| VIX | 22.72 | dün 23.07 | hafif geriledi |
+
+**emtia**: altın $5,202 (+%1.5) | petrol (USO) +%3.5 | iran krizi devam
+
+**genel tablo**: dünün satışından sonra bugün premarket toparlanma var. küçük şirketler (IWM +%0.84) en güçlü sinyal. VIX 23'ten 22.72'ye geriledi, risk iştahı biraz açıldı. ama kök neden (iran krizi, enflasyon, fed belirsizliği) değişmedi. ADP ve ISM verileri açılış öncesi yön belirleyecek.
 
 ---
 
