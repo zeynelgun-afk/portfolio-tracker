@@ -1,6 +1,6 @@
 # SEANS İÇİ AKSİYON PROMPT — v1.3
 
-> **versiyon**: 1.3 | **son güncelleme**: 26 şubat 2026
+> **versiyon**: 1.4 | **son güncelleme**: 5 mart 2026
 > **çalışma zamanı**: NYSE açıldıktan sonra (TR 17:30+), tercihen açılıştan 30-60dk sonra
 > **ön koşul**: o günün sabah raporu zaten yazılmış olmalı
 > **perspektif**: PİYASA AÇIK — GERÇEK ZAMANLI KARAR VE AKSİYON
@@ -62,6 +62,7 @@ FAZ 1: AÇILIŞ (TR 17:30-18:30) — ilk 60 dakika
   - BMO earnings sonuçları (açılış öncesi açıklananlar)
   - sabah raporundaki acil aksiyonları uygula
   - ilk 15dk aşırı volatil olabilir → büyük karar verme, izle
+  - TWİTTER TAKİP LİSTESİ → her açılışta 8 hesabın son tweetlerini çek, portföyle ilgili olanları özetle
   
 FAZ 2: MID-SESSION (TR 19:00-22:00) — ana seans
   öncelik: ANALİZ + KARAR
@@ -210,7 +211,29 @@ news = fmp_get("news/stock", {"symbols": ALL_SYMBOLS, "limit": 30})
 
 **toplam**: 1 FMP call + 2-4 websearch
 
-## 1d. sektör RS analizi (canlı)
+## 1d. twitter takip listesi (faz 1 — açılışta çek)
+
+**API**: RapidAPI → twitter241.p.rapidapi.com
+**key**: fe410e5222msh20c82b1bc9f4905p10ad02jsnb1c2402c92b7
+**endpoint**: GET /user-tweets?user={numeric_id}&count=20
+**user id alma**: GET /user?username=xxx → id alanını base64 decode et
+
+**takip listesi**:
+```
+@CheddarFlow       → kurumsal para akışı / opsiyon
+@berkdemirkiran_   → türk finans yorumcusu
+@yatirim           → türk finans yorumcusu (içsel analiz)
+@onestoploss       → teknik analiz / trade fikirleri
+@StockSavvyShay    → ivme hisse önerileri
+@BerkUcmz          → türk finans yorumcusu
+@TrendSpider       → teknik analiz araçları
+@Jake__Wujastyk    → ivme trader / hisse önerileri
+```
+
+**filtreleme**: portföy sembolleri + genel piyasa yorumlarını öne çıkar
+**toplam**: ~16 RapidAPI çağrısı (her hesap için user id + tweet)
+
+## 1e. sektör RS analizi (canlı)
 
 sabah raporundaki RS analizini canlı verilerle güncelle:
 ```
@@ -551,6 +574,17 @@ git commit -m "[WATCHLIST] merkezi watchlist güncellendi - {yeni aday varsa bel
 ```markdown
 ## 🔔 seans içi güncelleme — {tarih} {saat} TR
 
+### twitter takip özeti (faz 1)
+
+| hesap | tweet | sembol | yorum |
+|-------|-------|--------|-------|
+| @xxx | [özet] | $XXX | [kısa yorum] |
+
+öne çıkan:
+- @hesap: [önemli tweet özeti — portföy bağlantısı]
+
+---
+
 ### piyasa durumu
 SPY: $XXX (±%X) | QQQ: $XXX (±%X) | VIX: XX
 risk ortamı: RISK-ON/OFF | sabahtan değişim: [aynı/değişti → neden]
@@ -719,4 +753,4 @@ detaylı kurallar: `docs/SELF_VALIDATION.md`
 
 ---
 
-> son güncelleme: 26 şubat 2026 | finzora ai
+> son güncelleme: 5 mart 2026 | finzora ai
