@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-03-05T19:43:09.554778",
+  "son_guncelleme": "2026-03-05T19:47:42.767988",
   "not": "Tüm portföyler ve swing trade için tek merkezi watchlist. Her adayda hedef_portfoy alanı hangi portföye/stratejiye ait olduğunu belirtir.",
   "iran_krizi_notu": {
     "tarih": "2026-03-01",
@@ -201,6 +201,19 @@
       "stop_loss": 900.0,
       "notlar": "Equinix - datacenter REIT, AI altyapı oyunu, 1M +19.4%, 3M +29.3%. RSI 74 aşırı alım, pullback bekle.",
       "momentum_5gun": 0
+    },
+    {
+      "sembol": "GLW",
+      "guncel_fiyat": 132.89,
+      "sektor": "Teknoloji",
+      "hedef_portfoy": "agresif",
+      "urgency": "medium",
+      "ekleme_tarihi": "2026-03-05",
+      "son_kontrol": "2026-03-05",
+      "hedef_giris": "120-125",
+      "hedef_fiyat": 155.0,
+      "stop_loss": 115.0,
+      "notlar": "Corning - optik fiber + AI veri merkezi altyapisi. Gelir 3.4B->4.2B guclu buyume, karli. -10.8% AVGO bakir tercihi nedeniyle dusus. RSI 50.7 notr. SMA50 111.84 saglam destek. AVGO optik tezi netlestince degerlendir."
     }
   ],
   "haric_tutulanlar": [
@@ -292,7 +305,7 @@
     "savunma_talebi": "Savunma harcamaları artacak - RTX, NOC, LMT, GD en büyük faydalanıcılar",
     "nukleer_alternatif": "Petrol riski → Nükleer enerji stratejik önem kazanıyor - CEG, GEV"
   },
-  "toplam_aday": 16,
+  "toplam_aday": 14,
   "yuksek_oncelik_aday": 8,
   "iran_krizi_critical": [
     "RTX",
