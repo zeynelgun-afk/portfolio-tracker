@@ -1,6 +1,6 @@
 # GÜNLÜK RAPOR PART 1 — SABAH RAPORU v1.0
 
-> **versiyon**: 1.0 | **son güncelleme**: 3 mart 2026
+> **versiyon**: 1.1 | **son güncelleme**: 5 mart 2026
 > **çıktı dosyası**: `reports/daily/DAILY_SABAH_YYYY-MM-DD.md`
 > **çalışma zamanı**: TR ~14:00 (NYSE dün 00:00'da kapandı, bugün 17:30 açılacak)
 > **amaç**: piyasa analizi + haberler + tarama + günün planı
@@ -38,6 +38,28 @@ ADIM 2 — HABER TOPLAMA
   → websearch: dün gece / bugün sabah önemli piyasa haberleri
   → websearch: portföy hisselerini etkileyen gelişmeler
   → websearch: Fed faiz olasılıkları (Kalshi/Polymarket)
+
+ADIM 2.5 — TWİTTER TAKİP LİSTESİ (RapidAPI / twitter241)
+  → aşağıdaki 8 hesabın son tweetlerini çek (her biri için 15-20 tweet)
+  → portföy sembolleriyle örtüşenleri öne çıkar
+  → yorum/fikir içerenleri özetle
+  → kaynak: RapidAPI twitter241.p.rapidapi.com
+    key: fe410e5222msh20c82b1bc9f4905p10ad02jsnb1c2402c92b7
+    endpoint: GET /user-tweets?user={numeric_user_id}&count=20
+    user id alma: GET /user?username={username} → id alanını base64 decode et
+
+  TAKİP LİSTESİ:
+    @CheddarFlow       → opsiyon akışı / kurumsal para haraketleri
+    @berkdemirkiran_   → türk finans yorumcusu
+    @yatirim           → türk finans yorumcusu (içsel analiz)
+    @onestoploss       → teknik analiz / trade fikirleri
+    @StockSavvyShay    → momentum hisse önerileri
+    @BerkUcmz          → türk finans yorumcusu
+    @TrendSpider       → teknik analiz araçları / piyasa gözlemleri
+    @Jake__Wujastyk    → momentum trader / hisse önerileri
+
+  ÖNEMLİ: tweet çekerken yalnızca ilgili kullanıcının tweetlerini göster,
+  yanlış kullanıcı verisi gelirse atla. yanıt 200 ve içerik doluysa işle.
 
 ADIM 3 — EARNINGS
   → FMP: earnings-calendar (bugün + 7 gün)
@@ -138,6 +160,30 @@ aksiyon: [ne yapılacak]
 ### haber özeti skoru
 
 📊 **genel sentiment**: [pozitif / negatif / nötr / karışık]
+```
+
+---
+
+### BÖLÜM 2.5: TWİTTER TAKİP ÖZETİ
+
+```markdown
+## 2.5 takip listesi — günlük tweet özeti
+
+### 🎯 portföyle doğrudan ilgili
+
+| hesap | tweet özeti | sembol | sentiment |
+|-------|-------------|--------|-----------|
+| @xxx  | [özet]      | $XXX   | ✅/❌/➡️   |
+
+### 💡 öne çıkan fikirler ve trade önerileri
+
+**@hesap** — [tarih]
+> [tweet özeti veya önemli kısım]
+yorum: [kısa analiz — portföyle bağlantısı]
+
+### 📌 dikkat çeken diğer paylaşımlar
+
+[ilgili olabilecek makro/sektör gözlemleri]
 ```
 
 ---
@@ -258,3 +304,5 @@ urgency değişmeli: [sembol — eski → yeni]
 **BASE URL**: https://financialmodelingprep.com/stable
 **REPO**: https://github.com/zeynelgun-afk/portfolio-tracker
 **TOKEN**: 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
+**RAPIDAPI KEY**: fe410e5222msh20c82b1bc9f4905p10ad02jsnb1c2402c92b7
+**RAPIDAPI HOST**: twitter241.p.rapidapi.com
