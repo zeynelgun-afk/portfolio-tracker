@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-03-05T18:06:39.718213",
+  "son_guncelleme": "2026-03-05T19:43:09.554778",
   "not": "Tüm portföyler ve swing trade için tek merkezi watchlist. Her adayda hedef_portfoy alanı hangi portföye/stratejiye ait olduğunu belirtir.",
   "iran_krizi_notu": {
     "tarih": "2026-03-01",
@@ -16,7 +16,7 @@
   "izleme_listesi": [
     {
       "sembol": "RTX",
-      "guncel_fiyat": 200.575,
+      "guncel_fiyat": 203.12,
       "sektor": "Savunma",
       "hedef_portfoy": "swing",
       "urgency": "🔴 CRITICAL",
@@ -31,7 +31,7 @@
     },
     {
       "sembol": "NOC",
-      "guncel_fiyat": 737.92,
+      "guncel_fiyat": 739.99,
       "sektor": "Savunma",
       "hedef_portfoy": "swing",
       "urgency": "🔴 CRITICAL",
@@ -46,7 +46,7 @@
     },
     {
       "sembol": "DVN",
-      "guncel_fiyat": 44.54,
+      "guncel_fiyat": 44.615,
       "sektor": "Enerji E&P",
       "hedef_portfoy": "dengeli",
       "urgency": "high",
@@ -61,7 +61,7 @@
     },
     {
       "sembol": "EOG",
-      "guncel_fiyat": 130.75,
+      "guncel_fiyat": 131.34,
       "sektor": "Enerji E&P",
       "hedef_portfoy": "dengeli",
       "urgency": "high",
@@ -76,7 +76,7 @@
     },
     {
       "sembol": "SPG",
-      "guncel_fiyat": 200.48,
+      "guncel_fiyat": 201.26,
       "sektor": "REITs",
       "hedef_portfoy": "swing",
       "urgency": "medium",
@@ -90,7 +90,7 @@
     },
     {
       "sembol": "NEE",
-      "guncel_fiyat": 90.81,
+      "guncel_fiyat": 90.6,
       "sektor": "Kamu Hizmetleri",
       "hedef_portfoy": "swing",
       "urgency": "low",
@@ -104,7 +104,7 @@
     },
     {
       "sembol": "DIS",
-      "guncel_fiyat": 102.2,
+      "guncel_fiyat": 101.88,
       "sektor": "İletişim",
       "hedef_portfoy": "swing",
       "urgency": "high",
@@ -118,7 +118,7 @@
     },
     {
       "sembol": "BMY",
-      "guncel_fiyat": 60.44,
+      "guncel_fiyat": 60.69,
       "sektor": "Sağlık",
       "hedef_portfoy": "swing",
       "urgency": "high",
@@ -132,7 +132,7 @@
     },
     {
       "sembol": "OXY",
-      "guncel_fiyat": 53.675,
+      "guncel_fiyat": 53.615,
       "sektor": "Enerji",
       "hedef_portfoy": "swing",
       "urgency": "🔴 CRITICAL",
@@ -147,7 +147,7 @@
     },
     {
       "sembol": "AVGO",
-      "guncel_fiyat": 330.94,
+      "guncel_fiyat": 326.52,
       "sektor": "Teknoloji",
       "hedef_portfoy": "dengeli",
       "urgency": "medium",
@@ -161,7 +161,7 @@
     },
     {
       "sembol": "HWM",
-      "guncel_fiyat": 250.68,
+      "guncel_fiyat": 253.57,
       "sektor": "Savunma",
       "hedef_portfoy": "swing",
       "urgency": "🔴 CRITICAL",
@@ -176,7 +176,7 @@
     },
     {
       "sembol": "GEV",
-      "guncel_fiyat": 800.075,
+      "guncel_fiyat": 810.315,
       "sektor": "Utilities",
       "hedef_portfoy": "agresif",
       "urgency": "medium",
@@ -190,7 +190,7 @@
     },
     {
       "sembol": "EQIX",
-      "guncel_fiyat": 954.245,
+      "guncel_fiyat": 954.28,
       "sektor": "REITs",
       "hedef_portfoy": "agresif",
       "urgency": "medium",
