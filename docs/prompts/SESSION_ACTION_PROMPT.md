@@ -92,15 +92,10 @@ TEKRAR ÇALIŞTIRMA (FAZ 2/3):
   → sadece değişenleri çek:
     - batch-quote (1 call — tüm fiyatlar)
     - sector-performance-snapshot (1 call)
-    - varsa tetiklenen pozisyon için RSI (1-3 call)
-    - websearch sadece yeni haber/PM varsa (0-2)
-  → toplam: ~3-6 FMP + 0-2 websearch (minimal)
+    - varsa tetiklenen pozisyon için RSI (1-5 call)
+    - websearch sadece yeni haber/PM varsa (0-10)
+  → toplam: ~3-10 FMP + 0-12 websearch (minimal)
   
-SEANS API BÜTÇESİ:
-  ilk çalıştırma:  ~88 FMP + ~8 websearch
-  2. çalıştırma:   ~5 FMP + ~1 websearch  
-  3. çalıştırma:   ~5 FMP + ~1 websearch
-  toplam seans:    ~100 FMP (günlük rapor ile birlikte ~200 / 2,500 = %8 güvenli)
 ```
 
 ---
