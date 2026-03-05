@@ -79,6 +79,7 @@ FAZ 3: POWER HOUR (TR 23:00-00:00) — son saat
   - trailing stop'ları final güncelle
   - kapanış öncesi son fiyat kontrolü
   - yarının sabah raporu için not düş
+  - TWİTTER TAKİP LİSTESİ → faz 1'den bu yana yeni tweet varsa çek, önemli güncelleme varsa bildir
 ```
 
 ## TEKRAR ÇALIŞTIRMA — API OPTİMİZASYONU
@@ -683,6 +684,9 @@ POWER HOUR (FAZ 3: TR 23:00-00:00)
 │  ├─ bekleyen kar alma / pozisyon ayarlama
 │  ├─ trailing stop'ları final güncelle
 │  └─ kapanış öncesi son fiyat kontrolü
+│
+├─ TWİTTER GÜNCELLEMESİ
+│  └─ faz 1'den bu yana yeni tweet varsa çek → önemli gelişme varsa bildir
 │
 ├─ YARIN HAZIRLIK
 │  ├─ bugün AMC earnings açıklayacak hisseler → not et
