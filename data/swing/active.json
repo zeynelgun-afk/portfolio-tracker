@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-03-05T21:30:13.940652",
+  "son_guncelleme": "2026-03-06T07:02:09.308024",
   "not": "SWING TRADE SADECE SİMÜLASYON - Sadece % kazanç/kayıp takibi (MAX: 10 pozisyon)",
   "iran_krizi_hazirligi": {
     "tarih": "2026-03-01",
@@ -27,7 +27,7 @@
       "zaman_cercevesi": "7-10 gün",
       "risk": "Rekabet baskısı",
       "durum": "✅ Normal aralıkta",
-      "son_guncelleme": "2026-03-05T21:30:13.940652",
+      "son_guncelleme": "2026-03-06T07:02:09.308024",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
@@ -59,7 +59,7 @@
       "zaman_cercevesi": "7-10 gün",
       "risk": "Faiz oranı yükselmesi, düzenleme riski",
       "durum": "✅ Normal aralıkta",
-      "son_guncelleme": "2026-03-05T21:30:13.940652",
+      "son_guncelleme": "2026-03-06T07:02:09.308024",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
@@ -91,7 +91,7 @@
       "zaman_cercevesi": "7-12 gün",
       "risk": "Healthcare düzenlemeleri, Medicare reimbursement değişiklikleri",
       "durum": "✅ Normal aralıkta",
-      "son_guncelleme": "2026-03-05T21:30:13.940652",
+      "son_guncelleme": "2026-03-06T07:02:09.308024",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
@@ -122,9 +122,9 @@
       "tez": "Büyük IT consulting şirketi, AI entegrasyon haberleri pozitif, oversold bounce beklentisi",
       "zaman_cercevesi": "7-10 gün",
       "risk": "Tech sektörü genelinde satış baskısı devam edebilir, 52W low kırılırsa trend bozulur",
-      "durum": "🎯 Hedefe yakın (2.6%)",
+      "durum": "🟡 HEDEFE YAKIN",
       "tarama_yontemi": "RSI oversold",
-      "son_guncelleme": "2026-03-05T21:30:13.940652",
+      "son_guncelleme": "2026-03-06T07:02:09.308024",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
@@ -157,7 +157,7 @@
       "risk": "Nukleer duzenleme riski, tech/AI harcama yavaslama endisesi",
       "durum": "✅ Normal aralıkta",
       "tarama_yontemi": "sektor liderligi",
-      "son_guncelleme": "2026-03-05T21:30:13.940652",
+      "son_guncelleme": "2026-03-06T07:02:09.308024",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZISYONU SAT",
@@ -190,7 +190,7 @@
       "risk": "Jeopolitik risk-off ortaminda fintech basincı, yuksek beta, iran krizi devam ederse baski surer",
       "durum": "✅ Normal aralıkta",
       "tarama_yontemi": "earnings momentum",
-      "son_guncelleme": "2026-03-05T21:30:13.940652",
+      "son_guncelleme": "2026-03-06T07:02:09.308024",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZISYONU SAT",
