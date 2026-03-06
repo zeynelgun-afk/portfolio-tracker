@@ -45,8 +45,24 @@ ADIM 3 — JSON GÜNCELLEME
   → doğrulama: yatirim = adet × maliyet_baz, toplam = sum(pozisyonlar) + nakit, ağırlık ≈ %100
   → GIT COMMIT + PUSH: "[GÜNCELLEME] DD Ay - kapanış fiyatları"
 
+ADIM 2.5 — KAZANÇ AÇIKLAMALARI TARAMASI
+  → FMP earnings-calendar: from=bugün, to=bugün → o günün açıklamalarını çek
+  → market cap filtresi: sadece >$2B şirketler (küçük şirketler atla)
+  → zamanlama filtresi: sadece "amc" (kapanış sonrası) veya tümü
+  → KESİŞİM KONTROLÜ:
+      - portföy sembolleriyle karşılaştır (3 portföy + swing)
+      - watchlist.json sembolleriyle karşılaştır
+  → KESİŞEN şirketler için FMP'den tam analiz çek:
+      - income-statement (son 2 çeyrek — gerçek vs önceki dönem)
+      - analyst-estimates (EPS ve gelir beklenti vs gerçek fark)
+      - key-metrics-ttm + ratios-ttm
+      - news/stock (limit=5, yönetim yorumu / yönlendirme)
+  → KESİŞMEYEN şirketler için: sadece beklenti/gerçek özet tablosu (max 5 şirket)
+  → SONUÇ: kazanç açıklamaları bölümü (bölüm 4a) için veri hazır
+
 ADIM 4 — RAPOR YAZ
   → bölüm 1-5'i sırayla yaz (format aşağıda)
+  → bölüm 4a kazanç açıklamaları (adım 2.5 verileriyle) ekle
   → sabah raporundaki planla karşılaştır (bölüm 4)
   → reports/daily/DAILY_REPORT_YYYY-MM-DD.md olarak kaydet
   → GIT COMMIT + PUSH: "[GÜNLÜK RAPOR] DD Ay YYYY - kısa özet"
@@ -159,6 +175,64 @@ aktif pozisyonlar, stop/hedef kontrolü, aksiyonlar.
 
 ---
 
+### BÖLÜM 4a: KAZANÇ AÇIKLAMALARI
+
+bugün kapanış sonrası (veya gün içi) açıklayan şirketlerin analizi.
+
+**mantık**:
+- o günün açıklamalarını tara, market cap >$2B filtrele
+- portföy/watchlist kesişimi varsa → tam analiz
+- kesişim yoksa → sadece öne çıkan 3-5 şirketi özet tablo
+
+```markdown
+## 4a. kazanç açıklamaları — [tarih]
+
+### bugün açıklayanlar (market cap >$2B)
+
+| şirket | sembol | EPS beklenti | EPS gerçek | fark | gelir fark | yönlendirme | AH |
+|--------|--------|-------------|------------|------|------------|-------------|-----|
+| Marvell | MRVL | $0.62 | $0.68 | +9.7% | +4.2% | yükseltildi ✅ | +13.6% |
+
+> toplam X şirket açıkladı, X tanesi beklenti üstü (%XX), X tanesi beklenti altı (%XX)
+
+---
+
+### portföy/izleme kesişimi — detaylı analiz
+
+[kesişim varsa her şirket için ayrı başlık]
+
+**SEMBOL — Şirket Adı** ✅ beklenti üstü / ❌ beklenti altı
+
+- **EPS**: beklenti $X.XX → gerçek $X.XX (+%X.X)
+- **gelir**: beklenti $XB → gerçek $XB (+%X.X)
+- **yönlendirme**: [yükseltildi / düşürüldü / korundu / verilmedi]
+- **yönlendirme detayı**: [Q1 gelir beklentisi vb]
+- **karlılık trendi**: [son 3 çeyrek EPS: $X → $X → $X]
+- **tez etkisi**: [portföy/watchlist pozisyonumuzu nasıl etkiliyor]
+- **aksiyon önerisi**: [tez devam / pozisyon artır / kar al / izle]
+
+---
+
+### kesişim dışı öne çıkanlar
+
+[günün en çarpıcı 2-3 açıklaması — portföy dışı ama piyasa etkisi olanlar]
+
+**SEMBOL**: [1 cümle özet — EPS fark ve yönlendirme]
+
+---
+
+[kazanç açıklaması yoksa / $2B altındakilerse]: *bugün portföyle ilgili önemli kazanç açıklaması yok.*
+```
+
+**teknik notlar**:
+- beklenti vs gerçek fark: `(gerçek - beklenti) / abs(beklenti) × 100`
+- beklenti verisi: FMP `analyst-estimates` (en son çeyrek tahmini)
+- gerçek veri: FMP `income-statement` (son çeyrek)
+- kazanç sezonu dışında (Ocak/Nisan/Temmuz/Ekim arası) açıklama sayısı az olabilir — normal
+- AH hareketi: `aftermarket-quote` ile kapanış sonrası fiyat değişimi
+
+---
+
 ### BÖLÜM 4: DÜNÜN DEĞERLENDİRMESİ
 
 sabah raporundaki plan tuttu mu, dersler.
@@ -259,11 +333,12 @@ bu prompt'ta JSON'lar güncellenir. kurallar:
 
 rapor tamamlandığında kontrol et:
 
-- [ ] tüm bölümler (1-5) yazıldı mı?
+- [ ] tüm bölümler (1, 2, 3, 4a, 4, 5) yazıldı mı?
 - [ ] JSON'lar güncellenip push edildi mi?
 - [ ] tüm semboller güncel fiyatla güncellendi mi?
 - [ ] k/z hesaplamaları tutarlı mı?
 - [ ] sabah planı değerlendirildi mi?
+- [ ] kazanç açıklamaları tarandı mı? (portföy/watchlist kesişimi kontrol edildi mi?)
 - [ ] aksiyon planı net ve uygulanabilir mi?
 - [ ] rapor dosyası push edildi mi?
 
