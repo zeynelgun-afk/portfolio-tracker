@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-03-04",
+  "son_guncelleme": "2026-03-06",
   "kapatilan_pozisyonlar": [
     {
       "id": "SWING-020",
@@ -173,20 +173,6 @@
       "sonuc": "ZARAR",
       "ders": "Kriz rallisi kuralı tekrar doğrulandı. 2 mart girişi, petrol rallisine rağmen enerji servis hisseleri tepki vermedi. Savaş ortamında petrol yukari gitse bile servis şirketleri farklı hareket edebilir.",
       "tarama_yontemi": "sektor liderligi"
-    },
-    {
-      "id": "SWING-021",
-      "sembol": "KTOS",
-      "giris_tarihi": "2026-03-02",
-      "cikis_tarihi": "2026-03-04",
-      "giris_fiyati": 96.41,
-      "cikis_fiyati": 88.38,
-      "kar_zarar_yuzde": -8.33,
-      "tutulan_gun": 2,
-      "cikis_nedeni": "Stop-loss tetiklendi. $88.38 kapanış, stop $91.59 çoktan aşıldı. 1 gün override edildi, toparlanamadı.",
-      "sonuc": "ZARAR",
-      "ders": "Kriz rallisi kuralının en ağır ihlali. Savaş haberiyle ilk gün giriş, kısa spike sonrası geri çekilme. Stop override zararı büyüttü. Kural: 1) kriz haberlerinde en az 1 gün bekle, 2) stop ihlalinde hemen çık.",
-      "tarama_yontemi": "momentum"
     }
   ],
   "istatistikler": {
