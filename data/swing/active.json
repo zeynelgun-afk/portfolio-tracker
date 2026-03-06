@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-03-06T15:40:06.926245",
+  "son_guncelleme": "2026-03-06T16:44:30.379937",
   "not": "SWING TRADE SADECE SİMÜLASYON - Sadece % kazanç/kayıp takibi (MAX: 10 pozisyon)",
   "iran_krizi_hazirligi": {
     "tarih": "2026-03-01",
@@ -16,8 +16,8 @@
       "sembol": "T",
       "giris_tarihi": "2026-02-17",
       "giris_fiyati": 28.68,
-      "guncel_fiyat": 28.69,
-      "guncel_kar_zarar_yuzde": 0.03,
+      "guncel_fiyat": 28.4875,
+      "guncel_kar_zarar_yuzde": -0.67,
       "hedef_fiyat": 31.55,
       "stop_loss": 27.25,
       "tutulan_gun": 17,
@@ -27,7 +27,7 @@
       "zaman_cercevesi": "7-10 gün",
       "risk": "Rekabet baskısı",
       "durum": "✅ Normal aralıkta",
-      "son_guncelleme": "2026-03-06T15:40:06.926245",
+      "son_guncelleme": "2026-03-06T16:44:30.379937",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
@@ -48,8 +48,8 @@
       "sembol": "DUK",
       "giris_tarihi": "2026-02-19",
       "giris_fiyati": 126.71,
-      "guncel_fiyat": 130.91,
-      "guncel_kar_zarar_yuzde": 3.31,
+      "guncel_fiyat": 130.41,
+      "guncel_kar_zarar_yuzde": 2.92,
       "hedef_fiyat": 139.38,
       "stop_loss": 120.38,
       "tutulan_gun": 15,
@@ -59,7 +59,7 @@
       "zaman_cercevesi": "7-10 gün",
       "risk": "Faiz oranı yükselmesi, düzenleme riski",
       "durum": "✅ Normal aralıkta",
-      "son_guncelleme": "2026-03-06T15:40:06.926245",
+      "son_guncelleme": "2026-03-06T16:44:30.379937",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
@@ -80,8 +80,8 @@
       "sembol": "DVA",
       "giris_tarihi": "2026-02-20",
       "giris_fiyati": 149.73,
-      "guncel_fiyat": 149.725,
-      "guncel_kar_zarar_yuzde": -0.0,
+      "guncel_fiyat": 150.89,
+      "guncel_kar_zarar_yuzde": 0.77,
       "hedef_fiyat": 164.7,
       "stop_loss": 142.24,
       "tutulan_gun": 14,
@@ -91,7 +91,7 @@
       "zaman_cercevesi": "7-12 gün",
       "risk": "Healthcare düzenlemeleri, Medicare reimbursement değişiklikleri",
       "durum": "✅ Normal aralıkta",
-      "son_guncelleme": "2026-03-06T15:40:06.926245",
+      "son_guncelleme": "2026-03-06T16:44:30.379937",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
@@ -112,8 +112,8 @@
       "sembol": "CTSH",
       "giris_tarihi": "2026-02-24",
       "giris_fiyati": 61.36,
-      "guncel_fiyat": 65.64,
-      "guncel_kar_zarar_yuzde": 6.98,
+      "guncel_fiyat": 65.65,
+      "guncel_kar_zarar_yuzde": 6.99,
       "hedef_fiyat": 67.5,
       "stop_loss": 58.29,
       "tutulan_gun": 10,
@@ -124,7 +124,7 @@
       "risk": "Tech sektörü genelinde satış baskısı devam edebilir, 52W low kırılırsa trend bozulur",
       "durum": "🎯 Hedefe yakın (2.8%)",
       "tarama_yontemi": "RSI oversold",
-      "son_guncelleme": "2026-03-06T15:40:06.926245",
+      "son_guncelleme": "2026-03-06T16:44:30.379937",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
@@ -145,8 +145,8 @@
       "sembol": "CEG",
       "giris_tarihi": "2026-03-02",
       "giris_fiyati": 328.56,
-      "guncel_fiyat": 328.75,
-      "guncel_kar_zarar_yuzde": 0.06,
+      "guncel_fiyat": 322.76,
+      "guncel_kar_zarar_yuzde": -1.77,
       "hedef_fiyat": 380.0,
       "stop_loss": 312.13,
       "tutulan_gun": 4,
@@ -157,7 +157,7 @@
       "risk": "Nukleer duzenleme riski, tech/AI harcama yavaslama endisesi",
       "durum": "✅ Normal aralıkta",
       "tarama_yontemi": "sektor liderligi",
-      "son_guncelleme": "2026-03-06T15:40:06.926245",
+      "son_guncelleme": "2026-03-06T16:44:30.379937",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZISYONU SAT",
@@ -178,8 +178,8 @@
       "sembol": "SOFI",
       "giris_tarihi": "2026-02-24",
       "giris_fiyati": 18.51,
-      "guncel_fiyat": 18.695,
-      "guncel_kar_zarar_yuzde": 1.0,
+      "guncel_fiyat": 18.635,
+      "guncel_kar_zarar_yuzde": 0.68,
       "hedef_fiyat": 20.36,
       "stop_loss": 17.58,
       "tutulan_gun": 10,
@@ -190,7 +190,7 @@
       "risk": "Jeopolitik risk-off ortaminda fintech basincı, yuksek beta, iran krizi devam ederse baski surer",
       "durum": "✅ Normal aralıkta",
       "tarama_yontemi": "earnings momentum",
-      "son_guncelleme": "2026-03-06T15:40:06.926245",
+      "son_guncelleme": "2026-03-06T16:44:30.379937",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZISYONU SAT",
