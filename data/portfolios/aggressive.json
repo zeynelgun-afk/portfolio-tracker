@@ -27,7 +27,7 @@
   },
   "baslangic_sermaye": 369897.5,
   "nakit": {
-    "miktar": 273588.5,
+    "miktar": 286978.18,
     "para_birimi": "USD"
   },
   "pozisyonlar": [
@@ -47,7 +47,7 @@
       "giris_tarihi": "2026-02-20",
       "giris_fiyati": 14.61,
       "giris_nedeni": "Yarım pozisyon tamamlandı. RSI 41, SMA200 üzeri destek. Orijinal: 342 adet @$14.61, ek: 347 adet @$14.39. Ortalama maliyet: $14.50",
-      "agirlik_yuzde": 6.08,
+      "agirlik_yuzde": 6.09,
       "stop_loss": 14.57,
       "hedef_fiyat": 17.13,
       "sinyal_tipi": "mean_reversion",
@@ -76,98 +76,6 @@
       "stop_tipi": "breakeven"
     },
     {
-      "sembol": "BKSY",
-      "isim": "BlackSky Technology Inc.",
-      "sektor": "Savunma",
-      "adet": 379,
-      "maliyet_baz": 19.77,
-      "guncel_fiyat": 23.73,
-      "yatirim": 7492.83,
-      "guncel_deger": 8993.67,
-      "kar_zarar": 1500.84,
-      "kar_zarar_yuzde": 20.03,
-      "gunluk_degisim_yuzde": -2.59,
-      "son_guncelleme": "2026-03-07T07:38:08.277665",
-      "giris_tarihi": "2026-02-20",
-      "giris_fiyati": 19.77,
-      "giris_nedeni": "Yarım pozisyon - Real-time satellite imagery pullback",
-      "agirlik_yuzde": 2.46,
-      "stop_loss": 23.1,
-      "hedef_fiyat": 21.8,
-      "iran_krizi_notu": "Satellite imagery savunma talebi artacak. Stop genişletildi, savaş rallisi bekleniyor.",
-      "sinyal_tipi": "breakout",
-      "max_tutma_gun": 10,
-      "strateji_notu": "Savunma sektörü, satellite imagery büyümesi",
-      "risk_yuzde": 5.99,
-      "odul_yuzde": 7.97,
-      "rr_orani": 1.33,
-      "partial_exit": {
-        "seviye_1": {
-          "fiyat": 20.96,
-          "oran_yuzde": 33,
-          "durum": "bekliyor"
-        },
-        "seviye_2": {
-          "fiyat": 21.75,
-          "oran_yuzde": 33,
-          "durum": "bekliyor"
-        },
-        "seviye_3": {
-          "tur": "trailing_stop",
-          "trailing_yuzde": 4,
-          "durum": "bekliyor"
-        }
-      },
-      "stop_tipi": "trailing_%4",
-      "trailing_stop": 23.1,
-      "partial_exit_durum": "Trailing stop aktif - tüm partial exit seviyeleri geçildi"
-    },
-    {
-      "sembol": "NNDM",
-      "isim": "Nano Dimension Ltd.",
-      "sektor": "Teknoloji",
-      "adet": 2550,
-      "maliyet_baz": 1.96,
-      "guncel_fiyat": 1.82,
-      "yatirim": 4998.0,
-      "guncel_deger": 4641.0,
-      "kar_zarar": -357.0,
-      "kar_zarar_yuzde": -7.14,
-      "gunluk_degisim_yuzde": -3.7,
-      "son_guncelleme": "2026-03-07T07:38:08.277665",
-      "giris_tarihi": "2026-02-23",
-      "giris_fiyati": 1.96,
-      "giris_nedeni": "Giriş bölgesi $1.90-2.00 tutturuldu. Micro-cap 3D baskı teknoloji şirketi, savunma ve uzay sektörü müşteri tabanı güçleniyor. Watchlist hedefine ulaşıldı.",
-      "agirlik_yuzde": 1.27,
-      "stop_loss": 1.8,
-      "hedef_fiyat": 2.15,
-      "iran_krizi_notu": "Savunma/uzay müşteri tabanı potansiyel pozitif. Stop genişletildi, volatilite tamponu.",
-      "sinyal_tipi": "mean_reversion",
-      "max_tutma_gun": 10,
-      "strateji_notu": "Micro-cap riskli, sıkı takip",
-      "risk_yuzde": 2.59,
-      "odul_yuzde": 11.4,
-      "rr_orani": 4.4,
-      "partial_exit": {
-        "seviye_1": {
-          "fiyat": 2.08,
-          "oran_yuzde": 33,
-          "durum": "bekliyor"
-        },
-        "seviye_2": {
-          "fiyat": 2.16,
-          "oran_yuzde": 33,
-          "durum": "bekliyor"
-        },
-        "seviye_3": {
-          "tur": "trailing_stop",
-          "trailing_yuzde": 4,
-          "durum": "bekliyor"
-        }
-      },
-      "stop_tipi": "sabit_%4"
-    },
-    {
       "sembol": "PLTR",
       "isim": "Palantir Technologies Inc.",
       "sektor": "Teknoloji",
@@ -183,7 +91,7 @@
       "giris_tarihi": "2026-02-23",
       "giris_fiyati": 128.42,
       "giris_nedeni": "AI + savunma çift katalizör. Palantir veri analitiği lideri, ABD savunma kontratları güçlü. İran savaşı ortamında savunma harcamaları artışı + AI talebi seküler büyüme.",
-      "agirlik_yuzde": 5.97,
+      "agirlik_yuzde": 5.98,
       "stop_loss": 131.0,
       "hedef_fiyat": 147.0,
       "iran_krizi_notu": "AI/Savunma lider, savaş döneminde güçlü. Stop breakeven üzeri, kar korunuyor.",
@@ -392,9 +300,9 @@
       "stop_override_notu": "5 Mart override - stop $65→$62 genişletildi. Savaş rallisi bekleniyor, RSI 61 güçlü. Maliyet 67.69."
     }
   ],
-  "son_guncelleme": "2026-03-07T07:38:08.277665",
-  "toplam_deger": 365735.32,
-  "toplam_getiri_yuzde": -8.57,
+  "son_guncelleme": "2026-03-09T13:53:54.616194",
+  "toplam_deger": 365490.33,
+  "toplam_getiri_yuzde": -1.19,
   "iran_krizi_hazirligi": {
     "tarih": "2026-03-01",
     "durum": "Pazartesi açılış öncesi stop-loss ayarlamaları",
@@ -540,6 +448,11 @@
       "date": "2026-03-06T16:49:24.125656",
       "type": "exit",
       "content": "AMKR disiplinli erken çıkış. stop $42'ya sadece 67 cent mesafe, NFP -92K ile piyasa çok zayıf. MRVL beat'e rağmen AMKR faydalanmadı, tedarik zinciri ikinci kademe zayıf kaldı. zarar -%6.1."
+    },
+    {
+      "date": "2026-03-09T13:53:54.616194",
+      "type": "exit",
+      "content": "NNDM satıldı @$1.77 (stop-loss, -%9.7). BKSY satıldı @$23.42 (trailing stop, +%18.5 kâr koruması). VIX 31+ ortamında disiplin öncelikli."
     }
   ],
   "aylik_performans": {
@@ -661,6 +574,24 @@
       "fiyat": 42.67,
       "tutar": 7509.92,
       "aciklama": "stop'a %1.6 mesafe, NFP -92K şoku, zayıflama devam, erken disiplinli çıkış"
+    },
+    {
+      "tarih": "2026-03-09",
+      "islem_tipi": "SATIŞ",
+      "sembol": "NNDM",
+      "adet": 2550,
+      "fiyat": 1.77,
+      "tutar": 4513.5,
+      "aciklama": "Stop-loss tetiklendi — $1.80 altında, disiplinli çıkış"
+    },
+    {
+      "tarih": "2026-03-09",
+      "islem_tipi": "SATIŞ",
+      "sembol": "BKSY",
+      "adet": 379,
+      "fiyat": 23.42,
+      "tutar": 8876.18,
+      "aciklama": "İzleyen zarar kes tetiklendi — kâr koruması, disiplinli çıkış"
     }
   ]
 }

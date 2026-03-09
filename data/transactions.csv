@@ -68,3 +68,5 @@ date,action,symbol,shares,price,total,reason
 2026-03-06,SELL,AMKR,176,42.67,7509.92,"erken disiplinli çıkış - stop yakın - NFP şoku - agresif portföy"
 
 2026-03-09,SELL,CEG,1,311.98,311.98,"Swing stop-loss tetiklendi — nükleer enerji momentum kaybı"
+2026-03-09,SELL,NNDM,2550,1.77,4513.5,"Agresif - Stop-loss tetiklendi, disiplinli çıkış"
+2026-03-09,SELL,BKSY,379,23.42,8876.18,"Agresif - İzleyen zarar kes tetiklendi, kâr koruması"

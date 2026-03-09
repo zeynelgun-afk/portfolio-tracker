@@ -19,11 +19,11 @@
     },
     "agresif": {
       "isim": "Agresif Büyüme Portföyü",
-      "deger": 365735.32,
+      "deger": 365490.33,
       "maliyet": 369897.5,
-      "kar_zarar": -34264.68,
-      "kar_zarar_yuzde": -8.57,
-      "pozisyon_sayisi": 8,
+      "kar_zarar": -4407.17,
+      "kar_zarar_yuzde": -1.19,
+      "pozisyon_sayisi": 6,
       "nakit": {
         "miktar": 273588.5,
         "para_birimi": "USD"
@@ -51,6 +51,8 @@
   "benchmark_spy": -1.53,
   "alpha": 5.25,
   "son_islemler": [
+    "[SATIŞ] Agresif - NNDM @1.77 — Stop-loss, -9.69%",
+    "[SATIŞ] Agresif - BKSY @23.42 — Trailing stop, +18.46%",
     "[SWING-ÇIKIŞ] CEG @311.98 — Stop-loss tetiklendi, -%5.05"
   ]
 }
