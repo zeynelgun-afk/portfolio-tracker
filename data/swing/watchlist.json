@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-03-04T19:38:15.377024",
+  "son_guncelleme": "2026-03-09T19:22:09.841094",
   "not": "Bir sonraki işlemler için potansiyel swing adayları - ATR tabanlı filtreleme uygulandı",
   "izleme_listesi": [
     {
@@ -182,6 +182,71 @@
       "hedef_giris": "140-150",
       "hedef_fiyat": 175.0,
       "stop_loss": 133.0
+    },
+    {
+      "sembol": "LRCX",
+      "guncel_fiyat": 205.71,
+      "momentum_5gun": -7.19,
+      "sektor": "Yarı İletken Ekipman",
+      "notlar": "Wafer imalat ekipmanı lideri, RSI 39 aşırı satıma yakın. AI çip tedarik zinciri tezinin 4. bacağı. Analist 38 al/11 tut/1 sat. Zirveden -%20 geri çekilme.",
+      "urgency": "high",
+      "ekleme_tarihi": "2026-03-09",
+      "son_kontrol": "2026-03-09",
+      "hedef_giris": "200-210",
+      "hedef_fiyat": 240.0,
+      "stop_loss": 188.0
+    },
+    {
+      "sembol": "MU",
+      "guncel_fiyat": 379.03,
+      "momentum_5gun": -3.7,
+      "sektor": "Yarı İletken — Bellek/HBM",
+      "notlar": "HBM3E lider üretici, 18 mart kazanç açıklaması. Gelir 4 çeyrekte +%68. AVGO+MRVL çift beat koşulu oluştu. SMA50 kurtarması bugün.",
+      "urgency": "high",
+      "ekleme_tarihi": "2026-03-09",
+      "son_kontrol": "2026-03-09",
+      "hedef_giris": "370-385",
+      "hedef_fiyat": 430.0,
+      "stop_loss": 345.0
+    },
+    {
+      "sembol": "CRDO",
+      "guncel_fiyat": 111.78,
+      "momentum_5gun": 10.22,
+      "sektor": "Yarı İletken — SerDes/Optik",
+      "notlar": "SerDes/optik bağlantı, RSI 45 nötr. Gelir son çeyrekte +%52 QoQ patlama. @yatirim da aldı. CPI sonrası giriş.",
+      "urgency": "high",
+      "ekleme_tarihi": "2026-03-09",
+      "son_kontrol": "2026-03-09",
+      "hedef_giris": "105-115",
+      "hedef_fiyat": 140.0,
+      "stop_loss": 98.0
+    },
+    {
+      "sembol": "OKLO",
+      "guncel_fiyat": 60.03,
+      "momentum_5gun": -5.67,
+      "sektor": "Nükleer Enerji — Mikro Reaktör",
+      "notlar": "Düşen kama formasyonu (Jake), LEU ile HALEU JV görüşmeleri katalizör. Henüz gelir yok, saf spekülasyon.",
+      "urgency": "medium",
+      "ekleme_tarihi": "2026-03-09",
+      "son_kontrol": "2026-03-09",
+      "hedef_giris": "52-58",
+      "hedef_fiyat": 75.0,
+      "stop_loss": 48.0
+    },
+    {
+      "sembol": "HIMS",
+      "guncel_fiyat": 22.4,
+      "momentum_5gun": 41.15,
+      "sektor": "Sağlık — Telehealth",
+      "notlar": "NVO ortaklığı ile +%42 patladı. İlk gün momentumu kovalama — geri çekilme bekle ($18-20). Beta 2.6.",
+      "urgency": "low",
+      "ekleme_tarihi": "2026-03-09",
+      "son_kontrol": "2026-03-09",
+      "hedef_giris": "18-20",
+      "hedef_fiyat": 28.0,
+      "stop_loss": 16.0
     }
   ],
   "haric_tutulanlar": [
