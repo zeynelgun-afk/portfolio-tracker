@@ -25,7 +25,7 @@
     "sermaye_degisiklik_tarihi": "2026-02-26",
     "sermaye_notu": "$100K → $400K sermaye artırımı. $300K yeni nakit eklendi."
   },
-  "baslangic_sermaye": 369897.5,
+  "baslangic_sermaye": 140000,
   "nakit": {
     "miktar": 286978.18,
     "para_birimi": "USD"
@@ -300,9 +300,9 @@
       "stop_override_notu": "5 Mart override - stop $65→$62 genişletildi. Savaş rallisi bekleniyor, RSI 61 güçlü. Maliyet 67.69."
     }
   ],
-  "son_guncelleme": "2026-03-09T19:57:42.816798",
+  "son_guncelleme": "2026-03-09T20:02:54.644536",
   "toplam_deger": 367915.45,
-  "toplam_getiri_yuzde": -0.54,
+  "toplam_getiri_yuzde": 162.8,
   "iran_krizi_hazirligi": {
     "tarih": "2026-03-01",
     "durum": "Pazartesi açılış öncesi stop-loss ayarlamaları",
