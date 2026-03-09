@@ -1,6 +1,6 @@
 {
   "portfoy_adi": "Dengeli Portföy",
-  "baslangic_sermaye": 100000,
+  "baslangic_sermaye": 40000,
   "nakit": {
     "miktar": 50291.77,
     "para_birimi": "USD"
@@ -97,9 +97,9 @@
       "agirlik_yuzde": 12.86
     }
   ],
-  "son_guncelleme": "2026-03-09T19:57:42.815146",
+  "son_guncelleme": "2026-03-09T20:01:18.149356",
   "toplam_deger": 112918.16,
-  "toplam_getiri_yuzde": 12.92,
+  "toplam_getiri_yuzde": 182.3,
   "iran_krizi_hazirligi": {
     "tarih": "2026-03-01",
     "durum": "Enerji ağırlıklı portföy - İran krizinden maksimum fayda bekleniyor",

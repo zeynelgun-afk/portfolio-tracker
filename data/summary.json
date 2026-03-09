@@ -1,16 +1,16 @@
 {
   "son_guncelleme": "2026-03-09",
-  "toplam_sermaye": 600000,
+  "toplam_sermaye": 540000,
   "toplam_deger": 624644.19,
-  "toplam_kar_zarar": 24644.19,
-  "toplam_kar_zarar_yuzde": 4.11,
+  "toplam_kar_zarar": 84644.19,
+  "toplam_kar_zarar_yuzde": 15.67,
   "portfolyolar": {
     "dengeli": {
       "isim": "Dengeli Portföy",
       "deger": 112918.16,
-      "maliyet": 100000,
-      "kar_zarar": 12918.160000000003,
-      "kar_zarar_yuzde": 12.92,
+      "maliyet": 40000,
+      "kar_zarar": 72918.16,
+      "kar_zarar_yuzde": 182.3,
       "pozisyon_sayisi": 5,
       "nakit": {
         "miktar": 50291.77,
@@ -47,5 +47,6 @@
       "bos_slot": 4,
       "durum": "6/10 pozisyon aktif"
     }
-  }
+  },
+  "simulasyon_donemi": "2 Ocak 2025 - devam ediyor"
 }
