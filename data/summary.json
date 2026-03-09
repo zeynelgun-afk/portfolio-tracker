@@ -1,16 +1,16 @@
 {
   "son_guncelleme": "2026-03-09",
   "toplam_sermaye": 600000,
-  "toplam_deger": 622346.38,
-  "toplam_kar_zarar": 22346.38,
-  "toplam_kar_zarar_yuzde": 3.72,
+  "toplam_deger": 621839.38,
+  "toplam_kar_zarar": 21839.38,
+  "toplam_kar_zarar_yuzde": 3.64,
   "portfolyolar": {
     "dengeli": {
       "isim": "Dengeli Portföy",
-      "deger": 112537.15,
+      "deger": 113296.18,
       "maliyet": 100000,
-      "kar_zarar": 12537.15,
-      "kar_zarar_yuzde": 12.54,
+      "kar_zarar": 13296.179999999993,
+      "kar_zarar_yuzde": 13.3,
       "pozisyon_sayisi": 6,
       "nakit": {
         "miktar": 27027.11,
@@ -19,22 +19,22 @@
     },
     "agresif": {
       "isim": "Agresif Büyüme Portföyü",
-      "deger": 365490.33,
+      "deger": 365020.67,
       "maliyet": 369897.5,
-      "kar_zarar": -4407.17,
-      "kar_zarar_yuzde": -1.19,
+      "kar_zarar": -4876.830000000016,
+      "kar_zarar_yuzde": -1.32,
       "pozisyon_sayisi": 6,
       "nakit": {
-        "miktar": 273588.5,
+        "miktar": 286978.18,
         "para_birimi": "USD"
       }
     },
     "temettü": {
       "isim": "Değer + Temettü Portföyü",
-      "deger": 144073.91,
+      "deger": 143522.53,
       "maliyet": 130102.5,
-      "kar_zarar": 44073.91,
-      "kar_zarar_yuzde": 44.07,
+      "kar_zarar": 13420.029999999999,
+      "kar_zarar_yuzde": 10.31,
       "pozisyon_sayisi": 8,
       "nakit": {
         "miktar": 8371.68,
@@ -47,12 +47,5 @@
       "bos_slot": 5,
       "durum": "5/10 pozisyon aktif"
     }
-  },
-  "benchmark_spy": -1.53,
-  "alpha": 5.25,
-  "son_islemler": [
-    "[SATIŞ] Agresif - NNDM @1.77 — Stop-loss, -9.69%",
-    "[SATIŞ] Agresif - BKSY @23.42 — Trailing stop, +18.46%",
-    "[SWING-ÇIKIŞ] CEG @311.98 — Stop-loss tetiklendi, -%5.05"
-  ]
+  }
 }
