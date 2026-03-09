@@ -1,28 +1,28 @@
 {
   "son_guncelleme": "2026-03-09",
   "toplam_sermaye": 600000,
-  "toplam_deger": 622589.03,
-  "toplam_kar_zarar": 22589.03,
-  "toplam_kar_zarar_yuzde": 3.76,
+  "toplam_deger": 624896.26,
+  "toplam_kar_zarar": 24896.26,
+  "toplam_kar_zarar_yuzde": 4.15,
   "portfolyolar": {
     "dengeli": {
       "isim": "Dengeli Portföy",
-      "deger": 112955.84,
+      "deger": 113355.12,
       "maliyet": 100000,
-      "kar_zarar": 12955.84,
-      "kar_zarar_yuzde": 12.96,
+      "kar_zarar": 13355.119999999995,
+      "kar_zarar_yuzde": 13.36,
       "pozisyon_sayisi": 6,
       "nakit": {
-        "miktar": 27027.11,
+        "miktar": 38051.11,
         "para_birimi": "USD"
       }
     },
     "agresif": {
       "isim": "Agresif Büyüme Portföyü",
-      "deger": 366447.46,
+      "deger": 367486.92,
       "maliyet": 369897.5,
-      "kar_zarar": -3450.039999999979,
-      "kar_zarar_yuzde": -0.93,
+      "kar_zarar": -2410.5800000000163,
+      "kar_zarar_yuzde": -0.65,
       "pozisyon_sayisi": 6,
       "nakit": {
         "miktar": 286978.18,
@@ -31,10 +31,10 @@
     },
     "temettü": {
       "isim": "Değer + Temettü Portföyü",
-      "deger": 143456.13,
+      "deger": 144054.22,
       "maliyet": 130102.5,
-      "kar_zarar": 13353.630000000005,
-      "kar_zarar_yuzde": 10.26,
+      "kar_zarar": 13951.720000000001,
+      "kar_zarar_yuzde": 10.72,
       "pozisyon_sayisi": 8,
       "nakit": {
         "miktar": 8371.68,
@@ -47,8 +47,5 @@
       "bos_slot": 3,
       "durum": "7/10 pozisyon aktif"
     }
-  },
-  "son_islemler": [
-    "[SATIŞ] Dengeli - SM @26.5 (%40 kısmi kâr alma, +28.2%)"
-  ]
+  }
 }
