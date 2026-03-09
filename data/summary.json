@@ -1,28 +1,28 @@
 {
   "son_guncelleme": "2026-03-09",
   "toplam_sermaye": 600000,
-  "toplam_deger": 624896.26,
-  "toplam_kar_zarar": 24896.26,
-  "toplam_kar_zarar_yuzde": 4.15,
+  "toplam_deger": 624644.19,
+  "toplam_kar_zarar": 24644.19,
+  "toplam_kar_zarar_yuzde": 4.11,
   "portfolyolar": {
     "dengeli": {
       "isim": "Dengeli Portföy",
-      "deger": 113045.39,
+      "deger": 112918.16,
       "maliyet": 100000,
-      "kar_zarar": 13045.39,
-      "kar_zarar_yuzde": 13.05,
+      "kar_zarar": 12918.160000000003,
+      "kar_zarar_yuzde": 12.92,
       "pozisyon_sayisi": 5,
       "nakit": {
-        "miktar": 38051.11,
+        "miktar": 50291.77,
         "para_birimi": "USD"
       }
     },
     "agresif": {
       "isim": "Agresif Büyüme Portföyü",
-      "deger": 367486.92,
+      "deger": 367915.45,
       "maliyet": 369897.5,
-      "kar_zarar": -2410.5800000000163,
-      "kar_zarar_yuzde": -0.65,
+      "kar_zarar": -1982.0499999999884,
+      "kar_zarar_yuzde": -0.54,
       "pozisyon_sayisi": 6,
       "nakit": {
         "miktar": 286978.18,
@@ -31,10 +31,10 @@
     },
     "temettü": {
       "isim": "Değer + Temettü Portföyü",
-      "deger": 144054.22,
+      "deger": 143810.58,
       "maliyet": 130102.5,
-      "kar_zarar": 13951.720000000001,
-      "kar_zarar_yuzde": 10.72,
+      "kar_zarar": 13708.079999999987,
+      "kar_zarar_yuzde": 10.54,
       "pozisyon_sayisi": 8,
       "nakit": {
         "miktar": 8371.68,
@@ -47,8 +47,5 @@
       "bos_slot": 4,
       "durum": "6/10 pozisyon aktif"
     }
-  },
-  "son_islemler": [
-    "[ROTASYON] KOS @2.58 +%59.6, XLE @56.17 %50 kısmi, HAL swing -%5.1"
-  ]
+  }
 }
