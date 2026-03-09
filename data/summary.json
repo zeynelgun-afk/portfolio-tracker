@@ -7,10 +7,10 @@
   "portfolyolar": {
     "dengeli": {
       "isim": "Dengeli Portföy",
-      "deger": 112685.44,
+      "deger": 112955.84,
       "maliyet": 100000,
-      "kar_zarar": 12685.440000000002,
-      "kar_zarar_yuzde": 12.69,
+      "kar_zarar": 12955.84,
+      "kar_zarar_yuzde": 12.96,
       "pozisyon_sayisi": 6,
       "nakit": {
         "miktar": 27027.11,
@@ -47,5 +47,8 @@
       "bos_slot": 3,
       "durum": "7/10 pozisyon aktif"
     }
-  }
+  },
+  "son_islemler": [
+    "[SATIŞ] Dengeli - SM @26.5 (%40 kısmi kâr alma, +28.2%)"
+  ]
 }

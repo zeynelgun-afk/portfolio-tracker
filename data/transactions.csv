@@ -68,3 +68,4 @@ date,action,symbol,shares,price,total,reason
 
 2026-03-09,SELL,NNDM,2550,1.77,4513.5,"Agresif - Stop-loss tetiklendi, disiplinli çıkış"
 2026-03-09,SELL,BKSY,379,23.42,8876.18,"Agresif - İzleyen zarar kes tetiklendi, kâr koruması"
+2026-03-09,SELL,SM,416,26.5,11024.0,"Dengeli - Kısmi kâr alma %40, RSI aşırı alım, ağırlık dengeleme"

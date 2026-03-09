@@ -2,7 +2,7 @@
   "portfoy_adi": "Dengeli Portföy",
   "baslangic_sermaye": 100000,
   "nakit": {
-    "miktar": 27027.11,
+    "miktar": 38051.11,
     "para_birimi": "USD"
   },
   "pozisyonlar": [
@@ -10,19 +10,19 @@
       "sembol": "SM",
       "isim": "SM Energy Company",
       "sektor": "Enerji",
-      "adet": 1040,
+      "adet": 624,
       "maliyet_baz": 20.67,
-      "guncel_fiyat": 26.24,
-      "yatirim": 21496.800000000003,
-      "guncel_deger": 27289.6,
-      "kar_zarar": 5792.799999999996,
-      "kar_zarar_yuzde": 26.95,
+      "guncel_fiyat": 26.5,
+      "yatirim": 12898.08,
+      "guncel_deger": 16536.0,
+      "kar_zarar": 3637.92,
+      "kar_zarar_yuzde": 28.21,
       "gunluk_degisim_yuzde": 0,
-      "son_guncelleme": "2026-03-09T18:06:49.504699",
+      "son_guncelleme": "2026-03-09T18:42:04.891279",
       "giris_tarihi": "2026-02-17",
       "giris_fiyati": 20.67,
       "giris_nedeni": "Initial position - Oil & gas E&P",
-      "agirlik_yuzde": 24.22
+      "agirlik_yuzde": 14.64
     },
     {
       "sembol": "KOS",
@@ -40,7 +40,7 @@
       "giris_tarihi": "2026-02-17",
       "giris_fiyati": 1.617,
       "giris_nedeni": "Initial position - Deep value offshore",
-      "agirlik_yuzde": 4.08
+      "agirlik_yuzde": 4.07
     },
     {
       "sembol": "MO",
@@ -58,7 +58,7 @@
       "giris_tarihi": "2026-02-17",
       "giris_fiyati": 67.44,
       "giris_nedeni": "Initial position - Dividend defensive",
-      "agirlik_yuzde": 15.79
+      "agirlik_yuzde": 15.75
     },
     {
       "sembol": "XLE",
@@ -76,7 +76,7 @@
       "giris_tarihi": "2026-02-17",
       "giris_fiyati": 53.34,
       "giris_nedeni": "Initial position - Energy sector ETF",
-      "agirlik_yuzde": 13.87
+      "agirlik_yuzde": 13.84
     },
     {
       "sembol": "RGLD",
@@ -94,7 +94,7 @@
       "giris_tarihi": "2026-02-17",
       "giris_fiyati": 274.4,
       "giris_nedeni": "Initial position - Gold royalty",
-      "agirlik_yuzde": 5.35
+      "agirlik_yuzde": 5.34
     },
     {
       "sembol": "XLI",
@@ -112,12 +112,12 @@
       "giris_tarihi": "2026-02-19",
       "giris_fiyati": 175.04,
       "giris_nedeni": "Otomatik ekleme - Endüstriyel",
-      "agirlik_yuzde": 12.71
+      "agirlik_yuzde": 12.68
     }
   ],
-  "son_guncelleme": "2026-03-09T18:06:49.504699",
-  "toplam_deger": 112685.44,
-  "toplam_getiri_yuzde": 12.69,
+  "son_guncelleme": "2026-03-09T18:42:04.891279",
+  "toplam_deger": 112955.84,
+  "toplam_getiri_yuzde": 12.96,
   "iran_krizi_hazirligi": {
     "tarih": "2026-03-01",
     "durum": "Enerji ağırlıklı portföy - İran krizinden maksimum fayda bekleniyor",
@@ -153,6 +153,15 @@
       "fiyat": 2.46,
       "tutar": 4277.94,
       "aciklama": "Kâr realizasyonu - %50 pozisyon satışı - +52% getiri, RSI 68 overbought yakını"
+    },
+    {
+      "tarih": "2026-03-09",
+      "islem_tipi": "SATIŞ",
+      "sembol": "SM",
+      "adet": 416,
+      "fiyat": 26.5,
+      "tutar": 11024.0,
+      "aciklama": "Kısmi kâr alma (%40) — RSI 74 aşırı alım, ağırlık %24 çok yüksek, kâr garantiye alındı"
     }
   ],
   "notes": [
@@ -165,6 +174,11 @@
       "date": "2026-03-04T19:55:41.768596",
       "type": "rebalance",
       "content": "KOS %50 kâr alma: 1739 hisse @ $2.46. Kalan 1740 hisse trailing stop ile."
+    },
+    {
+      "date": "2026-03-09T18:42:04.891279",
+      "type": "rebalance",
+      "content": "SM %40 kısmi kâr alma: 416 adet @$26.5 satıldı. Gerçekleşen kâr: $+2,425.28 (+28.2%). RSI 74 aşırı alım + ağırlık %24 dengesizliği nedeniyle."
     }
   ]
 }
