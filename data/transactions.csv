@@ -66,3 +66,5 @@ date,action,symbol,shares,price,total,reason
 
 2026-03-05,BUY,AMKR,176,45.45,7999.2,"Yarım pozisyon - Agresif - AI chip tedarik zinciri, gelişmiş paketleme/HBM, MRVL earnings beklentisi"2026-03-06,SELL,SHOP,41,129.55,5311.55,"izleyen zarar kes $130.20 tetiklendi - agresif portföy - NFP şoku"
 2026-03-06,SELL,AMKR,176,42.67,7509.92,"erken disiplinli çıkış - stop yakın - NFP şoku - agresif portföy"
+
+2026-03-09,SELL,CEG,1,311.98,311.98,"Swing stop-loss tetiklendi — nükleer enerji momentum kaybı"

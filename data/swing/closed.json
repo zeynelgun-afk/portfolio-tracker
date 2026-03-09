@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-03-06",
+  "son_guncelleme": "2026-03-09",
   "kapatilan_pozisyonlar": [
     {
       "id": "SWING-020",
@@ -173,6 +173,19 @@
       "sonuc": "ZARAR",
       "ders": "Kriz rallisi kuralı tekrar doğrulandı. 2 mart girişi, petrol rallisine rağmen enerji servis hisseleri tepki vermedi. Savaş ortamında petrol yukari gitse bile servis şirketleri farklı hareket edebilir.",
       "tarama_yontemi": "sektor liderligi"
+    },
+    {
+      "id": "SWING-022",
+      "sembol": "CEG",
+      "giris_tarihi": "2026-03-02",
+      "cikis_tarihi": "2026-03-09",
+      "giris_fiyati": 328.56,
+      "cikis_fiyati": 311.98,
+      "kar_zarar_yuzde": -5.05,
+      "tutulan_gun": 7,
+      "cikis_nedeni": "Stop-loss tetiklendi — $312.13 altında kapanış, nükleer enerji momentum kaybı",
+      "sonuc": "ZARAR",
+      "ders": "VIX 31+ ortamında momentum hisseleri hızla geri çekilebilir. Yüksek beta swing'lerde stop disiplini hayati."
     }
   ],
   "istatistikler": {

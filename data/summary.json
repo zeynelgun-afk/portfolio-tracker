@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-03-06",
+  "son_guncelleme": "2026-03-09",
   "toplam_sermaye": 600000,
   "toplam_deger": 622346.38,
   "toplam_kar_zarar": 22346.38,
@@ -43,11 +43,14 @@
     },
     "swing_trade": {
       "isim": "Swing Trade (Simülasyon)",
-      "pozisyon_sayisi": 6,
-      "bos_slot": 4,
-      "durum": "6/10 pozisyon aktif"
+      "pozisyon_sayisi": 5,
+      "bos_slot": 5,
+      "durum": "5/10 pozisyon aktif"
     }
   },
   "benchmark_spy": -1.53,
-  "alpha": 5.25
+  "alpha": 5.25,
+  "son_islemler": [
+    "[SWING-ÇIKIŞ] CEG @311.98 — Stop-loss tetiklendi, -%5.05"
+  ]
 }

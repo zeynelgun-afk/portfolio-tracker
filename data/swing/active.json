@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-03-07T07:38:18.861257",
+  "son_guncelleme": "2026-03-09T13:52:25.484875",
   "not": "SWING TRADE SADECE SİMÜLASYON - Sadece % kazanç/kayıp takibi (MAX: 10 pozisyon)",
   "iran_krizi_hazirligi": {
     "tarih": "2026-03-01",
@@ -136,39 +136,6 @@
           "baslangic_trailing_stop": 60.28,
           "trailing_yuzde": 5,
           "aciklama": "Zirveden -%5 düşünce sat"
-        },
-        "durum": "Hedef bekleniyor"
-      }
-    },
-    {
-      "id": "SWING-022",
-      "sembol": "CEG",
-      "giris_tarihi": "2026-03-02",
-      "giris_fiyati": 328.56,
-      "guncel_fiyat": 319.06,
-      "guncel_kar_zarar_yuzde": -2.89,
-      "hedef_fiyat": 380.0,
-      "stop_loss": 312.13,
-      "tutulan_gun": 4,
-      "giris_nedeni": "Iran krizi enerji guvenligi endiselerini artirdi. CEG ABD'nin en buyuk nukleer operatoru. Microsoft AI data center anlasmasi ikinci katalizor. Watchlist hedef giris araliginda.",
-      "katalizor": "Iran enerji krizi nukleer talebi artiriyor, Microsoft AI data center anlasmasi, 1M +21% momentum",
-      "tez": "Nukleer enerji 'yerli ve temiz' enerji olarak yeniden gundemde. Petrol soku nukleer alternatif argümanini guclendiriyor. AI data center elektrik talebi yapısal artista.",
-      "zaman_cercevesi": "7-14 gun",
-      "risk": "Nukleer duzenleme riski, tech/AI harcama yavaslama endisesi",
-      "durum": "✅ Normal aralıkta",
-      "tarama_yontemi": "sektor liderligi",
-      "son_guncelleme": "2026-03-07T07:38:18.861257",
-      "partial_exit_plan": {
-        "hedef_ulasildiginda": {
-          "aksiyon": "%50 POZISYONU SAT",
-          "satis_fiyati": 380.0,
-          "sebep": "Kar garantiye al"
-        },
-        "kalan_50_icin": {
-          "aksiyon": "TRAILING STOP AKTIF",
-          "baslangic_trailing_stop": 312.13,
-          "trailing_yuzde": 5,
-          "aciklama": "Zirveden -%5 dusunce sat"
         },
         "durum": "Hedef bekleniyor"
       }
