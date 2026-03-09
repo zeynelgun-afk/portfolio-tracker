@@ -7,11 +7,11 @@
   "portfolyolar": {
     "dengeli": {
       "isim": "Dengeli Portföy",
-      "deger": 113355.12,
+      "deger": 113045.39,
       "maliyet": 100000,
-      "kar_zarar": 13355.119999999995,
-      "kar_zarar_yuzde": 13.36,
-      "pozisyon_sayisi": 6,
+      "kar_zarar": 13045.39,
+      "kar_zarar_yuzde": 13.05,
+      "pozisyon_sayisi": 5,
       "nakit": {
         "miktar": 38051.11,
         "para_birimi": "USD"
@@ -43,9 +43,12 @@
     },
     "swing_trade": {
       "isim": "Swing Trade (Simülasyon)",
-      "pozisyon_sayisi": 7,
-      "bos_slot": 3,
-      "durum": "7/10 pozisyon aktif"
+      "pozisyon_sayisi": 6,
+      "bos_slot": 4,
+      "durum": "6/10 pozisyon aktif"
     }
-  }
+  },
+  "son_islemler": [
+    "[ROTASYON] KOS @2.58 +%59.6, XLE @56.17 %50 kısmi, HAL swing -%5.1"
+  ]
 }

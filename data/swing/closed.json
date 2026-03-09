@@ -159,6 +159,19 @@
       "cikis_nedeni": "13 gün tutuldu, bugün -%3 düşüş, stop-loss'a çok yakın. Kâr korunarak çıkıldı",
       "sonuc": "KAZANÇ",
       "ders": "Endüstriyel momentum yavaşladığında erken çıkmak doğru karar. Stop'a yaklaşmayı beklemek gereksiz risk."
+    },
+    {
+      "id": "SWING-020",
+      "sembol": "HAL",
+      "giris_tarihi": "2026-02-24",
+      "cikis_tarihi": "2026-03-09",
+      "giris_fiyati": 36.24,
+      "cikis_fiyati": 34.39,
+      "kar_zarar_yuzde": -5.1,
+      "tutulan_gun": 13,
+      "cikis_nedeni": "Savaş bitti sinyali, petrol geri çekilmesi, enerji rotasyonu",
+      "sonuc": "ZARAR",
+      "ders": "Petrol servis şirketleri savaş sona erdiğinde ilk etkilenir."
     }
   ],
   "istatistikler": {

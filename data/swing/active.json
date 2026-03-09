@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-03-09T19:22:26.905947",
+  "son_guncelleme": "2026-03-09T19:53:32.715771",
   "not": "SWING TRADE SADECE SİMÜLASYON - Sadece % kazanç/kayıp takibi (MAX: 10 pozisyon)",
   "iran_krizi_hazirligi": {
     "tarih": "2026-03-01",
@@ -190,25 +190,6 @@
       "risk": "VIX yüksek, nükleer enerji sentiment dönüşü",
       "durum": "✅ Normal aralıkta",
       "tarama_yontemi": "momentum",
-      "son_guncelleme": "2026-03-09T19:22:26.905947"
-    },
-    {
-      "id": "SWING-020",
-      "sembol": "HAL",
-      "giris_tarihi": "2026-02-24",
-      "giris_fiyati": 36.24,
-      "guncel_fiyat": 34.61,
-      "guncel_kar_zarar_yuzde": -4.5,
-      "hedef_fiyat": 39.86,
-      "stop_loss": 34.36,
-      "tutulan_gun": 13,
-      "giris_nedeni": "Petrol hizmetleri, savaş ortamında artan sondaj talebi",
-      "katalizor": "İran savaşı, petrol fiyat artışı",
-      "tez": "Halliburton petrol hizmetleri lideri, petrol fiyatıyla doğru korelasyon",
-      "zaman_cercevesi": "7-14 gün",
-      "risk": "Petrol fiyat geri çekilmesi, G7 rezerv salımı",
-      "durum": "⚠️ Stop-loss yakın (0.7%)",
-      "tarama_yontemi": "sektor liderligi",
       "son_guncelleme": "2026-03-09T19:22:26.905947"
     }
   ],

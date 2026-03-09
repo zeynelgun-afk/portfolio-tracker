@@ -2,7 +2,7 @@
   "portfoy_adi": "Dengeli Portföy",
   "baslangic_sermaye": 100000,
   "nakit": {
-    "miktar": 38051.11,
+    "miktar": 50291.77,
     "para_birimi": "USD"
   },
   "pozisyonlar": [
@@ -22,25 +22,7 @@
       "giris_tarihi": "2026-02-17",
       "giris_fiyati": 20.67,
       "giris_nedeni": "Initial position - Oil & gas E&P",
-      "agirlik_yuzde": 14.55
-    },
-    {
-      "sembol": "KOS",
-      "isim": "Kosmos Energy Ltd",
-      "sektor": "Enerji",
-      "adet": 1740,
-      "maliyet_baz": 1.617,
-      "guncel_fiyat": 2.68,
-      "yatirim": 2813.58,
-      "guncel_deger": 4663.200000000001,
-      "kar_zarar": 1849.6200000000008,
-      "kar_zarar_yuzde": 65.74,
-      "gunluk_degisim_yuzde": 0,
-      "son_guncelleme": "2026-03-09T19:22:26.899233",
-      "giris_tarihi": "2026-02-17",
-      "giris_fiyati": 1.617,
-      "giris_nedeni": "Initial position - Deep value offshore",
-      "agirlik_yuzde": 4.11
+      "agirlik_yuzde": 14.59
     },
     {
       "sembol": "MO",
@@ -58,25 +40,25 @@
       "giris_tarihi": "2026-02-17",
       "giris_fiyati": 67.44,
       "giris_nedeni": "Initial position - Dividend defensive",
-      "agirlik_yuzde": 15.74
+      "agirlik_yuzde": 15.79
     },
     {
       "sembol": "XLE",
       "isim": "Energy Select Sector SPDR Fund",
       "sektor": "Enerji ETF",
-      "adet": 277,
+      "adet": 139,
       "maliyet_baz": 53.34,
-      "guncel_fiyat": 56.66,
-      "yatirim": 14775.18,
-      "guncel_deger": 15694.82,
-      "kar_zarar": 919.6399999999994,
-      "kar_zarar_yuzde": 6.22,
+      "guncel_fiyat": 56.17,
+      "yatirim": 7414.26,
+      "guncel_deger": 7807.63,
+      "kar_zarar": 393.37,
+      "kar_zarar_yuzde": 5.31,
       "gunluk_degisim_yuzde": 0,
-      "son_guncelleme": "2026-03-09T19:22:26.899233",
+      "son_guncelleme": "2026-03-09T19:53:32.715771",
       "giris_tarihi": "2026-02-17",
       "giris_fiyati": 53.34,
       "giris_nedeni": "Initial position - Energy sector ETF",
-      "agirlik_yuzde": 13.85
+      "agirlik_yuzde": 6.91
     },
     {
       "sembol": "RGLD",
@@ -94,7 +76,7 @@
       "giris_tarihi": "2026-02-17",
       "giris_fiyati": 274.4,
       "giris_nedeni": "Initial position - Gold royalty",
-      "agirlik_yuzde": 5.42
+      "agirlik_yuzde": 5.44
     },
     {
       "sembol": "XLI",
@@ -112,12 +94,12 @@
       "giris_tarihi": "2026-02-19",
       "giris_fiyati": 175.04,
       "giris_nedeni": "Otomatik ekleme - Endüstriyel",
-      "agirlik_yuzde": 12.75
+      "agirlik_yuzde": 12.79
     }
   ],
-  "son_guncelleme": "2026-03-09T19:22:26.899233",
-  "toplam_deger": 113355.12,
-  "toplam_getiri_yuzde": 13.36,
+  "son_guncelleme": "2026-03-09T19:53:32.715771",
+  "toplam_deger": 113045.39,
+  "toplam_getiri_yuzde": 13.05,
   "iran_krizi_hazirligi": {
     "tarih": "2026-03-01",
     "durum": "Enerji ağırlıklı portföy - İran krizinden maksimum fayda bekleniyor",
@@ -162,6 +144,24 @@
       "fiyat": 26.5,
       "tutar": 11024.0,
       "aciklama": "Kısmi kâr alma (%40) — RSI 74 aşırı alım, ağırlık %24 çok yüksek, kâr garantiye alındı"
+    },
+    {
+      "tarih": "2026-03-09",
+      "islem_tipi": "SATIŞ",
+      "sembol": "KOS",
+      "adet": 1740,
+      "fiyat": 2.58,
+      "tutar": 4489.2,
+      "aciklama": "Tam çıkış — savaş bitti sinyali, enerji rotasyonu, +%59.6 kâr"
+    },
+    {
+      "tarih": "2026-03-09",
+      "islem_tipi": "SATIŞ",
+      "sembol": "XLE",
+      "adet": 138,
+      "fiyat": 56.17,
+      "tutar": 7751.46,
+      "aciklama": "Kısmi %50 — enerji rotasyonu, tech'e geçiş"
     }
   ],
   "notes": [
@@ -179,6 +179,11 @@
       "date": "2026-03-09T18:42:04.891279",
       "type": "rebalance",
       "content": "SM %40 kısmi kâr alma: 416 adet @$26.5 satıldı. Gerçekleşen kâr: $+2,425.28 (+28.2%). RSI 74 aşırı alım + ağırlık %24 dengesizliği nedeniyle."
+    },
+    {
+      "date": "2026-03-09T19:53:32.715771",
+      "type": "rebalance",
+      "content": "Enerji rotasyonu: KOS tam @$2.58 (+59.6%), XLE %50 @$56.17. Savaş bitti sinyali + tech'e para akışı."
     }
   ]
 }
