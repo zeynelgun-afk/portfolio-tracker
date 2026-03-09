@@ -1,6 +1,6 @@
 {
   "portfoy_adi": "Değer + Temettü",
-  "baslangic_sermaye": 130102.5,
+  "baslangic_sermaye": 90000,
   "nakit": {
     "miktar": 8371.68,
     "para_birimi": "USD"
@@ -154,9 +154,9 @@
       "stop_notu": "Keytruda baskısı / Çin müzakereleri kötüleşirse çıkış. $112-113 tez bozulma seviyesi."
     }
   ],
-  "son_guncelleme": "2026-03-09T19:57:42.818756",
+  "son_guncelleme": "2026-03-09T20:04:24.134113",
   "toplam_deger": 143810.58,
-  "toplam_getiri_yuzde": 10.54,
+  "toplam_getiri_yuzde": 59.79,
   "transactions": [
     {
       "tarih": "2026-02-25",
