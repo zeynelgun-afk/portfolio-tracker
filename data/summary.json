@@ -43,9 +43,9 @@
     },
     "swing_trade": {
       "isim": "Swing Trade (Simülasyon)",
-      "pozisyon_sayisi": 5,
-      "bos_slot": 5,
-      "durum": "5/10 pozisyon aktif"
+      "pozisyon_sayisi": 7,
+      "bos_slot": 3,
+      "durum": "7/10 pozisyon aktif"
     }
   }
 }

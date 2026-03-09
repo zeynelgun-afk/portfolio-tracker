@@ -159,33 +159,6 @@
       "cikis_nedeni": "13 gün tutuldu, bugün -%3 düşüş, stop-loss'a çok yakın. Kâr korunarak çıkıldı",
       "sonuc": "KAZANÇ",
       "ders": "Endüstriyel momentum yavaşladığında erken çıkmak doğru karar. Stop'a yaklaşmayı beklemek gereksiz risk."
-    },
-    {
-      "id": "SWING-020",
-      "sembol": "HAL",
-      "giris_tarihi": "2026-03-02",
-      "cikis_tarihi": "2026-03-04",
-      "giris_fiyati": 36.245,
-      "cikis_fiyati": 34.33,
-      "kar_zarar_yuzde": -5.28,
-      "tutulan_gun": 2,
-      "cikis_nedeni": "Stop-loss tetiklendi. Kapanış $34.33, stop $34.36 altında.",
-      "sonuc": "ZARAR",
-      "ders": "Kriz rallisi kuralı tekrar doğrulandı. 2 mart girişi, petrol rallisine rağmen enerji servis hisseleri tepki vermedi. Savaş ortamında petrol yukari gitse bile servis şirketleri farklı hareket edebilir.",
-      "tarama_yontemi": "sektor liderligi"
-    },
-    {
-      "id": "SWING-022",
-      "sembol": "CEG",
-      "giris_tarihi": "2026-03-02",
-      "cikis_tarihi": "2026-03-09",
-      "giris_fiyati": 328.56,
-      "cikis_fiyati": 311.98,
-      "kar_zarar_yuzde": -5.05,
-      "tutulan_gun": 7,
-      "cikis_nedeni": "Stop-loss tetiklendi — $312.13 altında kapanış, nükleer enerji momentum kaybı",
-      "sonuc": "ZARAR",
-      "ders": "VIX 31+ ortamında momentum hisseleri hızla geri çekilebilir. Yüksek beta swing'lerde stop disiplini hayati."
     }
   ],
   "istatistikler": {

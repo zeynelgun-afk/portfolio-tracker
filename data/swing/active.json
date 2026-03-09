@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-03-09T18:06:49.511572",
+  "son_guncelleme": "2026-03-09T18:36:07.521174",
   "not": "SWING TRADE SADECE SİMÜLASYON - Sadece % kazanç/kayıp takibi (MAX: 10 pozisyon)",
   "iran_krizi_hazirligi": {
     "tarih": "2026-03-01",
@@ -172,6 +172,44 @@
         },
         "durum": "Hedef bekleniyor"
       }
+    },
+    {
+      "id": "SWING-022",
+      "sembol": "CEG",
+      "giris_tarihi": "2026-03-02",
+      "giris_fiyati": 328.56,
+      "guncel_fiyat": 318.165,
+      "guncel_kar_zarar_yuzde": -3.16,
+      "hedef_fiyat": 380.0,
+      "stop_loss": 312.13,
+      "tutulan_gun": 7,
+      "giris_nedeni": "Nükleer enerji momentum, savaş ortamında enerji talebi",
+      "katalizor": "İran savaş tırmanması, enerji fiyat artışı",
+      "tez": "Constellation Energy nükleer enerji lideri, AI veri merkezi talebi",
+      "zaman_cercevesi": "7-14 gün",
+      "risk": "VIX yüksek, nükleer enerji sentiment dönüşü",
+      "durum": "Stop altında ama Zeynel override — aktif devam",
+      "tarama_yontemi": "momentum",
+      "son_guncelleme": "2026-03-09T18:36:07.521174"
+    },
+    {
+      "id": "SWING-020",
+      "sembol": "HAL",
+      "giris_tarihi": "2026-02-24",
+      "giris_fiyati": 36.24,
+      "guncel_fiyat": 34.375,
+      "guncel_kar_zarar_yuzde": -5.15,
+      "hedef_fiyat": 39.86,
+      "stop_loss": 34.36,
+      "tutulan_gun": 13,
+      "giris_nedeni": "Petrol hizmetleri, savaş ortamında artan sondaj talebi",
+      "katalizor": "İran savaşı, petrol fiyat artışı",
+      "tez": "Halliburton petrol hizmetleri lideri, petrol fiyatıyla doğru korelasyon",
+      "zaman_cercevesi": "7-14 gün",
+      "risk": "Petrol fiyat geri çekilmesi, G7 rezerv salımı",
+      "durum": "Daha önce stop tetiklendi ama Zeynel kapatmadı — aktif devam",
+      "tarama_yontemi": "sektor liderligi",
+      "son_guncelleme": "2026-03-09T18:36:07.521174"
     }
   ],
   "ozet": {
