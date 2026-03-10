@@ -72,4 +72,4 @@ date,action,symbol,shares,price,total,reason
 2026-03-09,SELL,KOS,1740,2.58,4489.2,"Dengeli - Tam çıkış, enerji rotasyonu"
 2026-03-09,SELL,XLE,138,56.17,7751.46,"Dengeli - %50 kısmi, enerji rotasyonu"
 2026-03-09,SELL,HAL,1,34.39,34.39,"Swing - savaş bitti sinyali"
-2026-03-10,SELL,TYL,20,352.63,7052.60,"İzleyen zarar kes tetiklendi - TYL trailing stop $360.41 kırıldı - Kâr +%8.91 - Agresif portföy"
+2026-03-10,SELL,TYL,20,360.00,7200.00,"İzleyen zarar kes tetiklendi - TYL trailing stop, çıkış @360.00 - Kâr +%11.19 - Agresif portföy"
