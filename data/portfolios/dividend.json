@@ -2,7 +2,7 @@
   "portfoy_adi": "Değer + Temettü",
   "baslangic_sermaye": 90000,
   "nakit": {
-    "miktar": 8371.68,
+    "miktar": -6614.94,
     "para_birimi": "USD"
   },
   "pozisyonlar": [
@@ -152,9 +152,49 @@
       "stop_loss": 112.5,
       "stop_tipi": "zihinsel_esik",
       "stop_notu": "Keytruda baskısı / Çin müzakereleri kötüleşirse çıkış. $112-113 tez bozulma seviyesi."
+    },
+    {
+      "sembol": "ABBV",
+      "isim": "AbbVie Inc.",
+      "sektor": "Sağlık",
+      "adet": 33,
+      "maliyet_baz": 227.07,
+      "guncel_fiyat": 227.07,
+      "yatirim": 7493.31,
+      "guncel_deger": 7493.31,
+      "kar_zarar": 0.0,
+      "kar_zarar_yuzde": 0.0,
+      "gunluk_degisim_yuzde": 0.0,
+      "son_guncelleme": "2026-03-10T19:32:09.280613",
+      "giris_tarihi": "2026-03-10",
+      "giris_fiyati": 227.07,
+      "giris_nedeni": "Sağlık sektörü pullback girişi — RSI 49, her iki SMA üzeri, 5 günlük -%2.7 geri çekilme. İmmünoloji ve kanser portföyü güçlü, Humira patent kaybı sonrası Skyrizi/Rinvoq büyümesi devam ediyor. Portföyde healthcare yok, çeşitlendirme sağlıyor.",
+      "agirlik_yuzde": 5.21,
+      "stop_loss": 204.36,
+      "hedef_fiyat": 261.13
+    },
+    {
+      "sembol": "ABBV",
+      "isim": "AbbVie Inc.",
+      "sektor": "Sağlık",
+      "adet": 33,
+      "maliyet_baz": 227.07,
+      "guncel_fiyat": 227.07,
+      "yatirim": 7493.31,
+      "guncel_deger": 7493.31,
+      "kar_zarar": 0.0,
+      "kar_zarar_yuzde": 0.0,
+      "gunluk_degisim_yuzde": 0.0,
+      "son_guncelleme": "2026-03-10T19:32:14.676319",
+      "giris_tarihi": "2026-03-10",
+      "giris_fiyati": 227.07,
+      "giris_nedeni": "Sağlık sektörü pullback girişi — RSI 49, her iki SMA üzeri, 5 günlük -%2.7 geri çekilme. İmmünoloji ve kanser portföyü güçlü, Humira patent kaybı sonrası Skyrizi/Rinvoq büyümesi devam ediyor. Portföyde healthcare yok, çeşitlendirme sağlıyor.",
+      "agirlik_yuzde": 5.21,
+      "stop_loss": 204.36,
+      "hedef_fiyat": 261.13
     }
   ],
-  "son_guncelleme": "2026-03-10T19:13:17.892319",
+  "son_guncelleme": "2026-03-10T19:32:14.676319",
   "toplam_deger": 143733.56,
   "toplam_getiri_yuzde": 59.7,
   "transactions": [
@@ -175,6 +215,24 @@
       "fiyat": 120.41,
       "tutar": 30102.5,
       "aciklama": "Agresif portföyden transfer - Sağlık temettü hissesi"
+    },
+    {
+      "tarih": "2026-03-10",
+      "islem_tipi": "ALIŞ",
+      "sembol": "ABBV",
+      "adet": 33,
+      "fiyat": 227.07,
+      "tutar": 7493.31,
+      "aciklama": "Temettü portföyü — ABBV pullback girişi, RSI 49, healthcare çeşitlendirmesi"
+    },
+    {
+      "tarih": "2026-03-10",
+      "islem_tipi": "ALIŞ",
+      "sembol": "ABBV",
+      "adet": 33,
+      "fiyat": 227.07,
+      "tutar": 7493.31,
+      "aciklama": "Temettü portföyü — ABBV pullback girişi, RSI 49, healthcare çeşitlendirmesi"
     }
   ],
   "notes": [
