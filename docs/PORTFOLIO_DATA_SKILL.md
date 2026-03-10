@@ -145,7 +145,7 @@ agirlik_yuzde = (guncel_deger / toplam_deger) × 100  [her pozisyon için]
 ```json
 {
   "son_guncelleme": "2026-02-20T16:36:55.511599",
-  "not": "SWING TRADE SADECE SİMÜLASYON - Sadece % kazanç/kayıp takibi (MAX: 10 pozisyon)",
+  "not": "SWING TRADE SADECE SİMÜLASYON - Sadece % kazanç/kayıp takibi (MAX: 8 pozisyon)",
   "aktif_pozisyonlar": [
     {
       "id": "SWING-001",
@@ -440,7 +440,7 @@ date,action,symbol,shares,price,total,reason
 
 | Kural | Değer |
 |-------|-------|
-| Max eşzamanlı pozisyon | 10 |
+| Max eşzamanlı pozisyon | 8 |
 | Stop-loss | %5 |
 | Kar hedefi | %10 |
 | Min R:R oranı | 2:1 |
