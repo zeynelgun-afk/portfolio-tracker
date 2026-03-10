@@ -1,0 +1,72 @@
+name: Günlük Swing Trade Taraması (EP + Breakout)
+
+on:
+  schedule:
+    # Her iş günü 21:30 UTC = 00:30 TR (piyasa kapanışı sonrası)
+    # Yaz saati: NYSE 20:00 UTC kapanır → 21:30'da veri hazır
+    # Kış saati: NYSE 21:00 UTC kapanır → 21:30'da veri hazır
+    - cron: '30 21 * * 1-5'
+
+  # Manuel tetikleme (GitHub UI'dan "Run workflow" butonu)
+  workflow_dispatch:
+
+jobs:
+  swing-tarama:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Repo'yu çek
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Python 3.10 kur
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Bağımlılıkları yükle
+        run: |
+          pip install --upgrade pip
+          pip install requests
+
+      - name: Git yapılandır
+        run: |
+          git config --local user.email "zeynelgun@users.noreply.github.com"
+          git config --local user.name "Finzora AI"
+
+      - name: Tarama scriptini çalıştır
+        run: |
+          python3 scripts/daily_scan.py
+        env:
+          PYTHONUNBUFFERED: 1
+          FMP_API_KEY: ${{ secrets.FMP_API_KEY }}
+
+      - name: Değişiklikleri kontrol et
+        id: kontrol
+        run: |
+          if [[ -n $(git status --porcelain) ]]; then
+            echo "degisiklik_var=true" >> $GITHUB_OUTPUT
+          else
+            echo "degisiklik_var=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Commit ve push (3 deneme)
+        if: steps.kontrol.outputs.degisiklik_var == 'true'
+        run: |
+          for i in 1 2 3; do
+            echo "Deneme $i/3..."
+            git pull --rebase origin main || true
+            git add data/swing/daily_scan.json
+            git commit -m "[TARAMA] Swing adayları — $(date +'%d %b %Y')" || true
+            if git push; then
+              echo "✅ Push başarılı"
+              exit 0
+            fi
+            sleep 5
+          done
+          echo "❌ Push 3 denemede başarısız"
+          exit 1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
