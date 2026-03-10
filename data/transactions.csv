@@ -75,3 +75,4 @@ date,action,symbol,shares,price,total,reason
 2026-03-10,SELL,TYL,20,360.00,7200.00,"İzleyen zarar kes tetiklendi - TYL trailing stop, çıkış @360.00 - Kâr +%11.19 - Agresif portföy"
 2026-03-10,BUY,CRDO,87,114.28,9942.36,"AI tedarik zinciri - SerDes/ZeroFlap optik - yarım poz - stop $108 - hedef $130+ - Agresif portföy"
 2026-03-10,BUY,ALMU,216,16.19,3497.04,"AI fotonik/optik - NVDA optik yatırımı tedarik zinciri - spekülatif küçük poz - stop $14.80 - hedef $18.62 - Swing"
+2026-03-10,BUY,GLW,109,136.53,14881.77,"AI optik fiber arabağlantı - veri merkezi tedarik zinciri - yarım poz - stop $125.61 - hedef $162.10 - Agresif portföy"
