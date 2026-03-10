@@ -432,7 +432,7 @@ kontrol 3: yön korelasyonu
 - RSI 30-65 arası (aşırı alımda değil)
 - fiyat SMA50 üzerinde (veya SMA50'ye yaklaşan RSI < 35 dip alım)
 - 5 günlük momentum > +%3
-- mevcut açık slot var mı? (max 10 - aktif sayı = boş slot)
+- mevcut açık slot var mı? (max 8 - aktif sayı = boş slot)
 ```
 
 **her aday için zorunlu analiz**:
