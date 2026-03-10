@@ -87,7 +87,7 @@ not: bu hafta piyasa gündemini veri değil makro akışlar ve çin haberleri be
 | lasr | $67.69 | $61.00 | **-%9.88** | +%4.02 | 56.2 | ⚠️ stop $60 — sınırda |
 
 **kritik notlar:**
-- **gilt:** dün tek günde +%8.80 sert yükseliş — haberini takip et, bu hareketin ardında ne var?
+- **gilt:** dün +%8.80 yükseldi. spesifik bir tetikleyici yok — genel piyasa toparlamasına binmiş hareket. arka planda birkaç haftadır pozitif haber akışı var: q4 2025 beklenti üstü kazanç (eps $0.20 vs tahmin $0.13), mart başında savunma ve havacılık ifc siparişleri, satellite 2026 etkinliği (23-26 mart, washington) öncesi beklenti. needham "al" derecelendirmesi, $20 hedef fiyat koruyor. tez sağlam, ani geri çekilme riski düşük.
 - **lasr:** $60 stop'a çok yakın. dün $4 toparlayarak $61'de kapandı. stop tetiklenebilir — izle.
 - **tyl:** trailing stop (izleyen zarar kes) $360.41, kapanış $367.35. stop üzerinde ancak dün -%1.93 geriledi. dikkatli ol.
 - **4 boş slot:** vix stabilize olmadan yeni giriş yok. crdo ve mrvl tezi izlemeye devam.
@@ -159,17 +159,15 @@ vrt öne çıkıyor (yukarıda b bölümünde de var). adea (lisanslama teknoloj
 
 1. **swing — t pozisyonu:** stop $27.25, güncel $27.53. açılışta ilk 15 dakika izle. baskı devam ederse stop tetiklenecek — erken kapanmak istersen karar ver.
 
-2. **gilt haberini araştır:** dün +%8.80 sert yükseldi. haberin özü ne? sürdürülebilir mi yoksa kısa vadeli spike (ani fiyat sıçraması) mi?
+2. **sm dengeli portföyde kâr alma:** rsi 72.7, +%26 kârda. kısmi çıkış zamanlaması hakkında karar gerekiyor.
 
-3. **sm dengeli portföyde kâr alma:** rsi 72.7, +%26 kârda. kısmi çıkış zamanlaması hakkında karar gerekiyor.
+3. **lasr stop kontrolü:** $61.00 kapandı, stop $60. seans içi geri çekilme olursa tetiklenebilir.
 
-4. **lasr stop kontrolü:** $61.00 kapandı, stop $60. seans içi geri çekilme olursa tetiklenebilir.
+4. **tyl trailing stop:** $367.35 kapandı, stop $360.41. güvende ama takip et.
 
-5. **tyl trailing stop:** $367.35 kapandı, stop $360.41. güvende ama takip et.
+5. **vrt izleme listesi:** yapay zeka altyapı teması, güçlü hacim. agresif portföy için değerlendirilebilir.
 
-6. **vrt izleme listesi:** yapay zeka altyapı teması, güçlü hacim. agresif portföy için değerlendirilebilir.
-
-7. **çin ihracat verisi yorumu:** +%21.8 büyük sürpriz — enerji, emtia ve küresel büyüme hisseleri bugün güçlenebilir. xle ve rgld için olumlu arka plan.
+6. **çin ihracat verisi yorumu:** +%21.8 büyük sürpriz — enerji, emtia ve küresel büyüme hisseleri bugün güçlenebilir. xle ve rgld için olumlu arka plan.
 
 ---
 
