@@ -1,51 +1,63 @@
 {
   "son_guncelleme": "2026-03-09",
-  "toplam_sermaye": 600000,
-  "toplam_deger": 624855.97,
-  "toplam_kar_zarar": 24855.97,
+  "simulasyon_donemi": "17 Şubat 2026 - 9 Mart 2026",
+  "islem_gunleri": 15,
+  "toplam_sermaye": 600000.0,
+  "toplam_deger": 624854.58,
+  "toplam_kar_zarar": 24854.58,
   "toplam_kar_zarar_yuzde": 4.14,
+  "benchmark_spy": 2.46,
+  "alpha": 1.68,
   "portfolyolar": {
     "dengeli": {
       "isim": "Dengeli Portföy",
-      "deger": 112988.62,
-      "maliyet": 40000,
-      "kar_zarar": 72988.62,
-      "kar_zarar_yuzde": 182.47,
+      "deger": 112987.23,
+      "maliyet": 100000.0,
+      "kar_zarar": 12987.23,
+      "kar_zarar_yuzde": 12.99,
       "pozisyon_sayisi": 5,
       "nakit": {
         "miktar": 50291.77,
         "para_birimi": "USD"
-      }
+      },
+      "durum": "BAŞARILI"
     },
     "agresif": {
       "isim": "Agresif Büyüme Portföyü",
       "deger": 367973.52,
-      "maliyet": 140000,
-      "kar_zarar": 227973.52000000002,
-      "kar_zarar_yuzde": 162.84,
+      "maliyet": 400000.0,
+      "kar_zarar": -32026.48,
+      "kar_zarar_yuzde": -8.01,
       "pozisyon_sayisi": 6,
       "nakit": {
         "miktar": 286978.18,
         "para_birimi": "USD"
-      }
+      },
+      "durum": "SERMAYE KORUMA"
     },
     "temettü": {
       "isim": "Değer + Temettü Portföyü",
       "deger": 143893.83,
-      "maliyet": 90000,
-      "kar_zarar": 53893.82999999999,
-      "kar_zarar_yuzde": 59.88,
+      "maliyet": 100000.0,
+      "kar_zarar": 43893.83,
+      "kar_zarar_yuzde": 43.89,
       "pozisyon_sayisi": 8,
       "nakit": {
         "miktar": 8371.68,
         "para_birimi": "USD"
-      }
+      },
+      "durum": "BAŞARILI"
     },
     "swing_trade": {
       "isim": "Swing Trade (Simülasyon)",
-      "pozisyon_sayisi": 6,
-      "bos_slot": 4,
-      "durum": "6/10 pozisyon aktif"
+      "pozisyon_sayisi": 5,
+      "ortalama_getiri_yuzde": 1.64,
+      "bos_slot": 5,
+      "toplam_trade": 13,
+      "kazanc": 9,
+      "kayip": 4,
+      "kazanc_orani": 69.2,
+      "durum": "5/10 pozisyon aktif"
     }
   }
 }

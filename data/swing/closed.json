@@ -172,6 +172,19 @@
       "cikis_nedeni": "Savaş bitti sinyali, petrol geri çekilmesi, enerji rotasyonu",
       "sonuc": "ZARAR",
       "ders": "Petrol servis şirketleri savaş sona erdiğinde ilk etkilenir."
+    },
+    {
+      "id": "SWING-022",
+      "sembol": "CEG",
+      "giris_tarihi": "2026-03-02",
+      "cikis_tarihi": "2026-03-09",
+      "giris_fiyati": 328.56,
+      "cikis_fiyati": 311.98,
+      "kar_zarar_yuzde": -5.05,
+      "tutulan_gun": 7,
+      "cikis_nedeni": "stop-loss tetiklendi ($312.13). gün içi $311.98'da satıldı.",
+      "sonuc": "ZARAR",
+      "ders": "kriz rallisi girişi (2 mart). ilk günün momentumunu kovalama — 5/5 kriz pozisyonu zararda kapandı."
     }
   ],
   "istatistikler": {

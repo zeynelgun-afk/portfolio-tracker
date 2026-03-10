@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-03-09T21:28:20.763051",
+  "son_guncelleme": "2026-03-10T06:38:52.510038",
   "not": "SWING TRADE SADECE SİMÜLASYON - Sadece % kazanç/kayıp takibi (MAX: 10 pozisyon)",
   "iran_krizi_hazirligi": {
     "tarih": "2026-03-01",
@@ -27,7 +27,7 @@
       "zaman_cercevesi": "7-10 gün",
       "risk": "Rekabet baskısı",
       "durum": "⚠️ Stop-loss yakın (1.0%)",
-      "son_guncelleme": "2026-03-09T21:28:20.763051",
+      "son_guncelleme": "2026-03-10T06:38:52.510038",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
@@ -59,7 +59,7 @@
       "zaman_cercevesi": "7-10 gün",
       "risk": "Faiz oranı yükselmesi, düzenleme riski",
       "durum": "✅ Normal aralıkta",
-      "son_guncelleme": "2026-03-09T21:28:20.763051",
+      "son_guncelleme": "2026-03-10T06:38:52.510038",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
@@ -91,7 +91,7 @@
       "zaman_cercevesi": "7-12 gün",
       "risk": "Healthcare düzenlemeleri, Medicare reimbursement değişiklikleri",
       "durum": "✅ Normal aralıkta",
-      "son_guncelleme": "2026-03-09T21:28:20.763051",
+      "son_guncelleme": "2026-03-10T06:38:52.510038",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
@@ -124,7 +124,7 @@
       "risk": "Tech sektörü genelinde satış baskısı devam edebilir, 52W low kırılırsa trend bozulur",
       "durum": "🎯 Hedefe yakın (4.4%)",
       "tarama_yontemi": "RSI oversold",
-      "son_guncelleme": "2026-03-09T21:28:20.763051",
+      "son_guncelleme": "2026-03-10T06:38:52.510038",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
@@ -157,7 +157,7 @@
       "risk": "Jeopolitik risk-off ortaminda fintech basincı, yuksek beta, iran krizi devam ederse baski surer",
       "durum": "✅ Normal aralıkta",
       "tarama_yontemi": "earnings momentum",
-      "son_guncelleme": "2026-03-09T21:28:20.763051",
+      "son_guncelleme": "2026-03-10T06:38:52.510038",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZISYONU SAT",
@@ -172,25 +172,6 @@
         },
         "durum": "Hedef bekleniyor"
       }
-    },
-    {
-      "id": "SWING-022",
-      "sembol": "CEG",
-      "giris_tarihi": "2026-03-02",
-      "giris_fiyati": 328.56,
-      "guncel_fiyat": 322.99,
-      "guncel_kar_zarar_yuzde": -1.7,
-      "hedef_fiyat": 380.0,
-      "stop_loss": 312.13,
-      "tutulan_gun": 7,
-      "giris_nedeni": "Nükleer enerji momentum, savaş ortamında enerji talebi",
-      "katalizor": "İran savaş tırmanması, enerji fiyat artışı",
-      "tez": "Constellation Energy nükleer enerji lideri, AI veri merkezi talebi",
-      "zaman_cercevesi": "7-14 gün",
-      "risk": "VIX yüksek, nükleer enerji sentiment dönüşü",
-      "durum": "✅ Normal aralıkta",
-      "tarama_yontemi": "momentum",
-      "son_guncelleme": "2026-03-09T21:28:20.763051"
     }
   ],
   "ozet": {
