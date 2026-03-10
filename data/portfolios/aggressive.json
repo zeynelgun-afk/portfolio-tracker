@@ -27,7 +27,7 @@
   },
   "baslangic_sermaye": 140000,
   "nakit": {
-    "miktar": 294178.18,
+    "miktar": 284235.82,
     "para_birimi": "USD"
   },
   "pozisyonlar": [
@@ -252,10 +252,30 @@
       },
       "stop_tipi": "override_genis",
       "stop_override_notu": "5 Mart override - stop $65→$62 genişletildi. Savaş rallisi bekleniyor, RSI 61 güçlü. Maliyet 67.69."
+    },
+    {
+      "sembol": "CRDO",
+      "isim": "Credo Technology Group",
+      "sektor": "Teknoloji",
+      "adet": 87,
+      "maliyet_baz": 114.28,
+      "guncel_fiyat": 114.28,
+      "yatirim": 9942.36,
+      "guncel_deger": 9942.36,
+      "kar_zarar": 0.0,
+      "kar_zarar_yuzde": 0.0,
+      "gunluk_degisim_yuzde": 0.0,
+      "son_guncelleme": "2026-03-10T13:56:49.625605",
+      "giris_tarihi": "2026-03-10",
+      "giris_fiyati": 114.28,
+      "giris_nedeni": "AI tedarik zinciri tezi — SerDes/ZeroFlap optik arabağlantı lideri. AVGO+MRVL çift beat ile tez doğrulandı. 52H yüksekten -%46 geri çekilme, RSI 48 nötr. 11 analist Al önerisi. Yarım pozisyon (VIX 24, SMA50 üstü teyit bekleniyor). MU 18 Mart beat ederse tam pozisyona çıkılacak.",
+      "agirlik_yuzde": 2.7,
+      "stop_loss": 108.0,
+      "hedef_fiyat": 130.0
     }
   ],
-  "son_guncelleme": "2026-03-10T13:42:11.713746",
-  "toplam_deger": 367679.12,
+  "son_guncelleme": "2026-03-10T13:56:49.625605",
+  "toplam_deger": 367826.52,
   "toplam_getiri_yuzde": 162.63,
   "iran_krizi_hazirligi": {
     "tarih": "2026-03-01",
@@ -412,6 +432,11 @@
       "date": "2026-03-10T13:40:11.517755",
       "type": "exit",
       "content": "TYL satıldı @$360.00 | İzleyen zarar kes $360.41 bölgesinde | Kâr: +$724.40 (+%11.19) | 20 adet | Toplam gelir: $7,200.00"
+    },
+    {
+      "date": "2026-03-10T13:56:49.625605",
+      "type": "entry",
+      "content": "CRDO alındı @$114.28 | 87 adet | $9942.36 | Yarım poz (VIX 24) | Stop $108 | Hedef $130+ | AI çip tedarik zinciri tezi"
     }
   ],
   "aylik_performans": {
@@ -560,6 +585,15 @@
       "fiyat": 360.0,
       "tutar": 7200.0,
       "aciklama": "İzleyen zarar kes tetiklendi - TYL @360.00 - Trailing stop satışı. Kâr: +%11.19"
+    },
+    {
+      "tarih": "2026-03-10",
+      "islem_tipi": "ALIŞ",
+      "sembol": "CRDO",
+      "adet": 87,
+      "fiyat": 114.28,
+      "tutar": 9942.36,
+      "aciklama": "AI tedarik zinciri - SerDes/optik - yarım pozisyon - stop $108 - hedef $130+"
     }
   ]
 }
