@@ -27,7 +27,7 @@
   },
   "baslangic_sermaye": 140000,
   "nakit": {
-    "miktar": 294030.78,
+    "miktar": 294178.18,
     "para_birimi": "USD"
   },
   "pozisyonlar": [
@@ -254,7 +254,7 @@
       "stop_override_notu": "5 Mart override - stop $65→$62 genişletildi. Savaş rallisi bekleniyor, RSI 61 güçlü. Maliyet 67.69."
     }
   ],
-  "son_guncelleme": "2026-03-10T13:40:11.517755",
+  "son_guncelleme": "2026-03-10T13:42:11.713746",
   "toplam_deger": 367679.12,
   "toplam_getiri_yuzde": 162.63,
   "iran_krizi_hazirligi": {
@@ -411,7 +411,7 @@
     {
       "date": "2026-03-10T13:40:11.517755",
       "type": "exit",
-      "content": "TYL satıldı @$352.63 | İzleyen zarar kes $360.41 kırıldı | Kâr: +$577.00 (+%8.91) | 20 adet | Toplam gelir: $7052.60"
+      "content": "TYL satıldı @$360.00 | İzleyen zarar kes $360.41 bölgesinde | Kâr: +$724.40 (+%11.19) | 20 adet | Toplam gelir: $7,200.00"
     }
   ],
   "aylik_performans": {
@@ -557,9 +557,9 @@
       "islem_tipi": "SATIŞ",
       "sembol": "TYL",
       "adet": 20,
-      "fiyat": 352.63,
-      "tutar": 7052.6,
-      "aciklama": "İzleyen zarar kes tetiklendi - TYL @352.63 - Stop $360.41 kırıldı, trailing stop satışı. Kâr: +%8.91"
+      "fiyat": 360.0,
+      "tutar": 7200.0,
+      "aciklama": "İzleyen zarar kes tetiklendi - TYL @360.00 - Trailing stop satışı. Kâr: +%11.19"
     }
   ]
 }
