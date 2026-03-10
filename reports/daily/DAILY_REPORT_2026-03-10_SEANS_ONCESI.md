@@ -49,22 +49,6 @@ not: vix 24+ hâlâ yüksek — büyük pozisyon açmak için stabilizasyon bekl
 
 ---
 
-## 2.5 twitter takip listesi
-
-**@cheddarflow:** gld etf'den 10 yılın en büyük çıkışı — tek günde $2.91 milyar çıkış. aynı zamanda abd işgücü katılım oranı şubat'ta %62'ye geriledi, 2021'den bu yana en düşük seviye. emtia ve işgücü piyasası sinyalleri karışık.
-
-**@stocksavvyshay:** tsm (taiwan yarı iletken) şubat geliri yıllık bazda +%30 büyüdü, $10 milyar'a ulaştı — yapay zeka çip talebi güçlü. bitcoin $70k seviyesini aştı, iran barış anlaşması beklentisi fiyatlanıyor.
-
-**@trendspider:** spy için $656 "akşam yemeği iptali" seviyesi olarak işaret edildi — kritik destek. dün bu seviyenin çok üzerinde kapanıldı.
-
-**@jake__wujastyk:** zeta (dijital pazarlama) bugün boğa yutan mum (bullish engulfing) oluşturdu, ocak pivot vwap'ını kırmaya hazırlanıyor. hims s/r dönüşüm bölgesine geri döndü.
-
-**@onestoploss:** yapay zeka portföy yapısı için 6 katman önerisi — ekosistemin kendisi kesin kazanan olacak yorumu.
-
-**@berkdemirkiran_:** savaş/barış dinamikleri üzerine yorum — piyasa etki analizi paylaşıldı.
-
----
-
 ## 3. ekonomik takvim (bugün ve hafta)
 
 ### bugün (10 mart)
