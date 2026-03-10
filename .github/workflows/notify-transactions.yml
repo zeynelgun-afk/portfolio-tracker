@@ -1,0 +1,122 @@
+name: Notify New Transactions
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'data/transactions.csv'
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Find new transaction rows
+        id: diff
+        run: |
+          NEW=$(git diff HEAD~1 HEAD -- data/transactions.csv \
+            | grep '^+' \
+            | grep -v '^+++' \
+            | grep -v '^+date' \
+            | sed 's/^+//' \
+            | grep -v '^[[:space:]]*$')
+          echo "NEW_LINES<<EOF" >> $GITHUB_OUTPUT
+          echo "$NEW" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Send push notifications
+        if: steps.diff.outputs.NEW_LINES != ''
+        env:
+          EXPO_PUSH_TOKENS: ${{ secrets.EXPO_PUSH_TOKENS }}
+          NEW_LINES: ${{ steps.diff.outputs.NEW_LINES }}
+        run: |
+          python3 - <<'PYEOF'
+          import os, json, requests
+
+          new_lines = os.environ.get('NEW_LINES', '').strip()
+          tokens_str = os.environ.get('EXPO_PUSH_TOKENS', '').strip()
+
+          if not new_lines or not tokens_str:
+              print("No new transactions or no tokens configured")
+              exit(0)
+
+          tokens = [t.strip() for t in tokens_str.split(',') if t.strip()]
+
+          # Parse CSV lines
+          transactions = []
+          for line in new_lines.split('\n'):
+              line = line.strip().strip('"')
+              if not line:
+                  continue
+              # Split carefully - quoted fields may contain commas
+              import csv, io
+              reader = csv.reader(io.StringIO(line))
+              for parts in reader:
+                  if len(parts) >= 4:
+                      date   = parts[0].strip()
+                      action = parts[1].strip()
+                      symbol = parts[2].strip()
+                      shares = parts[3].strip()
+                      price  = parts[4].strip() if len(parts) > 4 else '?'
+                      reason = parts[6].strip() if len(parts) > 6 else (parts[5].strip() if len(parts) > 5 else '')
+                      transactions.append({
+                          'date': date,
+                          'action': action,
+                          'symbol': symbol,
+                          'shares': shares,
+                          'price': price,
+                          'reason': reason,
+                      })
+
+          if not transactions:
+              print("No valid transactions parsed")
+              exit(0)
+
+          print(f"Found {len(transactions)} new transaction(s)")
+
+          # Build Expo push messages
+          messages = []
+          for tx in transactions:
+              action = tx['action']
+              symbol = tx['symbol']
+              shares = tx['shares']
+              price  = tx['price']
+              reason = tx['reason']
+
+              emoji = '🟢' if action == 'BUY' else '🔴'
+              title = f"{emoji} {action} — {symbol}"
+              body  = f"{shares} adet @ ${price}"
+              if reason:
+                  short_reason = reason[:80] + ('…' if len(reason) > 80 else '')
+                  body += f"\n{short_reason}"
+
+              for token in tokens:
+                  messages.append({
+                      'to': token,
+                      'title': title,
+                      'body': body,
+                      'data': {'action': action, 'symbol': symbol, 'price': price},
+                      'sound': 'default',
+                      'priority': 'high',
+                      'channelId': 'transactions',
+                  })
+
+          # Send in batches of 100 (Expo limit)
+          headers = {
+              'Accept': 'application/json',
+              'Accept-encoding': 'gzip, deflate',
+              'Content-Type': 'application/json',
+          }
+          for i in range(0, len(messages), 100):
+              batch = messages[i:i+100]
+              resp = requests.post(
+                  'https://exp.host/--/api/v2/push/send',
+                  json=batch,
+                  headers=headers,
+                  timeout=30,
+              )
+              print(f"Batch {i//100 + 1}: {resp.status_code} — {resp.text[:200]}")
+          PYEOF
