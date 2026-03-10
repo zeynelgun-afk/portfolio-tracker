@@ -1,7 +1,6 @@
 # günlük rapor — 9 mart 2026 kapanış
 
-**tarih**: 9 mart 2026, pazartesi | **seans**: NYSE açık (yaz saati — 16:30 TR açılış)
-**not**: rapor seans başında yazıldı, kapanışta fiyatlar güncellenecek.
+**tarih**: 9 mart 2026, pazartesi | **seans**: NYSE kapandı (yaz saati — 16:30 TR açılış, 23:00 kapanış)
 
 ---
 
@@ -9,22 +8,24 @@
 
 ### piyasa
 
-| ticker | kapanış (6 mart) | bugün gün içi | 5 günlük | RSI | SMA20 | SMA50 | SMA200 |
-|--------|-----------------|---------------|----------|-----|-------|-------|--------|
-| SPY | $672.38 | -0.56% | -1.91% | 36.3 | ❌ | ❌ | ✅ |
-| QQQ | $599.75 | -0.26% | -0.98% | 42.4 | ❌ | ❌ | ✅ |
-| DIA | $475.23 | -0.96% | -3.27% | — | ✅ | ✅ | ✅ |
-| IWM | $250.89 | -1.12% | -5.02% | — | ✅ | ✅ | ✅ |
+seans sert satışla açıldı (futures -%1.5, nikkei -%7) ama gün boyunca güçlü bir toparlanma yaşandı. SPY günü +%0.88 kapattı, VIX 32'den 25.5'e geriledi. teknoloji sektörü +%3.5 ile günün lideri oldu. iran-hormuz baskısına rağmen piyasa dip aldı ve kapanışa doğru sert ralli yaptı.
 
-**emtia + döviz**: altın $5,103 (güvenli liman talebi güçlü) | EUR/USD 1.1583 | 10Y %4.15 / 2Y %3.56
+| ticker | kapanış | değişim | 5G | RSI | SMA20 | SMA50 | SMA200 |
+|--------|---------|---------|-----|-----|-------|-------|--------|
+| SPY | $678.27 | +0.88% | -0.56% | 44.2 | ❌ ($685) | ❌ ($688) | ✅ ($657) |
+| QQQ | $607.76 | +1.34% | +0.06% | 48.9 | ✅ ($607) | ❌ ($615) | ✅ ($589) |
+| DIA | $477.88 | +0.56% | -1.23% | 36.8 | ❌ ($492) | ❌ ($491) | ✅ ($464) |
+| IWM | $253.62 | +1.09% | -2.07% | 40.9 | ❌ ($262) | ❌ ($260) | ✅ ($239) |
 
-**petrol — tarihi volatilite**: gecelik brent +%30 fırladı (iran hormuz daraltması), ardından G7'nin 300-400M varil stratejik rezerv salımı düşünmesiyle WTI $100 altına geri düştü. tek günde +%30/-20%+ hareket, son on yılın en büyük petrol reversal'ı.
+**VIX: 25.50** — 32'den sert düşüş, 30 altına geriledi. korku seviyesinden çıkıyor ama hâlâ yüksek.
 
-**VIX: 31.35** — korku seviyesinde seyrediyor. 30 üzerinde 3. işlem günü. jake wujastyk: "yarın 40 üstü açılır mı?"
+**emtia + döviz**: altın $5,186 (+%1.7, güvenli liman talebi sürüyor) | EUR/USD 1.163 | petrol USO $104.33 | 10Y %4.12 / 2Y %3.56
 
-**sektörler (9 mart gün içi)**: en güçlü teknoloji +%2.06, iletişim +%1.17, sağlık +%1.02 / en zayıf tüketim döngüsel -%0.60, endüstriyel -%0.11
+**petrol**: seans öncesi brent $120'a fırladığı günden sonra G7 stratejik rezerv salımı haberleriyle geri çekildi. USO $104, hâlâ yüksek ama panik seviyelerinden uzaklaştı.
 
-**trend**: **ayı devam** — SPY RSI 36.3 ile aşırı satıma yaklaşıyor. her iki kısa vadeli ortalamanın altında ama SMA200 ($656.82) üzerinde tutunuyor. iran savaşı + NFP şoku + petrol volatilitesi üçlü baskı. ancak 200 günlük ortalama destek noktası olarak çalışabilir.
+**sektörler (9 mart kapanış)**: en güçlü teknoloji +%3.53, iletişim +%2.85, sağlık +%2.36 / en zayıf enerji +%0.60, temel tüketim +%0.60, temel malzeme +%0.60
+
+**trend**: **nötr/toparlanma** — SPY RSI 44.2 ile nötr bölgede. SMA200 ($657) üzerinde sağlam duruyor. seans başı sert satışa rağmen güçlü kapanış yapıldı. VIX düşüşü olumlu ama hâlâ 25 üzeri. kısa vadeli ortalamalar dirençte.
 
 ---
 
@@ -34,63 +35,70 @@
 
 | sembol | fiyat | 1G | k/z | RSI | 20 | 50 | 200 | durum |
 |--------|-------|----|-----|-----|----|----|-----|-------|
-| SM | $25.97 | +1.19% | +25.6% | 73.5 | ✅ | ✅ | ✅ | ⚠️ RSI aşırı alım — enerji ralli sürüyor |
-| KOS | $2.57 | +0.97% | +58.9% | 72.6 | ✅ | ✅ | ✅ | ⚠️ RSI aşırı alım — petrol volatilitesi dikkat |
-| MO | $66.51 | +0.54% | -1.4% | 52.7 | ❌ | ✅ | ✅ | nötr, savunmacı tema |
-| XLE | $56.57 | -0.26% | +6.1% | 68.2 | ✅ | ✅ | ✅ | enerji sektörü güçlü ama RSI yüksek |
-| RGLD | $279.84 | -2.00% | +2.0% | 47.3 | ❌ | ✅ | ✅ | altın güçlü, fiyat gecikmeli |
-| XLI | $169.94 | -0.94% | -2.9% | 41.0 | ❌ | ✅ | ✅ | endüstriyel baskı devam |
+| SM | $26.02 | +0.19% | +25.88% | 72.7 | ✅ | ✅ | ✅ | ⚠️ RSI aşırı alım bölgesinde |
+| MO | $67.04 | +0.80% | -0.59% | 54.0 | ❌ | ✅ | ✅ | nötr, savunmacı tema |
+| XLE | $56.32 | -0.44% | +5.59% | 67.2 | ✅ | ✅ | ✅ | enerji güçlü ama RSI yüksek |
+| RGLD | $281.86 | +0.72% | +2.72% | 51.8 | ❌ | ✅ | ✅ | altın güçlü, fiyat yavaş takip ediyor |
+| XLI | $170.94 | +0.59% | -2.34% | 46.6 | ❌ | ✅ | ✅ | endüstriyel zayıf, SMA20 dirençte |
 
-**toplam**: $112,537 (+%12.54) | **nakit**: $27,027 | **pozisyon**: 6
-**not**: enerji ağırlıklı portföy savaş ortamında piyasanın çok üstünde performans gösteriyor. SM ve KOS RSI aşırı alım bölgesinde — kısmi kâr alma zamanı yaklaşıyor.
+**bugün satılan:**
+- **KOS** @$2.58 — tam çıkış (son 1,740 hisse, $4,489). toplam trade: $1.67 girişten parçalı satışlarla ~+%65 kâr. en başarılı trade.
+- **SM** kısmi satış 416 hisse @$26.50 ($11,024) — %40 pozisyon azaltma, RSI aşırı alım, kâr al. 624 hisse kaldı.
+- **XLE** kısmi satış 138 hisse @$56.17 ($7,751) — %50 pozisyon azaltma, enerji rotasyonu. 139 hisse kaldı.
+
+**toplam**: $112,987 (+%12.99) | **nakit**: $50,292 (%44.5) | **pozisyon**: 5
+
+**not**: bugün 3 satış işlemi yapıldı. KOS tam çıkış, SM ve XLE kısmi kâr alma. nakit %44.5'e yükseldi, portföy daha hafif ve savunmacı yapıda.
 
 ### 2b. agresif portföy ($400K başlangıç)
 
 | sembol | fiyat | 1G | k/z | RSI | 20 | 50 | 200 | durum |
 |--------|-------|----|-----|-----|----|----|-----|-------|
-| GILT | $16.14 | +6.82% | +1.5% | 55.6 | ✅ | ❌ | ✅ | SMA50 direnci ($16.31) test ediyor |
-| PLTR | $157.16 | -2.19% | +7.3% | 56.5 | ✅ | ✅ | ❌ | SMA200 ($162) direnci, savunma teması destek |
-| ANET | $132.91 | +0.88% | +3.3% | 50.1 | ❌ | ❌ | ✅ | kısa vadeli ortalamaların altında |
-| RKLB | $70.11 | -1.53% | +2.4% | 45.0 | ❌ | ❌ | ✅ | momentum zayıflıyor |
-| TYL | $374.59 | -2.29% | +15.7% | 52.7 | ✅ | ❌ | ❌ | kamu sektörü teması güçlü, SMA50 direnci |
-| LASR | $58.64 | -0.05% | -13.4% | 53.9 | ✅ | ✅ | ✅ | 🔴 stop $60 altında 3+ seans, override #3 |
+| GILT | $17.56 | +8.80% | +10.44% | 56.7 | ✅ | ✅ | ✅ | 🟢 günün yıldızı! SMA50 aşıldı |
+| PLTR | $156.43 | -0.46% | +6.83% | 60.1 | ✅ | ❌ ($157) | ❌ ($162) | SMA50 direnci, savunma teması destek |
+| ANET | $137.17 | +3.22% | +6.65% | 52.4 | ✅ | ✅ | ✅ | 🟢 tech ralli ile güçlü kapanış |
+| RKLB | $71.48 | +1.95% | +4.44% | 48.3 | ✅ | ❌ ($77) | ✅ | SMA50 uzak, momentum toparlanıyor |
+| TYL | $367.35 | -1.93% | +13.46% | 53.2 | ✅ | ❌ ($390) | ❌ ($496) | izleyen zarar kes $360.41, mesafe $7 |
+| LASR | $61.00 | +4.02% | -9.88% | 56.2 | ✅ | ✅ | ✅ | ⚠️ stop $60 üzerinde kapandı! override #3 devam |
 
 **bugün satılan pozisyonlar:**
-- **NNDM** @$1.77 — stop-loss tetiklendi, -%9.69 zarar. mikro pozisyon, teknik yapı zayıftı.
-- **BKSY** @$23.42 — trailing stop tetiklendi, +%18.46 kâr. disiplinli çıkış, kâr cebe girdi.
+- **NNDM** @$1.77 — stop-loss tetiklendi, -%9.69 zarar ($485 kayıp). mikro pozisyon, beklenen sonuç.
+- **BKSY** @$23.42 — izleyen zarar kes tetiklendi, +%18.46 kâr ($1,383 kazanç). disiplinli çıkış.
 
-**toplam**: $365,492 (-%1.19) | **nakit**: $286,978 (%78.5) | **pozisyon**: 6/10
-**net etki**: BKSY kârı NNDM zararını fazlasıyla karşıladı (+$899 net). nakit oranı çok yüksek — piyasa stabilize olunca fırsat var.
+**toplam**: $367,974 (-%8.01) | **nakit**: $286,978 (%78.0) | **pozisyon**: 6/10
+
+**net etki**: BKSY kârı NNDM zararını fazlasıyla karşıladı (+$898 net). GILT +%8.8 ile günün yıldızı. LASR $61'e toparlanması olumlu, stop $60 üzerinde kapandı. nakit oranı yüksek, piyasa stabilize olunca fırsat var.
 
 ### 2c. temettü portföyü ($100K başlangıç)
 
 | sembol | fiyat | 1G | k/z | RSI | 20 | 50 | 200 | durum |
 |--------|-------|----|-----|-----|----|----|-----|-------|
-| T | $28.64 | -2.95% | +18.0% | 51.9 | ✅ | ✅ | ✅ | sert düşüş, analist "ılımlı al" |
-| VZ | $51.12 | -0.61% | +28.4% | 70.2 | ✅ | ✅ | ✅ | ⚠️ RSI aşırı alım |
-| MO | $66.51 | +0.54% | +16.1% | 52.7 | ❌ | ✅ | ✅ | savunmacı tema güçlü |
-| PM | $169.98 | +0.96% | +6.0% | 38.3 | ❌ | ❌ | ✅ | zayıf, RSI düşük |
-| XOM | $151.21 | +0.07% | +24.1% | 59.0 | ✅ | ✅ | ✅ | petrol rallisi henüz fiyata yansımadı |
-| CVX | $189.94 | -0.03% | +23.0% | 66.9 | ✅ | ✅ | ✅ | güçlü trend devam |
-| SCHD | $31.13 | -1.00% | +7.5% | 46.9 | ❌ | ✅ | ✅ | ETF, piyasayla paralel |
-| MRK | $115.79 | -0.11% | -3.8% | 45.0 | ❌ | ✅ | ✅ | en zayıf halka, izlenmeli |
+| T | $27.53 | -3.88% | +13.39% | 50.0 | ❌ ($28) | ✅ | ✅ | 🔴 sert düşüş! swing stop'a yakın |
+| VZ | $50.45 | -1.31% | +26.66% | 67.3 | ✅ | ✅ | ✅ | RSI yüksek ama aşırı alım altı |
+| MO | $67.04 | +0.80% | +16.98% | 54.0 | ❌ | ✅ | ✅ | savunmacı, stabil |
+| PM | $173.25 | +1.92% | +8.08% | 41.4 | ❌ | ❌ ($175) | ✅ | zayıf ama toparlanma sinyali |
+| XOM | $150.44 | -0.51% | +23.47% | 57.2 | ❌ | ✅ | ✅ | petrol güçlü ama gün içi düşüş |
+| CVX | $189.43 | -0.27% | +22.70% | 65.8 | ✅ | ✅ | ✅ | güçlü trend devam |
+| SCHD | $31.02 | -0.35% | +7.15% | 51.0 | ❌ | ✅ | ✅ | piyasayla paralel |
+| MRK | $117.13 | +1.15% | -2.73% | 48.3 | ❌ | ✅ | ✅ | toparlanma sinyali, en zayıf halka |
 
-**toplam**: $144,079 (+%10.74) | **nakit**: $8,372 | **pozisyon**: 8
-**not**: enerji + telekom ağırlığı savaş ortamında iyi çalışıyor. VZ RSI aşırı alım, kısmi kâr alma düşünülebilir. PM zayıf — uluslararası tütün risk-off'tan etkileniyor.
+**toplam**: $143,894 (+%43.89) | **nakit**: $8,372 (%5.8) | **pozisyon**: 8
+
+**not**: enerji + telekom ağırlığı güçlü sonuç veriyor. T'deki -%3.88 düşüş dikkat çekici, swing pozisyonu (stop $27.25) tehlikede. PM toparlanma sinyali verdi (+%1.92).
 
 ### genel özet ($600K toplam)
 
-**toplam değer**: $622,108 | **k/z**: +$22,108 (+%3.68) | **SPY**: +%10.49 | **alpha**: -%6.81
+**toplam değer**: $624,855 | **k/z**: +$24,855 (+%4.14) | **SPY**: +%2.46 | **alpha**: +%1.68
 
-alpha negatif çünkü agresif portföy ($400K, -%1.19) ağırlıklı olarak nakitte bekliyor. ancak bu VIX 31+ ortamında bilinçli bir karar — sermaye koruması öncelikli.
+agresif portföy -%8 ile negatif ama %78 nakitte olması bilinçli sermaye koruması. dengeli +%13, temettü +%44 ile başarılı. toplam alpha pozitif.
 
 ### uyarı özeti
 
-🔴 **acil**: LASR — stop $60 altında 3+ seans, override #3. hedge fund satışı ($9.6M). girişten -%13.4.
-⚠️ **izle**: SM RSI 73.5, KOS RSI 72.6 — enerji pozisyonlarında aşırı alım, kısmi kâr alma planla
-⚠️ **izle**: SOFI swing — $17.58 stop'a 30 cent ($17.88 gün içi)
-⚠️ **izle**: TYL — stop $360.41'e yaklaşıyor ($365.94 gün içi)
-🟢 **fırsat**: agresif portföyde 4 boş slot + $287K nakit. piyasa stabilize olunca CRDO, MU değerlendirmesi.
+🔴 **acil**: T swing — fiyat $27.53, stop $27.25'e 28 cent mesafe. yarın gap-down riski.
+⚠️ **izle**: TYL — izleyen zarar kes $360.41, fiyat $367.35. mesafe $6.94 (%1.9).
+⚠️ **izle**: SM RSI 72.7 — aşırı alım bölgesinde, kısmi kâr alma zamanı.
+⚠️ **izle**: LASR — $61 kapanış, stop $60 üzerinde ama override #3 devam. hâlâ -%9.88.
+🟢 **fırsat**: agresif portföyde 4 boş slot + $287K nakit. VIX 25.5'e düştü, stabilizasyon başlıyor.
 
 ---
 
@@ -98,21 +106,21 @@ alpha negatif çünkü agresif portföy ($400K, -%1.19) ağırlıklı olarak nak
 
 | id | sembol | giriş | güncel | k/z | stop | hedef | gün | durum |
 |----|--------|-------|--------|-----|------|-------|-----|-------|
-| SWING-014 | T | $28.68 | $28.64 | -0.14% | $27.25 | $31.55 | 17 | ✅ normal |
-| SWING-015 | DUK | $126.71 | $132.50 | +4.57% | $120.38 | $139.38 | 15 | ✅ normal |
-| SWING-016 | DVA | $149.73 | $150.76 | +0.69% | $142.24 | $164.70 | 14 | ✅ normal |
-| SWING-017 | CTSH | $61.36 | $66.26 | +7.99% | $58.29 | $67.50 | 10 | 🟡 hedefe yakın |
-| SWING-018 | SOFI | $18.51 | $18.90 | +2.11% | $17.58 | $20.36 | 10 | ⚠️ stop yakın (gün içi $17.88) |
+| SWING-015 | T | $28.68 | $27.53 | -4.01% | $27.25 | $31.55 | 20 | 🔴 stop'a 28 cent! |
+| SWING-017 | DUK | $126.71 | $131.08 | +3.45% | $120.38 | $139.38 | 18 | ✅ normal |
+| SWING-018 | DVA | $149.73 | $152.56 | +1.89% | $142.24 | $164.70 | 17 | ✅ normal |
+| SWING-019 | CTSH | $61.36 | $64.65 | +5.36% | $58.29 | $67.50 | 13 | 🟡 hedefe %4.4 |
+| SWING-023 | SOFI | $18.51 | $18.79 | +1.51% | $17.58 | $20.36 | 13 | ✅ normal |
 
 **bugün kapatılan:**
-- **CEG** @$311.98 — stop-loss tetiklendi ($312.13), -%5.05 zarar. 7 gün tutuldu. kriz rallisi girişi (2 mart) — bir kez daha bu girişlerin riskli olduğu teyit edildi.
+- **CEG** @$311.98 — stop-loss tetiklendi ($312.13 altına düştü gün içi). -%5.05 zarar, 7 gün tutuldu. kriz rallisi girişi (2 mart) — 5. kriz pozisyonu da zararda kapandı.
 
-**aktif**: 5/10 | **ortalama k/z**: +3.04%
+**aktif**: 5/10 | **ortalama k/z**: +1.64%
 
 **aksiyonlar:**
-🟡 **izle**: CTSH hedefe ($67.50) %1.9 uzakta — tetiklenirse %50 kâr al
-⚠️ **izle**: SOFI $17.58 altına düşerse → stop tetiklenir, çıkış yap
-✅ **sorunsuz**: T, DUK, DVA — stop'lardan uzak, tezler sağlam
+🔴 **hemen**: T — $27.25 altına düşerse stop tetiklenir. yarın açılışta dikkatli izle, -%3.88 momentum kaybı.
+🟡 **izle**: CTSH hedefe ($67.50) %4.4 mesafe — tech ralli devam ederse bu hafta tetiklenebilir.
+✅ **sorunsuz**: DUK, DVA, SOFI — stop'lardan uzak, tezler sağlam.
 
 **istatistik**: toplam 13 trade | kazanç 9 (%69) | kayıp 4 (%31)
 
@@ -122,15 +130,11 @@ alpha negatif çünkü agresif portföy ($400K, -%1.19) ağırlıklı olarak nak
 
 portföy/izleme listesi kesişimi yok.
 
-### öne çıkan açıklamalar
+### öne çıkan açıklama
 
-| şirket | sembol | EPS beklenti | gelir beklenti | zaman | not |
-|--------|--------|-------------|---------------|-------|-----|
-| Oracle | ORCL | $1.70 | $16.9B | 10 mart AMC | AI altyapı teması, @onestoploss finansman sorunlarından bahsetmişti |
-| HP Enterprise | HPE | $0.59 | $9.3B | 9 mart | sunucu/ağ altyapısı |
-| Volkswagen | VWAPY | $0.58 | $99.6B | 10 mart | avrupa otomotiv |
+**ORCL** — 10 mart kapanış sonrası açıklayacak. EPS beklenti $1.70, gelir beklenti $16.9B. AI altyapı yatırımlarının karlılık hızı sorgulanıyor. beat gelirse tech sentiment güçlenir (ANET, PLTR dolaylı fayda). miss gelirse yarın teknoloji baskısı olabilir.
 
-**ORCL** bugün/yarın en kritik açıklama. AI altyapı yatırımlarının karlılık süresi sorgulanıyor (@onestoploss). beat gelirse tech sentiment'ı iyileşebilir. miss gelirse yarın teknoloji sert satış görebilir. portföyümüzde direkt etki yok ama ANET ve PLTR dolaylı etkilenebilir.
+bugün başka büyük (>$2B) kazanç açıklaması yok.
 
 ---
 
@@ -140,35 +144,41 @@ portföy/izleme listesi kesişimi yok.
 
 | plan | sonuç | not |
 |------|-------|-----|
-| LASR sat — override tüketildi | ❌ uygulanmadı | zeynel override #3 verdi, tutmaya devam |
-| BKSY trailing izle | ✅ satıldı @$23.42 | trailing tetiklendi, +%18.46 kâr koruması |
-| CTSH hedefe yakın, kâr al hazırla | ⏳ beklemede | $66.26, hedefe (%1.9) yakın ama tetiklenmedi |
-| CEG stop $312.13 izle | ✅ satıldı @$311.98 | stop tetiklendi, disiplinli çıkış |
-| NNDM çıkış değerlendir | ✅ satıldı @$1.77 | stop-loss tetiklendi, -%9.69 zarar kesildi |
-| enerji tut | ✅ tutuldu | SM, KOS, XLE, XOM, CVX hepsi güçlü |
-| yeni alım yapma | ✅ uygulandı | piyasa çok volatil, doğru karar |
+| LASR sat — override tüketildi | ❌ uygulanmadı | zeynel override #3, LASR $61'e toparlandı |
+| BKSY trailing izle | ✅ satıldı @$23.42 | trailing stop tetiklendi, +%18.46 kâr |
+| CTSH hedefe yakın | ⏳ beklemede | $64.65, günlük -%2.43 ile hedefe uzaklaştı |
+| CEG stop $312.13 izle | ✅ satıldı @$311.98 | gün içi dip'te tetiklendi, disiplinli çıkış |
+| NNDM çıkış değerlendir | ✅ satıldı @$1.77 | stop-loss tetiklendi |
+| enerji tut | ✅ tutuldu | SM, XLE, XOM, CVX güçlü |
+| KOS rotasyonu | ✅ satıldı @$2.58 | tam çıkış, ~+%65 toplam kâr |
+| SM kısmi kâr alma | ✅ satıldı 416 hisse @$26.50 | RSI aşırı alım, %40 azaltma |
+| XLE kısmi satış | ✅ satıldı 138 hisse @$56.17 | enerji rotasyonu, %50 azaltma |
+| yeni alım yapma | ✅ uygulandı | volatil ortamda doğru karar |
 
 ### bugünün seans aksiyonları
 
-1. **CEG swing kapatıldı** @$311.98 — -%5.05 (7 gün). 2 mart kriz rallisi girişi. ders: kriz rallilerinde ilk gün momentumunu kovalama.
-2. **NNDM satıldı** @$1.77 — -%9.69. stop-loss disiplini uygulandı. küçük pozisyon ($4,513), zarar sınırlı.
-3. **BKSY satıldı** @$23.42 — +%18.46. trailing stop ile kâr koruması. $19.77 girişten $23.42 çıkış, temiz trade.
-
-**net sonuç**: BKSY kârı (+$1,383) NNDM zararını (-$485) ve CEG zararını (swing simülasyon) fazlasıyla karşıladı.
+1. **KOS tam çıkış** @$2.58 — dengeli portföy, $1.67 girişten parçalı satışlarla. toplam ~+%65. en başarılı trade.
+2. **SM kısmi satış** 416 hisse @$26.50 — dengeli, %40 pozisyon azaltma. RSI aşırı alım, kâr realizasyonu.
+3. **XLE kısmi satış** 138 hisse @$56.17 — dengeli, %50 pozisyon azaltma. enerji rotasyonu.
+4. **CEG swing kapatıldı** @$311.98 — -%5.05 (7 gün). kriz rallisi dersi pekiştirildi.
+5. **NNDM satıldı** @$1.77 — agresif, -%9.69. stop-loss disiplini.
+6. **BKSY satıldı** @$23.42 — agresif, +%18.46. izleyen zarar kes ile kâr koruması.
 
 ### günün performansı
 
-- portföy toplam: $622,108 (+$22,108, +%3.68)
-- SPY: +%10.49 → alpha: -%6.81
-- en iyi: KOS (+%58.9 toplam) — petrol rallisi sürüyor
-- en kötü: LASR (-%13.4 toplam) — stop ihlali devam, en büyük risk
+- portföy toplam: $624,855 (+$24,855, +%4.14)
+- SPY: +%2.46 → alpha: +%1.68
+- en iyi: GILT (+%8.80 günlük, +%10.44 toplam) — SMA50 aşıldı
+- en kötü: T (-%3.88 günlük) — telekom sert satıldı, swing stop'a çok yakın
 
 ### dersler
 
-- ✅ doğru: BKSY trailing stop ile kâr koruması — disiplin işe yaradı
-- ✅ doğru: CEG disiplinli çıkış — kriz rallisi girişlerinde stop'a sadık kal
-- ❌ yanlış: LASR override #3 — zarar büyüyor, disiplin kuralı delinmeye devam
-- 🔍 kaçırılan: petrol reversal ($120 → $100) önceden bilinmesi zor, ama G7 rezerv salımı haberi fırsat olabilirdi
+- ✅ doğru: BKSY izleyen zarar kes ile kâr koruması — disiplin çalıştı
+- ✅ doğru: CEG disiplinli çıkış — kriz rallisi dersi pekiştirildi (5/5 zarar)
+- ✅ doğru: KOS parçalı kâr realizasyonu — ~+%65, sabır ödüllendirdi
+- ✅ doğru: seans başı panik satış yapılmadı — piyasa toparlandı, sabır kazandırdı
+- ⚠️ dikkat: LASR $61'e toparlandı — override bu sefer doğru çıktı ama disiplin riski devam ediyor
+- 🔍 gözlem: VIX 32 → 25.5 düşüşü — piyasa kriz panikinden çıkıyor, stabilizasyon başlıyor
 
 ---
 
@@ -176,30 +186,29 @@ portföy/izleme listesi kesişimi yok.
 
 ### özet
 
-piyasa VIX 31+ ile stres altında seyrediyor. iran savaş tırmanması + NFP şoku + petrol volatilitesi üçlü baskı yarattı. bugün 3 pozisyon kapatıldı (CEG, NNDM, BKSY) — disiplinli çıkışlar portföyü korudu. agresif portföy %78.5 nakitte, bu VIX ortamında doğru strateji. dengeli ve temettü portföyleri enerji ağırlıklı yapılarıyla piyasanın üstünde performans gösteriyor. yarın CPI verisi gelecek — enflasyon sürpriz yaparsa VIX 40'a tırmanabilir.
+piyasa sert satışla açılıp güçlü kapanış yaptı. VIX 32'den 25.5'e düştü, korku seviyesinden çıkıyor. teknoloji +%3.5 ile günün lideri, GILT +%8.8 ile portföyümüzün yıldızı oldu. bugün 6 satış işlemi yapıldı: dengeli portföyde KOS (~+%65 kâr) tam çıkış, SM ve XLE kısmi kâr alma; agresif portföyde BKSY (+%18.46) ve NNDM çıkışı; swing'de CEG kapatıldı. agresif portföy %78 nakitte beklerken piyasa stabilize oluyor, yakında fırsat penceresi açılabilir. yarın CPI verisi ve ORCL earnings sonucu kritik.
 
 ### yarının aksiyonları
 
 🔴 **hemen** (seans açılışta):
-1. **CPI verisi** (14:30 TR) — enflasyon rakamlarını bekle, pozisyon alma
-2. **ORCL earnings sonucu** (bugün AMC) — tech sentiment etkisi, ANET/PLTR dolaylı etki
+1. **T swing** — $27.25 altına düşerse stop tetiklenir. açılışta gap-down riski yüksek
+2. **ORCL earnings sonucu** (bugün AMC) — tech sentiment etkisi izlenecek
 
 🟡 **izle** (seans içinde):
-3. **CTSH** $67.50 hedef — tetiklenirse %50 kâr al
-4. **SOFI** $17.58 stop — altına düşerse çıkış yap
-5. **TYL** $360.41 stop — yaklaşıyor, dikkatli izle
-6. **LASR** — override #3 devam, sessizce izle. gün sonunda tekrar değerlendir.
+3. **CPI verisi** (14:30 TR) — enflasyon sürprizi VIX'i tekrar yukarı gönderebilir
+4. **TYL** izleyen zarar kes $360.41 — mesafe $7 (%1.9)
+5. **CTSH** $67.50 hedef — tech ralli devam ederse tetiklenebilir
+6. **LASR** — $61 üzerinde tutunamazsa tekrar değerlendir
 
 🟢 **pasif** (seviye bekle):
-7. **CRDO** $105 altına gelirse → yarım pozisyon giriş değerlendir
-8. **SM/KOS** RSI 70+ — kısmi kâr alma zamanı yaklaşıyor, CPI sonrası değerlendir
-9. **VZ** RSI 70 — temettü portföyünde kısmi kâr alma düşünülebilir
+7. **CRDO** $105 altına gelirse → yarım pozisyon giriş değerlendir (VIX düştü, timing iyileşiyor)
+8. **SM** RSI 72.7 — kısmi kâr alma fırsatı, CPI sonrası değerlendir
+9. agresif portföyde 4 boş slot — CRDO, MRVL, MU (18 mart) izlemede
 
 ### sonraki güncelleme
 
-bugün kapanışta fiyat güncellemesi + ORCL earnings analizi
-yarın sabah CPI öncesi rapor (SEANS_ONCESI)
+yarın sabah: ORCL earnings analizi + CPI öncesi rapor (SEANS_ONCESI)
 
 ---
 
-*finzora ai | fmp api | 9 mart 2026*
+*finzora ai | fmp api | new york kapalı*
