@@ -1,0 +1,58 @@
+{
+  "tarama_tarihi": "2026-03-10",
+  "tarama_saati": "12:17 TR",
+  "piyasa_durumu": "KAPALI",
+  "piyasa_ozeti": {
+    "spy_degisim": 0.0,
+    "qqq_degisim": 0.0,
+    "iwm_degisim": 0.0,
+    "vix": 25.18,
+    "vix_uyarisi": true,
+    "vix_kritik": false,
+    "vix_mesaj": "⚠ VIX 25.2 — YÜKSEK OYNAKLLIK. Stop seviyeleri geniş tut, yarım pozisyon düşün."
+  },
+  "en_iyi_sektorler": [
+    [
+      "Technology",
+      3.53
+    ],
+    [
+      "Communication Services",
+      2.85
+    ],
+    [
+      "Healthcare",
+      2.36
+    ],
+    [
+      "Utilities",
+      2.36
+    ],
+    [
+      "Real Estate",
+      1.65
+    ]
+  ],
+  "en_kotu_sektorler": [
+    [
+      "Basic Materials",
+      0.6
+    ],
+    [
+      "Consumer Defensive",
+      0.6
+    ],
+    [
+      "Energy",
+      0.6
+    ]
+  ],
+  "ep_adaylari": [],
+  "breakout_adaylari": [],
+  "ozet": {
+    "toplam_ep": 0,
+    "toplam_breakout": 0,
+    "toplam_aday": 0,
+    "tarama_notu": "Bugün temiz aday yok — nakit tut, bekle"
+  }
+}
