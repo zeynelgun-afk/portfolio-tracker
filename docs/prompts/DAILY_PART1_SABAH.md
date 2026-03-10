@@ -1,9 +1,9 @@
-# GÜNLÜK RAPOR PART 1 — SABAH RAPORU v1.0
+# GÜNLÜK RAPOR PART 1 — SABAH RAPORU v2.0
 
-> **versiyon**: 1.1 | **son güncelleme**: 5 mart 2026
+> **versiyon**: 2.0 | **son güncelleme**: 10 mart 2026
 > **çıktı dosyası**: `reports/daily/DAILY_SABAH_YYYY-MM-DD.md`
-> **çalışma zamanı**: TR ~14:00 (NYSE dün 00:00'da kapandı, bugün 17:30 açılacak)
-> **amaç**: piyasa analizi + haberler + tarama + günün planı
+> **çalışma zamanı**: TR ~14:00 (NYSE dün 00:00'da kapandı, bugün 16:30 açılacak — yaz saati)
+> **amaç**: piyasa analizi + haberler + otomatik tarama sonuçları + günün planı
 > **dil**: küçük harf türkçe, dilbilgisi kurallarına uygun
 > **kaynak**: sadece "finzora ai"
 > **git commit**: `[SABAH RAPORU] DD Ay YYYY - kısa özet`
@@ -13,10 +13,10 @@
 ## ZAMAN BİLİNCİ
 
 - rapor TR ~14:00'da yazılır — NYSE dün gece 00:00'da kapandı
+- **yaz saati (mart-kasım)**: NYSE açılış 16:30 TR, kapanış 23:00 TR
+- **kış saati (kasım-mart)**: NYSE açılış 17:30 TR, kapanış 00:00 TR
 - FMP fiyatları = dünün kapanışı (kesinleşmiş)
-- after-hours: dün 00:00-02:00 TR
-- pre-market: bugün 16:00-17:30 TR
-- bugünün seansı: 17:30-00:00 TR
+- `data/swing/daily_scan.json` = dün gece 00:30 TR'de otomatik çalışan tarama sonuçları
 
 ---
 
@@ -49,7 +49,7 @@ ADIM 2.5 — TWİTTER TAKİP LİSTESİ (RapidAPI / twitter241)
     user id alma: GET /user?username={username} → id alanını base64 decode et
 
   TAKİP LİSTESİ:
-    @CheddarFlow       → opsiyon akışı / kurumsal para haraketleri
+    @CheddarFlow       → opsiyon akışı / kurumsal para hareketleri
     @berkdemirkiran_   → türk finans yorumcusu
     @yatirim           → türk finans yorumcusu (içsel analiz)
     @onestoploss       → teknik analiz / trade fikirleri
@@ -58,23 +58,44 @@ ADIM 2.5 — TWİTTER TAKİP LİSTESİ (RapidAPI / twitter241)
     @TrendSpider       → teknik analiz araçları / piyasa gözlemleri
     @Jake__Wujastyk    → momentum trader / hisse önerileri
 
-  ÖNEMLİ: tweet çekerken yalnızca ilgili kullanıcının tweetlerini göster,
-  yanlış kullanıcı verisi gelirse atla. yanıt 200 ve içerik doluysa işle.
+  ÖNEMLİ: tweet verileri SADECE claude'un bağlamına (context) girer,
+  rapora yazılmaz. tweet bilgileri yorumlanarak piyasa değerlendirmelerine,
+  sektör analizine veya pozisyon yorumlarına yedirilerek kullanılır.
 
 ADIM 3 — EARNINGS
   → FMP: earnings-calendar (bugün + 7 gün)
   → websearch: dün gece açıklanan earnings sonuçları (portföy/swing/majör)
   → websearch: bugünkü ekonomik veri takvimi
 
-ADIM 4 — FİNVİZ TARAMA (ücretsiz)
-  → websearch: finviz.com screener sonuçları
-  → swing adayları: RSI < 35, market cap > 500M, change > -5%
-  → momentum tarama: RSI 50-70, SMA20 üzeri, volume > avg
-  → sektör heatmap kontrolü: hangi sektörler güçlü/zayıf
-  → agresif portföy adayları: earnings beat > %10, RS yükselen
-  → sonuçları mevcut watchlist ile karşılaştır
+ADIM 4 — OTOMATİK SWING TARAMA SONUÇLARI (daily_scan.json)
+  ─────────────────────────────────────────────────────────
+  → GitHub'dan data/swing/daily_scan.json dosyasını oku
+    URL: https://raw.githubusercontent.com/zeynelgun-afk/portfolio-tracker/main/data/swing/daily_scan.json
 
-ADIM 5 — ANALİZ, PLAN VE KAYIT
+  OKUMA AKIŞI:
+  1. dosyayı oku
+  2. piyasa_ozeti → vix_kritik veya vix_uyarisi varsa önce belirt
+  3. ep_adaylari → skora göre sıralı, en yüksek 5'i al
+  4. breakout_adaylari → skora göre sıralı, en yüksek 5'i al
+  5. her aday için: seviyeler (giriş/stop/2R/3R), uyarılar, hacim katsayısı
+
+  ELEME KRİTERLERİ (bu adımda yap):
+  - VIX > 30 ise: EP adayları için "yarım pozisyon" notu ekle
+  - uyarılar listesi 2'den fazla madde içeriyorsa: "ZAYIF SETUP" işaretle
+  - sma50_uzerinde = false ise: agresif portföy için uyarı ekle
+  - ep_skoru < 50 veya breakout_skoru < 40 ise: listeye alma
+
+  KONTROL: mevcut swing aktif pozisyonlarla (data/swing/active.json)
+  sembol çakışması var mı? varsa listeden çıkar.
+
+ADIM 5 — FİNVİZ TARAMA (teyit katmanı)
+  → websearch: finviz screener — ADIM 4'teki adayları teyit et
+  → finviz.com/quote.ashx?t=SEMBOL → RSI, pattern, float, short float
+  → ADIM 4 listesinde olmayan ama finviz'de öne çıkan varsa ekle
+  → temettü portföy adayları: p/e <20, yield >%3
+  → sektör heatmap kontrolü: hangi sektörler güçlü/zayıf
+
+ADIM 6 — ANALİZ, PLAN VE KAYIT
   → tüm verileri sentezle
   → raporu yaz (aşağıdaki format)
   → reports/daily/DAILY_SABAH_YYYY-MM-DD.md olarak kaydet
@@ -83,9 +104,9 @@ ADIM 5 — ANALİZ, PLAN VE KAYIT
 
 ---
 
-## RAPOR FORMATI (CHAT'TE)
+## RAPOR FORMATI (GITHUB'A GÖNDERİLİR)
 
-rapor 5 bölümden oluşur. github'a push edilmez, sadece chat'te paylaşılır.
+rapor 5 bölümden oluşur.
 
 ---
 
@@ -126,29 +147,29 @@ rotasyon sinyali: [risk-on / risk-off / karışık]
 
 ---
 
-### BÖLÜM 2: HABER VE YORUM ANALİZİ
+### BÖLÜM 2: HABER VE ANALİZ
 
 ```markdown
-## 2. haber ve yorum analizi
+## 2. haber ve analiz
 
-### 🔴 portföyü doğrudan etkileyen
+### portföyü doğrudan etkileyen
 
 **[SEMBOL] — [başlık]**
 etki: [✅/❌/➡️] | portföy: [hangisi]
 [2-3 cümle analiz]
 aksiyon: [ne yapılacak]
 
-### 🟠 sektör ve makro gelişmeler
+### sektör ve makro gelişmeler
 
 | gelişme | etki | ilgili hisse | yorum |
 |---------|------|--------------|-------|
 
-### 📊 analist notları ve grade değişiklikleri
+### analist notları
 
 | tarih | sembol | kurum | önceki → yeni | hedef fiyat |
 |-------|--------|-------|---------------|-------------|
 
-### 🌍 makro yorum
+### makro yorum
 
 [2-4 cümle]
 
@@ -157,33 +178,7 @@ aksiyon: [ne yapılacak]
 | saat (TR) | veri | beklenti | önceki |
 |-----------|------|----------|--------|
 
-### haber özeti skoru
-
-📊 **genel sentiment**: [pozitif / negatif / nötr / karışık]
-```
-
----
-
-### BÖLÜM 2.5: TWİTTER TAKİP ÖZETİ
-
-```markdown
-## 2.5 takip listesi — günlük tweet özeti
-
-### 🎯 portföyle doğrudan ilgili
-
-| hesap | tweet özeti | sembol | sentiment |
-|-------|-------------|--------|-----------|
-| @xxx  | [özet]      | $XXX   | ✅/❌/➡️   |
-
-### 💡 öne çıkan fikirler ve trade önerileri
-
-**@hesap** — [tarih]
-> [tweet özeti veya önemli kısım]
-yorum: [kısa analiz — portföyle bağlantısı]
-
-### 📌 dikkat çeken diğer paylaşımlar
-
-[ilgili olabilecek makro/sektör gözlemleri]
+**genel sentiment**: [pozitif / negatif / nötr / karışık]
 ```
 
 ---
@@ -202,59 +197,53 @@ SEMBOL — [şirket]
   AH/PM tepki: $XXX (±%X)
   portföy etkisi: [doğrudan/dolaylı — aksiyon]
 
-### bugün
+### bugün ve haftalık kritik
 
-**BMO**: [SEMBOL] — EPS beklentisi $X.XX
-**AMC**: [SEMBOL] — EPS beklentisi $X.XX
-
-### haftalık kritik
-
-| tarih | sembol | timing | portföy etkisi |
-|-------|--------|--------|----------------|
+| tarih | sembol | timing | beklenti | portföy etkisi |
+|-------|--------|--------|----------|----------------|
 ```
 
 ---
 
-### BÖLÜM 4: FİNVİZ TARAMA SONUÇLARI
+### BÖLÜM 4: OTOMATİK SWING TARAMA SONUÇLARI
 
 ```markdown
-## 4. finviz tarama sonuçları
+## 4. swing tarama — {tarih} ({ep_sayisi} EP + {breakout_sayisi} breakout)
 
-### swing adayları (RSI oversold + momentum)
+> tarama zamanı: dün gece 00:30 TR | vix: XX.X | piyasa: [risk-on/off]
+> [vix_mesaj — varsa]
 
-| sembol | fiyat | RSI | sektör | market cap | sinyal |
-|--------|-------|-----|--------|------------|--------|
+### EP (episodic pivot) adayları
 
-### agresif portföy adayları
+| # | sembol | değişim | hacim | dolar hacim | close>dünkü high | ep skoru | giriş | stop | 2R hedef |
+|---|--------|---------|-------|-------------|------------------|----------|-------|------|----------|
+| 1 | XXX | +X.X% | Xm | $XXXm | ✅/❌ | XX/100 | $XX.XX | $XX.XX | $XX.XX |
 
-kriter: earnings beat >%10, RS yükselen, beta >1.2, market cap 00M-0B, 50MA üzeri, hacim 1.5x+
+**[SEMBOL] — detay:**
+- setup: [ne tetikledi — earnings/ürün/sektör rotasyonu]
+- risk/ödül: stop %X.X aşağıda, 2R hedef %X.X yukarıda
+- uyarılar: [varsa]
+- piyasa uyumu: [sektörü bugün güçlü mü]
 
-| sembol | fiyat | neden | sektör | earnings |
-|--------|-------|-------|--------|----------|
+### breakout (flag/base) adayları
 
-### dengeli portföy adayları
+| # | sembol | değişim | hacim katsayı | base genişlik | trend | breakout skoru | giriş | stop | 2R hedef |
+|---|--------|---------|---------------|---------------|-------|----------------|-------|------|----------|
+| 1 | XXX | +X.X% | X.Xx | %X | ✅/❌ | XX/100 | $XX.XX | $XX.XX | $XX.XX |
 
-kriter: multi-sector value + momentum blend, makul değerleme, güçlü momentum, mevcut pozisyonlarla düşük korelasyon
+**[SEMBOL] — detay:**
+- base: XX günlük konsolidasyon, %X.X genişlik
+- kırılım: XX günlük high olan $XX.XX seviyesini kırdı
+- uyarılar: [varsa]
 
-| sembol | fiyat | neden | sektör | p/e | momentum |
-|--------|-------|-------|--------|-----|----------|
+### tarama notu
 
-### temettü portföy adayları
+[daily_scan.json'dan gelen ozet.tarama_notu]
 
-kriter: p/e <20, temettü yield >%3, güçlü FCF, D/E <1.5, temettü büyüme geçmişi
+### bugün izlenecek setup önceliği
 
-| sembol | fiyat | yield | p/e | sektör | neden |
-|--------|-------|-------|-----|--------|-------|
-
-### sektör heatmap özeti
-
-[hangi sektörler yeşil/kırmızı — rotasyon sinyali]
-
-### watchlist güncellemesi
-
-eklenmeli: [sembol — neden]
-çıkarılmalı: [sembol — neden]
-urgency değişmeli: [sembol — eski → yeni]
+1. [SEMBOL] — EP / Breakout — neden öncelikli
+2. [SEMBOL] — EP / Breakout — neden öncelikli
 ```
 
 ---
@@ -270,14 +259,22 @@ urgency değişmeli: [sembol — eski → yeni]
 
 ### aksiyonlar
 
-🔴 **hemen** (seans açılışta):
+**hemen** (seans açılışında):
 1. [aksiyon] — [sebep]
 
-🟡 **izle** (seans içinde):
+**izle** (seans içinde):
 2. [koşul] → [aksiyon]
 
-🟢 **pasif** (seviye bekle):
+**pasif** (seviye bekle):
 3. [sembol] $XXX'e gelirse → [değerlendir]
+
+### swing giriş planı (varsa)
+
+**[SEMBOL]** — EP / Breakout
+- giriş koşulu: [ilk 30dk bekle, $XX.XX üzerinde konfirmasyon]
+- pozisyon büyüklüğü: [tam / yarım — VIX'e göre]
+- stop: $XX.XX (-%X.X)
+- hedef: $XX.XX (+%X.X, 2R)
 
 ### dikkat edilecekler
 
@@ -295,8 +292,10 @@ urgency değişmeli: [sembol — eski → yeni]
 
 - rapor github'a push edilir (`reports/daily/DAILY_SABAH_YYYY-MM-DD.md`)
 - JSON dosyalarına dokunma (veri güncellemesi part 2'de yapılacak)
-- amacı: sabah bilgilendirme + günün planını oluşturma + Finviz tarama
-- finviz taramasını websearch ile yap (ücretsiz versiyon)
+- amaç: sabah bilgilendirme + günün planını oluşturma + otomatik tarama okuma
+- `daily_scan.json` her gece 00:30 TR'de otomatik güncellenir — fresh data garantili
+- VIX > 30 durumunda swing girişlerinde "yarım pozisyon" varsayılan öneri olsun
+- EP adaylarında "ilk 30 dakika bekle, konfirmasyon al" kuralı her zaman geçerli
 
 ---
 
@@ -306,3 +305,4 @@ urgency değişmeli: [sembol — eski → yeni]
 **TOKEN**: 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
 **RAPIDAPI KEY**: fe410e5222msh20c82b1bc9f4905p10ad02jsnb1c2402c92b7
 **RAPIDAPI HOST**: twitter241.p.rapidapi.com
+**DAILY SCAN**: https://raw.githubusercontent.com/zeynelgun-afk/portfolio-tracker/main/data/swing/daily_scan.json
