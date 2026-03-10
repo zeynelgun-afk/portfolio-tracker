@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-03-10T20:44:50.615262",
+  "son_guncelleme": "2026-03-10T21:25:48.008586",
   "not": "SWING TRADE SADECE SİMÜLASYON - Sadece % kazanç/kayıp takibi (MAX: 8 pozisyon)",
   "iran_krizi_hazirligi": {
     "tarih": "2026-03-01",
@@ -27,7 +27,7 @@
       "zaman_cercevesi": "7-10 gün",
       "risk": "Rekabet baskısı",
       "durum": "⚠️ Stop-loss yakın (1.7%)",
-      "son_guncelleme": "2026-03-10T20:44:50.615262",
+      "son_guncelleme": "2026-03-10T21:25:48.008586",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
@@ -59,7 +59,7 @@
       "zaman_cercevesi": "7-10 gün",
       "risk": "Faiz oranı yükselmesi, düzenleme riski",
       "durum": "✅ Normal aralıkta",
-      "son_guncelleme": "2026-03-10T20:44:50.615262",
+      "son_guncelleme": "2026-03-10T21:25:48.008586",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
@@ -91,7 +91,7 @@
       "zaman_cercevesi": "7-12 gün",
       "risk": "Healthcare düzenlemeleri, Medicare reimbursement değişiklikleri",
       "durum": "✅ Normal aralıkta",
-      "son_guncelleme": "2026-03-10T20:44:50.615262",
+      "son_guncelleme": "2026-03-10T21:25:48.008586",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
@@ -124,7 +124,7 @@
       "risk": "Tech sektörü genelinde satış baskısı devam edebilir, 52W low kırılırsa trend bozulur",
       "durum": "✅ Normal aralıkta",
       "tarama_yontemi": "RSI oversold",
-      "son_guncelleme": "2026-03-10T20:44:50.615262",
+      "son_guncelleme": "2026-03-10T21:25:48.008586",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
@@ -157,7 +157,7 @@
       "risk": "Jeopolitik risk-off ortaminda fintech basincı, yuksek beta, iran krizi devam ederse baski surer",
       "durum": "✅ Normal aralıkta",
       "tarama_yontemi": "earnings momentum",
-      "son_guncelleme": "2026-03-10T20:44:50.615262",
+      "son_guncelleme": "2026-03-10T21:25:48.008586",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZISYONU SAT",
@@ -190,7 +190,7 @@
       "risk": "Küçük cap (228M), düşük hacim, zarar eden şirket, spekülatif",
       "durum": "✅ Normal aralıkta",
       "tarama_yontemi": "momentum",
-      "son_guncelleme": "2026-03-10T20:44:50.615262",
+      "son_guncelleme": "2026-03-10T21:25:48.008586",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
