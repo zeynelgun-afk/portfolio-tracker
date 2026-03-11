@@ -1,16 +1,16 @@
 {
   "son_guncelleme": "2026-03-11",
-  "toplam_sermaye": 280000,
-  "toplam_deger": 623577.38,
-  "toplam_kar_zarar": 343577.38,
-  "toplam_kar_zarar_yuzde": 122.71,
+  "toplam_sermaye": 600000,
+  "toplam_deger": 622719.61,
+  "toplam_kar_zarar": 22719.61,
+  "toplam_kar_zarar_yuzde": 3.79,
   "portfolyolar": {
     "dengeli": {
       "isim": "Dengeli Portföy",
-      "deger": 112255.76,
+      "deger": 112128.83,
       "maliyet": 40000,
-      "kar_zarar": 72255.76,
-      "kar_zarar_yuzde": 180.64,
+      "kar_zarar": 72128.83,
+      "kar_zarar_yuzde": 180.32,
       "pozisyon_sayisi": 5,
       "nakit": {
         "miktar": 50291.77,
@@ -19,10 +19,10 @@
     },
     "agresif": {
       "isim": "Agresif Büyüme Portföyü",
-      "deger": 367380.56,
+      "deger": 366772.84,
       "maliyet": 140000,
-      "kar_zarar": 227380.56,
-      "kar_zarar_yuzde": 162.41,
+      "kar_zarar": 226772.84000000003,
+      "kar_zarar_yuzde": 161.98,
       "pozisyon_sayisi": 7,
       "nakit": {
         "miktar": 269354.05,
@@ -31,10 +31,10 @@
     },
     "temettü": {
       "isim": "Değer + Temettü Portföyü",
-      "deger": 143941.06,
+      "deger": 143817.94,
       "maliyet": 100000,
-      "kar_zarar": 43941.06,
-      "kar_zarar_yuzde": 43.94,
+      "kar_zarar": 43817.94,
+      "kar_zarar_yuzde": 43.82,
       "pozisyon_sayisi": 9,
       "nakit": {
         "miktar": 1668.43,
@@ -47,9 +47,5 @@
       "bos_slot": 6,
       "durum": "4/10 pozisyon aktif"
     }
-  },
-  "son_islemler": [
-    "2026-03-11: SWING-019 CTSH @$62.25 SATIŞ - tez bozulması +1.45% - 13 gün",
-    "2026-03-11: SWING-015 T @$27.09 SATIŞ - stop-loss -%5.54 - 22 gün tutuldu"
-  ]
+  }
 }
