@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-03-11T11:10:10.516368",
+  "son_guncelleme": "2026-03-11T14:50:02.160968",
   "not": "Tüm portföyler ve swing trade için tek merkezi watchlist. Her adayda hedef_portfoy alanı hangi portföye/stratejiye ait olduğunu belirtir.",
   "iran_krizi_notu": {
     "tarih": "2026-03-01",
@@ -16,12 +16,12 @@
   "izleme_listesi": [
     {
       "sembol": "RTX",
-      "guncel_fiyat": 207,
+      "guncel_fiyat": 207.425,
       "sektor": "Savunma",
       "hedef_portfoy": "swing",
       "urgency": "🔴 CRITICAL",
       "ekleme_tarihi": "2026-03-01",
-      "son_kontrol": "2026-03-10",
+      "son_kontrol": "2026-03-11",
       "hedef_giris": "195-205",
       "hedef_fiyat": 230.0,
       "stop_loss": 190.0,
@@ -31,12 +31,12 @@
     },
     {
       "sembol": "NOC",
-      "guncel_fiyat": 734.98,
+      "guncel_fiyat": 739.41,
       "sektor": "Savunma",
       "hedef_portfoy": "swing",
       "urgency": "🔴 CRITICAL",
       "ekleme_tarihi": "2026-03-01",
-      "son_kontrol": "2026-03-10",
+      "son_kontrol": "2026-03-11",
       "hedef_giris": "700-730",
       "hedef_fiyat": 820.0,
       "stop_loss": 680.0,
@@ -46,12 +46,12 @@
     },
     {
       "sembol": "DVN",
-      "guncel_fiyat": 43.7,
+      "guncel_fiyat": 44.87,
       "sektor": "Enerji E&P",
       "hedef_portfoy": "dengeli",
       "urgency": "high",
       "ekleme_tarihi": "2026-03-01",
-      "son_kontrol": "2026-03-10",
+      "son_kontrol": "2026-03-11",
       "hedef_giris": "41-44",
       "hedef_fiyat": 52.0,
       "stop_loss": 39.0,
@@ -61,12 +61,12 @@
     },
     {
       "sembol": "EOG",
-      "guncel_fiyat": 127.89,
+      "guncel_fiyat": 131.39,
       "sektor": "Enerji E&P",
       "hedef_portfoy": "dengeli",
       "urgency": "high",
       "ekleme_tarihi": "2026-03-01",
-      "son_kontrol": "2026-03-10",
+      "son_kontrol": "2026-03-11",
       "hedef_giris": "118-125",
       "hedef_fiyat": 145.0,
       "stop_loss": 112.0,
@@ -76,12 +76,12 @@
     },
     {
       "sembol": "SPG",
-      "guncel_fiyat": 192.07,
+      "guncel_fiyat": 189.83,
       "sektor": "REITs",
       "hedef_portfoy": "swing",
       "urgency": "medium",
       "ekleme_tarihi": "2026-02-20",
-      "son_kontrol": "2026-03-10",
+      "son_kontrol": "2026-03-11",
       "hedef_giris": "195-200",
       "hedef_fiyat": 220.0,
       "stop_loss": 190.0,
@@ -90,12 +90,12 @@
     },
     {
       "sembol": "NEE",
-      "guncel_fiyat": 91.54,
+      "guncel_fiyat": 91.855,
       "sektor": "Kamu Hizmetleri",
       "hedef_portfoy": "swing",
       "urgency": "low",
       "ekleme_tarihi": "2026-02-20",
-      "son_kontrol": "2026-03-10",
+      "son_kontrol": "2026-03-11",
       "hedef_giris": "88-92",
       "hedef_fiyat": 102.0,
       "stop_loss": 85.0,
@@ -104,12 +104,12 @@
     },
     {
       "sembol": "DIS",
-      "guncel_fiyat": 101.31,
+      "guncel_fiyat": 101.61,
       "sektor": "İletişim",
       "hedef_portfoy": "swing",
       "urgency": "high",
       "ekleme_tarihi": "2026-02-22",
-      "son_kontrol": "2026-03-10",
+      "son_kontrol": "2026-03-11",
       "hedef_giris": "108-112",
       "hedef_fiyat": 125.0,
       "stop_loss": 105.0,
@@ -118,12 +118,12 @@
     },
     {
       "sembol": "BMY",
-      "guncel_fiyat": 60.13,
+      "guncel_fiyat": 59.735,
       "sektor": "Sağlık",
       "hedef_portfoy": "swing",
       "urgency": "high",
       "ekleme_tarihi": "2026-02-20",
-      "son_kontrol": "2026-03-10",
+      "son_kontrol": "2026-03-11",
       "hedef_giris": "58-62",
       "hedef_fiyat": 68.0,
       "stop_loss": 55.0,
@@ -132,12 +132,12 @@
     },
     {
       "sembol": "OXY",
-      "guncel_fiyat": 53.12,
+      "guncel_fiyat": 54.26,
       "sektor": "Enerji",
       "hedef_portfoy": "swing",
       "urgency": "🔴 CRITICAL",
       "ekleme_tarihi": "2026-02-20",
-      "son_kontrol": "2026-03-10",
+      "son_kontrol": "2026-03-11",
       "hedef_giris": "50-54",
       "hedef_fiyat": 65.0,
       "stop_loss": 47.0,
@@ -147,7 +147,7 @@
     },
     {
       "sembol": "AVGO",
-      "guncel_fiyat": 342.58,
+      "guncel_fiyat": 342.5759,
       "sektor": "Teknoloji",
       "hedef_portfoy": "dengeli",
       "urgency": "medium",
@@ -162,12 +162,12 @@
     },
     {
       "sembol": "HWM",
-      "guncel_fiyat": 253.91,
+      "guncel_fiyat": 252.1,
       "sektor": "Savunma",
       "hedef_portfoy": "swing",
       "urgency": "🔴 CRITICAL",
       "ekleme_tarihi": "2026-02-28",
-      "son_kontrol": "2026-03-10",
+      "son_kontrol": "2026-03-11",
       "hedef_giris": "250-265",
       "hedef_fiyat": 300.0,
       "stop_loss": 240.0,
@@ -177,7 +177,7 @@
     },
     {
       "sembol": "GEV",
-      "guncel_fiyat": 839.2,
+      "guncel_fiyat": 846.75,
       "sektor": "Utilities",
       "hedef_portfoy": "agresif",
       "urgency": "medium",
@@ -192,7 +192,7 @@
     },
     {
       "sembol": "EQIX",
-      "guncel_fiyat": 956.07,
+      "guncel_fiyat": 971.8934,
       "sektor": "REITs",
       "hedef_portfoy": "agresif",
       "urgency": "medium",
@@ -207,7 +207,7 @@
     },
     {
       "sembol": "GLW",
-      "guncel_fiyat": 136.26,
+      "guncel_fiyat": 134.24001,
       "sektor": "Teknoloji",
       "hedef_portfoy": "agresif",
       "urgency": "medium",
@@ -222,7 +222,7 @@
     },
     {
       "sembol": "TER",
-      "guncel_fiyat": 300.77,
+      "guncel_fiyat": 310.664,
       "sektor": "Teknoloji",
       "hedef_portfoy": "agresif",
       "urgency": "medium",
@@ -232,12 +232,12 @@
       "hedef_fiyat": 340.0,
       "stop_loss": 270.0,
       "notlar": "Teradyne - yari iletken test ekipmani. AI cip uretim arttikca test talebi artiyor. YTD +%45, 3A +%47 guclu momentum. RSI 50 notr bolge, pullback'te giris firsati. ENTG/CAMT/PLAB ile ayni tedarik zinciri temasi.",
-      "momentum_5gun": 2.6,
+      "momentum_5gun": 0,
       "nvidia_katman": "Katman 2 - Cipler (test ekipmani)"
     },
     {
       "sembol": "BE",
-      "guncel_fiyat": 154.0,
+      "guncel_fiyat": 162.39999,
       "sektor": "Enerji",
       "hedef_portfoy": "agresif",
       "urgency": "medium",
@@ -247,12 +247,12 @@
       "hedef_fiyat": 175.0,
       "stop_loss": 132.0,
       "notlar": "Bloom Energy - veri merkezi guc cozumleri (yakit hucresi). AI altyapi enerji talebi artisi dogrudan faydalanicilardan. YTD +%56, 3A +%41. RSI 51 notr. 52H'den -%15 geri cekilmis, $140-148 giris bolgesi bekleniyor.",
-      "momentum_5gun": 0.65,
+      "momentum_5gun": 0,
       "nvidia_katman": "Katman 1 - Enerji (yakit hucresi/veri merkezi)"
     },
     {
       "sembol": "VST",
-      "guncel_fiyat": 164.4,
+      "guncel_fiyat": 160.23,
       "sektor": "Enerji - Nükleer/Doğal Gaz",
       "hedef_portfoy": "agresif",
       "urgency": "medium",
@@ -263,11 +263,11 @@
       "stop_loss": 140.0,
       "notlar": "Vistra Energy - nukleer + dogal gaz, veri merkezi PPA kontratlari. NVIDIA makalesi Katman 1 (Enerji). RSI 49.2 notr, 52H'den -%25 geri cekilmis. Enerji AI altyapisi icin temel tedarikci. $55.7B mktcap.",
       "nvidia_katman": "Katman 1 - Enerji",
-      "momentum_5gun": -0.03
+      "momentum_5gun": 0
     },
     {
       "sembol": "NRG",
-      "guncel_fiyat": 155.15,
+      "guncel_fiyat": 150.435,
       "sektor": "Enerji - Kamu Hizmetleri",
       "hedef_portfoy": "agresif",
       "urgency": "medium",
@@ -278,11 +278,11 @@
       "stop_loss": 132.0,
       "notlar": "NRG Energy - buyuk veri merkezi enerji tedarikçisi. NVIDIA makalesi Katman 1 (Enerji). RSI 40.2 oversold bolgesi yakin, 52H'den -%18 dusmus. $33.3B mktcap.",
       "nvidia_katman": "Katman 1 - Enerji",
-      "momentum_5gun": -2.29
+      "momentum_5gun": 0
     },
     {
       "sembol": "MU",
-      "guncel_fiyat": 403.11,
+      "guncel_fiyat": 419.07,
       "sektor": "Teknoloji - Bellek/HBM",
       "hedef_portfoy": "agresif",
       "urgency": "high",
@@ -293,12 +293,12 @@
       "stop_loss": 360.0,
       "notlar": "Micron - HBM (yuksek bant genislikli bellek) lideri, AI cip katmaninin kritik bileseni. 18 Mart kazanc aciklamasi KRiTiK. NVIDIA makalesi Katman 2 (Cipler). RSI 52.1 notr. YTD +%28 guclu. $453.7B mktcap. Kazanc oncesi giris riskli, sonrasi degerlendır.",
       "nvidia_katman": "Katman 2 - Cipler",
-      "momentum_5gun": 6.04,
+      "momentum_5gun": 0,
       "katalizor": "18 Mart kazanc aciklamasi - HBM talep gucuyse agresif giris"
     },
     {
       "sembol": "MRVL",
-      "guncel_fiyat": 93.3,
+      "guncel_fiyat": 93.2412,
       "sektor": "Teknoloji - Ozel AI Cip",
       "hedef_portfoy": "agresif",
       "urgency": "high",
@@ -309,11 +309,11 @@
       "stop_loss": 80.0,
       "notlar": "Marvell - ozel AI ASIC + ag cipleri, veri merkezi odakli. NVIDIA makalesi Katman 2 (Cipler). RSI 68.2 biraz yuksek, geri cekilme bekle $85-90. Q4 beklenti ustu sonuc tezi dogruladi. $81.5B mktcap.",
       "nvidia_katman": "Katman 2 - Cipler",
-      "momentum_5gun": 10.13
+      "momentum_5gun": 0
     },
     {
       "sembol": "CRDO",
-      "guncel_fiyat": 112.33,
+      "guncel_fiyat": 119.55,
       "sektor": "Teknoloji - Yuksek Hizli Baglanti",
       "hedef_portfoy": "agresif",
       "urgency": "medium",
@@ -324,11 +324,11 @@
       "stop_loss": 95.0,
       "notlar": "Credo Technology - yuksek hizli veri aktarimi, AI kume baglantisi. NVIDIA makalesi Katman 2 (Cipler). RSI 45.4 ideal giris bolgesi. 52H'den -%47.5 ciddi geri cekilme, $105-110 hedef. $20.7B mktcap.",
       "nvidia_katman": "Katman 2 - Cipler",
-      "momentum_5gun": 1.04
+      "momentum_5gun": 0
     },
     {
       "sembol": "PLAB",
-      "guncel_fiyat": 34.1,
+      "guncel_fiyat": 34.67,
       "sektor": "Teknoloji - Fotomask/Litografi",
       "hedef_portfoy": "agresif",
       "urgency": "medium",
@@ -339,11 +339,11 @@
       "stop_loss": 28.5,
       "notlar": "Photronics - fotomask uretimi, cip uretim tedarik zinciri. NVIDIA makalesi Katman 2 destek. RSI 44.8 notr-dusuk. 52H'den -%25. Kucuk mktcap $2B ama niş lider.",
       "nvidia_katman": "Katman 2 - Cipler (tedarik zinciri)",
-      "momentum_5gun": 1.79
+      "momentum_5gun": 0
     },
     {
       "sembol": "ENTG",
-      "guncel_fiyat": 116.88,
+      "guncel_fiyat": 118.115,
       "sektor": "Teknoloji - Cip Uretim Malzemeleri",
       "hedef_portfoy": "agresif",
       "urgency": "medium",
@@ -354,11 +354,11 @@
       "stop_loss": 100.0,
       "notlar": "Entegris - yari iletken uretim malzemeleri ve filtreleme. NVIDIA makalesi Katman 2 destek. RSI 42.7 oversold yakin. YTD +%30 ama 52H'den -%18. $17.8B mktcap.",
       "nvidia_katman": "Katman 2 - Cipler (tedarik zinciri)",
-      "momentum_5gun": -2.55
+      "momentum_5gun": 0
     },
     {
       "sembol": "CAMT",
-      "guncel_fiyat": 156.28,
+      "guncel_fiyat": 162.89,
       "sektor": "Teknoloji - Cip Muayene/Test",
       "hedef_portfoy": "agresif",
       "urgency": "medium",
@@ -369,11 +369,11 @@
       "stop_loss": 135.0,
       "notlar": "Camtek - yari iletken muayene ve olcum sistemleri. NVIDIA makalesi Katman 2 destek. RSI 51.0 notr. YTD +%35 guclu. 52H'den -%10. $7.2B mktcap.",
       "nvidia_katman": "Katman 2 - Cipler (tedarik zinciri)",
-      "momentum_5gun": -2.61
+      "momentum_5gun": 0
     },
     {
       "sembol": "VRT",
-      "guncel_fiyat": 270.06,
+      "guncel_fiyat": 274.43,
       "sektor": "Teknoloji - Veri Merkezi Altyapi",
       "hedef_portfoy": "agresif",
       "urgency": "high",
@@ -384,12 +384,12 @@
       "stop_loss": 235.0,
       "notlar": "Vertiv - veri merkezi sogutma + guc yonetimi. NVIDIA makalesi Katman 3 (Altyapi) tam merkezi. RSI 68.4 biraz yuksek, pullback bekle. YTD +%54 muhtesem momentum. 52H'ye neredeyse ulasti. $103.3B mktcap.",
       "nvidia_katman": "Katman 3 - Altyapi (sogutma/guc)",
-      "momentum_5gun": 12.06,
+      "momentum_5gun": 0,
       "katalizor": "AI veri merkezi sogutma talebi patladi, her yeni AI fabrikasi VRT musteri"
     },
     {
       "sembol": "DELL",
-      "guncel_fiyat": 143.8,
+      "guncel_fiyat": 148.58,
       "sektor": "Teknoloji - AI Sunucu",
       "hedef_portfoy": "agresif",
       "urgency": "medium",
@@ -400,11 +400,11 @@
       "stop_loss": 125.0,
       "notlar": "Dell Technologies - AI sunucu ureticisi, NVIDIA GPU'lu sistemler. NVIDIA makalesi Katman 3 (Altyapi). RSI 61.9 notr-yuksek. 52H'den -%14. YTD +%13. $96.4B mktcap.",
       "nvidia_katman": "Katman 3 - Altyapi (sunucular)",
-      "momentum_5gun": -0.02
+      "momentum_5gun": 0
     },
     {
       "sembol": "CEG",
-      "guncel_fiyat": 317.09,
+      "guncel_fiyat": 304.3045,
       "sektor": "Enerji - Nukleer",
       "hedef_portfoy": "agresif",
       "urgency": "medium",
@@ -419,7 +419,7 @@
     },
     {
       "sembol": "COHR",
-      "guncel_fiyat": 260.64,
+      "guncel_fiyat": 254.21,
       "sektor": "Teknoloji - Optik/Lazer AI Networking",
       "hedef_portfoy": "agresif",
       "urgency": "high",
@@ -435,7 +435,7 @@
     },
     {
       "sembol": "CCJ",
-      "guncel_fiyat": 120.08,
+      "guncel_fiyat": 119.06,
       "sektor": "Enerji - Uranyum",
       "hedef_portfoy": "agresif",
       "urgency": "medium",
@@ -451,7 +451,7 @@
     },
     {
       "sembol": "BWXT",
-      "guncel_fiyat": 195.91,
+      "guncel_fiyat": 198.765,
       "sektor": "Savunma/Enerji - Nukleer Teknoloji",
       "hedef_portfoy": "agresif",
       "urgency": "medium",
@@ -468,7 +468,7 @@
     },
     {
       "sembol": "NET",
-      "guncel_fiyat": 207.49,
+      "guncel_fiyat": 213.49,
       "sektor": "Teknoloji - Edge Computing/CDN",
       "hedef_portfoy": "agresif",
       "urgency": "medium",
