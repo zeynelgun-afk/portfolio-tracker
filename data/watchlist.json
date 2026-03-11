@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-03-10T21:25:48.044323",
+  "son_guncelleme": "2026-03-11T06:12:10.357940",
   "not": "Tüm portföyler ve swing trade için tek merkezi watchlist. Her adayda hedef_portfoy alanı hangi portföye/stratejiye ait olduğunu belirtir.",
   "iran_krizi_notu": {
     "tarih": "2026-03-01",
@@ -215,6 +215,34 @@
       "stop_loss": 115.0,
       "notlar": "Corning - optik fiber + AI veri merkezi altyapisi. Gelir 3.4B->4.2B guclu buyume, karli. -10.8% AVGO bakir tercihi nedeniyle dusus. RSI 50.7 notr. SMA50 111.84 saglam destek. AVGO optik tezi netlestince degerlendir.",
       "momentum_5gun": 0
+    },
+    {
+      "sembol": "TER",
+      "guncel_fiyat": 300.77,
+      "sektor": "Teknoloji",
+      "hedef_portfoy": "agresif",
+      "urgency": "medium",
+      "ekleme_tarihi": "2026-03-11",
+      "son_kontrol": "2026-03-11",
+      "hedef_giris": "285-295",
+      "hedef_fiyat": 340.0,
+      "stop_loss": 270.0,
+      "notlar": "Teradyne - yari iletken test ekipmani. AI cip uretim arttikca test talebi artiyor. YTD +%45, 3A +%47 guclu momentum. RSI 50 notr bolge, pullback'te giris firsati. ENTG/CAMT/PLAB ile ayni tedarik zinciri temasi.",
+      "momentum_5gun": 2.6
+    },
+    {
+      "sembol": "BE",
+      "guncel_fiyat": 154.0,
+      "sektor": "Enerji",
+      "hedef_portfoy": "agresif",
+      "urgency": "medium",
+      "ekleme_tarihi": "2026-03-11",
+      "son_kontrol": "2026-03-11",
+      "hedef_giris": "140-148",
+      "hedef_fiyat": 175.0,
+      "stop_loss": 132.0,
+      "notlar": "Bloom Energy - veri merkezi guc cozumleri (yakit hucresi). AI altyapi enerji talebi artisi dogrudan faydalanicilardan. YTD +%56, 3A +%41. RSI 51 notr. 52H'den -%15 geri cekilmis, $140-148 giris bolgesi bekleniyor.",
+      "momentum_5gun": 0.65
     }
   ],
   "haric_tutulanlar": [
@@ -306,7 +334,7 @@
     "savunma_talebi": "Savunma harcamaları artacak - RTX, NOC, LMT, GD en büyük faydalanıcılar",
     "nukleer_alternatif": "Petrol riski → Nükleer enerji stratejik önem kazanıyor - CEG, GEV"
   },
-  "toplam_aday": 14,
+  "toplam_aday": 16,
   "yuksek_oncelik_aday": 8,
   "iran_krizi_critical": [
     "RTX",
