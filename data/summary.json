@@ -1,16 +1,16 @@
 {
   "son_guncelleme": "2026-03-11",
-  "toplam_sermaye": 600000,
-  "toplam_deger": 623127.14,
-  "toplam_kar_zarar": 23127.14,
-  "toplam_kar_zarar_yuzde": 3.85,
+  "toplam_sermaye": 280000,
+  "toplam_deger": 623577.38,
+  "toplam_kar_zarar": 343577.38,
+  "toplam_kar_zarar_yuzde": 122.71,
   "portfolyolar": {
     "dengeli": {
       "isim": "Dengeli Portföy",
-      "deger": 112160.36,
+      "deger": 112255.76,
       "maliyet": 40000,
-      "kar_zarar": 72160.36,
-      "kar_zarar_yuzde": 180.4,
+      "kar_zarar": 72255.76,
+      "kar_zarar_yuzde": 180.64,
       "pozisyon_sayisi": 5,
       "nakit": {
         "miktar": 50291.77,
@@ -19,10 +19,10 @@
     },
     "agresif": {
       "isim": "Agresif Büyüme Portföyü",
-      "deger": 367161.96,
+      "deger": 367380.56,
       "maliyet": 140000,
-      "kar_zarar": 227161.96000000002,
-      "kar_zarar_yuzde": 162.26,
+      "kar_zarar": 227380.56,
+      "kar_zarar_yuzde": 162.41,
       "pozisyon_sayisi": 7,
       "nakit": {
         "miktar": 269354.05,
@@ -31,10 +31,10 @@
     },
     "temettü": {
       "isim": "Değer + Temettü Portföyü",
-      "deger": 143804.82,
+      "deger": 143941.06,
       "maliyet": 100000,
-      "kar_zarar": 43804.82000000001,
-      "kar_zarar_yuzde": 43.8,
+      "kar_zarar": 43941.06,
+      "kar_zarar_yuzde": 43.94,
       "pozisyon_sayisi": 9,
       "nakit": {
         "miktar": 1668.43,
@@ -43,9 +43,12 @@
     },
     "swing_trade": {
       "isim": "Swing Trade (Simülasyon)",
-      "pozisyon_sayisi": 6,
-      "bos_slot": 4,
-      "durum": "6/10 pozisyon aktif"
+      "pozisyon_sayisi": 5,
+      "bos_slot": 5,
+      "durum": "5/10 pozisyon aktif"
     }
-  }
+  },
+  "son_islemler": [
+    "2026-03-11: SWING-015 T @$27.09 SATIŞ - stop-loss -%5.54 - 22 gün tutuldu"
+  ]
 }
