@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-03-11T10:20:07.113719",
+  "son_guncelleme": "2026-03-11T11:10:10.516368",
   "not": "Tüm portföyler ve swing trade için tek merkezi watchlist. Her adayda hedef_portfoy alanı hangi portföye/stratejiye ait olduğunu belirtir.",
   "iran_krizi_notu": {
     "tarih": "2026-03-01",
@@ -416,6 +416,71 @@
       "notlar": "Constellation Energy - ABD'nin en buyuk nukleer enerji ureticisi, Microsoft veri merkezi PPA. NVIDIA makalesi Katman 1 (Enerji). RSI 53.9 ideal. 52H'den -%23, swing'de zarar ile ciktik ama uzun vadeli tez saglam. $99B mktcap.",
       "nvidia_katman": "Katman 1 - Enerji (nukleer)",
       "momentum_5gun": 0
+    },
+    {
+      "sembol": "COHR",
+      "guncel_fiyat": 260.64,
+      "sektor": "Teknoloji - Optik/Lazer AI Networking",
+      "hedef_portfoy": "agresif",
+      "urgency": "high",
+      "ekleme_tarihi": "2026-03-11",
+      "son_kontrol": "2026-03-11",
+      "hedef_giris": "240-255",
+      "hedef_fiyat": 300.0,
+      "stop_loss": 225.0,
+      "notlar": "Coherent - optik/lazer bilesenleri, AI veri merkezi baglanti altyapisi. LASR tezinin buyuk kardesi ama $41B mktcap ile cok daha saglam. RSI 55.9 ideal, SMA50 ustunde guclu. 52H'den -%13 makul geri cekilme. @ProfKayaFinance Katman 2 (Cipler).",
+      "nvidia_katman": "Katman 2 - Cipler (optik baglanti)",
+      "momentum_5gun": 0,
+      "kaynak": "@ProfKayaFinance tweet - AI 5 Katman piramidi"
+    },
+    {
+      "sembol": "CCJ",
+      "guncel_fiyat": 120.08,
+      "sektor": "Enerji - Uranyum",
+      "hedef_portfoy": "agresif",
+      "urgency": "medium",
+      "ekleme_tarihi": "2026-03-11",
+      "son_kontrol": "2026-03-11",
+      "hedef_giris": "110-118",
+      "hedef_fiyat": 140.0,
+      "stop_loss": 102.0,
+      "notlar": "Cameco - dunyanin en buyuk uranyum ureticisi. Nukleer enerji AI veri merkezleri icin kritik. CEG/GEV/VST ile ayni tema ama yakit tarafinda. RSI 53.1 ideal, SMA50 ustunde. $52B mktcap. @ProfKayaFinance Katman 1 (Enerji).",
+      "nvidia_katman": "Katman 1 - Enerji (uranyum/nukleer yakit)",
+      "momentum_5gun": 0,
+      "kaynak": "@ProfKayaFinance tweet - AI 5 Katman piramidi"
+    },
+    {
+      "sembol": "BWXT",
+      "guncel_fiyat": 195.91,
+      "sektor": "Savunma/Enerji - Nukleer Teknoloji",
+      "hedef_portfoy": "agresif",
+      "urgency": "medium",
+      "ekleme_tarihi": "2026-03-11",
+      "son_kontrol": "2026-03-11",
+      "hedef_giris": "185-195",
+      "hedef_fiyat": 225.0,
+      "stop_loss": 170.0,
+      "notlar": "BWX Technologies - nukleer reaktor bilesenleri, denizalti reaktorleri, nukleer yakit islemleri. Savunma + enerji cift katalizor. RSI 45.2 oversold'a yakin, SMA50 altinda pullback devam ediyor. $18B mktcap. @ProfKayaFinance Katman 1 (Enerji). Iran krizi + nukleer enerji temasi crossover.",
+      "nvidia_katman": "Katman 1 - Enerji (nukleer teknoloji)",
+      "momentum_5gun": 0,
+      "iran_katalizor": "Nukleer denizalti reaktorleri, savunma nukleer altyapisi",
+      "kaynak": "@ProfKayaFinance tweet - AI 5 Katman piramidi"
+    },
+    {
+      "sembol": "NET",
+      "guncel_fiyat": 207.49,
+      "sektor": "Teknoloji - Edge Computing/CDN",
+      "hedef_portfoy": "agresif",
+      "urgency": "medium",
+      "ekleme_tarihi": "2026-03-11",
+      "son_kontrol": "2026-03-11",
+      "hedef_giris": "190-200",
+      "hedef_fiyat": 240.0,
+      "stop_loss": 180.0,
+      "notlar": "Cloudflare - edge computing, CDN, AI uygulama dagitim altyapisi. AI modellerinin son kullaniciya ulasma katmani. RSI 64.2 biraz yuksek ama SMA50 ustunde guclu trend. 52H'den -%20 makul pullback. $73B mktcap. @ProfKayaFinance Katman 5 (Uygulamalar).",
+      "nvidia_katman": "Katman 5 - Uygulamalar (edge/CDN)",
+      "momentum_5gun": 0,
+      "kaynak": "@ProfKayaFinance tweet - AI 5 Katman piramidi"
     }
   ],
   "haric_tutulanlar": [
@@ -503,7 +568,7 @@
     "savunma_talebi": "Savunma harcamaları artacak - RTX, NOC, LMT, GD en büyük faydalanıcılar",
     "nukleer_alternatif": "Petrol riski → Nükleer enerji stratejik önem kazanıyor - CEG, GEV"
   },
-  "toplam_aday": 27,
+  "toplam_aday": 31,
   "yuksek_oncelik_aday": 11,
   "iran_krizi_critical": [
     "RTX",
@@ -526,7 +591,9 @@
         "NRG",
         "POWL",
         "GEV",
-        "BE"
+        "BE",
+        "CCJ",
+        "BWXT"
       ],
       "katman_2_cipler": [
         "AVGO",
@@ -536,7 +603,8 @@
         "PLAB",
         "ENTG",
         "CAMT",
-        "TER"
+        "TER",
+        "COHR"
       ],
       "katman_3_altyapi": [
         "VRT",
@@ -549,9 +617,41 @@
       "katman_4_5_model_uygulama": [
         "PLTR*",
         "TYL*",
-        "RKLB*"
+        "RKLB*",
+        "NET"
       ]
     },
     "not": "* isaretli hisseler zaten portfoyde aktif pozisyon"
+  },
+  "profkaya_tweet_notu": {
+    "tarih": "2026-03-11",
+    "kaynak": "@ProfKayaFinance tweet - AI 5 Katman piramidi",
+    "ozet": "5 katmanli AI yatirim cercevesi: Enerji > Cipler > Altyapi > Modeller > Uygulamalar. Dalga dalga gelen birikim, sektor rotasyonu degil.",
+    "eklenen_adaylar": [
+      "COHR",
+      "CCJ",
+      "BWXT",
+      "NET"
+    ],
+    "zaten_listede_olan": [
+      "CEG",
+      "VST",
+      "BE",
+      "GEV",
+      "AVGO",
+      "MU",
+      "MRVL",
+      "CRDO",
+      "VRT",
+      "DELL",
+      "EQIX",
+      "GLW"
+    ],
+    "portfoyde_aktif": [
+      "PLTR (Katman 5)",
+      "LASR (Katman 3-optik)",
+      "GILT (Katman 3)",
+      "ANET (Katman 3)"
+    ]
   }
 }
