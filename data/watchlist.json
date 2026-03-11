@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-03-11T20:36:46.213407",
+  "son_guncelleme": "2026-03-11T21:28:48.646547",
   "not": "Tüm portföyler ve swing trade için tek merkezi watchlist. Her adayda hedef_portfoy alanı hangi portföye/stratejiye ait olduğunu belirtir.",
   "iran_krizi_notu": {
     "tarih": "2026-03-01",
@@ -222,7 +222,7 @@
     },
     {
       "sembol": "TER",
-      "guncel_fiyat": 301.96,
+      "guncel_fiyat": 301.99,
       "sektor": "Teknoloji",
       "hedef_portfoy": "agresif",
       "urgency": "medium",
