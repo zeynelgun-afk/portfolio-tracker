@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-03-11T17:15:17.710137",
+  "son_guncelleme": "2026-03-11T17:21:47.880016",
   "not": "SWING TRADE SADECE SİMÜLASYON - Sadece % kazanç/kayıp takibi (MAX: 8 pozisyon)",
   "iran_krizi_hazirligi": {
     "tarih": "2026-03-01",
@@ -76,40 +76,6 @@
         "durum": "Hedef bekleniyor"
       },
       "gunluk_degisim_yuzde": 0.89739
-    },
-    {
-      "id": "SWING-019",
-      "sembol": "CTSH",
-      "giris_tarihi": "2026-02-24",
-      "giris_fiyati": 61.36,
-      "guncel_fiyat": 62.41,
-      "guncel_kar_zarar_yuzde": 1.71,
-      "hedef_fiyat": 67.5,
-      "stop_loss": 58.29,
-      "tutulan_gun": 15,
-      "giris_nedeni": "RSI 22.5 aşırı satım, IT consulting devi $29.6B market cap, 52W low'a yakın ($60.23), Morgan Stanley konferansı katalizör olabilir, AI-driven workplace services kontratı haberi pozitif",
-      "katalizor": "Morgan Stanley TMT Konferansı sunumu + yeni AI workplace kontratı",
-      "tez": "Büyük IT consulting şirketi, AI entegrasyon haberleri pozitif, oversold bounce beklentisi",
-      "zaman_cercevesi": "7-10 gün",
-      "risk": "Tech sektörü genelinde satış baskısı devam edebilir, 52W low kırılırsa trend bozulur",
-      "durum": "✅ Normal aralıkta",
-      "tarama_yontemi": "RSI oversold",
-      "son_guncelleme": "2026-03-11T17:08:14.930834",
-      "partial_exit_plan": {
-        "hedef_ulasildiginda": {
-          "aksiyon": "%50 POZİSYONU SAT",
-          "satis_fiyati": 67.5,
-          "sebep": "Kar garantiye al"
-        },
-        "kalan_50_icin": {
-          "aksiyon": "TRAİLİNG STOP AKTİF",
-          "baslangic_trailing_stop": 60.28,
-          "trailing_yuzde": 5,
-          "aciklama": "Zirveden -%5 düşünce sat"
-        },
-        "durum": "Hedef bekleniyor"
-      },
-      "gunluk_degisim_yuzde": -0.90505
     },
     {
       "id": "SWING-023",

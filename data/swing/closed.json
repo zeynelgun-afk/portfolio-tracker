@@ -198,6 +198,19 @@
       "cikis_nedeni": "Stop-loss tetiklendi: İran savaşı volatilitesinde savunmacı tez beklenen güvenli liman korumasını sağlayamadı. $27.25 stop kırıldı.",
       "sonuc": "ZARAR",
       "ders": "Savunmacı/telecom hisseleri yüksek VIX ortamında bile basınç altında kalabiliyor. Swing trade'de sektör liderliği tezi için RS teyidi şart — sadece temettü verimi stop tezini desteklemiyor."
+    },
+    {
+      "id": "SWING-019",
+      "sembol": "CTSH",
+      "giris_tarihi": "2026-02-26",
+      "cikis_tarihi": "2026-03-11",
+      "giris_fiyati": 61.36,
+      "cikis_fiyati": 62.25,
+      "kar_zarar_yuzde": 1.45,
+      "tutulan_gun": 13,
+      "cikis_nedeni": "Tez bozulması: RSI 33, SMA50/200 çok altında, momentum hiç gelmedi. Erken çıkış kararı — stop beklemeden çıkıldı.",
+      "sonuc": "KAZANÇ",
+      "ders": "IT outsourcing toparlanma tezi piyasa baskısında geçersiz kaldı. RSI ve SMA teyidi olmadan savunmacı teze giriş yapılmamalı."
     }
   ],
   "istatistikler": {

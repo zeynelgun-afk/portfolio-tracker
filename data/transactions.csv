@@ -79,3 +79,4 @@ date,action,symbol,shares,price,total,reason
 2026-03-10,BUY,ABBV,33,227.07,7493.31,"Temettü portföyü — ABBV pullback girişi, RSI 49, SMA50+200 üzeri, healthcare çeşitlendirmesi"
 
 2026-03-11,SELL,T,0,27.09,27.09,"SWING-015 kapanış - stop-loss tetiklendi -%5.54 - İran volatilitesinde savunmacı tez işlemedi"
+2026-03-11,SELL,CTSH,0,62.25,62.25,"SWING-019 kapanış - tez bozulması - RSI 33 SMA50 altında - +1.45%"
