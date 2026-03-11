@@ -1,5 +1,22 @@
 # GÜNLÜK RAPOR PART 1 — SABAH RAPORU v2.0
 
+> ⛔ **KRİTİK: ADIM ATLAMA YASAĞI**
+>
+> bu prompt'taki her adım sırayla ve eksiksiz uygulanmalıdır. hiçbir adım atlanamaz, kısaltılamaz veya "sonra yaparım" diye ertelenmez. bir adımı tamamlamadan diğerine geçme.
+>
+> **zorunlu adımlar (teker teker kontrol et):**
+> - [ ] ADIM 1 — piyasa verisi (FMP batch-quote, teknik göstergeler, emtia, treasury)
+> - [ ] ADIM 2 — haber toplama (web search, piyasa haberleri)
+> - [ ] ADIM 2.5 — twitter takip listesi (RapidAPI ile hesap taraması)
+> - [ ] ADIM 3 — earnings takvimi (FMP earnings-calendar, market cap filtresi)
+> - [ ] ADIM 4 — otomatik swing tarama sonuçları (daily_scan.json oku)
+> - [ ] ADIM 5 — finviz tarama (teyit katmanı)
+> - [ ] ADIM 6 — analiz, plan ve kayıt
+> - [ ] RAPOR — tüm bölümler (1-5) eksiksiz yazıldı mı?
+> - [ ] GIT — commit + push yapıldı mı?
+>
+> **geçmiş hatalar**: adım atlama maliyetli oldu (örn: kazanç açıklaması taramasını atlama → Oracle bilançosu rapordan eksik kaldı). bu tür eksiklikler güvenilirliği zedeler. her adımı tamamla, sonra raporu yaz.
+
 > **versiyon**: 2.0 | **son güncelleme**: 10 mart 2026
 > **çıktı dosyası**: `reports/daily/DAILY_SABAH_YYYY-MM-DD.md`
 > **çalışma zamanı**: TR ~14:00 (NYSE dün 00:00'da kapandı, bugün 16:30 açılacak — yaz saati)

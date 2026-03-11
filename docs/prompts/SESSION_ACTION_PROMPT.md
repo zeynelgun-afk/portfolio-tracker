@@ -1,5 +1,36 @@
 # SEANS İÇİ AKSİYON PROMPT — v1.3
 
+> ⛔ **KRİTİK: AŞAMA ATLAMA YASAĞI**
+>
+> bu prompt'taki 5 aşama sırayla ve eksiksiz uygulanmalıdır. hiçbir aşama veya alt adım atlanamaz, kısaltılamaz veya "gerek yok" diye geçilemez. bir aşamayı tamamlamadan diğerine geçme.
+>
+> **zorunlu aşamalar (teker teker kontrol et):**
+> - [ ] AŞAMA 1 — VERİ TOPLAMA (tümü zorunlu):
+>   - [ ] 1a. piyasa genel durumu (SPY, QQQ, VIX, emtia)
+>   - [ ] 1b. portföy hisseleri (canlı fiyat + RSI + SMA)
+>   - [ ] 1c. prediction markets + haber kontrolü
+>   - [ ] 1d. twitter takip listesi (faz 1'de çek)
+>   - [ ] 1e. sektör RS analizi
+> - [ ] AŞAMA 2 — DURUM TESPİTİ:
+>   - [ ] 2a. sabah raporu ile karşılaştırma
+>   - [ ] 2b. her portföy pozisyonu durum tespiti
+>   - [ ] 2c. swing pozisyonları durum tespiti
+> - [ ] AŞAMA 3 — KARAR:
+>   - [ ] 3a. karar matrisi (portföyler)
+>   - [ ] 3b. karar matrisi (swing)
+>   - [ ] 3c. portföyler arası korelasyon kontrolü
+>   - [ ] 3d. yeni pozisyon fırsatları
+>   - [ ] 3e. satış/çıkış değerlendirmesi
+> - [ ] AŞAMA 4 — UYGULAMA:
+>   - [ ] 4a. trade işlemleri (JSON + CSV güncelle)
+>   - [ ] 4b. fiyat güncellemesi
+>   - [ ] 4c. watchlist güncellemesi
+>   - [ ] 4d. git commit + push
+> - [ ] AŞAMA 5 — RAPOR (chat'te göster)
+> - [ ] SELF-VALIDATION kontrolü yapıldı mı?
+>
+> **geçmiş hatalar**: adım atlama maliyetli oldu (örn: kazanç açıklaması taramasını atlama, bölüm eksik bırakma). prompttaki her madde bir sebepten var — atlamak portföy kararlarını olumsuz etkiler.
+
 > **versiyon**: 1.4 | **son güncelleme**: 5 mart 2026
 > **çalışma zamanı**: NYSE açıldıktan sonra (TR 17:30+), tercihen açılıştan 30-60dk sonra
 > **ön koşul**: o günün sabah raporu zaten yazılmış olmalı

@@ -1,5 +1,26 @@
 # GÜNLÜK RAPOR PART 2 — KAPANIŞ RAPORU v1.0
 
+> ⛔ **KRİTİK: ADIM ATLAMA YASAĞI**
+>
+> bu prompt'taki her adım sırayla ve eksiksiz uygulanmalıdır. hiçbir adım atlanamaz, kısaltılamaz veya "sonra yaparım" diye ertelenmez. bir adımı tamamlamadan diğerine geçme.
+>
+> **zorunlu adımlar (teker teker kontrol et):**
+> - [ ] ADIM 1 — git pull + hazırlık (JSON'ları oku, dünkü raporu kontrol et)
+> - [ ] ADIM 2 — FMP veri toplama (batch-quote, RSI, SMA, emtia, treasury)
+> - [ ] ADIM 2.5 — KAZANÇ AÇIKLAMALARI TARAMASI (earnings-calendar, portföy kesişimi, detaylı analiz)
+> - [ ] ADIM 3 — JSON güncelleme (fiyatlar, k/z, ağırlıklar, summary.json, git commit)
+> - [ ] ADIM 4 — rapor yaz (BÖLÜM 1-5 + BÖLÜM 4a eksiksiz)
+> - [ ] BÖLÜM 1 — günün özeti (piyasa tablosu, sektörler, trend)
+> - [ ] BÖLÜM 2 — portföy takibi (3 portföy + genel özet + uyarılar)
+> - [ ] BÖLÜM 3 — swing trade durumu (aktif pozisyonlar, stop/hedef kontrol)
+> - [ ] BÖLÜM 4 — günün işlemleri
+> - [ ] BÖLÜM 4a — KAZANÇ AÇIKLAMALARI (bugünkü bilançolar, portföy kesişimi analizi)
+> - [ ] BÖLÜM 4b — günün değerlendirmesi (sabah planı vs gerçekleşme, dersler)
+> - [ ] BÖLÜM 5 — sonuç + yarın aksiyonları
+> - [ ] GIT — rapor commit + push yapıldı mı?
+>
+> **geçmiş hatalar**: bölüm 4a (kazanç açıklamaları) atlandı → Oracle bilançosu ($17.2B gelir, bulut +%84, AH +%6.3) rapordan tamamen eksik kaldı. bölüm 4b ve 5 de eksik yazıldı. bu tür atlamalar portföy kararlarını olumsuz etkiler. her bölümü tamamla.
+
 > **versiyon**: 1.0 | **son güncelleme**: 3 mart 2026
 > **çıktı dosyası**: `reports/daily/DAILY_REPORT_YYYY-MM-DD.md`
 > **çalışma zamanı**: TR ~09:00 (NYSE dün gece 00:00'da kapandı, bugün 17:30 açılacak)
