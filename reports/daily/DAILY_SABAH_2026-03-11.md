@@ -21,10 +21,18 @@ petrolde salı günü tarihi düşüş yaşandı. enerji bakanı Wright'ın "don
 
 ### bugünün öncü göstergeleri
 
-**vadeli işlemler** (11 mart sabahı):
-- S&P 500 vadeli: ~yatay, flat açılış beklentisi
-- NASDAQ vadeli: ~yatay
-- petrol gece seansında tekrar yükselişe geçti (IEA acil stok salımı beklentisi + yeni çatışma haberleri)
+**vadeli işlemler / ön piyasa** (11 mart ~13:50 TR):
+
+| ticker | dün kapanış | ön piyasa | fark | not |
+|--------|------------|-----------|------|-----|
+| S&P 500 vadeli | 6,777 | 6,808 | +%0.3 | CPI öncesi temkinli pozitif |
+| NASDAQ 100 vadeli | 24,983 | 25,058 | +%0.3 | Oracle AH desteği |
+| Dow vadeli | 47,707 | 47,800 | +%0.2 | yataya yakın |
+| Brent ham petrol | $87.80 | $87.95 | +%0.2 | gece $91.66'ya kadar çıkıp döndü |
+| ORCL (Oracle) | $149.49 | ~$165 | +%10 | Q3 beat + yönlendirme yükseltme |
+| QQQ | $607.77 | $608.22 | +%0.1 | flat, CPI bekliyor |
+
+> kaynak: investing.com, robinhood, stockmarketwatch (FMP aftermarket endpoint seans dışında sıfır dönüyor, ön piyasa verileri web aramasıyla alındı)
 
 **CPI verisi bugün 15:30 TR**: şubat TÜFE beklentisi aylık +%0.3, yıllık +%2.4 (ocakla aynı). çekirdek yıllık +%2.5. bu veri savaş öncesi döneme ait, petrol etkisi mart-nisan verisinde görülecek. yine de beklentiden yüksek gelirse piyasa negatif tepki verir.
 

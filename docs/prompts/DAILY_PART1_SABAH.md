@@ -42,11 +42,20 @@
 bu prompt tek seferde çalışır. adımları sırayla takip et:
 
 ```
-ADIM 1 — PİYASA VERİSİ (FMP)
+ADIM 1 — PİYASA VERİSİ (FMP + WEB)
   → batch-quote: SPY, QQQ, DIA, IWM, VIX (varsa), GCUSD, CLUSD
+  → stock-price-change: tüm portföy sembolleri (1D, 5D, 1M güvenilir)
   → sector-performance-snapshot (date = dünün tarihi)
   → biggest-gainers, biggest-losers (limit 15)
   → treasury-rates (son 5 gün)
+
+  ⚠️ ÖN PİYASA VERİSİ — WEB ARAMASI ZORUNLU:
+  FMP aftermarket-quote endpoint'i NYSE seans dışında sıfır dönüyor.
+  ön piyasa (pre-market) ve vadeli işlem (futures) verileri için:
+  → websearch: "S&P 500 futures today" / "stock market premarket today"
+  → kaynak önceliği: investing.com, cnbc.com, tradingeconomics.com, robinhood.com
+  → endeks vadeli (ES, NQ, YM), petrol (Brent, WTI), altın, ORCL gibi AH hareketleri
+  → raporda tablo formatında sun: ticker | dün kapanış | ön piyasa | fark% | not
 
 ADIM 2 — HABER TOPLAMA
   → FMP: news/stock (tüm portföy + swing sembolleri), fmp-articles (limit 15)
@@ -145,9 +154,17 @@ rapor 5 bölümden oluşur.
 
 ### bugünün öncü göstergeleri
 
-**futures** ({bugün sabah}):
-- S&P 500: ±%X.XX | NASDAQ: ±%X.XX
-- [kısa yorum]
+**vadeli işlemler / ön piyasa** ({bugün sabah}, web aramasından):
+
+| ticker | dün kapanış | ön piyasa | fark | not |
+|--------|------------|-----------|------|-----|
+| S&P 500 vadeli | X,XXX | X,XXX | ±%X.XX | [kısa not] |
+| NASDAQ vadeli | XX,XXX | XX,XXX | ±%X.XX | |
+| Dow vadeli | XX,XXX | XX,XXX | ±%X.XX | |
+| Brent | $XX.XX | $XX.XX | ±%X.XX | |
+| [AH hareket eden hisse] | $XX.XX | $XX.XX | ±%X.XX | [neden] |
+
+> kaynak: investing.com / cnbc / robinhood (FMP aftermarket seans dışında sıfır dönüyor)
 
 ### sektör performansı (dün)
 
