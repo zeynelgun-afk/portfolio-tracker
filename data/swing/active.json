@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-03-11T17:08:14.930834",
+  "son_guncelleme": "2026-03-11T17:15:17.710137",
   "not": "SWING TRADE SADECE SİMÜLASYON - Sadece % kazanç/kayıp takibi (MAX: 8 pozisyon)",
   "iran_krizi_hazirligi": {
     "tarih": "2026-03-01",
@@ -16,18 +16,18 @@
       "sembol": "DUK",
       "giris_tarihi": "2026-02-19",
       "giris_fiyati": 126.71,
-      "guncel_fiyat": 130.29,
-      "guncel_kar_zarar_yuzde": 2.83,
+      "guncel_fiyat": 130.25,
+      "guncel_kar_zarar_yuzde": 2.79,
       "hedef_fiyat": 139.38,
-      "stop_loss": 120.38,
+      "stop_loss": 123.74,
       "tutulan_gun": 20,
       "giris_nedeni": "Güçlü momentum +3.4%, savunmacı utilities sektörü, istikrarlı nakit akışı",
       "katalizor": "Elektrik kamu hizmeti lideri, temiz enerji geçişi faydalanıcısı",
       "tez": "Duke Energy - Carolina'da dominant pozisyon, düzenli temettü ödemesi, savunmacı pozisyonlama",
       "zaman_cercevesi": "7-10 gün",
       "risk": "Faiz oranı yükselmesi, düzenleme riski",
-      "durum": "✅ Normal aralıkta",
-      "son_guncelleme": "2026-03-11T17:08:14.930834",
+      "durum": "Trailing stop güncellendi 120.38 → 123.74 ($130.25 × 0.95)",
+      "son_guncelleme": "2026-03-11T17:15:17.710137",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
