@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-03-11T06:12:10.357940",
+  "son_guncelleme": "2026-03-11T10:20:07.113719",
   "not": "Tüm portföyler ve swing trade için tek merkezi watchlist. Her adayda hedef_portfoy alanı hangi portföye/stratejiye ait olduğunu belirtir.",
   "iran_krizi_notu": {
     "tarih": "2026-03-01",
@@ -152,12 +152,13 @@
       "hedef_portfoy": "dengeli",
       "urgency": "medium",
       "ekleme_tarihi": "2026-02-22",
-      "son_kontrol": "2026-03-10",
+      "son_kontrol": "2026-03-11",
       "hedef_giris": "315-320",
       "hedef_fiyat": 370.0,
       "stop_loss": 295.0,
       "notlar": "custom ASIC + VMware çift motor, FCF $27B. NVDA earnings sonrası pullback bekle",
-      "momentum_5gun": 0
+      "momentum_5gun": 0,
+      "nvidia_katman": "Katman 2 - Cipler (ozel ASIC)"
     },
     {
       "sembol": "HWM",
@@ -181,12 +182,13 @@
       "hedef_portfoy": "agresif",
       "urgency": "medium",
       "ekleme_tarihi": "2026-02-28",
-      "son_kontrol": "2026-03-10",
+      "son_kontrol": "2026-03-11",
       "hedef_giris": "820-840",
       "hedef_fiyat": 950.0,
       "stop_loss": 800.0,
       "notlar": "GE Vernova - nükleer enerji infra, 1M +22.8%, 3M +45.7%. RSI 72.6 aşırı alım, pullback bekle $820-840.",
-      "momentum_5gun": 0
+      "momentum_5gun": 0,
+      "nvidia_katman": "Katman 1 - Enerji (nukleer/guc)"
     },
     {
       "sembol": "EQIX",
@@ -195,12 +197,13 @@
       "hedef_portfoy": "agresif",
       "urgency": "medium",
       "ekleme_tarihi": "2026-02-28",
-      "son_kontrol": "2026-03-10",
+      "son_kontrol": "2026-03-11",
       "hedef_giris": "920-940",
       "hedef_fiyat": 1050.0,
       "stop_loss": 900.0,
       "notlar": "Equinix - datacenter REIT, AI altyapı oyunu, 1M +19.4%, 3M +29.3%. RSI 74 aşırı alım, pullback bekle.",
-      "momentum_5gun": 0
+      "momentum_5gun": 0,
+      "nvidia_katman": "Katman 3 - Altyapi (veri merkezi REIT)"
     },
     {
       "sembol": "GLW",
@@ -209,12 +212,13 @@
       "hedef_portfoy": "agresif",
       "urgency": "medium",
       "ekleme_tarihi": "2026-03-05",
-      "son_kontrol": "2026-03-10",
+      "son_kontrol": "2026-03-11",
       "hedef_giris": "120-125",
       "hedef_fiyat": 155.0,
       "stop_loss": 115.0,
       "notlar": "Corning - optik fiber + AI veri merkezi altyapisi. Gelir 3.4B->4.2B guclu buyume, karli. -10.8% AVGO bakir tercihi nedeniyle dusus. RSI 50.7 notr. SMA50 111.84 saglam destek. AVGO optik tezi netlestince degerlendir.",
-      "momentum_5gun": 0
+      "momentum_5gun": 0,
+      "nvidia_katman": "Katman 3 - Altyapi (optik fiber)"
     },
     {
       "sembol": "TER",
@@ -228,7 +232,8 @@
       "hedef_fiyat": 340.0,
       "stop_loss": 270.0,
       "notlar": "Teradyne - yari iletken test ekipmani. AI cip uretim arttikca test talebi artiyor. YTD +%45, 3A +%47 guclu momentum. RSI 50 notr bolge, pullback'te giris firsati. ENTG/CAMT/PLAB ile ayni tedarik zinciri temasi.",
-      "momentum_5gun": 2.6
+      "momentum_5gun": 2.6,
+      "nvidia_katman": "Katman 2 - Cipler (test ekipmani)"
     },
     {
       "sembol": "BE",
@@ -242,7 +247,175 @@
       "hedef_fiyat": 175.0,
       "stop_loss": 132.0,
       "notlar": "Bloom Energy - veri merkezi guc cozumleri (yakit hucresi). AI altyapi enerji talebi artisi dogrudan faydalanicilardan. YTD +%56, 3A +%41. RSI 51 notr. 52H'den -%15 geri cekilmis, $140-148 giris bolgesi bekleniyor.",
-      "momentum_5gun": 0.65
+      "momentum_5gun": 0.65,
+      "nvidia_katman": "Katman 1 - Enerji (yakit hucresi/veri merkezi)"
+    },
+    {
+      "sembol": "VST",
+      "guncel_fiyat": 164.4,
+      "sektor": "Enerji - Nükleer/Doğal Gaz",
+      "hedef_portfoy": "agresif",
+      "urgency": "medium",
+      "ekleme_tarihi": "2026-03-11",
+      "son_kontrol": "2026-03-11",
+      "hedef_giris": "150-158",
+      "hedef_fiyat": 195.0,
+      "stop_loss": 140.0,
+      "notlar": "Vistra Energy - nukleer + dogal gaz, veri merkezi PPA kontratlari. NVIDIA makalesi Katman 1 (Enerji). RSI 49.2 notr, 52H'den -%25 geri cekilmis. Enerji AI altyapisi icin temel tedarikci. $55.7B mktcap.",
+      "nvidia_katman": "Katman 1 - Enerji",
+      "momentum_5gun": -0.03
+    },
+    {
+      "sembol": "NRG",
+      "guncel_fiyat": 155.15,
+      "sektor": "Enerji - Kamu Hizmetleri",
+      "hedef_portfoy": "agresif",
+      "urgency": "medium",
+      "ekleme_tarihi": "2026-03-11",
+      "son_kontrol": "2026-03-11",
+      "hedef_giris": "140-148",
+      "hedef_fiyat": 180.0,
+      "stop_loss": 132.0,
+      "notlar": "NRG Energy - buyuk veri merkezi enerji tedarikçisi. NVIDIA makalesi Katman 1 (Enerji). RSI 40.2 oversold bolgesi yakin, 52H'den -%18 dusmus. $33.3B mktcap.",
+      "nvidia_katman": "Katman 1 - Enerji",
+      "momentum_5gun": -2.29
+    },
+    {
+      "sembol": "MU",
+      "guncel_fiyat": 403.11,
+      "sektor": "Teknoloji - Bellek/HBM",
+      "hedef_portfoy": "agresif",
+      "urgency": "high",
+      "ekleme_tarihi": "2026-03-11",
+      "son_kontrol": "2026-03-11",
+      "hedef_giris": "380-395",
+      "hedef_fiyat": 450.0,
+      "stop_loss": 360.0,
+      "notlar": "Micron - HBM (yuksek bant genislikli bellek) lideri, AI cip katmaninin kritik bileseni. 18 Mart kazanc aciklamasi KRiTiK. NVIDIA makalesi Katman 2 (Cipler). RSI 52.1 notr. YTD +%28 guclu. $453.7B mktcap. Kazanc oncesi giris riskli, sonrasi degerlendır.",
+      "nvidia_katman": "Katman 2 - Cipler",
+      "momentum_5gun": 6.04,
+      "katalizor": "18 Mart kazanc aciklamasi - HBM talep gucuyse agresif giris"
+    },
+    {
+      "sembol": "MRVL",
+      "guncel_fiyat": 93.3,
+      "sektor": "Teknoloji - Ozel AI Cip",
+      "hedef_portfoy": "agresif",
+      "urgency": "high",
+      "ekleme_tarihi": "2026-03-11",
+      "son_kontrol": "2026-03-11",
+      "hedef_giris": "85-90",
+      "hedef_fiyat": 102.0,
+      "stop_loss": 80.0,
+      "notlar": "Marvell - ozel AI ASIC + ag cipleri, veri merkezi odakli. NVIDIA makalesi Katman 2 (Cipler). RSI 68.2 biraz yuksek, geri cekilme bekle $85-90. Q4 beklenti ustu sonuc tezi dogruladi. $81.5B mktcap.",
+      "nvidia_katman": "Katman 2 - Cipler",
+      "momentum_5gun": 10.13
+    },
+    {
+      "sembol": "CRDO",
+      "guncel_fiyat": 112.33,
+      "sektor": "Teknoloji - Yuksek Hizli Baglanti",
+      "hedef_portfoy": "agresif",
+      "urgency": "medium",
+      "ekleme_tarihi": "2026-03-11",
+      "son_kontrol": "2026-03-11",
+      "hedef_giris": "105-110",
+      "hedef_fiyat": 135.0,
+      "stop_loss": 95.0,
+      "notlar": "Credo Technology - yuksek hizli veri aktarimi, AI kume baglantisi. NVIDIA makalesi Katman 2 (Cipler). RSI 45.4 ideal giris bolgesi. 52H'den -%47.5 ciddi geri cekilme, $105-110 hedef. $20.7B mktcap.",
+      "nvidia_katman": "Katman 2 - Cipler",
+      "momentum_5gun": 1.04
+    },
+    {
+      "sembol": "PLAB",
+      "guncel_fiyat": 34.1,
+      "sektor": "Teknoloji - Fotomask/Litografi",
+      "hedef_portfoy": "agresif",
+      "urgency": "medium",
+      "ekleme_tarihi": "2026-03-11",
+      "son_kontrol": "2026-03-11",
+      "hedef_giris": "31-33",
+      "hedef_fiyat": 42.0,
+      "stop_loss": 28.5,
+      "notlar": "Photronics - fotomask uretimi, cip uretim tedarik zinciri. NVIDIA makalesi Katman 2 destek. RSI 44.8 notr-dusuk. 52H'den -%25. Kucuk mktcap $2B ama niş lider.",
+      "nvidia_katman": "Katman 2 - Cipler (tedarik zinciri)",
+      "momentum_5gun": 1.79
+    },
+    {
+      "sembol": "ENTG",
+      "guncel_fiyat": 116.88,
+      "sektor": "Teknoloji - Cip Uretim Malzemeleri",
+      "hedef_portfoy": "agresif",
+      "urgency": "medium",
+      "ekleme_tarihi": "2026-03-11",
+      "son_kontrol": "2026-03-11",
+      "hedef_giris": "108-114",
+      "hedef_fiyat": 138.0,
+      "stop_loss": 100.0,
+      "notlar": "Entegris - yari iletken uretim malzemeleri ve filtreleme. NVIDIA makalesi Katman 2 destek. RSI 42.7 oversold yakin. YTD +%30 ama 52H'den -%18. $17.8B mktcap.",
+      "nvidia_katman": "Katman 2 - Cipler (tedarik zinciri)",
+      "momentum_5gun": -2.55
+    },
+    {
+      "sembol": "CAMT",
+      "guncel_fiyat": 156.28,
+      "sektor": "Teknoloji - Cip Muayene/Test",
+      "hedef_portfoy": "agresif",
+      "urgency": "medium",
+      "ekleme_tarihi": "2026-03-11",
+      "son_kontrol": "2026-03-11",
+      "hedef_giris": "145-152",
+      "hedef_fiyat": 174.0,
+      "stop_loss": 135.0,
+      "notlar": "Camtek - yari iletken muayene ve olcum sistemleri. NVIDIA makalesi Katman 2 destek. RSI 51.0 notr. YTD +%35 guclu. 52H'den -%10. $7.2B mktcap.",
+      "nvidia_katman": "Katman 2 - Cipler (tedarik zinciri)",
+      "momentum_5gun": -2.61
+    },
+    {
+      "sembol": "VRT",
+      "guncel_fiyat": 270.06,
+      "sektor": "Teknoloji - Veri Merkezi Altyapi",
+      "hedef_portfoy": "agresif",
+      "urgency": "high",
+      "ekleme_tarihi": "2026-03-11",
+      "son_kontrol": "2026-03-11",
+      "hedef_giris": "250-260",
+      "hedef_fiyat": 310.0,
+      "stop_loss": 235.0,
+      "notlar": "Vertiv - veri merkezi sogutma + guc yonetimi. NVIDIA makalesi Katman 3 (Altyapi) tam merkezi. RSI 68.4 biraz yuksek, pullback bekle. YTD +%54 muhtesem momentum. 52H'ye neredeyse ulasti. $103.3B mktcap.",
+      "nvidia_katman": "Katman 3 - Altyapi (sogutma/guc)",
+      "momentum_5gun": 12.06,
+      "katalizor": "AI veri merkezi sogutma talebi patladi, her yeni AI fabrikasi VRT musteri"
+    },
+    {
+      "sembol": "DELL",
+      "guncel_fiyat": 143.8,
+      "sektor": "Teknoloji - AI Sunucu",
+      "hedef_portfoy": "agresif",
+      "urgency": "medium",
+      "ekleme_tarihi": "2026-03-11",
+      "son_kontrol": "2026-03-11",
+      "hedef_giris": "133-140",
+      "hedef_fiyat": 165.0,
+      "stop_loss": 125.0,
+      "notlar": "Dell Technologies - AI sunucu ureticisi, NVIDIA GPU'lu sistemler. NVIDIA makalesi Katman 3 (Altyapi). RSI 61.9 notr-yuksek. 52H'den -%14. YTD +%13. $96.4B mktcap.",
+      "nvidia_katman": "Katman 3 - Altyapi (sunucular)",
+      "momentum_5gun": -0.02
+    },
+    {
+      "sembol": "CEG",
+      "guncel_fiyat": 317.09,
+      "sektor": "Enerji - Nukleer",
+      "hedef_portfoy": "agresif",
+      "urgency": "medium",
+      "ekleme_tarihi": "2026-03-11",
+      "son_kontrol": "2026-03-11",
+      "hedef_giris": "290-310",
+      "hedef_fiyat": 370.0,
+      "stop_loss": 275.0,
+      "notlar": "Constellation Energy - ABD'nin en buyuk nukleer enerji ureticisi, Microsoft veri merkezi PPA. NVIDIA makalesi Katman 1 (Enerji). RSI 53.9 ideal. 52H'den -%23, swing'de zarar ile ciktik ama uzun vadeli tez saglam. $99B mktcap.",
+      "nvidia_katman": "Katman 1 - Enerji (nukleer)",
+      "momentum_5gun": 0
     }
   ],
   "haric_tutulanlar": [
@@ -311,10 +484,6 @@
       "neden": "Swing pozisyon acildi - 2026-03-02"
     },
     {
-      "sembol": "CEG",
-      "neden": "Swing pozisyon acildi - 2026-03-02"
-    },
-    {
       "sembol": "KTOS",
       "neden": "Swing pozisyon acildi - 2026-03-02"
     }
@@ -334,8 +503,8 @@
     "savunma_talebi": "Savunma harcamaları artacak - RTX, NOC, LMT, GD en büyük faydalanıcılar",
     "nukleer_alternatif": "Petrol riski → Nükleer enerji stratejik önem kazanıyor - CEG, GEV"
   },
-  "toplam_aday": 16,
-  "yuksek_oncelik_aday": 8,
+  "toplam_aday": 27,
+  "yuksek_oncelik_aday": 11,
   "iran_krizi_critical": [
     "RTX",
     "NOC",
@@ -345,5 +514,44 @@
     "CEG",
     "DVN",
     "EOG"
-  ]
+  ],
+  "nvidia_ai_altyapi_tezi": {
+    "tarih": "2026-03-11",
+    "kaynak": "NVIDIA resmi X hesabi - Jensen Huang AI altyapi makalesi",
+    "ozet": "AI 5 katmanli altyapi: Enerji > Cipler > Altyapi > Modeller > Uygulamalar. Trilyonlarca dolar altyapi yatirimi henuz yapilmadi. Insaat dongusu daha basinda.",
+    "katmanlar": {
+      "katman_1_enerji": [
+        "CEG",
+        "VST",
+        "NRG",
+        "POWL",
+        "GEV",
+        "BE"
+      ],
+      "katman_2_cipler": [
+        "AVGO",
+        "MU",
+        "MRVL",
+        "CRDO",
+        "PLAB",
+        "ENTG",
+        "CAMT",
+        "TER"
+      ],
+      "katman_3_altyapi": [
+        "VRT",
+        "DELL",
+        "EQIX",
+        "GLW",
+        "GILT*",
+        "LASR*"
+      ],
+      "katman_4_5_model_uygulama": [
+        "PLTR*",
+        "TYL*",
+        "RKLB*"
+      ]
+    },
+    "not": "* isaretli hisseler zaten portfoyde aktif pozisyon"
+  }
 }
