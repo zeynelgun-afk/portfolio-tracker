@@ -1,8 +1,8 @@
 {
   "portfoy_adi": "Değer + Temettü",
-  "baslangic_sermaye": 90000,
+  "baslangic_sermaye": 100000,
   "nakit": {
-    "miktar": 878.3700000000008,
+    "miktar": 1668.43,
     "para_birimi": "USD"
   },
   "pozisyonlar": [
@@ -22,7 +22,7 @@
       "giris_tarihi": "2026-01-02",
       "giris_fiyati": 24.28,
       "giris_nedeni": "Başlangıç pozisyonu - Temettü + değer portföyü - Telekomünikasyon",
-      "agirlik_yuzde": 9.93
+      "agirlik_yuzde": 9.88
     },
     {
       "sembol": "VZ",
@@ -40,7 +40,7 @@
       "giris_tarihi": "2026-01-02",
       "giris_fiyati": 39.83,
       "giris_nedeni": "Başlangıç pozisyonu - Temettü + değer portföyü - Telekomünikasyon",
-      "agirlik_yuzde": 5.55
+      "agirlik_yuzde": 5.52
     },
     {
       "sembol": "MO",
@@ -58,7 +58,7 @@
       "giris_tarihi": "2026-01-02",
       "giris_fiyati": 57.31,
       "giris_nedeni": "Initial position - Dividend defensive",
-      "agirlik_yuzde": 10.21
+      "agirlik_yuzde": 10.15
     },
     {
       "sembol": "PM",
@@ -76,7 +76,7 @@
       "giris_tarihi": "2026-01-02",
       "giris_fiyati": 160.3,
       "giris_nedeni": "Başlangıç pozisyonu - Temettü + değer portföyü - Tütün",
-      "agirlik_yuzde": 9.28
+      "agirlik_yuzde": 9.23
     },
     {
       "sembol": "XOM",
@@ -94,7 +94,7 @@
       "giris_tarihi": "2026-01-02",
       "giris_fiyati": 121.84,
       "giris_nedeni": "Başlangıç pozisyonu - Temettü + değer portföyü - Enerji",
-      "agirlik_yuzde": 10.53
+      "agirlik_yuzde": 10.48
     },
     {
       "sembol": "CVX",
@@ -112,7 +112,7 @@
       "giris_tarihi": "2026-01-02",
       "giris_fiyati": 154.39,
       "giris_nedeni": "Başlangıç pozisyonu - Temettü + değer portföyü - Enerji",
-      "agirlik_yuzde": 10.39
+      "agirlik_yuzde": 10.34
     },
     {
       "sembol": "SCHD",
@@ -130,7 +130,7 @@
       "giris_tarihi": "2026-01-02",
       "giris_fiyati": 28.95,
       "giris_nedeni": "Otomatik ekleme - Temettü ETF",
-      "agirlik_yuzde": 17.86
+      "agirlik_yuzde": 17.76
     },
     {
       "sembol": "MRK",
@@ -148,7 +148,7 @@
       "giris_tarihi": "2026-03-03",
       "giris_fiyati": 120.41,
       "giris_nedeni": "Agresif portföyden transfer. Yüksek temettü + savunmacı sağlık.",
-      "agirlik_yuzde": 20.41,
+      "agirlik_yuzde": 20.3,
       "stop_loss": 112.5,
       "stop_tipi": "zihinsel_esik",
       "stop_notu": "Keytruda baskısı / Çin müzakereleri kötüleşirse çıkış. $112-113 tez bozulma seviyesi."
@@ -169,14 +169,14 @@
       "giris_tarihi": "2026-03-10",
       "giris_fiyati": 227.07,
       "giris_nedeni": "Sağlık sektörü pullback girişi — RSI 49, her iki SMA üzeri, 5 günlük -%2.7 geri çekilme. İmmünoloji ve kanser portföyü güçlü, Humira patent kaybı sonrası Skyrizi/Rinvoq büyümesi devam ediyor. Portföyde healthcare yok, çeşitlendirme sağlıyor.",
-      "agirlik_yuzde": 5.22,
+      "agirlik_yuzde": 5.19,
       "stop_loss": 204.36,
       "hedef_fiyat": 261.13
     }
   ],
   "son_guncelleme": "2026-03-10T21:25:48.006064",
-  "toplam_deger": 143423.25999999998,
-  "toplam_getiri_yuzde": 59.35917777777776,
+  "toplam_deger": 144213.32,
+  "toplam_getiri_yuzde": 44.21,
   "transactions": [
     {
       "tarih": "2026-02-25",
@@ -186,6 +186,15 @@
       "fiyat": 49.51,
       "tutar": 7723.56,
       "aciklama": "Kısmi kar alma - RSI 73 aşırı alım + %24 kâr, nakit oluşturma"
+    },
+    {
+      "tarih": "2026-03-04",
+      "islem_tipi": "SERMAYE_TRANSFERI",
+      "sembol": "MRK",
+      "adet": 0,
+      "fiyat": 0,
+      "tutar": 30102.5,
+      "aciklama": "Agresif portföyden temettü portföyüne MRK transfer karşılığı nakit transferi"
     },
     {
       "tarih": "2026-03-04",
@@ -216,6 +225,11 @@
       "date": "2026-03-05T15:18:41.575862",
       "type": "market_note",
       "content": "MRK zihinsel stop $112.5 eklendi. Keytruda gelir baskısı ve Çin ilaç fiyat müzakereleri izleniyor."
+    },
+    {
+      "date": "2026-03-11T05:48:11.190390",
+      "type": "format_fix",
+      "content": "DÜZELTME: (1) baslangic_sermaye $90K→$100K, (2) MRK agresif→temettü transfer nakiti ($30,102.50) eklendi, (3) ABBV duplikat pozisyon+transaction silindi, (4) nakit yeniden hesaplandı."
     }
   ]
 }
