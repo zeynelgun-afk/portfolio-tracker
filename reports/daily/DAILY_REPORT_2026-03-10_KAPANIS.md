@@ -111,7 +111,7 @@ piyasanın nötr/zayıf kapandığı bir günde portföyler beklendiği gibi haf
 ⚠️ **izle**: LASR — fiyat $63.79, stop $62.00'ye mesafe $1.79 (%2.8). 3. override sonrası bir sonraki ihlalde satış zorunlu.
 ⚠️ **izle**: RKLB — SMA20 ($70.63) altına düştü, momentum zayıflıyor. stop $65.70'e %4.7 mesafe.
 ⚠️ **izle**: CRDO — SMA50/200 altında girdi, VIX ortamında riskli. stop $108'e %3.9 mesafe.
-🟡 **dikkat**: ABBV temettü portföyünde duplikat kayıt var, düzeltilmeli.
+✅ **düzeltildi**: ABBV temettü portföyünde duplikat kayıt temizlendi, nakit dengesi düzeltildi.
 🟢 **olumlu**: ANET tüm SMA'lar üzerinde, +%8.55, portföyün en güçlü pozisyonu.
 🟢 **olumlu**: SM kısmi kâr alma zamanlaması mükemmeldi (dün RSI 74'te sat, bugün -%4.38 düşüş).
 
@@ -155,19 +155,109 @@ piyasanın nötr/zayıf kapandığı bir günde portföyler beklendiği gibi haf
 
 ---
 
-## 5. yarına bakış (11 mart, çarşamba)
+## 4a. kazanç açıklamaları — 10 mart 2026
 
-**ekonomik takvim:**
-- almanya TÜFE (şubat) — enflasyon beklentisi
-- OPEC aylık raporu — petrol fiyatlarını etkileyebilir
-- bu hafta büyük kazanç açıklaması yok, 18 mart MU kritik randevu
+### bugün açıklayanlar (market cap >$2B, ABD)
 
-**izlenecekler:**
-- SM düzeltmesi ne kadar devam eder? RSI 63'e geriledi, 624 hisse kaldı. $23-24 destek izle.
-- LASR $62 stop seviyesi. bugün +%4.57 güçlü kapandı ama -%5.76 kayıpta.
-- CRDO/GLW ilk gün performansı: CRDO -%1.71, GLW -%0.20. SMA20 seviyeleri anahtar direnç.
-- T swing — 21 gün, stop yakın, savaş sonrası telecom ivmesi azalıyor.
-- VIX 25 altına kırılır mı? kırılırsa agresif portföyde boş slotlara yeni giriş düşünülebilir.
+| şirket | sembol | EPS beklenti | EPS gerçek | fark | gelir beklenti | gelir gerçek | fark | AH |
+|--------|--------|-------------|------------|------|----------------|-------------|------|-----|
+| Oracle | ORCL | $1.70-1.74 | $1.79 | +2.9% | $16.9B | $17.19B | +1.7% | +6.3% |
+| Kohl's | KSS | $0.86 | ? | ? | $5.02B | ? | ? | ? |
+| NIO | NIO | -$0.01 | ? | ? | $3.38B | ? | ? | ? |
+
+> Oracle kapanış sonrası açıkladı, en büyük ve en etkili bilanço buydu. KSS ve NIO sonuçları henüz FMP'ye girmedi.
+
+---
+
+### portföy/izleme kesişimi — detaylı analiz
+
+**ORCL — Oracle Corporation** ✅ beklenti üstü (EPS beat, gelir karışık)
+
+portföyde doğrudan ORCL pozisyonu yok. ancak AI altyapı / veri merkezi tedarik zinciri tezimiz açısından (CRDO, GLW, ANET, ALMU) dolaylı etkisi yüksek.
+
+- **EPS**: beklenti $1.74 (non-GAAP) → gerçek $1.79 (+%2.9 beat). GAAP EPS $1.27, yıldan yıla +%24.
+- **gelir**: beklenti $16.9B → gerçek $17.19B (+%1.7 beat). toplam gelir yıldan yıla +%22 (sabit kurda +%18).
+- **bulut geliri**: $8.9B, yıldan yıla +%44. bulut altyapısı (IaaS) $4.9B, +%84 patlama. bu AI veri merkezi harcamalarının hızlanmasının doğrudan kanıtı.
+- **RPO (kalan performans yükümlülükleri)**: $553B, yıldan yıla +%325. bu rakam devasa ve büyük kısmı AI kontratlarından geliyor. Oracle bu kontratları finanse etmek için ek sermaye artırımına gerek duymadığını açıkladı.
+- **yönlendirme**: FY27 gelir beklentisi $90B'a yükseltildi. Q4 büyüme hedefleri güçlü.
+- **öne çıkanlar**: TikTok US'ta %15 hisse alımı (yeni faaliyet dışı gelir kaynağı). OpenAI/Abilene veri merkezi projesi operasyonel. $50B finansman paketi ($30B tamamlandı).
+- **AH hareket**: +%6.28 — piyasa sonuçları olumlu karşıladı. ORCL YTD -%22 düşmüştü, bu rallinin kalıcılığı önemli.
+
+**tez etkisi — AI optik tedarik zinciri**:
+
+Oracle'ın bulut altyapı gelirinin +%84 büyümesi ve $553B RPO, AI veri merkezi yatırımlarının hızlandığını doğrudan teyit ediyor. bu bizim CRDO (SerDes/optik arabağlantı), GLW (optik fiber), ANET (ağ donanımı) ve ALMU (fotonik) pozisyonları için olumlu. Oracle tek başına $50B altyapı harcaması planlıyor — bu pastadan optik tedarik zinciri mutlaka pay alacak.
+
+**aksiyon önerisi**: doğrudan ORCL alımı değil (YTD -%22, toparlanma teyit bekle), ama mevcut AI optik tezini güçlendiriyor. CRDO/GLW yarım pozisyonları tutmaya devam. MU 18 mart beat ederse tez daha da güçlenir.
+
+---
+
+### kesişim dışı öne çıkanlar
+
+**KSS (Kohl's)**: perakende sektörü barometresi, tüketici harcama gücü göstergesi. sonuçlar henüz açıklanmadı.
+
+**FNV (Franco-Nevada)**: altın madenciliği royalty şirketi, RGLD'nin doğrudan rakibi. sonuçları henüz FMP'ye girmedi. RGLD pozisyonumuz için takip edilmeli.
+
+---
+
+## 4b. günün değerlendirmesi
+
+### sabah planı vs gerçekleşme
+
+| plan (seans öncesi rapor) | sonuç | not |
+|---------------------------|-------|-----|
+| TYL trailing stop $360.41 izle | ✅ tetiklendi @$360.00 | kârlı çıkış, disiplin çalıştı (+%11.19) |
+| LASR $60 stop izle, override #3 | ⏳ $63.79 kapandı, stop korundu | bugün +%4.57, ama hâlâ -%5.76 kayıpta |
+| VIX stabilize olursa yeni giriş | ✅ VIX 24.93, CRDO+GLW+ABBV alındı | 3 yeni pozisyon açıldı |
+| SM RSI yüksek, kısmi kâr alma teyit | ✅ dün RSI 74'te satıldı, bugün -%4.38 | zamanlama mükemmeldi |
+| T swing stop $27.25 izle | ⏳ $27.71, stop korundu | dünkü -%3.88 sonrası bugün +%0.65 toparlanma |
+
+### günün performansı
+
+- portföy toplam: $621,779 (-$3,076, -%0.50)
+- SPY: -%0.16 → alpha: -%0.34 (bugün piyasanın biraz altında kaldık)
+- en iyi: GLW (+%5.59) ve LASR (+%4.57)
+- en kötü: SM (-%4.38) ve RKLB (-%3.57)
+
+### dersler
+
+- ✅ doğru: SM kısmi kâr alma dün RSI 74'te yapıldı, bugün -%4.38 düşüş geldi. zamanlaması ideal.
+- ✅ doğru: TYL trailing stop disiplini. $360.41 seviyesinde tetiklendi, +%11.19 kâr realize edildi.
+- ✅ doğru: AI optik tedarik zinciri tezine yarım pozisyonlarla giriş (CRDO + GLW). Oracle bilançosu bu tezi gece teyit etti.
+- 🔍 kaçırılan: ORCL bilançosu seans sonrası gelecekti, buna hazırlıklı olunmalıydı. AH +%6.3 rallisi yarın AI/bulut hisselerini taşıyabilir.
+
+---
+
+## 5. sonuç
+
+### özet
+
+piyasa dünkü 11 sektör yeşil ralliden sonra bugün beklenen kar realizasyonuyla nötr/zayıf kapandı. portföylerimiz -$3,076 ile piyasaya paralel geriledi. günün en önemli gelişmesi seans sonrası gelen Oracle bilançosu oldu: bulut altyapı geliri +%84, RPO $553B (+%325) ile AI veri merkezi harcamalarının patladığını doğruladı. bu tablo CRDO, GLW, ANET ve ALMU pozisyonlarımız için olumlu. AH +%6.3 rallisi yarın tech/AI hisselerini taşıma potansiyeli taşıyor.
+
+### yarının aksiyonları
+
+🔴 **hemen** (seans açılışta):
+1. ORCL AH +%6.3 rallisinin AI/bulut tedarik zincirine yayılımını izle — CRDO, GLW, ANET açılışta güçlü olabilir
+2. LASR stop $62 kontrolü — bugün +%4.57 iyi ama hâlâ -%5.76 kayıpta, bir sonraki ihlalde satış zorunlu
+
+🟡 **izle** (seans içinde):
+3. SM düzeltmesi — RSI 63'e indi, $23-24 destek izle. kalan 624 hisse tutulmaya devam
+4. T swing — 21 gün, stop $27.25'e 46 cent, daha uzun süre düşük kalırsa çıkış düşün
+5. RKLB SMA20 ($70.63) altına düştü — $68 altında zayıflama derinleşir, stop $65.70
+
+🟢 **pasif** (seviye bekle):
+6. CRDO SMA20 $118.79 üzerine çıkarsa → momentum teyiti, tam pozisyona adım at
+7. GLW SMA20 $139.48 kırılırsa → tam pozisyona geçiş sinyali
+8. VIX 23 altına inerse → agresif portföyde 3. boş slota yeni aday düşün
+
+### ekonomik takvim (11 mart)
+
+- almanya TÜFE (şubat) — enflasyon beklentisi, ECB kararlarını etkileyebilir
+- OPEC aylık raporu — petrol fiyat yönünü belirleyebilir, enerji pozisyonları için kritik
+- 18 mart MU kazanç açıklaması haftanın kritik randevusu, AI çip tezi için belirleyici
+
+### sonraki güncelleme
+
+yarın sabah raporu (11 mart seans öncesi) — ORCL AH etkisi, premarket durumu ve seans planı.
 
 ---
 
