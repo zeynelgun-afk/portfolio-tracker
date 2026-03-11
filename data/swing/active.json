@@ -41,7 +41,8 @@
           "aciklama": "Zirveden -%5 düşünce sat"
         },
         "durum": "Hedef bekleniyor"
-      }
+      },
+      "gunluk_degisim_yuzde": 0.65
     },
     {
       "id": "SWING-017",
@@ -73,7 +74,8 @@
           "aciklama": "Zirveden -%5 düşünce sat"
         },
         "durum": "Hedef bekleniyor"
-      }
+      },
+      "gunluk_degisim_yuzde": -1.06
     },
     {
       "id": "SWING-018",
@@ -105,7 +107,8 @@
           "aciklama": "Zirveden -%5 düşünce sat"
         },
         "durum": "Hedef bekleniyor"
-      }
+      },
+      "gunluk_degisim_yuzde": -0.66
     },
     {
       "id": "SWING-019",
@@ -138,7 +141,8 @@
           "aciklama": "Zirveden -%5 düşünce sat"
         },
         "durum": "Hedef bekleniyor"
-      }
+      },
+      "gunluk_degisim_yuzde": -2.58
     },
     {
       "id": "SWING-023",
@@ -171,7 +175,8 @@
           "aciklama": "Zirveden -%5 dusunce sat"
         },
         "durum": "Hedef bekleniyor"
-      }
+      },
+      "gunluk_degisim_yuzde": -2.66
     },
     {
       "id": "SWING-024",
@@ -204,7 +209,8 @@
           "aciklama": "Zirveden -%5 düşünce sat"
         },
         "durum": "Hedef bekleniyor"
-      }
+      },
+      "gunluk_degisim_yuzde": -2.29
     }
   ],
   "ozet": {
