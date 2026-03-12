@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-03-11T21:28:48.627111",
+  "son_guncelleme": "2026-03-12T07:07:54.009585",
   "not": "SWING TRADE SADECE SİMÜLASYON - Sadece % kazanç/kayıp takibi (MAX: 8 pozisyon)",
   "iran_krizi_hazirligi": {
     "tarih": "2026-03-01",
@@ -20,14 +20,14 @@
       "guncel_kar_zarar_yuzde": 2.62,
       "hedef_fiyat": 139.38,
       "stop_loss": 123.74,
-      "tutulan_gun": 20,
+      "tutulan_gun": 21,
       "giris_nedeni": "Güçlü momentum +3.4%, savunmacı utilities sektörü, istikrarlı nakit akışı",
       "katalizor": "Elektrik kamu hizmeti lideri, temiz enerji geçişi faydalanıcısı",
       "tez": "Duke Energy - Carolina'da dominant pozisyon, düzenli temettü ödemesi, savunmacı pozisyonlama",
       "zaman_cercevesi": "7-10 gün",
       "risk": "Faiz oranı yükselmesi, düzenleme riski",
       "durum": "✅ Normal aralıkta",
-      "son_guncelleme": "2026-03-11T21:28:48.627111",
+      "son_guncelleme": "2026-03-12T07:07:54.009585",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
@@ -42,7 +42,7 @@
         },
         "durum": "Hedef bekleniyor"
       },
-      "gunluk_degisim_yuzde": 0.46264
+      "gunluk_degisim_yuzde": 0.2622
     },
     {
       "id": "SWING-018",
@@ -53,14 +53,14 @@
       "guncel_kar_zarar_yuzde": 3.39,
       "hedef_fiyat": 164.7,
       "stop_loss": 142.24,
-      "tutulan_gun": 19,
+      "tutulan_gun": 20,
       "giris_nedeni": "Şubat 2026'nın EN İYİ HİSSESİ +34%! Healthcare sektör momentumu güçlü",
       "katalizor": "1 ay +44% momentum, Healthcare sektör rotasyonu, kidney dialysis lideri",
       "tez": "DaVita - ABD'nin en büyük böbrek diyaliz şirketi, stabil nakit akışı, yaşlanan nüfus faydalanıcısı",
       "zaman_cercevesi": "7-12 gün",
       "risk": "Healthcare düzenlemeleri, Medicare reimbursement değişiklikleri",
       "durum": "✅ Normal aralıkta",
-      "son_guncelleme": "2026-03-11T21:28:48.627111",
+      "son_guncelleme": "2026-03-12T07:07:54.009585",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
@@ -75,7 +75,7 @@
         },
         "durum": "Hedef bekleniyor"
       },
-      "gunluk_degisim_yuzde": 0.89739
+      "gunluk_degisim_yuzde": 2.1511
     },
     {
       "id": "SWING-023",
@@ -86,7 +86,7 @@
       "guncel_kar_zarar_yuzde": 0.11,
       "hedef_fiyat": 20.36,
       "stop_loss": 17.58,
-      "tutulan_gun": 15,
+      "tutulan_gun": 16,
       "giris_nedeni": "Fintech lideri, SoFi Bank lisansi ile guclenen gelir modeli, Q4 earnings beat sonrasi momentum",
       "katalizor": "Q4 earnings beat, banka lisansi buyume ivmesi, fintech sektoru rotasyonu",
       "tez": "SoFi dijital bankacilik ve fintech platformu. Bank charter ile net faiz geliri hizla buyuyor. Kredi kalitesi stabil.",
@@ -94,7 +94,7 @@
       "risk": "Jeopolitik risk-off ortaminda fintech basincı, yuksek beta, iran krizi devam ederse baski surer",
       "durum": "✅ Normal aralıkta",
       "tarama_yontemi": "earnings momentum",
-      "son_guncelleme": "2026-03-11T21:28:48.627111",
+      "son_guncelleme": "2026-03-12T07:07:54.009585",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZISYONU SAT",
@@ -109,7 +109,7 @@
         },
         "durum": "Hedef bekleniyor"
       },
-      "gunluk_degisim_yuzde": 0.08201
+      "gunluk_degisim_yuzde": 1.3122
     },
     {
       "id": "SWING-024",
@@ -120,7 +120,7 @@
       "guncel_kar_zarar_yuzde": -0.68,
       "hedef_fiyat": 18.62,
       "stop_loss": 14.8,
-      "tutulan_gun": 1,
+      "tutulan_gun": 2,
       "giris_nedeni": "AI fotonik/optik dark horse — NVDA $4B optik yatırımı tedarik zinciri. Bileşik yarı iletken + silikon entegrasyonu. Spekülatif küçük pozisyon.",
       "katalizor": "NVDA optik arabağlantı push, AI veri merkezi optik talebi, VP atama haberi",
       "tez": "Aeluma bileşik yarı iletken optoelektronik — AI optik tedarik zincirinin küçük ama stratejik oyuncusu. Analist hedef $25.",
@@ -128,7 +128,7 @@
       "risk": "Küçük cap (228M), düşük hacim, zarar eden şirket, spekülatif",
       "durum": "✅ Normal aralıkta",
       "tarama_yontemi": "momentum",
-      "son_guncelleme": "2026-03-11T21:28:48.627111",
+      "son_guncelleme": "2026-03-12T07:07:54.009585",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
@@ -143,7 +143,7 @@
         },
         "durum": "Hedef bekleniyor"
       },
-      "gunluk_degisim_yuzde": 1.86473
+      "gunluk_degisim_yuzde": 1.6435
     }
   ],
   "ozet": {
