@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-03-11",
+  "son_guncelleme": "2026-03-12",
   "kapatilan_pozisyonlar": [
     {
       "id": "SWING-020",
@@ -211,6 +211,19 @@
       "cikis_nedeni": "Tez bozulması: RSI 33, SMA50/200 çok altında, momentum hiç gelmedi. Erken çıkış kararı — stop beklemeden çıkıldı.",
       "sonuc": "KAZANÇ",
       "ders": "IT outsourcing toparlanma tezi piyasa baskısında geçersiz kaldı. RSI ve SMA teyidi olmadan savunmacı teze giriş yapılmamalı."
+    },
+    {
+      "id": "SWING-024",
+      "sembol": "ALMU",
+      "giris_tarihi": "2026-03-10",
+      "cikis_tarihi": "2026-03-12",
+      "giris_fiyati": 16.19,
+      "cikis_fiyati": 15.2,
+      "kar_zarar_yuzde": -6.11,
+      "tutulan_gun": 2,
+      "cikis_nedeni": "%5 stop seviyesi ($15.38) kırıldı. Bugün -%5.47 sert düşüş. Hard stop $14.80 beklemeden erken çıkış kararı alındı — standart kural çiğnenmeden kapatma.",
+      "sonuc": "ZARAR",
+      "ders": "Küçük sermayeli (small-cap) hisselerde volatilite yüksek olur. ALMU likidite düşük (hacim ~79K), stop seviyesine ulaşmadan fiyat hızla gidebilir. Bir sonraki girişte $2B+ market cap filtresi daha sıkı uygulanmalı."
     }
   ],
   "istatistikler": {
