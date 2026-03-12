@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-03-12T14:52:15.991747",
+  "son_guncelleme": "2026-03-12T16:01:36.903167",
   "not": "SWING TRADE SADECE SİMÜLASYON - Sadece % kazanç/kayıp takibi (MAX: 8 pozisyon)",
   "iran_krizi_hazirligi": {
     "tarih": "2026-03-01",
@@ -16,8 +16,8 @@
       "sembol": "DUK",
       "giris_tarihi": "2026-02-19",
       "giris_fiyati": 126.71,
-      "guncel_fiyat": 133.03,
-      "guncel_kar_zarar_yuzde": 4.99,
+      "guncel_fiyat": 132.74,
+      "guncel_kar_zarar_yuzde": 4.76,
       "hedef_fiyat": 139.38,
       "stop_loss": 123.74,
       "tutulan_gun": 21,
@@ -26,8 +26,8 @@
       "tez": "Duke Energy - Carolina'da dominant pozisyon, düzenli temettü ödemesi, savunmacı pozisyonlama",
       "zaman_cercevesi": "7-10 gün",
       "risk": "Faiz oranı yükselmesi, düzenleme riski",
-      "durum": "🎯 Hedefe yakın (4.8%)",
-      "son_guncelleme": "2026-03-12T14:52:15.991747",
+      "durum": "✅ Normal aralıkta",
+      "son_guncelleme": "2026-03-12T16:01:36.903167",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
@@ -49,8 +49,8 @@
       "sembol": "DVA",
       "giris_tarihi": "2026-02-20",
       "giris_fiyati": 149.73,
-      "guncel_fiyat": 154.76,
-      "guncel_kar_zarar_yuzde": 3.36,
+      "guncel_fiyat": 156.5,
+      "guncel_kar_zarar_yuzde": 4.52,
       "hedef_fiyat": 164.7,
       "stop_loss": 142.24,
       "tutulan_gun": 20,
@@ -60,7 +60,7 @@
       "zaman_cercevesi": "7-12 gün",
       "risk": "Healthcare düzenlemeleri, Medicare reimbursement değişiklikleri",
       "durum": "✅ Normal aralıkta",
-      "son_guncelleme": "2026-03-12T14:52:15.991747",
+      "son_guncelleme": "2026-03-12T16:01:36.903167",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
@@ -82,8 +82,8 @@
       "sembol": "SOFI",
       "giris_tarihi": "2026-02-24",
       "giris_fiyati": 18.51,
-      "guncel_fiyat": 17.88,
-      "guncel_kar_zarar_yuzde": -3.4,
+      "guncel_fiyat": 17.985,
+      "guncel_kar_zarar_yuzde": -2.84,
       "hedef_fiyat": 20.36,
       "stop_loss": 17.58,
       "tutulan_gun": 16,
@@ -92,9 +92,9 @@
       "tez": "SoFi dijital bankacilik ve fintech platformu. Bank charter ile net faiz geliri hizla buyuyor. Kredi kalitesi stabil.",
       "zaman_cercevesi": "7-14 gun",
       "risk": "Jeopolitik risk-off ortaminda fintech basincı, yuksek beta, iran krizi devam ederse baski surer",
-      "durum": "⚠️ Stop-loss yakın (1.7%)",
+      "durum": "✅ Normal aralıkta",
       "tarama_yontemi": "earnings momentum",
-      "son_guncelleme": "2026-03-12T14:52:15.991747",
+      "son_guncelleme": "2026-03-12T16:01:36.903167",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZISYONU SAT",
