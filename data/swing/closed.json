@@ -224,6 +224,19 @@
       "cikis_nedeni": "%5 stop seviyesi ($15.38) kırıldı. Bugün -%5.47 sert düşüş. Hard stop $14.80 beklemeden erken çıkış kararı alındı — standart kural çiğnenmeden kapatma.",
       "sonuc": "ZARAR",
       "ders": "Küçük sermayeli (small-cap) hisselerde volatilite yüksek olur. ALMU likidite düşük (hacim ~79K), stop seviyesine ulaşmadan fiyat hızla gidebilir. Bir sonraki girişte $2B+ market cap filtresi daha sıkı uygulanmalı."
+    },
+    {
+      "id": "SWING-023",
+      "sembol": "SOFI",
+      "giris_tarihi": "2026-02-24",
+      "cikis_tarihi": "2026-03-12",
+      "giris_fiyati": 18.51,
+      "cikis_fiyati": 17.84,
+      "kar_zarar_yuzde": -3.62,
+      "tutulan_gun": 16,
+      "cikis_nedeni": "Stop'a $0.26 mesafe kaldı (%1.3). Faz 2'de -%3.74 günlük düşüş hızlandı. RSI 34.2, SMA50'nin %20 altında — downtrend devam edecek. Stop tetiklenmeden proaktif çıkış.",
+      "sonuc": "ZARAR",
+      "ders": "Risk-off ortamında fintech hisseleri (SOFI) defensif rotasyonda baskı altında kalır. Sektör RS negatif olduğunda swing giriş yapılmamalı."
     }
   ],
   "istatistikler": {
