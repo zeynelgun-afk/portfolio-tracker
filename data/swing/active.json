@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-03-12T16:01:36.903167",
+  "son_guncelleme": "2026-03-12T16:17:00.750908",
   "not": "SWING TRADE SADECE SİMÜLASYON - Sadece % kazanç/kayıp takibi (MAX: 8 pozisyon)",
   "iran_krizi_hazirligi": {
     "tarih": "2026-03-01",
@@ -76,40 +76,6 @@
         "durum": "Hedef bekleniyor"
       },
       "gunluk_degisim_yuzde": 2.1511
-    },
-    {
-      "id": "SWING-023",
-      "sembol": "SOFI",
-      "giris_tarihi": "2026-02-24",
-      "giris_fiyati": 18.51,
-      "guncel_fiyat": 17.985,
-      "guncel_kar_zarar_yuzde": -2.84,
-      "hedef_fiyat": 20.36,
-      "stop_loss": 17.58,
-      "tutulan_gun": 16,
-      "giris_nedeni": "Fintech lideri, SoFi Bank lisansi ile guclenen gelir modeli, Q4 earnings beat sonrasi momentum",
-      "katalizor": "Q4 earnings beat, banka lisansi buyume ivmesi, fintech sektoru rotasyonu",
-      "tez": "SoFi dijital bankacilik ve fintech platformu. Bank charter ile net faiz geliri hizla buyuyor. Kredi kalitesi stabil.",
-      "zaman_cercevesi": "7-14 gun",
-      "risk": "Jeopolitik risk-off ortaminda fintech basincı, yuksek beta, iran krizi devam ederse baski surer",
-      "durum": "✅ Normal aralıkta",
-      "tarama_yontemi": "earnings momentum",
-      "son_guncelleme": "2026-03-12T16:01:36.903167",
-      "partial_exit_plan": {
-        "hedef_ulasildiginda": {
-          "aksiyon": "%50 POZISYONU SAT",
-          "satis_fiyati": 20.36,
-          "sebep": "Kar garantiye al"
-        },
-        "kalan_50_icin": {
-          "aksiyon": "TRAILING STOP AKTIF",
-          "baslangic_trailing_stop": 17.58,
-          "trailing_yuzde": 5,
-          "aciklama": "Zirveden -%5 dusunce sat"
-        },
-        "durum": "Hedef bekleniyor"
-      },
-      "gunluk_degisim_yuzde": 1.3122
     }
   ],
   "ozet": {
