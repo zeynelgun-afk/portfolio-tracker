@@ -1,59 +1,51 @@
 {
   "son_guncelleme": "2026-03-12",
-  "simulasyon_donemi": "17 Şubat 2026 - 11 Mart 2026",
-  "islem_gunleri": 19,
-  "toplam_baslangic_sermaye": 280000,
-  "toplam_deger": 620447.18,
-  "toplam_kar_zarar": 30447.18,
-  "toplam_kar_zarar_yuzde": 5.16,
-  "benchmark_spy_ytd": 0,
-  "alpha": 122.47,
+  "toplam_sermaye": 600000,
+  "toplam_deger": 620917.89,
+  "toplam_kar_zarar": 20917.89,
+  "toplam_kar_zarar_yuzde": 3.49,
   "portfolyolar": {
     "dengeli": {
       "isim": "Dengeli Portföy",
-      "deger": 112420.59,
+      "deger": 112316.39,
       "maliyet": 40000,
-      "kar_zarar": 12420.59,
-      "kar_zarar_yuzde": 12.42,
+      "kar_zarar": 72316.39,
+      "kar_zarar_yuzde": 180.79,
       "pozisyon_sayisi": 5,
       "nakit": {
         "miktar": 50291.77,
         "para_birimi": "USD"
-      },
-      "durum": "BAŞARILI"
+      }
     },
     "agresif": {
-      "isim": "Agresif Portföy",
-      "deger": 364970.9,
+      "isim": "Agresif Büyüme Portföyü",
+      "deger": 364213.68,
       "maliyet": 140000,
-      "kar_zarar": -35029.1,
-      "kar_zarar_yuzde": -8.76,
+      "kar_zarar": 224213.68,
+      "kar_zarar_yuzde": 160.15,
       "pozisyon_sayisi": 7,
       "nakit": {
         "miktar": 269354.05,
         "para_birimi": "USD"
-      },
-      "durum": "BAŞARILI"
+      }
     },
     "temettü": {
       "isim": "Değer + Temettü Portföyü",
-      "deger": 143055.69,
+      "deger": 144387.82,
       "maliyet": 100000,
-      "kar_zarar": 53055.69,
-      "kar_zarar_yuzde": 58.95,
+      "kar_zarar": 44387.82000000001,
+      "kar_zarar_yuzde": 44.39,
       "pozisyon_sayisi": 9,
       "nakit": {
         "miktar": 1668.43,
         "para_birimi": "USD"
-      },
-      "durum": "BAŞARILI"
+      }
     },
     "swing_trade": {
       "isim": "Swing Trade (Simülasyon)",
-      "pozisyon_sayisi": 4,
-      "ortalama_getiri_yuzde": 1.36,
-      "bos_slot": 6,
-      "durum": "4/10 pozisyon aktif"
+      "pozisyon_sayisi": 3,
+      "bos_slot": 7,
+      "durum": "3/10 pozisyon aktif"
     }
   }
 }
