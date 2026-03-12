@@ -27,7 +27,7 @@
   },
   "baslangic_sermaye": 140000,
   "nakit": {
-    "miktar": 269354.05,
+    "miktar": 258706.45,
     "para_birimi": "USD"
   },
   "pozisyonlar": [
@@ -292,9 +292,29 @@
       "agirlik_yuzde": 3.89,
       "stop_loss": 125.61,
       "hedef_fiyat": 162.1
+    },
+    {
+      "sembol": "MRVL",
+      "isim": "Marvell Technology, Inc.",
+      "sektor": "Teknoloji",
+      "adet": 120,
+      "maliyet_baz": 88.73,
+      "guncel_fiyat": 88.73,
+      "yatirim": 10647.6,
+      "guncel_deger": 10647.6,
+      "kar_zarar": 0.0,
+      "kar_zarar_yuzde": 0.0,
+      "gunluk_degisim_yuzde": -1.89,
+      "son_guncelleme": "2026-03-12T18:18:52.505280",
+      "giris_tarihi": "2026-03-12",
+      "giris_fiyati": 88.73,
+      "giris_nedeni": "AI çip tedarik zinciri tezi - AVGO+MRVL çift beklenti üstü ile tez doğrulandı. Özel ASIC ve veri merkezi ağ çipleri lideri, bulut harcama büyümesinden doğrudan faydalanıyor. 50MA ve 200MA üzerinde teknik yapı temiz.",
+      "stop_loss": 81.6,
+      "hedef_fiyat": 102.0,
+      "agirlik_yuzde": 2.91
     }
   ],
-  "son_guncelleme": "2026-03-12T18:10:19.328770",
+  "son_guncelleme": "2026-03-12T18:18:52.505280",
   "toplam_deger": 365800.77,
   "toplam_getiri_yuzde": 161.29,
   "iran_krizi_hazirligi": {
@@ -462,6 +482,11 @@
       "date": "2026-03-10T14:29:13.753969",
       "type": "entry",
       "content": "GLW alındı @$136.53 | 109 adet | $14881.77 | Yarım poz | Stop $125.61 | Hedef $162.1 | AI optik tezi"
+    },
+    {
+      "date": "2026-03-12T18:18:52.505280",
+      "type": "entry",
+      "content": "MRVL 120 hisse @$88.73 girişi. AI çip tedarik zinciri tezi kapsamında. Stop: $81.60, Hedef: $102+. CRDO ile birlikte portföyde çift AI altyapı pozisyonu."
     }
   ],
   "aylik_performans": {
@@ -628,6 +653,15 @@
       "fiyat": 136.53,
       "tutar": 14881.77,
       "aciklama": "AI optik fiber tedarik zinciri - yarım pozisyon - stop $125.61 - hedef $162.10 (52H)"
+    },
+    {
+      "tarih": "2026-03-12",
+      "islem_tipi": "ALIŞ",
+      "sembol": "MRVL",
+      "adet": 120,
+      "fiyat": 88.73,
+      "tutar": 10647.6,
+      "aciklama": "AI çip tedarik zinciri tezi - Agresif portföy - Özel ASIC ve veri merkezi ağ çipleri lideri"
     }
   ]
 }
