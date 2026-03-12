@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-03-12T13:50:38.958819",
+  "son_guncelleme": "2026-03-12T14:07:00.237363",
   "not": "SWING TRADE SADECE SİMÜLASYON - Sadece % kazanç/kayıp takibi (MAX: 8 pozisyon)",
   "iran_krizi_hazirligi": {
     "tarih": "2026-03-01",
@@ -110,40 +110,6 @@
         "durum": "Hedef bekleniyor"
       },
       "gunluk_degisim_yuzde": 1.3122
-    },
-    {
-      "id": "SWING-024",
-      "sembol": "ALMU",
-      "giris_tarihi": "2026-03-10",
-      "giris_fiyati": 16.19,
-      "guncel_fiyat": 15.2,
-      "guncel_kar_zarar_yuzde": -6.11,
-      "hedef_fiyat": 18.62,
-      "stop_loss": 14.8,
-      "tutulan_gun": 2,
-      "giris_nedeni": "AI fotonik/optik dark horse — NVDA $4B optik yatırımı tedarik zinciri. Bileşik yarı iletken + silikon entegrasyonu. Spekülatif küçük pozisyon.",
-      "katalizor": "NVDA optik arabağlantı push, AI veri merkezi optik talebi, VP atama haberi",
-      "tez": "Aeluma bileşik yarı iletken optoelektronik — AI optik tedarik zincirinin küçük ama stratejik oyuncusu. Analist hedef $25.",
-      "zaman_cercevesi": "7-14 gün",
-      "risk": "Küçük cap (228M), düşük hacim, zarar eden şirket, spekülatif",
-      "durum": "⚠️ STOP YAKIN - $14.80 stopuna 2.6% mesafe, -6.1% K/Z",
-      "tarama_yontemi": "momentum",
-      "son_guncelleme": "2026-03-12T13:50:38.958819",
-      "partial_exit_plan": {
-        "hedef_ulasildiginda": {
-          "aksiyon": "%50 POZİSYONU SAT",
-          "satis_fiyati": 18.62,
-          "sebep": "Spekülatif — kâr garantiye al"
-        },
-        "kalan_50_icin": {
-          "aksiyon": "TRAİLİNG STOP AKTİF",
-          "baslangic_trailing_stop": 17.69,
-          "trailing_yuzde": 5,
-          "aciklama": "Zirveden -%5 düşünce sat"
-        },
-        "durum": "Hedef bekleniyor"
-      },
-      "gunluk_degisim_yuzde": 1.6435
     }
   ],
   "ozet": {
