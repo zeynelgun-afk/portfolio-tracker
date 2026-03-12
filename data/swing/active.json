@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-03-12T19:24:06.712998",
+  "son_guncelleme": "2026-03-12T19:48:02.244210",
   "not": "SWING TRADE SADECE SİMÜLASYON - Sadece % kazanç/kayıp takibi (MAX: 8 pozisyon)",
   "iran_krizi_hazirligi": {
     "tarih": "2026-03-01",
@@ -76,6 +76,39 @@
         "durum": "Hedef bekleniyor"
       },
       "gunluk_degisim_yuzde": 2.1511
+    },
+    {
+      "id": "SWING-025",
+      "sembol": "RTX",
+      "giris_tarihi": "2026-03-12",
+      "giris_fiyati": 203.3,
+      "guncel_fiyat": 203.3,
+      "guncel_kar_zarar_yuzde": 0.0,
+      "hedef_fiyat": 223.63,
+      "stop_loss": 193.13,
+      "tutulan_gun": 0,
+      "giris_nedeni": "Hedef giriş bölgesi $195-205 içinde yakalandı. Risk-off rotasyonunda savunma sektörü hem güvenli liman hem iran savaşı katalizöründen güç alıyor.",
+      "katalizor": "İran-ABD savaşı — Patriot hava savunma sistemleri ve F-35 motorları aktif kullanımda. Savunma bütçesi artışı beklentisi.",
+      "tez": "RTX dünyanın en büyük savunma tedarikçilerinden. İran krizi döneminde hem ABD hem NATO sipariş artışı bekleniyor. Pratt & Whitney motor bölümü ayrıca güçlü.",
+      "zaman_cercevesi": "7-14 gün",
+      "risk": "Ateşkes/barış anlaşması haberi ani geri çekilme yaratabilir. Savunma bütçe kesintisi haberleri.",
+      "durum": "Giriş bölgesinde, hedef bölgesi bekleniyor",
+      "tarama_yontemi": "sektor liderligi",
+      "son_guncelleme": "2026-03-12T19:48:02.244210",
+      "partial_exit_plan": {
+        "hedef_ulasildiginda": {
+          "aksiyon": "%50 POZİSYONU SAT",
+          "satis_fiyati": 223.63,
+          "sebep": "Kar garantiye al"
+        },
+        "kalan_50_icin": {
+          "aksiyon": "TRAİLİNG STOP AKTİF",
+          "baslangic_trailing_stop": 212.45,
+          "trailing_yuzde": 5,
+          "aciklama": "Zirveden -%5 düşünce sat"
+        },
+        "durum": "Hedef bekleniyor"
+      }
     }
   ],
   "ozet": {
