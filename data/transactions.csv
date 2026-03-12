@@ -80,3 +80,4 @@ date,action,symbol,shares,price,total,reason
 
 2026-03-11,SELL,T,0,27.09,27.09,"SWING-015 kapanış - stop-loss tetiklendi -%5.54 - İran volatilitesinde savunmacı tez işlemedi"
 2026-03-11,SELL,CTSH,0,62.25,62.25,"SWING-019 kapanış - tez bozulması - RSI 33 SMA50 altında - +1.45%"
+2026-03-12,BUY,MRVL,120,88.73,10647.60,"AI çip tedarik zinciri tezi - Agresif portföy - Özel ASIC ve veri merkezi ağ çipleri lideri"
