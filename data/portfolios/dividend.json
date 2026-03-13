@@ -2,7 +2,7 @@
   "portfoy_adi": "Değer + Temettü",
   "baslangic_sermaye": 100000,
   "nakit": {
-    "miktar": 9162.805,
+    "miktar": 279.53,
     "para_birimi": "USD"
   },
   "pozisyonlar": [
@@ -22,7 +22,7 @@
       "giris_tarihi": "2026-01-02",
       "giris_fiyati": 24.28,
       "giris_nedeni": "Başlangıç pozisyonu - Temettü + değer portföyü - Telekomünikasyon",
-      "agirlik_yuzde": 9.76
+      "agirlik_yuzde": 9.8
     },
     {
       "sembol": "VZ",
@@ -40,7 +40,7 @@
       "giris_tarihi": "2026-01-02",
       "giris_fiyati": 39.83,
       "giris_nedeni": "Başlangıç pozisyonu - Temettü + değer portföyü - Telekomünikasyon",
-      "agirlik_yuzde": 3.76
+      "agirlik_yuzde": 3.8
     },
     {
       "sembol": "MO",
@@ -58,7 +58,7 @@
       "giris_tarihi": "2026-01-02",
       "giris_fiyati": 57.31,
       "giris_nedeni": "Initial position - Dividend defensive",
-      "agirlik_yuzde": 10.16
+      "agirlik_yuzde": 10.2
     },
     {
       "sembol": "PM",
@@ -76,7 +76,7 @@
       "giris_tarihi": "2026-01-02",
       "giris_fiyati": 160.3,
       "giris_nedeni": "Başlangıç pozisyonu - Temettü + değer portföyü - Tütün",
-      "agirlik_yuzde": 9.22
+      "agirlik_yuzde": 9.2
     },
     {
       "sembol": "XOM",
@@ -94,7 +94,7 @@
       "giris_tarihi": "2026-01-02",
       "giris_fiyati": 121.84,
       "giris_nedeni": "Başlangıç pozisyonu - Temettü + değer portföyü - Enerji",
-      "agirlik_yuzde": 10.82
+      "agirlik_yuzde": 10.8
     },
     {
       "sembol": "CVX",
@@ -112,7 +112,7 @@
       "giris_tarihi": "2026-01-02",
       "giris_fiyati": 154.39,
       "giris_nedeni": "Başlangıç pozisyonu - Temettü + değer portföyü - Enerji",
-      "agirlik_yuzde": 7.39
+      "agirlik_yuzde": 7.4
     },
     {
       "sembol": "SCHD",
@@ -130,7 +130,7 @@
       "giris_tarihi": "2026-01-02",
       "giris_fiyati": 28.95,
       "giris_nedeni": "Otomatik ekleme - Temettü ETF",
-      "agirlik_yuzde": 17.56
+      "agirlik_yuzde": 17.6
     },
     {
       "sembol": "MRK",
@@ -148,7 +148,7 @@
       "giris_tarihi": "2026-03-03",
       "giris_fiyati": 120.41,
       "giris_nedeni": "Agresif portföyden transfer. Yüksek temettü + savunmacı sağlık.",
-      "agirlik_yuzde": 19.97,
+      "agirlik_yuzde": 20.0,
       "stop_loss": 112.5,
       "stop_tipi": "zihinsel_esik",
       "stop_notu": "Keytruda baskısı / Çin müzakereleri kötüleşirse çıkış. $112-113 tez bozulma seviyesi."
@@ -169,12 +169,30 @@
       "giris_tarihi": "2026-03-10",
       "giris_fiyati": 227.07,
       "giris_nedeni": "Sağlık sektörü pullback girişi — RSI 49, her iki SMA üzeri, 5 günlük -%2.7 geri çekilme. İmmünoloji ve kanser portföyü güçlü, Humira patent kaybı sonrası Skyrizi/Rinvoq büyümesi devam ediyor. Portföyde healthcare yok, çeşitlendirme sağlıyor.",
-      "agirlik_yuzde": 5.07,
+      "agirlik_yuzde": 5.1,
       "stop_loss": 204.36,
       "hedef_fiyat": 261.13
+    },
+    {
+      "sembol": "PFE",
+      "isim": "Pfizer Inc.",
+      "sektor": "Sağlık",
+      "adet": 330,
+      "maliyet_baz": 26.919,
+      "guncel_fiyat": 26.919,
+      "yatirim": 8883.27,
+      "guncel_deger": 8883.27,
+      "kar_zarar": 0.0,
+      "kar_zarar_yuzde": 0.0,
+      "gunluk_degisim_yuzde": 0.22,
+      "son_guncelleme": "2026-03-13T14:44:20.842982",
+      "giris_tarihi": "2026-03-13",
+      "giris_fiyati": 26.919,
+      "giris_nedeni": "Yuksek temettü yield (%5.9). Saglik sektoru defensif. RSI 51 ideal, SMA50 ustu. Dusuk fiyatla yuksek lot, gelir odakli pozisyon.",
+      "agirlik_yuzde": 6.1
     }
   ],
-  "son_guncelleme": "2026-03-13T14:43:18.964661",
+  "son_guncelleme": "2026-03-13T14:44:20.842982",
   "toplam_deger": 145588.93,
   "toplam_getiri_yuzde": 45.59,
   "transactions": [
@@ -231,6 +249,15 @@
       "fiyat": 196.84,
       "tutar": 4921.12,
       "aciklama": "K-11 kısmi kâr alma - RSI 70 ve +%28 kâr - Temettü portföy"
+    },
+    {
+      "tarih": "2026-03-13",
+      "islem_tipi": "ALIŞ",
+      "sembol": "PFE",
+      "adet": 330,
+      "fiyat": 26.92,
+      "tutar": 8883.27,
+      "aciklama": "Yuksek temettü yield - saglik defensif - Temettü portfoy"
     }
   ],
   "notes": [
@@ -253,6 +280,11 @@
       "date": "2026-03-13T14:10:01.668692",
       "type": "exit",
       "content": "VZ 50 adet kısmi satış @$51.47 + CVX 25 adet kısmi satış @$196.84 - K-11 kâr alma"
+    },
+    {
+      "date": "2026-03-13T14:44:20.842982",
+      "type": "entry",
+      "content": "PFE 330 adet alis @$26.92. Yield %5.9, saglik defensif."
     }
   ]
 }
