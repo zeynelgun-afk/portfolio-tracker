@@ -3,8 +3,8 @@
   "simulasyon_donemi": "17 Şubat 2026 - 12 Mart 2026",
   "islem_gunleri": 18,
   "toplam_sermaye": 600000,
-  "toplam_deger": 624714.85,
-  "toplam_kar_zarar": 24714.85,
+  "toplam_deger": 624714.86,
+  "toplam_kar_zarar": 24714.86,
   "toplam_kar_zarar_yuzde": 4.12,
   "benchmark_spy": -2.5,
   "alpha": 6.18,
@@ -28,9 +28,9 @@
       "maliyet": 140000,
       "kar_zarar": 226345.92,
       "kar_zarar_yuzde": 161.68,
-      "pozisyon_sayisi": 8,
+      "pozisyon_sayisi": 9,
       "nakit": {
-        "miktar": 258706.45,
+        "miktar": 234019.95,
         "para_birimi": "USD"
       },
       "durum": "BAŞARILI"
@@ -58,6 +58,7 @@
   },
   "onemli_dersler": "docs/TRADING_PLAYBOOK.md dosyasına bakınız",
   "son_islemler": [
+    "COHR 100 adet alis @$246.87 - AI optik GTC katalizoru (2026-03-13)",
     "VZ 50 adet kısmi satış @$51.47 - K-11 kâr alma (2026-03-13)",
     "CVX 25 adet kısmi satış @$196.84 - K-11 kâr alma (2026-03-13)",
     "DUK trailing stop güncellendi (2026-03-13)"
