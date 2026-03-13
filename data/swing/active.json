@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-03-13T15:45:02.842927",
+  "son_guncelleme": "2026-03-13T16:43:02.168540",
   "not": "SWING TRADE SADECE SİMÜLASYON - Sadece % kazanç/kayıp takibi (MAX: 8 pozisyon)",
   "aktif_pozisyonlar": [
     {
@@ -7,8 +7,8 @@
       "sembol": "DUK",
       "giris_tarihi": "2026-02-19",
       "giris_fiyati": 126.71,
-      "guncel_fiyat": 133.4,
-      "guncel_kar_zarar_yuzde": 5.28,
+      "guncel_fiyat": 133.645,
+      "guncel_kar_zarar_yuzde": 5.47,
       "hedef_fiyat": 139.38,
       "stop_loss": 126.73,
       "tutulan_gun": 22,
@@ -17,8 +17,8 @@
       "tez": "Duke Energy - Carolina'da dominant pozisyon, düzenli temettü ödemesi, savunmacı pozisyonlama",
       "zaman_cercevesi": "7-10 gün",
       "risk": "Faiz oranı yükselmesi, düzenleme riski",
-      "durum": "🎯 Hedefe yakın (4.5%)",
-      "son_guncelleme": "2026-03-13T15:45:02.842927",
+      "durum": "🎯 Hedefe yakın (4.3%)",
+      "son_guncelleme": "2026-03-13T16:43:02.168540",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
@@ -40,8 +40,8 @@
       "sembol": "DVA",
       "giris_tarihi": "2026-02-20",
       "giris_fiyati": 149.73,
-      "guncel_fiyat": 149.02,
-      "guncel_kar_zarar_yuzde": -0.47,
+      "guncel_fiyat": 149.375,
+      "guncel_kar_zarar_yuzde": -0.24,
       "hedef_fiyat": 164.7,
       "stop_loss": 142.24,
       "tutulan_gun": 21,
@@ -51,7 +51,7 @@
       "zaman_cercevesi": "7-12 gün",
       "risk": "Healthcare düzenlemeleri, Medicare reimbursement değişiklikleri",
       "durum": "✅ Normal aralıkta",
-      "son_guncelleme": "2026-03-13T15:45:02.842927",
+      "son_guncelleme": "2026-03-13T16:43:02.168540",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
@@ -73,8 +73,8 @@
       "sembol": "RTX",
       "giris_tarihi": "2026-03-12",
       "giris_fiyati": 203.3,
-      "guncel_fiyat": 205.06,
-      "guncel_kar_zarar_yuzde": 0.87,
+      "guncel_fiyat": 205.61,
+      "guncel_kar_zarar_yuzde": 1.14,
       "hedef_fiyat": 223.63,
       "stop_loss": 193.13,
       "tutulan_gun": 1,
@@ -85,7 +85,7 @@
       "risk": "Ateşkes/barış anlaşması haberi ani geri çekilme yaratabilir. Savunma bütçe kesintisi haberleri.",
       "durum": "✅ Normal aralıkta",
       "tarama_yontemi": "sektor liderligi",
-      "son_guncelleme": "2026-03-13T15:45:02.842927",
+      "son_guncelleme": "2026-03-13T16:43:02.168540",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
