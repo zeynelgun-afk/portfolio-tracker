@@ -82,3 +82,5 @@ date,action,symbol,shares,price,total,reason
 2026-03-11,SELL,CTSH,0,62.25,62.25,"SWING-019 kapanış - tez bozulması - RSI 33 SMA50 altında - +1.45%"
 2026-03-12,BUY,MRVL,120,88.73,10647.60,"AI çip tedarik zinciri tezi - Agresif portföy - Özel ASIC ve veri merkezi ağ çipleri lideri"
 2026-03-12,BUY,RTX,1,203.3,203.3,"Swing SWING-025 - İran savunma teması, risk-off rotasyonu, hedef giriş $195-205 bölgesi"
+2026-03-13,SELL,VZ,50,51.47,2573.25,"K-11 kısmi kâr alma - RSI 72+ ve +%27 - Temettü portföy"
+2026-03-13,SELL,CVX,25,196.84,4921.12,"K-11 kısmi kâr alma - RSI 70 ve +%28 - Temettü portföy"
