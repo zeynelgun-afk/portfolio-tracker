@@ -2,7 +2,7 @@
   "portfoy_adi": "Dengeli Portföy",
   "baslangic_sermaye": 40000,
   "nakit": {
-    "miktar": 50291.77,
+    "miktar": 38084.77,
     "para_birimi": "USD"
   },
   "pozisyonlar": [
@@ -22,7 +22,7 @@
       "giris_tarihi": "2026-02-17",
       "giris_fiyati": 20.67,
       "giris_nedeni": "Initial position - Oil & gas E&P",
-      "agirlik_yuzde": 14.23
+      "agirlik_yuzde": 14.2
     },
     {
       "sembol": "MO",
@@ -40,7 +40,7 @@
       "giris_tarihi": "2026-02-17",
       "giris_fiyati": 67.44,
       "giris_nedeni": "Initial position - Dividend defensive",
-      "agirlik_yuzde": 16.15
+      "agirlik_yuzde": 16.2
     },
     {
       "sembol": "XLE",
@@ -58,7 +58,7 @@
       "giris_tarihi": "2026-02-17",
       "giris_fiyati": 53.34,
       "giris_nedeni": "Initial position - Energy sector ETF",
-      "agirlik_yuzde": 7.13
+      "agirlik_yuzde": 7.1
     },
     {
       "sembol": "RGLD",
@@ -76,7 +76,7 @@
       "giris_tarihi": "2026-02-17",
       "giris_fiyati": 274.4,
       "giris_nedeni": "Initial position - Gold royalty",
-      "agirlik_yuzde": 5.17
+      "agirlik_yuzde": 5.2
     },
     {
       "sembol": "XLI",
@@ -94,10 +94,28 @@
       "giris_tarihi": "2026-02-19",
       "giris_fiyati": 175.04,
       "giris_nedeni": "Otomatik ekleme - Endüstriyel",
-      "agirlik_yuzde": 12.47
+      "agirlik_yuzde": 12.5
+    },
+    {
+      "sembol": "JNJ",
+      "isim": "Johnson & Johnson",
+      "sektor": "Sağlık",
+      "adet": 50,
+      "maliyet_baz": 244.14,
+      "guncel_fiyat": 244.14,
+      "yatirim": 12207.0,
+      "guncel_deger": 12207.0,
+      "kar_zarar": 0.0,
+      "kar_zarar_yuzde": 0.0,
+      "gunluk_degisim_yuzde": 0.87,
+      "son_guncelleme": "2026-03-13T14:44:20.842982",
+      "giris_tarihi": "2026-03-13",
+      "giris_fiyati": 244.14,
+      "giris_nedeni": "Saglik sektoru diversifikasyonu. Defensif/temettü aristokrati. Iran savasi ortaminda direncli. RSI 59, SMA50 ustu. Portfoyde saglik eksikti.",
+      "agirlik_yuzde": 10.9
     }
   ],
-  "son_guncelleme": "2026-03-13T14:43:18.951206",
+  "son_guncelleme": "2026-03-13T14:44:20.842982",
   "toplam_deger": 112150.56,
   "toplam_getiri_yuzde": 180.38,
   "transactions": [
@@ -145,6 +163,15 @@
       "fiyat": 56.17,
       "tutar": 7751.46,
       "aciklama": "Kısmi %50 — enerji rotasyonu, tech'e geçiş"
+    },
+    {
+      "tarih": "2026-03-13",
+      "islem_tipi": "ALIŞ",
+      "sembol": "JNJ",
+      "adet": 50,
+      "fiyat": 244.14,
+      "tutar": 12207.0,
+      "aciklama": "Saglik sektoru diversifikasyonu - defensif - Dengeli portfoy"
     }
   ],
   "notes": [
@@ -167,6 +194,11 @@
       "date": "2026-03-09T19:53:32.715771",
       "type": "rebalance",
       "content": "Enerji rotasyonu: KOS tam @$2.58 (+59.6%), XLE %50 @$56.17. Savaş bitti sinyali + tech'e para akışı."
+    },
+    {
+      "date": "2026-03-13T14:44:20.842982",
+      "type": "entry",
+      "content": "JNJ 50 adet alis @$244.14. Saglik diversifikasyonu, defensif play."
     }
   ]
 }
