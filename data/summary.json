@@ -1,66 +1,51 @@
 {
   "son_guncelleme": "2026-03-13",
-  "simulasyon_donemi": "17 Şubat 2026 - 12 Mart 2026",
-  "islem_gunleri": 18,
   "toplam_sermaye": 600000,
-  "toplam_deger": 624714.86,
-  "toplam_kar_zarar": 24714.86,
-  "toplam_kar_zarar_yuzde": 4.12,
-  "benchmark_spy": -2.5,
-  "alpha": 6.18,
+  "toplam_deger": 622693.9,
+  "toplam_kar_zarar": 22693.9,
+  "toplam_kar_zarar_yuzde": 3.78,
   "portfolyolar": {
     "dengeli": {
       "isim": "Dengeli Portföy",
-      "deger": 112400.46,
+      "deger": 112150.56,
       "maliyet": 40000,
-      "kar_zarar": 72400.46,
-      "kar_zarar_yuzde": 181.0,
+      "kar_zarar": 72150.56,
+      "kar_zarar_yuzde": 180.38,
       "pozisyon_sayisi": 5,
       "nakit": {
         "miktar": 50291.77,
         "para_birimi": "USD"
-      },
-      "durum": "BAŞARILI"
+      }
     },
     "agresif": {
-      "isim": "Agresif Büyüme",
-      "deger": 366345.92,
+      "isim": "Agresif Büyüme Portföyü",
+      "deger": 364954.41,
       "maliyet": 140000,
-      "kar_zarar": 226345.92,
-      "kar_zarar_yuzde": 161.68,
+      "kar_zarar": 224954.40999999997,
+      "kar_zarar_yuzde": 160.68,
       "pozisyon_sayisi": 9,
       "nakit": {
         "miktar": 234019.95,
         "para_birimi": "USD"
-      },
-      "durum": "BAŞARILI"
+      }
     },
-    "temettu": {
-      "isim": "Değer + Temettü",
-      "deger": 145968.48,
+    "temettü": {
+      "isim": "Değer + Temettü Portföyü",
+      "deger": 145588.93,
       "maliyet": 100000,
-      "kar_zarar": 45968.48,
-      "kar_zarar_yuzde": 45.97,
+      "kar_zarar": 45588.92999999999,
+      "kar_zarar_yuzde": 45.59,
       "pozisyon_sayisi": 9,
       "nakit": {
         "miktar": 9162.805,
         "para_birimi": "USD"
-      },
-      "durum": "BAŞARILI"
+      }
     },
     "swing_trade": {
       "isim": "Swing Trade (Simülasyon)",
       "pozisyon_sayisi": 3,
-      "ortalama_getiri_yuzde": 1.99,
       "bos_slot": 7,
       "durum": "3/10 pozisyon aktif"
     }
-  },
-  "onemli_dersler": "docs/TRADING_PLAYBOOK.md dosyasına bakınız",
-  "son_islemler": [
-    "COHR 100 adet alis @$246.87 - AI optik GTC katalizoru (2026-03-13)",
-    "VZ 50 adet kısmi satış @$51.47 - K-11 kâr alma (2026-03-13)",
-    "CVX 25 adet kısmi satış @$196.84 - K-11 kâr alma (2026-03-13)",
-    "DUK trailing stop güncellendi (2026-03-13)"
-  ]
+  }
 }
