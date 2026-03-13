@@ -11,9 +11,9 @@
       "maliyet": 40000,
       "kar_zarar": 72150.56,
       "kar_zarar_yuzde": 180.38,
-      "pozisyon_sayisi": 5,
+      "pozisyon_sayisi": 6,
       "nakit": {
-        "miktar": 50291.77,
+        "miktar": 38084.77,
         "para_birimi": "USD"
       }
     },
@@ -33,11 +33,11 @@
       "isim": "Değer + Temettü Portföyü",
       "deger": 145588.93,
       "maliyet": 100000,
-      "kar_zarar": 45588.92999999999,
+      "kar_zarar": 45588.93,
       "kar_zarar_yuzde": 45.59,
       "pozisyon_sayisi": 9,
       "nakit": {
-        "miktar": 9162.805,
+        "miktar": 279.53,
         "para_birimi": "USD"
       }
     },
@@ -47,5 +47,9 @@
       "bos_slot": 7,
       "durum": "3/10 pozisyon aktif"
     }
-  }
+  },
+  "son_islemler": [
+    "JNJ 50 adet alis @$244.14 - Dengeli saglik diversifikasyonu (2026-03-13)",
+    "PFE 330 adet alis @$26.92 - Temettü yuksek yield (2026-03-13)"
+  ]
 }
