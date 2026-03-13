@@ -15,12 +15,12 @@
 >   - [ ] 2a. sabah raporu ile karşılaştırma
 >   - [ ] 2b. her portföy pozisyonu durum tespiti
 >   - [ ] 2c. swing pozisyonları durum tespiti
-> - [ ] AŞAMA 3 — KARAR:
+> - [ ] AŞAMA 3 — KARAR (playbook kurallarıyla çapraz kontrol):
 >   - [ ] 3a. karar matrisi (portföyler)
 >   - [ ] 3b. karar matrisi (swing)
 >   - [ ] 3c. portföyler arası korelasyon kontrolü
->   - [ ] 3d. yeni pozisyon fırsatları
->   - [ ] 3e. satış/çıkış değerlendirmesi
+>   - [ ] 3d. yeni pozisyon fırsatları (K-01 ile K-04 kontrol)
+>   - [ ] 3e. satış/çıkış değerlendirmesi (K-06 ile K-09 kontrol)
 > - [ ] AŞAMA 4 — UYGULAMA:
 >   - [ ] 4a. trade işlemleri (JSON + CSV güncelle)
 >   - [ ] 4b. fiyat güncellemesi
@@ -361,6 +361,12 @@ eğer güncel_fiyat > önceki_zirve:
 ---
 
 # AŞAMA 3 — AKSİYON KARARLARI
+
+> ⚠️ **PLAYBOOK KONTROLÜ**: her karar vermeden önce `docs/TRADING_PLAYBOOK.md` kurallarını kontrol et.
+> - yeni giriş → K-01 (makro veri), K-02 (kriz rallisi), K-03 (VIX + small cap), K-04 (SMA teyidi), K-13 (VIX ortam)
+> - çıkış → K-06 (stop override), K-07 (trailing stop), K-08 (momentum yoksa çık), K-09 (stop yakın erken çık)
+> - swing → K-14 (ardışık 3+ zarar → dur)
+> - kural ihlali gerekiyorsa gerekçeyi açıkça yaz
 
 ## 3a. karar matrisi — portföyler
 

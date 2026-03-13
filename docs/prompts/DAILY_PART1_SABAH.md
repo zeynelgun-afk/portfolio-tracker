@@ -5,13 +5,14 @@
 > bu prompt'taki her adım sırayla ve eksiksiz uygulanmalıdır. hiçbir adım atlanamaz, kısaltılamaz veya "sonra yaparım" diye ertelenmez. bir adımı tamamlamadan diğerine geçme.
 >
 > **zorunlu adımlar (teker teker kontrol et):**
+> - [ ] ADIM 0 — playbook oku (`docs/TRADING_PLAYBOOK.md` — aktif kuralları gözden geçir)
 > - [ ] ADIM 1 — piyasa verisi (FMP batch-quote, teknik göstergeler, emtia, treasury)
 > - [ ] ADIM 2 — haber toplama (web search, piyasa haberleri)
 > - [ ] ADIM 2.5 — twitter takip listesi (RapidAPI ile hesap taraması)
 > - [ ] ADIM 3 — earnings takvimi (FMP earnings-calendar, market cap filtresi)
 > - [ ] ADIM 4 — otomatik swing tarama sonuçları (daily_scan.json oku)
 > - [ ] ADIM 5 — finviz tarama (teyit katmanı)
-> - [ ] ADIM 6 — analiz, plan ve kayıt
+> - [ ] ADIM 6 — analiz, plan ve kayıt (playbook kurallarını planla çapraz kontrol et)
 > - [ ] RAPOR — tüm bölümler (1-5) eksiksiz yazıldı mı?
 > - [ ] GIT — commit + push yapıldı mı?
 >
@@ -42,6 +43,12 @@
 bu prompt tek seferde çalışır. adımları sırayla takip et:
 
 ```
+ADIM 0 — PLAYBOOK OKU
+  → docs/TRADING_PLAYBOOK.md dosyasını oku
+  → aktif kuralları gözden geçir (özellikle K-01 ile K-14)
+  → swing istatistikleri bölümünü kontrol et (K-14: ardışık zarar → dur)
+  → günün planında her karar playbook kurallarıyla çapraz kontrol edilecek
+
 ADIM 1 — PİYASA VERİSİ (FMP + WEB)
   → batch-quote: SPY, QQQ, DIA, IWM, VIX (varsa), GCUSD, CLUSD
   → stock-price-change: tüm portföy sembolleri (1D, 5D, 1M güvenilir)
@@ -123,6 +130,11 @@ ADIM 5 — FİNVİZ TARAMA (teyit katmanı)
 
 ADIM 6 — ANALİZ, PLAN VE KAYIT
   → tüm verileri sentezle
+  → PLAYBOOK ÇAPRAZ KONTROL: günün planındaki her aksiyonu docs/TRADING_PLAYBOOK.md kurallarıyla kontrol et
+    - yeni giriş planlıyorsan: K-01 (makro veri), K-02 (kriz rallisi), K-03 (VIX+small cap), K-04 (SMA teyidi), K-13 (VIX ortam)
+    - çıkış planlıyorsan: K-06 (stop override), K-07 (trailing stop), K-08 (momentum), K-09 (stop yakın)
+    - swing planlıyorsan: K-14 (ardışık zarar → dur)
+    - kural ihlali varsa raporda açıkça belirt ve gerekçelendir
   → raporu yaz (aşağıdaki format)
   → reports/daily/DAILY_SABAH_YYYY-MM-DD.md olarak kaydet
   → GIT COMMIT + PUSH: "[SABAH RAPORU] DD Ay YYYY - kısa özet"

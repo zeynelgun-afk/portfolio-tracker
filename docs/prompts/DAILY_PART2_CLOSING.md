@@ -17,7 +17,8 @@
 > - [ ] BÖLÜM 4a — KAZANÇ AÇIKLAMALARI (bugünkü bilançolar, portföy kesişimi analizi)
 > - [ ] BÖLÜM 4b — günün değerlendirmesi (sabah planı vs gerçekleşme, dersler)
 > - [ ] BÖLÜM 5 — sonuç + yarın aksiyonları
-> - [ ] GIT — rapor commit + push yapıldı mı?
+> - [ ] ADIM 5 — PLAYBOOK GÜNCELLE (derslerden yeni kural varsa `docs/TRADING_PLAYBOOK.md`'ye ekle)
+> - [ ] GIT — rapor + playbook commit + push yapıldı mı?
 >
 > **geçmiş hatalar**: bölüm 4a (kazanç açıklamaları) atlandı → Oracle bilançosu ($17.2B gelir, bulut +%84, AH +%6.3) rapordan tamamen eksik kaldı. bölüm 4b ve 5 de eksik yazıldı. bu tür atlamalar portföy kararlarını olumsuz etkiler. her bölümü tamamla.
 
@@ -87,6 +88,17 @@ ADIM 4 — RAPOR YAZ
   → sabah raporundaki planla karşılaştır (bölüm 4)
   → reports/daily/DAILY_REPORT_YYYY-MM-DD.md olarak kaydet
   → GIT COMMIT + PUSH: "[GÜNLÜK RAPOR] DD Ay YYYY - kısa özet"
+
+ADIM 5 — PLAYBOOK GÜNCELLE
+  → docs/TRADING_PLAYBOOK.md dosyasını oku
+  → bölüm 4b'deki derslerden yeni kural çıkarılacak mı kontrol et:
+    - yeni bir hata kalıbı tespit edildiyse → yeni K-XX kuralı ekle
+    - mevcut bir kural teyit edildiyse → kanıt satırına ekle
+    - hata tablosuna yeni satır ekle (tarih, hisse, hata, sonuç, kural)
+    - çalışan strateji varsa → çalışan stratejiler tablosuna ekle
+    - swing istatistiklerini güncelle (yeni kapanış varsa)
+  → değişiklik yoksa "bugün yeni kural yok" notu düş ve atla
+  → değişiklik varsa → GIT COMMIT + PUSH: "[PLAYBOOK] yeni kural/güncelleme açıklaması"
 ```
 
 ---
@@ -361,6 +373,7 @@ rapor tamamlandığında kontrol et:
 - [ ] sabah planı değerlendirildi mi?
 - [ ] kazanç açıklamaları tarandı mı? (portföy/watchlist kesişimi kontrol edildi mi?)
 - [ ] aksiyon planı net ve uygulanabilir mi?
+- [ ] TRADING_PLAYBOOK.md güncellendi mi? (yeni ders varsa kural/hata tablosuna eklendi mi?)
 - [ ] rapor dosyası push edildi mi?
 
 ---
