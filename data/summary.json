@@ -1,16 +1,16 @@
 {
   "son_guncelleme": "2026-03-13",
   "toplam_sermaye": 600000,
-  "toplam_deger": 622693.9,
-  "toplam_kar_zarar": 22693.9,
-  "toplam_kar_zarar_yuzde": 3.78,
+  "toplam_deger": 620885.92,
+  "toplam_kar_zarar": 20885.92,
+  "toplam_kar_zarar_yuzde": 3.48,
   "portfolyolar": {
     "dengeli": {
       "isim": "Dengeli Portföy",
-      "deger": 112150.56,
+      "deger": 112304.59,
       "maliyet": 40000,
-      "kar_zarar": 72150.56,
-      "kar_zarar_yuzde": 180.38,
+      "kar_zarar": 72304.59,
+      "kar_zarar_yuzde": 180.76,
       "pozisyon_sayisi": 6,
       "nakit": {
         "miktar": 38084.77,
@@ -19,10 +19,10 @@
     },
     "agresif": {
       "isim": "Agresif Büyüme Portföyü",
-      "deger": 364954.41,
+      "deger": 363057.72,
       "maliyet": 140000,
-      "kar_zarar": 224954.40999999997,
-      "kar_zarar_yuzde": 160.68,
+      "kar_zarar": 223057.71999999997,
+      "kar_zarar_yuzde": 159.33,
       "pozisyon_sayisi": 9,
       "nakit": {
         "miktar": 234019.95,
@@ -31,11 +31,11 @@
     },
     "temettü": {
       "isim": "Değer + Temettü Portföyü",
-      "deger": 145588.93,
+      "deger": 145523.61,
       "maliyet": 100000,
-      "kar_zarar": 45588.93,
-      "kar_zarar_yuzde": 45.59,
-      "pozisyon_sayisi": 9,
+      "kar_zarar": 45523.609999999986,
+      "kar_zarar_yuzde": 45.52,
+      "pozisyon_sayisi": 10,
       "nakit": {
         "miktar": 279.53,
         "para_birimi": "USD"
@@ -47,9 +47,5 @@
       "bos_slot": 7,
       "durum": "3/10 pozisyon aktif"
     }
-  },
-  "son_islemler": [
-    "JNJ 50 adet alis @$244.14 - Dengeli saglik diversifikasyonu (2026-03-13)",
-    "PFE 330 adet alis @$26.92 - Temettü yuksek yield (2026-03-13)"
-  ]
+  }
 }
