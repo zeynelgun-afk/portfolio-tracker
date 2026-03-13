@@ -27,7 +27,7 @@
   },
   "baslangic_sermaye": 140000,
   "nakit": {
-    "miktar": 258706.45,
+    "miktar": 234019.95,
     "para_birimi": "USD"
   },
   "pozisyonlar": [
@@ -312,9 +312,29 @@
       "stop_loss": 81.6,
       "hedef_fiyat": 102.0,
       "agirlik_yuzde": 2.9
+    },
+    {
+      "sembol": "COHR",
+      "isim": "Coherent Corp",
+      "sektor": "Teknoloji",
+      "adet": 100,
+      "maliyet_baz": 246.865,
+      "guncel_fiyat": 246.865,
+      "yatirim": 24686.5,
+      "guncel_deger": 24686.5,
+      "kar_zarar": 0.0,
+      "kar_zarar_yuzde": 0.0,
+      "gunluk_degisim_yuzde": 2.32,
+      "son_guncelleme": "2026-03-13T14:40:15.318323",
+      "giris_tarihi": "2026-03-13",
+      "giris_fiyati": 246.865,
+      "giris_nedeni": "AI veri merkezi optik/lazer bilesenleri. NVIDIA GTC konferansi 16-19 mart katalizor. Hedef giris araliginda ($240-255), RSI 51 ideal bolge, SMA50 ustu. K-13 geregi yarim pozisyon (VIX 25.28).",
+      "agirlik_yuzde": 6.7,
+      "hedef_fiyat": 300.0,
+      "stop_loss": 225.0
     }
   ],
-  "son_guncelleme": "2026-03-13T14:10:01.668692",
+  "son_guncelleme": "2026-03-13T14:40:15.318323",
   "toplam_deger": 366345.92,
   "toplam_getiri_yuzde": 161.68,
   "notes": [
@@ -457,6 +477,11 @@
       "date": "2026-03-12T18:18:52.505280",
       "type": "entry",
       "content": "MRVL 120 hisse @$88.73 girişi. AI çip tedarik zinciri tezi kapsamında. Stop: $81.60, Hedef: $102+. CRDO ile birlikte portföyde çift AI altyapı pozisyonu."
+    },
+    {
+      "date": "2026-03-13T14:40:15.318323",
+      "type": "entry",
+      "content": "COHR 100 adet alis @$246.87. AI optik/lazer, GTC katalizoru. Yarim pozisyon (VIX>25). Stop $225, hedef $300."
     }
   ],
   "transactions": [
@@ -621,6 +646,15 @@
       "fiyat": 88.73,
       "tutar": 10647.6,
       "aciklama": "AI çip tedarik zinciri tezi - Agresif portföy - Özel ASIC ve veri merkezi ağ çipleri lideri"
+    },
+    {
+      "tarih": "2026-03-13",
+      "islem_tipi": "ALIŞ",
+      "sembol": "COHR",
+      "adet": 100,
+      "fiyat": 246.865,
+      "tutar": 24686.5,
+      "aciklama": "AI veri merkezi optik bilesenleri - GTC katalizoru - K-13 yarim pozisyon - Agresif portfoy"
     }
   ]
 }
