@@ -317,36 +317,6 @@
   "son_guncelleme": "2026-03-13T06:08:44.332186",
   "toplam_deger": 364739.74,
   "toplam_getiri_yuzde": 160.53,
-  "iran_krizi_hazirligi": {
-    "tarih": "2026-03-01",
-    "durum": "Pazartesi açılış öncesi stop-loss ayarlamaları",
-    "degisiklikler": [
-      "BKSY stop $18.98 → $17.90 (satellite savunma teması)",
-      "NNDM stop $1.88 → $1.80 (volatilite tamponu)",
-      "PLTR stop $129.06 → $131.00 (breakeven üzeri kar koruma)"
-    ],
-    "firsatlar": [
-      "PLTR",
-      "RKLB",
-      "GILT",
-      "BKSY - savunma/uzay teması"
-    ],
-    "riskler": [
-      "SHOP",
-      "ANET - tech baskısı devam edebilir"
-    ]
-  },
-  "gerceklesen_zarar": -1321.51,
-  "kapali_pozisyonlar": [
-    {
-      "tarih": "2026-02-19",
-      "aciklama": "Eski pozisyonlar kapatıldı (GOOGL, NVDA, META, AVGO, XLI, XLE)",
-      "toplam_maliyet": 84196.44,
-      "satis_degeri": 82874.93,
-      "gerceklesen_pnl": -1321.51
-    }
-  ],
-  "watchlist": [],
   "notes": [
     {
       "date": "2026-02-20T20:22:00.933774",
@@ -489,17 +459,6 @@
       "content": "MRVL 120 hisse @$88.73 girişi. AI çip tedarik zinciri tezi kapsamında. Stop: $81.60, Hedef: $102+. CRDO ile birlikte portföyde çift AI altyapı pozisyonu."
     }
   ],
-  "aylik_performans": {
-    "2026-02": {
-      "baslangic_deger": 100000,
-      "guncel_deger": 93324.55,
-      "net_getiri_yuzde": -6.68,
-      "trade_sayisi": 0,
-      "kazanc_sayisi": 0,
-      "kayip_sayisi": 0,
-      "not": "Strateji geçiş ayı - mevcut pozisyonlar devralındı"
-    }
-  },
   "transactions": [
     {
       "tarih": "2026-02-26",

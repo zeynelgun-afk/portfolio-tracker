@@ -1,15 +1,6 @@
 {
   "son_guncelleme": "2026-03-13T06:08:44.332186",
   "not": "SWING TRADE SADECE SİMÜLASYON - Sadece % kazanç/kayıp takibi (MAX: 8 pozisyon)",
-  "iran_krizi_hazirligi": {
-    "tarih": "2026-03-01",
-    "durum": "Pazartesi açılış öncesi stop-loss ayarlamaları yapıldı",
-    "degisiklikler": [
-      "LMT hedef $717.84 → $750.00 (savunma rallisi)",
-      "LMT stop $619.95 → $625.00 (momentum koruma)",
-      "SOFI: Gap-down'da çıkışa hazır, stop korundu"
-    ]
-  },
   "aktif_pozisyonlar": [
     {
       "id": "SWING-017",
