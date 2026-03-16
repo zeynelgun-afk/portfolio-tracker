@@ -1,9 +1,13 @@
 {
   "son_guncelleme": "2026-03-13",
-  "toplam_sermaye": 600000,
+  "simulasyon_donemi": "17 Şubat 2026 - 13 Mart 2026",
+  "islem_gunleri": 18,
+  "toplam_sermaye": 280000.0,
   "toplam_deger": 622054.1,
-  "toplam_kar_zarar": 22054.1,
-  "toplam_kar_zarar_yuzde": 3.68,
+  "toplam_kar_zarar": 342054.1,
+  "toplam_kar_zarar_yuzde": 122.16,
+  "benchmark_spy": -3.06,
+  "alpha": 125.22,
   "portfolyolar": {
     "dengeli": {
       "isim": "Dengeli Portföy",
@@ -15,10 +19,11 @@
       "nakit": {
         "miktar": 38084.77,
         "para_birimi": "USD"
-      }
+      },
+      "durum": "BAŞARILI"
     },
     "agresif": {
-      "isim": "Agresif Büyüme Portföyü",
+      "isim": "Agresif Büyüme",
       "deger": 363844.68,
       "maliyet": 140000,
       "kar_zarar": 223844.68,
@@ -27,10 +32,11 @@
       "nakit": {
         "miktar": 234019.95,
         "para_birimi": "USD"
-      }
+      },
+      "durum": "AKTİF"
     },
     "temettü": {
-      "isim": "Değer + Temettü Portföyü",
+      "isim": "Değer + Temettü",
       "deger": 145489.09,
       "maliyet": 100000,
       "kar_zarar": 45489.09,
@@ -39,7 +45,8 @@
       "nakit": {
         "miktar": 279.53,
         "para_birimi": "USD"
-      }
+      },
+      "durum": "BAŞARILI"
     },
     "swing_trade": {
       "isim": "Swing Trade (Simülasyon)",
