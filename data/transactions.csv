@@ -86,4 +86,4 @@ date,action,symbol,shares,price,total,reason
 2026-03-13,SELL,CVX,25,196.84,4921.12,"K-11 kısmi kâr alma - RSI 70 ve +%28 - Temettü portföy"
 2026-03-13,BUY,COHR,100,246.87,24686.50,"AI optik/lazer - GTC katalizoru - Agresif portfoy - K-13 yarim pozisyon"
 2026-03-13,BUY,JNJ,50,244.14,12207.00,"Saglik sektoru diversifikasyonu - Dengeli portfoy"
-2026-03-13,BUY,PFE,330,26.92,8883.27,"Yuksek temettü yield saglik defensif - Temettü portfoy"
+2026-03-13,BUY,PFE,330,26.92,8883.27,"Yuksek temettü yield saglik defensif - Temettü portfoy"2026-03-16,SELL,LASR,74,68.55,5072.70,"Breakeven çıkış - K-06 (3x stop override) + K-01 (FOMC haftası) - Agresif portföy"
