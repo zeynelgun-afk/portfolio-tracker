@@ -1,6 +1,6 @@
 # TRADING PLAYBOOK — KANIT BAZLI KURALLAR
 
-> **son güncelleme**: 12 mart 2026
+> **son güncelleme**: 13 mart 2026
 > **amaç**: gerçek trade deneyimlerinden çıkarılan, tekrar ihlal edilmemesi gereken kurallar
 > **güncelleme sıklığı**: her kapanış raporunda yeni dersler eklenir
 > **referans**: sabah raporu ve seans promptu bu dosyayı okur
@@ -99,6 +99,7 @@ her hata tarih, ne olduğu, neden yanlış olduğu ve çıkarılan kuralla kayde
 | 10 mart | ALMU | VIX 24'te small cap swing | 2 günde -%6.1 | K-03 |
 | 10 mart | CRDO | SMA altında giriş | -%2.4 devam | K-04 |
 | 24 şub-12 mart | SOFI | momentum gelmeden 16 gün tutma | -%3.6 | K-08 |
+| 13 mart | SM/XLE | RSI 70+ uyarısı, kısmi kâr zamanlaması | izlenmeli | K-11 |
 | 17 şub-11 mart | T | 22 gün tutma, savunmacı tez çalışmadı | -%5.5 | K-08 |
 
 ---
@@ -115,6 +116,7 @@ neyin iyi çalıştığını da kaydet — tekrar et.
 | savunmacı/temettü ağırlık | risk-off günlerinde portföy koruması | PM, CVX, MO sürekli güç |
 | enerji/emtia rotasyonu | KOS +%65, SM +%23, CVX +%28 | savaş/kriz döneminde enerji kazandırır |
 | erken disiplinli çıkış (stop yakın) | AMKR, GE | daha büyük zarardan korudu |
+| kriz ortamında sağlık diversifikasyonu | JNJ eklendi, portföy dengesi | risk-off koruması güçleniyor |
 
 ---
 
@@ -175,4 +177,9 @@ piyasa ortamına göre hangi sektör nasıl davranıyor.
 
 ---
 
-*finzora ai | son güncelleme: 12 mart 2026*
+*finzora ai | son güncelleme: 13 mart 2026*
+
+**K-15: aşırı satım bölgesinde (RSI <35) yeni alım yaparken dikkatli ol**
+- kanıt: XLI RSI 34.5, 3 haftadır düşüşte. JNJ RSI 53'te alındı ama girişte SMA20 altındaydı. endüstriyel ve sağlık sektörleri savaş ortamında sürekli baskı altında
+- kural: RSI <35 bölgesinde alım yapmadan önce en az 1 gün teyit bekle (gün içi dip test + toparlanma sinyali). düşen bıçağı tutma
+- ilişkili: K-04 (SMA teyidi olmadan giriş yapma)
