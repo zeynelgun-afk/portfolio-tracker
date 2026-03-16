@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-03-16T19:34:08.569761",
+  "son_guncelleme": "2026-03-16T20:40:51.985221",
   "not": "SWING TRADE SADECE SİMÜLASYON - Sadece % kazanç/kayıp takibi (MAX: 8 pozisyon)",
   "aktif_pozisyonlar": [
     {
@@ -7,8 +7,8 @@
       "sembol": "DUK",
       "giris_tarihi": "2026-02-19",
       "giris_fiyati": 126.71,
-      "guncel_fiyat": 133.49,
-      "guncel_kar_zarar_yuzde": 5.35,
+      "guncel_fiyat": 133.46,
+      "guncel_kar_zarar_yuzde": 5.33,
       "hedef_fiyat": 139.38,
       "stop_loss": 127.56,
       "tutulan_gun": 25,
@@ -18,7 +18,7 @@
       "zaman_cercevesi": "7-10 gün",
       "risk": "Faiz oranı yükselmesi, düzenleme riski",
       "durum": "🎯 Hedefe yakın (4.4%)",
-      "son_guncelleme": "2026-03-16T19:34:08.569761",
+      "son_guncelleme": "2026-03-16T20:40:51.985221",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
@@ -40,8 +40,8 @@
       "sembol": "DVA",
       "giris_tarihi": "2026-02-20",
       "giris_fiyati": 149.73,
-      "guncel_fiyat": 149.88,
-      "guncel_kar_zarar_yuzde": 0.1,
+      "guncel_fiyat": 148.22,
+      "guncel_kar_zarar_yuzde": -1.01,
       "hedef_fiyat": 164.7,
       "stop_loss": 142.24,
       "tutulan_gun": 24,
@@ -51,7 +51,7 @@
       "zaman_cercevesi": "7-12 gün",
       "risk": "Healthcare düzenlemeleri, Medicare reimbursement değişiklikleri",
       "durum": "✅ Normal aralıkta",
-      "son_guncelleme": "2026-03-16T19:34:08.569761",
+      "son_guncelleme": "2026-03-16T20:40:51.985221",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
@@ -73,8 +73,8 @@
       "sembol": "RTX",
       "giris_tarihi": "2026-03-12",
       "giris_fiyati": 203.3,
-      "guncel_fiyat": 205.74,
-      "guncel_kar_zarar_yuzde": 1.2,
+      "guncel_fiyat": 206.06,
+      "guncel_kar_zarar_yuzde": 1.36,
       "hedef_fiyat": 223.63,
       "stop_loss": 193.13,
       "tutulan_gun": 4,
@@ -85,7 +85,7 @@
       "risk": "Ateşkes/barış anlaşması haberi ani geri çekilme yaratabilir. Savunma bütçe kesintisi haberleri.",
       "durum": "✅ Normal aralıkta",
       "tarama_yontemi": "sektor liderligi",
-      "son_guncelleme": "2026-03-16T19:34:08.569761",
+      "son_guncelleme": "2026-03-16T20:40:51.985221",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
