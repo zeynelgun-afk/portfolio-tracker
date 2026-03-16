@@ -1,11 +1,11 @@
 {
-  "son_guncelleme": "2026-03-13",
+  "son_guncelleme": "2026-03-16",
   "simulasyon_donemi": "17 Şubat 2026 - 13 Mart 2026",
   "islem_gunleri": 18,
   "toplam_sermaye": 280000.0,
-  "toplam_deger": 622054.1,
-  "toplam_kar_zarar": 342054.1,
-  "toplam_kar_zarar_yuzde": 122.16,
+  "toplam_deger": 626093.16,
+  "toplam_kar_zarar": 26093.16,
+  "toplam_kar_zarar_yuzde": 4.35,
   "benchmark_spy": -3.06,
   "alpha": 125.22,
   "portfolyolar": {
