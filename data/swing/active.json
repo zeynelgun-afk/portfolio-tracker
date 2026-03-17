@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-03-16T21:35:13.592592",
+  "son_guncelleme": "2026-03-17T06:51:48.811111",
   "not": "SWING TRADE SADECE SİMÜLASYON - Sadece % kazanç/kayıp takibi (MAX: 8 pozisyon)",
   "aktif_pozisyonlar": [
     {
@@ -18,7 +18,7 @@
       "zaman_cercevesi": "7-10 gün",
       "risk": "Faiz oranı yükselmesi, düzenleme riski",
       "durum": "🎯 Hedefe yakın (4.4%)",
-      "son_guncelleme": "2026-03-16T21:35:13.592592",
+      "son_guncelleme": "2026-03-17T06:51:48.811111",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
@@ -33,7 +33,7 @@
         },
         "durum": "Hedef bekleniyor"
       },
-      "gunluk_degisim_yuzde": 0.2622
+      "gunluk_degisim_yuzde": 0.23
     },
     {
       "id": "SWING-018",
@@ -51,7 +51,7 @@
       "zaman_cercevesi": "7-12 gün",
       "risk": "Healthcare düzenlemeleri, Medicare reimbursement değişiklikleri",
       "durum": "✅ Normal aralıkta",
-      "son_guncelleme": "2026-03-16T21:35:13.592592",
+      "son_guncelleme": "2026-03-17T06:51:48.811111",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
@@ -66,7 +66,7 @@
         },
         "durum": "Hedef bekleniyor"
       },
-      "gunluk_degisim_yuzde": 2.1511
+      "gunluk_degisim_yuzde": -1.66
     },
     {
       "id": "SWING-025",
@@ -85,7 +85,7 @@
       "risk": "Ateşkes/barış anlaşması haberi ani geri çekilme yaratabilir. Savunma bütçe kesintisi haberleri.",
       "durum": "✅ Normal aralıkta",
       "tarama_yontemi": "sektor liderligi",
-      "son_guncelleme": "2026-03-16T21:35:13.592592",
+      "son_guncelleme": "2026-03-17T06:51:48.811111",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
@@ -99,13 +99,14 @@
           "aciklama": "Zirveden -%5 düşünce sat"
         },
         "durum": "Hedef bekleniyor"
-      }
+      },
+      "gunluk_degisim_yuzde": 0.75
     }
   ],
   "ozet": {
     "toplam_pozisyon": 3,
     "bos_slot": 7,
     "maksimum_pozisyon": 10,
-    "ortalama_kar_zarar_yuzde": 2.04
+    "ortalama_kar_zarar_yuzde": 1.89
   }
 }
