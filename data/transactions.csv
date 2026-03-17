@@ -89,3 +89,6 @@ date,action,symbol,shares,price,total,reason
 2026-03-13,BUY,PFE,330,26.92,8883.27,"Yuksek temettü yield saglik defensif - Temettü portfoy"2026-03-16,SELL,LASR,74,68.55,5072.70,"Breakeven çıkış - K-06 (3x stop override) + K-01 (FOMC haftası) - Agresif portföy"
 2026-03-17,SELL,RKLB,48,77.53,3721.44,Kısmi kâr alma %33 - hedef aşıldı - GTC katalizörü - Agresif portföy
 2026-03-17,SELL,SM,156,27.36,4268.16,Kısmi kâr alma %25 - RSI 72+ K-11 - Dengeli portföy
+2026-03-17,SELL,RKLB,48,77.53,3721.44,Kısmi kâr alma %33 - hedef aşıldı - GTC katalizörü - Agresif portföy
+2026-03-17,SELL,CRDO,87,104.26,9070.62,Stop-loss tetiklendi ($108) - fiyat $104.26 - insider + margin compression - Agresif portföy
+2026-03-17,SELL,SM,156,27.36,4268.16,Kısmi kâr alma %25 - RSI 72+ K-11 - Dengeli portföy
