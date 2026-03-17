@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-03-17T21:05:30.058948",
+  "son_guncelleme": "2026-03-17T21:33:28.201487",
   "not": "SWING TRADE SADECE SİMÜLASYON - Sadece % kazanç/kayıp takibi (MAX: 8 pozisyon)",
   "aktif_pozisyonlar": [
     {
@@ -18,7 +18,7 @@
       "zaman_cercevesi": "7-10 gün",
       "risk": "Faiz oranı yükselmesi, düzenleme riski",
       "durum": "🎯 Hedefe yakın (4.8%)",
-      "son_guncelleme": "2026-03-17T21:05:30.058948",
+      "son_guncelleme": "2026-03-17T21:33:28.201487",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
@@ -51,7 +51,7 @@
       "zaman_cercevesi": "7-12 gün",
       "risk": "Healthcare düzenlemeleri, Medicare reimbursement değişiklikleri",
       "durum": "✅ Normal aralıkta",
-      "son_guncelleme": "2026-03-17T21:05:30.058948",
+      "son_guncelleme": "2026-03-17T21:33:28.201487",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
@@ -85,7 +85,7 @@
       "risk": "Ateşkes/barış anlaşması haberi ani geri çekilme yaratabilir. Savunma bütçe kesintisi haberleri.",
       "durum": "✅ Normal aralıkta",
       "tarama_yontemi": "sektor liderligi",
-      "son_guncelleme": "2026-03-17T21:05:30.058948",
+      "son_guncelleme": "2026-03-17T21:33:28.201487",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",

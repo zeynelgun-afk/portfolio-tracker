@@ -1,15 +1,15 @@
 {
   "son_guncelleme": "2026-03-17",
   "toplam_sermaye": 600000,
-  "toplam_deger": 624876.5,
-  "toplam_kar_zarar": 24876.5,
+  "toplam_deger": 624877.89,
+  "toplam_kar_zarar": 24877.89,
   "toplam_kar_zarar_yuzde": 4.15,
   "portfolyolar": {
     "dengeli": {
       "isim": "Dengeli Portföy",
-      "deger": 112684.34,
+      "deger": 112685.73,
       "maliyet": 40000,
-      "kar_zarar": 72684.34,
+      "kar_zarar": 72685.73,
       "kar_zarar_yuzde": 181.71,
       "pozisyon_sayisi": 6,
       "nakit": {
