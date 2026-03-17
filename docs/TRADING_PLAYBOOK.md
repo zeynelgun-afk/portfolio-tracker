@@ -1,6 +1,6 @@
 # TRADING PLAYBOOK — KANIT BAZLI KURALLAR
 
-> **son güncelleme**: 13 mart 2026
+> **son güncelleme**: 16 mart 2026
 > **amaç**: gerçek trade deneyimlerinden çıkarılan, tekrar ihlal edilmemesi gereken kurallar
 > **güncelleme sıklığı**: her kapanış raporunda yeni dersler eklenir
 > **referans**: sabah raporu ve seans promptu bu dosyayı okur
@@ -123,6 +123,7 @@ neyin iyi çalıştığını da kaydet — tekrar et.
 | enerji/emtia rotasyonu | KOS +%65, SM +%23, CVX +%28 | savaş/kriz döneminde enerji kazandırır |
 | erken disiplinli çıkış (stop yakın) | AMKR, GE | daha büyük zarardan korudu |
 | kriz ortamında sağlık diversifikasyonu | JNJ eklendi, portföy dengesi | risk-off koruması güçleniyor |
+| AI tedarik zinciri katalizör pozisyonlama | GTC 2026: MRVL +%4.2, RKLB +%4.2, COHR +%1.9, GLW +%2.3, ANET +%1.3 tek günde | katalizör öncesi yarim pozisyon, doğrulanınca artır stratejisi çalışıyor |
 
 ---
 
@@ -144,6 +145,11 @@ piyasa ortamına göre hangi sektör nasıl davranıyor.
 - kanıt: NVDA 26 şubat beat etti ama -%5 düştü. "mükemmel fiyatlanmış" hissede beat tek başına yetmiyor
 - kural: consensus beklentisi çok yüksek olan mega cap'lerde earnings beat → sell the news riski
 
+### altın rekor ama royalty hisseleri düşüyor (16 mart 2026)
+- gözlem: GCUSD $5,016 rekor ama RGLD -%8.79, RSI 34.8, SMA20 ve SMA50 altında
+- olası nedenler: royalty modeli petrol/maden şirketleriyle farklı korelasyon gösteriyor, altın ETF (GLD) tercih ediliyor olabilir, sektör rotasyonu royalty modelinden uzaklaşıyor
+- sonuç: altın yükseliyor diye royalty hissesi de yükselecek varsayımı hatalı olabilir. korelasyon bozulmasını izle, tez bozulursa çık
+
 ---
 
 ## 5. SWING TRADE İSTATİSTİKLERİ
@@ -153,10 +159,10 @@ piyasa ortamına göre hangi sektör nasıl davranıyor.
 | metrik | değer |
 |--------|-------|
 | toplam trade | 17 |
-| kazanç | 9 (%53) |
-| zarar | 8 (%47) |
-| ortalama kazanç | +%4.1 |
-| ortalama zarar | -%4.3 |
+| kazanç | 10 (%58.8) |
+| zarar | 7 (%41.2) |
+| ortalama kazanç | +%4.13 |
+| ortalama zarar | -%4.61 |
 | en iyi | CAT +%12.0 (7 gün) |
 | en kötü | ALMU -%6.1 (2 gün) |
 | ortalama tutma (kazanç) | 10.4 gün |
@@ -170,6 +176,8 @@ piyasa ortamına göre hangi sektör nasıl davranıyor.
 
 ### son trend (mart 2026)
 - son 5 kapanıştan 4'ü zarar → **ortam uygun değil, swing'e ara ver** (K-14)
+- 16 mart itibarıyla 3 aktif pozisyon (DUK, DVA, RTX). DUK hedefe yakın, RTX yeni giriş
+- genel: 10K/7Z (%58.8 win rate), ort kazanç +%4.13, ort kayıp -%4.61
 
 ---
 
@@ -183,7 +191,7 @@ piyasa ortamına göre hangi sektör nasıl davranıyor.
 
 ---
 
-*finzora ai | son güncelleme: 13 mart 2026*
+*finzora ai | son güncelleme: 16 mart 2026*
 
 **K-15: aşırı satım bölgesinde (RSI <35) yeni alım yaparken dikkatli ol**
 - kanıt: XLI RSI 34.5, 3 haftadır düşüşte. JNJ RSI 53'te alındı ama girişte SMA20 altındaydı. endüstriyel ve sağlık sektörleri savaş ortamında sürekli baskı altında
