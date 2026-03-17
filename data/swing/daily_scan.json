@@ -1,50 +1,50 @@
 {
-  "tarama_tarihi": "2026-03-16",
+  "tarama_tarihi": "2026-03-17",
   "tarama_saati": "22:01 TR",
   "piyasa_durumu": "KAPALI",
   "piyasa_ozeti": {
     "spy_degisim": 0.0,
     "qqq_degisim": 0.0,
     "iwm_degisim": 0.0,
-    "vix": 23.51,
+    "vix": 22.37,
     "vix_uyarisi": false,
     "vix_kritik": false,
     "vix_mesaj": ""
   },
   "en_iyi_sektorler": [
     [
-      "Consumer Cyclical",
-      0.75
-    ],
-    [
-      "Real Estate",
-      0.74
-    ],
-    [
-      "Basic Materials",
-      0.42
-    ],
-    [
-      "Healthcare",
-      0.38
+      "Industrials",
+      1.63
     ],
     [
       "Energy",
-      0.29
+      1.12
+    ],
+    [
+      "Consumer Cyclical",
+      0.88
+    ],
+    [
+      "Communication Services",
+      0.36
+    ],
+    [
+      "Technology",
+      0.33
     ]
   ],
   "en_kotu_sektorler": [
     [
       "Consumer Defensive",
-      -1.01
+      -1.06
     ],
     [
-      "Utilities",
-      -0.33
+      "Real Estate",
+      -0.82
     ],
     [
-      "Industrials",
-      -0.24
+      "Basic Materials",
+      -0.71
     ]
   ],
   "ep_adaylari": [],
