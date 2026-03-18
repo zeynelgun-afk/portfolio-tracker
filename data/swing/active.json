@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-03-18T20:01:25.073087",
+  "son_guncelleme": "2026-03-18T20:06:18.810742",
   "not": "SWING TRADE SADECE SİMÜLASYON - Sadece % kazanç/kayıp takibi (MAX: 8 pozisyon)",
   "aktif_pozisyonlar": [
     {
@@ -17,8 +17,8 @@
       "tez": "Duke Energy - Carolina'da dominant pozisyon, düzenli temettü ödemesi, savunmacı pozisyonlama",
       "zaman_cercevesi": "7-10 gün",
       "risk": "Faiz oranı yükselmesi, düzenleme riski",
-      "durum": "✅ Normal aralıkta",
-      "son_guncelleme": "2026-03-18T20:01:25.073087",
+      "durum": "Pozitif bölge",
+      "son_guncelleme": "2026-03-18T20:06:18.810742",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
@@ -50,8 +50,8 @@
       "tez": "DaVita - ABD'nin en büyük böbrek diyaliz şirketi, stabil nakit akışı, yaşlanan nüfus faydalanıcısı",
       "zaman_cercevesi": "7-12 gün",
       "risk": "Healthcare düzenlemeleri, Medicare reimbursement değişiklikleri",
-      "durum": "✅ Normal aralıkta",
-      "son_guncelleme": "2026-03-18T20:01:25.073087",
+      "durum": "Normal aralıkta",
+      "son_guncelleme": "2026-03-18T20:06:18.810742",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
@@ -83,9 +83,9 @@
       "tez": "RTX dünyanın en büyük savunma tedarikçilerinden. İran krizi döneminde hem ABD hem NATO sipariş artışı bekleniyor. Pratt & Whitney motor bölümü ayrıca güçlü.",
       "zaman_cercevesi": "7-14 gün",
       "risk": "Ateşkes/barış anlaşması haberi ani geri çekilme yaratabilir. Savunma bütçe kesintisi haberleri.",
-      "durum": "✅ Normal aralıkta",
+      "durum": "Pozitif bölge",
       "tarama_yontemi": "sektor liderligi",
-      "son_guncelleme": "2026-03-18T20:01:25.073087",
+      "son_guncelleme": "2026-03-18T20:06:18.810742",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
