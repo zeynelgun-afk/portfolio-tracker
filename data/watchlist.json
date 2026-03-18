@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-03-17T21:33:28.247596",
+  "son_guncelleme": "2026-03-18T08:27:35.372521",
   "not": "Tüm portföyler ve swing trade için tek merkezi watchlist. Her adayda hedef_portfoy alanı hangi portföye/stratejiye ait olduğunu belirtir.",
   "iran_krizi_notu": {
     "tarih": "2026-03-01",
@@ -287,11 +287,11 @@
       "hedef_portfoy": "agresif",
       "urgency": "high",
       "ekleme_tarihi": "2026-03-11",
-      "son_kontrol": "2026-03-17",
+      "son_kontrol": "2026-03-18",
       "hedef_giris": "380-395",
       "hedef_fiyat": 450.0,
       "stop_loss": 360.0,
-      "notlar": "Micron - HBM (yuksek bant genislikli bellek) lideri, AI cip katmaninin kritik bileseni. 18 Mart kazanc aciklamasi KRiTiK. NVIDIA makalesi Katman 2 (Cipler). RSI 52.1 notr. YTD +%28 guclu. $453.7B mktcap. Kazanc oncesi giris riskli, sonrasi degerlendır.",
+      "notlar": "Micron - HBM4 seri uretim Q1 2026 teyidi (GTC 2026). SOCAMM2 numuneleri gonderilmeye basladi. 18 Mart earnings KRITIK. RSI 64.2, zirvede. $519.6B mktcap.",
       "nvidia_katman": "Katman 2 - Cipler",
       "momentum_5gun": 0,
       "katalizor": "18 Mart kazanc aciklamasi - HBM talep gucuyse agresif giris"
@@ -303,11 +303,11 @@
       "hedef_portfoy": "agresif",
       "urgency": "high",
       "ekleme_tarihi": "2026-03-11",
-      "son_kontrol": "2026-03-17",
+      "son_kontrol": "2026-03-18",
       "hedef_giris": "85-90",
-      "hedef_fiyat": 102.0,
-      "stop_loss": 80.0,
-      "notlar": "Marvell - ozel AI ASIC + ag cipleri, veri merkezi odakli. NVIDIA makalesi Katman 2 (Cipler). RSI 68.2 biraz yuksek, geri cekilme bekle $85-90. Q4 beklenti ustu sonuc tezi dogruladi. $81.5B mktcap.",
+      "hedef_fiyat": 110.0,
+      "stop_loss": 78.0,
+      "notlar": "Marvell - optik super dongu, AI connectivity saf oyuncu. GTC 2026 ile AGRESIF 2. ONCELIK'e yukseltildi. RSI 60.8, $85-88 geri cekilme ideal giris. $79.4B mktcap.",
       "nvidia_katman": "Katman 2 - Cipler",
       "momentum_5gun": 0
     },
@@ -316,13 +316,13 @@
       "guncel_fiyat": 104.06,
       "sektor": "Teknoloji - Yuksek Hizli Baglanti",
       "hedef_portfoy": "agresif",
-      "urgency": "medium",
+      "urgency": "high",
       "ekleme_tarihi": "2026-03-11",
-      "son_kontrol": "2026-03-17",
-      "hedef_giris": "105-110",
-      "hedef_fiyat": 135.0,
-      "stop_loss": 95.0,
-      "notlar": "Credo Technology - yuksek hizli veri aktarimi, AI kume baglantisi. NVIDIA makalesi Katman 2 (Cipler). RSI 45.4 ideal giris bolgesi. 52H'den -%47.5 ciddi geri cekilme, $105-110 hedef. $20.7B mktcap.",
+      "son_kontrol": "2026-03-18",
+      "hedef_giris": "95-105",
+      "hedef_fiyat": 140.0,
+      "stop_loss": 88.0,
+      "notlar": "Credo - bakir+optik dual play. BNP Paribas GTC 2026 sonrasi yukselis sinyali verdi. AGRESIF 1. ONCELIK. RSI 41.2 asiri satima yakin, 52H'den -%51.3 derin iskonto. $19.2B mktcap.",
       "nvidia_katman": "Katman 2 - Cipler",
       "momentum_5gun": 0
     },
@@ -424,11 +424,11 @@
       "hedef_portfoy": "agresif",
       "urgency": "high",
       "ekleme_tarihi": "2026-03-11",
-      "son_kontrol": "2026-03-17",
-      "hedef_giris": "240-255",
-      "hedef_fiyat": 300.0,
-      "stop_loss": 225.0,
-      "notlar": "Coherent - optik/lazer bilesenleri, AI veri merkezi baglanti altyapisi. LASR tezinin buyuk kardesi ama $41B mktcap ile cok daha saglam. RSI 55.9 ideal, SMA50 ustunde guclu. 52H'den -%13 makul geri cekilme. @ProfKayaFinance Katman 2 (Cipler).",
+      "son_kontrol": "2026-03-18",
+      "hedef_giris": "220-240",
+      "hedef_fiyat": 280.0,
+      "stop_loss": 200.0,
+      "notlar": "Coherent - nvidia $2B stratejik yatirim teyidi. Optik transceiver ve lazer bilesenleri. GTC 2026 ile tez guclendirildi. RSI 51.0 notr, 52H'den -%18.1. $39B mktcap.",
       "nvidia_katman": "Katman 2 - Cipler (optik baglanti)",
       "momentum_5gun": 0,
       "kaynak": "@ProfKayaFinance tweet - AI 5 Katman piramidi"
@@ -481,6 +481,217 @@
       "nvidia_katman": "Katman 5 - Uygulamalar (edge/CDN)",
       "momentum_5gun": 0,
       "kaynak": "@ProfKayaFinance tweet - AI 5 Katman piramidi"
+    },
+    {
+      "sembol": "AMAT",
+      "guncel_fiyat": 352.46,
+      "sektor": "Teknoloji - Yari Iletken Ekipman",
+      "hedef_portfoy": "dengeli",
+      "urgency": "high",
+      "ekleme_tarihi": "2026-03-18",
+      "son_kontrol": "2026-03-18",
+      "hedef_giris": "330-345",
+      "hedef_fiyat": 400.0,
+      "stop_loss": 310.0,
+      "notlar": "Applied Materials - yari iletken ekipman devi, HBM uretim hattinda kritik CVD/PVD ekipman. GTC 2026 infografikten eklendi. RSI 52.8 notr, 52H'den -%11. $279.7B mktcap.",
+      "nvidia_katman": "Katman 2 - Cipler (uretim ekipmani)",
+      "momentum_5gun": 0,
+      "kaynak": "GTC 2026 infografik + tedarik zinciri analizi"
+    },
+    {
+      "sembol": "LRCX",
+      "guncel_fiyat": 226.47,
+      "sektor": "Teknoloji - Yari Iletken Ekipman",
+      "hedef_portfoy": "dengeli",
+      "urgency": "medium",
+      "ekleme_tarihi": "2026-03-18",
+      "son_kontrol": "2026-03-18",
+      "hedef_giris": "210-220",
+      "hedef_fiyat": 260.0,
+      "stop_loss": 195.0,
+      "notlar": "Lam Research - etch ve deposition lideri, her HBM katmani icin gerekli ekipman. GTC 2026 infografikten eklendi. RSI 52.5 notr, 52H'den -%12. $282.8B mktcap.",
+      "nvidia_katman": "Katman 2 - Cipler (uretim ekipmani)",
+      "momentum_5gun": 0,
+      "kaynak": "GTC 2026 infografik + tedarik zinciri analizi"
+    },
+    {
+      "sembol": "KLAC",
+      "guncel_fiyat": 1481.35,
+      "sektor": "Teknoloji - Yari Iletken Ekipman",
+      "hedef_portfoy": "dengeli",
+      "urgency": "medium",
+      "ekleme_tarihi": "2026-03-18",
+      "son_kontrol": "2026-03-18",
+      "hedef_giris": "1380-1450",
+      "hedef_fiyat": 1700.0,
+      "stop_loss": 1300.0,
+      "notlar": "KLA Corporation - denetim ve metroloji lideri, ileri paketleme kalite kontrolu. CAMT'in buyuk abisi, daha likit. GTC 2026 infografikten eklendi. RSI 53.1 notr, 52H'den -%12.5. $194.6B mktcap.",
+      "nvidia_katman": "Katman 2 - Cipler (denetim/metroloji)",
+      "momentum_5gun": 0,
+      "kaynak": "GTC 2026 infografik + tedarik zinciri analizi"
+    },
+    {
+      "sembol": "NXPI",
+      "guncel_fiyat": 194.02,
+      "sektor": "Teknoloji - Otomotiv Yari Iletken",
+      "hedef_portfoy": "agresif",
+      "urgency": "high",
+      "ekleme_tarihi": "2026-03-18",
+      "son_kontrol": "2026-03-18",
+      "hedef_giris": "185-195",
+      "hedef_fiyat": 240.0,
+      "stop_loss": 170.0,
+      "notlar": "NXP Semiconductors - otomotiv cip lideri. BYD, Hyundai, Nissan DRIVE Hyperion ortakliklari icin kritik tedarikci. RSI 30.2 ASIRI SATIM! 52H'den -%24.3. GTC 2026 otonom surus tezi. $49B mktcap.",
+      "nvidia_katman": "Katman 2 - Cipler (otomotiv)",
+      "momentum_5gun": 0,
+      "kaynak": "GTC 2026 infografik + otonom surus analizi",
+      "katalizor": "DRIVE Hyperion seviye 4 ortakliklari, Uber robotaksi"
+    },
+    {
+      "sembol": "PWR",
+      "guncel_fiyat": 571.64,
+      "sektor": "Endustriyel - Veri Merkezi Altyapi Insaat",
+      "hedef_portfoy": "agresif",
+      "urgency": "medium",
+      "ekleme_tarihi": "2026-03-18",
+      "son_kontrol": "2026-03-18",
+      "hedef_giris": "530-555",
+      "hedef_fiyat": 640.0,
+      "stop_loss": 500.0,
+      "notlar": "Quanta Services - veri merkezi elektrik altyapi insaatinda dominant EPC. POWL'un buyuk versiyonu. GTC 2026 infografikten eklendi. RSI 61.9 biraz yuksek, pullback bekle. 52H'ye cok yakin -%1.2. $85.5B mktcap.",
+      "nvidia_katman": "Katman 1 - Enerji (altyapi insaat)",
+      "momentum_5gun": 0,
+      "kaynak": "GTC 2026 infografik + enerji altyapi analizi"
+    },
+    {
+      "sembol": "CRWD",
+      "guncel_fiyat": 433.2,
+      "sektor": "Teknoloji - Siber Guvenlik",
+      "hedef_portfoy": "agresif",
+      "urgency": "medium",
+      "ekleme_tarihi": "2026-03-18",
+      "son_kontrol": "2026-03-18",
+      "hedef_giris": "400-420",
+      "hedef_fiyat": 500.0,
+      "stop_loss": 375.0,
+      "notlar": "CrowdStrike - AI ajanlarinin guvenlik katmani. NemoClaw enterprise guvenlik tezi ile baglantili. GTC 2026 infografikten eklendi. RSI 55.0 notr, 52H'den -%23.6. $109.9B mktcap.",
+      "nvidia_katman": "Katman 5 - Uygulamalar (guvenlik)",
+      "momentum_5gun": 0,
+      "kaynak": "GTC 2026 infografik + NemoClaw analizi"
+    },
+    {
+      "sembol": "APH",
+      "guncel_fiyat": 135.12,
+      "sektor": "Teknoloji - Konnektor/Kablolama",
+      "hedef_portfoy": "temettu",
+      "urgency": "medium",
+      "ekleme_tarihi": "2026-03-18",
+      "son_kontrol": "2026-03-18",
+      "hedef_giris": "125-132",
+      "hedef_fiyat": 160.0,
+      "stop_loss": 115.0,
+      "notlar": "Amphenol - her AI raf sisteminde konnektor ve kablolama. Temettu ~%0.8. GTC 2026 analizinden eklendi. RSI 45.1 oversold'a yakin, 52H'den -%19.1. $166.1B mktcap.",
+      "nvidia_katman": "Katman 3 - Altyapi (konnektor)",
+      "momentum_5gun": 0,
+      "kaynak": "GTC 2026 tedarik zinciri analizi"
+    },
+    {
+      "sembol": "ETN",
+      "guncel_fiyat": 363.95,
+      "sektor": "Endustriyel - Guc Yonetimi",
+      "hedef_portfoy": "temettu",
+      "urgency": "medium",
+      "ekleme_tarihi": "2026-03-18",
+      "son_kontrol": "2026-03-18",
+      "hedef_giris": "340-355",
+      "hedef_fiyat": 410.0,
+      "stop_loss": 320.0,
+      "notlar": "Eaton - guc yonetimi ve dagitim, AC-DC gecis trendinde kilit oyuncu. Temettu ~%1.2. GTC 2026 enerji kategorisinde en dengeli risk/odul. RSI 52.0 notr, 52H'den -%10.9. $141.2B mktcap.",
+      "nvidia_katman": "Katman 1 - Enerji (guc yonetimi)",
+      "momentum_5gun": 0,
+      "kaynak": "GTC 2026 tedarik zinciri analizi"
+    },
+    {
+      "sembol": "LITE",
+      "guncel_fiyat": 649.56,
+      "sektor": "Teknoloji - Optik/Lazer",
+      "hedef_portfoy": "agresif",
+      "urgency": "medium",
+      "ekleme_tarihi": "2026-03-18",
+      "son_kontrol": "2026-03-18",
+      "hedef_giris": "580-620",
+      "hedef_fiyat": 750.0,
+      "stop_loss": 540.0,
+      "notlar": "Lumentum - nvidia $2B yatirim + ABD uretim genislemesi. Optik transceiver ve lazer bilesenleri. COHR'a gore daha pahali. RSI 54.7 notr, 52H'den -%17.1. $46.4B mktcap.",
+      "nvidia_katman": "Katman 2 - Cipler (optik baglanti)",
+      "momentum_5gun": 0,
+      "kaynak": "GTC 2026 infografik + optik analizi"
+    },
+    {
+      "sembol": "UBER",
+      "guncel_fiyat": 77.79,
+      "sektor": "Teknoloji - Mobilite Platformu",
+      "hedef_portfoy": "agresif",
+      "urgency": "medium",
+      "ekleme_tarihi": "2026-03-18",
+      "son_kontrol": "2026-03-18",
+      "hedef_giris": "70-75",
+      "hedef_fiyat": 95.0,
+      "stop_loss": 64.0,
+      "notlar": "Uber - nvidia DRIVE Hyperion robotaksi ag ortagi. 28 sehirde 4 kitada 2028'e kadar filo kurulacak. Platform oyunu, AV donanimi degil. RSI 57.3 notr, 52H'den -%23.7. $161.6B mktcap.",
+      "nvidia_katman": "Katman 5 - Uygulamalar (otonom surus platformu)",
+      "momentum_5gun": 0,
+      "kaynak": "GTC 2026 otonom surus analizi",
+      "katalizor": "2027 H1 LA + SF robotaksi lansmani"
+    },
+    {
+      "sembol": "ARM",
+      "guncel_fiyat": 127.31,
+      "sektor": "Teknoloji - Cip Mimarisi/Lisans",
+      "hedef_portfoy": "agresif",
+      "urgency": "low",
+      "ekleme_tarihi": "2026-03-18",
+      "son_kontrol": "2026-03-18",
+      "hedef_giris": "115-122",
+      "hedef_fiyat": 160.0,
+      "stop_loss": 105.0,
+      "notlar": "ARM Holdings - vera CPU 88 cekirdekli Olympus ARM mimarisi uzerine kurulu. Her nvidia CPU satisinda lisans geliri. P/E cok yuksek, derin geri cekilme bekleniyor. RSI 57.8, 52H'den -%30.5. $135.2B mktcap.",
+      "nvidia_katman": "Katman 2 - Cipler (mimari lisans)",
+      "momentum_5gun": 0,
+      "kaynak": "GTC 2026 infografik + tedarik zinciri analizi"
+    },
+    {
+      "sembol": "LSCC",
+      "guncel_fiyat": 92.16,
+      "sektor": "Teknoloji - FPGA",
+      "hedef_portfoy": "swing",
+      "urgency": "low",
+      "ekleme_tarihi": "2026-03-18",
+      "son_kontrol": "2026-03-18",
+      "hedef_giris": "84-90",
+      "hedef_fiyat": 108.0,
+      "stop_loss": 78.0,
+      "notlar": "Lattice Semiconductor - FPGA, edge AI ve robotik icin onemli. Nis oyuncu. GTC 2026 infografikten eklendi. RSI 51.7 notr, 52H'den -%14.7. $12.6B mktcap.",
+      "nvidia_katman": "Katman 2 - Cipler (FPGA/edge)",
+      "momentum_5gun": 0,
+      "kaynak": "GTC 2026 infografik"
+    },
+    {
+      "sembol": "ALAB",
+      "guncel_fiyat": 127.57,
+      "sektor": "Teknoloji - PCIe/CXL Retimer",
+      "hedef_portfoy": "agresif",
+      "urgency": "high",
+      "ekleme_tarihi": "2026-03-18",
+      "son_kontrol": "2026-03-18",
+      "hedef_giris": "115-125",
+      "hedef_fiyat": 170.0,
+      "stop_loss": 100.0,
+      "notlar": "Astera Labs - PCIe 6.0 ve CXL retimer lideri. CRDO'nun tamamlayicisi, vera rubin raf ici connectivity. Haric listesinden cikarildi, GTC 2026 tezi dogruladi. RSI 48.0, 52H'den -%51.5 derin iskonto! $21.7B mktcap.",
+      "nvidia_katman": "Katman 2 - Cipler (baglanti/retimer)",
+      "momentum_5gun": 0,
+      "kaynak": "GTC 2026 infografik + tedarik zinciri analizi",
+      "katalizor": "Vera Rubin raf ici PCIe/CXL talebi"
     }
   ],
   "haric_tutulanlar": [
@@ -529,10 +740,6 @@
       "neden": "Tech sektörü AI bubble korkusuyla zayıf, Mart ortası teknik toparlanma bekle"
     },
     {
-      "sembol": "ALAB",
-      "neden": "Tech sektörü AI bubble korkusuyla zayıf, Mart ortası teknik toparlanma bekle"
-    },
-    {
       "sembol": "IREN",
       "neden": "Bitcoin madenciliği spekülatif, sektör-agnostik stratejiye uygun değil"
     },
@@ -568,7 +775,7 @@
     "savunma_talebi": "Savunma harcamaları artacak - RTX, NOC, LMT, GD en büyük faydalanıcılar",
     "nukleer_alternatif": "Petrol riski → Nükleer enerji stratejik önem kazanıyor - CEG, GEV"
   },
-  "toplam_aday": 31,
+  "toplam_aday": 44,
   "yuksek_oncelik_aday": 11,
   "iran_krizi_critical": [
     "RTX",
@@ -621,7 +828,21 @@
         "NET"
       ]
     },
-    "not": "* isaretli hisseler zaten portfoyde aktif pozisyon"
+    "not": "* isaretli hisseler zaten portfoyde aktif pozisyon",
+    "katman_2_cipler_guncelleme": {
+      "tarih": "2026-03-18",
+      "eklenen": [
+        "AMAT",
+        "LRCX",
+        "KLAC",
+        "ALAB",
+        "NXPI",
+        "LSCC",
+        "LITE",
+        "ARM"
+      ],
+      "not": "GTC 2026 infografikten eklenen yari iletken ekipman ve baglanti adaylari"
+    }
   },
   "profkaya_tweet_notu": {
     "tarih": "2026-03-11",
@@ -653,5 +874,33 @@
       "GILT (Katman 3)",
       "ANET (Katman 3)"
     ]
+  },
+  "gtc_2026_notu": {
+    "tarih": "2026-03-18",
+    "ozet": "GTC 2026 sonrasi 14 yeni aday eklendi. Infografik + tedarik zinciri analizinden: AMAT, LRCX, KLAC, ALAB, NXPI, PWR, CRWD, APH, ETN, LITE, UBER, ARM, LSCC. CRDO, MRVL, COHR, MU guncellendi.",
+    "agresif_oncelik": [
+      "CRDO",
+      "MRVL",
+      "COHR",
+      "ENTG",
+      "ALAB"
+    ],
+    "dengeli_oncelik": [
+      "AMAT",
+      "LRCX",
+      "AVGO",
+      "ETN"
+    ],
+    "temettu_oncelik": [
+      "APH",
+      "ETN"
+    ],
+    "swing_oncelik": [
+      "POWL",
+      "CAMT",
+      "TTMI",
+      "LSCC"
+    ],
+    "dikkat_nxpi": "RSI 30.2 ASIRI SATIM! Otonom surus tezi ile birlikte degerlendir."
   }
 }
