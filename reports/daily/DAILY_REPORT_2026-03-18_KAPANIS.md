@@ -40,7 +40,16 @@ Fed faiz oranlarını %3.50-3.75 aralığında sabit tuttu (11-1 oy). beklenen k
 
 **RKLB $1B hisse arzı**: Rocket Lab $1 milyarlık hisse satışı planı açıkladı (dilüsyon riski). hisse -11.59% düştü. pozisyonumuz küçük (%0.9 ağırlık) ama izlenmeli. Neutron roketi finansmanı için olabilir.
 
-**MU kazanç açıklaması (kapanış sonrası)**: Micron bugün kapanış sonrası Q2 FY26 sonuçlarını açıklayacak. beklenti: EPS $8.5-8.7, gelir $18.7-19.1B. HBM4 yüksek hacimli üretim başladı (Vera Rubin için). CRDO pozisyonumuz için kritik katalizör.
+**MU kazanç açıklaması (kapanış sonrası) — CANAVAR BEAT**:
+- **EPS**: $12.20 vs $9.31 beklenti (+31% sürpriz)
+- **Gelir**: $23.86B vs $20.07B beklenti (+19% sürpriz, YoY neredeyse 3 kat artış, $8.05B'dan)
+- **Q3 rehber**: gelir ~$33.5B (vs $24.3B beklenti), EPS ~$19.15 (vs $12.05 beklenti) — YoY +200%
+- Cloud bellek geliri +160% ile $7.75B. Mobil+istemci $2.24B'dan $7.71B'ye fırladı
+- CEO Mehrotra: "AI kaynaklı bellek talebi artışı ve yapısal arz kısıtları sonuçları yukarı taşıdı"
+- HBM4 yüksek hacimli üretim başladı (Vera Rubin için), tüm 2026 HBM kapasitesi satıldı
+- **hisse kapanış sonrası hafif geriledi** — "sell the news" dinamiği, beklentiler zaten çok yüksekti
+
+→ AI bellek tedarik zinciri tezi güçlü şekilde doğrulandı. CRDO, MRVL, COHR için son derece pozitif sinyal. ancak hisse tepkisi "buy rumor sell news" olabilir, yarın fiyat aksiyonunu yakından izle.
 
 **İran gerginliği tırmanması**: İran körfez ülkelerindeki enerji tesislerini "meşru hedef" ilan etti. Katar, BAE ve Suudi Arabistan tesislerinde tahliye başladı. petrol tekrar $100 sınırında.
 
@@ -134,8 +143,8 @@ FOMC toplantısı tamamlandı, faiz kararı açıklandı. K-01 "makro veri önce
 
 ### yarın için
 
-1. **MU kazanç sonuçları (bugün kapanış sonrası)**: beklenti EPS $8.5-8.7, gelir $18.7-19.1B. beat gelirse → CRDO, MRVL, COHR için pozitif katalizör. miss gelirse → CRDO stop'a dikkat
-2. **RKLB değerlendirmesi**: $1B arz haberi sonrası -11.59%. pozisyon küçük (%0.9) ama tez (Neutron roketi) hâlâ geçerli mi? arz finansman amaçlı (Neutron R&D) olabilir, seyreltme riski kısa vadeli
+1. **MU kazanç sonrası etki (yarın açılış)**: devasa beat (EPS +31%, gelir +19%, rehber +38%) ama kapanış sonrası hisse hafif geriledi. yarın açılışta AI çip tedarik zinciri hisseleri (CRDO, MRVL, COHR, ANET) nasıl tepki verecek yakından izle. "sell the news" riski var ama rehber o kadar güçlü ki sektör genelinde pozitif yayılım olası
+2. **CRDO kritik gün**: MU tezi doğrulandı, CRDO'nun tekniği zayıf (RSI 40, 3 SMA altında) ama fundamental katalizör geldi. yarın fiyat aksiyonu CRDO'nun yön belirleyecek. yukarı gap açarsa güçlü sinyal, düşerse "sell the news" senaryosu
 3. **ABBV aşırı satım**: RSI 30.1, 3 SMA altında, -5.21% günlük. temettü portföyünde -8.27% zararda. tez bozulmadıysa aşırı satımda ek alım fırsatı olabilir
 4. **İran gerginliği**: körfez ülkeleri enerji altyapısı tehdidi. petrol $100+ olursa XOM, CVX, XLE daha da güçlenebilir ama genel piyasayı baskılar
 
@@ -153,6 +162,10 @@ FOMC toplantısı tamamlandı, faiz kararı açıklandı. K-01 "makro veri önce
 ### yeni ders (K-15 adayı)
 
 **hisse arzı riski**: RKLB örneği. momentum hisselerinde büyük hisse arzı açıklamaları ani ve sert düşüşe neden olabilir. pozisyon boyutlama bu riski sınırlandırdı (%0.9 ağırlık). ders: momentum hisselerinde yüksek borç veya yaklaşan sermaye ihtiyacı olan şirketlerde arz riskini önceden değerlendir.
+
+### MU kazanç analizi (K-02 teyidi)
+
+MU devasa beat sonrası kapanış sonrası hafif geriledi. bu K-02'nin başka bir versiyonu: beklentiler zaten fiyatlanmışsa canavar sonuçlar bile "sell the news" tetikleyebilir. MU kazanç öncesi 3 günde +10% rallimişti. ders: kazanç öncesi büyük ralli yapan hisselerde bile devasa beat, hisseyi yukarı taşımayabilir. pozisyon girişinde zamanlamayı kazanç öncesi ralliden sonraya değil, geri çekilmeye bırak.
 
 ---
 
