@@ -92,3 +92,5 @@ date,action,symbol,shares,price,total,reason
 2026-03-17,SELL,RKLB,48,77.53,3721.44,Kısmi kâr alma %33 - hedef aşıldı - GTC katalizörü - Agresif portföy
 2026-03-17,SELL,CRDO,87,104.26,9070.62,Stop-loss tetiklendi ($108) - fiyat $104.26 - insider + margin compression - Agresif portföy
 2026-03-17,SELL,SM,156,27.36,4268.16,Kısmi kâr alma %25 - RSI 72+ K-11 - Dengeli portföy
+2026-03-18,BUY,CRDO,147,101.56,14929.32,Yarım pozisyon giriş - Agresif portföy - FOMC sonrası - CRDO
+2026-03-18,BUY,PWR,26,574.35,14933.1,Yarım pozisyon giriş - Agresif portföy - FOMC sonrası - PWR

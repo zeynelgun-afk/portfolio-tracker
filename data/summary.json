@@ -1,9 +1,9 @@
 {
   "son_guncelleme": "2026-03-18",
   "toplam_sermaye": 600000,
-  "toplam_deger": 624736.17,
-  "toplam_kar_zarar": 24736.17,
-  "toplam_kar_zarar_yuzde": 4.12,
+  "toplam_deger": 623405.1,
+  "toplam_kar_zarar": 23405.1,
+  "toplam_kar_zarar_yuzde": 3.9,
   "portfolyolar": {
     "dengeli": {
       "isim": "Dengeli Portföy",
@@ -19,13 +19,13 @@
     },
     "agresif": {
       "isim": "Agresif Büyüme Portföyü",
-      "deger": 368589.72,
+      "deger": 367258.65,
       "maliyet": 140000,
-      "kar_zarar": 228589.71999999997,
-      "kar_zarar_yuzde": 163.28,
-      "pozisyon_sayisi": 7,
+      "kar_zarar": 227258.65,
+      "kar_zarar_yuzde": 162.33,
+      "pozisyon_sayisi": 9,
       "nakit": {
-        "miktar": 255606.15,
+        "miktar": 225743.73,
         "para_birimi": "USD"
       }
     },
@@ -47,5 +47,9 @@
       "bos_slot": 7,
       "durum": "3/10 pozisyon aktif"
     }
-  }
+  },
+  "son_islemler": [
+    "[ALIŞ] Agresif - CRDO @$101.56 (147 hisse, yarım pozisyon) - AI AEC lideri, FOMC sonrası giriş",
+    "[ALIŞ] Agresif - PWR @$574.35 (26 hisse, yarım pozisyon) - Data center altyapı, yeni sektör"
+  ]
 }
