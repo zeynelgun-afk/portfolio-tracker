@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-03-18T08:27:35.372521",
+  "son_guncelleme": "2026-03-18T09:24:30.661213",
   "not": "Tüm portföyler ve swing trade için tek merkezi watchlist. Her adayda hedef_portfoy alanı hangi portföye/stratejiye ait olduğunu belirtir.",
   "iran_krizi_notu": {
     "tarih": "2026-03-01",
@@ -531,23 +531,6 @@
       "kaynak": "GTC 2026 infografik + tedarik zinciri analizi"
     },
     {
-      "sembol": "NXPI",
-      "guncel_fiyat": 194.02,
-      "sektor": "Teknoloji - Otomotiv Yari Iletken",
-      "hedef_portfoy": "agresif",
-      "urgency": "high",
-      "ekleme_tarihi": "2026-03-18",
-      "son_kontrol": "2026-03-18",
-      "hedef_giris": "185-195",
-      "hedef_fiyat": 240.0,
-      "stop_loss": 170.0,
-      "notlar": "NXP Semiconductors - otomotiv cip lideri. BYD, Hyundai, Nissan DRIVE Hyperion ortakliklari icin kritik tedarikci. RSI 30.2 ASIRI SATIM! 52H'den -%24.3. GTC 2026 otonom surus tezi. $49B mktcap.",
-      "nvidia_katman": "Katman 2 - Cipler (otomotiv)",
-      "momentum_5gun": 0,
-      "kaynak": "GTC 2026 infografik + otonom surus analizi",
-      "katalizor": "DRIVE Hyperion seviye 4 ortakliklari, Uber robotaksi"
-    },
-    {
       "sembol": "PWR",
       "guncel_fiyat": 571.64,
       "sektor": "Endustriyel - Veri Merkezi Altyapi Insaat",
@@ -758,6 +741,10 @@
     {
       "sembol": "KTOS",
       "neden": "Swing pozisyon acildi - 2026-03-02"
+    },
+    {
+      "sembol": "NXPI",
+      "neden": "Otomotiv dongusal sektor, gelirler 2 yildir dususte, ROIC < WACC, insider satislari. AI altyapi tedarik zincirinde dogrudan faydalanmiyor. GTC otonom surus baglantisi dolaylI."
     }
   ],
   "prediction_markets_insights": {
@@ -775,7 +762,7 @@
     "savunma_talebi": "Savunma harcamaları artacak - RTX, NOC, LMT, GD en büyük faydalanıcılar",
     "nukleer_alternatif": "Petrol riski → Nükleer enerji stratejik önem kazanıyor - CEG, GEV"
   },
-  "toplam_aday": 44,
+  "toplam_aday": 43,
   "yuksek_oncelik_aday": 11,
   "iran_krizi_critical": [
     "RTX",
