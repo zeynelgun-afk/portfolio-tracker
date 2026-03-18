@@ -1,50 +1,50 @@
 {
-  "tarama_tarihi": "2026-03-17",
-  "tarama_saati": "22:01 TR",
+  "tarama_tarihi": "2026-03-18",
+  "tarama_saati": "21:58 TR",
   "piyasa_durumu": "KAPALI",
   "piyasa_ozeti": {
     "spy_degisim": 0.0,
     "qqq_degisim": 0.0,
     "iwm_degisim": 0.0,
-    "vix": 22.37,
-    "vix_uyarisi": false,
+    "vix": 25.09,
+    "vix_uyarisi": true,
     "vix_kritik": false,
-    "vix_mesaj": ""
+    "vix_mesaj": "⚠ VIX 25.1 — YÜKSEK OYNAKLLIK. Stop seviyeleri geniş tut, yarım pozisyon düşün."
   },
   "en_iyi_sektorler": [
     [
-      "Industrials",
-      1.63
+      "Utilities",
+      1.21
     ],
     [
       "Energy",
-      1.12
-    ],
-    [
-      "Consumer Cyclical",
-      0.88
+      0.34
     ],
     [
       "Communication Services",
-      0.36
+      -0.4
     ],
     [
-      "Technology",
-      0.33
+      "Real Estate",
+      -0.55
+    ],
+    [
+      "Basic Materials",
+      -0.69
     ]
   ],
   "en_kotu_sektorler": [
     [
+      "Consumer Cyclical",
+      -1.36
+    ],
+    [
       "Consumer Defensive",
-      -1.06
+      -1.26
     ],
     [
-      "Real Estate",
-      -0.82
-    ],
-    [
-      "Basic Materials",
-      -0.71
+      "Healthcare",
+      -1.24
     ]
   ],
   "ep_adaylari": [],
