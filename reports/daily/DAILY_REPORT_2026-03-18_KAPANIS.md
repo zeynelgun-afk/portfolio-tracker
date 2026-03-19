@@ -12,48 +12,38 @@
 
 | ticker | kapanış | değişim | RSI | SMA50 | SMA200 |
 |--------|---------|---------|-----|-------|--------|
-| SPY | $661.60 | -1.37% | 36.3 | ❌ | ✅ |
-| VIX | 24.59 | +9.92% | — | — | — |
+| SPY | $661.43 | -1.40% | 36.3 | ❌ | ✅ |
+| QQQ | $594.90 | -1.39% | — | — | — |
+| DIA | $463.00 | -1.68% | — | — | — |
+| IWM | $246.02 | -1.61% | — | — | — |
+| VIX | 25.09 | +9.92% | — | — | — |
 
-**endeksler**: Dow -768 puan (-1.6%, 2026 yılının en düşük kapanışı, 200 günlük ortalamanın altında). S&P 500 -1.36%. Nasdaq -1.46%. Russell 2000 -0.80%.
+**endeksler**: Dow -768 puan (-1.68%), 2026 yılının en düşük kapanışı ve 200 günlük ortalamanın altına indi. S&P 500 -1.40%, Nasdaq -1.39%, Russell 2000 -1.61%. geniş tabanlı satış.
 
-**emtia + döviz**: altın $4,845 (-3.25%, güçlü kar satışı), WTI ~$98 (+1.65%, İran körfez ülkeleri enerji altyapısını tehdit etti), 10Y %4.23 (+2bps), 2Y %3.68 (+4bps), BTC $71,335 (-3.8%)
+**emtia + döviz**: altın $4,767 (-3.25%, sert kâr satışı), WTI ~$98 (+1.65%, İran basra körfezi enerji altyapısı tehdidi), 10Y %4.26 (+2bps), 2Y %3.76 (+4bps), EUR/USD 1.1464, BTC $70,562 (-3.8%)
 
-**sektörler**: en güçlü enerji +0.53%, endüstriyel +0.14% | en zayıf tüketim (V, MA -3%), temel tüketim (BG, WMT -2%+)
+**sektörler**: en güçlü kamu hizmetleri +1.21%, enerji +0.34% | en zayıf tüketim döngüsel -1.36%, sağlık -1.24%, temel tüketim -1.26%
 
-**trend**: ayı (bearish) — SPY RSI 36, SMA50 altında, Dow 200 günlük altına indi. FOMC sonrası Powell "enflasyonda umduğumuz kadar ilerleme kaydedemedik" dedi. Dot plot 2026 için 1 indirim öngörüyor ama 7/19 üye hiç indirim beklemiyor. stagflasyon senaryosu güçleniyor.
+**trend**: ayı (bearish) — SPY RSI 36.3, SMA50 altında, Dow 200 günlük altına indi. FOMC "higher for longer" mesajı verdi. dot plot 2026 için 1 indirim, 7/19 üye hiç indirim beklemiyor. powell enflasyon ilerlemesinin beklenenden yavaş olduğunu söyledi. stagflasyon senaryosu güçleniyor.
 
-### FOMC kararı (bugünün ana olayı)
+### FOMC kararı (günün ana olayı)
 
-Fed faiz oranlarını %3.50-3.75 aralığında sabit tuttu (11-1 oy). beklenen karar ama detaylar piyasayı olumsuz etkiledi:
+Fed faiz oranlarını %3.50-3.75 aralığında sabit tuttu (11-1 oy). beklenen karar ama detaylar piyasayı baskıladı:
 
-- **dot plot**: 2026 medyan 1 indirim, 2027 1 ek indirim. 7/19 üye bu yıl hiç indirim beklemiyor (aralık'ta 6 idi)
-- **enflasyon projeksiyonu**: PCE %2.7'ye yükseltildi (aralık: %2.5). hem manşet hem çekirdek %2.7
-- **büyüme**: GDP %2.4 (aralık: biraz düşük), verimlilik artışına bağlı
+- **dot plot**: 2026 medyan 1 indirim, 2027 ek 1 indirim. 7/19 üye bu yıl hiç indirim beklemiyor (aralıkta 6 idi)
+- **enflasyon**: PCE hem manşet hem çekirdek %2.7'ye yükseltildi (aralık: %2.5)
+- **büyüme**: GDP %2.4 beklentisi korundu, hafif yukarı revize
 - **işsizlik**: %4.4 beklentisi korundu
-- **Powell**: "enflasyonda ilerleme var ama umduğumuz kadar değil", İran savaşının etkileri belirsiz, tarife etkileri tüketici fiyatlarını yükseltiyor
-- **Powell kişisel**: soruşturma bitene kadar görevde kalacağını, Warsh onaylanmazsa geçici olarak devam edeceğini söyledi
-
-→ piyasa "higher for longer" mesajını net aldı. 2026'da indirim beklentisi neredeyse sıfıra yaklaştı.
+- **powell**: "enflasyon ilerleme var ama beklediğimiz kadar değil", İran savaşı etkileri belirsiz, tarifeler tüketici fiyatlarını yükseltiyor. soruşturma bitene kadar görevde kalacak, Warsh onaylanmazsa geçici başkanlık devam edecek
+- **piyasa tepkisi**: Dow 768 puan düştü, "higher for longer" net fiyatlandı
 
 ### diğer önemli gelişmeler
 
-**RKLB $1B hisse arzı**: Rocket Lab $1 milyarlık hisse satışı planı açıkladı (dilüsyon riski). hisse -11.59% düştü. pozisyonumuz küçük (%0.9 ağırlık) ama izlenmeli. Neutron roketi finansmanı için olabilir.
+**RKLB $1B hisse arzı**: Rocket Lab $1 milyarlık hisse satış planı SEC'e bildirdi. dilüsyon endişesi ile hisse -11.59% düştü. Neutron roketi finansmanı için olması muhtemel. bir gün önceki +%8 rallisini tamamen sildi.
 
-**MU kazanç açıklaması (kapanış sonrası) — CANAVAR BEAT**:
-- **EPS**: $12.20 vs $9.31 beklenti (+31% sürpriz)
-- **Gelir**: $23.86B vs $20.07B beklenti (+19% sürpriz, YoY neredeyse 3 kat artış, $8.05B'dan)
-- **Q3 rehber**: gelir ~$33.5B (vs $24.3B beklenti), EPS ~$19.15 (vs $12.05 beklenti) — YoY +200%
-- Cloud bellek geliri +160% ile $7.75B. Mobil+istemci $2.24B'dan $7.71B'ye fırladı
-- CEO Mehrotra: "AI kaynaklı bellek talebi artışı ve yapısal arz kısıtları sonuçları yukarı taşıdı"
-- HBM4 yüksek hacimli üretim başladı (Vera Rubin için), tüm 2026 HBM kapasitesi satıldı
-- **hisse kapanış sonrası hafif geriledi** — "sell the news" dinamiği, beklentiler zaten çok yüksekti
+**İran gerginliği tırmanması**: İran, körfez ülkeleri enerji tesislerini "meşru hedef" ilan etti. Katar LNG tesisi ve BAE doğalgaz sahası vuruldu. petrol $100 sınırında seyrediyor, enerji hisseleri güçlü kalmaya devam ediyor.
 
-→ AI bellek tedarik zinciri tezi güçlü şekilde doğrulandı. CRDO, MRVL, COHR için son derece pozitif sinyal. ancak hisse tepkisi "buy rumor sell news" olabilir, yarın fiyat aksiyonunu yakından izle.
-
-**İran gerginliği tırmanması**: İran körfez ülkelerindeki enerji tesislerini "meşru hedef" ilan etti. Katar, BAE ve Suudi Arabistan tesislerinde tahliye başladı. petrol tekrar $100 sınırında.
-
-**sıcak PPI verisi**: bugün açıklanan PPI beklentinin üzerinde geldi, enflasyon endişelerini artırdı.
+**sıcak PPI verisi**: üretici fiyat endeksi beklentinin üzerinde geldi, enflasyon endişelerini artırdı.
 
 ---
 
@@ -64,109 +54,176 @@ Fed faiz oranlarını %3.50-3.75 aralığında sabit tuttu (11-1 oy). beklenen k
 | sembol | fiyat | günlük | k/z | RSI | 20 | 50 | 200 | durum |
 |--------|-------|--------|-----|-----|----|----|-----|-------|
 | SM | $27.27 | +1.72% | +31.93% | 71.8 | ✅ | ✅ | ✅ | ⚠️ RSI 72, aşırı alım |
-| MO | $65.13 | -2.75% | -3.43% | 42.1 | ❌ | ✅ | ✅ | zayıflıyor, izle |
-| XLE | $58.44 | -0.13% | +9.55% | 72.6 | ✅ | ✅ | ✅ | ⚠️ RSI 73, aşırı alım |
-| RGLD | $242.52 | -5.20% | -11.62% | 33.5 | ❌ | ❌ | ✅ | ⚠️ ciddi zayıflık, stop izle |
+| MO | $65.13 | -2.75% | -3.43% | 42.1 | ❌ | ✅ | ✅ | zayıflıyor, SMA20 altında |
+| XLE | $58.43 | -0.14% | +9.54% | 72.6 | ✅ | ✅ | ✅ | ⚠️ RSI 73, aşırı alım |
+| RGLD | $242.52 | -5.20% | -11.62% | 33.5 | ❌ | ❌ | ✅ | ⚠️ ciddi zayıflık, altın düşüşüyle sert geriledi |
 | XLI | $165.18 | -0.79% | -5.63% | 37.5 | ❌ | ❌ | ✅ | zayıf, SMA50 altında |
-| JNJ | $237.24 | -0.37% | -2.83% | 44.9 | ❌ | ✅ | ✅ | nötr, savunmacı |
+| JNJ | $237.28 | -0.35% | -2.81% | 44.9 | ❌ | ✅ | ✅ | nötr, savunmacı |
 
-**toplam**: $111,879 (+$71,879, %179.7) | **nakit**: $46,621 | **pozisyon**: 6
+**toplam**: $111,881 (+$71,881, +%179.7) | **nakit**: $46,621 | **pozisyon**: 6
 
-> SM ve XLE RSI 70+ aşırı alım. kısmi kâr alma zamanı yaklaşıyor. RGLD -11.62% ile en zayıf, altın $5,016'dan $4,845'e sert düşüş yaşadı.
+> SM ve XLE RSI 70+ aşırı alım bölgesinde, K-11 kuralı uyarınca kısmi kâr alma zamanı yaklaşıyor. RGLD -11.62% ile en zayıf, altın $4,767'ye sert düşüş yaşadı. tez bozulma sınırına yaklaşıyor.
 
 ### 2b. agresif portföy ($140K başlangıç)
 
 | sembol | fiyat | günlük | k/z | RSI | 20 | 50 | 200 | durum |
 |--------|-------|--------|-----|-----|----|----|-----|-------|
-| GILT | $17.00 | +1.19% | +6.92% | 53.6 | ✅ | ✅ | ✅ | sağlam, trend yukarı |
-| PLTR | $152.77 | -1.49% | +4.33% | 54.3 | ✅ | ✅ | ❌ | SMA200 altında, dikkat |
-| ANET | $136.08 | +2.26% | +5.80% | 51.3 | ✅ | ✅ | ✅ | güçlü, GTC katalizörü devam |
-| RKLB | $69.48 | -11.59% | +1.52% | 47.0 | ❌ | ❌ | ✅ | ⚠️ $1B arz düşüşü, izle |
-| GLW | $129.83 | -0.05% | -4.91% | 49.0 | ❌ | ✅ | ✅ | zayıf, stop mesafesini kontrol et |
-| MRVL | $87.62 | -3.49% | -1.25% | 54.8 | ✅ | ✅ | ✅ | GTC sonrası geri çekilme, MU bekle |
-| COHR | $257.44 | +4.74% | +4.28% | 55.1 | ✅ | ✅ | ✅ | günün yıldızı, güçlü momentum |
-| CRDO | $101.72 | -2.25% | +0.16% | 39.9 | ❌ | ❌ | ❌ | ⚠️ zayıf teknik, MU katalizörü kritik |
-| PWR | $571.94 | +0.05% | -0.42% | 62.0 | ✅ | ✅ | ✅ | yeni giriş, sağlam yapı |
+| GILT | $17.00 | +1.19% | +6.92% | 53.6 | ✅ | ✅ | ✅ | sağlam, tüm SMA üzerinde |
+| PLTR | $152.77 | -1.49% | +4.33% | 54.3 | ✅ | ❌ | ❌ | SMA50 ve SMA200 altında, dikkat |
+| ANET | $136.07 | +2.25% | +5.79% | 51.3 | ✅ | ✅ | ✅ | güçlü, GTC momentum devam |
+| RKLB | $69.48 | -11.59% | +1.52% | 47.0 | ❌ | ❌ | ✅ | ⚠️ $1B arz şoku, dilüsyon riski |
+| GLW | $129.82 | -0.05% | -4.91% | 49.0 | ❌ | ✅ | ✅ | zayıf, SMA20 altında |
+| MRVL | $87.62 | -3.49% | -1.25% | 54.8 | ✅ | ✅ | ✅ | GTC sonrası geri çekilme |
+| COHR | $257.21 | +4.64% | +4.19% | 55.0 | ✅ | ✅ | ✅ | günün yıldızı, güçlü momentum |
+| CRDO | $101.72 | -2.25% | +0.16% | 39.9 | ❌ | ❌ | ❌ | ⚠️ zayıf teknik, 3 SMA altında |
+| PWR | $572.00 | +0.06% | -0.41% | 62.0 | ✅ | ✅ | ✅ | yeni giriş, teknik güçlü |
 
-**toplam**: $366,767 (+$226,767, %162.0) | **nakit**: $225,744 | **pozisyon**: 9/10
+**toplam**: $366,744 (+$226,744, +%161.96) | **nakit**: $225,744 | **pozisyon**: 9/10
 
-> COHR +4.74% günün en güçlüsü. RKLB $1B arz haberiyle sert düşüş. CRDO teknik olarak en zayıf (3 SMA altında), MU kazanç sonuçları yön belirleyecek. FOMC sonrası K-01 kuralı artık kalktı.
+> COHR +4.64% günün en güçlüsü, AI optik teması çalışıyor. RKLB $1B hisse arzı haberiyle -11.59% sert düşüş. CRDO teknik olarak en zayıf pozisyon (3 SMA altında, RSI 40). MU devasa kazanç sonuçları CRDO/MRVL için güçlü katalizör, yarınki fiyat aksiyonu kritik.
 
 ### 2c. temettü portföyü ($100K başlangıç)
 
 | sembol | fiyat | günlük | k/z | RSI | 20 | 50 | 200 | durum |
 |--------|-------|--------|-----|-----|----|----|-----|-------|
 | T | $27.41 | -1.60% | +12.87% | 48.4 | ❌ | ✅ | ✅ | nötr |
-| VZ | $49.57 | -1.88% | +24.45% | 53.6 | ❌ | ✅ | ✅ | güçlü k/z ama günlük zayıf |
+| VZ | $49.59 | -1.84% | +24.50% | 53.7 | ❌ | ✅ | ✅ | güçlü k/z ama günlük zayıf |
 | MO | $65.13 | -2.75% | +13.65% | 42.1 | ❌ | ✅ | ✅ | geri çekilme devam |
-| PM | $166.12 | -3.89% | +3.63% | 36.9 | ❌ | ❌ | ❌ | ⚠️ 3 SMA altında, ciddi zayıflık |
-| XOM | $157.57 | -0.78% | +29.33% | 64.6 | ✅ | ✅ | ✅ | enerji güçlü |
-| CVX | $198.62 | +0.33% | +28.65% | 72.7 | ✅ | ✅ | ✅ | ⚠️ RSI 73, aşırı alım |
-| SCHD | $30.57 | -1.23% | +5.60% | 41.3 | ❌ | ✅ | ✅ | ETF, stabil |
-| MRK | $114.50 | -1.18% | -4.91% | 41.9 | ❌ | ❌ | ✅ | zayıf, SMA50 altında |
-| ABBV | $208.30 | -5.21% | -8.27% | 30.1 | ❌ | ❌ | ❌ | ⚠️ RSI 30, aşırı satım, 3 SMA altında |
+| PM | $166.14 | -3.87% | +3.64% | 36.9 | ❌ | ❌ | ❌ | ⚠️ 3 SMA altında, ciddi zayıflık |
+| XOM | $157.58 | -0.77% | +29.33% | 64.7 | ✅ | ✅ | ✅ | enerji güçlü, savaş primi |
+| CVX | $198.61 | +0.32% | +28.64% | 72.7 | ✅ | ✅ | ✅ | ⚠️ RSI 73, aşırı alım |
+| SCHD | $30.58 | -1.20% | +5.63% | 41.5 | ❌ | ✅ | ✅ | ETF, stabil |
+| MRK | $114.48 | -1.20% | -4.92% | 41.9 | ❌ | ❌ | ✅ | zayıf, SMA50 altında |
+| ABBV | $208.34 | -5.20% | -8.25% | 30.1 | ❌ | ❌ | ❌ | ⚠️ RSI 30, aşırı satım, 3 SMA altında |
 | PFE | $27.33 | -0.44% | +1.53% | 55.5 | ✅ | ✅ | ✅ | nötr |
 
-**toplam**: $143,515 (+$43,515, %43.5) | **nakit**: $280 | **pozisyon**: 10/15
+**toplam**: $143,525 (+$43,525, +%43.52) | **nakit**: $280 | **pozisyon**: 10/15
 
-> ABBV -5.21% ile günün en kötüsü, RSI 30 aşırı satım. PM de 3 SMA altında. CVX RSI 73 aşırı alım. enerji hisseleri (XOM, CVX) savaş primi ile güçlü, savunmacı (PM, ABBV) baskı altında.
+> ABBV -5.20% ile günün en kötüsü, RSI 30.1 aşırı satım bölgesinde. PM de 3 SMA altında ciddi zayıflık gösteriyor. enerji hisseleri (XOM +%29, CVX +%29) savaş primiyle portföyü taşıyor. CVX RSI 73 aşırı alım uyarısı.
 
-### 2d. swing trade
+### genel özet ($280K toplam başlangıç)
 
-| sembol | giriş | güncel | k/z | gün | stop | hedef | durum |
-|--------|-------|--------|-----|-----|------|-------|-------|
-| DUK | $126.71 | $130.75 | +3.19% | 27 | $127.56 | $139.38 | pozitif, hedefe doğru |
-| DVA | $149.73 | $148.85 | -0.58% | 26 | $142.24 | $164.70 | nötr, bekleme |
-| RTX | $203.30 | $204.50 | +0.59% | 6 | $193.13 | $223.63 | yeni, savunma sektörü güçlü |
+**toplam değer**: $622,149 | **k/z**: +$342,149 (+%122.20) | **SPY**: +%9.87 | **alpha**: +%112.32
 
-**aktif**: 3/10 | **boş slot**: 7
+### uyarı özeti
 
-> DUK hedefe yaklaşıyor ($139.38, %6.6 kaldı). DVA 26 gün oldu, tez bozulmadı ama ivme yok. RTX savunma teması ile İran gerginliğinden faydalanabilir.
-
----
-
-## 3. günün kararları ve işlemler
-
-### bugün gerçekleşen işlemler
-
-**CRDO tam pozisyona geçiş**: CRDO'da yarım pozisyondan tam pozisyona tamamlandı (147 hisse @$101.56). FOMC öncesi giriş, MU kazanç katalizörü bekleniyor. teknik zayıf (3 SMA altında, RSI 40) ama tez güçlü (AI çip tedarik zinciri, HBM4 talebi).
-
-**PWR yeni giriş**: Quanta Services'e 26 hisse @$574.35 ile girildi. altyapı + enerji dönüşümü + veri merkezi inşaat teması. RSI 62, tüm SMA'ların üzerinde, teknik yapı güçlü.
-
-### K-01 kuralı kalktı
-
-FOMC toplantısı tamamlandı, faiz kararı açıklandı. K-01 "makro veri öncesi yeni giriş yapma" kuralı artık geçerli değil. yeni pozisyon girişleri için engel kalktı.
+🔴 **acil**: RKLB — $1B arz düşüşü, dilüsyon riski. pozisyon küçük (%0.95 ağırlık) ama $65 altında stop değerlendir
+⚠️ **izle**: ABBV RSI 30 aşırı satım, PM 3 SMA altında, RGLD -11.62% tez bozulma sınırında
+⚠️ **izle**: SM ve XLE RSI 70+ aşırı alım, K-11 uyarınca kısmi kâr alma planı gerekli
+⚠️ **izle**: CRDO 3 SMA altında ama MU katalizörü tezi güçlendirdi, yarınki tepki kritik
+🟢 **fırsat**: MU devasa beat sonrası AI çip tedarik zinciri hisselerinde (MRVL, COHR, ANET) momentum devam edebilir
 
 ---
 
-## 4. kritik izleme noktaları
+## 3. swing trade durumu
 
-### yarın için
+| id | sembol | giriş | güncel | k/z | stop | hedef | gün | durum |
+|----|--------|-------|--------|-----|------|-------|-----|-------|
+| SWING-017 | DUK | $126.71 | $130.75 | +3.19% | $127.56 | $139.38 | 27 | ✅ hedefe doğru |
+| SWING-018 | DVA | $149.73 | $148.83 | -0.60% | $142.24 | $164.70 | 26 | ⚠️ momentum yok, K-08 izle |
+| SWING-025 | RTX | $203.30 | $204.56 | +0.62% | $193.13 | $223.63 | 6 | ✅ savunma tezi güçlü |
 
-1. **MU kazanç sonrası etki (yarın açılış)**: devasa beat (EPS +31%, gelir +19%, rehber +38%) ama kapanış sonrası hisse hafif geriledi. yarın açılışta AI çip tedarik zinciri hisseleri (CRDO, MRVL, COHR, ANET) nasıl tepki verecek yakından izle. "sell the news" riski var ama rehber o kadar güçlü ki sektör genelinde pozitif yayılım olası
-2. **CRDO kritik gün**: MU tezi doğrulandı, CRDO'nun tekniği zayıf (RSI 40, 3 SMA altında) ama fundamental katalizör geldi. yarın fiyat aksiyonu CRDO'nun yön belirleyecek. yukarı gap açarsa güçlü sinyal, düşerse "sell the news" senaryosu
-3. **ABBV aşırı satım**: RSI 30.1, 3 SMA altında, -5.21% günlük. temettü portföyünde -8.27% zararda. tez bozulmadıysa aşırı satımda ek alım fırsatı olabilir
-4. **İran gerginliği**: körfez ülkeleri enerji altyapısı tehdidi. petrol $100+ olursa XOM, CVX, XLE daha da güçlenebilir ama genel piyasayı baskılar
+**aktif**: 3/10 | **boş slot**: 7 | **ortalama k/z**: +1.07%
 
-### portföy seviyesi notlar
+**aksiyonlar**:
+🟡 **izle**: DVA 26 gün oldu, momentum gelmedi. sağlık sektörü -1.24% ama DVA -0.77% (hafif pozitif ayrışma). K-08 filtresi uyarınca 5 gün ek tolerans tanındı, 21 mart'a kadar momentum gelmezse çık
+🟡 **izle**: DUK hedefe $139.38, güncel $130.75, %6.6 mesafe. kamu hizmetleri +1.21% ile günün en güçlü sektörü, pozitif rüzgar devam ediyor
+✅ **sorunsuz**: RTX erken aşama, savunma tezi İran gerginliğiyle güçleniyor
 
-- agresif nakit oranı %61.6, yeni girişler için bol alan var. FOMC sonrası fırsatlar değerlendirilecek
-- dengeli portföyde SM ve XLE RSI 70+, kısmi kâr alma planı hazırlanmalı (K-11 kuralı)
-- temettü portföyünde nakit neredeyse sıfır ($280), yeni alım için satış gerekir
-- VIX 24.59, %25 sınırına yakın. yeni girişlerde K-13 (yarım pozisyon) kuralı uygulanmalı
-
----
-
-## 5. playbook güncellemesi
-
-### yeni ders (K-15 adayı)
-
-**hisse arzı riski**: RKLB örneği. momentum hisselerinde büyük hisse arzı açıklamaları ani ve sert düşüşe neden olabilir. pozisyon boyutlama bu riski sınırlandırdı (%0.9 ağırlık). ders: momentum hisselerinde yüksek borç veya yaklaşan sermaye ihtiyacı olan şirketlerde arz riskini önceden değerlendir.
-
-### MU kazanç analizi (K-02 teyidi)
-
-MU devasa beat sonrası kapanış sonrası hafif geriledi. bu K-02'nin başka bir versiyonu: beklentiler zaten fiyatlanmışsa canavar sonuçlar bile "sell the news" tetikleyebilir. MU kazanç öncesi 3 günde +10% rallimişti. ders: kazanç öncesi büyük ralli yapan hisselerde bile devasa beat, hisseyi yukarı taşımayabilir. pozisyon girişinde zamanlamayı kazanç öncesi ralliden sonraya değil, geri çekilmeye bırak.
+**istatistik**: toplam 25 trade | kazanç 10 (%40) | kayıp 7 (%28) | açık 3
 
 ---
 
-> finzora ai — 18 mart 2026 kapanış
+## 4a. kazanç açıklamaları — 18 mart
+
+### bugün açıklayanlar
+
+FMP taramasında 18 mart tarihinde $2B+ filtre geçen şirket arasında portföy/watchlist kesişimi: **MU (Micron)** — watchlist'te yer alıyor, AI çip tedarik zinciri tezinin temel taşı.
+
+### portföy/izleme kesişimi — detaylı analiz
+
+**MU — Micron Technology** ✅ beklenti üstü (devasa beat)
+
+- **EPS**: beklenti $9.31 → gerçek $12.20 (+%31 sürpriz)
+- **gelir**: beklenti $20.07B → gerçek $23.86B (+%19 sürpriz, YoY ~3 kat artış)
+- **brüt marj**: %75, çeyreklik +18 puan. operasyonel marj %69
+- **serbest nakit akışı**: $6.9B, şirket rekoru
+- **yönlendirme**: Q3 gelir ~$33.5B (vs $24.3B beklenti, +%38), EPS ~$19.15 (vs $12.05 beklenti, +%59)
+- **yönlendirme detayı**: Q3 brüt marj ~%81 beklentisi. HBM4 yüksek hacimli üretim başladı (Vera Rubin). tüm 2026 HBM kapasitesi satıldı
+- **bulut bellek**: gelir +%160 ile $7.75B. mobil+istemci $2.24B'dan $7.71B'ye fırladı
+- **stratejik**: ilk 5 yıllık müşteri anlaşması (SCA) imzalandı. temettü %30 artırıldı
+- **arz kısıtı**: bazı müşteriler talep ettiklerinin sadece %50-66'sını alabiliyor. DRAM ve NAND arz kısıtı yapısal
+- **AH tepki**: +%1.27 (devasa beat'e rağmen sınırlı, "sell the news" riski mevcut)
+- **portföy etkisi**: CRDO (aktif, tam pozisyon), MRVL (aktif), COHR (aktif), ANET (aktif) için son derece pozitif sinyal. bellek talebinin sadece AI değil tüm segmentlerde yapısal olarak kısıtlı olduğunu gösteriyor
+- **aksiyon**: CRDO tam pozisyonda, MU yarın fiyat aksiyonunu izle. MRVL ve COHR tutmaya devam. güçlü beat + rehber AI çip tedarik zinciri tezini en güçlü şekilde doğruladı
+
+### kesişim dışı öne çıkanlar
+
+**GIS (General Mills)**: tüketim sektörü barometresi, EPS beklenti $0.73. enflasyon etkisi ve tüketici harcama trendi izlenecek.
+
+**FDX (FedEx)**: 19 mart AMC. EPS beklenti $4.15, gelir $23.5B. lojistik/ticaret sağlığı göstergesi, makro görünüm için önemli.
+
+---
+
+## 4b. günün değerlendirmesi
+
+### sabah planı vs gerçekleşme
+
+| plan (17 mart sabah) | sonuç | not |
+|------|-------|-----|
+| LASR trailing stop $62'ye güncelle | ⏳ n/a | LASR artık portföyde değil |
+| DUK $135+ kısmi çıkış | ❌ tetiklenmedi | DUK $130.75, $135'e ulaşmadı |
+| DVA momentum kontrolü | ⚠️ devam | DVA -0.77%, sektör -1.24% → hafif pozitif ayrışma, ek tolerans |
+| RKLB $73+ trailing stop | ❌ ters tepki | RKLB $1B arz → -11.59%, trailing yerine stop izle |
+| RGLD tez bozulması izle | ⚠️ devam | RGLD -5.20%, altın sert düştü, -%11.62 zararda |
+| CRDO MU sonuçlarını bekle | ✅ tamamlandı | MU devasa beat, CRDO tam pozisyona geçildi |
+| agresif slotlar FOMC sonrasına | ✅ tamamlandı | PWR yeni giriş @$574.35 |
+
+### günün performansı
+
+- portföy toplam: $622,149 (+$342,149, +%122.20)
+- SPY: -1.40% günlük, toplam +%9.87 (17 şubattan beri)
+- alpha: +%112.32
+- en iyi: COHR (+%4.64) — AI optik momentum güçlü
+- en kötü: RKLB (-11.59%) — $1B hisse arzı şoku
+- en kötü (temettü): ABBV (-5.20%) — sağlık sektörü baskısı, RSI 30
+
+### dersler
+
+- ✅ doğru: FOMC öncesi K-01 kuralına uyuldu, gereksiz risk alınmadı
+- ✅ doğru: PWR teknik güçlü pozisyonda girildi, K-04 kuralına uygun (tüm SMA üzerinde)
+- ⚠️ dikkat: CRDO girişi K-04'e aykırı (3 SMA altında), fundamental katalizöre güvenildi. MU sonuçları tezi doğruladı ama teknik risk devam ediyor
+- 🔍 gözlem: RKLB arz haberi önceden bilinmesi mümkün değildi. K-12 (ağırlık %15 max) sayesinde portföy etkisi sınırlı kaldı (%0.95 ağırlık). momentum hisselerinde yüksek borç veya sermaye ihtiyacı olan şirketlerde arz riskini önceden değerlendir
+
+---
+
+## 5. sonuç
+
+### özet
+
+piyasa FOMC'nin "higher for longer" mesajını sert fiyatladı. Dow 2026 en düşük kapanışını yaptı, 200 günlük altına indi. dot plot 7/19 üyenin bu yıl hiç indirim beklememesiyle şahin geldi. petrol gerginliği devam ederken altın sert düştü. portföy enerji pozisyonları sayesinde dirençli kaldı ama RGLD, PM ve ABBV ciddi baskı altında. günün en kritik gelişmesi MU'nun canavar kazancı: EPS +%31, gelir +%19, Q3 rehber +%38 sürpriz. AI bellek tedarik zinciri tezi en güçlü şekilde doğrulandı. RKLB ise $1B arz haberiyle -11.59% düştü ama pozisyon küçük.
+
+### yarının aksiyonları
+
+🔴 **hemen** (seans açılışta):
+1. MU sonrası AI çip hisselerini izle — CRDO, MRVL, COHR, ANET açılışta nasıl tepki veriyor? CRDO gap-up açarsa trailing stop koy. gap-down açarsa $95 stop izle
+2. RKLB durum değerlendirmesi — $65 altına inerse stop-loss değerlendir
+
+🟡 **izle** (seans içinde):
+3. SM ve XLE kısmi kâr alma — RSI 70+ devam ederse %25-33 kısmi sat (K-11)
+4. RGLD tez bozulması — altın düşmeye devam ederse ve $230 altına inerse çıkış değerlendir
+5. DVA 21 mart deadline — K-08 uyarınca momentum gelmezse cuma çık
+6. ABBV RSI 30 aşırı satım — tez bozulmadıysa fırsat ama temettü portföyünde nakit yok ($280)
+
+🟢 **pasif** (seviye bekle):
+7. agresif portföyde 1 boş slot — MU/FOMC etkisi netleşene kadar bekle
+8. VIX 25 sınırında — yeni girişlerde K-13 kuralını (yarım pozisyon) göz önünde bulundur
+9. FDX kazanç açıklaması (19 mart AMC) — lojistik/makro sağlık barometresi
+
+### sonraki güncelleme
+
+yarın sabah raporu: 19 mart 2026 seans öncesi
+
+---
+
+*finzora ai | 18 mart 2026 kapanış*

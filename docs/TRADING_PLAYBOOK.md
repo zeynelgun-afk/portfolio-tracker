@@ -1,6 +1,6 @@
 # TRADING PLAYBOOK — KANIT BAZLI KURALLAR
 
-> **son güncelleme**: 16 mart 2026
+> **son güncelleme**: 18 mart 2026
 > **amaç**: gerçek trade deneyimlerinden çıkarılan, tekrar ihlal edilmemesi gereken kurallar
 > **güncelleme sıklığı**: her kapanış raporunda yeni dersler eklenir
 > **referans**: sabah raporu ve seans promptu bu dosyayı okur
@@ -107,6 +107,8 @@ her hata tarih, ne olduğu, neden yanlış olduğu ve çıkarılan kuralla kayde
 | 24 şub-12 mart | SOFI | momentum gelmeden 16 gün tutma | -%3.6 | K-08 |
 | 13 mart | SM/XLE | RSI 70+ uyarısı, kısmi kâr zamanlaması | izlenmeli | K-11 |
 | 17 mart | CRDO | SMA altında giriş, insider satış baskısı | -%8.77 stop | K-04 (2. kanıt) |
+| 18 mart | RKLB | momentum hissesinde arz riski değerlendirilmedi | -%11.59 (pozisyon küçük) | K-15 (yeni) |
+| 18 mart | MU | canavar beat ama AH sınırlı tepki | +%1.27 (beklenti altı) | K-16 (yeni gözlem) |
 | 17 şub-11 mart | T | 22 gün tutma, savunmacı tez çalışmadı | -%5.5 | K-08 |
 
 ---
@@ -147,6 +149,11 @@ piyasa ortamına göre hangi sektör nasıl davranıyor.
 - kural: consensus beklentisi çok yüksek olan mega cap'lerde earnings beat → sell the news riski
 
 ### altın rekor ama royalty hisseleri düşüyor (16 mart 2026)
+
+### MU canavar kazanç ama AH sınırlı (18 mart 2026)
+- gözlem: MU EPS +%31, gelir +%19, Q3 rehber +%38 sürpriz. AH sadece +%1.27. hisse kazanç öncesi 3 günde +%10 rally yapmıştı
+- çıkarım: beklenti çok yüksek olan mega cap'lerde beat fiyatlanmış olabilir. bellek tedarik zinciri tezi doğrulandı ama hisse tepkisi zamanlamaya bağlı
+- portföy etkisi: CRDO, MRVL, COHR, ANET için uzun vadeli pozitif ama kısa vadede "sell the news" riski
 - gözlem: GCUSD $5,016 rekor ama RGLD -%8.79, RSI 34.8, SMA20 ve SMA50 altında
 - olası nedenler: royalty modeli petrol/maden şirketleriyle farklı korelasyon gösteriyor, altın ETF (GLD) tercih ediliyor olabilir, sektör rotasyonu royalty modelinden uzaklaşıyor
 - sonuç: altın yükseliyor diye royalty hissesi de yükselecek varsayımı hatalı olabilir. korelasyon bozulmasını izle, tez bozulursa çık
@@ -192,12 +199,22 @@ piyasa ortamına göre hangi sektör nasıl davranıyor.
 
 ---
 
-*finzora ai | son güncelleme: 16 mart 2026*
+*finzora ai | son güncelleme: 18 mart 2026*
 
 **K-15: aşırı satım bölgesinde (RSI <35) yeni alım yaparken dikkatli ol**
 - kanıt: XLI RSI 34.5, 3 haftadır düşüşte. JNJ RSI 53'te alındı ama girişte SMA20 altındaydı. endüstriyel ve sağlık sektörleri savaş ortamında sürekli baskı altında
 - kural: RSI <35 bölgesinde alım yapmadan önce en az 1 gün teyit bekle (gün içi dip test + toparlanma sinyali). düşen bıçağı tutma
 - ilişkili: K-04 (SMA teyidi olmadan giriş yapma)
+
+**K-15 (yeni): momentum hisselerinde hisse arzı (dilüsyon) riskini önceden değerlendir**
+- kanıt: RKLB 18 mart'ta $1B hisse arzı açıkladı → -11.59% tek günde. bir gün önceki +%8 rallisini tamamen sildi
+- kural: yüksek borç, negatif FCF veya büyük CapEx planları olan momentum hisselerinde hisse arzı riski mevcut. pozisyon büyütmeden önce şirketin sermaye ihtiyacını değerlendir. küçük pozisyon (%1 ağırlık) bu riski sınırlandırır
+- ihlal maliyeti: RKLB -%11.59 (portföy etkisi sınırlı, %0.95 ağırlık sayesinde)
+
+**K-16 (yeni): canavar kazanç bile "sell the news" tetikleyebilir**
+- kanıt: MU 18 mart AMC devasa beat (EPS +%31, gelir +%19, rehber +%38 sürpriz) ama AH sadece +%1.27. hisse kazanç öncesi 3 günde +%10 rally yapmıştı
+- kural: consensus beklentisi çok yüksek ve hisse kazanç öncesi büyük ralli yapmışsa, beat tek başına sert yukarı hareket getirmeyebilir. pozisyon girişinde zamanlama kazanç öncesi ralliden sonraya değil, geri çekilmeye bırak
+- ilişkili: NVDA sell the news gözlemi (sektör gözlemleri bölümü)
 
 **K-04 ek kanıt: CRDO 17 mart 2026**
 - kanıt: CRDO 10 mart'ta $114.28'den alındı, tüm SMA'ların altındaydı (SMA50: $125.88, SMA200: $128.84). 17 mart'ta -%10.8 günlük düşüşle $104.26'da stop-loss ($108) tetiklendi. zarar: -%8.77
