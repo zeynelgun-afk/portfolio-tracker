@@ -1,9 +1,9 @@
 {
   "son_guncelleme": "2026-03-20",
   "toplam_sermaye": 600000,
-  "toplam_deger": 620669.44,
-  "toplam_kar_zarar": 20669.44,
-  "toplam_kar_zarar_yuzde": 3.44,
+  "toplam_deger": 620198.74,
+  "toplam_kar_zarar": 20198.74,
+  "toplam_kar_zarar_yuzde": 3.37,
   "portfolyolar": {
     "dengeli": {
       "isim": "Dengeli Portföy",
@@ -47,5 +47,11 @@
       "bos_slot": 7,
       "durum": "3/10 pozisyon aktif"
     }
-  }
+  },
+  "son_islemler": [
+    "2026-03-20 | SATIŞ RKLB @$67.61 - Trailing stop (Agresif)",
+    "2026-03-20 | KISMİ SATIŞ SM 104@$29.93 - K-11 (Dengeli)",
+    "2026-03-20 | SWING ÇIKIŞ DUK @$128.63 - K-08",
+    "2026-03-20 | SWING ÇIKIŞ DVA @$151.30 - K-08"
+  ]
 }
