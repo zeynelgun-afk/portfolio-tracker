@@ -97,3 +97,4 @@ date,action,symbol,shares,price,total,reason
 
 2026-03-20,SELL,RKLB,50,67.61,3380.50,"Trailing stop tetiklendi - Agresif portföy"
 2026-03-20,SELL,SM,104,29.93,3112.72,"K-11 kısmi kar alma 1/3 - RSI 78 - Dengeli portföy"
+2026-03-20,SELL,GLW,109,125.46,13675.14,"Stop-loss tetiklendi $125.46 < $125.61 - Agresif portföy"

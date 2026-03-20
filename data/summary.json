@@ -1,9 +1,9 @@
 {
   "son_guncelleme": "2026-03-20",
   "toplam_sermaye": 600000,
-  "toplam_deger": 620198.74,
-  "toplam_kar_zarar": 20198.74,
-  "toplam_kar_zarar_yuzde": 3.37,
+  "toplam_deger": 618870.55,
+  "toplam_kar_zarar": 18870.55,
+  "toplam_kar_zarar_yuzde": 3.15,
   "portfolyolar": {
     "dengeli": {
       "isim": "Dengeli Portföy",
@@ -19,13 +19,13 @@
     },
     "agresif": {
       "isim": "Agresif Büyüme Portföyü",
-      "deger": 364280.09,
+      "deger": 362933.62,
       "maliyet": 140000,
       "kar_zarar": 224280.09000000003,
       "kar_zarar_yuzde": 160.2,
-      "pozisyon_sayisi": 9,
+      "pozisyon_sayisi": 7,
       "nakit": {
-        "miktar": 225743.73,
+        "miktar": 242799.37,
         "para_birimi": "USD"
       }
     },
@@ -49,6 +49,7 @@
     }
   },
   "son_islemler": [
+    "2026-03-20 | STOP-LOSS GLW @$125.46 - Stop $125.61 ihlal (Agresif)",
     "2026-03-20 | SATIŞ RKLB @$67.61 - Trailing stop (Agresif)",
     "2026-03-20 | KISMİ SATIŞ SM 104@$29.93 - K-11 (Dengeli)",
     "2026-03-20 | SWING ÇIKIŞ DUK @$128.63 - K-08",
