@@ -220,3 +220,16 @@ piyasa ortamına göre hangi sektör nasıl davranıyor.
 - kanıt: CRDO 10 mart'ta $114.28'den alındı, tüm SMA'ların altındaydı (SMA50: $125.88, SMA200: $128.84). 17 mart'ta -%10.8 günlük düşüşle $104.26'da stop-loss ($108) tetiklendi. zarar: -%8.77
 - ek faktörler: insider satışları yoğun (365 satış / 0 alış son 6 ayda), gross margin guidance compression (68.6%→64-66%), rosenblatt nötr notu
 - sonuç: K-04 kuralı ikinci kez doğrulandı. SMA teyidi olmadan giriş = yüksek zarar riski. ilk kanıt SOFI -%3.6, ikinci kanıt CRDO -%8.77
+
+**K-16 ek gözlem: sell the news hisseye özgü, sektöre yayılmayabilir (19 mart 2026)**
+- kanıt: MU 18 mart'ta devasa beat etti (EPS +%31) ama kendi hissesi -%3.8 düştü (sell the news). ancak 19 mart'ta tedarik zinciri ortakları tam tersi tepki verdi: CRDO +%5.28, MRVL +%2.18, COHR +%7.14, GILT +%4.35
+- çıkarım: sell the news etkisi o hisseye özgü kalabilir. tedarik zinciri ortakları temel verilere odaklanarak ralli yapabilir. "sempati baskısı" varsayımı her zaman doğru değil
+
+**RGLD altın korelasyon bozulması ek kanıt (19 mart 2026)**
+- kanıt: altın -%5 düştü, RGLD -%7.20 düştü (negatif beta, altından daha sert). RSI 27.9, 3 SMA altında, -%17.98 zararda
+- sonuç: royalty modeli altınla asimetrik korelasyon gösteriyor — yukarı sınırlı, aşağı sert. tez bozulma sınırı -%20 (RGLD $217 civarı)
+- ilişkili: playbook sektör gözlemleri "altın yükseliyor diye royalty yükselecek varsayımı hatalı" notu
+
+---
+
+*finzora ai | son güncelleme: 19 mart 2026*
