@@ -27,6 +27,20 @@
 
 **trend**: İran-İsrail çatışması tırmanmaya devam ediyor. Irak tüm yabancı operatör sahalarında force majeure ilan etti, hürmüz boğazından sevkiyat yapamıyor. Kuveyt'te iki rafineri drone saldırısına uğradı. petrol haftada Brent bazında +%9 yükseldi. pentagon bölgeye ek denizci sevkiyatı hazırlıyor. HSBC'ye göre piyasa resesyon fiyatlıyor. Goldman Sachs hisse senedi risk priminin yetersiz olduğunu söylüyor. piyasa 4 hafta üst üste düştü. Russell 2000 resmi olarak düzeltme bölgesinde. Super Micro CEO'su Çin'e Nvidia çip kaçakçılığıyla suçlandı, hisse -%33.
 
+### kapanışa doğru dip buying + kapanış sonrası
+
+**son saat toparlanması**: Dow ve Nasdaq gün içi düzeltme bölgesine (-%10 eşiği) girdi ama son saatte ciddi dip buying geldi, her iki endeks de eşiğin üzerinde kapandı. bu seviyelerden alıcı ilgisi var.
+
+**mekanik alım baskısı**: bugün aynı anda triple witching (opsiyon + vadeli işlem vade sonu) ve S&P 500 çeyreklik endeks rebalansı gerçekleşti. pasif endeks fonları (trilyon dolar büyüklüğünde) pazartesi etkili olacak değişiklikler için cuma kapanış fiyatından zorunlu alım/satım yaptı. son saatteki hacim artışının önemli bir kısmı bu mekanik akıştan geldi. yeni eklenen hisseler: Lumentum (LITE), Vertiv (VRT) gibi AI altyapı isimleri.
+
+**kapanış sonrası vadeli işlemler**: Dow vadeli +85 puan (+%0.2), S&P 500 vadeli +%0.2, Nasdaq-100 vadeli +%0.2. hafif pozitif ama henüz güçlü bir sinyal değil.
+
+**Kharg Adası haberi**: Axios'a göre ABD, İran'ın ana petrol ihracat noktası Kharg Adası'nı ele geçirmeyi değerlendiriyor. boğazı yeniden açma baskısı yaratmak için stratejik hamle. eğer gerçekleşirse petrol sert düşebilir ve piyasa güçlü bounce yapabilir. henüz "değerlendirme" aşamasında.
+
+**altın çöküşü perspektif**: altın son 5 işlem gününde -%10+ düştü, 1983'ten bu yana en sert haftalık gerileme. bu risk-off pozisyonlarının çözülmeye başladığına işaret edebilir. bazı yatırımcılar altından çıkıp hisse senedine geçiyor olabilir.
+
+**yorum**: kapanışa doğru alım + AH vadeli pozitif + Kharg Adası haberi + altından rotasyon sinyalleri pazartesi bounce ihtimalini artırıyor. ancak K-02 kuralı hatırlatması: kriz rallisinin ilk gününe girme. eğer pazartesi gap up açarsa acele etme, ikinci günü bekle.
+
 ---
 
 ## 2. portföy takibi
@@ -190,16 +204,37 @@ RGLD -%21.57 ile belirlenen -%20 tez bozulma eşiğini aştı. altın-royalty ko
 ## 6. pazartesi (23 mart) için dikkat edilecekler
 
 ### makro
-- İran-İsrail durumu: hafta sonu gelişmeleri kritik. boğaz açılırsa petrol ve piyasa sert dönebilir
-- 10Y faiz %4.39: bu seviyede kalırsa growth hisseleri baskıda kalır
+- İran-İsrail durumu: hafta sonu gelişmeleri kritik. Kharg Adası operasyonu veya boğaz açılma haberi gelirse petrol sert düşer, piyasa güçlü bounce yapar
+- AH vadeli +%0.2 ile hafif pozitif. triple witching sonrası mekanik baskı kalktı, pazartesi organik akış daha net görülecek
+- S&P 500 endeks rebalansı pazartesi etkili: LITE, VRT gibi AI altyapı hisseleri endekse eklendi, pasif fon alımı devam edebilir
+- 10Y faiz %4.39: bu seviyede kalırsa growth hisseleri baskıda kalır. ancak petrol düşerse faiz de gevşeyebilir
 - VIX 26.78: K-13 aktif, yeni girişlerde yarım pozisyon
+- altın 1983'ten beri en sert haftalık düşüş (-%10+): risk-off çözülmesi sinyali mi, yoksa likidite ihtiyacı mı? altından hisseye rotasyon olası
+
+### senaryo analizi
+
+**senaryo A: bounce (olasılık %40-50)**
+tetikleyici: hafta sonu olumlu İran haberi, Kharg Adası operasyonu, boğaz açılma sinyali
+beklenti: SPY +%1-2 gap up, petrol geri çekilme, VIX düşüş
+aksiyon: K-02 hatırlatması, ilk günkü ralliye girme. eğer bounce ikinci gün de devam ederse boş slotları değerlendir
+
+**senaryo B: satış devamı (olasılık %30-40)**
+tetikleyici: hafta sonu İran tırmanması, yeni enerji altyapı saldırıları
+beklenti: SPY -%1-2, petrol $115+, VIX 30+
+aksiyon: savunmacı kal, stop seviyelerini sık kontrol et, CRDO ve PWR yakın izle
+
+**senaryo C: yatay/kararsız (olasılık %20)**
+tetikleyici: net bir gelişme yok, piyasa hafta sonu haberlerini sindirir
+beklenti: SPY -%0.5 ile +%0.5 arası
+aksiyon: mevcut pozisyonları koru, yeni giriş yapma
 
 ### portföy aksiyonları
-- **RGLD karar günü**: tez bozulma eşiği aşıldı. açılışta değerlendir: bounce varsa bekle, yoksa sat
-- **SM**: RSI 80. cuma +%8.25 sonrası pazartesi kar realizasyonu gelebilir. ek kısmi kâr alma düşün (kalan 208 adet)
-- **GILT**: Satellite 2026 konferansı başlıyor (23-26 mart). AWS SATCOM demosu olumlu haber akışı getirebilir ama CEO satışı uyarı
-- **CRDO**: RSI 42, 3 SMA altında. yavaş toparlanma mı yoksa düşüş devamı mı? $95 altı stop seviyesi
-- **COHR**: dünkü -%8 sonrası teknik hasar var. $240 destek izle
+- **RGLD karar günü**: tez bozulma eşiği aşıldı (-%21.57). ancak AH bounce sinyalleri ve altın stabilizasyonu göz önüne alındığında acele etme. açılışta 1-2 saat izle: eğer bounce gelirse $220 üzerine çıkışı bekle, gelmezse veya altın $4,500 altına inerse sat
+- **SM**: RSI 80. cuma +%8.25 sonrası pazartesi kar realizasyonu gelebilir. gap up açarsa ek kısmi kâr alma fırsatı (kalan 208 adet). gap down açarsa bekle
+- **GILT**: Satellite 2026 konferansı başlıyor (23-26 mart). AWS ile sanal SATCOM demosu olumlu haber akışı getirebilir ama CEO satışı uyarı. konferans haberleri gelene kadar sabır
+- **CRDO**: RSI 42, 3 SMA altında. bounce senaryosunda AI çip tedarik zinciri olarak fayda görebilir. $95 altı stop seviyesi
+- **COHR**: cuma -%8 sonrası teknik hasar var. $240 destek izle. bounce senaryosunda hızlı toparlanma olası (perşembe +%7, cuma -%8 volatilite kalıbı)
+- **boş slotlar (agresif 3/10)**: bounce senaryosunda bile acele etme. en erken çarşamba/perşembe değerlendir
 
 ### ekonomik takvim (gelecek hafta)
 - perşembe 27 mart: Michigan tüketici güven endeksi (yüksek etki)
@@ -207,7 +242,7 @@ RGLD -%21.57 ile belirlenen -%20 tez bozulma eşiğini aştı. altın-royalty ko
 - hafta boyunca: İran gelişmeleri + petrol fiyatları piyasanın ana sürücüsü olacak
 
 ### swing
-- RTX: 8. gün, -%2.53. stop $193.13 ile %2.5 mesafede. savunma teması güçlü ama piyasa baskısı var
+- RTX: 8. gün, -%2.53. stop $193.13 ile %2.5 mesafede. savunma teması güçlü ama piyasa baskısı var. bounce senaryosunda savunma hisselerine satış gelebilir (rotasyon riski). takip et
 - K-14 uyarısı: son 5 swing kapanıştan çoğu küçük kazanç veya zarar. ortam swing için optimal değil. yeni giriş yapma, mevcut RTX'i yönet
 
 ---
