@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-03-23T18:10:17.901270",
+  "son_guncelleme": "2026-03-23T19:27:56.451446",
   "not": "SWING TRADE SADECE SİMÜLASYON - Sadece % kazanç/kayıp takibi (MAX: 8 pozisyon)",
   "aktif_pozisyonlar": [
     {
@@ -7,8 +7,8 @@
       "sembol": "RTX",
       "giris_tarihi": "2026-03-12",
       "giris_fiyati": 203.3,
-      "guncel_fiyat": 198.48,
-      "guncel_kar_zarar_yuzde": -2.37,
+      "guncel_fiyat": 196.68,
+      "guncel_kar_zarar_yuzde": -3.26,
       "hedef_fiyat": 223.63,
       "stop_loss": 193.13,
       "tutulan_gun": 11,
@@ -17,9 +17,9 @@
       "tez": "RTX dünyanın en büyük savunma tedarikçilerinden. İran krizi döneminde hem ABD hem NATO sipariş artışı bekleniyor. Pratt & Whitney motor bölümü ayrıca güçlü.",
       "zaman_cercevesi": "7-14 gün",
       "risk": "Ateşkes/barış anlaşması haberi ani geri çekilme yaratabilir. Savunma bütçe kesintisi haberleri.",
-      "durum": "✅ Normal aralıkta",
+      "durum": "⚠️ Stop-loss yakın (1.8%)",
       "tarama_yontemi": "sektor liderligi",
-      "son_guncelleme": "2026-03-23T18:10:17.901270",
+      "son_guncelleme": "2026-03-23T19:27:56.451446",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
