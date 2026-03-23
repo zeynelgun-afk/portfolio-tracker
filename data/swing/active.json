@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-03-23T17:25:37.676899",
+  "son_guncelleme": "2026-03-23T17:41:14.438139",
   "not": "SWING TRADE SADECE SİMÜLASYON - Sadece % kazanç/kayıp takibi (MAX: 8 pozisyon)",
   "aktif_pozisyonlar": [
     {
@@ -7,8 +7,8 @@
       "sembol": "RTX",
       "giris_tarihi": "2026-03-12",
       "giris_fiyati": 203.3,
-      "guncel_fiyat": 197.83,
-      "guncel_kar_zarar_yuzde": -2.69,
+      "guncel_fiyat": 198.48,
+      "guncel_kar_zarar_yuzde": -2.37,
       "hedef_fiyat": 223.63,
       "stop_loss": 193.13,
       "tutulan_gun": 11,
@@ -19,7 +19,7 @@
       "risk": "Ateşkes/barış anlaşması haberi ani geri çekilme yaratabilir. Savunma bütçe kesintisi haberleri.",
       "durum": "✅ Normal aralıkta",
       "tarama_yontemi": "sektor liderligi",
-      "son_guncelleme": "2026-03-23T17:25:37.676899",
+      "son_guncelleme": "2026-03-23T17:41:14.438139",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
@@ -34,7 +34,7 @@
         },
         "durum": "Hedef bekleniyor"
       },
-      "gunluk_degisim_yuzde": 0.75
+      "gunluk_degisim_yuzde": 0.16
     }
   ],
   "ozet": {
