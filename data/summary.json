@@ -7,13 +7,13 @@
   "portfolyolar": {
     "dengeli": {
       "isim": "Dengeli Portföy",
-      "deger": 111849.05,
+      "deger": 112011.29,
       "maliyet": 40000,
-      "kar_zarar": 71849.05,
-      "kar_zarar_yuzde": 179.62,
+      "kar_zarar": 72011.29,
+      "kar_zarar_yuzde": 180.03,
       "pozisyon_sayisi": 6,
       "nakit": {
-        "miktar": 49733.81,
+        "miktar": 51563.43,
         "para_birimi": "USD"
       }
     },
@@ -47,5 +47,8 @@
       "bos_slot": 9,
       "durum": "1/10 pozisyon aktif"
     }
-  }
+  },
+  "son_islemler": [
+    "23 Mart: SM 62 hisse @$29.51 kısmi satış (K-11, RSI 75, +%43 kâr) - Dengeli"
+  ]
 }
