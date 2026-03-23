@@ -1,16 +1,16 @@
 {
   "son_guncelleme": "2026-03-23",
   "toplam_sermaye": 600000,
-  "toplam_deger": 622386.12,
-  "toplam_kar_zarar": 22386.12,
-  "toplam_kar_zarar_yuzde": 3.73,
+  "toplam_deger": 623285.0,
+  "toplam_kar_zarar": 23285.0,
+  "toplam_kar_zarar_yuzde": 3.88,
   "portfolyolar": {
     "dengeli": {
       "isim": "Dengeli Portföy",
-      "deger": 112011.29,
+      "deger": 112041.89,
       "maliyet": 40000,
-      "kar_zarar": 72011.29,
-      "kar_zarar_yuzde": 180.03,
+      "kar_zarar": 72041.89,
+      "kar_zarar_yuzde": 180.1,
       "pozisyon_sayisi": 6,
       "nakit": {
         "miktar": 51563.43,
@@ -19,10 +19,10 @@
     },
     "agresif": {
       "isim": "Agresif Büyüme Portföyü",
-      "deger": 366106.38,
+      "deger": 366724.55,
       "maliyet": 140000,
-      "kar_zarar": 226106.38,
-      "kar_zarar_yuzde": 161.5,
+      "kar_zarar": 226724.55,
+      "kar_zarar_yuzde": 161.95,
       "pozisyon_sayisi": 7,
       "nakit": {
         "miktar": 242799.37,
@@ -31,10 +31,10 @@
     },
     "temettü": {
       "isim": "Değer + Temettü Portföyü",
-      "deger": 144430.69,
+      "deger": 144518.56,
       "maliyet": 100000,
-      "kar_zarar": 44430.69,
-      "kar_zarar_yuzde": 44.43,
+      "kar_zarar": 44518.56,
+      "kar_zarar_yuzde": 44.52,
       "pozisyon_sayisi": 10,
       "nakit": {
         "miktar": 279.53,
@@ -47,8 +47,5 @@
       "bos_slot": 9,
       "durum": "1/10 pozisyon aktif"
     }
-  },
-  "son_islemler": [
-    "23 Mart: SM 62 hisse @$29.51 kısmi satış (K-11, RSI 75, +%43 kâr) - Dengeli"
-  ]
+  }
 }
