@@ -348,16 +348,160 @@ def check_volume(symbol):
 
 
 # ============================================================
+# 6. TEMEL ANALİZ FİLTRESİ
+# ============================================================
+
+def check_fundamentals(symbol):
+    """Temel analiz minimum eşik kontrolü. Geçer/kalır filtresi."""
+    flags = []      # kırmızı bayraklar
+    positives = []  # olumlu noktalar
+    passed = True
+
+    # Gelir tablosu (son 2 çeyrek)
+    inc = fmp_get("income-statement", {"symbol": symbol, "period": "quarter", "limit": 6})
+    if inc and len(inc) >= 2:
+        # Son çeyrek
+        rev_last = inc[0].get('revenue', 0)
+        ni_last = inc[0].get('netIncome', 0)
+
+        # Net marj
+        net_margin = (ni_last / rev_last * 100) if rev_last > 0 else 0
+        if net_margin > 10:
+            positives.append(f"net marj %{net_margin:.1f} (guclu)")
+        elif net_margin > 0:
+            positives.append(f"net marj %{net_margin:.1f} (pozitif)")
+        else:
+            flags.append(f"net marj %{net_margin:.1f} (NEGATIF)")
+
+        # YoY gelir büyümesi (son çeyrek vs 4 çeyrek önce)
+        if len(inc) >= 5:
+            rev_yoy = inc[4].get('revenue', 0)
+            if rev_yoy > 0:
+                rev_growth = ((rev_last - rev_yoy) / rev_yoy) * 100
+                if rev_growth > 5:
+                    positives.append(f"gelir buyume %{rev_growth:.1f} YoY")
+                elif rev_growth > 0:
+                    positives.append(f"gelir buyume %{rev_growth:.1f} YoY (yavas)")
+                else:
+                    flags.append(f"gelir KUCULUYOR %{rev_growth:.1f} YoY")
+
+        # Net kâr trendi (son 3 çeyrek)
+        if len(inc) >= 3:
+            ni_trend = [inc[i].get('netIncome', 0) for i in range(3)]
+            if ni_trend[0] > ni_trend[1] > ni_trend[2]:
+                positives.append("net kar trendi yukseliyor (3 ceyrek)")
+            elif ni_trend[0] < ni_trend[1] < ni_trend[2]:
+                flags.append("net kar trendi DUSUYOR (3 ceyrek)")
+
+    # Bilanço
+    bs = fmp_get("balance-sheet-statement", {"symbol": symbol, "period": "quarter", "limit": 1})
+    if bs and len(bs) > 0:
+        b = bs[0]
+        total_debt = b.get('totalDebt', 0)
+        equity = b.get('totalStockholdersEquity', 0)
+        cash = b.get('cashAndCashEquivalents', 0)
+
+        # D/E oranı
+        if equity > 0:
+            de_ratio = total_debt / equity
+            if de_ratio > 3:
+                flags.append(f"D/E {de_ratio:.2f} (COK YUKSEK)")
+                passed = False  # kritik eşik
+            elif de_ratio > 2:
+                flags.append(f"D/E {de_ratio:.2f} (yuksek)")
+            elif de_ratio < 1:
+                positives.append(f"D/E {de_ratio:.2f} (dusuk)")
+            else:
+                positives.append(f"D/E {de_ratio:.2f} (makul)")
+
+        # Nakit durumu
+        if total_debt > 0 and cash > 0:
+            cash_debt_pct = (cash / total_debt) * 100
+            if cash_debt_pct < 1:
+                flags.append(f"nakit/borc %{cash_debt_pct:.1f} (KRITIK DUSUK)")
+            elif cash_debt_pct < 5:
+                flags.append(f"nakit/borc %{cash_debt_pct:.1f} (dusuk)")
+            else:
+                positives.append(f"nakit/borc %{cash_debt_pct:.1f}")
+
+    # Nakit akışı (TTM)
+    cf = fmp_get("cash-flow-statement", {"symbol": symbol, "period": "quarter", "limit": 4})
+    if cf:
+        ttm_fcf = sum(c.get('freeCashFlow', 0) for c in cf)
+        ttm_ocf = sum(c.get('operatingCashFlow', 0) for c in cf)
+        if ttm_fcf > 0:
+            positives.append(f"FCF pozitif ${ttm_fcf/1e6:.0f}M (TTM)")
+        else:
+            flags.append(f"FCF NEGATIF ${ttm_fcf/1e6:.0f}M (TTM)")
+        if ttm_ocf > 0:
+            positives.append(f"isletme nakit akisi ${ttm_ocf/1e6:.0f}M (TTM)")
+
+    # Analist konsensüsü
+    gc = fmp_get("grades-consensus", {"symbol": symbol})
+    if gc and len(gc) > 0:
+        g = gc[0]
+        buy = g.get('strongBuy', 0) + g.get('buy', 0)
+        sell = g.get('sell', 0) + g.get('strongSell', 0)
+        hold = g.get('hold', 0)
+        total_analysts = buy + sell + hold
+        if total_analysts > 0:
+            buy_pct = (buy / total_analysts) * 100
+            if buy_pct >= 70:
+                positives.append(f"analist %{buy_pct:.0f} al ({buy}/{total_analysts})")
+            elif sell > buy:
+                flags.append(f"analist SAT agirlikli ({sell} sat vs {buy} al)")
+
+    # Sonuç
+    # kritik kırmızı bayrak sayısı
+    critical_flags = [f for f in flags if any(w in f for w in ["COK YUKSEK", "NEGATIF", "KRITIK", "KUCULUYOR"])]
+
+    if len(critical_flags) >= 2:
+        passed = False
+
+    label_parts = []
+    if positives:
+        label_parts.append(f"{len(positives)} olumlu")
+    if flags:
+        label_parts.append(f"{len(flags)} uyari")
+    if critical_flags:
+        label_parts.append(f"{len(critical_flags)} kritik")
+
+    return {
+        "passed": passed,
+        "positives": positives,
+        "flags": flags,
+        "critical_flags": critical_flags,
+        "label": f"Temel: {', '.join(label_parts)}",
+        "verdict": "GECTI ✅" if passed else "KALDI ❌",
+    }
+
+
+# ============================================================
 # KAPSAMLI ANALİZ
 # ============================================================
 
 def full_analysis(symbol):
-    """Tüm teknik göstergeleri birleştir ve skor ver."""
+    """Teknik + temel analiz birleştir ve skor ver."""
     print(f"\n{'='*50}")
-    print(f"  {symbol} - TEKNİK ANALİZ")
+    print(f"  {symbol} - TEKNİK + TEMEL ANALİZ")
     print(f"{'='*50}")
 
     results = {}
+
+    # 0. TEMEL ANALİZ FİLTRESİ (önce kontrol)
+    fund = check_fundamentals(symbol)
+    if fund:
+        results["fundamentals"] = fund
+        emoji = "✅" if fund["passed"] else "❌"
+        print(f"\n  🏢 TEMEL ANALİZ ({fund['verdict']})")
+        if fund["positives"]:
+            for p in fund["positives"]:
+                print(f"     ✅ {p}")
+        if fund["flags"]:
+            for f in fund["flags"]:
+                is_critical = any(w in f for w in ["COK YUKSEK", "NEGATIF", "KRITIK", "KUCULUYOR"])
+                e = "🔴" if is_critical else "⚠️"
+                print(f"     {e} {f}")
 
     # 1. Ichimoku
     ichi = calc_ichimoku(symbol)
@@ -403,20 +547,30 @@ def full_analysis(symbol):
         print(f"\n  📊 HACİM (skor: {vol['score']}/{vol['max_score']})")
         print(f"     {emoji} {vol['label']}")
 
-    # TOPLAM SKOR
+    # TOPLAM TEKNİK SKOR (temel analiz skordan hariç, filtre olarak çalışır)
     total = 0
     max_total = 0
     for key, r in results.items():
+        if key == "fundamentals":
+            continue  # temel analiz puanlamaya dahil değil
         total += r.get("score", 0)
         max_total += r.get("max_score", 0)
 
     pct = (total / max_total * 100) if max_total > 0 else 0
 
-    print(f"\n  {'─'*40}")
-    print(f"  TOPLAM SKOR: {total:.1f}/{max_total} ({pct:.0f}%)")
+    # Temel analiz filtresi
+    fund_passed = results.get("fundamentals", {}).get("passed", True)
+    fund_critical = len(results.get("fundamentals", {}).get("critical_flags", []))
 
-    if pct >= 70:
-        verdict = "GİRİŞ UYGUN ✅"
+    print(f"\n  {'─'*40}")
+    print(f"  TEKNİK SKOR: {total:.1f}/{max_total} ({pct:.0f}%)")
+    print(f"  TEMEL FİLTRE: {'GECTI ✅' if fund_passed else 'KALDI ❌'}")
+
+    # Karar: temel kaldıysa teknik ne olursa olsun girme
+    if not fund_passed:
+        verdict = "GİRME ❌ (temel analiz RED)"
+    elif pct >= 70:
+        verdict = "GİRİŞ UYGUN ✅" if fund_critical == 0 else "DİKKATLİ GİRİŞ ⚠️ (temel uyarilar var)"
     elif pct >= 50:
         verdict = "DİKKATLİ GİRİŞ ⚠️ (yakin izle)"
     elif pct >= 35:
@@ -432,6 +586,8 @@ def full_analysis(symbol):
         "total_score": round(total, 1),
         "max_score": max_total,
         "pct": round(pct, 0),
+        "fund_passed": fund_passed,
+        "fund_flags": fund_critical,
         "verdict": verdict,
         "details": results
     }
@@ -468,11 +624,12 @@ def main():
 
     # Özet tablo
     if len(all_results) > 1:
-        print(f"\n{'='*50}")
+        print(f"\n{'='*60}")
         print(f"  ÖZET TABLO")
-        print(f"{'='*50}")
+        print(f"{'='*60}")
         for r in sorted(all_results, key=lambda x: x["pct"], reverse=True):
-            print(f"  {r['symbol']:6} | {r['total_score']:.1f}/{r['max_score']} ({r['pct']:.0f}%) | {r['verdict']}")
+            fund_icon = "✅" if r.get("fund_passed", True) else "❌"
+            print(f"  {r['symbol']:6} | teknik:{r['total_score']:.1f}/{r['max_score']} ({r['pct']:.0f}%) | temel:{fund_icon} | {r['verdict']}")
 
     if args.json:
         print(json.dumps(all_results, indent=2, ensure_ascii=False))
