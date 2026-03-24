@@ -19,13 +19,14 @@
 >   - [ ] 3a. karar matrisi (portföyler)
 >   - [ ] 3b. karar matrisi (swing)
 >   - [ ] 3c. portföyler arası korelasyon kontrolü
->   - [ ] 3d. yeni pozisyon fırsatları (K-01 ile K-04 kontrol)
+>   - [ ] 3d. yeni pozisyon fırsatları (K-01 ile K-04 + K-17 teknik skor kontrol)
 >   - [ ] 3e. satış/çıkış değerlendirmesi (K-06 ile K-09 kontrol)
 > - [ ] AŞAMA 4 — UYGULAMA:
 >   - [ ] 4a. trade işlemleri (JSON + CSV güncelle)
 >   - [ ] 4b. fiyat güncellemesi
 >   - [ ] 4c. watchlist güncellemesi
 >   - [ ] 4d. git commit + push
+>   - [ ] 4e. telegram bildirimleri (aksiyon + seans özeti)
 > - [ ] AŞAMA 5 — RAPOR (chat'te göster)
 > - [ ] SELF-VALIDATION kontrolü yapıldı mı?
 >
@@ -365,7 +366,7 @@ eğer güncel_fiyat > önceki_zirve:
 > ⚠️ **PLAYBOOK KONTROLÜ**: her karar vermeden önce `docs/TRADING_PLAYBOOK.md` kurallarını kontrol et.
 > - yeni giriş → K-01 (makro veri), K-02 (kriz rallisi), K-03 (VIX + small cap), K-04 (SMA teyidi), K-13 (VIX ortam)
 > - çıkış → K-06 (stop override), K-07 (trailing stop), K-08 (momentum yoksa çık), K-09 (stop yakın erken çık)
-> - swing → K-14 (ardışık 3+ zarar → dur)
+> - swing → K-14 (ardışık 3+ zarar → dur), K-17 (teknik skor >= %50)
 > - kural ihlali gerekiyorsa gerekçeyi açıkça yaz
 
 ## 3a. karar matrisi — portföyler
@@ -407,6 +408,13 @@ her pozisyon için şu ağaçtan geç:
 her swing pozisyonu için:
 
 ```
+0. TEKNİK SKOR TAKİBİ (K-17)
+   python scripts/swing_technical.py SEMBOL
+   → skor iyileşiyor mu kötüleşiyor mu? (önceki seans ile karşılaştır)
+   → ichimoku sinyalleri değişti mi?
+   → NOT: mevcut pozisyonlarda düşük skor = otomatik sat DEĞİL
+     (stop-loss ve hedef fiyat hala geçerli, ama trailing sıkılaştır)
+
 1. STOP-LOSS KESİLDİ Mİ?
    fiyat < stop_loss → 🔴 %100 SAT, closed.json'a kaydet
    hayır → devam
@@ -467,19 +475,28 @@ kontrol 3: yön korelasyonu
 - market cap > $2B
 - günlük hacim > ortalama 1.2x
 - RSI 30-65 arası (aşırı alımda değil)
-- fiyat SMA50 üzerinde (veya SMA50'ye yaklaşan RSI < 35 dip alım)
+- fiyat SMA50 üzerinde (veya SMA50'ye yaklaşan dönüş teyidi olan dip alım)
 - 5 günlük momentum > +%3
 - mevcut açık slot var mı? (max 8 - aktif sayı = boş slot)
+- K-17 teknik skor >= %50 (swing_technical.py çalıştır)
 ```
 
 **her aday için zorunlu analiz**:
 ```
-1. teknik: RSI, SMA50, SMA200, 5 günlük momentum, hacim
+1. TEKNİK SKOR (K-17): python scripts/swing_technical.py SEMBOL
+   → ichimoku (3p) + RSI (1p) + MACD (1p) + SMA (1p) + hacim (1p) = 7p
+   → skor < %50 (3.5/7) → GİRME, watchlist'te tut
+   → ichimoku 0/3 → OTOMATIK RED (trend kesinlikle düşüş)
+   → skor %50-69 → yarım pozisyon, yakın izle
+   → skor %70+ → tam giriş uygun
 2. temel: son earnings, P/E, sektör durumu
 3. risk: stop seviyesi, R:R oranı (min 2:1)
 4. hedef: +%10 hedef fiyat gerçekçi mi?
 5. katalizör: neden şimdi? yaklaşan earnings, sektör rotasyonu, momentum...
 6. portföy korelasyonu: mevcut pozisyonlarla çakışma var mı?
+
+⚠️ K-17 ZORUNLU: teknik skor kontrolü yapılmadan swing girişi YAPILAMAZ.
+fundamental ne kadar güçlü olursa olsun, teknik onay şart.
 ```
 
 ### portföy yeni ekleme fırsatları
@@ -601,6 +618,21 @@ git commit -m "[GÜNCELLEME] seans içi fiyat güncellemesi - {tarih}"
 
 # watchlist güncellemesi:
 git commit -m "[WATCHLIST] merkezi watchlist güncellendi - {yeni aday varsa belirt}"
+```
+
+## 4e. telegram bildirimleri (git push'tan SONRA)
+
+```bash
+# her alış/satış/stop aksiyonunda:
+python scripts/telegram_notify.py --type action --symbol SEMBOL --price FIYAT --action ALIŞ/SATIŞ/STOP/KAR_AL --details "detay"
+
+# stop'a %2'den yakın pozisyon tespit edildiğinde:
+python scripts/telegram_notify.py --type alert --symbol SEMBOL --price FIYAT --stop STOP_FIYAT
+
+# seans özeti (her faz sonunda):
+python scripts/telegram_notify.py --type session --theme "günün teması özeti"
+
+# NOT: iç sistem detayları (kural değişiklikleri, skor açıklamaları vb.) telegram'a GÖNDERİLMEZ
 ```
 
 ---

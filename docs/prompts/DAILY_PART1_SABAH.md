@@ -11,6 +11,7 @@
 > - [ ] ADIM 2.5 — twitter takip listesi (RapidAPI ile hesap taraması)
 > - [ ] ADIM 3 — earnings takvimi (FMP earnings-calendar, market cap filtresi)
 > - [ ] ADIM 4 — otomatik swing tarama sonuçları (daily_scan.json oku)
+> - [ ] ADIM 4.5 — teknik skor kontrolü K-17 (swing_technical.py — adaylar + aktif pozisyonlar)
 > - [ ] ADIM 5 — finviz tarama (teyit katmanı)
 > - [ ] ADIM 6 — analiz, plan ve kayıt (playbook kurallarını planla çapraz kontrol et)
 > - [ ] RAPOR — tüm bölümler (1-5) eksiksiz yazıldı mı?
@@ -121,6 +122,17 @@ ADIM 4 — OTOMATİK SWING TARAMA SONUÇLARI (daily_scan.json)
   KONTROL: mevcut swing aktif pozisyonlarla (data/swing/active.json)
   sembol çakışması var mı? varsa listeden çıkar.
 
+ADIM 4.5 — TEKNİK SKOR KONTROLÜ (K-17)
+  → ADIM 4'ten geçen adaylar + mevcut aktif swing pozisyonları için:
+    python scripts/swing_technical.py SEMBOL1,SEMBOL2,...
+  → ichimoku (3p) + RSI (1p) + MACD (1p) + SMA (1p) + hacim (1p) = 7p
+  → sonuçları rapora ekle:
+    - skor >= %70: "GİRİŞ UYGUN" işaretle
+    - skor %50-69: "DİKKATLİ" işaretle
+    - skor < %50: "BEKLE" işaretle
+    - ichimoku 0/3: "TREND DÜŞÜŞ" işaretle, giriş planlarından çıkar
+  → mevcut aktif swing pozisyonlarının skorunu da raporla (iyileşme/kötüleşme takibi)
+
 ADIM 5 — FİNVİZ TARAMA (teyit katmanı)
   → websearch: finviz screener — ADIM 4'teki adayları teyit et
   → finviz.com/quote.ashx?t=SEMBOL → RSI, pattern, float, short float
@@ -133,11 +145,14 @@ ADIM 6 — ANALİZ, PLAN VE KAYIT
   → PLAYBOOK ÇAPRAZ KONTROL: günün planındaki her aksiyonu docs/TRADING_PLAYBOOK.md kurallarıyla kontrol et
     - yeni giriş planlıyorsan: K-01 (makro veri), K-02 (kriz rallisi), K-03 (VIX+small cap), K-04 (SMA teyidi), K-13 (VIX ortam)
     - çıkış planlıyorsan: K-06 (stop override), K-07 (trailing stop), K-08 (momentum), K-09 (stop yakın)
-    - swing planlıyorsan: K-14 (ardışık zarar → dur)
+    - swing planlıyorsan: K-14 (ardışık zarar → dur), K-17 (teknik skor >= %50)
     - kural ihlali varsa raporda açıkça belirt ve gerekçelendir
   → raporu yaz (aşağıdaki format)
   → reports/daily/DAILY_SABAH_YYYY-MM-DD.md olarak kaydet
   → GIT COMMIT + PUSH: "[SABAH RAPORU] DD Ay YYYY - kısa özet"
+  → TELEGRAM GÖNDERİMİ (git push'tan SONRA):
+    1. python scripts/telegram_notify.py --type premarket --theme "[günün özeti]"
+    2. python scripts/telegram_notify.py --type report --file reports/daily/DAILY_SABAH_YYYY-MM-DD.md
 ```
 
 ---
@@ -261,26 +276,34 @@ SEMBOL — [şirket]
 
 ### EP (episodic pivot) adayları
 
-| # | sembol | değişim | hacim | dolar hacim | close>dünkü high | ep skoru | giriş | stop | 2R hedef |
-|---|--------|---------|-------|-------------|------------------|----------|-------|------|----------|
-| 1 | XXX | +X.X% | Xm | $XXXm | ✅/❌ | XX/100 | $XX.XX | $XX.XX | $XX.XX |
+| # | sembol | değişim | hacim | ep skoru | K-17 skor | ichimoku | karar |
+|---|--------|---------|-------|----------|-----------|----------|-------|
+| 1 | XXX | +X.X% | Xm | XX/100 | X.X/7 (%XX) | X/3 | GİRİŞ/BEKLE/RED |
 
 **[SEMBOL] — detay:**
 - setup: [ne tetikledi — earnings/ürün/sektör rotasyonu]
 - risk/ödül: stop %X.X aşağıda, 2R hedef %X.X yukarıda
+- ichimoku: [fiyat vs kumo, TK cross, chikou durumu]
 - uyarılar: [varsa]
 - piyasa uyumu: [sektörü bugün güçlü mü]
 
 ### breakout (flag/base) adayları
 
-| # | sembol | değişim | hacim katsayı | base genişlik | trend | breakout skoru | giriş | stop | 2R hedef |
-|---|--------|---------|---------------|---------------|-------|----------------|-------|------|----------|
-| 1 | XXX | +X.X% | X.Xx | %X | ✅/❌ | XX/100 | $XX.XX | $XX.XX | $XX.XX |
+| # | sembol | değişim | hacim katsayı | breakout skoru | K-17 skor | ichimoku | karar |
+|---|--------|---------|---------------|----------------|-----------|----------|-------|
+| 1 | XXX | +X.X% | X.Xx | XX/100 | X.X/7 (%XX) | X/3 | GİRİŞ/BEKLE/RED |
 
 **[SEMBOL] — detay:**
 - base: XX günlük konsolidasyon, %X.X genişlik
 - kırılım: XX günlük high olan $XX.XX seviyesini kırdı
+- ichimoku: [fiyat vs kumo, TK cross, chikou durumu]
 - uyarılar: [varsa]
+
+### mevcut swing pozisyonları teknik skor takibi
+
+| sembol | PnL | K-17 skor | ichimoku | trend | not |
+|--------|-----|-----------|----------|-------|-----|
+| XXX | +X.X% | X.X/7 | X/3 | iyileşme/kötüleşme/sabit | [kısa yorum] |
 
 ### tarama notu
 
@@ -288,8 +311,8 @@ SEMBOL — [şirket]
 
 ### bugün izlenecek setup önceliği
 
-1. [SEMBOL] — EP / Breakout — neden öncelikli
-2. [SEMBOL] — EP / Breakout — neden öncelikli
+1. [SEMBOL] — EP / Breakout — K-17 skor: X.X/7 — neden öncelikli
+2. [SEMBOL] — EP / Breakout — K-17 skor: X.X/7 — neden öncelikli
 ```
 
 ---
