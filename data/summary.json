@@ -1,16 +1,16 @@
 {
   "son_guncelleme": "2026-03-24",
   "toplam_sermaye": 600000,
-  "toplam_deger": 626143.3,
-  "toplam_kar_zarar": 26143.3,
-  "toplam_kar_zarar_yuzde": 4.36,
+  "toplam_deger": 625550.49,
+  "toplam_kar_zarar": 25550.49,
+  "toplam_kar_zarar_yuzde": 4.26,
   "portfolyolar": {
     "dengeli": {
       "isim": "Dengeli Portföy",
-      "deger": 112442.07,
-      "maliyet": 40000,
-      "kar_zarar": 12507.49,
-      "kar_zarar_yuzde": 12.44,
+      "deger": 112499.17,
+      "maliyet": 100000,
+      "kar_zarar": 12499.169999999998,
+      "kar_zarar_yuzde": 12.5,
       "pozisyon_sayisi": 6,
       "nakit": {
         "miktar": 54551.07,
@@ -19,10 +19,10 @@
     },
     "agresif": {
       "isim": "Agresif Büyüme Portföyü",
-      "deger": 367299.67,
-      "maliyet": 140000,
-      "kar_zarar": -32826.86,
-      "kar_zarar_yuzde": -8.18,
+      "deger": 366756.71,
+      "maliyet": 400000,
+      "kar_zarar": -33243.28999999998,
+      "kar_zarar_yuzde": -8.31,
       "pozisyon_sayisi": 7,
       "nakit": {
         "miktar": 242799.37,
@@ -31,10 +31,10 @@
     },
     "temettü": {
       "isim": "Değer + Temettü Portföyü",
-      "deger": 146401.56,
+      "deger": 146294.61,
       "maliyet": 100000,
-      "kar_zarar": 46418.59,
-      "kar_zarar_yuzde": 46.4,
+      "kar_zarar": 46294.609999999986,
+      "kar_zarar_yuzde": 46.29,
       "pozisyon_sayisi": 10,
       "nakit": {
         "miktar": 4426.03,
@@ -47,10 +47,5 @@
       "bos_slot": 9,
       "durum": "1/10 pozisyon aktif"
     }
-  },
-  "son_islemler": [
-    "SM %50 kısmi kâr alma: 47 adet @ $30.84 (K-11, RSI 76.6, +%49)",
-    "XOM %25 kısmi kâr alma: 25 adet @ $165.86 (K-11, RSI 74.8, +%36)",
-    "RTX swing stop-loss: @$192.81 (SL $193.13, -%5.16, 12 gün)"
-  ]
+  }
 }

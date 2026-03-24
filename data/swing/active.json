@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-03-24T16:26:40.815709",
+  "son_guncelleme": "2026-03-24T16:36:53.796225",
   "not": "SWING TRADE SADECE SİMÜLASYON - Sadece % kazanç/kayıp takibi (MAX: 8 pozisyon)",
   "aktif_pozisyonlar": [
     {
@@ -7,8 +7,8 @@
       "sembol": "NEM",
       "giris_tarihi": "2026-03-24",
       "giris_fiyati": 98.47,
-      "guncel_fiyat": 98.47,
-      "guncel_kar_zarar_yuzde": 0.0,
+      "guncel_fiyat": 98.3825,
+      "guncel_kar_zarar_yuzde": -0.09,
       "hedef_fiyat": 108.3,
       "stop_loss": 93.55,
       "tutulan_gun": 0,
@@ -17,9 +17,9 @@
       "tez": "Altın $4,400+ iken en büyük üreticinin RSI 31'de olması anomali. geri dönüş kaçınılmaz.",
       "zaman_cercevesi": "7-14 gün",
       "risk": "Altın fiyatında sert düzeltme, dolar güçlenmesi, genel piyasa satışı",
-      "durum": "Yeni giriş - K-13 yarım pozisyon (VIX 26+)",
+      "durum": "✅ Normal aralıkta",
       "tarama_yontemi": "RSI oversold",
-      "son_guncelleme": "2026-03-24T16:26:40.815709",
+      "son_guncelleme": "2026-03-24T16:36:53.796225",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
