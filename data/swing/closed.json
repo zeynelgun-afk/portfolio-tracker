@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-03-20",
+  "son_guncelleme": "2026-03-24",
   "kapatilan_pozisyonlar": [
     {
       "id": "SWING-020",
@@ -263,6 +263,19 @@
       "cikis_nedeni": "K-08: 27 gün, momentum yok",
       "sonuc": "KAZANÇ",
       "ders": "Sağlık hizmetleri swing'de sermaye maliyeti yüksek."
+    },
+    {
+      "id": "SWING-025",
+      "sembol": "RTX",
+      "giris_tarihi": "2026-03-12",
+      "cikis_tarihi": "2026-03-24",
+      "giris_fiyati": 203.3,
+      "cikis_fiyati": 192.81,
+      "kar_zarar_yuzde": -5.16,
+      "tutulan_gun": 12,
+      "cikis_nedeni": "Stop-loss tetiklendi ($192.81 < SL $193.13)",
+      "sonuc": "ZARAR",
+      "ders": "savunma sektörü iran savaşı ortamında beklendiği kadar güçlü performans gösteremedi. 12 gün tutuldu, stop düzgün çalıştı."
     }
   ],
   "istatistikler": {
