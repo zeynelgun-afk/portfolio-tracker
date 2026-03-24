@@ -271,6 +271,28 @@ swing trade girişlerinde temel analiz aday havuzunu oluşturur, teknik analiz g
 - VIX > 25 ise %70+ skor bile olsa yarim pozisyonla gir (K-13)
 - fundamental cok guclu ama teknik zayifsa → watchlist'te tut, teknik donus bekle
 
+### temel analiz filtresi (geçer/kalır)
+
+teknik skor ne kadar yüksek olursa olsun, temel analiz filtresi kaldıysa giris yapilmaz.
+
+**kontrol edilen metrikler:**
+- net marj: negatif = kirmizi bayrak
+- gelir buyume YoY: kuculuyor = kirmizi bayrak
+- net kar trendi: 3 ceyrek dusus = uyari
+- D/E orani: >3 = otomatik red, >2 = uyari
+- nakit/borc orani: <%1 = kritik uyari
+- FCF (TTM): negatif = kirmizi bayrak
+- analist konsensus: sat agirlikli = uyari
+
+**red kosullari:**
+- D/E > 3 → otomatik red
+- 2 veya daha fazla kritik bayrak → red
+- teknik %70+ ama temel kritik bayrakli → "dikkatli giris" (tam giris degil)
+
+**kanit:**
+- AROC (24 mart): teknik %75, ichimoku 3/3 ama nakit/borc %0.1 kritik. tam giris yerine dikkatli giris sinyali
+- NEM (24 mart): temel guclu (D/E 0.01, FCF $10B+) ama teknik %18. iki katman birlikte calismali
+
 ### kullanim
 
 ```bash
