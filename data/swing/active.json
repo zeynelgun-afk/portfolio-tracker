@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-03-24T19:16:39.310031",
+  "son_guncelleme": "2026-03-24T20:02:31.194806",
   "not": "SWING TRADE SADECE SİMÜLASYON - Sadece % kazanç/kayıp takibi (MAX: 8 pozisyon)",
   "aktif_pozisyonlar": [
     {
@@ -7,8 +7,8 @@
       "sembol": "NEM",
       "giris_tarihi": "2026-03-24",
       "giris_fiyati": 98.47,
-      "guncel_fiyat": 99.1,
-      "guncel_kar_zarar_yuzde": 0.64,
+      "guncel_fiyat": 99.013,
+      "guncel_kar_zarar_yuzde": 0.55,
       "hedef_fiyat": 108.3,
       "stop_loss": 93.55,
       "tutulan_gun": 0,
@@ -19,7 +19,7 @@
       "risk": "Altın fiyatında sert düzeltme, dolar güçlenmesi, genel piyasa satışı",
       "durum": "✅ Normal aralıkta",
       "tarama_yontemi": "RSI oversold",
-      "son_guncelleme": "2026-03-24T19:16:39.310031",
+      "son_guncelleme": "2026-03-24T20:02:31.194806",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
@@ -40,8 +40,8 @@
       "sembol": "AROC",
       "giris_tarihi": "2026-03-24",
       "giris_fiyati": 37.56,
-      "guncel_fiyat": 37.19,
-      "guncel_kar_zarar_yuzde": -0.99,
+      "guncel_fiyat": 37.02,
+      "guncel_kar_zarar_yuzde": -1.44,
       "hedef_fiyat": 41.32,
       "stop_loss": 35.68,
       "tutulan_gun": 0,
@@ -54,7 +54,7 @@
       "tarama_yontemi": "momentum",
       "teknik_skor": "5.2/7 (%75)",
       "ichimoku_skor": "3/3",
-      "son_guncelleme": "2026-03-24T19:16:39.310031",
+      "son_guncelleme": "2026-03-24T20:02:31.194806",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
