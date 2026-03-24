@@ -19,9 +19,9 @@
 >
 > **geçmiş hatalar**: adım atlama maliyetli oldu (örn: kazanç açıklaması taramasını atlama → Oracle bilançosu rapordan eksik kaldı). bu tür eksiklikler güvenilirliği zedeler. her adımı tamamla, sonra raporu yaz.
 
-> **versiyon**: 2.0 | **son güncelleme**: 10 mart 2026
+> **versiyon**: 2.1 | **son güncelleme**: 24 mart 2026
 > **çıktı dosyası**: `reports/daily/DAILY_SABAH_YYYY-MM-DD.md`
-> **çalışma zamanı**: TR ~14:00 (NYSE dün 00:00'da kapandı, bugün 16:30 açılacak — yaz saati)
+> **çalışma zamanı**: TR ~14:00 (NYSE dün 23:00'da kapandı, bugün 16:30 açılacak — yaz saati)
 > **amaç**: piyasa analizi + haberler + otomatik tarama sonuçları + günün planı
 > **dil**: küçük harf türkçe, dilbilgisi kurallarına uygun
 > **kaynak**: sadece "finzora ai"
@@ -31,7 +31,7 @@
 
 ## ZAMAN BİLİNCİ
 
-- rapor TR ~14:00'da yazılır — NYSE dün gece 00:00'da kapandı
+- rapor TR ~14:00'da yazılır — NYSE dün gece 23:00'da kapandı
 - **yaz saati (mart-kasım)**: NYSE açılış 16:30 TR, kapanış 23:00 TR
 - **kış saati (kasım-mart)**: NYSE açılış 17:30 TR, kapanış 00:00 TR
 - FMP fiyatları = dünün kapanışı (kesinleşmiş)
@@ -125,12 +125,13 @@ ADIM 4 — OTOMATİK SWING TARAMA SONUÇLARI (daily_scan.json)
 ADIM 4.5 — TEKNİK SKOR KONTROLÜ (K-17)
   → ADIM 4'ten geçen adaylar + mevcut aktif swing pozisyonları için:
     python scripts/swing_technical.py SEMBOL1,SEMBOL2,...
-  → ichimoku (3p) + RSI (1p) + MACD (1p) + SMA (1p) + hacim (1p) = 7p
+  → ichimoku (3p) + RSI (1p) + MACD (1p) + SMA (1p) + hacim (1p) = 7p + temel filtre (geçer/kalır)
   → sonuçları rapora ekle:
     - skor >= %70: "GİRİŞ UYGUN" işaretle
     - skor %50-69: "DİKKATLİ" işaretle
     - skor < %50: "BEKLE" işaretle
     - ichimoku 0/3: "TREND DÜŞÜŞ" işaretle, giriş planlarından çıkar
+    - temel filtre kaldı: "TEMEL RED" işaretle, teknik skor ne olursa olsun giriş yok
   → mevcut aktif swing pozisyonlarının skorunu da raporla (iyileşme/kötüleşme takibi)
 
 ADIM 5 — FİNVİZ TARAMA (teyit katmanı)

@@ -7,8 +7,8 @@
 > **zorunlu adımlar (teker teker kontrol et):**
 > - [ ] ADIM 1 — git pull + hazırlık (JSON'ları oku, dünkü raporu kontrol et)
 > - [ ] ADIM 2 — FMP veri toplama (batch-quote, RSI, SMA, emtia, treasury)
-> - [ ] ADIM 2.5 — KAZANÇ AÇIKLAMALARI TARAMASI (earnings-calendar, portföy kesişimi, detaylı analiz)
 > - [ ] ADIM 3 — JSON güncelleme (fiyatlar, k/z, ağırlıklar, summary.json, git commit)
+> - [ ] ADIM 3.5 — KAZANÇ AÇIKLAMALARI TARAMASI (earnings-calendar, portföy kesişimi, detaylı analiz)
 > - [ ] ADIM 4 — rapor yaz (BÖLÜM 1-5 + BÖLÜM 4a eksiksiz)
 > - [ ] BÖLÜM 1 — günün özeti (piyasa tablosu, sektörler, trend)
 > - [ ] BÖLÜM 2 — portföy takibi (3 portföy + genel özet + uyarılar)
@@ -22,9 +22,9 @@
 >
 > **geçmiş hatalar**: bölüm 4a (kazanç açıklamaları) atlandı → Oracle bilançosu ($17.2B gelir, bulut +%84, AH +%6.3) rapordan tamamen eksik kaldı. bölüm 4b ve 5 de eksik yazıldı. bu tür atlamalar portföy kararlarını olumsuz etkiler. her bölümü tamamla.
 
-> **versiyon**: 1.0 | **son güncelleme**: 3 mart 2026
+> **versiyon**: 1.1 | **son güncelleme**: 24 mart 2026
 > **çıktı dosyası**: `reports/daily/DAILY_REPORT_YYYY-MM-DD.md`
-> **çalışma zamanı**: TR ~09:00 (NYSE dün gece 00:00'da kapandı, bugün 17:30 açılacak)
+> **çalışma zamanı**: TR ~09:00 (NYSE dün gece 23:00'da kapandı, bugün 16:30 açılacak — yaz saati)
 > **ön koşul**: part 1 (sabah raporu) aynı gün veya bir önceki gün çalıştırılmış olmalı
 > **dil**: küçük harf türkçe, dilbilgisi kurallarına uygun
 > **kaynak**: sadece "finzora ai"
@@ -35,11 +35,11 @@
 
 ## ZAMAN BİLİNCİ
 
-- rapor TR ~09:00'da yazılır — NYSE dün gece 00:00'da kapandı
+- rapor TR ~09:00'da yazılır — NYSE dün gece 23:00'da kapandı
 - FMP fiyatları = dünün kapanışı (kesinleşmiş)
-- after-hours: dün 00:00-02:00 TR (tamamlanmış)
-- pre-market: bugün 16:00-17:30 TR (henüz başlamadı)
-- bugünün seansı: 17:30-00:00 TR
+- after-hours: dün 23:00-01:00 TR (tamamlanmış)
+- pre-market: bugün 12:00-16:30 TR (henüz başlamadı)
+- bugünün seansı: 16:30-23:00 TR (yaz saati)
 - sabah raporundaki plan dünün seansında uygulandı
 
 ---
@@ -69,7 +69,7 @@ ADIM 3 — JSON GÜNCELLEME
   → doğrulama: yatirim = adet × maliyet_baz, toplam = sum(pozisyonlar) + nakit, ağırlık ≈ %100
   → GIT COMMIT + PUSH: "[GÜNCELLEME] DD Ay - kapanış fiyatları"
 
-ADIM 2.5 — KAZANÇ AÇIKLAMALARI TARAMASI
+ADIM 3.5 — KAZANÇ AÇIKLAMALARI TARAMASI
   → FMP earnings-calendar: from=bugün, to=bugün → o günün açıklamalarını çek
   → market cap filtresi: sadece >$2B şirketler (küçük şirketler atla)
   → zamanlama filtresi: sadece "amc" (kapanış sonrası) veya tümü

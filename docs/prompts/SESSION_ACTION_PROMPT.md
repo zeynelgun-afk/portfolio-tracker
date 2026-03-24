@@ -32,8 +32,8 @@
 >
 > **geçmiş hatalar**: adım atlama maliyetli oldu (örn: kazanç açıklaması taramasını atlama, bölüm eksik bırakma). prompttaki her madde bir sebepten var — atlamak portföy kararlarını olumsuz etkiler.
 
-> **versiyon**: 1.4 | **son güncelleme**: 5 mart 2026
-> **çalışma zamanı**: NYSE açıldıktan sonra (TR 17:30+), tercihen açılıştan 30-60dk sonra
+> **versiyon**: 1.5 | **son güncelleme**: 24 mart 2026
+> **çalışma zamanı**: NYSE açıldıktan sonra (TR 16:30+, yaz saati), tercihen açılıştan 30-60dk sonra
 > **ön koşul**: o günün sabah raporu zaten yazılmış olmalı
 > **perspektif**: PİYASA AÇIK — GERÇEK ZAMANLI KARAR VE AKSİYON
 > **fiyat verisi**: canlı/güncel fiyatlar (FMP quote = bugünün verisi)
@@ -62,7 +62,7 @@
 
 | | günlük rapor (TR ~14:00) | seans içi aksiyon (bu prompt) |
 |---|---|---|
-| **ne zaman** | NYSE açılmadan ~3.5 saat önce | NYSE açıldıktan 30-60dk sonra |
+| **ne zaman** | NYSE açılmadan ~2.5 saat önce | NYSE açıldıktan 30-60dk sonra |
 | **fiyat** | dünün kapanışı (final) | bugünün canlı fiyatı |
 | **amaç** | değerlendirme + JSON güncelleme + plan | karar + uygulama |
 | **çıktı** | rapor dosyası (.md) + JSON güncelleme | trade emirleri + JSON |
@@ -87,7 +87,7 @@ bu prompt seans boyunca birden fazla kez çalıştırılabilir.
 her faz farklı önceliklere sahip:
 
 ```
-FAZ 1: AÇILIŞ (TR 17:30-18:30) — ilk 60 dakika
+FAZ 1: AÇILIŞ (TR 16:30-17:30) — ilk 60 dakika
   öncelik: ACİL KONTROL
   - gap-up/gap-down kontrolü
   - stop-loss tetiklenen var mı?
@@ -96,7 +96,7 @@ FAZ 1: AÇILIŞ (TR 17:30-18:30) — ilk 60 dakika
   - ilk 15dk aşırı volatil olabilir → büyük karar verme, izle
   - TWİTTER TAKİP LİSTESİ → her açılışta 8 hesabın son tweetlerini çek, portföyle ilgili olanları özetle
   
-FAZ 2: MID-SESSION (TR 19:00-22:00) — ana seans
+FAZ 2: MID-SESSION (TR 18:00-21:00) — ana seans
   öncelik: ANALİZ + KARAR
   - tam teknik analiz (RSI, SMA, sektör RS)
   - yeni pozisyon fırsatları değerlendir
@@ -104,7 +104,7 @@ FAZ 2: MID-SESSION (TR 19:00-22:00) — ana seans
   - portföy rebalance değerlendirmesi
   - prediction markets güncellemesi
   
-FAZ 3: POWER HOUR (TR 23:00-00:00) — son saat
+FAZ 3: POWER HOUR (TR 22:00-23:00) — son saat
   öncelik: FİNAL AKSİYONLAR
   - kapanışa yakın kar alma/pozisyon ayarlama
   - bugün AMC earnings açıklayacak hisseleri not et
@@ -512,7 +512,7 @@ fundamental ne kadar güçlü olursa olsun, teknik onay şart.
 - earnings momentum: beat >%15, guidance yükseltme, post-earnings pullback'te giriş
 - breakout: 52W high yakını, dar range konsolidasyon, volume 1.5x+
 - mean reversion: RSI <30, SMA200 üzeri, sektör/piyasa kaynaklı düşüş (hisse bazlı değil)
-- pozisyon büyüklüğü: $40K-$60K (%10-15), max 8 eşzamanlı pozisyon
+- pozisyon büyüklüğü: $40K-$60K (%10-15), max 10 eşzamanlı pozisyon
 - nakit oranı yüksekse ve kaliteli sinyal varsa → kademeli giriş fırsatı
 - trade execution kuralları: `docs/AGGRESSIVE_MOMENTUM_STRATEGY.md`
 
@@ -708,7 +708,7 @@ aksiyonlar:
 # KARAR AĞACI — HIZLI REFERANS
 
 ```
-SEANS AÇILDI (FAZ 1: TR 17:30-18:30)
+SEANS AÇILDI (FAZ 1: TR 16:30-17:30)
 │
 ├─ ACİL KONTROL (ilk 5 dk)
 │  ├─ stop-loss tetiklenen var mı? → SAT
@@ -723,7 +723,7 @@ SEANS AÇILDI (FAZ 1: TR 17:30-18:30)
 ├─ SABAH PLANI UYGULAMASI (30 dk)
 │  └─ günlük rapordaki acil aksiyonları uygula
 │
-MID-SESSION (FAZ 2: TR 19:00-22:00)
+MID-SESSION (FAZ 2: TR 18:00-21:00)
 │
 ├─ PORTFÖY TARAMA (30 dk)
 │  ├─ her pozisyon: fiyat, RSI, SMA kontrol
@@ -747,7 +747,7 @@ MID-SESSION (FAZ 2: TR 19:00-22:00)
 │  ├─ dip alım fırsatları (RSI < 30 + kaliteli hisse)
 │  └─ portföy dengeleme ihtiyacı
 │
-POWER HOUR (FAZ 3: TR 23:00-00:00)
+POWER HOUR (FAZ 3: TR 22:00-23:00)
 │
 ├─ FİNAL AKSİYONLAR
 │  ├─ bekleyen kar alma / pozisyon ayarlama
@@ -772,18 +772,23 @@ POWER HOUR (FAZ 3: TR 23:00-00:00)
 
 # ÖNEMLİ KURALLAR
 
-## kullanıcı onayı gerektiren kararlar
-- yeni pozisyon açma (portföy veya swing)
-- mevcut pozisyonu kapatma (stop-loss hariç — o otomatik)
-- portföy rebalance
-- büyük strateji değişikliği
+## SEN KARAR VER kuralı (tüm seans aksiyonları)
 
-## otomatik yapılabilecek işlemler (onay gerekmez)
+seans içi TÜM aksiyonlarda (kısmi kâr alma, trailing stop, stop-loss satışı,
+yeni giriş, fiyat güncellemesi, pozisyon kapatma, kural esnetme/uygulama)
+Zeynel'den onay istenmez. soru sormadan doğrudan karar ver ve uygula.
+playbook kurallarına (K-01 ile K-17) uygunluk kontrolü yapıldıktan sonra
+son karar her zaman Claude'da. onay istemek = kural ihlali.
+
+## otomatik yapılan işlemler (hepsi)
+- yeni pozisyon açma/kapatma (playbook kurallarına uygunsa)
+- kısmi kâr alma (K-11 tetiklenirse)
+- stop-loss satışı
+- trailing stop güncelleme (sadece yukarı)
 - fiyat güncellemesi (tüm JSON'lar)
-- trailing stop yukarı güncelleme
-- data/watchlist.json fiyat güncellemesi (merkezi)
-- tutulan_gun artırma
-- ağırlık yüzdesi yeniden hesaplama
+- watchlist güncellemesi
+- portföy rebalance kararları
+- tutulan_gun artırma, ağırlık yüzdesi hesaplama
 
 ## yapma!
 - stop-loss'u aşağı çekme (ASLA)
@@ -826,4 +831,4 @@ detaylı kurallar: `docs/SELF_VALIDATION.md`
 
 ---
 
-> son güncelleme: 5 mart 2026 | finzora ai
+> son güncelleme: 24 mart 2026 | finzora ai
