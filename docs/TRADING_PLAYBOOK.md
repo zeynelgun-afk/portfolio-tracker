@@ -227,9 +227,59 @@ piyasa ortamına göre hangi sektör nasıl davranıyor.
 
 **RGLD altın korelasyon bozulması ek kanıt (19 mart 2026)**
 - kanıt: altın -%5 düştü, RGLD -%7.20 düştü (negatif beta, altından daha sert). RSI 27.9, 3 SMA altında, -%17.98 zararda
-- sonuç: royalty modeli altınla asimetrik korelasyon gösteriyor — yukarı sınırlı, aşağı sert. tez bozulma sınırı -%20 (RGLD $217 civarı)
+- sonuç: royalty modeli altınla asimetrik korelasyon gösteriyor -- yukarı sınırlı, aşağı sert. tez bozulma sınırı -%20 (RGLD $217 civarı)
 - ilişkili: playbook sektör gözlemleri "altın yükseliyor diye royalty yükselecek varsayımı hatalı" notu
 
 ---
 
-*finzora ai | son güncelleme: 19 mart 2026*
+## 3. SWING TRADE TEKNİK GİRİŞ SİSTEMİ (K-17)
+
+> ekleme: 24 mart 2026
+> kanıt: NEM swing girişi (24 mart). RSI 31 + fundamental güçlü ama ichimoku 0/3, tüm SMA altında, MACD negatif. toplam skor 1.2/7 (%18). düşen bıçak riski.
+> araç: scripts/swing_technical.py
+
+### kural
+
+swing trade girişlerinde temel analiz aday havuzunu oluşturur, teknik analiz giriş zamanlamasını belirler. **minimum %50 teknik skor** (3.5/7) gerekli.
+
+### puanlama sistemi (7 puan üzerinden)
+
+**ichimoku bulutu (3 puan)**
+1. fiyat vs kumo: fiyat > kumo (+1), kumo icinde (+0.5), kumo altında (0)
+2. tenkan-kijun kesisimi: tenkan > kijun (+1), yaklaşıyor (+0.5), tenkan < kijun (0)
+3. chikou span: mevcut fiyat > 26 gün önceki fiyat (+1), altında (0)
+
+**klasik göstergeler (4 puan)**
+4. RSI donuş teyidi (+1): 30 altından 30 üzerine çıkış veya yükselen RSI trendi (+0.5)
+5. MACD: bullish cross (+1), histogram yükseliyor (+0.5), toparlanma başlıyor (+0.25)
+6. SMA pozisyonu: fiyat > SMA20 (+0.5) + fiyat > SMA50 (+0.5)
+7. hacim: 1.5x ortalama + pozitif gün (+1), 1.2x + pozitif (+0.5)
+
+### karar eşikleri
+
+| skor | yüzde | karar |
+|------|-------|-------|
+| 5.0+ | %70+ | giris uygun |
+| 3.5-4.9 | %50-69 | dikkatli giris (yakin izle, yarim pozisyon) |
+| 2.0-3.4 | %28-49 | erken, bekle (donus teyidi yok) |
+| 0-1.9 | %0-27 | girme (trend dusus) |
+
+### özel durumlar
+
+- ichimoku 0/3 = giris yapma, diger skor ne olursa olsun (trend kesinlikle dusus)
+- ichimoku 3/3 + RSI > 70 = asiri alim, geri cekilme bekle
+- VIX > 25 ise %70+ skor bile olsa yarim pozisyonla gir (K-13)
+- fundamental cok guclu ama teknik zayifsa → watchlist'te tut, teknik donus bekle
+
+### kullanim
+
+```bash
+python scripts/swing_technical.py NEM,ONTO,AROC     # belirli hisseler
+python scripts/swing_technical.py --watchlist         # tum watchlist
+```
+
+her seans oncesi ve swing giris karari oncesi bu scripti calistir.
+
+---
+
+*finzora ai | son güncelleme: 24 mart 2026*
