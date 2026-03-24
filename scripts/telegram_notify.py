@@ -158,7 +158,7 @@ def get_all_positions():
 
 # --- MESAJ FORMATLARI ---
 
-def format_session_report():
+def format_session_report(theme=None):
     """Seans içi özet raporu."""
     all_pos, bal, agg, div = get_all_positions()
     swing = load_swing()
@@ -172,7 +172,11 @@ def format_session_report():
 <i>{now}</i>
 
 <b>💰 TOPLAM: ${toplam:,.0f} ({toplam_pct:+.2f}%)</b>
+"""
+    if theme:
+        msg += f"\n<b>📌 Günün teması:</b> {theme}\n"
 
+    msg += f"""
 <b>▸ Dengeli</b> ${bal['toplam_deger']:,.0f} ({bal['toplam_getiri_yuzde']:+.2f}%)
 """
     for p in bal["pozisyonlar"]:
@@ -238,7 +242,7 @@ Mesafe: ${distance:.2f} (%{pct:.1f})
     return msg
 
 
-def format_premarket():
+def format_premarket(theme=None):
     """Seans öncesi rapor."""
     all_pos, bal, agg, div = get_all_positions()
     swing = load_swing()
@@ -249,7 +253,11 @@ def format_premarket():
 
     msg = f"""<b>🌅 SEANS ÖNCESİ RAPOR</b>
 <i>{today}</i>
+"""
+    if theme:
+        msg += f"\n<b>📌 Piyasa notu:</b> {theme}\n"
 
+    msg += f"""
 <b>💼 Portföy Durumu</b>
   Toplam: ${toplam:,.0f} ({toplam_pct:+.2f}%)
   Dengeli: ${bal['toplam_deger']:,.0f} ({bal['toplam_getiri_yuzde']:+.2f}%)
@@ -322,7 +330,7 @@ def format_premarket():
     return msg
 
 
-def format_closing():
+def format_closing(theme=None):
     """Detaylı kapanış raporu."""
     all_pos, bal, agg, div = get_all_positions()
     swing = load_swing()
@@ -339,8 +347,11 @@ def format_closing():
 <i>{today}</i>
 
 {'─' * 25}
+"""
+    if theme:
+        msg += f"\n<b>📌 Günün teması:</b> {theme}\n\n"
 
-<b>💰 TOPLAM: ${toplam:,.0f} ({toplam_pct:+.2f}%)</b>
+    msg += f"""<b>💰 TOPLAM: ${toplam:,.0f} ({toplam_pct:+.2f}%)</b>
   Dengeli: ${bal['toplam_deger']:,.0f} ({bal['toplam_getiri_yuzde']:+.2f}%)
   Agresif: ${agg['toplam_deger']:,.0f} ({agg['toplam_getiri_yuzde']:+.2f}%)
   Temettü: ${div['toplam_deger']:,.0f} ({div['toplam_getiri_yuzde']:+.2f}%)
@@ -419,6 +430,7 @@ def main():
     parser.add_argument("--type", choices=["session", "action", "alert", "daily", "premarket", "closing", "report", "custom"], required=True)
     parser.add_argument("--msg", help="Özel mesaj (--type custom için)")
     parser.add_argument("--file", help="Markdown rapor dosyası (--type report için)")
+    parser.add_argument("--theme", help="Piyasa teması / günün özeti (session, premarket, closing için)")
     parser.add_argument("--symbol", help="Sembol (action/alert için)")
     parser.add_argument("--price", type=float, help="Fiyat")
     parser.add_argument("--action", help="Aksiyon tipi: ALIŞ, SATIŞ, STOP, KAR_AL, UYARI")
@@ -428,11 +440,11 @@ def main():
     args = parser.parse_args()
 
     if args.type == "session":
-        msg = format_session_report()
+        msg = format_session_report(theme=args.theme)
     elif args.type == "premarket":
-        msg = format_premarket()
+        msg = format_premarket(theme=args.theme)
     elif args.type in ("daily", "closing"):
-        msg = format_closing()
+        msg = format_closing(theme=args.theme)
     elif args.type == "report":
         if not args.file:
             print("report için --file gerekli")
