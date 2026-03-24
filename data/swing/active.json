@@ -1,7 +1,41 @@
 {
-  "son_guncelleme": "2026-03-24T16:09:27.437787",
+  "son_guncelleme": "2026-03-24T16:26:40.815709",
   "not": "SWING TRADE SADECE SİMÜLASYON - Sadece % kazanç/kayıp takibi (MAX: 8 pozisyon)",
-  "aktif_pozisyonlar": [],
+  "aktif_pozisyonlar": [
+    {
+      "id": "SWING-026",
+      "sembol": "NEM",
+      "giris_tarihi": "2026-03-24",
+      "giris_fiyati": 98.47,
+      "guncel_fiyat": 98.47,
+      "guncel_kar_zarar_yuzde": 0.0,
+      "hedef_fiyat": 108.3,
+      "stop_loss": 93.55,
+      "tutulan_gun": 0,
+      "giris_nedeni": "Altın $4,431 rekor yakınında iken NEM RSI 31.4 aşırı satım. fiyat-emtia ayrışması sürdürülemez. dünyanın en büyük altın üreticisi.",
+      "katalizor": "Altın rekor seviyeleri, iran savaşı güvenli liman talebi, merkez bankası alımları",
+      "tez": "Altın $4,400+ iken en büyük üreticinin RSI 31'de olması anomali. geri dönüş kaçınılmaz.",
+      "zaman_cercevesi": "7-14 gün",
+      "risk": "Altın fiyatında sert düzeltme, dolar güçlenmesi, genel piyasa satışı",
+      "durum": "Yeni giriş - K-13 yarım pozisyon (VIX 26+)",
+      "tarama_yontemi": "RSI oversold",
+      "son_guncelleme": "2026-03-24T16:26:40.815709",
+      "partial_exit_plan": {
+        "hedef_ulasildiginda": {
+          "aksiyon": "%50 POZİSYONU SAT",
+          "satis_fiyati": 108.3,
+          "sebep": "Kar garantiye al"
+        },
+        "kalan_50_icin": {
+          "aksiyon": "TRAİLİNG STOP AKTİF",
+          "baslangic_trailing_stop": 102.88,
+          "trailing_yuzde": 5,
+          "aciklama": "Zirveden -%5 düşünce sat"
+        },
+        "durum": "Hedef bekleniyor"
+      }
+    }
+  ],
   "ozet": {
     "toplam_pozisyon": 3,
     "bos_slot": 7,

@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-03-09T19:22:09.841094",
+  "son_guncelleme": "2026-03-24T16:26:40.815709",
   "not": "Bir sonraki işlemler için potansiyel swing adayları - ATR tabanlı filtreleme uygulandı",
   "izleme_listesi": [
     {
@@ -247,6 +247,58 @@
       "hedef_giris": "18-20",
       "hedef_fiyat": 28.0,
       "stop_loss": 16.0
+    },
+    {
+      "sembol": "RDDT",
+      "guncel_fiyat": 137.86,
+      "momentum_5gun": -0.66,
+      "sektor": "İletişim Hizmetleri - İnternet İçerik",
+      "notlar": "Zirveden -%51, RSI 41, fundamentaller güçlü (gelir +%70 YoY, marj genişliyor). Tüm SMA altında, trend kırılması bekleniyor. İçeriden $148'den 50K hisse alım sinyali. Q1 earnings 12 Mayıs.",
+      "urgency": "medium",
+      "ekleme_tarihi": "2026-03-24",
+      "son_kontrol": "2026-03-24",
+      "hedef_giris": "120-130",
+      "hedef_fiyat": 180.0,
+      "stop_loss": 110.0
+    },
+    {
+      "sembol": "ONTO",
+      "guncel_fiyat": 218.51,
+      "momentum_5gun": 4.16,
+      "sektor": "Teknoloji - Yarı İletken Ekipman",
+      "notlar": "AI çip ekipman, HBM kalifikasyon tamamlandı, 2.5D AI paketleme. Gelir +%22 YoY. 10 al/1 tut. Agresif portföy adayı.",
+      "urgency": "high",
+      "ekleme_tarihi": "2026-03-24",
+      "son_kontrol": "2026-03-24",
+      "hedef_giris": "210-215",
+      "hedef_fiyat": 245.0,
+      "stop_loss": 195.0
+    },
+    {
+      "sembol": "AROC",
+      "guncel_fiyat": 37.67,
+      "momentum_5gun": 2.36,
+      "sektor": "Enerji - Doğalgaz Hizmetleri",
+      "notlar": "Düşük beta (0.91) + yüksek momentum. Net kar +%64 büyüme, marj %31. 15 al/3 tut. Enerji temasına uyumlu.",
+      "urgency": "medium",
+      "ekleme_tarihi": "2026-03-24",
+      "son_kontrol": "2026-03-24",
+      "hedef_giris": "35-36",
+      "hedef_fiyat": 42.0,
+      "stop_loss": 33.0
+    },
+    {
+      "sembol": "CGAU",
+      "guncel_fiyat": 16.44,
+      "momentum_5gun": 0.43,
+      "sektor": "Emtia - Altın/Bakır Madenciliği",
+      "notlar": "Q4 dev beat, EPS beklentisi 2x yukarı revize. Forward PE 11.4x, sektörüne %33 iskontolu. Altın + bakır çift tema.",
+      "urgency": "high",
+      "ekleme_tarihi": "2026-03-24",
+      "son_kontrol": "2026-03-24",
+      "hedef_giris": "15-16",
+      "hedef_fiyat": 20.0,
+      "stop_loss": 14.0
     }
   ],
   "haric_tutulanlar": [
