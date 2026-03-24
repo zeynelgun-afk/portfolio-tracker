@@ -100,4 +100,5 @@ date,action,symbol,shares,price,total,reason
 2026-03-20,SELL,GLW,109,125.46,13675.14,"Stop-loss tetiklendi $125.46 < $125.61 - Agresif portföy"
 2026-03-23,SELL,SM,62,29.51,1829.62,"K-11 kısmi kâr alma - RSI 75 + %43 kâr - petrol düşüşü enerji baskısı - Dengeli portföy"
 
-2026-03-23,SELL,SM,52,29.58,1538.16,"K-11 kısmi kâr alma %25 - RSI 80 + negatif ayrışma - Dengeli portföy"
+2026-03-23,SELL,SM,52,29.58,1538.16,"K-11 kısmi kâr alma %25 - RSI 80 + negatif ayrışma - Dengeli portföy"2026-03-24,SELL,SM,47,30.84,1449.48,K-11 kısmi kâr alma - RSI 76.6 + %49 kazanç - Dengeli portföy
+2026-03-24,SELL,XOM,25,165.86,4146.5,K-11 kısmi kâr alma - RSI 74.8 + %36 kazanç - Temettü portföy

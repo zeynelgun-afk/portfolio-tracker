@@ -1,8 +1,8 @@
 {
   "portfoy_adi": "Dengeli Portföy",
-  "baslangic_sermaye": 40000,
+  "baslangic_sermaye": 100000,
   "nakit": {
-    "miktar": 53101.590000000004,
+    "miktar": 54551.07,
     "para_birimi": "USD"
   },
   "pozisyonlar": [
@@ -10,19 +10,19 @@
       "sembol": "SM",
       "isim": "SM Energy Company",
       "sektor": "Enerji",
-      "adet": 94,
+      "adet": 47,
       "maliyet_baz": 20.67,
-      "guncel_fiyat": 30.85,
-      "yatirim": 1942.98,
-      "guncel_deger": 2899.9,
-      "kar_zarar": 956.9200000000001,
-      "kar_zarar_yuzde": 49.25,
-      "gunluk_degisim_yuzde": 0,
-      "son_guncelleme": "2026-03-24T15:00:53.057852",
+      "guncel_fiyat": 30.84,
+      "yatirim": 971.49,
+      "guncel_deger": 1449.48,
+      "kar_zarar": 477.99,
+      "kar_zarar_yuzde": 49.2,
+      "gunluk_degisim_yuzde": 6.16,
+      "son_guncelleme": "2026-03-24T15:04:19.117829",
       "giris_tarihi": "2026-02-17",
       "giris_fiyati": 20.67,
       "giris_nedeni": "Initial position - Oil & gas E&P",
-      "agirlik_yuzde": 2.58
+      "agirlik_yuzde": 1.29
     },
     {
       "sembol": "MO",
@@ -30,17 +30,17 @@
       "sektor": "Temel Tüketim",
       "adet": 267,
       "maliyet_baz": 67.44,
-      "guncel_fiyat": 65.31,
+      "guncel_fiyat": 65.39,
       "yatirim": 18006.48,
-      "guncel_deger": 17437.77,
-      "kar_zarar": -568.7099999999991,
-      "kar_zarar_yuzde": -3.16,
-      "gunluk_degisim_yuzde": 0,
-      "son_guncelleme": "2026-03-24T15:00:53.057852",
+      "guncel_deger": 17459.13,
+      "kar_zarar": -547.35,
+      "kar_zarar_yuzde": -3.04,
+      "gunluk_degisim_yuzde": 1.55,
+      "son_guncelleme": "2026-03-24T15:04:19.117829",
       "giris_tarihi": "2026-02-17",
       "giris_fiyati": 67.44,
       "giris_nedeni": "Initial position - Dividend defensive",
-      "agirlik_yuzde": 15.5
+      "agirlik_yuzde": 15.52
     },
     {
       "sembol": "XLE",
@@ -48,13 +48,13 @@
       "sektor": "Enerji ETF",
       "adet": 139,
       "maliyet_baz": 53.34,
-      "guncel_fiyat": 61.045,
+      "guncel_fiyat": 61.02,
       "yatirim": 7414.26,
-      "guncel_deger": 8485.255000000001,
-      "kar_zarar": 1070.9950000000008,
-      "kar_zarar_yuzde": 14.45,
-      "gunluk_degisim_yuzde": 0,
-      "son_guncelleme": "2026-03-24T15:00:53.057852",
+      "guncel_deger": 8481.78,
+      "kar_zarar": 1067.52,
+      "kar_zarar_yuzde": 14.4,
+      "gunluk_degisim_yuzde": 2.34,
+      "son_guncelleme": "2026-03-24T15:04:19.117829",
       "giris_tarihi": "2026-02-17",
       "giris_fiyati": 53.34,
       "giris_nedeni": "Initial position - Energy sector ETF",
@@ -66,13 +66,13 @@
       "sektor": "Temel Malzeme",
       "adet": 22,
       "maliyet_baz": 274.4,
-      "guncel_fiyat": 223.515,
+      "guncel_fiyat": 223.54,
       "yatirim": 6036.8,
-      "guncel_deger": 4917.33,
-      "kar_zarar": -1119.4700000000003,
-      "kar_zarar_yuzde": -18.54,
-      "gunluk_degisim_yuzde": 0,
-      "son_guncelleme": "2026-03-24T15:00:53.057852",
+      "guncel_deger": 4917.88,
+      "kar_zarar": -1118.92,
+      "kar_zarar_yuzde": -18.53,
+      "gunluk_degisim_yuzde": 0.31,
+      "son_guncelleme": "2026-03-24T15:04:19.117829",
       "giris_tarihi": "2026-02-17",
       "giris_fiyati": 274.4,
       "giris_nedeni": "Initial position - Gold royalty",
@@ -84,17 +84,17 @@
       "sektor": "Endüstriyel",
       "adet": 85,
       "maliyet_baz": 175.04,
-      "guncel_fiyat": 163.89,
+      "guncel_fiyat": 163.79,
       "yatirim": 14878.4,
-      "guncel_deger": 13930.65,
-      "kar_zarar": -947.75,
-      "kar_zarar_yuzde": -6.37,
-      "gunluk_degisim_yuzde": 0,
-      "son_guncelleme": "2026-03-24T15:00:53.057852",
+      "guncel_deger": 13922.15,
+      "kar_zarar": -956.25,
+      "kar_zarar_yuzde": -6.43,
+      "gunluk_degisim_yuzde": 0.45,
+      "son_guncelleme": "2026-03-24T15:04:19.117829",
       "giris_tarihi": "2026-02-19",
       "giris_fiyati": 175.04,
       "giris_nedeni": "Otomatik ekleme - Endüstriyel",
-      "agirlik_yuzde": 12.38
+      "agirlik_yuzde": 12.37
     },
     {
       "sembol": "JNJ",
@@ -102,22 +102,22 @@
       "sektor": "Sağlık",
       "adet": 50,
       "maliyet_baz": 244.14,
-      "guncel_fiyat": 234.67,
+      "guncel_fiyat": 234.52,
       "yatirim": 12207.0,
-      "guncel_deger": 11733.5,
-      "kar_zarar": -473.5,
-      "kar_zarar_yuzde": -3.88,
-      "gunluk_degisim_yuzde": 0,
-      "son_guncelleme": "2026-03-24T15:00:53.057852",
+      "guncel_deger": 11726.0,
+      "kar_zarar": -481.0,
+      "kar_zarar_yuzde": -3.94,
+      "gunluk_degisim_yuzde": -0.38,
+      "son_guncelleme": "2026-03-24T15:04:19.117829",
       "giris_tarihi": "2026-03-13",
       "giris_fiyati": 244.14,
       "giris_nedeni": "Saglik sektoru diversifikasyonu. Defensif/temettü aristokrati. Iran savasi ortaminda direncli. RSI 59, SMA50 ustu. Portfoyde saglik eksikti.",
-      "agirlik_yuzde": 10.43
+      "agirlik_yuzde": 10.42
     }
   ],
-  "son_guncelleme": "2026-03-24T15:00:53.057852",
-  "toplam_deger": 112506.0,
-  "toplam_getiri_yuzde": 181.27,
+  "son_guncelleme": "2026-03-24T15:05:20.445863",
+  "toplam_deger": 112507.49,
+  "toplam_getiri_yuzde": 12.51,
   "transactions": [
     {
       "tarih": "2026-03-02",
@@ -217,6 +217,15 @@
       "fiyat": 29.58,
       "tutar": 1538.16,
       "aciklama": "K-11 kısmi kâr alma %25 - RSI 80 + negatif ayrışma (SPY +%1.4 SM -%1.5) - Dengeli portföy"
+    },
+    {
+      "tarih": "2026-03-24",
+      "islem_tipi": "SATIŞ",
+      "sembol": "SM",
+      "adet": 47,
+      "fiyat": 30.84,
+      "tutar": 1449.48,
+      "aciklama": "K-11 kısmi kâr alma - RSI 76.6 + %49 kazanç - Dengeli portföy"
     }
   ],
   "notes": [
@@ -269,6 +278,11 @@
       "date": "2026-03-23T17:41:14.438139",
       "type": "exit",
       "content": "SM kısmi satış %25 (52 hisse) @$29.58 - K-11 (RSI 80+, %43 kâr) + negatif ayrışma"
+    },
+    {
+      "date": "2026-03-24T15:04:19.117829",
+      "type": "rebalance",
+      "content": "SM %50 kısmi kâr alma: 47 adet @ $30.84. RSI 76.6, +%49.25 kazanç. K-11 kuralı. Kalan 47 adet tutulmaya devam."
     }
   ]
 }
