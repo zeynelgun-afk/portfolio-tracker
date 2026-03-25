@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-03-25T16:58:23.193763",
+  "son_guncelleme": "2026-03-25T17:02:42.659787",
   "not": "Tüm portföyler ve swing trade için tek merkezi watchlist. Her adayda hedef_portfoy alanı hangi portföye/stratejiye ait olduğunu belirtir.",
   "iran_krizi_notu": {
     "tarih": "2026-03-01",
@@ -701,6 +701,19 @@
       "hedef_giris": "kumo kırılımı ($641+ üstüne kapanış)",
       "hedef_fiyat": null,
       "stop_loss": 608.94
+    },
+    {
+      "sembol": "POWL",
+      "guncel_fiyat": 587.41,
+      "sektor": "Güç Altyapısı",
+      "hedef_portfoy": "agresif",
+      "notlar": "AI tedarik zinciri: veri merkezi trafo ve güç dağıtım. ichimoku 4/4, OBV yükseliş. 3ay +72%. kijun bounce ($530-540) veya konsolidasyon kırılımı bekleniyor.",
+      "urgency": "high",
+      "ekleme_tarihi": "2026-03-25",
+      "son_kontrol": "2026-03-25",
+      "hedef_giris": "kijun bounce ($530-540)",
+      "hedef_fiyat": null,
+      "stop_loss": 531.25
     }
   ],
   "haric_tutulanlar": [
