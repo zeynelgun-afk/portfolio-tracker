@@ -1,9 +1,10 @@
 # SWING TRADE SİSTEMİ v2.0 — ICHİMOKU + HACİM + ATR
 
-> **versiyon**: 2.0
+> **versiyon**: 2.1
 > **son güncelleme**: 25 mart 2026
 > **önceki sistem**: sabit %5 stop / %10 hedef / RSI+MACD+SMA skor kartı
 > **neden değişti**: ichimoku kendi başına komple bir trend sistemi. sabit stop/hedef ile karıştırmak çelişki yaratıyordu. yeni sistem tamamen dinamik.
+> **v2.1 değişiklik**: TK cross giriş sinyali kaldırıldı (sahte sinyaller), minimum %5 stop mesafesi zorunluluğu eklendi
 
 ---
 
@@ -26,7 +27,7 @@ RSI ve MACD eklenmez. tenkan/kijun kesişimi zaten MACD'nin yaptığını yapıy
 
 ## 1. GİRİŞ SİNYALLERİ
 
-üç giriş tipi var. hepsi ichimoku bazlı, hacim teyidi zorunlu.
+iki giriş tipi var. ikisi de ichimoku bazlı, hacim teyidi zorunlu.
 
 ### 1a. KUMO KIRILIMI (en güçlü sinyal)
 
@@ -41,21 +42,9 @@ fiyat kumo'nun üst kenarını (senkou span A veya B, hangisi üstteyse) yukarı
 
 **güç**: yüksek. kumo kalın ise direnç güçlüydü demek, kırılım anlamlı. kumo ince ise dikkatli ol, sahte kırılım olabilir.
 
-### 1b. TK CROSS (tenkan-kijun kesişimi)
+### ~~1b. TK CROSS~~ (v2.1'de kaldırıldı)
 
-tenkan-sen (9 günlük orta nokta) kijun-sen'i (26 günlük orta nokta) yukarı doğru keser.
-
-**koşullar**:
-- dün tenkan < kijun idi, bugün tenkan > kijun
-- kesişim kumo'nun üzerinde gerçekleşiyor (güçlü sinyal)
-- kesişim kumo içinde (orta sinyal)
-- kesişim kumo altında (zayıf sinyal, genelde girme)
-- **hacim teyidi**: kesişim günü hacim > 20 günlük ortalama hacmin 1.0 katı (normal hacim yeterli)
-
-**güç**: kesişimin konumuna göre değişir:
-- kumo üstü TK cross = güçlü giriş
-- kumo içi TK cross = dikkatli giriş (kumo kırılımını bekle)
-- kumo altı TK cross = girme, sadece izle
+tek başına anlamlı giriş sinyali üretmiyordu. sahte sinyaller çok fazlaydı, özellikle yatay piyasalarda sürekli tetikleniyordu. TK cross aşağı yönlü kesişim çıkış sinyali olarak korunuyor (bölüm 3b).
 
 ### 1c. KİJUN BOUNCE (geri çekilme girişi)
 
@@ -77,6 +66,8 @@ fiyat yükseliş trendinde kijun-sen'e geri çekilir ve oradan seker.
 sabit yüzde yok. stop seviyeleri ichimoku bileşenlerinden türetilir ve ATR ile doğrulanır.
 
 ### stop belirleme hiyerarşisi
+
+**minimum stop mesafesi: %5.** kijun veya kumo bazlı stop ne çıkarsa çıksın, giriş fiyatından %5'ten küçük stop mesafesi olan adaylar elenir. %5'ten dar stop = whipsaw riski çok yüksek, kısa vadeli gürültüye takılma ihtimali artar. bu filtre ATR kontrolünden önce uygulanır.
 
 fiyat kumo üzerindeyse:
 
@@ -220,10 +211,10 @@ sabit rasyolarla otomatik red yok. karar claude'da.
 
 | eski sistem | yeni sistem |
 |-------------|-------------|
-| sabit %5 stop | kijun-sen dinamik stop |
+| sabit %5 stop | kijun-sen dinamik stop (min %5 mesafe zorunlu) |
 | sabit %10 hedef | hedef yok, trend devam ettiği sürece tut |
-| RSI oversold giriş | ichimoku kumo kırılımı / TK cross giriş |
-| MACD teyidi | gereksiz (TK cross = MACD'nin yaptığı) |
+| RSI oversold giriş | ichimoku kumo kırılımı / kijun bounce giriş |
+| MACD teyidi | gereksiz (TK cross kaldırıldı, tek başına anlamlı değildi) |
 | SMA20/50 pozisyon kontrolü | ichimoku kumo bunu zaten yapıyor |
 | SMA200 filtresi | SMA200 uzun vadeli trend filtresi olarak korundu |
 | sabit %5 trailing | kijun-sen doğal trailing |
@@ -265,9 +256,9 @@ yeni/değişen alanlar:
   "hacim_oran": 1.3,
   "obv_trend": "yukselis",
   "tutulan_gun": 0,
-  "giris_nedeni": "ichimoku: kumo kırılımı + TK cross + hacim teyidi 1.3x",
+  "giris_nedeni": "ichimoku: kumo kırılımı + hacim teyidi 1.3x",
   "katalizor": "enerji sektörü güçlü, doğalgaz sıkıştırma talebi artışta",
-  "tez": "ichimoku 3/3 tam yükseliş. düşük beta enerji hizmet şirketi.",
+  "tez": "ichimoku tam yükseliş: kumo üstü + trend yukarı. düşük beta enerji hizmet şirketi.",
   "risk": "enerji fiyatlarında sert düşüş",
   "durum": "✅ normal",
   "son_guncelleme": "2026-03-25T09:00:00"
@@ -298,7 +289,7 @@ yeni/değişen alanlar:
 
 ### seans içi
 4. stop tetiklendi mi → çık
-5. yeni TK cross veya kumo kırılımı var mı → giriş değerlendir
+5. yeni kumo kırılımı veya kijun bounce var mı → giriş değerlendir
 
 ### seans sonrası
 6. `python scripts/swing_ichimoku.py SEMBOL1,SEMBOL2` → aday tarama

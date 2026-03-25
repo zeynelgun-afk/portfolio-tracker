@@ -369,7 +369,7 @@ python scripts/swing_ichimoku.py --aktif
 > - yeni giriş → K-01 (makro veri), K-02 (kriz rallisi), K-03 (VIX + small cap), K-13 (VIX ortam)
 > - çıkış → K-06 (stop override), K-07 (trailing stop), K-08 (momentum yoksa çık), K-09 (stop yakın erken çık)
 > - swing → K-14 (ardışık 3+ zarar → dur)
-> - ichimoku giriş: kumo kırılımı / TK cross / kijun bounce + hacim teyidi + SMA200 filtre
+> - ichimoku giriş: kumo kırılımı / kijun bounce + hacim teyidi + SMA200 filtre
 > - temel analiz: claude hisse bazında değerlendirir, sabit rasyo filtresi yok
 > - kural ihlali gerekiyorsa gerekçeyi açıkça yaz
 
@@ -521,7 +521,7 @@ python scripts/swing_ichimoku.py SEMBOL1,SEMBOL2,...,SEMBOLN
 
 script her sembol için otomatik hesaplar:
 - ichimoku seviyeleri (tenkan, kijun, kumo, chikou)
-- giriş sinyalleri (kumo kırılımı, TK cross, kijun bounce)
+- giriş sinyalleri (kumo kırılımı, kijun bounce)
 - çıkış sinyalleri (kijun altı, TK cross aşağı)
 - hacim analizi (oran, OBV trend, teyit seviyesi)
 - ATR ve dinamik stop seviyesi
@@ -545,7 +545,7 @@ sinyal + temel değerlendirme + portföy dengesi → giriş/bekle/geç kararı.
 
 ```
 giriş koşulları:
-1. ichimoku giriş sinyali var (kumo kırılımı / TK cross / kijun bounce)
+1. ichimoku giriş sinyali var (kumo kırılımı / kijun bounce)
 2. hacim teyidi (en az 1.0x ortalama, ideal 1.2x+)
 3. SMA200 üstünde (altındaysa sadece çok güçlü sinyalle yarım pozisyon)
 4. claude temel değerlendirmesi olumlu

@@ -130,7 +130,7 @@ ADIM 4.5 — İCHİMOKU TARAMA (swing v2.0)
   → ADIM 4'ten geçen adaylar için tam ichimoku tarama:
     python scripts/swing_ichimoku.py SEMBOL1,SEMBOL2,...
   → sonuçları rapora ekle:
-    - "GİRİŞ ✅": kumo kırılımı/TK cross/kijun bounce + hacim teyidi + SMA200 üstü
+    - "GİRİŞ ✅": kumo kırılımı/kijun bounce + hacim teyidi + SMA200 üstü
     - "GİRİŞ ⚠️": sinyal var ama hacim zayıf veya SMA200 altı
     - "TREND DEVAM": kumo üstü ama bugün giriş sinyali yok
     - "BEKLE": sinyal zayıf
@@ -288,7 +288,7 @@ SEMBOL — [şirket]
 
 **[SEMBOL] — detay:**
 - setup: [ne tetikledi — earnings/ürün/sektör rotasyonu]
-- ichimoku: fiyat $XX vs kumo $XX-$XX, tenkan/kijun, sinyal: [kumo kırılımı/TK cross/yok]
+- ichimoku: fiyat $XX vs kumo $XX-$XX, tenkan/kijun, sinyal: [kumo kırılımı/kijun bounce/yok]
 - hacim: X.Xx ortalama, OBV: [yükseliş/düşüş/nötr]
 - stop: $XX (kijun), mesafe: -%X.X, ATR: X.Xx
 - risk/ödül: kijun stop %X.X aşağıda
@@ -317,7 +317,7 @@ SEMBOL — [şirket]
 
 ### bugün izlenecek setup önceliği
 
-1. [SEMBOL] — ichimoku sinyal: [kumo kırılımı/TK cross/kijun bounce] — neden öncelikli
+1. [SEMBOL] — ichimoku sinyal: [kumo kırılımı/kijun bounce] — neden öncelikli
 2. [SEMBOL] — ichimoku sinyal: [tip] — neden öncelikli
 ```
 

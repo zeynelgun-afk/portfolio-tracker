@@ -141,24 +141,9 @@ def detect_entry_signals(ichi):
             "konum": loc,
         })
 
-    # --- TK CROSS (bullish) ---
-    if p['tenkan_prev'] <= p['kijun_prev'] and p['tenkan'] > p['kijun']:
-        # kesişim nerede gerçekleşti?
-        if p['price'] > p['kumo_top']:
-            guc = "yuksek"
-            konum = "kumo_ustu"
-        elif p['price'] > p['kumo_bottom']:
-            guc = "orta"
-            konum = "kumo_icinde"
-        else:
-            guc = "zayif"
-            konum = "kumo_alti"
-        signals.append({
-            "tip": "tk_cross",
-            "guc": guc,
-            "aciklama": f"tenkan (${p['tenkan']:.2f}) kijun'u (${p['kijun']:.2f}) yukarı kesti [{konum}]",
-            "konum": konum,
-        })
+    # --- TK CROSS kaldırıldı (v2.1) ---
+    # tek başına anlamlı sinyal üretmiyordu, sahte sinyaller çoktu.
+    # TK cross aşağı çıkış sinyali olarak korunuyor (detect_exit_signals).
 
     # --- KİJUN BOUNCE ---
     # fiyat kumo üzerinde, kijun'a dokundu ve sıçradı
@@ -614,6 +599,8 @@ def full_analysis(symbol, detay=False):
 
     if pos['konum'] == "kumo_alti" and pos['trend'] == "dusus":
         karar = "GİRME ❌ (kumo altı + düşüş trendi)"
+    elif stop_info['stop_mesafesi_pct'] < 5.0:
+        karar = "GİRME ❌ (stop mesafesi <%5, whipsaw riski yüksek)"
     elif entry_signals:
         en_guclu = max(entry_signals, key=lambda x: {"yuksek": 3, "orta": 2, "zayif": 1}.get(x['guc'], 0))
         if not sma200_above:
