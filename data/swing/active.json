@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-03-25T20:01:45.320389",
+  "son_guncelleme": "2026-03-25T21:02:11.256180",
   "not": "SWING TRADE SADECE SİMÜLASYON - Sadece % kazanç/kayıp takibi (MAX: 8 pozisyon)",
   "aktif_pozisyonlar": [
     {
@@ -7,8 +7,8 @@
       "sembol": "AROC",
       "giris_tarihi": "2026-03-24",
       "giris_fiyati": 37.56,
-      "guncel_fiyat": 36.84,
-      "guncel_kar_zarar_yuzde": -1.92,
+      "guncel_fiyat": 36.86,
+      "guncel_kar_zarar_yuzde": -1.86,
       "hedef_fiyat": 41.32,
       "stop_loss": 35.68,
       "tutulan_gun": 1,
@@ -21,7 +21,7 @@
       "tarama_yontemi": "momentum",
       "teknik_skor": "5.2/7 (%75)",
       "ichimoku_skor": "3/3",
-      "son_guncelleme": "2026-03-25T20:01:45.320389",
+      "son_guncelleme": "2026-03-25T21:02:11.256180",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
