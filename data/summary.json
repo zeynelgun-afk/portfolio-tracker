@@ -1,16 +1,16 @@
 {
   "son_guncelleme": "2026-03-25",
   "toplam_sermaye": 600000,
-  "toplam_deger": 629145.03,
-  "toplam_kar_zarar": 29145.03,
-  "toplam_kar_zarar_yuzde": 4.86,
+  "toplam_deger": 629091.1699999999,
+  "toplam_kar_zarar": 29091.17,
+  "toplam_kar_zarar_yuzde": 4.85,
   "portfolyolar": {
     "dengeli": {
       "isim": "Dengeli Portföy",
-      "deger": 112621.26,
+      "deger": 112703.13,
       "maliyet": 100000,
       "kar_zarar": 12621.259999999995,
-      "kar_zarar_yuzde": 12.62,
+      "kar_zarar_yuzde": 12.7,
       "pozisyon_sayisi": 6,
       "nakit": {
         "miktar": 55001.52,
@@ -19,10 +19,10 @@
     },
     "agresif": {
       "isim": "Agresif Büyüme Portföyü",
-      "deger": 370416.8,
+      "deger": 369929.79,
       "maliyet": 400000,
       "kar_zarar": -29583.20000000001,
-      "kar_zarar_yuzde": -7.4,
+      "kar_zarar_yuzde": -7.52,
       "pozisyon_sayisi": 7,
       "nakit": {
         "miktar": 242799.37,
@@ -31,10 +31,10 @@
     },
     "temettü": {
       "isim": "Değer + Temettü Portföyü",
-      "deger": 146106.97,
+      "deger": 146458.25,
       "maliyet": 100000,
       "kar_zarar": 46106.97,
-      "kar_zarar_yuzde": 46.11,
+      "kar_zarar_yuzde": 46.46,
       "pozisyon_sayisi": 10,
       "nakit": {
         "miktar": 7294.7699999999995,
@@ -43,9 +43,15 @@
     },
     "swing_trade": {
       "isim": "Swing Trade (Simülasyon)",
-      "pozisyon_sayisi": 2,
-      "bos_slot": 8,
+      "pozisyon_sayisi": 1,
+      "bos_slot": 7,
       "durum": "2/10 pozisyon aktif"
     }
-  }
+  },
+  "son_islemler": [
+    "[SATIŞ] CVX 14 adet @ $204.91 - K-11 kısmi kâr alma (Temettü)",
+    "[SWING-ÇIKIŞ] NEM @ $102.59 - ichimoku çıkış +%4.18",
+    "[TRAILING] PLTR, COHR stop güncellendi",
+    "[GÜNCELLEME] Faz 2 fiyat güncellemesi"
+  ]
 }

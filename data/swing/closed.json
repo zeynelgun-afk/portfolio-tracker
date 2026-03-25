@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-03-24",
+  "son_guncelleme": "2026-03-25",
   "kapatilan_pozisyonlar": [
     {
       "id": "SWING-020",
@@ -276,6 +276,19 @@
       "cikis_nedeni": "Stop-loss tetiklendi ($192.81 < SL $193.13)",
       "sonuc": "ZARAR",
       "ders": "savunma sektörü iran savaşı ortamında beklendiği kadar güçlü performans gösteremedi. 12 gün tutuldu, stop düzgün çalıştı."
+    },
+    {
+      "id": "SWING-026",
+      "sembol": "NEM",
+      "giris_tarihi": "2026-03-24",
+      "cikis_tarihi": "2026-03-25",
+      "giris_fiyati": 98.47,
+      "cikis_fiyati": 102.59,
+      "kar_zarar_yuzde": 4.18,
+      "tutulan_gun": 1,
+      "cikis_nedeni": "ichimoku çıkış: kumo altı 0/4, kijun altı %9.5 fark. kârdayken disiplinli çıkış",
+      "sonuc": "KAZANÇ",
+      "ders": "K-17 ihlaliyle giriş kısa vadede kâr getirdi ama ichimoku yapı bozuk. kumo altında giriş yapma"
     }
   ],
   "istatistikler": {

@@ -107,3 +107,4 @@ date,action,symbol,shares,price,total,reason
 2026-03-24,BUY,AROC,1,37.56,37.56,"Swing giriş - K-17 skor 5.2/7 (%75), ichimoku 3/3, enerji momentum, K-13 yarım pozisyon"
 2026-03-25,SELL,SM,15,30.03,450.45,"K-11 kısmi kâr alma: RSI 75.4 + %46.8 kâr. Dengeli portföy"
 2026-03-25,SELL,CVX,14,204.91,2868.74,K-11 kısmi kâr alma - RSI 74.7 +%33.1 kâr - Temettü portföy
+2026-03-25,SELL,NEM,1,102.59,102.59,Swing çıkış - ichimoku 0/4 kumo altı çıkış sinyali

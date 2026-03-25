@@ -1,56 +1,14 @@
 {
-  "son_guncelleme": "2026-03-25T15:01:55.672047",
+  "son_guncelleme": "2026-03-25T15:48:35.315337",
   "not": "SWING TRADE SADECE SİMÜLASYON - Sadece % kazanç/kayıp takibi (MAX: 8 pozisyon)",
   "aktif_pozisyonlar": [
-    {
-      "id": "SWING-026",
-      "sembol": "NEM",
-      "giris_tarihi": "2026-03-24",
-      "giris_fiyati": 98.47,
-      "guncel_fiyat": 102.8,
-      "guncel_kar_zarar_yuzde": 4.4,
-      "hedef_fiyat": 108.3,
-      "stop_loss": 94.07,
-      "tutulan_gun": 1,
-      "giris_nedeni": "Altın $4,431 rekor yakınında iken NEM RSI 31.4 aşırı satım. fiyat-emtia ayrışması sürdürülemez. dünyanın en büyük altın üreticisi.",
-      "katalizor": "Altın rekor seviyeleri, iran savaşı güvenli liman talebi, merkez bankası alımları",
-      "tez": "Altın $4,400+ iken en büyük üreticinin RSI 31'de olması anomali. geri dönüş kaçınılmaz.",
-      "zaman_cercevesi": "7-14 gün",
-      "risk": "Altın fiyatında sert düzeltme, dolar güçlenmesi, genel piyasa satışı",
-      "durum": "✅ Normal aralıkta",
-      "tarama_yontemi": "RSI oversold",
-      "son_guncelleme": "2026-03-25T15:01:55.672047",
-      "partial_exit_plan": {
-        "hedef_ulasildiginda": {
-          "aksiyon": "%50 POZİSYONU SAT",
-          "satis_fiyati": 108.3,
-          "sebep": "Kar garantiye al"
-        },
-        "kalan_50_icin": {
-          "aksiyon": "TRAİLİNG STOP AKTİF",
-          "baslangic_trailing_stop": 102.88,
-          "trailing_yuzde": 5,
-          "aciklama": "Zirveden -%5 düşünce sat"
-        },
-        "durum": "Hedef bekleniyor"
-      },
-      "kijun_sen": 113.16,
-      "tenkan_sen": 105.7,
-      "kumo_ust": 114.61,
-      "kumo_alt": 109.43,
-      "atr_14": 5.2064,
-      "hacim_oran": 1.19,
-      "obv_trend": "dusus",
-      "stop_en_yuksek": 94.07,
-      "stop_tipi": "acil_%5"
-    },
     {
       "id": "SWING-027",
       "sembol": "AROC",
       "giris_tarihi": "2026-03-24",
       "giris_fiyati": 37.56,
-      "guncel_fiyat": 36.84,
-      "guncel_kar_zarar_yuzde": -1.92,
+      "guncel_fiyat": 36.85,
+      "guncel_kar_zarar_yuzde": -1.89,
       "hedef_fiyat": 41.32,
       "stop_loss": 35.68,
       "tutulan_gun": 1,
@@ -63,7 +21,7 @@
       "tarama_yontemi": "momentum",
       "teknik_skor": "5.2/7 (%75)",
       "ichimoku_skor": "3/3",
-      "son_guncelleme": "2026-03-25T15:01:55.672047",
+      "son_guncelleme": "2026-03-25T15:48:35.315337",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
