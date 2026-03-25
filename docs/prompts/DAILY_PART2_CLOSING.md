@@ -6,23 +6,22 @@
 >
 > **zorunlu adımlar (teker teker kontrol et):**
 > - [ ] ADIM 1 — git pull + hazırlık (JSON'ları oku, dünkü raporu kontrol et)
-> - [ ] ADIM 2 — FMP veri toplama (batch-quote, RSI, SMA, emtia, treasury)
+> - [ ] ADIM 2 — FMP veri toplama (batch-quote, portföy: RSI+SMA, swing: ichimoku, emtia, treasury)
 > - [ ] ADIM 3 — JSON güncelleme (fiyatlar, k/z, ağırlıklar, summary.json, git commit)
 > - [ ] ADIM 3.5 — KAZANÇ AÇIKLAMALARI TARAMASI (earnings-calendar, portföy kesişimi, detaylı analiz)
-> - [ ] ADIM 4 — rapor yaz (BÖLÜM 1-5 + BÖLÜM 4a eksiksiz)
+> - [ ] ADIM 4 — rapor yaz (BÖLÜM 1-6 eksiksiz)
 > - [ ] BÖLÜM 1 — günün özeti (piyasa tablosu, sektörler, trend)
 > - [ ] BÖLÜM 2 — portföy takibi (3 portföy + genel özet + uyarılar)
-> - [ ] BÖLÜM 3 — swing trade durumu (aktif pozisyonlar, stop/hedef kontrol)
-> - [ ] BÖLÜM 4 — günün işlemleri
-> - [ ] BÖLÜM 4a — KAZANÇ AÇIKLAMALARI (bugünkü bilançolar, portföy kesişimi analizi)
-> - [ ] BÖLÜM 4b — günün değerlendirmesi (sabah planı vs gerçekleşme, dersler)
-> - [ ] BÖLÜM 5 — sonuç + yarın aksiyonları
+> - [ ] BÖLÜM 3 — swing trade durumu (aktif pozisyonlar, ichimoku kontrol)
+> - [ ] BÖLÜM 4 — kazanç açıklamaları (bugünkü bilançolar, portföy kesişimi analizi)
+> - [ ] BÖLÜM 5 — günün değerlendirmesi (sabah planı vs gerçekleşme, dersler)
+> - [ ] BÖLÜM 6 — sonuç + yarın aksiyonları
 > - [ ] ADIM 5 — PLAYBOOK GÜNCELLE (derslerden yeni kural varsa `docs/TRADING_PLAYBOOK.md`'ye ekle)
 > - [ ] GIT — rapor + playbook commit + push yapıldı mı?
 >
-> **geçmiş hatalar**: bölüm 4a (kazanç açıklamaları) atlandı → Oracle bilançosu ($17.2B gelir, bulut +%84, AH +%6.3) rapordan tamamen eksik kaldı. bölüm 4b ve 5 de eksik yazıldı. bu tür atlamalar portföy kararlarını olumsuz etkiler. her bölümü tamamla.
+> **geçmiş hatalar**: bölüm 4 (kazanç açıklamaları) atlandı → Oracle bilançosu ($17.2B gelir, bulut +%84, AH +%6.3) rapordan tamamen eksik kaldı. bölüm 5 ve 6 da eksik yazıldı. bu tür atlamalar portföy kararlarını olumsuz etkiler. her bölümü tamamla.
 
-> **versiyon**: 1.1 | **son güncelleme**: 24 mart 2026
+> **versiyon**: 1.2 | **son güncelleme**: 25 mart 2026
 > **çıktı dosyası**: `reports/daily/DAILY_REPORT_YYYY-MM-DD.md`
 > **çalışma zamanı**: TR ~09:00 (NYSE dün gece 23:00'da kapandı, bugün 16:30 açılacak — yaz saati)
 > **ön koşul**: part 1 (sabah raporu) aynı gün veya bir önceki gün çalıştırılmış olmalı
@@ -55,7 +54,8 @@ ADIM 1 — GIT PULL + HAZIRLIK
 
 ADIM 2 — FMP VERİ TOPLAMA
   → batch-quote: tüm benzersiz semboller + SPY/QQQ/DIA/IWM
-  → teknik göstergeler: her sembol için RSI(14), SMA(20), SMA(50), SMA(200)
+  → teknik göstergeler (portföy hisseleri): her sembol için RSI(14), SMA(50), SMA(200)
+  → swing pozisyonları için RSI/SMA çekilmez — ichimoku scripti (adım 3) bunu kapsar
   → emtia/döviz: GCUSD, CLUSD, EURUSD
   → treasury-rates
 
@@ -83,12 +83,12 @@ ADIM 3.5 — KAZANÇ AÇIKLAMALARI TARAMASI
       - key-metrics-ttm + ratios-ttm
       - news/stock (limit=5, yönetim yorumu / yönlendirme)
   → KESİŞMEYEN şirketler için: sadece beklenti/gerçek özet tablosu (max 5 şirket)
-  → SONUÇ: kazanç açıklamaları bölümü (bölüm 4a) için veri hazır
+  → SONUÇ: kazanç açıklamaları bölümü (bölüm 4) için veri hazır
 
 ADIM 4 — RAPOR YAZ
-  → bölüm 1-5'i sırayla yaz (format aşağıda)
-  → bölüm 4a kazanç açıklamaları (adım 2.5 verileriyle) ekle
-  → sabah raporundaki planla karşılaştır (bölüm 4)
+  → bölüm 1-6'yı sırayla yaz (format aşağıda)
+  → bölüm 4 kazanç açıklamaları (adım 3.5 verileriyle) ekle
+  → sabah raporundaki planla karşılaştır (bölüm 5)
   → reports/daily/DAILY_REPORT_YYYY-MM-DD.md olarak kaydet
   → GIT COMMIT + PUSH: "[GÜNLÜK RAPOR] DD Ay YYYY - kısa özet"
   → TELEGRAM GÖNDERİMİ (git push'tan SONRA):
@@ -97,7 +97,7 @@ ADIM 4 — RAPOR YAZ
 
 ADIM 5 — PLAYBOOK GÜNCELLE
   → docs/TRADING_PLAYBOOK.md dosyasını oku
-  → bölüm 4b'deki derslerden yeni kural çıkarılacak mı kontrol et:
+  → bölüm 5'teki derslerden yeni kural çıkarılacak mı kontrol et:
     - yeni bir hata kalıbı tespit edildiyse → yeni K-XX kuralı ekle
     - mevcut bir kural teyit edildiyse → kanıt satırına ekle
     - hata tablosuna yeni satır ekle (tarih, hisse, hata, sonuç, kural)
@@ -111,7 +111,7 @@ ADIM 5 — PLAYBOOK GÜNCELLE
 
 ## RAPOR FORMATI
 
-rapor 5 bölümden oluşur. github'a push edilir.
+rapor 6 bölümden oluşur. github'a push edilir.
 
 ---
 
@@ -220,7 +220,7 @@ aktif pozisyonlar, ichimoku çıkış kontrolü, aksiyonlar.
 
 ---
 
-### BÖLÜM 4a: KAZANÇ AÇIKLAMALARI
+### BÖLÜM 4: KAZANÇ AÇIKLAMALARI
 
 bugün kapanış sonrası (veya gün içi) açıklayan şirketlerin analizi.
 
@@ -230,7 +230,7 @@ bugün kapanış sonrası (veya gün içi) açıklayan şirketlerin analizi.
 - kesişim yoksa → sadece öne çıkan 3-5 şirketi özet tablo
 
 ```markdown
-## 4a. kazanç açıklamaları — [tarih]
+## 4. kazanç açıklamaları — [tarih]
 
 ### bugün açıklayanlar (market cap >$2B)
 
@@ -278,12 +278,12 @@ bugün kapanış sonrası (veya gün içi) açıklayan şirketlerin analizi.
 
 ---
 
-### BÖLÜM 4: DÜNÜN DEĞERLENDİRMESİ
+### BÖLÜM 5: GÜNÜN DEĞERLENDİRMESİ
 
 sabah raporundaki plan tuttu mu, dersler.
 
 ```markdown
-## 4. günün değerlendirmesi
+## 5. günün değerlendirmesi
 
 ### sabah planı vs gerçekleşme
 
@@ -308,12 +308,12 @@ sabah raporundaki plan tuttu mu, dersler.
 
 ---
 
-### BÖLÜM 5: YARIN + AKSİYON
+### BÖLÜM 6: YARIN + AKSİYON
 
 özet ve yarın ne yapacağız.
 
 ```markdown
-## 5. sonuç
+## 6. sonuç
 
 ### özet
 
@@ -381,7 +381,7 @@ bu prompt'ta JSON'lar güncellenir. kurallar:
 
 rapor tamamlandığında kontrol et:
 
-- [ ] tüm bölümler (1, 2, 3, 4a, 4, 5) yazıldı mı?
+- [ ] tüm bölümler (1, 2, 3, 4, 5, 6) yazıldı mı?
 - [ ] JSON'lar güncellenip push edildi mi?
 - [ ] tüm semboller güncel fiyatla güncellendi mi?
 - [ ] k/z hesaplamaları tutarlı mı?

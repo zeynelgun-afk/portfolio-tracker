@@ -32,7 +32,7 @@
 >
 > **geçmiş hatalar**: adım atlama maliyetli oldu (örn: kazanç açıklaması taramasını atlama, bölüm eksik bırakma). prompttaki her madde bir sebepten var — atlamak portföy kararlarını olumsuz etkiler.
 
-> **versiyon**: 2.0 | **son güncelleme**: 25 mart 2026
+> **versiyon**: 2.1 | **son güncelleme**: 25 mart 2026
 > **çalışma zamanı**: NYSE açıldıktan sonra (TR 16:30+, yaz saati), tercihen açılıştan 30-60dk sonra
 > **ön koşul**: o günün sabah raporu zaten yazılmış olmalı
 > **perspektif**: PİYASA AÇIK — GERÇEK ZAMANLI KARAR VE AKSİYON
@@ -48,8 +48,9 @@
 > 
 > **seans içinde hiçbir rapor (.md) hazırlanmaz ve githuba gönderilmez.**
 > 
-> repoya gidecek raporlar yalnızca üç türdür:
-> - `DAILY_YYYY-MM-DD.md` → piyasa kapanışı sonrası (gece)
+> repoya gidecek raporlar yalnızca dört türdür:
+> - `DAILY_SABAH_YYYY-MM-DD.md` → piyasa açılmadan önce (sabah raporu)
+> - `DAILY_REPORT_YYYY-MM-DD.md` → piyasa kapanışı sonrası (kapanış raporu)
 > - `WEEKLY_YYYY-MM-DD.md` → pazar günü
 > - `MONTHLY_YYYY-MM.md` → ay sonu
 > 
@@ -94,7 +95,7 @@ FAZ 1: AÇILIŞ (TR 16:30-17:30) — ilk 60 dakika
   - BMO earnings sonuçları (açılış öncesi açıklananlar)
   - sabah raporundaki acil aksiyonları uygula
   - ilk 15dk aşırı volatil olabilir → büyük karar verme, izle
-  - TWİTTER TAKİP LİSTESİ → her açılışta 8 hesabın son tweetlerini çek, portföyle ilgili olanları özetle
+  - TWİTTER TAKİP LİSTESİ → her açılışta 9 hesabın son tweetlerini çek, portföyle ilgili olanları özetle
   
 FAZ 2: MID-SESSION (TR 18:00-21:00) — ana seans
   öncelik: ANALİZ + KARAR
@@ -261,10 +262,11 @@ news = fmp_get("news/stock", {"symbols": ALL_SYMBOLS, "limit": 30})
 @BerkUcmz          → türk finans yorumcusu
 @TrendSpider       → teknik analiz araçları
 @Jake__Wujastyk    → ivme trader / hisse önerileri
+@RyanDetrick       → piyasa istatistikleri / mevsimsellik verileri
 ```
 
 **filtreleme**: portföy sembolleri + genel piyasa yorumlarını öne çıkar
-**toplam**: ~16 RapidAPI çağrısı (her hesap için user id + tweet)
+**toplam**: ~18 RapidAPI çağrısı (her hesap için user id + tweet)
 
 ## 1e. sektör RS analizi (canlı)
 
@@ -298,7 +300,7 @@ sinyaller:
 
 ## 2a. sabah raporu ile karşılaştırma
 
-sabah raporunu oku (`reports/daily/DAILY_REPORT_{TODAY}.md`) ve şu soruları cevapla:
+sabah raporunu oku (`reports/daily/DAILY_SABAH_{TODAY}.md`) ve şu soruları cevapla:
 
 **piyasa beklentisi tuttu mu?**
 - sabah: "futures +%0.3, hafif toparlanma bekleniyor" → gerçek: SPY ?
@@ -587,11 +589,12 @@ giriş koşulları:
 6. kar realizasyonu (özellikle RSI > 75 + hedef aşılmış)
 ```
 
-**satış kararı onay süreci**:
+**satış uygulama süreci** (SEN KARAR VER kuralı geçerli — onay istenmez):
 ```
-- acil satışlar (stop tetiklendi): kullanıcıya bilgi ver, JSON güncelle
-- stratejik satışlar (tez bozulması, rotasyon): kullanıcıya neden+alternatif sun, onay bekle
-- kar alma: kullanıcıya öner, karar kullanıcıda
+- tüm satışlar (acil, stratejik, kar alma) doğrudan uygulanır
+- playbook kurallarıyla çapraz kontrol yap, gerekçeyi chat'te açıkla
+- JSON güncelle, CSV kaydet, git push, telegram bildirim gönder
+- onay istemek = kural ihlali
 ```
 
 ---
@@ -888,4 +891,4 @@ detaylı kurallar: `docs/SELF_VALIDATION.md`
 
 ---
 
-> son güncelleme: 25 mart 2026 | finzora ai
+> son güncelleme: 25 mart 2026 v2.1 | finzora ai

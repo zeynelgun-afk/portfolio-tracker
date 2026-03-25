@@ -19,7 +19,7 @@
 >
 > **geçmiş hatalar**: adım atlama maliyetli oldu (örn: kazanç açıklaması taramasını atlama → Oracle bilançosu rapordan eksik kaldı). bu tür eksiklikler güvenilirliği zedeler. her adımı tamamla, sonra raporu yaz.
 
-> **versiyon**: 2.1 | **son güncelleme**: 24 mart 2026
+> **versiyon**: 2.2 | **son güncelleme**: 25 mart 2026
 > **çıktı dosyası**: `reports/daily/DAILY_SABAH_YYYY-MM-DD.md`
 > **çalışma zamanı**: TR ~14:00 (NYSE dün 23:00'da kapandı, bugün 16:30 açılacak — yaz saati)
 > **amaç**: piyasa analizi + haberler + otomatik tarama sonuçları + günün planı
@@ -74,7 +74,7 @@ ADIM 2 — HABER TOPLAMA
   → websearch: Fed faiz olasılıkları (Kalshi/Polymarket)
 
 ADIM 2.5 — TWİTTER TAKİP LİSTESİ (RapidAPI / twitter241)
-  → aşağıdaki 8 hesabın son tweetlerini çek (her biri için 15-20 tweet)
+  → aşağıdaki 9 hesabın son tweetlerini çek (her biri için 15-20 tweet)
   → portföy sembolleriyle örtüşenleri öne çıkar
   → yorum/fikir içerenleri özetle
   → kaynak: RapidAPI twitter241.p.rapidapi.com
@@ -91,6 +91,7 @@ ADIM 2.5 — TWİTTER TAKİP LİSTESİ (RapidAPI / twitter241)
     @BerkUcmz          → türk finans yorumcusu
     @TrendSpider       → teknik analiz araçları / piyasa gözlemleri
     @Jake__Wujastyk    → momentum trader / hisse önerileri
+    @RyanDetrick       → piyasa istatistikleri / mevsimsellik verileri
 
   ÖNEMLİ: tweet verileri SADECE claude'un bağlamına (context) girer,
   rapora yazılmaz. tweet bilgileri yorumlanarak piyasa değerlendirmelerine,
@@ -116,7 +117,7 @@ ADIM 4 — OTOMATİK SWING TARAMA SONUÇLARI (daily_scan.json)
   ELEME KRİTERLERİ (bu adımda yap):
   - VIX > 30 ise: EP adayları için "yarım pozisyon" notu ekle
   - uyarılar listesi 2'den fazla madde içeriyorsa: "ZAYIF SETUP" işaretle
-  - sma50_uzerinde = false ise: agresif portföy için uyarı ekle
+  - sma200_uzerinde = false ise: uzun vadeli trend aşağı, yarım pozisyon veya geç
   - ep_skoru < 50 veya breakout_skoru < 40 ise: listeye alma
 
   KONTROL: mevcut swing aktif pozisyonlarla (data/swing/active.json)
@@ -369,7 +370,7 @@ SEMBOL — [şirket]
 - amaç: sabah bilgilendirme + günün planını oluşturma + otomatik tarama okuma
 - `daily_scan.json` her gece 00:30 TR'de otomatik güncellenir — fresh data garantili
 - VIX > 30 durumunda swing girişlerinde "yarım pozisyon" varsayılan öneri olsun
-- EP adaylarında "ilk 30 dakika bekle, konfirmasyon al" kuralı her zaman geçerli
+- EP adaylarında "ilk 30 dakika bekle, konfirmasyon al" kuralı seans promptunda uygulanır — sabah planına yaz
 
 ---
 
