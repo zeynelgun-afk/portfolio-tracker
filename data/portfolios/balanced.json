@@ -2,7 +2,7 @@
   "portfoy_adi": "Dengeli Portföy",
   "baslangic_sermaye": 100000,
   "nakit": {
-    "miktar": 54551.07,
+    "miktar": 55001.52,
     "para_birimi": "USD"
   },
   "pozisyonlar": [
@@ -10,19 +10,19 @@
       "sembol": "SM",
       "isim": "SM Energy Company",
       "sektor": "Enerji",
-      "adet": 47,
+      "adet": 32,
       "maliyet_baz": 20.67,
-      "guncel_fiyat": 30.35,
-      "yatirim": 971.49,
-      "guncel_deger": 1426.45,
-      "kar_zarar": 454.96,
-      "kar_zarar_yuzde": 46.83,
-      "gunluk_degisim_yuzde": 4.48,
-      "son_guncelleme": "2026-03-25T06:30:25.971587",
+      "guncel_fiyat": 30.03,
+      "yatirim": 661.44,
+      "guncel_deger": 960.96,
+      "kar_zarar": 299.52,
+      "kar_zarar_yuzde": 45.28,
+      "gunluk_degisim_yuzde": -1.05,
+      "son_guncelleme": "2026-03-25T13:37:51.678281",
       "giris_tarihi": "2026-02-17",
       "giris_fiyati": 20.67,
       "giris_nedeni": "Initial position - Oil & gas E&P",
-      "agirlik_yuzde": 1.27
+      "agirlik_yuzde": 0.86
     },
     {
       "sembol": "MO",
@@ -30,17 +30,17 @@
       "sektor": "Temel Tüketim",
       "adet": 267,
       "maliyet_baz": 67.44,
-      "guncel_fiyat": 64.32,
+      "guncel_fiyat": 63.3,
       "yatirim": 18006.48,
-      "guncel_deger": 17173.44,
-      "kar_zarar": -833.04,
-      "kar_zarar_yuzde": -4.63,
-      "gunluk_degisim_yuzde": -0.11,
-      "son_guncelleme": "2026-03-25T06:30:25.971587",
+      "guncel_deger": 16901.1,
+      "kar_zarar": -1105.38,
+      "kar_zarar_yuzde": -6.14,
+      "gunluk_degisim_yuzde": -1.59,
+      "son_guncelleme": "2026-03-25T13:37:51.678281",
       "giris_tarihi": "2026-02-17",
       "giris_fiyati": 67.44,
       "giris_nedeni": "Initial position - Dividend defensive",
-      "agirlik_yuzde": 15.29
+      "agirlik_yuzde": 15.05
     },
     {
       "sembol": "XLE",
@@ -48,17 +48,17 @@
       "sektor": "Enerji ETF",
       "adet": 139,
       "maliyet_baz": 53.34,
-      "guncel_fiyat": 60.84,
+      "guncel_fiyat": 60.43,
       "yatirim": 7414.26,
-      "guncel_deger": 8456.76,
-      "kar_zarar": 1042.5,
-      "kar_zarar_yuzde": 14.06,
-      "gunluk_degisim_yuzde": 2.03,
-      "son_guncelleme": "2026-03-25T06:30:25.971587",
+      "guncel_deger": 8399.77,
+      "kar_zarar": 985.51,
+      "kar_zarar_yuzde": 13.29,
+      "gunluk_degisim_yuzde": -0.66,
+      "son_guncelleme": "2026-03-25T13:37:51.678281",
       "giris_tarihi": "2026-02-17",
       "giris_fiyati": 53.34,
       "giris_nedeni": "Initial position - Energy sector ETF",
-      "agirlik_yuzde": 7.53
+      "agirlik_yuzde": 7.48
     },
     {
       "sembol": "RGLD",
@@ -66,17 +66,17 @@
       "sektor": "Temel Malzeme",
       "adet": 22,
       "maliyet_baz": 274.4,
-      "guncel_fiyat": 227.38,
+      "guncel_fiyat": 233.6,
       "yatirim": 6036.8,
-      "guncel_deger": 5002.36,
-      "kar_zarar": -1034.44,
-      "kar_zarar_yuzde": -17.14,
-      "gunluk_degisim_yuzde": 2.12,
-      "son_guncelleme": "2026-03-25T06:30:25.971587",
+      "guncel_deger": 5139.2,
+      "kar_zarar": -897.6,
+      "kar_zarar_yuzde": -14.87,
+      "gunluk_degisim_yuzde": 2.74,
+      "son_guncelleme": "2026-03-25T13:37:51.678281",
       "giris_tarihi": "2026-02-17",
       "giris_fiyati": 274.4,
       "giris_nedeni": "Initial position - Gold royalty",
-      "agirlik_yuzde": 4.45
+      "agirlik_yuzde": 4.58
     },
     {
       "sembol": "XLI",
@@ -84,17 +84,17 @@
       "sektor": "Endüstriyel",
       "adet": 85,
       "maliyet_baz": 175.04,
-      "guncel_fiyat": 164,
+      "guncel_fiyat": 165.85,
       "yatirim": 14878.4,
-      "guncel_deger": 13940,
-      "kar_zarar": -938.4,
-      "kar_zarar_yuzde": -6.31,
-      "gunluk_degisim_yuzde": 0.58,
-      "son_guncelleme": "2026-03-25T06:30:25.971587",
+      "guncel_deger": 14097.25,
+      "kar_zarar": -781.15,
+      "kar_zarar_yuzde": -5.25,
+      "gunluk_degisim_yuzde": 1.13,
+      "son_guncelleme": "2026-03-25T13:37:51.678281",
       "giris_tarihi": "2026-02-19",
       "giris_fiyati": 175.04,
       "giris_nedeni": "Otomatik ekleme - Endüstriyel",
-      "agirlik_yuzde": 12.41
+      "agirlik_yuzde": 12.55
     },
     {
       "sembol": "JNJ",
@@ -102,22 +102,22 @@
       "sektor": "Sağlık",
       "adet": 50,
       "maliyet_baz": 244.14,
-      "guncel_fiyat": 235.27,
+      "guncel_fiyat": 236.4,
       "yatirim": 12207.0,
-      "guncel_deger": 11763.5,
-      "kar_zarar": -443.5,
-      "kar_zarar_yuzde": -3.63,
-      "gunluk_degisim_yuzde": -0.06,
-      "son_guncelleme": "2026-03-25T06:30:25.971587",
+      "guncel_deger": 11820.0,
+      "kar_zarar": -387.0,
+      "kar_zarar_yuzde": -3.17,
+      "gunluk_degisim_yuzde": 0.48,
+      "son_guncelleme": "2026-03-25T13:37:51.678281",
       "giris_tarihi": "2026-03-13",
       "giris_fiyati": 244.14,
       "giris_nedeni": "Saglik sektoru diversifikasyonu. Defensif/temettü aristokrati. Iran savasi ortaminda direncli. RSI 59, SMA50 ustu. Portfoyde saglik eksikti.",
-      "agirlik_yuzde": 10.47
+      "agirlik_yuzde": 10.52
     }
   ],
-  "son_guncelleme": "2026-03-25T06:30:25.971587",
-  "toplam_deger": 112313.58,
-  "toplam_getiri_yuzde": 12.31,
+  "son_guncelleme": "2026-03-25T13:37:51.678281",
+  "toplam_deger": 112319.8,
+  "toplam_getiri_yuzde": 12.32,
   "transactions": [
     {
       "tarih": "2026-03-02",
@@ -226,6 +226,15 @@
       "fiyat": 30.84,
       "tutar": 1449.48,
       "aciklama": "K-11 kısmi kâr alma - RSI 76.6 + %49 kazanç - Dengeli portföy"
+    },
+    {
+      "tarih": "2026-03-25",
+      "islem_tipi": "SATIŞ",
+      "sembol": "SM",
+      "adet": 15,
+      "fiyat": 30.03,
+      "tutar": 450.45,
+      "aciklama": "K-11 kısmi kâr alma: RSI 75.4, +%46.8 kâr. %33 pozisyon azaltma"
     }
   ],
   "notes": [
@@ -283,6 +292,11 @@
       "date": "2026-03-24T15:04:19.117829",
       "type": "rebalance",
       "content": "SM %50 kısmi kâr alma: 47 adet @ $30.84. RSI 76.6, +%49.25 kazanç. K-11 kuralı. Kalan 47 adet tutulmaya devam."
+    },
+    {
+      "date": "2026-03-25T13:37:51.678281",
+      "type": "exit",
+      "content": "SM kısmi kâr alma (K-11): RSI 75.4, +%46.8 kâr. 15/47 adet satıldı @ $30.03. Kalan 32 adet tutulmaya devam"
     }
   ]
 }
