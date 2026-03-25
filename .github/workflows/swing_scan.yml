@@ -1,4 +1,4 @@
-name: Günlük Swing Trade Taraması (EP + Breakout)
+name: Günlük Çoklu Portföy Taraması v2.0
 
 on:
   schedule:
@@ -58,8 +58,8 @@ jobs:
           for i in 1 2 3; do
             echo "Deneme $i/3..."
             git pull --rebase origin main || true
-            git add data/swing/daily_scan.json
-            git commit -m "[TARAMA] Swing adayları — $(date +'%d %b %Y')" || true
+            git add data/daily_scan.json
+            git commit -m "[TARAMA] Portfoy taramasi - $(date +'%d %b %Y')" || true
             if git push; then
               echo "✅ Push başarılı"
               exit 0

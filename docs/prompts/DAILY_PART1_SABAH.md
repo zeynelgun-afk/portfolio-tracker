@@ -35,7 +35,7 @@
 - **yaz saati (mart-kasım)**: NYSE açılış 16:30 TR, kapanış 23:00 TR
 - **kış saati (kasım-mart)**: NYSE açılış 17:30 TR, kapanış 00:00 TR
 - FMP fiyatları = dünün kapanışı (kesinleşmiş)
-- `data/swing/daily_scan.json` = dün gece 00:30 TR'de otomatik çalışan tarama sonuçları
+- `data/daily_scan.json` = dün gece 00:30 TR'de otomatik çalışan tarama sonuçları
 
 ---
 
@@ -104,8 +104,8 @@ ADIM 3 — EARNINGS
 
 ADIM 4 — OTOMATİK SWING TARAMA SONUÇLARI (daily_scan.json)
   ─────────────────────────────────────────────────────────
-  → GitHub'dan data/swing/daily_scan.json dosyasını oku
-    URL: https://raw.githubusercontent.com/zeynelgun-afk/portfolio-tracker/main/data/swing/daily_scan.json
+  → GitHub'dan data/daily_scan.json dosyasını oku
+    URL: https://raw.githubusercontent.com/zeynelgun-afk/portfolio-tracker/main/data/daily_scan.json
 
   OKUMA AKIŞI:
   1. dosyayı oku
@@ -380,4 +380,4 @@ SEMBOL — [şirket]
 **TOKEN**: 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
 **RAPIDAPI KEY**: fe410e5222msh20c82b1bc9f4905p10ad02jsnb1c2402c92b7
 **RAPIDAPI HOST**: twitter241.p.rapidapi.com
-**DAILY SCAN**: https://raw.githubusercontent.com/zeynelgun-afk/portfolio-tracker/main/data/swing/daily_scan.json
+**DAILY SCAN**: https://raw.githubusercontent.com/zeynelgun-afk/portfolio-tracker/main/data/daily_scan.json
