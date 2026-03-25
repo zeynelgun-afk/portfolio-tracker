@@ -123,7 +123,7 @@ ADIM 4 — OTOMATİK SWING TARAMA SONUÇLARI (daily_scan.json)
   KONTROL: mevcut swing aktif pozisyonlarla (data/swing/active.json)
   sembol çakışması var mı? varsa listeden çıkar.
 
-ADIM 4.5 — İCHİMOKU TARAMA (swing v2.0)
+ADIM 4.5 — İCHİMOKU TARAMA (swing v2.1)
   → aktif swing pozisyonları için ichimoku seviyeleri güncelle:
     python scripts/swing_ichimoku.py --aktif
     → kijun trailing stop değişti mi? çıkış sinyali var mı?
@@ -348,8 +348,8 @@ SEMBOL — [şirket]
 **[SEMBOL]** — EP / Breakout
 - giriş koşulu: [ilk 30dk bekle, $XX.XX üzerinde konfirmasyon]
 - pozisyon büyüklüğü: [tam / yarım — VIX'e göre]
-- stop: $XX.XX (-%X.X)
-- hedef: $XX.XX (+%X.X, 2R)
+- stop: $XX.XX (kijun/kumo, -%X.X)
+- ichimoku: [sinyal tipi, kumo/kijun seviyeleri]
 
 ### dikkat edilecekler
 

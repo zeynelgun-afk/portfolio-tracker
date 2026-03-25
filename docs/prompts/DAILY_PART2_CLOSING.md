@@ -274,7 +274,7 @@ bugün kapanış sonrası (veya gün içi) açıklayan şirketlerin analizi.
 - beklenti verisi: FMP `analyst-estimates` (en son çeyrek tahmini)
 - gerçek veri: FMP `income-statement` (son çeyrek)
 - kazanç sezonu dışında (Ocak/Nisan/Temmuz/Ekim arası) açıklama sayısı az olabilir — normal
-- AH hareketi: `aftermarket-quote` ile kapanış sonrası fiyat değişimi
+- AH hareketi: web araması ile kapanış sonrası fiyat değişimi (FMP aftermarket-quote seans dışında sıfır dönüyor, kullanma)
 
 ---
 
