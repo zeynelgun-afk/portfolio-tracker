@@ -118,7 +118,7 @@ ADIM 4 — OTOMATİK SWING TARAMA SONUÇLARI (daily_scan.json)
   - VIX > 30 ise: EP adayları için "yarım pozisyon" notu ekle
   - uyarılar listesi 2'den fazla madde içeriyorsa: "ZAYIF SETUP" işaretle
   - sma200_uzerinde = false ise: uzun vadeli trend aşağı, yarım pozisyon veya geç
-  - ep_skoru < 50 veya breakout_skoru < 40 ise: listeye alma
+  - (v1 skor filtresi kaldırıldı — v2'de ichimoku sinyali belirleyici, skor eşiği yok)
 
   KONTROL: mevcut swing aktif pozisyonlarla (data/swing/active.json)
   sembol çakışması var mı? varsa listeden çıkar.
