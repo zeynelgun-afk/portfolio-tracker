@@ -108,3 +108,6 @@ date,action,symbol,shares,price,total,reason
 2026-03-25,SELL,SM,15,30.03,450.45,"K-11 kısmi kâr alma: RSI 75.4 + %46.8 kâr. Dengeli portföy"
 2026-03-25,SELL,CVX,14,204.91,2868.74,K-11 kısmi kâr alma - RSI 74.7 +%33.1 kâr - Temettü portföy
 2026-03-25,SELL,NEM,1,102.59,102.59,Swing çıkış - ichimoku 0/4 kumo altı çıkış sinyali
+2026-03-25,BUY,POWL,34,585.12,19894.08,"Yarım pozisyon - Agresif portföy - AI tedarik zinciri: AI veri merkezi yapım patlaması, elektrik altyapısı darboğaz"
+2026-03-25,BUY,CAMT,114,174.35,19875.90,"Yarım pozisyon - Agresif portföy - AI tedarik zinciri: HBM (yüksek bant genişlikli bellek) üretimi artışı, gelişmiş"
+2026-03-25,BUY,VRT,71,278.52,19774.92,"Yarım pozisyon - Agresif portföy - AI tedarik zinciri: sıvı soğutma talebi patlaması, NVIDIA Blackwell GPU'lar daha"

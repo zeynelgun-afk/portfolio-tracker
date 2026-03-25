@@ -27,7 +27,7 @@
   },
   "baslangic_sermaye": 400000,
   "nakit": {
-    "miktar": 242799.37,
+    "miktar": 183254.47,
     "para_birimi": "USD"
   },
   "pozisyonlar": [
@@ -265,9 +265,75 @@
       "tamamlama_kosulu": "FOMC sonrası 1-2 gün izle, $550-560 geri çekilme olursa tamamla",
       "stop_tipi": "2x_ATR(20.58)",
       "atr_14": 20.58
+    },
+    {
+      "sembol": "POWL",
+      "isim": "Powell Industries",
+      "sektor": "Güç Altyapısı",
+      "adet": 34,
+      "maliyet_baz": 585.12,
+      "guncel_fiyat": 585.12,
+      "yatirim": 19894.08,
+      "guncel_deger": 19894.08,
+      "kar_zarar": 0.0,
+      "kar_zarar_yuzde": 0.0,
+      "gunluk_degisim_yuzde": 0,
+      "son_guncelleme": "2026-03-25T17:12:15.300362",
+      "giris_tarihi": "2026-03-25",
+      "giris_fiyati": 585.12,
+      "giris_nedeni": "AI tedarik zinciri: veri merkezi trafo ve güç dağıtım ekipmanı. ichimoku 4/4 güçlü yükseliş, OBV yükseliş, 3ay +72%. düşük float, güçlü talep. VIX>25 yarım pozisyon.",
+      "katalizor": "AI veri merkezi yapım patlaması, elektrik altyapısı darboğazı",
+      "stop_loss": 521.04,
+      "stop_tipi": "2x_ATR(32.04)",
+      "atr_14": 32.04,
+      "agirlik_yuzde": 5.37
+    },
+    {
+      "sembol": "CAMT",
+      "isim": "Camtek Ltd",
+      "sektor": "Yarı İletken Ekipman",
+      "adet": 114,
+      "maliyet_baz": 174.35,
+      "guncel_fiyat": 174.35,
+      "yatirim": 19875.9,
+      "guncel_deger": 19875.9,
+      "kar_zarar": 0.0,
+      "kar_zarar_yuzde": 0.0,
+      "gunluk_degisim_yuzde": 0,
+      "son_guncelleme": "2026-03-25T17:12:15.300362",
+      "giris_tarihi": "2026-03-25",
+      "giris_fiyati": 174.35,
+      "giris_nedeni": "AI tedarik zinciri: wafer denetim ve ölçüm ekipmanı. ichimoku 4/4 güçlü yükseliş, OBV yükseliş, 3ay +60%. niş oyuncu, HBM ve gelişmiş paketleme için kritik. VIX>25 yarım pozisyon.",
+      "katalizor": "HBM (yüksek bant genişlikli bellek) üretimi artışı, gelişmiş paketleme talebi",
+      "stop_loss": 151.98,
+      "stop_tipi": "2x_ATR(11.18)",
+      "atr_14": 11.18,
+      "agirlik_yuzde": 5.36
+    },
+    {
+      "sembol": "VRT",
+      "isim": "Vertiv Holdings",
+      "sektor": "Güç Altyapısı",
+      "adet": 71,
+      "maliyet_baz": 278.52,
+      "guncel_fiyat": 278.52,
+      "yatirim": 19774.92,
+      "guncel_deger": 19774.92,
+      "kar_zarar": 0.0,
+      "kar_zarar_yuzde": 0.0,
+      "gunluk_degisim_yuzde": 0,
+      "son_guncelleme": "2026-03-25T17:12:15.300362",
+      "giris_tarihi": "2026-03-25",
+      "giris_fiyati": 278.52,
+      "giris_nedeni": "AI tedarik zinciri: veri merkezi soğutma, UPS, güç yönetimi. ichimoku 4/4 güçlü yükseliş, 3ay +66%. hacim ayrışması uyarısı var, bu yüzden yarım pozisyon. VIX>25 de yarım pozisyon destekliyor.",
+      "katalizor": "sıvı soğutma talebi patlaması, NVIDIA Blackwell GPU'lar daha fazla güç+soğutma gerektiriyor",
+      "stop_loss": 250.03,
+      "stop_tipi": "2x_ATR(14.24)",
+      "atr_14": 14.24,
+      "agirlik_yuzde": 5.34
     }
   ],
-  "son_guncelleme": "2026-03-25T16:55:44.109184",
+  "son_guncelleme": "2026-03-25T17:12:15.300362",
   "toplam_deger": 370648.04,
   "toplam_getiri_yuzde": -7.34,
   "notes": [
@@ -705,6 +771,33 @@
       "fiyat": 125.46,
       "tutar": 13675.14,
       "aciklama": "Stop-loss tetiklendi - $125.46 < stop $125.61 - Agresif portföy - Fiber optik"
+    },
+    {
+      "tarih": "2026-03-25",
+      "islem_tipi": "ALIŞ",
+      "sembol": "POWL",
+      "adet": 34,
+      "fiyat": 585.12,
+      "tutar": 19894.08,
+      "aciklama": "Yarım pozisyon giriş - Agresif portföy - AI tedarik zinciri: veri merkezi trafo ve güç dağıtım ekipmanı. ichimoku 4/4 güç"
+    },
+    {
+      "tarih": "2026-03-25",
+      "islem_tipi": "ALIŞ",
+      "sembol": "CAMT",
+      "adet": 114,
+      "fiyat": 174.35,
+      "tutar": 19875.9,
+      "aciklama": "Yarım pozisyon giriş - Agresif portföy - AI tedarik zinciri: wafer denetim ve ölçüm ekipmanı. ichimoku 4/4 güçlü yükseliş"
+    },
+    {
+      "tarih": "2026-03-25",
+      "islem_tipi": "ALIŞ",
+      "sembol": "VRT",
+      "adet": 71,
+      "fiyat": 278.52,
+      "tutar": 19774.92,
+      "aciklama": "Yarım pozisyon giriş - Agresif portföy - AI tedarik zinciri: veri merkezi soğutma, UPS, güç yönetimi. ichimoku 4/4 güçlü "
     }
   ]
 }
