@@ -160,7 +160,7 @@ def get_all_positions():
 # --- MESAJ FORMATLARI ---
 
 def format_session_report(theme=None):
-    """Seans içi özet raporu."""
+    """Seans içi kısa özet. pozisyon detayı yok, sadece toplam + aksiyonlar + dikkat."""
     all_pos, bal, agg, div = get_all_positions()
     swing = load_swing()
 
@@ -172,36 +172,64 @@ def format_session_report(theme=None):
     msg = f"""<b>📊 FİNZORA SEANS RAPORU</b>
 <i>{now}</i>
 
-<b>💰 TOPLAM: ${toplam:,.0f} ({toplam_pct:+.2f}%)</b>
+<b>💰 ${toplam:,.0f} ({toplam_pct:+.2f}%)</b>
+  Dengeli {bal['toplam_getiri_yuzde']:+.1f}% | Agresif {agg['toplam_getiri_yuzde']:+.1f}% | Temettü {div['toplam_getiri_yuzde']:+.1f}%
 """
     if theme:
-        msg += f"\n<b>📌 Günün teması:</b> {theme}\n"
+        msg += f"\n📌 {theme}\n"
 
-    msg += f"""
-<b>▸ Dengeli</b> ${bal['toplam_deger']:,.0f} ({bal['toplam_getiri_yuzde']:+.2f}%)
-"""
-    for p in bal["pozisyonlar"]:
-        e = "🟢" if p["kar_zarar_yuzde"] >= 0 else "🔴"
-        msg += f"  {e} {p['sembol']} ${p['guncel_fiyat']:.2f} ({p['gunluk_degisim_yuzde']:+.1f}%) | PnL: {p['kar_zarar_yuzde']:+.1f}%\n"
+    # günün en iyi/en kötü 3'er pozisyonu
+    movers = sorted(all_pos, key=lambda x: x["gunluk_degisim_yuzde"], reverse=True)
+    best3 = [p for p in movers[:3] if p["gunluk_degisim_yuzde"] > 0]
+    worst3 = [p for p in movers[-3:] if p["gunluk_degisim_yuzde"] < 0]
 
-    msg += f"\n<b>▸ Agresif</b> ${agg['toplam_deger']:,.0f} ({agg['toplam_getiri_yuzde']:+.2f}%)\n"
-    for p in agg["pozisyonlar"]:
-        e = "🟢" if p["kar_zarar_yuzde"] >= 0 else "🔴"
-        msg += f"  {e} {p['sembol']} ${p['guncel_fiyat']:.2f} ({p['gunluk_degisim_yuzde']:+.1f}%) | PnL: {p['kar_zarar_yuzde']:+.1f}%\n"
-    nakit_pct = (agg["nakit"]["miktar"] / agg["toplam_deger"]) * 100
-    msg += f"  💵 Nakit: ${agg['nakit']['miktar']:,.0f} ({nakit_pct:.0f}%)\n"
+    if best3 or worst3:
+        msg += "\n<b>📈 Günün Öne Çıkanları</b>\n"
+        for p in best3:
+            msg += f"  🟢 {p['sembol']} {p['gunluk_degisim_yuzde']:+.1f}% (toplam {p['kar_zarar_yuzde']:+.1f}%)\n"
+        for p in reversed(worst3):
+            msg += f"  🔴 {p['sembol']} {p['gunluk_degisim_yuzde']:+.1f}% (toplam {p['kar_zarar_yuzde']:+.1f}%)\n"
 
-    msg += f"\n<b>▸ Temettü</b> ${div['toplam_deger']:,.0f} ({div['toplam_getiri_yuzde']:+.2f}%)\n"
-    for p in div["pozisyonlar"]:
-        e = "🟢" if p["kar_zarar_yuzde"] >= 0 else "🔴"
-        msg += f"  {e} {p['sembol']} ${p['guncel_fiyat']:.2f} ({p['gunluk_degisim_yuzde']:+.1f}%) | PnL: {p['kar_zarar_yuzde']:+.1f}%\n"
+    # günün işlemleri (summary.json)
+    try:
+        summary = load_json("data/summary.json")
+        son_islemler = summary.get("son_islemler", [])
+        trade_islemler = [i for i in son_islemler if any(
+            t in i for t in ["SATIŞ", "ALIŞ", "SWING", "TRAILING", "STOP"]
+        )]
+        if trade_islemler:
+            msg += "\n<b>📝 Aksiyonlar</b>\n"
+            for islem in trade_islemler[:5]:
+                msg += f"  • {islem}\n"
+    except:
+        pass
+
+    # stop yakını uyarıları
+    alerts = []
+    for p in all_pos:
+        sl = p.get("stop_loss") or p.get("zarar_kes")
+        if sl and p["guncel_fiyat"] > 0:
+            dist_pct = ((p["guncel_fiyat"] - sl) / p["guncel_fiyat"]) * 100
+            if dist_pct < 3:
+                alerts.append((p["sembol"], p["port"], p["guncel_fiyat"], sl, dist_pct))
 
     aktif = swing.get("aktif_pozisyonlar", [])
+    for p in aktif:
+        sl = p.get("stop_loss", 0)
+        if sl and p["guncel_fiyat"] > 0:
+            dist_pct = ((p["guncel_fiyat"] - sl) / p["guncel_fiyat"]) * 100
+            if dist_pct < 3:
+                alerts.append((p["sembol"], "SWG", p["guncel_fiyat"], sl, dist_pct))
+
+    if alerts:
+        msg += "\n<b>🚨 Stop Yakını</b>\n"
+        for sym, port, price, sl, dist in sorted(alerts, key=lambda x: x[4]):
+            msg += f"  {sym} ({port}) ${price:.2f} → SL ${sl:.2f} (%{dist:.1f})\n"
+
+    # swing özet (tek satır)
     if aktif:
-        msg += f"\n<b>▸ Swing ({len(aktif)} aktif)</b>\n"
-        for p in aktif:
-            e = "🟢" if p["guncel_kar_zarar_yuzde"] >= 0 else "🔴"
-            msg += f"  {e} {p['sembol']} ${p['guncel_fiyat']:.2f} | PnL: {p['guncel_kar_zarar_yuzde']:+.1f}% | SL: ${p['stop_loss']}\n"
+        sw_summary = ", ".join(f"{p['sembol']} {p['guncel_kar_zarar_yuzde']:+.1f}%" for p in aktif)
+        msg += f"\n⚡ Swing ({len(aktif)}/8): {sw_summary}\n"
 
     msg += "\n<i>finzora ai</i>"
     return msg
