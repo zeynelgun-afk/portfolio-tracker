@@ -59,6 +59,8 @@ fiyat yükseliş trendinde kijun-sen'e geri çekilir ve oradan seker.
 
 **güç**: trend devamı sinyali. ilk girişi kaçırınca veya ekleme (piramitleme) için kullanılır.
 
+**stop notu**: kijun bounce'ta fiyat kijun'a çok yakın olduğu için kijun bazlı stop mesafesi <%5 çıkar. bu durumda stop otomatik olarak kumo alt kenarına genişletilir (daha geniş stop mesafesi, daha küçük pozisyon boyutu).
+
 ---
 
 ## 2. STOP-LOSS (DİNAMİK)
@@ -67,7 +69,11 @@ sabit yüzde yok. stop seviyeleri ichimoku bileşenlerinden türetilir ve ATR il
 
 ### stop belirleme hiyerarşisi
 
-**minimum stop mesafesi: %5.** kijun veya kumo bazlı stop ne çıkarsa çıksın, giriş fiyatından %5'ten küçük stop mesafesi olan adaylar elenir. %5'ten dar stop = whipsaw riski çok yüksek, kısa vadeli gürültüye takılma ihtimali artar. bu filtre ATR kontrolünden önce uygulanır.
+**minimum %5 stop mesafesi kuralı** (v2.1 ile eklendi): giriş fiyatından %5'ten küçük stop mesafesi olan adaylar elenir. ancak bu kural giriş tipine göre farklı uygulanır:
+
+- **kumo kırılımı**: kijun bazlı stop <%5 ise → giriş reddedilir (whipsaw riski)
+- **kijun bounce**: doğası gereği kijun'a çok yakın olacağı için stop otomatik olarak kumo alt kenarına genişletilir. kumo alt ile bile <%2 kalıyorsa o zaman reddedilir
+- **sinyal yokken**: <%5 stop mesafesi olan hisseler genel olarak reddedilir
 
 fiyat kumo üzerindeyse:
 

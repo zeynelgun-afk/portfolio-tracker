@@ -597,26 +597,50 @@ def full_analysis(symbol, detay=False):
     # karar mantığı (temel analiz claude tarafından ayrıca değerlendirilir)
     sma200_above = sma200_info['above'] if sma200_info else True
 
+    # kijun bounce'ta stop mesafesi dar olacağı için kumo alt'a genişlet
+    effective_stop = stop_info
+    if entry_signals:
+        sinyal_tipleri = [s['tip'] for s in entry_signals]
+        if 'kijun_bounce' in sinyal_tipleri and stop_info['stop_mesafesi_pct'] < 5.0:
+            # kijun bounce: stop'u kumo alt kenarına genişlet
+            kumo_alt_stop_mesafesi = ichi['price'] - ichi['kumo_bottom']
+            kumo_alt_stop_pct = (kumo_alt_stop_mesafesi / ichi['price']) * 100
+            effective_stop = {
+                'stop': round(ichi['kumo_bottom'], 2),
+                'stop_tipi': 'kumo_alt_bounce',
+                'stop_mesafesi': round(kumo_alt_stop_mesafesi, 2),
+                'stop_mesafesi_pct': round(kumo_alt_stop_pct, 2),
+                'atr_check': stop_info['atr_check'],
+            }
+            print(f"\n  ℹ️ kijun bounce: stop kijun→kumo alt genişletildi (${ichi['kijun']:.2f}→${ichi['kumo_bottom']:.2f}, -%{kumo_alt_stop_pct:.1f})")
+
     if pos['konum'] == "kumo_alti" and pos['trend'] == "dusus":
         karar = "GİRME ❌ (kumo altı + düşüş trendi)"
-    elif stop_info['stop_mesafesi_pct'] < 5.0:
-        karar = "GİRME ❌ (stop mesafesi <%5, whipsaw riski yüksek)"
     elif entry_signals:
-        en_guclu = max(entry_signals, key=lambda x: {"yuksek": 3, "orta": 2, "zayif": 1}.get(x['guc'], 0))
-        if not sma200_above:
-            if en_guclu['guc'] == "yuksek" and vol and vol['teyit'] in ('guclu', 'normal'):
-                karar = "GİRİŞ ⚠️ (SMA200 altı, yarım pozisyon)"
-            else:
-                karar = "BEKLE ⏳ (SMA200 altı, güçlü sinyal bekle)"
+        sinyal_tipleri = [s['tip'] for s in entry_signals]
+        # <%5 filtresi sadece kumo kırılımı girişine uygulanır
+        if 'kumo_kirilimi' in sinyal_tipleri and 'kijun_bounce' not in sinyal_tipleri and effective_stop['stop_mesafesi_pct'] < 5.0:
+            karar = "GİRME ❌ (kumo kırılımı + stop mesafesi <%5, whipsaw riski)"
+        elif effective_stop['stop_mesafesi_pct'] < 2.0:
+            karar = "GİRME ❌ (stop mesafesi <%2, kumo genişletme sonrası bile çok dar)"
         else:
-            if en_guclu['guc'] == "yuksek" and vol and vol['teyit'] in ('guclu', 'normal'):
-                karar = "GİRİŞ ✅"
-            elif en_guclu['guc'] == "yuksek" and vol and vol['teyit'] == 'zayif':
-                karar = "GİRİŞ ⚠️ (hacim zayıf, yarım pozisyon)"
-            elif en_guclu['guc'] == "orta":
-                karar = "DİKKATLİ GİRİŞ ⚠️"
+            en_guclu = max(entry_signals, key=lambda x: {"yuksek": 3, "orta": 2, "zayif": 1}.get(x['guc'], 0))
+            if not sma200_above:
+                if en_guclu['guc'] == "yuksek" and vol and vol['teyit'] in ('guclu', 'normal'):
+                    karar = "GİRİŞ ⚠️ (SMA200 altı, yarım pozisyon)"
+                else:
+                    karar = "BEKLE ⏳ (SMA200 altı, güçlü sinyal bekle)"
             else:
-                karar = "BEKLE ⏳ (zayıf sinyal)"
+                if en_guclu['guc'] == "yuksek" and vol and vol['teyit'] in ('guclu', 'normal'):
+                    karar = "GİRİŞ ✅"
+                elif en_guclu['guc'] == "yuksek" and vol and vol['teyit'] == 'zayif':
+                    karar = "GİRİŞ ⚠️ (hacim zayıf, yarım pozisyon)"
+                elif en_guclu['guc'] == "orta":
+                    karar = "DİKKATLİ GİRİŞ ⚠️"
+                else:
+                    karar = "BEKLE ⏳ (zayıf sinyal)"
+    elif stop_info['stop_mesafesi_pct'] < 5.0 and not entry_signals:
+        karar = "GİRME ❌ (stop mesafesi <%5, whipsaw riski yüksek)"
     elif pos['genel'] in ('guclu_yukselis', 'yukselis') and not exit_signals:
         karar = "TREND DEVAM — giriş sinyali bekle"
     elif exit_signals:
@@ -641,6 +665,7 @@ def full_analysis(symbol, detay=False):
         "entry_signals": entry_signals,
         "exit_signals": exit_signals,
         "stop": stop_info,
+        "effective_stop": effective_stop,
         "karar": karar,
     }
 
