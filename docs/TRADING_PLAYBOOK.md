@@ -110,6 +110,7 @@ her hata tarih, ne olduğu, neden yanlış olduğu ve çıkarılan kuralla kayde
 | 18 mart | RKLB | momentum hissesinde arz riski değerlendirilmedi | -%11.59 (pozisyon küçük) | K-15 (yeni) |
 | 18 mart | MU | canavar beat ama AH sınırlı tepki | +%1.27 (beklenti altı) | K-16 (yeni gözlem) |
 | 17 şub-11 mart | T | 22 gün tutma, savunmacı tez çalışmadı | -%5.5 | K-08 |
+| 24 mart | NEM | K-17 skor %18 (min %50 gerekli) ile giriş, ichimoku 0/3 | devam izleniyor | K-17 ihlali |
 
 ---
 
@@ -127,6 +128,7 @@ neyin iyi çalıştığını da kaydet — tekrar et.
 | erken disiplinli çıkış (stop yakın) | AMKR, GE | daha büyük zarardan korudu |
 | kriz ortamında sağlık diversifikasyonu | JNJ eklendi, portföy dengesi | risk-off koruması güçleniyor |
 | AI tedarik zinciri katalizör pozisyonlama | GTC 2026: MRVL +%4.2, RKLB +%4.2, COHR +%1.9, GLW +%2.3, ANET +%1.3 tek günde | katalizör öncesi yarim pozisyon, doğrulanınca artır stratejisi çalışıyor |
+| stop-loss disiplini (override yok) | RTX -%5.16 stop tetiklendi, K-06'ya uyuldu (24 mart) | kontrollü zarar, daha büyük kayıp önlendi |
 
 ---
 
@@ -304,4 +306,4 @@ her seans oncesi ve swing giris karari oncesi bu scripti calistir.
 
 ---
 
-*finzora ai | son güncelleme: 24 mart 2026*
+*finzora ai | son güncelleme: 25 mart 2026*
