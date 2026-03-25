@@ -14,7 +14,7 @@
 > - [ ] ADIM 4.5 — ichimoku tarama (swing_ichimoku.py — adaylar + aktif pozisyonlar)
 > - [ ] ADIM 5 — finviz tarama (teyit katmanı)
 > - [ ] ADIM 6 — analiz, plan ve kayıt (playbook kurallarını planla çapraz kontrol et)
-> - [ ] RAPOR — tüm bölümler (1-5) eksiksiz yazıldı mı?
+> - [ ] RAPOR — tüm bölümler (0-5) eksiksiz yazıldı mı?
 > - [ ] GIT — commit + push yapıldı mı?
 >
 > **geçmiş hatalar**: adım atlama maliyetli oldu (örn: kazanç açıklaması taramasını atlama → Oracle bilançosu rapordan eksik kaldı). bu tür eksiklikler güvenilirliği zedeler. her adımı tamamla, sonra raporu yaz.
@@ -122,7 +122,7 @@ ADIM 4 — OTOMATİK SWING TARAMA SONUÇLARI (daily_scan.json)
   2. piyasa_ozeti → vix_kritik veya vix_uyarisi varsa önce belirt
   3. ep_adaylari → skora göre sıralı, en yüksek 5'i al
   4. breakout_adaylari → skora göre sıralı, en yüksek 5'i al
-  5. her aday için: seviyeler (giriş/stop/2R/3R), uyarılar, hacim katsayısı
+  5. her aday için: seviyeler (giriş/stop/kijun/kumo), uyarılar, hacim katsayısı
 
   ELEME KRİTERLERİ (bu adımda yap):
   - VIX > 30 ise: EP adayları için "yarım pozisyon" notu ekle
@@ -166,7 +166,7 @@ ADIM 6 — ANALİZ, PLAN VE KAYIT
   → PLAYBOOK ÇAPRAZ KONTROL: günün planındaki her aksiyonu docs/TRADING_PLAYBOOK.md kurallarıyla kontrol et
     - yeni giriş planlıyorsan: K-01 (makro veri), K-02 (kriz rallisi), K-03 (VIX+small cap), K-13 (VIX ortam)
     - çıkış planlıyorsan: K-06 (stop override), K-07 (trailing stop), K-08 (momentum), K-09 (stop yakın)
-    - swing planlıyorsan: K-14 (ardışık zarar → dur), ichimoku giriş sinyali zorunlu
+    - swing planlıyorsan: K-14 (ardışık zarar → dur), ichimoku giriş sinyali veya trend devam girişi (4/4 bullish)
     - temel analiz: claude hisse bazında değerlendirir, sabit rasyo filtresi yok
     - kural ihlali varsa raporda açıkça belirt ve gerekçelendir
   → raporu yaz (aşağıdaki format)

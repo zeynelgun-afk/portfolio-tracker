@@ -1,4 +1,4 @@
-# SEANS İÇİ AKSİYON PROMPT — v1.3
+# SEANS İÇİ AKSİYON PROMPT — v2.1
 
 > ⛔ **KRİTİK: AŞAMA ATLAMA YASAĞI**
 >
@@ -121,7 +121,7 @@ aynı seansta 2. veya 3. kez çalıştırıldığında tam veri toplama gereksiz
 
 ```
 İLK ÇALIŞTIRMA (FAZ 1):
-  → tam veri toplama: ~88 FMP + 6-9 websearch
+  → tam veri toplama: ~67 FMP + 6-9 websearch
   
 TEKRAR ÇALIŞTIRMA (FAZ 2/3):
   → sadece değişenleri çek:
@@ -199,7 +199,7 @@ losers = fmp_get("biggest-losers", {"limit": 10})
 # 3 portföy JSON + swing active.json oku
 # benzersiz sembol listesi çıkar
 # batch quote çek
-quotes = fmp_get("batch-quote", {"symbols": "SM,KOS,MO,XLE,RGLD,..."})
+quotes = fmp_get("batch-quote", {"symbols": "COHR,MRVL,PLTR,POWL,CAMT,VRT,..."})
 ```
 
 **her sembol için teknik göstergeler**:
@@ -210,7 +210,7 @@ for symbol in unique_symbols:
     sma200 = fmp_get("technical-indicators/sma", {"symbol": symbol, "periodLength": 200, "timeframe": "1day"})
 ```
 
-**toplam**: ~1 (batch) + 3×N (teknik) — N = benzersiz sembol sayısı (~25 = ~76 call)
+**toplam**: ~1 (batch) + 3×N (teknik) — N = benzersiz sembol sayısı (~18 = ~54 call)
 
 ## 1c. piyasa istihbaratı + prediction markets + haber
 
@@ -300,12 +300,12 @@ sinyaller:
 | endeks + emtia + forex | ~8 |
 | sektör + movers | ~3 |
 | portföy batch quote | ~1 |
-| teknik göstergeler (25 sembol × 3) | ~75 |
+| teknik göstergeler (18 sembol × 3) | ~54 |
 | haberler | ~1 |
-| **FMP toplam** | **~88** |
+| **FMP toplam** | **~67** |
 | **websearch** | **4-7** |
 
-⚠️ sabah raporu ~100 call kullandıysa, günlük toplam ~190 / 2,500 limit = **%7.6** (güvenli)
+⚠️ sabah raporu ~80 call kullandıysa, günlük toplam ~150 / 2,500 limit = **%6** (güvenli)
 
 ---
 
@@ -617,13 +617,13 @@ C) ORTAK KOŞULLAR (her giriş için):
 - P/E makul (<25), momentum pozitif
 - mevcut sektör dağılımıyla çakışmayan
 
-**agresif portföy** ($400K): aylık %5 hedef, 3 sinyal tipi
-- earnings momentum: beat >%15, guidance yükseltme, post-earnings pullback'te giriş
-- breakout: 52W high yakını, dar range konsolidasyon, volume 1.5x+
-- mean reversion: RSI <30, SMA200 üzeri, sektör/piyasa kaynaklı düşüş (hisse bazlı değil)
-- pozisyon büyüklüğü: $40K-$60K (%10-15), max 10 eşzamanlı pozisyon
-- nakit oranı yüksekse ve kaliteli sinyal varsa → kademeli giriş fırsatı
-- trade execution kuralları: `docs/AGGRESSIVE_MOMENTUM_STRATEGY.md`
+**agresif portföy** ($400K): AI tedarik zinciri tematik, yıllık %30+ hedef
+- tedarik zinciri katmanlarından (ekipman, kimya, güç, optik, soğutma) güçlü hisseler
+- ichimoku 4/4 bullish veya sinyal bazlı giriş
+- pozisyon büyüklüğü: $20K-$70K, max 6 eşzamanlı pozisyon
+- stop: 2x ATR(14) trailing
+- nakit oranı yüksekse ve kaliteli setup varsa → kademeli giriş
+- zayıfı kes, kazananı büyüt prensibi
 
 **değer + temettü portföyü** ($100K): düşük P/E, yüksek temettü, güçlü FCF
 - P/E < 20, temettü yield > %3
@@ -708,7 +708,7 @@ for swing active:
 - her adayın hedef_portfoy alanını kontrol et (swing/agresif/dengeli/temettü)
 - artık geçerli olmayan adayları haric_tutulanlar'a taşı (neden ile)
 - yeni aday varsa ekle (zorunlu alanlar: sembol, guncel_fiyat, sektor, hedef_portfoy, hedef_giris, hedef_fiyat, stop_loss, urgency, ekleme_tarihi)
-- portföy watchlist adayları da burada (IREN, AVGO, AMD vb.)
+- portföy ve tedarik zinciri adayları da burada (AMAT, KLAC, LITE, COP, LMT vb.)
 
 ⚠️ ÖNEMLİ: data/swing/watchlist.json KALDIRILDI — artık tek watchlist data/watchlist.json
 ⚠️ ÖNEMLİ: portföy JSON'larında watchlist[] KULLANILMAZ — her şey merkezi dosyada

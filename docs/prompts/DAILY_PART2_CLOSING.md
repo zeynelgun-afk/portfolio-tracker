@@ -55,6 +55,7 @@ ADIM 1 — GIT PULL + HAZIRLIK
 ADIM 2 — FMP VERİ TOPLAMA
   → batch-quote: tüm benzersiz semboller + SPY/QQQ/DIA/IWM
   → teknik göstergeler (portföy hisseleri): her sembol için RSI(14), SMA(50), SMA(200)
+  → agresif portföy stopları: 2x ATR(14) trailing (FMP historical-price ile ATR hesapla)
   → swing pozisyonları için RSI/SMA çekilmez — ichimoku scripti (adım 3) bunu kapsar
   → emtia/döviz: GCUSD, CLUSD, EURUSD
   → treasury-rates
@@ -158,9 +159,9 @@ kısa, hızlı özet — bugün ne oldu.
 
 ### 2a. dengeli portföy ($100K başlangıç)
 
-| sembol | fiyat | günlük | k/z | RSI | 20 | 50 | 200 | durum |
-|--------|-------|--------|-----|-----|----|----|-----|-------|
-| SM | $XX.XX | +X.X% | +X% | XX | ✅ | ✅ | ✅ | [not] |
+| sembol | fiyat | günlük | k/z | RSI | 50 | 200 | durum |
+|--------|-------|--------|-----|-----|----|-----|-------|
+| SM | $XX.XX | +X.X% | +X% | XX | ✅ | ✅ | [not] |
 
 **toplam**: $XXX,XXX (+%X.XX) | **nakit**: $X,XXX | **pozisyon**: X
 
