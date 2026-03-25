@@ -201,7 +201,7 @@ def ep_tara():
         skor = _ep_skoru_hesapla(
             degisim, g["dollar_volume"], close_gt_yest_high,
             avg_volume, hacim=guvenli_float(g.get("volume")),
-            price_50ma=price_50ma, fiyat=fiyat
+            price_200ma=price_200ma, fiyat=fiyat
         )
 
         # Seviyeler: giriş = today close, stop = today low
@@ -251,7 +251,7 @@ def ep_tara():
     adaylar.sort(key=lambda x: x["ep_skoru"], reverse=True)
     return adaylar[:MAX_ADAY]
 
-def _ep_skoru_hesapla(degisim, dol_hacim, close_gt_high, avg_vol, hacim, price_50ma, fiyat):
+def _ep_skoru_hesapla(degisim, dol_hacim, close_gt_high, avg_vol, hacim, price_200ma, fiyat):
     skor = 0
     # Değişim büyüklüğü (0-30 puan)
     if degisim >= 20:      skor += 30
@@ -271,8 +271,8 @@ def _ep_skoru_hesapla(degisim, dol_hacim, close_gt_high, avg_vol, hacim, price_5
         elif kat >= 3:  skor += 15
         elif kat >= 2:  skor += 10
         elif kat >= 1.5:skor += 5
-    # SMA50 üzerinde mi (0-10 puan)
-    if price_50ma > 0 and fiyat > price_50ma:
+    # SMA200 üzerinde mi (0-10 puan) — uzun vadeli trend filtresi
+    if price_200ma > 0 and fiyat > price_200ma:
         skor += 10
     return min(skor, 100)
 
@@ -400,7 +400,7 @@ def breakout_tara():
 
         skor = _breakout_skoru_hesapla(
             hacim_katsayisi, base_genislik, trend_yukari,
-            fiyat, price_50ma, price_200ma, bugun_close, n_gun_high
+            fiyat, price_200ma, bugun_close, n_gun_high
         )
 
         # 52h konumu
@@ -448,7 +448,7 @@ def breakout_tara():
     return adaylar[:MAX_ADAY]
 
 def _breakout_skoru_hesapla(hacim_kat, base_genislik, trend_yukari,
-                              fiyat, sma50, sma200, bugun_close, n_gun_high):
+                              fiyat, sma200, bugun_close, n_gun_high):
     skor = 0
     # Hacim katsayısı (0-30 puan)
     if hacim_kat >= 4:    skor += 30
@@ -463,8 +463,8 @@ def _breakout_skoru_hesapla(hacim_kat, base_genislik, trend_yukari,
     # Trend (0-20 puan)
     if trend_yukari is True:  skor += 20
     elif trend_yukari is None:skor += 10
-    # SMA50 üzerinde (0-15 puan)
-    if sma50 > 0 and fiyat > sma50:  skor += 15
+    # SMA200 üzerinde (0-15 puan) — uzun vadeli trend filtresi
+    if sma200 > 0 and fiyat > sma200:  skor += 15
     # Kırılım gücü: kapanış ne kadar üzerinde (0-15 puan)
     if n_gun_high > 0:
         kiriim_yuzde = ((bugun_close - n_gun_high) / n_gun_high) * 100
