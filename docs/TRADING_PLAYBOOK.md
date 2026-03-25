@@ -234,75 +234,29 @@ piyasa ortamına göre hangi sektör nasıl davranıyor.
 
 ---
 
-## 3. SWING TRADE TEKNİK GİRİŞ SİSTEMİ (K-17)
+## 3. SWING TRADE SİSTEMİ
 
-> ekleme: 24 mart 2026
-> kanıt: NEM swing girişi (24 mart). RSI 31 + fundamental güçlü ama ichimoku 0/3, tüm SMA altında, MACD negatif. toplam skor 1.2/7 (%18). düşen bıçak riski.
-> araç: scripts/swing_technical.py
+### v2.0 — ichimoku + hacim + ATR (25 mart 2026~)
 
-### kural
+> **tam doküman**: `docs/SWING_SYSTEM_V2.md`
+> **araç**: `scripts/swing_ichimoku.py`
+> **neden değişti**: v1'de ichimoku'yu sabit %5 stop / %10 hedef ile karıştırıyorduk. ichimoku kendi başına komple bir trend sistemi. sabit kurallarla karıştırmak çelişki yaratıyordu (NEM örneği: ichimoku 0/3 "girme" diyor, RSI oversold tezi "gir" diyordu).
 
-swing trade girişlerinde temel analiz aday havuzunu oluşturur, teknik analiz giriş zamanlamasını belirler. **minimum %50 teknik skor** (3.5/7) gerekli.
+**v2 özeti**:
+- giriş: kumo kırılımı / TK cross / kijun bounce (ichimoku sinyalleri)
+- stop: kijun-sen dinamik (sabit %5 yok)
+- hedef: yok, trend devam ettiği sürece tut (sabit %10 yok)
+- trailing: kijun-sen doğal trailing (sabit % yok)
+- süre: sınır yok, trend bitene kadar tut
+- hacim: giriş teyidi + OBV trendi
+- ATR: pozisyon boyutlandırma + stop mesafesi doğrulama
+- RSI/MACD/SMA: kullanılmıyor (ichimoku zaten hepsini kapsıyor)
 
-### puanlama sistemi (7 puan üzerinden)
+### v1 (eski, 24 mart 2026'ya kadar)
 
-**ichimoku bulutu (3 puan)**
-1. fiyat vs kumo: fiyat > kumo (+1), kumo icinde (+0.5), kumo altında (0)
-2. tenkan-kijun kesisimi: tenkan > kijun (+1), yaklaşıyor (+0.5), tenkan < kijun (0)
-3. chikou span: mevcut fiyat > 26 gün önceki fiyat (+1), altında (0)
-
-**klasik göstergeler (4 puan)**
-4. RSI donuş teyidi (+1): 30 altından 30 üzerine çıkış veya yükselen RSI trendi (+0.5)
-5. MACD: bullish cross (+1), histogram yükseliyor (+0.5), toparlanma başlıyor (+0.25)
-6. SMA pozisyonu: fiyat > SMA20 (+0.5) + fiyat > SMA50 (+0.5)
-7. hacim: 1.5x ortalama + pozitif gün (+1), 1.2x + pozitif (+0.5)
-
-### karar eşikleri
-
-| skor | yüzde | karar |
-|------|-------|-------|
-| 5.0+ | %70+ | giris uygun |
-| 3.5-4.9 | %50-69 | dikkatli giris (yakin izle, yarim pozisyon) |
-| 2.0-3.4 | %28-49 | erken, bekle (donus teyidi yok) |
-| 0-1.9 | %0-27 | girme (trend dusus) |
-
-### özel durumlar
-
-- ichimoku 0/3 = giris yapma, diger skor ne olursa olsun (trend kesinlikle dusus)
-- ichimoku 3/3 + RSI > 70 = asiri alim, geri cekilme bekle
-- VIX > 25 ise %70+ skor bile olsa yarim pozisyonla gir (K-13)
-- fundamental cok guclu ama teknik zayifsa → watchlist'te tut, teknik donus bekle
-
-### temel analiz filtresi (geçer/kalır)
-
-teknik skor ne kadar yüksek olursa olsun, temel analiz filtresi kaldıysa giris yapilmaz.
-
-**kontrol edilen metrikler:**
-- net marj: negatif = kirmizi bayrak
-- gelir buyume YoY: kuculuyor = kirmizi bayrak
-- net kar trendi: 3 ceyrek dusus = uyari
-- D/E orani: >3 = otomatik red, >2 = uyari
-- nakit/borc orani: <%1 = kritik uyari
-- FCF (TTM): negatif = kirmizi bayrak
-- analist konsensus: sat agirlikli = uyari
-
-**red kosullari:**
-- D/E > 3 → otomatik red
-- 2 veya daha fazla kritik bayrak → red
-- teknik %70+ ama temel kritik bayrakli → "dikkatli giris" (tam giris degil)
-
-**kanit:**
-- AROC (24 mart): teknik %75, ichimoku 3/3 ama nakit/borc %0.1 kritik. tam giris yerine dikkatli giris sinyali
-- NEM (24 mart): temel guclu (D/E 0.01, FCF $10B+) ama teknik %18. iki katman birlikte calismali
-
-### kullanim
-
-```bash
-python scripts/swing_technical.py NEM,ONTO,AROC     # belirli hisseler
-python scripts/swing_technical.py --watchlist         # tum watchlist
-```
-
-her seans oncesi ve swing giris karari oncesi bu scripti calistir.
+> v1 artık kullanılmıyor. skor kartı sistemi (7 puan, sabit %5/%10) ichimoku ile çelişiyordu.
+> eski script `scripts/swing_technical.py` referans olarak saklanıyor.
+> v1 detayları: git log'dan 24 mart 2026 öncesi commitlerde mevcut.
 
 ---
 

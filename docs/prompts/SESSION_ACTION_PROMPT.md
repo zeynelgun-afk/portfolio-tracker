@@ -409,7 +409,7 @@ her swing pozisyonu için:
 
 ```
 0. TEKNİK SKOR TAKİBİ (K-17)
-   python scripts/swing_technical.py SEMBOL
+   python scripts/swing_ichimoku.py SEMBOL
    → skor iyileşiyor mu kötüleşiyor mu? (önceki seans ile karşılaştır)
    → ichimoku sinyalleri değişti mi?
    → NOT: mevcut pozisyonlarda düşük skor = otomatik sat DEĞİL
@@ -478,12 +478,12 @@ kontrol 3: yön korelasyonu
 - fiyat SMA50 üzerinde (veya SMA50'ye yaklaşan dönüş teyidi olan dip alım)
 - 5 günlük momentum > +%3
 - mevcut açık slot var mı? (max 8 - aktif sayı = boş slot)
-- K-17 teknik skor >= %50 (swing_technical.py çalıştır)
+- ichimoku giriş sinyali + hacim teyidi (swing_ichimoku.py çalıştır)
 ```
 
 **her aday için zorunlu analiz**:
 ```
-1. TEKNİK SKOR (K-17): python scripts/swing_technical.py SEMBOL
+1. TEKNİK SKOR (K-17): python scripts/swing_ichimoku.py SEMBOL
    → ichimoku (3p) + RSI (1p) + MACD (1p) + SMA (1p) + hacim (1p) = 7p
    → skor < %50 (3.5/7) → GİRME, watchlist'te tut
    → ichimoku 0/3 → OTOMATIK RED (trend kesinlikle düşüş)

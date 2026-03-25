@@ -63,7 +63,7 @@ ADIM 3 — JSON GÜNCELLEME
   → her pozisyon: guncel_fiyat, gunluk_degisim_yuzde, guncel_deger, kar_zarar, kar_zarar_yuzde, agirlik_yuzde, son_guncelleme
   → portföy toplamları: toplam_deger, toplam_getiri_yuzde
   → swing: guncel_fiyat, guncel_kar_zarar_yuzde, tutulan_gun, stop/hedef kontrol
-  → swing teknik skor: python scripts/swing_technical.py [aktif swing semboller]
+  → swing teknik skor: python scripts/swing_ichimoku.py [aktif swing semboller]
     (ichimoku + RSI + MACD + SMA + hacim, kapanış raporunda skor değişimi takibi)
   → summary.json güncelle
   → doğrulama: yatirim = adet × maliyet_baz, toplam = sum(pozisyonlar) + nakit, ağırlık ≈ %100
@@ -198,7 +198,7 @@ aktif pozisyonlar, stop/hedef kontrolü, aksiyonlar.
 ```markdown
 ## 3. swing trade durumu
 
-> teknik skor: python scripts/swing_technical.py [aktif semboller]
+> teknik skor: python scripts/swing_ichimoku.py [aktif semboller]
 
 | id | sembol | giriş | güncel | k/z | stop | hedef | gün | K-17 skor | ichimoku | durum |
 |----|--------|-------|--------|-----|------|-------|-----|-----------|----------|-------|
@@ -360,8 +360,8 @@ bu prompt'ta JSON'lar güncellenir. kurallar:
 - `guncel_fiyat`, `guncel_kar_zarar_yuzde`, `tutulan_gun` güncelle
 - trailing stop sadece yukarı yönde güncellenir
 - stop tetiklendi mi, hedef ulaşıldı mı kontrol et
-- `python scripts/swing_technical.py [aktif semboller]` çalıştır
-  → K-17 skorunu rapora yaz (önceki seansla karşılaştır)
+- `python scripts/swing_ichimoku.py [aktif semboller]` çalıştır
+  → ichimoku seviyelerini rapora yaz (önceki seansla karşılaştır)
   → ichimoku iyileşme: trend dönüş sinyali olabilir
   → ichimoku kötüleşme: trailing sıkılaştır
 

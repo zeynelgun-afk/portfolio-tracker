@@ -11,7 +11,7 @@
 > - [ ] ADIM 2.5 — twitter takip listesi (RapidAPI ile hesap taraması)
 > - [ ] ADIM 3 — earnings takvimi (FMP earnings-calendar, market cap filtresi)
 > - [ ] ADIM 4 — otomatik swing tarama sonuçları (daily_scan.json oku)
-> - [ ] ADIM 4.5 — teknik skor kontrolü K-17 (swing_technical.py — adaylar + aktif pozisyonlar)
+> - [ ] ADIM 4.5 — teknik skor kontrolü K-17 (swing_ichimoku.py — adaylar + aktif pozisyonlar)
 > - [ ] ADIM 5 — finviz tarama (teyit katmanı)
 > - [ ] ADIM 6 — analiz, plan ve kayıt (playbook kurallarını planla çapraz kontrol et)
 > - [ ] RAPOR — tüm bölümler (1-5) eksiksiz yazıldı mı?
@@ -124,7 +124,7 @@ ADIM 4 — OTOMATİK SWING TARAMA SONUÇLARI (daily_scan.json)
 
 ADIM 4.5 — TEKNİK SKOR KONTROLÜ (K-17)
   → ADIM 4'ten geçen adaylar + mevcut aktif swing pozisyonları için:
-    python scripts/swing_technical.py SEMBOL1,SEMBOL2,...
+    python scripts/swing_ichimoku.py SEMBOL1,SEMBOL2,...
   → ichimoku (3p) + RSI (1p) + MACD (1p) + SMA (1p) + hacim (1p) = 7p + temel filtre (geçer/kalır)
   → sonuçları rapora ekle:
     - skor >= %70: "GİRİŞ UYGUN" işaretle
