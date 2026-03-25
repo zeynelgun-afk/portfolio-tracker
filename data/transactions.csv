@@ -111,3 +111,19 @@ date,action,symbol,shares,price,total,reason
 2026-03-25,BUY,POWL,34,585.12,19894.08,"Yarım pozisyon - Agresif portföy - AI tedarik zinciri: AI veri merkezi yapım patlaması, elektrik altyapısı darboğaz"
 2026-03-25,BUY,CAMT,114,174.35,19875.90,"Yarım pozisyon - Agresif portföy - AI tedarik zinciri: HBM (yüksek bant genişlikli bellek) üretimi artışı, gelişmiş"
 2026-03-25,BUY,VRT,71,278.52,19774.92,"Yarım pozisyon - Agresif portföy - AI tedarik zinciri: sıvı soğutma talebi patlaması, NVIDIA Blackwell GPU'lar daha"
+2026-03-25,SELL,GILT,1378,17.53,24156.06,"Portföy daraltma 10→6 - altın madenci, AI tedarik zinciri temasına uymuyor"
+2026-03-25,SELL,ANET,93,134.45,12503.85,"Portföy daraltma 10→6 - küçük pozisyon, daha yüksek konviksiyon hisselere yoğunlaşma"
+2026-03-25,SELL,CRDO,147,102.60,15082.20,"Portföy daraltma 10→6 - en zayıf momentum, daha önce stop yedi, tekrar giriş başarısız"
+2026-03-25,SELL,PWR,26,577.36,15011.36,"Portföy daraltma 10→6 - POWL ile çakışma (güç altyapısı), konsolide"
+2026-03-25,BUY,COHR,91,271.88,24741.53,Pozisyon büyütme - yüksek konviksiyon
+2026-03-25,BUY,MRVL,255,97.86,24954.30,Pozisyon büyütme - yüksek konviksiyon
+2026-03-25,BUY,PLTR,95,156.90,14905.03,Pozisyon büyütme - yüksek konviksiyon
+2026-03-25,SELL,ABBV,33,207.40,6844.20,"Portföy daraltma 10→6 - stop yakın (%1.6), zayıf momentum"
+2026-03-25,SELL,MRK,250,119.61,29902.50,"Portföy daraltma 10→6 - $30K bağlı ama sıfırda, sermaye verimsiz"
+2026-03-25,SELL,PFE,330,27.47,9065.10,Portföy daraltma 10→6 - en düşük getiri potansiyeli
+2026-03-25,SELL,SCHD,829,30.57,25338.39,Portföy daraltma 10→6 - ETF yerine bireysel kazananlar tercih
+2026-03-25,BUY,XOM,122,163.61,19960.42,Pozisyon büyütme - güçlü temettü
+2026-03-25,BUY,CVX,72,205.85,14821.20,Pozisyon büyütme - güçlü temettü
+2026-03-25,BUY,T,345,28.98,9996.38,Pozisyon büyütme - güçlü temettü
+2026-03-25,SELL,RGLD,22,232.00,5104.00,"-%16 kayıp, sermaye güçlülere aktarılıyor"
+2026-03-25,BUY,SM,160,31.14,4982.40,Pozisyon büyütme +51% kazananı büyüt
