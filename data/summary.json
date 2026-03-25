@@ -3,18 +3,18 @@
   "simulasyon_donemi": "17 Şubat 2026 - 24 Mart 2026",
   "islem_gunleri": 25,
   "toplam_sermaye": 600000.0,
-  "toplam_deger": 626918.87,
-  "toplam_kar_zarar": 26918.87,
-  "toplam_kar_zarar_yuzde": 4.49,
+  "toplam_deger": 629688.63,
+  "toplam_kar_zarar": 29688.63,
+  "toplam_kar_zarar_yuzde": 4.95,
   "benchmark_spy": 7.92,
   "alpha": -3.63,
   "portfolyolar": {
     "dengeli": {
       "isim": "Dengeli Portföy",
-      "deger": 112319.8,
+      "deger": 112539.87,
       "maliyet": 100000,
       "kar_zarar": 12319.8,
-      "kar_zarar_yuzde": 12.32,
+      "kar_zarar_yuzde": 12.54,
       "pozisyon_sayisi": 6,
       "nakit": {
         "miktar": 54551.07,
@@ -24,10 +24,10 @@
     },
     "agresif": {
       "isim": "Agresif Büyüme Portföyü",
-      "deger": 369030.4,
+      "deger": 371137.79,
       "maliyet": 400000,
       "kar_zarar": -30969.6,
-      "kar_zarar_yuzde": -7.74,
+      "kar_zarar_yuzde": -7.22,
       "pozisyon_sayisi": 7,
       "nakit": {
         "miktar": 242799.37,
@@ -37,10 +37,10 @@
     },
     "temettü": {
       "isim": "Değer + Temettü Portföyü",
-      "deger": 145568.67,
+      "deger": 146010.97,
       "maliyet": 100000,
       "kar_zarar": 45568.67,
-      "kar_zarar_yuzde": 45.57,
+      "kar_zarar_yuzde": 46.01,
       "pozisyon_sayisi": 10,
       "nakit": {
         "miktar": 4426.03,
@@ -55,5 +55,11 @@
       "bos_slot": 6,
       "durum": "2/8 pozisyon aktif"
     }
-  }
+  },
+  "son_islemler": [
+    "[SATIŞ] CVX 14 adet @ $204.91 - K-11 kısmi kâr alma (Temettü)",
+    "[TRAILING] PLTR stop güncellendi",
+    "[TRAILING] COHR stop güncellendi",
+    "[GÜNCELLEME] Tüm portföyler seans içi fiyat güncellemesi"
+  ]
 }
