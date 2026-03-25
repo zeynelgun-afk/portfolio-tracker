@@ -469,7 +469,37 @@ def calc_position_size(price, stop, atr, account_size=10000, vix=None):
 
 
 # ============================================================
-# 9. TEMEL ANALİZ FİLTRESİ (v1'den taşındı)
+# 9. SMA200 UZUN VADELİ TREND FİLTRESİ
+# ============================================================
+
+def check_sma200(symbol, price):
+    """SMA200 uzun vadeli trend filtresi. ichimoku'nun kapsamadığı 200 günlük perspektif."""
+    sma200_data = fmp_get("technical-indicators/sma", {
+        "symbol": symbol, "periodLength": 200, "timeframe": "1day"
+    })
+    if not sma200_data or len(sma200_data) < 2:
+        return None
+
+    sma200 = sma200_data[0].get("sma", 0)
+    sma200_prev = sma200_data[1].get("sma", 0)
+
+    if sma200 <= 0:
+        return None
+
+    above = price > sma200
+    fark_pct = ((price - sma200) / sma200) * 100
+    sma_trend = "yukselis" if sma200 > sma200_prev else "dusus"
+
+    return {
+        "sma200": round(sma200, 2),
+        "above": above,
+        "fark_pct": round(fark_pct, 2),
+        "sma_trend": sma_trend,
+    }
+
+
+# ============================================================
+# 10. TEMEL ANALİZ FİLTRESİ (v1'den taşındı)
 # ============================================================
 
 def check_fundamentals(symbol):
@@ -536,7 +566,7 @@ def check_fundamentals(symbol):
 
 
 # ============================================================
-# 10. TAM ANALİZ
+# 11. TAM ANALİZ
 # ============================================================
 
 def full_analysis(symbol, detay=False):
@@ -576,6 +606,9 @@ def full_analysis(symbol, detay=False):
 
     # 7. stop seviyesi
     stop_info = determine_stop(ichi, atr)
+
+    # 8. SMA200 uzun vadeli filtre
+    sma200_info = check_sma200(symbol, ichi['price'])
 
     # === ÇIKTI ===
 
@@ -633,6 +666,13 @@ def full_analysis(symbol, detay=False):
             acil = "🔴" if s.get('acil') else "🟡"
             print(f"     {acil} [{s['tip']}] {s['aciklama']}")
 
+    # SMA200
+    if sma200_info:
+        s200_emoji = "✅" if sma200_info['above'] else "❌"
+        trend_icon = "↑" if sma200_info['sma_trend'] == "yukselis" else "↓"
+        print(f"\n  📈 SMA200: ${sma200_info['sma200']} {trend_icon}")
+        print(f"     {s200_emoji} fiyat {'üstünde' if sma200_info['above'] else 'altında'} ({sma200_info['fark_pct']:+.1f}%)")
+
     # temel filtre
     print(f"\n  🏢 TEMEL FİLTRE")
     fund = check_fundamentals(symbol)
@@ -647,20 +687,30 @@ def full_analysis(symbol, detay=False):
     print(f"\n  {'─'*45}")
 
     # karar mantığı
+    sma200_above = sma200_info['above'] if sma200_info else True  # veri yoksa geç
+
     if not fund['passed']:
         karar = "GİRME ❌ (temel red)"
     elif pos['konum'] == "kumo_alti" and pos['trend'] == "dusus":
         karar = "GİRME ❌ (kumo altı + düşüş trendi)"
     elif entry_signals:
         en_guclu = max(entry_signals, key=lambda x: {"yuksek": 3, "orta": 2, "zayif": 1}.get(x['guc'], 0))
-        if en_guclu['guc'] == "yuksek" and vol and vol['teyit'] in ('guclu', 'normal'):
-            karar = "GİRİŞ ✅"
-        elif en_guclu['guc'] == "yuksek" and vol and vol['teyit'] == 'zayif':
-            karar = "GİRİŞ ⚠️ (hacim zayıf, yarım pozisyon)"
-        elif en_guclu['guc'] == "orta":
-            karar = "DİKKATLİ GİRİŞ ⚠️"
+        if not sma200_above:
+            # SMA200 altında: sadece çok güçlü kumo kırılımı + hacim teyidi ile yarım pozisyon
+            if en_guclu['guc'] == "yuksek" and vol and vol['teyit'] in ('guclu', 'normal'):
+                karar = "GİRİŞ ⚠️ (SMA200 altı, yarım pozisyon)"
+            else:
+                karar = "BEKLE ⏳ (SMA200 altı, güçlü sinyal bekle)"
         else:
-            karar = "BEKLE ⏳ (zayıf sinyal)"
+            # SMA200 üstü: normal akış
+            if en_guclu['guc'] == "yuksek" and vol and vol['teyit'] in ('guclu', 'normal'):
+                karar = "GİRİŞ ✅"
+            elif en_guclu['guc'] == "yuksek" and vol and vol['teyit'] == 'zayif':
+                karar = "GİRİŞ ⚠️ (hacim zayıf, yarım pozisyon)"
+            elif en_guclu['guc'] == "orta":
+                karar = "DİKKATLİ GİRİŞ ⚠️"
+            else:
+                karar = "BEKLE ⏳ (zayıf sinyal)"
     elif pos['genel'] in ('guclu_yukselis', 'yukselis') and not exit_signals:
         karar = "TREND DEVAM — giriş sinyali bekle"
     elif exit_signals:
@@ -680,6 +730,7 @@ def full_analysis(symbol, detay=False):
         "ichimoku": ichi,
         "atr": atr,
         "volume": vol,
+        "sma200": sma200_info,
         "position": pos,
         "entry_signals": entry_signals,
         "exit_signals": exit_signals,
@@ -805,13 +856,14 @@ def main():
         print(f"\n{'='*65}")
         print(f"  ÖZET TABLO")
         print(f"{'='*65}")
-        print(f"  {'sembol':6s} | {'konum':10s} | {'trend':8s} | {'sinyal':5s} | {'hacim':6s} | {'stop':>8s} | karar")
-        print(f"  {'─'*6} | {'─'*10} | {'─'*8} | {'─'*5} | {'─'*6} | {'─'*8} | {'─'*20}")
+        print(f"  {'sembol':6s} | {'konum':10s} | {'trend':8s} | {'sinyal':5s} | {'hacim':6s} | {'SMA200':6s} | {'stop':>8s} | karar")
+        print(f"  {'─'*6} | {'─'*10} | {'─'*8} | {'─'*5} | {'─'*6} | {'─'*6} | {'─'*8} | {'─'*20}")
         for r in all_results:
             pos = r['position']
             vol_t = r['volume']['teyit'] if r['volume'] else '?'
             sinyal = len(r['entry_signals'])
-            print(f"  {r['symbol']:6s} | {pos['konum']:10s} | {pos['trend']:8s} | {sinyal:5d} | {vol_t:6s} | ${r['stop']['stop']:>7.2f} | {r['karar']}")
+            s200 = "✅" if r.get('sma200', {}).get('above', True) else "❌"
+            print(f"  {r['symbol']:6s} | {pos['konum']:10s} | {pos['trend']:8s} | {sinyal:5d} | {vol_t:6s} | {s200:6s} | ${r['stop']['stop']:>7.2f} | {r['karar']}")
 
 
 if __name__ == "__main__":

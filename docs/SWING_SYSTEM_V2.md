@@ -16,6 +16,12 @@ ichimoku kinko hyo zaten tek başına trend, momentum, destek ve direnç veriyor
 
 RSI ve MACD eklenmez. tenkan/kijun kesişimi zaten MACD'nin yaptığını yapıyor, chikou span momentum veriyor. üst üste yığmak karmaşıklık, çelişki ve analiz felci yaratır.
 
+**SMA200 uzun vadeli filtre olarak eklenir.** ichimoku en uzun periyodu senkou span B (52 gün). bu, 200 günlük kurumsal trend perspektifini kapsamıyor. SMA200 tek başına uzun vadeli trend filtresi olarak çalışır:
+
+- fiyat > SMA200 → uzun vadeli trend yukarı, giriş yapılabilir (normal akış)
+- fiyat < SMA200 → uzun vadeli trend aşağı, sadece çok güçlü kumo kırılımı + hacim teyidi ile yarım pozisyon
+- SMA20 ve SMA50 eklenmez, bunların rolünü tenkan (9) ve kijun (26) zaten yapıyor
+
 ---
 
 ## 1. GİRİŞ SİNYALLERİ
@@ -218,6 +224,7 @@ teknik ne kadar iyi olursa olsun, temel analiz red verirse girme. mevcut filtre 
 | RSI oversold giriş | ichimoku kumo kırılımı / TK cross giriş |
 | MACD teyidi | gereksiz (TK cross = MACD'nin yaptığı) |
 | SMA20/50 pozisyon kontrolü | ichimoku kumo bunu zaten yapıyor |
+| SMA200 filtresi | SMA200 uzun vadeli trend filtresi olarak korundu |
 | sabit %5 trailing | kijun-sen doğal trailing |
 | 7-14 gün tutma süresi | süre sınırı yok, trend devam ettiği sürece tut |
 | skor kartı (7 puan) | giriş sinyali var/yok + hacim teyidi |
