@@ -194,8 +194,17 @@ agirlik_yuzde = (guncel_deger / toplam_deger) × 100  [her pozisyon için]
 | `giris_fiyati` | float | Giriş fiyatı |
 | `guncel_fiyat` | float | Güncel kapanış fiyatı |
 | `guncel_kar_zarar_yuzde` | float | `((guncel - giris) / giris) × 100` |
-| `hedef_fiyat` | float | %10 hedef (min) |
-| `stop_loss` | float | %5 stop (max) |
+| `stop_loss` | float | kijun-sen veya kumo dinamik stop (ichimoku v2.1) |
+| `stop_tipi` | string | `"kijun"`, `"kumo_ust"`, `"kumo_alt"` |
+| `stop_en_yuksek` | float | en yüksek stop değeri (sadece yukarı güncellenir) |
+| `kijun_sen` | float | güncel kijun-sen seviyesi |
+| `kumo_ust` | float | güncel kumo üst kenarı |
+| `kumo_alt` | float | güncel kumo alt kenarı |
+| `tenkan_sen` | float | güncel tenkan-sen seviyesi |
+| `atr_14` | float | ATR(14) değeri |
+| `hacim_oran` | float | günlük hacim / 20 gün ortalama |
+| `obv_trend` | string | `"yukselis"`, `"dusus"`, `"notr"` |
+| `giris_sinyali` | string | `"kumo_kirilimi"`, `"kijun_bounce"`, `"trend_devam"` |
 | `tutulan_gun` | int | Giriş tarihinden itibaren geçen gün |
 | `giris_nedeni` | string | Türkçe, detaylı neden |
 | `katalizor` | string | Türkçe, tetikleyici olay |
@@ -207,11 +216,11 @@ agirlik_yuzde = (guncel_deger / toplam_deger) × 100  [her pozisyon için]
 | `son_guncelleme` | datetime | Her güncellemede yenile |
 
 #### Tarama Yöntemleri (`tarama_yontemi` değerleri)
-- `"RSI oversold"` — RSI < 30 veya aşırı satım
-- `"earnings momentum"` — Kazanç sürprizi sonrası ivme
-- `"breakout"` — Direnç kırılımı
-- `"sektor liderligi"` — Sektör rotasyonunda öncü
-- `"momentum"` — Fiyat + hacim momentum taraması
+- `"kumo_kirilimi"` — ichimoku kumo kırılımı + hacim teyidi
+- `"kijun_bounce"` — kijun-sen'den sekme (geri çekilme girişi)
+- `"trend_devam"` — ichimoku 4/4 bullish trend devam girişi
+- `"earnings momentum"` — kazanç sürprizi sonrası ivme
+- `"breakout"` — direnç kırılımı + hacim
 
 ---
 
@@ -330,11 +339,11 @@ agirlik_yuzde = (guncel_deger / toplam_deger) × 100  [her pozisyon için]
     "agresif": {...},
     "temettü": {...},
     "swing_trade": {
-      "isim": "Swing Trade (Simülasyon)",
-      "pozisyon_sayisi": 5,
-      "ortalama_getiri_yuzde": 2.5,
-      "bos_slot": 5,
-      "durum": "5/10 pozisyon aktif"
+      "isim": "Swing Trade",
+      "pozisyon_sayisi": 1,
+      "ortalama_getiri_yuzde": 0.0,
+      "bos_slot": 7,
+      "durum": "1/8 pozisyon aktif"
     }
   },
   "son_islemler": ["İşlem özeti satırları"],
@@ -436,16 +445,21 @@ date,action,symbol,shares,price,total,reason
 
 ---
 
-## 7. SWING TRADE KURALLARI (Sayısal Sınırlar)
+## 7. SWING TRADE KURALLARI (ichimoku v2.1)
+
+> detay: `docs/SWING_SYSTEM_V2.md`
 
 | Kural | Değer |
 |-------|-------|
 | Max eşzamanlı pozisyon | 8 |
-| Stop-loss | %5 |
-| Kar hedefi | %10 |
-| Min R:R oranı | 2:1 |
-| Çıkış kriteri | Fiyat aksiyonu bazlı (sabit süre limiti yok) |
-| Tipik tutma süresi | 7-10 gün (momentum devam ederse uzayabilir) |
+| Stop sistemi | kijun-sen dinamik trailing (ichimoku) |
+| Kijun bounce stop | kumo alt kenarına genişler |
+| Min stop mesafesi (kumo kırılımı) | %5 |
+| Kar hedefi | yok (trend devam ettiği sürece tut) |
+| Çıkış sinyalleri | kijun altı kapanış, TK cross aşağı, kumo'ya giriş |
+| Sabit süre limiti | yok |
+| Pozisyon boyutu | ATR bazlı risk hesaplı |
+| Giriş tipleri | kumo kırılımı, kijun bounce, trend devam (4/4 bullish) |
 
 ---
 
