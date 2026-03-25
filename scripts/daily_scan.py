@@ -1,10 +1,15 @@
 #!/usr/bin/env python3
 """
-Finzora AI — Günlük Swing Trade Tarama Scripti
---------------------------------------------------
+Finzora AI — Günlük Çoklu Portföy Tarama Scripti v2.0
+-------------------------------------------------------
 Çalışma: Her iş günü piyasa kapanışı sonrası (21:30 UTC / 00:30 TR)
-Yöntem : EP (Episodic Pivot) + Flag/Base Breakout — Qullamaggie metodolojisi
-Çıktı  : data/swing/daily_scan.json
+Çıktı  : data/daily_scan.json (4 portföy bölümü)
+
+Portföyler:
+  1. agresif   — momentum + hacim + earnings beat
+  2. dengeli   — value + sektör gücü + RSI kurtarma
+  3. temettü   — düşük P/E + yüksek yield + güçlü FCF
+  4. swing     — ichimoku sinyalleri (kumo kırılımı, TK cross, kijun bounce)
 """
 
 import requests
@@ -17,20 +22,54 @@ from datetime import datetime, timedelta, timezone
 FMP_API_KEY = os.environ.get("FMP_API_KEY", "g1GFJZtV5rCP49UCir4WuP56VjhmA6F8")
 FMP_BASE    = "https://financialmodelingprep.com/stable"
 
-# Filtre parametreleri
-EP_MIN_DEGISIM_YZD  = 7.5      # % — minimum EP hareketi
-EP_MIN_DOLAR_HACIM  = 100e6    # $100M — minimum dollar volume
-EP_MAX_PIYASA_DEG   = 1e9      # $1B — minimum market cap
-BREAKOUT_MIN_HACIM  = 500_000  # minimum ortalama günlük hacim
-BREAKOUT_VOL_KATSAYI= 1.5      # breakout günü hacim çarpanı
-BREAKOUT_BAKIN_GUN  = 50       # n günlük yüksek kırılımı
-MIN_FIYAT           = 10       # minimum hisse fiyatı
-MAX_ADAY            = 8        # her kategoride maksimum aday sayısı
+MIN_FIYAT        = 10
+MIN_HACIM        = 300_000
+MAX_ADAY         = 10
 
-VIX_UYARI_ESIGI     = 25       # VIX bu seviyenin üzerindeyse uyarı
-VIX_KRITIK_ESIGI    = 30       # VIX bu seviyenin üzerindeyse EP skip öner
+VIX_UYARI_ESIGI  = 25
+VIX_KRITIK_ESIGI = 30
 
-# ─── Yardımcı Fonksiyonlar ───────────────────────────────────────────────────
+AGR_MIN_MCAP     = 3e9
+AGR_MIN_HACIM    = 1_000_000
+AGR_MIN_5D_CHG   = 3.0
+
+DNG_MIN_MCAP     = 5e9
+
+TMT_MIN_MCAP     = 5e9
+TMT_MAX_PE       = 20
+TMT_MIN_YIELD    = 3.0
+
+SWG_MIN_MCAP     = 2e9
+SWG_MIN_HACIM    = 500_000
+
+
+def mevcut_pozisyonlari_al():
+    semboller = set()
+    dosyalar = [
+        "data/portfolios/aggressive.json",
+        "data/portfolios/balanced.json",
+        "data/portfolios/dividend.json",
+        "data/swing/active.json",
+    ]
+    for dosya in dosyalar:
+        yol = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), dosya)
+        if os.path.exists(yol):
+            try:
+                with open(yol) as f:
+                    d = json.load(f)
+                if "pozisyonlar" in d:
+                    for p in d["pozisyonlar"]:
+                        semboller.add(p.get("sembol", ""))
+                if "aktif_pozisyonlar" in d:
+                    for p in d["aktif_pozisyonlar"]:
+                        semboller.add(p.get("sembol", ""))
+            except:
+                pass
+    semboller.discard("")
+    return semboller
+
+
+# ─── FMP Yardımcılar ────────────────────────────────────────────────────────
 def fmp_get(endpoint, params=None):
     if params is None:
         params = {}
@@ -48,555 +87,466 @@ def fmp_get(endpoint, params=None):
         print(f"  ✗ İstek hatası [{endpoint}]: {e}")
         return None
 
-def guvenli_float(deger, varsayilan=0.0):
+
+def sf(val, default=0.0):
     try:
-        return float(deger) if deger is not None else varsayilan
+        return float(val) if val is not None else default
     except:
-        return varsayilan
+        return default
 
-def piyasa_kapali_mi(quotes):
-    """batch-quote'ta tüm hisseler %0 değişim dönüyorsa piyasa kapalıdır."""
-    if not quotes or len(quotes) < 3:
-        return True
-    sifir_sayisi = sum(1 for q in quotes if guvenli_float(q.get("changesPercentage")) == 0)
-    return sifir_sayisi == len(quotes)
 
-# ─── Piyasa Bağlamı ──────────────────────────────────────────────────────────
+# ─── Piyasa Bağlamı ─────────────────────────────────────────────────────────
 def piyasa_baglamini_al():
     print("→ Piyasa bağlamı alınıyor...")
-    endeks_quotes = fmp_get("batch-quote", {"symbols": "SPY,QQQ,IWM"})
+    endeks_quotes = fmp_get("batch-quote", {"symbols": "SPY,QQQ,IWM,DIA"})
     vix_quote     = fmp_get("quote", {"symbol": "^VIX"})
 
     endeks = {}
     if endeks_quotes:
         for q in endeks_quotes:
-            sym = q.get("symbol", "")
-            endeks[sym] = {
-                "fiyat"  : guvenli_float(q.get("price")),
-                "degisim": guvenli_float(q.get("changesPercentage")),
-                "hacim"  : guvenli_float(q.get("volume")),
+            endeks[q.get("symbol", "")] = {
+                "fiyat": sf(q.get("price")),
+                "degisim": sf(q.get("changesPercentage")),
             }
 
     vix = 0.0
-    if vix_quote and isinstance(vix_quote, list) and len(vix_quote) > 0:
-        vix = guvenli_float(vix_quote[0].get("price"))
+    if vix_quote:
+        v = vix_quote[0] if isinstance(vix_quote, list) else vix_quote
+        vix = sf(v.get("price"))
 
-    # Piyasa kapalı kontrolü
-    kapali = piyasa_kapali_mi(endeks_quotes)
+    dun = (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d")
+    sektor_perf = fmp_get("sector-performance-snapshot", {"date": dun})
+    if not sektor_perf:
+        sektor_perf = fmp_get("sector-performance-snapshot",
+                              {"date": (datetime.now() - timedelta(days=2)).strftime("%Y-%m-%d")})
 
-    return {
-        "spy_degisim"  : endeks.get("SPY", {}).get("degisim", 0),
-        "qqq_degisim"  : endeks.get("QQQ", {}).get("degisim", 0),
-        "iwm_degisim"  : endeks.get("IWM", {}).get("degisim", 0),
-        "spy_fiyat"    : endeks.get("SPY", {}).get("fiyat", 0),
-        "qqq_fiyat"    : endeks.get("QQQ", {}).get("fiyat", 0),
-        "vix"          : vix,
-        "piyasa_kapali": kapali,
-        "vix_uyarisi"  : vix >= VIX_UYARI_ESIGI,
-        "vix_kritik"   : vix >= VIX_KRITIK_ESIGI,
-    }
+    sektorler = {}
+    if sektor_perf:
+        for s in sektor_perf:
+            sektorler[s["sector"]] = sf(s.get("averageChange"))
 
-# ─── Seviye Hesaplama ────────────────────────────────────────────────────────
-def seviyeleri_hesapla(giris, stop):
-    """Giriş ve stop fiyatından R hedeflerini hesapla."""
-    if giris <= 0 or stop <= 0 or stop >= giris:
-        return None
-    r         = giris - stop
-    risk_yuzde = round((r / giris) * 100, 1)
-    return {
-        "giris"      : round(giris, 2),
-        "stop"       : round(stop, 2),
-        "r_dolar"    : round(r, 2),
-        "risk_yuzde" : risk_yuzde,
-        "hedef_2r"   : round(giris + 2 * r, 2),
-        "hedef_3r"   : round(giris + 3 * r, 2),
-        "rr_orani"   : "2:1",
-    }
-
-# ─── EP (Episodic Pivot) Taraması ────────────────────────────────────────────
-def ep_tara():
-    """
-    Episodic Pivot adayları:
-    1. biggest-gainers listesinden başla
-    2. Filtrele: % >= 7.5, dollar_volume >= 100M, market_cap >= 1B, price >= 10
-    3. Teyit: close_today > high_yesterday (son 5 günlük OHLCV)
-    4. Skora göre sırala
-    """
-    print("→ EP (Episodic Pivot) taranıyor...")
-    adaylar = []
-
-    # 1) En büyük kazananlar
-    gainers = fmp_get("biggest-gainers", {"limit": 60})
-    if not gainers:
-        print("  ✗ biggest-gainers verisi alınamadı")
-        return []
-
-    # 2) Ön filtre: price, değişim, dollar_volume
-    on_filtre = []
-    for g in gainers:
-        fiyat     = guvenli_float(g.get("price"))
-        degisim   = guvenli_float(g.get("changesPercentage"))
-        hacim     = guvenli_float(g.get("volume"))
-        dol_hacim = fiyat * hacim
-
-        if (degisim  >= EP_MIN_DEGISIM_YZD and
-            dol_hacim >= EP_MIN_DOLAR_HACIM and
-            fiyat     >= MIN_FIYAT):
-            g["dollar_volume"] = dol_hacim
-            on_filtre.append(g)
-
-    if not on_filtre:
-        print("  — Ön filtreden geçen EP adayı yok")
-        return []
-
-    print(f"  ✓ Ön filtreden {len(on_filtre)} aday geçti, tarihsel veri alınıyor...")
-
-    # 3) Her aday için son 5 günlük OHLCV — close > high_yesterday kontrolü
-    sembolleri = [g["symbol"] for g in on_filtre]
-
-    # batch-quote ile ek bilgi al (marketCap, avgVolume, priceAvg50, priceAvg200)
-    batch = fmp_get("batch-quote", {"symbols": ",".join(sembolleri)})
-    batch_map = {}
-    if batch:
-        for q in batch:
-            batch_map[q.get("symbol", "")] = q
-
-    for g in on_filtre:
-        sym    = g.get("symbol", "")
-        fiyat  = guvenli_float(g.get("price"))
-        degisim= guvenli_float(g.get("changesPercentage"))
-        bq     = batch_map.get(sym, {})
-
-        market_cap = guvenli_float(bq.get("marketCap"))
-        avg_volume = guvenli_float(bq.get("avgVolume"))
-        price_50ma = guvenli_float(bq.get("priceAvg50"))
-        price_200ma= guvenli_float(bq.get("priceAvg200"))
-        year_high  = guvenli_float(bq.get("yearHigh"))
-        year_low   = guvenli_float(bq.get("yearLow"))
-        prev_close = guvenli_float(bq.get("previousClose"))
-
-        # Market cap filtresi
-        if market_cap > 0 and market_cap < EP_MAX_PIYASA_DEG:
-            continue
-
-        # Son 5 günlük OHLCV — close > high_yesterday
-        tarih_gecmis = (datetime.now() - timedelta(days=10)).strftime("%Y-%m-%d")
-        tarih_bugun  = datetime.now().strftime("%Y-%m-%d")
-        hist = fmp_get("historical-price-eod/full", {
-            "symbol": sym, "from": tarih_gecmis, "to": tarih_bugun
-        })
-
-        close_gt_yest_high = False
-        onceki_gun_high    = 0.0
-        bugun_low          = 0.0
-
-        if hist and len(hist) >= 2:
-            # hist[0] = bugün, hist[1] = dün (en yeni önce)
-            bugun_close        = guvenli_float(hist[0].get("close"))
-            bugun_low          = guvenli_float(hist[0].get("low"))
-            onceki_gun_high    = guvenli_float(hist[1].get("high"))
-            close_gt_yest_high = bugun_close > onceki_gun_high
-
-        # Skoru hesapla (0-100)
-        skor = _ep_skoru_hesapla(
-            degisim, g["dollar_volume"], close_gt_yest_high,
-            avg_volume, hacim=guvenli_float(g.get("volume")),
-            price_200ma=price_200ma, fiyat=fiyat
-        )
-
-        # Seviyeler: giriş = today close, stop = today low
-        giris = fiyat * 1.005  # %0.5 yukarısından konfirmasyon girişi
-        stop  = bugun_low * 0.99 if bugun_low > 0 else fiyat * 0.92
-        seviyeler = seviyeleri_hesapla(giris, stop)
-
-        # 52 haftalık konumu
-        yw_konum = ""
-        if year_high > 0 and year_low > 0:
-            konum_yuzde = ((fiyat - year_low) / (year_high - year_low)) * 100
-            yw_konum = f"52h yüksek: %{round(konum_yuzde)}"
-
-        # Uyarılar
-        uyarilar = []
-        if not close_gt_yest_high:
-            uyarilar.append("⚠ close > dünkü high doğrulanamadı")
-        if avg_volume > 0 and guvenli_float(g.get("volume")) < avg_volume * 1.5:
-            uyarilar.append("⚠ hacim 1.5x ortalamanın altında")
-        if market_cap < 2e9:
-            uyarilar.append("⚠ küçük cap — volatil olabilir")
-
-        aday = {
-            "sembol"            : sym,
-            "isim"              : g.get("name", sym),
-            "setup_tipi"        : "EP",
-            "fiyat"             : round(fiyat, 2),
-            "degisim_yuzde"     : round(degisim, 2),
-            "hacim"             : int(guvenli_float(g.get("volume"))),
-            "ort_hacim"         : int(avg_volume),
-            "hacim_katsayi"     : round(guvenli_float(g.get("volume")) / avg_volume, 1) if avg_volume > 0 else 0,
-            "dollar_hacim_M"    : round(g["dollar_volume"] / 1e6, 1),
-            "piyasa_deger_B"    : round(market_cap / 1e9, 2) if market_cap > 0 else 0,
-            "onceki_gun_high"   : round(onceki_gun_high, 2),
-            "bugun_low"         : round(bugun_low, 2),
-            "close_gt_dunku_high": close_gt_yest_high,
-            "sma50_uzerinde"    : fiyat > price_50ma if price_50ma > 0 else None,
-            "sma200_uzerinde"   : fiyat > price_200ma if price_200ma > 0 else None,
-            "52h_konum"         : yw_konum,
-            "ep_skoru"          : skor,
-            "seviyeler"         : seviyeler,
-            "uyarilar"          : uyarilar,
-        }
-        adaylar.append(aday)
-
-    # Skora göre sırala, en iyileri al
-    adaylar.sort(key=lambda x: x["ep_skoru"], reverse=True)
-    return adaylar[:MAX_ADAY]
-
-def _ep_skoru_hesapla(degisim, dol_hacim, close_gt_high, avg_vol, hacim, price_200ma, fiyat):
-    skor = 0
-    # Değişim büyüklüğü (0-30 puan)
-    if degisim >= 20:      skor += 30
-    elif degisim >= 15:    skor += 24
-    elif degisim >= 10:    skor += 18
-    elif degisim >= 7.5:   skor += 12
-    # Dollar volume (0-25 puan)
-    if dol_hacim >= 500e6:   skor += 25
-    elif dol_hacim >= 250e6: skor += 20
-    elif dol_hacim >= 100e6: skor += 15
-    # close > dünkü high (0-25 puan) — önemli teyit
-    if close_gt_high:        skor += 25
-    # Hacim katsayısı vs ortalama (0-20 puan)
-    if avg_vol > 0:
-        kat = hacim / avg_vol
-        if kat >= 5:    skor += 20
-        elif kat >= 3:  skor += 15
-        elif kat >= 2:  skor += 10
-        elif kat >= 1.5:skor += 5
-    # SMA200 üzerinde mi (0-10 puan) — uzun vadeli trend filtresi
-    if price_200ma > 0 and fiyat > price_200ma:
-        skor += 10
-    return min(skor, 100)
-
-# ─── Breakout (Flag/Base) Taraması ──────────────────────────────────────────
-def breakout_tara():
-    """
-    Flag/Base breakout adayları:
-    1. most-actives listesinden başla
-    2. batch-quote ile ek bilgi al
-    3. Filtre: price >= 15, avgVolume >= 500K, priceAvg50 üzerinde
-    4. 60 günlük OHLCV — last 50 günün higherini kırdı mı + base kalitesi
-    5. Skora göre sırala
-    """
-    print("→ Breakout (Flag/Base) taranıyor...")
-    adaylar = []
-
-    # 1) En çok işlem gören hisseler
-    actives = fmp_get("most-actives", {"limit": 50})
-    if not actives:
-        print("  ✗ most-actives verisi alınamadı")
-        return []
-
-    # Semboller listesi
-    sembolleri = [a.get("symbol", "") for a in actives if a.get("symbol")]
-
-    # 2) batch-quote ile detaylı bilgi
-    batch = fmp_get("batch-quote", {"symbols": ",".join(sembolleri)})
-    batch_map = {}
-    if batch:
-        for q in batch:
-            batch_map[q.get("symbol", "")] = q
-
-    # 3) Ön filtre
-    on_filtre = []
-    for sym in sembolleri:
-        bq = batch_map.get(sym, {})
-        fiyat      = guvenli_float(bq.get("price"))
-        avg_volume = guvenli_float(bq.get("avgVolume"))
-        hacim      = guvenli_float(bq.get("volume"))
-        price_50ma = guvenli_float(bq.get("priceAvg50"))
-        market_cap = guvenli_float(bq.get("marketCap"))
-
-        if (fiyat >= MIN_FIYAT and
-            avg_volume >= BREAKOUT_MIN_HACIM and
-            hacim >= avg_volume * BREAKOUT_VOL_KATSAYI and
-            market_cap >= EP_MAX_PIYASA_DEG):
-            on_filtre.append(sym)
-
-    if not on_filtre:
-        print("  — Ön filtreden geçen breakout adayı yok")
-        return []
-
-    print(f"  ✓ Ön filtreden {len(on_filtre)} aday geçti, {BREAKOUT_BAKIN_GUN} günlük OHLCV alınıyor...")
-
-    # 4) Her aday için 60 günlük OHLCV
-    tarih_gecmis = (datetime.now() - timedelta(days=80)).strftime("%Y-%m-%d")
-    tarih_bugun  = datetime.now().strftime("%Y-%m-%d")
-
-    for sym in on_filtre[:20]:  # maksimum 20 API çağrısı
-        hist = fmp_get("historical-price-eod/full", {
-            "symbol": sym, "from": tarih_gecmis, "to": tarih_bugun
-        })
-        if not hist or len(hist) < BREAKOUT_BAKIN_GUN:
-            continue
-
-        bq = batch_map.get(sym, {})
-        fiyat      = guvenli_float(bq.get("price"))
-        avg_volume = guvenli_float(bq.get("avgVolume"))
-        hacim      = guvenli_float(bq.get("volume"))
-        price_50ma = guvenli_float(bq.get("priceAvg50"))
-        price_200ma= guvenli_float(bq.get("priceAvg200"))
-        market_cap = guvenli_float(bq.get("marketCap"))
-        year_high  = guvenli_float(bq.get("yearHigh"))
-        year_low   = guvenli_float(bq.get("yearLow"))
-        prev_close = guvenli_float(bq.get("previousClose"))
-        name       = bq.get("name", sym)
-
-        # hist[0] = bugün, en yeni önce
-        bugun     = hist[0]
-        bugun_high = guvenli_float(bugun.get("high"))
-        bugun_low  = guvenli_float(bugun.get("low"))
-        bugun_close= guvenli_float(bugun.get("close"))
-        bugun_vol  = guvenli_float(bugun.get("volume"))
-
-        # Önceki N gün (bugün hariç)
-        onceki_n_gun = hist[1:BREAKOUT_BAKIN_GUN + 1]
-        if len(onceki_n_gun) < BREAKOUT_BAKIN_GUN:
-            continue
-
-        n_gun_high = max(guvenli_float(d.get("high")) for d in onceki_n_gun)
-        n_gun_low  = min(guvenli_float(d.get("low")) for d in onceki_n_gun)
-
-        # 20 günlük ortalama hacim (gerçek hesaplama)
-        son20_vol  = [guvenli_float(d.get("volume")) for d in hist[1:21]]
-        avg20_vol  = sum(son20_vol) / len(son20_vol) if son20_vol else 0
-
-        # Breakout kontrolü: bugün N günlük highi kırdı mı?
-        kiriyor  = bugun_high > n_gun_high or bugun_close > n_gun_high * 0.995
-        # Hacim teyidi
-        hacim_katsayisi = bugun_vol / avg20_vol if avg20_vol > 0 else 0
-        hacim_teyidi    = hacim_katsayisi >= 1.5
-
-        if not (kiriyor and hacim_teyidi):
-            continue
-
-        # Base kalitesi: son 20 günde fiyat aralığı daralmış mı?
-        son20_highs = [guvenli_float(d.get("high")) for d in hist[1:21]]
-        son20_lows  = [guvenli_float(d.get("low")) for d in hist[1:21]]
-        base_genislik = 0
-        if son20_highs and son20_lows:
-            base_max = max(son20_highs)
-            base_min = min(son20_lows)
-            base_genislik = ((base_max - base_min) / base_max) * 100
-
-        # Trend kalitesi: 50MA > 200MA?
-        trend_yukari = price_50ma > price_200ma if (price_50ma > 0 and price_200ma > 0) else None
-
-        # Seviyeler: giriş = kırılım seviyesi, stop = base alt
-        giris    = n_gun_high * 1.005
-        stop_raw = n_gun_low * 0.98
-        # Stop mantıksal kontrol
-        if stop_raw >= giris:
-            stop_raw = giris * 0.92
-        seviyeler = seviyeleri_hesapla(giris, stop_raw)
-
-        skor = _breakout_skoru_hesapla(
-            hacim_katsayisi, base_genislik, trend_yukari,
-            fiyat, price_200ma, bugun_close, n_gun_high
-        )
-
-        # 52h konumu
-        yw_konum = ""
-        if year_high > 0 and year_low > 0:
-            konum_yuzde = ((fiyat - year_low) / (year_high - year_low)) * 100
-            yw_konum = f"52h yüksek: %{round(konum_yuzde)}"
-
-        uyarilar = []
-        if base_genislik > 25:
-            uyarilar.append("⚠ base çok geniş — temiz değil")
-        if not trend_yukari:
-            uyarilar.append("⚠ SMA50 < SMA200 — trend sorunlu")
-        if hacim_katsayisi < 2.0:
-            uyarilar.append("⚠ hacim 2x'in altında")
-        if market_cap < 2e9:
-            uyarilar.append("⚠ küçük cap")
-
-        aday = {
-            "sembol"           : sym,
-            "isim"             : name,
-            "setup_tipi"       : "BREAKOUT",
-            "fiyat"            : round(fiyat, 2),
-            "degisim_yuzde"    : round(guvenli_float(bq.get("changesPercentage")), 2),
-            "hacim"            : int(bugun_vol),
-            "ort_hacim_20g"    : int(avg20_vol),
-            "hacim_katsayi"    : round(hacim_katsayisi, 1),
-            "dollar_hacim_M"   : round(fiyat * bugun_vol / 1e6, 1),
-            "piyasa_deger_B"   : round(market_cap / 1e9, 2),
-            "n_gun_high"       : round(n_gun_high, 2),
-            "n_gun_low"        : round(n_gun_low, 2),
-            "base_genislik_yuzde": round(base_genislik, 1),
-            "sma50_uzerinde"   : fiyat > price_50ma if price_50ma > 0 else None,
-            "sma200_uzerinde"  : fiyat > price_200ma if price_200ma > 0 else None,
-            "trend_yukari"     : trend_yukari,
-            "52h_konum"        : yw_konum,
-            "bakin_gun"        : BREAKOUT_BAKIN_GUN,
-            "breakout_skoru"   : skor,
-            "seviyeler"        : seviyeler,
-            "uyarilar"         : uyarilar,
-        }
-        adaylar.append(aday)
-
-    adaylar.sort(key=lambda x: x["breakout_skoru"], reverse=True)
-    return adaylar[:MAX_ADAY]
-
-def _breakout_skoru_hesapla(hacim_kat, base_genislik, trend_yukari,
-                              fiyat, sma200, bugun_close, n_gun_high):
-    skor = 0
-    # Hacim katsayısı (0-30 puan)
-    if hacim_kat >= 4:    skor += 30
-    elif hacim_kat >= 3:  skor += 24
-    elif hacim_kat >= 2:  skor += 18
-    elif hacim_kat >= 1.5:skor += 12
-    # Base kalitesi: dar base daha iyi (0-20 puan)
-    if base_genislik <= 8:    skor += 20
-    elif base_genislik <= 12: skor += 15
-    elif base_genislik <= 18: skor += 10
-    elif base_genislik <= 25: skor += 5
-    # Trend (0-20 puan)
-    if trend_yukari is True:  skor += 20
-    elif trend_yukari is None:skor += 10
-    # SMA200 üzerinde (0-15 puan) — uzun vadeli trend filtresi
-    if sma200 > 0 and fiyat > sma200:  skor += 15
-    # Kırılım gücü: kapanış ne kadar üzerinde (0-15 puan)
-    if n_gun_high > 0:
-        kiriim_yuzde = ((bugun_close - n_gun_high) / n_gun_high) * 100
-        if kiriim_yuzde >= 3:   skor += 15
-        elif kiriim_yuzde >= 2: skor += 12
-        elif kiriim_yuzde >= 1: skor += 8
-        elif kiriim_yuzde >= 0: skor += 4
-    return min(skor, 100)
-
-# ─── Sektör Bağlamı ──────────────────────────────────────────────────────────
-def sektor_performansini_al(tarih):
-    sektor_data = fmp_get("sector-performance-snapshot", {"date": tarih})
-    if not sektor_data:
-        # Bir gün geri git
-        onceki = (datetime.strptime(tarih, "%Y-%m-%d") - timedelta(days=1)).strftime("%Y-%m-%d")
-        sektor_data = fmp_get("sector-performance-snapshot", {"date": onceki})
-    if not sektor_data:
-        return {}
-    return {s.get("sector", ""): round(guvenli_float(s.get("averageChange")), 2)
-            for s in sektor_data}
-
-# ─── Sonuçları Kaydet ────────────────────────────────────────────────────────
-def sonuclari_kaydet(baglam, ep_adaylar, breakout_adaylar, sektor_perf):
-    tarih_str = datetime.now().strftime("%Y-%m-%d")
-    saat_str  = datetime.now().strftime("%H:%M TR")
-
-    # VIX uyarı mesajı
     vix_mesaj = ""
-    if baglam["vix_kritik"]:
-        vix_mesaj = f"⚠⚠ VIX {baglam['vix']:.1f} — KRİTİK SEVIYE. EP girişleri riskli, pozisyon küçült veya geç."
-    elif baglam["vix_uyarisi"]:
-        vix_mesaj = f"⚠ VIX {baglam['vix']:.1f} — YÜKSEK OYNAKLLIK. Stop seviyeleri geniş tut, yarım pozisyon düşün."
+    if vix >= VIX_KRITIK_ESIGI:
+        vix_mesaj = f"🔴 VIX {vix:.1f} — KRİTİK. Yeni giriş tehlikeli, yarım pozisyon bile dikkatli."
+    elif vix >= VIX_UYARI_ESIGI:
+        vix_mesaj = f"⚠ VIX {vix:.1f} — YÜKSEK OYNAKLIK. Stop seviyeleri geniş tut, yarım pozisyon düşün."
 
-    sonuc = {
-        "tarama_tarihi"   : tarih_str,
-        "tarama_saati"    : saat_str,
-        "piyasa_durumu"   : "KAPALI" if baglam["piyasa_kapali"] else "AÇIK",
-        "piyasa_ozeti": {
-            "spy_degisim" : baglam["spy_degisim"],
-            "qqq_degisim" : baglam["qqq_degisim"],
-            "iwm_degisim" : baglam["iwm_degisim"],
-            "vix"         : baglam["vix"],
-            "vix_uyarisi" : baglam["vix_uyarisi"],
-            "vix_kritik"  : baglam["vix_kritik"],
-            "vix_mesaj"   : vix_mesaj,
-        },
-        "en_iyi_sektorler": sorted(sektor_perf.items(), key=lambda x: x[1], reverse=True)[:5],
-        "en_kotu_sektorler": sorted(sektor_perf.items(), key=lambda x: x[1])[:3],
-        "ep_adaylari"     : ep_adaylar,
-        "breakout_adaylari": breakout_adaylar,
-        "ozet": {
-            "toplam_ep"       : len(ep_adaylar),
-            "toplam_breakout" : len(breakout_adaylar),
-            "toplam_aday"     : len(ep_adaylar) + len(breakout_adaylar),
-            "tarama_notu"     : _tarama_notu_uret(baglam, ep_adaylar, breakout_adaylar),
-        }
+    return {
+        "tarih": datetime.now().strftime("%Y-%m-%d"),
+        "spy_fiyat": endeks.get("SPY", {}).get("fiyat", 0),
+        "spy_degisim": endeks.get("SPY", {}).get("degisim", 0),
+        "qqq_degisim": endeks.get("QQQ", {}).get("degisim", 0),
+        "iwm_degisim": endeks.get("IWM", {}).get("degisim", 0),
+        "vix": vix,
+        "vix_uyarisi": vix >= VIX_UYARI_ESIGI,
+        "vix_kritik": vix >= VIX_KRITIK_ESIGI,
+        "vix_mesaj": vix_mesaj,
+        "sektorler": sektorler,
     }
 
-    os.makedirs("data/swing", exist_ok=True)
-    with open("data/swing/daily_scan.json", "w", encoding="utf-8") as f:
-        json.dump(sonuc, f, ensure_ascii=False, indent=2)
 
-    print(f"\n✅ Tarama tamamlandı → data/swing/daily_scan.json")
-    print(f"   EP adayları   : {len(ep_adaylar)}")
-    print(f"   Breakout adayları: {len(breakout_adaylar)}")
-    print(f"   VIX            : {baglam['vix']:.1f}")
+# ═══════════════════════════════════════════════════════════════════════════
+#  1. AGRESİF TARAMA
+# ═══════════════════════════════════════════════════════════════════════════
+def agresif_tara(haric):
+    print("\n→ Agresif tarama başlıyor...")
+    goruldu = set()
 
-def _tarama_notu_uret(baglam, ep_adaylar, breakout_adaylar):
-    notlar = []
-    if baglam["vix_kritik"]:
-        notlar.append("VIX kritik seviyede — yeni giriş yaparken dikkatli ol")
-    if baglam["spy_degisim"] < -1.5:
-        notlar.append("SPY güçlü düşüş — momentum bozuk, breakout tuzağı riski")
-    elif baglam["spy_degisim"] > 1.5:
-        notlar.append("SPY güçlü — trend destekliyor")
-    if not ep_adaylar and not breakout_adaylar:
-        notlar.append("Bugün temiz aday yok — nakit tut, bekle")
-    elif len(ep_adaylar) >= 3:
-        notlar.append(f"{len(ep_adaylar)} EP adayı var — seçici ol, en yüksek skorluya odaklan")
-    return " | ".join(notlar) if notlar else "Normal tarama günü"
+    # biggest-gainers
+    gainers = fmp_get("biggest-gainers", {"limit": 50})
+    if gainers:
+        for g in gainers:
+            sym = g.get("symbol", "")
+            mc = sf(g.get("marketCap"))
+            price = sf(g.get("price"))
+            vol = sf(g.get("volume"))
+            if (sym not in haric and mc >= AGR_MIN_MCAP
+                    and price >= MIN_FIYAT and vol >= AGR_MIN_HACIM):
+                goruldu.add(sym)
 
-# ─── Git Commit ───────────────────────────────────────────────────────────────
-def git_commit_push(tarih_str):
-    try:
-        subprocess.run(["git", "config", "user.email", "zeynelgun@users.noreply.github.com"], check=True)
-        subprocess.run(["git", "config", "user.name", "Finzora AI"], check=True)
-        subprocess.run(["git", "pull", "--rebase", "origin", "main"], check=False)
-        subprocess.run(["git", "add", "data/swing/daily_scan.json"], check=True)
-        result = subprocess.run(
-            ["git", "diff", "--cached", "--quiet"],
-            capture_output=True
-        )
-        if result.returncode != 0:
-            subprocess.run(
-                ["git", "commit", "-m",
-                 f"[TARAMA] Swing adayları güncellendi — {tarih_str}"],
-                check=True
-            )
-            subprocess.run(["git", "push"], check=True)
-            print("✅ Git push başarılı")
+    # screener (çoklu sektör)
+    for sector in ["Technology", "Industrials", "Energy", "Healthcare"]:
+        scr = fmp_get("company-screener", {
+            "marketCapMoreThan": int(AGR_MIN_MCAP),
+            "sector": sector,
+            "exchange": "NYSE,NASDAQ",
+            "isActivelyTrading": "true",
+            "volumeMoreThan": AGR_MIN_HACIM,
+            "priceMoreThan": MIN_FIYAT,
+            "limit": 20,
+        })
+        if scr:
+            for s in scr:
+                if s["symbol"] not in haric:
+                    goruldu.add(s["symbol"])
+
+    # momentum filtresi
+    print(f"  → {len(goruldu)} aday için momentum kontrolü...")
+    sonuc = []
+    for sym in list(goruldu)[:60]:
+        d = fmp_get("stock-price-change", {"symbol": sym})
+        if not d or len(d) == 0:
+            continue
+        c = d[0]
+        d1 = sf(c.get("1D"))
+        d5 = sf(c.get("5D"))
+        d1m = sf(c.get("1M"))
+        if d5 >= AGR_MIN_5D_CHG and d1 >= 0:
+            profil = fmp_get("profile", {"symbol": sym})
+            isim, sektor = sym, ""
+            if profil and len(profil) > 0:
+                isim = profil[0].get("companyName", sym)
+                sektor = profil[0].get("sector", "")
+            sonuc.append({
+                "sembol": sym, "isim": isim, "sektor": sektor,
+                "degisim_1d": round(d1, 2), "degisim_5d": round(d5, 2),
+                "degisim_1m": round(d1m, 2),
+                "neden": f"5 günlük momentum +%{d5:.1f}, dün +%{d1:.1f}",
+            })
+
+    sonuc.sort(key=lambda x: x["degisim_5d"], reverse=True)
+    print(f"  ✓ Agresif: {len(sonuc[:MAX_ADAY])} aday")
+    return sonuc[:MAX_ADAY]
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+#  2. DENGELİ TARAMA
+# ═══════════════════════════════════════════════════════════════════════════
+def dengeli_tara(haric, guclu_sektorler):
+    print("\n→ Dengeli tarama başlıyor...")
+    goruldu = set()
+
+    for sector in guclu_sektorler[:4]:
+        scr = fmp_get("company-screener", {
+            "marketCapMoreThan": int(DNG_MIN_MCAP),
+            "sector": sector,
+            "exchange": "NYSE,NASDAQ",
+            "isActivelyTrading": "true",
+            "volumeMoreThan": MIN_HACIM,
+            "priceMoreThan": MIN_FIYAT,
+            "limit": 20,
+        })
+        if scr:
+            for s in scr:
+                if s["symbol"] not in haric:
+                    goruldu.add(s["symbol"])
+
+    print(f"  → {len(goruldu)} aday için RSI kontrolü...")
+    sonuc = []
+    for sym in list(goruldu)[:40]:
+        rsi_data = fmp_get("technical-indicators/rsi",
+                           {"symbol": sym, "periodLength": 14, "timeframe": "1day"})
+        if not rsi_data or len(rsi_data) < 2:
+            continue
+        rsi_now = sf(rsi_data[0].get("rsi"))
+        rsi_prev = sf(rsi_data[1].get("rsi"))
+
+        if 30 <= rsi_now <= 55 and rsi_now > rsi_prev:
+            chg = fmp_get("stock-price-change", {"symbol": sym})
+            d1 = sf(chg[0].get("1D")) if chg and len(chg) > 0 else 0
+            d5 = sf(chg[0].get("5D")) if chg and len(chg) > 0 else 0
+            d1m = sf(chg[0].get("1M")) if chg and len(chg) > 0 else 0
+
+            profil = fmp_get("profile", {"symbol": sym})
+            isim, sektor = sym, ""
+            if profil and len(profil) > 0:
+                isim = profil[0].get("companyName", sym)
+                sektor = profil[0].get("sector", "")
+
+            sonuc.append({
+                "sembol": sym, "isim": isim, "sektor": sektor,
+                "rsi": round(rsi_now, 1), "rsi_onceki": round(rsi_prev, 1),
+                "degisim_1d": round(d1, 2), "degisim_5d": round(d5, 2),
+                "degisim_1m": round(d1m, 2),
+                "neden": f"RSI {rsi_now:.0f} kurtarma (önceki {rsi_prev:.0f}), güçlü sektör",
+            })
+
+    sonuc.sort(key=lambda x: x["rsi"])
+    print(f"  ✓ Dengeli: {len(sonuc[:MAX_ADAY])} aday")
+    return sonuc[:MAX_ADAY]
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+#  3. TEMETTÜ TARAMA
+# ═══════════════════════════════════════════════════════════════════════════
+def temettu_tara(haric):
+    print("\n→ Temettü tarama başlıyor...")
+
+    scr = fmp_get("company-screener", {
+        "marketCapMoreThan": int(TMT_MIN_MCAP),
+        "dividendMoreThan": TMT_MIN_YIELD,
+        "exchange": "NYSE,NASDAQ",
+        "isActivelyTrading": "true",
+        "priceMoreThan": MIN_FIYAT,
+        "limit": 50,
+    })
+
+    semboller = []
+    if scr:
+        for s in scr:
+            if s["symbol"] not in haric:
+                semboller.append(s["symbol"])
+
+    print(f"  → {len(semboller)} aday için temel analiz...")
+    sonuc = []
+    for sym in semboller[:30]:
+        ratios = fmp_get("ratios-ttm", {"symbol": sym})
+        if not ratios or len(ratios) == 0:
+            continue
+        r = ratios[0]
+        pe = sf(r.get("peRatioTTM"))
+        div_yield = sf(r.get("dividendYielTTM")) * 100
+        payout = sf(r.get("payoutRatioTTM"))
+
+        if pe <= 0 or pe > TMT_MAX_PE or div_yield < TMT_MIN_YIELD or payout > 1.0:
+            continue
+
+        km = fmp_get("key-metrics-ttm", {"symbol": sym})
+        fcf_yield = 0
+        if km and len(km) > 0:
+            fcf_yield = sf(km[0].get("freeCashFlowYieldTTM")) * 100
+
+        profil = fmp_get("profile", {"symbol": sym})
+        isim, sektor, fiyat = sym, "", 0
+        if profil and len(profil) > 0:
+            isim = profil[0].get("companyName", sym)
+            sektor = profil[0].get("sector", "")
+            fiyat = sf(profil[0].get("price"))
+
+        sonuc.append({
+            "sembol": sym, "isim": isim, "sektor": sektor, "fiyat": fiyat,
+            "pe": round(pe, 1), "temettu_yuzde": round(div_yield, 2),
+            "payout_orani": round(payout * 100, 1),
+            "fcf_yield_yuzde": round(fcf_yield, 2),
+            "neden": f"P/E {pe:.1f}, temettü %{div_yield:.1f}, FCF yield %{fcf_yield:.1f}",
+        })
+
+    sonuc.sort(key=lambda x: x["temettu_yuzde"], reverse=True)
+    print(f"  ✓ Temettü: {len(sonuc[:MAX_ADAY])} aday")
+    return sonuc[:MAX_ADAY]
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+#  4. SWING TARAMA (ichimoku)
+# ═══════════════════════════════════════════════════════════════════════════
+def ichimoku_hesapla(fiyatlar):
+    if len(fiyatlar) < 52:
+        return None
+
+    def orta(veri, n):
+        dilim = veri[:n]
+        h = [sf(d.get("high")) for d in dilim]
+        l = [sf(d.get("low")) for d in dilim]
+        return (max(h) + min(l)) / 2
+
+    tenkan = orta(fiyatlar, 9)
+    kijun  = orta(fiyatlar, 26)
+    senkou_a = (tenkan + kijun) / 2
+    senkou_b = orta(fiyatlar, 52)
+    kumo_ust = max(senkou_a, senkou_b)
+    kumo_alt = min(senkou_a, senkou_b)
+
+    fiyat = sf(fiyatlar[0].get("close"))
+    fiyat_26 = sf(fiyatlar[25].get("close")) if len(fiyatlar) > 25 else fiyat
+    fiyat_dun = sf(fiyatlar[1].get("close")) if len(fiyatlar) > 1 else fiyat
+    tenkan_dun = orta(fiyatlar[1:], 9) if len(fiyatlar) > 10 else tenkan
+    kijun_dun = orta(fiyatlar[1:], 26) if len(fiyatlar) > 27 else kijun
+
+    return {
+        "fiyat": fiyat, "tenkan": round(tenkan, 2), "kijun": round(kijun, 2),
+        "kumo_ust": round(kumo_ust, 2), "kumo_alt": round(kumo_alt, 2),
+        "kumo_renk": "yesil" if senkou_a > senkou_b else "kirmizi",
+        "chikou_pozitif": fiyat > fiyat_26,
+        "tenkan_gt_kijun": tenkan > kijun,
+        "fiyat_dun": fiyat_dun, "tenkan_dun": round(tenkan_dun, 2),
+        "kijun_dun": round(kijun_dun, 2),
+    }
+
+
+def swing_tara(haric, baglam):
+    print("\n→ Swing ichimoku tarama başlıyor...")
+    goruldu = set()
+
+    gainers = fmp_get("biggest-gainers", {"limit": 40})
+    if gainers:
+        for g in gainers:
+            sym = g.get("symbol", "")
+            mc = sf(g.get("marketCap"))
+            price = sf(g.get("price"))
+            vol = sf(g.get("volume"))
+            if sym not in haric and mc >= SWG_MIN_MCAP and price >= MIN_FIYAT and vol >= SWG_MIN_HACIM:
+                goruldu.add(sym)
+
+    for sector in ["Technology", "Energy", "Industrials", "Healthcare", "Basic Materials"]:
+        scr = fmp_get("company-screener", {
+            "marketCapMoreThan": int(SWG_MIN_MCAP), "sector": sector,
+            "exchange": "NYSE,NASDAQ", "isActivelyTrading": "true",
+            "volumeMoreThan": SWG_MIN_HACIM, "priceMoreThan": MIN_FIYAT, "limit": 15,
+        })
+        if scr:
+            for s in scr:
+                if s["symbol"] not in haric:
+                    goruldu.add(s["symbol"])
+
+    # 5D pozitif filtre
+    momentum = []
+    for sym in list(goruldu)[:50]:
+        d = fmp_get("stock-price-change", {"symbol": sym})
+        if d and len(d) > 0:
+            d5 = sf(d[0].get("5D"))
+            d1 = sf(d[0].get("1D"))
+            if d5 > 0 and d1 >= 0:
+                momentum.append(sym)
+
+    print(f"  → {len(momentum)} aday için ichimoku kontrol...")
+    sonuc = []
+    for sym in momentum[:30]:
+        fiyatlar = fmp_get("historical-price-eod/full", {"symbol": sym, "limit": 60})
+        if not fiyatlar or len(fiyatlar) < 52:
+            continue
+
+        ich = ichimoku_hesapla(fiyatlar)
+        if not ich:
+            continue
+
+        fiyat = ich["fiyat"]
+        # konum
+        if fiyat > ich["kumo_ust"]:
+            konum = "kumo_ustu"
+        elif fiyat > ich["kumo_alt"]:
+            konum = "kumo_ici"
         else:
-            print("— Değişiklik yok, commit atlandı")
-    except subprocess.CalledProcessError as e:
-        print(f"⚠ Git hatası: {e}")
+            konum = "kumo_alti"
 
-# ─── Ana Akış ────────────────────────────────────────────────────────────────
+        # sinyaller
+        sinyaller = []
+        if fiyat > ich["kumo_ust"] and ich["fiyat_dun"] <= ich["kumo_ust"]:
+            sinyaller.append("kumo_kirilimi")
+        if ich["tenkan_gt_kijun"] and ich["tenkan_dun"] <= ich["kijun_dun"]:
+            sinyaller.append("tk_cross")
+        kijun = ich["kijun"]
+        if kijun > 0 and abs(fiyat - kijun) / kijun < 0.02 and fiyat > ich["fiyat_dun"]:
+            sinyaller.append("kijun_bounce")
+
+        guc = sum([
+            konum == "kumo_ustu",
+            ich["tenkan_gt_kijun"],
+            ich["chikou_pozitif"],
+            ich["kumo_renk"] == "yesil",
+        ])
+
+        # hacim
+        hacimler = [sf(d.get("volume")) for d in fiyatlar[:20]]
+        ort_hacim = sum(hacimler) / len(hacimler) if hacimler else 1
+        hacim_kat = hacimler[0] / ort_hacim if ort_hacim > 0 else 0
+
+        if len(sinyaller) > 0 or guc >= 3:
+            karar = "BEKLE"
+            if sinyaller and guc >= 3 and hacim_kat >= 1.0:
+                karar = "GİRİŞ ✅"
+            elif sinyaller and guc >= 2:
+                karar = "GİRİŞ ⚠️"
+            elif guc >= 3:
+                karar = "TREND DEVAM"
+
+            profil = fmp_get("profile", {"symbol": sym})
+            isim, sektor = sym, ""
+            if profil and len(profil) > 0:
+                isim = profil[0].get("companyName", sym)
+                sektor = profil[0].get("sector", "")
+
+            sonuc.append({
+                "sembol": sym, "isim": isim, "sektor": sektor,
+                "fiyat": fiyat,
+                "ichimoku": {
+                    "konum": konum, "guc": guc, "sinyaller": sinyaller,
+                    "tenkan": ich["tenkan"], "kijun": ich["kijun"],
+                    "kumo_ust": ich["kumo_ust"], "kumo_alt": ich["kumo_alt"],
+                    "kumo_renk": ich["kumo_renk"],
+                },
+                "hacim_katsayisi": round(hacim_kat, 1),
+                "stop_kijun": ich["kijun"],
+                "karar": karar,
+                "neden": f"ichimoku {guc}/4, {', '.join(sinyaller) or 'trend devam'}",
+            })
+
+    sonuc.sort(key=lambda x: (
+        0 if "GİRİŞ ✅" in x["karar"] else 1 if "GİRİŞ ⚠️" in x["karar"] else 2,
+        -x["ichimoku"]["guc"]
+    ))
+    print(f"  ✓ Swing: {len(sonuc[:MAX_ADAY])} aday")
+    return sonuc[:MAX_ADAY]
+
+
+# ─── Kaydet + Git ────────────────────────────────────────────────────────
+def sonuclari_kaydet(baglam, agresif, dengeli, temettu, swing):
+    dosya = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+                         "data", "daily_scan.json")
+    veri = {
+        "tarama_tarihi": baglam["tarih"],
+        "tarama_zamani": datetime.now(timezone.utc).isoformat(),
+        "versiyon": "2.0",
+        "piyasa_ozeti": baglam,
+        "agresif_adaylari": agresif,
+        "dengeli_adaylari": dengeli,
+        "temettu_adaylari": temettu,
+        "swing_adaylari": swing,
+        "ozet": {
+            "agresif_sayi": len(agresif),
+            "dengeli_sayi": len(dengeli),
+            "temettu_sayi": len(temettu),
+            "swing_sayi": len(swing),
+            "toplam": len(agresif) + len(dengeli) + len(temettu) + len(swing),
+        }
+    }
+    with open(dosya, "w", encoding="utf-8") as f:
+        json.dump(veri, f, ensure_ascii=False, indent=2)
+    print(f"\n✓ Sonuçlar kaydedildi: {dosya}")
+
+
+def git_commit_push(tarih_str):
+    repo = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    env = {**os.environ,
+           "GIT_AUTHOR_NAME": "Finzora AI",
+           "GIT_AUTHOR_EMAIL": "zeynelgun@users.noreply.github.com",
+           "GIT_COMMITTER_NAME": "Finzora AI",
+           "GIT_COMMITTER_EMAIL": "zeynelgun@users.noreply.github.com"}
+    try:
+        subprocess.run(["git", "add", "data/daily_scan.json"], cwd=repo, check=True, capture_output=True)
+        subprocess.run(["git", "commit", "-m", f"[TARAMA] {tarih_str} - günlük çoklu portföy taraması"],
+                       cwd=repo, check=True, capture_output=True, env=env)
+        subprocess.run(["git", "push", "origin", "main"], cwd=repo, check=True, capture_output=True)
+        print("✓ Git commit + push tamamlandı")
+    except subprocess.CalledProcessError as e:
+        print(f"✗ Git hatası: {e}")
+
+
 def main():
     print("=" * 60)
-    print(f"Finzora AI — Günlük Swing Tarama")
-    print(f"Zaman: {datetime.now().strftime('%Y-%m-%d %H:%M UTC')}")
+    print("  FİNZORA AI — GÜNLÜK ÇOKLU PORTFÖY TARAMASI v2.0")
     print("=" * 60)
 
-    tarih_str = datetime.now().strftime("%Y-%m-%d")
+    haric = mevcut_pozisyonlari_al()
+    print(f"  Mevcut pozisyonlar ({len(haric)}): {', '.join(sorted(haric))}")
 
-    # 1) Piyasa bağlamı
     baglam = piyasa_baglamini_al()
-    print(f"  SPY: {baglam['spy_degisim']:+.2f}% | QQQ: {baglam['qqq_degisim']:+.2f}% | VIX: {baglam['vix']:.1f}")
+    sektorler = baglam.get("sektorler", {})
+    guclu = sorted(sektorler.keys(), key=lambda x: sektorler[x], reverse=True)
 
-    # 2) Sektör performansı
-    sektor_perf = sektor_performansini_al(tarih_str)
+    agresif = agresif_tara(haric)
+    dengeli = dengeli_tara(haric, guclu)
+    temettu = temettu_tara(haric)
+    swing   = swing_tara(haric, baglam)
 
-    # 3) EP taraması
-    ep_adaylar = ep_tara()
+    sonuclari_kaydet(baglam, agresif, dengeli, temettu, swing)
+    git_commit_push(datetime.now().strftime("%d %B %Y"))
 
-    # 4) Breakout taraması
-    breakout_adaylar = breakout_tara()
+    print("\n" + "=" * 60)
+    print("  TARAMA TAMAMLANDI")
+    print(f"  Toplam: {len(agresif)} agresif + {len(dengeli)} dengeli + "
+          f"{len(temettu)} temettü + {len(swing)} swing")
+    print("=" * 60)
 
-    # 5) Kaydet
-    sonuclari_kaydet(baglam, ep_adaylar, breakout_adaylar, sektor_perf)
-
-    # 6) Git commit
-    git_commit_push(tarih_str)
 
 if __name__ == "__main__":
     main()
