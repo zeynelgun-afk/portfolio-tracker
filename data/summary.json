@@ -1,65 +1,51 @@
 {
   "son_guncelleme": "2026-03-25",
-  "simulasyon_donemi": "17 Şubat 2026 - 24 Mart 2026",
-  "islem_gunleri": 25,
-  "toplam_sermaye": 600000.0,
-  "toplam_deger": 629688.63,
-  "toplam_kar_zarar": 29688.63,
-  "toplam_kar_zarar_yuzde": 4.95,
-  "benchmark_spy": 7.92,
-  "alpha": -3.63,
+  "toplam_sermaye": 600000,
+  "toplam_deger": 629145.03,
+  "toplam_kar_zarar": 29145.03,
+  "toplam_kar_zarar_yuzde": 4.86,
   "portfolyolar": {
     "dengeli": {
       "isim": "Dengeli Portföy",
-      "deger": 112539.87,
+      "deger": 112621.26,
       "maliyet": 100000,
-      "kar_zarar": 12319.8,
-      "kar_zarar_yuzde": 12.54,
+      "kar_zarar": 12621.259999999995,
+      "kar_zarar_yuzde": 12.62,
       "pozisyon_sayisi": 6,
       "nakit": {
-        "miktar": 54551.07,
+        "miktar": 55001.52,
         "para_birimi": "USD"
-      },
-      "durum": "BAŞARILI"
+      }
     },
     "agresif": {
       "isim": "Agresif Büyüme Portföyü",
-      "deger": 371137.79,
+      "deger": 370416.8,
       "maliyet": 400000,
-      "kar_zarar": -30969.6,
-      "kar_zarar_yuzde": -7.22,
+      "kar_zarar": -29583.20000000001,
+      "kar_zarar_yuzde": -7.4,
       "pozisyon_sayisi": 7,
       "nakit": {
         "miktar": 242799.37,
         "para_birimi": "USD"
-      },
-      "durum": "ZARAR"
+      }
     },
     "temettü": {
       "isim": "Değer + Temettü Portföyü",
-      "deger": 146010.97,
+      "deger": 146106.97,
       "maliyet": 100000,
-      "kar_zarar": 45568.67,
-      "kar_zarar_yuzde": 46.01,
+      "kar_zarar": 46106.97,
+      "kar_zarar_yuzde": 46.11,
       "pozisyon_sayisi": 10,
       "nakit": {
-        "miktar": 4426.03,
+        "miktar": 7294.7699999999995,
         "para_birimi": "USD"
-      },
-      "durum": "BAŞARILI"
+      }
     },
     "swing_trade": {
       "isim": "Swing Trade (Simülasyon)",
       "pozisyon_sayisi": 2,
-      "ortalama_getiri_yuzde": -0.43999999999999995,
-      "bos_slot": 6,
-      "durum": "2/8 pozisyon aktif"
+      "bos_slot": 8,
+      "durum": "2/10 pozisyon aktif"
     }
-  },
-  "son_islemler": [
-    "[SATIŞ] CVX 14 adet @ $204.91 - K-11 kısmi kâr alma (Temettü)",
-    "[TRAILING] PLTR stop güncellendi",
-    "[TRAILING] COHR stop güncellendi",
-    "[GÜNCELLEME] Tüm portföyler seans içi fiyat güncellemesi"
-  ]
+  }
 }
