@@ -203,15 +203,16 @@ OBV = kümülatif hacim. fiyat yükseldiği günlerde hacim eklenir, düştüğ�
 
 ---
 
-## 6. TEMEL FİLTRE (değişmedi)
+## 6. TEMEL ANALİZ (claude değerlendirir)
 
-teknik ne kadar iyi olursa olsun, temel analiz red verirse girme. mevcut filtre aynen devam:
+script temel analiz yapmaz. her taramada claude hisse bazında bağlamsal değerlendirme yapar:
 
-- D/E > 3 → otomatik red
-- FCF negatif (TTM) → kırmızı bayrak
-- net marj negatif → kırmızı bayrak
-- gelir küçülüyor YoY → kırmızı bayrak
-- 2+ kritik bayrak → red
+- sektör normları (utilities/REIT yüksek borç normaldir, büyüme şirketlerinde FCF negatif olabilir)
+- döngüsel etki (enerji gelir küçülmesi petrol fiyatına bağlı, sabit kural ile filtrelenmez)
+- katalizör ve tez uyumu (şirketin hikayesi teknik sinyalle tutarlı mı)
+- risk/ödül dengesi (pozisyon büyüklüğüne yansıtılır)
+
+sabit rasyolarla otomatik red yok. karar claude'da.
 
 ---
 

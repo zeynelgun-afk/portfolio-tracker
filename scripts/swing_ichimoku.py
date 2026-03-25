@@ -499,73 +499,6 @@ def check_sma200(symbol, price):
 
 
 # ============================================================
-# 10. TEMEL ANALİZ FİLTRESİ (v1'den taşındı)
-# ============================================================
-
-def check_fundamentals(symbol):
-    """Temel analiz minimum eşik kontrolü."""
-    flags = []
-    positives = []
-    passed = True
-
-    inc = fmp_get("income-statement", {"symbol": symbol, "period": "quarter", "limit": 6})
-    if inc and len(inc) >= 2:
-        rev_last = inc[0].get('revenue', 0)
-        ni_last = inc[0].get('netIncome', 0)
-        net_margin = (ni_last / rev_last * 100) if rev_last > 0 else 0
-
-        if net_margin > 10:
-            positives.append(f"net marj %{net_margin:.1f}")
-        elif net_margin > 0:
-            positives.append(f"net marj %{net_margin:.1f} (dusuk)")
-        else:
-            flags.append(f"net marj NEGATIF %{net_margin:.1f}")
-
-        if len(inc) >= 5:
-            rev_yoy = inc[4].get('revenue', 0)
-            if rev_yoy > 0:
-                rev_growth = ((rev_last - rev_yoy) / rev_yoy) * 100
-                if rev_growth > 0:
-                    positives.append(f"gelir +%{rev_growth:.1f} YoY")
-                else:
-                    flags.append(f"gelir KUCULUYOR %{rev_growth:.1f}")
-
-    bs = fmp_get("balance-sheet-statement", {"symbol": symbol, "period": "quarter", "limit": 1})
-    if bs and len(bs) > 0:
-        b = bs[0]
-        total_debt = b.get('totalDebt', 0)
-        equity = b.get('totalStockholdersEquity', 0)
-        if equity > 0:
-            de = total_debt / equity
-            if de > 3:
-                flags.append(f"D/E {de:.1f} COK YUKSEK")
-                passed = False
-            elif de > 2:
-                flags.append(f"D/E {de:.1f} yuksek")
-            else:
-                positives.append(f"D/E {de:.1f}")
-
-    cf = fmp_get("cash-flow-statement", {"symbol": symbol, "period": "quarter", "limit": 4})
-    if cf:
-        ttm_fcf = sum(c.get('freeCashFlow', 0) for c in cf)
-        if ttm_fcf > 0:
-            positives.append(f"FCF ${ttm_fcf/1e6:.0f}M")
-        else:
-            flags.append(f"FCF NEGATIF ${ttm_fcf/1e6:.0f}M")
-
-    critical = [f for f in flags if any(w in f for w in ["COK YUKSEK", "NEGATIF", "KUCULUYOR"])]
-    if len(critical) >= 2:
-        passed = False
-
-    return {
-        "passed": passed,
-        "positives": positives,
-        "flags": flags,
-        "verdict": "GECTI" if passed else "KALDI",
-    }
-
-
-# ============================================================
 # 11. TAM ANALİZ
 # ============================================================
 
@@ -673,36 +606,22 @@ def full_analysis(symbol, detay=False):
         print(f"\n  📈 SMA200: ${sma200_info['sma200']} {trend_icon}")
         print(f"     {s200_emoji} fiyat {'üstünde' if sma200_info['above'] else 'altında'} ({sma200_info['fark_pct']:+.1f}%)")
 
-    # temel filtre
-    print(f"\n  🏢 TEMEL FİLTRE")
-    fund = check_fundamentals(symbol)
-    icon = "✅" if fund['passed'] else "❌"
-    print(f"     {icon} {fund['verdict']}")
-    for p in fund['positives'][:4]:
-        print(f"     ✅ {p}")
-    for f in fund['flags'][:4]:
-        print(f"     ⚠️ {f}")
-
     # === KARAR ===
     print(f"\n  {'─'*45}")
 
-    # karar mantığı
-    sma200_above = sma200_info['above'] if sma200_info else True  # veri yoksa geç
+    # karar mantığı (temel analiz claude tarafından ayrıca değerlendirilir)
+    sma200_above = sma200_info['above'] if sma200_info else True
 
-    if not fund['passed']:
-        karar = "GİRME ❌ (temel red)"
-    elif pos['konum'] == "kumo_alti" and pos['trend'] == "dusus":
+    if pos['konum'] == "kumo_alti" and pos['trend'] == "dusus":
         karar = "GİRME ❌ (kumo altı + düşüş trendi)"
     elif entry_signals:
         en_guclu = max(entry_signals, key=lambda x: {"yuksek": 3, "orta": 2, "zayif": 1}.get(x['guc'], 0))
         if not sma200_above:
-            # SMA200 altında: sadece çok güçlü kumo kırılımı + hacim teyidi ile yarım pozisyon
             if en_guclu['guc'] == "yuksek" and vol and vol['teyit'] in ('guclu', 'normal'):
                 karar = "GİRİŞ ⚠️ (SMA200 altı, yarım pozisyon)"
             else:
                 karar = "BEKLE ⏳ (SMA200 altı, güçlü sinyal bekle)"
         else:
-            # SMA200 üstü: normal akış
             if en_guclu['guc'] == "yuksek" and vol and vol['teyit'] in ('guclu', 'normal'):
                 karar = "GİRİŞ ✅"
             elif en_guclu['guc'] == "yuksek" and vol and vol['teyit'] == 'zayif':
@@ -735,7 +654,6 @@ def full_analysis(symbol, detay=False):
         "entry_signals": entry_signals,
         "exit_signals": exit_signals,
         "stop": stop_info,
-        "fundamentals": fund,
         "karar": karar,
     }
 
