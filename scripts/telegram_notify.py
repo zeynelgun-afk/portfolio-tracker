@@ -12,6 +12,7 @@ Kullanım:
   python scripts/telegram_notify.py --type closing       # detaylı kapanış raporu
   python scripts/telegram_notify.py --type report --file rapor.md  # markdown rapor gönder
   python scripts/telegram_notify.py --type custom --msg "mesaj"    # özel mesaj
+  python scripts/telegram_notify.py --type winners               # kârdaki pozisyonlar vitrini
 """
 
 import requests
@@ -330,6 +331,117 @@ def format_premarket(theme=None):
     return msg
 
 
+def format_winners(theme=None):
+    """Kârdaki pozisyonların vitrin gösterimi. reklam/showcase amaçlı."""
+    all_pos, bal, agg, div = get_all_positions()
+    swing = load_swing()
+
+    toplam = bal["toplam_deger"] + agg["toplam_deger"] + div["toplam_deger"]
+    toplam_pnl = toplam - 600000
+    toplam_pct = (toplam_pnl / 600000) * 100
+    today = datetime.now().strftime("%d.%m.%Y")
+
+    # aktif kârdaki pozisyonlar (tüm portföyler)
+    winners = [p for p in all_pos if p["kar_zarar_yuzde"] > 0]
+    winners.sort(key=lambda x: x["kar_zarar_yuzde"], reverse=True)
+
+    # swing aktif kârdakiler
+    swing_aktif = swing.get("aktif_pozisyonlar", [])
+    swing_winners = [p for p in swing_aktif if p["guncel_kar_zarar_yuzde"] > 0]
+    swing_winners.sort(key=lambda x: x["guncel_kar_zarar_yuzde"], reverse=True)
+
+    # kapanmış swing kazançları
+    try:
+        closed = load_json("data/swing/closed.json")
+        closed_wins = [p for p in closed.get("kapatilan_pozisyonlar", []) if p["kar_zarar_yuzde"] > 0]
+        closed_wins.sort(key=lambda x: x["kar_zarar_yuzde"], reverse=True)
+        total_closed = len(closed.get("kapatilan_pozisyonlar", []))
+        win_rate = (len(closed_wins) / total_closed * 100) if total_closed > 0 else 0
+    except:
+        closed_wins = []
+        win_rate = 0
+        total_closed = 0
+
+    # portföy isim haritası
+    port_names = {"DNG": "Dengeli", "AGR": "Agresif", "TMT": "Temettü"}
+
+    # tutma süresi hesapla
+    def hold_days(giris):
+        try:
+            d = datetime.strptime(giris, "%Y-%m-%d")
+            return (datetime.now() - d).days
+        except:
+            return 0
+
+    # toplam realize + unrealized
+    unrealized_pnl = sum(p.get("kar_zarar", 0) for p in all_pos if p.get("kar_zarar", 0) > 0)
+
+    msg = f"""<b>🏆 KAZANANLAR VİTRİNİ</b>
+<i>{today}</i>
+"""
+    if theme:
+        msg += f"\n<b>📌</b> {theme}\n"
+
+    msg += f"""
+<b>💰 Toplam Portföy: ${toplam:,.0f} ({toplam_pct:+.2f}%)</b>
+"""
+
+    # en iyi aktif pozisyonlar
+    if winners:
+        msg += f"\n<b>📈 Aktif Kazananlar ({len(winners)} pozisyon)</b>\n"
+        for i, p in enumerate(winners):
+            # medal emojisi ilk 3 için
+            if i == 0:
+                medal = "🥇"
+            elif i == 1:
+                medal = "🥈"
+            elif i == 2:
+                medal = "🥉"
+            else:
+                medal = "🟢"
+
+            days = hold_days(p.get("giris_tarihi", ""))
+            port_label = port_names.get(p["port"], p["port"])
+            pnl_usd = p.get("kar_zarar", 0)
+            msg += f"  {medal} <b>{p['sembol']}</b> <b>+%{p['kar_zarar_yuzde']:.1f}</b>"
+            if pnl_usd > 0:
+                msg += f" (+${pnl_usd:,.0f})"
+            msg += f" | {days} gün | {port_label}\n"
+
+    # swing aktif kazananlar
+    if swing_winners:
+        msg += f"\n<b>⚡ Swing Aktif Kazananlar</b>\n"
+        for p in swing_winners:
+            msg += f"  🟢 <b>{p['sembol']}</b> <b>+%{p['guncel_kar_zarar_yuzde']:.1f}</b> | {p['tutulan_gun']} gün\n"
+
+    # kapanmış swing istatistikleri
+    if closed_wins:
+        avg_win = sum(p["kar_zarar_yuzde"] for p in closed_wins) / len(closed_wins)
+        best = closed_wins[0]
+        msg += f"\n<b>📊 Swing Geçmiş Performans</b>\n"
+        msg += f"  Kazanç oranı: <b>%{win_rate:.0f}</b> ({len(closed_wins)}/{total_closed})\n"
+        msg += f"  Ort. kazanç: <b>+%{avg_win:.1f}</b>\n"
+        msg += f"  En iyi: <b>{best['sembol']} +%{best['kar_zarar_yuzde']:.1f}</b> ({best['tutulan_gun']} gün)\n"
+
+        # son 5 kapanmış kazanç
+        msg += "\n  Son kapanmış kazançlar:\n"
+        recent = sorted(closed_wins, key=lambda x: x.get("cikis_tarihi", ""), reverse=True)[:5]
+        for p in recent:
+            msg += f"    ✅ {p['sembol']} +%{p['kar_zarar_yuzde']:.1f} | {p['tutulan_gun']} gün\n"
+
+    # portföy bazında özet
+    msg += f"\n{'─' * 25}\n"
+    msg += "<b>📋 Portföy Bazında Getiri</b>\n"
+    for label, port in [("Dengeli", bal), ("Agresif", agg), ("Temettü", div)]:
+        pct = port["toplam_getiri_yuzde"]
+        emoji = "📈" if pct >= 0 else "📉"
+        msg += f"  {emoji} {label}: <b>{pct:+.2f}%</b>\n"
+
+    msg += f"\n<i>17 şubat 2026'dan beri takip ediliyor</i>"
+    msg += "\n<i>finzora ai</i>"
+    return msg
+
+
 def format_closing(theme=None):
     """Detaylı kapanış raporu."""
     all_pos, bal, agg, div = get_all_positions()
@@ -427,7 +539,7 @@ def format_report_from_file(filepath):
 # --- ANA FONKSİYON ---
 def main():
     parser = argparse.ArgumentParser(description="Finzora AI Telegram Bildirim")
-    parser.add_argument("--type", choices=["session", "action", "alert", "daily", "premarket", "closing", "report", "custom"], required=True)
+    parser.add_argument("--type", choices=["session", "action", "alert", "daily", "premarket", "closing", "report", "custom", "winners"], required=True)
     parser.add_argument("--msg", help="Özel mesaj (--type custom için)")
     parser.add_argument("--file", help="Markdown rapor dosyası (--type report için)")
     parser.add_argument("--theme", help="Piyasa teması / günün özeti (session, premarket, closing için)")
@@ -443,6 +555,8 @@ def main():
         msg = format_session_report(theme=args.theme)
     elif args.type == "premarket":
         msg = format_premarket(theme=args.theme)
+    elif args.type == "winners":
+        msg = format_winners(theme=args.theme)
     elif args.type in ("daily", "closing"):
         msg = format_closing(theme=args.theme)
     elif args.type == "report":
