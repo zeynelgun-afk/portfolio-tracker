@@ -461,11 +461,39 @@ kontrol 3: yön korelasyonu
 - hepsi aynı anda düşüyorsa → korelasyon riski ⚠️
 ```
 
-## 3d. yeni pozisyon fırsatları — GENİŞ HAVUZ İCHİMOKU TARAMA
+## 3d. yeni pozisyon fırsatları — PROAKTİF TEMATİK TARAMA
 
-> **felsefe**: dar watchlist'e bağlı kalma. her seansta geniş havuzdan tara, ichimoku sinyali olanları bul, temel değerlendirmeyi claude yapsın.
+> **felsefe**: claude kendi başına düşünür. haberleri okur, sektörel trendleri analiz eder, hangi tema öne çıkıyor saptar, o temadaki tedarik zincirinin her katmanını araştırır. zeynel'in söylemesini beklemez. watchlist'e ekleyip beklemez, uygun setup'a giriş yapar.
+>
+> **temel prensip**: AI her sektörü etkiliyor. çip tasarımı (NVDA) herkesin bildiği katman. ama çipi üretmek için ekipman, kimyasal, gaz, wafer, soğutma, trafo, bakır, optik fiber, nadir toprak lazım. bu alt katmanlar daha az kalabalık, daha ucuz ve seküler büyümeden faydalanıyor.
 
-### adım 1: aday havuzu oluştur (geniş ağ)
+### kaynak 0: TEMATİK TEDARİK ZİNCİRİ TARAMASI (her seansta zorunlu)
+
+aktif temaları ve her temanın tedarik zinciri katmanlarını tara:
+
+```
+AI TEDARİK ZİNCİRİ KATMANLARI:
+  çip tasarımı:     NVDA, AMD, MRVL, AVGO, CRDO
+  çip ekipmanı:     ASML, AMAT, LRCX, KLAC, CAMT, ONTO
+  kimyasal/malzeme: ENTG, MKSI, PLAB, CCMP, LIN, APD
+  optik bağlantı:   COHR, LITE, GLW, AAOI
+  güç altyapısı:    POWL, VRT, ETN, PWR, GNRC
+  soğutma/termal:   VRT, TT, JCI
+  veri merkezi:     DLR, EQIX
+  enerji:           COP, XOM, CVX (hepsini besleyen yakıt)
+  nadir toprak:     MP, FCX, BHP
+
+SAVUNMA/UZAY:       LMT, RTX, GE, RKLB, KTOS
+ENERJİ GEÇİŞİ:     FSLR, ENPH, NEE, VST
+```
+
+claude her seansta:
+1. web aramasıyla güncel piyasa temalarını/haberlerini oku
+2. hangi katman öne çıkıyor belirle (kazanç açıklamaları, yeni kontratlar, darboğazlar)
+3. o katmandaki hisseleri ichimoku ile tara
+4. güçlü setup'lara giriş yap (watchlist'e ekleme yerine)
+
+### kaynak 1-5: (mevcut geniş ağ tarama)
 
 5 kaynaktan aday topla, tekrar edenleri birleştir:
 
@@ -544,14 +572,27 @@ script "GİRİŞ ✅" veya "GİRİŞ ⚠️" veren hisseler için claude hisse b
 sinyal + temel değerlendirme + portföy dengesi → giriş/bekle/geç kararı.
 
 ```
-giriş koşulları:
+giriş koşulları (birini sağlaması yeterli):
+
+A) SİNYAL GİRİŞİ (ideal):
 1. ichimoku giriş sinyali var (kumo kırılımı / kijun bounce)
 2. hacim teyidi (en az 1.0x ortalama, ideal 1.2x+)
-3. SMA200 üstünde (altındaysa sadece çok güçlü sinyalle yarım pozisyon)
-4. claude temel değerlendirmesi olumlu
-5. portföy korelasyonu uygun (aynı sektörde 3'ten fazla swing yok)
-6. VIX ortamı: >25 = yarım pozisyon (K-13)
-7. ATR bazlı pozisyon boyutlandırma (risk %1, stop = kijun)
+3. SMA200 üstünde
+→ tam veya yarım pozisyon (VIX'e göre)
+
+B) TREND DEVAM GİRİŞİ (güçlü trend varken):
+1. ichimoku 4/4 güçlü yükseliş (kumo üstü + tenkan>kijun + chikou pozitif + yeşil kumo)
+2. OBV yükseliş (alıcılar aktif)
+3. stop mesafesi >%5 (2x ATR uygun)
+4. SMA200 üstünde
+→ yarım pozisyon (trend güçlü ama spesifik sinyal yok, dikkatli giriş)
+→ trend devam ederse ve kijun bounce veya yeni kırılım gelirse tamamla
+
+C) ORTAK KOŞULLAR (her giriş için):
+5. claude temel değerlendirmesi olumlu
+6. portföy korelasyonu uygun (aynı alt sektörde 3'ten fazla pozisyon yok)
+7. VIX >25 = yarım pozisyon (K-13)
+8. 2x ATR bazlı stop ve pozisyon boyutlandırma
 ```
 
 ### portföy yeni ekleme fırsatları

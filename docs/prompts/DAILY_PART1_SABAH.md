@@ -123,14 +123,20 @@ ADIM 4 — OTOMATİK SWING TARAMA SONUÇLARI (daily_scan.json)
   KONTROL: mevcut swing aktif pozisyonlarla (data/swing/active.json)
   sembol çakışması var mı? varsa listeden çıkar.
 
-ADIM 4.5 — İCHİMOKU TARAMA (swing v2.1)
+ADIM 4.5 — İCHİMOKU TARAMA (swing v2.1) + TEMATİK TEDARİK ZİNCİRİ
   → aktif swing pozisyonları için ichimoku seviyeleri güncelle:
     python scripts/swing_ichimoku.py --aktif
     → kijun trailing stop değişti mi? çıkış sinyali var mı?
   → ADIM 4'ten geçen adaylar için tam ichimoku tarama:
     python scripts/swing_ichimoku.py SEMBOL1,SEMBOL2,...
+  → TEMATİK TARAMA (her sabah zorunlu):
+    - web araması: güncel piyasa temaları, sektörel haberler
+    - hangi AI tedarik zinciri katmanı öne çıkıyor? (ekipman, kimya, güç, optik, soğutma)
+    - o katmandaki hisseleri ichimoku ile tara
+    - ichimoku 4/4 bullish + trend devam eden hisselere giriş değerlendir (sinyal bekleme zorunlu değil)
   → sonuçları rapora ekle:
     - "GİRİŞ ✅": kumo kırılımı/kijun bounce + hacim teyidi + SMA200 üstü
+    - "TREND GİRİŞ ⚠️": 4/4 bullish, sinyal yok ama trend güçlü (yarım pozisyon)
     - "GİRİŞ ⚠️": sinyal var ama hacim zayıf veya SMA200 altı
     - "TREND DEVAM": kumo üstü ama bugün giriş sinyali yok
     - "BEKLE": sinyal zayıf
