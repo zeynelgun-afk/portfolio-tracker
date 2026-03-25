@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-03-25T16:42:03.331505",
+  "son_guncelleme": "2026-03-25T16:58:23.193763",
   "not": "Tüm portföyler ve swing trade için tek merkezi watchlist. Her adayda hedef_portfoy alanı hangi portföye/stratejiye ait olduğunu belirtir.",
   "iran_krizi_notu": {
     "tarih": "2026-03-01",
@@ -675,6 +675,32 @@
       "momentum_5gun": 0,
       "kaynak": "GTC 2026 infografik + tedarik zinciri analizi",
       "katalizor": "Vera Rubin raf ici PCIe/CXL talebi"
+    },
+    {
+      "sembol": "COP",
+      "guncel_fiyat": 129.32,
+      "sektor": "Enerji",
+      "hedef_portfoy": "agresif",
+      "notlar": "ichimoku 4/4 güçlü yükseliş. kumo üstü, tenkan>kijun, yeşil kumo. iran savaşı + enerji momentum katalizörü. 1ay +17.6%, 3ay +41.3%. giriş sinyali (kumo kırılımı veya kijun bounce) bekleniyor.",
+      "urgency": "high",
+      "ekleme_tarihi": "2026-03-25",
+      "son_kontrol": "2026-03-25",
+      "hedef_giris": "kijun bounce ($120-125) veya kumo kırılımı sonrası geri çekilme",
+      "hedef_fiyat": null,
+      "stop_loss": 119.56
+    },
+    {
+      "sembol": "LMT",
+      "guncel_fiyat": 623.05,
+      "sektor": "Savunma",
+      "hedef_portfoy": "agresif",
+      "notlar": "savunma harcamaları artışı. kumo içinde, kısa vadeli düzeltmede. 3ay +29%, 6ay +29% uzun vadeli trend çok güçlü. kumo üstüne çıkış ($641+) ile giriş değerlendir.",
+      "urgency": "medium",
+      "ekleme_tarihi": "2026-03-25",
+      "son_kontrol": "2026-03-25",
+      "hedef_giris": "kumo kırılımı ($641+ üstüne kapanış)",
+      "hedef_fiyat": null,
+      "stop_loss": 608.94
     }
   ],
   "haric_tutulanlar": [

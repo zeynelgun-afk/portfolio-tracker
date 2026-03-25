@@ -581,7 +581,7 @@ giriş koşulları:
 
 **portföy hissesi satış nedenleri**:
 ```
-1. stop-loss tetiklendi (agresif %8, dengeli %8, temettü %10-15)
+1. stop-loss tetiklendi (agresif: 2x ATR(14), dengeli %8, temettü %10-15)
 2. tez bozuldu (temel verilerde kötüleşme)
 3. sektör RS sürekli zayıf (3+ gün negatif RS, trend dönüşü)
 4. daha iyi fırsat var (aynı sektörde/temada daha güçlü alternatif)

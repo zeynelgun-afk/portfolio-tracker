@@ -48,7 +48,7 @@
       "giris_fiyati": 14.61,
       "giris_nedeni": "Yarım pozisyon tamamlandı. RSI 41, SMA200 üzeri destek. Orijinal: 342 adet @$14.61, ek: 347 adet @$14.39. Ortalama maliyet: $14.50",
       "agirlik_yuzde": 6.56,
-      "stop_loss": 14.57,
+      "stop_loss": 15.63,
       "hedef_fiyat": 17.13,
       "sinyal_tipi": "mean_reversion",
       "max_tutma_gun": 10,
@@ -73,7 +73,8 @@
           "durum": "bekliyor"
         }
       },
-      "stop_tipi": "breakeven"
+      "stop_tipi": "2x_ATR(1.00)",
+      "atr_14": 1.0
     },
     {
       "sembol": "PLTR",
@@ -92,7 +93,7 @@
       "giris_fiyati": 128.42,
       "giris_nedeni": "AI + savunma çift katalizör. Palantir veri analitiği lideri, ABD savunma kontratları güçlü. İran savaşı ortamında savunma harcamaları artışı + AI talebi seküler büyüme.",
       "agirlik_yuzde": 5.86,
-      "stop_loss": 131.0,
+      "stop_loss": 143.46,
       "hedef_fiyat": 147.0,
       "iran_krizi_notu": "AI/Savunma lider, savaş döneminde güçlü. Stop breakeven üzeri, kar korunuyor.",
       "sinyal_tipi": "mean_reversion",
@@ -118,10 +119,11 @@
           "durum": "bekliyor"
         }
       },
-      "stop_tipi": "breakeven",
+      "stop_tipi": "2x_ATR(6.38)",
       "trailing_stop": 150.96,
       "trailing_yuzde": 5,
-      "trailing_zirve": 158.58
+      "trailing_zirve": 158.58,
+      "atr_14": 6.38
     },
     {
       "sembol": "ANET",
@@ -140,7 +142,7 @@
       "giris_fiyati": 128.62,
       "giris_nedeni": "AI/data center networking lideri - bulut devleri altyapı harcaması artıyor - RSI 42.9 oversold bounce bölgesinde - SMA200 üzerinde sağlam trend - analist hedefi $177 (+%37 upside) - Altman Z-score 16.1 finansal güç",
       "agirlik_yuzde": 3.38,
-      "stop_loss": 123.48,
+      "stop_loss": 123.59,
       "hedef_fiyat": 146.0,
       "sinyal_tipi": "earnings_momentum",
       "max_tutma_gun": 10,
@@ -165,7 +167,8 @@
           "durum": "bekliyor"
         }
       },
-      "stop_tipi": "sabit_%4"
+      "stop_tipi": "2x_ATR(5.49)",
+      "atr_14": 5.49
     },
     {
       "sembol": "MRVL",
@@ -183,9 +186,11 @@
       "giris_tarihi": "2026-03-12",
       "giris_fiyati": 88.73,
       "giris_nedeni": "AI çip tedarik zinciri tezi - AVGO+MRVL çift beklenti üstü ile tez doğrulandı. Özel ASIC ve veri merkezi ağ çipleri lideri, bulut harcama büyümesinden doğrudan faydalanıyor. 50MA ve 200MA üzerinde teknik yapı temiz.",
-      "stop_loss": 81.6,
+      "stop_loss": 87.05,
       "hedef_fiyat": 102.0,
-      "agirlik_yuzde": 3.17
+      "agirlik_yuzde": 3.17,
+      "stop_tipi": "2x_ATR(5.47)",
+      "atr_14": 5.47
     },
     {
       "sembol": "COHR",
@@ -205,9 +210,11 @@
       "giris_nedeni": "AI veri merkezi optik/lazer bilesenleri. NVIDIA GTC konferansi 16-19 mart katalizor. Hedef giris araliginda ($240-255), RSI 51 ideal bolge, SMA50 ustu. K-13 geregi yarim pozisyon (VIX 25.28).",
       "agirlik_yuzde": 7.4,
       "hedef_fiyat": 300.0,
-      "stop_loss": 225.0,
+      "stop_loss": 231.58,
       "trailing_stop": 263.7,
-      "izleyen_zarar_kes": 253.11
+      "izleyen_zarar_kes": 253.11,
+      "stop_tipi": "2x_ATR(21.32)",
+      "atr_14": 21.32
     },
     {
       "sembol": "CRDO",
@@ -230,7 +237,9 @@
       "hedef_fiyat_1": 125.0,
       "hedef_fiyat_2": 145.0,
       "pozisyon_tipi": "yarim_pozisyon",
-      "tamamlama_kosulu": "MU earnings pozitif + CRDO $100 üzeri tutunursa tam pozisyona tamamla"
+      "tamamlama_kosulu": "MU earnings pozitif + CRDO $100 üzeri tutunursa tam pozisyona tamamla",
+      "stop_tipi": "korundu(eski>86.04)",
+      "atr_14": 8.47
     },
     {
       "sembol": "PWR",
@@ -249,14 +258,16 @@
       "giris_fiyati": 574.35,
       "giris_nedeni": "Kuzey Amerika'nın en büyük elektrik altyapısı ve data center inşaat şirketi. AI data center yapımı + grid modernizasyonu + temiz enerji üçlü katalizör. NVIDIA GTC $1T AI altyapı tezi. Portföye yeni sektör (endüstriyel) ekliyor. Yarım pozisyon giriş.",
       "agirlik_yuzde": 4.05,
-      "stop_loss": 530.0,
+      "stop_loss": 535.7,
       "hedef_fiyat_1": 660.0,
       "hedef_fiyat_2": 720.0,
       "pozisyon_tipi": "yarim_pozisyon",
-      "tamamlama_kosulu": "FOMC sonrası 1-2 gün izle, $550-560 geri çekilme olursa tamamla"
+      "tamamlama_kosulu": "FOMC sonrası 1-2 gün izle, $550-560 geri çekilme olursa tamamla",
+      "stop_tipi": "2x_ATR(20.58)",
+      "atr_14": 20.58
     }
   ],
-  "son_guncelleme": "2026-03-25T16:42:03.297691",
+  "son_guncelleme": "2026-03-25T16:55:44.109184",
   "toplam_deger": 370648.04,
   "toplam_getiri_yuzde": -7.34,
   "notes": [
@@ -444,6 +455,11 @@
       "date": "2026-03-23T17:41:14.438139",
       "type": "market_note",
       "content": "PLTR trailing stop aktif: $150.65 (%5 trailing, hedef $147 aşıldı)"
+    },
+    {
+      "date": "2026-03-25T16:58:38.537769",
+      "type": "rebalance",
+      "content": "agresif portföy yeniden yapılandırma kararı (25 mart 2026): 1) stop sistemi 2x ATR(14) trailing'e geçildi (sabit % kaldırıldı). 2) sektör yoğunlaşması tespit edildi: %88 tech/AI. hedef: tek sektör max %50. 3) nakit %65 çok yüksek, hedef %20-30. non-tech sektörlerden giriş sinyali bekleniyor. 4) COP (enerji, ichimoku 4/4), LMT (savunma, kumo düzeltmede), ETN (endüstriyel, güç altyapısı) watchlist'e eklendi. 5) mevcut tech pozisyonlara ekleme yapılmayacak, çeşitlendirme öncelikli."
     }
   ],
   "transactions": [
