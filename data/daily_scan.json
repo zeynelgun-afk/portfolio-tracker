@@ -1,0 +1,429 @@
+{
+  "tarama_tarihi": "2026-03-25",
+  "tarama_zamani": "2026-03-25T12:09:14.457284+00:00",
+  "versiyon": "2.0",
+  "piyasa_ozeti": {
+    "tarih": "2026-03-25",
+    "spy_fiyat": 653.18,
+    "spy_degisim": 0.0,
+    "qqq_degisim": 0.0,
+    "iwm_degisim": 0.0,
+    "vix": 25.45,
+    "vix_uyarisi": true,
+    "vix_kritik": false,
+    "vix_mesaj": "⚠ VIX 25.4 — YÜKSEK OYNAKLIK. Stop seviyeleri geniş tut, yarım pozisyon düşün.",
+    "sektorler": {
+      "Basic Materials": 1.4225440995830452,
+      "Communication Services": -1.9138918716791187,
+      "Consumer Cyclical": -0.24544584426939853,
+      "Consumer Defensive": 1.0237979052951873,
+      "Energy": 1.6751504964835906,
+      "Financial Services": -0.4732766098634489,
+      "Healthcare": 0.40818656830603484,
+      "Industrials": 0.13973219103702306,
+      "Real Estate": -0.07342693443713744,
+      "Technology": 0.562687243359905,
+      "Utilities": 2.135647747464131
+    }
+  },
+  "agresif_adaylari": [
+    {
+      "sembol": "SLB",
+      "isim": "SLB N.V.",
+      "sektor": "Energy",
+      "degisim_1d": 2.56,
+      "degisim_5d": 5.21,
+      "degisim_1m": -2.23,
+      "neden": "5 günlük momentum +%5.2, dün +%2.6"
+    },
+    {
+      "sembol": "CAT",
+      "isim": "Caterpillar Inc.",
+      "sektor": "Industrials",
+      "degisim_1d": 2.13,
+      "degisim_5d": 4.37,
+      "degisim_1m": -6.52,
+      "neden": "5 günlük momentum +%4.4, dün +%2.1"
+    },
+    {
+      "sembol": "MMM",
+      "isim": "3M Company",
+      "sektor": "Industrials",
+      "degisim_1d": 0.08,
+      "degisim_5d": 3.57,
+      "degisim_1m": -11.4,
+      "neden": "5 günlük momentum +%3.6, dün +%0.1"
+    },
+    {
+      "sembol": "HWM",
+      "isim": "Howmet Aerospace Inc.",
+      "sektor": "Industrials",
+      "degisim_1d": 1.47,
+      "degisim_5d": 3.51,
+      "degisim_1m": -7.75,
+      "neden": "5 günlük momentum +%3.5, dün +%1.5"
+    },
+    {
+      "sembol": "ETN",
+      "isim": "Eaton Corporation plc",
+      "sektor": "Industrials",
+      "degisim_1d": 3.99,
+      "degisim_5d": 3.49,
+      "degisim_1m": 0.15,
+      "neden": "5 günlük momentum +%3.5, dün +%4.0"
+    },
+    {
+      "sembol": "TXN",
+      "isim": "Texas Instruments Incorporated",
+      "sektor": "Technology",
+      "degisim_1d": 3.04,
+      "degisim_5d": 3.24,
+      "degisim_1m": -9.01,
+      "neden": "5 günlük momentum +%3.2, dün +%3.0"
+    },
+    {
+      "sembol": "CSCO",
+      "isim": "Cisco Systems, Inc.",
+      "sektor": "Technology",
+      "degisim_1d": 2.57,
+      "degisim_5d": 3.09,
+      "degisim_1m": 2.2,
+      "neden": "5 günlük momentum +%3.1, dün +%2.6"
+    }
+  ],
+  "dengeli_adaylari": [
+    {
+      "sembol": "SCCO",
+      "isim": "Southern Copper Corporation",
+      "sektor": "Basic Materials",
+      "rsi": 36.2,
+      "rsi_onceki": 36.0,
+      "degisim_1d": 0.18,
+      "degisim_5d": 0.51,
+      "degisim_1m": -25.71,
+      "neden": "RSI 36 kurtarma (önceki 36), güçlü sektör"
+    },
+    {
+      "sembol": "FNV",
+      "isim": "Franco-Nevada Corporation",
+      "sektor": "Basic Materials",
+      "rsi": 37.5,
+      "rsi_onceki": 34.3,
+      "degisim_1d": 1.7,
+      "degisim_5d": -0.07,
+      "degisim_1m": -16.32,
+      "neden": "RSI 37 kurtarma (önceki 34), güçlü sektör"
+    },
+    {
+      "sembol": "SYY",
+      "isim": "Sysco Corporation",
+      "sektor": "Consumer Defensive",
+      "rsi": 38.9,
+      "rsi_onceki": 34.4,
+      "degisim_1d": 0.91,
+      "degisim_5d": 0.37,
+      "degisim_1m": -7.62,
+      "neden": "RSI 39 kurtarma (önceki 34), güçlü sektör"
+    },
+    {
+      "sembol": "XEL",
+      "isim": "Xcel Energy Inc.",
+      "sektor": "Utilities",
+      "rsi": 39.0,
+      "rsi_onceki": 32.5,
+      "degisim_1d": 1.31,
+      "degisim_5d": -1.33,
+      "degisim_1m": -6.69,
+      "neden": "RSI 39 kurtarma (önceki 32), güçlü sektör"
+    },
+    {
+      "sembol": "BHP",
+      "isim": "BHP Group Limited",
+      "sektor": "Basic Materials",
+      "rsi": 43.3,
+      "rsi_onceki": 41.8,
+      "degisim_1d": 0.82,
+      "degisim_5d": 3.29,
+      "degisim_1m": -15.81,
+      "neden": "RSI 43 kurtarma (önceki 42), güçlü sektör"
+    },
+    {
+      "sembol": "CRH",
+      "isim": "CRH plc",
+      "sektor": "Basic Materials",
+      "rsi": 43.5,
+      "rsi_onceki": 39.1,
+      "degisim_1d": 2.01,
+      "degisim_5d": 4.37,
+      "degisim_1m": -11.35,
+      "neden": "RSI 43 kurtarma (önceki 39), güçlü sektör"
+    },
+    {
+      "sembol": "VALE",
+      "isim": "Vale S.A.",
+      "sektor": "Basic Materials",
+      "rsi": 44.1,
+      "rsi_onceki": 43.4,
+      "degisim_1d": 0.54,
+      "degisim_5d": 2.98,
+      "degisim_1m": -15.17,
+      "neden": "RSI 44 kurtarma (önceki 43), güçlü sektör"
+    },
+    {
+      "sembol": "CEG",
+      "isim": "Constellation Energy Corporation",
+      "sektor": "Utilities",
+      "rsi": 44.8,
+      "rsi_onceki": 42.1,
+      "degisim_1d": 1.76,
+      "degisim_5d": -6.23,
+      "degisim_1m": -9.51,
+      "neden": "RSI 45 kurtarma (önceki 42), güçlü sektör"
+    },
+    {
+      "sembol": "WEC",
+      "isim": "WEC Energy Group, Inc.",
+      "sektor": "Utilities",
+      "rsi": 44.8,
+      "rsi_onceki": 40.4,
+      "degisim_1d": 0.92,
+      "degisim_5d": -2.16,
+      "degisim_1m": -2.03,
+      "neden": "RSI 45 kurtarma (önceki 40), güçlü sektör"
+    },
+    {
+      "sembol": "EXC",
+      "isim": "Exelon Corporation",
+      "sektor": "Utilities",
+      "rsi": 44.9,
+      "rsi_onceki": 44.0,
+      "degisim_1d": 0.25,
+      "degisim_5d": -0.46,
+      "degisim_1m": -2.9,
+      "neden": "RSI 45 kurtarma (önceki 44), güçlü sektör"
+    }
+  ],
+  "temettu_adaylari": [],
+  "swing_adaylari": [
+    {
+      "sembol": "CTVA",
+      "isim": "Corteva, Inc.",
+      "sektor": "Basic Materials",
+      "fiyat": 80.58,
+      "ichimoku": {
+        "konum": "kumo_ustu",
+        "guc": 4,
+        "sinyaller": [
+          "kumo_kirilimi"
+        ],
+        "tenkan": 78.94,
+        "kijun": 77.99,
+        "kumo_ust": 78.46,
+        "kumo_alt": 74.5,
+        "kumo_renk": "yesil"
+      },
+      "hacim_katsayisi": 1.1,
+      "stop_kijun": 77.99,
+      "karar": "GİRİŞ ✅",
+      "neden": "ichimoku 4/4, kumo_kirilimi"
+    },
+    {
+      "sembol": "WMB",
+      "isim": "The Williams Companies, Inc.",
+      "sektor": "Energy",
+      "fiyat": 74.46,
+      "ichimoku": {
+        "konum": "kumo_ustu",
+        "guc": 3,
+        "sinyaller": [
+          "kumo_kirilimi",
+          "kijun_bounce"
+        ],
+        "tenkan": 73.66,
+        "kijun": 74.15,
+        "kumo_ust": 73.91,
+        "kumo_alt": 67.97,
+        "kumo_renk": "yesil"
+      },
+      "hacim_katsayisi": 0.7,
+      "stop_kijun": 74.15,
+      "karar": "GİRİŞ ⚠️",
+      "neden": "ichimoku 3/4, kumo_kirilimi, kijun_bounce"
+    },
+    {
+      "sembol": "CSCO",
+      "isim": "Cisco Systems, Inc.",
+      "sektor": "Technology",
+      "fiyat": 80.86,
+      "ichimoku": {
+        "konum": "kumo_ustu",
+        "guc": 3,
+        "sinyaller": [
+          "kumo_kirilimi"
+        ],
+        "tenkan": 78.82,
+        "kijun": 78.19,
+        "kumo_ust": 80.5,
+        "kumo_alt": 78.5,
+        "kumo_renk": "kirmizi"
+      },
+      "hacim_katsayisi": 1.0,
+      "stop_kijun": 78.19,
+      "karar": "GİRİŞ ⚠️",
+      "neden": "ichimoku 3/4, kumo_kirilimi"
+    },
+    {
+      "sembol": "TT",
+      "isim": "Trane Technologies plc",
+      "sektor": "Industrials",
+      "fiyat": 430.08,
+      "ichimoku": {
+        "konum": "kumo_ustu",
+        "guc": 2,
+        "sinyaller": [
+          "kumo_kirilimi",
+          "kijun_bounce"
+        ],
+        "tenkan": 420.5,
+        "kijun": 438.71,
+        "kumo_ust": 429.6,
+        "kumo_alt": 425.82,
+        "kumo_renk": "yesil"
+      },
+      "hacim_katsayisi": 1.0,
+      "stop_kijun": 438.71,
+      "karar": "GİRİŞ ⚠️",
+      "neden": "ichimoku 2/4, kumo_kirilimi, kijun_bounce"
+    },
+    {
+      "sembol": "ETN",
+      "isim": "Eaton Corporation plc",
+      "sektor": "Industrials",
+      "fiyat": 374.1,
+      "ichimoku": {
+        "konum": "kumo_ustu",
+        "guc": 2,
+        "sinyaller": [
+          "kumo_kirilimi",
+          "kijun_bounce"
+        ],
+        "tenkan": 360.69,
+        "kijun": 367.62,
+        "kumo_ust": 364.15,
+        "kumo_alt": 362.11,
+        "kumo_renk": "yesil"
+      },
+      "hacim_katsayisi": 1.0,
+      "stop_kijun": 367.62,
+      "karar": "GİRİŞ ⚠️",
+      "neden": "ichimoku 2/4, kumo_kirilimi, kijun_bounce"
+    },
+    {
+      "sembol": "COP",
+      "isim": "ConocoPhillips",
+      "sektor": "Energy",
+      "fiyat": 129.35,
+      "ichimoku": {
+        "konum": "kumo_ustu",
+        "guc": 4,
+        "sinyaller": [],
+        "tenkan": 124.33,
+        "kijun": 119.44,
+        "kumo_ust": 121.88,
+        "kumo_alt": 112.66,
+        "kumo_renk": "yesil"
+      },
+      "hacim_katsayisi": 0.9,
+      "stop_kijun": 119.44,
+      "karar": "TREND DEVAM",
+      "neden": "ichimoku 4/4, trend devam"
+    },
+    {
+      "sembol": "PBR",
+      "isim": "Petróleo Brasileiro S.A. - Petrobras",
+      "sektor": "Energy",
+      "fiyat": 19.75,
+      "ichimoku": {
+        "konum": "kumo_ustu",
+        "guc": 4,
+        "sinyaller": [],
+        "tenkan": 19.4,
+        "kijun": 17.55,
+        "kumo_ust": 18.47,
+        "kumo_alt": 15.94,
+        "kumo_renk": "yesil"
+      },
+      "hacim_katsayisi": 0.8,
+      "stop_kijun": 17.55,
+      "karar": "TREND DEVAM",
+      "neden": "ichimoku 4/4, trend devam"
+    },
+    {
+      "sembol": "EOG",
+      "isim": "EOG Resources, Inc.",
+      "sektor": "Energy",
+      "fiyat": 142.53,
+      "ichimoku": {
+        "konum": "kumo_ustu",
+        "guc": 4,
+        "sinyaller": [],
+        "tenkan": 138.06,
+        "kijun": 130.76,
+        "kumo_ust": 134.41,
+        "kumo_alt": 123.11,
+        "kumo_renk": "yesil"
+      },
+      "hacim_katsayisi": 0.6,
+      "stop_kijun": 130.76,
+      "karar": "TREND DEVAM",
+      "neden": "ichimoku 4/4, trend devam"
+    },
+    {
+      "sembol": "EPD",
+      "isim": "Enterprise Products Partners L.P.",
+      "sektor": "Energy",
+      "fiyat": 38.39,
+      "ichimoku": {
+        "konum": "kumo_ustu",
+        "guc": 4,
+        "sinyaller": [],
+        "tenkan": 37.55,
+        "kijun": 37.05,
+        "kumo_ust": 37.3,
+        "kumo_alt": 35.18,
+        "kumo_renk": "yesil"
+      },
+      "hacim_katsayisi": 0.7,
+      "stop_kijun": 37.05,
+      "karar": "TREND DEVAM",
+      "neden": "ichimoku 4/4, trend devam"
+    },
+    {
+      "sembol": "PBR-A",
+      "isim": "Petróleo Brasileiro S.A. - Petrobras",
+      "sektor": "Energy",
+      "fiyat": 17.95,
+      "ichimoku": {
+        "konum": "kumo_ustu",
+        "guc": 4,
+        "sinyaller": [],
+        "tenkan": 17.55,
+        "kijun": 16.09,
+        "kumo_ust": 16.82,
+        "kumo_alt": 14.72,
+        "kumo_renk": "yesil"
+      },
+      "hacim_katsayisi": 1.1,
+      "stop_kijun": 16.09,
+      "karar": "TREND DEVAM",
+      "neden": "ichimoku 4/4, trend devam"
+    }
+  ],
+  "ozet": {
+    "agresif_sayi": 7,
+    "dengeli_sayi": 10,
+    "temettu_sayi": 0,
+    "swing_sayi": 10,
+    "toplam": 27
+  }
+}
