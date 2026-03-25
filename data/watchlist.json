@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-03-25T19:25:34.681749",
+  "son_guncelleme": "2026-03-25T19:49:22.115226",
   "not": "Tüm portföyler ve swing trade için tek merkezi watchlist. Her adayda hedef_portfoy alanı hangi portföye/stratejiye ait olduğunu belirtir.",
   "iran_krizi_notu": {
     "tarih": "2026-03-01",
@@ -717,6 +717,29 @@
       "hedef_fiyat": null,
       "stop_loss": 531.25,
       "momentum_5gun": 0
+    },
+    {
+      "sembol": "RDDT",
+      "guncel_fiyat": 139.46,
+      "sektor": "İletişim / AI Veri Altyapısı",
+      "hedef_portfoy": "agresif",
+      "urgency": "medium",
+      "ekleme_tarihi": "2026-03-25",
+      "son_kontrol": "2026-03-25",
+      "hedef_giris": "140-145 (kijun-sen kurtarma + hacim teyidi)",
+      "hedef_fiyat": 200.0,
+      "stop_loss": 125.0,
+      "notlar": "AI tedarik zinciri veri katmanı. google + openai ile $203M veri lisanslama anlaşması. 2025 gelir +%69 ($2.2B), brüt marj %91.2. AI modellerde en çok referans verilen kaynak (wikipedia 3x). dinamik fiyatlama müzakereleri devam ediyor. mayıs 2026 AI veri lisanslama duruşması kritik katalizör. teknik: fiyat tüm MA + kumo altında, ichimoku 0/4 bearish. kijun kurtarma ($143.85) veya kumo yaklaşma ($170+) sinyali bekleniyor.",
+      "katalizor": "Mayıs 2026 AI veri lisanslama duruşması + Google/OpenAI yenileme müzakereleri",
+      "tez": "AI tedarik zincirinin veri hammadde katmanı. her LLM reddit verisine bağımlı. dinamik fiyatlama ile gelir çarpanı potansiyeli",
+      "risk": "Reklam gelirlerine bağımlılık (%90), beta 2.42 yüksek volatilite, düşen bıçak riski, veri lisanslama düzenlemesi belirsizliği",
+      "momentum_5gun": 0.27,
+      "tetikleyiciler": [
+        "Kijun-sen ($143.85) üstüne günlük kapanış + hacim ortalamanın üstü",
+        "SMA50 ($163) kurtarma = güçlü trend dönüş sinyali",
+        "Mayıs 2026 duruşması öncesi olumlu haber akışı",
+        "Yeni AI lisanslama anlaşması haberi"
+      ]
     }
   ],
   "haric_tutulanlar": [
