@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-03-24T21:33:51.014651",
+  "son_guncelleme": "2026-03-25T06:30:25.971587",
   "not": "SWING TRADE SADECE SİMÜLASYON - Sadece % kazanç/kayıp takibi (MAX: 8 pozisyon)",
   "aktif_pozisyonlar": [
     {
@@ -19,7 +19,7 @@
       "risk": "Altın fiyatında sert düzeltme, dolar güçlenmesi, genel piyasa satışı",
       "durum": "✅ Normal aralıkta",
       "tarama_yontemi": "RSI oversold",
-      "son_guncelleme": "2026-03-24T21:33:51.014651",
+      "son_guncelleme": "2026-03-25T06:30:25.971587",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
@@ -54,7 +54,7 @@
       "tarama_yontemi": "momentum",
       "teknik_skor": "5.2/7 (%75)",
       "ichimoku_skor": "3/3",
-      "son_guncelleme": "2026-03-24T21:33:51.014651",
+      "son_guncelleme": "2026-03-25T06:30:25.971587",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
@@ -72,9 +72,9 @@
     }
   ],
   "ozet": {
-    "toplam_pozisyon": 3,
-    "bos_slot": 7,
+    "toplam_pozisyon": 2,
+    "bos_slot": 6,
     "maksimum_pozisyon": 8,
-    "ortalama_kar_zarar_yuzde": 1.89
+    "ortalama_kar_zarar_yuzde": -0.44
   }
 }
