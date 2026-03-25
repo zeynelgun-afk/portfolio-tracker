@@ -19,7 +19,7 @@
 >   - [ ] 3a. karar matrisi (portföyler)
 >   - [ ] 3b. karar matrisi (swing)
 >   - [ ] 3c. portföyler arası korelasyon kontrolü
->   - [ ] 3d. yeni pozisyon fırsatları (K-01 ile K-04 + K-17 teknik skor kontrol)
+>   - [ ] 3d. yeni pozisyon fırsatları (geniş havuz ichimoku tarama: screener → SMA filtre → ichimoku → claude temel değerlendirme)
 >   - [ ] 3e. satış/çıkış değerlendirmesi (K-06 ile K-09 kontrol)
 > - [ ] AŞAMA 4 — UYGULAMA:
 >   - [ ] 4a. trade işlemleri (JSON + CSV güncelle)
@@ -32,7 +32,7 @@
 >
 > **geçmiş hatalar**: adım atlama maliyetli oldu (örn: kazanç açıklaması taramasını atlama, bölüm eksik bırakma). prompttaki her madde bir sebepten var — atlamak portföy kararlarını olumsuz etkiler.
 
-> **versiyon**: 1.5 | **son güncelleme**: 24 mart 2026
+> **versiyon**: 2.0 | **son güncelleme**: 25 mart 2026
 > **çalışma zamanı**: NYSE açıldıktan sonra (TR 16:30+, yaz saati), tercihen açılıştan 30-60dk sonra
 > **ön koşul**: o günün sabah raporu zaten yazılmış olmalı
 > **perspektif**: PİYASA AÇIK — GERÇEK ZAMANLI KARAR VE AKSİYON
@@ -341,22 +341,22 @@ durum kodları:
 her swing pozisyonu için:
 
 ```
-format: ID | SEMBOL | giriş | güncel | k/z% | stop | hedefe mesafe | trailing | durum
+format: ID | SEMBOL | giriş | güncel | k/z% | kijun stop | kumo | ichimoku durum | durum
 
 durum kodları:
-🎯 HEDEF YAKLAŞTI — hedef fiyata %2 içinde
-⚠️ STOP YAKIN — stop'a %2 içinde
-📈 TREND GÜÇLÜ — momentum devam ediyor
-📉 ZAYIFLIYOR — momentum kaybediyor
-🔄 trailing aktif — zirveden -%5 takip ediyor
+⚠️ STOP YAKIN — fiyat kijun'a yaklaşıyor (<%2)
+🔴 ÇIKIŞ SİNYALİ — kijun altı kapanış veya TK cross aşağı
+📈 TREND GÜÇLÜ — kumo üstü, tenkan > kijun, OBV yükseliş
+📉 ZAYIFLIYOR — hacim ayrışması veya OBV düşüş
+🔄 NÖTR — sinyal yok, ichimoku yapı korunuyor
 ```
 
-**trailing stop güncelleme kuralı**:
+**kijun trailing stop güncelleme kuralı (ichimoku v2)**:
 ```
-eğer güncel_fiyat > önceki_zirve:
-    yeni_trailing_stop = güncel_fiyat × 0.95
-    eğer yeni_trailing_stop > mevcut_trailing_stop:
-        trailing_stop = yeni_trailing_stop  # sadece yukarı güncelle
+python scripts/swing_ichimoku.py --aktif
+→ kijun yükseldi mi? evet → stop yukarı çek
+→ stop ASLA aşağı çekilmez (en yüksek kijun korunur)
+→ çıkış sinyali var mı? acil olanlar hemen uygulanır
 ```
 
 ---
@@ -364,9 +364,11 @@ eğer güncel_fiyat > önceki_zirve:
 # AŞAMA 3 — AKSİYON KARARLARI
 
 > ⚠️ **PLAYBOOK KONTROLÜ**: her karar vermeden önce `docs/TRADING_PLAYBOOK.md` kurallarını kontrol et.
-> - yeni giriş → K-01 (makro veri), K-02 (kriz rallisi), K-03 (VIX + small cap), K-04 (SMA teyidi), K-13 (VIX ortam)
+> - yeni giriş → K-01 (makro veri), K-02 (kriz rallisi), K-03 (VIX + small cap), K-13 (VIX ortam)
 > - çıkış → K-06 (stop override), K-07 (trailing stop), K-08 (momentum yoksa çık), K-09 (stop yakın erken çık)
-> - swing → K-14 (ardışık 3+ zarar → dur), K-17 (teknik skor >= %50)
+> - swing → K-14 (ardışık 3+ zarar → dur)
+> - ichimoku giriş: kumo kırılımı / TK cross / kijun bounce + hacim teyidi + SMA200 filtre
+> - temel analiz: claude hisse bazında değerlendirir, sabit rasyo filtresi yok
 > - kural ihlali gerekiyorsa gerekçeyi açıkça yaz
 
 ## 3a. karar matrisi — portföyler
@@ -408,37 +410,34 @@ her pozisyon için şu ağaçtan geç:
 her swing pozisyonu için:
 
 ```
-0. TEKNİK SKOR TAKİBİ (K-17)
-   python scripts/swing_ichimoku.py SEMBOL
-   → skor iyileşiyor mu kötüleşiyor mu? (önceki seans ile karşılaştır)
-   → ichimoku sinyalleri değişti mi?
-   → NOT: mevcut pozisyonlarda düşük skor = otomatik sat DEĞİL
-     (stop-loss ve hedef fiyat hala geçerli, ama trailing sıkılaştır)
+0. ICHİMOKU SEVİYE TAKİBİ
+   python scripts/swing_ichimoku.py --aktif
+   → kijun değişti mi? (trailing stop güncelleme)
+   → çıkış sinyali var mı? (kijun altı kapanış, TK cross aşağı, kumo'ya giriş)
+   → hacim uyarısı var mı? (düşen hacim + yükselen fiyat = zayıflama)
 
 1. STOP-LOSS KESİLDİ Mİ?
-   fiyat < stop_loss → 🔴 %100 SAT, closed.json'a kaydet
+   fiyat < stop_loss (kijun veya kumo) → 🔴 %100 SAT, closed.json'a kaydet
    hayır → devam
 
-2. HEDEF FIYATA ULAŞTI MI?
-   fiyat >= hedef_fiyat → 💰 partial exit planını uygula:
-     - %50 sat (kar garantile)
-     - kalan %50 trailing stop kur (hedeften -%5)
+2. KİJUN ALTI KAPANIŞ?
+   fiyat kijun altında kapandı → fark > %0.5 ise hemen çık, < %0.5 ise yarın teyit bekle
    hayır → devam
 
-3. TRAİLİNG STOP TETİKLENDİ Mİ?
-   trailing aktif VE fiyat < trailing_stop → 🔴 kalan pozisyonu sat
+3. TK CROSS AŞAĞI?
+   tenkan kijun'u aşağı kesti → trend bitti, çık
    hayır → devam
 
 4. TRAİLİNG STOP GÜNCELLE
-   fiyat > önceki zirve → trailing stop yukarı çek
-   (trailing stop ASLA aşağı çekilmez)
+   kijun yükseldi mi → stop yukarı çek (stop ASLA aşağı çekilmez)
+   en yüksek kijun değeri korunur
 
-5. MOMENTUM DURUMU?
-   - RSI yükseliyor + hacim artıyor → 📈 momentum güçlü, tut
-   - RSI düşüyor + hacim azalıyor → 📉 zayıflıyor, trailing sıkılaştır
-   - sektör RS zayıflıyor → dikkat, sektör rotasyonu başlamış olabilir
+5. HACİM DURUMU?
+   - OBV yükseliyor + fiyat yükseliyor → sağlıklı, tut
+   - OBV düşüyor + fiyat yükseliyor → ayrışma, dikkat
+   - 3 gün düşen hacim + yükselen fiyat → uyarı, trailing sıkılaştır
 
-6. HİÇBİR TETİK YOK → ✅ TUT, trailing kontrol et
+6. HİÇBİR TETİK YOK → ✅ TUT
 ```
 
 ## 3c. portföyler arası korelasyon kontrolü
@@ -460,43 +459,97 @@ kontrol 3: yön korelasyonu
 - hepsi aynı anda düşüyorsa → korelasyon riski ⚠️
 ```
 
-## 3d. yeni pozisyon fırsatları
+## 3d. yeni pozisyon fırsatları — GENİŞ HAVUZ İCHİMOKU TARAMA
 
-### watchlist tarama (merkezi)
+> **felsefe**: dar watchlist'e bağlı kalma. her seansta geniş havuzdan tara, ichimoku sinyali olanları bul, temel değerlendirmeyi claude yapsın.
 
-**aday kaynakları**:
-1. sabah raporundaki güçlü sektörlerden (RS > +1.0%)
-2. biggest-gainers listesinden (momentum)
-3. earnings beat eden hisselerden (BMO sonuçları açılışta gelir)
-4. merkezi watchlist'ten (`data/watchlist.json`) tetiklenen seviyeler
+### adım 1: aday havuzu oluştur (geniş ağ)
 
-**filtre kriterleri**:
+5 kaynaktan aday topla, tekrar edenleri birleştir:
+
+```python
+# kaynak 1: FMP biggest-gainers (momentum)
+gainers = fmp_get("biggest-gainers", {"limit": 30})
+# filtre: price > $15, volume > 500K, market cap > $3B
+
+# kaynak 2: FMP screener — güçlü sektörlerden
+# sektör performans snapshot'tan en güçlü 3 sektörü al
+for sektor in en_guclu_3_sektor:
+    fmp_get("company-screener", {
+        "sector": sektor,
+        "marketCapMoreThan": 3000000000,
+        "volumeMoreThan": 500000,
+        "priceMoreThan": 15,
+        "exchange": "NYSE,NASDAQ",
+        "isActivelyTrading": "true",
+        "limit": 15
+    })
+
+# kaynak 3: mevcut watchlist (data/watchlist.json)
+# tetiklenen seviyeler, urgency=high olanlar
+
+# kaynak 4: portföy temaları (AI altyapı, enerji, savunma vb.)
+# temaya uygun bilinen hisseler
+
+# kaynak 5: finviz websearch (52W high, unusual volume)
+# websearch: "finviz screener 52 week high unusual volume mid cap"
 ```
-- market cap > $2B
-- günlük hacim > ortalama 1.2x
-- RSI 30-65 arası (aşırı alımda değil)
-- fiyat SMA50 üzerinde (veya SMA50'ye yaklaşan dönüş teyidi olan dip alım)
-- 5 günlük momentum > +%3
-- mevcut açık slot var mı? (max 8 - aktif sayı = boş slot)
-- ichimoku giriş sinyali + hacim teyidi (swing_ichimoku.py çalıştır)
+
+**hedef**: 20-30 benzersiz aday. portföyde olanları çıkar.
+
+### adım 2: hızlı ön filtre (SMA50 + SMA200)
+
+her aday için SMA50 ve SMA200 çek. kumo üstü olma ihtimali yüksek olanları seç:
+
+```python
+for sym in adaylar:
+    sma50 = fmp("technical-indicators/sma", symbol=sym, periodLength=50)
+    sma200 = fmp("technical-indicators/sma", symbol=sym, periodLength=200)
+    # fiyat > SMA50 VE fiyat > SMA200 → ichimoku taramasına gönder
+    # fiyat < SMA50 → elenir (kumo altında olma ihtimali yüksek)
 ```
 
-**her aday için zorunlu analiz**:
-```
-1. TEKNİK SKOR (K-17): python scripts/swing_ichimoku.py SEMBOL
-   → ichimoku (3p) + RSI (1p) + MACD (1p) + SMA (1p) + hacim (1p) = 7p
-   → skor < %50 (3.5/7) → GİRME, watchlist'te tut
-   → ichimoku 0/3 → OTOMATIK RED (trend kesinlikle düşüş)
-   → skor %50-69 → yarım pozisyon, yakın izle
-   → skor %70+ → tam giriş uygun
-2. temel: son earnings, P/E, sektör durumu
-3. risk: stop seviyesi, R:R oranı (min 2:1)
-4. hedef: +%10 hedef fiyat gerçekçi mi?
-5. katalizör: neden şimdi? yaklaşan earnings, sektör rotasyonu, momentum...
-6. portföy korelasyonu: mevcut pozisyonlarla çakışma var mı?
+**hedef**: 20-30'dan 10-15 adaya düşür.
 
-⚠️ K-17 ZORUNLU: teknik skor kontrolü yapılmadan swing girişi YAPILAMAZ.
-fundamental ne kadar güçlü olursa olsun, teknik onay şart.
+### adım 3: ichimoku tam tarama
+
+```bash
+python scripts/swing_ichimoku.py SEMBOL1,SEMBOL2,...,SEMBOLN
+```
+
+script her sembol için otomatik hesaplar:
+- ichimoku seviyeleri (tenkan, kijun, kumo, chikou)
+- giriş sinyalleri (kumo kırılımı, TK cross, kijun bounce)
+- çıkış sinyalleri (kijun altı, TK cross aşağı)
+- hacim analizi (oran, OBV trend, teyit seviyesi)
+- ATR ve dinamik stop seviyesi
+- SMA200 uzun vadeli filtre
+
+### adım 4: claude temel değerlendirme
+
+script "GİRİŞ ✅" veya "GİRİŞ ⚠️" veren hisseler için claude hisse bazında değerlendirir:
+
+- sektör bağlamı (utilities yüksek borç normaldir, enerji gelir döngüseldir)
+- şirketin hikayesi ve katalizörü
+- mevcut portföy ile korelasyon
+- risk/ödül dengesi
+- VIX ortamı (K-13)
+
+**sabit rasyo filtresi yok.** D/E, FCF, marj gibi metrikler sektör ve şirkete göre yorumlanır.
+
+### adım 5: giriş kararı
+
+sinyal + temel değerlendirme + portföy dengesi → giriş/bekle/geç kararı.
+
+```
+giriş koşulları:
+1. ichimoku giriş sinyali var (kumo kırılımı / TK cross / kijun bounce)
+2. hacim teyidi (en az 1.0x ortalama, ideal 1.2x+)
+3. SMA200 üstünde (altındaysa sadece çok güçlü sinyalle yarım pozisyon)
+4. claude temel değerlendirmesi olumlu
+5. portföy korelasyonu uygun (aynı sektörde 3'ten fazla swing yok)
+6. VIX ortamı: >25 = yarım pozisyon (K-13)
+7. ATR bazlı pozisyon boyutlandırma (risk %1, stop = kijun)
 ```
 
 ### portföy yeni ekleme fırsatları
@@ -560,7 +613,7 @@ fundamental ne kadar güçlü olursa olsun, teknik onay şart.
 2. `nakit.miktar -= adet × fiyat`
 3. portföy `transactions[]` listesine ALIŞ kaydı ekle
 4. `data/transactions.csv` dosyasına satır ekle
-5. swing ise → `data/swing/active.json`'a ekle (tüm zorunlu alanlar: id, giris_tarihi, giris_fiyati, hedef_fiyat, stop_loss, giris_nedeni, katalizor, tez, zaman_cercevesi, risk, tarama_yontemi, partial_exit_plan)
+5. swing ise → `data/swing/active.json`'a ekle (zorunlu alanlar: id, giris_tarihi, giris_fiyati, giris_sinyali, stop_loss, stop_tipi, kijun_sen, kumo_ust, kumo_alt, tenkan_sen, atr_14, giris_nedeni, katalizor, tez, risk, tarama_yontemi)
 6. `data/summary.json` güncelle
 
 ## 4b. fiyat güncellemesi
@@ -731,10 +784,14 @@ MID-SESSION (FAZ 2: TR 18:00-21:00)
 │  └─ korelasyon kontrolü (sektör yoğunlaşması)
 │
 ├─ SWING TARAMA (30 dk)
-│  ├─ stop/hedef/trailing güncelle
-│  ├─ data/watchlist.json fiyat kontrol (tüm portföyler + swing)
-│  ├─ yeni aday tarama (güçlü sektörlerden)
-│  └─ boş slot varsa → en iyi adayı değerlendir
+│  ├─ python scripts/swing_ichimoku.py --aktif (stop/çıkış/trailing güncelle)
+│  ├─ GENİŞ HAVUZ TARAMA:
+│  │  ├─ FMP biggest-gainers + screener (güçlü sektörlerden)
+│  │  ├─ watchlist tetiklenen seviyeler
+│  │  ├─ SMA50+SMA200 ön filtre → ichimoku taramasına gönder
+│  │  └─ python scripts/swing_ichimoku.py ADAY1,ADAY2,...
+│  ├─ sinyal veren adaylar için claude temel değerlendirme
+│  └─ boş slot varsa → en iyi adayı giriş yap
 │
 ├─ PREDİCTION MARKETS (5 dk)
 │  ├─ kalshi fed rate → sabahtan değişim?
@@ -831,4 +888,4 @@ detaylı kurallar: `docs/SELF_VALIDATION.md`
 
 ---
 
-> son güncelleme: 24 mart 2026 | finzora ai
+> son güncelleme: 25 mart 2026 | finzora ai

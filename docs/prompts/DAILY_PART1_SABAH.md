@@ -11,7 +11,7 @@
 > - [ ] ADIM 2.5 — twitter takip listesi (RapidAPI ile hesap taraması)
 > - [ ] ADIM 3 — earnings takvimi (FMP earnings-calendar, market cap filtresi)
 > - [ ] ADIM 4 — otomatik swing tarama sonuçları (daily_scan.json oku)
-> - [ ] ADIM 4.5 — teknik skor kontrolü K-17 (swing_ichimoku.py — adaylar + aktif pozisyonlar)
+> - [ ] ADIM 4.5 — ichimoku tarama (swing_ichimoku.py — adaylar + aktif pozisyonlar)
 > - [ ] ADIM 5 — finviz tarama (teyit katmanı)
 > - [ ] ADIM 6 — analiz, plan ve kayıt (playbook kurallarını planla çapraz kontrol et)
 > - [ ] RAPOR — tüm bölümler (1-5) eksiksiz yazıldı mı?
@@ -122,21 +122,24 @@ ADIM 4 — OTOMATİK SWING TARAMA SONUÇLARI (daily_scan.json)
   KONTROL: mevcut swing aktif pozisyonlarla (data/swing/active.json)
   sembol çakışması var mı? varsa listeden çıkar.
 
-ADIM 4.5 — TEKNİK SKOR KONTROLÜ (K-17)
-  → ADIM 4'ten geçen adaylar + mevcut aktif swing pozisyonları için:
+ADIM 4.5 — İCHİMOKU TARAMA (swing v2.0)
+  → aktif swing pozisyonları için ichimoku seviyeleri güncelle:
+    python scripts/swing_ichimoku.py --aktif
+    → kijun trailing stop değişti mi? çıkış sinyali var mı?
+  → ADIM 4'ten geçen adaylar için tam ichimoku tarama:
     python scripts/swing_ichimoku.py SEMBOL1,SEMBOL2,...
-  → ichimoku (3p) + RSI (1p) + MACD (1p) + SMA (1p) + hacim (1p) = 7p + temel filtre (geçer/kalır)
   → sonuçları rapora ekle:
-    - skor >= %70: "GİRİŞ UYGUN" işaretle
-    - skor %50-69: "DİKKATLİ" işaretle
-    - skor < %50: "BEKLE" işaretle
-    - ichimoku 0/3: "TREND DÜŞÜŞ" işaretle, giriş planlarından çıkar
-    - temel filtre kaldı: "TEMEL RED" işaretle, teknik skor ne olursa olsun giriş yok
-  → mevcut aktif swing pozisyonlarının skorunu da raporla (iyileşme/kötüleşme takibi)
+    - "GİRİŞ ✅": kumo kırılımı/TK cross/kijun bounce + hacim teyidi + SMA200 üstü
+    - "GİRİŞ ⚠️": sinyal var ama hacim zayıf veya SMA200 altı
+    - "TREND DEVAM": kumo üstü ama bugün giriş sinyali yok
+    - "BEKLE": sinyal zayıf
+    - "GİRME ❌": kumo altı + düşüş trendi
+  → sinyal veren adaylar için claude temel değerlendirme yapacak (sabit rasyo filtresi yok)
+  → mevcut aktif pozisyonların ichimoku durumunu raporla (kijun mesafe, çıkış sinyali)
 
 ADIM 5 — FİNVİZ TARAMA (teyit katmanı)
   → websearch: finviz screener — ADIM 4'teki adayları teyit et
-  → finviz.com/quote.ashx?t=SEMBOL → RSI, pattern, float, short float
+  → finviz.com/quote.ashx?t=SEMBOL → pattern, float, short float
   → ADIM 4 listesinde olmayan ama finviz'de öne çıkan varsa ekle
   → temettü portföy adayları: p/e <20, yield >%3
   → sektör heatmap kontrolü: hangi sektörler güçlü/zayıf
@@ -144,9 +147,10 @@ ADIM 5 — FİNVİZ TARAMA (teyit katmanı)
 ADIM 6 — ANALİZ, PLAN VE KAYIT
   → tüm verileri sentezle
   → PLAYBOOK ÇAPRAZ KONTROL: günün planındaki her aksiyonu docs/TRADING_PLAYBOOK.md kurallarıyla kontrol et
-    - yeni giriş planlıyorsan: K-01 (makro veri), K-02 (kriz rallisi), K-03 (VIX+small cap), K-04 (SMA teyidi), K-13 (VIX ortam)
+    - yeni giriş planlıyorsan: K-01 (makro veri), K-02 (kriz rallisi), K-03 (VIX+small cap), K-13 (VIX ortam)
     - çıkış planlıyorsan: K-06 (stop override), K-07 (trailing stop), K-08 (momentum), K-09 (stop yakın)
-    - swing planlıyorsan: K-14 (ardışık zarar → dur), K-17 (teknik skor >= %50)
+    - swing planlıyorsan: K-14 (ardışık zarar → dur), ichimoku giriş sinyali zorunlu
+    - temel analiz: claude hisse bazında değerlendirir, sabit rasyo filtresi yok
     - kural ihlali varsa raporda açıkça belirt ve gerekçelendir
   → raporu yaz (aşağıdaki format)
   → reports/daily/DAILY_SABAH_YYYY-MM-DD.md olarak kaydet
@@ -277,34 +281,34 @@ SEMBOL — [şirket]
 
 ### EP (episodic pivot) adayları
 
-| # | sembol | değişim | hacim | ep skoru | K-17 skor | ichimoku | karar |
-|---|--------|---------|-------|----------|-----------|----------|-------|
-| 1 | XXX | +X.X% | Xm | XX/100 | X.X/7 (%XX) | X/3 | GİRİŞ/BEKLE/RED |
+| # | sembol | değişim | hacim | ep skoru | ichimoku | SMA200 | karar |
+|---|--------|---------|-------|----------|----------|--------|-------|
+| 1 | XXX | +X.X% | Xm | XX/100 | kumo üstü/içi/altı | ✅/❌ | GİRİŞ/BEKLE/RED |
 
 **[SEMBOL] — detay:**
 - setup: [ne tetikledi — earnings/ürün/sektör rotasyonu]
-- risk/ödül: stop %X.X aşağıda, 2R hedef %X.X yukarıda
-- ichimoku: [fiyat vs kumo, TK cross, chikou durumu]
-- uyarılar: [varsa]
-- piyasa uyumu: [sektörü bugün güçlü mü]
+- ichimoku: fiyat $XX vs kumo $XX-$XX, tenkan/kijun, sinyal: [kumo kırılımı/TK cross/yok]
+- hacim: X.Xx ortalama, OBV: [yükseliş/düşüş/nötr]
+- stop: $XX (kijun), mesafe: -%X.X, ATR: X.Xx
+- risk/ödül: kijun stop %X.X aşağıda
+- claude temel değerlendirme: [sektör bağlamı, hikaye, katalizör]
 
 ### breakout (flag/base) adayları
 
-| # | sembol | değişim | hacim katsayı | breakout skoru | K-17 skor | ichimoku | karar |
-|---|--------|---------|---------------|----------------|-----------|----------|-------|
-| 1 | XXX | +X.X% | X.Xx | XX/100 | X.X/7 (%XX) | X/3 | GİRİŞ/BEKLE/RED |
+| # | sembol | değişim | hacim katsayı | breakout skoru | ichimoku | SMA200 | karar |
+|---|--------|---------|---------------|----------------|----------|--------|-------|
+| 1 | XXX | +X.X% | X.Xx | XX/100 | kumo üstü/içi/altı | ✅/❌ | GİRİŞ/BEKLE/RED |
 
 **[SEMBOL] — detay:**
-- base: XX günlük konsolidasyon, %X.X genişlik
-- kırılım: XX günlük high olan $XX.XX seviyesini kırdı
-- ichimoku: [fiyat vs kumo, TK cross, chikou durumu]
-- uyarılar: [varsa]
+- base: XX günlük konsolidasyon
+- ichimoku: [sinyal tipi + hacim teyidi]
+- claude temel değerlendirme: [hisse bazında]
 
-### mevcut swing pozisyonları teknik skor takibi
+### mevcut swing pozisyonları ichimoku durumu
 
-| sembol | PnL | K-17 skor | ichimoku | trend | not |
-|--------|-----|-----------|----------|-------|-----|
-| XXX | +X.X% | X.X/7 | X/3 | iyileşme/kötüleşme/sabit | [kısa yorum] |
+| sembol | PnL | kijun stop | kumo | tenkan vs kijun | çıkış sinyali | durum |
+|--------|-----|-----------|------|-----------------|----------------|-------|
+| XXX | +X.X% | $XX.XX | üstü/içi/altı | ↑/↓ | var/yok | [kısa yorum] |
 
 ### tarama notu
 
@@ -312,8 +316,8 @@ SEMBOL — [şirket]
 
 ### bugün izlenecek setup önceliği
 
-1. [SEMBOL] — EP / Breakout — K-17 skor: X.X/7 — neden öncelikli
-2. [SEMBOL] — EP / Breakout — K-17 skor: X.X/7 — neden öncelikli
+1. [SEMBOL] — ichimoku sinyal: [kumo kırılımı/TK cross/kijun bounce] — neden öncelikli
+2. [SEMBOL] — ichimoku sinyal: [tip] — neden öncelikli
 ```
 
 ---
