@@ -2,8 +2,8 @@ name: Haftalık Kazananlar Vitrini
 
 on:
   schedule:
-    # Her pazar 17:00 UTC = 20:00 TR
-    - cron: '0 17 * * 0'
+    # Her pazartesi 17:00 UTC = 20:00 TR
+    - cron: '0 17 * * 1'
 
   # Manuel tetikleme
   workflow_dispatch:
