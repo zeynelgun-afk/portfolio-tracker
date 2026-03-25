@@ -5,7 +5,7 @@
 > bu prompt'taki her adım sırayla ve eksiksiz uygulanmalıdır. hiçbir adım atlanamaz, kısaltılamaz veya "sonra yaparım" diye ertelenmez. bir adımı tamamlamadan diğerine geçme.
 >
 > **zorunlu adımlar (teker teker kontrol et):**
-> - [ ] ADIM 0 — playbook oku (`docs/TRADING_PLAYBOOK.md` — aktif kuralları gözden geçir)
+> - [ ] ADIM 0 — playbook + piyasa istihbaratı (`TRADING_PLAYBOOK.md` + `MARKET_INTELLIGENCE.md` + web arama)
 > - [ ] ADIM 1 — piyasa verisi (FMP batch-quote, teknik göstergeler, emtia, treasury)
 > - [ ] ADIM 2 — haber toplama (web search, piyasa haberleri)
 > - [ ] ADIM 2.5 — twitter takip listesi (RapidAPI ile hesap taraması)
@@ -44,11 +44,21 @@
 bu prompt tek seferde çalışır. adımları sırayla takip et:
 
 ```
-ADIM 0 — PLAYBOOK OKU
+ADIM 0 — PLAYBOOK + PİYASA İSTİHBARATI
   → docs/TRADING_PLAYBOOK.md dosyasını oku
   → aktif kuralları gözden geçir (özellikle K-01 ile K-14)
-  → swing istatistikleri bölümünü kontrol et (K-14: ardışık zarar → dur)
-  → günün planında her karar playbook kurallarıyla çapraz kontrol edilecek
+  → docs/MARKET_INTELLIGENCE.md okuyarak istihbarat çerçevesini hatırla
+  → web aramasıyla güncel piyasa istihbaratı topla:
+    - dünden bu yana kritik haberler (makro, jeopolitik, sektörel)
+    - her haberin neden-sonuç zinciri (1./2./3. derece etki)
+    - bu haftanın kritik olayları ve senaryolar (FOMC, earnings, veri)
+    - aktif tema güç skorları (AI altyapı, enerji, savunma vb.)
+    - prediction markets değişimleri (kalshi, polymarket)
+    - AI tedarik zinciri katmanlarının durumu (ekipman, kimya, güç, optik)
+  → PORTFÖY ÖNCEDEN POZİSYONLAMA kararı:
+    - hangi temaya ağırlık artır/azalt?
+    - hangi katmanda fırsat var?
+    - mod değişikliği gerekiyor mu? (agresif/normal/dikkatli/defansif)
 
 ADIM 1 — PİYASA VERİSİ (FMP + WEB)
   → batch-quote: SPY, QQQ, DIA, IWM, VIX (varsa), GCUSD, CLUSD
@@ -171,7 +181,43 @@ ADIM 6 — ANALİZ, PLAN VE KAYIT
 
 ## RAPOR FORMATI (GITHUB'A GÖNDERİLİR)
 
-rapor 5 bölümden oluşur.
+rapor 6 bölümden oluşur.
+
+---
+
+### BÖLÜM 0: PİYASA İSTİHBARATI
+
+```markdown
+## 0. piyasa istihbaratı
+
+### aktif temalar
+
+| tema | güç skoru | değişim | neden |
+|------|-----------|---------|-------|
+| AI altyapı harcaması | X/10 | ↑/↓/→ | [kısa açıklama] |
+| enerji güvenliği | X/10 | ↑/↓/→ | |
+| savunma harcaması | X/10 | ↑/↓/→ | |
+| faiz indirimi beklentisi | X/10 | ↑/↓/→ | |
+
+### kritik haber → etki zinciri
+
+1. **[haber başlığı]**
+   - 1. derece: [direkt etki]
+   - 2. derece: [tedarik zinciri etkisi]
+   - 3. derece: [yan etkiler]
+   - portföy aksiyonu: [ne yapılmalı]
+
+### bu haftanın senaryoları
+
+**[olay]** — olasılıklar:
+- senaryo A (%XX): [sonuç → aksiyon]
+- senaryo B (%XX): [sonuç → aksiyon]
+- önceden pozisyonlama: [ne yapılmalı]
+
+### tedarik zinciri katman durumu
+
+ekipman: [güçlü/zayıf/nötr] | kimya: [...] | güç: [...] | optik: [...] | soğutma: [...]
+```
 
 ---
 

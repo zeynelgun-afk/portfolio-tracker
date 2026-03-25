@@ -8,7 +8,7 @@
 > - [ ] AŞAMA 1 — VERİ TOPLAMA (tümü zorunlu):
 >   - [ ] 1a. piyasa genel durumu (SPY, QQQ, VIX, emtia)
 >   - [ ] 1b. portföy hisseleri (canlı fiyat + RSI + SMA)
->   - [ ] 1c. prediction markets + haber kontrolü
+>   - [ ] 1c. piyasa istihbaratı + prediction markets + haber (neden-sonuç zinciri)
 >   - [ ] 1d. twitter takip listesi (faz 1'de çek)
 >   - [ ] 1e. sektör RS analizi
 > - [ ] AŞAMA 2 — DURUM TESPİTİ:
@@ -212,7 +212,20 @@ for symbol in unique_symbols:
 
 **toplam**: ~1 (batch) + 3×N (teknik) — N = benzersiz sembol sayısı (~25 = ~76 call)
 
-## 1c. prediction markets + haber kontrolü (portföy hisseleri)
+## 1c. piyasa istihbaratı + prediction markets + haber
+
+### piyasa istihbaratı (docs/MARKET_INTELLIGENCE.md)
+
+her seansta dünyada ne değişti düşün:
+```
+1. web araması: "stock market news today", "AI chip semiconductor news", "energy market news"
+2. her haberin neden-sonuç zinciri:
+   - 1. derece (direkt): haber kimi etkiler?
+   - 2. derece (tedarik zinciri): tedarikçileri/müşterileri ne olur?
+   - 3. derece (yan etki): enerji, hammadde, lojistik?
+3. portföy etkisi: hangi pozisyonlar etkileniyor? aksiyon gerekiyor mu?
+4. fırsat: yeni bir katman/hisse ortaya çıkıyor mu?
+```
 
 ### prediction markets (canlı sentiment)
 
