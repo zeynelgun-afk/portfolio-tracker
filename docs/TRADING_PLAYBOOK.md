@@ -261,3 +261,17 @@ piyasa ortamına göre hangi sektör nasıl davranıyor.
 ---
 
 *finzora ai | son güncelleme: 25 mart 2026*
+
+**K-17 (yeni): aynı gün çoklu giriş yaparken korelasyon riskini sınırla**
+- kanıt: 25 mart'ta POWL, CAMT, VRT aynı gün girildi, üçü de AI altyapısı teması. aynı sektör/tema hisseleri birlikte hareket ediyor, düşüşte de birlikte düşer
+- kural: aynı gün 2'den fazla yeni pozisyon açarken en az 1 farklı sektör/tema zorunlu. tamamen aynı temaya yoğunlaşma portföy korelasyonunu artırır
+- ilişkili: K-12 (ağırlık sınırı), K-13 (VIX yarım pozisyon)
+
+**RGLD çıkış teyidi (25 mart 2026)**
+- kanıt: RGLD -%16 zararla satıldı @$232. altın korelasyon bozulması tezi doğrulandı. sermaye SM'ye aktarıldı (güçlüye aktar prensibi)
+- sonuç: sektör gözlemlerindeki "altın yükseliyor diye royalty yükselecek varsayımı hatalı" notu kesin olarak doğrulandı. RGLD çıkışı K-08 (momentum yoksa çık) ve tez bozulma prensibiyle tutarlı
+
+**NEM ichimoku çıkış (25 mart 2026)**
+- kanıt: NEM SWING-026, +4.18% kârdayken ichimoku 0/4 (kumo altı, düşüş trendi) nedeniyle çıkıldı. disiplinli çıkış
+- sonuç: ichimoku v2 sisteminin ilk başarılı çıkış sinyali. kârdayken bile teknik bozulma sinyaline saygı göstermek doğru
+- ilişkili: K-07 (trailing stop disiplini)
