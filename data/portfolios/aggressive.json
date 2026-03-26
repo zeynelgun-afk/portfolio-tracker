@@ -27,104 +27,31 @@
   },
   "baslangic_sermaye": 400000,
   "nakit": {
-    "miktar": 185407.08440000005,
+    "miktar": 269962.2344000001,
     "para_birimi": "USD"
   },
   "pozisyonlar": [
-    {
-      "sembol": "PLTR",
-      "isim": "Palantir Technologies Inc.",
-      "sektor": "Teknoloji",
-      "adet": 234,
-      "maliyet_baz": 150.68,
-      "guncel_fiyat": 154.96,
-      "yatirim": 35259.12,
-      "guncel_deger": 36260.64,
-      "kar_zarar": 1001.52,
-      "kar_zarar_yuzde": 2.84,
-      "gunluk_degisim_yuzde": 0.12,
-      "son_guncelleme": "2026-03-26T05:58:30.366650",
-      "giris_tarihi": "2026-02-23",
-      "giris_fiyati": 128.42,
-      "giris_nedeni": "AI + savunma çift katalizör. Palantir veri analitiği lideri, ABD savunma kontratları güçlü. İran savaşı ortamında savunma harcamaları artışı + AI talebi seküler büyüme.",
-      "agirlik_yuzde": 9.8,
-      "stop_loss": 143.46,
-      "hedef_fiyat": 147.0,
-      "iran_krizi_notu": "AI/Savunma lider, savaş döneminde güçlü. Stop breakeven üzeri, kar korunuyor.",
-      "sinyal_tipi": "mean_reversion",
-      "max_tutma_gun": 10,
-      "strateji_notu": "RSI oversold bounce, AI/savunma lider",
-      "risk_yuzde": 3.82,
-      "odul_yuzde": 9.55,
-      "rr_orani": 2.5,
-      "partial_exit": {
-        "seviye_1": {
-          "fiyat": 136.13,
-          "oran_yuzde": 33,
-          "durum": "bekliyor"
-        },
-        "seviye_2": {
-          "fiyat": 141.26,
-          "oran_yuzde": 33,
-          "durum": "bekliyor"
-        },
-        "seviye_3": {
-          "tur": "trailing_stop",
-          "trailing_yuzde": 4,
-          "durum": "bekliyor"
-        }
-      },
-      "stop_tipi": "2x_ATR(6.38)",
-      "trailing_stop": 150.96,
-      "trailing_yuzde": 5,
-      "trailing_zirve": 158.58,
-      "atr_14": 6.38
-    },
     {
       "sembol": "MRVL",
       "isim": "Marvell Technology, Inc.",
       "sektor": "Teknoloji",
       "adet": 375,
       "maliyet_baz": 94.94,
-      "guncel_fiyat": 98.45,
+      "guncel_fiyat": 100.56,
       "yatirim": 35602.5,
-      "guncel_deger": 36918.75,
-      "kar_zarar": 1316.25,
-      "kar_zarar_yuzde": 3.7,
-      "gunluk_degisim_yuzde": 6.59,
-      "son_guncelleme": "2026-03-26T05:58:30.366650",
+      "guncel_deger": 37710.0,
+      "kar_zarar": 2107.5,
+      "kar_zarar_yuzde": 5.92,
+      "gunluk_degisim_yuzde": 2.14,
+      "son_guncelleme": "2026-03-26T13:40:49.547649",
       "giris_tarihi": "2026-03-12",
       "giris_fiyati": 88.73,
       "giris_nedeni": "AI çip tedarik zinciri tezi - AVGO+MRVL çift beklenti üstü ile tez doğrulandı. Özel ASIC ve veri merkezi ağ çipleri lideri, bulut harcama büyümesinden doğrudan faydalanıyor. 50MA ve 200MA üzerinde teknik yapı temiz.",
       "stop_loss": 87.05,
       "hedef_fiyat": 102.0,
-      "agirlik_yuzde": 9.98,
+      "agirlik_yuzde": 10.33,
       "stop_tipi": "2x_ATR(5.47)",
       "atr_14": 5.47
-    },
-    {
-      "sembol": "COHR",
-      "isim": "Coherent Corp",
-      "sektor": "Teknoloji",
-      "adet": 191,
-      "maliyet_baz": 258.79,
-      "guncel_fiyat": 272.04,
-      "yatirim": 49428.89,
-      "guncel_deger": 51959.64,
-      "kar_zarar": 2530.75,
-      "kar_zarar_yuzde": 5.12,
-      "gunluk_degisim_yuzde": -0.11,
-      "son_guncelleme": "2026-03-26T05:58:30.366650",
-      "giris_tarihi": "2026-03-13",
-      "giris_fiyati": 246.865,
-      "giris_nedeni": "AI veri merkezi optik/lazer bilesenleri. NVIDIA GTC konferansi 16-19 mart katalizor. Hedef giris araliginda ($240-255), RSI 51 ideal bolge, SMA50 ustu. K-13 geregi yarim pozisyon (VIX 25.28).",
-      "agirlik_yuzde": 14.04,
-      "hedef_fiyat": 300.0,
-      "stop_loss": 231.58,
-      "trailing_stop": 263.7,
-      "izleyen_zarar_kes": 253.11,
-      "stop_tipi": "2x_ATR(21.32)",
-      "atr_14": 21.32
     },
     {
       "sembol": "POWL",
@@ -132,13 +59,13 @@
       "sektor": "Güç Altyapısı",
       "adet": 34,
       "maliyet_baz": 585.12,
-      "guncel_fiyat": 584.56,
+      "guncel_fiyat": 563,
       "yatirim": 19894.08,
-      "guncel_deger": 19875.04,
-      "kar_zarar": -19.04,
-      "kar_zarar_yuzde": -0.1,
-      "gunluk_degisim_yuzde": 4.3,
-      "son_guncelleme": "2026-03-26T05:58:30.366650",
+      "guncel_deger": 19142,
+      "kar_zarar": -752.08,
+      "kar_zarar_yuzde": -3.78,
+      "gunluk_degisim_yuzde": -3.69,
+      "son_guncelleme": "2026-03-26T13:40:49.547649",
       "giris_tarihi": "2026-03-25",
       "giris_fiyati": 585.12,
       "giris_nedeni": "AI tedarik zinciri: veri merkezi trafo ve güç dağıtım ekipmanı. ichimoku 4/4 güçlü yükseliş, OBV yükseliş, 3ay +72%. düşük float, güçlü talep. VIX>25 yarım pozisyon.",
@@ -146,7 +73,7 @@
       "stop_loss": 521.04,
       "stop_tipi": "2x_ATR(32.04)",
       "atr_14": 32.04,
-      "agirlik_yuzde": 5.37
+      "agirlik_yuzde": 5.24
     },
     {
       "sembol": "CAMT",
@@ -154,13 +81,13 @@
       "sektor": "Yarı İletken Ekipman",
       "adet": 114,
       "maliyet_baz": 174.35,
-      "guncel_fiyat": 175.08,
+      "guncel_fiyat": 169.76,
       "yatirim": 19875.9,
-      "guncel_deger": 19959.12,
-      "kar_zarar": 83.22,
-      "kar_zarar_yuzde": 0.42,
-      "gunluk_degisim_yuzde": -2.35,
-      "son_guncelleme": "2026-03-26T05:58:30.366650",
+      "guncel_deger": 19352.64,
+      "kar_zarar": -523.26,
+      "kar_zarar_yuzde": -2.63,
+      "gunluk_degisim_yuzde": -3.04,
+      "son_guncelleme": "2026-03-26T13:40:49.547649",
       "giris_tarihi": "2026-03-25",
       "giris_fiyati": 174.35,
       "giris_nedeni": "AI tedarik zinciri: wafer denetim ve ölçüm ekipmanı. ichimoku 4/4 güçlü yükseliş, OBV yükseliş, 3ay +60%. niş oyuncu, HBM ve gelişmiş paketleme için kritik. VIX>25 yarım pozisyon.",
@@ -168,7 +95,7 @@
       "stop_loss": 151.98,
       "stop_tipi": "2x_ATR(11.18)",
       "atr_14": 11.18,
-      "agirlik_yuzde": 5.39
+      "agirlik_yuzde": 5.3
     },
     {
       "sembol": "VRT",
@@ -176,13 +103,13 @@
       "sektor": "Güç Altyapısı",
       "adet": 71,
       "maliyet_baz": 278.52,
-      "guncel_fiyat": 276.16,
+      "guncel_fiyat": 268.05,
       "yatirim": 19774.92,
-      "guncel_deger": 19607.36,
-      "kar_zarar": -167.56,
-      "kar_zarar_yuzde": -0.85,
-      "gunluk_degisim_yuzde": 1.95,
-      "son_guncelleme": "2026-03-26T05:58:30.366650",
+      "guncel_deger": 19031.55,
+      "kar_zarar": -743.37,
+      "kar_zarar_yuzde": -3.76,
+      "gunluk_degisim_yuzde": -2.94,
+      "son_guncelleme": "2026-03-26T13:40:49.547649",
       "giris_tarihi": "2026-03-25",
       "giris_fiyati": 278.52,
       "giris_nedeni": "AI tedarik zinciri: veri merkezi soğutma, UPS, güç yönetimi. ichimoku 4/4 güçlü yükseliş, 3ay +66%. hacim ayrışması uyarısı var, bu yüzden yarım pozisyon. VIX>25 de yarım pozisyon destekliyor.",
@@ -190,12 +117,12 @@
       "stop_loss": 250.03,
       "stop_tipi": "2x_ATR(14.24)",
       "atr_14": 14.24,
-      "agirlik_yuzde": 5.3
+      "agirlik_yuzde": 5.21
     }
   ],
-  "son_guncelleme": "2026-03-26T05:58:30.366650",
-  "toplam_deger": 369987.63,
-  "toplam_getiri_yuzde": -7.5,
+  "son_guncelleme": "2026-03-26T13:40:49.547649",
+  "toplam_deger": 365198.42,
+  "toplam_getiri_yuzde": -8.7,
   "notes": [
     {
       "date": "2026-02-20T20:22:00.933774",
@@ -386,6 +313,16 @@
       "date": "2026-03-25T16:58:38.537769",
       "type": "rebalance",
       "content": "agresif portföy yeniden yapılandırma kararı (25 mart 2026): 1) stop sistemi 2x ATR(14) trailing'e geçildi (sabit % kaldırıldı). 2) sektör yoğunlaşması tespit edildi: %88 tech/AI. hedef: tek sektör max %50. 3) nakit %65 çok yüksek, hedef %20-30. non-tech sektörlerden giriş sinyali bekleniyor. 4) COP (enerji, ichimoku 4/4), LMT (savunma, kumo düzeltmede), ETN (endüstriyel, güç altyapısı) watchlist'e eklendi. 5) mevcut tech pozisyonlara ekleme yapılmayacak, çeşitlendirme öncelikli."
+    },
+    {
+      "date": "2026-03-26T13:40:49.547649",
+      "type": "exit",
+      "content": "PLTR trailing stop satışı @$149.90 (trailing: $150.96). K/Z: -0.52%, 31 gün tutuldu. Zirve $158.58'den -%5 trailing tetiklendi."
+    },
+    {
+      "date": "2026-03-26T13:40:49.547649",
+      "type": "exit",
+      "content": "COHR trailing stop satışı @$259.05 (trailing: $263.7). K/Z: +0.10%, 13 gün tutuldu. Bain Capital ardışık blok satışları satış baskısı oluşturuyor."
     }
   ],
   "transactions": [
@@ -721,6 +658,24 @@
       "fiyat": 156.9,
       "tutar": 14905.03,
       "aciklama": "Pozisyon büyütme - yüksek konviksiyon, güçlü momentum"
+    },
+    {
+      "tarih": "2026-03-26",
+      "islem_tipi": "SATIŞ",
+      "sembol": "PLTR",
+      "adet": 234,
+      "fiyat": 149.9,
+      "tutar": 35076.6,
+      "aciklama": "Trailing stop tetiklendi - $150.96 kırıldı, fiyat $149.90"
+    },
+    {
+      "tarih": "2026-03-26",
+      "islem_tipi": "SATIŞ",
+      "sembol": "COHR",
+      "adet": 191,
+      "fiyat": 259.05,
+      "tutar": 49478.55,
+      "aciklama": "Trailing stop tetiklendi - $263.7 kırıldı, fiyat $259.05. Bain Capital blok satışları ek baskı."
     }
   ]
 }

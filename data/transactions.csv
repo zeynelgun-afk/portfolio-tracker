@@ -127,3 +127,5 @@ date,action,symbol,shares,price,total,reason
 2026-03-25,BUY,T,345,28.98,9996.38,Pozisyon büyütme - güçlü temettü
 2026-03-25,SELL,RGLD,22,232.00,5104.00,"-%16 kayıp, sermaye güçlülere aktarılıyor"
 2026-03-25,BUY,SM,160,31.14,4982.40,Pozisyon büyütme +51% kazananı büyüt
+2026-03-26,SELL,PLTR,234,149.9,35076.6,Trailing stop tetiklendi @$150.96 - Agresif portföy
+2026-03-26,SELL,COHR,191,259.05,49478.55,Trailing stop tetiklendi @$263.7 - Bain Capital blok satis baskisi - Agresif portföy
