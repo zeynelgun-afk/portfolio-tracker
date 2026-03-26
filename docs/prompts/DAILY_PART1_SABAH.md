@@ -139,6 +139,12 @@ ADIM 4.5 — İCHİMOKU TARAMA (swing v2.1) + TEMATİK TEDARİK ZİNCİRİ
     → kijun trailing stop değişti mi? çıkış sinyali var mı?
   → ADIM 4'ten geçen adaylar için tam ichimoku tarama:
     python scripts/swing_ichimoku.py SEMBOL1,SEMBOL2,...
+  → MERKEZİ WATCHLIST TARAMASI (data/watchlist.json):
+    - dosyayı oku, hedef_portfoy bazında filtrele
+    - swing adaylarını ichimoku ile tara: python scripts/swing_ichimoku.py ADAY1,ADAY2,...
+    - agresif/dengeli/temettu adaylarını ayrı listele (bölüm 5'e yaz)
+    - bozulmuş adayları (kumo altı, ÇIKIŞ sinyali) raporda belirt → seans sonunda temizlenecek
+    ⚠️ data/swing/watchlist.json KALDIRILDI, sadece data/watchlist.json oku
   → TEMATİK TARAMA (her sabah zorunlu):
     - web araması: güncel piyasa temaları, sektörel haberler
     - hangi AI tedarik zinciri katmanı öne çıkıyor? (ekipman, kimya, güç, optik, soğutma)

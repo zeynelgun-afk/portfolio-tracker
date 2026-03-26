@@ -761,11 +761,8 @@ def main():
                 wl = json.load(f)
             symbols = [w["sembol"] for w in wl.get("izleme_listesi", [])]
         else:
-            # swing watchlist
-            wl_path = os.path.join(REPO_ROOT, "data/swing/watchlist.json")
-            with open(wl_path) as f:
-                wl = json.load(f)
-            symbols = [w["sembol"] for w in wl.get("izleme_listesi", [])]
+            print("HATA: data/watchlist.json bulunamadı")
+            sys.exit(1)
     elif args.symbols:
         symbols = [s.strip().upper() for s in args.symbols.split(",")]
     else:

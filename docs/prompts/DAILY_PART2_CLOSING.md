@@ -77,7 +77,7 @@ ADIM 3.5 — KAZANÇ AÇIKLAMALARI TARAMASI
   → zamanlama filtresi: sadece "amc" (kapanış sonrası) veya tümü
   → KESİŞİM KONTROLÜ:
       - portföy sembolleriyle karşılaştır (3 portföy + swing)
-      - watchlist.json sembolleriyle karşılaştır
+      - data/watchlist.json sembolleriyle karşılaştır (merkezi watchlist)
   → KESİŞEN şirketler için FMP'den tam analiz çek:
       - income-statement (son 2 çeyrek — gerçek vs önceki dönem)
       - analyst-estimates (EPS ve gelir beklenti vs gerçek fark)

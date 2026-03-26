@@ -117,11 +117,16 @@ fiyat kijun-sen altında kapanırsa → ertesi gün aç, çık.
 
 tek günlük ihlal sahte olabilir. doğrulama: kapanış kijun'un %0.5'inden fazla altındaysa → hemen çık. kijun'a çok yakın kapanışta (<%0.5) → bir gün daha bekle.
 
-### 3b. TK CROSS AŞAĞI (trend dönüşü)
+### 3b. TK CROSS AŞAĞI (trend dönüşü — filtreli)
 
-tenkan-sen kijun-sen'i aşağı keserse → trend bitti, çık.
+tenkan-sen kijun-sen'i aşağı keserse → potansiyel çıkış sinyali. ama v2.1'de giriş sinyali olarak kaldırıldığı gibi, çıkışta da sahte sinyal üretebilir (özellikle yatay piyasalarda).
 
-bu sinyal genellikle kijun altı kapanıştan sonra gelir ama bazen önce gelir. her iki durumda da çıkış sinyali.
+filtre:
+- fark > %1 VE hacim > 1.0x ortalama → güçlü sinyal, çık
+- fark > %0.5 ama hacim düşük → yarın teyit bekle (bir gün daha ver)
+- fark < %0.5 → sahte sinyal olasılığı yüksek, hacim + OBV teyidi olmadan çıkma
+
+bu sinyal genellikle kijun altı kapanıştan sonra gelir ama bazen önce gelir. kijun altı kapanış daha güvenilir birincil sinyal, TK cross ikincil teyit olarak kullanılır.
 
 ### 3c. KUMO'YA GİRİŞ (trend zayıflama)
 

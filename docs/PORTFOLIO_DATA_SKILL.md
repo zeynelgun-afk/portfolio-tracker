@@ -261,25 +261,29 @@ agirlik_yuzde = (guncel_deger / toplam_deger) × 100  [her pozisyon için]
 
 ---
 
-### 2c. `data/swing/watchlist.json` — İzleme Listesi
+### 2c. `data/watchlist.json` — Merkezi İzleme Listesi
+
+> ⚠️ **ÖNEMLİ**: Tüm portföyler ve swing trade için TEK merkezi watchlist.
+> `data/swing/watchlist.json` KALDIRILDI (26 mart 2026). Eski dosya redirect notu içerir.
+> Portföy JSON'larında watchlist[] KULLANILMAZ.
 
 ```json
 {
-  "son_guncelleme": "2026-02-20T16:48:07.288589",
-  "not": "Bir sonraki işlemler için potansiyel swing adayları",
+  "son_guncelleme": "2026-03-26T14:30:00.000000",
+  "not": "Tüm portföyler ve swing trade için tek merkezi watchlist. Her adayda hedef_portfoy alanı hangi portföye/stratejiye ait olduğunu belirtir.",
   "izleme_listesi": [
     {
-      "sembol": "SPG",
-      "guncel_fiyat": 202.01,
-      "momentum_5gun": 2.9,
-      "sektor": "REITs - Alışveriş Merkezleri",
-      "notlar": "AVM REIT'i, perakende toparlanma oyunu",
-      "urgency": "medium",
-      "ekleme_tarihi": "2026-02-20",
-      "son_kontrol": null,
-      "hedef_giris": "195-200",
-      "hedef_fiyat": 220.0,
-      "stop_loss": 190.0
+      "sembol": "RTX",
+      "guncel_fiyat": 195.0,
+      "sektor": "Savunma",
+      "hedef_portfoy": "swing",
+      "notlar": "Savunma sektörü güçlü, savunma harcamaları artıyor",
+      "urgency": "high",
+      "ekleme_tarihi": "2026-03-01",
+      "son_kontrol": "2026-03-25",
+      "hedef_giris": "190-195",
+      "hedef_fiyat": 215.0,
+      "stop_loss": 185.0
     }
   ],
   "haric_tutulanlar": [
@@ -293,19 +297,19 @@ agirlik_yuzde = (guncel_deger / toplam_deger) × 100  [her pozisyon için]
 
 #### Watchlist Aday — Alanlar
 
-| Alan | Türü | Açıklama |
-|------|------|---------|
-| `sembol` | string | Ticker |
-| `guncel_fiyat` | float | Güncel fiyat |
-| `momentum_5gun` | float | 5 günlük % değişim |
-| `sektor` | string | Türkçe sektör |
-| `notlar` | string | Türkçe gözlemler |
-| `urgency` | string | `"high"` / `"medium"` / `"low"` |
-| `ekleme_tarihi` | date | Watchlist'e eklenme tarihi |
-| `son_kontrol` | date/null | Son kontrol tarihi veya null |
-| `hedef_giris` | string | Fiyat aralığı (örn. `"195-200"`) |
-| `hedef_fiyat` | float | Hedef çıkış fiyatı |
-| `stop_loss` | float | Stop seviyesi |
+| Alan | Türü | Zorunlu | Açıklama |
+|------|------|---------|---------|
+| `sembol` | string | ✅ | Ticker |
+| `guncel_fiyat` | float | ✅ | Güncel fiyat |
+| `sektor` | string | ✅ | Türkçe sektör |
+| `hedef_portfoy` | string | ✅ | `"swing"` / `"agresif"` / `"dengeli"` / `"temettu"` |
+| `notlar` | string | ✅ | Türkçe gözlemler |
+| `urgency` | string | ✅ | `"high"` / `"medium"` / `"low"` |
+| `ekleme_tarihi` | date | ✅ | Watchlist'e eklenme tarihi |
+| `son_kontrol` | date/null | | Son kontrol tarihi veya null |
+| `hedef_giris` | string | | Fiyat aralığı (örn. `"195-200"`) |
+| `hedef_fiyat` | float | | Hedef çıkış fiyatı |
+| `stop_loss` | float | | Stop seviyesi |
 
 ---
 
@@ -456,7 +460,7 @@ date,action,symbol,shares,price,total,reason
 | Kijun bounce stop | kumo alt kenarına genişler |
 | Min stop mesafesi (kumo kırılımı) | %5 |
 | Kar hedefi | yok (trend devam ettiği sürece tut) |
-| Çıkış sinyalleri | kijun altı kapanış, TK cross aşağı, kumo'ya giriş |
+| Çıkış sinyalleri | kijun altı kapanış, TK cross aşağı (filtreli: fark>%1 + hacim teyidi), kumo'ya giriş |
 | Sabit süre limiti | yok |
 | Pozisyon boyutu | ATR bazlı risk hesaplı |
 | Giriş tipleri | kumo kırılımı, kijun bounce, trend devam (4/4 bullish) |

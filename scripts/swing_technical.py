@@ -607,7 +607,7 @@ def main():
     symbols = []
 
     if args.watchlist:
-        wl_path = os.path.join(REPO_ROOT, "data/swing/watchlist.json")
+        wl_path = os.path.join(REPO_ROOT, "data/watchlist.json")
         with open(wl_path, "r") as f:
             wl = json.load(f)
         symbols = [w["sembol"] for w in wl.get("izleme_listesi", [])]

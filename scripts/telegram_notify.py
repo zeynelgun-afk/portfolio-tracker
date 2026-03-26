@@ -345,7 +345,7 @@ def format_premarket(theme=None):
 
     # Watchlist
     try:
-        wl = load_json("data/swing/watchlist.json")
+        wl = load_json("data/watchlist.json")
         izleme = wl.get("izleme_listesi", [])
         high = [w for w in izleme if w.get("urgency") == "high"]
         if high:

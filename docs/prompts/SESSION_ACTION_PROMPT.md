@@ -439,8 +439,11 @@ her swing pozisyonu için:
    fiyat kijun altında kapandı → fark > %0.5 ise hemen çık, < %0.5 ise yarın teyit bekle
    hayır → devam
 
-3. TK CROSS AŞAĞI?
-   tenkan kijun'u aşağı kesti → trend bitti, çık
+3. TK CROSS AŞAĞI? (filtreli — v2.1'de giriş sinyali olarak kaldırıldı, çıkışta savunmacı kullanım)
+   tenkan kijun'u aşağı kesti:
+   → fark > %1 VE hacim > 1.0x ortalama → çık (güçlü sinyal)
+   → fark > %0.5 ama hacim düşük → yarın teyit bekle
+   → fark < %0.5 → sahte sinyal olasılığı yüksek, hacim + OBV teyidi olmadan çıkma
    hayır → devam
 
 4. TRAİLİNG STOP GÜNCELLE
