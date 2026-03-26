@@ -21,7 +21,7 @@
       "isim": "Agresif Büyüme Portföyü",
       "deger": 369987.63,
       "maliyet": 400000,
-      "kar_zarar": -30012.369999999995,
+      "kar_zarar": -30012.37,
       "kar_zarar_yuzde": -7.5,
       "pozisyon_sayisi": 6,
       "nakit": {
@@ -33,7 +33,7 @@
       "isim": "Değer + Temettü Portföyü",
       "deger": 146141.67,
       "maliyet": 100000,
-      "kar_zarar": 46141.67000000001,
+      "kar_zarar": 46141.67,
       "kar_zarar_yuzde": 46.14,
       "pozisyon_sayisi": 6,
       "nakit": {
@@ -44,8 +44,8 @@
     "swing_trade": {
       "isim": "Swing Trade (Simülasyon)",
       "pozisyon_sayisi": 1,
-      "bos_slot": 9,
-      "durum": "1/10 pozisyon aktif"
+      "bos_slot": 7,
+      "durum": "1/8 pozisyon aktif"
     }
   }
 }

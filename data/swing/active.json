@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-03-25T21:34:45.081156",
+  "son_guncelleme": "2026-03-26T05:58:30.366650",
   "not": "SWING TRADE SADECE SİMÜLASYON - Sadece % kazanç/kayıp takibi (MAX: 8 pozisyon)",
   "aktif_pozisyonlar": [
     {
@@ -11,7 +11,7 @@
       "guncel_kar_zarar_yuzde": -1.86,
       "hedef_fiyat": 41.32,
       "stop_loss": 35.68,
-      "tutulan_gun": 1,
+      "tutulan_gun": 2,
       "giris_nedeni": "K-17 teknik skor 5.2/7 (%75). ichimoku 3/3 (kumo yesil, fiyat > kumo, tenkan > kijun, chikou pozitif). SMA20+50 uzerinde. enerji sektoru guclu.",
       "katalizor": "Enerji sektörü güçlü (bugün +%1.81), doğalgaz sıkıştırma hizmetleri talebi artışta, net kâr +%64 büyüme",
       "tez": "Düşük beta (0.91) enerji hizmet şirketi, marj %31'e genişledi, 15 al/3 tut analist konsensüsü. ichimoku tam yükseliş sinyali.",
@@ -21,7 +21,7 @@
       "tarama_yontemi": "momentum",
       "teknik_skor": "5.2/7 (%75)",
       "ichimoku_skor": "3/3",
-      "son_guncelleme": "2026-03-25T21:34:45.081156",
+      "son_guncelleme": "2026-03-26T05:58:30.366650",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
@@ -41,7 +41,7 @@
       "kumo_ust": 35.58,
       "kumo_alt": 31.45,
       "atr_14": 1.1174,
-      "hacim_oran": 0.2,
+      "hacim_oran": 0.67,
       "obv_trend": "yukselis"
     }
   ],
