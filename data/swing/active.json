@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-03-26T20:38:27.035698",
+  "son_guncelleme": "2026-03-26T21:27:44.382961",
   "not": "SWING TRADE SADECE SİMÜLASYON - Sadece % kazanç/kayıp takibi (MAX: 8 pozisyon)",
   "aktif_pozisyonlar": [
     {
@@ -21,7 +21,7 @@
       "tarama_yontemi": "momentum",
       "teknik_skor": "5.2/7 (%75)",
       "ichimoku_skor": "3/3",
-      "son_guncelleme": "2026-03-26T20:38:27.035698",
+      "son_guncelleme": "2026-03-26T21:27:44.382961",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
