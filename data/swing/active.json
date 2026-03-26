@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-03-26T05:58:30.366650",
+  "son_guncelleme": "2026-03-26T11:45:14.258286",
   "not": "SWING TRADE SADECE SİMÜLASYON - Sadece % kazanç/kayıp takibi (MAX: 8 pozisyon)",
   "aktif_pozisyonlar": [
     {
@@ -40,8 +40,8 @@
       "tenkan_sen": 36.09,
       "kumo_ust": 35.58,
       "kumo_alt": 31.45,
-      "atr_14": 1.1174,
-      "hacim_oran": 0.67,
+      "atr_14": 1.1171,
+      "hacim_oran": 0.83,
       "obv_trend": "yukselis"
     }
   ],
