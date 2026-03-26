@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-03-26T19:07:38.299895",
+  "son_guncelleme": "2026-03-26T19:37:07.837289",
   "not": "SWING TRADE SADECE SİMÜLASYON - Sadece % kazanç/kayıp takibi (MAX: 8 pozisyon)",
   "aktif_pozisyonlar": [
     {
@@ -7,8 +7,8 @@
       "sembol": "AROC",
       "giris_tarihi": "2026-03-24",
       "giris_fiyati": 37.56,
-      "guncel_fiyat": 36.16,
-      "guncel_kar_zarar_yuzde": -3.74,
+      "guncel_fiyat": 36.12,
+      "guncel_kar_zarar_yuzde": -3.83,
       "hedef_fiyat": 41.32,
       "stop_loss": 35.68,
       "tutulan_gun": 2,
@@ -17,11 +17,11 @@
       "tez": "Düşük beta (0.91) enerji hizmet şirketi, marj %31'e genişledi, 15 al/3 tut analist konsensüsü. ichimoku tam yükseliş sinyali.",
       "zaman_cercevesi": "7-14 gün",
       "risk": "Enerji fiyatlarında sert düşüş, genel piyasa satışı, RSI 67 biraz yüksek",
-      "durum": "🚨 Stop-loss çok yakın (1.3%)",
+      "durum": "⚠️ Stop-loss yakın (1.2%)",
       "tarama_yontemi": "momentum",
       "teknik_skor": "5.2/7 (%75)",
       "ichimoku_skor": "3/3",
-      "son_guncelleme": "2026-03-26T19:07:38.299895",
+      "son_guncelleme": "2026-03-26T19:37:07.837289",
       "partial_exit_plan": {
         "hedef_ulasildiginda": {
           "aksiyon": "%50 POZİSYONU SAT",
