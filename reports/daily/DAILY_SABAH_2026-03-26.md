@@ -169,52 +169,58 @@ bugün 97 şirket bilançosu açıklayacak (Yahoo Finance). portföy hisselerini
 
 ---
 
-## 4. swing tarama - 26 mart (0 EP + 0 breakout)
+## 4. swing tarama - 26 mart
 
 > tarama zamanı: 25 mart gece 00:30 TR | VIX: 25.33 → 27.27 | piyasa: dikkatli
 > ⚠ VIX 25+ uyarısı aktif. stop seviyeleri geniş tut, yarım pozisyon düşün.
 
-### EP (episodic pivot) adayları
+### otomatik tarama (daily_scan.py)
 
-otomatik taramada EP adayı tespit edilmedi.
+EP adayı: 0 | breakout adayı: 0
 
-### breakout adayları
-
-otomatik taramada breakout adayı tespit edilmedi.
-
-### agresif portföy momentum tarama (daily_scan)
-
-| # | sembol | 1G | 5G | 1A | not |
-|---|--------|-----|-----|-----|-----|
-| 1 | ARM | +%16.4 | +%14.7 | +%19.2 | AGI CPU lansmanı, tarihi hamle. geri çekilme bekle |
-| 2 | AMD | +%7.3 | +%7.5 | +%4.5 | yarıiletken rallisi, ichimoku 2/4 |
-| 3 | SLB | +%2.7 | +%8.1 | +%0.5 | enerji servis, petrol rallisi desteği |
-| 4 | HWM | +%0.9 | +%4.4 | -%6.9 | havacılık alaşım, toparlanma |
-| 5 | TXN | +%1.1 | +%4.4 | -%8.0 | analog yarıiletken, geri çekilmeden kurtarma |
+dün gece otomatik taramada EP veya breakout setup'ı tespit edilmedi. VIX 25+ ortamında tarama filtresi sıkılaşıyor.
 
 ### mevcut swing pozisyonları ichimoku durumu
 
-| sembol | PnL | kijun stop | kumo | ichimoku | çıkış sinyali | durum |
-|--------|-----|-----------|------|----------|----------------|-------|
-| AROC | -%1.86 | $35.05 (JSON'da $35.68) | üstü | 4/4 güçlü yükseliş | yok | normal. fiyat $36.86, mevcut stop $35.68 korunuyor |
+| sembol | fiyat | PnL | kijun stop | kumo | ichimoku | hacim | çıkış sinyali |
+|--------|-------|-----|-----------|------|----------|-------|----------------|
+| AROC | $36.86 | -%1.86 | $35.05 (JSON: $35.68) | üstü | 4/4 güçlü yükseliş | 0.8x (zayıf) | yok |
 
-> AROC notu: kijun $35.05 ama mevcut stop $35.68 daha yukarıda, korunuyor. hacim teyidi zayıf (0.8x). bugün petrol yükselişi AROC'a destek olabilir (doğalgaz sıkıştırma hizmetleri).
+AROC notu: kijun $35.05 ama mevcut stop $35.68 daha yukarıda, korunuyor. OBV yükseliş trendinde. bugün petrol rallisi (Brent +%8) AROC'a destek olabilir, doğalgaz sıkıştırma hizmetleri enerji fiyatlarıyla pozitif korelasyonlu. 2. gün, izlemeye devam.
 
-### ichimoku tedarik zinciri tarama
+### watchlist ichimoku tarama (21 aday)
 
-| sembol | ichimoku | SMA200 | karar | not |
-|--------|----------|--------|-------|-----|
-| ARM | 4/4 | ✅ +%14 | TREND DEVAM | dün +%16 sonrası giriş riskli, geri çekilme bekle |
-| AMAT | 4/4 | ✅ +%51 | stop mesafesi dar | ekipman katmanı güçlü |
-| POWL | 4/4 | ✅ +%71 | TREND DEVAM | portföyde mevcut |
-| VRT | 4/4 | ✅ +%63 | TREND DEVAM | portföyde mevcut |
-| MRVL | 4/4 | ✅ +%22 | TREND DEVAM | portföyde mevcut, dün +%6.6 |
-| COHR | 4/4 | ✅ +%93 | TREND DEVAM | portföyde mevcut |
-| LITE | 4/4 | ✅ | stop mesafesi dar | optik katman güçlü |
-| AMD | 2/4 | ✅ +%13 | TREND DEVAM | sinyal bekleniyor |
-| ENTG | 1/4 | ✅ +%30 | stop mesafesi dar | kimya katmanı zayıf |
+| sembol | fiyat | ichimoku | SMA200 | karar | not |
+|--------|-------|----------|--------|-------|-----|
+| AMD | $220.27 | 2/4 yükseliş | ✅ +%13 | TREND DEVAM | giriş sinyali bekle |
+| ONTO | $221.04 | 4/4 güçlü | ✅ +%52 | TREND DEVAM | ekipman, giriş sinyali bekle |
+| NET | $171.79 | 3/4 | ✅ | TREND DEVAM | giriş sinyali bekle |
+| LRCX | $233.45 | 3/4 | ✅ +%51 | stop mesafesi dar | ekipman güçlü ama dar setup |
+| FLNC | $16.35 | 1/4 nötr | ✅ +%9 | stop mesafesi dar | zayıf setup |
+| NVDA | $195.62 | 0/4 düşüş | ❌ SMA200 altı | GİRME ❌ | kumo altı, düşüş trendi |
+| CRDO | $103.91 | 0/4 düşüş | ❌ SMA200 altı | GİRME ❌ | kumo altı, düşüş trendi |
+| WDAY | $127.07 | 0/4 düşüş | ❌ SMA200 altı | GİRME ❌ | kumo altı, düşüş trendi |
+| CRWD | $385.86 | 1/4 nötr | ❌ SMA200 altı | ÇIKIŞ 🔴 | bozulmuş, watchlist'ten çıkar |
+| MU | $382.09 | 2/4 yükseliş | ✅ | ÇIKIŞ 🔴 | 5 gün üst üste düşüş, bozulmuş |
+| SNOW | $169.21 | 0/4 | ❌ SMA200 altı | ÇIKIŞ 🔴 | bozulmuş, watchlist'ten çıkar |
+| NOW | $104.23 | 0/4 düşüş | ❌ SMA200 altı | GİRME ❌ | kumo altı |
+| RBRK | $52.16 | 0/4 düşüş | ❌ SMA200 altı | GİRME ❌ | kumo altı |
+| ZS | $156.59 | 0/4 düşüş | ❌ SMA200 altı | GİRME ❌ | kumo altı |
+| CGAU | $16.94 | 0/4 düşüş | ❌ | GİRME ❌ | kumo altı |
 
-> tedarik zinciri değerlendirme: güç (POWL, VRT) ve optik (COHR, LITE) katmanları en güçlü. ekipman (AMAT) ve çip (MRVL) güçlü. kimya (ENTG, MKSI) konsolidasyonda. portföydeki 4 AI pozisyonun (MRVL, COHR, POWL, VRT) hepsi 4/4 ichimoku, trend devam ediyor.
+> watchlist temizlik notu: CRWD, SNOW, MU ichimoku bozulmuş (ÇIKIŞ sinyali). seans sonu watchlist'ten çıkarılacak. NVDA, CRDO, WDAY, NOW, RBRK, ZS kumo altında, düşüş trendinde, şimdilik giriş yok. AMD, ONTO ve NET trend devam ediyor ama giriş sinyali bekliyor.
+
+### bugün izlenecek swing setup önceliği
+
+bugün yeni swing girişi planlanmıyor:
+- otomatik taramada EP/breakout adayı yok
+- watchlist'te giriş sinyali veren aday yok (sadece trend devam)
+- VIX 27+ (K-13: dikkatli)
+- AROC izleniyor (1/8 slot dolu, 7 boş)
+
+### tarama notu
+
+piyasa volatilitesi yüksek (VIX 27+), iran haberleri piyasayı sallıyor. bu ortamda swing giriş yapmamak doğru strateji (K-14 referans). stabilizasyon bekle.
 
 ---
 
@@ -243,6 +249,40 @@ bugün yeni swing girişi planlanmıyor. sebep:
 - petrol şoku piyasayı baskılayabilir
 - otomatik taramada EP/breakout adayı yok
 - mevcut AROC pozisyonu izleniyor
+
+### agresif portföy — momentum adayları (daily_scan)
+
+agresif portföy 6/6 dolu, yeni giriş için mevcut pozisyondan çıkış gerekir. aşağıdakiler izleme listesinde:
+
+| # | sembol | 1G | 5G | 1A | ichimoku | not |
+|---|--------|-----|-----|-----|----------|-----|
+| 1 | ARM | +%16.4 | +%14.7 | +%19.2 | 4/4 | AGI CPU, tarihi hamle. +%16 sonrası geri çekilme bekle |
+| 2 | AMD | +%7.3 | +%7.5 | +%4.5 | 2/4 | yarıiletken rallisi, giriş sinyali yok |
+| 3 | SLB | +%2.7 | +%8.1 | +%0.5 | - | enerji servis, petrol rallisi |
+| 4 | HWM | +%0.9 | +%4.4 | -%6.9 | - | havacılık alaşım, toparlanma |
+| 5 | TXN | +%1.1 | +%4.4 | -%8.0 | - | analog yarıiletken, kurtarma |
+
+### agresif portföy — tedarik zinciri ichimoku tarama
+
+portföydeki mevcut AI pozisyonları + potansiyel adaylar:
+
+| sembol | ichimoku | SMA200 | karar | not |
+|--------|----------|--------|-------|-----|
+| **MRVL** | 4/4 güçlü | ✅ +%22 | TREND DEVAM | portföyde, dün +%6.6 |
+| **COHR** | 4/4 güçlü | ✅ +%93 | TREND DEVAM | portföyde, optik katman |
+| **POWL** | 4/4 güçlü | ✅ +%71 | TREND DEVAM | portföyde, güç katmanı, dün +%4.3 |
+| **VRT** | 4/4 güçlü | ✅ +%63 | TREND DEVAM | portföyde, soğutma katmanı |
+| **CAMT** | - | ✅ | - | portföyde, ekipman |
+| **PLTR** | 3/4 | ❌ SMA200 altı | BEKLE | SMA200 $163.89 kırması lazım |
+| ARM | 4/4 güçlü | ✅ +%14 | geri çekilme bekle | dün +%16, aday ama pahalı |
+| AMAT | 4/4 güçlü | ✅ +%51 | stop mesafesi dar | ekipman katmanı güçlü |
+| ONTO | 4/4 güçlü | ✅ +%52 | giriş sinyali bekle | ekipman, watchlist'te |
+| LITE | 4/4 güçlü | ✅ | stop mesafesi dar | optik katman |
+| ETN | 4/4 güçlü | ✅ | giriş sinyali bekle | güç katmanı |
+| AMD | 2/4 | ✅ +%13 | sinyal bekleniyor | momentum var ama ichimoku zayıf |
+| ENTG | 1/4 nötr | ✅ +%30 | stop mesafesi dar | kimya katmanı konsolidasyonda |
+
+> tedarik zinciri: güç (POWL, VRT, ETN) ve optik (COHR, LITE) en güçlü katmanlar. ekipman (AMAT, ONTO) güçlü ama stop mesafesi dar. kimya (ENTG, MKSI) zayıf. portföydeki 4 AI pozisyon (MRVL, COHR, POWL, VRT) hepsi 4/4 ichimoku, trend sağlam.
 
 ### portföy özeti
 
