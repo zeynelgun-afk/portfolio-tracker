@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-03-27T15:55:47.616658",
+  "son_guncelleme": "2026-03-27T16:51:00.977030",
   "not": "Tüm portföyler ve swing trade için tek merkezi watchlist. Her adayda hedef_portfoy alanı hangi portföye/stratejiye ait olduğunu belirtir.",
   "iran_krizi_notu": {
     "tarih": "2026-03-01",
@@ -361,13 +361,13 @@
       "guncel_fiyat": 154.16,
       "sektor": "Teknoloji - Cip Muayene/Test",
       "hedef_portfoy": "agresif",
-      "urgency": "medium",
+      "urgency": "low",
       "ekleme_tarihi": "2026-03-11",
       "son_kontrol": "2026-03-27",
       "hedef_giris": "145-152",
       "hedef_fiyat": 174.0,
       "stop_loss": 135.0,
-      "notlar": "Camtek - yari iletken muayene ve olcum sistemleri. NVIDIA makalesi Katman 2 destek. RSI 51.0 notr. YTD +%35 guclu. 52H'den -%10. $7.2B mktcap.",
+      "notlar": "satıldı 27 mart sabah @157.75 (-9.52%). re-entry kumo + kijun bounce bekle",
       "nvidia_katman": "Katman 2 - Cipler (tedarik zinciri)",
       "momentum_5gun": 0
     },
@@ -376,13 +376,13 @@
       "guncel_fiyat": 253.9,
       "sektor": "Teknoloji - Veri Merkezi Altyapi",
       "hedef_portfoy": "agresif",
-      "urgency": "high",
+      "urgency": "low",
       "ekleme_tarihi": "2026-03-11",
       "son_kontrol": "2026-03-27",
-      "hedef_giris": "250-260",
+      "hedef_giris": "235-245 (kumo desteği)",
       "hedef_fiyat": 310.0,
       "stop_loss": 235.0,
-      "notlar": "Vertiv - veri merkezi sogutma + guc yonetimi. NVIDIA makalesi Katman 3 (Altyapi) tam merkezi. RSI 68.4 biraz yuksek, pullback bekle. YTD +%54 muhtesem momentum. 52H'ye neredeyse ulasti. $103.3B mktcap.",
+      "notlar": "satıldı 27 mart @251.40 (-9.74%). re-entry için kumo kırılımı + hacim teyidi gerekli. ATR(14) 13.84",
       "nvidia_katman": "Katman 3 - Altyapi (sogutma/guc)",
       "momentum_5gun": 0,
       "katalizor": "AI veri merkezi sogutma talebi patladi, her yeni AI fabrikasi VRT musteri"
@@ -709,8 +709,8 @@
       "guncel_fiyat": 538.02,
       "sektor": "Güç Altyapısı",
       "hedef_portfoy": "agresif",
-      "notlar": "AI tedarik zinciri: veri merkezi trafo ve güç dağıtım. ichimoku 4/4, OBV yükseliş. 3ay +72%. kijun bounce ($530-540) veya konsolidasyon kırılımı bekleniyor.",
-      "urgency": "high",
+      "notlar": "portföyde mevcut @539.52. stop 524.89. bugün güçlü bounce +2.89%. izlemeye devam",
+      "urgency": "low",
       "ekleme_tarihi": "2026-03-25",
       "son_kontrol": "2026-03-27",
       "hedef_giris": "kijun bounce ($530-540)",
@@ -1020,6 +1020,10 @@
     {
       "sembol": "NXPI",
       "neden": "Otomotiv dongusal sektor, gelirler 2 yildir dususte, ROIC < WACC, insider satislari. AI altyapi tedarik zincirinde dogrudan faydalanmiyor. GTC otonom surus baglantisi dolaylI."
+    },
+    {
+      "sembol": "XLI",
+      "neden": "stop-loss %8 tetiklendi @160.37. endüstriyel sektör risk-off ortamında zayıf. VIX >29"
     }
   ],
   "prediction_markets_insights": {
