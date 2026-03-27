@@ -132,3 +132,4 @@ date,action,symbol,shares,price,total,reason
 2026-03-27,SELL,CAMT,114,157.75,17983.5,Stop-loss (2xATR) tetiklendi - stop $157.42 sadece $0.33 mesafe - QQQ -0.69% VIX 29.45 - stop ihlali kaçınılmaz - Agresif portföy
 
 2026-03-27,SELL,XLI,85,160.37,13631.45,"Stop-loss %8 tetiklendi - Endüstriyel zayıflık devam - Dengeli portföy"
+2026-03-27,SELL,VRT,71,251.40,17849.40,"2xATR trailing stop tetiklendi - en yüksek 282.05 ATR 13.84 stop 254.37 guncel 251.40 - Agresif portfoy"

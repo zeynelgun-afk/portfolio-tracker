@@ -23,9 +23,9 @@
       "maliyet": 400000,
       "kar_zarar": -40401.19,
       "kar_zarar_yuzde": -10.1,
-      "pozisyon_sayisi": 3,
+      "pozisyon_sayisi": 2,
       "nakit": {
-        "miktar": 287945.73,
+        "miktar": 305795.13,
         "para_birimi": "USD"
       }
     },
