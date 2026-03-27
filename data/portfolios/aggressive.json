@@ -27,7 +27,7 @@
   },
   "baslangic_sermaye": 400000,
   "nakit": {
-    "miktar": 269962.2344000001,
+    "miktar": 287945.73,
     "para_birimi": "USD"
   },
   "pozisyonlar": [
@@ -37,19 +37,19 @@
       "sektor": "Teknoloji",
       "adet": 375,
       "maliyet_baz": 94.94,
-      "guncel_fiyat": 97.68,
+      "guncel_fiyat": 97.56,
       "yatirim": 35602.5,
-      "guncel_deger": 36630.0,
-      "kar_zarar": 1027.5,
-      "kar_zarar_yuzde": 2.89,
-      "gunluk_degisim_yuzde": -0.78,
-      "son_guncelleme": "2026-03-27T12:25:16.936482",
+      "guncel_deger": 36585.0,
+      "kar_zarar": 982.5,
+      "kar_zarar_yuzde": 2.76,
+      "gunluk_degisim_yuzde": -0.12,
+      "son_guncelleme": "2026-03-27T13:47:45.110179",
       "giris_tarihi": "2026-03-12",
       "giris_fiyati": 88.73,
       "giris_nedeni": "AI çip tedarik zinciri tezi - AVGO+MRVL çift beklenti üstü ile tez doğrulandı. Özel ASIC ve veri merkezi ağ çipleri lideri, bulut harcama büyümesinden doğrudan faydalanıyor. 50MA ve 200MA üzerinde teknik yapı temiz.",
       "stop_loss": 89.49,
       "hedef_fiyat": 102.0,
-      "agirlik_yuzde": 10.16,
+      "agirlik_yuzde": 10.13,
       "stop_tipi": "2x_ATR(4.48)_trailing",
       "atr_14": 4.48
     },
@@ -59,13 +59,13 @@
       "sektor": "Güç Altyapısı",
       "adet": 34,
       "maliyet_baz": 585.12,
-      "guncel_fiyat": 524.39,
+      "guncel_fiyat": 542.41,
       "yatirim": 19894.08,
-      "guncel_deger": 17829.26,
-      "kar_zarar": -2064.82,
-      "kar_zarar_yuzde": -10.38,
-      "gunluk_degisim_yuzde": -10.29,
-      "son_guncelleme": "2026-03-27T12:25:16.936482",
+      "guncel_deger": 18441.94,
+      "kar_zarar": -1452.14,
+      "kar_zarar_yuzde": -7.3,
+      "gunluk_degisim_yuzde": 3.44,
+      "son_guncelleme": "2026-03-27T13:47:45.110179",
       "giris_tarihi": "2026-03-25",
       "giris_fiyati": 585.12,
       "giris_nedeni": "AI tedarik zinciri: veri merkezi trafo ve güç dağıtım ekipmanı. ichimoku 4/4 güçlü yükseliş, OBV yükseliş, 3ay +72%. düşük float, güçlü talep. VIX>25 yarım pozisyon.",
@@ -73,31 +73,8 @@
       "stop_loss": 521.04,
       "stop_tipi": "2x_ATR(34.64)_trailing",
       "atr_14": 34.64,
-      "agirlik_yuzde": 4.94,
-      "durum": "AÇILIŞTA ÇIK - aftermarket $512 < stop $521.04"
-    },
-    {
-      "sembol": "CAMT",
-      "isim": "Camtek Ltd",
-      "sektor": "Yarı İletken Ekipman",
-      "adet": 114,
-      "maliyet_baz": 174.35,
-      "guncel_fiyat": 159.86,
-      "yatirim": 19875.9,
-      "guncel_deger": 18224.04,
-      "kar_zarar": -1651.86,
-      "kar_zarar_yuzde": -8.31,
-      "gunluk_degisim_yuzde": -8.69,
-      "son_guncelleme": "2026-03-27T12:25:16.936482",
-      "giris_tarihi": "2026-03-25",
-      "giris_fiyati": 174.35,
-      "giris_nedeni": "AI tedarik zinciri: wafer denetim ve ölçüm ekipmanı. ichimoku 4/4 güçlü yükseliş, OBV yükseliş, 3ay +60%. niş oyuncu, HBM ve gelişmiş paketleme için kritik. VIX>25 yarım pozisyon.",
-      "katalizor": "HBM (yüksek bant genişlikli bellek) üretimi artışı, gelişmiş paketleme talebi",
-      "stop_loss": 157.42,
-      "stop_tipi": "2x_ATR(10.94)_trailing",
-      "atr_14": 10.94,
-      "agirlik_yuzde": 5.05,
-      "durum": "AÇILIŞTA ÇIK - aftermarket $153 < stop $157.42 (güncellendi)"
+      "agirlik_yuzde": 5.11,
+      "durum": "Aktif - stop $521.04 korunuyor"
     },
     {
       "sembol": "VRT",
@@ -105,13 +82,13 @@
       "sektor": "Güç Altyapısı",
       "adet": 71,
       "maliyet_baz": 278.52,
-      "guncel_fiyat": 252.4,
+      "guncel_fiyat": 255.11,
       "yatirim": 19774.92,
-      "guncel_deger": 17920.4,
-      "kar_zarar": -1854.52,
-      "kar_zarar_yuzde": -9.38,
-      "gunluk_degisim_yuzde": -8.6,
-      "son_guncelleme": "2026-03-27T12:25:16.936482",
+      "guncel_deger": 18112.81,
+      "kar_zarar": -1662.11,
+      "kar_zarar_yuzde": -8.41,
+      "gunluk_degisim_yuzde": 1.07,
+      "son_guncelleme": "2026-03-27T13:47:45.110179",
       "giris_tarihi": "2026-03-25",
       "giris_fiyati": 278.52,
       "giris_nedeni": "AI tedarik zinciri: veri merkezi soğutma, UPS, güç yönetimi. ichimoku 4/4 güçlü yükseliş, 3ay +66%. hacim ayrışması uyarısı var, bu yüzden yarım pozisyon. VIX>25 de yarım pozisyon destekliyor.",
@@ -119,13 +96,12 @@
       "stop_loss": 250.03,
       "stop_tipi": "2x_ATR(15.02)_trailing",
       "atr_14": 15.02,
-      "agirlik_yuzde": 4.97,
-      "durum": "KRİTİK - $250 altında açılırsa çıkış"
+      "agirlik_yuzde": 5.02
     }
   ],
-  "son_guncelleme": "2026-03-27T12:25:16.936482",
-  "toplam_deger": 360565.93,
-  "toplam_getiri_yuzde": -9.86,
+  "son_guncelleme": "2026-03-27T13:47:45.110179",
+  "toplam_deger": 361085.48,
+  "toplam_getiri_yuzde": -9.73,
   "notes": [
     {
       "date": "2026-02-20T20:22:00.933774",
@@ -331,6 +307,11 @@
       "date": "2026-03-27T12:25:16.936482",
       "type": "market_note",
       "content": "27 mart 2026 seans öncesi ATR güncellemesi: CAMT stop $151.98 → $157.42 (zirve $179.30'dan 2xATR). CAMT aftermarket bid $153.13 = stop altında → POWL ile birlikte açılışta çıkış kararı alındı. MRVL stop $89.20 → $89.49. VRT stop değişmedi."
+    },
+    {
+      "date": "2026-03-27T13:47:45.110179",
+      "type": "exit",
+      "content": "CAMT 114 adet @$157.75 satıldı. Stop $157.42'ye $0.33 mesafe, QQQ -0.69% VIX 29.45 ortamında beklemek anlamsız. K/Z: -9.52% (-1,892.40$). POWL ise aftermarket $512'den $542'ye güçlü açıldı, stop ihlal yok - tutuldu."
     }
   ],
   "transactions": [
@@ -684,6 +665,15 @@
       "fiyat": 259.05,
       "tutar": 49478.55,
       "aciklama": "Trailing stop tetiklendi - $263.7 kırıldı, fiyat $259.05. Bain Capital blok satışları ek baskı."
+    },
+    {
+      "tarih": "2026-03-27",
+      "islem_tipi": "SATIŞ",
+      "sembol": "CAMT",
+      "adet": 114,
+      "fiyat": 157.75,
+      "tutar": 17983.5,
+      "aciklama": "Stop-loss (2xATR) tetiklendi - stop $157.42, fiyat $157.75 (sadece $0.33 mesafe) - QQQ -0.69%, VIX 29.45 baskısıyla kaçınılmaz ihlal - Agresif portföy"
     }
   ]
 }

@@ -129,3 +129,4 @@ date,action,symbol,shares,price,total,reason
 2026-03-25,BUY,SM,160,31.14,4982.40,Pozisyon büyütme +51% kazananı büyüt
 2026-03-26,SELL,PLTR,234,149.9,35076.6,Trailing stop tetiklendi @$150.96 - Agresif portföy
 2026-03-26,SELL,COHR,191,259.05,49478.55,Trailing stop tetiklendi @$263.7 - Bain Capital blok satis baskisi - Agresif portföy
+2026-03-27,SELL,CAMT,114,157.75,17983.5,Stop-loss (2xATR) tetiklendi - stop $157.42 sadece $0.33 mesafe - QQQ -0.69% VIX 29.45 - stop ihlali kaçınılmaz - Agresif portföy
