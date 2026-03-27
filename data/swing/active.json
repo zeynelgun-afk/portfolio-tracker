@@ -1,50 +1,7 @@
 {
-  "son_guncelleme": "2026-03-26T21:27:44.382961",
+  "son_guncelleme": "2026-03-27T06:26:31.700981",
   "not": "SWING TRADE SADECE SİMÜLASYON - Sadece % kazanç/kayıp takibi (MAX: 8 pozisyon)",
-  "aktif_pozisyonlar": [
-    {
-      "id": "SWING-027",
-      "sembol": "AROC",
-      "giris_tarihi": "2026-03-24",
-      "giris_fiyati": 37.56,
-      "guncel_fiyat": 35.7,
-      "guncel_kar_zarar_yuzde": -4.95,
-      "hedef_fiyat": 41.32,
-      "stop_loss": 35.68,
-      "tutulan_gun": 2,
-      "giris_nedeni": "K-17 teknik skor 5.2/7 (%75). ichimoku 3/3 (kumo yesil, fiyat > kumo, tenkan > kijun, chikou pozitif). SMA20+50 uzerinde. enerji sektoru guclu.",
-      "katalizor": "Enerji sektörü güçlü (bugün +%1.81), doğalgaz sıkıştırma hizmetleri talebi artışta, net kâr +%64 büyüme",
-      "tez": "Düşük beta (0.91) enerji hizmet şirketi, marj %31'e genişledi, 15 al/3 tut analist konsensüsü. ichimoku tam yükseliş sinyali.",
-      "zaman_cercevesi": "7-14 gün",
-      "risk": "Enerji fiyatlarında sert düşüş, genel piyasa satışı, RSI 67 biraz yüksek",
-      "durum": "⚠️ Stop-loss yakın (0.1%)",
-      "tarama_yontemi": "momentum",
-      "teknik_skor": "5.2/7 (%75)",
-      "ichimoku_skor": "3/3",
-      "son_guncelleme": "2026-03-26T21:27:44.382961",
-      "partial_exit_plan": {
-        "hedef_ulasildiginda": {
-          "aksiyon": "%50 POZİSYONU SAT",
-          "satis_fiyati": 41.32,
-          "sebep": "Kar garantiye al"
-        },
-        "kalan_50_icin": {
-          "aksiyon": "TRAİLİNG STOP AKTİF",
-          "baslangic_trailing_stop": 39.25,
-          "trailing_yuzde": 5,
-          "aciklama": "Zirveden -%5 düşünce sat"
-        },
-        "durum": "Hedef bekleniyor"
-      },
-      "kijun_sen": 35.05,
-      "tenkan_sen": 36.09,
-      "kumo_ust": 35.58,
-      "kumo_alt": 31.45,
-      "atr_14": 1.1171,
-      "hacim_oran": 0.83,
-      "obv_trend": "yukselis"
-    }
-  ],
+  "aktif_pozisyonlar": [],
   "ozet": {
     "toplam_pozisyon": 2,
     "bos_slot": 6,

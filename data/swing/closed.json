@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-03-25",
+  "son_guncelleme": "2026-03-26",
   "kapatilan_pozisyonlar": [
     {
       "id": "SWING-020",
@@ -289,6 +289,19 @@
       "cikis_nedeni": "ichimoku çıkış: kumo altı 0/4, kijun altı %9.5 fark. kârdayken disiplinli çıkış",
       "sonuc": "KAZANÇ",
       "ders": "K-17 ihlaliyle giriş kısa vadede kâr getirdi ama ichimoku yapı bozuk. kumo altında giriş yapma"
+    },
+    {
+      "id": "SWING-027",
+      "sembol": "AROC",
+      "giris_tarihi": "2026-03-24",
+      "cikis_tarihi": "2026-03-26",
+      "giris_fiyati": 37.56,
+      "cikis_fiyati": 35.7,
+      "kar_zarar_yuzde": -4.95,
+      "tutulan_gun": 2,
+      "cikis_nedeni": "Stop-loss gün içi ihlali ($35.66 < SL $35.68). K-09: stop'a %0.06 mesafe, erken çıkış uygulandı",
+      "sonuc": "ZARAR",
+      "ders": "doğalgaz sıkıştırma tezi doğru ama giriş zamanlaması kötü. petrol rallisi AROC'u taşımadı, piyasa genel satış baskısında enerji hizmet zayıf kaldı. VIX 27+ ortamında giriş K-13 ile çelişiyor."
     }
   ],
   "istatistikler": {
