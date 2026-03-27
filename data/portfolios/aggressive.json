@@ -43,7 +43,7 @@
       "kar_zarar": -22.5,
       "kar_zarar_yuzde": -0.06,
       "gunluk_degisim_yuzde": 0,
-      "son_guncelleme": "2026-03-27T20:51:22.739481",
+      "son_guncelleme": "2026-03-27T21:29:56.007265",
       "giris_tarihi": "2026-03-12",
       "giris_fiyati": 88.73,
       "giris_nedeni": "AI çip tedarik zinciri tezi - AVGO+MRVL çift beklenti üstü ile tez doğrulandı. Özel ASIC ve veri merkezi ağ çipleri lideri, bulut harcama büyümesinden doğrudan faydalanıyor. 50MA ve 200MA üzerinde teknik yapı temiz.",
@@ -65,7 +65,7 @@
       "kar_zarar": -1600.7200000000012,
       "kar_zarar_yuzde": -8.05,
       "gunluk_degisim_yuzde": 0,
-      "son_guncelleme": "2026-03-27T20:51:22.739481",
+      "son_guncelleme": "2026-03-27T21:29:56.007265",
       "giris_tarihi": "2026-03-25",
       "giris_fiyati": 585.12,
       "giris_nedeni": "AI tedarik zinciri: veri merkezi trafo ve güç dağıtım ekipmanı. ichimoku 4/4 güçlü yükseliş, OBV yükseliş, 3ay +72%. düşük float, güçlü talep. VIX>25 yarım pozisyon.",
@@ -77,7 +77,7 @@
       "durum": "Aktif - stop $524.89"
     }
   ],
-  "son_guncelleme": "2026-03-27T20:51:22.739481",
+  "son_guncelleme": "2026-03-27T21:29:56.007265",
   "toplam_deger": 359668.49,
   "toplam_getiri_yuzde": -10.08,
   "notes": [

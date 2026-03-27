@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-03-27T20:51:22.743933",
+  "son_guncelleme": "2026-03-27T21:29:56.013849",
   "not": "Tüm portföyler ve swing trade için tek merkezi watchlist. Her adayda hedef_portfoy alanı hangi portföye/stratejiye ait olduğunu belirtir.",
   "iran_krizi_notu": {
     "tarih": "2026-03-01",
@@ -222,7 +222,7 @@
     },
     {
       "sembol": "TER",
-      "guncel_fiyat": 295.624,
+      "guncel_fiyat": 295.61,
       "sektor": "Teknoloji",
       "hedef_portfoy": "agresif",
       "urgency": "medium",
@@ -813,7 +813,7 @@
     },
     {
       "sembol": "NVDA",
-      "guncel_fiyat": 167.46,
+      "guncel_fiyat": 167.52,
       "sektor": "Teknoloji - AI/Yarı İletken",
       "hedef_portfoy": "swing",
       "notlar": "Q3 earnings çok güçlü ($57B revenue, +62% YoY, EPS $1.30, +67% YoY, net margin %56) ama piyasa tepkisi zayıf (+1.4%). Beklenti çok yüksekti. Pullback + RSI oversold bekle. AI chip lideri, güçlü fundamentaller.",
