@@ -1,298 +1,298 @@
 {
-  "portfoy_adi": "Dengeli Portföy",
-  "baslangic_sermaye": 100000,
-  "nakit": {
-    "miktar": 68754.56999999999,
-    "para_birimi": "USD"
-  },
-  "pozisyonlar": [
-    {
-      "sembol": "SM",
-      "isim": "SM Energy Company",
-      "sektor": "Enerji",
-      "adet": 192,
-      "maliyet_baz": 29.39,
-      "guncel_fiyat": 32.72,
-      "yatirim": 5642.88,
-      "guncel_deger": 6282.24,
-      "kar_zarar": 639.3599999999997,
-      "kar_zarar_yuzde": 11.33,
-      "gunluk_degisim_yuzde": 0,
-      "son_guncelleme": "2026-03-27T21:29:56.004808",
-      "giris_tarihi": "2026-02-17",
-      "giris_fiyati": 20.67,
-      "giris_nedeni": "Initial position - Oil & gas E&P",
-      "agirlik_yuzde": 5.53
+    "portfoy_adi": "Dengeli Portföy",
+    "baslangic_sermaye": 100000,
+    "nakit": {
+        "miktar": 68754.56999999999,
+        "para_birimi": "USD"
     },
-    {
-      "sembol": "MO",
-      "isim": "Altria Group Inc",
-      "sektor": "Temel Tüketim",
-      "adet": 267,
-      "maliyet_baz": 67.44,
-      "guncel_fiyat": 66.48,
-      "yatirim": 18006.48,
-      "guncel_deger": 17750.16,
-      "kar_zarar": -256.3199999999997,
-      "kar_zarar_yuzde": -1.42,
-      "gunluk_degisim_yuzde": 0,
-      "son_guncelleme": "2026-03-27T21:29:56.004808",
-      "giris_tarihi": "2026-02-17",
-      "giris_fiyati": 67.44,
-      "giris_nedeni": "Initial position - Dividend defensive",
-      "agirlik_yuzde": 15.64
-    },
-    {
-      "sembol": "XLE",
-      "isim": "Energy Select Sector SPDR Fund",
-      "sektor": "Enerji ETF",
-      "adet": 139,
-      "maliyet_baz": 53.34,
-      "guncel_fiyat": 62.56,
-      "yatirim": 7414.26,
-      "guncel_deger": 8695.84,
-      "kar_zarar": 1281.58,
-      "kar_zarar_yuzde": 17.29,
-      "gunluk_degisim_yuzde": 0,
-      "son_guncelleme": "2026-03-27T21:29:56.004808",
-      "giris_tarihi": "2026-02-17",
-      "giris_fiyati": 53.34,
-      "giris_nedeni": "Initial position - Energy sector ETF",
-      "agirlik_yuzde": 7.66
-    },
-    {
-      "sembol": "JNJ",
-      "isim": "Johnson & Johnson",
-      "sektor": "Sağlık",
-      "adet": 50,
-      "maliyet_baz": 244.14,
-      "guncel_fiyat": 240.45,
-      "yatirim": 12207.0,
-      "guncel_deger": 12022.5,
-      "kar_zarar": -184.5,
-      "kar_zarar_yuzde": -1.51,
-      "gunluk_degisim_yuzde": 0,
-      "son_guncelleme": "2026-03-27T21:29:56.004808",
-      "giris_tarihi": "2026-03-13",
-      "giris_fiyati": 244.14,
-      "giris_nedeni": "Saglik sektoru diversifikasyonu. Defensif/temettü aristokrati. Iran savasi ortaminda direncli. RSI 59, SMA50 ustu. Portfoyde saglik eksikti.",
-      "agirlik_yuzde": 10.59
-    }
-  ],
-  "son_guncelleme": "2026-03-27T21:29:56.004808",
-  "toplam_deger": 113505.31,
-  "toplam_getiri_yuzde": 13.51,
-  "transactions": [
-    {
-      "tarih": "2026-03-02",
-      "islem_tipi": "SATIŞ",
-      "sembol": "KOS",
-      "adet": 1159,
-      "fiyat": 2.33,
-      "tutar": 2700.47,
-      "aciklama": "Kismi kar alma (%25) - +44% kardan koruma, iran krizi volatilitesinde risk yonetimi"
-    },
-    {
-      "tarih": "2026-03-04",
-      "islem_tipi": "SATIŞ",
-      "sembol": "KOS",
-      "adet": 1739,
-      "fiyat": 2.46,
-      "tutar": 4277.94,
-      "aciklama": "Kâr realizasyonu - %50 pozisyon satışı - +52% getiri, RSI 68 overbought yakını"
-    },
-    {
-      "tarih": "2026-03-09",
-      "islem_tipi": "SATIŞ",
-      "sembol": "SM",
-      "adet": 416,
-      "fiyat": 26.5,
-      "tutar": 11024.0,
-      "aciklama": "Kısmi kâr alma (%40) — RSI 74 aşırı alım, ağırlık %24 çok yüksek, kâr garantiye alındı"
-    },
-    {
-      "tarih": "2026-03-09",
-      "islem_tipi": "SATIŞ",
-      "sembol": "KOS",
-      "adet": 1740,
-      "fiyat": 2.58,
-      "tutar": 4489.2,
-      "aciklama": "Tam çıkış — savaş bitti sinyali, enerji rotasyonu, +%59.6 kâr"
-    },
-    {
-      "tarih": "2026-03-09",
-      "islem_tipi": "SATIŞ",
-      "sembol": "XLE",
-      "adet": 138,
-      "fiyat": 56.17,
-      "tutar": 7751.46,
-      "aciklama": "Kısmi %50 — enerji rotasyonu, tech'e geçiş"
-    },
-    {
-      "tarih": "2026-03-13",
-      "islem_tipi": "ALIŞ",
-      "sembol": "JNJ",
-      "adet": 50,
-      "fiyat": 244.14,
-      "tutar": 12207.0,
-      "aciklama": "Saglik sektoru diversifikasyonu - defensif - Dengeli portfoy"
-    },
-    {
-      "tarih": "2026-03-17",
-      "islem_tipi": "SATIŞ",
-      "sembol": "SM",
-      "adet": 156,
-      "fiyat": 27.36,
-      "tutar": 4268.16,
-      "aciklama": "Kısmi kâr alma %25 - RSI 72+ aşırı alım - K-11 tetiklendi - Dengeli portföy"
-    },
-    {
-      "tarih": "2026-03-17",
-      "islem_tipi": "SATIŞ",
-      "sembol": "SM",
-      "adet": 156,
-      "fiyat": 27.36,
-      "tutar": 4268.16,
-      "aciklama": "Kısmi kâr alma %25 - RSI 72+ aşırı alım - K-11 tetiklendi - Dengeli portföy"
-    },
-    {
-      "tarih": "2026-03-20",
-      "islem_tipi": "SATIŞ",
-      "sembol": "SM",
-      "adet": 104,
-      "fiyat": 29.93,
-      "tutar": 3112.72,
-      "aciklama": "K-11 kısmi kar alma (1/3 pozisyon) - RSI 78 aşırı alım - +%44.8 kazanç - Dengeli portföy"
-    },
-    {
-      "tarih": "2026-03-23",
-      "islem_tipi": "SATIŞ",
-      "sembol": "SM",
-      "adet": 62,
-      "fiyat": 29.51,
-      "tutar": 1829.62,
-      "aciklama": "K-11 kısmi kâr alma - RSI 75 + %43 kâr - petrol düşüşü enerji baskısı - %30 pozisyon azaltma"
-    },
-    {
-      "tarih": "2026-03-23",
-      "islem_tipi": "SATIŞ",
-      "sembol": "SM",
-      "adet": 52,
-      "fiyat": 29.58,
-      "tutar": 1538.16,
-      "aciklama": "K-11 kısmi kâr alma %25 - RSI 80 + negatif ayrışma (SPY +%1.4 SM -%1.5) - Dengeli portföy"
-    },
-    {
-      "tarih": "2026-03-24",
-      "islem_tipi": "SATIŞ",
-      "sembol": "SM",
-      "adet": 47,
-      "fiyat": 30.84,
-      "tutar": 1449.48,
-      "aciklama": "K-11 kısmi kâr alma - RSI 76.6 + %49 kazanç - Dengeli portföy"
-    },
-    {
-      "tarih": "2026-03-25",
-      "islem_tipi": "SATIŞ",
-      "sembol": "SM",
-      "adet": 15,
-      "fiyat": 30.03,
-      "tutar": 450.45,
-      "aciklama": "K-11 kısmi kâr alma: RSI 75.4, +%46.8 kâr. %33 pozisyon azaltma"
-    },
-    {
-      "tarih": "2026-03-25",
-      "islem_tipi": "SATIŞ",
-      "sembol": "RGLD",
-      "adet": 22,
-      "fiyat": 232,
-      "tutar": 5104,
-      "aciklama": "Portföy daraltma 6→5 - -%16 kayıp, sermaye daha güçlü pozisyonlara aktarılıyor"
-    },
-    {
-      "tarih": "2026-03-25",
-      "islem_tipi": "ALIŞ",
-      "sembol": "SM",
-      "adet": 160,
-      "fiyat": 31.14,
-      "tutar": 4982.4,
-      "aciklama": "Pozisyon büyütme - en güçlü performans +51%, enerji momentum"
-    },
-    {
-      "tarih": "2026-03-27",
-      "islem_tipi": "SATIŞ",
-      "sembol": "XLI",
-      "adet": 85,
-      "fiyat": 160.37,
-      "tutar": 13631.45,
-      "aciklama": "Stop-loss %8 tetiklendi - XLI $160.37 < stop $161.04. endüstriyel sektör zayıf, VIX 29.46"
-    }
-  ],
-  "notes": [
-    {
-      "date": "2026-03-02T20:39:40.510657",
-      "type": "rebalance",
-      "content": "KOS %25 kismi satis (1159 hisse @$2.33). Realize kar: $826.37. Kalan 3479 hisse tutulmaya devam."
-    },
-    {
-      "date": "2026-03-04T19:55:41.768596",
-      "type": "rebalance",
-      "content": "KOS %50 kâr alma: 1739 hisse @ $2.46. Kalan 1740 hisse trailing stop ile."
-    },
-    {
-      "date": "2026-03-09T18:42:04.891279",
-      "type": "rebalance",
-      "content": "SM %40 kısmi kâr alma: 416 adet @$26.5 satıldı. Gerçekleşen kâr: $+2,425.28 (+28.2%). RSI 74 aşırı alım + ağırlık %24 dengesizliği nedeniyle."
-    },
-    {
-      "date": "2026-03-09T19:53:32.715771",
-      "type": "rebalance",
-      "content": "Enerji rotasyonu: KOS tam @$2.58 (+59.6%), XLE %50 @$56.17. Savaş bitti sinyali + tech'e para akışı."
-    },
-    {
-      "date": "2026-03-13T14:44:20.842982",
-      "type": "entry",
-      "content": "JNJ 50 adet alis @$244.14. Saglik diversifikasyonu, defensif play."
-    },
-    {
-      "date": "2026-03-17T14:53:26.231759",
-      "type": "exit",
-      "content": "SM %25 kısmi satış (156 adet @$27.36). RSI 72.1 K-11 kuralı. kalan 468 adet. K/Z: +%32.3"
-    },
-    {
-      "date": "2026-03-17T18:02:18.154244",
-      "type": "exit",
-      "content": "SM %25 kısmi satış (156 adet @$27.36). RSI 72.1 K-11 kuralı. kalan 468 adet."
-    },
-    {
-      "date": "2026-03-20T18:15:10.251622",
-      "type": "rebalance",
-      "content": "SM 1/3 kısmi kar: 104 adet @$29.93. RSI 78, +%44.8. K-11. Kalan: 208 adet."
-    },
-    {
-      "date": "2026-03-23T16:44:27.644037",
-      "type": "exit",
-      "content": "SM 62 hisse @$29.51 kısmi satış. K-11 kuralı: RSI 75 + %43 kâr. petrol -%8.9 düşüşüyle enerji baskısı. kalan 146 hisse trailing stop $27.00"
-    },
-    {
-      "date": "2026-03-23T17:41:14.438139",
-      "type": "exit",
-      "content": "SM kısmi satış %25 (52 hisse) @$29.58 - K-11 (RSI 80+, %43 kâr) + negatif ayrışma"
-    },
-    {
-      "date": "2026-03-24T15:04:19.117829",
-      "type": "rebalance",
-      "content": "SM %50 kısmi kâr alma: 47 adet @ $30.84. RSI 76.6, +%49.25 kazanç. K-11 kuralı. Kalan 47 adet tutulmaya devam."
-    },
-    {
-      "date": "2026-03-25T13:37:51.678281",
-      "type": "exit",
-      "content": "SM kısmi kâr alma (K-11): RSI 75.4, +%46.8 kâr. 15/47 adet satıldı @ $30.03. Kalan 32 adet tutulmaya devam"
-    },
-    {
-      "date": "2026-03-27T16:25:44.191394",
-      "type": "exit",
-      "content": "XLI satıldı @$160.37 - Stop-loss %8 tetiklendi - XLI $160.37 < stop $161.04. endüstriyel sektör zayıf, VIX 29.46"
-    }
-  ]
+    "pozisyonlar": [
+        {
+            "sembol": "SM",
+            "isim": "SM Energy Company",
+            "sektor": "Enerji",
+            "adet": 192,
+            "maliyet_baz": 29.39,
+            "guncel_fiyat": 32.96,
+            "yatirim": 5642.88,
+            "guncel_deger": 6328.32,
+            "kar_zarar": 685.44,
+            "kar_zarar_yuzde": 12.15,
+            "gunluk_degisim_yuzde": 0.73,
+            "son_guncelleme": "2026-03-30T14:03:57",
+            "giris_tarihi": "2026-02-17",
+            "giris_fiyati": 20.67,
+            "giris_nedeni": "Initial position - Oil & gas E&P",
+            "agirlik_yuzde": 5.53
+        },
+        {
+            "sembol": "MO",
+            "isim": "Altria Group Inc",
+            "sektor": "Temel Tüketim",
+            "adet": 267,
+            "maliyet_baz": 67.44,
+            "guncel_fiyat": 66.55,
+            "yatirim": 18006.48,
+            "guncel_deger": 17768.85,
+            "kar_zarar": -237.63,
+            "kar_zarar_yuzde": -1.32,
+            "gunluk_degisim_yuzde": 0.11,
+            "son_guncelleme": "2026-03-30T14:03:57",
+            "giris_tarihi": "2026-02-17",
+            "giris_fiyati": 67.44,
+            "giris_nedeni": "Initial position - Dividend defensive",
+            "agirlik_yuzde": 15.64
+        },
+        {
+            "sembol": "XLE",
+            "isim": "Energy Select Sector SPDR Fund",
+            "sektor": "Enerji ETF",
+            "adet": 139,
+            "maliyet_baz": 53.34,
+            "guncel_fiyat": 63.15,
+            "yatirim": 7414.26,
+            "guncel_deger": 8777.85,
+            "kar_zarar": 1363.59,
+            "kar_zarar_yuzde": 18.39,
+            "gunluk_degisim_yuzde": 0.94,
+            "son_guncelleme": "2026-03-30T14:03:57",
+            "giris_tarihi": "2026-02-17",
+            "giris_fiyati": 53.34,
+            "giris_nedeni": "Initial position - Energy sector ETF",
+            "agirlik_yuzde": 7.66
+        },
+        {
+            "sembol": "JNJ",
+            "isim": "Johnson & Johnson",
+            "sektor": "Sağlık",
+            "adet": 50,
+            "maliyet_baz": 244.14,
+            "guncel_fiyat": 241.74,
+            "yatirim": 12207.0,
+            "guncel_deger": 12087.0,
+            "kar_zarar": -120.0,
+            "kar_zarar_yuzde": -0.98,
+            "gunluk_degisim_yuzde": 0.54,
+            "son_guncelleme": "2026-03-30T14:03:57",
+            "giris_tarihi": "2026-03-13",
+            "giris_fiyati": 244.14,
+            "giris_nedeni": "Saglik sektoru diversifikasyonu. Defensif/temettü aristokrati. Iran savasi ortaminda direncli. RSI 59, SMA50 ustu. Portfoyde saglik eksikti.",
+            "agirlik_yuzde": 10.59
+        }
+    ],
+    "son_guncelleme": "2026-03-30T14:03:57",
+    "toplam_deger": 113716.59,
+    "toplam_getiri_yuzde": 13.72,
+    "transactions": [
+        {
+            "tarih": "2026-03-02",
+            "islem_tipi": "SATIŞ",
+            "sembol": "KOS",
+            "adet": 1159,
+            "fiyat": 2.33,
+            "tutar": 2700.47,
+            "aciklama": "Kismi kar alma (%25) - +44% kardan koruma, iran krizi volatilitesinde risk yonetimi"
+        },
+        {
+            "tarih": "2026-03-04",
+            "islem_tipi": "SATIŞ",
+            "sembol": "KOS",
+            "adet": 1739,
+            "fiyat": 2.46,
+            "tutar": 4277.94,
+            "aciklama": "Kâr realizasyonu - %50 pozisyon satışı - +52% getiri, RSI 68 overbought yakını"
+        },
+        {
+            "tarih": "2026-03-09",
+            "islem_tipi": "SATIŞ",
+            "sembol": "SM",
+            "adet": 416,
+            "fiyat": 26.5,
+            "tutar": 11024.0,
+            "aciklama": "Kısmi kâr alma (%40) — RSI 74 aşırı alım, ağırlık %24 çok yüksek, kâr garantiye alındı"
+        },
+        {
+            "tarih": "2026-03-09",
+            "islem_tipi": "SATIŞ",
+            "sembol": "KOS",
+            "adet": 1740,
+            "fiyat": 2.58,
+            "tutar": 4489.2,
+            "aciklama": "Tam çıkış — savaş bitti sinyali, enerji rotasyonu, +%59.6 kâr"
+        },
+        {
+            "tarih": "2026-03-09",
+            "islem_tipi": "SATIŞ",
+            "sembol": "XLE",
+            "adet": 138,
+            "fiyat": 56.17,
+            "tutar": 7751.46,
+            "aciklama": "Kısmi %50 — enerji rotasyonu, tech'e geçiş"
+        },
+        {
+            "tarih": "2026-03-13",
+            "islem_tipi": "ALIŞ",
+            "sembol": "JNJ",
+            "adet": 50,
+            "fiyat": 244.14,
+            "tutar": 12207.0,
+            "aciklama": "Saglik sektoru diversifikasyonu - defensif - Dengeli portfoy"
+        },
+        {
+            "tarih": "2026-03-17",
+            "islem_tipi": "SATIŞ",
+            "sembol": "SM",
+            "adet": 156,
+            "fiyat": 27.36,
+            "tutar": 4268.16,
+            "aciklama": "Kısmi kâr alma %25 - RSI 72+ aşırı alım - K-11 tetiklendi - Dengeli portföy"
+        },
+        {
+            "tarih": "2026-03-17",
+            "islem_tipi": "SATIŞ",
+            "sembol": "SM",
+            "adet": 156,
+            "fiyat": 27.36,
+            "tutar": 4268.16,
+            "aciklama": "Kısmi kâr alma %25 - RSI 72+ aşırı alım - K-11 tetiklendi - Dengeli portföy"
+        },
+        {
+            "tarih": "2026-03-20",
+            "islem_tipi": "SATIŞ",
+            "sembol": "SM",
+            "adet": 104,
+            "fiyat": 29.93,
+            "tutar": 3112.72,
+            "aciklama": "K-11 kısmi kar alma (1/3 pozisyon) - RSI 78 aşırı alım - +%44.8 kazanç - Dengeli portföy"
+        },
+        {
+            "tarih": "2026-03-23",
+            "islem_tipi": "SATIŞ",
+            "sembol": "SM",
+            "adet": 62,
+            "fiyat": 29.51,
+            "tutar": 1829.62,
+            "aciklama": "K-11 kısmi kâr alma - RSI 75 + %43 kâr - petrol düşüşü enerji baskısı - %30 pozisyon azaltma"
+        },
+        {
+            "tarih": "2026-03-23",
+            "islem_tipi": "SATIŞ",
+            "sembol": "SM",
+            "adet": 52,
+            "fiyat": 29.58,
+            "tutar": 1538.16,
+            "aciklama": "K-11 kısmi kâr alma %25 - RSI 80 + negatif ayrışma (SPY +%1.4 SM -%1.5) - Dengeli portföy"
+        },
+        {
+            "tarih": "2026-03-24",
+            "islem_tipi": "SATIŞ",
+            "sembol": "SM",
+            "adet": 47,
+            "fiyat": 30.84,
+            "tutar": 1449.48,
+            "aciklama": "K-11 kısmi kâr alma - RSI 76.6 + %49 kazanç - Dengeli portföy"
+        },
+        {
+            "tarih": "2026-03-25",
+            "islem_tipi": "SATIŞ",
+            "sembol": "SM",
+            "adet": 15,
+            "fiyat": 30.03,
+            "tutar": 450.45,
+            "aciklama": "K-11 kısmi kâr alma: RSI 75.4, +%46.8 kâr. %33 pozisyon azaltma"
+        },
+        {
+            "tarih": "2026-03-25",
+            "islem_tipi": "SATIŞ",
+            "sembol": "RGLD",
+            "adet": 22,
+            "fiyat": 232,
+            "tutar": 5104,
+            "aciklama": "Portföy daraltma 6→5 - -%16 kayıp, sermaye daha güçlü pozisyonlara aktarılıyor"
+        },
+        {
+            "tarih": "2026-03-25",
+            "islem_tipi": "ALIŞ",
+            "sembol": "SM",
+            "adet": 160,
+            "fiyat": 31.14,
+            "tutar": 4982.4,
+            "aciklama": "Pozisyon büyütme - en güçlü performans +51%, enerji momentum"
+        },
+        {
+            "tarih": "2026-03-27",
+            "islem_tipi": "SATIŞ",
+            "sembol": "XLI",
+            "adet": 85,
+            "fiyat": 160.37,
+            "tutar": 13631.45,
+            "aciklama": "Stop-loss %8 tetiklendi - XLI $160.37 < stop $161.04. endüstriyel sektör zayıf, VIX 29.46"
+        }
+    ],
+    "notes": [
+        {
+            "date": "2026-03-02T20:39:40.510657",
+            "type": "rebalance",
+            "content": "KOS %25 kismi satis (1159 hisse @$2.33). Realize kar: $826.37. Kalan 3479 hisse tutulmaya devam."
+        },
+        {
+            "date": "2026-03-04T19:55:41.768596",
+            "type": "rebalance",
+            "content": "KOS %50 kâr alma: 1739 hisse @ $2.46. Kalan 1740 hisse trailing stop ile."
+        },
+        {
+            "date": "2026-03-09T18:42:04.891279",
+            "type": "rebalance",
+            "content": "SM %40 kısmi kâr alma: 416 adet @$26.5 satıldı. Gerçekleşen kâr: $+2,425.28 (+28.2%). RSI 74 aşırı alım + ağırlık %24 dengesizliği nedeniyle."
+        },
+        {
+            "date": "2026-03-09T19:53:32.715771",
+            "type": "rebalance",
+            "content": "Enerji rotasyonu: KOS tam @$2.58 (+59.6%), XLE %50 @$56.17. Savaş bitti sinyali + tech'e para akışı."
+        },
+        {
+            "date": "2026-03-13T14:44:20.842982",
+            "type": "entry",
+            "content": "JNJ 50 adet alis @$244.14. Saglik diversifikasyonu, defensif play."
+        },
+        {
+            "date": "2026-03-17T14:53:26.231759",
+            "type": "exit",
+            "content": "SM %25 kısmi satış (156 adet @$27.36). RSI 72.1 K-11 kuralı. kalan 468 adet. K/Z: +%32.3"
+        },
+        {
+            "date": "2026-03-17T18:02:18.154244",
+            "type": "exit",
+            "content": "SM %25 kısmi satış (156 adet @$27.36). RSI 72.1 K-11 kuralı. kalan 468 adet."
+        },
+        {
+            "date": "2026-03-20T18:15:10.251622",
+            "type": "rebalance",
+            "content": "SM 1/3 kısmi kar: 104 adet @$29.93. RSI 78, +%44.8. K-11. Kalan: 208 adet."
+        },
+        {
+            "date": "2026-03-23T16:44:27.644037",
+            "type": "exit",
+            "content": "SM 62 hisse @$29.51 kısmi satış. K-11 kuralı: RSI 75 + %43 kâr. petrol -%8.9 düşüşüyle enerji baskısı. kalan 146 hisse trailing stop $27.00"
+        },
+        {
+            "date": "2026-03-23T17:41:14.438139",
+            "type": "exit",
+            "content": "SM kısmi satış %25 (52 hisse) @$29.58 - K-11 (RSI 80+, %43 kâr) + negatif ayrışma"
+        },
+        {
+            "date": "2026-03-24T15:04:19.117829",
+            "type": "rebalance",
+            "content": "SM %50 kısmi kâr alma: 47 adet @ $30.84. RSI 76.6, +%49.25 kazanç. K-11 kuralı. Kalan 47 adet tutulmaya devam."
+        },
+        {
+            "date": "2026-03-25T13:37:51.678281",
+            "type": "exit",
+            "content": "SM kısmi kâr alma (K-11): RSI 75.4, +%46.8 kâr. 15/47 adet satıldı @ $30.03. Kalan 32 adet tutulmaya devam"
+        },
+        {
+            "date": "2026-03-27T16:25:44.191394",
+            "type": "exit",
+            "content": "XLI satıldı @$160.37 - Stop-loss %8 tetiklendi - XLI $160.37 < stop $161.04. endüstriyel sektör zayıf, VIX 29.46"
+        }
+    ]
 }

@@ -132,4 +132,5 @@ date,action,symbol,shares,price,total,reason
 2026-03-27,SELL,CAMT,114,157.75,17983.5,Stop-loss (2xATR) tetiklendi - stop $157.42 sadece $0.33 mesafe - QQQ -0.69% VIX 29.45 - stop ihlali kaçınılmaz - Agresif portföy
 
 2026-03-27,SELL,XLI,85,160.37,13631.45,"Stop-loss %8 tetiklendi - Endüstriyel zayıflık devam - Dengeli portföy"
-2026-03-27,SELL,VRT,71,251.40,17849.40,"2xATR trailing stop tetiklendi - en yüksek 282.05 ATR 13.84 stop 254.37 guncel 251.40 - Agresif portfoy"
+2026-03-27,SELL,VRT,71,251.40,17849.40,"2xATR trailing stop tetiklendi - en yüksek 282.05 ATR 13.84 stop 254.37 guncel 251.40 - Agresif portfoy"2026-03-30,SELL,MRVL,375,91.33,34248.75,stop tetiklendi - 2xATR trailing stop $92.09 kirildi. Microsoft-AVGO gecis haberleri + Benchmark downgrade. PnL -3.80% (-$1353.75). 18 gun tutuldu.
+2026-03-30,SELL,POWL,34,522.92,17779.28,stop tetiklendi - 2xATR trailing stop $524.89 kirildi. $25M insider satisi (Thomas W. Powell) + kar realizasyonu. PnL -10.63% (-$2114.80). 5 gun tutuldu.
