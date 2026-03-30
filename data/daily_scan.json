@@ -1,274 +1,204 @@
 {
-  "tarama_tarihi": "2026-03-27",
-  "tarama_zamani": "2026-03-27T21:58:13.323697+00:00",
+  "tarama_tarihi": "2026-03-30",
+  "tarama_zamani": "2026-03-30T22:03:39.537584+00:00",
   "versiyon": "2.0",
   "piyasa_ozeti": {
-    "tarih": "2026-03-27",
-    "spy_fiyat": 634.09,
+    "tarih": "2026-03-30",
+    "spy_fiyat": 631.97,
     "spy_degisim": 0.0,
     "qqq_degisim": 0.0,
     "iwm_degisim": 0.0,
-    "vix": 31.05,
+    "vix": 30.61,
     "vix_uyarisi": true,
     "vix_kritik": true,
-    "vix_mesaj": "🔴 VIX 31.1 — KRİTİK. Yeni giriş tehlikeli, yarım pozisyon bile dikkatli.",
-    "sektorler": {
-      "Basic Materials": 0.7609482855813532,
-      "Communication Services": -3.7212824937149724,
-      "Consumer Cyclical": -1.170234462969888,
-      "Consumer Defensive": -0.006709221616152394,
-      "Energy": 0.25395314226348553,
-      "Financial Services": 0.6958936750807165,
-      "Healthcare": 0.489874990032213,
-      "Industrials": -0.7459383951129661,
-      "Real Estate": 0.2536529586408154,
-      "Technology": -1.8803837006487134,
-      "Utilities": -1.080991668345621
-    }
+    "vix_mesaj": "🔴 VIX 30.6 — KRİTİK. Yeni giriş tehlikeli, yarım pozisyon bile dikkatli.",
+    "sektorler": {}
   },
   "agresif_adaylari": [
     {
-      "sembol": "SLB",
-      "isim": "SLB N.V.",
+      "sembol": "EQNR",
+      "isim": "Equinor ASA",
       "sektor": "Energy",
-      "degisim_1d": 2.27,
-      "degisim_5d": 11.44,
-      "degisim_1m": 4.21,
-      "neden": "5 günlük momentum +%11.4, dün +%2.3"
-    },
-    {
-      "sembol": "EOG",
-      "isim": "EOG Resources, Inc.",
-      "sektor": "Energy",
-      "degisim_1d": 1.4,
-      "degisim_5d": 7.33,
-      "degisim_1m": 20.54,
-      "neden": "5 günlük momentum +%7.3, dün +%1.4"
-    },
-    {
-      "sembol": "PBR-A",
-      "isim": "Petróleo Brasileiro S.A. - Petrobras",
-      "sektor": "Energy",
-      "degisim_1d": 2.79,
-      "degisim_5d": 7.0,
-      "degisim_1m": 22.08,
-      "neden": "5 günlük momentum +%7.0, dün +%2.8"
+      "degisim_1d": 2.09,
+      "degisim_5d": 8.33,
+      "degisim_1m": 42.14,
+      "neden": "5 günlük momentum +%8.3, dün +%2.1"
     },
     {
       "sembol": "PBR",
       "isim": "Petróleo Brasileiro S.A. - Petrobras",
       "sektor": "Energy",
-      "degisim_1d": 2.16,
-      "degisim_5d": 6.95,
-      "degisim_1m": 24.89,
-      "neden": "5 günlük momentum +%7.0, dün +%2.2"
+      "degisim_1d": 0.19,
+      "degisim_5d": 6.99,
+      "degisim_1m": 25.14,
+      "neden": "5 günlük momentum +%7.0, dün +%0.2"
     },
-    {
-      "sembol": "MPC",
-      "isim": "Marathon Petroleum Corporation",
-      "sektor": "Energy",
-      "degisim_1d": 1.45,
-      "degisim_5d": 6.7,
-      "degisim_1m": 27.09,
-      "neden": "5 günlük momentum +%6.7, dün +%1.4"
-    },
-    {
-      "sembol": "COP",
-      "isim": "ConocoPhillips",
-      "sektor": "Energy",
-      "degisim_1d": 0.41,
-      "degisim_5d": 5.94,
-      "degisim_1m": 17.93,
-      "neden": "5 günlük momentum +%5.9, dün +%0.4"
-    },
-    {
-      "sembol": "PSX",
-      "isim": "Phillips 66",
-      "sektor": "Energy",
-      "degisim_1d": 2.32,
-      "degisim_5d": 5.59,
-      "degisim_1m": 22.0,
-      "neden": "5 günlük momentum +%5.6, dün +%2.3"
-    },
-    {
-      "sembol": "SU",
-      "isim": "Suncor Energy Inc.",
-      "sektor": "Energy",
-      "degisim_1d": 2.59,
-      "degisim_5d": 5.39,
-      "degisim_1m": 17.94,
-      "neden": "5 günlük momentum +%5.4, dün +%2.6"
-    },
-    {
-      "sembol": "EPD",
-      "isim": "Enterprise Products Partners L.P.",
-      "sektor": "Energy",
-      "degisim_1d": 0.46,
-      "degisim_5d": 4.77,
-      "degisim_1m": 8.69,
-      "neden": "5 günlük momentum +%4.8, dün +%0.5"
-    },
-    {
-      "sembol": "VLO",
-      "isim": "Valero Energy Corporation",
-      "sektor": "Energy",
-      "degisim_1d": 2.49,
-      "degisim_5d": 4.57,
-      "degisim_1m": 24.28,
-      "neden": "5 günlük momentum +%4.6, dün +%2.5"
-    }
-  ],
-  "dengeli_adaylari": [
-    {
-      "sembol": "B",
-      "isim": "Barrick Mining Corporation",
-      "sektor": "Basic Materials",
-      "rsi": 35.3,
-      "rsi_onceki": 30.1,
-      "degisim_1d": 2.93,
-      "degisim_5d": 0.83,
-      "degisim_1m": -23.97,
-      "neden": "RSI 35 kurtarma (önceki 30), güçlü sektör"
-    },
-    {
-      "sembol": "NEM",
-      "isim": "Newmont Corporation",
-      "sektor": "Basic Materials",
-      "rsi": 39.3,
-      "rsi_onceki": 34.7,
-      "degisim_1d": 2.76,
-      "degisim_5d": 2.42,
-      "degisim_1m": -21.46,
-      "neden": "RSI 39 kurtarma (önceki 35), güçlü sektör"
-    },
-    {
-      "sembol": "SCCO",
-      "isim": "Southern Copper Corporation",
-      "sektor": "Basic Materials",
-      "rsi": 39.5,
-      "rsi_onceki": 37.7,
-      "degisim_1d": 1.45,
-      "degisim_5d": 1.89,
-      "degisim_1m": -25.76,
-      "neden": "RSI 39 kurtarma (önceki 38), güçlü sektör"
-    },
-    {
-      "sembol": "GFI",
-      "isim": "Gold Fields Limited",
-      "sektor": "Basic Materials",
-      "rsi": 39.7,
-      "rsi_onceki": 34.7,
-      "degisim_1d": 4.52,
-      "degisim_5d": 3.75,
-      "degisim_1m": -28.06,
-      "neden": "RSI 40 kurtarma (önceki 35), güçlü sektör"
-    },
-    {
-      "sembol": "WPM",
-      "isim": "Wheaton Precious Metals Corp.",
-      "sektor": "Basic Materials",
-      "rsi": 40.3,
-      "rsi_onceki": 33.6,
-      "degisim_1d": 4.83,
-      "degisim_5d": 2.25,
-      "degisim_1m": -23.8,
-      "neden": "RSI 40 kurtarma (önceki 34), güçlü sektör"
-    },
-    {
-      "sembol": "AU",
-      "isim": "AngloGold Ashanti Plc",
-      "sektor": "Basic Materials",
-      "rsi": 40.5,
-      "rsi_onceki": 36.1,
-      "degisim_1d": 4.01,
-      "degisim_5d": 4.01,
-      "degisim_1m": -30.21,
-      "neden": "RSI 40 kurtarma (önceki 36), güçlü sektör"
-    },
-    {
-      "sembol": "FNV",
-      "isim": "Franco-Nevada Corporation",
-      "sektor": "Basic Materials",
-      "rsi": 41.8,
-      "rsi_onceki": 36.9,
-      "degisim_1d": 2.66,
-      "degisim_5d": 1.33,
-      "degisim_1m": -16.63,
-      "neden": "RSI 42 kurtarma (önceki 37), güçlü sektör"
-    },
-    {
-      "sembol": "RIO",
-      "isim": "Rio Tinto Group",
-      "sektor": "Basic Materials",
-      "rsi": 42.1,
-      "rsi_onceki": 39.8,
-      "degisim_1d": 0.99,
-      "degisim_5d": 1.81,
-      "degisim_1m": -12.78,
-      "neden": "RSI 42 kurtarma (önceki 40), güçlü sektör"
-    },
-    {
-      "sembol": "FCX",
-      "isim": "Freeport-McMoRan Inc.",
-      "sektor": "Basic Materials",
-      "rsi": 43.5,
-      "rsi_onceki": 42.4,
-      "degisim_1d": 0.73,
-      "degisim_5d": 5.97,
-      "degisim_1m": -17.39,
-      "neden": "RSI 44 kurtarma (önceki 42), güçlü sektör"
-    },
-    {
-      "sembol": "VALE",
-      "isim": "Vale S.A.",
-      "sektor": "Basic Materials",
-      "rsi": 46.3,
-      "rsi_onceki": 45.4,
-      "degisim_1d": 0.47,
-      "degisim_5d": 4.09,
-      "degisim_1m": -12.51,
-      "neden": "RSI 46 kurtarma (önceki 45), güçlü sektör"
-    }
-  ],
-  "temettu_adaylari": [],
-  "swing_adaylari": [
     {
       "sembol": "EOG",
       "isim": "EOG Resources, Inc.",
       "sektor": "Energy",
-      "fiyat": 149.56,
+      "degisim_1d": 0.22,
+      "degisim_5d": 5.62,
+      "degisim_1m": 20.8,
+      "neden": "5 günlük momentum +%5.6, dün +%0.2"
+    },
+    {
+      "sembol": "BP",
+      "isim": "BP p.l.c.",
+      "sektor": "Energy",
+      "degisim_1d": 1.44,
+      "degisim_5d": 5.6,
+      "degisim_1m": 21.85,
+      "neden": "5 günlük momentum +%5.6, dün +%1.4"
+    },
+    {
+      "sembol": "BMY",
+      "isim": "Bristol-Myers Squibb Company",
+      "sektor": "Healthcare",
+      "degisim_1d": 2.03,
+      "degisim_5d": 3.36,
+      "degisim_1m": -4.23,
+      "neden": "5 günlük momentum +%3.4, dün +%2.0"
+    },
+    {
+      "sembol": "AZN",
+      "isim": "AstraZeneca PLC",
+      "sektor": "Healthcare",
+      "degisim_1d": 2.9,
+      "degisim_5d": 3.31,
+      "degisim_1m": -6.99,
+      "neden": "5 günlük momentum +%3.3, dün +%2.9"
+    },
+    {
+      "sembol": "ABBV",
+      "isim": "AbbVie Inc.",
+      "sektor": "Healthcare",
+      "degisim_1d": 1.82,
+      "degisim_5d": 3.07,
+      "degisim_1m": -8.13,
+      "neden": "5 günlük momentum +%3.1, dün +%1.8"
+    }
+  ],
+  "dengeli_adaylari": [],
+  "temettu_adaylari": [],
+  "swing_adaylari": [
+    {
+      "sembol": "E",
+      "isim": "Eni S.p.A.",
+      "sektor": "Energy",
+      "fiyat": 55.77,
       "ichimoku": {
         "konum": "kumo_ustu",
         "guc": 4,
         "sinyaller": [],
-        "tenkan": 141.93,
-        "kijun": 134.7,
-        "kumo_ust": 138.32,
-        "kumo_alt": 127.19,
+        "tenkan": 54.36,
+        "kijun": 50.3,
+        "kumo_ust": 52.33,
+        "kumo_alt": 47.23,
         "kumo_renk": "yesil"
       },
-      "hacim_katsayisi": 0.7,
-      "stop_kijun": 134.7,
+      "hacim_katsayisi": 0.8,
+      "stop_kijun": 50.3,
       "karar": "TREND DEVAM",
       "neden": "ichimoku 4/4, trend devam"
     },
     {
-      "sembol": "COP",
-      "isim": "ConocoPhillips",
-      "sektor": "Energy",
-      "fiyat": 133.8,
+      "sembol": "CTVA",
+      "isim": "Corteva, Inc.",
+      "sektor": "Basic Materials",
+      "fiyat": 82.95,
       "ichimoku": {
         "konum": "kumo_ustu",
         "guc": 4,
         "sinyaller": [],
-        "tenkan": 128.04,
-        "kijun": 121.49,
-        "kumo_ust": 124.77,
-        "kumo_alt": 114.93,
+        "tenkan": 80.17,
+        "kijun": 79.23,
+        "kumo_ust": 79.7,
+        "kumo_alt": 76.01,
+        "kumo_renk": "yesil"
+      },
+      "hacim_katsayisi": 1.2,
+      "stop_kijun": 79.23,
+      "karar": "TREND DEVAM",
+      "neden": "ichimoku 4/4, trend devam"
+    },
+    {
+      "sembol": "SHEL",
+      "isim": "Shell plc",
+      "sektor": "Energy",
+      "fiyat": 92.74,
+      "ichimoku": {
+        "konum": "kumo_ustu",
+        "guc": 4,
+        "sinyaller": [],
+        "tenkan": 91.22,
+        "kijun": 86.91,
+        "kumo_ust": 89.06,
+        "kumo_alt": 83.18,
+        "kumo_renk": "yesil"
+      },
+      "hacim_katsayisi": 1.1,
+      "stop_kijun": 86.91,
+      "karar": "TREND DEVAM",
+      "neden": "ichimoku 4/4, trend devam"
+    },
+    {
+      "sembol": "PBR-A",
+      "isim": "Petróleo Brasileiro S.A. - Petrobras",
+      "sektor": "Energy",
+      "fiyat": 18.91,
+      "ichimoku": {
+        "konum": "kumo_ustu",
+        "guc": 4,
+        "sinyaller": [],
+        "tenkan": 18.12,
+        "kijun": 17.07,
+        "kumo_ust": 17.59,
+        "kumo_alt": 15.5,
+        "kumo_renk": "yesil"
+      },
+      "hacim_katsayisi": 1.0,
+      "stop_kijun": 17.07,
+      "karar": "TREND DEVAM",
+      "neden": "ichimoku 4/4, trend devam"
+    },
+    {
+      "sembol": "PBR",
+      "isim": "Petróleo Brasileiro S.A. - Petrobras",
+      "sektor": "Energy",
+      "fiyat": 20.81,
+      "ichimoku": {
+        "konum": "kumo_ustu",
+        "guc": 4,
+        "sinyaller": [],
+        "tenkan": 19.96,
+        "kijun": 18.65,
+        "kumo_ust": 19.31,
+        "kumo_alt": 16.86,
+        "kumo_renk": "yesil"
+      },
+      "hacim_katsayisi": 1.3,
+      "stop_kijun": 18.65,
+      "karar": "TREND DEVAM",
+      "neden": "ichimoku 4/4, trend devam"
+    },
+    {
+      "sembol": "EOG",
+      "isim": "EOG Resources, Inc.",
+      "sektor": "Energy",
+      "fiyat": 149.89,
+      "ichimoku": {
+        "konum": "kumo_ustu",
+        "guc": 4,
+        "sinyaller": [],
+        "tenkan": 143.59,
+        "kijun": 135.59,
+        "kumo_ust": 139.59,
+        "kumo_alt": 128.07,
         "kumo_renk": "yesil"
       },
       "hacim_katsayisi": 0.8,
-      "stop_kijun": 121.49,
+      "stop_kijun": 135.59,
       "karar": "TREND DEVAM",
       "neden": "ichimoku 4/4, trend devam"
     },
@@ -276,88 +206,91 @@
       "sembol": "BP",
       "isim": "BP p.l.c.",
       "sektor": "Energy",
-      "fiyat": 46.68,
+      "fiyat": 47.35,
       "ichimoku": {
         "konum": "kumo_ustu",
         "guc": 4,
         "sinyaller": [],
-        "tenkan": 44.73,
-        "kijun": 42.03,
-        "kumo_ust": 43.38,
-        "kumo_alt": 40.69,
+        "tenkan": 45.17,
+        "kijun": 42.47,
+        "kumo_ust": 43.82,
+        "kumo_alt": 41.2,
         "kumo_renk": "yesil"
       },
-      "hacim_katsayisi": 0.8,
-      "stop_kijun": 42.03,
+      "hacim_katsayisi": 1.2,
+      "stop_kijun": 42.47,
       "karar": "TREND DEVAM",
       "neden": "ichimoku 4/4, trend devam"
     },
     {
-      "sembol": "EPD",
-      "isim": "Enterprise Products Partners L.P.",
+      "sembol": "TTE",
+      "isim": "TotalEnergies SE",
       "sektor": "Energy",
-      "fiyat": 39.28,
+      "fiyat": 91.55,
       "ichimoku": {
         "konum": "kumo_ustu",
         "guc": 4,
         "sinyaller": [],
-        "tenkan": 38.38,
-        "kijun": 37.55,
-        "kumo_ust": 37.97,
-        "kumo_alt": 35.94,
-        "kumo_renk": "yesil"
-      },
-      "hacim_katsayisi": 1.1,
-      "stop_kijun": 37.55,
-      "karar": "TREND DEVAM",
-      "neden": "ichimoku 4/4, trend devam"
-    },
-    {
-      "sembol": "CNQ",
-      "isim": "Canadian Natural Resources Limited",
-      "sektor": "Energy",
-      "fiyat": 50.09,
-      "ichimoku": {
-        "konum": "kumo_ustu",
-        "guc": 4,
-        "sinyaller": [],
-        "tenkan": 49.24,
-        "kijun": 46.48,
-        "kumo_ust": 47.86,
-        "kumo_alt": 41.88,
-        "kumo_renk": "yesil"
-      },
-      "hacim_katsayisi": 0.8,
-      "stop_kijun": 46.48,
-      "karar": "TREND DEVAM",
-      "neden": "ichimoku 4/4, trend devam"
-    },
-    {
-      "sembol": "PBR-A",
-      "isim": "Petróleo Brasileiro S.A. - Petrobras",
-      "sektor": "Energy",
-      "fiyat": 18.8,
-      "ichimoku": {
-        "konum": "kumo_ustu",
-        "guc": 4,
-        "sinyaller": [],
-        "tenkan": 17.87,
-        "kijun": 16.62,
-        "kumo_ust": 17.25,
-        "kumo_alt": 15.11,
+        "tenkan": 89.5,
+        "kijun": 84.75,
+        "kumo_ust": 87.13,
+        "kumo_alt": 79.19,
         "kumo_renk": "yesil"
       },
       "hacim_katsayisi": 0.7,
-      "stop_kijun": 16.62,
+      "stop_kijun": 84.75,
       "karar": "TREND DEVAM",
       "neden": "ichimoku 4/4, trend devam"
+    },
+    {
+      "sembol": "EQNR",
+      "isim": "Equinor ASA",
+      "sektor": "Energy",
+      "fiyat": 42.4,
+      "ichimoku": {
+        "konum": "kumo_ustu",
+        "guc": 4,
+        "sinyaller": [],
+        "tenkan": 40.25,
+        "kijun": 35.83,
+        "kumo_ust": 38.04,
+        "kumo_alt": 33.78,
+        "kumo_renk": "yesil"
+      },
+      "hacim_katsayisi": 0.7,
+      "stop_kijun": 35.83,
+      "karar": "TREND DEVAM",
+      "neden": "ichimoku 4/4, trend devam"
+    },
+    {
+      "sembol": "AZN",
+      "isim": "AstraZeneca PLC",
+      "sektor": "Healthcare",
+      "fiyat": 193.88,
+      "ichimoku": {
+        "konum": "kumo_ustu",
+        "guc": 1,
+        "sinyaller": [
+          "kumo_kirilimi",
+          "kijun_bounce"
+        ],
+        "tenkan": 188.51,
+        "kijun": 196.16,
+        "kumo_ust": 192.69,
+        "kumo_alt": 192.34,
+        "kumo_renk": "kirmizi"
+      },
+      "hacim_katsayisi": 1.1,
+      "stop_kijun": 196.16,
+      "karar": "BEKLE",
+      "neden": "ichimoku 1/4, kumo_kirilimi, kijun_bounce"
     }
   ],
   "ozet": {
-    "agresif_sayi": 10,
-    "dengeli_sayi": 10,
+    "agresif_sayi": 7,
+    "dengeli_sayi": 0,
     "temettu_sayi": 0,
-    "swing_sayi": 6,
-    "toplam": 26
+    "swing_sayi": 10,
+    "toplam": 17
   }
 }
