@@ -1,4 +1,4 @@
-# kapanış raporu - 28 mart 2026 (cuma)
+# kapanış raporu - 27 mart 2026 (cuma)
 
 finzora ai
 
@@ -6,7 +6,7 @@ finzora ai
 
 ## 1. günün özeti
 
-**tarih**: 28 mart 2026, cuma | **seans**: NYSE kapandı (23:00 TR)
+**tarih**: 27 mart 2026, cuma | **seans**: NYSE kapandı (23:00 TR)
 
 ### piyasa
 
@@ -120,7 +120,7 @@ NEM ve AROC geçen haftanın sonlarında stop ile çıkış yapmıştı. bu haft
 
 ## 4a. kazanç açıklamaları - 28 mart 2026
 
-28 mart cuma'da portföy veya watchlist ile kesişen önemli kazanç açıklaması yok.
+27 mart cuma'da portföy veya watchlist ile kesişen önemli kazanç açıklaması yok.
 
 ### önümüzdeki hafta dikkat (31 mart - 4 nisan)
 
@@ -160,7 +160,7 @@ Q1 kapanış haftası. büyük bilançolar yok ama çeyrek sonu pencere süsleme
 
 ## 5. iran savaşı durumu (gün sonu)
 
-- savaşın 29. günü tamamlandı
+- savaşın 28. günü tamamlandı
 - ABD 15 maddelik plan iran tarafından reddedildi
 - iran 5 maddelik karşı teklif sundu (saldırı durdurma, tazminat, boğaz egemenliği)
 - trump enerji tesisleri saldırı moratoryumunu 6 nisan'a uzattı
@@ -180,7 +180,7 @@ cuma son derece zorlu bir piyasa gününde portföy endeksin tam tersine hareket
 
 temettü portföyü +%1.38 ile günün şampiyonu. XOM (+%3.36) ve MO (+%2.88) taşıyıcılar. dengeli portföy +%0.63 ile yeşil. agresif portföy MRVL'nin -%2.87 düşüşü nedeniyle -%0.16 ile neredeyse düz kapattı.
 
-hafta toplamında S&P 500 -%3.64 düşerken, portföyün enerji ve defensif ağırlığı bu kayıptan korudu. 6 nisan son tarihine 9 gün kaldı. bu, önümüzdeki dönemin en kritik ikili risk noktası.
+hafta toplamında S&P 500 -%3.64 düşerken, portföyün enerji ve defensif ağırlığı bu kayıptan korudu. 6 nisan son tarihine 10 gün kaldı. bu, önümüzdeki dönemin en kritik ikili risk noktası.
 
 ### pazartesi aksiyonları
 
@@ -201,7 +201,7 @@ yesil **pasif**:
 
 ### sonraki güncelleme
 
-pazartesi (31 mart) sabah seans öncesi rapor
+pazartesi (30 mart) sabah seans öncesi rapor
 
 ---
 
