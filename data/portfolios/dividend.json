@@ -1,308 +1,308 @@
 {
-    "portfoy_adi": "Değer + Temettü",
-    "baslangic_sermaye": 100000,
-    "nakit": {
-        "miktar": 36535.695000000014,
-        "para_birimi": "USD"
+  "portfoy_adi": "Değer + Temettü",
+  "baslangic_sermaye": 100000,
+  "nakit": {
+    "miktar": 36535.695000000014,
+    "para_birimi": "USD"
+  },
+  "pozisyonlar": [
+    {
+      "sembol": "T",
+      "isim": "AT&T Inc",
+      "sektor": "Telekomünikasyon",
+      "adet": 859,
+      "maliyet_baz": 26.17,
+      "guncel_fiyat": 28.98,
+      "yatirim": 22480.03,
+      "guncel_deger": 24893.82,
+      "kar_zarar": 2413.790000000001,
+      "kar_zarar_yuzde": 10.74,
+      "gunluk_degisim_yuzde": 0,
+      "son_guncelleme": "2026-03-30T15:05:52.112587",
+      "giris_tarihi": "2026-01-02",
+      "giris_fiyati": 24.28,
+      "giris_nedeni": "Başlangıç pozisyonu - Temettü + değer portföyü - Telekomünikasyon",
+      "agirlik_yuzde": 16.6
     },
-    "pozisyonlar": [
-        {
-            "sembol": "T",
-            "isim": "AT&T Inc",
-            "sektor": "Telekomünikasyon",
-            "adet": 859,
-            "maliyet_baz": 26.17,
-            "guncel_fiyat": 29.08,
-            "yatirim": 22480.03,
-            "guncel_deger": 24979.72,
-            "kar_zarar": 2499.69,
-            "kar_zarar_yuzde": 11.12,
-            "gunluk_degisim_yuzde": -0.05,
-            "son_guncelleme": "2026-03-30T14:03:57",
-            "giris_tarihi": "2026-01-02",
-            "giris_fiyati": 24.28,
-            "giris_nedeni": "Başlangıç pozisyonu - Temettü + değer portföyü - Telekomünikasyon",
-            "agirlik_yuzde": 16.78
-        },
-        {
-            "sembol": "VZ",
-            "isim": "Verizon Communications",
-            "sektor": "Telekomünikasyon",
-            "adet": 107,
-            "maliyet_baz": 39.83,
-            "guncel_fiyat": 50.62,
-            "yatirim": 4261.81,
-            "guncel_deger": 5416.34,
-            "kar_zarar": 1154.53,
-            "kar_zarar_yuzde": 27.09,
-            "gunluk_degisim_yuzde": 0.62,
-            "son_guncelleme": "2026-03-30T14:03:57",
-            "giris_tarihi": "2026-01-02",
-            "giris_fiyati": 39.83,
-            "giris_nedeni": "Başlangıç pozisyonu - Temettü + değer portföyü - Telekomünikasyon",
-            "agirlik_yuzde": 3.61
-        },
-        {
-            "sembol": "MO",
-            "isim": "Altria Group",
-            "sektor": "Tütün",
-            "adet": 218,
-            "maliyet_baz": 57.31,
-            "guncel_fiyat": 66.55,
-            "yatirim": 12493.58,
-            "guncel_deger": 14507.9,
-            "kar_zarar": 2014.32,
-            "kar_zarar_yuzde": 16.12,
-            "gunluk_degisim_yuzde": 0.11,
-            "son_guncelleme": "2026-03-30T14:03:57",
-            "giris_tarihi": "2026-01-02",
-            "giris_fiyati": 57.31,
-            "giris_nedeni": "Initial position - Dividend defensive",
-            "agirlik_yuzde": 9.73
-        },
-        {
-            "sembol": "PM",
-            "isim": "Philip Morris International",
-            "sektor": "Tütün",
-            "adet": 77,
-            "maliyet_baz": 160.3,
-            "guncel_fiyat": 164.22,
-            "yatirim": 12343.1,
-            "guncel_deger": 12644.94,
-            "kar_zarar": 301.84,
-            "kar_zarar_yuzde": 2.45,
-            "gunluk_degisim_yuzde": 0.42,
-            "son_guncelleme": "2026-03-30T14:03:57",
-            "giris_tarihi": "2026-01-02",
-            "giris_fiyati": 160.3,
-            "giris_nedeni": "Başlangıç pozisyonu - Temettü + değer portföyü - Tütün",
-            "agirlik_yuzde": 8.46
-        },
-        {
-            "sembol": "XOM",
-            "isim": "Exxon Mobil Corporation",
-            "sektor": "Enerji",
-            "adet": 199,
-            "maliyet_baz": 147.45,
-            "guncel_fiyat": 175.16,
-            "yatirim": 29342.55,
-            "guncel_deger": 34856.84,
-            "kar_zarar": 5514.29,
-            "kar_zarar_yuzde": 18.79,
-            "gunluk_degisim_yuzde": 2.44,
-            "son_guncelleme": "2026-03-30T14:03:57",
-            "giris_tarihi": "2026-01-02",
-            "giris_fiyati": 121.84,
-            "giris_nedeni": "Başlangıç pozisyonu - Temettü + değer portföyü - Enerji",
-            "agirlik_yuzde": 22.85
-        },
-        {
-            "sembol": "CVX",
-            "isim": "Chevron Corporation",
-            "sektor": "Enerji",
-            "adet": 99,
-            "maliyet_baz": 191.82,
-            "guncel_fiyat": 214.02,
-            "yatirim": 18990.18,
-            "guncel_deger": 21187.98,
-            "kar_zarar": 2197.8,
-            "kar_zarar_yuzde": 11.57,
-            "gunluk_degisim_yuzde": 1.37,
-            "son_guncelleme": "2026-03-30T14:03:57",
-            "giris_tarihi": "2026-01-02",
-            "giris_fiyati": 154.39,
-            "giris_nedeni": "Başlangıç pozisyonu - Temettü + değer portföyü - Enerji",
-            "agirlik_yuzde": 14.04
-        }
-    ],
-    "son_guncelleme": "2026-03-30T14:03:57",
-    "toplam_deger": 150129.42,
-    "toplam_getiri_yuzde": 50.13,
-    "transactions": [
-        {
-            "tarih": "2026-02-25",
-            "islem_tipi": "SATIŞ",
-            "sembol": "VZ",
-            "adet": 156,
-            "fiyat": 49.51,
-            "tutar": 7723.56,
-            "aciklama": "Kısmi kar alma - RSI 73 aşırı alım + %24 kâr, nakit oluşturma"
-        },
-        {
-            "tarih": "2026-03-04",
-            "islem_tipi": "SERMAYE_TRANSFERI",
-            "sembol": "MRK",
-            "adet": 0,
-            "fiyat": 0,
-            "tutar": 30102.5,
-            "aciklama": "Agresif portföyden temettü portföyüne MRK transfer karşılığı nakit transferi"
-        },
-        {
-            "tarih": "2026-03-04",
-            "islem_tipi": "ALIŞ",
-            "sembol": "MRK",
-            "adet": 250,
-            "fiyat": 120.41,
-            "tutar": 30102.5,
-            "aciklama": "Agresif portföyden transfer - Sağlık temettü hissesi"
-        },
-        {
-            "tarih": "2026-03-10",
-            "islem_tipi": "ALIŞ",
-            "sembol": "ABBV",
-            "adet": 33,
-            "fiyat": 227.07,
-            "tutar": 7493.31,
-            "aciklama": "Temettü portföyü — ABBV pullback girişi, RSI 49, healthcare çeşitlendirmesi"
-        },
-        {
-            "tarih": "2026-03-13",
-            "islem_tipi": "SATIŞ",
-            "sembol": "VZ",
-            "adet": 50,
-            "fiyat": 51.47,
-            "tutar": 2573.25,
-            "aciklama": "K-11 kısmi kâr alma - RSI 72+ ve +%27 kâr - Temettü portföy"
-        },
-        {
-            "tarih": "2026-03-13",
-            "islem_tipi": "SATIŞ",
-            "sembol": "CVX",
-            "adet": 25,
-            "fiyat": 196.84,
-            "tutar": 4921.12,
-            "aciklama": "K-11 kısmi kâr alma - RSI 70 ve +%28 kâr - Temettü portföy"
-        },
-        {
-            "tarih": "2026-03-13",
-            "islem_tipi": "ALIŞ",
-            "sembol": "PFE",
-            "adet": 330,
-            "fiyat": 26.92,
-            "tutar": 8883.27,
-            "aciklama": "Yuksek temettü yield - saglik defensif - Temettü portfoy"
-        },
-        {
-            "tarih": "2026-03-24",
-            "islem_tipi": "SATIŞ",
-            "sembol": "XOM",
-            "adet": 25,
-            "fiyat": 165.86,
-            "tutar": 4146.5,
-            "aciklama": "K-11 kısmi kâr alma - RSI 74.8 + %36 kazanç - Temettü portföy"
-        },
-        {
-            "tarih": "2026-03-25",
-            "islem_tipi": "SATIŞ",
-            "sembol": "CVX",
-            "adet": 14,
-            "fiyat": 204.91,
-            "tutar": 2868.74,
-            "aciklama": "K-11 kısmi kâr alma - RSI 74.7, +%33.1 kâr, %25 pozisyon satışı"
-        },
-        {
-            "tarih": "2026-03-25",
-            "islem_tipi": "SATIŞ",
-            "sembol": "CVX",
-            "adet": 14,
-            "fiyat": 204.91,
-            "tutar": 2868.74,
-            "aciklama": "K-11 kısmi kâr alma - RSI 74.7, +%33.1 kâr, %25 pozisyon satışı"
-        },
-        {
-            "tarih": "2026-03-25",
-            "islem_tipi": "SATIŞ",
-            "sembol": "ABBV",
-            "adet": 33,
-            "fiyat": 207.4,
-            "tutar": 6844.2,
-            "aciklama": "Portföy daraltma 10→6 - stop yakın (%1.6), zayıf momentum"
-        },
-        {
-            "tarih": "2026-03-25",
-            "islem_tipi": "SATIŞ",
-            "sembol": "MRK",
-            "adet": 250,
-            "fiyat": 119.61,
-            "tutar": 29902.5,
-            "aciklama": "Portföy daraltma 10→6 - $30K bağlı ama sıfırda, sermaye verimsiz"
-        },
-        {
-            "tarih": "2026-03-25",
-            "islem_tipi": "SATIŞ",
-            "sembol": "PFE",
-            "adet": 330,
-            "fiyat": 27.47,
-            "tutar": 9065.1,
-            "aciklama": "Portföy daraltma 10→6 - en düşük getiri potansiyeli"
-        },
-        {
-            "tarih": "2026-03-25",
-            "islem_tipi": "SATIŞ",
-            "sembol": "SCHD",
-            "adet": 829,
-            "fiyat": 30.57,
-            "tutar": 25338.39,
-            "aciklama": "Portföy daraltma 10→6 - ETF yerine bireysel kazananlar tercih"
-        },
-        {
-            "tarih": "2026-03-25",
-            "islem_tipi": "ALIŞ",
-            "sembol": "XOM",
-            "adet": 122,
-            "fiyat": 163.61,
-            "tutar": 19960.42,
-            "aciklama": "Pozisyon büyütme - güçlü temettü kazanancı, yüksek getiri"
-        },
-        {
-            "tarih": "2026-03-25",
-            "islem_tipi": "ALIŞ",
-            "sembol": "CVX",
-            "adet": 72,
-            "fiyat": 205.85,
-            "tutar": 14821.2,
-            "aciklama": "Pozisyon büyütme - güçlü temettü kazanancı, yüksek getiri"
-        },
-        {
-            "tarih": "2026-03-25",
-            "islem_tipi": "ALIŞ",
-            "sembol": "T",
-            "adet": 345,
-            "fiyat": 28.98,
-            "tutar": 9996.38,
-            "aciklama": "Pozisyon büyütme - güçlü temettü kazanancı, yüksek getiri"
-        }
-    ],
-    "notes": [
-        {
-            "date": "2026-03-04T19:55:41.768596",
-            "type": "entry",
-            "content": "MRK 250 hisse agresif portföyden transfer."
-        },
-        {
-            "date": "2026-03-05T15:18:41.575862",
-            "type": "market_note",
-            "content": "MRK zihinsel stop $112.5 eklendi. Keytruda gelir baskısı ve Çin ilaç fiyat müzakereleri izleniyor."
-        },
-        {
-            "date": "2026-03-11T05:48:11.190390",
-            "type": "format_fix",
-            "content": "DÜZELTME: (1) baslangic_sermaye $90K→$100K, (2) MRK agresif→temettü transfer nakiti ($30,102.50) eklendi, (3) ABBV duplikat pozisyon+transaction silindi, (4) nakit yeniden hesaplandı."
-        },
-        {
-            "date": "2026-03-13T14:10:01.668692",
-            "type": "exit",
-            "content": "VZ 50 adet kısmi satış @$51.47 + CVX 25 adet kısmi satış @$196.84 - K-11 kâr alma"
-        },
-        {
-            "date": "2026-03-13T14:44:20.842982",
-            "type": "entry",
-            "content": "PFE 330 adet alis @$26.92. Yield %5.9, saglik defensif."
-        },
-        {
-            "date": "2026-03-24T15:04:19.117829",
-            "type": "rebalance",
-            "content": "XOM %25 kısmi kâr alma: 25 adet @ $165.86. RSI 74.8, +%36.29 kazanç. K-11 kuralı. 77 adet tutulmaya devam."
-        }
-    ]
+    {
+      "sembol": "VZ",
+      "isim": "Verizon Communications",
+      "sektor": "Telekomünikasyon",
+      "adet": 107,
+      "maliyet_baz": 39.83,
+      "guncel_fiyat": 50.3,
+      "yatirim": 4261.81,
+      "guncel_deger": 5382.099999999999,
+      "kar_zarar": 1120.289999999999,
+      "kar_zarar_yuzde": 26.29,
+      "gunluk_degisim_yuzde": 0,
+      "son_guncelleme": "2026-03-30T15:05:52.112587",
+      "giris_tarihi": "2026-01-02",
+      "giris_fiyati": 39.83,
+      "giris_nedeni": "Başlangıç pozisyonu - Temettü + değer portföyü - Telekomünikasyon",
+      "agirlik_yuzde": 3.59
+    },
+    {
+      "sembol": "MO",
+      "isim": "Altria Group",
+      "sektor": "Tütün",
+      "adet": 218,
+      "maliyet_baz": 57.31,
+      "guncel_fiyat": 66.9309,
+      "yatirim": 12493.58,
+      "guncel_deger": 14590.936199999998,
+      "kar_zarar": 2097.3561999999984,
+      "kar_zarar_yuzde": 16.79,
+      "gunluk_degisim_yuzde": 0,
+      "son_guncelleme": "2026-03-30T15:05:52.112587",
+      "giris_tarihi": "2026-01-02",
+      "giris_fiyati": 57.31,
+      "giris_nedeni": "Initial position - Dividend defensive",
+      "agirlik_yuzde": 9.73
+    },
+    {
+      "sembol": "PM",
+      "isim": "Philip Morris International",
+      "sektor": "Tütün",
+      "adet": 77,
+      "maliyet_baz": 160.3,
+      "guncel_fiyat": 164.95,
+      "yatirim": 12343.1,
+      "guncel_deger": 12701.15,
+      "kar_zarar": 358.0499999999993,
+      "kar_zarar_yuzde": 2.9,
+      "gunluk_degisim_yuzde": 0,
+      "son_guncelleme": "2026-03-30T15:05:52.112587",
+      "giris_tarihi": "2026-01-02",
+      "giris_fiyati": 160.3,
+      "giris_nedeni": "Başlangıç pozisyonu - Temettü + değer portföyü - Tütün",
+      "agirlik_yuzde": 8.47
+    },
+    {
+      "sembol": "XOM",
+      "isim": "Exxon Mobil Corporation",
+      "sektor": "Enerji",
+      "adet": 199,
+      "maliyet_baz": 147.45,
+      "guncel_fiyat": 174.25,
+      "yatirim": 29342.55,
+      "guncel_deger": 34675.75,
+      "kar_zarar": 5333.200000000001,
+      "kar_zarar_yuzde": 18.18,
+      "gunluk_degisim_yuzde": 0,
+      "son_guncelleme": "2026-03-30T15:05:52.112587",
+      "giris_tarihi": "2026-01-02",
+      "giris_fiyati": 121.84,
+      "giris_nedeni": "Başlangıç pozisyonu - Temettü + değer portföyü - Enerji",
+      "agirlik_yuzde": 23.12
+    },
+    {
+      "sembol": "CVX",
+      "isim": "Chevron Corporation",
+      "sektor": "Enerji",
+      "adet": 99,
+      "maliyet_baz": 191.82,
+      "guncel_fiyat": 213.93,
+      "yatirim": 18990.18,
+      "guncel_deger": 21179.07,
+      "kar_zarar": 2188.8899999999994,
+      "kar_zarar_yuzde": 11.53,
+      "gunluk_degisim_yuzde": 0,
+      "son_guncelleme": "2026-03-30T15:05:52.112587",
+      "giris_tarihi": "2026-01-02",
+      "giris_fiyati": 154.39,
+      "giris_nedeni": "Başlangıç pozisyonu - Temettü + değer portföyü - Enerji",
+      "agirlik_yuzde": 14.12
+    }
+  ],
+  "son_guncelleme": "2026-03-30T15:05:52.112587",
+  "toplam_deger": 149958.52,
+  "toplam_getiri_yuzde": 49.96,
+  "transactions": [
+    {
+      "tarih": "2026-02-25",
+      "islem_tipi": "SATIŞ",
+      "sembol": "VZ",
+      "adet": 156,
+      "fiyat": 49.51,
+      "tutar": 7723.56,
+      "aciklama": "Kısmi kar alma - RSI 73 aşırı alım + %24 kâr, nakit oluşturma"
+    },
+    {
+      "tarih": "2026-03-04",
+      "islem_tipi": "SERMAYE_TRANSFERI",
+      "sembol": "MRK",
+      "adet": 0,
+      "fiyat": 0,
+      "tutar": 30102.5,
+      "aciklama": "Agresif portföyden temettü portföyüne MRK transfer karşılığı nakit transferi"
+    },
+    {
+      "tarih": "2026-03-04",
+      "islem_tipi": "ALIŞ",
+      "sembol": "MRK",
+      "adet": 250,
+      "fiyat": 120.41,
+      "tutar": 30102.5,
+      "aciklama": "Agresif portföyden transfer - Sağlık temettü hissesi"
+    },
+    {
+      "tarih": "2026-03-10",
+      "islem_tipi": "ALIŞ",
+      "sembol": "ABBV",
+      "adet": 33,
+      "fiyat": 227.07,
+      "tutar": 7493.31,
+      "aciklama": "Temettü portföyü — ABBV pullback girişi, RSI 49, healthcare çeşitlendirmesi"
+    },
+    {
+      "tarih": "2026-03-13",
+      "islem_tipi": "SATIŞ",
+      "sembol": "VZ",
+      "adet": 50,
+      "fiyat": 51.47,
+      "tutar": 2573.25,
+      "aciklama": "K-11 kısmi kâr alma - RSI 72+ ve +%27 kâr - Temettü portföy"
+    },
+    {
+      "tarih": "2026-03-13",
+      "islem_tipi": "SATIŞ",
+      "sembol": "CVX",
+      "adet": 25,
+      "fiyat": 196.84,
+      "tutar": 4921.12,
+      "aciklama": "K-11 kısmi kâr alma - RSI 70 ve +%28 kâr - Temettü portföy"
+    },
+    {
+      "tarih": "2026-03-13",
+      "islem_tipi": "ALIŞ",
+      "sembol": "PFE",
+      "adet": 330,
+      "fiyat": 26.92,
+      "tutar": 8883.27,
+      "aciklama": "Yuksek temettü yield - saglik defensif - Temettü portfoy"
+    },
+    {
+      "tarih": "2026-03-24",
+      "islem_tipi": "SATIŞ",
+      "sembol": "XOM",
+      "adet": 25,
+      "fiyat": 165.86,
+      "tutar": 4146.5,
+      "aciklama": "K-11 kısmi kâr alma - RSI 74.8 + %36 kazanç - Temettü portföy"
+    },
+    {
+      "tarih": "2026-03-25",
+      "islem_tipi": "SATIŞ",
+      "sembol": "CVX",
+      "adet": 14,
+      "fiyat": 204.91,
+      "tutar": 2868.74,
+      "aciklama": "K-11 kısmi kâr alma - RSI 74.7, +%33.1 kâr, %25 pozisyon satışı"
+    },
+    {
+      "tarih": "2026-03-25",
+      "islem_tipi": "SATIŞ",
+      "sembol": "CVX",
+      "adet": 14,
+      "fiyat": 204.91,
+      "tutar": 2868.74,
+      "aciklama": "K-11 kısmi kâr alma - RSI 74.7, +%33.1 kâr, %25 pozisyon satışı"
+    },
+    {
+      "tarih": "2026-03-25",
+      "islem_tipi": "SATIŞ",
+      "sembol": "ABBV",
+      "adet": 33,
+      "fiyat": 207.4,
+      "tutar": 6844.2,
+      "aciklama": "Portföy daraltma 10→6 - stop yakın (%1.6), zayıf momentum"
+    },
+    {
+      "tarih": "2026-03-25",
+      "islem_tipi": "SATIŞ",
+      "sembol": "MRK",
+      "adet": 250,
+      "fiyat": 119.61,
+      "tutar": 29902.5,
+      "aciklama": "Portföy daraltma 10→6 - $30K bağlı ama sıfırda, sermaye verimsiz"
+    },
+    {
+      "tarih": "2026-03-25",
+      "islem_tipi": "SATIŞ",
+      "sembol": "PFE",
+      "adet": 330,
+      "fiyat": 27.47,
+      "tutar": 9065.1,
+      "aciklama": "Portföy daraltma 10→6 - en düşük getiri potansiyeli"
+    },
+    {
+      "tarih": "2026-03-25",
+      "islem_tipi": "SATIŞ",
+      "sembol": "SCHD",
+      "adet": 829,
+      "fiyat": 30.57,
+      "tutar": 25338.39,
+      "aciklama": "Portföy daraltma 10→6 - ETF yerine bireysel kazananlar tercih"
+    },
+    {
+      "tarih": "2026-03-25",
+      "islem_tipi": "ALIŞ",
+      "sembol": "XOM",
+      "adet": 122,
+      "fiyat": 163.61,
+      "tutar": 19960.42,
+      "aciklama": "Pozisyon büyütme - güçlü temettü kazanancı, yüksek getiri"
+    },
+    {
+      "tarih": "2026-03-25",
+      "islem_tipi": "ALIŞ",
+      "sembol": "CVX",
+      "adet": 72,
+      "fiyat": 205.85,
+      "tutar": 14821.2,
+      "aciklama": "Pozisyon büyütme - güçlü temettü kazanancı, yüksek getiri"
+    },
+    {
+      "tarih": "2026-03-25",
+      "islem_tipi": "ALIŞ",
+      "sembol": "T",
+      "adet": 345,
+      "fiyat": 28.98,
+      "tutar": 9996.38,
+      "aciklama": "Pozisyon büyütme - güçlü temettü kazanancı, yüksek getiri"
+    }
+  ],
+  "notes": [
+    {
+      "date": "2026-03-04T19:55:41.768596",
+      "type": "entry",
+      "content": "MRK 250 hisse agresif portföyden transfer."
+    },
+    {
+      "date": "2026-03-05T15:18:41.575862",
+      "type": "market_note",
+      "content": "MRK zihinsel stop $112.5 eklendi. Keytruda gelir baskısı ve Çin ilaç fiyat müzakereleri izleniyor."
+    },
+    {
+      "date": "2026-03-11T05:48:11.190390",
+      "type": "format_fix",
+      "content": "DÜZELTME: (1) baslangic_sermaye $90K→$100K, (2) MRK agresif→temettü transfer nakiti ($30,102.50) eklendi, (3) ABBV duplikat pozisyon+transaction silindi, (4) nakit yeniden hesaplandı."
+    },
+    {
+      "date": "2026-03-13T14:10:01.668692",
+      "type": "exit",
+      "content": "VZ 50 adet kısmi satış @$51.47 + CVX 25 adet kısmi satış @$196.84 - K-11 kâr alma"
+    },
+    {
+      "date": "2026-03-13T14:44:20.842982",
+      "type": "entry",
+      "content": "PFE 330 adet alis @$26.92. Yield %5.9, saglik defensif."
+    },
+    {
+      "date": "2026-03-24T15:04:19.117829",
+      "type": "rebalance",
+      "content": "XOM %25 kısmi kâr alma: 25 adet @ $165.86. RSI 74.8, +%36.29 kazanç. K-11 kuralı. 77 adet tutulmaya devam."
+    }
+  ]
 }
