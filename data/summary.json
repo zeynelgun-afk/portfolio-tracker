@@ -1,16 +1,16 @@
 {
   "son_guncelleme": "2026-03-31",
   "toplam_sermaye": 600000,
-  "toplam_deger": 620724.0,
-  "toplam_kar_zarar": 20724.0,
-  "toplam_kar_zarar_yuzde": 3.45,
+  "toplam_deger": 620651.31,
+  "toplam_kar_zarar": 20651.31,
+  "toplam_kar_zarar_yuzde": 3.44,
   "portfolyolar": {
     "dengeli": {
       "isim": "Dengeli Portföy",
-      "deger": 113597.47,
+      "deger": 113531.31,
       "maliyet": 100000,
-      "kar_zarar": 13597.470000000001,
-      "kar_zarar_yuzde": 13.6,
+      "kar_zarar": 13531.309999999998,
+      "kar_zarar_yuzde": 13.53,
       "pozisyon_sayisi": 4,
       "nakit": {
         "miktar": 68754.56999999999,
@@ -31,9 +31,9 @@
     },
     "temettü": {
       "isim": "Değer + Temettü Portföyü",
-      "deger": 149303.37,
+      "deger": 149296.84,
       "maliyet": 100000,
-      "kar_zarar": 49303.369999999995,
+      "kar_zarar": 49296.84,
       "kar_zarar_yuzde": 49.3,
       "pozisyon_sayisi": 6,
       "nakit": {
