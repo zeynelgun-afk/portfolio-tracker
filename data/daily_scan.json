@@ -1,272 +1,290 @@
 {
-  "tarama_tarihi": "2026-03-30",
-  "tarama_zamani": "2026-03-30T22:03:39.537584+00:00",
+  "tarama_tarihi": "2026-03-31",
+  "tarama_zamani": "2026-03-31T22:02:49.323164+00:00",
   "versiyon": "2.0",
   "piyasa_ozeti": {
-    "tarih": "2026-03-30",
-    "spy_fiyat": 631.97,
+    "tarih": "2026-03-31",
+    "spy_fiyat": 650.34,
     "spy_degisim": 0.0,
     "qqq_degisim": 0.0,
     "iwm_degisim": 0.0,
-    "vix": 30.61,
+    "vix": 25.25,
     "vix_uyarisi": true,
-    "vix_kritik": true,
-    "vix_mesaj": "🔴 VIX 30.6 — KRİTİK. Yeni giriş tehlikeli, yarım pozisyon bile dikkatli.",
-    "sektorler": {}
+    "vix_kritik": false,
+    "vix_mesaj": "⚠ VIX 25.2 — YÜKSEK OYNAKLIK. Stop seviyeleri geniş tut, yarım pozisyon düşün.",
+    "sektorler": {
+      "Basic Materials": 0.643006730224327,
+      "Communication Services": -0.5216026045274158,
+      "Consumer Cyclical": -0.425722630633818,
+      "Consumer Defensive": 0.7190310943630873,
+      "Energy": -3.1022798586001876,
+      "Financial Services": 0.24775016342495348,
+      "Healthcare": -0.09438042978930916,
+      "Industrials": -1.7787311677616158,
+      "Real Estate": -0.7806116166708787,
+      "Technology": -2.809723972239875,
+      "Utilities": -1.3075275785435325
+    }
   },
   "agresif_adaylari": [
-    {
-      "sembol": "EQNR",
-      "isim": "Equinor ASA",
-      "sektor": "Energy",
-      "degisim_1d": 2.09,
-      "degisim_5d": 8.33,
-      "degisim_1m": 42.14,
-      "neden": "5 günlük momentum +%8.3, dün +%2.1"
-    },
-    {
-      "sembol": "PBR",
-      "isim": "Petróleo Brasileiro S.A. - Petrobras",
-      "sektor": "Energy",
-      "degisim_1d": 0.19,
-      "degisim_5d": 6.99,
-      "degisim_1m": 25.14,
-      "neden": "5 günlük momentum +%7.0, dün +%0.2"
-    },
-    {
-      "sembol": "EOG",
-      "isim": "EOG Resources, Inc.",
-      "sektor": "Energy",
-      "degisim_1d": 0.22,
-      "degisim_5d": 5.62,
-      "degisim_1m": 20.8,
-      "neden": "5 günlük momentum +%5.6, dün +%0.2"
-    },
-    {
-      "sembol": "BP",
-      "isim": "BP p.l.c.",
-      "sektor": "Energy",
-      "degisim_1d": 1.44,
-      "degisim_5d": 5.6,
-      "degisim_1m": 21.85,
-      "neden": "5 günlük momentum +%5.6, dün +%1.4"
-    },
-    {
-      "sembol": "BMY",
-      "isim": "Bristol-Myers Squibb Company",
-      "sektor": "Healthcare",
-      "degisim_1d": 2.03,
-      "degisim_5d": 3.36,
-      "degisim_1m": -4.23,
-      "neden": "5 günlük momentum +%3.4, dün +%2.0"
-    },
     {
       "sembol": "AZN",
       "isim": "AstraZeneca PLC",
       "sektor": "Healthcare",
-      "degisim_1d": 2.9,
-      "degisim_5d": 3.31,
-      "degisim_1m": -6.99,
-      "neden": "5 günlük momentum +%3.3, dün +%2.9"
+      "degisim_1d": 1.72,
+      "degisim_5d": 6.56,
+      "degisim_1m": -5.39,
+      "neden": "5 günlük momentum +%6.6, dün +%1.7"
     },
     {
       "sembol": "ABBV",
       "isim": "AbbVie Inc.",
       "sektor": "Healthcare",
-      "degisim_1d": 1.82,
-      "degisim_5d": 3.07,
-      "degisim_1m": -8.13,
-      "neden": "5 günlük momentum +%3.1, dün +%1.8"
+      "degisim_1d": 2.03,
+      "degisim_5d": 4.95,
+      "degisim_1m": -6.31,
+      "neden": "5 günlük momentum +%4.9, dün +%2.0"
+    },
+    {
+      "sembol": "SNY",
+      "isim": "Sanofi",
+      "sektor": "Healthcare",
+      "degisim_1d": 3.12,
+      "degisim_5d": 3.99,
+      "degisim_1m": -0.99,
+      "neden": "5 günlük momentum +%4.0, dün +%3.1"
+    },
+    {
+      "sembol": "BMY",
+      "isim": "Bristol-Myers Squibb Company",
+      "sektor": "Healthcare",
+      "degisim_1d": 1.54,
+      "degisim_5d": 3.2,
+      "degisim_1m": -2.76,
+      "neden": "5 günlük momentum +%3.2, dün +%1.5"
+    },
+    {
+      "sembol": "PFE",
+      "isim": "Pfizer Inc.",
+      "sektor": "Healthcare",
+      "degisim_1d": 1.12,
+      "degisim_5d": 3.05,
+      "degisim_1m": 1.56,
+      "neden": "5 günlük momentum +%3.0, dün +%1.1"
+    },
+    {
+      "sembol": "CRM",
+      "isim": "Salesforce, Inc.",
+      "sektor": "Technology",
+      "degisim_1d": 0.89,
+      "degisim_5d": 3.03,
+      "degisim_1m": -4.17,
+      "neden": "5 günlük momentum +%3.0, dün +%0.9"
     }
   ],
-  "dengeli_adaylari": [],
+  "dengeli_adaylari": [
+    {
+      "sembol": "DEO",
+      "isim": "Diageo plc",
+      "sektor": "Consumer Defensive",
+      "rsi": 34.2,
+      "rsi_onceki": 30.2,
+      "degisim_1d": 1.36,
+      "degisim_5d": 0.43,
+      "degisim_1m": -16.82,
+      "neden": "RSI 34 kurtarma (önceki 30), güçlü sektör"
+    },
+    {
+      "sembol": "MDT",
+      "isim": "Medtronic plc",
+      "sektor": "Healthcare",
+      "rsi": 34.9,
+      "rsi_onceki": 30.0,
+      "degisim_1d": 1.06,
+      "degisim_5d": -0.74,
+      "degisim_1m": -11.27,
+      "neden": "RSI 35 kurtarma (önceki 30), güçlü sektör"
+    },
+    {
+      "sembol": "V",
+      "isim": "Visa Inc.",
+      "sektor": "Financial Services",
+      "rsi": 41.6,
+      "rsi_onceki": 37.8,
+      "degisim_1d": 0.9,
+      "degisim_5d": -0.63,
+      "degisim_1m": -5.59,
+      "neden": "RSI 42 kurtarma (önceki 38), güçlü sektör"
+    },
+    {
+      "sembol": "DHR",
+      "isim": "Danaher Corporation",
+      "sektor": "Healthcare",
+      "rsi": 41.9,
+      "rsi_onceki": 32.4,
+      "degisim_1d": 3.11,
+      "degisim_5d": 2.2,
+      "degisim_1m": -9.99,
+      "neden": "RSI 42 kurtarma (önceki 32), güçlü sektör"
+    },
+    {
+      "sembol": "LLY",
+      "isim": "Eli Lilly and Company",
+      "sektor": "Healthcare",
+      "rsi": 41.9,
+      "rsi_onceki": 32.0,
+      "degisim_1d": 3.74,
+      "degisim_5d": 0.81,
+      "degisim_1m": -12.57,
+      "neden": "RSI 42 kurtarma (önceki 32), güçlü sektör"
+    },
+    {
+      "sembol": "QQQ",
+      "isim": "Invesco QQQ Trust, Series 1",
+      "sektor": "Financial Services",
+      "rsi": 42.1,
+      "rsi_onceki": 28.4,
+      "degisim_1d": 3.39,
+      "degisim_5d": -0.93,
+      "degisim_1m": -4.96,
+      "neden": "RSI 42 kurtarma (önceki 28), güçlü sektör"
+    },
+    {
+      "sembol": "AMGN",
+      "isim": "Amgen Inc.",
+      "sektor": "Healthcare",
+      "rsi": 42.3,
+      "rsi_onceki": 38.9,
+      "degisim_1d": 0.82,
+      "degisim_5d": 0.43,
+      "degisim_1m": -9.35,
+      "neden": "RSI 42 kurtarma (önceki 39), güçlü sektör"
+    },
+    {
+      "sembol": "BRK-B",
+      "isim": "Berkshire Hathaway Inc.",
+      "sektor": "Financial Services",
+      "rsi": 43.5,
+      "rsi_onceki": 38.0,
+      "degisim_1d": 0.94,
+      "degisim_5d": 0.56,
+      "degisim_1m": -5.12,
+      "neden": "RSI 44 kurtarma (önceki 38), güçlü sektör"
+    },
+    {
+      "sembol": "CRH",
+      "isim": "CRH plc",
+      "sektor": "Basic Materials",
+      "rsi": 44.2,
+      "rsi_onceki": 36.8,
+      "degisim_1d": 3.15,
+      "degisim_5d": 0.33,
+      "degisim_1m": -12.39,
+      "neden": "RSI 44 kurtarma (önceki 37), güçlü sektör"
+    },
+    {
+      "sembol": "B",
+      "isim": "Barrick Mining Corporation",
+      "sektor": "Basic Materials",
+      "rsi": 44.8,
+      "rsi_onceki": 34.9,
+      "degisim_1d": 6.14,
+      "degisim_5d": 7.82,
+      "degisim_1m": -19.57,
+      "neden": "RSI 45 kurtarma (önceki 35), güçlü sektör"
+    }
+  ],
   "temettu_adaylari": [],
   "swing_adaylari": [
     {
-      "sembol": "E",
-      "isim": "Eni S.p.A.",
-      "sektor": "Energy",
-      "fiyat": 55.77,
+      "sembol": "MRK",
+      "isim": "Merck & Co., Inc.",
+      "sektor": "Healthcare",
+      "fiyat": 120.29,
       "ichimoku": {
         "konum": "kumo_ustu",
-        "guc": 4,
-        "sinyaller": [],
-        "tenkan": 54.36,
-        "kijun": 50.3,
-        "kumo_ust": 52.33,
-        "kumo_alt": 47.23,
-        "kumo_renk": "yesil"
-      },
-      "hacim_katsayisi": 0.8,
-      "stop_kijun": 50.3,
-      "karar": "TREND DEVAM",
-      "neden": "ichimoku 4/4, trend devam"
-    },
-    {
-      "sembol": "CTVA",
-      "isim": "Corteva, Inc.",
-      "sektor": "Basic Materials",
-      "fiyat": 82.95,
-      "ichimoku": {
-        "konum": "kumo_ustu",
-        "guc": 4,
-        "sinyaller": [],
-        "tenkan": 80.17,
-        "kijun": 79.23,
-        "kumo_ust": 79.7,
-        "kumo_alt": 76.01,
-        "kumo_renk": "yesil"
-      },
-      "hacim_katsayisi": 1.2,
-      "stop_kijun": 79.23,
-      "karar": "TREND DEVAM",
-      "neden": "ichimoku 4/4, trend devam"
-    },
-    {
-      "sembol": "SHEL",
-      "isim": "Shell plc",
-      "sektor": "Energy",
-      "fiyat": 92.74,
-      "ichimoku": {
-        "konum": "kumo_ustu",
-        "guc": 4,
-        "sinyaller": [],
-        "tenkan": 91.22,
-        "kijun": 86.91,
-        "kumo_ust": 89.06,
-        "kumo_alt": 83.18,
-        "kumo_renk": "yesil"
-      },
-      "hacim_katsayisi": 1.1,
-      "stop_kijun": 86.91,
-      "karar": "TREND DEVAM",
-      "neden": "ichimoku 4/4, trend devam"
-    },
-    {
-      "sembol": "PBR-A",
-      "isim": "Petróleo Brasileiro S.A. - Petrobras",
-      "sektor": "Energy",
-      "fiyat": 18.91,
-      "ichimoku": {
-        "konum": "kumo_ustu",
-        "guc": 4,
-        "sinyaller": [],
-        "tenkan": 18.12,
-        "kijun": 17.07,
-        "kumo_ust": 17.59,
-        "kumo_alt": 15.5,
+        "guc": 2,
+        "sinyaller": [
+          "kijun_bounce"
+        ],
+        "tenkan": 117.18,
+        "kijun": 118.93,
+        "kumo_ust": 118.06,
+        "kumo_alt": 115.59,
         "kumo_renk": "yesil"
       },
       "hacim_katsayisi": 1.0,
-      "stop_kijun": 17.07,
-      "karar": "TREND DEVAM",
-      "neden": "ichimoku 4/4, trend devam"
-    },
-    {
-      "sembol": "PBR",
-      "isim": "Petróleo Brasileiro S.A. - Petrobras",
-      "sektor": "Energy",
-      "fiyat": 20.81,
-      "ichimoku": {
-        "konum": "kumo_ustu",
-        "guc": 4,
-        "sinyaller": [],
-        "tenkan": 19.96,
-        "kijun": 18.65,
-        "kumo_ust": 19.31,
-        "kumo_alt": 16.86,
-        "kumo_renk": "yesil"
-      },
-      "hacim_katsayisi": 1.3,
-      "stop_kijun": 18.65,
-      "karar": "TREND DEVAM",
-      "neden": "ichimoku 4/4, trend devam"
-    },
-    {
-      "sembol": "EOG",
-      "isim": "EOG Resources, Inc.",
-      "sektor": "Energy",
-      "fiyat": 149.89,
-      "ichimoku": {
-        "konum": "kumo_ustu",
-        "guc": 4,
-        "sinyaller": [],
-        "tenkan": 143.59,
-        "kijun": 135.59,
-        "kumo_ust": 139.59,
-        "kumo_alt": 128.07,
-        "kumo_renk": "yesil"
-      },
-      "hacim_katsayisi": 0.8,
-      "stop_kijun": 135.59,
-      "karar": "TREND DEVAM",
-      "neden": "ichimoku 4/4, trend devam"
-    },
-    {
-      "sembol": "BP",
-      "isim": "BP p.l.c.",
-      "sektor": "Energy",
-      "fiyat": 47.35,
-      "ichimoku": {
-        "konum": "kumo_ustu",
-        "guc": 4,
-        "sinyaller": [],
-        "tenkan": 45.17,
-        "kijun": 42.47,
-        "kumo_ust": 43.82,
-        "kumo_alt": 41.2,
-        "kumo_renk": "yesil"
-      },
-      "hacim_katsayisi": 1.2,
-      "stop_kijun": 42.47,
-      "karar": "TREND DEVAM",
-      "neden": "ichimoku 4/4, trend devam"
-    },
-    {
-      "sembol": "TTE",
-      "isim": "TotalEnergies SE",
-      "sektor": "Energy",
-      "fiyat": 91.55,
-      "ichimoku": {
-        "konum": "kumo_ustu",
-        "guc": 4,
-        "sinyaller": [],
-        "tenkan": 89.5,
-        "kijun": 84.75,
-        "kumo_ust": 87.13,
-        "kumo_alt": 79.19,
-        "kumo_renk": "yesil"
-      },
-      "hacim_katsayisi": 0.7,
-      "stop_kijun": 84.75,
-      "karar": "TREND DEVAM",
-      "neden": "ichimoku 4/4, trend devam"
-    },
-    {
-      "sembol": "EQNR",
-      "isim": "Equinor ASA",
-      "sektor": "Energy",
-      "fiyat": 42.4,
-      "ichimoku": {
-        "konum": "kumo_ustu",
-        "guc": 4,
-        "sinyaller": [],
-        "tenkan": 40.25,
-        "kijun": 35.83,
-        "kumo_ust": 38.04,
-        "kumo_alt": 33.78,
-        "kumo_renk": "yesil"
-      },
-      "hacim_katsayisi": 0.7,
-      "stop_kijun": 35.83,
-      "karar": "TREND DEVAM",
-      "neden": "ichimoku 4/4, trend devam"
+      "stop_kijun": 118.93,
+      "karar": "GİRİŞ ⚠️",
+      "neden": "ichimoku 2/4, kijun_bounce"
     },
     {
       "sembol": "AZN",
       "isim": "AstraZeneca PLC",
       "sektor": "Healthcare",
-      "fiyat": 193.88,
+      "fiyat": 197.22,
+      "ichimoku": {
+        "konum": "kumo_ustu",
+        "guc": 2,
+        "sinyaller": [
+          "kijun_bounce"
+        ],
+        "tenkan": 189.83,
+        "kijun": 196.16,
+        "kumo_ust": 193.0,
+        "kumo_alt": 192.69,
+        "kumo_renk": "yesil"
+      },
+      "hacim_katsayisi": 1.4,
+      "stop_kijun": 196.16,
+      "karar": "GİRİŞ ⚠️",
+      "neden": "ichimoku 2/4, kijun_bounce"
+    },
+    {
+      "sembol": "PFE",
+      "isim": "Pfizer Inc.",
+      "sektor": "Healthcare",
+      "fiyat": 28.08,
+      "ichimoku": {
+        "konum": "kumo_ustu",
+        "guc": 4,
+        "sinyaller": [],
+        "tenkan": 27.38,
+        "kijun": 27.25,
+        "kumo_ust": 27.31,
+        "kumo_alt": 26.7,
+        "kumo_renk": "yesil"
+      },
+      "hacim_katsayisi": 1.0,
+      "stop_kijun": 27.25,
+      "karar": "TREND DEVAM",
+      "neden": "ichimoku 4/4, trend devam"
+    },
+    {
+      "sembol": "E",
+      "isim": "Eni S.p.A.",
+      "sektor": "Energy",
+      "fiyat": 56.61,
+      "ichimoku": {
+        "konum": "kumo_ustu",
+        "guc": 4,
+        "sinyaller": [],
+        "tenkan": 54.83,
+        "kijun": 50.77,
+        "kumo_ust": 52.8,
+        "kumo_alt": 47.71,
+        "kumo_renk": "yesil"
+      },
+      "hacim_katsayisi": 1.5,
+      "stop_kijun": 50.77,
+      "karar": "TREND DEVAM",
+      "neden": "ichimoku 4/4, trend devam"
+    },
+    {
+      "sembol": "VALE",
+      "isim": "Vale S.A.",
+      "sektor": "Basic Materials",
+      "fiyat": 15.92,
       "ichimoku": {
         "konum": "kumo_ustu",
         "guc": 1,
@@ -274,23 +292,67 @@
           "kumo_kirilimi",
           "kijun_bounce"
         ],
-        "tenkan": 188.51,
-        "kijun": 196.16,
-        "kumo_ust": 192.69,
-        "kumo_alt": 192.34,
+        "tenkan": 14.96,
+        "kijun": 15.8,
+        "kumo_ust": 15.86,
+        "kumo_alt": 15.38,
         "kumo_renk": "kirmizi"
       },
-      "hacim_katsayisi": 1.1,
-      "stop_kijun": 196.16,
+      "hacim_katsayisi": 0.9,
+      "stop_kijun": 15.8,
       "karar": "BEKLE",
       "neden": "ichimoku 1/4, kumo_kirilimi, kijun_bounce"
+    },
+    {
+      "sembol": "TMO",
+      "isim": "Thermo Fisher Scientific Inc.",
+      "sektor": "Healthcare",
+      "fiyat": 491.53,
+      "ichimoku": {
+        "konum": "kumo_ici",
+        "guc": 0,
+        "sinyaller": [
+          "kijun_bounce"
+        ],
+        "tenkan": 479.14,
+        "kijun": 489.99,
+        "kumo_ust": 551.16,
+        "kumo_alt": 484.56,
+        "kumo_renk": "kirmizi"
+      },
+      "hacim_katsayisi": 1.0,
+      "stop_kijun": 489.99,
+      "karar": "BEKLE",
+      "neden": "ichimoku 0/4, kijun_bounce"
+    },
+    {
+      "sembol": "BHP",
+      "isim": "BHP Group Limited",
+      "sektor": "Basic Materials",
+      "fiyat": 72.74,
+      "ichimoku": {
+        "konum": "kumo_ici",
+        "guc": 0,
+        "sinyaller": [
+          "kijun_bounce"
+        ],
+        "tenkan": 68.65,
+        "kijun": 73.88,
+        "kumo_ust": 73.34,
+        "kumo_alt": 71.26,
+        "kumo_renk": "kirmizi"
+      },
+      "hacim_katsayisi": 1.0,
+      "stop_kijun": 73.88,
+      "karar": "BEKLE",
+      "neden": "ichimoku 0/4, kijun_bounce"
     }
   ],
   "ozet": {
-    "agresif_sayi": 7,
-    "dengeli_sayi": 0,
+    "agresif_sayi": 6,
+    "dengeli_sayi": 10,
     "temettu_sayi": 0,
-    "swing_sayi": 10,
-    "toplam": 17
+    "swing_sayi": 7,
+    "toplam": 23
   }
 }
