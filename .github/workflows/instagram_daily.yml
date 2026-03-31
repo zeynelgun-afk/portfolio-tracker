@@ -1,0 +1,73 @@
+name: instagram gunluk post
+
+on:
+  # pazartesi-cuma her gun saat 00:00 TR (21:00 UTC)
+  schedule:
+    - cron: '0 21 * * 1-5'
+  # manuel tetikleme
+  workflow_dispatch:
+    inputs:
+      post_type:
+        description: 'post turu'
+        required: true
+        default: 'piyasa'
+        type: choice
+        options:
+          - piyasa
+          - performans
+          - egitim
+          - telegram
+
+jobs:
+  generate-and-post:
+    runs-on: ubuntu-latest
+    steps:
+      - name: repo checkout
+        uses: actions/checkout@v4
+
+      - name: python kur
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: bagimliliklari yukle
+        run: pip install Pillow requests
+
+      - name: post turunu belirle
+        id: post_type
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "type=${{ github.event.inputs.post_type }}" >> $GITHUB_OUTPUT
+          else
+            # gun bazli otomatik secim
+            DOW=$(date -u +%u)
+            case $DOW in
+              1) echo "type=piyasa" >> $GITHUB_OUTPUT ;;
+              2) echo "type=egitim" >> $GITHUB_OUTPUT ;;
+              3) echo "type=piyasa" >> $GITHUB_OUTPUT ;;
+              4) echo "type=egitim" >> $GITHUB_OUTPUT ;;
+              5) echo "type=performans" >> $GITHUB_OUTPUT ;;
+              *) echo "type=piyasa" >> $GITHUB_OUTPUT ;;
+            esac
+          fi
+
+      - name: gorsel uret
+        run: |
+          mkdir -p outputs/instagram
+          python scripts/instagram_post_generator.py --type ${{ steps.post_type.outputs.type }}
+
+      - name: instagram a paylas
+        if: env.INSTAGRAM_ACCOUNT_ID != '' && env.META_ACCESS_TOKEN != ''
+        env:
+          INSTAGRAM_ACCOUNT_ID: ${{ secrets.INSTAGRAM_ACCOUNT_ID }}
+          META_ACCESS_TOKEN: ${{ secrets.META_ACCESS_TOKEN }}
+          IMGBB_API_KEY: ${{ secrets.IMGBB_API_KEY }}
+        run: python scripts/instagram_publisher.py --type ${{ steps.post_type.outputs.type }}
+
+      - name: gorseli repo ya kaydet
+        run: |
+          git config user.name "Finzora AI"
+          git config user.email "zeynelgun@users.noreply.github.com"
+          git add outputs/instagram/
+          git diff --cached --quiet || git commit -m "instagram: ${{ steps.post_type.outputs.type }} postu $(date +%Y-%m-%d)"
+          git push
