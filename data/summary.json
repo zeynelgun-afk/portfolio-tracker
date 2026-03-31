@@ -1,20 +1,20 @@
 {
-  "son_guncelleme": "2026-03-30",
+  "son_guncelleme": "2026-03-31",
   "simulasyon_donemi": "17 subat 2026 - 30 mart 2026",
   "islem_gunleri": 29,
   "toplam_sermaye": 600000,
-  "toplam_deger": 620326.36,
-  "toplam_kar_zarar": 20326.36,
-  "toplam_kar_zarar_yuzde": 3.39,
-  "benchmark_spy": -7.45,
-  "alpha": 10.84,
+  "toplam_deger": 620468.58,
+  "toplam_kar_zarar": 20468.58,
+  "toplam_kar_zarar_yuzde": 3.41,
+  "benchmark_spy": 6.66,
+  "alpha": -3.25,
   "portfolyolar": {
     "dengeli": {
       "isim": "Dengeli Portfoy",
-      "deger": 113554.81,
+      "deger": 113576.44,
       "maliyet": 100000,
-      "kar_zarar": 13554.81,
-      "kar_zarar_yuzde": 13.55,
+      "kar_zarar": 13576.44,
+      "kar_zarar_yuzde": 13.58,
       "pozisyon_sayisi": 4,
       "nakit": {
         "miktar": 68754.56999999999,
@@ -35,10 +35,10 @@
     },
     "temettü": {
       "isim": "Deger + Temettu Portfoyu",
-      "deger": 148948.4,
+      "deger": 149068.99,
       "maliyet": 100000,
-      "kar_zarar": 48948.4,
-      "kar_zarar_yuzde": 48.95,
+      "kar_zarar": 49068.99,
+      "kar_zarar_yuzde": 49.07,
       "pozisyon_sayisi": 6,
       "nakit": {
         "miktar": 36535.695000000014,
