@@ -1,197 +1,233 @@
 {
-  "tarama_tarihi": "2026-03-31",
-  "tarama_zamani": "2026-03-31T22:02:49.323164+00:00",
+  "tarama_tarihi": "2026-04-01",
+  "tarama_zamani": "2026-04-01T22:03:22.462636+00:00",
   "versiyon": "2.0",
   "piyasa_ozeti": {
-    "tarih": "2026-03-31",
-    "spy_fiyat": 650.34,
+    "tarih": "2026-04-01",
+    "spy_fiyat": 655.24,
     "spy_degisim": 0.0,
     "qqq_degisim": 0.0,
     "iwm_degisim": 0.0,
-    "vix": 25.25,
-    "vix_uyarisi": true,
+    "vix": 24.54,
+    "vix_uyarisi": false,
     "vix_kritik": false,
-    "vix_mesaj": "⚠ VIX 25.2 — YÜKSEK OYNAKLIK. Stop seviyeleri geniş tut, yarım pozisyon düşün.",
+    "vix_mesaj": "",
     "sektorler": {
-      "Basic Materials": 0.643006730224327,
-      "Communication Services": -0.5216026045274158,
-      "Consumer Cyclical": -0.425722630633818,
-      "Consumer Defensive": 0.7190310943630873,
-      "Energy": -3.1022798586001876,
-      "Financial Services": 0.24775016342495348,
-      "Healthcare": -0.09438042978930916,
-      "Industrials": -1.7787311677616158,
-      "Real Estate": -0.7806116166708787,
-      "Technology": -2.809723972239875,
-      "Utilities": -1.3075275785435325
+      "Basic Materials": 0.36251643096061326,
+      "Communication Services": 3.448431865524615,
+      "Consumer Cyclical": 2.315339530761662,
+      "Consumer Defensive": -0.02199684382276912,
+      "Energy": 0.2304129013813272,
+      "Financial Services": 0.6221540792326508,
+      "Healthcare": 1.7811660735235435,
+      "Industrials": 1.8970649099044667,
+      "Real Estate": 0.6158408924868519,
+      "Technology": 3.043187194746677,
+      "Utilities": 1.092078802641061
     }
   },
   "agresif_adaylari": [
     {
-      "sembol": "AZN",
-      "isim": "AstraZeneca PLC",
-      "sektor": "Healthcare",
-      "degisim_1d": 1.72,
-      "degisim_5d": 6.56,
-      "degisim_1m": -5.39,
-      "neden": "5 günlük momentum +%6.6, dün +%1.7"
-    },
-    {
-      "sembol": "ABBV",
-      "isim": "AbbVie Inc.",
-      "sektor": "Healthcare",
-      "degisim_1d": 2.03,
-      "degisim_5d": 4.95,
-      "degisim_1m": -6.31,
-      "neden": "5 günlük momentum +%4.9, dün +%2.0"
-    },
-    {
-      "sembol": "SNY",
-      "isim": "Sanofi",
-      "sektor": "Healthcare",
-      "degisim_1d": 3.12,
-      "degisim_5d": 3.99,
-      "degisim_1m": -0.99,
-      "neden": "5 günlük momentum +%4.0, dün +%3.1"
-    },
-    {
-      "sembol": "BMY",
-      "isim": "Bristol-Myers Squibb Company",
-      "sektor": "Healthcare",
-      "degisim_1d": 1.54,
-      "degisim_5d": 3.2,
-      "degisim_1m": -2.76,
-      "neden": "5 günlük momentum +%3.2, dün +%1.5"
-    },
-    {
-      "sembol": "PFE",
-      "isim": "Pfizer Inc.",
-      "sektor": "Healthcare",
-      "degisim_1d": 1.12,
-      "degisim_5d": 3.05,
-      "degisim_1m": 1.56,
-      "neden": "5 günlük momentum +%3.0, dün +%1.1"
-    },
-    {
-      "sembol": "CRM",
-      "isim": "Salesforce, Inc.",
+      "sembol": "INTC",
+      "isim": "Intel Corporation",
       "sektor": "Technology",
-      "degisim_1d": 0.89,
-      "degisim_5d": 3.03,
-      "degisim_1m": -4.17,
-      "neden": "5 günlük momentum +%3.0, dün +%0.9"
-    }
-  ],
-  "dengeli_adaylari": [
-    {
-      "sembol": "DEO",
-      "isim": "Diageo plc",
-      "sektor": "Consumer Defensive",
-      "rsi": 34.2,
-      "rsi_onceki": 30.2,
-      "degisim_1d": 1.36,
-      "degisim_5d": 0.43,
-      "degisim_1m": -16.82,
-      "neden": "RSI 34 kurtarma (önceki 30), güçlü sektör"
-    },
-    {
-      "sembol": "MDT",
-      "isim": "Medtronic plc",
-      "sektor": "Healthcare",
-      "rsi": 34.9,
-      "rsi_onceki": 30.0,
-      "degisim_1d": 1.06,
-      "degisim_5d": -0.74,
-      "degisim_1m": -11.27,
-      "neden": "RSI 35 kurtarma (önceki 30), güçlü sektör"
-    },
-    {
-      "sembol": "V",
-      "isim": "Visa Inc.",
-      "sektor": "Financial Services",
-      "rsi": 41.6,
-      "rsi_onceki": 37.8,
-      "degisim_1d": 0.9,
-      "degisim_5d": -0.63,
-      "degisim_1m": -5.59,
-      "neden": "RSI 42 kurtarma (önceki 38), güçlü sektör"
-    },
-    {
-      "sembol": "DHR",
-      "isim": "Danaher Corporation",
-      "sektor": "Healthcare",
-      "rsi": 41.9,
-      "rsi_onceki": 32.4,
-      "degisim_1d": 3.11,
-      "degisim_5d": 2.2,
-      "degisim_1m": -9.99,
-      "neden": "RSI 42 kurtarma (önceki 32), güçlü sektör"
+      "degisim_1d": 8.84,
+      "degisim_5d": 10.11,
+      "degisim_1m": 5.31,
+      "neden": "5 günlük momentum +%10.1, dün +%8.8"
     },
     {
       "sembol": "LLY",
       "isim": "Eli Lilly and Company",
       "sektor": "Healthcare",
-      "rsi": 41.9,
-      "rsi_onceki": 32.0,
-      "degisim_1d": 3.74,
-      "degisim_5d": 0.81,
-      "degisim_1m": -12.57,
-      "neden": "RSI 42 kurtarma (önceki 32), güçlü sektör"
+      "degisim_1d": 3.75,
+      "degisim_5d": 6.5,
+      "degisim_1m": -9.29,
+      "neden": "5 günlük momentum +%6.5, dün +%3.8"
     },
     {
-      "sembol": "QQQ",
-      "isim": "Invesco QQQ Trust, Series 1",
-      "sektor": "Financial Services",
-      "rsi": 42.1,
-      "rsi_onceki": 28.4,
-      "degisim_1d": 3.39,
-      "degisim_5d": -0.93,
-      "degisim_1m": -4.96,
-      "neden": "RSI 42 kurtarma (önceki 28), güçlü sektör"
+      "sembol": "LRCX",
+      "isim": "Lam Research Corporation",
+      "sektor": "Technology",
+      "degisim_1d": 3.91,
+      "degisim_5d": 5.89,
+      "degisim_1m": -5.08,
+      "neden": "5 günlük momentum +%5.9, dün +%3.9"
     },
     {
-      "sembol": "AMGN",
-      "isim": "Amgen Inc.",
+      "sembol": "CSX",
+      "isim": "CSX Corporation",
+      "sektor": "Industrials",
+      "degisim_1d": 0.95,
+      "degisim_5d": 5.5,
+      "degisim_1m": -2.93,
+      "neden": "5 günlük momentum +%5.5, dün +%1.0"
+    },
+    {
+      "sembol": "AZN",
+      "isim": "AstraZeneca PLC",
       "sektor": "Healthcare",
+      "degisim_1d": 1.78,
+      "degisim_5d": 5.16,
+      "degisim_1m": -3.7,
+      "neden": "5 günlük momentum +%5.2, dün +%1.8"
+    },
+    {
+      "sembol": "CAT",
+      "isim": "Caterpillar Inc.",
+      "sektor": "Industrials",
+      "degisim_1d": 3.09,
+      "degisim_5d": 5.16,
+      "degisim_1m": -1.68,
+      "neden": "5 günlük momentum +%5.2, dün +%3.1"
+    },
+    {
+      "sembol": "AMD",
+      "isim": "Advanced Micro Devices, Inc.",
+      "sektor": "Technology",
+      "degisim_1d": 3.33,
+      "degisim_5d": 4.18,
+      "degisim_1m": 4.99,
+      "neden": "5 günlük momentum +%4.2, dün +%3.3"
+    },
+    {
+      "sembol": "HWM",
+      "isim": "Howmet Aerospace Inc.",
+      "sektor": "Industrials",
+      "degisim_1d": 3.72,
+      "degisim_5d": 3.83,
+      "degisim_1m": -8.95,
+      "neden": "5 günlük momentum +%3.8, dün +%3.7"
+    },
+    {
+      "sembol": "VRT",
+      "isim": "Vertiv Holdings Co",
+      "sektor": "Industrials",
+      "degisim_1d": 3.51,
+      "degisim_5d": 3.76,
+      "degisim_1m": 1.76,
+      "neden": "5 günlük momentum +%3.8, dün +%3.5"
+    },
+    {
+      "sembol": "GE",
+      "isim": "GE Aerospace",
+      "sektor": "Industrials",
+      "degisim_1d": 3.14,
+      "degisim_5d": 3.42,
+      "degisim_1m": -14.49,
+      "neden": "5 günlük momentum +%3.4, dün +%3.1"
+    }
+  ],
+  "dengeli_adaylari": [
+    {
+      "sembol": "DASH",
+      "isim": "DoorDash, Inc.",
+      "sektor": "Communication Services",
+      "rsi": 34.9,
+      "rsi_onceki": 34.4,
+      "degisim_1d": 0.23,
+      "degisim_5d": 0.48,
+      "degisim_1m": -14.72,
+      "neden": "RSI 35 kurtarma (önceki 34), güçlü sektör"
+    },
+    {
+      "sembol": "BIDU",
+      "isim": "Baidu, Inc.",
+      "sektor": "Communication Services",
+      "rsi": 37.1,
+      "rsi_onceki": 36.2,
+      "degisim_1d": 0.43,
+      "degisim_5d": 2.68,
+      "degisim_1m": -10.08,
+      "neden": "RSI 37 kurtarma (önceki 36), güçlü sektör"
+    },
+    {
+      "sembol": "DIS",
+      "isim": "The Walt Disney Company",
+      "sektor": "Communication Services",
+      "rsi": 40.2,
+      "rsi_onceki": 39.6,
+      "degisim_1d": 0.24,
+      "degisim_5d": 2.57,
+      "degisim_1m": -8.89,
+      "neden": "RSI 40 kurtarma (önceki 40), güçlü sektör"
+    },
+    {
+      "sembol": "META",
+      "isim": "Meta Platforms, Inc.",
+      "sektor": "Communication Services",
       "rsi": 42.3,
-      "rsi_onceki": 38.9,
-      "degisim_1d": 0.82,
-      "degisim_5d": 0.43,
-      "degisim_1m": -9.35,
-      "neden": "RSI 42 kurtarma (önceki 39), güçlü sektör"
+      "rsi_onceki": 40.1,
+      "degisim_1d": 1.24,
+      "degisim_5d": 7.24,
+      "degisim_1m": -10.64,
+      "neden": "RSI 42 kurtarma (önceki 40), güçlü sektör"
     },
     {
-      "sembol": "BRK-B",
-      "isim": "Berkshire Hathaway Inc.",
-      "sektor": "Financial Services",
-      "rsi": 43.5,
-      "rsi_onceki": 38.0,
-      "degisim_1d": 0.94,
-      "degisim_5d": 0.56,
-      "degisim_1m": -5.12,
-      "neden": "RSI 44 kurtarma (önceki 38), güçlü sektör"
+      "sembol": "TTWO",
+      "isim": "Take-Two Interactive Software, Inc.",
+      "sektor": "Communication Services",
+      "rsi": 43.8,
+      "rsi_onceki": 42.8,
+      "degisim_1d": 0.35,
+      "degisim_5d": 2.69,
+      "degisim_1m": -6.28,
+      "neden": "RSI 44 kurtarma (önceki 43), güçlü sektör"
     },
     {
-      "sembol": "CRH",
-      "isim": "CRH plc",
-      "sektor": "Basic Materials",
-      "rsi": 44.2,
-      "rsi_onceki": 36.8,
-      "degisim_1d": 3.15,
-      "degisim_5d": 0.33,
-      "degisim_1m": -12.39,
-      "neden": "RSI 44 kurtarma (önceki 37), güçlü sektör"
+      "sembol": "IBM",
+      "isim": "International Business Machines Corporation",
+      "sektor": "Technology",
+      "rsi": 44.4,
+      "rsi_onceki": 43.7,
+      "degisim_1d": 0.29,
+      "degisim_5d": 1.8,
+      "degisim_1m": 1.22,
+      "neden": "RSI 44 kurtarma (önceki 44), güçlü sektör"
     },
     {
-      "sembol": "B",
-      "isim": "Barrick Mining Corporation",
-      "sektor": "Basic Materials",
-      "rsi": 44.8,
-      "rsi_onceki": 34.9,
-      "degisim_1d": 6.14,
-      "degisim_5d": 7.82,
-      "degisim_1m": -19.57,
-      "neden": "RSI 45 kurtarma (önceki 35), güçlü sektör"
+      "sembol": "MU",
+      "isim": "Micron Technology, Inc.",
+      "sektor": "Technology",
+      "rsi": 44.7,
+      "rsi_onceki": 36.6,
+      "degisim_1d": 8.88,
+      "degisim_5d": 2.22,
+      "degisim_1m": -10.8,
+      "neden": "RSI 45 kurtarma (önceki 37), güçlü sektör"
+    },
+    {
+      "sembol": "LMT",
+      "isim": "Lockheed Martin Corporation",
+      "sektor": "Industrials",
+      "rsi": 45.4,
+      "rsi_onceki": 39.1,
+      "degisim_1d": 2.19,
+      "degisim_5d": -1.29,
+      "degisim_1m": -6.15,
+      "neden": "RSI 45 kurtarma (önceki 39), güçlü sektör"
+    },
+    {
+      "sembol": "CHTR",
+      "isim": "Charter Communications, Inc.",
+      "sektor": "Communication Services",
+      "rsi": 46.0,
+      "rsi_onceki": 45.5,
+      "degisim_1d": 0.18,
+      "degisim_5d": -1.03,
+      "degisim_1m": -7.83,
+      "neden": "RSI 46 kurtarma (önceki 46), güçlü sektör"
+    },
+    {
+      "sembol": "TSLA",
+      "isim": "Tesla, Inc.",
+      "sektor": "Consumer Cyclical",
+      "rsi": 46.4,
+      "rsi_onceki": 41.6,
+      "degisim_1d": 2.56,
+      "degisim_5d": 3.13,
+      "degisim_1m": -5.28,
+      "neden": "RSI 46 kurtarma (önceki 42), güçlü sektör"
     }
   ],
   "temettu_adaylari": [],
@@ -200,91 +236,139 @@
       "sembol": "MRK",
       "isim": "Merck & Co., Inc.",
       "sektor": "Healthcare",
-      "fiyat": 120.29,
+      "fiyat": 120.84,
       "ichimoku": {
         "konum": "kumo_ustu",
         "guc": 2,
         "sinyaller": [
           "kijun_bounce"
         ],
-        "tenkan": 117.18,
+        "tenkan": 117.45,
         "kijun": 118.93,
-        "kumo_ust": 118.06,
+        "kumo_ust": 118.19,
         "kumo_alt": 115.59,
         "kumo_renk": "yesil"
       },
-      "hacim_katsayisi": 1.0,
+      "hacim_katsayisi": 0.6,
       "stop_kijun": 118.93,
       "karar": "GİRİŞ ⚠️",
       "neden": "ichimoku 2/4, kijun_bounce"
     },
     {
-      "sembol": "AZN",
-      "isim": "AstraZeneca PLC",
-      "sektor": "Healthcare",
-      "fiyat": 197.22,
+      "sembol": "HWM",
+      "isim": "Howmet Aerospace Inc.",
+      "sektor": "Industrials",
+      "fiyat": 239.04,
       "ichimoku": {
         "konum": "kumo_ustu",
         "guc": 2,
         "sinyaller": [
+          "kumo_kirilimi",
           "kijun_bounce"
         ],
-        "tenkan": 189.83,
-        "kijun": 196.16,
-        "kumo_ust": 193.0,
-        "kumo_alt": 192.69,
+        "tenkan": 232.08,
+        "kijun": 243.91,
+        "kumo_ust": 238.0,
+        "kumo_alt": 235.93,
         "kumo_renk": "yesil"
       },
-      "hacim_katsayisi": 1.4,
-      "stop_kijun": 196.16,
+      "hacim_katsayisi": 1.0,
+      "stop_kijun": 243.91,
+      "karar": "GİRİŞ ⚠️",
+      "neden": "ichimoku 2/4, kumo_kirilimi, kijun_bounce"
+    },
+    {
+      "sembol": "PLTR",
+      "isim": "Palantir Technologies Inc.",
+      "sektor": "Technology",
+      "fiyat": 146.49,
+      "ichimoku": {
+        "konum": "kumo_alti",
+        "guc": 2,
+        "sinyaller": [
+          "kijun_bounce"
+        ],
+        "tenkan": 149.35,
+        "kijun": 145.79,
+        "kumo_ust": 154.33,
+        "kumo_alt": 147.57,
+        "kumo_renk": "kirmizi"
+      },
+      "hacim_katsayisi": 0.8,
+      "stop_kijun": 145.79,
       "karar": "GİRİŞ ⚠️",
       "neden": "ichimoku 2/4, kijun_bounce"
+    },
+    {
+      "sembol": "VRT",
+      "isim": "Vertiv Holdings Co",
+      "sektor": "Industrials",
+      "fiyat": 259.37,
+      "ichimoku": {
+        "konum": "kumo_ustu",
+        "guc": 2,
+        "sinyaller": [
+          "kumo_kirilimi",
+          "kijun_bounce"
+        ],
+        "tenkan": 256.88,
+        "kijun": 256.88,
+        "kumo_ust": 256.88,
+        "kumo_alt": 226.03,
+        "kumo_renk": "yesil"
+      },
+      "hacim_katsayisi": 0.4,
+      "stop_kijun": 256.88,
+      "karar": "GİRİŞ ⚠️",
+      "neden": "ichimoku 2/4, kumo_kirilimi, kijun_bounce"
     },
     {
       "sembol": "PFE",
       "isim": "Pfizer Inc.",
       "sektor": "Healthcare",
-      "fiyat": 28.08,
+      "fiyat": 28.55,
       "ichimoku": {
         "konum": "kumo_ustu",
         "guc": 4,
         "sinyaller": [],
-        "tenkan": 27.38,
-        "kijun": 27.25,
-        "kumo_ust": 27.31,
-        "kumo_alt": 26.7,
+        "tenkan": 27.54,
+        "kijun": 27.42,
+        "kumo_ust": 27.48,
+        "kumo_alt": 26.87,
         "kumo_renk": "yesil"
       },
       "hacim_katsayisi": 1.0,
-      "stop_kijun": 27.25,
+      "stop_kijun": 27.42,
       "karar": "TREND DEVAM",
       "neden": "ichimoku 4/4, trend devam"
     },
     {
-      "sembol": "E",
-      "isim": "Eni S.p.A.",
-      "sektor": "Energy",
-      "fiyat": 56.61,
+      "sembol": "IBM",
+      "isim": "International Business Machines Corporation",
+      "sektor": "Technology",
+      "fiyat": 243.14,
       "ichimoku": {
-        "konum": "kumo_ustu",
-        "guc": 4,
-        "sinyaller": [],
-        "tenkan": 54.83,
-        "kijun": 50.77,
-        "kumo_ust": 52.8,
-        "kumo_alt": 47.71,
-        "kumo_renk": "yesil"
+        "konum": "kumo_alti",
+        "guc": 1,
+        "sinyaller": [
+          "kijun_bounce"
+        ],
+        "tenkan": 242.55,
+        "kijun": 245.8,
+        "kumo_ust": 270.31,
+        "kumo_alt": 244.18,
+        "kumo_renk": "kirmizi"
       },
-      "hacim_katsayisi": 1.5,
-      "stop_kijun": 50.77,
-      "karar": "TREND DEVAM",
-      "neden": "ichimoku 4/4, trend devam"
+      "hacim_katsayisi": 0.7,
+      "stop_kijun": 245.8,
+      "karar": "BEKLE",
+      "neden": "ichimoku 1/4, kijun_bounce"
     },
     {
-      "sembol": "VALE",
-      "isim": "Vale S.A.",
+      "sembol": "FCX",
+      "isim": "Freeport-McMoRan Inc.",
       "sektor": "Basic Materials",
-      "fiyat": 15.92,
+      "fiyat": 61.2,
       "ichimoku": {
         "konum": "kumo_ustu",
         "guc": 1,
@@ -292,67 +376,90 @@
           "kumo_kirilimi",
           "kijun_bounce"
         ],
-        "tenkan": 14.96,
-        "kijun": 15.8,
-        "kumo_ust": 15.86,
-        "kumo_alt": 15.38,
+        "tenkan": 56.78,
+        "kijun": 60.27,
+        "kumo_ust": 60.27,
+        "kumo_alt": 58.52,
         "kumo_renk": "kirmizi"
       },
-      "hacim_katsayisi": 0.9,
-      "stop_kijun": 15.8,
+      "hacim_katsayisi": 1.2,
+      "stop_kijun": 60.27,
       "karar": "BEKLE",
       "neden": "ichimoku 1/4, kumo_kirilimi, kijun_bounce"
-    },
-    {
-      "sembol": "TMO",
-      "isim": "Thermo Fisher Scientific Inc.",
-      "sektor": "Healthcare",
-      "fiyat": 491.53,
-      "ichimoku": {
-        "konum": "kumo_ici",
-        "guc": 0,
-        "sinyaller": [
-          "kijun_bounce"
-        ],
-        "tenkan": 479.14,
-        "kijun": 489.99,
-        "kumo_ust": 551.16,
-        "kumo_alt": 484.56,
-        "kumo_renk": "kirmizi"
-      },
-      "hacim_katsayisi": 1.0,
-      "stop_kijun": 489.99,
-      "karar": "BEKLE",
-      "neden": "ichimoku 0/4, kijun_bounce"
     },
     {
       "sembol": "BHP",
       "isim": "BHP Group Limited",
       "sektor": "Basic Materials",
-      "fiyat": 72.74,
+      "fiyat": 73.56,
       "ichimoku": {
-        "konum": "kumo_ici",
-        "guc": 0,
+        "konum": "kumo_ustu",
+        "guc": 1,
+        "sinyaller": [
+          "kumo_kirilimi",
+          "kijun_bounce"
+        ],
+        "tenkan": 69.34,
+        "kijun": 73.88,
+        "kumo_ust": 73.34,
+        "kumo_alt": 71.61,
+        "kumo_renk": "kirmizi"
+      },
+      "hacim_katsayisi": 0.7,
+      "stop_kijun": 73.88,
+      "karar": "BEKLE",
+      "neden": "ichimoku 1/4, kumo_kirilimi, kijun_bounce"
+    },
+    {
+      "sembol": "VALE",
+      "isim": "Vale S.A.",
+      "sektor": "Basic Materials",
+      "fiyat": 16.05,
+      "ichimoku": {
+        "konum": "kumo_ustu",
+        "guc": 1,
         "sinyaller": [
           "kijun_bounce"
         ],
-        "tenkan": 68.65,
-        "kijun": 73.88,
-        "kumo_ust": 73.34,
-        "kumo_alt": 71.26,
+        "tenkan": 15.11,
+        "kijun": 15.8,
+        "kumo_ust": 15.86,
+        "kumo_alt": 15.46,
         "kumo_renk": "kirmizi"
       },
-      "hacim_katsayisi": 1.0,
-      "stop_kijun": 73.88,
+      "hacim_katsayisi": 0.7,
+      "stop_kijun": 15.8,
       "karar": "BEKLE",
-      "neden": "ichimoku 0/4, kijun_bounce"
+      "neden": "ichimoku 1/4, kijun_bounce"
+    },
+    {
+      "sembol": "WM",
+      "isim": "Waste Management, Inc.",
+      "sektor": "Industrials",
+      "fiyat": 231.0,
+      "ichimoku": {
+        "konum": "kumo_ici",
+        "guc": 1,
+        "sinyaller": [
+          "kijun_bounce"
+        ],
+        "tenkan": 227.05,
+        "kijun": 233.62,
+        "kumo_ust": 233.13,
+        "kumo_alt": 230.33,
+        "kumo_renk": "kirmizi"
+      },
+      "hacim_katsayisi": 0.9,
+      "stop_kijun": 233.62,
+      "karar": "BEKLE",
+      "neden": "ichimoku 1/4, kijun_bounce"
     }
   ],
   "ozet": {
-    "agresif_sayi": 6,
+    "agresif_sayi": 10,
     "dengeli_sayi": 10,
     "temettu_sayi": 0,
-    "swing_sayi": 7,
-    "toplam": 23
+    "swing_sayi": 10,
+    "toplam": 30
   }
 }
