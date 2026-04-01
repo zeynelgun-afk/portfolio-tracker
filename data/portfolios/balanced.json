@@ -2,41 +2,23 @@
   "portfoy_adi": "Dengeli Portföy",
   "baslangic_sermaye": 100000,
   "nakit": {
-    "miktar": 76952.79,
+    "miktar": 82612.95,
     "para_birimi": "USD"
   },
   "pozisyonlar": [
-    {
-      "sembol": "SM",
-      "isim": "SM Energy Company",
-      "sektor": "Enerji",
-      "adet": 192,
-      "maliyet_baz": 29.39,
-      "guncel_fiyat": 29.4,
-      "yatirim": 5642.88,
-      "guncel_deger": 5644.799999999999,
-      "kar_zarar": 1.9199999999991633,
-      "kar_zarar_yuzde": 0.03,
-      "gunluk_degisim_yuzde": 0,
-      "son_guncelleme": "2026-04-01T16:31:32.819408",
-      "giris_tarihi": "2026-02-17",
-      "giris_fiyati": 20.67,
-      "giris_nedeni": "Initial position - Oil & gas E&P",
-      "agirlik_yuzde": 5.03
-    },
     {
       "sembol": "MO",
       "isim": "Altria Group Inc",
       "sektor": "Temel Tüketim",
       "adet": 267,
       "maliyet_baz": 67.44,
-      "guncel_fiyat": 64.955,
+      "guncel_fiyat": 65.305,
       "yatirim": 18006.48,
-      "guncel_deger": 17342.985,
-      "kar_zarar": -663.494999999999,
-      "kar_zarar_yuzde": -3.68,
+      "guncel_deger": 17436.44,
+      "kar_zarar": -570.04,
+      "kar_zarar_yuzde": -3.17,
       "gunluk_degisim_yuzde": 0,
-      "son_guncelleme": "2026-04-01T16:31:32.819408",
+      "son_guncelleme": "2026-04-01T16:52:41.359906",
       "giris_tarihi": "2026-02-17",
       "giris_fiyati": 67.44,
       "giris_nedeni": "Initial position - Dividend defensive",
@@ -48,22 +30,22 @@
       "sektor": "Sağlık",
       "adet": 50,
       "maliyet_baz": 244.14,
-      "guncel_fiyat": 244.2,
+      "guncel_fiyat": 244.76,
       "yatirim": 12207.0,
-      "guncel_deger": 12210.0,
-      "kar_zarar": 3.0,
-      "kar_zarar_yuzde": 0.02,
+      "guncel_deger": 12238.0,
+      "kar_zarar": 31.0,
+      "kar_zarar_yuzde": 0.25,
       "gunluk_degisim_yuzde": 0,
-      "son_guncelleme": "2026-04-01T16:31:32.819408",
+      "son_guncelleme": "2026-04-01T16:52:41.359906",
       "giris_tarihi": "2026-03-13",
       "giris_fiyati": 244.14,
       "giris_nedeni": "Saglik sektoru diversifikasyonu. Defensif/temettü aristokrati. Iran savasi ortaminda direncli. RSI 59, SMA50 ustu. Portfoyde saglik eksikti.",
       "agirlik_yuzde": 10.89
     }
   ],
-  "son_guncelleme": "2026-04-01T16:31:32.819408",
-  "toplam_deger": 112150.57,
-  "toplam_getiri_yuzde": 12.15,
+  "son_guncelleme": "2026-04-01T16:52:41.359906",
+  "toplam_deger": 112287.39,
+  "toplam_getiri_yuzde": 12.29,
   "transactions": [
     {
       "tarih": "2026-03-02",
@@ -289,6 +271,11 @@
       "date": "2026-04-01",
       "type": "trade",
       "content": "XLE satıldı @ $58.98. iran ateşkes haberleri - enerji katalizörü zayıflıyor. +10.57% kar realize edildi."
+    },
+    {
+      "date": "2026-04-01",
+      "type": "SELL",
+      "content": "SM 192 hisse @ $29.48 satıldı. İran ateşkes = petrol düşüşü tezi. XLE/XOM/CVX ile tutarlı enerji çıkışı. P&L: $17.28"
     }
   ]
 }
