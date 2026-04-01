@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-04-01T21:08:31.159077",
+  "son_guncelleme": "2026-04-01T21:37:39.825906",
   "not": "Tüm portföyler ve swing trade için tek merkezi watchlist. Her adayda hedef_portfoy alanı hangi portföye/stratejiye ait olduğunu belirtir.",
   "iran_krizi_notu": {
     "tarih": "2026-03-01",
@@ -502,7 +502,7 @@
     },
     {
       "sembol": "LRCX",
-      "guncel_fiyat": 221.96,
+      "guncel_fiyat": 222.01,
       "sektor": "Teknoloji - Yari Iletken Ekipman",
       "hedef_portfoy": "dengeli",
       "urgency": "medium",
