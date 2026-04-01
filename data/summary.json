@@ -4,12 +4,14 @@
   "toplam_deger": 619063.28,
   "toplam_kar_zarar": 19063.28,
   "toplam_kar_zarar_yuzde": 3.18,
+  "benchmark_spy_yuzde": -4.76,
+  "alpha": 7.94,
   "portfolyolar": {
     "dengeli": {
       "isim": "Dengeli Portföy",
       "deger": 113097.6,
       "maliyet": 100000,
-      "kar_zarar": 13097.600000000006,
+      "kar_zarar": 13097.6,
       "kar_zarar_yuzde": 13.1,
       "pozisyon_sayisi": 4,
       "nakit": {
@@ -21,7 +23,7 @@
       "isim": "Agresif Büyüme Portföyü",
       "deger": 357823.16,
       "maliyet": 400000,
-      "kar_zarar": -42176.840000000026,
+      "kar_zarar": -42176.84,
       "kar_zarar_yuzde": -10.54,
       "pozisyon_sayisi": 0,
       "nakit": {
@@ -33,7 +35,7 @@
       "isim": "Değer + Temettü Portföyü",
       "deger": 148142.52,
       "maliyet": 100000,
-      "kar_zarar": 48142.51999999999,
+      "kar_zarar": 48142.52,
       "kar_zarar_yuzde": 48.14,
       "pozisyon_sayisi": 6,
       "nakit": {
@@ -44,8 +46,8 @@
     "swing_trade": {
       "isim": "Swing Trade (Simülasyon)",
       "pozisyon_sayisi": 0,
-      "bos_slot": 10,
-      "durum": "0/10 pozisyon aktif"
+      "bos_slot": 8,
+      "durum": "0/8 pozisyon aktif"
     }
   }
 }
