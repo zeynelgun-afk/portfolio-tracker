@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-04-01T15:06:47.215354",
+  "son_guncelleme": "2026-04-01T16:27:02.788094",
   "not": "Tüm portföyler ve swing trade için tek merkezi watchlist. Her adayda hedef_portfoy alanı hangi portföye/stratejiye ait olduğunu belirtir.",
   "iran_krizi_notu": {
     "tarih": "2026-03-01",
@@ -324,7 +324,8 @@
       "stop_loss": 88.0,
       "notlar": "Credo - bakir+optik dual play. BNP Paribas GTC 2026 sonrasi yukselis sinyali verdi. AGRESIF 1. ONCELIK. RSI 41.2 asiri satima yakin, 52H'den -%51.3 derin iskonto. $19.2B mktcap.",
       "nvidia_katman": "Katman 2 - Cipler",
-      "momentum_5gun": 0
+      "momentum_5gun": 0,
+      "tema": "AI altyapı bağlantı"
     },
     {
       "sembol": "PLAB",
@@ -354,7 +355,8 @@
       "stop_loss": 100.0,
       "notlar": "Entegris - yari iletken uretim malzemeleri ve filtreleme. NVIDIA makalesi Katman 2 destek. RSI 42.7 oversold yakin. YTD +%30 ama 52H'den -%18. $17.8B mktcap.",
       "nvidia_katman": "Katman 2 - Cipler (tedarik zinciri)",
-      "momentum_5gun": 0
+      "momentum_5gun": 0,
+      "tema": "AI tedarik zinciri"
     },
     {
       "sembol": "CAMT",
@@ -664,7 +666,7 @@
       "guncel_fiyat": 108.1,
       "sektor": "Teknoloji - PCIe/CXL Retimer",
       "hedef_portfoy": "agresif",
-      "urgency": "high",
+      "urgency": "medium",
       "ekleme_tarihi": "2026-03-18",
       "son_kontrol": "2026-04-01",
       "hedef_giris": "115-125",
@@ -674,7 +676,8 @@
       "nvidia_katman": "Katman 2 - Cipler (baglanti/retimer)",
       "momentum_5gun": 0,
       "kaynak": "GTC 2026 infografik + tedarik zinciri analizi",
-      "katalizor": "Vera Rubin raf ici PCIe/CXL talebi"
+      "katalizor": "Vera Rubin raf ici PCIe/CXL talebi",
+      "tema": "AI altyapı bağlantı"
     },
     {
       "sembol": "COP",
@@ -879,7 +882,8 @@
       "hedef_giris": "140-150",
       "hedef_fiyat": 175.0,
       "stop_loss": 133.0,
-      "momentum_5gun": 0
+      "momentum_5gun": 0,
+      "tema": "siber güvenlik"
     },
     {
       "sembol": "OKLO",
@@ -893,7 +897,8 @@
       "hedef_giris": "52-58",
       "hedef_fiyat": 75.0,
       "stop_loss": 48.0,
-      "momentum_5gun": 0
+      "momentum_5gun": 0,
+      "tema": "nükleer enerji"
     },
     {
       "sembol": "HIMS",
@@ -950,6 +955,76 @@
       "hedef_fiyat": 20.0,
       "stop_loss": 14.0,
       "momentum_5gun": 0
+    },
+    {
+      "sembol": "LEU",
+      "guncel_fiyat": 188.63,
+      "sektor": "Enerji - Nükleer Yakıt",
+      "notlar": "Q2 tematik: HALEU tekeli, tüm SMR'lar muhtaç. RSI 44, 52H -%59",
+      "urgency": "high",
+      "ekleme_tarihi": "2026-04-01",
+      "son_kontrol": null,
+      "hedef_giris": "175-195",
+      "hedef_fiyat": 280.0,
+      "stop_loss": 155.0,
+      "hedef_portfoy": "agresif",
+      "tema": "nükleer enerji tedarik"
+    },
+    {
+      "sembol": "KTOS",
+      "guncel_fiyat": 70.11,
+      "sektor": "Savunma - İnsansız Sistemler",
+      "notlar": "Q2 tematik: drone + hipersonik. RSI 35.8 aşırı satım, 52H -%48",
+      "urgency": "high",
+      "ekleme_tarihi": "2026-04-01",
+      "son_kontrol": null,
+      "hedef_giris": "65-72",
+      "hedef_fiyat": 100.0,
+      "stop_loss": 58.0,
+      "hedef_portfoy": "agresif",
+      "tema": "savunma + uzay"
+    },
+    {
+      "sembol": "GNRC",
+      "guncel_fiyat": 200.45,
+      "sektor": "Sanayi - Güç Ekipmanları",
+      "notlar": "Q2 tematik: yedek güç + enerji depolama. veri merkezi talebi",
+      "urgency": "medium",
+      "ekleme_tarihi": "2026-04-01",
+      "son_kontrol": null,
+      "hedef_giris": "190-205",
+      "hedef_fiyat": 245.0,
+      "stop_loss": 170.0,
+      "hedef_portfoy": "dengeli",
+      "tema": "AI enerji altyapı"
+    },
+    {
+      "sembol": "BAH",
+      "guncel_fiyat": 79.17,
+      "sektor": "Savunma - Hükümet Danışmanlık",
+      "notlar": "Q2 tematik: ABD hükümeti AI danışmanlığı. 52H -%40",
+      "urgency": "low",
+      "ekleme_tarihi": "2026-04-01",
+      "son_kontrol": null,
+      "hedef_giris": "74-82",
+      "hedef_fiyat": 110.0,
+      "stop_loss": 66.0,
+      "hedef_portfoy": "dengeli",
+      "tema": "savunma + AI"
+    },
+    {
+      "sembol": "CACI",
+      "guncel_fiyat": 562.25,
+      "sektor": "Savunma - IT Hizmetleri",
+      "notlar": "Q2 tematik: savunma IT + istihbarat. RSI 40.1, istikrarlı profil",
+      "urgency": "low",
+      "ekleme_tarihi": "2026-04-01",
+      "son_kontrol": null,
+      "hedef_giris": "540-570",
+      "hedef_fiyat": 680.0,
+      "stop_loss": 480.0,
+      "hedef_portfoy": "dengeli",
+      "tema": "savunma IT"
     }
   ],
   "haric_tutulanlar": [
