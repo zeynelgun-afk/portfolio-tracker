@@ -1,20 +1,20 @@
 {
-  "son_guncelleme": "2026-04-01T13:52:30.935654",
-  "toplam_portfoy_degeri": 615260.96,
+  "son_guncelleme": "2026-04-01T14:27:46.766821",
+  "toplam_portfoy_degeri": 614335.29,
   "baslangic_sermaye": 600000,
-  "toplam_getiri_yuzde": 2.54,
+  "toplam_getiri_yuzde": 2.39,
   "portfoyler": {
     "dengeli": {
-      "deger": 112285.94,
-      "getiri_yuzde": 12.29,
-      "nakit": 68754.56999999999,
-      "pozisyon_sayisi": 4
+      "deger": 112148.48,
+      "getiri_yuzde": 12.15,
+      "nakit": 76952.79,
+      "pozisyon_sayisi": 3
     },
     "temettu": {
-      "deger": 145151.86,
-      "getiri_yuzde": 45.15,
-      "nakit": 36535.695000000014,
-      "pozisyon_sayisi": 6
+      "deger": 144363.65,
+      "getiri_yuzde": 44.36,
+      "nakit": 88387.32,
+      "pozisyon_sayisi": 4
     },
     "agresif": {
       "deger": 357823.16,

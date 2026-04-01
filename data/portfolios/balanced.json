@@ -2,7 +2,7 @@
   "portfoy_adi": "Dengeli Portföy",
   "baslangic_sermaye": 100000,
   "nakit": {
-    "miktar": 68754.56999999999,
+    "miktar": 76952.79,
     "para_birimi": "USD"
   },
   "pozisyonlar": [
@@ -12,13 +12,13 @@
       "sektor": "Enerji",
       "adet": 192,
       "maliyet_baz": 29.39,
-      "guncel_fiyat": 29.89,
+      "guncel_fiyat": 29.22,
       "yatirim": 5642.88,
-      "guncel_deger": 5738.88,
-      "kar_zarar": 96.0,
-      "kar_zarar_yuzde": 1.7,
+      "guncel_deger": 5610.24,
+      "kar_zarar": -32.64,
+      "kar_zarar_yuzde": -0.58,
       "gunluk_degisim_yuzde": -4.14,
-      "son_guncelleme": "2026-04-01T13:52:19.607902",
+      "son_guncelleme": "2026-04-01T14:27:46.766821",
       "giris_tarihi": "2026-02-17",
       "giris_fiyati": 20.67,
       "giris_nedeni": "Initial position - Oil & gas E&P",
@@ -30,35 +30,17 @@
       "sektor": "Temel Tüketim",
       "adet": 267,
       "maliyet_baz": 67.44,
-      "guncel_fiyat": 64.37,
+      "guncel_fiyat": 64.85,
       "yatirim": 18006.48,
-      "guncel_deger": 17186.79,
-      "kar_zarar": -819.69,
-      "kar_zarar_yuzde": -4.55,
+      "guncel_deger": 17314.95,
+      "kar_zarar": -691.53,
+      "kar_zarar_yuzde": -3.84,
       "gunluk_degisim_yuzde": -2.45,
-      "son_guncelleme": "2026-04-01T13:52:19.607902",
+      "son_guncelleme": "2026-04-01T14:27:46.766821",
       "giris_tarihi": "2026-02-17",
       "giris_fiyati": 67.44,
       "giris_nedeni": "Initial position - Dividend defensive",
       "agirlik_yuzde": 15.58
-    },
-    {
-      "sembol": "XLE",
-      "isim": "Energy Select Sector SPDR Fund",
-      "sektor": "Enerji ETF",
-      "adet": 139,
-      "maliyet_baz": 53.34,
-      "guncel_fiyat": 59.8,
-      "yatirim": 7414.26,
-      "guncel_deger": 8312.2,
-      "kar_zarar": 897.94,
-      "kar_zarar_yuzde": 12.11,
-      "gunluk_degisim_yuzde": -2.38,
-      "son_guncelleme": "2026-04-01T13:52:19.607902",
-      "giris_tarihi": "2026-02-17",
-      "giris_fiyati": 53.34,
-      "giris_nedeni": "Initial position - Energy sector ETF",
-      "agirlik_yuzde": 7.53
     },
     {
       "sembol": "JNJ",
@@ -66,22 +48,22 @@
       "sektor": "Sağlık",
       "adet": 50,
       "maliyet_baz": 244.14,
-      "guncel_fiyat": 245.87,
+      "guncel_fiyat": 245.4101,
       "yatirim": 12207.0,
-      "guncel_deger": 12293.5,
-      "kar_zarar": 86.5,
-      "kar_zarar_yuzde": 0.71,
+      "guncel_deger": 12270.5,
+      "kar_zarar": 63.51,
+      "kar_zarar_yuzde": 0.52,
       "gunluk_degisim_yuzde": 0.59,
-      "son_guncelleme": "2026-04-01T13:52:19.607902",
+      "son_guncelleme": "2026-04-01T14:27:46.766821",
       "giris_tarihi": "2026-03-13",
       "giris_fiyati": 244.14,
       "giris_nedeni": "Saglik sektoru diversifikasyonu. Defensif/temettü aristokrati. Iran savasi ortaminda direncli. RSI 59, SMA50 ustu. Portfoyde saglik eksikti.",
       "agirlik_yuzde": 10.81
     }
   ],
-  "son_guncelleme": "2026-04-01T13:52:19.607902",
-  "toplam_deger": 112285.94,
-  "toplam_getiri_yuzde": 12.29,
+  "son_guncelleme": "2026-04-01T14:27:46.766821",
+  "toplam_deger": 112148.48,
+  "toplam_getiri_yuzde": 12.15,
   "transactions": [
     {
       "tarih": "2026-03-02",
@@ -226,6 +208,15 @@
       "fiyat": 160.37,
       "tutar": 13631.45,
       "aciklama": "Stop-loss %8 tetiklendi - XLI $160.37 < stop $161.04. endüstriyel sektör zayıf, VIX 29.46"
+    },
+    {
+      "tarih": "2026-04-01",
+      "islem_tipi": "SELL",
+      "sembol": "XLE",
+      "adet": 139,
+      "fiyat": 58.98,
+      "tutar": 8198.22,
+      "aciklama": "iran ateşkes umudu - petrol düşüşü, enerji katalizörü ortadan kalkıyor. kar: $783.96 (+10.57%)"
     }
   ],
   "notes": [
@@ -293,6 +284,11 @@
       "date": "2026-03-27T16:25:44.191394",
       "type": "exit",
       "content": "XLI satıldı @$160.37 - Stop-loss %8 tetiklendi - XLI $160.37 < stop $161.04. endüstriyel sektör zayıf, VIX 29.46"
+    },
+    {
+      "date": "2026-04-01",
+      "type": "trade",
+      "content": "XLE satıldı @ $58.98. iran ateşkes haberleri - enerji katalizörü zayıflıyor. +10.57% kar realize edildi."
     }
   ]
 }
