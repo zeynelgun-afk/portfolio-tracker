@@ -434,21 +434,20 @@ piyasa ortamına göre hangi sektör nasıl davranıyor.
 
 ## 7. SWING TRADE SİSTEMİ
 
-### v2.2 — ichimoku + hacim + ATR + ön filtre (2 nisan 2026~)
+### v2.3 — ichimoku + hacim + ATR + ön filtre + SPY master switch (2 nisan 2026~)
 
 > **tam doküman**: `docs/SWING_SYSTEM_V2.md`
 > **araç**: `scripts/swing_ichimoku.py`
 > **neden değişti**: v1'de ichimoku'yu sabit %5 stop / %10 hedef ile karıştırıyorduk. ichimoku kendi başına komple bir trend sistemi. sabit kurallarla karıştırmak çelişki yaratıyordu (NEM örneği: ichimoku 0/3 "girme" diyor, RSI oversold tezi "gir" diyordu).
 
-**v2.2 özeti**:
-- giriş: kumo kırılımı / TK cross / kijun bounce (ichimoku sinyalleri)
+**v2.3 özeti**:
+- ön filtre: VIX <22 → SPY > 21SMA master switch → A+B+E+F filtre. VIX >25 → K-13b (sektör ETF SMA)
+- giriş: kumo kırılımı / kijun bounce (ichimoku sinyalleri, ön filtre geçtikten sonra)
 - stop: kijun-sen dinamik (sabit %5 yok)
 - hedef: tüm swing girişleri ön filtreden geçtiği için sabit %10 hedef. portföy pozisyonlarında K-11 kademeli çıkış uygulanır
 - trailing: kijun-sen doğal trailing (sabit % yok)
 - süre: %10 hedefe veya stop'a kadar tut. süre sınırı yok ama K-08 zaman filtresi uygulanır
-- hacim: giriş teyidi + OBV trendi
-- ATR: pozisyon boyutlandırma + stop mesafesi doğrulama
-- RSI/MACD/SMA: kullanılmıyor (ichimoku zaten hepsini kapsıyor)
+- backtest: 15 dönem, 16W 1L 3F, kayıp oranı %5.9
 
 ### v1 (eski, 24 mart 2026'ya kadar)
 

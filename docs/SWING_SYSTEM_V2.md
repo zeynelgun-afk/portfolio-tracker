@@ -1,11 +1,12 @@
-# SWING TRADE SİSTEMİ v2.2 — ICHİMOKU + HACİM + ATR + ÖN FİLTRE
+# SWING TRADE SİSTEMİ v2.3 — ICHİMOKU + HACİM + ATR + ÖN FİLTRE
 
-> **versiyon**: 2.2
+> **versiyon**: 2.3
 > **son güncelleme**: 2 nisan 2026
 > **önceki sistem**: sabit %5 stop / %10 hedef / RSI+MACD+SMA skor kartı
 > **neden değişti**: ichimoku kendi başına komple bir trend sistemi. sabit stop/hedef ile karıştırmak çelişki yaratıyordu. yeni sistem tamamen dinamik.
 > **v2.1 değişiklik**: TK cross giriş sinyali kaldırıldı (sahte sinyaller), minimum %5 stop mesafesi zorunluluğu eklendi
 > **v2.2 değişiklik**: VIX rejimine göre çift katmanlı ön filtre sistemi eklendi (A+B+E+F). 5 dönem backtesti ile doğrulandı (15/15 kazanan, 0 kayıp)
+> **v2.3 değişiklik**: SPY 21SMA master switch eklendi. 15 dönem backtesti ile doğrulandı (kayıp oranı %26 → %5.9)
 
 ---
 
@@ -26,17 +27,16 @@ RSI ve MACD eklenmez. tenkan/kijun kesişimi zaten MACD'nin yaptığını yapıy
 
 ---
 
-## 0. ÖN FİLTRE SİSTEMİ (v2.2 — GİRİŞ ÖNCESİ ZORUNLU)
+## 0. ÖN FİLTRE SİSTEMİ (v2.3 — GİRİŞ ÖNCESİ ZORUNLU)
 
-> **neden eklendi**: ichimoku 4/4 sinyal normal piyasada (VIX <22) tek başına %33 başarı gösterdi (kasım 2025, şubat 2026). A+B+E+F filtresi eklendikten sonra normal piyasada %100'e çıktı. kriz döneminde (VIX >25) ichimoku 4/4 zaten %100 çalıştığı için ek filtre gereksiz ve hatta zararlı (tüm kazananları engelliyor). bu yüzden çift katmanlı sistem: VIX rejimine göre farklı filtre.
+> **neden eklendi**: ichimoku 4/4 sinyal normal piyasada (VIX <22) tek başına %33 başarı gösterdi. A+B+E+F filtresi eklendikten sonra iyileşti ama SPY 21SMA altındayken hala %12.5 başarı (%63 kayıp oranı). SPY 21SMA master switch eklendikten sonra kayıp oranı %5.9'a düştü.
 >
-> **backtest kanıtı (5 dönem, 27 hisse, 15 giriş)**:
-> - mart 2025 (VIX ~30, tarife krizi): 0 giriş → doğru bloke, hiçbir şey çalışmadı
-> - kasım 2025 (VIX ~21): A+B+E+F 2 giriş → 2 kazanan, AMZN -7.6% engellendi
-> - şubat 2026 (VIX ~18): A+B+E+F 3 giriş → 3 kazanan (VZ, CAT, DVN), META/GOOGL engellendi
-> - 9 mart 2026 (VIX ~30): K-13b 4/4 → 6/6 kazanan, A+B+E+F hepsini engellerdi
-> - 20 mart 2026 (VIX ~27): K-13b 4/4 → 4/4 kazanan
-> - **toplam: 15 giriş, 15 kazanan, 0 kayıp**
+> **backtest kanıtı (15 dönem, 28 trade)**:
+> - SPY ✅ + ABEF: 6 dönem → 6W 1L 3F (%86 başarı, tek kayıp PM eki24 RSI 75)
+> - SPY ❌ + ABEF: 5 dönem → 1W 5L 2F (%12.5 başarı → SPY filtresi engeller)
+> - K-13b kriz: 2 dönem → 10W 0L (%100)
+> - SPY ❌ dönemler: nis24 (ABEF 0 geçirdi), ağu24 (ABEF 0 geçirdi), eyl24 (1W/1L), ara24 (1L), oca25 (3L)
+> - **SPY filtresi ile: 16W 1L 3F, kayıp oranı %5.9 (filtre olmadan %26)**
 
 ### karar akışı (swing trade)
 
@@ -46,22 +46,37 @@ RSI ve MACD eklenmez. tenkan/kijun kesişimi zaten MACD'nin yaptığını yapıy
 ichimoku sinyali (3/4 veya 4/4)
         │
         ├── VIX <22 (normal/dikkatli)
-        │     └── A+B+E+F filtresi uygula
-        │           ├── geçti → GİR (tam pozisyon, %10 hedef)
-        │           └── geçmedi → ATLA
+        │     │
+        │     ├── SPY > 21SMA? ← MASTER SWITCH
+        │     │     │
+        │     │     ├── evet → A+B+E+F filtresi uygula
+        │     │     │            ├── geçti → GİR (tam pozisyon, %10 hedef)
+        │     │     │            └── geçmedi → ATLA
+        │     │     │
+        │     │     └── hayır → ATLA (piyasa geneli zayıf)
+        │     │
         │
         ├── VIX 22-35 (gergin/kriz)
         │     └── ichimoku skoru 4/4 mü?
-        │           ├── evet + K-13b koşulları sağlanıyor → GİR (yarım pozisyon, %10 hedef)
-        │           └── hayır (3/4 veya K-13b koşulları eksik) → ATLA
+        │           ├── evet + K-13b koşulları → GİR (yarım pozisyon, %10 hedef)
+        │           └── hayır → ATLA
         │
-        └── VIX >35 veya net sektör trendi yok → ATLA (hiç girme)
+        └── VIX >35 → ATLA (hiç girme)
 ```
 
 **tüm swing girişleri ön filtreden geçer → tüm swing trade'lerde hedef sabit %10.**
 portföy pozisyonlarında K-11 kademeli çıkış (RSI 70+ katmanları) uygulanır, sabit hedef yoktur.
 
-### A+B+E+F filtresi (VIX <22 ortamında zorunlu)
+### SPY 21SMA master switch (v2.3 ile eklendi)
+
+VIX <22 ortamında A+B+E+F filtresinden ÖNCE SPY > 21SMA kontrolü yapılır. SPY 21SMA altındaysa hiçbir swing girişi yapılmaz.
+
+- hesaplama: SPY kapanış fiyatı > SPY 21 günlük basit hareketli ortalama
+- gerekçe: piyasa geneli zayıflarken bireysel hisse ichimoku sinyalleri güvenilmez. 15 dönem backtestinde SPY ❌ ortamında ABEF %12.5 başarı (5 kayıp / 1 kazanan), SPY ✅ ortamında ABEF %86 başarı (6 kazanan / 1 kayıp)
+- K-13b yolunda (VIX >25) SPY kontrolü YAPILMAZ. kriz döneminde SPY zaten 21SMA altındadır, sektör ETF SMA filtresi yeterlidir
+- veri kaynağı: FMP quote veya historical-price-eod ile günlük kontrol
+
+### A+B+E+F filtresi (VIX <22 + SPY > 21SMA ortamında zorunlu)
 
 ichimoku sinyali aldıktan sonra, giriş öncesinde bu 4 koşulun **tümü** sağlanmalı:
 
@@ -385,4 +400,4 @@ NEM ve AROC v1 sistemiyle açıldı. geçiş:
 
 ---
 
-*finzora ai | swing sistemi v2.2 | 2 nisan 2026*
+*finzora ai | swing sistemi v2.3 | 2 nisan 2026*
