@@ -3,7 +3,8 @@
   "baslangic_sermaye": 100000,
   "nakit": {
     "miktar": 82612.95,
-    "para_birimi": "USD"
+    "para_birimi": "USD",
+    "agirlik_yuzde": 73.6
   },
   "pozisyonlar": [
     {
@@ -12,13 +13,13 @@
       "sektor": "Temel Tüketim",
       "adet": 267,
       "maliyet_baz": 67.44,
-      "guncel_fiyat": 65.565,
+      "guncel_fiyat": 65.54,
       "yatirim": 18006.48,
-      "guncel_deger": 17505.855,
-      "kar_zarar": -500.625,
-      "kar_zarar_yuzde": -2.78,
-      "gunluk_degisim_yuzde": 0,
-      "son_guncelleme": "2026-04-02T19:29:25.760970",
+      "guncel_deger": 17499.18,
+      "kar_zarar": -507.3,
+      "kar_zarar_yuzde": -2.82,
+      "gunluk_degisim_yuzde": 0.09,
+      "son_guncelleme": "2026-04-02T19:35:30.001096",
       "giris_tarihi": "2026-02-17",
       "giris_fiyati": 67.44,
       "giris_nedeni": "Initial position - Dividend defensive",
@@ -30,21 +31,21 @@
       "sektor": "Sağlık",
       "adet": 50,
       "maliyet_baz": 244.14,
-      "guncel_fiyat": 242.73,
+      "guncel_fiyat": 242.77,
       "yatirim": 12207.0,
-      "guncel_deger": 12136.5,
-      "kar_zarar": -70.5,
-      "kar_zarar_yuzde": -0.58,
-      "gunluk_degisim_yuzde": 0,
-      "son_guncelleme": "2026-04-02T19:29:25.760970",
+      "guncel_deger": 12138.5,
+      "kar_zarar": -68.5,
+      "kar_zarar_yuzde": -0.56,
+      "gunluk_degisim_yuzde": -0.55,
+      "son_guncelleme": "2026-04-02T19:35:30.001096",
       "giris_tarihi": "2026-03-13",
       "giris_fiyati": 244.14,
       "giris_nedeni": "Saglik sektoru diversifikasyonu. Defensif/temettü aristokrati. Iran savasi ortaminda direncli. RSI 59, SMA50 ustu. Portfoyde saglik eksikti.",
       "agirlik_yuzde": 10.81
     }
   ],
-  "son_guncelleme": "2026-04-02T19:29:25.760970",
-  "toplam_deger": 112255.3,
+  "son_guncelleme": "2026-04-02T19:35:30.001096",
+  "toplam_deger": 112250.63,
   "toplam_getiri_yuzde": 12.26,
   "transactions": [
     {
