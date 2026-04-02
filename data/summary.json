@@ -21,7 +21,7 @@
       "isim": "Agresif Büyüme Portföyü",
       "deger": 357823.16,
       "maliyet": 400000,
-      "kar_zarar": -42176.840000000026,
+      "kar_zarar": -42176.84,
       "kar_zarar_yuzde": -10.54,
       "pozisyon_sayisi": 0,
       "nakit": {
@@ -47,5 +47,7 @@
       "bos_slot": 10,
       "durum": "0/10 pozisyon aktif"
     }
-  }
+  },
+  "benchmark_spy": 8.99,
+  "alpha": -6.57
 }
