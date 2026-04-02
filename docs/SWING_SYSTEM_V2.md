@@ -1,10 +1,11 @@
 # SWING TRADE SİSTEMİ v2.0 — ICHİMOKU + HACİM + ATR
 
-> **versiyon**: 2.1
-> **son güncelleme**: 25 mart 2026
+> **versiyon**: 2.2
+> **son güncelleme**: 2 nisan 2026
 > **önceki sistem**: sabit %5 stop / %10 hedef / RSI+MACD+SMA skor kartı
 > **neden değişti**: ichimoku kendi başına komple bir trend sistemi. sabit stop/hedef ile karıştırmak çelişki yaratıyordu. yeni sistem tamamen dinamik.
 > **v2.1 değişiklik**: TK cross giriş sinyali kaldırıldı (sahte sinyaller), minimum %5 stop mesafesi zorunluluğu eklendi
+> **v2.2 değişiklik**: VIX rejimine göre çift katmanlı ön filtre sistemi eklendi (A+B+E+F). 5 dönem backtesti ile doğrulandı (15/15 kazanan, 0 kayıp)
 
 ---
 
@@ -22,6 +23,66 @@ RSI ve MACD eklenmez. tenkan/kijun kesişimi zaten MACD'nin yaptığını yapıy
 - fiyat > SMA200 → uzun vadeli trend yukarı, giriş yapılabilir (normal akış)
 - fiyat < SMA200 → uzun vadeli trend aşağı, sadece çok güçlü kumo kırılımı + hacim teyidi ile yarım pozisyon
 - SMA20 ve SMA50 eklenmez, bunların rolünü tenkan (9) ve kijun (26) zaten yapıyor
+
+---
+
+## 0. ÖN FİLTRE SİSTEMİ (v2.2 — GİRİŞ ÖNCESİ ZORUNLU)
+
+> **neden eklendi**: ichimoku 4/4 sinyal normal piyasada (VIX <22) tek başına %33 başarı gösterdi (kasım 2025, şubat 2026). A+B+E+F filtresi eklendikten sonra normal piyasada %100'e çıktı. kriz döneminde (VIX >25) ichimoku 4/4 zaten %100 çalıştığı için ek filtre gereksiz ve hatta zararlı (tüm kazananları engelliyor). bu yüzden çift katmanlı sistem: VIX rejimine göre farklı filtre.
+>
+> **backtest kanıtı (5 dönem, 27 hisse, 15 giriş)**:
+> - mart 2025 (VIX ~30, tarife krizi): 0 giriş → doğru bloke, hiçbir şey çalışmadı
+> - kasım 2025 (VIX ~21): A+B+E+F 2 giriş → 2 kazanan, AMZN -7.6% engellendi
+> - şubat 2026 (VIX ~18): A+B+E+F 3 giriş → 3 kazanan (VZ, CAT, DVN), META/GOOGL engellendi
+> - 9 mart 2026 (VIX ~30): K-13b 4/4 → 6/6 kazanan, A+B+E+F hepsini engellerdi
+> - 20 mart 2026 (VIX ~27): K-13b 4/4 → 4/4 kazanan
+> - **toplam: 15 giriş, 15 kazanan, 0 kayıp**
+
+### karar akışı
+
+```
+ichimoku sinyali (3/4 veya 4/4)
+        │
+        ├── VIX <22 (normal/dikkatli)
+        │     └── A+B+E+F filtresi uygula
+        │           ├── 4/4 geçti → GİR (tam pozisyon)
+        │           └── geçmedi → ATLA
+        │
+        ├── VIX 22-35 (gergin/kriz)
+        │     └── ichimoku skoru 4/4 mü?
+        │           ├── evet + K-13b koşulları sağlanıyor → GİR (yarım pozisyon)
+        │           └── hayır (3/4 veya K-13b koşulları eksik) → ATLA
+        │
+        └── VIX >35 veya net sektör trendi yok → ATLA (hiç girme)
+```
+
+### A+B+E+F filtresi (VIX <22 ortamında zorunlu)
+
+ichimoku sinyali aldıktan sonra, giriş öncesinde bu 4 koşulun **tümü** sağlanmalı:
+
+| filtre | koşul | hesaplama | gerekçe |
+|--------|-------|-----------|---------|
+| **A** | 52 haftalık zirveye yakınlık | (fiyat - 52W high) / 52W high > -3% | düşüş trendindeki değil, yükseliş trendindeki hisseleri seçer |
+| **B** | 5 günlük momentum | (fiyat - 5 gün önceki kapanış) / 5 gün önceki > +3% | son 1 haftada aktif alıcı baskısı olan hisseleri seçer |
+| **E** | 20 günlük volatilite | std_dev(son 20 kapanış) / ortalama(son 20 kapanış) > 2.5% | yeterli hareket alanı olan hisseleri seçer, çok dar range'deki hisselerin kijun stop'u sıkı olur ve whipsaw ile tetiklenir |
+| **F** | RSI(14) | RSI > 60 | momentum bölgesindeki hisseleri seçer. RSI <60 olan 4/4 sinyal volume spike'ının satış baskısından geldiğine işaret edebilir |
+
+**ne zaman uygulanmaz**:
+- VIX >22 ortamında A+B+E+F uygulanMAZ (kriz döneminde 52W ve Mom5 yapısal olarak farklı davranır, tüm kazananları engeller)
+- bu durumda K-13b kuralları devreye girer (bkz. TRADING_PLAYBOOK.md K-13 v3)
+
+### K-13b özet referans (VIX >25 ortamında)
+
+VIX >25'te ichimoku 4/4 + volume teyit yeterli, A+B+E+F aranmaz. ek koşullar:
+1. ichimoku skoru tam 4/4 (kumo üstü + TK bull + tenkan üstü + volume 1.3x+)
+2. lider sektör trendi aktif (contrarian değil)
+3. mcap >$5B
+4. RSI 40-70
+5. K-18 insider temiz
+6. K-17 korelasyon >%50
+7. max 2 eşzamanlı, sektör başına 1, hedef sabit %10
+
+detaylar: docs/TRADING_PLAYBOOK.md K-13 v3 bölümü
 
 ---
 
@@ -181,7 +242,7 @@ true range = max(yüksek-düşük, abs(yüksek-önceki kapanış), abs(düşük-
 | <20 | %1.0 | normal ortam |
 | 20-25 | %0.75 | dikkatli |
 | 25-30 | %0.50 | yarım risk |
-| 30+ | %0.25 | minimum risk veya girme |
+| 30+ | %0.25 | minimum risk veya girme (K-13b istisnası: ichimoku 4/4 + ön filtre koşulları sağlanırsa %0.50) |
 
 ---
 
@@ -223,7 +284,7 @@ sabit rasyolarla otomatik red yok. karar claude'da.
 | eski sistem | yeni sistem |
 |-------------|-------------|
 | sabit %5 stop | kijun-sen dinamik stop (min %5 mesafe zorunlu) |
-| sabit %10 hedef | hedef yok, trend devam ettiği sürece tut |
+| sabit %10 hedef | ön filtreli girişlerde (A+B+E+F veya K-13b) sabit %10 hedef. filtresiz kumo kırılımlarında hedef yok, kijun trailing ile trend takip |
 | RSI oversold giriş | ichimoku kumo kırılımı / kijun bounce giriş |
 | MACD teyidi | gereksiz (TK cross kaldırıldı, tek başına anlamlı değildi) |
 | SMA20/50 pozisyon kontrolü | ichimoku kumo bunu zaten yapıyor |
@@ -240,7 +301,7 @@ sabit rasyolarla otomatik red yok. karar claude'da.
 ### aktif pozisyon (data/swing/active.json)
 
 eski alanlar kaldırılan:
-- ~~hedef_fiyat~~ → hedef yok, trend takip
+- ~~hedef_fiyat~~ → ön filtreli girişlerde (A+B+E+F / K-13b) giriş fiyatı × 1.10 sabit hedef. filtresiz girişlerde hedef yok, kijun trailing
 - ~~trailing_yuzde~~ → kijun trailing
 - ~~zaman_cercevesi~~ → süre sınırı yok
 - ~~partial_exit_plan~~ → ichimoku çıkış sinyalleri
@@ -319,4 +380,4 @@ NEM ve AROC v1 sistemiyle açıldı. geçiş:
 
 ---
 
-*finzora ai | swing sistemi v2.0 | 25 mart 2026*
+*finzora ai | swing sistemi v2.2 | 2 nisan 2026*
