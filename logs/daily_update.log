@@ -12244,3 +12244,17 @@
 [2026-04-02 21:02:18] 💾 Kaydedildi: summary.json
 [2026-04-02 21:02:18] 
 🔄 Git commit yapılıyor...
+[2026-04-02 21:02:18]   ✅ Commit başarılı: [GÜNCELLEME] Otomatik fiyat güncellemesi - 02 Apr 2026 21:02
+[2026-04-02 21:02:18]   ❌ Push hatası: To https://github.com/zeynelgun-afk/portfolio-tracker
+ ! [rejected]        main -> main (non-fast-forward)
+error: failed to push some refs to 'https://github.com/zeynelgun-afk/portfolio-tracker'
+hint: Updates were rejected because the tip of your current branch is behind
+hint: its remote counterpart. If you want to integrate the remote changes,
+hint: use 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+
+[2026-04-02 21:02:18] 
+============================================================
+[2026-04-02 21:02:18] ✅ GÜNCELLEME TAMAMLANDI
+[2026-04-02 21:02:18] ============================================================
+
