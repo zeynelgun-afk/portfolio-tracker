@@ -25,11 +25,21 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).parent.parent
 
 # --- YAPILANDIRMA ---
-# bu degerleri .env dosyasina veya ortam degiskenlerine ekle
-INSTAGRAM_ACCOUNT_ID = os.getenv("INSTAGRAM_ACCOUNT_ID", "")
-META_ACCESS_TOKEN = os.getenv("META_ACCESS_TOKEN", "")
-GRAPH_API_VERSION = "v19.0"
+# config/instagram_config.json dosyasindan oku, yoksa ortam degiskenlerinden
+CONFIG_PATH = REPO_ROOT / "config" / "instagram_config.json"
+
+def load_ig_config():
+    if CONFIG_PATH.exists():
+        with open(CONFIG_PATH, "r", encoding="utf-8") as f:
+            return json.load(f)
+    return {}
+
+_config = load_ig_config()
+INSTAGRAM_ACCOUNT_ID = _config.get("instagram_account_id") or os.getenv("INSTAGRAM_ACCOUNT_ID", "")
+META_ACCESS_TOKEN = _config.get("access_token") or os.getenv("META_ACCESS_TOKEN", "")
+GRAPH_API_VERSION = _config.get("graph_api_version", "v25.0")
 GRAPH_API_BASE = f"https://graph.facebook.com/{GRAPH_API_VERSION}"
+IMGBB_API_KEY = _config.get("imgbb_api_key") or os.getenv("IMGBB_API_KEY", "")
 
 # gorsel sunucu - instagram api gorseli url uzerinden ceker
 # github raw url veya imgbb/cloudinary gibi bir servis kullanilabilir
@@ -173,7 +183,7 @@ def upload_image_to_host(local_path):
     imgbb ucretsiz api: https://api.imgbb.com/1/upload
     alternatif: github raw url kullanilabilir
     """
-    imgbb_key = os.getenv("IMGBB_API_KEY", "")
+    imgbb_key = IMGBB_API_KEY or os.getenv("IMGBB_API_KEY", "")
 
     if imgbb_key:
         import base64

@@ -1,0 +1,19 @@
+{
+  "app_id": "1521966196161302",
+  "app_secret": "3625b06d1fb69979fd882989a960a574",
+  "instagram_account_id": "",
+  "facebook_page_id": "758837067309184",
+  "facebook_page_name": "Finzora",
+  "access_token": "",
+  "user_access_token": "",
+  "token_expires": "",
+  "username": "zeynelgun01",
+  "ig_app_id": "1505058181223109",
+  "ig_app_secret": "1dd3ec249bcfed1b86458a0d3c1f35c0",
+  "threads_app_id": "922552067315328",
+  "threads_app_secret": "76edf3ed4c0b406fbce333cb0b36c9f0",
+  "graph_api_version": "v25.0",
+  "setup_date": "",
+  "imgbb_api_key": "",
+  "notes": "instagram_setup.py calistirarak bu dosya otomatik doldurulur"
+}
