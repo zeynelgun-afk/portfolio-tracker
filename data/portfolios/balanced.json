@@ -18,11 +18,11 @@
       "kar_zarar": -309.7199999999975,
       "kar_zarar_yuzde": -1.72,
       "gunluk_degisim_yuzde": 0,
-      "son_guncelleme": "2026-04-02T14:58:11.767876",
+      "son_guncelleme": "2026-04-02T16:06:37.522047",
       "giris_tarihi": "2026-02-17",
       "giris_fiyati": 67.44,
       "giris_nedeni": "Initial position - Dividend defensive",
-      "agirlik_yuzde": 15.71
+      "agirlik_yuzde": 15.72
     },
     {
       "sembol": "JNJ",
@@ -30,22 +30,22 @@
       "sektor": "Sağlık",
       "adet": 50,
       "maliyet_baz": 244.14,
-      "guncel_fiyat": 246.57,
+      "guncel_fiyat": 244.59,
       "yatirim": 12207.0,
-      "guncel_deger": 12328.5,
-      "kar_zarar": 121.5,
-      "kar_zarar_yuzde": 1.0,
+      "guncel_deger": 12229.5,
+      "kar_zarar": 22.5,
+      "kar_zarar_yuzde": 0.18,
       "gunluk_degisim_yuzde": 0,
-      "son_guncelleme": "2026-04-02T14:58:11.767876",
+      "son_guncelleme": "2026-04-02T16:06:37.522047",
       "giris_tarihi": "2026-03-13",
       "giris_fiyati": 244.14,
       "giris_nedeni": "Saglik sektoru diversifikasyonu. Defensif/temettü aristokrati. Iran savasi ortaminda direncli. RSI 59, SMA50 ustu. Portfoyde saglik eksikti.",
-      "agirlik_yuzde": 10.95
+      "agirlik_yuzde": 10.87
     }
   ],
-  "son_guncelleme": "2026-04-02T14:58:11.767876",
-  "toplam_deger": 112638.21,
-  "toplam_getiri_yuzde": 12.64,
+  "son_guncelleme": "2026-04-02T16:06:37.522047",
+  "toplam_deger": 112539.21,
+  "toplam_getiri_yuzde": 12.54,
   "transactions": [
     {
       "tarih": "2026-03-02",
