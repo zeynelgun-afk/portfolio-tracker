@@ -5,7 +5,7 @@
 > **portföy**: data/portfolios/dividend.json
 > **başlangıç**: $100K (17 şubat 2026)
 > **hedef**: yıllık %8-12 sermaye artışı + temettü geliri
-> **max pozisyon**: 15 hisse, tek hisse max %8
+> **max pozisyon**: 6 hisse, tek hisse max %20
 
 ---
 
@@ -196,8 +196,8 @@ bu metrik mevcut yield'den daha önemli: düşük yield + yüksek büyüme > yü
 
 | skor | max ağırlık |
 |:----:|:-----------:|
-| 80-100 | %8 |
-| 65-79 | %5 |
+| 80-100 | %20 |
+| 65-79 | %12 |
 
 ---
 
@@ -205,15 +205,15 @@ bu metrik mevcut yield'den daha önemli: düşük yield + yüksek büyüme > yü
 
 ### ağırlık kuralları
 
-- tek hisse max %8
-- tek sektör max %30
-- aynı tema max %40 (tema bozulma riski sınırlanır)
-- aynı temadan 4+ hisse varsa yeni ekleme yapma, mevcut pozisyonları büyüt
+- max 6 pozisyon (tüm portföylerde aynı kural)
+- tek hisse max %20
+- tek sektör max %40 (6 hisseden max 2 aynı sektör)
+- aynı temadan max 3 hisse (tema bozulma riski sınırlanır)
 
 ### sektör korelasyonu
 
 yeni ekleme yapılırken mevcut portföyle korelasyon kontrol edilir:
-- aynı sektörden zaten 3+ hisse varsa → ekleme sadece olağanüstü skor (85+) ile
+- aynı sektörden zaten 2 hisse varsa → ekleme yapılmaz (max 2/sektör)
 - farklı sektörden ekleme öncelikli (diversifikasyon)
 - tema değişiminde sektör rotasyonu yapılır
 

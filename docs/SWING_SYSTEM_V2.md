@@ -273,7 +273,7 @@ pozisyon_buyuklugu = risk_tutari / stop_mesafesi
 | risk_yuzdesi | %1 | tek trade'de kaybedilecek max tutar (hesabın %1'i) |
 | min_stop_mesafesi | fiyatın %5'i | bunun altında giriş reddedilir |
 | max_stop_mesafesi | chandelier: 3x ATR(14) | çarpan sabit (3×), ATR günlük güncellenir |
-| max_pozisyon_tutari | hesabın %12.5'i | tek pozisyon max (8 slot / %100) |
+| max_pozisyon_tutari | hesabın %16.7'si | tek pozisyon max (6 slot / %100) |
 
 ### ATR hesaplama
 
