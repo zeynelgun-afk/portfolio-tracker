@@ -1,6 +1,6 @@
 # TRADING PLAYBOOK — KANIT BAZLI KURALLAR
 
-> **son güncelleme**: 2 nisan 2026
+> **son güncelleme**: 3 nisan 2026
 > **amaç**: gerçek trade deneyimlerinden çıkarılan, tekrar ihlal edilmemesi gereken kurallar
 > **güncelleme sıklığı**: her kapanış raporunda yeni dersler eklenir
 > **referans**: sabah raporu ve seans promptu bu dosyayı okur
@@ -448,14 +448,16 @@ piyasa ortamına göre hangi sektör nasıl davranıyor.
 > **neden değişti**: v1'de ichimoku'yu sabit %5 stop / %10 hedef ile karıştırıyorduk. ichimoku kendi başına komple bir trend sistemi. sabit kurallarla karıştırmak çelişki yaratıyordu (NEM örneği: ichimoku 0/3 "girme" diyor, RSI oversold tezi "gir" diyordu).
 
 **v2.3 özeti**:
-- ön filtre: VIX <22 → SPY > 21SMA master switch → A+B+E+F filtre. VIX >25 → K-13b (sektör ETF SMA)
+- ön filtre: VIX <22 → SPY > 21SMA + eğim ↗ → A+B+E+F filtre → K-19 sektör kontrolü. VIX >25 → K-13b
 - giriş: kumo kırılımı / kijun bounce (ichimoku sinyalleri, ön filtre geçtikten sonra)
 - stop: kijun-sen dinamik (sabit %5 yok)
 - hedef: tüm swing girişleri ön filtreden geçtiği için sabit %10 hedef. portföy pozisyonlarında K-11 kademeli çıkış uygulanır
 - trailing: kijun-sen doğal trailing (sabit % yok)
 - süre: %10 hedefe veya stop'a kadar tut. süre sınırı yok ama K-08 zaman filtresi uygulanır
+- K-19: XLP (defansif) sektöründen swing girişi yapılmaz (0🎯 2⛔ geçmiş)
+- SPY eğim kanıtı: ↗ yükselen dönemde %67, ↘ düşen dönemde %25 başarı (38 dönem)
 - backtest (38 dönem, 2021-2026): 54 trade → 21🎯 14⛔ 19— | kazanç vs kayıp: %60 | net kârlı (~+$15.9K)
-- regime notu: ABEF bull market'te güçlü (%73), choppy/geçiş döneminde zayıf (%21). K-13b her dönemde güvenilir (%90). detay: docs/SWING_SYSTEM_V2.md bölüm 0
+- regime notu: ABEF bull market'te güçlü (%73), choppy/geçiş döneminde zayıf (%21). K-13b her dönemde güvenilir (%90)
 
 ### v1 (eski, 24 mart 2026'ya kadar)
 

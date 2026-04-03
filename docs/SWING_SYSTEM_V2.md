@@ -1,12 +1,12 @@
 # SWING TRADE SİSTEMİ v2.3 — ICHİMOKU + HACİM + ATR + ÖN FİLTRE
 
 > **versiyon**: 2.3
-> **son güncelleme**: 2 nisan 2026
+> **son güncelleme**: 3 nisan 2026
 > **önceki sistem**: sabit %5 stop / %10 hedef / RSI+MACD+SMA skor kartı
 > **neden değişti**: ichimoku kendi başına komple bir trend sistemi. sabit stop/hedef ile karıştırmak çelişki yaratıyordu. yeni sistem tamamen dinamik.
 > **v2.1 değişiklik**: TK cross giriş sinyali kaldırıldı (sahte sinyaller), minimum %5 stop mesafesi zorunluluğu eklendi
 > **v2.2 değişiklik**: VIX rejimine göre çift katmanlı ön filtre sistemi eklendi (A+B+E+F)
-> **v2.3 değişiklik**: SPY 21SMA master switch eklendi. sektör ETF SMA filtresi K-13b'de sayısallaştırıldı
+> **v2.3 değişiklik**: SPY 21SMA master switch (konum + eğim) eklendi. sektör ETF SMA filtresi K-13b'de sayısallaştırıldı. K-19 XLP sektör dışlaması eklendi
 >
 > **38 dönem backtest özeti (2021-2026)**:
 > - toplam: 54 trade → 21🎯 hedef (%39), 14⛔ stop (%26), 19 düz (%35)
@@ -70,9 +70,13 @@ ichimoku sinyali (3/4 veya 4/4)
         │     │
         │     ├── SPY > 21SMA? ← MASTER SWITCH
         │     │     │
-        │     │     ├── evet → A+B+E+F filtresi uygula
-        │     │     │            ├── geçti → GİR (tam pozisyon, %10 hedef)
-        │     │     │            └── geçmedi → ATLA
+        │     │     ├── evet → 21SMA eğimi yükseliyor mu? (son 5 gün)
+        │     │     │            │
+        │     │     │            ├── ↗ evet → A+B+E+F filtresi uygula
+        │     │     │            │              ├── geçti → GİR (tam pozisyon, %10 hedef)
+        │     │     │            │              └── geçmedi → ATLA
+        │     │     │            │
+        │     │     │            └── ↘ hayır → ATLA (momentum kırılıyor)
         │     │     │
         │     │     └── hayır → ATLA (piyasa geneli zayıf)
         │
@@ -87,14 +91,23 @@ ichimoku sinyali (3/4 veya 4/4)
 **tüm swing girişleri ön filtreden geçer → tüm swing trade'lerde hedef sabit %10.**
 portföy pozisyonlarında K-11 kademeli çıkış (RSI 70+ katmanları) uygulanır, sabit hedef yoktur.
 
-### SPY 21SMA master switch
+### SPY 21SMA master switch (konum + eğim)
 
-VIX <22 ortamında A+B+E+F filtresinden ÖNCE SPY > 21SMA kontrolü yapılır. SPY 21SMA altındaysa hiçbir swing girişi yapılmaz.
+VIX <22 ortamında A+B+E+F filtresinden ÖNCE iki koşul kontrol edilir:
+1. SPY kapanış > 21SMA (konum)
+2. 21SMA bugün > 21SMA 5 gün önce (eğim yükseliyor)
 
-- hesaplama: SPY kapanış fiyatı > SPY 21 günlük basit hareketli ortalama
-- gerekçe: 38 dönem backtestinde SPY ❌ ortamında ABEF %12.5 başarı (toplamda ~6⛔ önlendi, ~6🎯 kaçırıldı). SPY ❌'de giriş yapmak net negatif beklenen değer
+her iki koşul da sağlanmalı. SPY 21SMA altındaysa VEYA 21SMA düşüş eğimindeyse swing girişi yapılmaz.
+
+- konum hesaplama: SPY kapanış > SPY 21 günlük basit hareketli ortalama
+- eğim hesaplama: 21SMA(bugün) > 21SMA(5 gün önce). eğim = (21SMA_bugün - 21SMA_5gün_önce) / 21SMA_5gün_önce × 100. eğim > 0 ise ↗ yükseliyor
+- gerekçe: SPY 21SMA üzerinde ama eğim düşüyorsa momentum kırılıyor. 38 dönem backtestinde:
+  SPY ↗ yükseliyor: 10🎯 5⛔ = %67 başarı
+  SPY ↘ düşüyor:    2🎯 6⛔ = %25 başarı (+42 puan fark)
+  kritik kanıt: ağu 2023'te SPY>21SMA ama eğim ↘ → NVDA/AVGO/ANET 3/3 stop (-$1,870). eğim filtresi bunu yakalıyor
+- neden 50SMA değil: 50SMA çok yavaş (10 günlük eğim gerekiyor), ağu 2023'ü kaçırıyor, nis 2023 LLY🎯'yi engelliyor. 21SMA swing trade zaman dilimiyle uyumlu
 - K-13b yolunda (VIX >25) SPY kontrolü YAPILMAZ. kriz döneminde SPY zaten 21SMA altındadır, sektör ETF SMA filtresi yeterlidir
-- bilinen sınırlama: sektör bazlı katalizörleri kaçırabilir (mayıs 2023 NVDA earnings patlaması: AMD/AVGO/PANW 3🎯 kaçırıldı). bu kabul edilebilir trade-off
+- bilinen sınırlama: sektör bazlı katalizörleri kaçırabilir (mayıs 2023 NVDA earnings: 3🎯 kaçırıldı) ve haz 2022 enerji rallisini engeller (2🎯 kaçırılır ama 3⛔ de önlenir)
 
 ### A+B+E+F filtresi (VIX <22 + SPY > 21SMA ortamında zorunlu)
 
