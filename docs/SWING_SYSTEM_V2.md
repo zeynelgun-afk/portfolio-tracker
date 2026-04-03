@@ -5,18 +5,16 @@
 > **önceki sistem**: sabit %5 stop / %10 hedef / RSI+MACD+SMA skor kartı
 > **neden değişti**: ichimoku kendi başına komple bir trend sistemi. sabit stop/hedef ile karıştırmak çelişki yaratıyordu. yeni sistem tamamen dinamik.
 > **v2.1 değişiklik**: TK cross giriş sinyali kaldırıldı (sahte sinyaller), minimum %5 stop mesafesi zorunluluğu eklendi
-> **v2.2 değişiklik**: VIX rejimine göre çift katmanlı ön filtre sistemi eklendi (A+B+E+F)
-> **v2.3 değişiklik**: SPY 21SMA master switch (konum + eğim) eklendi. sektör ETF SMA filtresi K-13b'de sayısallaştırıldı. K-19 XLP sektör dışlaması eklendi
+> **v2.2 değişiklik**: VIX rejimine göre çift katmanlı ön filtre sistemi eklendi (A+B+E+F) — sonra v2.3'te kaldırıldı
+> **v2.3 değişiklik**: SPY 21SMA master switch (konum + eğim) eklendi. K-19 XLP dışlama. ABEF kaldırıldı (184 sinyal analizinde %0 iyileştirme). 4/4 ichimoku zorunlu yapıldı (3/4 kaldırıldı)
 >
-> **51 dönem backtest özeti (2021-2026, 63 trade)**:
-> - kârda kapanan: 42/63 = %67 | zararda kapanan: 20/63 = %32 | breakeven: 1
-> - toplam P/L: +194.7% (tüm trade'lerin kümülatif getirisi)
-> - tahmini 5 yıl net kâr: ~+$20,200
-> - K-13b kriz modu: 11 kâr / 2 zarar = %85 (en güvenilir parça)
-> - ABEF normal piyasa (SPY✅ + eğim↗): 31 kâr / 18 zarar = %63
+> **61 dönem backtest özeti (2021-2026)**:
+> - 184 ichimoku 3/4+ sinyal analiz edildi → 4/4 sinyal: %54 kâr, 3/4 sinyal: %49 kâr
+> - ABEF filtreleri (A/B/E/F) hiçbiri anlamlı fark yaratmadı → kaldırıldı
+> - yeni sistem: ichimoku 4/4 zorunlu + SPY > 21SMA + eğim ↗ + K-19 sektör dışlama
+> - K-13b kriz modu: %85 kâr oranı (en güvenilir bileşen)
 > - yıl bazlı: 2024 %100, 2025 %74, 2026 %85, 2023 %30, 2022 %40, 2021 %50
-> - **DİKKAT**: ABEF filtresi bull market dönemlerinde (2024-2026) güçlü, choppy/geçiş dönemlerinde (2021-2023) zayıf. bu sınırlama kabul edilmeli, ek filtre ile düzeltmeye çalışılmamalı (overfitting riski)
-> - başarı tanımı: kârda kapanan trade = başarılı (sadece %10 hedef değil, herhangi bir pozitif P/L)
+> - başarı tanımı: kârda kapanan trade = başarılı (sadece %10 hedef değil)
 
 ---
 
@@ -39,63 +37,59 @@ RSI ve MACD eklenmez. tenkan/kijun kesişimi zaten MACD'nin yaptığını yapıy
 
 ## 0. ÖN FİLTRE SİSTEMİ (v2.3 — GİRİŞ ÖNCESİ ZORUNLU)
 
-> **51 dönem backtest sonuçları (nisan 2021 — mart 2026, 63 trade)**:
+> **61 dönem, 184 sinyal analizi (ocak 2021 — mart 2026)**:
 >
-> | bileşen | trade | ✅ kâr | ❌ zarar | kâr oranı |
-> |---------|:-----:|:------:|:-------:|:---------:|
-> | ABEF normal (SPY✅ + eğim↗) | 51 | 31 | 18 | %63 |
-> | K-13b kriz | 12 | 11 | 2 | %85 |
-> | **toplam** | **63** | **42** | **20** | **%68** |
+> ABEF filtreleri (A: 52W yakınlık, B: 5gün momentum, E: volatilite, F: RSI>60) 184 ichimoku sinyali üzerinde test edildi. hiçbiri anlamlı fark yaratmadı:
+> - filtre yok: %49 kâr oranı
+> - ABEF toplu: %49 kâr oranı (sıfır iyileştirme)
+> - tekil en iyi filtre (E): +2 puan (istatistiksel olarak anlamsız)
+> - A filtresi (52W): -2 puan (zararlı)
 >
-> yıl bazlı (kârda kapanan = başarılı):
-> - 2021: 3 kâr / 3 zarar = %50
-> - 2022: 2 kâr / 3 zarar = %40 (ayı piyasasında kayıp minimum)
-> - 2023: 3 kâr / 7 zarar = %30 (choppy — en kötü dönem)
-> - 2024: 9 kâr / 0 zarar = %100 (bull + AI)
-> - 2025: 14 kâr / 5 zarar = %74
-> - 2026: 11 kâr / 2 zarar = %85
+> **gerçek ayrıştırıcı: ichimoku 4/4 vs 3/4**:
+> - 4/4 sinyal (volume teyitli): %54 kâr
+> - 3/4 sinyal (volume teyitsiz): %49 kâr
+> - fark: +5 puan → ABEF'in tamamından daha etkili
 >
-> toplam P/L: +194.7% kümülatif | tahmini net kâr: ~+$20,200
+> **karar**: ABEF kaldırıldı, 4/4 ichimoku zorunlu yapıldı
 >
-> **sınırlama**: ABEF bull market filtresidir. 2024-2026'da %85+ kâr oranı, 2021-2023'te %30-50. bu regime-dependency kabul edilmeli, ek filtre ile düzeltmeye çalışılmamalı (overfitting riski).
->
-> **en güvenilir bileşen: K-13b kriz modu** (%85 kâr oranı, 5 yıl boyunca tutarlı)
+> K-13b kriz modu: %85 kâr oranı (en güvenilir bileşen)
+> SPY eğim filtresi: ↗ yükselirken %67, ↘ düşerken %25 kâr (+42 puan fark)
 
 ### karar akışı (swing trade)
 
 > **önemli**: bu akış sadece swing trade girişleri içindir. portföy pozisyonları (dengeli/agresif/temettü) farklı çıkış kuralları kullanır (K-11 kademeli çıkış).
 
 ```
-ichimoku sinyali (3/4 veya 4/4)
+ichimoku sinyali
         │
-        ├── VIX <22 (normal/dikkatli)
+        ├── VIX <22 (normal)
         │     │
-        │     ├── SPY > 21SMA? ← MASTER SWITCH
+        │     ├── sinyal 4/4 mü? (volume teyit zorunlu)
         │     │     │
-        │     │     ├── evet → 21SMA eğimi yükseliyor mu? (son 5 gün)
-        │     │     │            │
-        │     │     │            ├── ↗ evet → A+B+E+F filtresi uygula
-        │     │     │            │              ├── geçti → GİR (tam pozisyon, %10 hedef)
-        │     │     │            │              └── geçmedi → ATLA
-        │     │     │            │
-        │     │     │            └── ↘ hayır → ATLA (momentum kırılıyor)
+        │     │     ├── evet (4/4) → SPY > 21SMA + eğim ↗?
+        │     │     │                  │
+        │     │     │                  ├── evet → K-19 sektör kontrol
+        │     │     │                  │           ├── geçti → GİR (%10 hedef)
+        │     │     │                  │           └── XLP → ATLA
+        │     │     │                  │
+        │     │     │                  └── hayır → ATLA
         │     │     │
-        │     │     └── hayır → ATLA (piyasa geneli zayıf)
+        │     │     └── hayır (3/4) → ATLA
         │
-        ├── VIX 22-35 (gergin/kriz)
-        │     └── ichimoku skoru 4/4 mü?
-        │           ├── evet + K-13b koşulları → GİR (yarım pozisyon, %10 hedef)
-        │           └── hayır → ATLA
+        ├── VIX 22-35 (kriz)
+        │     └── ichimoku 4/4 + K-13b koşulları → GİR (yarım pozisyon, %10 hedef)
         │
-        └── VIX >35 → ATLA (hiç girme)
+        └── VIX >35 → ATLA
 ```
 
-**tüm swing girişleri ön filtreden geçer → tüm swing trade'lerde hedef sabit %10.**
-portföy pozisyonlarında K-11 kademeli çıkış (RSI 70+ katmanları) uygulanır, sabit hedef yoktur.
+**tüm swing girişleri 4/4 ichimoku zorunlu.** 3/4 sinyaller (volume teyitsiz) swing'de değerlendirilmez.
+portföy pozisyonlarında K-11 kademeli çıkış uygulanır, sabit hedef yoktur.
+
+> **neden ABEF kaldırıldı**: 184 ichimoku sinyali üzerinde yapılan analiz sonucu ABEF filtrelerinin (52W yakınlık, 5gün momentum, 20gün volatilite, RSI>60) hiçbiri anlamlı fark yaratmadı. baseline %49 kâr oranı, ABEF ile %49 — sıfır iyileştirme. tekil en iyi filtre +2p, toplu ABEF -1p. buna karşılık 4/4 vs 3/4 sinyal ayrımı +5p fark yarattı. ABEF yerine 4/4 zorunluluğu daha etkili ve daha basit.
 
 ### SPY 21SMA master switch (konum + eğim)
 
-VIX <22 ortamında A+B+E+F filtresinden ÖNCE iki koşul kontrol edilir:
+VIX <22 ortamında girişten ÖNCE iki koşul kontrol edilir:
 1. SPY kapanış > 21SMA (konum)
 2. 21SMA bugün > 21SMA 5 gün önce (eğim yükseliyor)
 
@@ -104,38 +98,22 @@ her iki koşul da sağlanmalı. SPY 21SMA altındaysa VEYA 21SMA düşüş eğim
 - konum hesaplama: SPY kapanış > SPY 21 günlük basit hareketli ortalama
 - eğim hesaplama: 21SMA(bugün) > 21SMA(5 gün önce). eğim = (21SMA_bugün - 21SMA_5gün_önce) / 21SMA_5gün_önce × 100. eğim > 0 ise ↗ yükseliyor
 - gerekçe: SPY 21SMA üzerinde ama eğim düşüyorsa momentum kırılıyor. 51 dönem backtestinde:
-  SPY ↗ yükseliyor: 10🎯 5⛔ = %67 başarı
-  SPY ↘ düşüyor:    2🎯 6⛔ = %25 başarı (+42 puan fark)
-  kritik kanıt: ağu 2023'te SPY>21SMA ama eğim ↘ → NVDA/AVGO/ANET 3/3 stop (-$1,870). eğim filtresi bunu yakalıyor
-- neden 50SMA değil: 50SMA çok yavaş (10 günlük eğim gerekiyor), ağu 2023'ü kaçırıyor, nis 2023 LLY🎯'yi engelliyor. 21SMA swing trade zaman dilimiyle uyumlu
-- K-13b yolunda (VIX >25) SPY kontrolü YAPILMAZ. kriz döneminde SPY zaten 21SMA altındadır, sektör ETF SMA filtresi yeterlidir
-- bilinen sınırlama: sektör bazlı katalizörleri kaçırabilir (mayıs 2023 NVDA earnings: 3🎯 kaçırıldı) ve haz 2022 enerji rallisini engeller (2🎯 kaçırılır ama 3⛔ de önlenir)
+  SPY ↗ yükseliyor: kâr oranı %67
+  SPY ↘ düşüyor:    kâr oranı %25 (+42 puan fark)
+- neden 50SMA değil: 50SMA çok yavaş, ağu 2023'ü kaçırıyor, nis 2023 LLY'yi engelliyor. 21SMA swing trade zaman dilimiyle uyumlu
+- K-13b yolunda (VIX >25) SPY kontrolü YAPILMAZ
 
-### A+B+E+F filtresi (VIX <22 + SPY > 21SMA ortamında zorunlu)
+### sektör dışlaması (K-19)
 
-ichimoku sinyali aldıktan sonra, giriş öncesinde bu 4 koşulun **tümü** sağlanmalı:
-
-| filtre | koşul | hesaplama | gerekçe |
-|--------|-------|-----------|---------|
-| **A** | 52 haftalık zirveye yakınlık | (fiyat - 52W high) / 52W high > -3% | düşüş trendindeki değil, yükseliş trendindeki hisseleri seçer |
-| **B** | 5 günlük momentum | (fiyat - 5 gün önceki kapanış) / 5 gün önceki > +3% | son 1 haftada aktif alıcı baskısı olan hisseleri seçer |
-| **E** | 20 günlük volatilite | std_dev(son 20 kapanış) / ortalama(son 20 kapanış) > 2.5% | yeterli hareket alanı olan hisseleri seçer, çok dar range'deki hisselerin kijun stop'u sıkı olur ve whipsaw ile tetiklenir |
-| **F** | RSI(14) | RSI > 60 | momentum bölgesindeki hisseleri seçer. RSI <60 olan 4/4 sinyal volume spike'ının satış baskısından geldiğine işaret edebilir |
-
-**ne zaman uygulanmaz**:
-- VIX >22 ortamında A+B+E+F uygulanMAZ (kriz döneminde 52W ve Mom5 yapısal olarak farklı davranır, tüm kazananları engeller)
-- bu durumda K-13b kuralları devreye girer (bkz. TRADING_PLAYBOOK.md K-13 v3)
-
-**sektör dışlaması (K-19)**:
 - XLP (temel tüketim / defansif) sektöründen swing girişi YAPILMAZ
 - kapsam: MO, PM, KO, PEP, WMT, COST ve XLP'ye dahil diğer hisseler
-- gerekçe: 51 dönem backtestinde XLP'den 0🎯 hedef, 2⛔ stop, 4 düz. defansif hisseler yapısal olarak düşük volatiliteye sahip, günlük %0.5-1 hareket eden hisseden 10 gün içinde %10 hedef matematiksel olarak gerçekçi değil
-- bu kural sadece swing trade için geçerli. portföy pozisyonu (dengeli/temettü) olarak XLP hisseleri alınabilir (K-11 çıkış kurallarıyla)
-- K-13b kriz modunda da XLP'den swing girişi yapılmaz (aynı yapısal sorun)
+- gerekçe: 51 dönem backtestinde XLP'den 0 kâr, 2 zarar. defansif hisseler yapısal olarak düşük volatiliteye sahip, %10 hedefe ulaşamıyor
+- bu kural sadece swing trade için geçerli. portföy pozisyonu olarak XLP alınabilir
+- K-13b kriz modunda da XLP'den swing girişi yapılmaz
 
 ### K-13b özet referans (VIX >25 ortamında)
 
-VIX >25'te ichimoku 4/4 + volume teyit yeterli, A+B+E+F aranmaz. giriş koşulları (tümü zorunlu):
+VIX >25'te ichimoku 4/4 + volume teyit + sektör ETF SMA filtresi. giriş koşulları (tümü zorunlu):
 1. ichimoku skoru tam 4/4 (kumo üstü + TK bull + tenkan üstü + volume 1.3x+)
 2. sektör ETF (XLK/XLE/XLI/XLC/XLV/XLF/XLP/XLY/XLU/XLB) hem 9SMA hem 21SMA üzerinde
 3. mcap >$5B
