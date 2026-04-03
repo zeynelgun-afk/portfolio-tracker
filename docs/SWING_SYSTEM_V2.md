@@ -3,7 +3,7 @@
 > **versiyon**: 2.3
 > **son güncelleme**: 3 nisan 2026
 > **önceki sistem**: sabit %5 stop / %10 hedef / RSI+MACD+SMA skor kartı
-> **neden değişti**: ichimoku kendi başına komple bir trend sistemi. sabit stop/hedef ile karıştırmak çelişki yaratıyordu. yeni sistem tamamen dinamik.
+> **neden değişti**: ichimoku kendi başına komple bir trend sistemi. sabit stop/hedef ile karıştırmak çelişki yaratıyordu. yeni sistem: stop dinamik (chandelier), hedef sabit (%10).
 > **v2.1 değişiklik**: TK cross giriş sinyali kaldırıldı (sahte sinyaller), minimum %5 stop mesafesi zorunluluğu eklendi
 > **v2.2 değişiklik**: VIX rejimine göre çift katmanlı ön filtre sistemi eklendi (A+B+E+F) — sonra v2.3'te kaldırıldı
 > **v2.3 değişiklik**: SPY 21SMA master switch (konum + eğim). K-19 XLP dışlama. K-20 sektör RS dead cat bounce. ABEF kaldırıldı (184 sinyal, %0 iyileştirme). 4/4 ichimoku zorunlu. kijun trailing → chandelier exit (3×ATR) — 126 trade: +45% P/L iyileştirme
@@ -11,7 +11,7 @@
 > **61 dönem backtest özeti (2021-2026)**:
 > - 184 ichimoku 3/4+ sinyal analiz edildi → 4/4 sinyal: %54 kâr, 3/4 sinyal: %49 kâr
 > - ABEF filtreleri (A/B/E/F) hiçbiri anlamlı fark yaratmadı → kaldırıldı
-> - yeni sistem: ichimoku 4/4 zorunlu + SPY > 21SMA + eğim ↗ + K-19 sektör dışlama + K-20 RS dead cat bounce filtresi
+> - yeni sistem: ichimoku 4/4 zorunlu + chandelier exit (3×ATR) + SPY > 21SMA + eğim ↗ + K-19 sektör dışlama + K-20 RS dead cat bounce filtresi
 > - K-13b kriz modu: %85 kâr oranı (en güvenilir bileşen)
 > - yıl bazlı: 2024 %100, 2025 %74, 2026 %85, 2023 %30, 2022 %40, 2021 %50
 > - başarı tanımı: kârda kapanan trade = başarılı (sadece %10 hedef değil)
@@ -102,7 +102,7 @@ her iki koşul da sağlanmalı. SPY 21SMA altındaysa VEYA 21SMA düşüş eğim
 
 - konum hesaplama: SPY kapanış > SPY 21 günlük basit hareketli ortalama
 - eğim hesaplama: 21SMA(bugün) > 21SMA(5 gün önce). eğim = (21SMA_bugün - 21SMA_5gün_önce) / 21SMA_5gün_önce × 100. eğim > 0 ise ↗ yükseliyor
-- gerekçe: SPY 21SMA üzerinde ama eğim düşüyorsa momentum kırılıyor. 51 dönem backtestinde:
+- gerekçe: SPY 21SMA üzerinde ama eğim düşüyorsa momentum kırılıyor. backtestinde:
   SPY ↗ yükseliyor: kâr oranı %67
   SPY ↘ düşüyor:    kâr oranı %25 (+42 puan fark)
 - neden 50SMA değil: 50SMA çok yavaş, ağu 2023'ü kaçırıyor, nis 2023 LLY'yi engelliyor. 21SMA swing trade zaman dilimiyle uyumlu
@@ -112,7 +112,7 @@ her iki koşul da sağlanmalı. SPY 21SMA altındaysa VEYA 21SMA düşüş eğim
 
 - XLP (temel tüketim / defansif) sektöründen swing girişi YAPILMAZ
 - kapsam: MO, PM, KO, PEP, WMT, COST ve XLP'ye dahil diğer hisseler
-- gerekçe: 51 dönem backtestinde XLP'den 0 kâr, 2 zarar. defansif hisseler yapısal olarak düşük volatiliteye sahip, %10 hedefe ulaşamıyor
+- gerekçe: backtestinde XLP'den 0 kâr, 2 zarar. defansif hisseler yapısal olarak düşük volatiliteye sahip, %10 hedefe ulaşamıyor
 - bu kural sadece swing trade için geçerli. portföy pozisyonu olarak XLP alınabilir
 - K-13b kriz modunda da XLP'den swing girişi yapılmaz
 
@@ -139,7 +139,7 @@ VIX >25'te ichimoku 4/4 + volume teyit + sektör ETF SMA filtresi. giriş koşul
 4. RSI 40-70
 5. K-18 insider temiz
 6. K-17 korelasyon >%50
-uygulama kuralları: max 2 eşzamanlı, sektör başına 1, hedef sabit %10
+uygulama kuralları: max 2 eşzamanlı, sektör başına 1, hedef sabit %10, stop: chandelier exit (3×ATR) — normal modla aynı
 
 detaylar: docs/TRADING_PLAYBOOK.md K-13 v3 bölümü
 
@@ -272,13 +272,12 @@ pozisyon_buyuklugu = risk_tutari / stop_mesafesi
 |-----------|-------|----------|
 | risk_yuzdesi | %1 | tek trade'de kaybedilecek max tutar (hesabın %1'i) |
 | min_stop_mesafesi | fiyatın %5'i | bunun altında giriş reddedilir |
-| max_stop_mesafesi | chandelier: 3x ATR(14) | stop mesafesi sabittir |
+| max_stop_mesafesi | chandelier: 3x ATR(14) | çarpan sabit (3×), ATR günlük güncellenir |
 | max_pozisyon_tutari | hesabın %12.5'i | tek pozisyon max (8 slot / %100) |
 
 ### ATR hesaplama
 
-ATR(14) = son 14 günün true range ortalaması
-true range = max(yüksek-düşük, abs(yüksek-önceki kapanış), abs(düşük-önceki kapanış))
+bkz. bölüm 2 (chandelier exit) — ATR(14) formülü orada tanımlı.
 
 ### örnek
 
