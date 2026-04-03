@@ -5,8 +5,16 @@
 > **önceki sistem**: sabit %5 stop / %10 hedef / RSI+MACD+SMA skor kartı
 > **neden değişti**: ichimoku kendi başına komple bir trend sistemi. sabit stop/hedef ile karıştırmak çelişki yaratıyordu. yeni sistem tamamen dinamik.
 > **v2.1 değişiklik**: TK cross giriş sinyali kaldırıldı (sahte sinyaller), minimum %5 stop mesafesi zorunluluğu eklendi
-> **v2.2 değişiklik**: VIX rejimine göre çift katmanlı ön filtre sistemi eklendi (A+B+E+F). 5 dönem backtesti ile doğrulandı (15/15 kazanan, 0 kayıp)
-> **v2.3 değişiklik**: SPY 21SMA master switch eklendi. 15 dönem backtesti ile doğrulandı (kayıp oranı %26 → %5.9)
+> **v2.2 değişiklik**: VIX rejimine göre çift katmanlı ön filtre sistemi eklendi (A+B+E+F)
+> **v2.3 değişiklik**: SPY 21SMA master switch eklendi. sektör ETF SMA filtresi K-13b'de sayısallaştırıldı
+>
+> **38 dönem backtest özeti (2021-2026)**:
+> - toplam: 54 trade → 21🎯 hedef (%39), 14⛔ stop (%26), 19 düz (%35)
+> - kazanç vs kayıp oranı: 21/35 = %60 (net kârlı)
+> - K-13b kriz modu: 9🎯 1⛔ = %90 başarı (en güvenilir parça)
+> - ABEF normal piyasa: 12🎯 13⛔ = %48 (regime-dependent, bull market'te daha iyi)
+> - tahmini 5 yıl net kâr: ~+$15,900
+> - **DİKKAT**: ABEF filtresi bull market dönemlerinde (2024-2026) güçlü (%73 başarı), choppy/geçiş dönemlerinde (2021-2023) zayıf (%21 başarı). bu sınırlama kabul edilmeli, ek filtre ile düzeltmeye çalışılmamalı (overfitting riski)
 
 ---
 
@@ -29,14 +37,27 @@ RSI ve MACD eklenmez. tenkan/kijun kesişimi zaten MACD'nin yaptığını yapıy
 
 ## 0. ÖN FİLTRE SİSTEMİ (v2.3 — GİRİŞ ÖNCESİ ZORUNLU)
 
-> **neden eklendi**: ichimoku 4/4 sinyal normal piyasada (VIX <22) tek başına %33 başarı gösterdi. A+B+E+F filtresi eklendikten sonra iyileşti ama SPY 21SMA altındayken hala %12.5 başarı (%63 kayıp oranı). SPY 21SMA master switch eklendikten sonra kayıp oranı %5.9'a düştü.
+> **38 dönem backtest sonuçları (temmuz 2021 — mart 2026)**:
 >
-> **backtest kanıtı (15 dönem, 28 trade)**:
-> - SPY ✅ + ABEF: 6 dönem → 6W 1L 3F (%86 başarı, tek kayıp PM eki24 RSI 75)
-> - SPY ❌ + ABEF: 5 dönem → 1W 5L 2F (%12.5 başarı → SPY filtresi engeller)
-> - K-13b kriz: 2 dönem → 10W 0L (%100)
-> - SPY ❌ dönemler: nis24 (ABEF 0 geçirdi), ağu24 (ABEF 0 geçirdi), eyl24 (1W/1L), ara24 (1L), oca25 (3L)
-> - **SPY filtresi ile: 16W 1L 3F, kayıp oranı %5.9 (filtre olmadan %26)**
+> | bileşen | trade | 🎯 hedef | ⛔ stop | — düz | 🎯 vs ⛔ |
+> |---------|:-----:|:--------:|:------:|:-----:|:-------:|
+> | SPY ✅ + ABEF | 42 | 12 | 13 | 17 | %48 |
+> | K-13b kriz | 12 | 9 | 1 | 2 | %90 |
+> | **toplam** | **54** | **21** | **14** | **19** | **%60** |
+>
+> yıl bazlı ABEF (SPY ✅ dönemler):
+> - 2021: 0🎯 2⛔ (boğa zirvesi düzeltmesi)
+> - 2022: 2🎯 3⛔ (ayı rallisi, enerji kazandırdı)
+> - 2023: 1🎯 5⛔ (choppy/geçiş — en kötü dönem)
+> - 2024: 4🎯 3⛔ (bull + AI rally)
+> - 2025: 2🎯 0⛔ (bull devam, kayıpsız)
+> - 2026: 3🎯 0⛔ (bull + kriz enerji)
+>
+> **sınırlama**: ABEF bull market filtresidir. 2024-2026 bull market'te %73 başarı, 2021-2023 choppy/geçiş döneminde %21 başarı. bu regime-dependency kabul edilmeli, ek filtre ile düzeltmeye çalışılmamalı (overfitting riski).
+>
+> ABEF olmasaydı (v3.0 sade ichimoku): %44 kayıp oranı, net kâr $5,503. ABEF ile: %26 kayıp oranı, net kâr ~$15,900. ABEF mükemmel değil ama alternatifsiz en iyisi.
+>
+> **en güvenilir bileşen: K-13b kriz modu** (%90 başarı, 5 yıl boyunca tutarlı)
 
 ### karar akışı (swing trade)
 
@@ -54,7 +75,6 @@ ichimoku sinyali (3/4 veya 4/4)
         │     │     │            └── geçmedi → ATLA
         │     │     │
         │     │     └── hayır → ATLA (piyasa geneli zayıf)
-        │     │
         │
         ├── VIX 22-35 (gergin/kriz)
         │     └── ichimoku skoru 4/4 mü?
@@ -67,14 +87,14 @@ ichimoku sinyali (3/4 veya 4/4)
 **tüm swing girişleri ön filtreden geçer → tüm swing trade'lerde hedef sabit %10.**
 portföy pozisyonlarında K-11 kademeli çıkış (RSI 70+ katmanları) uygulanır, sabit hedef yoktur.
 
-### SPY 21SMA master switch (v2.3 ile eklendi)
+### SPY 21SMA master switch
 
 VIX <22 ortamında A+B+E+F filtresinden ÖNCE SPY > 21SMA kontrolü yapılır. SPY 21SMA altındaysa hiçbir swing girişi yapılmaz.
 
 - hesaplama: SPY kapanış fiyatı > SPY 21 günlük basit hareketli ortalama
-- gerekçe: piyasa geneli zayıflarken bireysel hisse ichimoku sinyalleri güvenilmez. 15 dönem backtestinde SPY ❌ ortamında ABEF %12.5 başarı (5 kayıp / 1 kazanan), SPY ✅ ortamında ABEF %86 başarı (6 kazanan / 1 kayıp)
+- gerekçe: 38 dönem backtestinde SPY ❌ ortamında ABEF %12.5 başarı (toplamda ~6⛔ önlendi, ~6🎯 kaçırıldı). SPY ❌'de giriş yapmak net negatif beklenen değer
 - K-13b yolunda (VIX >25) SPY kontrolü YAPILMAZ. kriz döneminde SPY zaten 21SMA altındadır, sektör ETF SMA filtresi yeterlidir
-- veri kaynağı: FMP quote veya historical-price-eod ile günlük kontrol
+- bilinen sınırlama: sektör bazlı katalizörleri kaçırabilir (mayıs 2023 NVDA earnings patlaması: AMD/AVGO/PANW 3🎯 kaçırıldı). bu kabul edilebilir trade-off
 
 ### A+B+E+F filtresi (VIX <22 + SPY > 21SMA ortamında zorunlu)
 
