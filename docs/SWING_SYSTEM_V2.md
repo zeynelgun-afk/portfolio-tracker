@@ -6,7 +6,7 @@
 > **neden değişti**: ichimoku kendi başına komple bir trend sistemi. sabit stop/hedef ile karıştırmak çelişki yaratıyordu. yeni sistem: stop dinamik (chandelier), hedef sabit (%10).
 > **v2.1 değişiklik**: TK cross giriş sinyali kaldırıldı (sahte sinyaller), minimum %5 stop mesafesi zorunluluğu eklendi
 > **v2.2 değişiklik**: VIX rejimine göre çift katmanlı ön filtre sistemi eklendi (A+B+E+F) — sonra v2.3'te kaldırıldı
-> **v2.3 değişiklik**: SPY 21SMA master switch (konum + eğim). K-19 XLP dışlama. K-20 sektör RS dead cat bounce. ABEF kaldırıldı (184 sinyal, %0 iyileştirme). 4/4 ichimoku zorunlu. kijun trailing → chandelier exit (3×ATR) — 126 trade: +45% P/L iyileştirme
+> **v2.3 değişiklik**: SPY 21SMA master switch (konum + eğim). K-19 XLP dışlama. K-20 sektör RS dead cat bounce. ABEF kaldırıldı (184 sinyal, %0 iyileştirme). 4/4 ichimoku zorunlu. kijun trailing → chandelier exit (3×ATR) — 126 trade: +45% P/L iyileştirme. tarama evreni: sabit liste → FMP screener dinamik evren (~1,100 hisse, mcap >$2B). mcap eşiği $5B → $2B
 >
 > **61 dönem backtest özeti (2021-2026)**:
 > - 184 ichimoku 3/4+ sinyal analiz edildi → 4/4 sinyal: %54 kâr, 3/4 sinyal: %49 kâr
@@ -135,7 +135,7 @@ sektör ETF'inin SPY'a göre relative strength'i kontrol edilir. orta vadede zay
 VIX >25'te ichimoku 4/4 + volume teyit + sektör ETF SMA filtresi. giriş koşulları (tümü zorunlu):
 1. ichimoku skoru tam 4/4 (kumo üstü + TK bull + tenkan üstü + volume 1.3x+)
 2. hissenin sektör ETF'i (XLK/XLE/XLI/XLC/XLV/XLF/XLY/XLU/XLB) hem 9SMA hem 21SMA üzerinde (**not**: XLP hisseleri K-19 gereği swing'de alınmaz, ancak XLP ETF genel piyasa sağlık göstergesi olarak kontrol edilebilir)
-3. mcap >$5B
+3. mcap >$2B
 4. RSI 40-70
 5. K-18 insider temiz
 6. K-17 korelasyon >%50
@@ -406,29 +406,75 @@ yeni/değişen alanlar:
 
 ---
 
-## 9. GÜNLÜK İŞ AKIŞI
+## 9. TARAMA EVRENİ
 
-### seans öncesi
-1. `python scripts/swing_ichimoku.py --aktif` → tüm aktif pozisyonlar için ichimoku seviyeleri + ATR güncelle
-2. chandelier stop güncelle: highest_high yenilendi mi, ATR değişti mi → stop yeniden hesapla (sadece yukarı)
-3. kumo yakınında mı kontrol et → çıkış uyarısı
+### FMP screener bazlı dinamik evren
 
-### seans içi
-4. stop tetiklendi mi → çık
-5. yeni kumo kırılımı veya kijun bounce var mı → giriş değerlendir
+tarama evreni sabit liste değil, her seans içinde FMP API'den çekilir:
 
-### seans sonrası
-6. `python scripts/swing_ichimoku.py SEMBOL1,SEMBOL2` → aday tarama
-7. hacim teyidi kontrolü
-8. JSON güncelle, git push
+```
+FMP company-screener parametreleri:
+  marketCapMoreThan: 2000000000 ($2B+)
+  volumeMoreThan: 500000 (günlük 500K+ hacim)
+  priceMoreThan: 10 ($10+ fiyat)
+  isEtf: false
+  isFund: false
+  isActivelyTrading: true
+  country: US
+  limit: 5000 (sektör başına kısıtlama yok)
+```
+
+bu filtrelerle ~1,100 hisse gelir. sektör dağılımı otomatik ve dengeli.
+
+### neden sabit liste değil
+
+- hisseler mcap, hacim, fiyat değişimine göre evrene girip çıkar
+- sabit liste güncellenmeyi unutma riski taşır
+- FMP screener her zaman güncel veri verir
+- API limiti sorun değil (~1,100 çağrı / seans)
+
+### tarama akışı (seans içi, manuel)
+
+1. FMP screener → ~1,100 sembol çek
+2. K-19 filtresi: XLP (consumer defensive) hisselerini çıkar
+3. her sembol için FMP historical data çek (son 120 gün)
+4. ichimoku 4/4 hesapla (kumo üstü + TK bull + tenkan üstü + volume 1.3x)
+5. VIX kontrol:
+   - VIX <22: SPY > 21SMA + eğim ↗ → K-20 RS kontrol → GİR
+   - VIX 22-35: K-13b koşulları (sektör ETF SMA + RSI 40-70 + mcap >$2B) → GİR yarım
+   - VIX >35: ATLA
+6. chandelier stop hesapla: giriş_fiyatı - 3×ATR(14)
+7. min stop mesafesi ≥%5 kontrol
+
+### K-19 dışlama listesi (consumer defensive)
+
+XLP sektörüne dahil tüm hisseler otomatik dışlanır. FMP screener'dan sector="Consumer Defensive" olarak gelir.
 
 ---
 
-## 10. NOTLAR
+## 10. GÜNLÜK İŞ AKIŞI
+
+### seans öncesi / FAZ1
+1. aktif swing pozisyonları için ichimoku seviyeleri + ATR güncelle
+2. chandelier stop güncelle: highest_high yenilendi mi, ATR değişti mi → stop yeniden hesapla (sadece yukarı)
+3. kumo yakınında mı kontrol et → çıkış uyarısı
+
+### seans içi / FAZ2-FAZ3
+4. stop tetiklendi mi → çık
+5. swing tarama çalıştır: FMP screener → ichimoku 4/4 filtre → karar akışı
+6. aday varsa: temel kontrol (K-18 insider, earnings tarihi) → giriş kararı
+
+### seans sonrası
+7. JSON güncelle, git push
+
+---
+
+## 11. NOTLAR
 
 - NEM ve AROC v1 sisteminden v2'ye geçiş (mart 2026) tamamlanmış, her iki pozisyon da kapatılmıştır
 - v1 skor kartı sistemi (7 puan, sabit %5/%10) artık kullanılmıyor
 - v2.1'de TK cross giriş sinyali kaldırıldı, v2.2'de ABEF eklendi, v2.3'te ABEF kaldırılıp 4/4 zorunlu yapıldı, kijun trailing → chandelier exit (3×ATR)
+- tarama evreni: sabit liste → FMP screener bazlı dinamik evren (v2.3, nisan 2026)
 
 ---
 
