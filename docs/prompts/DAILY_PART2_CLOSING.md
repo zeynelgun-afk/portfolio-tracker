@@ -64,8 +64,8 @@ ADIM 3 — JSON GÜNCELLEME
   → her pozisyon: guncel_fiyat, gunluk_degisim_yuzde, guncel_deger, kar_zarar, kar_zarar_yuzde, agirlik_yuzde, son_guncelleme
   → portföy toplamları: toplam_deger, toplam_getiri_yuzde
   → swing: guncel_fiyat, guncel_kar_zarar_yuzde, tutulan_gun
-  → swing ichimoku güncelleme: python scripts/swing_ichimoku.py --aktif
-    (kijun trailing stop güncelleme, çıkış sinyali kontrolü, ichimoku seviyeleri)
+  → swing pozisyonları: chandelier stop güncelle (highest_high, ATR yeniden hesapla)
+    (çıkış sinyali kontrolü: chandelier tetiklendi mi, TK cross, kumo girişi)
   → kapanış raporunda ichimoku değişimi takibi (kijun hareket, sinyal durumu)
   → summary.json güncelle
   → doğrulama: yatirim = adet × maliyet_baz, toplam = sum(pozisyonlar) + nakit, ağırlık ≈ %100
@@ -191,8 +191,7 @@ kısa, hızlı özet — bugün ne oldu.
 aktif pozisyonlar, ichimoku çıkış kontrolü, aksiyonlar.
 
 **durum belirleme (ichimoku v2)**:
-- fiyat < kijun (%0.5+ fark) → 🔴 ÇIKIŞ SİNYALİ
-- fiyat < kijun (<%0.5 fark) → ⚠️ YAKIN, yarın teyit
+- intraday low ≤ chandelier stop → 🔴 ÇIKIŞ SİNYALİ
 - tenkan < kijun (bearish TK cross) → 🔴 TREND DÖNÜŞÜ
 - fiyat kumo'ya girdi → 🟡 KISMI ÇIKIŞ DÜŞÜN
 - fiyat kumo üstü + tenkan > kijun → ✅ normal
@@ -201,18 +200,18 @@ aktif pozisyonlar, ichimoku çıkış kontrolü, aksiyonlar.
 ```markdown
 ## 3. swing trade durumu
 
-> ichimoku güncelleme: python scripts/swing_ichimoku.py --aktif
+> swing v2.3: chandelier exit (3×ATR) + ichimoku durum kontrolü
 
-| id | sembol | giriş | güncel | k/z | kijun stop | kumo | tenkan/kijun | gün | durum |
+| id | sembol | giriş | güncel | k/z | chandelier stop | highest high | ATR | gün | durum |
 |----|--------|-------|--------|-----|-----------|------|--------------|-----|-------|
 
-**aktif**: X/8 | **ortalama k/z**: +%X.XX
+**aktif**: X/6 | **ortalama k/z**: +%X.XX
 
 **ichimoku değişimi** (önceki seans ile karşılaştır):
-- [SEMBOL]: kijun $XX → $XX (stop güncellendi/korundu), çıkış sinyali: var/yok
+- [SEMBOL]: chandelier $XX → $XX (stop güncellendi/korundu), çıkış sinyali: var/yok
 
 **aksiyonlar**:
-🔴 **hemen**: [SEMBOL] — [kijun altı kapanış / TK cross aşağı → çık]
+🔴 **hemen**: [SEMBOL] — [chandelier stop tetiklendi / TK cross aşağı → çık]
 🟡 **izle**: [SEMBOL] koşul → aksiyon
 ✅ **sorunsuz**: [liste]
 
@@ -359,13 +358,13 @@ bu prompt'ta JSON'lar güncellenir. kurallar:
 - `toplam_deger` = tüm pozisyonların guncel_deger toplamı + nakit
 - `toplam_getiri_yuzde` = ((toplam_deger - baslangic_sermaye) / baslangic_sermaye) × 100
 
-**swing güncelleme (ichimoku v2)**:
+**swing güncelleme (v2.3 chandelier)**:
 - `guncel_fiyat`, `guncel_kar_zarar_yuzde`, `tutulan_gun` güncelle
-- `python scripts/swing_ichimoku.py --aktif` çalıştır
-  → kijun_sen, tenkan_sen, kumo_ust, kumo_alt, atr_14, hacim_oran, obv_trend güncelle
-  → kijun yükseldi mi? evet → stop_loss yukarı çek (stop ASLA aşağı çekilmez)
-  → çıkış sinyali var mı? kijun altı kapanış, TK cross aşağı, kumo'ya giriş
-  → rapora ichimoku değişimi yaz (önceki seansla karşılaştır)
+- ichimoku seviyeleri + ATR(14) yeniden hesapla (FMP historical data ile)
+  → chandelier stop güncelle: highest_high - 3×ATR(14) (stop ASLA aşağı çekilmez)
+  → highest_high yenilendi mi? ATR değişti mi? → stop yeniden hesapla
+  → çıkış sinyali var mı? chandelier tetiklendi, TK cross aşağı, kumo'ya giriş
+  → rapora chandelier değişimi yaz (önceki seansla karşılaştır)
 
 **doğrulama**:
 - yatirim = adet × maliyet_baz (sabit, değişmemeli)

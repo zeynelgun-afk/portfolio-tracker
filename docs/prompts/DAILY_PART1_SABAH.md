@@ -10,8 +10,7 @@
 > - [ ] ADIM 2 — haber toplama (web search, piyasa haberleri)
 > - [ ] ADIM 2.5 — twitter takip listesi (RapidAPI ile hesap taraması)
 > - [ ] ADIM 3 — earnings takvimi (FMP earnings-calendar, market cap filtresi)
-> - [ ] ADIM 4 — otomatik swing tarama sonuçları (daily_scan.json oku)
-> - [ ] ADIM 4.5 — ichimoku tarama (swing_ichimoku.py — adaylar + aktif pozisyonlar)
+> - [ ] ADIM 4 — swing tarama (FMP screener → ichimoku 4/4 → v2.3 filtreleri)
 > - [ ] ADIM 5 — finviz tarama (teyit katmanı)
 > - [ ] ADIM 6 — analiz, plan ve kayıt (playbook kurallarını planla çapraz kontrol et)
 > - [ ] RAPOR — tüm bölümler (0-5) eksiksiz yazıldı mı?
@@ -35,7 +34,7 @@
 - **yaz saati (mart-kasım)**: NYSE açılış 16:30 TR, kapanış 23:00 TR
 - **kış saati (kasım-mart)**: NYSE açılış 17:30 TR, kapanış 00:00 TR
 - FMP fiyatları = dünün kapanışı (kesinleşmiş)
-- `data/daily_scan.json` = dün gece 00:30 TR'de otomatik çalışan tarama sonuçları
+- swing tarama: seans içinde FMP screener'dan ~1,100 hisse çekilip ichimoku 4/4 taranır
 
 ---
 
@@ -112,59 +111,33 @@ ADIM 3 — EARNINGS
   → websearch: dün gece açıklanan earnings sonuçları (portföy/swing/majör)
   → websearch: bugünkü ekonomik veri takvimi
 
-ADIM 4 — OTOMATİK SWING TARAMA SONUÇLARI (daily_scan.json)
+ADIM 4 — SWİNG TARAMA (FMP screener → ichimoku 4/4 → v2.3 filtreleri)
   ─────────────────────────────────────────────────────────
-  → GitHub'dan data/daily_scan.json dosyasını oku
-    URL: https://raw.githubusercontent.com/zeynelgun-afk/portfolio-tracker/main/data/daily_scan.json
+  → swing tarama seans içinde yapılır, otomatik script yok
+  → detay: docs/SWING_SYSTEM_V2.md bölüm 9 (tarama evreni)
 
-  OKUMA AKIŞI:
-  1. dosyayı oku
-  2. piyasa_ozeti → vix_kritik veya vix_uyarisi varsa önce belirt
-  3. ep_adaylari → skora göre sıralı, en yüksek 5'i al
-  4. breakout_adaylari → skora göre sıralı, en yüksek 5'i al
-  5. her aday için: seviyeler (giriş/stop/kijun/kumo), uyarılar, hacim katsayısı
+  TARAMA AKIŞI:
+  1. FMP company-screener → ~1,100 hisse çek (mcap >$2B, vol >500K, price >$10, US)
+  2. K-19: consumer defensive sektör hisselerini çıkar
+  3. VIX kontrol:
+     - VIX <22: normal mod → SPY > 21SMA + eğim ↗ kontrol → K-20 RS kontrol
+     - VIX 22-35: K-13b kriz modu → sektör ETF 9+21 SMA kontrol
+     - VIX >35: hiç giriş yapılmaz
+  4. ichimoku 4/4 hesapla (kumo üstü + TK bull + tenkan üstü + volume 1.3x)
+  5. 4/4 sinyal verenler için chandelier stop hesapla: giriş_fiyatı - 3×ATR(14)
+  6. min stop mesafesi ≥%5 kontrol
+  7. aday varsa: K-18 insider check, earnings tarihi check
 
-  ELEME KRİTERLERİ (bu adımda yap):
-  - VIX > 30 ise: EP adayları için "yarım pozisyon" notu ekle
-  - uyarılar listesi 2'den fazla madde içeriyorsa: "ZAYIF SETUP" işaretle
-  - sma200_uzerinde = false ise: uzun vadeli trend aşağı, yarım pozisyon veya geç
-  - (v1 skor filtresi kaldırıldı — v2'de ichimoku sinyali belirleyici, skor eşiği yok)
-
-  KONTROL: mevcut swing aktif pozisyonlarla (data/swing/active.json)
-  sembol çakışması var mı? varsa listeden çıkar.
-
-ADIM 4.5 — İCHİMOKU TARAMA (swing v2.1) + TEMATİK TEDARİK ZİNCİRİ
-  → aktif swing pozisyonları için ichimoku seviyeleri güncelle:
-    python scripts/swing_ichimoku.py --aktif
-    → kijun trailing stop değişti mi? çıkış sinyali var mı?
-  → ADIM 4'ten geçen adaylar için tam ichimoku tarama:
-    python scripts/swing_ichimoku.py SEMBOL1,SEMBOL2,...
-  → MERKEZİ WATCHLIST TARAMASI (data/watchlist.json):
-    - dosyayı oku, hedef_portfoy bazında filtrele
-    - swing adaylarını ichimoku ile tara: python scripts/swing_ichimoku.py ADAY1,ADAY2,...
-    - agresif/dengeli/temettu adaylarını ayrı listele (bölüm 5'e yaz)
-    - bozulmuş adayları (kumo altı, ÇIKIŞ sinyali) raporda belirt → seans sonunda temizlenecek
-    ⚠️ data/swing/watchlist.json KALDIRILDI, sadece data/watchlist.json oku
-  → TEMATİK TARAMA (her sabah zorunlu):
-    - web araması: güncel piyasa temaları, sektörel haberler
-    - hangi AI tedarik zinciri katmanı öne çıkıyor? (ekipman, kimya, güç, optik, soğutma)
-    - o katmandaki hisseleri ichimoku ile tara
-    - ichimoku 4/4 bullish + trend devam eden hisselere giriş değerlendir (sinyal bekleme zorunlu değil)
-  → sonuçları rapora ekle:
-    - "GİRİŞ ✅": kumo kırılımı/kijun bounce + hacim teyidi + SMA200 üstü
-    - "TREND GİRİŞ ⚠️": 4/4 bullish, sinyal yok ama trend güçlü (yarım pozisyon)
-    - "GİRİŞ ⚠️": sinyal var ama hacim zayıf veya SMA200 altı
-    - "TREND DEVAM": kumo üstü ama bugün giriş sinyali yok
-    - "BEKLE": sinyal zayıf
-    - "GİRME ❌": kumo altı + düşüş trendi
-  → sinyal veren adaylar için claude temel değerlendirme yapacak (sabit rasyo filtresi yok)
-  → mevcut aktif pozisyonların ichimoku durumunu raporla (kijun mesafe, çıkış sinyali)
+  MEVCUT AKTİF POZİSYONLAR:
+  → data/swing/active.json oku
+  → her pozisyon için: chandelier stop güncelle (highest_high, ATR yeniden hesapla)
+  → çıkış sinyali var mı? (chandelier stop tetiklendi, TK cross aşağı, kumo'ya giriş)
 
 ADIM 5 — FİNVİZ TARAMA (teyit katmanı)
   → websearch: finviz screener — ADIM 4'teki adayları teyit et
   → finviz.com/quote.ashx?t=SEMBOL → pattern, float, short float
   → ADIM 4 listesinde olmayan ama finviz'de öne çıkan varsa ekle
-  → temettü portföy adayları: p/e <20, yield >%3
+  → temettü portföy adayları: docs/DIVIDEND_SYSTEM.md kriterlerine göre
   → sektör heatmap kontrolü: hangi sektörler güçlü/zayıf
 
 ADIM 6 — ANALİZ, PLAN VE KAYIT
@@ -330,48 +303,32 @@ SEMBOL — [şirket]
 
 ---
 
-### BÖLÜM 4: OTOMATİK SWING TARAMA SONUÇLARI
+### BÖLÜM 4: SWING TARAMA SONUÇLARI
 
 ```markdown
-## 4. swing tarama — {tarih} ({ep_sayisi} EP + {breakout_sayisi} breakout)
+## 4. swing tarama — {tarih}
 
-> tarama zamanı: dün gece 00:30 TR | vix: XX.X | piyasa: [risk-on/off]
-> [vix_mesaj — varsa]
+> VIX: XX.X | mod: [normal / K-13b / dur] | SPY: 21SMA [üstü/altı], eğim [↗/↘]
+> tarama evreni: ~X,XXX hisse (FMP screener, mcap >$2B)
 
-### EP (episodic pivot) adayları
+### ichimoku 4/4 sinyal verenler
 
-| # | sembol | değişim | hacim | ep skoru | ichimoku | SMA200 | karar |
-|---|--------|---------|-------|----------|----------|--------|-------|
-| 1 | XXX | +X.X% | Xm | XX/100 | kumo üstü/içi/altı | ✅/❌ | GİRİŞ/BEKLE/RED |
-
-**[SEMBOL] — detay:**
-- setup: [ne tetikledi — earnings/ürün/sektör rotasyonu]
-- ichimoku: fiyat $XX vs kumo $XX-$XX, tenkan/kijun, sinyal: [kumo kırılımı/kijun bounce/yok]
-- hacim: X.Xx ortalama, OBV: [yükseliş/düşüş/nötr]
-- stop: $XX (kijun), mesafe: -%X.X, ATR: X.Xx
-- risk/ödül: kijun stop %X.X aşağıda
-- claude temel değerlendirme: [sektör bağlamı, hikaye, katalizör]
-
-### breakout (flag/base) adayları
-
-| # | sembol | değişim | hacim katsayı | breakout skoru | ichimoku | SMA200 | karar |
-|---|--------|---------|---------------|----------------|----------|--------|-------|
-| 1 | XXX | +X.X% | X.Xx | XX/100 | kumo üstü/içi/altı | ✅/❌ | GİRİŞ/BEKLE/RED |
+| # | sembol | sektör | fiyat | ichimoku | volume | RSI | chandelier stop | mesafe | karar |
+|---|--------|--------|-------|----------|--------|-----|-----------------|--------|-------|
+| 1 | XXX | XLX | $XX.XX | 4/4 | X.Xx | XX | $XX.XX | X.X% | GİR/K-13b/ATLA |
 
 **[SEMBOL] — detay:**
-- base: XX günlük konsolidasyon
-- ichimoku: [sinyal tipi + hacim teyidi]
-- claude temel değerlendirme: [hisse bazında]
+- sinyal: [kumo kırılımı / kijun bounce]
+- ichimoku: fiyat $XX vs kumo $XX-$XX, tenkan/kijun
+- chandelier stop: $XX.XX (highest_high - 3×ATR), mesafe: %X.X
+- filtreler: K-19 [geçti/XLP], K-20 [geçti/dead cat bounce], SPY [üstü/altı]
+- temel değerlendirme: [sektör bağlamı, hikaye, katalizör]
 
-### mevcut swing pozisyonları ichimoku durumu
+### mevcut swing pozisyonları
 
-| sembol | PnL | kijun stop | kumo | tenkan vs kijun | çıkış sinyali | durum |
-|--------|-----|-----------|------|-----------------|----------------|-------|
-| XXX | +X.X% | $XX.XX | üstü/içi/altı | ↑/↓ | var/yok | [kısa yorum] |
-
-### tarama notu
-
-[daily_scan.json'dan gelen ozet.tarama_notu]
+| sembol | PnL | chandelier stop | highest high | ATR | çıkış sinyali | durum |
+|--------|-----|----------------|--------------|-----|----------------|-------|
+| XXX | +X.X% | $XX.XX | $XX.XX | $X.XX | var/yok | [kısa yorum] |
 
 ### bugün izlenecek setup önceliği
 
@@ -406,8 +363,8 @@ SEMBOL — [şirket]
 **[SEMBOL]** — EP / Breakout
 - giriş koşulu: [ilk 30dk bekle, $XX.XX üzerinde konfirmasyon]
 - pozisyon büyüklüğü: [tam / yarım — VIX'e göre]
-- stop: $XX.XX (kijun/kumo, -%X.X)
-- ichimoku: [sinyal tipi, kumo/kijun seviyeleri]
+- stop: $XX.XX (chandelier 3×ATR, -%X.X)
+- ichimoku: [sinyal tipi, 4/4 detay]
 
 ### dikkat edilecekler
 
@@ -426,8 +383,8 @@ SEMBOL — [şirket]
 - rapor github'a push edilir (`reports/daily/DAILY_SABAH_YYYY-MM-DD.md`)
 - JSON dosyalarına dokunma (veri güncellemesi part 2'de yapılacak)
 - amaç: sabah bilgilendirme + günün planını oluşturma + otomatik tarama okuma
-- `daily_scan.json` her gece 00:30 TR'de otomatik güncellenir — fresh data garantili
-- VIX > 30 durumunda swing girişlerinde "yarım pozisyon" varsayılan öneri olsun
+- swing tarama seans içinde FMP screener'dan çekilir — docs/SWING_SYSTEM_V2.md bölüm 9
+- VIX >35 → swing girişi yapılmaz. VIX 22-35 → K-13b yarım pozisyon. VIX <22 → normal mod
 - EP adaylarında "ilk 30 dakika bekle, konfirmasyon al" kuralı seans promptunda uygulanır — sabah planına yaz
 
 ---
@@ -438,4 +395,3 @@ SEMBOL — [şirket]
 **TOKEN**: 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
 **RAPIDAPI KEY**: fe410e5222msh20c82b1bc9f4905p10ad02jsnb1c2402c92b7
 **RAPIDAPI HOST**: twitter241.p.rapidapi.com
-**DAILY SCAN**: https://raw.githubusercontent.com/zeynelgun-afk/portfolio-tracker/main/data/daily_scan.json

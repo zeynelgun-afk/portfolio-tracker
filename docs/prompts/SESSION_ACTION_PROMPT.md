@@ -356,20 +356,20 @@ durum kodları:
 her swing pozisyonu için:
 
 ```
-format: ID | SEMBOL | giriş | güncel | k/z% | kijun stop | kumo | ichimoku durum | durum
+format: ID | SEMBOL | giriş | güncel | k/z% | chandelier stop | highest high | ATR | gün | durum
 
 durum kodları:
 ⚠️ STOP YAKIN — fiyat kijun'a yaklaşıyor (<%2)
-🔴 ÇIKIŞ SİNYALİ — kijun altı kapanış veya TK cross aşağı
+🔴 ÇIKIŞ SİNYALİ — chandelier stop tetiklenme veya TK cross aşağı
 📈 TREND GÜÇLÜ — kumo üstü, tenkan > kijun, OBV yükseliş
 📉 ZAYIFLIYOR — hacim ayrışması veya OBV düşüş
 🔄 NÖTR — sinyal yok, ichimoku yapı korunuyor
 ```
 
-**kijun trailing stop güncelleme kuralı (ichimoku v2)**:
+**chandelier trailing stop güncelleme kuralı (ichimoku v2)**:
 ```
-python scripts/swing_ichimoku.py --aktif
-→ kijun yükseldi mi? evet → stop yukarı çek
+FMP historical data ile ichimoku + chandelier stop hesapla
+→ chandelier stop güncellendi mi (highest_high artınca)? evet → stop yukarı çek
 → stop ASLA aşağı çekilmez (en yüksek kijun korunur)
 → çıkış sinyali var mı? acil olanlar hemen uygulanır
 ```
@@ -426,9 +426,9 @@ her swing pozisyonu için:
 
 ```
 0. ICHİMOKU SEVİYE TAKİBİ
-   python scripts/swing_ichimoku.py --aktif
+   FMP historical data ile ichimoku + chandelier stop hesapla
    → kijun değişti mi? (trailing stop güncelleme)
-   → çıkış sinyali var mı? (kijun altı kapanış, TK cross aşağı, kumo'ya giriş)
+   → çıkış sinyali var mı? (chandelier stop tetiklenme, TK cross aşağı, kumo'ya giriş)
    → hacim uyarısı var mı? (düşen hacim + yükselen fiyat = zayıflama)
 
 1. STOP-LOSS KESİLDİ Mİ?
@@ -447,7 +447,7 @@ her swing pozisyonu için:
    hayır → devam
 
 4. TRAİLİNG STOP GÜNCELLE
-   kijun yükseldi mi → stop yukarı çek (stop ASLA aşağı çekilmez)
+   chandelier stop güncellendi mi (highest_high artınca) → stop yukarı çek (stop ASLA aşağı çekilmez)
    en yüksek kijun değeri korunur
 
 5. HACİM DURUMU?
@@ -560,7 +560,7 @@ for sym in adaylar:
 ### adım 3: ichimoku tam tarama
 
 ```bash
-python scripts/swing_ichimoku.py SEMBOL1,SEMBOL2,...,SEMBOLN
+FMP screener → ichimoku 4/4 tarama (bkz. SWING_SYSTEM_V2.md bölüm 9)
 ```
 
 script her sembol için otomatik hesaplar:
@@ -843,12 +843,12 @@ MID-SESSION (FAZ 2: TR 18:00-21:00)
 │  └─ korelasyon kontrolü (sektör yoğunlaşması)
 │
 ├─ SWING TARAMA (30 dk)
-│  ├─ python scripts/swing_ichimoku.py --aktif (stop/çıkış/trailing güncelle)
+│  ├─ FMP historical data ile ichimoku + chandelier stop hesapla (stop/çıkış/trailing güncelle)
 │  ├─ GENİŞ HAVUZ TARAMA:
 │  │  ├─ FMP biggest-gainers + screener (güçlü sektörlerden)
 │  │  ├─ watchlist tetiklenen seviyeler
 │  │  ├─ SMA50+SMA200 ön filtre → ichimoku taramasına gönder
-│  │  └─ python scripts/swing_ichimoku.py ADAY1,ADAY2,...
+│  │  └─ FMP historical data ile ichimoku hesapla ADAY1,ADAY2,...
 │  ├─ sinyal veren adaylar için claude temel değerlendirme
 │  └─ boş slot varsa → en iyi adayı giriş yap
 │
