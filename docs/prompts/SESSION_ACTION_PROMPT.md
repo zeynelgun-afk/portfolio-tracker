@@ -628,17 +628,16 @@ C) ORTAK KOŞULLAR (her giriş için):
 - nakit oranı yüksekse ve kaliteli setup varsa → kademeli giriş
 - zayıfı kes, kazananı büyüt prensibi
 
-**değer + temettü portföyü** ($100K): düşük P/E, yüksek temettü, güçlü FCF
-- P/E < 20, temettü yield > %3
-- D/E < 1.5, FCF pozitif
-- temettü artış geçmişi
-- güçlü sektör RS (özellikle consumer defensive, utilities, healthcare)
+**değer + temettü portföyü** ($100K): tema + kalite + momentum puanlama sistemi
+- detay: docs/DIVIDEND_SYSTEM.md
+- 5 katman: tema (25p) + temettü kalitesi (25p) + büyüme (20p) + momentum (15p) + değerleme (15p)
+- giriş eşiği: skor ≥65, max 6 pozisyon
 
 ## 3e. satış/çıkış değerlendirmesi
 
 **portföy hissesi satış nedenleri**:
 ```
-1. stop-loss tetiklendi (agresif: 2x ATR(14), dengeli %8, temettü %10-15)
+1. stop-loss tetiklendi (agresif: 2x ATR(14), dengeli %8, temettü: tema/kalite/skor bazlı çıkış — bkz. DIVIDEND_SYSTEM.md)
 2. tez bozuldu (temel verilerde kötüleşme)
 3. sektör RS sürekli zayıf (3+ gün negatif RS, trend dönüşü)
 4. daha iyi fırsat var (aynı sektörde/temada daha güçlü alternatif)
