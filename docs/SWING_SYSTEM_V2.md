@@ -1,4 +1,4 @@
-# SWING TRADE SİSTEMİ v2.3 — ICHİMOKU + HACİM + ATR + ÖN FİLTRE
+# SWING TRADE SİSTEMİ v2.3 — ICHİMOKU + CHANDELİER EXİT + ÖN FİLTRE
 
 > **versiyon**: 2.3
 > **son güncelleme**: 3 nisan 2026
@@ -6,7 +6,7 @@
 > **neden değişti**: ichimoku kendi başına komple bir trend sistemi. sabit stop/hedef ile karıştırmak çelişki yaratıyordu. yeni sistem tamamen dinamik.
 > **v2.1 değişiklik**: TK cross giriş sinyali kaldırıldı (sahte sinyaller), minimum %5 stop mesafesi zorunluluğu eklendi
 > **v2.2 değişiklik**: VIX rejimine göre çift katmanlı ön filtre sistemi eklendi (A+B+E+F) — sonra v2.3'te kaldırıldı
-> **v2.3 değişiklik**: SPY 21SMA master switch (konum + eğim) eklendi. K-19 XLP dışlama. K-20 sektör RS dead cat bounce filtresi. ABEF kaldırıldı (184 sinyal analizinde %0 iyileştirme). 4/4 ichimoku zorunlu yapıldı (3/4 kaldırıldı)
+> **v2.3 değişiklik**: SPY 21SMA master switch (konum + eğim). K-19 XLP dışlama. K-20 sektör RS dead cat bounce. ABEF kaldırıldı (184 sinyal, %0 iyileştirme). 4/4 ichimoku zorunlu. kijun trailing → chandelier exit (3×ATR) — 126 trade: +45% P/L iyileştirme
 >
 > **61 dönem backtest özeti (2021-2026)**:
 > - 184 ichimoku 3/4+ sinyal analiz edildi → 4/4 sinyal: %54 kâr, 3/4 sinyal: %49 kâr
@@ -179,74 +179,70 @@ fiyat yükseliş trendinde kijun-sen'e geri çekilir ve oradan seker.
 
 **güç**: trend devamı sinyali. ilk girişi kaçırınca veya ekleme (piramitleme) için kullanılır.
 
-**stop notu**: kijun bounce'ta fiyat kijun'a çok yakın olduğu için kijun bazlı stop mesafesi <%5 çıkar. bu durumda stop otomatik olarak kumo alt kenarına genişletilir (daha geniş stop mesafesi, daha küçük pozisyon boyutu).
+**stop notu**: kijun bounce'ta fiyat kijun'a çok yakın girişi olduğu için chandelier stop (giriş_fiyatı - 3×ATR) genellikle kijun'dan daha geniş alan tanır. bu yüzden kijun bounce girişleri chandelier ile daha iyi korunur. chandelier stop mesafesi yine de <%5 ise → giriş reddedilir.
 
 ---
 
-## 2. STOP-LOSS (DİNAMİK)
+## 2. STOP-LOSS (CHANDELİER EXİT — 3×ATR)
 
-sabit yüzde yok. stop seviyeleri ichimoku bileşenlerinden türetilir ve ATR ile doğrulanır.
+> **v2.3 değişiklik**: kijun-sen trailing stop → chandelier exit (3×ATR) olarak değiştirildi.
+> kanıt: 126 trade karşılaştırmasında chandelier +57.1% vs kijun +12.0% toplam P/L (+45.1% fark).
+> kijun çok sıkı — normal volatiliteyi stop olarak algılıyordu (gün 2'de gereksiz çıkışlar).
+> chandelier trende daha fazla nefes alanı tanıyor.
+> çarpan testi: 2×(-52%), 2.5×(+24%), **3×(+57%)**, 3.5×(+66%), 4×(+71%). 3× seçildi: en çok trade'de kazanan (31/25), makul worst-case (-5.6%), standart literatür ayarı.
 
-### stop belirleme hiyerarşisi
+### chandelier exit formülü
 
-**minimum %5 stop mesafesi kuralı** (v2.1 ile eklendi): giriş fiyatından %5'ten küçük stop mesafesi olan adaylar elenir. ancak bu kural giriş tipine göre farklı uygulanır:
+```
+ilk stop = giriş_fiyatı - 3 × ATR(14)
+trailing: highest_high - 3 × ATR(14)
+```
 
-- **kumo kırılımı**: kijun bazlı stop <%5 ise → giriş reddedilir (whipsaw riski)
-- **kijun bounce**: doğası gereği kijun'a çok yakın olacağı için stop otomatik olarak kumo alt kenarına genişletilir. kumo alt ile bile <%2 kalıyorsa o zaman reddedilir
-- **sinyal yokken**: <%5 stop mesafesi olan hisseler genel olarak reddedilir
+- highest_high: giriş gününden itibaren ulaşılan en yüksek fiyat (intraday high)
+- ATR(14): son 14 günün true range ortalaması, her gün yeniden hesaplanır
+- stop sadece YUKARI hareket eder (highest high artınca veya ATR düşünce stop yükselir)
+- fiyat stop seviyesine dokunursa (intraday low ≤ stop) → çıkış
 
-fiyat kumo üzerindeyse:
+### minimum stop mesafesi
 
-| öncelik | stop seviyesi | ne zaman kullanılır |
-|---------|---------------|---------------------|
-| 1 | kijun-sen | varsayılan stop. fiyat kijun altında kapanırsa çık |
-| 2 | kumo üst kenarı | kijun çok yakınsa (<%1) kumo'ya genişlet |
-| 3 | kumo alt kenarı | güçlü trend, geniş stop istiyorsan. kumo altına kapanış = trend bitti |
+giriş fiyatından chandelier stop'a kadar mesafe <%5 ise → giriş reddedilir (whipsaw riski)
 
-fiyat kumo içindeyse (kumo kırılımı bekleniyor):
-- stop = kumo alt kenarı. kumo altına kapanış = tez bozuldu
+- kumo kırılımı: 3×ATR < fiyatın %5'i ise → ATR çok düşük, hisse yeterince hareketli değil
+- kijun bounce: fiyat kijun'a yakın olduğu için mesafe zaten dar olabilir. bu durumda chandelier stop doğal olarak daha geniş alan tanır (kijundan bağımsız)
 
-### ATR doğrulaması
+### ATR hesaplama
 
-stop mesafesi çok dar veya çok geniş olmamalı. ATR(14) ile kontrol:
+ATR(14) = son 14 günün true range ortalaması
+true range = max(yüksek-düşük, abs(yüksek-önceki kapanış), abs(düşük-önceki kapanış))
 
-- stop mesafesi < 0.5x ATR → stop çok dar, whipsaw riski yüksek. kijun yerine kumo'ya genişlet
-- stop mesafesi > 3x ATR → stop çok geniş, pozisyon çok küçük olacak. girişi ertele veya farklı zaman dilimi kullan
-- ideal: stop mesafesi 1x-2.5x ATR arasında
+### neden kijun değil chandelier
 
-### stop güncelleme (trailing)
+| metrik | kijun | chandelier 3×ATR |
+|--------|:-----:|:----------------:|
+| toplam P/L (126 trade) | +12.0% | **+57.1%** |
+| kâr oranı | 45% | **49%** |
+| trade başına beklenen değer | +0.10% | **+0.46%** |
 
-sabit yüzde trailing yok. kijun-sen doğal trailing stop olarak çalışır:
-
-- kijun-sen her gün yeniden hesaplanır (26 günlük en yüksek + en düşük / 2)
-- trend güçlüyken kijun yukarı hareket eder, stop otomatik yükselir
-- fiyat kijun altında kapanırsa → çıkış
-- kijun düz seyrediyorsa (konsolidasyon) → mevcut stop koru, acele etme
-
-**önemli**: kijun aşağı hareket ederse stop aşağı çekilmez. stop sadece yukarı yönde güncellenir (en yüksek kijun değeri korunur).
+kijun sorunu: 26 günlük en yüksek+en düşük ortalaması bazen giriş fiyatına çok yakın kalıyor. özellikle dar range sonrası breakout'larda kijun giriş fiyatının %1-2 altında olabiliyor → normal geri çekilmede gereksiz stop. chandelier entry high'dan 3×ATR mesafede durarak trende nefes alanı tanıyor.
 
 ---
 
 ## 3. ÇIKIŞ SİNYALLERİ
 
-stop dışında üç çıkış sinyali var:
+chandelier stop dışında ek çıkış sinyalleri:
 
-### 3a. KİJUN ALTI KAPANIŞ (birincil çıkış)
+### 3a. CHANDELİER STOP TETİKLENME (birincil çıkış)
 
-fiyat kijun-sen altında kapanırsa → ertesi gün aç, çık.
+intraday low ≤ chandelier stop seviyesi → çıkış. bu otomatik ve mekanik bir çıkış.
 
-tek günlük ihlal sahte olabilir. doğrulama: kapanış kijun'un %0.5'inden fazla altındaysa → hemen çık. kijun'a çok yakın kapanışta (<%0.5) → bir gün daha bekle.
+### 3b. TK CROSS AŞAĞI (trend dönüşü — ikincil teyit)
 
-### 3b. TK CROSS AŞAĞI (trend dönüşü — filtreli)
-
-tenkan-sen kijun-sen'i aşağı keserse → potansiyel çıkış sinyali. ama v2.1'de giriş sinyali olarak kaldırıldığı gibi, çıkışta da sahte sinyal üretebilir (özellikle yatay piyasalarda).
+tenkan-sen kijun-sen'i aşağı keserse → potansiyel erken uyarı. chandelier henüz tetiklenmemiş olabilir.
 
 filtre:
-- fark > %1 VE hacim > 1.0x ortalama → güçlü sinyal, çık
-- fark > %0.5 ama hacim düşük → yarın teyit bekle (bir gün daha ver)
-- fark < %0.5 → sahte sinyal olasılığı yüksek, hacim + OBV teyidi olmadan çıkma
-
-bu sinyal genellikle kijun altı kapanıştan sonra gelir ama bazen önce gelir. kijun altı kapanış daha güvenilir birincil sinyal, TK cross ikincil teyit olarak kullanılır.
+- fark > %1 VE hacim > 1.0x ortalama → güçlü sinyal, çık (chandelier bekleme)
+- fark > %0.5 ama hacim düşük → uyarı, chandelier bekle
+- fark < %0.5 → sahte sinyal olasılığı yüksek, chandelier'a güven
 
 ### 3c. KUMO'YA GİRİŞ (trend zayıflama)
 
@@ -275,8 +271,8 @@ pozisyon_buyuklugu = risk_tutari / stop_mesafesi
 | parametre | değer | açıklama |
 |-----------|-------|----------|
 | risk_yuzdesi | %1 | tek trade'de kaybedilecek max tutar (hesabın %1'i) |
-| min_stop_mesafesi | 0.5x ATR(14) | bunun altında stop çok dar |
-| max_stop_mesafesi | 3x ATR(14) | bunun üstünde giriş ertele |
+| min_stop_mesafesi | fiyatın %5'i | bunun altında giriş reddedilir |
+| max_stop_mesafesi | chandelier: 3x ATR(14) | stop mesafesi sabittir |
 | max_pozisyon_tutari | hesabın %12.5'i | tek pozisyon max (8 slot / %100) |
 
 ### ATR hesaplama
@@ -288,11 +284,11 @@ true range = max(yüksek-düşük, abs(yüksek-önceki kapanış), abs(düşük-
 
 - hesap: $10,000 swing sermayesi
 - risk: %1 = $100
-- AROC giriş: $37.56, kijun: $34.98, stop: $34.98
-- stop mesafesi: $37.56 - $34.98 = $2.58
-- ATR(14): $1.20, stop mesafesi = 2.15x ATR (ideal aralıkta)
-- pozisyon: $100 / $2.58 = 38 hisse
-- pozisyon tutarı: 38 * $37.56 = $1,427 (hesabın %14.3'ü, max %12.5 aşıyor → 33 hisseye düşür)
+- AROC giriş: $37.56, ATR(14): $1.20
+- chandelier stop: $37.56 - 3 × $1.20 = $33.96
+- stop mesafesi: $37.56 - $33.96 = $3.60 (fiyatın %9.6'sı, min %5 geçiyor ✅)
+- pozisyon: $100 / $3.60 = 27 hisse
+- pozisyon tutarı: 27 × $37.56 = $1,014 (hesabın %10.1'i, max %12.5 altında ✅)
 
 ### VIX düzeltmesi
 
@@ -341,13 +337,13 @@ sabit rasyolarla otomatik red yok. karar claude'da.
 
 | eski sistem | yeni sistem |
 |-------------|-------------|
-| sabit %5 stop | kijun-sen dinamik stop (min %5 mesafe zorunlu) |
+| sabit %5 stop | chandelier exit: highest_high - 3×ATR(14) trailing stop |
 | sabit %10 hedef | sabit %10 hedef (tüm swing girişleri ön filtreden geçer, hedefe ulaşınca veya stop tetiklenince çıkış) |
 | RSI oversold giriş | ichimoku kumo kırılımı / kijun bounce giriş |
 | MACD teyidi | gereksiz (TK cross kaldırıldı, tek başına anlamlı değildi) |
 | SMA20/50 pozisyon kontrolü | ichimoku kumo bunu zaten yapıyor |
 | SMA200 filtresi | SMA200 referans bilgi olarak korundu (zorunlu filtre değil) |
-| sabit %5 trailing | kijun-sen doğal trailing |
+| sabit %5 trailing | chandelier exit (3×ATR) doğal trailing |
 | 7-14 gün tutma süresi | %10 hedefe veya stop'a kadar tut. süre sınırı yok ama K-08 zaman filtresi uygulanır |
 | skor kartı (7 puan) | ichimoku 4/4 + SPY master switch + K-19/K-20 filtreleri |
 | sabit lot | ATR bazlı risk hesaplı lot |
@@ -359,10 +355,10 @@ sabit rasyolarla otomatik red yok. karar claude'da.
 ### aktif pozisyon (data/swing/active.json)
 
 eski alanlar kaldırılan:
-- ~~hedef_fiyat~~ → giriş fiyatı x 1.10 sabit hedef (tüm swing girişleri filtreden geçtiği için %10 hedef zorunlu)
-- ~~trailing_yuzde~~ → kijun trailing
+- ~~hedef_fiyat~~ → giriş fiyatı x 1.10 sabit hedef
+- ~~trailing_yuzde~~ → chandelier exit (3×ATR)
 - ~~zaman_cercevesi~~ → süre sınırı yok
-- ~~partial_exit_plan~~ → ichimoku çıkış sinyalleri
+- ~~partial_exit_plan~~ → chandelier + ichimoku çıkış sinyalleri
 
 yeni/değişen alanlar:
 
@@ -375,9 +371,10 @@ yeni/değişen alanlar:
   "giris_sinyali": "kumo_kirilimi",
   "guncel_fiyat": 37.02,
   "guncel_kar_zarar_yuzde": -1.44,
-  "stop_loss": 34.98,
-  "stop_tipi": "kijun",
-  "stop_en_yuksek": 34.98,
+  "stop_loss": 33.96,
+  "stop_tipi": "chandelier_3xATR",
+  "highest_high": 37.56,
+  "chandelier_stop": 33.96,
   "kijun_sen": 34.98,
   "kumo_ust": 35.54,
   "kumo_alt": 31.45,
@@ -399,11 +396,11 @@ yeni/değişen alanlar:
 
 ```json
 {
-  "cikis_sinyali": "kijun_alti_kapanis",
-  "stop_tipi_cikis": "kijun",
+  "cikis_sinyali": "chandelier_stop",
+  "stop_tipi_cikis": "chandelier_3xATR",
   "atr_giris": 1.20,
   "atr_cikis": 1.35,
-  "max_fiyat": 41.20,
+  "highest_high": 41.20,
   "max_kar_zarar_yuzde": 9.70
 }
 ```
@@ -413,8 +410,8 @@ yeni/değişen alanlar:
 ## 9. GÜNLÜK İŞ AKIŞI
 
 ### seans öncesi
-1. `python scripts/swing_ichimoku.py --aktif` → tüm aktif pozisyonlar için ichimoku seviyeleri güncelle
-2. kijun değişti mi kontrol et → stop güncelle (sadece yukarı)
+1. `python scripts/swing_ichimoku.py --aktif` → tüm aktif pozisyonlar için ichimoku seviyeleri + ATR güncelle
+2. chandelier stop güncelle: highest_high yenilendi mi, ATR değişti mi → stop yeniden hesapla (sadece yukarı)
 3. kumo yakınında mı kontrol et → çıkış uyarısı
 
 ### seans içi
@@ -432,7 +429,7 @@ yeni/değişen alanlar:
 
 - NEM ve AROC v1 sisteminden v2'ye geçiş (mart 2026) tamamlanmış, her iki pozisyon da kapatılmıştır
 - v1 skor kartı sistemi (7 puan, sabit %5/%10) artık kullanılmıyor
-- v2.1'de TK cross giriş sinyali kaldırıldı, v2.2'de ABEF eklendi, v2.3'te ABEF kaldırılıp 4/4 zorunlu yapıldı
+- v2.1'de TK cross giriş sinyali kaldırıldı, v2.2'de ABEF eklendi, v2.3'te ABEF kaldırılıp 4/4 zorunlu yapıldı, kijun trailing → chandelier exit (3×ATR)
 
 ---
 
