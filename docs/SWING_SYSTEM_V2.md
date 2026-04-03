@@ -6,12 +6,12 @@
 > **neden değişti**: ichimoku kendi başına komple bir trend sistemi. sabit stop/hedef ile karıştırmak çelişki yaratıyordu. yeni sistem tamamen dinamik.
 > **v2.1 değişiklik**: TK cross giriş sinyali kaldırıldı (sahte sinyaller), minimum %5 stop mesafesi zorunluluğu eklendi
 > **v2.2 değişiklik**: VIX rejimine göre çift katmanlı ön filtre sistemi eklendi (A+B+E+F) — sonra v2.3'te kaldırıldı
-> **v2.3 değişiklik**: SPY 21SMA master switch (konum + eğim) eklendi. K-19 XLP dışlama. ABEF kaldırıldı (184 sinyal analizinde %0 iyileştirme). 4/4 ichimoku zorunlu yapıldı (3/4 kaldırıldı)
+> **v2.3 değişiklik**: SPY 21SMA master switch (konum + eğim) eklendi. K-19 XLP dışlama. K-20 sektör RS dead cat bounce filtresi. ABEF kaldırıldı (184 sinyal analizinde %0 iyileştirme). 4/4 ichimoku zorunlu yapıldı (3/4 kaldırıldı)
 >
 > **61 dönem backtest özeti (2021-2026)**:
 > - 184 ichimoku 3/4+ sinyal analiz edildi → 4/4 sinyal: %54 kâr, 3/4 sinyal: %49 kâr
 > - ABEF filtreleri (A/B/E/F) hiçbiri anlamlı fark yaratmadı → kaldırıldı
-> - yeni sistem: ichimoku 4/4 zorunlu + SPY > 21SMA + eğim ↗ + K-19 sektör dışlama
+> - yeni sistem: ichimoku 4/4 zorunlu + SPY > 21SMA + eğim ↗ + K-19 sektör dışlama + K-20 RS dead cat bounce filtresi
 > - K-13b kriz modu: %85 kâr oranı (en güvenilir bileşen)
 > - yıl bazlı: 2024 %100, 2025 %74, 2026 %85, 2023 %30, 2022 %40, 2021 %50
 > - başarı tanımı: kârda kapanan trade = başarılı (sadece %10 hedef değil)
@@ -27,10 +27,10 @@ ichimoku kinko hyo zaten tek başına trend, momentum, destek ve direnç veriyor
 
 RSI ve MACD eklenmez. tenkan/kijun kesişimi zaten MACD'nin yaptığını yapıyor, chikou span momentum veriyor. üst üste yığmak karmaşıklık, çelişki ve analiz felci yaratır.
 
-**SMA200 uzun vadeli filtre olarak eklenir.** ichimoku en uzun periyodu senkou span B (52 gün). bu, 200 günlük kurumsal trend perspektifini kapsamıyor. SMA200 tek başına uzun vadeli trend filtresi olarak çalışır:
+**SMA200 uzun vadeli referans olarak kullanılır.** ichimoku en uzun periyodu senkou span B (52 gün). SMA200 uzun vadeli trend perspektifi sağlar:
 
-- fiyat > SMA200 → uzun vadeli trend yukarı, giriş yapılabilir (normal akış)
-- fiyat < SMA200 → uzun vadeli trend aşağı, sadece çok güçlü kumo kırılımı + hacim teyidi ile yarım pozisyon
+- fiyat > SMA200 → uzun vadeli trend yukarı, normal giriş
+- fiyat < SMA200 → dikkat. ichimoku 4/4 sinyali yine de geçerli ama riskli. karar akışındaki filtreler (SPY master switch, K-19, K-20) zaten çoğu zayıf ortamı engelliyor. SMA200 ek bilgi olarak değerlendirilir, giriş engelleyen zorunlu filtre değildir
 - SMA20 ve SMA50 eklenmez, bunların rolünü tenkan (9) ve kijun (26) zaten yapıyor
 
 ---
@@ -69,8 +69,13 @@ ichimoku sinyali
         │     │     ├── evet (4/4) → SPY > 21SMA + eğim ↗?
         │     │     │                  │
         │     │     │                  ├── evet → K-19 sektör kontrol
-        │     │     │                  │           ├── geçti → GİR (%10 hedef)
-        │     │     │                  │           └── XLP → ATLA
+        │     │     │                  │           │
+        │     │     │                  │           ├── XLP → ATLA
+        │     │     │                  │           │
+        │     │     │                  │           └── geçti → K-20 RS kontrol
+        │     │     │                  │                        │
+        │     │     │                  │                        ├── dead cat bounce → ATLA
+        │     │     │                  │                        └── geçti → GİR (%10 hedef)
         │     │     │                  │
         │     │     │                  └── hayır → ATLA
         │     │     │
@@ -111,11 +116,25 @@ her iki koşul da sağlanmalı. SPY 21SMA altındaysa VEYA 21SMA düşüş eğim
 - bu kural sadece swing trade için geçerli. portföy pozisyonu olarak XLP alınabilir
 - K-13b kriz modunda da XLP'den swing girişi yapılmaz
 
+### sektör RS dead cat bounce filtresi (K-20)
+
+sektör ETF'inin SPY'a göre relative strength'i kontrol edilir. orta vadede zayıflayan ama kısa vadede sıçrayan sektördeki trade'ler engellenir.
+
+- hesaplama:
+  RS oranı = sektörETF(bugün) / SPY(bugün)
+  RS20 = (RS_bugün - RS_20gün_önce) / RS_20gün_önce × 100
+  RS10 = (RS_bugün - RS_10gün_önce) / RS_10gün_önce × 100
+- kural: RS20 < 0 VE RS10 > 0 ise → GİRME (dead cat bounce riski)
+- sektör ETF eşleştirme: XLK (tech), XLC (iletişim), XLE (enerji), XLI (sanayi), XLV (sağlık), XLF (finans), XLY (tüketici isteğe bağlı)
+- gerekçe: 76 trade backtestinde bu kombinasyon %80 zarar oranı gösterdi (3 kâr / 12 zarar). sektör orta vadede zayıflamış ama kısa vadede sıçramış → sahte toparlanma, trend devam ediyor
+- filtre etkisi: filtresiz %47 kâr → filtre ile %54 kâr (+7 puan). 12 zarar önlendi, 3 küçük kâr kaçırıldı
+- K-13b kriz modunda bu filtre UYGULANMAZ (kriz modunun kendi sektör ETF SMA filtresi var)
+
 ### K-13b özet referans (VIX >25 ortamında)
 
 VIX >25'te ichimoku 4/4 + volume teyit + sektör ETF SMA filtresi. giriş koşulları (tümü zorunlu):
 1. ichimoku skoru tam 4/4 (kumo üstü + TK bull + tenkan üstü + volume 1.3x+)
-2. sektör ETF (XLK/XLE/XLI/XLC/XLV/XLF/XLP/XLY/XLU/XLB) hem 9SMA hem 21SMA üzerinde
+2. hissenin sektör ETF'i (XLK/XLE/XLI/XLC/XLV/XLF/XLY/XLU/XLB) hem 9SMA hem 21SMA üzerinde (**not**: XLP hisseleri K-19 gereği swing'de alınmaz, ancak XLP ETF genel piyasa sağlık göstergesi olarak kontrol edilebilir)
 3. mcap >$5B
 4. RSI 40-70
 5. K-18 insider temiz
@@ -279,10 +298,9 @@ true range = max(yüksek-düşük, abs(yüksek-önceki kapanış), abs(düşük-
 
 | VIX | risk_yuzdesi | açıklama |
 |-----|--------------|----------|
-| <20 | %1.0 | normal ortam |
-| 20-25 | %0.75 | dikkatli |
-| 25-30 | %0.50 | yarım risk |
-| 30+ | %0.25 | minimum risk veya girme (K-13b istisnası: ichimoku 4/4 + ön filtre koşulları sağlanırsa %0.50) |
+| <22 | %1.0 | normal mod — karar akışında tam pozisyon |
+| 22-35 | %0.50 | K-13b kriz modu — yarım pozisyon |
+| >35 | girme | hiç giriş yapılmaz |
 
 ---
 
@@ -328,10 +346,10 @@ sabit rasyolarla otomatik red yok. karar claude'da.
 | RSI oversold giriş | ichimoku kumo kırılımı / kijun bounce giriş |
 | MACD teyidi | gereksiz (TK cross kaldırıldı, tek başına anlamlı değildi) |
 | SMA20/50 pozisyon kontrolü | ichimoku kumo bunu zaten yapıyor |
-| SMA200 filtresi | SMA200 uzun vadeli trend filtresi olarak korundu |
+| SMA200 filtresi | SMA200 referans bilgi olarak korundu (zorunlu filtre değil) |
 | sabit %5 trailing | kijun-sen doğal trailing |
 | 7-14 gün tutma süresi | %10 hedefe veya stop'a kadar tut. süre sınırı yok ama K-08 zaman filtresi uygulanır |
-| skor kartı (7 puan) | giriş sinyali var/yok + hacim teyidi |
+| skor kartı (7 puan) | ichimoku 4/4 + SPY master switch + K-19/K-20 filtreleri |
 | sabit lot | ATR bazlı risk hesaplı lot |
 
 ---
@@ -410,14 +428,12 @@ yeni/değişen alanlar:
 
 ---
 
-## 10. MEVCUT POZİSYONLARA GEÇİŞ
+## 10. NOTLAR
 
-NEM ve AROC v1 sistemiyle açıldı. geçiş:
-
-**NEM**: eski stop $93.55 (sabit %5). yeni sistemde kijun $113.16, kumo alt $109.43. fiyat ($99.02) kumo'nun altında, kijun'un altında. ichimoku'ya göre bu pozisyon zaten "girme" sinyali veriyor. giriş tezi (altın rekor + RSI oversold) ichimoku dışı bir tezdi. yeni sistemde bu tür kontra-trend girişler yapılmaz. pozisyon v1 kurallarıyla yönetilmeye devam eder veya erken kapatılır.
-
-**AROC**: eski stop $35.68 (sabit %5). yeni sistemde kijun $34.98. fiyat ($37.02) kumo üstünde, tenkan > kijun. ichimoku tam yükseliş sinyali. bu pozisyon yeni sisteme uyumlu. stop kijun $34.98'e güncellenir (eski $35.68'den daha geniş ama ichimoku bazlı).
+- NEM ve AROC v1 sisteminden v2'ye geçiş (mart 2026) tamamlanmış, her iki pozisyon da kapatılmıştır
+- v1 skor kartı sistemi (7 puan, sabit %5/%10) artık kullanılmıyor
+- v2.1'de TK cross giriş sinyali kaldırıldı, v2.2'de ABEF eklendi, v2.3'te ABEF kaldırılıp 4/4 zorunlu yapıldı
 
 ---
 
-*finzora ai | swing sistemi v2.3 | 2 nisan 2026*
+*finzora ai | swing sistemi v2.3 | 3 nisan 2026*
