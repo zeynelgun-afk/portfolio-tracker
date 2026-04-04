@@ -1,0 +1,30 @@
+name: Instagram Savas Borsa Postu Yayinla
+
+on:
+  workflow_dispatch:
+    inputs:
+      post_type:
+        description: 'Yayin tipi'
+        required: true
+        default: 'carousel_and_story'
+        type: choice
+        options:
+          - carousel_and_story
+          - carousel_only
+          - story_only
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      
+      - name: Install dependencies
+        run: pip install requests
+      
+      - name: Publish to Instagram
+        run: python3 scripts/publish_savas_post.py --type ${{ github.event.inputs.post_type }}
