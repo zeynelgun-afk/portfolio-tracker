@@ -34,12 +34,31 @@ def load_ig_config():
             return json.load(f)
     return {}
 
+def get_page_access_token(user_token, page_id, api_base):
+    """user tokendan page token al (page token suresiz gecerli)"""
+    try:
+        r = requests.get(f"{api_base}/me/accounts",
+                        params={"access_token": user_token}, timeout=30)
+        if r.status_code == 200:
+            for page in r.json().get("data", []):
+                if page["id"] == page_id:
+                    return page.get("access_token")
+    except Exception as e:
+        print(f"page token alinamadi: {e}")
+    return None
+
 _config = load_ig_config()
 INSTAGRAM_ACCOUNT_ID = _config.get("instagram_account_id") or os.getenv("INSTAGRAM_ACCOUNT_ID", "")
 META_ACCESS_TOKEN = _config.get("access_token") or os.getenv("META_ACCESS_TOKEN", "")
 GRAPH_API_VERSION = _config.get("graph_api_version", "v25.0")
 GRAPH_API_BASE = f"https://graph.facebook.com/{GRAPH_API_VERSION}"
 IMGBB_API_KEY = _config.get("imgbb_api_key") or os.getenv("IMGBB_API_KEY", "")
+FB_PAGE_ID = _config.get("facebook_page_id", "758837067309184")
+
+# page token al (suresiz gecerli, her calistirmada yenilenir)
+_page_token = get_page_access_token(META_ACCESS_TOKEN, FB_PAGE_ID, GRAPH_API_BASE)
+if _page_token:
+    META_ACCESS_TOKEN = _page_token
 
 # gorsel sunucu - instagram api gorseli url uzerinden ceker
 # github raw url veya imgbb/cloudinary gibi bir servis kullanilabilir
