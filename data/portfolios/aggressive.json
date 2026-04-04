@@ -1,635 +1,636 @@
 {
-  "portfoy_adi": "Agresif Büyüme",
-  "strateji": {
-    "isim": "Agresif Momentum - Aylık %5",
-    "aylik_hedef_yuzde": 5.0,
-    "max_esanli_pozisyon": 8,
-    "pozisyon_buyuklugu_yuzde": "10-15",
-    "ortalama_tutma_gun": "3-7",
-    "max_tutma_gun": 10,
-    "stop_loss_yuzde": 4.0,
-    "kar_hedefi_yuzde": "8-12",
-    "min_rr_orani": "2:1",
-    "min_win_rate_yuzde": 55,
-    "aylik_max_drawdown_yuzde": 8.0,
-    "gunluk_max_kayip_yuzde": 2.0,
-    "haftalik_max_kayip_yuzde": 4.0,
-    "sinyal_tipleri": [
-      "earnings_momentum",
-      "breakout",
-      "mean_reversion"
+    "portfoy_adi": "Agresif Büyüme",
+    "strateji": {
+        "isim": "Agresif Momentum - Aylık %5",
+        "aylik_hedef_yuzde": 5.0,
+        "max_esanli_pozisyon": 8,
+        "pozisyon_buyuklugu_yuzde": "10-15",
+        "ortalama_tutma_gun": "3-7",
+        "max_tutma_gun": 10,
+        "stop_loss_yuzde": 4.0,
+        "kar_hedefi_yuzde": "8-12",
+        "min_rr_orani": "2:1",
+        "min_win_rate_yuzde": 55,
+        "aylik_max_drawdown_yuzde": 8.0,
+        "gunluk_max_kayip_yuzde": 2.0,
+        "haftalik_max_kayip_yuzde": 4.0,
+        "sinyal_tipleri": [
+            "earnings_momentum",
+            "breakout",
+            "mean_reversion"
+        ],
+        "baslangic_tarihi": "2026-02-26",
+        "dokuman": "docs/AGGRESSIVE_MOMENTUM_STRATEGY.md",
+        "sermaye": 400000,
+        "sermaye_degisiklik_tarihi": "2026-02-26",
+        "sermaye_notu": "$100K → $400K sermaye artırımı. $300K yeni nakit eklendi."
+    },
+    "baslangic_sermaye": 400000,
+    "nakit": {
+        "miktar": 357823.16,
+        "para_birimi": "USD",
+        "agirlik_yuzde": 100.0
+    },
+    "pozisyonlar": [],
+    "son_guncelleme": "2026-04-04T12:47:34",
+    "toplam_deger": 357823.16,
+    "toplam_getiri_yuzde": -10.54,
+    "notes": [
+        {
+            "date": "2026-02-20T20:22:00.933774",
+            "type": "correction",
+            "content": "DÜZELTME: Eski pozisyonlardan gerçekleşen zarar (-$1,321.51) eklendi. Portföy başlangıca göre -$9,051.35 (-9.05%) zarar ediyor."
+        },
+        {
+            "date": "2026-02-20T19:55:18",
+            "type": "entry",
+            "content": "İLK GİRİŞLER: GILT $14.61 + BKSY $19.77 = $12,489.45"
+        },
+        {
+            "date": "2026-02-23T14:44:07.121043",
+            "type": "entry",
+            "content": "ALIŞ NNDM: 2550 adet @$1.96 = $4998.0. Stop: $1.86, Hedef: $2.16. Giriş bölgesi yakalandı."
+        },
+        {
+            "date": "2026-02-23T14:47:41.021880",
+            "type": "entry",
+            "content": "ALIŞ PLTR: 39 adet @$128.42 = $5008.38. Stop: $118.15, Hedef: $147.68. RSI 33 oversold, NVDA earnings sonrası slot kullanıldı."
+        },
+        {
+            "date": "2026-02-23T14:50:28.497621",
+            "type": "entry",
+            "content": "GILT yarım pozisyon tamamlandı (+347 adet @$14.39). SHOP yeni giriş 41 adet @$119.88. Nakit kalan: $58,544.41"
+        },
+        {
+            "date": "2026-02-24T16:32:57.138431",
+            "type": "entry",
+            "content": "ANET alımı - Arista Networks, Inc. - $128.62 x 93 adet = $11,961.66"
+        },
+        {
+            "date": "2026-02-24T16:32:57.138431",
+            "type": "entry",
+            "content": "RKLB alımı - Rocket Lab USA, Inc. - $68.44 x 146 adet = $9,992.24"
+        },
+        {
+            "date": "2026-02-24T16:32:57.138431",
+            "type": "entry",
+            "content": "CELH alımı - Celsius Holdings, Inc. - $49.76 x 140 adet = $6,966.40"
+        },
+        {
+            "date": "2026-02-24T16:40:08.488331",
+            "type": "market_note",
+            "content": "IREN watchlist'e eklendi - $38-40 giriş hedefi - Bitcoin madenciliği + AI data center dönüşümü"
+        },
+        {
+            "date": "2026-02-24T16:47:15.973744",
+            "type": "format_fix",
+            "content": "Watchlist data/watchlist.json'a taşındı — portföy içi watchlist kaldırıldı"
+        },
+        {
+            "date": "2026-02-25T15:01:14.467625",
+            "type": "entry",
+            "content": "ALIŞ TYL: 30 adet @$323.78 = $9713.4. Stop: $270, Hedef: $430. Devlet yazılımı + AI entegrasyonu, Axon paraleli tez. DCF $429, EV/Rev 5.8x."
+        },
+        {
+            "date": "2026-02-26T13:27:16.564127",
+            "type": "rebalance",
+            "content": "Sermaye $100K → $400K artırıldı. $300K yeni nakit eklendi. Aylık %5 agresif momentum stratejisi aktif. Rotasyon portföyü kapatıldı."
+        },
+        {
+            "date": "2026-02-26T16:02:27.281882",
+            "type": "exit",
+            "content": "CELH %33 kısmi satış (46 adet @$56.62) - Q4 earnings rally +11.88% - kademeli çıkış kuralı. TYL %33 kısmi satış (10 adet @$351.09) - +4.77% günlük - kademeli çıkış kuralı."
+        },
+        {
+            "date": "2026-02-26T16:55:45.167225",
+            "type": "exit",
+            "content": "CELH tam çıkış tamamlandı. İlk %33 @$56.62 (+13.8%), kalan %67 @$54.44 (+9.4%). Toplam realize: $2,604.52 + $5,117.36 = $7,721.88. Earnings gap-up sonrası trailing stop disiplini uygulandı."
+        },
+        {
+            "date": "2026-03-03T14:00:05.453779",
+            "type": "entry",
+            "content": "LASR yarım pozisyon giriş: 74 adet @$67.69. Savunma/lazer silah teması, iran savaşı directed energy weapons talebi. ATH riski yüzünden yarım lot. Stop $65.0, hedef $75.0, R:R 2.72:1"
+        },
+        {
+            "date": "2026-03-03T18:48:49.902750",
+            "type": "entry",
+            "content": "GILT yarım pozisyon tamamlandı (689 hisse daha @ $17.30, toplam 1378 hisse). MRK yeni pozisyon açıldı (250 hisse @ $120.41) — sağlık sektörü çeşitlendirmesi."
+        },
+        {
+            "date": "2026-03-04T19:55:41.768596",
+            "type": "rebalance",
+            "content": "MRK 250 hisse temettü portföyüne transfer edildi."
+        },
+        {
+            "date": "2026-03-04T20:15:55.601710",
+            "type": "entry",
+            "content": "PLTR 100 hisse ekleme @ $153.46. Toplam 139 hisse, maliyet $146.43. İkinci aşama: pullback $148-150 bölgesinde 100 hisse daha planlanıyor."
+        },
+        {
+            "date": "2026-03-05T14:59:02.205098",
+            "type": "entry",
+            "content": "AMKR yarım pozisyon giriş: 176 adet @$45.45 = $7999.2. AI chip tedarik zinciri tezi. Stop $42.5, hedef $54, R:R 2.9:1. MRVL beat → tam pozisyon planı."
+        },
+        {
+            "date": "2026-03-05T14:59:02.205098",
+            "type": "market_note",
+            "content": "LASR stop override: $65→$62. Zeynel kararı. Fiyat $65.02, RSI 61 güçlü, savaş lazer silah teması devam ediyor."
+        },
+        {
+            "date": "2026-03-05T14:59:02.205098",
+            "type": "rebalance",
+            "content": "Trailing stop aktivasyonları: BKSY $23.10 (-%4), SHOP $130.20 (-%4), TYL $360.41 (-%4). Tüm hedef seviyeleri aşıldı."
+        },
+        {
+            "date": "2026-03-06T15:23:38.705173",
+            "type": "exit",
+            "content": "SHOP izleyen zarar kes tetiklendi. giriş $119.88, çıkış $129.55, kâr +%8.1. NFP -92K şoku ile piyasa çökerken trailing stop disiplini çalıştı."
+        },
+        {
+            "date": "2026-03-06T16:49:24.125656",
+            "type": "exit",
+            "content": "AMKR disiplinli erken çıkış. stop $42'ya sadece 67 cent mesafe, NFP -92K ile piyasa çok zayıf. MRVL beat'e rağmen AMKR faydalanmadı, tedarik zinciri ikinci kademe zayıf kaldı. zarar -%6.1."
+        },
+        {
+            "date": "2026-03-09T13:53:54.616194",
+            "type": "exit",
+            "content": "NNDM satıldı @$1.77 (stop-loss, -%9.7). BKSY satıldı @$23.42 (trailing stop, +%18.5 kâr koruması). VIX 31+ ortamında disiplin öncelikli."
+        },
+        {
+            "date": "2026-03-10T13:40:11.517755",
+            "type": "exit",
+            "content": "TYL satıldı @$360.00 | İzleyen zarar kes $360.41 bölgesinde | Kâr: +$724.40 (+%11.19) | 20 adet | Toplam gelir: $7,200.00"
+        },
+        {
+            "date": "2026-03-10T13:56:49.625605",
+            "type": "entry",
+            "content": "CRDO alındı @$114.28 | 87 adet | $9942.36 | Yarım poz (VIX 24) | Stop $108 | Hedef $130+ | AI çip tedarik zinciri tezi"
+        },
+        {
+            "date": "2026-03-10T14:29:13.753969",
+            "type": "entry",
+            "content": "GLW alındı @$136.53 | 109 adet | $14881.77 | Yarım poz | Stop $125.61 | Hedef $162.1 | AI optik tezi"
+        },
+        {
+            "date": "2026-03-12T18:18:52.505280",
+            "type": "entry",
+            "content": "MRVL 120 hisse @$88.73 girişi. AI çip tedarik zinciri tezi kapsamında. Stop: $81.60, Hedef: $102+. CRDO ile birlikte portföyde çift AI altyapı pozisyonu."
+        },
+        {
+            "date": "2026-03-13T14:40:15.318323",
+            "type": "entry",
+            "content": "COHR 100 adet alis @$246.87. AI optik/lazer, GTC katalizoru. Yarim pozisyon (VIX>25). Stop $225, hedef $300."
+        },
+        {
+            "date": "2026-03-16T19:28:51.098401",
+            "type": "exit",
+            "content": "LASR @$68.55 satıldı. giriş $67.69, +1.27% (+$63.64). 3x stop override dersi: K-06 kuralı çalıştı. breakeven çıkış fırsatı doğru değerlendirildi."
+        },
+        {
+            "date": "2026-03-17T14:53:26.231759",
+            "type": "exit",
+            "content": "RKLB %33 kısmi satış (48 adet @$77.53). hedef $77 aşıldı, GTC 2026 katalizörü. kalan 98 adet trailing stop $73.65. K/Z: +%13.3"
+        },
+        {
+            "date": "2026-03-17T18:02:18.154244",
+            "type": "exit",
+            "content": "RKLB %33 kısmi satış (48 adet @$77.53). hedef $77 aşıldı, GTC katalizörü. kalan 98 adet trailing stop $73.65. K/Z: +%13.3"
+        },
+        {
+            "date": "2026-03-17T18:02:18.154244",
+            "type": "exit",
+            "content": "CRDO stop-loss çıkış. 87 adet @$104.26 (K/Z: -%8.77). stop $108 kırıldı. insider satışları + gross margin compression + SMA altında K-04."
+        },
+        {
+            "date": "2026-03-18T18:52:47.898183",
+            "type": "entry",
+            "content": "FOMC sonrası K-01 kalktı. CRDO yarım pozisyon @$101.56 (147 hisse, AI AEC lideri, ATH'den -%52 geri çekilme) + PWR yarım pozisyon @$574.35 (26 hisse, data center altyapı, portföye yeni sektör). VIX 23.73, PPI sıcak geldi ama dot plot 1 indirim korudu. MU earnings bekleniyor."
+        },
+        {
+            "date": "2026-03-20T18:15:10.251622",
+            "type": "exit",
+            "content": "RKLB trailing stop satışı @$67.61. Stop $73.65 dün ihlal edilmişti. PnL: -1.21%"
+        },
+        {
+            "date": "2026-03-20T18:38:34.441092",
+            "type": "exit",
+            "content": "GLW stop-loss satışı @$125.46. Stop $125.61 ihlal edildi. PnL: -8.11%. Triple witching baskısı + SMCI chip skandalı tech satışını derinleştirdi."
+        },
+        {
+            "date": "2026-03-23T17:41:14.438139",
+            "type": "market_note",
+            "content": "PLTR trailing stop aktif: $150.65 (%5 trailing, hedef $147 aşıldı)"
+        },
+        {
+            "date": "2026-03-25T16:58:38.537769",
+            "type": "rebalance",
+            "content": "agresif portföy yeniden yapılandırma kararı (25 mart 2026): 1) stop sistemi 2x ATR(14) trailing'e geçildi (sabit % kaldırıldı). 2) sektör yoğunlaşması tespit edildi: %88 tech/AI. hedef: tek sektör max %50. 3) nakit %65 çok yüksek, hedef %20-30. non-tech sektörlerden giriş sinyali bekleniyor. 4) COP (enerji, ichimoku 4/4), LMT (savunma, kumo düzeltmede), ETN (endüstriyel, güç altyapısı) watchlist'e eklendi. 5) mevcut tech pozisyonlara ekleme yapılmayacak, çeşitlendirme öncelikli."
+        },
+        {
+            "date": "2026-03-26T13:40:49.547649",
+            "type": "exit",
+            "content": "PLTR trailing stop satışı @$149.90 (trailing: $150.96). K/Z: -0.52%, 31 gün tutuldu. Zirve $158.58'den -%5 trailing tetiklendi."
+        },
+        {
+            "date": "2026-03-26T13:40:49.547649",
+            "type": "exit",
+            "content": "COHR trailing stop satışı @$259.05 (trailing: $263.7). K/Z: +0.10%, 13 gün tutuldu. Bain Capital ardışık blok satışları satış baskısı oluşturuyor."
+        },
+        {
+            "date": "2026-03-27T12:25:16.936482",
+            "type": "market_note",
+            "content": "27 mart 2026 seans öncesi ATR güncellemesi: CAMT stop $151.98 → $157.42 (zirve $179.30'dan 2xATR). CAMT aftermarket bid $153.13 = stop altında → POWL ile birlikte açılışta çıkış kararı alındı. MRVL stop $89.20 → $89.49. VRT stop değişmedi."
+        },
+        {
+            "date": "2026-03-27T13:47:45.110179",
+            "type": "exit",
+            "content": "CAMT 114 adet @$157.75 satıldı. Stop $157.42'ye $0.33 mesafe, QQQ -0.69% VIX 29.45 ortamında beklemek anlamsız. K/Z: -9.52% (-1,892.40$). POWL ise aftermarket $512'den $542'ye güçlü açıldı, stop ihlal yok - tutuldu."
+        },
+        {
+            "date": "2026-03-27T16:50:19.051146",
+            "type": "exit",
+            "content": "VRT satıldı @$251.40 - trailing stop $254.37 ihlali. giriş $278.52, kayıp -9.74%"
+        },
+        {
+            "date": "2026-03-30T14:03:29",
+            "type": "exit",
+            "content": "MRVL stop tetiklendi: 375 adet @$91.33. 2xATR trailing stop $92.09 kirildi. PnL -3.8% ($-1353.75). Microsoft-AVGO gecis haberleri + Benchmark downgrade."
+        },
+        {
+            "date": "2026-03-30T14:03:29",
+            "type": "exit",
+            "content": "POWL stop tetiklendi: 34 adet @$522.92. 2xATR trailing stop $524.89 kirildi. PnL -10.63% ($-2114.8). $25M insider satisi + kar realizasyonu baskisi."
+        }
     ],
-    "baslangic_tarihi": "2026-02-26",
-    "dokuman": "docs/AGGRESSIVE_MOMENTUM_STRATEGY.md",
-    "sermaye": 400000,
-    "sermaye_degisiklik_tarihi": "2026-02-26",
-    "sermaye_notu": "$100K → $400K sermaye artırımı. $300K yeni nakit eklendi."
-  },
-  "baslangic_sermaye": 400000,
-  "nakit": {
-    "miktar": 357823.16,
-    "para_birimi": "USD"
-  },
-  "pozisyonlar": [],
-  "son_guncelleme": "2026-04-03T21:29:34.284781",
-  "toplam_deger": 357823.16,
-  "toplam_getiri_yuzde": -10.54,
-  "notes": [
-    {
-      "date": "2026-02-20T20:22:00.933774",
-      "type": "correction",
-      "content": "DÜZELTME: Eski pozisyonlardan gerçekleşen zarar (-$1,321.51) eklendi. Portföy başlangıca göre -$9,051.35 (-9.05%) zarar ediyor."
-    },
-    {
-      "date": "2026-02-20T19:55:18",
-      "type": "entry",
-      "content": "İLK GİRİŞLER: GILT $14.61 + BKSY $19.77 = $12,489.45"
-    },
-    {
-      "date": "2026-02-23T14:44:07.121043",
-      "type": "entry",
-      "content": "ALIŞ NNDM: 2550 adet @$1.96 = $4998.0. Stop: $1.86, Hedef: $2.16. Giriş bölgesi yakalandı."
-    },
-    {
-      "date": "2026-02-23T14:47:41.021880",
-      "type": "entry",
-      "content": "ALIŞ PLTR: 39 adet @$128.42 = $5008.38. Stop: $118.15, Hedef: $147.68. RSI 33 oversold, NVDA earnings sonrası slot kullanıldı."
-    },
-    {
-      "date": "2026-02-23T14:50:28.497621",
-      "type": "entry",
-      "content": "GILT yarım pozisyon tamamlandı (+347 adet @$14.39). SHOP yeni giriş 41 adet @$119.88. Nakit kalan: $58,544.41"
-    },
-    {
-      "date": "2026-02-24T16:32:57.138431",
-      "type": "entry",
-      "content": "ANET alımı - Arista Networks, Inc. - $128.62 x 93 adet = $11,961.66"
-    },
-    {
-      "date": "2026-02-24T16:32:57.138431",
-      "type": "entry",
-      "content": "RKLB alımı - Rocket Lab USA, Inc. - $68.44 x 146 adet = $9,992.24"
-    },
-    {
-      "date": "2026-02-24T16:32:57.138431",
-      "type": "entry",
-      "content": "CELH alımı - Celsius Holdings, Inc. - $49.76 x 140 adet = $6,966.40"
-    },
-    {
-      "date": "2026-02-24T16:40:08.488331",
-      "type": "market_note",
-      "content": "IREN watchlist'e eklendi - $38-40 giriş hedefi - Bitcoin madenciliği + AI data center dönüşümü"
-    },
-    {
-      "date": "2026-02-24T16:47:15.973744",
-      "type": "format_fix",
-      "content": "Watchlist data/watchlist.json'a taşındı — portföy içi watchlist kaldırıldı"
-    },
-    {
-      "date": "2026-02-25T15:01:14.467625",
-      "type": "entry",
-      "content": "ALIŞ TYL: 30 adet @$323.78 = $9713.4. Stop: $270, Hedef: $430. Devlet yazılımı + AI entegrasyonu, Axon paraleli tez. DCF $429, EV/Rev 5.8x."
-    },
-    {
-      "date": "2026-02-26T13:27:16.564127",
-      "type": "rebalance",
-      "content": "Sermaye $100K → $400K artırıldı. $300K yeni nakit eklendi. Aylık %5 agresif momentum stratejisi aktif. Rotasyon portföyü kapatıldı."
-    },
-    {
-      "date": "2026-02-26T16:02:27.281882",
-      "type": "exit",
-      "content": "CELH %33 kısmi satış (46 adet @$56.62) - Q4 earnings rally +11.88% - kademeli çıkış kuralı. TYL %33 kısmi satış (10 adet @$351.09) - +4.77% günlük - kademeli çıkış kuralı."
-    },
-    {
-      "date": "2026-02-26T16:55:45.167225",
-      "type": "exit",
-      "content": "CELH tam çıkış tamamlandı. İlk %33 @$56.62 (+13.8%), kalan %67 @$54.44 (+9.4%). Toplam realize: $2,604.52 + $5,117.36 = $7,721.88. Earnings gap-up sonrası trailing stop disiplini uygulandı."
-    },
-    {
-      "date": "2026-03-03T14:00:05.453779",
-      "type": "entry",
-      "content": "LASR yarım pozisyon giriş: 74 adet @$67.69. Savunma/lazer silah teması, iran savaşı directed energy weapons talebi. ATH riski yüzünden yarım lot. Stop $65.0, hedef $75.0, R:R 2.72:1"
-    },
-    {
-      "date": "2026-03-03T18:48:49.902750",
-      "type": "entry",
-      "content": "GILT yarım pozisyon tamamlandı (689 hisse daha @ $17.30, toplam 1378 hisse). MRK yeni pozisyon açıldı (250 hisse @ $120.41) — sağlık sektörü çeşitlendirmesi."
-    },
-    {
-      "date": "2026-03-04T19:55:41.768596",
-      "type": "rebalance",
-      "content": "MRK 250 hisse temettü portföyüne transfer edildi."
-    },
-    {
-      "date": "2026-03-04T20:15:55.601710",
-      "type": "entry",
-      "content": "PLTR 100 hisse ekleme @ $153.46. Toplam 139 hisse, maliyet $146.43. İkinci aşama: pullback $148-150 bölgesinde 100 hisse daha planlanıyor."
-    },
-    {
-      "date": "2026-03-05T14:59:02.205098",
-      "type": "entry",
-      "content": "AMKR yarım pozisyon giriş: 176 adet @$45.45 = $7999.2. AI chip tedarik zinciri tezi. Stop $42.5, hedef $54, R:R 2.9:1. MRVL beat → tam pozisyon planı."
-    },
-    {
-      "date": "2026-03-05T14:59:02.205098",
-      "type": "market_note",
-      "content": "LASR stop override: $65→$62. Zeynel kararı. Fiyat $65.02, RSI 61 güçlü, savaş lazer silah teması devam ediyor."
-    },
-    {
-      "date": "2026-03-05T14:59:02.205098",
-      "type": "rebalance",
-      "content": "Trailing stop aktivasyonları: BKSY $23.10 (-%4), SHOP $130.20 (-%4), TYL $360.41 (-%4). Tüm hedef seviyeleri aşıldı."
-    },
-    {
-      "date": "2026-03-06T15:23:38.705173",
-      "type": "exit",
-      "content": "SHOP izleyen zarar kes tetiklendi. giriş $119.88, çıkış $129.55, kâr +%8.1. NFP -92K şoku ile piyasa çökerken trailing stop disiplini çalıştı."
-    },
-    {
-      "date": "2026-03-06T16:49:24.125656",
-      "type": "exit",
-      "content": "AMKR disiplinli erken çıkış. stop $42'ya sadece 67 cent mesafe, NFP -92K ile piyasa çok zayıf. MRVL beat'e rağmen AMKR faydalanmadı, tedarik zinciri ikinci kademe zayıf kaldı. zarar -%6.1."
-    },
-    {
-      "date": "2026-03-09T13:53:54.616194",
-      "type": "exit",
-      "content": "NNDM satıldı @$1.77 (stop-loss, -%9.7). BKSY satıldı @$23.42 (trailing stop, +%18.5 kâr koruması). VIX 31+ ortamında disiplin öncelikli."
-    },
-    {
-      "date": "2026-03-10T13:40:11.517755",
-      "type": "exit",
-      "content": "TYL satıldı @$360.00 | İzleyen zarar kes $360.41 bölgesinde | Kâr: +$724.40 (+%11.19) | 20 adet | Toplam gelir: $7,200.00"
-    },
-    {
-      "date": "2026-03-10T13:56:49.625605",
-      "type": "entry",
-      "content": "CRDO alındı @$114.28 | 87 adet | $9942.36 | Yarım poz (VIX 24) | Stop $108 | Hedef $130+ | AI çip tedarik zinciri tezi"
-    },
-    {
-      "date": "2026-03-10T14:29:13.753969",
-      "type": "entry",
-      "content": "GLW alındı @$136.53 | 109 adet | $14881.77 | Yarım poz | Stop $125.61 | Hedef $162.1 | AI optik tezi"
-    },
-    {
-      "date": "2026-03-12T18:18:52.505280",
-      "type": "entry",
-      "content": "MRVL 120 hisse @$88.73 girişi. AI çip tedarik zinciri tezi kapsamında. Stop: $81.60, Hedef: $102+. CRDO ile birlikte portföyde çift AI altyapı pozisyonu."
-    },
-    {
-      "date": "2026-03-13T14:40:15.318323",
-      "type": "entry",
-      "content": "COHR 100 adet alis @$246.87. AI optik/lazer, GTC katalizoru. Yarim pozisyon (VIX>25). Stop $225, hedef $300."
-    },
-    {
-      "date": "2026-03-16T19:28:51.098401",
-      "type": "exit",
-      "content": "LASR @$68.55 satıldı. giriş $67.69, +1.27% (+$63.64). 3x stop override dersi: K-06 kuralı çalıştı. breakeven çıkış fırsatı doğru değerlendirildi."
-    },
-    {
-      "date": "2026-03-17T14:53:26.231759",
-      "type": "exit",
-      "content": "RKLB %33 kısmi satış (48 adet @$77.53). hedef $77 aşıldı, GTC 2026 katalizörü. kalan 98 adet trailing stop $73.65. K/Z: +%13.3"
-    },
-    {
-      "date": "2026-03-17T18:02:18.154244",
-      "type": "exit",
-      "content": "RKLB %33 kısmi satış (48 adet @$77.53). hedef $77 aşıldı, GTC katalizörü. kalan 98 adet trailing stop $73.65. K/Z: +%13.3"
-    },
-    {
-      "date": "2026-03-17T18:02:18.154244",
-      "type": "exit",
-      "content": "CRDO stop-loss çıkış. 87 adet @$104.26 (K/Z: -%8.77). stop $108 kırıldı. insider satışları + gross margin compression + SMA altında K-04."
-    },
-    {
-      "date": "2026-03-18T18:52:47.898183",
-      "type": "entry",
-      "content": "FOMC sonrası K-01 kalktı. CRDO yarım pozisyon @$101.56 (147 hisse, AI AEC lideri, ATH'den -%52 geri çekilme) + PWR yarım pozisyon @$574.35 (26 hisse, data center altyapı, portföye yeni sektör). VIX 23.73, PPI sıcak geldi ama dot plot 1 indirim korudu. MU earnings bekleniyor."
-    },
-    {
-      "date": "2026-03-20T18:15:10.251622",
-      "type": "exit",
-      "content": "RKLB trailing stop satışı @$67.61. Stop $73.65 dün ihlal edilmişti. PnL: -1.21%"
-    },
-    {
-      "date": "2026-03-20T18:38:34.441092",
-      "type": "exit",
-      "content": "GLW stop-loss satışı @$125.46. Stop $125.61 ihlal edildi. PnL: -8.11%. Triple witching baskısı + SMCI chip skandalı tech satışını derinleştirdi."
-    },
-    {
-      "date": "2026-03-23T17:41:14.438139",
-      "type": "market_note",
-      "content": "PLTR trailing stop aktif: $150.65 (%5 trailing, hedef $147 aşıldı)"
-    },
-    {
-      "date": "2026-03-25T16:58:38.537769",
-      "type": "rebalance",
-      "content": "agresif portföy yeniden yapılandırma kararı (25 mart 2026): 1) stop sistemi 2x ATR(14) trailing'e geçildi (sabit % kaldırıldı). 2) sektör yoğunlaşması tespit edildi: %88 tech/AI. hedef: tek sektör max %50. 3) nakit %65 çok yüksek, hedef %20-30. non-tech sektörlerden giriş sinyali bekleniyor. 4) COP (enerji, ichimoku 4/4), LMT (savunma, kumo düzeltmede), ETN (endüstriyel, güç altyapısı) watchlist'e eklendi. 5) mevcut tech pozisyonlara ekleme yapılmayacak, çeşitlendirme öncelikli."
-    },
-    {
-      "date": "2026-03-26T13:40:49.547649",
-      "type": "exit",
-      "content": "PLTR trailing stop satışı @$149.90 (trailing: $150.96). K/Z: -0.52%, 31 gün tutuldu. Zirve $158.58'den -%5 trailing tetiklendi."
-    },
-    {
-      "date": "2026-03-26T13:40:49.547649",
-      "type": "exit",
-      "content": "COHR trailing stop satışı @$259.05 (trailing: $263.7). K/Z: +0.10%, 13 gün tutuldu. Bain Capital ardışık blok satışları satış baskısı oluşturuyor."
-    },
-    {
-      "date": "2026-03-27T12:25:16.936482",
-      "type": "market_note",
-      "content": "27 mart 2026 seans öncesi ATR güncellemesi: CAMT stop $151.98 → $157.42 (zirve $179.30'dan 2xATR). CAMT aftermarket bid $153.13 = stop altında → POWL ile birlikte açılışta çıkış kararı alındı. MRVL stop $89.20 → $89.49. VRT stop değişmedi."
-    },
-    {
-      "date": "2026-03-27T13:47:45.110179",
-      "type": "exit",
-      "content": "CAMT 114 adet @$157.75 satıldı. Stop $157.42'ye $0.33 mesafe, QQQ -0.69% VIX 29.45 ortamında beklemek anlamsız. K/Z: -9.52% (-1,892.40$). POWL ise aftermarket $512'den $542'ye güçlü açıldı, stop ihlal yok - tutuldu."
-    },
-    {
-      "date": "2026-03-27T16:50:19.051146",
-      "type": "exit",
-      "content": "VRT satıldı @$251.40 - trailing stop $254.37 ihlali. giriş $278.52, kayıp -9.74%"
-    },
-    {
-      "date": "2026-03-30T14:03:29",
-      "type": "exit",
-      "content": "MRVL stop tetiklendi: 375 adet @$91.33. 2xATR trailing stop $92.09 kirildi. PnL -3.8% ($-1353.75). Microsoft-AVGO gecis haberleri + Benchmark downgrade."
-    },
-    {
-      "date": "2026-03-30T14:03:29",
-      "type": "exit",
-      "content": "POWL stop tetiklendi: 34 adet @$522.92. 2xATR trailing stop $524.89 kirildi. PnL -10.63% ($-2114.8). $25M insider satisi + kar realizasyonu baskisi."
-    }
-  ],
-  "transactions": [
-    {
-      "tarih": "2026-02-26",
-      "islem_tipi": "SERMAYE_ARTIRIMI",
-      "sembol": "-",
-      "adet": 0,
-      "fiyat": 0,
-      "tutar": 300000,
-      "aciklama": "Portföy yeniden yapılandırma - $300K yeni sermaye eklendi. Rotasyon portföyü kapatıldı, agresif momentum stratejisine geçiş."
-    },
-    {
-      "tarih": "2026-02-26",
-      "islem_tipi": "SATIŞ",
-      "sembol": "CELH",
-      "adet": 46,
-      "fiyat": 56.62,
-      "tutar": 2604.52,
-      "aciklama": "Kademeli çıkış - %33 kısmi satış - +%13.8 kar - strateji kuralı +6%/+10% tetiklendi"
-    },
-    {
-      "tarih": "2026-02-26",
-      "islem_tipi": "SATIŞ",
-      "sembol": "TYL",
-      "adet": 10,
-      "fiyat": 351.09,
-      "tutar": 3510.9,
-      "aciklama": "Kademeli çıkış - %33 kısmi satış - +%8.4 kar - strateji kuralı +6% tetiklendi"
-    },
-    {
-      "tarih": "2026-02-26",
-      "islem_tipi": "SATIŞ",
-      "sembol": "CELH",
-      "adet": 94,
-      "fiyat": 54.44,
-      "tutar": 5117.36,
-      "aciklama": "Trailing stop tetiklendi ($54.92) - kalan %67 tam çıkış - toplam CELH karı: +9.4%"
-    },
-    {
-      "tarih": "2026-03-03",
-      "islem_tipi": "ALIŞ",
-      "sembol": "LASR",
-      "adet": 74,
-      "fiyat": 67.69,
-      "tutar": 5009.06,
-      "aciklama": "Yarım pozisyon - Agresif portföy - Savunma lazer silah, iran savaşı katalizörü"
-    },
-    {
-      "tarih": "2026-03-03",
-      "islem_tipi": "ALIŞ",
-      "sembol": "GILT",
-      "adet": 689,
-      "fiyat": 17.3,
-      "tutar": 11919.7,
-      "aciklama": "Yarım pozisyon tamamlama - Agresif portföy - Pullback fırsatı"
-    },
-    {
-      "tarih": "2026-03-03",
-      "islem_tipi": "ALIŞ",
-      "sembol": "MRK",
-      "adet": 250,
-      "fiyat": 120.41,
-      "tutar": 30102.5,
-      "aciklama": "Yeni pozisyon - Agresif portföy - Sağlık sektörü çeşitlendirmesi"
-    },
-    {
-      "tarih": "2026-03-04",
-      "islem_tipi": "SATIŞ",
-      "sembol": "MRK",
-      "adet": 250,
-      "fiyat": 120.51,
-      "tutar": 30127.5,
-      "aciklama": "Temettü portföyüne transfer"
-    },
-    {
-      "tarih": "2026-03-04",
-      "islem_tipi": "ALIŞ",
-      "sembol": "PLTR",
-      "adet": 100,
-      "fiyat": 153.46,
-      "tutar": 15346.0,
-      "aciklama": "Pozisyon büyütme - AI + savunma çift katalizör, momentum güçlü, ağırlık %1.6'dan %5.8'e"
-    },
-    {
-      "tarih": "2026-03-05",
-      "islem_tipi": "ALIŞ",
-      "sembol": "AMKR",
-      "adet": 176,
-      "fiyat": 45.45,
-      "tutar": 7999.2,
-      "aciklama": "Yarım pozisyon - Agresif portföy - AI chip tedarik zinciri: gelişmiş paketleme/HBM. MRVL earnings sonucu bekleniyor."
-    },
-    {
-      "tarih": "2026-03-06",
-      "islem_tipi": "SATIŞ",
-      "sembol": "SHOP",
-      "adet": 41,
-      "fiyat": 129.55,
-      "tutar": 5311.55,
-      "aciklama": "izleyen zarar kes $130.20 tetiklendi, kârlı çıkış +%8.07"
-    },
-    {
-      "tarih": "2026-03-06",
-      "islem_tipi": "SATIŞ",
-      "sembol": "AMKR",
-      "adet": 176,
-      "fiyat": 42.67,
-      "tutar": 7509.92,
-      "aciklama": "stop'a %1.6 mesafe, NFP -92K şoku, zayıflama devam, erken disiplinli çıkış"
-    },
-    {
-      "tarih": "2026-03-09",
-      "islem_tipi": "SATIŞ",
-      "sembol": "NNDM",
-      "adet": 2550,
-      "fiyat": 1.77,
-      "tutar": 4513.5,
-      "aciklama": "Stop-loss tetiklendi — $1.80 altında, disiplinli çıkış"
-    },
-    {
-      "tarih": "2026-03-09",
-      "islem_tipi": "SATIŞ",
-      "sembol": "BKSY",
-      "adet": 379,
-      "fiyat": 23.42,
-      "tutar": 8876.18,
-      "aciklama": "İzleyen zarar kes tetiklendi — kâr koruması, disiplinli çıkış"
-    },
-    {
-      "tarih": "2026-03-10",
-      "islem_tipi": "SATIŞ",
-      "sembol": "TYL",
-      "adet": 20,
-      "fiyat": 360.0,
-      "tutar": 7200.0,
-      "aciklama": "İzleyen zarar kes tetiklendi - TYL @360.00 - Trailing stop satışı. Kâr: +%11.19"
-    },
-    {
-      "tarih": "2026-03-10",
-      "islem_tipi": "ALIŞ",
-      "sembol": "CRDO",
-      "adet": 87,
-      "fiyat": 114.28,
-      "tutar": 9942.36,
-      "aciklama": "AI tedarik zinciri - SerDes/optik - yarım pozisyon - stop $108 - hedef $130+"
-    },
-    {
-      "tarih": "2026-03-10",
-      "islem_tipi": "ALIŞ",
-      "sembol": "GLW",
-      "adet": 109,
-      "fiyat": 136.53,
-      "tutar": 14881.77,
-      "aciklama": "AI optik fiber tedarik zinciri - yarım pozisyon - stop $125.61 - hedef $162.10 (52H)"
-    },
-    {
-      "tarih": "2026-03-12",
-      "islem_tipi": "ALIŞ",
-      "sembol": "MRVL",
-      "adet": 120,
-      "fiyat": 88.73,
-      "tutar": 10647.6,
-      "aciklama": "AI çip tedarik zinciri tezi - Agresif portföy - Özel ASIC ve veri merkezi ağ çipleri lideri"
-    },
-    {
-      "tarih": "2026-03-13",
-      "islem_tipi": "ALIŞ",
-      "sembol": "COHR",
-      "adet": 100,
-      "fiyat": 246.865,
-      "tutar": 24686.5,
-      "aciklama": "AI veri merkezi optik bilesenleri - GTC katalizoru - K-13 yarim pozisyon - Agresif portfoy"
-    },
-    {
-      "tarih": "2026-03-16",
-      "islem_tipi": "SATIŞ",
-      "sembol": "LASR",
-      "adet": 74,
-      "fiyat": 68.55,
-      "tutar": 5072.7,
-      "aciklama": "Breakeven çıkış — K-06 (3x stop override geçmişi) + K-01 (FOMC haftası). Kâr: +1.27%"
-    },
-    {
-      "tarih": "2026-03-17",
-      "islem_tipi": "SATIŞ",
-      "sembol": "RKLB",
-      "adet": 48,
-      "fiyat": 77.53,
-      "tutar": 3721.44,
-      "aciklama": "Kısmi kâr alma %33 - hedef fiyat aşıldı ($77+) - GTC katalizörü çalıştı - K-11 - Agresif portföy"
-    },
-    {
-      "tarih": "2026-03-17",
-      "islem_tipi": "SATIŞ",
-      "sembol": "RKLB",
-      "adet": 48,
-      "fiyat": 77.53,
-      "tutar": 3721.44,
-      "aciklama": "Kısmi kâr alma %33 - hedef fiyat aşıldı ($77+) - GTC katalizörü çalıştı - K-11 - Agresif portföy"
-    },
-    {
-      "tarih": "2026-03-17",
-      "islem_tipi": "SATIŞ",
-      "sembol": "CRDO",
-      "adet": 87,
-      "fiyat": 104.26,
-      "tutar": 9070.62,
-      "aciklama": "Stop-loss tetiklendi ($108) - fiyat $104.26 - insider satış baskısı + gross margin compression + SMA200 altında - Agresif portföy"
-    },
-    {
-      "tarih": "2026-03-18",
-      "islem_tipi": "ALIŞ",
-      "sembol": "CRDO",
-      "adet": 147,
-      "fiyat": 101.56,
-      "tutar": 14929.32,
-      "aciklama": "Yarım pozisyon giriş - Agresif portföy - AI data center bağlantı çözümleri (AEC) pazar lideri, %88 pazar payı. Q3 FY2026 "
-    },
-    {
-      "tarih": "2026-03-18",
-      "islem_tipi": "ALIŞ",
-      "sembol": "PWR",
-      "adet": 26,
-      "fiyat": 574.35,
-      "tutar": 14933.1,
-      "aciklama": "Yarım pozisyon giriş - Agresif portföy - Kuzey Amerika'nın en büyük elektrik altyapısı ve data center inşaat şirketi. AI "
-    },
-    {
-      "tarih": "2026-03-20",
-      "islem_tipi": "SATIŞ",
-      "sembol": "RKLB",
-      "adet": 50,
-      "fiyat": 67.61,
-      "tutar": 3380.5,
-      "aciklama": "Trailing stop tetiklendi - Stop $73.65 ihlal edildi - Agresif portföy"
-    },
-    {
-      "tarih": "2026-03-20",
-      "islem_tipi": "SATIŞ",
-      "sembol": "GLW",
-      "adet": 109,
-      "fiyat": 125.46,
-      "tutar": 13675.14,
-      "aciklama": "Stop-loss tetiklendi - $125.46 < stop $125.61 - Agresif portföy - Fiber optik"
-    },
-    {
-      "tarih": "2026-03-25",
-      "islem_tipi": "ALIŞ",
-      "sembol": "POWL",
-      "adet": 34,
-      "fiyat": 585.12,
-      "tutar": 19894.08,
-      "aciklama": "Yarım pozisyon giriş - Agresif portföy - AI tedarik zinciri: veri merkezi trafo ve güç dağıtım ekipmanı. ichimoku 4/4 güç"
-    },
-    {
-      "tarih": "2026-03-25",
-      "islem_tipi": "ALIŞ",
-      "sembol": "CAMT",
-      "adet": 114,
-      "fiyat": 174.35,
-      "tutar": 19875.9,
-      "aciklama": "Yarım pozisyon giriş - Agresif portföy - AI tedarik zinciri: wafer denetim ve ölçüm ekipmanı. ichimoku 4/4 güçlü yükseliş"
-    },
-    {
-      "tarih": "2026-03-25",
-      "islem_tipi": "ALIŞ",
-      "sembol": "VRT",
-      "adet": 71,
-      "fiyat": 278.52,
-      "tutar": 19774.92,
-      "aciklama": "Yarım pozisyon giriş - Agresif portföy - AI tedarik zinciri: veri merkezi soğutma, UPS, güç yönetimi. ichimoku 4/4 güçlü "
-    },
-    {
-      "tarih": "2026-03-25",
-      "islem_tipi": "SATIŞ",
-      "sembol": "GILT",
-      "adet": 1378,
-      "fiyat": 17.53,
-      "tutar": 24156.06,
-      "aciklama": "Portföy daraltma 10→6 - altın madenci, AI tedarik zinciri temasına uymuyor"
-    },
-    {
-      "tarih": "2026-03-25",
-      "islem_tipi": "SATIŞ",
-      "sembol": "ANET",
-      "adet": 93,
-      "fiyat": 134.45,
-      "tutar": 12503.85,
-      "aciklama": "Portföy daraltma 10→6 - küçük pozisyon, daha yüksek konviksiyon hisselere yoğunlaşma"
-    },
-    {
-      "tarih": "2026-03-25",
-      "islem_tipi": "SATIŞ",
-      "sembol": "CRDO",
-      "adet": 147,
-      "fiyat": 102.6,
-      "tutar": 15082.2,
-      "aciklama": "Portföy daraltma 10→6 - en zayıf momentum, daha önce stop yedi, tekrar giriş başarısız"
-    },
-    {
-      "tarih": "2026-03-25",
-      "islem_tipi": "SATIŞ",
-      "sembol": "PWR",
-      "adet": 26,
-      "fiyat": 577.36,
-      "tutar": 15011.36,
-      "aciklama": "Portföy daraltma 10→6 - POWL ile çakışma (güç altyapısı), konsolide"
-    },
-    {
-      "tarih": "2026-03-25",
-      "islem_tipi": "ALIŞ",
-      "sembol": "COHR",
-      "adet": 91,
-      "fiyat": 271.88,
-      "tutar": 24741.53,
-      "aciklama": "Pozisyon büyütme - yüksek konviksiyon, güçlü momentum"
-    },
-    {
-      "tarih": "2026-03-25",
-      "islem_tipi": "ALIŞ",
-      "sembol": "MRVL",
-      "adet": 255,
-      "fiyat": 97.86,
-      "tutar": 24954.3,
-      "aciklama": "Pozisyon büyütme - yüksek konviksiyon, güçlü momentum"
-    },
-    {
-      "tarih": "2026-03-25",
-      "islem_tipi": "ALIŞ",
-      "sembol": "PLTR",
-      "adet": 95,
-      "fiyat": 156.9,
-      "tutar": 14905.03,
-      "aciklama": "Pozisyon büyütme - yüksek konviksiyon, güçlü momentum"
-    },
-    {
-      "tarih": "2026-03-26",
-      "islem_tipi": "SATIŞ",
-      "sembol": "PLTR",
-      "adet": 234,
-      "fiyat": 149.9,
-      "tutar": 35076.6,
-      "aciklama": "Trailing stop tetiklendi - $150.96 kırıldı, fiyat $149.90"
-    },
-    {
-      "tarih": "2026-03-26",
-      "islem_tipi": "SATIŞ",
-      "sembol": "COHR",
-      "adet": 191,
-      "fiyat": 259.05,
-      "tutar": 49478.55,
-      "aciklama": "Trailing stop tetiklendi - $263.7 kırıldı, fiyat $259.05. Bain Capital blok satışları ek baskı."
-    },
-    {
-      "tarih": "2026-03-27",
-      "islem_tipi": "SATIŞ",
-      "sembol": "CAMT",
-      "adet": 114,
-      "fiyat": 157.75,
-      "tutar": 17983.5,
-      "aciklama": "Stop-loss (2xATR) tetiklendi - stop $157.42, fiyat $157.75 (sadece $0.33 mesafe) - QQQ -0.69%, VIX 29.45 baskısıyla kaçınılmaz ihlal - Agresif portföy"
-    },
-    {
-      "tarih": "2026-03-27",
-      "islem_tipi": "SATIŞ",
-      "sembol": "VRT",
-      "adet": 71,
-      "fiyat": 251.4,
-      "tutar": 17849.4,
-      "aciklama": "2xATR trailing stop tetiklendi. en yüksek $282.05, ATR(14) $13.84, stop $254.37. güncel $251.40 stop altı. bugün dip $248.50"
-    }
-  ]
+    "transactions": [
+        {
+            "tarih": "2026-02-26",
+            "islem_tipi": "SERMAYE_ARTIRIMI",
+            "sembol": "-",
+            "adet": 0,
+            "fiyat": 0,
+            "tutar": 300000,
+            "aciklama": "Portföy yeniden yapılandırma - $300K yeni sermaye eklendi. Rotasyon portföyü kapatıldı, agresif momentum stratejisine geçiş."
+        },
+        {
+            "tarih": "2026-02-26",
+            "islem_tipi": "SATIŞ",
+            "sembol": "CELH",
+            "adet": 46,
+            "fiyat": 56.62,
+            "tutar": 2604.52,
+            "aciklama": "Kademeli çıkış - %33 kısmi satış - +%13.8 kar - strateji kuralı +6%/+10% tetiklendi"
+        },
+        {
+            "tarih": "2026-02-26",
+            "islem_tipi": "SATIŞ",
+            "sembol": "TYL",
+            "adet": 10,
+            "fiyat": 351.09,
+            "tutar": 3510.9,
+            "aciklama": "Kademeli çıkış - %33 kısmi satış - +%8.4 kar - strateji kuralı +6% tetiklendi"
+        },
+        {
+            "tarih": "2026-02-26",
+            "islem_tipi": "SATIŞ",
+            "sembol": "CELH",
+            "adet": 94,
+            "fiyat": 54.44,
+            "tutar": 5117.36,
+            "aciklama": "Trailing stop tetiklendi ($54.92) - kalan %67 tam çıkış - toplam CELH karı: +9.4%"
+        },
+        {
+            "tarih": "2026-03-03",
+            "islem_tipi": "ALIŞ",
+            "sembol": "LASR",
+            "adet": 74,
+            "fiyat": 67.69,
+            "tutar": 5009.06,
+            "aciklama": "Yarım pozisyon - Agresif portföy - Savunma lazer silah, iran savaşı katalizörü"
+        },
+        {
+            "tarih": "2026-03-03",
+            "islem_tipi": "ALIŞ",
+            "sembol": "GILT",
+            "adet": 689,
+            "fiyat": 17.3,
+            "tutar": 11919.7,
+            "aciklama": "Yarım pozisyon tamamlama - Agresif portföy - Pullback fırsatı"
+        },
+        {
+            "tarih": "2026-03-03",
+            "islem_tipi": "ALIŞ",
+            "sembol": "MRK",
+            "adet": 250,
+            "fiyat": 120.41,
+            "tutar": 30102.5,
+            "aciklama": "Yeni pozisyon - Agresif portföy - Sağlık sektörü çeşitlendirmesi"
+        },
+        {
+            "tarih": "2026-03-04",
+            "islem_tipi": "SATIŞ",
+            "sembol": "MRK",
+            "adet": 250,
+            "fiyat": 120.51,
+            "tutar": 30127.5,
+            "aciklama": "Temettü portföyüne transfer"
+        },
+        {
+            "tarih": "2026-03-04",
+            "islem_tipi": "ALIŞ",
+            "sembol": "PLTR",
+            "adet": 100,
+            "fiyat": 153.46,
+            "tutar": 15346.0,
+            "aciklama": "Pozisyon büyütme - AI + savunma çift katalizör, momentum güçlü, ağırlık %1.6'dan %5.8'e"
+        },
+        {
+            "tarih": "2026-03-05",
+            "islem_tipi": "ALIŞ",
+            "sembol": "AMKR",
+            "adet": 176,
+            "fiyat": 45.45,
+            "tutar": 7999.2,
+            "aciklama": "Yarım pozisyon - Agresif portföy - AI chip tedarik zinciri: gelişmiş paketleme/HBM. MRVL earnings sonucu bekleniyor."
+        },
+        {
+            "tarih": "2026-03-06",
+            "islem_tipi": "SATIŞ",
+            "sembol": "SHOP",
+            "adet": 41,
+            "fiyat": 129.55,
+            "tutar": 5311.55,
+            "aciklama": "izleyen zarar kes $130.20 tetiklendi, kârlı çıkış +%8.07"
+        },
+        {
+            "tarih": "2026-03-06",
+            "islem_tipi": "SATIŞ",
+            "sembol": "AMKR",
+            "adet": 176,
+            "fiyat": 42.67,
+            "tutar": 7509.92,
+            "aciklama": "stop'a %1.6 mesafe, NFP -92K şoku, zayıflama devam, erken disiplinli çıkış"
+        },
+        {
+            "tarih": "2026-03-09",
+            "islem_tipi": "SATIŞ",
+            "sembol": "NNDM",
+            "adet": 2550,
+            "fiyat": 1.77,
+            "tutar": 4513.5,
+            "aciklama": "Stop-loss tetiklendi — $1.80 altında, disiplinli çıkış"
+        },
+        {
+            "tarih": "2026-03-09",
+            "islem_tipi": "SATIŞ",
+            "sembol": "BKSY",
+            "adet": 379,
+            "fiyat": 23.42,
+            "tutar": 8876.18,
+            "aciklama": "İzleyen zarar kes tetiklendi — kâr koruması, disiplinli çıkış"
+        },
+        {
+            "tarih": "2026-03-10",
+            "islem_tipi": "SATIŞ",
+            "sembol": "TYL",
+            "adet": 20,
+            "fiyat": 360.0,
+            "tutar": 7200.0,
+            "aciklama": "İzleyen zarar kes tetiklendi - TYL @360.00 - Trailing stop satışı. Kâr: +%11.19"
+        },
+        {
+            "tarih": "2026-03-10",
+            "islem_tipi": "ALIŞ",
+            "sembol": "CRDO",
+            "adet": 87,
+            "fiyat": 114.28,
+            "tutar": 9942.36,
+            "aciklama": "AI tedarik zinciri - SerDes/optik - yarım pozisyon - stop $108 - hedef $130+"
+        },
+        {
+            "tarih": "2026-03-10",
+            "islem_tipi": "ALIŞ",
+            "sembol": "GLW",
+            "adet": 109,
+            "fiyat": 136.53,
+            "tutar": 14881.77,
+            "aciklama": "AI optik fiber tedarik zinciri - yarım pozisyon - stop $125.61 - hedef $162.10 (52H)"
+        },
+        {
+            "tarih": "2026-03-12",
+            "islem_tipi": "ALIŞ",
+            "sembol": "MRVL",
+            "adet": 120,
+            "fiyat": 88.73,
+            "tutar": 10647.6,
+            "aciklama": "AI çip tedarik zinciri tezi - Agresif portföy - Özel ASIC ve veri merkezi ağ çipleri lideri"
+        },
+        {
+            "tarih": "2026-03-13",
+            "islem_tipi": "ALIŞ",
+            "sembol": "COHR",
+            "adet": 100,
+            "fiyat": 246.865,
+            "tutar": 24686.5,
+            "aciklama": "AI veri merkezi optik bilesenleri - GTC katalizoru - K-13 yarim pozisyon - Agresif portfoy"
+        },
+        {
+            "tarih": "2026-03-16",
+            "islem_tipi": "SATIŞ",
+            "sembol": "LASR",
+            "adet": 74,
+            "fiyat": 68.55,
+            "tutar": 5072.7,
+            "aciklama": "Breakeven çıkış — K-06 (3x stop override geçmişi) + K-01 (FOMC haftası). Kâr: +1.27%"
+        },
+        {
+            "tarih": "2026-03-17",
+            "islem_tipi": "SATIŞ",
+            "sembol": "RKLB",
+            "adet": 48,
+            "fiyat": 77.53,
+            "tutar": 3721.44,
+            "aciklama": "Kısmi kâr alma %33 - hedef fiyat aşıldı ($77+) - GTC katalizörü çalıştı - K-11 - Agresif portföy"
+        },
+        {
+            "tarih": "2026-03-17",
+            "islem_tipi": "SATIŞ",
+            "sembol": "RKLB",
+            "adet": 48,
+            "fiyat": 77.53,
+            "tutar": 3721.44,
+            "aciklama": "Kısmi kâr alma %33 - hedef fiyat aşıldı ($77+) - GTC katalizörü çalıştı - K-11 - Agresif portföy"
+        },
+        {
+            "tarih": "2026-03-17",
+            "islem_tipi": "SATIŞ",
+            "sembol": "CRDO",
+            "adet": 87,
+            "fiyat": 104.26,
+            "tutar": 9070.62,
+            "aciklama": "Stop-loss tetiklendi ($108) - fiyat $104.26 - insider satış baskısı + gross margin compression + SMA200 altında - Agresif portföy"
+        },
+        {
+            "tarih": "2026-03-18",
+            "islem_tipi": "ALIŞ",
+            "sembol": "CRDO",
+            "adet": 147,
+            "fiyat": 101.56,
+            "tutar": 14929.32,
+            "aciklama": "Yarım pozisyon giriş - Agresif portföy - AI data center bağlantı çözümleri (AEC) pazar lideri, %88 pazar payı. Q3 FY2026 "
+        },
+        {
+            "tarih": "2026-03-18",
+            "islem_tipi": "ALIŞ",
+            "sembol": "PWR",
+            "adet": 26,
+            "fiyat": 574.35,
+            "tutar": 14933.1,
+            "aciklama": "Yarım pozisyon giriş - Agresif portföy - Kuzey Amerika'nın en büyük elektrik altyapısı ve data center inşaat şirketi. AI "
+        },
+        {
+            "tarih": "2026-03-20",
+            "islem_tipi": "SATIŞ",
+            "sembol": "RKLB",
+            "adet": 50,
+            "fiyat": 67.61,
+            "tutar": 3380.5,
+            "aciklama": "Trailing stop tetiklendi - Stop $73.65 ihlal edildi - Agresif portföy"
+        },
+        {
+            "tarih": "2026-03-20",
+            "islem_tipi": "SATIŞ",
+            "sembol": "GLW",
+            "adet": 109,
+            "fiyat": 125.46,
+            "tutar": 13675.14,
+            "aciklama": "Stop-loss tetiklendi - $125.46 < stop $125.61 - Agresif portföy - Fiber optik"
+        },
+        {
+            "tarih": "2026-03-25",
+            "islem_tipi": "ALIŞ",
+            "sembol": "POWL",
+            "adet": 34,
+            "fiyat": 585.12,
+            "tutar": 19894.08,
+            "aciklama": "Yarım pozisyon giriş - Agresif portföy - AI tedarik zinciri: veri merkezi trafo ve güç dağıtım ekipmanı. ichimoku 4/4 güç"
+        },
+        {
+            "tarih": "2026-03-25",
+            "islem_tipi": "ALIŞ",
+            "sembol": "CAMT",
+            "adet": 114,
+            "fiyat": 174.35,
+            "tutar": 19875.9,
+            "aciklama": "Yarım pozisyon giriş - Agresif portföy - AI tedarik zinciri: wafer denetim ve ölçüm ekipmanı. ichimoku 4/4 güçlü yükseliş"
+        },
+        {
+            "tarih": "2026-03-25",
+            "islem_tipi": "ALIŞ",
+            "sembol": "VRT",
+            "adet": 71,
+            "fiyat": 278.52,
+            "tutar": 19774.92,
+            "aciklama": "Yarım pozisyon giriş - Agresif portföy - AI tedarik zinciri: veri merkezi soğutma, UPS, güç yönetimi. ichimoku 4/4 güçlü "
+        },
+        {
+            "tarih": "2026-03-25",
+            "islem_tipi": "SATIŞ",
+            "sembol": "GILT",
+            "adet": 1378,
+            "fiyat": 17.53,
+            "tutar": 24156.06,
+            "aciklama": "Portföy daraltma 10→6 - altın madenci, AI tedarik zinciri temasına uymuyor"
+        },
+        {
+            "tarih": "2026-03-25",
+            "islem_tipi": "SATIŞ",
+            "sembol": "ANET",
+            "adet": 93,
+            "fiyat": 134.45,
+            "tutar": 12503.85,
+            "aciklama": "Portföy daraltma 10→6 - küçük pozisyon, daha yüksek konviksiyon hisselere yoğunlaşma"
+        },
+        {
+            "tarih": "2026-03-25",
+            "islem_tipi": "SATIŞ",
+            "sembol": "CRDO",
+            "adet": 147,
+            "fiyat": 102.6,
+            "tutar": 15082.2,
+            "aciklama": "Portföy daraltma 10→6 - en zayıf momentum, daha önce stop yedi, tekrar giriş başarısız"
+        },
+        {
+            "tarih": "2026-03-25",
+            "islem_tipi": "SATIŞ",
+            "sembol": "PWR",
+            "adet": 26,
+            "fiyat": 577.36,
+            "tutar": 15011.36,
+            "aciklama": "Portföy daraltma 10→6 - POWL ile çakışma (güç altyapısı), konsolide"
+        },
+        {
+            "tarih": "2026-03-25",
+            "islem_tipi": "ALIŞ",
+            "sembol": "COHR",
+            "adet": 91,
+            "fiyat": 271.88,
+            "tutar": 24741.53,
+            "aciklama": "Pozisyon büyütme - yüksek konviksiyon, güçlü momentum"
+        },
+        {
+            "tarih": "2026-03-25",
+            "islem_tipi": "ALIŞ",
+            "sembol": "MRVL",
+            "adet": 255,
+            "fiyat": 97.86,
+            "tutar": 24954.3,
+            "aciklama": "Pozisyon büyütme - yüksek konviksiyon, güçlü momentum"
+        },
+        {
+            "tarih": "2026-03-25",
+            "islem_tipi": "ALIŞ",
+            "sembol": "PLTR",
+            "adet": 95,
+            "fiyat": 156.9,
+            "tutar": 14905.03,
+            "aciklama": "Pozisyon büyütme - yüksek konviksiyon, güçlü momentum"
+        },
+        {
+            "tarih": "2026-03-26",
+            "islem_tipi": "SATIŞ",
+            "sembol": "PLTR",
+            "adet": 234,
+            "fiyat": 149.9,
+            "tutar": 35076.6,
+            "aciklama": "Trailing stop tetiklendi - $150.96 kırıldı, fiyat $149.90"
+        },
+        {
+            "tarih": "2026-03-26",
+            "islem_tipi": "SATIŞ",
+            "sembol": "COHR",
+            "adet": 191,
+            "fiyat": 259.05,
+            "tutar": 49478.55,
+            "aciklama": "Trailing stop tetiklendi - $263.7 kırıldı, fiyat $259.05. Bain Capital blok satışları ek baskı."
+        },
+        {
+            "tarih": "2026-03-27",
+            "islem_tipi": "SATIŞ",
+            "sembol": "CAMT",
+            "adet": 114,
+            "fiyat": 157.75,
+            "tutar": 17983.5,
+            "aciklama": "Stop-loss (2xATR) tetiklendi - stop $157.42, fiyat $157.75 (sadece $0.33 mesafe) - QQQ -0.69%, VIX 29.45 baskısıyla kaçınılmaz ihlal - Agresif portföy"
+        },
+        {
+            "tarih": "2026-03-27",
+            "islem_tipi": "SATIŞ",
+            "sembol": "VRT",
+            "adet": 71,
+            "fiyat": 251.4,
+            "tutar": 17849.4,
+            "aciklama": "2xATR trailing stop tetiklendi. en yüksek $282.05, ATR(14) $13.84, stop $254.37. güncel $251.40 stop altı. bugün dip $248.50"
+        }
+    ]
 }
