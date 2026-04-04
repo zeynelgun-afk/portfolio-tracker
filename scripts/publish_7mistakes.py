@@ -123,11 +123,18 @@ def main():
     post_id = pr["id"]
     print(f"\n  ✅ CAROUSEL YAYINLANDI! Post ID: {post_id}")
 
-    # First comment
+    # First comment (engagement)
     time.sleep(3)
     cmr = ig(f"{post_id}/comments", {"message": FIRST_COMMENT})
     if cmr.get("id"):
         print(f"  💬 İlk yorum eklendi")
+
+    # Second comment (clickable link)
+    time.sleep(2)
+    LINK_COMMENT = "📱 telegram grubuna katıl: https://t.me/+nWm5M7VnxEEzNGQ0\n🌐 site: https://finzora.ai"
+    cmr2 = ig(f"{post_id}/comments", {"message": LINK_COMMENT})
+    if cmr2.get("id"):
+        print(f"  🔗 Link yorumu eklendi (tıklanabilir)")
 
     print(f"\n{'='*55}")
     print(f"  ✅ TAMAMLANDI")

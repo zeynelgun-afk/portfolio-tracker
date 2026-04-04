@@ -1,4 +1,4 @@
-name: "Instagram: Haftalık Özet (5 Nisan 20:30 TR)"
+name: "Instagram: Haftalık Özet (5 Nis 20:30 TR)"
 
 on:
   schedule:
@@ -14,4 +14,4 @@ jobs:
         with:
           python-version: '3.12'
       - run: pip install requests
-      - run: python3 scripts/publish_carousel.py --folder weekly --type weekly
+      - run: python3 scripts/publish_carousel.py --type weekly

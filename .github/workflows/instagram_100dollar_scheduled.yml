@@ -1,4 +1,4 @@
-name: "Instagram: $100 ile Yatırım (6 Nisan 20:35 TR)"
+name: "Instagram: $100 Yatırım Rehberi (6 Nis 20:35 TR)"
 
 on:
   schedule:
@@ -14,4 +14,4 @@ jobs:
         with:
           python-version: '3.12'
       - run: pip install requests
-      - run: python3 scripts/publish_carousel.py --folder 100dollar --type 100dollar
+      - run: python3 scripts/publish_carousel.py --type 100dollar

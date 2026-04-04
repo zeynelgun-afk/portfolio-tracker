@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Genel carousel yayınlama — klasör + caption ile çalışır"""
+"""Generic Instagram carousel publisher — folder + caption + comment ile çalışır"""
 import requests, json, time, sys, os, argparse
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -10,128 +10,165 @@ IG_ID = config["instagram_account_id"]
 TOKEN = config["access_token"]
 API = f"https://graph.facebook.com/{config['graph_api_version']}"
 
+LINK_COMMENT = "📱 telegram grubuna katıl: https://t.me/+nWm5M7VnxEEzNGQ0\n🌐 site: https://finzora.ai"
+
+# ===== CAPTIONS =====
 CAPTIONS = {
     "weekly": """📊 bu hafta ABD borsasında ne oldu?
 
-31 mart — 4 nisan 2026 haftasının özeti 👇
+31 Mart — 4 Nisan haftasının özeti 👇
 
-🔴 CPU arz krizi patladı
-→ Intel %9+ ralli yaptı, Fab 34 geri alımı
-→ ARM AGI CPU lansmanıyla %18 sıçradı
-→ sunucu CPU fiyatları %10-15 arttı
-→ DDR5 256GB modül $5,700'e çıktı
+endeksler:
+→ S&P 500: +%3.43
+→ NASDAQ: +%3.98 (haftanın lideri)
+→ Dow Jones: +%3.03
+→ Russell 2000: +%3.37
 
-🌍 jeopolitik
-→ İran savaşı 5. haftasında, enerji primi yüksek
-→ 7 nisan müzakere deadline'ı yaklaşıyor
-→ VIX 25+ bölgesinde, volatilite devam
+haftanın ana teması: CPU arz krizi
+→ Intel +%16.8 (haftanın yıldızı — Fab 34 geri alımı)
+→ AMD +%7.7 (sunucu CPU fiyatlama gücü)
+→ ARM +%3.5 (kendi AI CPU lansmanı)
 
-📈 haftanın öne çıkanları: INTC, AMD, ARM, MU, QCOM
+sektör lideri: teknoloji +%2.50
 
-gelecek hafta kritik: İran deadline + CPI verisi + Fed konuşmaları
+⚠️ gelecek hafta dikkat:
+→ 6 Nisan İran müzakere deadline ı
+→ büyük banka kazanç açıklamaları başlıyor
+→ VIX hâlâ 25 üzeri = yüksek volatilite
 
-detaylı analiz ve portföy takibi 👇
-👆 bio'daki linke tıkla veya telegram'da @finzora ara
+detaylı analiz ve $600K gerçek portföy takibi 👇
+🔗 t.me/+nWm5M7VnxEEzNGQ0
 🌐 finzora.ai
 
 ⚠️ yatırım tavsiyesi değildir, eğitim amaçlıdır.
 
 
-#finzora #yatirim #borsa #amerikanborsasi #haftalikozet #sp500 #nasdaq #cpu #semiconductor #intel #amd #borsaanalizi #piyasa #wallstreet #hisseSenedi""",
+#finzora #yatirim #borsa #amerikanborsasi #sp500 #nasdaq #haftalikozet #borsaanalizi #cpu #semiconductor #intel #amd #wallstreet #piyasa #hisseSenedi""",
 
     "100dollar": """💰 $100 ile yatırıma nasıl başlanır?
 
-sıfırdan adım adım rehber 👇
+büyük paraya gerek yok. önemli olan başlamak.
 
-1️⃣ hedefini belirle — neden yatırım yapıyorsun?
-2️⃣ acil durum fonu ayır — 3-6 aylık gider
-3️⃣ aracı kurum hesabı aç — 10 dakika yeter
-4️⃣ ETF ile başla — SPY, QQQ veya VT
-5️⃣ düzenli yatır — her ay aynı gün, aynı tutar
+4 adım:
+1️⃣ yatırım hesabı aç — düşük komisyonlu platform seç
+2️⃣ ETF ile başla — SPY veya VTI ile risk dağıt
+3️⃣ otomatik yatırım kur — her ay $100, DCA stratejisi
+4️⃣ sabırla büyüt — 10 yıl düşün, panik satma
 
-$100/ay × 20 yıl × %10 getiri = $76,000+
+bileşik getiri mucizesi:
+$100/ay × %10 getiri × 20 yıl = $75,937 💰
 
-bileşik getiri dünyanın 8. harikası. zaman senin en büyük silahın.
+yaygın yanılgılar:
+❌ yatırım için çok param yok → $100 ile başla
+❌ borsayı anlamam lazım → ETF al, piyasa çalışsın
+❌ başlamak için geç → en iyi zaman bugün
+❌ borsa kumar → tarihsel ortalama %10/yıl getiri
 
-bu rehberi kaydet 🔖 lazım olacak
-yatırıma başlamak isteyen arkadaşına gönder 📩
+bu postu kaydet 🔖 yatırıma başlamak isteyen arkadaşına gönder 📩
 
-daha fazlası için 👇
-👆 bio'daki linke tıkla veya telegram'da @finzora ara
+detaylı rehber ve portföy takibi 👇
+🔗 t.me/+nWm5M7VnxEEzNGQ0
 🌐 finzora.ai
 
 ⚠️ yatırım tavsiyesi değildir, eğitim amaçlıdır.
 
 
-#finzora #yatirim #borsa #yatirimabasla #etf #sp500 #borsaegitimi #finansokuryazarligi #yeniyatirimci #100dolar #bilesikgetiri #portfoy #pasifgelir #yatirimegitimleri #amerikanborsasi""",
+#finzora #yatirim #borsa #yeniyatirimci #borsaegitimi #etf #sp500 #yatirimegitimleri #finansokuryazarligi #pasifgelir #bilesikGetiri #amerikanborsasi #ilkyatirim #100dolar #portfoy"""
 }
 
-COMMENTS = {
-    "weekly": "gelecek hafta hangi hisseyi takip ediyorsunuz? 👇",
-    "100dollar": "yatırıma kaç yaşında başladın veya başlamayı düşünüyorsun? 👇",
+FIRST_COMMENTS = {
+    "weekly": "gelecek hafta hangi sektör öne çıkar? 👇",
+    "100dollar": "yatırıma başlamak isteyip de başlayamayan arkadaşını etiketle 👇"
 }
 
-def upload(fp):
-    r = requests.post("https://catbox.moe/user/api.php", files={"fileToUpload": open(fp,"rb")}, data={"reqtype":"fileupload"})
+def upload(filepath):
+    print(f"  📤 {os.path.basename(filepath)}...")
+    r = requests.post("https://catbox.moe/user/api.php",
+        files={"fileToUpload": open(filepath, "rb")},
+        data={"reqtype": "fileupload"})
     url = r.text.strip()
-    return url if url.startswith("http") else None
+    if url.startswith("http"):
+        print(f"     ✓ {url}")
+        return url
+    print(f"     ✗ yükleme hatası")
+    return None
 
-def ig(ep, data):
-    r = requests.post(f"{API}/{ep}", data={**data, "access_token": TOKEN})
+def ig(endpoint, data):
+    r = requests.post(f"{API}/{endpoint}", data={**data, "access_token": TOKEN})
     try: return r.json()
     except: return {}
 
-def wait(cid, t=120):
-    for _ in range(t//5):
-        s = requests.get(f"{API}/{cid}", params={"fields":"status_code","access_token":TOKEN}).json().get("status_code","")
-        if s=="FINISHED": return True
-        if s=="ERROR": return False
+def wait_ready(cid, timeout=120):
+    for _ in range(timeout // 5):
+        s = requests.get(f"{API}/{cid}", params={"fields": "status_code", "access_token": TOKEN}).json().get("status_code", "")
+        if s == "FINISHED": return True
+        if s == "ERROR": return False
         time.sleep(5)
     return False
 
-def main():
-    p = argparse.ArgumentParser()
-    p.add_argument("--folder", required=True)
-    p.add_argument("--type", required=True, choices=["weekly","100dollar"])
-    a = p.parse_args()
+def publish(post_type, folder):
+    img_dir = os.path.join(BASE_DIR, "outputs", "instagram", folder)
+    caption = CAPTIONS[post_type]
+    first_comment = FIRST_COMMENTS[post_type]
     
-    img_dir = os.path.join(BASE_DIR, "outputs", "instagram", a.folder)
     slides = sorted([f for f in os.listdir(img_dir) if f.endswith('.png')])
-    caption = CAPTIONS[a.type]
-    comment = COMMENTS[a.type]
-    
-    print(f"{'='*55}\n  FINZORA AI — {a.type} carousel\n  {len(slides)} slide\n{'='*55}")
-    
-    print(f"\n📤 Yükleniyor...")
+    print(f"{'='*55}")
+    print(f"  FINZORA AI — {post_type.upper()} CAROUSEL")
+    print(f"  {len(slides)} slide | {folder}")
+    print(f"{'='*55}")
+
+    print(f"\n📤 Görseller yükleniyor...\n")
     urls = []
     for s in slides:
-        print(f"  {s}...", end=" ")
-        u = upload(os.path.join(img_dir, s))
-        print(f"{'✓' if u else '✗'}")
-        if not u: sys.exit(1)
-        urls.append(u); time.sleep(1)
-    
-    print(f"\n📸 Container'lar...")
+        url = upload(os.path.join(img_dir, s))
+        if not url: sys.exit(1)
+        urls.append(url)
+        time.sleep(1)
+
+    print(f"\n📸 Container'lar oluşturuluyor...\n")
     cids = []
-    for i,u in enumerate(urls):
-        r = ig(f"{IG_ID}/media", {"image_url":u, "is_carousel_item":"true"})
-        if "id" in r: cids.append(r["id"]); print(f"  [{i+1}] ✓")
-        else: print(f"  [{i+1}] ✗ {r}"); sys.exit(1)
+    for i, url in enumerate(urls):
+        r = ig(f"{IG_ID}/media", {"image_url": url, "is_carousel_item": "true"})
+        if "id" in r:
+            cids.append(r["id"])
+            print(f"  [{i+1}/{len(urls)}] ✓ {r['id']}")
+        else:
+            print(f"  ✗ {r.get('error',{}).get('message','')}")
+            sys.exit(1)
         time.sleep(3)
+
+    print(f"\n  Carousel oluşturuluyor...")
+    cr = ig(f"{IG_ID}/media", {"media_type": "CAROUSEL", "children": ",".join(cids), "caption": caption})
+    if "id" not in cr:
+        print(f"  ✗ {cr.get('error',{}).get('message','')}")
+        sys.exit(1)
     
-    print(f"\n  Carousel...")
-    cr = ig(f"{IG_ID}/media", {"media_type":"CAROUSEL","children":",".join(cids),"caption":caption})
-    if "id" not in cr: print(f"✗ {cr}"); sys.exit(1)
-    print(f"  ✓ {cr['id']}"); print("  ⏳ işleniyor...")
-    if not wait(cr["id"]): print("✗ timeout"); sys.exit(1)
+    car_id = cr["id"]
+    print(f"  ✓ {car_id}\n  ⏳ işleniyor...")
+    if not wait_ready(car_id): sys.exit(1)
+
+    pr = ig(f"{IG_ID}/media_publish", {"creation_id": car_id})
+    if "id" not in pr:
+        print(f"  ✗ {pr.get('error',{}).get('message','')}")
+        sys.exit(1)
     
-    pr = ig(f"{IG_ID}/media_publish", {"creation_id":cr["id"]})
-    if "id" not in pr: print(f"✗ {pr}"); sys.exit(1)
-    print(f"\n✅ YAYINLANDI! {pr['id']}")
-    
+    post_id = pr["id"]
+    print(f"\n  ✅ YAYINLANDI! Post ID: {post_id}")
+
+    # Comments
     time.sleep(3)
-    ig(f"{pr['id']}/comments", {"message":comment})
-    print(f"💬 İlk yorum eklendi")
+    ig(f"{post_id}/comments", {"message": first_comment})
+    print(f"  💬 İlk yorum eklendi")
+    time.sleep(2)
+    ig(f"{post_id}/comments", {"message": LINK_COMMENT})
+    print(f"  🔗 Link yorumu eklendi (tıklanabilir)")
+    
+    print(f"\n{'='*55}\n  ✅ TAMAMLANDI\n{'='*55}")
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--type", required=True, choices=["weekly", "100dollar"])
+    args = parser.parse_args()
+    
+    folders = {"weekly": "weekly", "100dollar": "100dollar"}
+    publish(args.type, folders[args.type])
