@@ -112,17 +112,24 @@ def publish_carousel():
     cids = []
     for i, url in enumerate(urls):
         print(f"  [{i+1}/{len(urls)}] container...")
-        r = ig_post(f"{IG_ID}/media", {"image_url": url, "is_carousel_item": "true"})
-        if "id" in r:
-            cids.append(r["id"])
-            print(f"     ✓ {r['id']}")
-        else:
-            err = r.get("error", {}).get("message", json.dumps(r))
-            print(f"     ✗ {err}")
+        success = False
+        for attempt in range(3):
+            r = ig_post(f"{IG_ID}/media", {"image_url": url, "is_carousel_item": "true"})
+            if "id" in r:
+                cids.append(r["id"])
+                print(f"     ✓ {r['id']}")
+                success = True
+                break
+            else:
+                err = r.get("error", {}).get("message", json.dumps(r))
+                print(f"     ✗ deneme {attempt+1}/3: {err}")
+                time.sleep(10)
+        if not success:
             return False
-        time.sleep(3)
+        time.sleep(6)
 
     # Carousel
+    time.sleep(5)
     print(f"\n  adim 3: carousel olusturuluyor...")
     cr = ig_post(f"{IG_ID}/media", {
         "media_type": "CAROUSEL",
