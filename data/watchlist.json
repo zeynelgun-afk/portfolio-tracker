@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-04-03T21:29:34.289506",
+  "son_guncelleme": "2026-04-04T12:23:38.530913",
   "not": "Tüm portföyler ve swing trade için tek merkezi watchlist. Her adayda hedef_portfoy alanı hangi portföye/stratejiye ait olduğunu belirtir.",
   "iran_krizi_notu": {
     "tarih": "2026-03-01",
@@ -14,6 +14,64 @@
     ]
   },
   "izleme_listesi": [
+    {
+      "sembol": "QCOM",
+      "guncel_fiyat": 126.8,
+      "sektor": "Teknoloji - CPU/Mobil/AI Inference",
+      "hedef_portfoy": "agresif",
+      "urgency": "🔴 CRITICAL",
+      "ekleme_tarihi": "2026-04-04",
+      "son_kontrol": "2026-04-04",
+      "hedef_giris": "120-128",
+      "hedef_fiyat": 160.0,
+      "stop_loss": 118.0,
+      "notlar": "CPU arz darboğazı temasının en ucuz pure-play'i. RSI 32 = aşırı satım. 52wL ($120.80) yakınında baz oluşturuyor. Forward PE ~13x sektör medyanından %34 ucuz. P/S 3.0 yarıiletken mega-cap'lerin en düşüğü.",
+      "tez": "1) HUMAIN ortaklığı ile AI datacenter'a giriş (AI200/AI250 çipleri, 200MW deployment 2026'dan itibaren). 2) Ventana Micro (RISC-V) akizisyonu ile Oryon CPU mimarisini server'a taşıyor. 3) Agentic AI = CPU darboğazı, x86 alternatifi olarak Arm/RISC-V tabanlı sunucu CPU talebi artıyor. 4) Snapdragon X2 Elite ile AI PC pazarında güçlü konum. 5) Alphawave Semi ($2.4B) satın alımı datacenter bağlantı çözümlerini güçlendiriyor.",
+      "katalizorler": [
+        "AI200 datacenter çipinin 2026 ticari lansmanı",
+        "HUMAIN 200MW datacenter deployment başlaması",
+        "Q2 FY2026 kazanç açıklaması (Nisan sonu)",
+        "CPU arz krizinin derinleşmesi = alternatif mimari talebini artırır",
+        "Arm dava sonucu (Mart 2026 bekleniyor, olumlu çözüm)"
+      ],
+      "riskler": [
+        "NVDA MediaTek ile ARM tabanlı tüketici CPU ortaklığı (rekabet)",
+        "Mobil cihaz pazarının yavaşlaması (gelirin %60+)",
+        "RISC-V server CPU'nun hyperscaler adoption'ı belirsiz",
+        "Bellek kıtlığı = edge AI cihaz maliyetlerini artırır"
+      ],
+      "teknik_seviyeler": {
+        "destek_1": 120.8,
+        "destek_2": 118.0,
+        "direnç_1": 130.5,
+        "direnç_2": 139.0,
+        "sma20": 130.52,
+        "sma50": 139.09,
+        "sma200": 158.4,
+        "rsi_14": 32.1
+      },
+      "degerlemeler": {
+        "ps_ttm": 3.0,
+        "pb_ttm": 5.8,
+        "forward_pe": 13.0,
+        "temettü_verimi": "2.81%",
+        "fcf_per_share": 12.08,
+        "piyasa_degeri": "135B",
+        "beta": 1.28
+      },
+      "finansal_ozet": {
+        "son_ceyrek_gelir": "12.25B (Q4 FY2025)",
+        "brut_marj": "54.6%",
+        "net_gelir": "3.0B",
+        "eps": 2.81,
+        "nakit": "7.21B",
+        "borc": "14.82B",
+        "de_orani": 0.64
+      },
+      "momentum_5gun": 0,
+      "cpu_darbogazı_skoru": 9,
+      "tema": "CPU arz darboğazı — en ucuz yarıiletken mega-cap, AI inference + server CPU re-entry"
+    },
     {
       "sembol": "RTX",
       "guncel_fiyat": 196.21,
@@ -291,10 +349,11 @@
       "hedef_giris": "380-395",
       "hedef_fiyat": 450.0,
       "stop_loss": 360.0,
-      "notlar": "Micron - HBM4 seri uretim Q1 2026 teyidi (GTC 2026). SOCAMM2 numuneleri gonderilmeye basladi. 18 Mart earnings KRITIK. RSI 64.2, zirvede. $519.6B mktcap.",
+      "notlar": "Micron - HBM4 seri uretim Q1 2026 teyidi (GTC 2026). SOCAMM2 numuneleri gonderilmeye basladi. 18 Mart earnings KRITIK. RSI 64.2, zirvede. $519.6B mktcap. | CPU darboğazının ikiz kardeşi = bellek kıtlığı. DDR5 fiyatları uçuşta. Forward PE ~12-14x ile mega-cap yarıiletken en ucuzlarından.",
       "nvidia_katman": "Katman 2 - Cipler",
       "momentum_5gun": 0,
-      "katalizor": "18 Mart kazanc aciklamasi - HBM talep gucuyse agresif giris"
+      "katalizor": "18 Mart kazanc aciklamasi - HBM talep gucuyse agresif giris",
+      "cpu_darbogazı_skoru": 9
     },
     {
       "sembol": "MRVL",
@@ -307,9 +366,10 @@
       "hedef_giris": "85-90",
       "hedef_fiyat": 110.0,
       "stop_loss": 78.0,
-      "notlar": "Marvell - optik super dongu, AI connectivity saf oyuncu. GTC 2026 ile AGRESIF 2. ONCELIK'e yukseltildi. RSI 60.8, $85-88 geri cekilme ideal giris. $79.4B mktcap.",
+      "notlar": "Marvell - optik super dongu, AI connectivity saf oyuncu. GTC 2026 ile AGRESIF 2. ONCELIK'e yukseltildi. RSI 60.8, $85-88 geri cekilme ideal giris. $79.4B mktcap. | CPU darboğazı networking boyutu. AI backend networking güçlü çift haneli büyümede. Custom silicon + Ethernet AI çözümleri.",
       "nvidia_katman": "Katman 2 - Cipler",
-      "momentum_5gun": 0
+      "momentum_5gun": 0,
+      "cpu_darbogazı_skoru": 8
     },
     {
       "sembol": "CRDO",
@@ -717,14 +777,16 @@
       "guncel_fiyat": 217.5,
       "sektor": "Teknoloji - Yarı İletken (GPU/AI)",
       "hedef_portfoy": "swing",
-      "notlar": "Meta + OpenAI warrant anlaşmaları (320M hisse, 12GW GPU taahhüdü). Nvidia'ya tek ciddi AI GPU alternatifi. Bugün +8.77% haber rallisi - pullback bekle. ROCm ekosistemi hâlâ CUDA gerisinde ama adoption hızlanıyor. Agresif portföy adayı.",
+      "notlar": "Meta + OpenAI warrant anlaşmaları (320M hisse, 12GW GPU taahhüdü). Nvidia'ya tek ciddi AI GPU alternatifi. Bugün +8.77% haber rallisi - pullback bekle. ROCm ekosistemi hâlâ CUDA gerisinde ama adoption hızlanıyor. Agresif portföy adayı. | CPU darboğazı temasının en güçlü faydalananı. 2026 server CPU kapasitesi tükendi, %10-15 fiyat artışı gücü. EPYC bulut instance'ları yıllık %50+ arttı.",
       "urgency": "medium",
       "ekleme_tarihi": "2026-02-25",
       "son_kontrol": "2026-04-03",
       "hedef_giris": "190-200",
       "hedef_fiyat": 235.0,
       "stop_loss": 185.0,
-      "momentum_5gun": 0
+      "momentum_5gun": 0,
+      "cpu_darbogazı_skoru": 10,
+      "tema": "CPU arz darboğazı — doğrudan pricing power, en güçlü server CPU oyuncusu"
     },
     {
       "sembol": "WDAY",
@@ -998,6 +1060,69 @@
       "hedef_portfoy": "dengeli",
       "tema": "savunma IT",
       "momentum_5gun": 0
+    },
+    {
+      "sembol": "INTC",
+      "guncel_fiyat": 49.77,
+      "sektor": "Teknoloji - CPU Üretici/Foundry",
+      "hedef_portfoy": "swing",
+      "urgency": "medium",
+      "ekleme_tarihi": "2026-04-04",
+      "son_kontrol": "2026-04-04",
+      "hedef_giris": "45-48",
+      "hedef_fiyat": 55.0,
+      "stop_loss": 43.0,
+      "notlar": "CPU kıtlığından doğrudan faydalanan, Fab 34 geri alımı + Xeon fiyat artışı gücü. P/B 2.1 ile varlık bazında en ucuz yarıiletken. TTM EPS negatif = turnaround trade. 52wL'den %181 yukarıda, RSI 59 = nötr.",
+      "tez": "1) Server CPU kapasite tükendi, %10-15 fiyat artışı. 2) Fab 34 Apollo'dan $14.2B geri alım = Xeon 6 + Core Ultra üretim ekonomisi. 3) Intel 18A foundry rampası H2 2026. 4) PC'den sunucuya wafer kaydırma = server gelir artışı.",
+      "riskler": [
+        "TTM zarar eden şirket",
+        "NVDA Vera ve ARM AGI CPU rekabeti",
+        "Foundry execution riski",
+        "İran gerilimi = helyum arz riski"
+      ],
+      "teknik_seviyeler": {
+        "destek_1": 45.25,
+        "destek_2": 43.0,
+        "direnç_1": 50.0,
+        "direnç_2": 54.6,
+        "sma20": 45.25,
+        "sma50": 46.15,
+        "sma200": 0,
+        "rsi_14": 59.0
+      },
+      "momentum_5gun": 0,
+      "cpu_darbogazı_skoru": 8,
+      "tema": "CPU arz darboğazı — doğrudan pricing power, turnaround + foundry"
+    },
+    {
+      "sembol": "SMCI",
+      "guncel_fiyat": 23.11,
+      "sektor": "Teknoloji - AI Sunucu/Altyapı",
+      "hedef_portfoy": "swing",
+      "urgency": "medium",
+      "ekleme_tarihi": "2026-04-04",
+      "son_kontrol": "2026-04-04",
+      "hedef_giris": "20-23",
+      "hedef_fiyat": 30.0,
+      "stop_loss": 19.0,
+      "notlar": "Forward PE ~7x ile sektörün en ucuzu. P/S 0.5 inanılmaz düşük. 52wH'den %63 aşağıda. UYARI: muhasebe skandalı geçmişi, governance riski. Value trap olabilir — küçük pozisyon.",
+      "tez": "CPU darboğazı = sunucu üretim gecikmeleri = mevcut envantere sahip SMCI premium'la satabilir. AI sunucu rack montajcısı olarak her darboğaz katmanından dolaylı faydalanır.",
+      "riskler": [
+        "Muhasebe/governance riski",
+        "Delisting geçmişi",
+        "Marj baskısı",
+        "Dell/HPE rekabeti"
+      ],
+      "teknik_seviyeler": {
+        "destek_1": 19.48,
+        "direnç_1": 26.74,
+        "sma20": 26.74,
+        "sma50": 29.63,
+        "rsi_14": 37.8
+      },
+      "momentum_5gun": 0,
+      "cpu_darbogazı_skoru": 6,
+      "tema": "CPU arz darboğazı — dolaylı faydalanan, en ucuz forward PE"
     }
   ],
   "haric_tutulanlar": [
@@ -1216,5 +1341,18 @@
       "LSCC"
     ],
     "dikkat_nxpi": "RSI 30.2 ASIRI SATIM! Otonom surus tezi ile birlikte degerlendir."
+  },
+  "cpu_darbogazı_notu": {
+    "tarih": "2026-04-04",
+    "durum": "CPU arz krizi aktif — Intel ve AMD teslimat süreleri uzamış, fiyatlar %10-15 artışta. Agentic AI = CPU darboğazının ana tetikleyicisi.",
+    "tema": "CPU üreticileri (INTC, AMD, QCOM, ARM) + bellek (MU) + sunucu altyapı (SMCI, DELL) + enerji/soğutma (VRT, ETN)",
+    "oncelik_sirasi": [
+      "QCOM",
+      "AMD",
+      "MU",
+      "INTC",
+      "MRVL"
+    ],
+    "giris_kosulu": "VIX <25 + İran riski azalması = tam pozisyon. VIX 25-35 arası = K-13 yarı pozisyon."
   }
 }
