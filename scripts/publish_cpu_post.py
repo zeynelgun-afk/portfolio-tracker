@@ -3,113 +3,25 @@
 CPU Arz Darboğazı - Instagram Carousel + Story Yayınlama
 Finzora AI | 4 Nisan 2026
 
-Kullanım: python3 scripts/publish_cpu_post.py
+Kullanım:
+  python3 scripts/publish_cpu_post.py                         # her ikisini yayınla
+  python3 scripts/publish_cpu_post.py --type carousel_only    # sadece carousel
+  python3 scripts/publish_cpu_post.py --type story_only       # sadece story
+  python3 scripts/publish_cpu_post.py --type carousel_and_story
 """
-import requests
-import json
-import time
-import sys
-import os
+import requests, json, time, sys, os, argparse
 
-# Config
-CONFIG_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), "config", "instagram_config.json")
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+CONFIG_PATH = os.path.join(BASE_DIR, "config", "instagram_config.json")
+
 with open(CONFIG_PATH, "r") as f:
     config = json.load(f)
 
 IG_ID = config["instagram_account_id"]
 TOKEN = config["access_token"]
-BASE = f"https://graph.facebook.com/{config['graph_api_version']}"
+API = f"https://graph.facebook.com/{config['graph_api_version']}"
+IMG_DIR = os.path.join(BASE_DIR, "outputs", "instagram")
 
-# Görselleri catbox.moe'ye yükle
-def upload_image(filepath):
-    """Görseli catbox.moe'ye yükle, public URL döndür"""
-    print(f"  Yükleniyor: {os.path.basename(filepath)}...")
-    r = requests.post("https://catbox.moe/user/api.php", files={
-        "fileToUpload": open(filepath, "rb")
-    }, data={"reqtype": "fileupload"})
-    url = r.text.strip()
-    print(f"  ✓ {url}")
-    return url
-
-# Instagram API fonksiyonları
-def create_container(image_url, is_carousel_item=True):
-    """Tek görsel için container oluştur"""
-    data = {
-        "image_url": image_url,
-        "access_token": TOKEN
-    }
-    if is_carousel_item:
-        data["is_carousel_item"] = "true"
-    
-    r = requests.post(f"{BASE}/{IG_ID}/media", data=data)
-    result = r.json()
-    if "id" in result:
-        return result["id"]
-    else:
-        print(f"  ✗ Hata: {result.get('error', {}).get('message', json.dumps(result))}")
-        return None
-
-def create_carousel(container_ids, caption):
-    """Carousel container oluştur"""
-    data = {
-        "media_type": "CAROUSEL",
-        "children": ",".join(container_ids),
-        "caption": caption,
-        "access_token": TOKEN
-    }
-    r = requests.post(f"{BASE}/{IG_ID}/media", data=data)
-    result = r.json()
-    if "id" in result:
-        return result["id"]
-    else:
-        print(f"  ✗ Carousel hatası: {result.get('error', {}).get('message', json.dumps(result))}")
-        return None
-
-def create_story(image_url):
-    """Story container oluştur"""
-    data = {
-        "image_url": image_url,
-        "media_type": "STORIES",
-        "access_token": TOKEN
-    }
-    r = requests.post(f"{BASE}/{IG_ID}/media", data=data)
-    result = r.json()
-    if "id" in result:
-        return result["id"]
-    else:
-        print(f"  ✗ Story hatası: {result.get('error', {}).get('message', json.dumps(result))}")
-        return None
-
-def publish(creation_id):
-    """Container'ı yayınla"""
-    r = requests.post(f"{BASE}/{IG_ID}/media_publish", data={
-        "creation_id": creation_id,
-        "access_token": TOKEN
-    })
-    result = r.json()
-    if "id" in result:
-        return result["id"]
-    else:
-        print(f"  ✗ Yayınlama hatası: {result.get('error', {}).get('message', json.dumps(result))}")
-        return None
-
-def wait_for_processing(container_id, max_wait=60):
-    """Container işlenene kadar bekle"""
-    for i in range(max_wait // 5):
-        r = requests.get(f"{BASE}/{container_id}", params={
-            "fields": "status_code",
-            "access_token": TOKEN
-        })
-        status = r.json().get("status_code", "")
-        if status == "FINISHED":
-            return True
-        elif status == "ERROR":
-            print(f"  ✗ İşleme hatası!")
-            return False
-        time.sleep(5)
-    return False
-
-# Caption
 CAPTION = """🔴 CPU arz krizi: AI nin yeni darboğazı
 
 herkes GPU darboğazı konuşuyor ama asıl sorun başka yerde.
@@ -136,104 +48,174 @@ detaylı analiz ve $600K gerçek portföy takibi için telegram grubuna katıl �
 
 #finzora #yatirim #borsa #amerikanborsasi #cpu #semiconductor #yarileiletken #qualcomm #amd #intel #nvidia #borsaanalizi #hisseyatirimi #yapayzekaYatirim"""
 
-# İlk yorum
 FIRST_COMMENT = "hangi hisseyi en cazip buluyorsunuz? 👇"
 
-def main():
-    base_dir = os.path.dirname(os.path.dirname(__file__))
-    img_dir = os.path.join(base_dir, "outputs", "instagram")
+def upload_image(filepath):
+    print(f"  📤 {os.path.basename(filepath)}...")
+    r = requests.post("https://catbox.moe/user/api.php", 
+        files={"fileToUpload": open(filepath, "rb")},
+        data={"reqtype": "fileupload"})
+    url = r.text.strip()
+    if url.startswith("http"):
+        print(f"     ✓ {url}")
+        return url
+    print(f"     ✗ yükleme hatası: {url}")
+    return None
+
+def ig_post(endpoint, data):
+    r = requests.post(f"{API}/{endpoint}", data={**data, "access_token": TOKEN})
+    try:
+        return r.json()
+    except:
+        print(f"     ✗ API yanıt hatası: {r.status_code} {r.text[:200]}")
+        return {}
+
+def ig_get(endpoint, params={}):
+    r = requests.get(f"{API}/{endpoint}", params={**params, "access_token": TOKEN})
+    try:
+        return r.json()
+    except:
+        return {}
+
+def wait_ready(container_id, timeout=90):
+    for _ in range(timeout // 5):
+        s = ig_get(container_id, {"fields": "status_code"}).get("status_code", "")
+        if s == "FINISHED": return True
+        if s == "ERROR": return False
+        time.sleep(5)
+    return False
+
+def publish_carousel():
+    print("\n" + "="*55)
+    print("  📸 CAROUSEL POST")
+    print("="*55)
     
-    slides = [
-        os.path.join(img_dir, "slide1_cover.png"),
-        os.path.join(img_dir, "slide2_problem.png"),
-        os.path.join(img_dir, "slide3_energy.png"),
-        os.path.join(img_dir, "slide4_stocks.png"),
-        os.path.join(img_dir, "slide5_cta.png"),
-    ]
-    story_path = os.path.join(img_dir, "story_cpu_krizi.png")
+    slides = [f"slide{i}_{'cover' if i==1 else 'problem' if i==2 else 'energy' if i==3 else 'stocks' if i==4 else 'cta'}.png" for i in range(1,6)]
     
-    # Dosyaları kontrol et
-    for s in slides + [story_path]:
-        if not os.path.exists(s):
-            print(f"✗ Dosya bulunamadı: {s}")
-            sys.exit(1)
-    
-    print("=" * 55)
-    print("  FINZORA AI — Instagram Yayınlama")
-    print("  CPU Arz Darboğazı Carousel + Story")
-    print("=" * 55)
-    
-    # === ADIM 1: Görselleri yükle ===
-    print("\n📤 ADIM 1: Görseller yükleniyor (catbox.moe)...\n")
-    slide_urls = []
+    # Upload
+    print("\n  adım 1: görseller yükleniyor...\n")
+    urls = []
     for s in slides:
-        url = upload_image(s)
-        slide_urls.append(url)
+        path = os.path.join(IMG_DIR, s)
+        if not os.path.exists(path):
+            print(f"  ✗ dosya yok: {path}")
+            return False
+        url = upload_image(path)
+        if not url: return False
+        urls.append(url)
         time.sleep(1)
     
-    story_url = upload_image(story_path)
-    
-    # === ADIM 2: Carousel ===
-    print("\n📸 ADIM 2: Carousel post oluşturuluyor...\n")
-    container_ids = []
-    for i, url in enumerate(slide_urls):
-        print(f"  [{i+1}/5] Container oluşturuluyor...")
-        cid = create_container(url, is_carousel_item=True)
-        if cid:
-            container_ids.append(cid)
-            print(f"  ✓ ID: {cid}")
+    # Containers
+    print("\n  adım 2: container'lar oluşturuluyor...\n")
+    cids = []
+    for i, url in enumerate(urls):
+        print(f"  [{i+1}/5] container...")
+        r = ig_post(f"{IG_ID}/media", {"image_url": url, "is_carousel_item": "true"})
+        if "id" in r:
+            cids.append(r["id"])
+            print(f"     ✓ {r['id']}")
+        else:
+            err = r.get("error", {}).get("message", json.dumps(r))
+            print(f"     ✗ {err}")
+            return False
         time.sleep(3)
     
-    if len(container_ids) != 5:
-        print(f"\n✗ Sadece {len(container_ids)}/5 container oluşturuldu, devam edilemiyor.")
-        sys.exit(1)
+    # Carousel
+    print(f"\n  adım 3: carousel oluşturuluyor...")
+    cr = ig_post(f"{IG_ID}/media", {
+        "media_type": "CAROUSEL",
+        "children": ",".join(cids),
+        "caption": CAPTION
+    })
+    if "id" not in cr:
+        print(f"  ✗ {cr.get('error', {}).get('message', json.dumps(cr))}")
+        return False
     
-    print(f"\n  Carousel container oluşturuluyor...")
-    carousel_id = create_carousel(container_ids, CAPTION)
+    car_id = cr["id"]
+    print(f"     ✓ carousel: {car_id}")
+    print(f"     ⏳ işleniyor...")
     
-    if carousel_id:
-        print(f"  ✓ Carousel ID: {carousel_id}")
-        print(f"  İşleniyor, bekleniyor...")
-        
-        if wait_for_processing(carousel_id):
-            post_id = publish(carousel_id)
-            if post_id:
-                print(f"\n  ✅ CAROUSEL YAYINLANDI! Post ID: {post_id}")
-                
-                # İlk yorum ekle
-                print(f"  İlk yorum ekleniyor...")
-                time.sleep(3)
-                cr = requests.post(f"{BASE}/{post_id}/comments", data={
-                    "message": FIRST_COMMENT,
-                    "access_token": TOKEN
-                })
-                if cr.json().get("id"):
-                    print(f"  ✓ İlk yorum eklendi: \"{FIRST_COMMENT}\"")
-            else:
-                print(f"\n  ✗ Carousel yayınlanamadı")
-        else:
-            print(f"\n  ✗ Carousel işleme zaman aşımı")
+    if not wait_ready(car_id):
+        print(f"  ✗ işleme başarısız veya zaman aşımı")
+        return False
     
-    # === ADIM 3: Story ===
-    print(f"\n📱 ADIM 3: Story yayınlanıyor...\n")
-    story_cid = create_story(story_url)
+    # Publish
+    print(f"  adım 4: yayınlanıyor...")
+    pr = ig_post(f"{IG_ID}/media_publish", {"creation_id": car_id})
+    if "id" not in pr:
+        print(f"  ✗ {pr.get('error', {}).get('message', json.dumps(pr))}")
+        return False
     
-    if story_cid:
-        print(f"  ✓ Story container: {story_cid}")
-        print(f"  İşleniyor...")
-        
-        if wait_for_processing(story_cid):
-            story_post_id = publish(story_cid)
-            if story_post_id:
-                print(f"\n  ✅ STORY YAYINLANDI! Story ID: {story_post_id}")
-            else:
-                print(f"\n  ✗ Story yayınlanamadı")
-        else:
-            print(f"\n  ✗ Story işleme zaman aşımı")
+    post_id = pr["id"]
+    print(f"\n  ✅ CAROUSEL YAYINLANDI!")
+    print(f"     Post ID: {post_id}")
     
-    print(f"\n{'='*55}")
-    print(f"  İŞLEM TAMAMLANDI")
-    print(f"{'='*55}")
+    # First comment
+    time.sleep(3)
+    print(f"  💬 ilk yorum ekleniyor...")
+    cmr = ig_post(f"{post_id}/comments", {"message": FIRST_COMMENT})
+    if cmr.get("id"):
+        print(f"     ✓ yorum eklendi")
+    
+    return True
+
+def publish_story():
+    print("\n" + "="*55)
+    print("  📱 STORY")
+    print("="*55)
+    
+    path = os.path.join(IMG_DIR, "story_cpu_krizi.png")
+    if not os.path.exists(path):
+        print(f"  ✗ dosya yok: {path}")
+        return False
+    
+    print("\n  adım 1: görsel yükleniyor...\n")
+    url = upload_image(path)
+    if not url: return False
+    
+    print(f"\n  adım 2: story container...")
+    sr = ig_post(f"{IG_ID}/media", {"image_url": url, "media_type": "STORIES"})
+    if "id" not in sr:
+        print(f"  ✗ {sr.get('error', {}).get('message', json.dumps(sr))}")
+        return False
+    
+    sid = sr["id"]
+    print(f"     ✓ {sid}")
+    print(f"     ⏳ işleniyor...")
+    
+    if not wait_ready(sid):
+        print(f"  ✗ işleme başarısız")
+        return False
+    
+    print(f"  adım 3: yayınlanıyor...")
+    pr = ig_post(f"{IG_ID}/media_publish", {"creation_id": sid})
+    if "id" not in pr:
+        print(f"  ✗ {pr.get('error', {}).get('message', json.dumps(pr))}")
+        return False
+    
+    print(f"\n  ✅ STORY YAYINLANDI!")
+    print(f"     Story ID: {pr['id']}")
+    return True
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--type", default="carousel_and_story",
+        choices=["carousel_and_story", "carousel_only", "story_only"])
+    args = parser.parse_args()
+    
+    print("="*55)
+    print("  FINZORA AI — Instagram Yayınlama")
+    print("  CPU Arz Darboğazı | 4 Nisan 2026")
+    print("="*55)
+    
+    ok = True
+    if args.type in ("carousel_and_story", "carousel_only"):
+        ok = publish_carousel() and ok
+    if args.type in ("carousel_and_story", "story_only"):
+        ok = publish_story() and ok
+    
+    print(f"\n{'='*55}")
+    print(f"  {'✅ TAMAMLANDI' if ok else '⚠️ BAZI HATALAR OLUŞTU'}")
+    print(f"{'='*55}")
+    
+    sys.exit(0 if ok else 1)
