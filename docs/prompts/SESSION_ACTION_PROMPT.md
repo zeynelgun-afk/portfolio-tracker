@@ -1,4 +1,4 @@
-# SEANS İÇİ AKSİYON PROMPT — v2.1
+# SEANS İÇİ AKSİYON PROMPT — v2.2
 
 > ⛔ **KRİTİK: AŞAMA ATLAMA YASAĞI**
 >
@@ -32,7 +32,7 @@
 >
 > **geçmiş hatalar**: adım atlama maliyetli oldu (örn: kazanç açıklaması taramasını atlama, bölüm eksik bırakma). prompttaki her madde bir sebepten var — atlamak portföy kararlarını olumsuz etkiler.
 
-> **versiyon**: 2.1 | **son güncelleme**: 25 mart 2026
+> **versiyon**: 2.2 | **son güncelleme**: 6 nisan 2026
 > **çalışma zamanı**: NYSE açıldıktan sonra (TR 16:30+, yaz saati), tercihen açılıştan 30-60dk sonra
 > **ön koşul**: o günün sabah raporu zaten yazılmış olmalı
 > **perspektif**: PİYASA AÇIK — GERÇEK ZAMANLI KARAR VE AKSİYON
@@ -95,7 +95,7 @@ FAZ 1: AÇILIŞ (TR 16:30-17:30) — ilk 60 dakika
   - BMO earnings sonuçları (açılış öncesi açıklananlar)
   - sabah raporundaki acil aksiyonları uygula
   - ilk 15dk aşırı volatil olabilir → büyük karar verme, izle
-  - TWİTTER TAKİP LİSTESİ → her açılışta 9 hesabın son tweetlerini çek, portföyle ilgili olanları özetle
+  - TWİTTER TAKİP LİSTESİ → her açılışta 10 hesabın son tweetlerini çek, portföyle ilgili olanları özetle
   
 FAZ 2: MID-SESSION (TR 18:00-21:00) — ana seans
   öncelik: ANALİZ + KARAR
@@ -165,7 +165,7 @@ iwm = fmp_get("quote", {"symbol": "IWM"})  # russell 2000
 
 # emtia + forex
 gold = fmp_get("quote", {"symbol": "GCUSD"})
-oil = fmp_get("quote", {"symbol": "CLUSD"})
+oil = fmp_get("quote", {"symbol": "USO"})  # petrol proxy (CLUSD güvenilmez)
 usdtry = fmp_get("quote", {"symbol": "USDTRY"})
 
 # treasury
@@ -248,7 +248,12 @@ aksiyon tetikleyicileri (docs/PREDICTION_MARKETS_GUIDE.md):
 
 ```python
 # portföy hisselerinin haberleri
-news = fmp_get("news/stock", {"symbols": ALL_SYMBOLS, "limit": 30})
+news = fmp_get("news/stock", {"symbols": ALL_SYMBOLS, "limit": 50})
+# keyword filtresi:
+#   negatif: lawsuit, downgrade, SEC, investigation, cut dividend, miss, warning, recall, resign
+#   pozitif: beat, upgrade, raise, target, deal, contract, approval, partnership
+# eşleşen → web search ile doğrula, dolgu haberler (zacks "is X undervalued" vb.) → atla
+# ⚠️ press-releases endpoint'i bozuk — KULLANMA
 ```
 
 **websearch**: sabah raporundaki beklenen olaylara özel arama
@@ -276,10 +281,11 @@ news = fmp_get("news/stock", {"symbols": ALL_SYMBOLS, "limit": 30})
 @TrendSpider       → teknik analiz araçları
 @Jake__Wujastyk    → ivme trader / hisse önerileri
 @RyanDetrick       → piyasa istatistikleri / mevsimsellik verileri
+@VolSignals        → volatilite analizi / opsiyon stratejileri
 ```
 
 **filtreleme**: portföy sembolleri + genel piyasa yorumlarını öne çıkar
-**toplam**: ~18 RapidAPI çağrısı (her hesap için user id + tweet)
+**toplam**: ~20 RapidAPI çağrısı (her hesap için user id + tweet)
 
 ## 1e. sektör RS analizi (canlı)
 
@@ -305,7 +311,7 @@ sinyaller:
 | **FMP toplam** | **~67** |
 | **websearch** | **4-7** |
 
-⚠️ sabah raporu ~80 call kullandıysa, günlük toplam ~150 / 2,500 limit = **%6** (güvenli)
+⚠️ sabah raporu ~80 call kullandıysa, günlük toplam ~150 — dakikalık 2,500 limitin çok altında (güvenli)
 
 ---
 
@@ -379,9 +385,9 @@ FMP historical data ile ichimoku + chandelier stop hesapla
 # AŞAMA 3 — AKSİYON KARARLARI
 
 > ⚠️ **PLAYBOOK KONTROLÜ**: her karar vermeden önce `docs/TRADING_PLAYBOOK.md` kurallarını kontrol et.
-> - yeni giriş → K-01 (makro veri), K-02 (kriz rallisi), K-03 (VIX + small cap), K-13 (VIX ortam)
+> - yeni giriş → K-01 (makro veri), K-02 (kriz rallisi), K-03 (VIX + small cap), K-13 v4.1 (sektör bazlı VIX), K-17/K-18 (insider check)
 > - çıkış → K-06 (stop override), K-07 (trailing stop), K-08 (momentum yoksa çık), K-09 (stop yakın erken çık)
-> - swing → K-14 (ardışık 3+ zarar → dur)
+> - swing → K-14 (ardışık 3+ zarar → dur), K-19 (XLP hariç), K-20 (RS dead cat bounce)
 > - ichimoku giriş: kumo kırılımı / kijun bounce + hacim teyidi + SMA200 filtre
 > - temel analiz: claude hisse bazında değerlendirir, sabit rasyo filtresi yok
 > - kural ihlali gerekiyorsa gerekçeyi açıkça yaz
@@ -607,7 +613,7 @@ B) TREND DEVAM GİRİŞİ (güçlü trend varken):
 C) ORTAK KOŞULLAR (her giriş için):
 5. claude temel değerlendirmesi olumlu
 6. portföy korelasyonu uygun (aynı alt sektörde 3'ten fazla pozisyon yok)
-7. VIX >25 = yarım pozisyon (K-13)
+7. K-13 v4.1: kriz tipine göre sektör bazlı VIX kuralı (faydalanıcı sektörlere VIX 28'e kadar tam, duyarlılara 22'den itibaren yarım)
 8. 2x ATR bazlı stop ve pozisyon boyutlandırma
 ```
 
@@ -682,7 +688,7 @@ trade olmasa bile tüm JSON dosyalarını güncelle:
 for each portfolio JSON:
     for each position:
         guncel_fiyat = quote['price']
-        gunluk_degisim_yuzde = quote['changesPercentage']
+        gunluk_degisim_yuzde = quote['changesPercentage']  # seans açıkken güvenilir, kapalıyken 0 dönebilir → manuel: ((price-previousClose)/previousClose)*100
         guncel_deger = adet × guncel_fiyat
         kar_zarar = guncel_deger - yatirim
         kar_zarar_yuzde = (kar_zarar / yatirim) × 100
@@ -893,7 +899,7 @@ POWER HOUR (FAZ 3: TR 22:00-23:00)
 seans içi TÜM aksiyonlarda (kısmi kâr alma, trailing stop, stop-loss satışı,
 yeni giriş, fiyat güncellemesi, pozisyon kapatma, kural esnetme/uygulama)
 Zeynel'den onay istenmez. soru sormadan doğrudan karar ver ve uygula.
-playbook kurallarına (K-01 ile K-17) uygunluk kontrolü yapıldıktan sonra
+playbook kurallarına (K-01 ile K-20, K-13 v4.1 sektör bazlı VIX) uygunluk kontrolü yapıldıktan sonra
 son karar her zaman Claude'da. onay istemek = kural ihlali.
 
 ## otomatik yapılan işlemler (hepsi)
@@ -947,4 +953,4 @@ detaylı kurallar: `docs/SELF_VALIDATION.md`
 
 ---
 
-> son güncelleme: 25 mart 2026 v2.1 | finzora ai
+> son güncelleme: 6 nisan 2026 v2.2 | finzora ai
