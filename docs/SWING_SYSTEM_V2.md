@@ -1,7 +1,7 @@
 # SWING TRADE SİSTEMİ v2.3 — ICHİMOKU + CHANDELİER EXİT + ÖN FİLTRE
 
 > **versiyon**: 2.3
-> **son güncelleme**: 3 nisan 2026
+> **son güncelleme**: 6 nisan 2026
 > **önceki sistem**: sabit %5 stop / %10 hedef / RSI+MACD+SMA skor kartı
 > **neden değişti**: ichimoku kendi başına komple bir trend sistemi. sabit stop/hedef ile karıştırmak çelişki yaratıyordu. yeni sistem: stop dinamik (chandelier), hedef sabit (%10).
 > **v2.1 değişiklik**: TK cross giriş sinyali kaldırıldı (sahte sinyaller), minimum %5 stop mesafesi zorunluluğu eklendi
@@ -60,41 +60,49 @@ RSI ve MACD eklenmez. tenkan/kijun kesişimi zaten MACD'nin yaptığını yapıy
 > **önemli**: bu akış sadece swing trade girişleri içindir. portföy pozisyonları (dengeli/agresif/temettü) farklı çıkış kuralları kullanır (K-11 kademeli çıkış).
 
 ```
-ichimoku sinyali
+ichimoku sinyali (4/4 zorunlu, 3/4 → ATLA)
         │
-        ├── VIX <22 (normal)
+        ├── K-13 v4.1: sektör faydalanıcı mı duyarlı mı?
+        │
+        ├── FAYDALANICI SEKTÖR (savunma, enerji, altın, sağlık, staples, telekom, utilities, siber güvenlik)
         │     │
-        │     ├── sinyal 4/4 mü? (volume teyit zorunlu)
+        │     ├── VIX <28 → SPY > 21SMA + eğim ↗? (VIX <22 iken zorunlu, VIX 22-28 iken önerilir)
         │     │     │
-        │     │     ├── evet (4/4) → SPY > 21SMA + eğim ↗?
-        │     │     │                  │
-        │     │     │                  ├── evet → K-19 sektör kontrol
-        │     │     │                  │           │
-        │     │     │                  │           ├── XLP → ATLA
-        │     │     │                  │           │
-        │     │     │                  │           └── geçti → K-20 RS kontrol
-        │     │     │                  │                        │
-        │     │     │                  │                        ├── dead cat bounce → ATLA
-        │     │     │                  │                        └── geçti → GİR (%10 hedef)
-        │     │     │                  │
-        │     │     │                  └── hayır → ATLA
-        │     │     │
-        │     │     └── hayır (3/4) → ATLA
+        │     │     ├── evet → K-19 → K-20 → GİR (tam pozisyon)
+        │     │     └── hayır + VIX <22 → ATLA | VIX 22-28 → ichimoku 4/4 yeterliyse yarım pozisyon
+        │     │
+        │     ├── VIX 28-35 → yarım pozisyon, stop 3xATR, SPY kontrol yok
+        │     └── VIX 35+ → çeyrek pozisyon
         │
-        ├── VIX 22-35 (kriz)
-        │     └── ichimoku 4/4 + K-13b koşulları → GİR (yarım pozisyon, %10 hedef)
+        ├── DUYARLI SEKTÖR (tech/AI, tüketim döngüsel, havacılık, küçük sermaye, spekülatif)
+        │     │
+        │     ├── VIX <22 → SPY > 21SMA + eğim ↗ → K-19 → K-20 → GİR (tam pozisyon)
+        │     ├── VIX 22-28 → SPY > 21SMA + eğim ↗ → K-19 → K-20 → GİR (yarım pozisyon)
+        │     ├── VIX 28-35 → giriş yok (istisna: K-13b 6 koşul sağlanırsa çeyrek pozisyon)
+        │     └── VIX 35+ → ATLA (K-13b bile izin vermez)
         │
-        └── VIX >35 → ATLA
+        └── PEAD GİRİŞİ (K-05 v3 Aşama 2 — ichimoku 4/4 gerekmez, kendi koşulları var)
+              └── kazanç sürprizi ≥%10 + gap-up + hacim 2x + 2. gün trigger → yarım pozisyon
 ```
 
-**tüm swing girişleri 4/4 ichimoku zorunlu.** 3/4 sinyaller (volume teyitsiz) swing'de değerlendirilmez.
+**tüm ichimoku bazlı swing girişleri 4/4 zorunlu.** 3/4 sinyaller (volume teyitsiz) swing'de değerlendirilmez.
+**PEAD girişleri** (K-05 v3 Aşama 2) ichimoku 4/4 gerektirmez, kendi giriş koşulları vardır (bkz. aşağıda 1d).
 portföy pozisyonlarında K-11 kademeli çıkış uygulanır, sabit hedef yoktur.
+
+**hedef ve çıkış politikası (v2.3.1 — 6 nisan 2026):**
+eski sistem sabit %10 hedef kullanıyordu. sorun: birçok trade %7-8'de zirve yapıp geri dönüyor, %10'u görmeden chandelier stop'ta düşük kârla veya zararda çıkıyordu. backtest'te başarı tanımı zaten "kârda kapanma" idi, "%10'a ulaşma" değil.
+yeni sistem: sabit hedef kaldırıldı, chandelier trailing birincil çıkış mekanizması. ek olarak kâr kilidi mekanizması:
+  - kâr <%7: chandelier 3×ATR trailing (normal)
+  - kâr %7-15: chandelier 2×ATR'ye sıkılaştır (kâr kilidi — geri vermeyi önle)
+  - kâr %15+: chandelier 1.5×ATR (agresif kâr koruma)
+  - ichimoku çıkış sinyalleri (TK aşağı kesişim, kumo'ya giriş) hala geçerli
+bu sayede %7-8 kârda olan trade korunurken, %15-20 trend devamı engellenmiyor.
 
 > **neden ABEF kaldırıldı**: 184 ichimoku sinyali üzerinde yapılan analiz sonucu ABEF filtrelerinin (52W yakınlık, 5gün momentum, 20gün volatilite, RSI>60) hiçbiri anlamlı fark yaratmadı. baseline %49 kâr oranı, ABEF ile %49 — sıfır iyileştirme. tekil en iyi filtre +2p, toplu ABEF -1p. buna karşılık 4/4 vs 3/4 sinyal ayrımı +5p fark yarattı. ABEF yerine 4/4 zorunluluğu daha etkili ve daha basit.
 
 ### SPY 21SMA master switch (konum + eğim)
 
-VIX <22 ortamında girişten ÖNCE iki koşul kontrol edilir:
+VIX <22 ortamında girişten ÖNCE iki koşul kontrol edilir (VIX 22-28'de faydalanıcı sektörlerde önerilir ama zorunlu değil):
 1. SPY kapanış > 21SMA (konum)
 2. 21SMA bugün > 21SMA 5 gün önce (eğim yükseliyor)
 
@@ -106,7 +114,7 @@ her iki koşul da sağlanmalı. SPY 21SMA altındaysa VEYA 21SMA düşüş eğim
   SPY ↗ yükseliyor: kâr oranı %67
   SPY ↘ düşüyor:    kâr oranı %25 (+42 puan fark)
 - neden 50SMA değil: 50SMA çok yavaş, ağu 2023'ü kaçırıyor, nis 2023 LLY'yi engelliyor. 21SMA swing trade zaman dilimiyle uyumlu
-- K-13b yolunda (VIX >25) SPY kontrolü YAPILMAZ
+- K-13 v4.1: faydalanıcı sektörlerde VIX 22-28 arası SPY kontrolü önerilir ama zorunlu değil. VIX 28+ iken SPY kontrolü yapılmaz. duyarlı sektörlerde VIX 22-28 arası SPY kontrolü zorunlu
 
 ### sektör dışlaması (K-19)
 
@@ -128,20 +136,20 @@ sektör ETF'inin SPY'a göre relative strength'i kontrol edilir. orta vadede zay
 - sektör ETF eşleştirme: XLK (tech), XLC (iletişim), XLE (enerji), XLI (sanayi), XLV (sağlık), XLF (finans), XLY (tüketici isteğe bağlı)
 - gerekçe: 76 trade backtestinde bu kombinasyon %80 zarar oranı gösterdi (3 kâr / 12 zarar). sektör orta vadede zayıflamış ama kısa vadede sıçramış → sahte toparlanma, trend devam ediyor
 - filtre etkisi: filtresiz %47 kâr → filtre ile %54 kâr (+7 puan). 12 zarar önlendi, 3 küçük kâr kaçırıldı
-- K-13b kriz modunda bu filtre UYGULANMAZ (kriz modunun kendi sektör ETF SMA filtresi var)
+- K-13b istisnası pozisyonlarında bu filtre uygulanmaz (K-13b'nin kendi sektör ETF SMA filtresi var). diğer tüm VIX bantlarında uygulanır
 
-### K-13b özet referans (VIX >25 ortamında)
+### K-13b özet referans (sadece VIX-duyarlı sektörlerde, VIX 28-35 arası)
 
-VIX >25'te ichimoku 4/4 + volume teyit + sektör ETF SMA filtresi. giriş koşulları (tümü zorunlu):
+K-13 v4.1 ile K-13b artık sadece duyarlı sektörlere uygulanır. faydalanıcı sektörler K-13 v4.1 matrisiyle zaten izinli. duyarlı sektörlerde VIX 28-35 arası ichimoku 4/4 + 6 koşul sağlanırsa çeyrek pozisyon izni. giriş koşulları (tümü zorunlu):
 1. ichimoku skoru tam 4/4 (kumo üstü + TK bull + tenkan üstü + volume 1.3x+)
 2. hissenin sektör ETF'i (XLK/XLE/XLI/XLC/XLV/XLF/XLY/XLU/XLB) hem 9SMA hem 21SMA üzerinde (**not**: XLP hisseleri K-19 gereği swing'de alınmaz, ancak XLP ETF genel piyasa sağlık göstergesi olarak kontrol edilebilir)
 3. mcap >$2B
 4. RSI 40-70
 5. K-18 insider temiz
 6. K-17 korelasyon >%50
-uygulama kuralları: max 2 eşzamanlı, sektör başına 1, hedef sabit %10, stop: chandelier exit (3×ATR) — normal modla aynı
+uygulama kuralları: max 2 eşzamanlı, sektör başına 1, kâr kilidi sistemi (<%7: 3×ATR, %7-15: 2×ATR, %15+: 1.5×ATR), stop: chandelier exit — normal modla aynı
 
-detaylar: docs/TRADING_PLAYBOOK.md K-13 v3 bölümü
+detaylar: docs/TRADING_PLAYBOOK.md K-13 v4.1 bölümü
 
 ---
 
@@ -180,6 +188,29 @@ fiyat yükseliş trendinde kijun-sen'e geri çekilir ve oradan seker.
 **güç**: trend devamı sinyali. ilk girişi kaçırınca veya ekleme (piramitleme) için kullanılır.
 
 **stop notu**: kijun bounce'ta fiyat kijun'a çok yakın girişi olduğu için chandelier stop (giriş_fiyatı - 3×ATR) genellikle kijun'dan daha geniş alan tanır. bu yüzden kijun bounce girişleri chandelier ile daha iyi korunur. chandelier stop mesafesi yine de <%5 ise → giriş reddedilir.
+
+### 1d. PEAD GİRİŞİ (kazanç sonrası sürüklenme — K-05 v3 Aşama 2)
+
+kazanç açıklaması sonrası sürpriz yönünde devam eden fiyat hareketinden (post-earnings announcement drift) faydalanma. bu giriş tipi ichimoku 4/4 gerektirmez — kendi koşulları var.
+
+**koşullar (TÜMÜ sağlanmalı):**
+1. kazanç sürprizi ≥%10 (EPS actual vs estimate)
+2. ilk gün tepkisi sürprizle aynı yönde: pozitif sürpriz → gap-up, negatif → gap-down
+3. ilk gün hacim ≥ 20 günlük ortalama hacmin 2 katı (kurumsal ilgi teyidi)
+4. 2. gün trigger candle: ilk gün yüksek/düşüğünü kırmadan konsolide + yeni mum aynı yönde kapanış
+5. ilk güne GİRME (K-02 ile tutarlı)
+
+**pozisyon:** yarım pozisyon (kazanç sonrası volatilite hala yüksek)
+**stop:** ilk gün (açıklama günü) düşüğü altı (long) veya yükseği üstü (short)
+**çıkış:** chandelier trailing ile kâr kilidi sistemi (<%7: 3×ATR, %7-15: 2×ATR, %15+: 1.5×ATR)
+**süre:** 60 işlem günü drift veya stop tetiklenene kadar. K-08 zaman filtresi uygulanır ama tolerans 15 gün yerine 30 gün (PEAD drifti daha yavaş gelişir)
+
+**akademik kanıt:** Ball & Brown (1968), Bernard & Thomas (1989). çeyreklik %2.6-9.37 anormal getiri. momentum hisselerde (küçük sermaye, düşük analist takibi) daha güçlü
+**kendi kanıtımız:** henüz backtest edilmedi. gelecek kazanç sezonunda (nisan 2026 Q1 sonuçları) ilk 5-10 PEAD trade'i simülasyon olarak kaydedilecek
+
+**güç**: orta-yüksek. ichimoku sinyalinden farklı bir alfa kaynağı — teknik değil temel veri bazlı. iki sistem birbirini tamamlıyor.
+
+**ilişkili:** K-05 v3 Aşama 3 (tedarik zinciri yayılım) da PEAD benzeri giriş ama lider şirket yerine ortaklarına uygulanır
 
 ---
 
@@ -291,11 +322,15 @@ bkz. bölüm 2 (chandelier exit) — ATR(14) formülü orada tanımlı.
 
 ### VIX düzeltmesi
 
-| VIX | risk_yuzdesi | açıklama |
-|-----|--------------|----------|
-| <22 | %1.0 | normal mod — karar akışında tam pozisyon |
-| 22-35 | %0.50 | K-13b kriz modu — yarım pozisyon |
-| >35 | girme | hiç giriş yapılmaz |
+| VIX | faydalanıcı sektör risk% | duyarlı sektör risk% | açıklama |
+|-----|:------------------------:|:--------------------:|----------|
+| <22 | %1.0 | %1.0 | her iki grup tam pozisyon |
+| 22-28 | %1.0 | %0.50 | faydalanıcı tam, duyarlı yarım |
+| 28-35 | %0.50 | K-13b: %0.25 veya girme | faydalanıcı yarım, duyarlı sadece K-13b istisnasıyla |
+| 35+ | %0.25 | girme | faydalanıcı çeyrek, duyarlı tamamen kapalı |
+
+not: sektör sınıflandırması aktif kriz tipine göre belirlenir (bkz. TRADING_PLAYBOOK.md K-13 v4.1)
+aktif kriz: jeopolitik/savaş (İran, şubat 2026). kriz tipi değişirse bu tablo güncellenmeli
 
 ---
 
@@ -337,13 +372,13 @@ sabit rasyolarla otomatik red yok. karar claude'da.
 | eski sistem | yeni sistem |
 |-------------|-------------|
 | sabit %5 stop | chandelier exit: highest_high - 3×ATR(14) trailing stop |
-| sabit %10 hedef | sabit %10 hedef (tüm swing girişleri ön filtreden geçer, hedefe ulaşınca veya stop tetiklenince çıkış) |
+| sabit %10 hedef | kâr kilidi sistemi: <%7 chandelier 3×ATR, %7-15 chandelier 2×ATR, %15+ chandelier 1.5×ATR. sabit hedef yok |
 | RSI oversold giriş | ichimoku kumo kırılımı / kijun bounce giriş |
 | MACD teyidi | gereksiz (TK cross kaldırıldı, tek başına anlamlı değildi) |
 | SMA20/50 pozisyon kontrolü | ichimoku kumo bunu zaten yapıyor |
 | SMA200 filtresi | SMA200 referans bilgi olarak korundu (zorunlu filtre değil) |
 | sabit %5 trailing | chandelier exit (3×ATR) doğal trailing |
-| 7-14 gün tutma süresi | %10 hedefe veya stop'a kadar tut. süre sınırı yok ama K-08 zaman filtresi uygulanır |
+| 7-14 gün tutma süresi | chandelier stop tetiklenene kadar tut. süre sınırı yok ama K-08 zaman filtresi uygulanır |
 | skor kartı (7 puan) | ichimoku 4/4 + SPY master switch + K-19/K-20 filtreleri |
 | sabit lot | ATR bazlı risk hesaplı lot |
 
@@ -439,10 +474,13 @@ bu filtrelerle ~1,100 hisse gelir. sektör dağılımı otomatik ve dengeli.
 2. K-19 filtresi: XLP (consumer defensive) hisselerini çıkar
 3. her sembol için FMP historical data çek (son 120 gün)
 4. ichimoku 4/4 hesapla (kumo üstü + TK bull + tenkan üstü + volume 1.3x)
-5. VIX kontrol:
-   - VIX <22: SPY > 21SMA + eğim ↗ → K-20 RS kontrol → GİR
-   - VIX 22-35: K-13b koşulları (sektör ETF SMA + RSI 40-70 + mcap >$2B) → GİR yarım
-   - VIX >35: ATLA
+5. K-13 v4.1 sektör bazlı VIX kontrol:
+   - sektör faydalanıcı + VIX <28: SPY > 21SMA + eğim ↗ (VIX<22 zorunlu, 22-28 önerilir) → K-20 → GİR tam
+   - sektör faydalanıcı + VIX 28-35: yarım pozisyon, SPY kontrol yok
+   - sektör duyarlı + VIX <22: SPY > 21SMA + eğim ↗ → K-20 → GİR tam
+   - sektör duyarlı + VIX 22-28: SPY > 21SMA + eğim ↗ → K-20 → GİR yarım
+   - sektör duyarlı + VIX 28-35: K-13b 6 koşul → GİR çeyrek (veya ATLA)
+   - VIX 35+: faydalanıcı çeyrek, duyarlı ATLA
 6. chandelier stop hesapla: giriş_fiyatı - 3×ATR(14)
 7. min stop mesafesi ≥%5 kontrol
 
@@ -478,4 +516,4 @@ XLP sektörüne dahil tüm hisseler otomatik dışlanır. FMP screener'dan secto
 
 ---
 
-*finzora ai | swing sistemi v2.3 | 3 nisan 2026*
+*finzora ai | swing sistemi v2.3 | 6 nisan 2026*
