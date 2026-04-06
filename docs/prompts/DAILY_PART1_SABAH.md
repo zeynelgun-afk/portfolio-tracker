@@ -128,7 +128,7 @@ ADIM 4 — SWİNG TARAMA (FMP screener → ichimoku 4/4 → v2.3 filtreleri)
   2. K-19: consumer defensive sektör hisselerini çıkar
   3. VIX kontrol:
      - VIX <22: normal mod → SPY > 21EMA + eğim ↗ kontrol → K-20 RS kontrol
-     - VIX 22-35: K-13b kriz modu → sektör ETF 9+21 SMA kontrol
+     - VIX 22-35: K-13b kriz modu → sektör ETF 9+21 EMA kontrol
      - VIX >35: hiç giriş yapılmaz
   4. ichimoku 4/4 hesapla (kumo üstü + TK bull + tenkan üstü + volume 1.3x)
   5. 4/4 sinyal verenler için chandelier stop hesapla: giriş_fiyatı - 3×ATR(14)

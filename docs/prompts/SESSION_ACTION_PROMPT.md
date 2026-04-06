@@ -967,7 +967,7 @@ son karar her zaman Claude'da. onay istemek = kural ihlali.
 
 ## SELF-VALIDATION (seans içi)
 
-detaylı kurallar: `docs/SELF_VALIDATION.md`
+aşağıdaki kontroller bu prompt'un içinde inline tanımlıdır — ayrı dosya gerekmez.
 
 ### her FMP çağrısından sonra (katman 1)
 ```

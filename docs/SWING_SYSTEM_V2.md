@@ -144,7 +144,7 @@ sektör ETF'inin SPY'a göre relative strength'i kontrol edilir. orta vadede zay
 
 K-13 v4.1 ile K-13b artık sadece duyarlı sektörlere uygulanır. faydalanıcı sektörler K-13 v4.1 matrisiyle zaten izinli. duyarlı sektörlerde VIX 28-35 arası ichimoku 4/4 + 6 koşul sağlanırsa çeyrek pozisyon izni. giriş koşulları (tümü zorunlu):
 1. ichimoku skoru tam 4/4 (kumo üstü + TK bull + tenkan üstü + volume 1.3x+)
-2. hissenin sektör ETF'i (XLK/XLE/XLI/XLC/XLV/XLF/XLY/XLU/XLB) hem 9SMA hem 21EMA üzerinde (**not**: XLP hisseleri K-19 gereği swing'de alınmaz, ancak XLP ETF genel piyasa sağlık göstergesi olarak kontrol edilebilir)
+2. hissenin sektör ETF'i (XLK/XLE/XLI/XLC/XLV/XLF/XLY/XLU/XLB) hem 9EMA hem 21EMA üzerinde (**not**: XLP hisseleri K-19 gereği swing'de alınmaz, ancak XLP ETF genel piyasa sağlık göstergesi olarak kontrol edilebilir)
 3. mcap >$2B
 4. RSI 40-70
 5. K-18 insider temiz
