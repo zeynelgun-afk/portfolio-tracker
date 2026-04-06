@@ -156,8 +156,11 @@ ADIM 6 — ANALİZ, PLAN VE KAYIT
     - swing planlıyorsan: K-14 (ardışık zarar → dur), K-19 (XLP hariç), K-20 (RS dead cat bounce), ichimoku giriş sinyali veya trend devam girişi (4/4 bullish)
     - temel analiz: claude hisse bazında değerlendirir, sabit rasyo filtresi yok
     - kural ihlali varsa raporda açıkça belirt ve gerekçelendir
-  → KARAR ÇERÇEVESİ: giriş planlarında docs/DECISION_FRAMEWORK.md uygula (GO/NO-GO, düşünce zinciri, kırmızı takım)
-  → SENTIMENT: CBOE put/call ratio + analyst consensus (docs/POST_TRADE_REVIEW.md bölüm 5)
+  → KARAR ÇERÇEVESİ: giriş planlarında GO/NO-GO 10 soru kontrol et (sinyal, stop, R:R, VIX, insider, earnings, korelasyon, nakit, plan, karşıt argüman)
+    her giriş planı için düşünce zinciri yaz: (1) VERİ — somut veri (2) KURAL — hangi K/sistem sinyali (3) KARŞIT — neden yanlış olabilir
+    detay: docs/DECISION_FRAMEWORK.md
+  → SENTIMENT: CBOE put/call ratio (web search) + FMP grades-consensus (portföy hisseleri)
+    put/call <0.7 = aşırı iyimser uyarı, >1.0 = aşırı kötümser (contrarian boğa), >1.2 = panik
   → raporu yaz (aşağıdaki format)
   → reports/daily/DAILY_SABAH_YYYY-MM-DD.md olarak kaydet
   → GIT COMMIT + PUSH: "[SABAH RAPORU] DD Ay YYYY - kısa özet"

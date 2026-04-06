@@ -385,11 +385,46 @@ FMP historical data ile ichimoku + chandelier stop hesapla
 # AŞAMA 3 — AKSİYON KARARLARI
 
 > ⚠️ **PLAYBOOK KONTROLÜ**: her karar vermeden önce `docs/TRADING_PLAYBOOK.md` kurallarını kontrol et.
-> ⚠️ **KARAR ÇERÇEVESİ**: yeni giriş kararlarında `docs/DECISION_FRAMEWORK.md` uygula (GO/NO-GO 10 soru, düşünce zinciri, kırmızı takım testi, önyargı kontrolü).
 > - yeni giriş → K-01 (makro veri), K-02 (kriz rallisi), K-03 (VIX + small cap), K-13 v4.1 (sektör bazlı VIX), K-17/K-18 (insider check)
 > - çıkış → K-06 (stop override), K-07 (trailing stop), K-08 (momentum yoksa çık), K-09 (stop yakın erken çık)
 > - swing → K-14 (ardışık 3+ zarar → dur), K-19 (XLP hariç), K-20 (RS dead cat bounce)
 > - ichimoku giriş: kumo kırılımı / kijun bounce + hacim teyidi + SMA200 filtre
+
+### ⛔ GO/NO-GO — HER YENİ GİRİŞTE ZORUNLU (tek "hayır" = giriş iptal)
+
+```
+□ 1. sinyal var mı? (ichimoku 4/4, kumo kırılımı, kijun bounce veya portföy tezi)
+□ 2. stop tanımlı mı? (chandelier 3×ATR veya portföy stop, mesafe ≥%5)
+□ 3. R:R ≥ 2:1 mi?
+□ 4. VIX uygun mu? (K-13 v4.1 sektör bazlı kontrol)
+□ 5. insider temiz mi? (K-17/K-18, FMP insider-trading, son 90 gün >$5M satış var mı?)
+□ 6. earnings riski var mı? (5 gün içinde earnings → binary risk, bekle veya K-11 erken uygula)
+□ 7. korelasyon uygun mu? (aynı alt sektörde 3+ pozisyon?, sektör exposure >%30?)
+□ 8. nakit yeterli mi? (giriş sonrası nakit <%5 olacak mı?)
+□ 9. sabah planında var mı? (plan dışı → ekstra gerekçe zorunlu)
+□ 10. karşıt argüman düşündüm mü? (kırmızı takım: detay → docs/DECISION_FRAMEWORK.md bölüm 3)
+```
+
+### ⛔ DÜŞÜNCE ZİNCİRİ — HER AL/SAT KARARINDA ZORUNLU (stop hariç)
+
+```
+KARAR: [AL/SAT/TUT] — [SEMBOL]
+1. VERİ: [somut veri — fiyat, RSI, hacim, haber, teknik seviye]
+2. KURAL: [hangi playbook kuralı/sistem sinyali destekliyor]
+3. KARŞIT: [bu kararın neden yanlış olabileceği]
+→ SONUÇ: [uygula / ertele / vazgeç]
+```
+
+### ⛔ ÖNYARGI HIZLI KONTROL — şüphe anında sor
+
+```
+□ "eskiden X dolardı, şimdi ucuz" → ÇIPA ETKİSİ (geçmiş fiyat referans değil)
+□ "bu kadar zarar ettim, satamam" → BATIK MALİYET (bugün sıfırdan alır mıydım?)
+□ "herkes alıyor" → SÜRÜ/FOMO (2 gün önce görsem alır mıydım?)
+□ "kesin yükselir" → AŞIRI GÜVEN (son 3 trade kârlıysa risk yüksek)
+□ "kârlı çıktım, strateji doğru" → SONUÇ YANLILIĞI (süreç mi iyi yoksa şans mı?)
+detaylı önyargı listesi: docs/DECISION_FRAMEWORK.md bölüm 4
+```
 > - temel analiz: claude hisse bazında değerlendirir, sabit rasyo filtresi yok
 > - kural ihlali gerekiyorsa gerekçeyi açıkça yaz
 
@@ -674,7 +709,11 @@ C) ORTAK KOŞULLAR (her giriş için):
 3. portföy `transactions[]` listesine SATIŞ kaydı ekle
 4. `data/transactions.csv` dosyasına satır ekle
 5. swing ise → `data/swing/closed.json`'a ekle (tüm zorunlu alanlar: cikis_tarihi, cikis_fiyati, kar_zarar_yuzde, cikis_nedeni, sonuc, ders)
-     → docs/POST_TRADE_REVIEW.md uygula: process_score, root_cause, corrective_action, bias_detected alanlarını doldur
+     → YENİ ZORUNLU ALANLAR (docs/POST_TRADE_REVIEW.md):
+       process_score: 1-5 (5=mükemmel süreç, 3=ortalama, 1=kötü)
+       root_cause: hazırlık / uygulama / boyutlandırma / duygusal / harici
+       corrective_action: "bir sonraki döngüde ne değişecek"
+       bias_detected: yok / anchoring / disposition / FOMO / overconfidence / sunk_cost
 6. `data/summary.json` güncelle
 
 **her alış için**:
