@@ -127,7 +127,7 @@ ADIM 4 — SWİNG TARAMA (FMP screener → ichimoku 4/4 → v2.3 filtreleri)
   1. FMP company-screener → ~1,100 hisse çek (mcap >$2B, vol >500K, price >$10, US)
   2. K-19: consumer defensive sektör hisselerini çıkar
   3. VIX kontrol:
-     - VIX <22: normal mod → SPY > 21SMA + eğim ↗ kontrol → K-20 RS kontrol
+     - VIX <22: normal mod → SPY > 21EMA + eğim ↗ kontrol → K-20 RS kontrol
      - VIX 22-35: K-13b kriz modu → sektör ETF 9+21 SMA kontrol
      - VIX >35: hiç giriş yapılmaz
   4. ichimoku 4/4 hesapla (kumo üstü + TK bull + tenkan üstü + volume 1.3x)
@@ -321,7 +321,7 @@ SEMBOL — [şirket]
 ```markdown
 ## 4. swing tarama — {tarih}
 
-> VIX: XX.X | mod: [normal / K-13b / dur] | SPY: 21SMA [üstü/altı], eğim [↗/↘]
+> VIX: XX.X | mod: [normal / K-13b / dur] | SPY: 21EMA [üstü/altı], eğim [↗/↘]
 > tarama evreni: ~X,XXX hisse (FMP screener, mcap >$2B)
 
 ### ichimoku 4/4 sinyal verenler

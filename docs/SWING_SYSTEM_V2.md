@@ -6,12 +6,12 @@
 > **neden değişti**: ichimoku kendi başına komple bir trend sistemi. sabit stop/hedef ile karıştırmak çelişki yaratıyordu. yeni sistem: stop dinamik (chandelier), hedef sabit (%10).
 > **v2.1 değişiklik**: TK cross giriş sinyali kaldırıldı (sahte sinyaller), minimum %5 stop mesafesi zorunluluğu eklendi
 > **v2.2 değişiklik**: VIX rejimine göre çift katmanlı ön filtre sistemi eklendi (A+B+E+F) — sonra v2.3'te kaldırıldı
-> **v2.3 değişiklik**: SPY 21SMA master switch (konum + eğim). K-19 XLP dışlama. K-20 sektör RS dead cat bounce. ABEF kaldırıldı (184 sinyal, %0 iyileştirme). 4/4 ichimoku zorunlu. kijun trailing → chandelier exit (3×ATR) — 126 trade: +45% P/L iyileştirme. tarama evreni: sabit liste → FMP screener dinamik evren (~1,100 hisse, mcap >$2B). mcap eşiği $5B → $2B
+> **v2.3 değişiklik**: SPY 21EMA master switch (konum + eğim). K-19 XLP dışlama. K-20 sektör RS dead cat bounce. ABEF kaldırıldı (184 sinyal, %0 iyileştirme). 4/4 ichimoku zorunlu. kijun trailing → chandelier exit (3×ATR) — 126 trade: +45% P/L iyileştirme. tarama evreni: sabit liste → FMP screener dinamik evren (~1,100 hisse, mcap >$2B). mcap eşiği $5B → $2B
 >
 > **61 dönem backtest özeti (2021-2026)**:
 > - 184 ichimoku 3/4+ sinyal analiz edildi → 4/4 sinyal: %54 kâr, 3/4 sinyal: %49 kâr
 > - ABEF filtreleri (A/B/E/F) hiçbiri anlamlı fark yaratmadı → kaldırıldı
-> - yeni sistem: ichimoku 4/4 zorunlu + chandelier exit (3×ATR) + SPY > 21SMA + eğim ↗ + K-19 sektör dışlama + K-20 RS dead cat bounce filtresi
+> - yeni sistem: ichimoku 4/4 zorunlu + chandelier exit (3×ATR) + SPY > 21EMA + eğim ↗ + K-19 sektör dışlama + K-20 RS dead cat bounce filtresi
 > - K-13b kriz modu: %85 kâr oranı (en güvenilir bileşen)
 > - yıl bazlı: 2024 %100, 2025 %74, 2026 %85, 2023 %30, 2022 %40, 2021 %50
 > - başarı tanımı: kârda kapanan trade = başarılı (sadece %10 hedef değil)
@@ -66,7 +66,7 @@ ichimoku sinyali (4/4 zorunlu, 3/4 → ATLA)
         │
         ├── FAYDALANICI SEKTÖR (savunma, enerji, altın, sağlık, staples, telekom, utilities, siber güvenlik)
         │     │
-        │     ├── VIX <28 → SPY > 21SMA + eğim ↗? (VIX <22 iken zorunlu, VIX 22-28 iken önerilir)
+        │     ├── VIX <28 → SPY > 21EMA + eğim ↗? (VIX <22 iken zorunlu, VIX 22-28 iken önerilir)
         │     │     │
         │     │     ├── evet → K-19 → K-20 → GİR (tam pozisyon)
         │     │     └── hayır + VIX <22 → ATLA | VIX 22-28 → ichimoku 4/4 yeterliyse yarım pozisyon
@@ -76,8 +76,8 @@ ichimoku sinyali (4/4 zorunlu, 3/4 → ATLA)
         │
         ├── DUYARLI SEKTÖR (tech/AI, tüketim döngüsel, havacılık, küçük sermaye, spekülatif)
         │     │
-        │     ├── VIX <22 → SPY > 21SMA + eğim ↗ → K-19 → K-20 → GİR (tam pozisyon)
-        │     ├── VIX 22-28 → SPY > 21SMA + eğim ↗ → K-19 → K-20 → GİR (yarım pozisyon)
+        │     ├── VIX <22 → SPY > 21EMA + eğim ↗ → K-19 → K-20 → GİR (tam pozisyon)
+        │     ├── VIX 22-28 → SPY > 21EMA + eğim ↗ → K-19 → K-20 → GİR (yarım pozisyon)
         │     ├── VIX 28-35 → giriş yok (istisna: K-13b 6 koşul sağlanırsa çeyrek pozisyon)
         │     └── VIX 35+ → ATLA (K-13b bile izin vermez)
         │
@@ -100,20 +100,22 @@ bu sayede %7-8 kârda olan trade korunurken, %15-20 trend devamı engellenmiyor.
 
 > **neden ABEF kaldırıldı**: 184 ichimoku sinyali üzerinde yapılan analiz sonucu ABEF filtrelerinin (52W yakınlık, 5gün momentum, 20gün volatilite, RSI>60) hiçbiri anlamlı fark yaratmadı. baseline %49 kâr oranı, ABEF ile %49 — sıfır iyileştirme. tekil en iyi filtre +2p, toplu ABEF -1p. buna karşılık 4/4 vs 3/4 sinyal ayrımı +5p fark yarattı. ABEF yerine 4/4 zorunluluğu daha etkili ve daha basit.
 
-### SPY 21SMA master switch (konum + eğim)
+### SPY 21EMA master switch (konum + eğim)
 
 VIX <22 ortamında girişten ÖNCE iki koşul kontrol edilir (VIX 22-28'de faydalanıcı sektörlerde önerilir ama zorunlu değil):
-1. SPY kapanış > 21SMA (konum)
-2. 21SMA bugün > 21SMA 5 gün önce (eğim yükseliyor)
+1. SPY kapanış > 21EMA (konum)
+2. 21EMA bugün > 21EMA 5 gün önce (eğim yükseliyor)
 
-her iki koşul da sağlanmalı. SPY 21SMA altındaysa VEYA 21SMA düşüş eğimindeyse swing girişi yapılmaz.
+her iki koşul da sağlanmalı. SPY 21EMA altındaysa VEYA 21EMA düşüş eğimindeyse swing girişi yapılmaz.
 
-- konum hesaplama: SPY kapanış > SPY 21 günlük basit hareketli ortalama
-- eğim hesaplama: 21SMA(bugün) > 21SMA(5 gün önce). eğim = (21SMA_bugün - 21SMA_5gün_önce) / 21SMA_5gün_önce × 100. eğim > 0 ise ↗ yükseliyor
-- gerekçe: SPY 21SMA üzerinde ama eğim düşüyorsa momentum kırılıyor. backtestinde:
+- konum hesaplama: SPY kapanış > SPY 21 günlük üstel hareketli ortalama (EMA)
+- eğim hesaplama: 21EMA(bugün) > 21EMA(5 gün önce). eğim = (21EMA_bugün - 21EMA_5gün_önce) / 21EMA_5gün_önce × 100. eğim > 0 ise ↗ yükseliyor
+- gerekçe: SPY 21EMA üzerinde ama eğim düşüyorsa momentum kırılıyor. backtestinde:
   SPY ↗ yükseliyor: kâr oranı %67
   SPY ↘ düşüyor:    kâr oranı %25 (+42 puan fark)
-- neden 50SMA değil: 50SMA çok yavaş, ağu 2023'ü kaçırıyor, nis 2023 LLY'yi engelliyor. 21SMA swing trade zaman dilimiyle uyumlu
+- neden EMA: EMA son fiyatlara daha fazla ağırlık verir, rejim değişikliğini SMA'dan 1-2 gün önce yakalar. swing trade kısa vadeli zaman dilimiyle uyumlu. 50 ve 200 periyot için SMA kalır (endüstri standardı, kurumsal referans)
+- neden 50SMA değil: 50SMA çok yavaş, ağu 2023'ü kaçırıyor, nis 2023 LLY'yi engelliyor. 21EMA swing trade zaman dilimiyle uyumlu
+- FMP çağrısı: `technical-indicators/ema` (periodLength=21, timeframe=1day)
 - K-13 v4.1: faydalanıcı sektörlerde VIX 22-28 arası SPY kontrolü önerilir ama zorunlu değil. VIX 28+ iken SPY kontrolü yapılmaz. duyarlı sektörlerde VIX 22-28 arası SPY kontrolü zorunlu
 
 ### sektör dışlaması (K-19)
@@ -142,7 +144,7 @@ sektör ETF'inin SPY'a göre relative strength'i kontrol edilir. orta vadede zay
 
 K-13 v4.1 ile K-13b artık sadece duyarlı sektörlere uygulanır. faydalanıcı sektörler K-13 v4.1 matrisiyle zaten izinli. duyarlı sektörlerde VIX 28-35 arası ichimoku 4/4 + 6 koşul sağlanırsa çeyrek pozisyon izni. giriş koşulları (tümü zorunlu):
 1. ichimoku skoru tam 4/4 (kumo üstü + TK bull + tenkan üstü + volume 1.3x+)
-2. hissenin sektör ETF'i (XLK/XLE/XLI/XLC/XLV/XLF/XLY/XLU/XLB) hem 9SMA hem 21SMA üzerinde (**not**: XLP hisseleri K-19 gereği swing'de alınmaz, ancak XLP ETF genel piyasa sağlık göstergesi olarak kontrol edilebilir)
+2. hissenin sektör ETF'i (XLK/XLE/XLI/XLC/XLV/XLF/XLY/XLU/XLB) hem 9SMA hem 21EMA üzerinde (**not**: XLP hisseleri K-19 gereği swing'de alınmaz, ancak XLP ETF genel piyasa sağlık göstergesi olarak kontrol edilebilir)
 3. mcap >$2B
 4. RSI 40-70
 5. K-18 insider temiz
@@ -475,10 +477,10 @@ bu filtrelerle ~1,100 hisse gelir. sektör dağılımı otomatik ve dengeli.
 3. her sembol için FMP historical data çek (son 120 gün)
 4. ichimoku 4/4 hesapla (kumo üstü + TK bull + tenkan üstü + volume 1.3x)
 5. K-13 v4.1 sektör bazlı VIX kontrol:
-   - sektör faydalanıcı + VIX <28: SPY > 21SMA + eğim ↗ (VIX<22 zorunlu, 22-28 önerilir) → K-20 → GİR tam
+   - sektör faydalanıcı + VIX <28: SPY > 21EMA + eğim ↗ (VIX<22 zorunlu, 22-28 önerilir) → K-20 → GİR tam
    - sektör faydalanıcı + VIX 28-35: yarım pozisyon, SPY kontrol yok
-   - sektör duyarlı + VIX <22: SPY > 21SMA + eğim ↗ → K-20 → GİR tam
-   - sektör duyarlı + VIX 22-28: SPY > 21SMA + eğim ↗ → K-20 → GİR yarım
+   - sektör duyarlı + VIX <22: SPY > 21EMA + eğim ↗ → K-20 → GİR tam
+   - sektör duyarlı + VIX 22-28: SPY > 21EMA + eğim ↗ → K-20 → GİR yarım
    - sektör duyarlı + VIX 28-35: K-13b 6 koşul → GİR çeyrek (veya ATLA)
    - VIX 35+: faydalanıcı çeyrek, duyarlı ATLA
 6. chandelier stop hesapla: giriş_fiyatı - 3×ATR(14)
