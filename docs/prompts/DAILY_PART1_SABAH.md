@@ -1,4 +1,4 @@
-# GÜNLÜK RAPOR PART 1 — SABAH RAPORU v2.0
+# GÜNLÜK RAPOR PART 1 — SABAH RAPORU v2.3
 
 > ⛔ **KRİTİK: ADIM ATLAMA YASAĞI**
 >
@@ -7,7 +7,7 @@
 > **zorunlu adımlar (teker teker kontrol et):**
 > - [ ] ADIM 0 — playbook + piyasa istihbaratı (`TRADING_PLAYBOOK.md` + `MARKET_INTELLIGENCE.md` + web arama)
 > - [ ] ADIM 1 — piyasa verisi (FMP batch-quote, teknik göstergeler, emtia, treasury)
-> - [ ] ADIM 2 — haber toplama (web search, piyasa haberleri)
+> - [ ] ADIM 2 — haber toplama (FMP news/stock keyword filtresi, web search, piyasa haberleri)
 > - [ ] ADIM 2.5 — twitter takip listesi (RapidAPI ile hesap taraması)
 > - [ ] ADIM 3 — earnings takvimi (FMP earnings-calendar, market cap filtresi)
 > - [ ] ADIM 4 — swing tarama (FMP screener → ichimoku 4/4 → v2.3 filtreleri)
@@ -18,7 +18,7 @@
 >
 > **geçmiş hatalar**: adım atlama maliyetli oldu (örn: kazanç açıklaması taramasını atlama → Oracle bilançosu rapordan eksik kaldı). bu tür eksiklikler güvenilirliği zedeler. her adımı tamamla, sonra raporu yaz.
 
-> **versiyon**: 2.2 | **son güncelleme**: 25 mart 2026
+> **versiyon**: 2.3 | **son güncelleme**: 6 nisan 2026
 > **çıktı dosyası**: `reports/daily/DAILY_SABAH_YYYY-MM-DD.md`
 > **çalışma zamanı**: TR ~14:00 (NYSE dün 23:00'da kapandı, bugün 16:30 açılacak — yaz saati)
 > **amaç**: piyasa analizi + haberler + otomatik tarama sonuçları + günün planı
@@ -45,7 +45,7 @@ bu prompt tek seferde çalışır. adımları sırayla takip et:
 ```
 ADIM 0 — PLAYBOOK + PİYASA İSTİHBARATI
   → docs/TRADING_PLAYBOOK.md dosyasını oku
-  → aktif kuralları gözden geçir (özellikle K-01 ile K-14)
+  → aktif kuralları gözden geçir (özellikle K-01 ile K-20, K-13 v4.1 sektör bazlı VIX kuralı)
   → docs/MARKET_INTELLIGENCE.md okuyarak istihbarat çerçevesini hatırla
   → web aramasıyla güncel piyasa istihbaratı topla:
     - dünden bu yana kritik haberler (makro, jeopolitik, sektörel)
@@ -60,7 +60,8 @@ ADIM 0 — PLAYBOOK + PİYASA İSTİHBARATI
     - mod değişikliği gerekiyor mu? (agresif/normal/dikkatli/defansif)
 
 ADIM 1 — PİYASA VERİSİ (FMP + WEB)
-  → batch-quote: SPY, QQQ, DIA, IWM, VIX (varsa), GCUSD, CLUSD
+  → batch-quote: SPY, QQQ, DIA, IWM, VIXY (VIX proxy), GCUSD, USO (petrol proxy)
+    ⚠️ doğrudan ^VIX ve CLUSD/WTIUSD güvenilmez — VIXY ve USO kullan
   → stock-price-change: tüm portföy sembolleri (1D, 5D, 1M güvenilir)
   → sector-performance-snapshot (date = dünün tarihi)
   → biggest-gainers, biggest-losers (limit 15)
@@ -75,7 +76,12 @@ ADIM 1 — PİYASA VERİSİ (FMP + WEB)
   → raporda tablo formatında sun: ticker | dün kapanış | ön piyasa | fark% | not
 
 ADIM 2 — HABER TOPLAMA
-  → FMP: news/stock (tüm portföy + swing sembolleri), fmp-articles (limit 15)
+  → FMP news/stock: tüm portföy + swing + watchlist sembollerini virgülle birleştir, TEK çağrıda çek (limit 50)
+    - negatif sinyal taraması: lawsuit, downgrade, SEC, investigation, cut dividend, miss, warning, recall, resign
+    - pozitif sinyal taraması: beat, upgrade, raise, target, deal, contract, approval, partnership
+    - eşleşen haberler → web search ile doğrula ve derinleştir
+    - eşleşmeyen dolgu haberler (zacks "is X undervalued" vb.) → atla
+    ⚠️ press-releases endpoint'i symbol filtresini düzgün uygulamıyor — KULLANMA
   → FMP: upgrades-downgrades (portföy hisseleri, limit 20)
   → websearch: futures ve pre-market durumu
   → websearch: dün gece / bugün sabah önemli piyasa haberleri
@@ -83,7 +89,7 @@ ADIM 2 — HABER TOPLAMA
   → websearch: Fed faiz olasılıkları (Kalshi/Polymarket)
 
 ADIM 2.5 — TWİTTER TAKİP LİSTESİ (RapidAPI / twitter241)
-  → aşağıdaki 9 hesabın son tweetlerini çek (her biri için 15-20 tweet)
+  → aşağıdaki 10 hesabın son tweetlerini çek (her biri için 15-20 tweet)
   → portföy sembolleriyle örtüşenleri öne çıkar
   → yorum/fikir içerenleri özetle
   → kaynak: RapidAPI twitter241.p.rapidapi.com
@@ -101,6 +107,7 @@ ADIM 2.5 — TWİTTER TAKİP LİSTESİ (RapidAPI / twitter241)
     @TrendSpider       → teknik analiz araçları / piyasa gözlemleri
     @Jake__Wujastyk    → momentum trader / hisse önerileri
     @RyanDetrick       → piyasa istatistikleri / mevsimsellik verileri
+    @VolSignals        → volatilite analizi / opsiyon stratejileri
 
   ÖNEMLİ: tweet verileri SADECE claude'un bağlamına (context) girer,
   rapora yazılmaz. tweet bilgileri yorumlanarak piyasa değerlendirmelerine,
@@ -143,9 +150,9 @@ ADIM 5 — FİNVİZ TARAMA (teyit katmanı)
 ADIM 6 — ANALİZ, PLAN VE KAYIT
   → tüm verileri sentezle
   → PLAYBOOK ÇAPRAZ KONTROL: günün planındaki her aksiyonu docs/TRADING_PLAYBOOK.md kurallarıyla kontrol et
-    - yeni giriş planlıyorsan: K-01 (makro veri), K-02 (kriz rallisi), K-03 (VIX+small cap), K-13 (VIX ortam)
+    - yeni giriş planlıyorsan: K-01 (makro veri), K-02 (kriz rallisi), K-03 (VIX+small cap), K-13 v4.1 (sektör bazlı VIX), K-17/K-18 (insider check)
     - çıkış planlıyorsan: K-06 (stop override), K-07 (trailing stop), K-08 (momentum), K-09 (stop yakın)
-    - swing planlıyorsan: K-14 (ardışık zarar → dur), ichimoku giriş sinyali veya trend devam girişi (4/4 bullish)
+    - swing planlıyorsan: K-14 (ardışık zarar → dur), K-19 (XLP hariç), K-20 (RS dead cat bounce), ichimoku giriş sinyali veya trend devam girişi (4/4 bullish)
     - temel analiz: claude hisse bazında değerlendirir, sabit rasyo filtresi yok
     - kural ihlali varsa raporda açıkça belirt ve gerekçelendir
   → raporu yaz (aşağıdaki format)
@@ -384,7 +391,7 @@ SEMBOL — [şirket]
 - JSON dosyalarına dokunma (veri güncellemesi part 2'de yapılacak)
 - amaç: sabah bilgilendirme + günün planını oluşturma + otomatik tarama okuma
 - swing tarama seans içinde FMP screener'dan çekilir — docs/SWING_SYSTEM_V2.md bölüm 9
-- VIX >35 → swing girişi yapılmaz. VIX 22-35 → K-13b yarım pozisyon. VIX <22 → normal mod
+- VIX kuralı: K-13 v4.1 sektör bazlı — kriz tipine göre faydalanıcı sektörlere VIX 28'e kadar tam pozisyon, duyarlı sektörlere 22'den itibaren yarım. aktif kriz: jeopolitik/savaş. detay: docs/TRADING_PLAYBOOK.md
 - EP adaylarında "ilk 30 dakika bekle, konfirmasyon al" kuralı seans promptunda uygulanır — sabah planına yaz
 
 ---
