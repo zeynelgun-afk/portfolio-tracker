@@ -149,12 +149,15 @@ ADIM 5 — FİNVİZ TARAMA (teyit katmanı)
 
 ADIM 6 — ANALİZ, PLAN VE KAYIT
   → tüm verileri sentezle
+  → SEKTÖR EXPOSURE TABLOSU: 3 portföy + swing toplam sektör dağılımı hesapla (docs/DECISION_FRAMEWORK.md bölüm 5)
   → PLAYBOOK ÇAPRAZ KONTROL: günün planındaki her aksiyonu docs/TRADING_PLAYBOOK.md kurallarıyla kontrol et
     - yeni giriş planlıyorsan: K-01 (makro veri), K-02 (kriz rallisi), K-03 (VIX+small cap), K-13 v4.1 (sektör bazlı VIX), K-17/K-18 (insider check)
     - çıkış planlıyorsan: K-06 (stop override), K-07 (trailing stop), K-08 (momentum), K-09 (stop yakın)
     - swing planlıyorsan: K-14 (ardışık zarar → dur), K-19 (XLP hariç), K-20 (RS dead cat bounce), ichimoku giriş sinyali veya trend devam girişi (4/4 bullish)
     - temel analiz: claude hisse bazında değerlendirir, sabit rasyo filtresi yok
     - kural ihlali varsa raporda açıkça belirt ve gerekçelendir
+  → KARAR ÇERÇEVESİ: giriş planlarında docs/DECISION_FRAMEWORK.md uygula (GO/NO-GO, düşünce zinciri, kırmızı takım)
+  → SENTIMENT: CBOE put/call ratio + analyst consensus (docs/POST_TRADE_REVIEW.md bölüm 5)
   → raporu yaz (aşağıdaki format)
   → reports/daily/DAILY_SABAH_YYYY-MM-DD.md olarak kaydet
   → GIT COMMIT + PUSH: "[SABAH RAPORU] DD Ay YYYY - kısa özet"

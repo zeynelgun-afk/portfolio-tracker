@@ -385,6 +385,7 @@ FMP historical data ile ichimoku + chandelier stop hesapla
 # AŞAMA 3 — AKSİYON KARARLARI
 
 > ⚠️ **PLAYBOOK KONTROLÜ**: her karar vermeden önce `docs/TRADING_PLAYBOOK.md` kurallarını kontrol et.
+> ⚠️ **KARAR ÇERÇEVESİ**: yeni giriş kararlarında `docs/DECISION_FRAMEWORK.md` uygula (GO/NO-GO 10 soru, düşünce zinciri, kırmızı takım testi, önyargı kontrolü).
 > - yeni giriş → K-01 (makro veri), K-02 (kriz rallisi), K-03 (VIX + small cap), K-13 v4.1 (sektör bazlı VIX), K-17/K-18 (insider check)
 > - çıkış → K-06 (stop override), K-07 (trailing stop), K-08 (momentum yoksa çık), K-09 (stop yakın erken çık)
 > - swing → K-14 (ardışık 3+ zarar → dur), K-19 (XLP hariç), K-20 (RS dead cat bounce)
@@ -465,6 +466,8 @@ her swing pozisyonu için:
 ```
 
 ## 3c. portföyler arası korelasyon kontrolü
+
+> **SEKTÖR EXPOSURE TABLOSU**: docs/DECISION_FRAMEWORK.md bölüm 5 formatında hesapla.
 
 yeni pozisyon açmadan önce veya mevcut durumu değerlendirirken:
 
@@ -671,6 +674,7 @@ C) ORTAK KOŞULLAR (her giriş için):
 3. portföy `transactions[]` listesine SATIŞ kaydı ekle
 4. `data/transactions.csv` dosyasına satır ekle
 5. swing ise → `data/swing/closed.json`'a ekle (tüm zorunlu alanlar: cikis_tarihi, cikis_fiyati, kar_zarar_yuzde, cikis_nedeni, sonuc, ders)
+     → docs/POST_TRADE_REVIEW.md uygula: process_score, root_cause, corrective_action, bias_detected alanlarını doldur
 6. `data/summary.json` güncelle
 
 **her alış için**:
@@ -939,7 +943,9 @@ detaylı kurallar: `docs/SELF_VALIDATION.md`
 ✓ "AL" diyorsan → RSI/SMA/momentum destekliyor mu?
 ✓ portföy kurallarıyla uyumlu mu?
 ✓ nakit yeterli mi?
-✓ karşıt argüman düşündün mü? (teyit yanılgısı)
+✓ GO/NO-GO 10 soru geçti mi? (docs/DECISION_FRAMEWORK.md bölüm 1)
+✓ düşünce zinciri yazıldı mı? (docs/DECISION_FRAMEWORK.md bölüm 2)
+✓ bilişsel önyargı kontrolü yapıldı mı? (docs/DECISION_FRAMEWORK.md bölüm 4)
 ✓ dünkü hareket yüzünden aşırı tepki mi veriyorsun? (yakınlık yanılgısı)
 ✓ "herkes alıyor" mantığıyla mı öneriyorsun? (FOMO)
 ```

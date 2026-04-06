@@ -282,6 +282,7 @@ bugün kapanış sonrası (veya gün içi) açıklayan şirketlerin analizi.
 ### BÖLÜM 5: GÜNÜN DEĞERLENDİRMESİ
 
 sabah raporundaki plan tuttu mu, dersler.
+**kapanan trade varsa**: docs/POST_TRADE_REVIEW.md uygula (process score, root cause, corrective action).
 
 ```markdown
 ## 5. günün değerlendirmesi
