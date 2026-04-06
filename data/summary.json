@@ -1,7 +1,54 @@
 {
-  "toplam_deger": 614993.06,
-  "baslangic_sermaye": 600000,
-  "toplam_kar_zarar": 14993.06,
-  "toplam_getiri_yuzde": 2.5,
-  "son_guncelleme": "2026-04-06T19:56:51.271724"
+  "son_guncelleme": "2026-04-06",
+  "toplam_sermaye": 600000,
+  "toplam_deger": 615062.41,
+  "toplam_kar_zarar": 15062.41,
+  "toplam_kar_zarar_yuzde": 2.51,
+  "portfolyolar": {
+    "dengeli": {
+      "isim": "Dengeli Portföy",
+      "deger": 112424.38,
+      "maliyet": 100000,
+      "kar_zarar": 12424.380000000005,
+      "kar_zarar_yuzde": 12.42,
+      "pozisyon_sayisi": 2,
+      "nakit": {
+        "miktar": 82612.95,
+        "para_birimi": "USD",
+        "agirlik_yuzde": 73.55
+      }
+    },
+    "agresif": {
+      "isim": "Agresif Büyüme Portföyü",
+      "deger": 357823.16,
+      "maliyet": 400000,
+      "kar_zarar": -42176.840000000026,
+      "kar_zarar_yuzde": -10.54,
+      "pozisyon_sayisi": 0,
+      "nakit": {
+        "miktar": 357823.16,
+        "para_birimi": "USD",
+        "agirlik_yuzde": 100.0
+      }
+    },
+    "temettü": {
+      "isim": "Değer + Temettü Portföyü",
+      "deger": 144814.87,
+      "maliyet": 100000,
+      "kar_zarar": 44814.869999999995,
+      "kar_zarar_yuzde": 44.81,
+      "pozisyon_sayisi": 4,
+      "nakit": {
+        "miktar": 88387.32,
+        "para_birimi": "USD",
+        "agirlik_yuzde": 61.17
+      }
+    },
+    "swing_trade": {
+      "isim": "Swing Trade (Simülasyon)",
+      "pozisyon_sayisi": 0,
+      "bos_slot": 10,
+      "durum": "0/10 pozisyon aktif"
+    }
+  }
 }
