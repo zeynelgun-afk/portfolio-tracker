@@ -1,4 +1,4 @@
-# GÜNLÜK RAPOR PART 2 — KAPANIŞ RAPORU v1.0
+# GÜNLÜK RAPOR PART 2 — KAPANIŞ RAPORU v1.3
 
 > ⛔ **KRİTİK: ADIM ATLAMA YASAĞI**
 >
@@ -21,7 +21,7 @@
 >
 > **geçmiş hatalar**: bölüm 4 (kazanç açıklamaları) atlandı → Oracle bilançosu ($17.2B gelir, bulut +%84, AH +%6.3) rapordan tamamen eksik kaldı. bölüm 5 ve 6 da eksik yazıldı. bu tür atlamalar portföy kararlarını olumsuz etkiler. her bölümü tamamla.
 
-> **versiyon**: 1.2 | **son güncelleme**: 25 mart 2026
+> **versiyon**: 1.3 | **son güncelleme**: 6 nisan 2026
 > **çıktı dosyası**: `reports/daily/DAILY_REPORT_YYYY-MM-DD.md`
 > **çalışma zamanı**: TR ~09:00 (NYSE dün gece 23:00'da kapandı, bugün 16:30 açılacak — yaz saati)
 > **ön koşul**: part 1 (sabah raporu) aynı gün veya bir önceki gün çalıştırılmış olmalı
@@ -53,11 +53,12 @@ ADIM 1 — GIT PULL + HAZIRLIK
   → dünkü raporu oku (varsa), bölüm 5 aksiyon planını not al
 
 ADIM 2 — FMP VERİ TOPLAMA
-  → batch-quote: tüm benzersiz semboller + SPY/QQQ/DIA/IWM
+  → batch-quote: tüm benzersiz semboller + SPY/QQQ/DIA/IWM/VIXY
   → teknik göstergeler (portföy hisseleri): her sembol için RSI(14), SMA(50), SMA(200)
   → agresif portföy stopları: 2x ATR(14) trailing (FMP historical-price ile ATR hesapla)
   → swing pozisyonları için RSI/SMA çekilmez — ichimoku scripti (adım 3) bunu kapsar
-  → emtia/döviz: GCUSD, CLUSD, EURUSD
+  → emtia/döviz: GCUSD, USO (petrol proxy), EURUSD
+    ⚠️ CLUSD/WTIUSD güvenilmez → USO kullan. doğrudan ^VIX güvenilmez → VIXY kullan
   → treasury-rates
 
 ADIM 3 — JSON GÜNCELLEME
@@ -348,6 +349,7 @@ bu prompt'ta JSON'lar güncellenir. kurallar:
 **pozisyon güncelleme** (her pozisyon için):
 - `guncel_fiyat` = FMP quote price
 - `gunluk_degisim_yuzde` = FMP changesPercentage
+    ⚠️ changesPercentage seans dışında 0 dönebilir → manuel hesapla: ((price - previousClose) / previousClose) × 100
 - `guncel_deger` = adet × guncel_fiyat
 - `kar_zarar` = guncel_deger - yatirim
 - `kar_zarar_yuzde` = (kar_zarar / yatirim) × 100
