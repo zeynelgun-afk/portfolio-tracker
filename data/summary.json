@@ -1,21 +1,21 @@
 {
-  "toplam_deger": 614629.17,
+  "toplam_deger": 614800.96,
   "baslangic_sermaye": 600000,
-  "toplam_kar_zarar": 14629.17,
-  "toplam_getiri_yuzde": 2.44,
+  "toplam_kar_zarar": 14800.96,
+  "toplam_getiri_yuzde": 2.47,
   "portfoyler": {
     "dengeli": {
-      "deger": 112279.28,
-      "getiri": 12.28
+      "deger": 112315.65,
+      "getiri": 12.32
     },
     "agresif": {
       "deger": 357823.16,
       "getiri": -10.54
     },
     "temettü": {
-      "deger": 144526.73,
-      "getiri": 44.53
+      "deger": 144662.15,
+      "getiri": 44.66
     }
   },
-  "son_guncelleme": "2026-04-06T17:57:32.154830"
+  "son_guncelleme": "2026-04-06T18:59:21.259879"
 }
