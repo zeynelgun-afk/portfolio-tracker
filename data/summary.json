@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-04-06",
+  "son_guncelleme": "2026-04-06T23:00:00",
   "toplam_sermaye": 600000,
   "toplam_deger": 615080.79,
   "toplam_kar_zarar": 15080.79,
@@ -49,6 +49,30 @@
       "pozisyon_sayisi": 0,
       "bos_slot": 10,
       "durum": "0/10 pozisyon aktif"
+    }
+  },
+  "toplam_baslangic": 600000,
+  "toplam_getiri_yuzde": 2.51,
+  "nakit_oran_yuzde": 85.98,
+  "aktif_pozisyon": 6,
+  "portfoyler": {
+    "dengeli": {
+      "deger": 112430.3,
+      "getiri_yuzde": 12.43,
+      "nakit": 82612.95,
+      "pozisyon": 2
+    },
+    "agresif": {
+      "deger": 357823.16,
+      "getiri_yuzde": -10.54,
+      "nakit": 357823.16,
+      "pozisyon": 0
+    },
+    "temettu": {
+      "deger": 144827.33,
+      "getiri_yuzde": 44.83,
+      "nakit": 88387.32,
+      "pozisyon": 4
     }
   }
 }
