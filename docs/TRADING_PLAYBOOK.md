@@ -150,17 +150,47 @@ LİTERATÜR: Charles Le Beau chandelier exit standardı (22 periyot, 3×ATR vars
 - akademik destek sınırlı: time stop ana çıkış değil, hibrit yedek olarak işe yarar (QuantifiedStrategies ocak 2026)
 - fırsat maliyeti kaygısı haklıydı (DUK 28g +%1.52 = günde %0.054) ama bunun için ayrı kural gerekmez, manuel gözden geçirme yeterli
 
-**K-09: stop yakınlığı erken çıkış protokolü**
-- fiyat stop'a %2 mesafede ise 4 kontrol:
-  1) RSI yönü: düşüyor + 40 altı → erken çık
-  2) hacim: satış > alış → erken çık
-  3) piyasa: SPY negatif + VIX yükseliyor → erken çık
-  4) sektör: ETF düşüyor → erken çık
-- 4'ten 3+ negatif → stop beklemeden çık
-- 4'ten 2 negatif → stop'u bekle
-- toparlanma sinyali (hammer mum, hacim artışı) → stop'u tut
-- telegram alert: stop'a %2 kala otomatik (--type alert)
-- kanıt: AMKR, GE doğru çıkışlar
+**K-09: stop yakınlığı erken çıkış protokolü (güncellenmiş 7 nisan 2026)**
+
+TETİK: fiyat stop'a ≤%2 mesafede ise 4 kontrol değerlendirilir
+
+4 KONTROL (her biri "negatif" veya "nötr" işaretlenir):
+1) RSI yönü: düşüyor + 40 altı → negatif
+2) Hacim profili: satış baskısı > alış baskısı → negatif
+3) Piyasa: SPY günlük negatif + VIX yükseliyor → negatif
+4) Sektör: ilgili ETF günlük negatif → negatif
+
+KARAR EŞİKLERİ:
+- 3+ negatif → stop beklemeden ÇIKIŞ
+- 2 negatif → stop'u bekle (otomatik çıkış yok)
+- 0-1 negatif + toparlanma sinyali (hammer mum, hacim sıçraması) → tut
+
+ESNEKLİK NOTU: %2 mesafe katı bir eşik değil, "stop bölgesi" yaklaşımı. Pratik uygulamada %0.06 (AROC) ile %1.7 (AMT) arası tetikleme yapılmış. Kural: ne kadar yakınsa karar o kadar acil.
+
+OTOMASYON:
+- Telegram alert: stop'a ≤%2 kala otomatik (--type alert)
+- Manuel karar gerekli, alert otomatik çıkış değildir
+
+K-06 İLE İLİŞKİ: K-09 tetik öncesi, K-06 tetik anında. çakışma yok, sıralı tamamlayıcı.
+K-07 İLE İLİŞKİ: K-07 trailing seviyesini matematiksel ayarlar, K-09 stop yaklaştığında durum değerlendirir.
+
+REPO KANITI (n=6 K-09 uygulaması, closed.json swing testi 7 nisan 2026):
+
+KÂR KORUMA (en önemli katma değer):
+- GE +%1.68 (13g sonra -%3 günlük düşüş, kâr korunarak çıkış)
+- CTSH +%1.45 (RSI 33, momentum hiç gelmedi, stop beklemeden çıkış)
+
+ZARAR KÜÇÜLTME:
+- AMT -%3.35 (%1.7 mesafe, zarar limiti)
+- SOFI -%3.62 (%1.3 mesafe, RSI 34.2, downtrend devam)
+- AROC -%4.95 (%0.06 mesafe, gün içi ihlal)
+- ALMU -%6.11 (sert düşüş, hard stop beklemeden)
+
+KARŞILAŞTIRMA (K-09 vs normal stop tetik):
+- K-09 erken çıkış (n=6): 2 kâr koruma + 4 zarar küçültme, ort -%2.48
+- Normal stop tetik (n=3): CEG -%5.05, T -%5.54, RTX -%5.16, ort -%5.25
+- K-09'un ASIL katma değeri: kazanan trade'leri (GE, CTSH) zarara dönmeden korumak
+- İkincil katma değer: zarar büyüklüğünü ortalama %0.74 azaltmak
 
 ### portföy yönetimi kuralları
 
