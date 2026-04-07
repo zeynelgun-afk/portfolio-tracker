@@ -110,14 +110,37 @@ LİTERATÜR DESTEĞİ:
 - TradingMetrics: "stop'u taşımak risk yönetimi değil, risk kaçınmasıdır; risk kaçınması her zaman daha büyük kayıplara yol açar"
 - mental stop yerine her zaman gerçek stop emri kullan (override fırsatını ortadan kaldır)
 
-**K-07: izleyen zarar kes (trailing stop) disiplini**
-- swing trade: chandelier exit — highest_high − 3×ATR(14)
-- pozisyon trade: 20SMA günlük kapanış altı VEYA 50SMA haftalık altı
-- momentum trade: 10EMA altı kapanış (daha sıkı)
-- trailing tetiklendiğinde sorgulama yok, çık. ASLA bozulmaz
-- çıkış sonrası yeni sinyal verirse tekrar girilebilir (yeni trade olarak)
-- sıkılaştırma zamanı: VIX yükselirken, kazanç yaklaşırken, sektör zayıflarken
-- kazanç: SHOP +%8, BKSY +%18.5, NEM +%2.1, TYL +%11.2 (4/4)
+**K-07: trailing stop disiplini (sadeleştirilmiş 7 nisan 2026)**
+
+ANA KURAL: trailing stop tetiklendiğinde ÇIKIŞ. sorgulama yok, ASLA bozulmaz. K-06 ile aynı disiplin felsefesi.
+
+SWING TRADE: chandelier exit + kâr kilidi sistemi (matematiksel sıkılaştırma)
+- kâr <%7: chandelier 3×ATR(14)
+- kâr %7-15: chandelier 2×ATR (kâr kilidi devreye girer)
+- kâr %15+: chandelier 1.5×ATR (agresif kilit)
+- detaylar: docs/SWING_SYSTEM_V2.md
+
+POZİSYON TRADE (uzun vadeli portföy): 50SMA günlük kapanış altı VEYA ichimoku kumo altı kapanış
+
+YENİ GİRİŞ: trailing tetiklenen pozisyon yeni bir sinyal verirse tekrar girilebilir. "intikam trade'i" değil, yeni trade olarak değerlendirilir ve kendi K-04/K-13/K-17/K-18 kontrollerinden geçer.
+
+ÇAKIŞMA AÇIKLAMASI:
+- "VIX yükselince sıkılaştır" → K-13 v4.1 yönetir (sektör bazlı VIX)
+- "Earnings yaklaşınca sıkılaştır" → K-05 yönetir (2+ gün önce çık)
+- "Sektör zayıflayınca sıkılaştır" → K-08 ve K-20 yönetir
+- K-07 ek manuel sıkılaştırma kuralı içermez. kâr kilidi zaten matematiksel sıkılaştırma yapıyor
+
+REPO KANITI (n=10 trailing exit, 8 bilinen sonuç, 7 nisan 2026):
+- Kazanç (5): TYL +%11.19, COHR +%4.93, KOS +%39 kısmi, NEM +%2.13, ZS +%2.55
+- Zarar (3): RKLB -%11.59, VRT -%9.7, POWL -%10.63
+- Win rate %62 (5/8)
+- ÖNEMLİ NÜANS: 3 zararın hepsi K-07 başarısızlığı değil, giriş zamanlama ihlali sonucu:
+  • RKLB → K-15b (momentum hisselerinde arz/dilüsyon riski)
+  • VRT  → K-13b ihlali (VIX 29+ ortamında AI tema tam pozisyon)
+  • POWL → K-13b + K-18 ihlali (insider $25M satış kontrol edilmedi)
+- Bu trade'lerde trailing stop "kâr kilidi" değil "kayıp limiti" görevi yaptı, beklendiği gibi çalıştı
+
+LİTERATÜR: Charles Le Beau chandelier exit standardı (22 periyot, 3×ATR varsayılan). choppy/range piyasada whipsaw riski var, kâr kilidi sistemi bu durumda devreye girer. tech-ağırlıklı portföylerde 3×ATR yeterince esnek (StockCharts: tech için 3-5x aralığı önerilir)
 
 **K-08: zaman bazlı çıkış + sektör ayrışma filtresi**
 - kapsam:
