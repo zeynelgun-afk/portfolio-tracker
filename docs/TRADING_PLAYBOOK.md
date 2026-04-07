@@ -409,7 +409,9 @@ LİTERATÜR KALIBRASYONu:
 
 - **K-13b: ichimoku 4/4 istisnası (sadece duyarlı sektörler için)**
   - amaç: K-13 duyarlı sektörlere VIX 28+ giriş yasaklıyor. K-13b sistematik 4/4 sinyalle çeyrek pozisyon istisnası
-  - backtest: 51 dönem kriz modunda 11 kâr / 2 zarar = %85 başarı
+  - backtest: 51-61 dönem (2021-2026), kriz modunda 11 kâr / 2 zarar = %85 başarı
+  - YIL BAZLI DAĞILIM: 2024 %100, 2026 %85, 2025 %74, 2021 %50, 2022 %40, 2023 %30
+  - NOT: %85 rakamı 2026 ve genel kriz modu içindir, K-13b piyasa rejimine duyarlı (sakin yıllarda daha az kullanılır, kriz modu en güvenilir)
   - kapsam: SADECE duyarlı sektörler (faydalanıcılar K-13 ile zaten izinli)
   - boyut: VIX 28-35 → çeyrek pozisyon ($2.5K). VIX 35+ → giriş yok
   - 6 koşul TÜMÜ:
@@ -426,7 +428,26 @@ LİTERATÜR KALIBRASYONu:
     d) o gün >%3 yükselmişse girme (kovalama yasağı)
   - iptal: VIX 1 günde >%15 yükselirse istisna pozisyonları yarıya
   - izleme: trade log'da "K-13b istisnası" etiketi. 10 trade sonra <%60 ise istisna kaldırılır
-- mevcut durum: VIX 24.83, "dikkatli" rejim. faydalanıcılarda tam, duyarlılarda yarım pozisyon
+- mevcut durum (7 nisan 2026): VIX 24.83, "dikkatli" rejim. faydalanıcılarda tam, duyarlılarda yarım pozisyon. K-13b inaktif (VIX <28).
+- NİSAN 2026 ATEŞKES GEÇİŞİ: 6 nisan ateşkes haberleri, savunma sektörü "sell on the news" düzeltmesi başladı (LMT, NOC, RTX). K-13'ün "VIX zirvesinden %20 düştü → duyarlı sektörlere kademeli geri dönüş" kuralı aktivasyon eşiğine yaklaşıyor. İran krizi tezi zayıflıyor, jeopolitik kriz tablosu güncellemesi yakında gerekebilir.
+
+K-12 İLE BOYUT ÇAKIŞMASI ÇÖZÜMÜ:
+- "Tam pozisyon" = K-12 portföy bazlı limit (Dengeli %25, Agresif %20, Temettü %15)
+- "Yarım pozisyon" = K-12 limitin yarısı (Dengeli %12.5, Agresif %10, Temettü %7.5)
+- "Çeyrek pozisyon" = K-12 limitin çeyreği (Dengeli %6.25, Agresif %5, Temettü %3.75)
+- K-13b istisna pozisyonu boyut: VIX 28-35'te çeyrek (yukarıdaki çeyrek seviyelerinde)
+
+K-10 İLE İLİŞKİ (çift yönlü):
+- K-10 PORTFÖY SEVİYESİ savunmacı/nakit alt sınır koyar (statik, VIX bandlı)
+- K-13 SEKTÖR SEVİYESİ giriş/boyut yönetir (dinamik, kriz tipine bağlı)
+- İki kural çakışmaz, paraleldir: K-10 alt sınır + K-13 sektör seçimi
+
+LİTERATÜR DESTEĞİ (7 nisan 2026 araştırması):
+- MSCI Multi-Asset Playbook (mart 2026): jeopolitik krizde defansif sektörler (enerji, staples, sağlık, utilities) outperformance, enerji en yüksek aktif getiri → K-13 jeopolitik tablosu doğrulandı
+- PMC Geopolitical risk contagion (2025): savunma + siber defansif varlık, enerji + raw materials sensitive → K-13 sektör listesi doğrulandı
+- FinancialContent (6 nisan 2026, 1 gün önce): savunma "sell on the news" düzeltmesi → K-13b geri dönüş kuralı şu an aktif olabilir
+- Ecconomi (mart 2026): retail en büyük hata "şok aşamasında savunma/enerji kovalamak" → K-13b "o gün >%3 yükseldi → girme" kuralı bunu yansıtıyor
+- JP Morgan / BlackRock Geopolitical Risk Dashboard: VIX-Geopolitical Risk Index zayıf korelasyon, sektör bazlı yönetim gerekli → K-13 "blanket VIX engeli yanlış" mantığı doğrulandı
 
 **K-14: kayıp serisi yönetimi (drawdown fren)**
 - kademeli fren:
