@@ -658,20 +658,84 @@ LİTERATÜR DESTEĞİ:
 - US News Money: guidance ile eşleşen earnings = priced in = sell on news
 - UCLA Anderson akademik: SUE + EAR earnings reaction patterns gerçek fenomen, abnormal returns sürekli görülüyor
 
-**K-17: korelasyon ve yoğunlaşma yönetimi**
-- aynı gün giriş limitleri:
-  • max 2 yeni pozisyon/gün (farklı sektör olsa bile)
-  • aynı tema/sektörden max 1
-  • VIX 22-28 ("dikkatli"): max 1 duyarlı sektör girişi (faydalanıcılarda 2'ye izin)
-  • VIX 28+: max 1 yeni giriş toplam (K-13 duyarlıları zaten yasaklıyor)
-- tema yoğunluk (K-12 ile entegre): tek tema max %40
-  • aşılırsa en zayıfı küçült, yeni giriş yok
-  • IBKR notu: AI/yarıiletken %63 → sınır aşıldı, yeni AI öncesi azaltma şart
-- korelasyon checklist (giriş öncesi):
-  • yeni hisse mevcut portföyle aynı sektör ETF'inde mi?
-  • aynı makro faktör (faiz, petrol, dolar, çip talebi)?
-  • aynı katalizöre mi tepki veriyor (earnings, FOMC, sektör haberi)?
-- kanıt: POWL+CAMT+VRT toplam -%28
+**K-17: korelasyon ve yoğunlaşma yönetimi — netleştirilmiş 7 nisan 2026**
+
+KAPSAM: tüm portföyler (Dengeli, Agresif, Temettü, Swing). hem bireysel pozisyon hem küme seviyesi risk yönetimi.
+
+AYNI GÜN GİRİŞ LİMİTLERİ:
+- Max 2 yeni pozisyon/gün (farklı sektör olsa bile)
+- Aynı tema/sektör/anlatıdan max 1
+- VIX 22-28 ("dikkatli"): max 1 duyarlı sektör girişi (faydalanıcılarda 2'ye izin)
+- VIX 28+: max 1 yeni giriş toplam (K-13 duyarlıları zaten yasaklıyor)
+
+TEMA TANIMI (yeni eklendi - kritik):
+GICS sektör değil, ANLATI bazlı tema. Üç soru testi:
+1) Aynı makro hikayeye mi bağlı? (örn: AI sermaye harcaması, petrol arzı, faiz)
+2) Aynı katalize mi tepki veriyor? (örn: NVDA earnings, OPEC kararı, FOMC)
+3) Aynı senaryo bozulursa hepsi düşer mi?
+ÜÇ SORUDAN BİR EVET → AYNI TEMA
+
+ÖRNEK TEMALAR:
+- AI tedarik zinciri TEMASI: NVDA, MRVL, COHR, POWL, CAMT, VRT, ANET, CRDO (farklı GICS sektörler ama AYNI ANLATI)
+- Enerji petrol TEMASI: XOM, CVX, COP, EOG, SLB, HAL, FANG
+- Savunma jeopolitik TEMASI: LMT, NOC, RTX, GD, HII
+
+TEMA YOĞUNLUK (K-12 ile entegre):
+- Tek tema max %40 toplam $600K bazlı (K-12 sektör limiti ile aynı)
+- Aşılırsa en zayıfı küçült, yeni tema girişi yok
+- HAFTALIK kontrol pazar günleri zorunlu
+
+KORELASYON CHECKLIST (giriş öncesi zorunlu):
+1) Yeni hisse mevcut portföyle aynı sektör ETF'inde mi? (XLK, XLE, XLF...)
+2) Aynı makro faktör? (faiz, petrol, dolar, çip talebi, AI capex)
+3) Aynı katalizöre mi tepki veriyor? (earnings, FOMC, sektör haberi)
+4) Aynı küme/anlatıya mı bağlı? (yukarıdaki tema testi)
+- 2+ EVET → korelasyon riski yüksek, küçült veya skip
+
+OTOMATİK KONTROL (yeni eklendi):
+- Her giriş öncesi script çalışır: scripts/k17_correlation_check.py NEW_SYMBOL
+- Mevcut portföy ile sektör/tema/makro çakışması raporlanır
+- Telegram alert ("K-17 RISK: NEW_SYMBOL same theme as POWL/CAMT")
+
+REPO KANITI - belgelendi 7 nisan 2026:
+
+OLAY 1 - POWL+CAMT+VRT (en pahalı K-17 ihlali):
+- 25 mart 2026, Aggressive portföy
+- POWL $19,894 (AI veri merkezi güç altyapısı)
+- CAMT $19,876 (HBM yarıiletken denetimi)
+- VRT $19,775 (AI sıvı soğutma)
+- Toplam yatırım: $59,544
+- Tema: HEPSİ AI TEDARİK ZİNCİRİ (farklı GICS sektör ama aynı anlatı)
+- K-17 ihlali: "aynı tema max 1" kuralının açık ihlali (3 hisse aynı gün)
+- Sonuç (27-30 mart, 5 gün içinde hepsi stop):
+  • CAMT 27 mart -%9.5 (~-$1,892)
+  • VRT 27 mart -%9.7 (~-$1,925)
+  • POWL 30 mart -%10.63 (~-$2,115) [+ K-18 ihlali insider satış]
+- TOPLAM ZARAR: ~$5,932 (-%9.98 yatırım üzerinden)
+- Memory iddiası "-%28": yüzdelerin matematik toplamı (-10.63 -9.5 -9.7 = -%29.83), YANILTICI metrik. Gerçek portföy etkisi -%9.98
+- BONUS ZARAR: MRVL aynı tema/pencere -%3.80 (~-$1,354)
+- TOPLAM AI TEDARİK ZİNCİRİ KAYBI: ~$7,286
+- KRİTİK DERS: 5 gün içinde küme seviyesi başarısızlık. K-17 doğru uygulansaydı 3 hisse yerine 1 hisse açılırdı, kayıp 1/3'e inerdi
+
+OLAY 2 - 24 şubat 3 swing pozisyon (nicel ihlal):
+- ZS (cybersec) +%2.55 ✓
+- HAL (oil services) -%5.10 ✗
+- SOFI (fintech) -%3.62 ✗
+- Sektörler farklı (tema ihlali yok)
+- AMA max 2/gün limiti açık ihlal (3 pozisyon)
+- Sonuç: 1 kazanç + 2 zarar = mixed
+- DERS: nicel kontrolün önemi, otomasyon olmadan unutulur
+
+LİTERATÜR DESTEĞİ:
+- Black Swan Lab (3 hafta önce): konsantrasyon riski "çoklu pozisyonlar aynı altta yatan sürücü", 3 tech hisse + tech ETF + growth fund "diversified hissedilebilir, tech selloff'ta değil"
+- Hereward Vaudry / Medium (ocak 2026): pozisyon listesi enstrüman listesi, risk listesi değil; küme seviyesi düşünme şart, "her pozisyon tek başına zararsız görünür, gerçek risk toplamdadır"
+- Guardfolio (aralık 2025): 50 holding 5 gibi işleyebilir korelasyon yüksekse
+- HeyGotrade (ocak 2026): konsantrasyon farkında olmadan birikir, sayı değil korelasyon önemli
+- BIS akademik: sektör konsantrasyonu ekonomik sermayeyi %20-40 artırır
+- Predictive Investor: korelasyon 0.80+ "diversified portföyü konsantre kumar haline getirir"
+- K-17 mantığı endüstri standardı
+
+ESKİ "IBKR notu" KALDIRILDI: "AI/yarıiletken %63 → sınır aşıldı, yeni AI öncesi azaltma şart" notu eski bir durumla ilgiliydi. Mevcut portföy %86 nakit, AI exposure ~%0. Mevcut durum kontrolü için günlük summary.json kullanılır.
 
 **K-18: giriş öncesi insider kontrolü**
 - 1) insider (FMP insider-trading endpoint):
