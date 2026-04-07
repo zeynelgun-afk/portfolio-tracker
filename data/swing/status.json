@@ -1,0 +1,52 @@
+{
+  "aktif_durum": "K14_DRAWDOWN_FREN",
+  "tetiklenme_tarihi": "2026-04-07",
+  "tetik_sebebi": "Peak-to-trough drawdown %16.42 (esik %15)",
+  "detaylar": {
+    "peak_equity": 12480,
+    "peak_tarihi": "2026-03-03",
+    "trough_equity": 10430,
+    "trough_tarihi": "2026-03-26",
+    "drawdown_yuzde": 16.42,
+    "son_ardisik_zarar": 1,
+    "kayip_serisi_mart": [
+      {"tarih": "2026-03-09", "sembol": "HAL", "pnl_pct": -5.10},
+      {"tarih": "2026-03-09", "sembol": "CEG", "pnl_pct": -5.05},
+      {"tarih": "2026-03-11", "sembol": "T",   "pnl_pct": -5.54},
+      {"tarih": "2026-03-12", "sembol": "ALMU", "pnl_pct": -6.11},
+      {"tarih": "2026-03-12", "sembol": "SOFI", "pnl_pct": -3.62},
+      {"tarih": "2026-03-24", "sembol": "RTX", "pnl_pct": -5.16},
+      {"tarih": "2026-03-26", "sembol": "AROC", "pnl_pct": -4.95}
+    ],
+    "kayip_yogunlugu": "9-12 mart: 5 zarar / 4 gun | 24-26 mart: 2 zarar / 3 gun"
+  },
+  "ortam_testi_7_nisan_2026": {
+    "vix_yaklasik": 25,
+    "vix_bandi": "dikkatli (22-28)",
+    "spy_fiyat": 655.73,
+    "spy_sma50": 675.19,
+    "spy_vs_sma50_pct": -2.88,
+    "spy_trendi": "SMA50 ALTI (tehdit)",
+    "kriter_ozeti": "VIX dikkatli + SPY SMA50 alti = K-14 ortam testi SAGLANMIYOR"
+  },
+  "yeni_giris_kurallari": {
+    "genel": "YENI SWING GIRISI YOK, ortam duzelene kadar",
+    "istisna": "SADECE A-kalite ichimoku 4/4 + K-13 faydalanici sektor + K-17/K-18 temiz",
+    "pozisyon_boyutu": "Normal $10K -> $5K (K-14 katman 2 matematigi)",
+    "ortam_testi_yeniden": "VIX<22 VE SPY>SMA50 VE sektor rotasyonu pozitif"
+  },
+  "yeniden_baslama_protokolu": [
+    "1. Min 5 is gunu soguma",
+    "2. Neden analizi: ortam (VIX/SPY), sistem (4/4 sinyal kalitesi), psikoloji (revenge/kovalama)",
+    "3. Ilk 3 trade yarim pozisyon",
+    "4. 2/3 kazanirsa normal boyuta don"
+  ],
+  "dersler": [
+    "9-12 mart 5 zarar penceresi: K-14 zamaninda uygulanmadi, boyut kucultulmedi",
+    "K-14 manuel izleme basarisiz, otomatik script sarti (7 nisan 2026'da eklendi)",
+    "POWL+CAMT+VRT 25 mart: K-17 ihlali ayni temada ucluk, K-14 drawdown'un buyuk parcasi",
+    "Mart 2026 genel ders: VIX dikkatli + sektor rotasyonu yavas = swing ortami zayif"
+  ],
+  "guncelleyen": "k14_drawdown_track.py + manuel analiz",
+  "son_guncelleme": "2026-04-07"
+}
