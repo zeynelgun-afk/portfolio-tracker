@@ -21,7 +21,7 @@ Kullanım:
 
 import sys
 import argparse
-from k_rules_common import fmp_get, send_k_alert
+from k_rules_common import fmp_get, send_k_alert, set_quiet_mode
 
 
 def is_momentum_stock(symbol):
@@ -116,9 +116,11 @@ def calc_dilution_score(symbol):
 
 def main():
     parser = argparse.ArgumentParser()
+    parser.add_argument("--quiet", action="store_true", help="Sadece warning/critical alerts telegrama gider")
     parser.add_argument("symbol", help="Hisse sembolü (örn: RKLB)")
     parser.add_argument("--force", action="store_true", help="Momentum check'i atla")
     args = parser.parse_args()
+    set_quiet_mode(getattr(args, "quiet", False))
 
     symbol = args.symbol.upper()
     print(f"[K-15b] {symbol} dilüsyon kontrolü...")

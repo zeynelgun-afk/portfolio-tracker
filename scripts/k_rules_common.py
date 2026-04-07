@@ -76,10 +76,26 @@ def get_swing_active():
     return data.get("aktif_pozisyonlar", [])
 
 
+# Global quiet mode flag (script'ten set edilir)
+_QUIET_MODE = False
+
+def set_quiet_mode(enabled: bool):
+    """Quiet mode'u etkinleştir/kapat. True ise sadece critical/warning alert'ler telegram'a gider."""
+    global _QUIET_MODE
+    _QUIET_MODE = enabled
+
+
 def send_k_alert(rule, symbol, message, severity="info"):
-    """Telegram alert gönder. severity: info, warning, critical."""
+    """Telegram alert gönder. severity: info, warning, critical.
+    Quiet mode aktifse info severity alert'leri skiplenır (spam azaltma)."""
     icons = {"info": "ℹ️", "warning": "⚠️", "critical": "🚨"}
     icon = icons.get(severity, "ℹ️")
+
+    # Quiet mode: sadece warning ve critical telegram'a gider
+    if _QUIET_MODE and severity == "info":
+        print(f"[{rule} {symbol}] info (quiet mode, telegram skip)")
+        return True
+
     text = f"{icon} <b>{rule}</b> | {symbol}\n\n{message}"
     try:
         from telegram_notify import send_message
@@ -88,7 +104,6 @@ def send_k_alert(rule, symbol, message, severity="info"):
         return True
     except Exception as e:
         print(f"[TELEGRAM HATA] {rule} {symbol} → {e}", file=sys.stderr)
-        # Telegram hatasi script'i durdurmaz, sadece konsola yazdir
         print(f"\n--- ALERT (telegram failed) ---\n{text}\n--- END ---")
         return False
 

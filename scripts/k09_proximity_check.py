@@ -23,7 +23,7 @@ Kullanım:
 import sys
 import argparse
 from k_rules_common import (
-    fmp_get, get_all_positions, get_swing_active, send_k_alert, get_sector
+    fmp_get, get_all_positions, get_swing_active, send_k_alert, get_sector, set_quiet_mode
 )
 
 
@@ -118,6 +118,7 @@ def main():
     parser.add_argument("--symbol", help="Tek hisse kontrolü")
     parser.add_argument("--quiet", action="store_true", help="Sadece uyarı verirse yazdır")
     args = parser.parse_args()
+    set_quiet_mode(getattr(args, "quiet", False))
 
     positions = []
     if args.symbol:

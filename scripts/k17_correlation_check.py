@@ -16,7 +16,7 @@ Kullanım:
 import sys
 import argparse
 from k_rules_common import (
-    get_all_positions, send_k_alert, get_sector, get_themes, fmp_get
+    get_all_positions, send_k_alert, get_sector, get_themes, fmp_get, set_quiet_mode
 )
 
 
@@ -75,8 +75,10 @@ def check_correlation(new_symbol):
 
 def main():
     parser = argparse.ArgumentParser()
+    parser.add_argument("--quiet", action="store_true", help="Sadece warning/critical alerts telegrama gider")
     parser.add_argument("symbol", help="Yeni eklenecek hisse")
     args = parser.parse_args()
+    set_quiet_mode(getattr(args, "quiet", False))
 
     result = check_correlation(args.symbol)
 

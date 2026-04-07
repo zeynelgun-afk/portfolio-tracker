@@ -21,7 +21,7 @@ Kullanım:
 import sys
 import argparse
 from datetime import datetime, timedelta
-from k_rules_common import fmp_get, send_k_alert
+from k_rules_common import fmp_get, send_k_alert, set_quiet_mode
 
 
 def check_insider_layer1(symbol):
@@ -147,8 +147,10 @@ def check_insider_layer2(symbol):
 
 def main():
     parser = argparse.ArgumentParser()
+    parser.add_argument("--quiet", action="store_true", help="Sadece warning/critical alerts telegrama gider")
     parser.add_argument("symbol")
     args = parser.parse_args()
+    set_quiet_mode(getattr(args, "quiet", False))
 
     symbol = args.symbol.upper()
     print(f"[K-18] {symbol} insider kontrolü başlıyor...")

@@ -20,7 +20,7 @@ Kullanım:
 import sys
 import json
 import argparse
-from k_rules_common import fmp_get, send_k_alert, get_sector
+from k_rules_common import fmp_get, send_k_alert, get_sector, set_quiet_mode
 
 
 SEKTOR_ETFS = ["XLK", "XLC", "XLE", "XLI", "XLV", "XLF", "XLY", "XLU", "XLB", "XLRE"]
@@ -91,11 +91,13 @@ def filter_scan(scan_data, rs_cache):
 
 def main():
     parser = argparse.ArgumentParser()
+    parser.add_argument("--quiet", action="store_true", help="Sadece warning/critical alerts telegrama gider")
     parser.add_argument("scan_file", nargs="?")
     parser.add_argument("--check", help="Tek sembol kontrol")
     parser.add_argument("--status", action="store_true", help="10 sektör RS durumu")
     parser.add_argument("--write", action="store_true")
     args = parser.parse_args()
+    set_quiet_mode(getattr(args, "quiet", False))
 
     if args.status:
         print("[K-20] 10 SEKTÖR RS DURUMU")

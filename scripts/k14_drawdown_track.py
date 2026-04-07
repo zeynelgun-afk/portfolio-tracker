@@ -18,7 +18,7 @@ import sys
 import json
 import argparse
 from pathlib import Path
-from k_rules_common import DATA_DIR, send_k_alert
+from k_rules_common import DATA_DIR, send_k_alert, set_quiet_mode
 
 
 def load_closed_swing():
@@ -79,6 +79,7 @@ def main():
     parser.add_argument("--quiet", action="store_true")
     parser.add_argument("--days", type=int, default=30, help="Son N gün")
     args = parser.parse_args()
+    set_quiet_mode(getattr(args, "quiet", False))
 
     trades = load_closed_swing()
     if not trades:
