@@ -127,7 +127,7 @@ YENİ GİRİŞ: trailing tetiklenen pozisyon yeni bir sinyal verirse tekrar giri
 ÇAKIŞMA AÇIKLAMASI:
 - "VIX yükselince sıkılaştır" → K-13 v4.1 yönetir (sektör bazlı VIX)
 - "Earnings yaklaşınca sıkılaştır" → K-05 yönetir (2+ gün önce çık)
-- "Sektör zayıflayınca sıkılaştır" → K-08 ve K-20 yönetir
+- "Sektör zayıflayınca sıkılaştır" → K-20 yönetir
 - K-07 ek manuel sıkılaştırma kuralı içermez. kâr kilidi zaten matematiksel sıkılaştırma yapıyor
 
 REPO KANITI (n=10 trailing exit, 8 bilinen sonuç, 7 nisan 2026):
@@ -142,21 +142,13 @@ REPO KANITI (n=10 trailing exit, 8 bilinen sonuç, 7 nisan 2026):
 
 LİTERATÜR: Charles Le Beau chandelier exit standardı (22 periyot, 3×ATR varsayılan). choppy/range piyasada whipsaw riski var, kâr kilidi sistemi bu durumda devreye girer. tech-ağırlıklı portföylerde 3×ATR yeterince esnek (StockCharts: tech için 3-5x aralığı önerilir)
 
-**K-08: zaman bazlı çıkış + sektör ayrışma filtresi**
-- kapsam:
-  • Swing v2.3 (aktif): sert 15g limit YOK, chandelier yönetir. sadece "momentum yok + ayrışma yok" durumunda manuel inceleme
-  • Swing v1 / sabit hedefli: 3 aşamalı zaman filtresi (aşağıda)
-  • Agresif portföy pozisyon trade'leri: zaman sınırı yok, tez bazlı
-- 3 aşamalı filtre (sadece v1 / sabit hedefli):
-  • gün 1-7: normal izleme
-  • gün 8-10: momentum kontrol — fiyat giriş +%3 ve hacim artıyor mu?
-    - evet → devam
-    - hayır + pozitif ayrışma + hacim → +5 gün tolerans
-    - hayır + pozitif ayrışma + düşük hacim → +3 gün, sonra çık
-    - hayır + ayrışma yok → derhal çık
-  • gün 15+: katalizör yoksa çık
-- ichimoku entegrasyonu: kijun düz + fiyat sıkışıyor → momentum yok. kumo daraldı → sabırlı ol. kumo geniş + trend belirsiz → çık
-- kanıt: T -%5.5, LMT zaman maliyeti
+**K-08: KALDIRILDI** — 7 nisan 2026 değerlendirmesinde geri çekildi. gerekçeler:
+- repo verisi tezi çürüttü: 15+ gün tutulan 8 trade win rate %75 / ort P/L +%1.51, 8-14 gün tutulan 7 trade win rate %57 / ort P/L -%0.80. "15g fazla" iddiası yanlıştı, kazananları uzun tutmak daha iyi sonuç veriyor
+- ölü kod: 3 aşamalı v1 filtresi "sadece v1 için" notuyla pratikte hiç çalışmıyordu, Swing v2.3'te chandelier zaten momentumu yönetiyor
+- K-07 ile çakışma: chandelier stop momentum kaybında zaten çıkış sağlıyor, K-08'in "momentum kontrol" maddesi gereksiz ikinci katman
+- kanıt zayıf: T (-%5.5) zaman değil tez sorunu (savunmacı tez yanlıştı), LMT (+%1.43) "süre aşımı" diye etiketlenmişti ama trade KÂR etti
+- akademik destek sınırlı: time stop ana çıkış değil, hibrit yedek olarak işe yarar (QuantifiedStrategies ocak 2026)
+- fırsat maliyeti kaygısı haklıydı (DUK 28g +%1.52 = günde %0.054) ama bunun için ayrı kural gerekmez, manuel gözden geçirme yeterli
 
 **K-09: stop yakınlığı erken çıkış protokolü**
 - fiyat stop'a %2 mesafede ise 4 kontrol:
@@ -399,14 +391,14 @@ her hata tarih, ne olduğu, neden yanlış olduğu ve çıkarılan kuralla kayde
 | 2-9 mart | KTOS, CEG, HAL, LASR, BKSY | momentum/savunma kriz girişleri | 3 zarar (HAL -%5.10, CEG -%5.05, KTOS stop), 1 breakeven (LASR), 1 kâr (BKSY +%18) | K-02 (kısmi) |
 | 5 mart | AMKR | NFP öncesi gece alım | -%6.12 | (K-01 kaldırıldı) |
 | 5-9 mart | LASR | 3x stop override (override istisnası 'şanslı' breakeven dönüş ile maskelendi) | -%3.8→-%7.3, BE çıkış | K-06 ihlal kanıtı |
-| 27 şubat | LMT | swing'de süre aşımı ertelemesi | +%1.4 ama 18 gün | K-08 |
+| 27 şubat | LMT | swing'de fırsat maliyeti gözlemi | +%1.43 (18g, kâr ama yavaş) | (K-08 kaldırıldı) |
 | 10 mart | ALMU | VIX 24'te small cap swing | 2 günde -%6.1 | K-03 |
-| 24 şub-12 mart | SOFI | momentum gelmeden 16 gün tutma | -%3.6 | K-08 |
+| 24 şub-12 mart | SOFI | momentum kaybı, SMA50 altı giriş | -%3.62 | K-04 (mean reversion ihlali) |
 | 13 mart | SM/XLE | RSI 70+ uyarısı, kısmi kâr zamanlaması | izlenmeli | K-11 |
 | 10-17 mart | CRDO | SMA50+200 altı + insider yoğun satış (çifte bayrak) | -%8.77 stop | K-04 + K-18 |
 | 18 mart | RKLB | momentum hissesinde arz riski değerlendirilmedi | -%11.59 (pozisyon küçük) | K-15 (yeni) |
 | 18 mart | MU | canavar beat ama AH sınırlı tepki | +%1.27 (beklenti altı) | K-16 (yeni gözlem) |
-| 17 şub-11 mart | T | 22 gün tutma, savunmacı tez çalışmadı | -%5.5 | K-08 |
+| 17 şub-11 mart | T | savunmacı tez yüksek VIX'te çalışmadı, sektör liderliği yok | -%5.54 | tez bazlı kayıp (K kategori dışı) |
 | 24 mart | NEM | K-17 skor %18 (min %50 gerekli) ile giriş, ichimoku 0/3 | devam izleniyor | K-17 ihlali |
 | 25 mart | POWL, CAMT, VRT | VIX 29+ ortamında AI tedarik zinciri tam pozisyon girişi (kriz rallisi değil, AI capex tezi) | POWL -%10.3, CAMT -%8.3, VRT -%9.4 | K-13 v4.1 (yüksek VIX'te momentum tema riski) |
 | 25 mart | POWL | insider $25M satışı kontrol edilmedi, giriş yapıldı | -%10.38 (1 gün) | K-18 (yeni) |
@@ -527,7 +519,7 @@ piyasa ortamına göre hangi sektör nasıl davranıyor.
 - stop: chandelier exit — highest_high - 3×ATR(14) trailing stop
 - çıkış: kâr kilidi sistemi (<%7: chandelier 3×ATR, %7-15: 2×ATR, %15+: 1.5×ATR). sabit hedef yok. portföy pozisyonlarında K-11 kademeli çıkış uygulanır
 - trailing: chandelier exit doğal trailing (highest high artınca veya ATR düşünce stop yükselir)
-- süre: %10 hedefe veya stop'a kadar tut. K-08 zaman filtresi uygulanır
+- süre: %10 hedefe veya stop'a kadar tut. zaman sınırı yok, chandelier yönetir
 - K-19: XLP (defansif) sektöründen swing girişi yapılmaz
 - K-20: sektör RS dead cat bounce → sektör 20g RS↘ + 10g RS↗ ise girme (76 trade: %80 zarar)
 - chandelier kanıtı: 126 trade karşılaştırmasında kijun +12% vs chandelier 3×ATR +57% toplam P/L

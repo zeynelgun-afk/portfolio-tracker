@@ -353,7 +353,7 @@ sabit rasyolarla otomatik red yok. karar claude'da.
 | SMA20/50 pozisyon kontrolü | ichimoku kumo bunu zaten yapıyor |
 | SMA200 filtresi | SMA200 referans bilgi olarak korundu (zorunlu filtre değil) |
 | sabit %5 trailing | chandelier exit (3×ATR) doğal trailing |
-| 7-14 gün tutma süresi | chandelier stop tetiklenene kadar tut. süre sınırı yok ama K-08 zaman filtresi uygulanır |
+| 7-14 gün tutma süresi | chandelier stop tetiklenene kadar tut. süre sınırı yok |
 | skor kartı (7 puan) | ichimoku 4/4 + SPY master switch + K-19/K-20 filtreleri |
 | sabit lot | ATR bazlı risk hesaplı lot |
 

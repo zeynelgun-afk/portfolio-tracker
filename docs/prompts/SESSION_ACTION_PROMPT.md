@@ -386,7 +386,7 @@ FMP historical data ile ichimoku + chandelier stop hesapla
 
 > ⚠️ **PLAYBOOK KONTROLÜ**: her karar vermeden önce `docs/TRADING_PLAYBOOK.md` kurallarını kontrol et.
 > - yeni giriş → K-02 (kriz şokunda momentum giriş yasağı), K-13 v4.1 (sektör bazlı VIX), K-17/K-18 (insider check)
-> - çıkış → K-06 (stop disiplini, override yasak), K-07 (trailing stop), K-08 (momentum yoksa çık), K-09 (stop yakın erken çık)
+> - çıkış → K-06 (stop disiplini, override yasak), K-07 (trailing stop), K-09 (stop yakın erken çık)
 > - swing → K-14 (ardışık 3+ zarar → dur), K-19 (XLP hariç), K-20 (RS dead cat bounce)
 > - ichimoku giriş: kumo kırılımı / kijun bounce + hacim teyidi + SMA200 filtre
 
