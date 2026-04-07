@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-04-07T15:11:29.992523",
+  "son_guncelleme": "2026-04-07T16:34:09.513270",
   "not": "Tüm portföyler ve swing trade için tek merkezi watchlist. Her adayda hedef_portfoy alanı hangi portföye/stratejiye ait olduğunu belirtir.",
   "iran_krizi_notu": {
     "tarih": "2026-03-01",
@@ -16,7 +16,7 @@
   "izleme_listesi": [
     {
       "sembol": "QCOM",
-      "guncel_fiyat": 122.525,
+      "guncel_fiyat": 123.37,
       "sektor": "Teknoloji - CPU/Mobil/AI Inference",
       "hedef_portfoy": "agresif",
       "urgency": "🔴 CRITICAL",
@@ -74,7 +74,7 @@
     },
     {
       "sembol": "RTX",
-      "guncel_fiyat": 196.65,
+      "guncel_fiyat": 197.93,
       "sektor": "Savunma",
       "hedef_portfoy": "swing",
       "urgency": "🔴 CRITICAL",
@@ -89,7 +89,7 @@
     },
     {
       "sembol": "NOC",
-      "guncel_fiyat": 691.01,
+      "guncel_fiyat": 694.77,
       "sektor": "Savunma",
       "hedef_portfoy": "swing",
       "urgency": "🔴 CRITICAL",
@@ -104,7 +104,7 @@
     },
     {
       "sembol": "DVN",
-      "guncel_fiyat": 50.4,
+      "guncel_fiyat": 49.79,
       "sektor": "Enerji E&P",
       "hedef_portfoy": "dengeli",
       "urgency": "low",
@@ -119,7 +119,7 @@
     },
     {
       "sembol": "EOG",
-      "guncel_fiyat": 146.285,
+      "guncel_fiyat": 144.795,
       "sektor": "Enerji E&P",
       "hedef_portfoy": "dengeli",
       "urgency": "low",
@@ -134,7 +134,7 @@
     },
     {
       "sembol": "SPG",
-      "guncel_fiyat": 189.65,
+      "guncel_fiyat": 190.23,
       "sektor": "REITs",
       "hedef_portfoy": "swing",
       "urgency": "medium",
@@ -148,7 +148,7 @@
     },
     {
       "sembol": "NEE",
-      "guncel_fiyat": 93.205,
+      "guncel_fiyat": 93.66,
       "sektor": "Kamu Hizmetleri",
       "hedef_portfoy": "swing",
       "urgency": "low",
@@ -162,7 +162,7 @@
     },
     {
       "sembol": "DIS",
-      "guncel_fiyat": 95.82,
+      "guncel_fiyat": 95.9,
       "sektor": "İletişim",
       "hedef_portfoy": "swing",
       "urgency": "high",
@@ -176,7 +176,7 @@
     },
     {
       "sembol": "BMY",
-      "guncel_fiyat": 58.295,
+      "guncel_fiyat": 58.08,
       "sektor": "Sağlık",
       "hedef_portfoy": "swing",
       "urgency": "high",
@@ -190,7 +190,7 @@
     },
     {
       "sembol": "OXY",
-      "guncel_fiyat": 63.55,
+      "guncel_fiyat": 62.605,
       "sektor": "Enerji",
       "hedef_portfoy": "swing",
       "urgency": "low",
@@ -205,7 +205,7 @@
     },
     {
       "sembol": "AVGO",
-      "guncel_fiyat": 324.45,
+      "guncel_fiyat": 329.98761,
       "sektor": "Teknoloji",
       "hedef_portfoy": "dengeli",
       "urgency": "medium",
@@ -220,7 +220,7 @@
     },
     {
       "sembol": "HWM",
-      "guncel_fiyat": 234.42,
+      "guncel_fiyat": 235.865,
       "sektor": "Savunma",
       "hedef_portfoy": "swing",
       "urgency": "🔴 CRITICAL",
@@ -235,7 +235,7 @@
     },
     {
       "sembol": "GEV",
-      "guncel_fiyat": 888.5,
+      "guncel_fiyat": 903.86499,
       "sektor": "Utilities",
       "hedef_portfoy": "agresif",
       "urgency": "medium",
@@ -250,7 +250,7 @@
     },
     {
       "sembol": "EQIX",
-      "guncel_fiyat": 996.3056,
+      "guncel_fiyat": 1005.48,
       "sektor": "REITs",
       "hedef_portfoy": "agresif",
       "urgency": "medium",
@@ -265,7 +265,7 @@
     },
     {
       "sembol": "GLW",
-      "guncel_fiyat": 144.81,
+      "guncel_fiyat": 146.74,
       "sektor": "Teknoloji",
       "hedef_portfoy": "agresif",
       "urgency": "medium",
@@ -280,7 +280,7 @@
     },
     {
       "sembol": "TER",
-      "guncel_fiyat": 312.37,
+      "guncel_fiyat": 317.5911,
       "sektor": "Teknoloji",
       "hedef_portfoy": "agresif",
       "urgency": "medium",
@@ -295,7 +295,7 @@
     },
     {
       "sembol": "BE",
-      "guncel_fiyat": 132.185,
+      "guncel_fiyat": 135.97,
       "sektor": "Enerji",
       "hedef_portfoy": "agresif",
       "urgency": "medium",
@@ -310,7 +310,7 @@
     },
     {
       "sembol": "VST",
-      "guncel_fiyat": 151.24,
+      "guncel_fiyat": 152.175,
       "sektor": "Enerji - Nükleer/Doğal Gaz",
       "hedef_portfoy": "agresif",
       "urgency": "medium",
@@ -325,7 +325,7 @@
     },
     {
       "sembol": "NRG",
-      "guncel_fiyat": 150.84,
+      "guncel_fiyat": 151.17,
       "sektor": "Enerji - Kamu Hizmetleri",
       "hedef_portfoy": "agresif",
       "urgency": "medium",
@@ -340,7 +340,7 @@
     },
     {
       "sembol": "MU",
-      "guncel_fiyat": 367.3784,
+      "guncel_fiyat": 373.52,
       "sektor": "Teknoloji - Bellek/HBM",
       "hedef_portfoy": "agresif",
       "urgency": "high",
@@ -357,7 +357,7 @@
     },
     {
       "sembol": "MRVL",
-      "guncel_fiyat": 106.55,
+      "guncel_fiyat": 108.48,
       "sektor": "Teknoloji - Ozel AI Cip",
       "hedef_portfoy": "agresif",
       "urgency": "high",
@@ -373,7 +373,7 @@
     },
     {
       "sembol": "CRDO",
-      "guncel_fiyat": 102.72,
+      "guncel_fiyat": 103.9266,
       "sektor": "Teknoloji - Yuksek Hizli Baglanti",
       "hedef_portfoy": "agresif",
       "urgency": "high",
@@ -389,7 +389,7 @@
     },
     {
       "sembol": "PLAB",
-      "guncel_fiyat": 39.39,
+      "guncel_fiyat": 39.779,
       "sektor": "Teknoloji - Fotomask/Litografi",
       "hedef_portfoy": "agresif",
       "urgency": "medium",
@@ -404,7 +404,7 @@
     },
     {
       "sembol": "ENTG",
-      "guncel_fiyat": 115.03,
+      "guncel_fiyat": 116.295,
       "sektor": "Teknoloji - Cip Uretim Malzemeleri",
       "hedef_portfoy": "agresif",
       "urgency": "medium",
@@ -420,7 +420,7 @@
     },
     {
       "sembol": "CAMT",
-      "guncel_fiyat": 154.67,
+      "guncel_fiyat": 155.99,
       "sektor": "Teknoloji - Cip Muayene/Test",
       "hedef_portfoy": "agresif",
       "urgency": "low",
@@ -435,7 +435,7 @@
     },
     {
       "sembol": "VRT",
-      "guncel_fiyat": 255.74,
+      "guncel_fiyat": 257.92,
       "sektor": "Teknoloji - Veri Merkezi Altyapi",
       "hedef_portfoy": "agresif",
       "urgency": "low",
@@ -451,7 +451,7 @@
     },
     {
       "sembol": "DELL",
-      "guncel_fiyat": 174.94,
+      "guncel_fiyat": 178.49,
       "sektor": "Teknoloji - AI Sunucu",
       "hedef_portfoy": "agresif",
       "urgency": "medium",
@@ -466,7 +466,7 @@
     },
     {
       "sembol": "CEG",
-      "guncel_fiyat": 269.02,
+      "guncel_fiyat": 270.2788,
       "sektor": "Enerji - Nukleer",
       "hedef_portfoy": "agresif",
       "urgency": "medium",
@@ -481,7 +481,7 @@
     },
     {
       "sembol": "COHR",
-      "guncel_fiyat": 250.14,
+      "guncel_fiyat": 253.905,
       "sektor": "Teknoloji - Optik/Lazer AI Networking",
       "hedef_portfoy": "agresif",
       "urgency": "high",
@@ -497,7 +497,7 @@
     },
     {
       "sembol": "CCJ",
-      "guncel_fiyat": 109.06,
+      "guncel_fiyat": 109.23,
       "sektor": "Enerji - Uranyum",
       "hedef_portfoy": "agresif",
       "urgency": "medium",
@@ -513,7 +513,7 @@
     },
     {
       "sembol": "BWXT",
-      "guncel_fiyat": 213.89,
+      "guncel_fiyat": 216.15,
       "sektor": "Savunma/Enerji - Nukleer Teknoloji",
       "hedef_portfoy": "agresif",
       "urgency": "medium",
@@ -530,7 +530,7 @@
     },
     {
       "sembol": "NET",
-      "guncel_fiyat": 209.675,
+      "guncel_fiyat": 214.2,
       "sektor": "Teknoloji - Edge Computing/CDN",
       "hedef_portfoy": "agresif",
       "urgency": "medium",
@@ -546,7 +546,7 @@
     },
     {
       "sembol": "AMAT",
-      "guncel_fiyat": 347.36,
+      "guncel_fiyat": 352.7168,
       "sektor": "Teknoloji - Yari Iletken Ekipman",
       "hedef_portfoy": "dengeli",
       "urgency": "high",
@@ -562,7 +562,7 @@
     },
     {
       "sembol": "LRCX",
-      "guncel_fiyat": 217.99,
+      "guncel_fiyat": 221.64,
       "sektor": "Teknoloji - Yari Iletken Ekipman",
       "hedef_portfoy": "dengeli",
       "urgency": "medium",
@@ -578,7 +578,7 @@
     },
     {
       "sembol": "KLAC",
-      "guncel_fiyat": 1519.2045,
+      "guncel_fiyat": 1530.761,
       "sektor": "Teknoloji - Yari Iletken Ekipman",
       "hedef_portfoy": "dengeli",
       "urgency": "medium",
@@ -594,7 +594,7 @@
     },
     {
       "sembol": "PWR",
-      "guncel_fiyat": 553.27,
+      "guncel_fiyat": 554.4,
       "sektor": "Endustriyel - Veri Merkezi Altyapi Insaat",
       "hedef_portfoy": "agresif",
       "urgency": "medium",
@@ -610,7 +610,7 @@
     },
     {
       "sembol": "CRWD",
-      "guncel_fiyat": 398.87,
+      "guncel_fiyat": 403.3501,
       "sektor": "Teknoloji - Siber Guvenlik",
       "hedef_portfoy": "agresif",
       "urgency": "medium",
@@ -626,7 +626,7 @@
     },
     {
       "sembol": "LITE",
-      "guncel_fiyat": 788,
+      "guncel_fiyat": 803.4382,
       "sektor": "Teknoloji - Optik/Lazer",
       "hedef_portfoy": "agresif",
       "urgency": "medium",
@@ -642,7 +642,7 @@
     },
     {
       "sembol": "UBER",
-      "guncel_fiyat": 71.3501,
+      "guncel_fiyat": 72.03,
       "sektor": "Teknoloji - Mobilite Platformu",
       "hedef_portfoy": "agresif",
       "urgency": "medium",
@@ -659,7 +659,7 @@
     },
     {
       "sembol": "ARM",
-      "guncel_fiyat": 139.32,
+      "guncel_fiyat": 142.98,
       "sektor": "Teknoloji - Cip Mimarisi/Lisans",
       "hedef_portfoy": "agresif",
       "urgency": "low",
@@ -675,7 +675,7 @@
     },
     {
       "sembol": "LSCC",
-      "guncel_fiyat": 95.345,
+      "guncel_fiyat": 96.88,
       "sektor": "Teknoloji - FPGA",
       "hedef_portfoy": "swing",
       "urgency": "low",
@@ -691,7 +691,7 @@
     },
     {
       "sembol": "ALAB",
-      "guncel_fiyat": 116.24,
+      "guncel_fiyat": 119.05,
       "sektor": "Teknoloji - PCIe/CXL Retimer",
       "hedef_portfoy": "agresif",
       "urgency": "medium",
@@ -709,7 +709,7 @@
     },
     {
       "sembol": "COP",
-      "guncel_fiyat": 133.34,
+      "guncel_fiyat": 131.75,
       "sektor": "Enerji",
       "hedef_portfoy": "agresif",
       "notlar": "ichimoku 4/4 güçlü yükseliş. kumo üstü, tenkan>kijun, yeşil kumo. iran savaşı + enerji momentum katalizörü. 1ay +17.6%, 3ay +41.3%. giriş sinyali (kumo kırılımı veya kijun bounce) bekleniyor.",
@@ -723,7 +723,7 @@
     },
     {
       "sembol": "LMT",
-      "guncel_fiyat": 632.06,
+      "guncel_fiyat": 633.23999,
       "sektor": "Savunma",
       "hedef_portfoy": "agresif",
       "notlar": "savunma harcamaları artışı. kumo içinde, kısa vadeli düzeltmede. 3ay +29%, 6ay +29% uzun vadeli trend çok güçlü. kumo üstüne çıkış ($641+) ile giriş değerlendir.",
@@ -737,7 +737,7 @@
     },
     {
       "sembol": "POWL",
-      "guncel_fiyat": 192.0951,
+      "guncel_fiyat": 198.35,
       "sektor": "Güç Altyapısı",
       "hedef_portfoy": "agresif",
       "notlar": "portföyde mevcut @539.52. stop 524.89. bugün güçlü bounce +2.89%. izlemeye devam",
@@ -751,7 +751,7 @@
     },
     {
       "sembol": "RDDT",
-      "guncel_fiyat": 137.48,
+      "guncel_fiyat": 139.98,
       "sektor": "İletişim / AI Veri Altyapısı",
       "hedef_portfoy": "agresif",
       "urgency": "medium",
@@ -774,7 +774,7 @@
     },
     {
       "sembol": "AMD",
-      "guncel_fiyat": 217.49,
+      "guncel_fiyat": 219.17,
       "sektor": "Teknoloji - Yarı İletken (GPU/AI)",
       "hedef_portfoy": "swing",
       "notlar": "Meta + OpenAI warrant anlaşmaları (320M hisse, 12GW GPU taahhüdü). Nvidia'ya tek ciddi AI GPU alternatifi. Bugün +8.77% haber rallisi - pullback bekle. ROCm ekosistemi hâlâ CUDA gerisinde ama adoption hızlanıyor. Agresif portföy adayı. | CPU darboğazı temasının en güçlü faydalananı. 2026 server CPU kapasitesi tükendi, %10-15 fiyat artışı gücü. EPYC bulut instance'ları yıllık %50+ arttı.",
@@ -790,7 +790,7 @@
     },
     {
       "sembol": "WDAY",
-      "guncel_fiyat": 127.2796,
+      "guncel_fiyat": 128.898,
       "sektor": "Teknoloji - Kurumsal Yazılım",
       "hedef_portfoy": "swing",
       "notlar": "RSI 17.4 aşırı düşük, SaaS devi ama düşüş çok sert (-54% ATH'den). Q4 earnings yaklaşıyor - earnings sonrası değerlendir. Düşen bıçağı tutma riski yüksek.",
@@ -804,7 +804,7 @@
     },
     {
       "sembol": "IQV",
-      "guncel_fiyat": 168.99,
+      "guncel_fiyat": 170.22,
       "sektor": "Sağlık - Klinik Araştırma",
       "hedef_portfoy": "swing",
       "notlar": "RSI 27.7, sağlık sektörü CRO lideri $28B market cap. Sağlık sektörü savunmacı özelliği güçlü. ATH'den -%33 düşüş.",
@@ -818,7 +818,7 @@
     },
     {
       "sembol": "EXPE",
-      "guncel_fiyat": 225.01,
+      "guncel_fiyat": 226.73,
       "sektor": "Tüketim Döngüsel - Seyahat",
       "hedef_portfoy": "swing",
       "notlar": "RSI 31.3, online seyahat devi. Yaz sezonu yaklaşıyor - mevsimsel katalizör. ATH'den -%35 düşüş.",
@@ -832,7 +832,7 @@
     },
     {
       "sembol": "FLNC",
-      "guncel_fiyat": 12.63,
+      "guncel_fiyat": 12.7693,
       "sektor": "Enerji Depolama / Batarya",
       "hedef_portfoy": "swing",
       "notlar": "Fluence Energy - data center batarya depolama talebi, BE benzeri tez. RSI 35 oversold, $15.34 destek test edildi. NVDA sonrası giriş planla.",
@@ -846,7 +846,7 @@
     },
     {
       "sembol": "NVDA",
-      "guncel_fiyat": 174.46,
+      "guncel_fiyat": 175.595,
       "sektor": "Teknoloji - AI/Yarı İletken",
       "hedef_portfoy": "swing",
       "notlar": "Q3 earnings çok güçlü ($57B revenue, +62% YoY, EPS $1.30, +67% YoY, net margin %56) ama piyasa tepkisi zayıf (+1.4%). Beklenti çok yüksekti. Pullback + RSI oversold bekle. AI chip lideri, güçlü fundamentaller.",
@@ -860,7 +860,7 @@
     },
     {
       "sembol": "NOW",
-      "guncel_fiyat": 99.83,
+      "guncel_fiyat": 101.07,
       "sektor": "Kurumsal Yazılım",
       "hedef_portfoy": "swing",
       "notlar": "ServiceNow — NVIDIA CEO endorsement: 'kimse onlardan daha iyi hizmet veremez'. Enterprise workflow AI entegrasyonu lideri. Domain-specific moat güçlü.",
@@ -874,7 +874,7 @@
     },
     {
       "sembol": "SNOW",
-      "guncel_fiyat": 146.41,
+      "guncel_fiyat": 150.02,
       "sektor": "Veri Altyapısı",
       "hedef_portfoy": "swing",
       "notlar": "Snowflake — data cloud + AI/ML pipeline altyapısı. Proprietary veri avantajı güçlü. T. Rowe Price 'linchpin teknoloji' kategorisinde.",
@@ -888,7 +888,7 @@
     },
     {
       "sembol": "RBRK",
-      "guncel_fiyat": 50.92,
+      "guncel_fiyat": 51.845,
       "sektor": "Siber Güvenlik / Veri Koruma",
       "hedef_portfoy": "swing",
       "notlar": "Rubrik — data security + backup. Diğer siber güvenlik isimlerine kıyasla daha makul valuasyon. AI çağında veri koruması kritik.",
@@ -902,7 +902,7 @@
     },
     {
       "sembol": "ZS",
-      "guncel_fiyat": 137.18,
+      "guncel_fiyat": 138.99,
       "sektor": "Siber Güvenlik - Zero Trust",
       "hedef_portfoy": "swing",
       "notlar": "Zscaler, zero-trust lideri. ATH'den -%53.5 en derin pullback. RSI 39.6 oversold yakını. YTD -%29. Savaş ortamında siber güvenlik talebi artıyor. Pullback $140-150 aralığında giriş.",
@@ -917,7 +917,7 @@
     },
     {
       "sembol": "OKLO",
-      "guncel_fiyat": 45.26,
+      "guncel_fiyat": 46.39,
       "sektor": "Nükleer Enerji — Mikro Reaktör",
       "hedef_portfoy": "swing",
       "notlar": "Düşen kama formasyonu (Jake), LEU ile HALEU JV görüşmeleri katalizör. Henüz gelir yok, saf spekülasyon.",
@@ -932,7 +932,7 @@
     },
     {
       "sembol": "HIMS",
-      "guncel_fiyat": 19.1,
+      "guncel_fiyat": 19.665,
       "sektor": "Sağlık — Telehealth",
       "hedef_portfoy": "swing",
       "notlar": "NVO ortaklığı ile +%42 patladı. İlk gün momentumu kovalama — geri çekilme bekle ($18-20). Beta 2.6.",
@@ -946,7 +946,7 @@
     },
     {
       "sembol": "ONTO",
-      "guncel_fiyat": 216.16,
+      "guncel_fiyat": 218.72,
       "sektor": "Teknoloji - Yarı İletken Ekipman",
       "hedef_portfoy": "swing",
       "notlar": "AI çip ekipman, HBM kalifikasyon tamamlandı, 2.5D AI paketleme. Gelir +%22 YoY. 10 al/1 tut. Agresif portföy adayı.",
@@ -960,7 +960,7 @@
     },
     {
       "sembol": "AROC",
-      "guncel_fiyat": 35.21,
+      "guncel_fiyat": 35.17,
       "sektor": "Enerji - Doğalgaz Hizmetleri",
       "hedef_portfoy": "swing",
       "notlar": "Düşük beta (0.91) + yüksek momentum. Net kar +%64 büyüme, marj %31. 15 al/3 tut. Enerji temasına uyumlu.",
@@ -974,7 +974,7 @@
     },
     {
       "sembol": "CGAU",
-      "guncel_fiyat": 18.16,
+      "guncel_fiyat": 18.26,
       "sektor": "Emtia - Altın/Bakır Madenciliği",
       "hedef_portfoy": "swing",
       "notlar": "Q4 dev beat, EPS beklentisi 2x yukarı revize. Forward PE 11.4x, sektörüne %33 iskontolu. Altın + bakır çift tema.",
@@ -988,7 +988,7 @@
     },
     {
       "sembol": "LEU",
-      "guncel_fiyat": 167.72,
+      "guncel_fiyat": 171.25,
       "sektor": "Enerji - Nükleer Yakıt",
       "notlar": "Q2 tematik: HALEU tekeli, tüm SMR'lar muhtaç. RSI 44, 52H -%59",
       "urgency": "high",
@@ -1003,7 +1003,7 @@
     },
     {
       "sembol": "KTOS",
-      "guncel_fiyat": 70.31,
+      "guncel_fiyat": 71.85,
       "sektor": "Savunma - İnsansız Sistemler",
       "notlar": "Q2 tematik: drone + hipersonik. RSI 35.8 aşırı satım, 52H -%48",
       "urgency": "high",
@@ -1018,7 +1018,7 @@
     },
     {
       "sembol": "GNRC",
-      "guncel_fiyat": 190.35,
+      "guncel_fiyat": 191.025,
       "sektor": "Sanayi - Güç Ekipmanları",
       "notlar": "Q2 tematik: yedek güç + enerji depolama. veri merkezi talebi",
       "urgency": "medium",
@@ -1033,7 +1033,7 @@
     },
     {
       "sembol": "BAH",
-      "guncel_fiyat": 84.35,
+      "guncel_fiyat": 85.18,
       "sektor": "Savunma - Hükümet Danışmanlık",
       "notlar": "Q2 tematik: ABD hükümeti AI danışmanlığı. 52H -%40",
       "urgency": "low",
@@ -1048,7 +1048,7 @@
     },
     {
       "sembol": "CACI",
-      "guncel_fiyat": 571.72498,
+      "guncel_fiyat": 574.9,
       "sektor": "Savunma - IT Hizmetleri",
       "notlar": "Q2 tematik: savunma IT + istihbarat. RSI 40.1, istikrarlı profil",
       "urgency": "low",
@@ -1063,7 +1063,7 @@
     },
     {
       "sembol": "INTC",
-      "guncel_fiyat": 52.1,
+      "guncel_fiyat": 52.5501,
       "sektor": "Teknoloji - CPU Üretici/Foundry",
       "hedef_portfoy": "swing",
       "urgency": "medium",
@@ -1096,7 +1096,7 @@
     },
     {
       "sembol": "SMCI",
-      "guncel_fiyat": 21.93,
+      "guncel_fiyat": 22.4597,
       "sektor": "Teknoloji - AI Sunucu/Altyapı",
       "hedef_portfoy": "swing",
       "urgency": "medium",
