@@ -521,22 +521,80 @@ LİTERATÜR DESTEĞİ:
 
 ### giriş öncesi filtreler
 
-**K-15a: RSI <35 oversold girişinde dikkat**
-- RSI <35 bölgesinde alım öncesi en az 1 gün teyit bekle (gün içi dip-test + toparlanma sinyali). düşen bıçağı tutma
-- ilişkili: K-04 (SMA teyidi)
+**K-15a: RSI <35 oversold girişinde dikkat — netleştirilmiş 7 nisan 2026**
 
-**K-15b: momentum hisselerinde dilüsyon + arz riski**
-- giriş öncesi dilüsyon risk skoru:
-  • +1: negatif FCF (son 4 çeyrek)
-  • +1: borç/öz sermaye >1.5
-  • +1: son 12 ay içinde hisse arzı yapılmış
-  • +1: aktif shelf registration (SEC S-3)
-  • +1: büyük CapEx planı + finansman belirsiz
-- skor 0-1: normal pozisyon
-- skor 2-3: max %2 portföy ağırlığı
-- skor 4-5: girme veya sadece opsiyon ile sınırlı risk
-- momentum hissesi tanımı: son 3 ayda %30+ ralli, P/E negatif veya >50
-- kanıt: RKLB -%11.59 (küçük pozisyon kuralı sayesinde portföy etkisi sınırlı)
+KAPSAM: swing ve agresif portföy (giriş öncesi filtre)
+
+KURAL:
+- RSI 14 günlük < 35 olan hisselerde anlık giriş YASAK
+- Min 1 gün teyit bekle, teyit sinyalleri (BİRİ yeterli):
+  • RSI dönüş: dün RSI <35, bugün RSI yukarı dönüyor (artıyor)
+  • Hammer mum + yükselen hacim (>20g ortalama 1.3x+)
+  • Gün içi düşük teste rağmen kapanış üstünde
+- "Düşen bıçağı tutma" prensibi: yön belirsizken alma
+
+İSTİSNALAR:
+- K-04 ile uyumlu: SMA50 üstünde olan hisseler K-15a istisnası (mean reversion trend içinde, çeyrek pozisyon ile giriş izinli)
+- K-13 faydalanıcı sektör + RSI <35 → güçlü alım sinyali (teyit ile)
+
+REPO KANITI (n=4 closed.json testi 7 nisan 2026):
+- CTSH RSI 22.5 (24 şubat) → +%1.45 ✓ KAZANÇ
+- ZS RSI 26.7 (24 şubat) → +%2.55 ✓ KAZANÇ
+- NEM RSI 31.4 (24 mart) → +%4.18 ✓ KAZANÇ
+- SOFI RSI 27.8 (24 şubat) → -%3.62 ✗ ZARAR (K-04 ihlali, SMA50 altı)
+- Win rate: 3/4 = %75. Çekirdek kural çalışıyor.
+
+KRİTİK DERS: 24 şubat'ta CTSH/ZS/SOFI 3 hisse AYNI GÜN girildi. K-15a "1 gün teyit" uygulanmadı. SOFI tek zararı oldu - 1 gün teyit muhtemelen engellerdi. Bu olay K-15a + K-04 birlikte uygulanmasının önemini gösteriyor.
+
+**K-15b: momentum hisselerinde dilüsyon + arz riski — netleştirilmiş 7 nisan 2026**
+
+KAPSAM: swing ve agresif portföy. momentum hisse girişi öncesi zorunlu skor.
+
+MOMENTUM HİSSE TANIMI (net):
+- Son 3 ay >%30 ralli VE
+- (P/E negatif VEYA P/E >50)
+- Tipik örnek: RKLB, PLTR, BKSY, NNDM, GILT, AI/quantum/space sektör hisseleri
+
+DİLÜSYON RİSK SKORU (her madde +1):
+1) Negatif FCF (son 4 çeyrek)
+   • Veri: FMP cash-flow-statement, "freeCashFlow" alanı
+2) Borç/Öz sermaye >1.5
+   • Veri: FMP balance-sheet, totalDebt / totalStockholdersEquity
+3) Son 12 ay hisse arzı yapılmış
+   • Veri: FMP shares-float değişimi VEYA SEC EDGAR S-1/S-3
+4) Aktif shelf registration (SEC S-3)
+   • Veri: SEC EDGAR full-text arama VEYA dilutiontracker.com
+5) Büyük CapEx planı + finansman belirsiz
+   • Veri: 10-K MD&A VEYA earnings call transkript
+
+KARAR EŞİKLERİ:
+- Skor 0-1: normal pozisyon (standart $5K-$10K)
+- Skor 2-3: max %2 portföy ağırlığı (Dengeli $2K, Agresif $8K)
+- Skor 4-5: girme YA DA sadece opsiyon ile sınırlı risk (max $1K premium)
+
+OTOMATİK KONTROL (yeni eklendi):
+- Giriş öncesi script çalışır: scripts/k15b_dilution_check.py SYMBOL
+- Skor + telegram alert ("K-15b SCORE:3 SYMBOL → max %2 ağırlık")
+- Manuel skor hesaplama riski (memory yanlış olabilir, RKLB örneği)
+
+REPO KANITI (REVİZE 7 nisan 2026):
+- ESKİ İDDIA: "RKLB -%11.59" → YANLIŞ
+- GERÇEK RKLB: $68.44 giriş × 146 hisse, 17 mart kısmi kâr 96 hisse @ $77.53 (+%13) + 20 mart trailing stop 50 hisse @ $67.61 (-%1) = NET +%8 portföy. RKLB KÂR ETTİ.
+- closed.json'da K-15b etiketli swing trade YOK
+- K-15b başka momentum hisselerinde (PLTR, BKSY, NNDM, GILT) uygulanma KAYDI YOK
+- Bu durum otomatik script ihtiyacının kanıtı
+
+K-15a İLE İLİŞKİSİ:
+- K-15a TIMING riski (kısa vade, RSI bazlı)
+- K-15b YAPISAL risk (uzun vade, bilanço bazlı)
+- İkisi birlikte: oversold momentum hisse + dilüsyon = ÇİFT KIRMIZI BAYRAK
+- Örnek: hipotetik RKLB RSI 30 + shelf registration → K-15a 1g teyit + K-15b skor 4-5 = girme
+
+LİTERATÜR DESTEĞİ:
+- DilutionTracker: shelf registration küçük cap + nakit yakım + adil değer üstü → ek hisse ihraç olasılığı yüksek, fiyat üzerinde aşağı baskı
+- HeyGotrade: %5-10 yıllık hisse artışı bile anlamlı dilüsyon, EPS basıncı
+- Lord Abbett: value trap kavramı, quality + value + momentum kombinasyonu daha etkili, ROIC ana dayanıklılık göstergesi
+- Quant Investing (12 yıl Avrupa çalışması): yüksek FCF + momentum kombinasyonu sadece FCF'ye göre %506 iyileşme - K-15b "negative FCF momentum" doğru kırmızı bayrak
 
 **K-16: sell the news riski değerlendirmesi**
 - skor (her madde +1):
