@@ -139,3 +139,4 @@ date,action,symbol,shares,price,total,reason
 2026-04-01,SELL,dividend,CVX,99,198.64,19665.36,"iran ateşkes umudu - petrol düşüşü, enerji katalizörü zayıflıyor. kar: $675.18 (+3.56%)"
 
 2026-04-01,SELL,balanced,SM,192,29.48,5660.16,"iran ateşkes tezi - enerji sektörü çıkışı. XLE/XOM/CVX ile aynı mantık. kar: $17.28"
+2026-04-07,SELL,dividend,T,86,28.07,2414.02,"K-12 limit asimi duzeltmesi - Temettu portfoyunde T agirligi %16.67 (limit %15). 86 hisse satis ile %15.00 hedeflendi. Kalan 773 hisse. Kar: $163.40 (+7.26%)"

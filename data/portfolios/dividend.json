@@ -2,28 +2,28 @@
   "portfoy_adi": "Değer + Temettü",
   "baslangic_sermaye": 100000,
   "nakit": {
-    "miktar": 88387.32,
+    "miktar": 90801.34,
     "para_birimi": "USD",
-    "agirlik_yuzde": 61.03
+    "agirlik_yuzde": 62.77
   },
   "pozisyonlar": [
     {
       "sembol": "T",
       "isim": "AT&T Inc",
       "sektor": "Telekomünikasyon",
-      "adet": 859,
+      "adet": 773,
       "maliyet_baz": 26.17,
       "guncel_fiyat": 28.07,
-      "yatirim": 22480.03,
-      "guncel_deger": 24112.13,
-      "kar_zarar": 1632.1,
+      "yatirim": 20229.41,
+      "guncel_deger": 21698.11,
+      "kar_zarar": 1468.7,
       "kar_zarar_yuzde": 7.26,
       "gunluk_degisim_yuzde": -0.88,
-      "son_guncelleme": "2026-04-07T16:58:24",
+      "son_guncelleme": "2026-04-07T17:29:41",
       "giris_tarihi": "2026-01-02",
       "giris_fiyati": 24.28,
       "giris_nedeni": "Başlangıç pozisyonu - Temettü + değer portföyü - Telekomünikasyon",
-      "agirlik_yuzde": 16.67
+      "agirlik_yuzde": 15.0
     },
     {
       "sembol": "VZ",
@@ -80,10 +80,12 @@
       "agirlik_yuzde": 8.48
     }
   ],
-  "son_guncelleme": "2026-04-07T16:58:24",
+  "son_guncelleme": "2026-04-07",
   "toplam_deger": 144649.89,
   "toplam_getiri_yuzde": 44.65,
   "transactions": [],
-  "notes": [],
+  "notes": [
+    "2026-04-07: K-12 limit asimi duzeltmesi - T 86 hisse @ $28.07 satildi. Onceki %16.67 -> %15.00. Kar $163.40 (+7.26%)."
+  ],
   "toplam_getiri": 44649.89
 }
