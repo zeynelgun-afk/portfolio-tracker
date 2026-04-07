@@ -905,13 +905,85 @@ EKSILER (gelecek genişleme için not):
 - Mevcut form: bütün-veya-hiç (whole-or-none)
 - Bu kabul edilebilir çünkü swing'de hassasiyet > esneklik
 
-**K-20: sektör RS dead cat bounce filtresi**
-- kural: sektör ETF/SPY oranı 20g değişim <0 VE 10g değişim >0 ise swing girişi yok
-- hesaplama: RS = sektörETF/SPY. RS20 = (RS_bugün − RS_20gün_önce)/RS_20gün_önce ×100. RS10 aynı formül
-- gerekçe: sektör orta vadede SPY'a karşı zayıf ama kısa vadede sıçramış → dead cat bounce. sektörel zayıflık devam ediyor
-- kapsam: tüm VIX bantları. K-13b istisna pozisyonlarında uygulanmaz (kendi sektör ETF filtresi var)
-- sektör ETF: XLK, XLC, XLE, XLI, XLV, XLF, XLY
-- backtest: bu kombinasyonda 3 kâr / 12 zarar (%80 zarar). filtre ile kâr oranı %47 → %54
+**K-20: sektör RS dead cat bounce filtresi — netleştirilmiş 7 nisan 2026**
+
+KAPSAM: tüm swing girişler. K-13b istisna pozisyonlarında uygulanmaz.
+
+KURAL: Hisse'nin sektör ETF'i SPY'a karşı RS20 < 0 VE RS10 > 0 ise → swing girişi YOK.
+Yorum: sektör orta vadede zayıflıyor (RS20<0) ama kısa vadede sıçramış (RS10>0) → dead cat bounce, sektörel zayıflık devam ediyor.
+
+HESAPLAMA (netleştirildi):
+- Veri: FMP historical-price-eod, GÜNLÜK KAPANIŞ fiyatları
+- RS oranı = sektörETF_kapanış(bugün) / SPY_kapanış(bugün)
+- RS20 = (RS_bugün - RS_20_iş_günü_önce) / RS_20_iş_günü_önce × 100
+- RS10 = (RS_bugün - RS_10_iş_günü_önce) / RS_10_iş_günü_önce × 100
+- 20 ve 10 = takvim günü değil, İŞ GÜNÜ (trading day)
+
+SEKTÖR ETF EŞLEŞTİRME (genişletildi 7 → 10):
+- XLK: technology (NVDA, MSFT, AAPL, GOOGL, MRVL, COHR, CRDO, CAMT)
+- XLC: communication services (META, NFLX, T, VZ, GOOGL)
+- XLE: energy (XOM, CVX, COP, EOG, SLB, HAL, FANG, AROC)
+- XLI: industrials (CAT, GE, LMT, RTX, NOC, GD, POWL, VRT)
+- XLV: healthcare (JNJ, UNH, LLY, PFE, ABBV, MRK, DVA, MDT)
+- XLF: financials (JPM, BAC, GS, MS, BRK.B, V, MA, SOFI)
+- XLY: consumer discretionary (AMZN, TSLA, HD, LOW, MCD, SBUX)
+- XLU: utilities (NEE, DUK, SO, CEG, EXC, AEP) — YENİ EKLENDİ
+- XLB: materials (LIN, APD, FCX, NEM, RGLD, ECL) — YENİ EKLENDİ
+- XLRE: real estate (AMT, PLD, EQIX, CCI, DLR) — YENİ EKLENDİ
+- XLP: NOT — K-19 zaten swing yasak, K-20 uygulanmaz
+
+K-19 İLE İLİŞKİ (sıralı uygulama):
+- K-19 (XLP) ÖNCE çalışır: XLP hisseleri tarama dışı
+- K-20 SONRA çalışır: K-19'dan geçen hisselerin sektör RS'i hesaplanır
+- Çakışma yok
+
+K-13b İSTİSNA POZİSYONLARI:
+- K-13b "VIX 28-35'te 6 koşul sağlanırsa çeyrek pozisyon" istisnası verir
+- Bu istisna pozisyonlarda K-20 uygulanmaz
+- Gerekçe: K-13b zaten kendi sektör filtresi (faydalanıcı sektör — savunma, enerji, altın) uyguluyor, çift filtre over-restrictive olur
+
+OTOMATİK SCRIPT (kritik - yeni eklendi):
+- Tarama sırasında her hisse için sektör tespit + RS hesabı:
+  python scripts/k20_rs_filter.py SCAN_RESULTS.json
+- 10 sektör ETF için günlük RS önbelleğe alınır (FMP API quota tasarrufu)
+- Telegram alert ("K-20: HAL filtered (XLE RS20=-2.1%, RS10=+0.8% → dead cat)")
+- Manuel hesaplama imkansız (10 sektör × her hisse × her tarama)
+
+REPO KANITI (revize 7 nisan 2026):
+
+SWING_SYSTEM_V2 BACKTEST:
+- 76 trade backtest evreninde (2021-2026)
+- 15 vaka K-20 RS pattern'inde (RS20<0 + RS10>0)
+- 3 kâr / 12 zarar (%80 zarar)
+- Filtre olmadan: %47 win rate
+- Filtre ile: %54 win rate (+%7 puan iyileşme)
+- Mütevazı ama tutarlı iyileşme, sample küçük uyarısı
+
+CLOSED.JSON SEKTÖR DAĞILIMI (referans, K-20 doğrudan test değil):
+- XLK 5 trade %80 win, XLI 4 trade %75 win — güçlü sektörler
+- XLE 3 trade %33 win, XLF 1 trade %0 win, XLRE 1 trade %0 win — zayıf
+- XLU 2 trade %50, XLB 2 trade %100 (NEM altın), XLV 1 trade %100 (DVA)
+- Bu dağılım K-20'nin sektör ayırt etme mantığını dolaylı destekliyor
+
+KRİTİK DERS: closed.json'da K-20 etiketi 0 trade. K-20 muhtemelen otomasyon eksikliğinden hiç uygulanmadı (manuel hesaplama imkansız: 10 sektör × her hisse). Otomatik script + telegram alert şart.
+
+LİTERATÜR DESTEĞİ (8 referans, hepsi aynı yönde):
+- Wikipedia: dead cat bounce continuation pattern, kısa pozisyon kapama + temporary demand sürer
+- Kraken: bearish continuation chart pattern, sadece oluştuktan sonra teyit
+- Strike.money: continuation pattern, trend tersine dönüş değil, fundamental destek yok
+- XS Trading: çok erken alım zarar, davranışsal önyargılar (confirmation bias, FOMO)
+- EBC Financial: rallileri reversal ile karıştırmak anlamlı zararlar, gerçek reversal artan hacim
+- FXOpen: her sıçrama toparlanma sinyali değil, broader market teyit gerekli
+- Investing.com: bankacılık sektör tarihsel örneği — kısa toparlanma sonra yeniden düşüş
+- Tealstreet: continuation pattern, market hala bearish, broader market analiz şart
+
+HEPSİ aynı sonucu veriyor: kısa süreli sıçrama + uzun vade zayıflık = bearish continuation, swing alımı kayıp riski yüksek.
+
+EKSILER (gelecek genişleme):
+- Backtest sample küçük (15 vaka)
+- Filtre etkisi mütevazı (%7 puan)
+- Hisse seviyesi dead cat bounce kontrolü yok (sadece sektör seviyesi)
+- Sektör seviyesi tek başına yetmez, hisse seviyesinde RSI overbought ek değerlendirilebilir
 
 ### ek kanıtlar
 
