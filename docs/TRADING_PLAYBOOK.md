@@ -596,18 +596,67 @@ LİTERATÜR DESTEĞİ:
 - Lord Abbett: value trap kavramı, quality + value + momentum kombinasyonu daha etkili, ROIC ana dayanıklılık göstergesi
 - Quant Investing (12 yıl Avrupa çalışması): yüksek FCF + momentum kombinasyonu sadece FCF'ye göre %506 iyileşme - K-15b "negative FCF momentum" doğru kırmızı bayrak
 
-**K-16: sell the news riski değerlendirmesi**
-- skor (her madde +1):
-  • hisse kazanç öncesi 5 günde %5+ ralli (beklenti fiyatlanmış)
-  • consensus EPS son 3 ay %10+ yükseltilmiş (çıta yüksek)
-  • 52w zirveye %5 mesafe (yukarı alan dar)
-  • sektör son 1 ay %10+ ralli
-  • short interest %10+ float
-- skor 0-1: normal tut
-- skor 2-3: kazanç öncesi %25 kısmi al + trailing sıkılaştır
-- skor 4-5: kazanç öncesi %50 kısmi çık, post-earnings bekle
-- **önemli**: sell-the-news hisseye özgü, tedarik zinciri ortaklarına yayılmayabilir (MU→CRDO/MRVL/COHR örneği). ortaktaki geri çekilme alım fırsatı olabilir
-- kanıt: MU -%3.8, NVDA -%5
+**K-16: sell the news riski değerlendirmesi — netleştirilmiş 7 nisan 2026**
+
+KAPSAM: SADECE portföy pozisyonları (Dengeli, Agresif, Temettü). swing trade için K-05 geçerli (kazançtan 2+ gün önce TAM çıkış).
+
+NEDEN PORTFÖY: portföy pozisyonları uzun vadeli, kademeli çıkış mantıklı. swing kısa vadeli, tam çıkış zaman tasarrufu sağlar.
+
+5 MADDELİK SKOR (her madde +1):
+1) Hisse kazanç öncesi 5 günde %5+ ralli (beklenti fiyatlanmış)
+   • Veri: FMP historical-price-eod son 5 gün
+2) Consensus EPS son 3 ay %10+ yükseltilmiş (çıta yüksek)
+   • Veri: FMP analyst-estimates revisions
+3) 52w zirveye %5 mesafe (yukarı alan dar)
+   • Veri: FMP historical-price-eod 52w high
+4) Sektör son 1 ay %10+ ralli
+   • Veri: FMP sector-performance-snapshot
+5) Short interest %10+ float
+   • Veri: FMP key-metrics shortFloat
+
+KARAR EŞİKLERİ:
+- Skor 0-1: normal tut, kazanç sonrası izle
+- Skor 2-3: kazanç öncesi %25 kısmi al + trailing sıkılaştır (K-11 aktif et)
+- Skor 4-5: kazanç öncesi %50 kısmi çık, post-earnings bekle
+
+TEDARİK ZİNCİRİ ORTAKLARI NÜANSI (önemli):
+- Sell-the-news hisseye özgüdür, tedarik zinciri ortaklarına yayılmayabilir
+- Örnek: MU sell-the-news → CRDO/MRVL/COHR doğrudan etkilenmez
+- Ortaktaki geri çekilme ALIM FIRSATI olabilir (sektör tezi sağlamsa)
+- Uygulama: ana hisse skor 4-5 ise ortakları izle, sertçe düşerse K-15a 1g teyit ile alım değerlendir
+
+OTOMATİK SKOR HESAPLAMA (yeni eklendi):
+- Earnings tarihi 7 gün öncesi script çalışır: scripts/k16_sell_the_news_score.py SYMBOL
+- Skor + telegram alert ("K-16 SCORE:3 AAPL → %25 kısmi al + trailing")
+- Manuel hesaplama atlama riski (NVDA örneği — script olsaydı kayıt olurdu)
+
+K-05 İLE İLİŞKİ:
+- K-05: swing earnings 2+ gün öncesi TAM çıkış (binary risk yönetimi)
+- K-16: portföy earnings öncesi KADEMELİ çıkış (uzun vadeli pozisyon koruma)
+- Çakışma yok, farklı kapsam: swing K-05, portföy K-16
+
+REPO KANITI (REVİZE 7 nisan 2026):
+
+ESKİ İDDIA: "MU -%3.8, NVDA -%5" → KISMEN YANLIŞ
+
+GERÇEK NVDA (closed.json SWING-011):
+- 12 şubat - 23 şubat 2026
+- +%2.88 KAZANÇ (zarar değil!)
+- Çıkış nedeni: K-05 (earnings öncesi tam çıkış), K-16 değil
+- "26 şubat NVDA earnings riski, +%3.4 kâr güvenceye alındı, gap-down riski (%10-15 olası) alınmadı"
+- NVDA earnings sonrası belki gerçekten -%5 düştü ama Zeynel'e zarar yaratmadı
+- Bu örnek K-05'in başarısı, K-16 ile karıştırılmış
+
+GERÇEK MU: transactions.csv'de MU referansı yok (ALMU farklı hisse). Aggressive portföyde MU pozisyonu olabilir ama kayıt eksik.
+
+KRİTİK DERS: closed.json'da K-16 etiketi 0 trade. K-16 hiç sistemli uygulanmadı. Otomatik script + telegram alert şart.
+
+LİTERATÜR DESTEĞİ:
+- AInvest (4 gün önce, en güncel): büyüme hisseleri sell the news riski, beat-and-raise gerekli, subtle guidance reset bile catalyst
+- HeyGotrade: pre-earnings buyer profit-taking baskısı, guidance historical performance'tan ağır basar, markets forward-looking
+- CMC Markets: buy the rumour sell the news klasik pattern, prices drift up before, selling even when numbers meet expectations
+- US News Money: guidance ile eşleşen earnings = priced in = sell on news
+- UCLA Anderson akademik: SUE + EAR earnings reaction patterns gerçek fenomen, abnormal returns sürekli görülüyor
 
 **K-17: korelasyon ve yoğunlaşma yönetimi**
 - aynı gün giriş limitleri:
