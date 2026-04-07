@@ -45,7 +45,7 @@ bu prompt tek seferde çalışır. adımları sırayla takip et:
 ```
 ADIM 0 — PLAYBOOK + PİYASA İSTİHBARATI
   → docs/TRADING_PLAYBOOK.md dosyasını oku
-  → aktif kuralları gözden geçir (özellikle K-01 ile K-20, K-13 v4.1 sektör bazlı VIX kuralı)
+  → aktif kuralları gözden geçir (özellikle K-02 ile K-20, K-13 v4.1 sektör bazlı VIX kuralı)
   → docs/MARKET_INTELLIGENCE.md okuyarak istihbarat çerçevesini hatırla
   → web aramasıyla güncel piyasa istihbaratı topla:
     - dünden bu yana kritik haberler (makro, jeopolitik, sektörel)
@@ -151,7 +151,7 @@ ADIM 6 — ANALİZ, PLAN VE KAYIT
   → tüm verileri sentezle
   → SEKTÖR EXPOSURE TABLOSU: 3 portföy + swing toplam sektör dağılımı hesapla (docs/DECISION_FRAMEWORK.md bölüm 5)
   → PLAYBOOK ÇAPRAZ KONTROL: günün planındaki her aksiyonu docs/TRADING_PLAYBOOK.md kurallarıyla kontrol et
-    - yeni giriş planlıyorsan: K-01 (makro veri), K-02 (kriz rallisi), K-03 (VIX+small cap), K-13 v4.1 (sektör bazlı VIX), K-17/K-18 (insider check)
+    - yeni giriş planlıyorsan: K-02 (kriz rallisi), K-13 v4.1 (sektör bazlı VIX), K-17/K-18 (insider check)
     - çıkış planlıyorsan: K-06 (stop override), K-07 (trailing stop), K-08 (momentum), K-09 (stop yakın)
     - swing planlıyorsan: K-14 (ardışık zarar → dur), K-19 (XLP hariç), K-20 (RS dead cat bounce), ichimoku giriş sinyali veya trend devam girişi (4/4 bullish)
     - temel analiz: claude hisse bazında değerlendirir, sabit rasyo filtresi yok
