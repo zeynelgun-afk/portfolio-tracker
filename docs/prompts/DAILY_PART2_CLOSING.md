@@ -147,13 +147,18 @@ kısa, hızlı özet — bugün ne oldu.
 
 3 portföyün detay tablosu, uyarılar, aksiyonlar.
 
-**teknik uyarı kuralları**:
-- RSI > 70 → overbought uyarısı
-- RSI < 30 → oversold uyarısı
-- fiyat > SMA → ✅, fiyat < SMA → ❌
-- k/z > %20 + RSI > 75 → kar realizasyonu düşün
-- k/z < -%8 → stop-loss değerlendir
-- günlük değişim < -%5 → sert düşüş kontrolü
+**teknik uyarı kuralları** (playbook referansları ile):
+- RSI > 70 → overbought uyarısı (K-11 katman 1 tetiği, RSI 70+ otomatik satış DEĞİL, momentum teyidi)
+- RSI > 80 → K-11 katman 2 baskın tetik (kısmi satış %25-30 değerlendir)
+- RSI < 35 → K-15a oversold girişinde dikkat (1 gün teyit bekle)
+- fiyat > SMA50 → ✅ (K-04 trend filtresi), fiyat < SMA50 → ❌ (K-04 istisna kontrolü gerek)
+- fiyat < SMA200 → uzun vadeli trend kırılması uyarısı
+- k/z < -max(2×ATR, %5) → K-06 stop-loss tetikleyici (sabit eşik yok, hisse bazlı)
+- K-12 konsantrasyon kontrolü (portföy bazlı):
+  • Dengeli: tek hisse > %25 → uyarı
+  • Agresif: tek hisse > %20 → uyarı
+  • Temettü: tek hisse > %15 → uyarı
+- günlük değişim < -%5 → sert düşüş kontrolü (K-09 stop yakınlık çalıştır)
 
 ```markdown
 ## 2. portföy takibi
@@ -191,12 +196,13 @@ kısa, hızlı özet — bugün ne oldu.
 
 aktif pozisyonlar, ichimoku çıkış kontrolü, aksiyonlar.
 
-**durum belirleme (ichimoku v2)**:
-- intraday low ≤ chandelier stop → 🔴 ÇIKIŞ SİNYALİ
-- tenkan < kijun (bearish TK cross) → 🔴 TREND DÖNÜŞÜ
-- fiyat kumo'ya girdi → 🟡 KISMI ÇIKIŞ DÜŞÜN
-- fiyat kumo üstü + tenkan > kijun → ✅ normal
-- hacim ayrışması (düşen hacim + yükselen fiyat) → ⚠️ DİKKAT
+**durum belirleme (swing v2.3 chandelier)**:
+- intraday low ≤ chandelier stop → 🔴 ÇIK (K-06 ana kural: stop tetiklendiğinde ÇIKIŞ, override yasak)
+- kâr %7-15 bandında → chandelier sıkılaşır (2×ATR), K-07 kâr kilidi aktif
+- kâr %15+ bandında → chandelier agresif (1.5×ATR)
+- fiyat kumo üstü + tenkan > kijun → ✅ normal tutma
+- hacim ayrışması (düşen hacim + yükselen fiyat) → ⚠️ DİKKAT, izleme artır
+- NOT: kijun tabanlı çıkış v2.1'de kaldırıldı, sadece TK cross savunmacı kullanım (K-07 referansı)
 
 ```markdown
 ## 3. swing trade durumu
@@ -276,6 +282,13 @@ bugün kapanış sonrası (veya gün içi) açıklayan şirketlerin analizi.
 - gerçek veri: FMP `income-statement` (son çeyrek)
 - kazanç sezonu dışında (Ocak/Nisan/Temmuz/Ekim arası) açıklama sayısı az olabilir — normal
 - AH hareketi: web araması ile kapanış sonrası fiyat değişimi (FMP aftermarket-quote seans dışında sıfır dönüyor, kullanma)
+
+**K-16 SELL-THE-NEWS SKOR (portföy pozisyonları için, earnings 7 gün öncesi çalıştır)**:
+- Script: `python scripts/k16_sell_the_news_score.py SYMBOL`
+- 5 madde: 5g ralli %5+, EPS revizyon %10+, 52w zirve %5 mesafe, sektör 1ay %10+, short float %10+
+- Skor 2-3: portföy pozisyonunda %25 kısmi kâr al + K-11 trailing aktif
+- Skor 4-5: %50 kısmi çık, post-earnings bekle
+- NOT: Swing pozisyonları için K-05 geçerli (2+ gün öncesi TAM çık), K-16 portföy için
 
 ---
 

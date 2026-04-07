@@ -348,14 +348,17 @@ durum kodları:
 🔄 NÖTR — bekle, sinyal yok
 ```
 
-**otomatik uyarı tetikleyicileri**:
+**otomatik uyarı tetikleyicileri** (playbook referansları):
 - günlük değişim > +%5 veya < -%5 → acil inceleme
-- RSI > 75 → aşırı alım uyarısı
-- RSI < 30 → aşırı satım (fırsat mı tehlike mi?)
-- fiyat SMA50 altına düştü → trend zayıflama
+- RSI > 80 → K-11 katman 2 baskın tetik (RSI 75 değil, 80+)
+- RSI < 35 → K-15a oversold teyit protokolü (1 gün teyit)
+- fiyat SMA50 altına düştü → K-04 trend filtresi uyarısı
 - fiyat SMA200 altına düştü → uzun vadeli trend kırılması
-- stop-loss'a mesafe < %2 → acil uyarı
-- portföy ağırlığı > %25 → yoğunlaşma riski
+- stop-loss'a mesafe < %2 → K-09 stop yakınlık (scripts/k09_proximity_check.py)
+- K-12 KONSANTRASYON (portföy bazlı, TEK ESIK DEGIL):
+  • Dengeli: hisse > %25 → uyarı
+  • Agresif: hisse > %20 → uyarı
+  • Temettü: hisse > %15 → uyarı
 
 ## 2c. swing pozisyonları durum tespiti
 
@@ -364,45 +367,86 @@ her swing pozisyonu için:
 ```
 format: ID | SEMBOL | giriş | güncel | k/z% | chandelier stop | highest high | ATR | gün | durum
 
-durum kodları:
-⚠️ STOP YAKIN — fiyat kijun'a yaklaşıyor (<%2)
-🔴 ÇIKIŞ SİNYALİ — chandelier stop tetiklenme veya TK cross aşağı
+durum kodları (swing v2.3 chandelier, kijun tabanlı kurallar v2.1'de kaldırıldı):
+⚠️ STOP YAKIN — fiyat chandelier stop'a yaklaşıyor (<%2, K-09 çalıştır)
+🔴 ÇIKIŞ TETİĞİ — chandelier stop kırıldı (K-06 ana kural: override yasak)
 📈 TREND GÜÇLÜ — kumo üstü, tenkan > kijun, OBV yükseliş
 📉 ZAYIFLIYOR — hacim ayrışması veya OBV düşüş
-🔄 NÖTR — sinyal yok, ichimoku yapı korunuyor
+🔄 NÖTR — sinyal yok, chandelier aktif
 ```
 
-**chandelier trailing stop güncelleme kuralı (ichimoku v2)**:
+**chandelier trailing stop güncelleme kuralı (K-07 swing v2.3)**:
 ```
-FMP historical data ile ichimoku + chandelier stop hesapla
-→ chandelier stop güncellendi mi (highest_high artınca)? evet → stop yukarı çek
-→ stop ASLA aşağı çekilmez (en yüksek kijun korunur)
-→ çıkış sinyali var mı? acil olanlar hemen uygulanır
+FMP historical data ile ATR(14) + highest_high hesapla
+→ chandelier formül: highest_high - (multiplier × ATR)
+→ multiplier kâr bandına göre (kâr kilidi):
+   • kâr <%7: 3×ATR (normal)
+   • kâr %7-15: 2×ATR (kâr kilidi devrede)
+   • kâr %15+: 1.5×ATR (agresif kilit)
+→ stop ASLA aşağı çekilmez (matematik tek yön: yukarı)
+→ K-09 ile birlikte: stop'a %2 kala scripts/k09_proximity_check.py çalıştır
+```
+
+**K-14 DRAWDOWN DURUM KONTROLÜ (swing giriş öncesi zorunlu)**:
+```
+→ data/swing/status.json oku
+→ aktif_durum "K14_DRAWDOWN_FREN" ise → yeni giriş YASAK (A-kalite istisnası hariç)
+→ scripts/k14_drawdown_track.py son raporu incele
+→ ortam testi: VIX<22 VE SPY>SMA50 sağlanmıyorsa giriş ertele
 ```
 
 ---
 
 # AŞAMA 3 — AKSİYON KARARLARI
 
-> ⚠️ **PLAYBOOK KONTROLÜ**: her karar vermeden önce `docs/TRADING_PLAYBOOK.md` kurallarını kontrol et.
-> - yeni giriş → K-02 (kriz şokunda momentum giriş yasağı), K-13 v4.1 (sektör bazlı VIX), K-17/K-18 (insider check)
-> - çıkış → K-06 (stop disiplini, override yasak), K-07 (trailing stop), K-09 (stop yakın erken çık)
-> - swing → K-14 (ardışık 3+ zarar → dur), K-19 (XLP hariç), K-20 (RS dead cat bounce)
-> - ichimoku giriş: kumo kırılımı / kijun bounce + hacim teyidi + SMA200 filtre
+> ⚠️ **PLAYBOOK ÇAPRAZ KONTROL**: her karar vermeden önce `docs/TRADING_PLAYBOOK.md` 17 kuralını kontrol et.
+>
+> **GİRİŞ filtreleri** (17 kural):
+> - K-02 — kriz şokunda momentum giriş yasağı (3 iş günü)
+> - K-04 — SMA50 trend filtresi (üstü normal / altı sadece RSI<30 istisna)
+> - K-05 — swing earnings 2+ gün öncesi TAM çık (exception yok)
+> - K-13 v4.1 — sektör bazlı VIX (faydalanıcı/duyarlı × 4 bant)
+> - K-13b — VIX 28+ duyarlı sektör ichimoku 4/4 çeyrek istisnası
+> - K-14 — drawdown fren (data/swing/status.json kontrol)
+> - K-15a — RSI<35 oversold 1 gün teyit
+> - K-15b — momentum dilüsyon skoru (scripts/k15b_dilution_check.py)
+> - K-17 — korelasyon + tema (scripts/k17_correlation_check.py)
+> - K-18 — insider check (scripts/k18_insider_check.py)
+> - K-19 — XLP swing dışlama (scripts/k19_xlp_filter.py)
+> - K-20 — sektör RS dead cat bounce (scripts/k20_rs_filter.py)
+>
+> **ÇIKIŞ disiplini**:
+> - K-06 — stop tetiği ÇIKIŞ, override YASAK
+> - K-07 — trailing stop (chandelier + kâr kilidi)
+> - K-09 — stop yakınlık erken çıkış (scripts/k09_proximity_check.py)
+>
+> **PORTFÖY YÖNETİMİ**:
+> - K-10 — VIX bazlı savunmacı allokasyon ($600K bazlı)
+> - K-11 — kademeli kâr alma (3 katman, RSI 80+ baskın tetik)
+> - K-12 — konsantrasyon limitleri (Dengeli %25 / Agresif %20 / Temettü %15 / sektör %40 / tema %40)
+> - K-16 — portföy sell-the-news skor (scripts/k16_sell_the_news_score.py)
 
 ### ⛔ GO/NO-GO — HER YENİ GİRİŞTE ZORUNLU (tek "hayır" = giriş iptal)
 
 ```
-□ 1. sinyal var mı? (ichimoku 4/4, kumo kırılımı, kijun bounce veya portföy tezi)
-□ 2. stop tanımlı mı? (chandelier 3×ATR veya portföy stop, mesafe ≥%5)
+□ 1. sinyal var mı? (ichimoku 4/4, kumo kırılımı, portföy tezi)
+□ 2. stop tanımlı mı? (K-06: max(2×ATR(14), %5) normal swing / K-13b: chandelier 3×ATR %5 cap yok kriz modu)
 □ 3. R:R ≥ 2:1 mi?
-□ 4. VIX uygun mu? (K-13 v4.1 sektör bazlı kontrol)
-□ 5. insider temiz mi? (K-17/K-18, FMP insider-trading, son 90 gün >$5M satış var mı?)
-□ 6. earnings riski var mı? (5 gün içinde earnings → binary risk, bekle veya K-11 erken uygula)
-□ 7. korelasyon uygun mu? (aynı alt sektörde 3+ pozisyon?, sektör exposure >%30?)
-□ 8. nakit yeterli mi? (giriş sonrası nakit <%5 olacak mı?)
-□ 9. sabah planında var mı? (plan dışı → ekstra gerekçe zorunlu)
-□ 10. karşıt argüman düşündüm mü? (kırmızı takım: detay → docs/DECISION_FRAMEWORK.md bölüm 3)
+□ 4. VIX uygun mu? (K-13 v4.1 sektör bazlı kontrol — 4 bant × 2 sektör kategorisi)
+   • faydalanıcı: VIX <22 tam | 22-28 tam | 28-35 yarım | 35+ çeyrek
+   • duyarlı: VIX <22 tam | 22-28 yarım | 28-35 giriş yok (K-13b istisna hariç) | 35+ giriş yok
+□ 5. K-18 INSIDER temiz mi? (scripts/k18_insider_check.py SYMBOL, son 30 gün CEO/CFO satış + $5M eşiği)
+□ 6. K-17 KORELASYON temiz mi? (scripts/k17_correlation_check.py SYMBOL, sektör + anlatı tema çakışması)
+□ 7. K-15a teyit: RSI <35 ise 1 gün teyit bekle mi?
+□ 8. K-15b dilüsyon: momentum hisse ise (3ay >%30 + P/E neg/>50) scripts/k15b_dilution_check.py çalıştı mı?
+□ 9. K-05 earnings riski: swing için 2+ işlem günü içinde earnings varsa → GİRMEZ (exception yok)
+□ 10. K-19 + K-20 filtreleri: XLP değil mi? sektör RS dead cat paterni yok mu?
+□ 11. K-14 drawdown status: data/swing/status.json "K14_DRAWDOWN_FREN" değil mi?
+□ 12. K-12 konsantrasyon: giriş sonrası portföy limiti (Dengeli %25 / Agresif %20 / Temettü %15) aşılmıyor mu?
+□ 13. K-10 VIX allokasyon: toplam savunmacı + nakit minimum eşik sağlanıyor mu?
+□ 14. nakit yeterli mi? (giriş sonrası nakit <%5 olacak mı?)
+□ 15. sabah planında var mı? (plan dışı → ekstra gerekçe zorunlu)
+□ 16. karşıt argüman düşündüm mü? (kırmızı takım: detay → docs/DECISION_FRAMEWORK.md bölüm 3)
 ```
 
 ### ⛔ DÜŞÜNCE ZİNCİRİ — HER AL/SAT KARARINDA ZORUNLU (stop hariç)
@@ -428,77 +472,100 @@ detaylı önyargı listesi: docs/DECISION_FRAMEWORK.md bölüm 4
 > - temel analiz: claude hisse bazında değerlendirir, sabit rasyo filtresi yok
 > - kural ihlali gerekiyorsa gerekçeyi açıkça yaz
 
-## 3a. karar matrisi — portföyler
+## 3a. karar matrisi — portföyler (playbook K-rule entegrasyonu)
 
 her pozisyon için şu ağaçtan geç:
 
 ```
-1. STOP-LOSS TETİKLENDİ Mİ?
-   evet → 🔴 HEMEN SAT (duygusal karar yok)
+1. K-06 STOP-LOSS TETİKLENDİ Mİ?
+   evet → 🔴 HEMEN SAT (override YASAK, duygusal karar yok)
    hayır → devam
 
-2. HEDEF FİYATA ULAŞTI MI?
-   evet → 💰 kar al (kısmi/tam)
+2. K-11 KADEMELİ KÂR ALMA?
+   - Katman 1: RSI 70+ VE kâr %15+ → K-11 kâr kilidi aktif et (max(2×ATR, 20SMA altı))
+   - Katman 2: RSI 80+ VEYA (RSI 75+ + negatif divergence/20SMA altı) → %25-30 kısmi sat
+   - Katman 3: 50SMA altı kapanış VEYA chandelier trailing → tam çık
    hayır → devam
 
-3. TEZ BOZULDU MU?
+3. K-16 SELL-THE-NEWS SKOR (earnings 7g öncesi, portföy pozisyonu)
+   → scripts/k16_sell_the_news_score.py SYMBOL
+   - Skor 2-3: %25 kısmi + K-11 trailing sıkılaştır
+   - Skor 4-5: %50 kısmi çık, post-earnings bekle
+   hayır → devam
+
+4. TEZ BOZULDU MU?
    - temel verilerde kötüleşme? (earnings miss, temettü kesintisi, guidance düşürme)
-   - sektör yapısal zayıflama? (sadece günlük dalgalanma değil)
-   - korelasyon riski? (aynı sektörde çok fazla yoğunlaşma)
+   - sektör yapısal zayıflama? (K-20 sektör RS dead cat paterni)
+   - korelasyon riski? (K-17 + K-12 sektör/tema %40 limit)
    evet → ⚠️ pozisyon küçült veya kapat
    hayır → devam
 
-4. PORTFÖY DENGESİ BOZULDU MU?
-   - bir pozisyon > %25 ağırlık?
-   - bir sektör > %40 ağırlık?
-   evet → 🔄 rebalance düşün
+5. K-12 KONSANTRASYON KONTROLÜ (PORTFÖY BAZLI LIMITLER)?
+   - Dengeli: hisse > %25? → küçült
+   - Agresif: hisse > %20? → küçült
+   - Temettü: hisse > %15? → küçült
+   - Toplam $600K bazlı sektör > %40? → en zayıfı kes
+   - Toplam $600K bazlı anlatı tema > %40? (K-17) → tema yoğunluğu azalt
+   evet → 🔄 rebalance
    hayır → devam
 
-5. TEKNİK DURUM?
-   - RSI > 75 + SMA'lar üzerinde → kar alma düşünülebilir
-   - RSI < 30 + SMA'lar üzerinde → dip alım fırsatı
+6. K-10 VIX ALLOKASYON KONTROLÜ
+   - VIX bandına göre min savunmacı + nakit eşiği sağlanıyor mu?
+   - eksikse: yeni agresif giriş yasak, savunmacı/nakit artır
+   hayır → devam
+
+7. TEKNİK DURUM (K-11 zaten yönetiyor, sadece izleme):
+   - RSI > 80 + kâr 15%+ → K-11 katman 2 baskın tetik aktif
+   - RSI < 35 + K-04 SMA üstü → K-15a dip alım değerlendir (1 gün teyit)
    - SMA200 altına kırılım → trend dönüşü uyarısı
 
-6. HİÇBİR TETİK YOK → ✅ TUT, bir sonraki güne bekle
+8. HİÇBİR TETİK YOK → ✅ TUT
 ```
 
-## 3b. karar matrisi — swing trade
+## 3b. karar matrisi — swing trade (v2.3)
 
 her swing pozisyonu için:
 
 ```
-0. ICHİMOKU SEVİYE TAKİBİ
-   FMP historical data ile ichimoku + chandelier stop hesapla
-   → kijun değişti mi? (trailing stop güncelleme)
-   → çıkış sinyali var mı? (chandelier stop tetiklenme, TK cross aşağı, kumo'ya giriş)
-   → hacim uyarısı var mı? (düşen hacim + yükselen fiyat = zayıflama)
+0. K-14 DRAWDOWN STATUS KONTROLÜ (günlük tek sefer)
+   → data/swing/status.json oku, aktif_durum kontrol
+   → K14_DRAWDOWN_FREN aktifse → yeni giriş yok, sadece mevcut pozisyon yönetimi
 
-1. STOP-LOSS KESİLDİ Mİ?
-   fiyat < stop_loss (kijun veya kumo) → 🔴 %100 SAT, closed.json'a kaydet
+1. CHANDELIER STOP TETİKLENDİ Mİ? (K-06 + K-07)
+   fiyat <= chandelier stop → 🔴 %100 SAT (override YASAK), closed.json'a kaydet
+   → kaydet: K-rule etiketi (K-06 stop, K-14 trailing, vb.)
    hayır → devam
 
-2. KİJUN ALTI KAPANIŞ?
-   fiyat kijun altında kapandı → fark > %0.5 ise hemen çık, < %0.5 ise yarın teyit bekle
+2. K-09 STOP YAKINLIK KONTROLÜ
+   fiyat chandelier stop'a <%2 mesafe mi?
+   → scripts/k09_proximity_check.py çalıştır (4 kontrol: RSI/hacim/SPY+VIX/sektör ETF)
+   → 3+ negatif → 🔴 EXIT_NOW erken çıkış
+   → 2 negatif → WAIT_STOP bekle
+   → 0-1 negatif → TUT
+
+3. K-07 KÂR KİLİDİ GÜNCELLE (chandelier multiplier)
+   kâr <%7: chandelier 3×ATR (normal)
+   kâr %7-15: chandelier 2×ATR (kâr kilidi aktif)
+   kâr %15+: chandelier 1.5×ATR (agresif kilit)
+   → highest_high artmışsa stop yukarı çek (matematik tek yön)
+
+4. K-05 EARNINGS KORUMASI (2+ gün öncesi ZORUNLU)
+   earnings 2 işlem günü içinde mi?
+   → evet → ✂️ TAM ÇIK (exception yok, binary risk alma)
    hayır → devam
 
-3. TK CROSS AŞAĞI? (filtreli — v2.1'de giriş sinyali olarak kaldırıldı, çıkışta savunmacı kullanım)
-   tenkan kijun'u aşağı kesti:
-   → fark > %1 VE hacim > 1.0x ortalama → çık (güçlü sinyal)
-   → fark > %0.5 ama hacim düşük → yarın teyit bekle
-   → fark < %0.5 → sahte sinyal olasılığı yüksek, hacim + OBV teyidi olmadan çıkma
-   hayır → devam
+5. HACİM + MOMENTUM DURUMU (K-07 kâr kilidi zaten yönetiyor, sadece rapor)
+   - OBV yükseliyor + fiyat yükseliyor → sağlıklı
+   - OBV düşüyor + fiyat yükseliyor → ayrışma, raporda belirt
+   - 3 gün düşen hacim + yükselen fiyat → K-07 kâr kilidini kontrol et
 
-4. TRAİLİNG STOP GÜNCELLE
-   chandelier stop güncellendi mi (highest_high artınca) → stop yukarı çek (stop ASLA aşağı çekilmez)
-   en yüksek kijun değeri korunur
-
-5. HACİM DURUMU?
-   - OBV yükseliyor + fiyat yükseliyor → sağlıklı, tut
-   - OBV düşüyor + fiyat yükseliyor → ayrışma, dikkat
-   - 3 gün düşen hacim + yükselen fiyat → uyarı, trailing sıkılaştır
-
-6. HİÇBİR TETİK YOK → ✅ TUT
+6. HİÇBİR TETİK YOK → ✅ TUT (chandelier aktif)
 ```
+
+**NOT: v2.1'den v2.3'e geçişte kaldırılan/değişen kurallar**:
+- "Kijun altı kapanış" otomatik çıkış: KALDIRILDI (chandelier aldı)
+- "TK cross aşağı" otomatik çıkış: KALDIRILDI (sadece rapor sinyali)
+- Stop hesaplama: kijun → chandelier (K-07)
 
 ## 3c. portföyler arası korelasyon kontrolü
 
@@ -507,15 +574,21 @@ her swing pozisyonu için:
 yeni pozisyon açmadan önce veya mevcut durumu değerlendirirken:
 
 ```
-kontrol 1: aynı hisse birden fazla portföyde var mı?
+kontrol 1: aynı hisse birden fazla portföyde var mı? (K-12 cross-portfoy)
 - swing + portföy çakışması kabul edilebilir (farklı zaman ufku)
-- iki portföyde aynı hisse → bilinçli karar mı yoksa hata mı?
+- iki portföyde aynı hisse → toplam $600K bazlı %10 üstünde mi? bilinçli karar mı?
 
-kontrol 2: sektör yoğunlaşması
-- 3 portföy toplamında bir sektörün toplam ağırlığı > %30 → uyar
-- örnek: dengeli'de XLE + agresif'te tech hisseler + swing'de enerji hissesi = aşırı exposure
+kontrol 2: K-12 GICS SEKTÖR LİMİTİ
+- 3 portföy toplamında bir GICS sektörün toplam ağırlığı > %40 → en zayıfı kes
+- örnek: dengeli'de XLE + agresif'te XLK + swing'de XLE = sektör exposure hesabı
 
-kontrol 3: yön korelasyonu
+kontrol 3: K-17 ANLATI BAZLI TEMA LİMİTİ (yeni)
+- Anlatı tema (AI tedarik zinciri, savunma, enerji vb.) > %40 → yeni tema girişi yok
+- Script: scripts/k17_correlation_check.py YENI_SYMBOL
+- 3 soru testi: makro hikaye / katalist / senaryo — 1 evet = aynı tema
+- Tema tanımı: k_rules_common.py THEME_MAP (10 anlati tema)
+
+kontrol 4: yön korelasyonu
 - tüm portföyler aynı yönde mi hareket ediyor? (çeşitlendirme çalışıyor mu?)
 - temettü portföyü piyasa düşerken yükseliyorsa → hedge fonksiyonu çalışıyor ✅
 - hepsi aynı anda düşüyorsa → korelasyon riski ⚠️
@@ -643,10 +716,11 @@ A) SİNYAL GİRİŞİ (ideal):
 B) TREND DEVAM GİRİŞİ (güçlü trend varken):
 1. ichimoku 4/4 güçlü yükseliş (kumo üstü + tenkan>kijun + chikou pozitif + yeşil kumo)
 2. OBV yükseliş (alıcılar aktif)
-3. stop mesafesi >%5 (2x ATR uygun)
-4. SMA200 üstünde
+3. K-06 stop hesaplama: max(2×ATR(14), %5) — 2×ATR ile %5'ten büyüğü al
+   (K-13b kriz modu istisna: chandelier 3×ATR, %5 cap yok)
+4. SMA200 üstünde (K-04 trend filtresi)
 → yarım pozisyon (trend güçlü ama spesifik sinyal yok, dikkatli giriş)
-→ trend devam ederse ve kijun bounce veya yeni kırılım gelirse tamamla
+→ trend devam ederse ve yeni kırılım gelirse tamamla
 
 C) ORTAK KOŞULLAR (her giriş için):
 5. claude temel değerlendirmesi olumlu
@@ -714,6 +788,11 @@ C) ORTAK KOŞULLAR (her giriş için):
        root_cause: hazırlık / uygulama / boyutlandırma / duygusal / harici
        corrective_action: "bir sonraki döngüde ne değişecek"
        bias_detected: yok / anchoring / disposition / FOMO / overconfidence / sunk_cost
+     → K-RULE ETİKETLERİ (zorunlu, otomatik izlenebilirlik için):
+       k_rules_applied: ["K-06", "K-07", "K-09", ...]  (bu trade'de hangi kurallar devreye girdi)
+       k_rules_violated: []  (varsa hangi kurallar ihlal edildi)
+       giris_filtre_sonuc: "geçti" / "K-17 ihlali" / "K-18 senior sell flag"
+       bu etiketler K-14 drawdown ve K-rule etkinlik analizleri için kritik
 6. `data/summary.json` güncelle
 
 **her alış için**:
@@ -792,6 +871,16 @@ python scripts/telegram_notify.py --type alert --symbol SEMBOL --price FIYAT --s
 
 # seans özeti (her faz sonunda):
 python scripts/telegram_notify.py --type session --theme "günün teması özeti"
+
+# K-RULE OTOMATİK ALERT'LER (script'ler zaten telegram'a yazar):
+#   - scripts/k09_proximity_check.py → stop yakınlık (EXIT_NOW/WAIT)
+#   - scripts/k14_drawdown_track.py → ardışık zarar/drawdown
+#   - scripts/k15b_dilution_check.py SYMBOL → momentum dilüsyon skoru
+#   - scripts/k16_sell_the_news_score.py SYMBOL → portföy sell-the-news
+#   - scripts/k17_correlation_check.py SYMBOL → korelasyon riski
+#   - scripts/k18_insider_check.py SYMBOL → insider (senior sell)
+#   - scripts/k19_xlp_filter.py SCAN_FILE → XLP elemesi
+#   - scripts/k20_rs_filter.py SCAN_FILE → dead cat bounce elemesi
 
 # NOT: iç sistem detayları (kural değişiklikleri, skor açıklamaları vb.) telegram'a GÖNDERİLMEZ
 ```

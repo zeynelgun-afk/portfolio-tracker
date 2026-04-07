@@ -126,14 +126,24 @@ ADIM 4 — SWİNG TARAMA (FMP screener → ichimoku 4/4 → v2.3 filtreleri)
   TARAMA AKIŞI:
   1. FMP company-screener → ~1,100 hisse çek (mcap >$2B, vol >500K, price >$10, US)
   2. K-19: consumer defensive sektör hisselerini çıkar
-  3. VIX kontrol:
-     - VIX <22: normal mod → SPY > 21EMA + eğim ↗ kontrol → K-20 RS kontrol
-     - VIX 22-35: K-13b kriz modu → sektör ETF 9+21 EMA kontrol
-     - VIX >35: hiç giriş yapılmaz
+  3. K-13 v4.1 VIX kontrolü (sektör bazlı, 4 bant):
+     - VIX <22 (sakin): faydalanıcı tam | duyarlı tam (SPY > 21EMA kontrol)
+     - VIX 22-28 (dikkatli): faydalanıcı tam | duyarlı YARIM
+     - VIX 28-35 (gergin): faydalanıcı yarım | duyarlı GİRİŞ YOK (K-13b ichimoku 4/4 istisnası hariç, çeyrek poz)
+     - VIX 35+ (panik): faydalanıcı çeyrek | duyarlı giriş yok
+     - Aktif kriz listesi: docs/TRADING_PLAYBOOK.md ADIM 2 kriz tablosu
   4. ichimoku 4/4 hesapla (kumo üstü + TK bull + tenkan üstü + volume 1.3x)
-  5. 4/4 sinyal verenler için chandelier stop hesapla: giriş_fiyatı - 3×ATR(14)
-  6. min stop mesafesi ≥%5 kontrol
-  7. aday varsa: K-18 insider check, earnings tarihi check
+  5. K-06 stop hesaplama: max(2×ATR(14), %5) — normal swing
+     K-13b istisna: chandelier 3×ATR, %5 cap YOK (VIX 28+ kriz modu)
+  6. K-14 DRAWDOWN STATUS kontrol: data/swing/status.json oku, "K14_DRAWDOWN_FREN" aktifse YENI GİRİŞ YASAK
+  7. Aday filtreleri (sırayla):
+     a) K-19 XLP filtre: scripts/k19_xlp_filter.py SCAN_FILE --write
+     b) K-20 RS dead cat bounce: scripts/k20_rs_filter.py SCAN_FILE --write
+     c) K-15a RSI<35 ise 1 gün teyit kontrolü
+     d) K-15b momentum hisse ise dilüsyon skoru: scripts/k15b_dilution_check.py SYMBOL
+     e) K-17 korelasyon: scripts/k17_correlation_check.py SYMBOL (sektör + anlatı tema)
+     f) K-18 insider: scripts/k18_insider_check.py SYMBOL (senior + 30g + $5M)
+     g) K-05 earnings: swing için 2+ gün içinde earnings varsa GİRME
 
   MEVCUT AKTİF POZİSYONLAR:
   → data/swing/active.json oku
@@ -150,10 +160,29 @@ ADIM 5 — FİNVİZ TARAMA (teyit katmanı)
 ADIM 6 — ANALİZ, PLAN VE KAYIT
   → tüm verileri sentezle
   → SEKTÖR EXPOSURE TABLOSU: 3 portföy + swing toplam sektör dağılımı hesapla (docs/DECISION_FRAMEWORK.md bölüm 5)
-  → PLAYBOOK ÇAPRAZ KONTROL: günün planındaki her aksiyonu docs/TRADING_PLAYBOOK.md kurallarıyla kontrol et
-    - yeni giriş planlıyorsan: K-02 (kriz şokunda momentum giriş yasağı), K-13 v4.1 (sektör bazlı VIX), K-17/K-18 (insider check)
-    - çıkış planlıyorsan: K-06 (stop disiplini, override yasak), K-07 (trailing stop), K-09 (stop yakın)
-    - swing planlıyorsan: K-14 (ardışık zarar → dur), K-19 (XLP hariç), K-20 (RS dead cat bounce), ichimoku giriş sinyali veya trend devam girişi (4/4 bullish)
+  → PLAYBOOK ÇAPRAZ KONTROL: günün planındaki her aksiyonu docs/TRADING_PLAYBOOK.md 17 kuralı ile kontrol et
+    **GİRİŞ KURALLARI**:
+    - K-02 — kriz şokunda momentum giriş yasağı (3 iş günü)
+    - K-04 — SMA50 trend filtresi (üstü normal, altı istisna RSI<30)
+    - K-05 — swing earnings 2+ gün öncesi TAM çık (exception yok)
+    - K-13 v4.1 — sektör bazlı VIX (faydalanıcı/duyarlı × 4 bant)
+    - K-13b — VIX 28+ duyarlı ichimoku 4/4 çeyrek istisnası
+    - K-14 — drawdown status (data/swing/status.json)
+    - K-15a — RSI<35 oversold 1 gün teyit
+    - K-15b — momentum hisse dilüsyon skoru
+    - K-17 — korelasyon + anlatı tema çakışma
+    - K-18 — insider kontrolü (senior sell + $5M eşiği)
+    - K-19 — XLP swing dışlama
+    - K-20 — sektör RS dead cat bounce
+    **ÇIKIŞ KURALLARI**:
+    - K-06 — stop tetiği ÇIKIŞ, override YASAK
+    - K-07 — trailing stop (chandelier + kâr kilidi)
+    - K-09 — stop yakınlık 4 kontrol (3+ negatif → EXIT_NOW)
+    **PORTFÖY**:
+    - K-10 — VIX bazlı savunmacı allokasyon ($600K bazlı)
+    - K-11 — kademeli kâr alma (RSI 80+ baskın tetik, RSI 70+ katman 1 kâr kilidi)
+    - K-12 — konsantrasyon (Dengeli %25/Agresif %20/Temettü %15/sektör %40/tema %40)
+    - K-16 — portföy sell-the-news skor (earnings öncesi)
     - temel analiz: claude hisse bazında değerlendirir, sabit rasyo filtresi yok
     - kural ihlali varsa raporda açıkça belirt ve gerekçelendir
   → KARAR ÇERÇEVESİ: giriş planlarında GO/NO-GO 10 soru kontrol et (sinyal, stop, R:R, VIX, insider, earnings, korelasyon, nakit, plan, karşıt argüman)
