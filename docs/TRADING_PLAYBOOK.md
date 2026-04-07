@@ -83,17 +83,32 @@ kanıt: NVDA swing +%2.88 (12-23 şubat 2026) — earnings öncesi kâr realizas
 
 ### çıkış kuralları
 
-**K-06: stop-loss override protokolü**
-- stop tetiklendiğinde ÇIKIŞ. tartışma yok
-- override istisnası (sadece 1 kez, 4 koşul TÜMÜ sağlanmalı):
-  a) hisse teknik destek seviyesinde (SMA200, pivot, kumo)
-  b) piyasa geneli kötü (SPY -%2+) ve hisse pozitif ayrışıyor
-  c) orijinal tez sağlam
-  d) yeni stop max %2 daha aşağıda
-- 4 koşuldan biri eksikse → direkt çık
-- override sonrası 3 iş günü toparlanma yoksa → kesin çıkış, 2. override yok
-- ATR önerisi: sabit %5 yerine 2×ATR(14)
-- kanıt: LASR -%3.8 → -%7.3 (ihlal), RTX -%5.16 (uyuldu)
+**K-06: stop disiplini (sertleştirilmiş 7 nisan 2026)**
+
+ANA KURAL: stop tetiklendiğinde ÇIKIŞ. tartışma, istisna, koşul yok.
+
+stop hesaplama (zorunlu):
+- ilk giriş stop'u: max(2×ATR(14), %5) — sabit %5 tek başına yetersiz
+- chandelier exit (3×ATR trailing) açıldıktan sonra K-07 devralır
+- ATR hesaplaması zorunlu, "öneri" değil
+
+OVERRIDE: yasak. istisnasız.
+- "tez sağlam, biraz daha bekleyeyim" trader'ın en pahalı 4 kelimesidir
+- önceki 4 koşullu istisna (teknik destek + ayrışma + tez + %2 alt stop) kaldırıldı
+  - 4 koşulun 3'ü öznel, "tez sağlam" confirmation bias için açık kapıydı
+  - "1 kez izin" sınırı LASR vakasında 3 kez ihlal edildi, pratikte çalışmadı
+
+K-09 İLE İLİŞKİ: K-09 stop tetiklenmeden önceki hareketi yönetir (yakınlık erken çıkışı), K-06 tetik anında çalışır. çakışma yok, sıralı tamamlayıcı.
+
+REPO KANITI (closed.json swing testi 7 nisan 2026):
+- disipline uyulan 8 trade: RTX -%5.16, CEG -%5.05, T -%5.54, AMT -%3.35, GE +%1.68 (kâr koruma), ALMU -%6.11, SOFI -%3.62, AROC -%4.95
+- hard zarar yok, hepsi -%6 ve altında, düzgün boyutlandırılmış stop
+- ihlal vakası (aggressive portföy): LASR 3-16 mart, 3x override, breakeven dönüş (şans eseri kurtuluş, gelecek için garanti değil)
+
+LİTERATÜR DESTEĞİ:
+- TradeFundrr (2025): stop'u taşıyan trader'ların ortalama kaybı taşımayanlardan %40 daha büyük
+- TradingMetrics: "stop'u taşımak risk yönetimi değil, risk kaçınmasıdır; risk kaçınması her zaman daha büyük kayıplara yol açar"
+- mental stop yerine her zaman gerçek stop emri kullan (override fırsatını ortadan kaldır)
 
 **K-07: izleyen zarar kes (trailing stop) disiplini**
 - swing trade: chandelier exit — highest_high − 3×ATR(14)
@@ -360,7 +375,7 @@ her hata tarih, ne olduğu, neden yanlış olduğu ve çıkarılan kuralla kayde
 |-------|-------|------|-------|-----------------|
 | 2-9 mart | KTOS, CEG, HAL, LASR, BKSY | momentum/savunma kriz girişleri | 3 zarar (HAL -%5.10, CEG -%5.05, KTOS stop), 1 breakeven (LASR), 1 kâr (BKSY +%18) | K-02 (kısmi) |
 | 5 mart | AMKR | NFP öncesi gece alım | -%6.12 | (K-01 kaldırıldı) |
-| 5-9 mart | LASR | 3x stop override | -%3.8→-%7.3 | K-06 |
+| 5-9 mart | LASR | 3x stop override (override istisnası 'şanslı' breakeven dönüş ile maskelendi) | -%3.8→-%7.3, BE çıkış | K-06 ihlal kanıtı |
 | 27 şubat | LMT | swing'de süre aşımı ertelemesi | +%1.4 ama 18 gün | K-08 |
 | 10 mart | ALMU | VIX 24'te small cap swing | 2 günde -%6.1 | K-03 |
 | 24 şub-12 mart | SOFI | momentum gelmeden 16 gün tutma | -%3.6 | K-08 |
@@ -394,7 +409,7 @@ neyin iyi çalıştığını da kaydet — tekrar et.
 | erken disiplinli çıkış (stop yakın) | AMKR, GE | daha büyük zarardan korudu |
 | kriz ortamında sağlık diversifikasyonu | JNJ eklendi, portföy dengesi | risk-off koruması güçleniyor |
 | AI tedarik zinciri katalizör pozisyonlama | GTC 2026: MRVL +%4.2, RKLB +%4.2, COHR +%1.9, GLW +%2.3, ANET +%1.3 tek günde | katalizör öncesi yarim pozisyon, doğrulanınca artır stratejisi çalışıyor |
-| stop-loss disiplini (override yok) | RTX -%5.16 stop tetiklendi, K-06'ya uyuldu (24 mart) | kontrollü zarar, daha büyük kayıp önlendi |
+| stop-loss disiplini (override yasak, K-06) | n=8 swing, hepsi -%6 altında: RTX -%5.16, CEG -%5.05, T -%5.54, AMT -%3.35, GE +%1.68, ALMU -%6.11, SOFI -%3.62, AROC -%4.95 | hard zarar yok, kontrollü kayıplar |
 | ichimoku 4/4 + volume teyit (backtest) | 9 mart: VLO, OXY, MPC, DVN, COP, FANG = 6/6 kazanan. 20 mart: HAL, DVN, VLO = 3/3 kazanan. 3/4 sinyal (volume eksik) savunma hisseleri 2/2 stop | %100 başarı oranı, volume teyidi kritik filtre. K-13b istisnası bu kanıta dayanır |
 
 ---

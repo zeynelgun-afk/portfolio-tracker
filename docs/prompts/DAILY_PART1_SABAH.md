@@ -152,7 +152,7 @@ ADIM 6 — ANALİZ, PLAN VE KAYIT
   → SEKTÖR EXPOSURE TABLOSU: 3 portföy + swing toplam sektör dağılımı hesapla (docs/DECISION_FRAMEWORK.md bölüm 5)
   → PLAYBOOK ÇAPRAZ KONTROL: günün planındaki her aksiyonu docs/TRADING_PLAYBOOK.md kurallarıyla kontrol et
     - yeni giriş planlıyorsan: K-02 (kriz şokunda momentum giriş yasağı), K-13 v4.1 (sektör bazlı VIX), K-17/K-18 (insider check)
-    - çıkış planlıyorsan: K-06 (stop override), K-07 (trailing stop), K-08 (momentum), K-09 (stop yakın)
+    - çıkış planlıyorsan: K-06 (stop disiplini, override yasak), K-07 (trailing stop), K-08 (momentum), K-09 (stop yakın)
     - swing planlıyorsan: K-14 (ardışık zarar → dur), K-19 (XLP hariç), K-20 (RS dead cat bounce), ichimoku giriş sinyali veya trend devam girişi (4/4 bullish)
     - temel analiz: claude hisse bazında değerlendirir, sabit rasyo filtresi yok
     - kural ihlali varsa raporda açıkça belirt ve gerekçelendir
