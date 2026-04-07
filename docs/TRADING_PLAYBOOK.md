@@ -238,27 +238,64 @@ LİTERATÜR KANITI:
 - ScienceDirect VIX-managed portfolios: önceki ay VIX yüksekken risk azalt basit kuralı istikrarlı performans veriyor
 - International Trading Institute (2025): VIX eşikleri pozisyon sizing'de endüstri standardı (sakin altı normal, ortada yarım, üstünde sadece A-setup)
 
-**K-11: kademeli kâr alma sistemi**
-- kapsam: sadece portföy pozisyonları. swing'de uygulanmaz (kâr kilidi sistemi: <%7 chandelier 3×ATR, %7-15 2×ATR, %15+ 1.5×ATR)
-- prensip: güçlü trendlerde RSI 70+ uzun süre kalabilir. RSI 70 otomatik satış değil, momentum teyidi. kazananı erken kesme
+**K-11: kademeli kâr alma sistemi (sadeleştirilmiş 7 nisan 2026)**
 
-  katman 1 — UYARI (izle, satma):
-  RSI 70+ ve %15+ kâr → trailing aktif (2×ATR(14) veya 20SMA altı kapanış, hangisi geniş). koruma modu
+KAPSAM: portföy pozisyonları (Dengeli, Agresif, Temettü). swing'de uygulanmaz (swing'de K-07 kâr kilidi: <%7 chandelier 3×ATR, %7-15 2×ATR, %15+ 1.5×ATR)
 
-  katman 2 — KISMİ KÂR AL (%25-30, tetikleyici BİRİ):
-  a) RSI bearish divergence (fiyat yeni zirve, RSI yapmaz)
-  b) RSI 75+ sonra 70 altı (momentum kırılması)
-  c) fiyat 20SMA altı kapanış
-  d) RSI 80+ (uyumsuzluk aramadan)
+PRENSİP: RSI 70 OTOMATİK SATIŞ DEĞİL, momentum teyididir. güçlü trendlerde RSI 70+ uzun süre kalabilir. kazananı erken kesme.
 
-  katman 3 — KALAN (trailing ile devam):
-  pozisyon trade: 50SMA altı kapanış veya 3×ATR(14). trend bitene kadar tut
+3 KATMANLI YAPI:
 
-- istisnalar:
-  • earnings 5 gün içinde: katman 2'yi RSI 70+'ta uygula
-  • VIX >28: katman 2'yi RSI 72+'ta uygula
-  • LEAPS: katman 2 eşiği RSI 80+
-- kanıt: SM RSI 74 → ertesi gün -%4.38 (doğru). KOS parçalı ideal
+KATMAN 1 — UYARI MODU (izle, satma):
+- Tetik: RSI 70+ VE +%15 kâr
+- Aksiyon: trailing aktif → max(2×ATR(14), 20SMA altı kapanış)
+- Amaç: kâr koruma, çıkış DEĞİL
+
+KATMAN 2 — KISMİ KÂR AL (%25-30 dilim):
+Tetikler (BİRİ yeterli, basitleştirilmiş — 2 ana tetik):
+- (a) RSI 80+ → kısmi sat (en sık kullanılan, baskın tetik)
+- (b) RSI 75+ VE bir teyit (negatif divergence YA DA 20SMA altı kapanış)
+- Tek dilim kuralı: bir günde max 1 kısmi satış (transaction yığılmasını önle)
+
+KATMAN 3 — KALAN POZİSYON (trend bitene kadar):
+- Tetik: 50SMA altı kapanış VEYA 3×ATR(14) trailing kırılım
+- Amaç: trend bitişinde tam çıkış
+
+İSTİSNALAR:
+- Earnings 5 gün içinde: katman 2 RSI 70+'a düşürülür
+- VIX >28: katman 2 RSI 72+'a düşürülür
+- LEAPS: katman 2 eşiği RSI 80+ (zaten baskın tetik ile aynı)
+
+POZİSYON BÜYÜTME (yeni eklendi 7 nisan 2026):
+- Katman 1 aktif + RSI <80 + 20SMA üstünde + güçlü hacim → "kazananı büyüt" pozisyon büyütme yapılabilir (max %10 ek)
+- Örnek: SM 25 mart +160 hisse @ $31.14 (RSI 75, trend devam)
+
+REPO KANITI (n=15+ K-11 uygulaması, closed.json + transactions.csv testi 7 nisan 2026):
+
+SM (Dengeli) — K-11'in en yoğun uygulandığı trade:
+- Giriş 17 şubat $21.14 (1040 hisse)
+- 9 farklı K-11 kısmi satış: 9-25 mart arası, fiyat $26.50-$30.84
+- Tetikler: RSI 72-80 aralığı (baskın olarak (a) RSI 80+ tetiği)
+- 25 mart pozisyon büyütme +160 @ $31.14 (kazananı büyüt uygulaması)
+- 1 nisan tam çıkış: iran ateşkes (tez bazlı, K-11 dışı)
+- Sonuç: ortalama çıkış ~$28-29, %30-40 kâr boyunca yönetildi
+- Ders: kademeli çıkış sayesinde tam tepe yakalanamadı ama trend kaçırılmadı
+
+KOS (Dengeli) — parçalı ideal:
+- Giriş $1.67, 27 şubat-9 mart arası 5 kısmi satış
+- Çıkış aralığı $2.25-$2.58, ~%35-%55 kâr
+
+VZ (Temettü) — kısmi kâr:
+- 25 şubat 156 hisse @ $49.51, RSI 73, +%24 kâr realize
+
+CELH, TYL, COHR, CRDO, MU (Agresif) — earnings rally + katalist tabanlı kademeli çıkışlar. K-11 kuralı doğru uygulandı.
+
+KANIT DÜZELTMESİ (önemli): Önceki kanıt iddiası "SM RSI 74 → ertesi gün -%4.38" YANLIŞTI. SM gerçekte RSI 74 sonrası yükselmeye devam etti ($27.36 → $30.84). K-11'in asıl başarısı "RSI 70'te tamamen sat" hatasını önlemek, kademeli çıkışla trendi kaçırmamaktı.
+
+LİTERATÜR:
+- Capital.com / NusaTrader / Goat Funded Trader: RSI güçlü trendlerde 70+ uzun süre kalabilir, her 70'i aştığında satmak kaçırılmış fırsat yaratır
+- Kraken: hidden bullish divergence (price higher low, RSI lower low) trend devam sinyali
+- LuxAlgo: ATR bazlı çoklu hedef + ilk hedef sonra trail endüstri standardı
 
 **K-12: pozisyon konsantrasyon limitleri**
 - tek hisse: max %15 portföy ağırlığı
