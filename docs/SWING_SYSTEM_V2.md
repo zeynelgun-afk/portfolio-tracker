@@ -80,13 +80,9 @@ ichimoku sinyali (4/4 zorunlu, 3/4 → ATLA)
         │     ├── VIX 22-28 → SPY > 21EMA + eğim ↗ → K-19 → K-20 → GİR (yarım pozisyon)
         │     ├── VIX 28-35 → giriş yok (istisna: K-13b 6 koşul sağlanırsa çeyrek pozisyon)
         │     └── VIX 35+ → ATLA (K-13b bile izin vermez)
-        │
-        └── PEAD GİRİŞİ (K-05 v3 Aşama 2 — ichimoku 4/4 gerekmez, kendi koşulları var)
-              └── kazanç sürprizi ≥%10 + gap-up + hacim 2x + 2. gün trigger → yarım pozisyon
 ```
 
 **tüm ichimoku bazlı swing girişleri 4/4 zorunlu.** 3/4 sinyaller (volume teyitsiz) swing'de değerlendirilmez.
-**PEAD girişleri** (K-05 v3 Aşama 2) ichimoku 4/4 gerektirmez, kendi giriş koşulları vardır (bkz. aşağıda 1d).
 portföy pozisyonlarında K-11 kademeli çıkış uygulanır, sabit hedef yoktur.
 
 **hedef ve çıkış politikası (v2.3.1 — 6 nisan 2026):**
@@ -190,29 +186,6 @@ fiyat yükseliş trendinde kijun-sen'e geri çekilir ve oradan seker.
 **güç**: trend devamı sinyali. ilk girişi kaçırınca veya ekleme (piramitleme) için kullanılır.
 
 **stop notu**: kijun bounce'ta fiyat kijun'a çok yakın girişi olduğu için chandelier stop (giriş_fiyatı - 3×ATR) genellikle kijun'dan daha geniş alan tanır. bu yüzden kijun bounce girişleri chandelier ile daha iyi korunur. chandelier stop mesafesi yine de <%5 ise → giriş reddedilir.
-
-### 1d. PEAD GİRİŞİ (kazanç sonrası sürüklenme — K-05 v3 Aşama 2)
-
-kazanç açıklaması sonrası sürpriz yönünde devam eden fiyat hareketinden (post-earnings announcement drift) faydalanma. bu giriş tipi ichimoku 4/4 gerektirmez — kendi koşulları var.
-
-**koşullar (TÜMÜ sağlanmalı):**
-1. kazanç sürprizi ≥%10 (EPS actual vs estimate)
-2. ilk gün tepkisi sürprizle aynı yönde: pozitif sürpriz → gap-up, negatif → gap-down
-3. ilk gün hacim ≥ 20 günlük ortalama hacmin 2 katı (kurumsal ilgi teyidi)
-4. 2. gün trigger candle: ilk gün yüksek/düşüğünü kırmadan konsolide + yeni mum aynı yönde kapanış
-5. ilk güne GİRME (K-02 ile tutarlı)
-
-**pozisyon:** yarım pozisyon (kazanç sonrası volatilite hala yüksek)
-**stop:** ilk gün (açıklama günü) düşüğü altı (long) veya yükseği üstü (short)
-**çıkış:** chandelier trailing ile kâr kilidi sistemi (<%7: 3×ATR, %7-15: 2×ATR, %15+: 1.5×ATR)
-**süre:** 60 işlem günü drift veya stop tetiklenene kadar. K-08 zaman filtresi uygulanır ama tolerans 15 gün yerine 30 gün (PEAD drifti daha yavaş gelişir)
-
-**akademik kanıt:** Ball & Brown (1968), Bernard & Thomas (1989). çeyreklik %2.6-9.37 anormal getiri. momentum hisselerde (küçük sermaye, düşük analist takibi) daha güçlü
-**kendi kanıtımız:** henüz backtest edilmedi. gelecek kazanç sezonunda (nisan 2026 Q1 sonuçları) ilk 5-10 PEAD trade'i simülasyon olarak kaydedilecek
-
-**güç**: orta-yüksek. ichimoku sinyalinden farklı bir alfa kaynağı — teknik değil temel veri bazlı. iki sistem birbirini tamamlıyor.
-
-**ilişkili:** K-05 v3 Aşama 3 (tedarik zinciri yayılım) da PEAD benzeri giriş ama lider şirket yerine ortaklarına uygulanır
 
 ---
 

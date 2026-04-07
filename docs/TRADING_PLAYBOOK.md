@@ -58,41 +58,28 @@ repo verisi (n=22 swing test, 7 nisan 2026):
 - kanıt 1: CRDO 10-17 mart -%8.77 (insider + SMA altı çifte bayrak)
 - kanıt 2: SOFI -%3.62 (momentum kaybı + SMA altı)
 
-**K-05: kazanç açıklaması 3 aşamalı strateji**
-- kanıt: NVDA swing +%2.9 (önce çıkıldı, sonra düştü). MU EPS +%31 ama AH +%1.27 sonra -%3.8 (sell the news). MU tedarik zinciri ortakları ertesi gün ralli: CRDO +%5.28, MRVL +%2.18, COHR +%7.14
-- prensip: kazanç öncesi straddle/giriş negatif beklenti (IV crush). PEAD (post-earnings drift) sürpriz yönünde sürdürülebilir getiri sağlar. sell-the-news hisseye özgü, tedarik zinciri ortaklarına yayılmayabilir
+**K-05: kazanç açıklaması koruma (basitleştirilmiş 7 nisan 2026)**
 
-  **AŞAMA 1 — AÇIKLAMA ÖNCESİ (çıkış/koruma)**
-  - swing trade: 2+ gün önce çık (kâr/zarar fark etmez). binary gap riski yok
-  - pozisyon trade: K-16 skoruna göre
-    • K-16 0-2: pozisyonda kal, trailing 2×ATR → 1.5×ATR sıkılaştır
-    • K-16 3: %25 kısmi kâr al, kalan trailing
-    • K-16 4-5: %50 kısmi çık, post-earnings bekle
-    • mevcut kâr %15+ ise K-16'dan bağımsız min %25 kısmi al
-  - LEAPS: vade 6+ ay tut, vade 3 ay altı + kâr → kısmi çık
+TEK KURAL: swing pozisyonu, kazanç açıklamasından 2+ işlem günü önce çıkılır. kâr/zarar fark etmez. binary gap riski alınmaz.
 
-  **AŞAMA 2 — AÇIKLAMA SONRASI GİRİŞ (PEAD)**
-  giriş koşulları (TÜMÜ):
-    1) EPS sürpriz ≥%10
-    2) ilk gün gap aynı yönde
-    3) ilk gün hacim ≥ 20g ortalama × 2
-    4) 2. gün trigger candle (1. gün range içinde konsolide + aynı yönde kapanış)
-    5) ilk güne GİRME (earnings drift için 2. gün giriş tercih)
-  - boyut: yarım pozisyon
-  - stop: ilk gün düşüğü altı (long)
-  - hedef: 60 gün drift veya chandelier 3×ATR
-  - filtre: küçük/orta cap'te güçlü, mega-cap'te zayıf
+uygulama detayı:
+- swing trade: 2+ gün önce kapanış, exception yok
+- pozisyon trade (uzun vadeli): K-16 sell-the-news skoruna göre yönetilir, K-05 burada müdahale etmez
+- LEAPS: ayrı playbook bölümünde, K-05 dışı
 
-  **AŞAMA 3 — TEDARİK ZİNCİRİ YAYILIM**
-  koşullar:
-    1) lider beat (EPS sürpriz ≥%5 veya gelir ≥%3)
-    2) lider guidance güçlü (yıl beklentisi yükseltildi)
-    3) beat metrikleri ortağı doğrudan etkiliyor
-    4) ortak teknik uygun (SMA200 üstü, kumo üstü, RSI 40-65)
-  - giriş: lider açıklamasından 1-2 gün sonra
-  - boyut: yarım pozisyon, stop chandelier 3×ATR
-  - max 1 ortak/açıklama (K-17 korelasyon riski)
-  - tedarik zinciri haritası: docs/AGGRESSIVE_V2_THESIS.md
+PEAD GİRİŞİ (eski Aşama 2): KALDIRILDI
+- gerekçe 1: Subrahmanyam (UCLA, ocak 2026) 2001-2024 ABD verisinde drift faktörü microcap dışlandığında t-istatistiği 1.43 ile anlamsız. PEAD ABD'de sadece NYSE alt %20 microcap'te var. portföy evrenimiz mid/large-cap → uygulanamaz
+- gerekçe 2: SWING_SYSTEM_V2.md PEAD bölümü açıkça "henüz backtest edilmedi" notu taşıyor. hiç test edilmemiş bir kural ölü kuraldır
+- gerekçe 3: closed.json'da hiç PEAD girişi yok, kanıt yok
+- gerekçe 4: Martineau (2022) decimal trading + 2005 HFT regülasyonu sonrası PEAD'in çoğu hisse için "öldüğünü" gösterdi. CFA Institute (mayıs 2025) generatif AI'nın drift'i daha da sıkıştıracağını öngörüyor
+
+TEDARİK ZİNCİRİ YAYILIM (eski Aşama 3): KALDIRILDI
+- gerekçe 1: formal akademik literatürde "supply chain spillover" anomalisi yok. sezgisel gözleme dayalı bir kuraldı
+- gerekçe 2: repo verisi karşı — 3 trade alındı, 1 küçük kâr (COHR +%4.93) + 2 zarar (CRDO -%8.77, MRVL -%3.80), ortalama -%2.55
+- gerekçe 3: 3 hisse aynı sektörden aynı haftada → kendi K-17 korelasyon kuralını ihlal ediyordu
+- gerekçe 4: gerçek sebep yayılım değil hisseye özgü olaylar (CRDO insider, MRVL Microsoft-AVGO geçişi, COHR Bain blok satış)
+
+kanıt: NVDA swing +%2.88 (12-23 şubat 2026) — earnings öncesi kâr realizasyonu doğru strateji uygulaması. swing'de kazanç açıklamasına maruz kalmamak +%3.4 potansiyel kâr koruması sağladı. bu Aşama 1'in tek ve yeterli kanıtı
 
 ### çıkış kuralları
 
