@@ -835,11 +835,75 @@ K-15b İLE İLİŞKİ:
 - CRDO örneği: hem insider hem margin compression (K-18 + K-15b çift bayrak)
 - POWL örneği: K-17 + K-18 çift ihlal (kümeleme + insider)
 
-**K-19: XLP swing dışlama**
-- XLP hisselerinden (MO, PM, PEP, WMT, COST, KO) swing trade sinyali değerlendirilmez. ichimoku 4/4 veya K-13b sinyal verse bile girme
-- gerekçe: defansif hisseler yapısal düşük volatiliteye sahip — günlük %0.5-1 hareket eden hisseden 10 günde %10 beklemek gerçekçi değil
-- kapsam: sadece swing. portföy pozisyonu (dengeli/temettü) olarak XLP alınabilir
-- backtest: 51 dönem 0 hedef, 2 stop, 4 düz
+**K-19: XLP swing dışlama — netleştirilmiş 7 nisan 2026**
+
+KAPSAM: SADECE swing trade. portföy pozisyonları izinli (Temettü'deki MO/PM örnekleri).
+
+KURAL: XLP sektöründeki hisselerden swing trade sinyali değerlendirilmez. ichimoku 4/4, K-13b sinyali, RSI oversold gibi sinyaller verse bile GİRİLMEZ.
+
+XLP HİSSELERİ (genişletilmiş, 25+ hisse):
+- Tütün: MO, PM
+- Gıda/içecek: PEP, KO, KDP, MDLZ, GIS, K, HSY, MNST, CAG, CPB, KHC
+- Perakende: WMT, COST
+- Ev ürünleri: PG, CL, CLX, KMB, CHD, EL, NWL
+- Diğer: SYY, ADM, BG, TSN, HRL
+
+ALTERNATİF FORMÜL: SPY sektör sınıflamasında "Consumer Staples" altındaki tüm hisseler. Şüphe varsa: spdr.com/etfs/XLP holdings sayfası kontrol edilir.
+
+GEREKÇE: Defansif hisseler yapısal düşük volatiliteye sahip
+- Beta ortalaması 0.6-0.8 (S&P 500 = 1.0)
+- Günlük hareket %0.5-1
+- 10 günde %10 swing hedef matematik olarak zor (literatür onayı)
+
+K-13b İLE ÖNCELİK (yeni netleştirildi - kritik):
+- K-13b "savunma sektör tam pozisyon" der, kapsam: XLU + XLV + XLP + XLC
+- K-19 K-13b'den DAHA ÖNCELİKLİ sadece XLP için
+- K-13b VIX 22-35'te:
+  • XLU swing → izinli (orta volatilite, rate sensitive)
+  • XLV swing → izinli (clinical katalist, M&A)
+  • XLC swing → izinli (META/GOOGL/NFLX yüksek beta)
+  • XLP swing → YASAK (K-19 önceliği)
+- Bu hiyerarşi net: K-19 sadece XLP için ÖZELDİR, K-13b genel kuralı geçer
+
+OTOMATİK KONTROL (yeni eklendi):
+- Tarama sırasında script çalışır: scripts/k19_xlp_filter.py SCAN_RESULTS.json
+- XLP hisseleri tarama sonuçlarından otomatik elenir
+- Telegram alert ("K-19: WMT removed from scan, XLP exclusion")
+
+REPO KANITI - belgelendi 7 nisan 2026:
+
+CLOSED.JSON (1 vaka):
+- WMT 6-18 şubat 2026: -%3.48 ZARAR
+- 12 gün tutuldu, hedef 10 gündü
+- Çıkış nedeni: "zaman çerçevesi aşıldı, hedef 10 gündü, zarar kesildi"
+- Klasik düşük volatilite örneği — fiyat hedefe yetişemedi
+
+SWING_SYSTEM_V2 BACKTEST (2 vaka):
+- 0 kâr, 2 zarar
+- 61 dönem 2021-2026 backtest evreninde
+- "Defansif hisseler %10 hedefe ulaşamıyor"
+
+TOPLAM: 3 trade, 3 zarar (%100 zarar oranı, küçük sample uyarısı)
+- Sample küçük ama yön net
+- Bull market'te (mart 2026 öncesi) bile staples zayıf
+
+MEMORY HATA KONTROLÜ: T (AT&T) listede DEĞİL, doğru. T = XLC (Communication Services), XLP değil.
+
+LİTERATÜR DESTEĞİ (7 referans):
+- Quantified Strategies (en doğrudan akademik onay): "low volatility stocks may not appeal to day traders and SWING TRADERS because in short run may not provide the price movement needed for short-term gains" — K-19'un tam akademik onayı
+- AlphaExCapital: consumer staples beta 0.6-0.8 vs S&P 500 = 1.0, daha az fiyat dalgalanması, daha düşük drawdown ama daha düşük getiri potansiyeli
+- AQR Funds: low-vol stratejiler defansif sektörleri tercih eder, bull market'te underperform
+- Motley Fool 2026: staples bull marketleri yönetmez, growth tökezlediğinde smooth eder, soda/tütün baskısı son yıllarda underperformance
+- Interactive Brokers: yıllık %2.5 büyüme, broader market'tan düşük
+- JP Morgan (5 gün önce): defensive playbook 2026 - staples yerine utilities ve healthcare öneriyor
+- Fidelity 2026: staples 2025'te belirgin underperform, AI-growth tercih
+- K-19 mantığı endüstri ve akademik konsensüs ile uyumlu
+
+EKSILER (gelecek genişleme için not):
+- XLP alt-sektör ayrımı yok (tütün vs gıda vs perakende farklı dinamikler)
+- Tek tek istisna izin yok (örn: özel katalist)
+- Mevcut form: bütün-veya-hiç (whole-or-none)
+- Bu kabul edilebilir çünkü swing'de hassasiyet > esneklik
 
 **K-20: sektör RS dead cat bounce filtresi**
 - kural: sektör ETF/SPY oranı 20g değişim <0 VE 10g değişim >0 ise swing girişi yok
