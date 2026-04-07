@@ -737,18 +737,103 @@ LİTERATÜR DESTEĞİ:
 
 ESKİ "IBKR notu" KALDIRILDI: "AI/yarıiletken %63 → sınır aşıldı, yeni AI öncesi azaltma şart" notu eski bir durumla ilgiliydi. Mevcut portföy %86 nakit, AI exposure ~%0. Mevcut durum kontrolü için günlük summary.json kullanılır.
 
-**K-18: giriş öncesi insider kontrolü**
-- 1) insider (FMP insider-trading endpoint):
-  • 30 gün CEO/CFO satışı → girme veya çeyrek pozisyon
-  • 30 gün toplam satış >$5M → yarım pozisyon
-  • insider alışı → pozitif sinyal, normal giriş
-  • dengeli → nötr, diğer faktörlere bak
-- 2) kısa vadeli baskı:
-  • dark pool / blok satışları
-  • son 2 hafta analist downgrade'leri
-- 3) arz/dilüsyon riski → K-15b'ye bak (negatif FCF, shelf, hisse arzı geçmişi)
-- tüm kontroller girişten ÖNCE
-- kanıt: POWL -%10.38, CRDO -%8.77
+**K-18: giriş öncesi insider kontrolü — netleştirilmiş 7 nisan 2026**
+
+KAPSAM: tüm portföyler (Dengeli, Agresif, Temettü, Swing). giriş ÖNCESİ zorunlu kontrol, atlama yasak.
+
+KATMAN 1: İNSİDER SATIŞ ANALİZİ (FMP insider-trading endpoint)
+
+a) CEO/CFO/Chairman satışı son 30 gün:
+   • VAR → girme veya çeyrek pozisyon (eşiğe bakılmaksızın)
+   • YOK → diğer kontrollere geç
+
+b) Toplam insider satış son 30 gün:
+   • >$5M → yarım pozisyon
+   • $1-5M → tam pozisyon ama dikkat (diğer faktörler)
+   • <$1M → normal
+
+c) Satış konteksti (Kelly nüansı - YENİ):
+   • Satış son 6 ay düşüş trendinde (zarar gerçekleştirme) → ÖZELLİKLE KAÇIN
+     (Notre Dame Kelly: zararda satış 188bp negatif tahmin)
+   • Satış yükseliş trendinde (kâr gerçekleştirme) → daha az endişe verici
+     (Kelly: kârda satış öngörü gücü yok)
+
+d) İnsider alışı son 30 gün:
+   • CEO/CFO alışı VAR → güçlü pozitif sinyal, normal giriş
+   • Net alış pozitif → nötr-pozitif
+
+e) Dengeli (alış+satış var) → nötr, diğer faktörlere bak
+
+KATMAN 2: KISA VADELİ BASKI (yeni netleştirildi)
+
+a) Dark pool / blok satış:
+   • Veri kaynağı: cheddarflow.com (twitter izleme listesinde @CheddarFlow)
+   • Son 5 gün $50M+ blok satış → yarım pozisyon
+
+b) Analist downgrade'leri son 2 hafta:
+   • Veri kaynağı: FMP analyst-stock-recommendations
+   • 2+ downgrade → girme veya yarım pozisyon
+
+c) Margin compression / debt warning:
+   • Veri kaynağı: FMP key-metrics interestCoverage
+   • <2x → ek dikkat
+
+KATMAN 3: ARZ/DİLÜSYON RİSKİ
+→ K-15b'ye bak (negatif FCF, shelf, hisse arzı geçmişi)
+
+OTOMATİK KONTROL (kritik - yeni eklendi):
+- Her giriş öncesi script çalışır: scripts/k18_insider_check.py SYMBOL
+- 3 katman tek seferde sorgulanır
+- Telegram alert ("K-18 RISK: SYMBOL CEO sold $25M last 30d → çeyrek poz")
+- Manuel kontrol unutkanlığa açık (POWL kanıtı)
+
+REPO KANITI - belgelendi 7 nisan 2026:
+
+OLAY 1 - POWL (K-18 başarısızlığı, en pahalı):
+- 25 mart 2026 giriş, $19,894 yatırım (Aggressive portföy)
+- $585.12 fiyattan 34 hisse alındı
+- K-18 GİRİŞ ÖNCESİ KONTROL EDİLMEDİ
+- 30 mart stop kaydı: "$25M insider satışı (Thomas W. Powell - CEO) + kâr realizasyonu"
+- PnL: -%10.63 (~-$2,115)
+- 5 gün içinde stop yedi
+- Eğer K-18 çalışsaydı: CEO satışı son 30g VAR → girme veya çeyrek poz
+  • Çeyrek poz olsa kayıp ~-$528 (4x daha az)
+  • Hiç girilmese kayıp $0
+- POWL ayrıca K-17 ihlalinin parçası (POWL+CAMT+VRT AI tedarik zinciri kümesi)
+- DERS: K-18 KURALI VARDI ama UYGULANMADI. Otomatik script şart.
+
+OLAY 2 - CRDO (K-18 başarısızlığı):
+- 17 mart 2026 stop kaydı: "Stop-loss tetiklendi - insider + margin compression - Agresif portföy"
+- Aggressive portföyde, kayıp ~-%8.77
+- closed.json'da yok (swing değil)
+- Aynı pattern: K-18 giriş öncesi kontrol edilmedi
+- Hem insider (K-18) hem margin compression (K-15b) → ÇİFT KIRMIZI BAYRAK
+- DERS: K-18 + K-15b birlikte çalışsaydı bu pozisyon hiç açılmazdı
+
+KRİTİK İSTATİSTİK:
+- closed.json'da K-18 etiketi: 0 trade
+- Yani K-18 hiç sistemli giriş öncesi uygulanmadı (mart 2026'ya kadar)
+- POWL ve CRDO sadece "çıkış sonrası fark edildi"
+- Bu kuralın ÖLÜ KURAL olduğunun kanıtı
+- Otomasyon olmadan K-18 yine ölü kalır
+
+LİTERATÜR DESTEĞİ (6 referans):
+- Notre Dame Peter Kelly (Review of Financial Studies 2018, en titiz akademik):
+  • Zararda insider satış → 6 ay sonra 188 baz puan daha düşük getiri
+  • Kârda insider satış → öngörü gücü yok
+  • "Loss-sold short, gain-sold long" stratejisi 67bp/ay alpha
+- Springer Quantitative Finance: insider satışları gelecek crash risk ile pozitif ilişkili, senior insider (CEO/CFO/Chairman) en bilgilendirici, ortalama 15 ay önceden öngörü
+- ScienceDirect 2019: CEO satışları tahminleri özellikle güçlü, opportunistik işlemler rutin işlemlerden daha bilgi içerir, "insider sales can be informative for investors"
+- AEAweb 2019: insider price impact hızlı oluşuyor, kontrol giriş öncesi şart, market maker reaksiyonları zayıf
+- MDPI 2024: earnings öncesi insider satış güçlü kötü haber sinyali, 10-40 gün pencerelerde negatif getiri
+- ScienceDirect 2024: tüm insider satışları eşit değil, narsist CEO işlemleri daha az bilgilendirici, opportunistic vs routine ayrımı önemli
+
+K-15b İLE İLİŞKİ:
+- K-18 katman 1+2: insider davranışı ve kısa vadeli baskı (kısa-orta vade sinyaller)
+- K-15b: yapısal dilüsyon (uzun vade bilanço, FCF, shelf)
+- İkisi birlikte: insider satış + dilüsyon = ÇİFT KIRMIZI BAYRAK
+- CRDO örneği: hem insider hem margin compression (K-18 + K-15b çift bayrak)
+- POWL örneği: K-17 + K-18 çift ihlal (kümeleme + insider)
 
 **K-19: XLP swing dışlama**
 - XLP hisselerinden (MO, PM, PEP, WMT, COST, KO) swing trade sinyali değerlendirilmez. ichimoku 4/4 veya K-13b sinyal verse bile girme
