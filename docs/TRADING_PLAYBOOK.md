@@ -449,19 +449,75 @@ LİTERATÜR DESTEĞİ (7 nisan 2026 araştırması):
 - Ecconomi (mart 2026): retail en büyük hata "şok aşamasında savunma/enerji kovalamak" → K-13b "o gün >%3 yükseldi → girme" kuralı bunu yansıtıyor
 - JP Morgan / BlackRock Geopolitical Risk Dashboard: VIX-Geopolitical Risk Index zayıf korelasyon, sektör bazlı yönetim gerekli → K-13 "blanket VIX engeli yanlış" mantığı doğrulandı
 
-**K-14: kayıp serisi yönetimi (drawdown fren)**
-- kademeli fren:
-  • 2 ardışık zarar: boyut %25 küçült ($10K → $7.5K)
-  • 3 ardışık zarar: boyut %50 küçült ($10K → $5K) + sadece A-kalite
-  • 4+ ardışık zarar: TAMAMEN DUR, min 1 hafta swing yok
-  • toplam swing drawdown %15+ (başlangıca göre): dur, ortamı değerlendir
-- yeniden başlama protokolü:
-  1) min 5 iş günü soğuma
-  2) neden kaybettiğini analiz et (ortam/sistem/psikoloji)
-  3) ilk 3 trade yarım pozisyon
-  4) 2/3 kazanırsa normal boyuta dön
-- ortam testi: K-13'e göre. faydalanıcı sektörlerde VIX <28, duyarlı sektörlerde VIX <22 + SPY SMA50 üstü + sektör rotasyonu pozitif → swing'e dön
-- kanıt: mart 2026 4/5 zarar serisi
+**K-14: kayıp serisi yönetimi (drawdown fren) — netleştirilmiş 7 nisan 2026**
+
+KAPSAM: swing trade (sadece). portföy pozisyonları K-13'e tabidir.
+
+TANIMLAR (netleştirildi):
+- Ardışık zarar: takvim bazlı değil, swing trade ÇIKIŞ SIRASINA göre
+- Drawdown ölçümü: peak-to-trough (literatür standardı), başlangıç sermayeye değil
+- Standart swing boyutu: $5K-$10K (mevcut aralık)
+- A-kalite trade tanımı (yeni eklendi):
+  • İchimoku 4/4 (kumo+TK+tenkan+volume)
+  • Sektör ETF lider (XLK/XLE vb. 9EMA+21EMA üstü)
+  • RS pozitif (sektör/SPY 20g+ trend)
+  • K-13 faydalanıcı sektör VEYA K-13b 6 koşulları
+  • K-17 korelasyon ihlali yok
+  • K-18 insider temiz
+
+KADEMELİ FREN:
+- 2 ardışık zarar → boyut %25 küçült
+  • Standart $10K → $7.5K
+  • Standart $5K → $3.75K
+- 3 ardışık zarar → boyut %50 küçült + SADECE A-kalite
+  • Standart $10K → $5K
+  • Standart $5K → $2.5K
+- 4+ ardışık zarar → TAMAMEN DUR, min 1 hafta swing yok
+- Toplam swing drawdown %15+ (peak-to-trough) → DUR, ortamı değerlendir
+
+YENİDEN BAŞLAMA PROTOKOLÜ:
+1) Min 5 iş günü soğuma
+2) Neden kaybettiğini analiz et: ortam (VIX/SPY trendi), sistem (ichimoku 4/4 sayısı), psikoloji (kovalama/revenge)
+3) İlk 3 trade yarım pozisyon
+4) 2/3 kazanırsa normal boyuta dön
+
+ORTAM TESTİ (K-13'e göre):
+- Faydalanıcı sektörlerde VIX <28 + SPY SMA50 üstü
+- Duyarlı sektörlerde VIX <22 + SPY SMA50 üstü + sektör rotasyonu pozitif
+- Bu koşullar sağlanmadan swing'e dönülmez
+
+OTOMATİK TAKİP (yeni eklendi):
+- Her swing kapanışında kontrol script çalışır
+- 2 ardışık zarar → telegram alert ("K-14 katman 1: boyut %25 küçült")
+- 3 ardışık zarar → telegram alert ("K-14 katman 2: boyut %50 + A-kalite")
+- 4 ardışık zarar → telegram alert ("K-14 STOP: 1 hafta swing yok")
+- swing drawdown %15 → telegram alert ("K-14 drawdown stop")
+
+REPO KANITI VE KRİTİK DERS (mart 2026):
+
+DOĞRU SAYIM (closed.json testi 7 nisan 2026):
+- 9 mart HAL -%5.10
+- 9 mart CEG -%5.05
+- 11 mart T -%5.54  ← 3 ardışık zarar TAMAM
+- 11 mart CTSH +%1.45 (seriyi kırdı, 4 ardışık olmadı)
+- 12 mart ALMU -%6.11 (yeni başlangıç, ama K-14 hâlâ aktif olmalıydı)
+- 12 mart SOFI -%3.62 (24 şubat girişi, 12 mart çıkışı)
+- 9-12 mart penceresi: 5 zarar / 6 trade
+
+KRİTİK DERS:
+- K-14 UYGULANMADI! 3 ardışık zarardan sonra (HAL/CEG/T 9-11 mart) boyut %50 küçültülmeliydi
+- ALMU (12 mart girişi) standart boyutta açıldı → K-14 katman 2 ihlali
+- closed.json'da K-14 etiketi yok → kayıt yetersiz
+- Memory iddiası "4/5 zarar serisi" yanlış formülasyon — gerçek 3 ardışık + 2 ek
+- BU OLAY OTOMATİK TAKİP VE TELEGRAM ALERT İHTİYACININ KANITI
+
+LİTERATÜR DESTEĞİ:
+- Quant.fish: drawdown bazlı kademeli kesim (5%/10%/15% → 10/25/50)
+- Edgeful (matematik): %60 win rate'te 3 ardışık zarar olasılığı %100, normal varyans
+- Atmos Funded: 2 zarar sonrası mola + sadece A-setup, K-14 ile uyumlu
+- Quantvps: 3-5 ardışık zarar sonrası mola endüstri standardı
+- TradingMetrics: psikolojik kırılma matematiksel kırılmadan önce gelir
+- K-14 literatür orta sıkılığında, makul kalibrasyon
 
 ### giriş öncesi filtreler
 
