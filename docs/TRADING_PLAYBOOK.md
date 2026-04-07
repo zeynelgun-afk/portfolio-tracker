@@ -297,16 +297,57 @@ LİTERATÜR:
 - Kraken: hidden bullish divergence (price higher low, RSI lower low) trend devam sinyali
 - LuxAlgo: ATR bazlı çoklu hedef + ilk hedef sonra trail endüstri standardı
 
-**K-12: pozisyon konsantrasyon limitleri**
-- tek hisse: max %15 portföy ağırlığı
-- tek hisse + opsiyonları: max %20 (delta ayarlanmış)
-- tek sektör/tema: max %40
-- LEAPS efektif maruziyet: kontrat × 100 × delta. örnek: 6 MU call × $87.93 × 100 × 0.55 ≈ $29K
-- aşımda:
-  • %15 aşıldı → 1 hafta içinde kısmi satış
-  • %20 aşıldı → aynı/ertesi gün kısmi satış
-  • sektör %40 aşıldı → en zayıf pozisyonu küçült veya kapat
-- haftalık kontrol pazar günleri zorunlu
+**K-12: pozisyon konsantrasyon limitleri (netleştirilmiş 7 nisan 2026)**
+
+KAPSAM AYRIMI: hisse limitleri PORTFÖY BAZLI, sektör limiti TOPLAM bazlı
+
+HİSSE LİMİTLERİ (her portföy kendi değeri içinde):
+- Dengeli (max 6 pozisyon, $100K): tek hisse max %25 portföy ağırlığı
+- Agresif (max 10 pozisyon, $400K): tek hisse max %20 portföy ağırlığı
+- Temettü (max 15 pozisyon, $100K): tek hisse max %15 portföy ağırlığı
+
+GEREKÇE (pozisyon sayısı × eşit ağırlık matematiği):
+- Dengeli 6 pozisyon eşit ağırlık = %16.67 → %25 limit (eşit + esneklik)
+- Agresif 10 pozisyon eşit ağırlık = %10 → %20 limit (eşit + esneklik)
+- Temettü 15 pozisyon eşit ağırlık = %6.67 → %15 limit (eşit + esneklik)
+NOT: Önceki K-12 metnindeki sabit %15 limiti Dengeli portföy ile mantıken çelişiyordu (6 eşit pozisyon zaten %16.67). Bu tutarsızlık 7 nisan 2026'da düzeltildi.
+
+OPSİYONLU HİSSE: hisse + opsiyon (delta ayarlanmış efektif maruziyet) → yukarıdaki limitler +%5 toleransla uygulanır (Dengeli %30, Agresif %25, Temettü %20)
+
+LEAPS EFEKTİF MARUZİYET HESABI:
+- formül: kontrat sayısı × 100 × delta × strike
+- örnek: 6 MU call × 100 × 0.55 × $87.93 ≈ $29K
+- LEAPS pozisyonu portföy bazında "hisse" gibi sayılır
+
+SEKTÖR LİMİTİ (TOPLAM $600K bazlı):
+- Tek sektör/tema: max %40 toplam portföy
+- Tema tanımı: GICS sektör + alt-sektör YA DA tematik kümeler (AI tedarik zinciri, savunma, vb. cross-sektör ama yüksek korelasyon taşıyan gruplar)
+- Cross-portföy: aynı sektör birden fazla portföyde varsa toplanır
+
+CROSS-PORTFÖY HİSSE TAKİBİ:
+- aynı hisse birden fazla portföyde varsa her portföy kendi limitini ayrı kontrol eder
+- AMA toplam $600K bazında ek bilgi olarak takip edilir
+- Toplam >%10 → bilinçli karar (şirkete özgü risk: kazanç miss, regülatör eylemi iki portföyü birden vurur)
+- Mevcut örnek: MO hem Dengeli ($17.8K) hem Temettü ($14.5K), toplam $32.3K = %5.25 → izleme altında
+
+AŞIM YÖNETİMİ:
+- portföy %25/%20/%15 aşıldı → 1 hafta içinde kısmi satış
+- portföy +%5 üstü (yani %30/%25/%20) aşıldı → aynı/ertesi gün kısmi satış
+- sektör %40 aşıldı → en zayıf pozisyonu küçült veya kapat
+- haftalık kontrol pazar günleri zorunlu (summary.json + portföy ağırlıkları)
+
+MEVCUT DURUM (7 nisan 2026):
+- T (Temettü): $24.3K / $144.8K = %16.80 → ⚠️ %15 limiti +1.80 aşıldı, 1 hafta içinde kısmi satış GEREKLİ
+- MO (Dengeli): $17.8K / $112K ≈ %15.9 → %25 limitin altında ✓
+- Diğer hisseler tüm portföylerde limit altında
+- Sektör bazlı toplam: hiçbir sektör %40'ı aşmıyor (telekom %4.81, tütün %4.37, tüm sektörler düşük çünkü %86 nakit)
+
+LİTERATÜR KALIBRASYONu:
+- Guardfolio (2026 ocak): retail için tek hisse %5-10 öneriliyor, sektör %25-30
+- Charles Schwab: tek hisse %10-20 üstü "aşırı konsantrasyon riski"
+- JP Morgan Private Bank: %10-20 yaygın eşik ama esnek yorumlanır
+- Darrow Wealth Management: tek hisse %10 üstü "muhtemelen çok fazla"
+- K-12'nin %15-25 portföy bazlı limiti retail'in orta gevşek tarafında, pozisyon sayısı limitleri ile birlikte mantıklı kalibrasyon
 
 ### ortam kuralları
 
