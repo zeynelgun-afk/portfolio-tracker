@@ -194,14 +194,49 @@ KARŞILAŞTIRMA (K-09 vs normal stop tetik):
 
 ### portföy yönetimi kuralları
 
-**K-10: savunmacı/temettü allokasyon kuralı (K-13 ile hizalı)**
-- VIX <22 (sakin/normal): min %25 savunmacı
-- VIX 22-28 (dikkatli): min %35 savunmacı
-- VIX 28-35 (gergin): min %45 savunmacı, agresif pozisyonları küçült
-- VIX 35+ (panik): min %55 savunmacı, agresif'te sadece mevcudu yönet
-- savunmacı tanımı: temettü yield >%2.5, beta <1.0, veya utilities/tüketim/sağlık
-- enerji: çatışma dönemlerinde saldırgan, K-13 v4.1 faydalanıcı listesinde değerlendir
-- toplam portföyde min %35 savunmacı korunmalı (mevcut "dikkatli" rejimde)
+**K-10: VIX bazlı savunmacı allokasyon kuralı (netleştirilmiş 7 nisan 2026)**
+
+KAPSAM: 3 ana portföyün TOPLAM değeri ($600K bazlı) üzerinden hesaplanır. swing trade hariç (kısa vadeli, ayrı bütçe).
+
+EŞİKLER (K-13 v4.1 ile aynı VIX bantları):
+- VIX <22 (sakin/normal): min %25 savunmacı + nakit
+- VIX 22-28 (dikkatli): min %35 savunmacı + nakit
+- VIX 28-35 (gergin): min %45 savunmacı + nakit, agresif pozisyonları küçült
+- VIX 35+ (panik): min %55 savunmacı + nakit, agresif'te sadece mevcudu yönet
+
+SAVUNMACI TANIMI (3 koşuldan EN AZ 1 sağlanmalı):
+1) Temettü yield >%2.5
+2) Beta <1.0
+3) Defansif sektör (utilities/temel tüketim/sağlık/telekom)
+
+NAKİT MUAMELESİ: nakit "savunmacı + nakit" toplamına dahildir. nakit kayıp riski olmayan en savunmacı varlıktır, savunmacı oranına sayılır.
+
+ENERJİ İSTİSNASI: çatışma dönemlerinde enerji sektörü saldırgan olabilir. K-13 v4.1 faydalanıcı listesinde değerlendirilir, K-10 savunmacısı sayılmaz ama K-13 boyut izinleri korunur.
+
+K-13 v4.1 İLE İLİŞKİ:
+- K-10 PORTFÖY SEVİYESİ yüzde yönetir (statik koruma alt sınırı)
+- K-13 v4.1 SEKTÖR SEVİYESİ giriş/boyut yönetir (dinamik tepki)
+- iki kural çakışmaz, paraleldir: K-10 alt sınır koyar, K-13 sektör seçer
+
+ÖLÇÜM PROTOKOLÜ:
+- her seans öncesi summary.json'dan toplam değer ve nakit oranı çekilir
+- yatırılı pozisyonların savunmacı tanımına göre sınıflandırılması yapılır
+- VIX rejimine göre minimum karşılaştırılır
+- eksikse: yeni agresif giriş yasak, savunmacı/nakit artırılır
+
+ÖLÇÜM ÖRNEĞİ (mevcut durum 7 nisan 2026):
+- toplam portföy: $615K (Dengeli + Agresif + Temettü)
+- nakit: $516K (~%86)
+- yatırılı savunmacı: T, VZ, MO, PM, JNJ ≈ $50-55K (~%9)
+- toplam savunmacı + nakit: ~%94
+- VIX 24.83 → "dikkatli" rejim → min %35 gerekli
+- durum: ✓ FAZLASIYLA SAĞLANIYOR
+
+LİTERATÜR KANITI:
+- HL Hunt institutional research (2025): VIX bazlı dinamik koruma hedging maliyetlerini %40-60 azaltırken eşdeğer korumayı sağlıyor
+- Nature 2025 ML çalışması: yüksek vol rejiminde (VIX≥25) defansif allokasyon Sharpe oranını %187 artırıyor, max drawdown'u %45.5 azaltıyor
+- ScienceDirect VIX-managed portfolios: önceki ay VIX yüksekken risk azalt basit kuralı istikrarlı performans veriyor
+- International Trading Institute (2025): VIX eşikleri pozisyon sizing'de endüstri standardı (sakin altı normal, ortada yarım, üstünde sadece A-setup)
 
 **K-11: kademeli kâr alma sistemi**
 - kapsam: sadece portföy pozisyonları. swing'de uygulanmaz (kâr kilidi sistemi: <%7 chandelier 3×ATR, %7-15 2×ATR, %15+ 1.5×ATR)
