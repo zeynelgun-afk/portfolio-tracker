@@ -96,107 +96,97 @@ ADIM 2 — MEVCUT POZİSYONLAR İÇİN BÜYÜT/DÖNDÜR DEĞERLENDİRMESİ
 
 ADIM 3 — DENGELİ PORTFÖY TARAMASI
   detay: docs/PORTFOLIO_OPPORTUNITY_SYSTEM.md bölüm 2a
+  script: scripts/portfolio_scan_balanced.py (portfolio_scan_common.py wrapper'ı)
 
-  → FMP company-screener:
-    marketCapMoreThan=5000000000
-    priceMoreThan=10
-    volumeMoreThan=500000
-    country=US
-    peRatioLessThan=25
-    peRatioMoreThan=5
-    betaLessThan=1.5
-    limit=200
+  → aday evrenini belirle (3 kaynak birleştir):
+    a. Mevcut watchlist.json'dan "dengeli" hedef portföylü adaylar
+    b. FMP company-screener (geniş):
+       marketCapMoreThan=5000000000, peRatioLessThan=25, peRatioMoreThan=5,
+       betaLessThan=1.5, priceMoreThan=10, volumeMoreThan=500000, limit=100
+    c. Mevcut dengeli pozisyonlarda olmayan sektörlerden 5-10 ticker (çeşitlilik)
 
-  → portföy spesifik filtre:
-    1. ROIC >%10 (FMP key-metrics-ttm)
-    2. 6 aylık fiyat momentum >%0
-    3. SMA50 üstü
-    4. EPS büyümesi son 3 yıl pozitif
-    5. debt/equity <2
-    6. sektör çeşitliliği (mevcut portföyde olmayan sektörler önce)
+  → tarama çalıştırma:
+    python scripts/portfolio_scan_balanced.py SEMBOL1,SEMBOL2,...
+    → wrapper otomatik mevcut sektörleri okur, çeşitlilik bonusu hesaplar
+    → her aday için fundamentals + technical + skor + detay döner
 
-  → her geçen aday için skor hesapla (0-15+):
-    ROIC >%15: +3, >%12: +2, >%10: +1
-    6M momentum >%20: +3, >%10: +2, >%0: +1
-    RSI 40-60 nötr: +2
-    P/E <15: +2, <20: +1
-    sektör mevcut portföyde değil: +2
-    5Y EPS büyümesi >%10: +2
+  → skor kaynağı: scripts/portfolio_scan_common.py/score_dengeli
+    P/E <15 +2, <25 +1
+    ROIC >15% +3, >12% +2, >10% +1
+    6M momentum >20% +3, >10% +2, >0% +1
+    RSI 40-60 nötr +2
+    SMA50 üstü +2
+    Golden cross +1
+    FCF yield >5% +2, >3% +1
+    Yeni sektör (çeşitlilik) +2
 
-  → eşik: skor <8 GEÇ, 8-11 İZLE, 12+ EKLE
+  → eşik (8 nisan 2026 kalibre): skor <6 GEÇ, 6-8 İZLE, 9+ EKLE
+
+  → NİTELİKSEL KATALİZÖR OVERRIDE (opsiyonel, sıkı kurallı):
+    scripts/portfolio_scan_common.py apply_catalyst_override fonksiyonu
+    kurallar: max +2 puan, gerekçe ≥20 karakter, kaynak (URL/SEC/haber) zorunlu,
+    katalizör son 7 gün içinde. Geçersiz override sessizce reddedilir.
+    kullanım: catalyst_override={'puan':2, 'gerekce':'...', 'kaynak':'Reuters 2026-04-07'}
 
 ADIM 4 — AGRESİF PORTFÖY TARAMASI
   detay: docs/PORTFOLIO_OPPORTUNITY_SYSTEM.md bölüm 2b
+  script: scripts/portfolio_scan_aggressive.py
 
-  → FMP company-screener:
-    marketCapMoreThan=10000000000
-    priceMoreThan=20
-    volumeMoreThan=1000000
-    country=US
-    betaMoreThan=0.8
-    limit=300
+  → aday evrenini belirle:
+    a. Mevcut watchlist.json'dan "agresif" hedef portföylü adaylar
+    b. AI tedarik zinciri öncelik listesi (her zaman tara):
+       ekipman: ASML, AMAT, LRCX, KLAC, CAMT, ONTO, TER, UCTT
+       kimya: ENTG, MKSI, PLAB, LIN, APD, MP, FCX
+       optik: COHR, LITE, GLW, AAOI, FN, ANET
+       güç: POWL, VRT, ETN, PWR, HUBB
+       veri merkezi: DLR, EQIX
+       mobil/edge: QCOM, AVGO, MRVL, CRDO
+       memory: MU, SNDK, WDC, STX
+       chip AI: NVDA, AMD, TSM, TXN
+    c. FMP company-screener (geniş büyüme):
+       marketCapMoreThan=10000000000, priceMoreThan=20,
+       volumeMoreThan=1000000, betaMoreThan=0.8, limit=150
 
-  → portföy spesifik filtre:
-    1. son çeyrek EPS surprise >%10 (FMP earnings-surprises)
-    2. RS rank >80 (6M getiri SPY'yi en az %15 geçmiş)
-    3. ortalama hacim oranı >1.5x (10g / 50g hacim)
-    4. SMA50 üstü
-    5. RSI 40-75
-    6. 52W high'a %15 mesafe içinde
+  → tarama çalıştırma:
+    python scripts/portfolio_scan_aggressive.py SEMBOL1,SEMBOL2,...
+    → wrapper otomatik skor + karar döner
 
-  → AI tedarik zinciri öncelik listesi (önce bu listedekiler değerlendirilir):
-    ekipman: ASML, AMAT, LRCX, KLAC, CAMT, ONTO, TER, UCTT, ACLS
-    kimya: ENTG, MKSI, PLAB, LIN, APD, CCMP, MP, FCX
-    optik: COHR, LITE, GLW, AAOI, FN, ANET
-    güç: POWL, VRT, ETN, PWR, EME
-    soğutma: VRT, TT, JCI
-    veri merkezi: DLR, EQIX
-    enerji destek: COP, XOM
-    mobil/edge: QCOM, AVGO
-    memory: MU, SNDK, WDC
+  → skor kaynağı: score_agresif (portfolio_scan_common.py)
+    1M momentum >20% +3, >10% +2, >0% +1
+    6M momentum >50% +3, >30% +2, >15% +1
+    P/E quality guard: <0 -3, >80 -3, >60 -2, >40 -1
+    ROIC >25% +3, >15% +2, >10% +1, <0% -3, <8% -1
+    RSI 50-70 güçlü +2, 40-50 nötr +1, >75 aşırı alım -1
+    SMA50 üstü +2, golden cross +2
+    3M >15% +2
 
-  → skor (0-18+):
-    EPS surprise >%20: +4, >%15: +3, >%10: +2
-    RS rank >90: +3, >85: +2, >80: +1
-    hacim oranı >2x: +3, >1.5x: +2, >1.2x: +1
-    AI tedarik zinciri katmanı: +3 doğrudan, +1 dolaylı
-    analyst "Strong Buy": +2, "Buy": +1
-    6M getiri >%50: +3, >%30: +2, >%15: +1
-
-  → eşik: skor <10 GEÇ, 10-13 İZLE, 14+ EKLE
+  → eşik (8 nisan 2026 kalibre): skor <10 GEÇ, 10-13 İZLE, 14+ EKLE
 
 ADIM 5 — TEMETTÜ PORTFÖY TARAMASI
   detay: docs/PORTFOLIO_OPPORTUNITY_SYSTEM.md bölüm 2c
+  script: scripts/portfolio_scan_dividend.py
 
-  → FMP company-screener:
-    marketCapMoreThan=5000000000
-    priceMoreThan=10
-    volumeMoreThan=300000
-    country=US
-    peRatioLessThan=20
-    peRatioMoreThan=5
-    dividendMoreThan=0.03
-    betaLessThan=1.2
-    limit=200
+  → aday evrenini belirle:
+    a. Mevcut watchlist.json'dan "temettü" hedef portföylü adaylar
+    b. FMP company-screener:
+       marketCapMoreThan=5000000000, peRatioLessThan=20, peRatioMoreThan=5,
+       dividendMoreThan=0.03, betaLessThan=1.2, priceMoreThan=10, limit=150
+    c. Mevcut temettü portföyünde olmayan sektörlerden 5-10 ticker (çeşitlilik)
 
-  → portföy spesifik filtre:
-    1. yield %3-8 (yield trap üstünü ele)
-    2. payout ratio <%75 (FMP ratios-ttm)
-    3. debt/equity <1.5
-    4. son 3 yıl operating cash flow pozitif (FMP cash-flow-statement)
-    5. 5+ yıl temettü artış geçmişi (FMP stock-dividend)
-    6. P/E <20
-    7. SMA200 üstü VEYA RSI <40
+  → tarama çalıştırma:
+    python scripts/portfolio_scan_dividend.py SEMBOL1,SEMBOL2,...
 
-  → skor (0-16+):
-    yield %5-7: +3, %4-5: +2, %3-4: +1
-    payout ratio <%50: +3, <%65: +2, <%75: +1
-    10+ yıl temettü artışı: +3, 5-10 yıl: +2
-    P/E <12: +3, <15: +2, <18: +1
-    FCF büyümesi 3Y pozitif: +2
-    sektör defensive (XLU/XLP/XLV/Tobacco): +2
+  → skor kaynağı: score_temettü
+    yield 5-7% +3, 4-5% +2, 3-4% +1, >8% -2 (yield trap uyarı)
+    payout <50% +3, <65% +2, <75% +1, >100% -5 (YIELD TRAP)
+    P/E <12 +3, <15 +2, <18 +1, <0 -3
+    ROIC >15% +2, >10% +1
+    FCF yield >5% +2, >0 +1, <0 -2
+    SMA50 üstü +1, SMA200 üstü +1
+    Yeni sektör (çeşitlilik) +2
 
-  → eşik: skor <9 GEÇ, 9-12 İZLE, 13+ EKLE
+  → eşik (8 nisan 2026 kalibre): skor <6 GEÇ, 6-8 İZLE, 9+ EKLE
+  → KRİTİK: payout >100% yield trap = otomatik -5 puan, rapora "YIELD TRAP" notu ekle
 
 ADIM 6 — ORTAK FİLTRELER (TÜM 3 PORTFÖY ADAYLARINA)
   her aday yukarıdaki portföy spesifik skoru aldıktan sonra ortak filtreler uygulanır.
@@ -234,28 +224,39 @@ ADIM 7 — KARAR MATRİSİ UYGULA
   → karar matrisi detayı: docs/PORTFOLIO_OPPORTUNITY_SYSTEM.md bölüm 4
 
 ADIM 8 — WATCHLİST MEKANİK YÖNETİMİ
+  script: scripts/watchlist_manager.py (CRUD + cooldown + otomatik eleme)
   4 kontrol her gün uygulanır:
 
-  8a. seviyeye ulaşma:
+  8a. yeniden skorlama (refresh):
+    python scripts/watchlist_manager.py refresh
+    → tüm mevcut adaylar için fiyat + RSI + skor + karar yeniden hesaplanır
+    → bekleme_gun +1, son_kontrol güncellenir
+    → skor veya karar değişenler raporda vurgulanır
+
+  8b. seviyeye ulaşma:
     - watchlist adayı için fiyat hedef_giris bandı içinde mi?
     - evetse → BÖLÜM 5 giriş planına taşı, urgency = "entry_active"
     - K-04 teyit (SMA50 üstü) gerekli
 
-  8b. momentum bozulma:
-    - aday son 5 gün SPY'den %5+ geride mi?
-    - VE RSI <35 mi? → K-04 istisnası değerlendir
-    - VE 14+ gün watchlist'te mi? → otomatik elenme
+  8c. otomatik eleme (cleanup):
+    python scripts/watchlist_manager.py cleanup
+    → kural 1: bekleme_gun >10 + karar GEÇ → sil
+    → kural 2: karar GEÇ + skor < İZLE eşiğinin %70'i → sil
+    → son_kontrol >14g eski olanlar "eski" etiketi (elle kontrol gerekli)
 
-  8c. yeni aday ekleme:
-    - bu sabah taramadan çıkan EKLE/İZLE adayları → watchlist'e ekle
-    - duplicate kontrol: zaten varsa skoru güncelle
+  8d. cool-down kontrolü (yeni ekleme öncesi):
+    python scripts/watchlist_manager.py cooldown
+    → kapanmış swing trade'lerin satış tarihi üstünden kaç gün geçti?
+    → 7 gün içinde tekrar ekleme YASAK (trade tekrar hatası önleme)
 
-  8d. eleme (çöp toplama):
-    - 14 gün hedef altında + momentum bozuk → elenme
-    - fundamental katalist bozuldu (downgrade, miss, SEC) → elenme
-    - portföyde zaten var → büyütme kararı ayrı yürütülür
+  8e. yeni aday ekleme:
+    bu sabah taramadan çıkan EKLE/İZLE adayları → watchlist'e ekle:
+    python scripts/watchlist_manager.py add SEMBOL --portfoy dengeli|agresif|temettü
+    → otomatik cool-down kontrolü, duplicate kontrolü, mekanik skor hesaplama
+    → skor düşükse reddeder (--force ile override mümkün)
 
-  → data/watchlist.json güncelle (genişletilmiş şema, bkz. PORTFOLIO_OPPORTUNITY_SYSTEM.md bölüm 7)
+  → data/watchlist.json otomatik güncellenir (manuel JSON dokunma YASAK)
+  → detay şema: docs/PORTFOLIO_OPPORTUNITY_SYSTEM.md bölüm 7
 
 ADIM 9 — RAPOR YAZ + GIT PUSH
   → rapor yaz (aşağıdaki format)

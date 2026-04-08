@@ -10,8 +10,8 @@
 > - [ ] ADIM 0 — sabah raporunu oku (makro, VIX, trend, senaryolar)
 > - [ ] ADIM 1 — swing sistem durumu (K-14 drawdown status, K-13 VIX bandı, SPY trend)
 > - [ ] ADIM 2 — aktif pozisyonlar (chandelier stop güncelle, çıkış sinyali kontrol)
-> - [ ] ADIM 3 — FMP screener ile tarama evreni (~1,100 hisse)
-> - [ ] ADIM 4 — ichimoku 4/4 filtresi
+> - [ ] ADIM 3 — tam evren tarama (swing_full_universe.py, iki aşamalı)
+> - [ ] ADIM 4 — ichimoku 4/4 doğrulama (Aşama 2 otomatik)
 > - [ ] ADIM 5 — K filtreleri sırayla (K-17, K-18, K-19, K-20, K-05, K-15)
 > - [ ] ADIM 6 — finviz teyit (web search)
 > - [ ] ADIM 7 — giriş planı (varsa) + rapor yaz + git push
@@ -89,32 +89,46 @@ ADIM 2 — AKTİF POZİSYON YÖNETİMİ
        - 3+ negatif kontrol → EXIT_NOW
   → aktif pozisyonların tablo halinde raporu yazılır
 
-ADIM 3 — TARAMA EVRENİ
-  → FMP company-screener çağrısı:
-    marketCapMoreThan=2000000000
-    volumeMoreThan=500000
-    priceMoreThan=10
-    country=US
-    isActivelyTrading=true
-    limit=1100
-  → beklenen dönüş: ~1,100 hisse
-  → not: FMP screener bazı ETF'leri dahil eder, bunlar swing için uygun değil — exchange = "NYSE" veya "NASDAQ" filtresi
+ADIM 3 — TAM EVREN TARAMA (İKİ AŞAMALI)
+  → önce K-14 drawdown durumu oku: data/swing/status.json
+  → K-14 aktifse: "yeni swing girişi YASAK" notunu rapora ekle, hedefli evrene geç
+  → K-14 kalktıysa: scripts/swing_full_universe.py ile tam evren taraması çalıştır
 
-ADIM 4 — ICHIMOKU 4/4 FİLTRESİ
-  → her hisse için ichimoku bileşenleri hesapla (9/26/52 periyot standart):
-    1. tenkan-sen (conversion): 9 periyot (high+low)/2
-    2. kijun-sen (base): 26 periyot (high+low)/2
-    3. senkou A (leading A): (tenkan+kijun)/2, 26 periyot ileri
-    4. senkou B (leading B): 52 periyot (high+low)/2, 26 periyot ileri
-    5. chikou (lagging): kapanış 26 periyot geri
-  → 4/4 sinyal kontrolü:
+  ÇALIŞTIRMA:
+    python scripts/swing_full_universe.py --max-candidates 200
+
+  AKIŞ:
+    Aşama 1 (momentum pre-filter):
+      - FMP company-screener: mcap>$2B, price>$10, vol>500K, NYSE+NASDAQ
+      - K-19 XLP otomatik ön eleme (Consumer Defensive sektörü hariç)
+      - Günlük momentum pozitif filtresi (batch-quote)
+      - 1M >=0 + 3M >=%5 teyidi (stock-price-change)
+      - Sonuç: tipik 30-80 survivor
+    
+    Aşama 2 (RSI + Ichimoku derin analiz):
+      - swing_ichimoku.full_analysis her survivor için
+      - RSI 40-65 filtresi
+      - Ichimoku 4/4 bullish zorunlu
+      - SMA200 üstü zorunlu
+      - Sonuç: tipik 5-15 A-kalite aday
+
+  ÇIKTI: data/daily_full_scan.json dosyasına kaydedilir
+  NOT: Tam çalışma ~2-5 dakika, 300-400 FMP çağrısı yapar. Günde 1 defa yeterli.
+
+  K-14 AKTİFKEN (DRAWDOWN FREN):
+    - Tam evren yerine hedefli evren kullan (mevcut watchlist + son 3 haftanın kazananları)
+    - Script: python scripts/swing_full_universe.py --max-candidates 50 --skip-stage2
+    - Amaç: hazır olduğunda hızlı geri dönüş için izlemeye devam
+
+ADIM 4 — ICHIMOKU 4/4 DOĞRULAMA (Aşama 2 zaten yapıyor)
+  → swing_full_universe.py Aşama 2'de ichimoku 4/4 zaten uygulanıyor:
     a. fiyat > kumo (senkou A ve senkou B üstünde)
     b. tenkan > kijun (TK cross bull)
     c. chikou clear (26 periyot önceki fiyatın üstünde)
     d. kumo yeşil (senkou A > senkou B)
-  → 4/4 geçenler hafif adaylar listesi
-  → hafif adaylar listesinde hacim kontrolü: son 10 gün ortalama hacim > 50 gün ortalama × 1.3
-  → bu teyit listesi → "ichimoku 4/4 + hacim teyitli adaylar"
+  → hacim teyidi: swing_ichimoku.py "analyze_volume" fonksiyonu otomatik çalışır
+  → bu adımda yalnızca data/daily_full_scan.json'ı oku, stage2_adaylar listesini
+    sonraki K filtrelerine gönder
 
 ADIM 5 — K FİLTRELERİ (SIRAYLA)
   her geçen filtre aday listesini daraltır. bir sonraki filtreye sadece geçenler geçer.
