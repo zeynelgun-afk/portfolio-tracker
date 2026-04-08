@@ -155,13 +155,16 @@ def get_full_data(symbol, delay=0.05):
 # SKOR HESAPLAMA
 # ============================================================
 
-def score_dengeli(data, existing_sectors=None):
+def score_dengeli(data, existing_sectors=None, catalyst_override=None):
     """
     Dengeli portföy skoru (max ~20).
     Kriterler: P/E, ROIC, momentum, SMA, RSI, FCF, sektör çeşitliliği bonusu.
     
     existing_sectors: mevcut dengeli portföyde bulunan sektör listesi.
                       Adayın sektörü bu listede YOKsa +2 bonus (çeşitlilik).
+    catalyst_override: {'puan': 1|2, 'gerekce': str, 'kaynak': str} dict.
+                       Max +2 puan. Hem gerekçe hem kaynak zorunlu.
+                       Bkz. apply_catalyst_override() dokümantasyonu.
     """
     score = 0
     detail = []
@@ -213,10 +216,13 @@ def score_dengeli(data, existing_sectors=None):
         if sector != 'UNKNOWN' and sector not in existing_sectors:
             score += 2; detail.append(f"Yeni sektör ({sector}) mevcut portföyde yok: +2")
     
+    # Niteliksel katalizör override (opsiyonel, sıkı kurallı)
+    score, detail = apply_catalyst_override(score, detail, catalyst_override)
+    
     return score, detail
 
 
-def score_agresif(data):
+def score_agresif(data, catalyst_override=None):
     """
     Agresif portföy skoru (max ~18).
     Kriterler: Momentum, RS, teknik, fundamental kalite.
@@ -286,10 +292,13 @@ def score_agresif(data):
     if m3m > 15:
         score += 2; detail.append(f"3M {m3m:.1f}% >15: +2")
     
+    # Niteliksel katalizör override (opsiyonel, sıkı kurallı)
+    score, detail = apply_catalyst_override(score, detail, catalyst_override)
+    
     return score, detail
 
 
-def score_temettü(data, existing_sectors=None):
+def score_temettü(data, existing_sectors=None, catalyst_override=None):
     """
     Değer + Temettü portföy skoru (max ~18).
     Kriterler: Yield, payout sürdürülebilirliği, P/E, ROIC, trend, çeşitlilik.
@@ -360,6 +369,58 @@ def score_temettü(data, existing_sectors=None):
         if sector != 'UNKNOWN' and sector not in existing_sectors:
             score += 2; detail.append(f"Yeni sektör ({sector}) portföyde yok: +2")
     
+    # Niteliksel katalizör override (opsiyonel, sıkı kurallı)
+    score, detail = apply_catalyst_override(score, detail, catalyst_override)
+    
+    return score, detail
+
+
+# ============================================================
+# KATALİZÖR OVERRIDE (niteliksel, sıkı kurallı)
+# ============================================================
+
+def apply_catalyst_override(score, detail, override):
+    """
+    Niteliksel katalizör için opsiyonel puan ekleme. SÜBJEKTİFLİK ÖNLEMEK İÇİN SIKI KURALLAR:
+    
+    1) Max +2 puan. +3 ve üstü reddedilir.
+    2) Dict olmalı: {'puan': 1 veya 2, 'gerekce': str, 'kaynak': str}
+    3) Gerekçe ve kaynak ZORUNLU, boş string kabul edilmez.
+    4) Kaynak bir URL, haber başlığı veya SEC dosya kimliği olmalı (ör. "https://..." veya "SEC 8-K 2026-04-05" veya "Reuters 2026-04-07")
+    5) Gerekçe en az 20 karakter olmalı (açıklayıcı olması için).
+    6) Katalizör son 7 gün içinde olmalı (çağıran kontrol eder).
+    
+    Geçersiz override sessizce atlanır (skoru değiştirmez), detay logu eklenir.
+    """
+    if override is None:
+        return score, detail
+    
+    if not isinstance(override, dict):
+        detail.append("⚠️ Katalizör override reddedildi: dict değil")
+        return score, detail
+    
+    puan = override.get('puan', 0)
+    gerekce = (override.get('gerekce') or '').strip()
+    kaynak = (override.get('kaynak') or '').strip()
+    
+    # Kural 1: max +2
+    if not isinstance(puan, int) or puan < 1 or puan > 2:
+        detail.append(f"⚠️ Katalizör override reddedildi: puan {puan} geçersiz (1-2 olmalı)")
+        return score, detail
+    
+    # Kural 3-4: kaynak zorunlu
+    if not kaynak or len(kaynak) < 5:
+        detail.append("⚠️ Katalizör override reddedildi: kaynak boş/geçersiz")
+        return score, detail
+    
+    # Kural 5: gerekçe en az 20 karakter
+    if not gerekce or len(gerekce) < 20:
+        detail.append("⚠️ Katalizör override reddedildi: gerekçe çok kısa (<20 karakter)")
+        return score, detail
+    
+    # Geçti → uygula
+    score += puan
+    detail.append(f"KATALİZÖR (+{puan}): {gerekce[:80]} [kaynak: {kaynak[:60]}]")
     return score, detail
 
 
@@ -389,13 +450,15 @@ def get_decision(score, portfolio):
 # K-17 KORELASYON KONTROLÜ (lokal, aday listesi bazlı)
 # ============================================================
 
-# Basit sektör/tema haritası (manuel, FMP sector kullanılabilir ama çok geniş)
-# Format: sembol → (ana_sektor, alt_katman, tema)
+# Sektör/tema haritası. Format: sembol → (ana_sektor, alt_katman, tema)
+# Yaygın ABD large/mid cap hisseleri. UNKNOWN olanlar için FMP fallback aşağıda.
 SECTOR_MAP = {
+    # === TECH ===
     # Memory
     'WDC': ('Tech', 'Memory', 'AI_tedarik'),
     'SNDK': ('Tech', 'Memory', 'AI_tedarik'),
     'MU': ('Tech', 'Memory', 'AI_tedarik'),
+    'STX': ('Tech', 'Memory', 'AI_tedarik'),
     # Yarıiletken ekipman
     'KLAC': ('Tech', 'Ekipman', 'AI_tedarik'),
     'AMAT': ('Tech', 'Ekipman', 'AI_tedarik'),
@@ -405,6 +468,7 @@ SECTOR_MAP = {
     'TER': ('Tech', 'Ekipman', 'AI_tedarik'),
     'CAMT': ('Tech', 'Ekipman', 'AI_tedarik'),
     'UCTT': ('Tech', 'Ekipman', 'AI_tedarik'),
+    'ENTG': ('Tech', 'Ekipman', 'AI_tedarik'),
     # Optik
     'GLW': ('Tech', 'Optik', 'AI_tedarik'),
     'COHR': ('Tech', 'Optik', 'AI_tedarik'),
@@ -412,75 +476,328 @@ SECTOR_MAP = {
     'FN': ('Tech', 'Optik', 'AI_tedarik'),
     'AAOI': ('Tech', 'Optik', 'AI_tedarik'),
     'ANET': ('Tech', 'Networking', 'AI_tedarik'),
+    'CSCO': ('Tech', 'Networking', 'Capex'),
+    # Chip / AI
+    'NVDA': ('Tech', 'Chip_AI', 'AI_tedarik'),
+    'AMD': ('Tech', 'Chip_AI', 'AI_tedarik'),
+    'INTC': ('Tech', 'Chip_AI', 'AI_tedarik'),
+    'TSM': ('Tech', 'Chip_Foundry', 'AI_tedarik'),
+    'TXN': ('Tech', 'Chip_Analog', 'Capex'),
+    'MRVL': ('Tech', 'Chip_Connectivity', 'AI_tedarik'),
+    'CRDO': ('Tech', 'Chip_Connectivity', 'AI_tedarik'),
+    'ALMU': ('Tech', 'Chip_Design', 'AI_tedarik'),
     # Mobil/edge
     'QCOM': ('Tech', 'Mobil', 'AI_tedarik'),
     'AVGO': ('Tech', 'Mobil', 'AI_tedarik'),
+    # Mega cap tech
+    'AAPL': ('Tech', 'Hardware', 'Mega_tech'),
+    'MSFT': ('Tech', 'Software', 'Mega_tech'),
+    'GOOGL': ('Communication', 'Internet', 'Mega_tech'),
+    'GOOG': ('Communication', 'Internet', 'Mega_tech'),
+    'META': ('Communication', 'Internet', 'Mega_tech'),
+    'AMZN': ('ConsumerCyc', 'E-commerce', 'Mega_tech'),
+    'TSLA': ('ConsumerCyc', 'EV', 'Mega_tech'),
+    'NFLX': ('Communication', 'Streaming', 'Mega_tech'),
+    # Enterprise software
+    'ORCL': ('Tech', 'Software', 'AI_uygulama'),
+    'CRM': ('Tech', 'Software', 'AI_uygulama'),
+    'ADBE': ('Tech', 'Software', 'AI_uygulama'),
+    'NOW': ('Tech', 'Software', 'AI_uygulama'),
+    'INTU': ('Tech', 'Software', 'AI_uygulama'),
+    'SNPS': ('Tech', 'Software', 'AI_uygulama'),
+    'CDNS': ('Tech', 'Software', 'AI_uygulama'),
+    'IBM': ('Tech', 'Software', 'Capex'),
+    'SAP': ('Tech', 'Software', 'AI_uygulama'),
+    'TYL': ('Tech', 'Software', 'AI_uygulama'),
+    # Siber güvenlik
+    'PANW': ('Tech', 'CyberSec', 'CyberSec'),
+    'CRWD': ('Tech', 'CyberSec', 'CyberSec'),
+    'FTNT': ('Tech', 'CyberSec', 'CyberSec'),
+    'ZS': ('Tech', 'CyberSec', 'CyberSec'),
+    'NET': ('Tech', 'CyberSec', 'CyberSec'),
+    # Data/AI infra
+    'DDOG': ('Tech', 'Software', 'AI_uygulama'),
+    'SNOW': ('Tech', 'Software', 'AI_uygulama'),
+    'MDB': ('Tech', 'Software', 'AI_uygulama'),
+    'PLTR': ('Tech', 'Software', 'AI_uygulama'),
+    # Donanım/sunucu
+    'DELL': ('Tech', 'Hardware', 'AI_tedarik'),
+    'HPQ': ('Tech', 'Hardware', 'Capex'),
+    'SMCI': ('Tech', 'Hardware', 'AI_tedarik'),
+    # === INDUSTRIAL ===
     # Güç AI
     'VRT': ('Industrial', 'GucAI', 'AI_tedarik'),
     'POWL': ('Industrial', 'GucAI', 'AI_tedarik'),
     'ETN': ('Industrial', 'GucAI', 'AI_tedarik'),
+    'PWR': ('Industrial', 'GucAI', 'AI_tedarik'),
+    'HUBB': ('Industrial', 'GucAI', 'AI_tedarik'),
+    # Nükleer
     'GEV': ('Industrial', 'Nukleer', 'AI_enerji'),
     'VST': ('Utility', 'Nukleer', 'AI_enerji'),
     'CEG': ('Utility', 'Nukleer', 'AI_enerji'),
     'SMR': ('Utility', 'Nukleer', 'AI_enerji'),
-    # Sanayi
+    # Makine/sanayi
     'CAT': ('Industrial', 'Machinery', 'Capex'),
     'DE': ('Industrial', 'Machinery', 'Capex'),
     'HON': ('Industrial', 'Diversified', 'Capex'),
-    # Sağlık
-    'UNH': ('Healthcare', 'Insurance', 'Medicare'),
-    'HUM': ('Healthcare', 'Insurance', 'Medicare'),
-    'ELV': ('Healthcare', 'Insurance', 'Medicare'),
-    'CVS': ('Healthcare', 'Insurance', 'Medicare'),
-    'JNJ': ('Healthcare', 'Pharma', 'Pharma'),
-    'MRK': ('Healthcare', 'Pharma', 'Pharma'),
-    'LLY': ('Healthcare', 'Pharma', 'Pharma'),
-    'ABBV': ('Healthcare', 'Pharma', 'Pharma'),
-    'PFE': ('Healthcare', 'Pharma', 'Pharma'),
-    # Finans
-    'JPM': ('Financial', 'Bank', 'Bank'),
-    'BAC': ('Financial', 'Bank', 'Bank'),
-    'WFC': ('Financial', 'Bank', 'Bank'),
-    'GS': ('Financial', 'IBank', 'Bank'),
-    'MS': ('Financial', 'IBank', 'Bank'),
-    'V': ('Financial', 'Payments', 'Fintech'),
-    'MA': ('Financial', 'Payments', 'Fintech'),
-    'BLK': ('Financial', 'Asset', 'Asset'),
-    # Tütün
-    'MO': ('ConsumerDef', 'Tobacco', 'Defensive'),
-    'PM': ('ConsumerDef', 'Tobacco', 'Defensive'),
-    # Telekom
-    'T': ('Communication', 'Telecom', 'Defensive'),
-    'VZ': ('Communication', 'Telecom', 'Defensive'),
-    # Temel tüketim
-    'KO': ('ConsumerDef', 'Beverage', 'Defensive'),
-    'PEP': ('ConsumerDef', 'Beverage', 'Defensive'),
-    'WMT': ('ConsumerDef', 'Retail', 'Defensive'),
-    'COST': ('ConsumerDef', 'Retail', 'Defensive'),
-    # Utility
-    'SO': ('Utility', 'Electric', 'Defensive'),
-    'D': ('Utility', 'Electric', 'Defensive'),
-    # REIT
-    'O': ('RealEstate', 'REIT', 'Defensive'),
+    'MMM': ('Industrial', 'Diversified', 'Capex'),
+    'GE': ('Industrial', 'Diversified', 'Capex'),
+    'EMR': ('Industrial', 'Machinery', 'Capex'),
+    'ITW': ('Industrial', 'Machinery', 'Capex'),
+    'PH': ('Industrial', 'Machinery', 'Capex'),
+    'CMI': ('Industrial', 'Machinery', 'Capex'),
+    'ROK': ('Industrial', 'Machinery', 'Capex'),
+    'DOV': ('Industrial', 'Machinery', 'Capex'),
+    'TT': ('Industrial', 'Machinery', 'Capex'),
+    'JCI': ('Industrial', 'Machinery', 'Capex'),
+    'URI': ('Industrial', 'Rental', 'Capex'),
     # Savunma
     'LMT': ('Industrial', 'Defense', 'Defense'),
     'GD': ('Industrial', 'Defense', 'Defense'),
     'RTX': ('Industrial', 'Defense', 'Defense'),
     'NOC': ('Industrial', 'Defense', 'Defense'),
-    # Kargo
+    'HII': ('Industrial', 'Defense', 'Defense'),
+    'TDG': ('Industrial', 'Defense', 'Defense'),
+    'TDY': ('Industrial', 'Defense', 'Defense'),
+    'LHX': ('Industrial', 'Defense', 'Defense'),
+    'BA': ('Industrial', 'Aerospace', 'Aerospace'),
+    'HWM': ('Industrial', 'Aerospace', 'Aerospace'),
+    # Kargo/lojistik
     'UPS': ('Industrial', 'Logistics', 'Logistics'),
     'FDX': ('Industrial', 'Logistics', 'Logistics'),
-    # Enerji
+    'CSX': ('Industrial', 'Rail', 'Logistics'),
+    'UNP': ('Industrial', 'Rail', 'Logistics'),
+    'NSC': ('Industrial', 'Rail', 'Logistics'),
+    'ODFL': ('Industrial', 'Trucking', 'Logistics'),
+    # Havayolu
+    'DAL': ('Industrial', 'Airline', 'ConsumerCyc'),
+    'UAL': ('Industrial', 'Airline', 'ConsumerCyc'),
+    'LUV': ('Industrial', 'Airline', 'ConsumerCyc'),
+    # Atık yönetimi
+    'WM': ('Industrial', 'Waste', 'Defensive'),
+    'RSG': ('Industrial', 'Waste', 'Defensive'),
+    # === HEALTHCARE ===
+    # Sigorta
+    'UNH': ('Healthcare', 'Insurance', 'Medicare'),
+    'HUM': ('Healthcare', 'Insurance', 'Medicare'),
+    'ELV': ('Healthcare', 'Insurance', 'Medicare'),
+    'CVS': ('Healthcare', 'Insurance', 'Medicare'),
+    'CI': ('Healthcare', 'Insurance', 'Medicare'),
+    # Pharma
+    'JNJ': ('Healthcare', 'Pharma', 'Pharma'),
+    'MRK': ('Healthcare', 'Pharma', 'Pharma'),
+    'LLY': ('Healthcare', 'Pharma', 'Pharma'),
+    'ABBV': ('Healthcare', 'Pharma', 'Pharma'),
+    'PFE': ('Healthcare', 'Pharma', 'Pharma'),
+    'BMY': ('Healthcare', 'Pharma', 'Pharma'),
+    'AMGN': ('Healthcare', 'Biotech', 'Pharma'),
+    'GILD': ('Healthcare', 'Biotech', 'Pharma'),
+    'VRTX': ('Healthcare', 'Biotech', 'Pharma'),
+    'REGN': ('Healthcare', 'Biotech', 'Pharma'),
+    'BIIB': ('Healthcare', 'Biotech', 'Pharma'),
+    'ZTS': ('Healthcare', 'Pharma', 'Pharma'),
+    # Medikal cihaz
+    'MDT': ('Healthcare', 'Device', 'Medtech'),
+    'ABT': ('Healthcare', 'Device', 'Medtech'),
+    'TMO': ('Healthcare', 'Tools', 'Medtech'),
+    'DHR': ('Healthcare', 'Tools', 'Medtech'),
+    'SYK': ('Healthcare', 'Device', 'Medtech'),
+    'ISRG': ('Healthcare', 'Device', 'Medtech'),
+    'BSX': ('Healthcare', 'Device', 'Medtech'),
+    'EW': ('Healthcare', 'Device', 'Medtech'),
+    'BDX': ('Healthcare', 'Device', 'Medtech'),
+    # Dağıtım
+    'MCK': ('Healthcare', 'Distribution', 'Medicare'),
+    'COR': ('Healthcare', 'Distribution', 'Medicare'),
+    'CAH': ('Healthcare', 'Distribution', 'Medicare'),
+    # === FINANCIAL ===
+    'JPM': ('Financial', 'Bank', 'Bank'),
+    'BAC': ('Financial', 'Bank', 'Bank'),
+    'WFC': ('Financial', 'Bank', 'Bank'),
+    'C': ('Financial', 'Bank', 'Bank'),
+    'USB': ('Financial', 'Bank', 'Bank'),
+    'PNC': ('Financial', 'Bank', 'Bank'),
+    'TFC': ('Financial', 'Bank', 'Bank'),
+    'GS': ('Financial', 'IBank', 'Bank'),
+    'MS': ('Financial', 'IBank', 'Bank'),
+    'SCHW': ('Financial', 'Broker', 'Bank'),
+    'BRK.B': ('Financial', 'Diversified', 'Diversified'),
+    'V': ('Financial', 'Payments', 'Fintech'),
+    'MA': ('Financial', 'Payments', 'Fintech'),
+    'AXP': ('Financial', 'Payments', 'Fintech'),
+    'PYPL': ('Financial', 'Payments', 'Fintech'),
+    'COF': ('Financial', 'Bank', 'Bank'),
+    'DFS': ('Financial', 'Bank', 'Bank'),
+    'BLK': ('Financial', 'Asset', 'Asset'),
+    'BX': ('Financial', 'Asset', 'Asset'),
+    'KKR': ('Financial', 'Asset', 'Asset'),
+    'SPGI': ('Financial', 'DataSvc', 'DataSvc'),
+    'MCO': ('Financial', 'DataSvc', 'DataSvc'),
+    'ICE': ('Financial', 'Exchange', 'DataSvc'),
+    'CME': ('Financial', 'Exchange', 'DataSvc'),
+    'NDAQ': ('Financial', 'Exchange', 'DataSvc'),
+    # Sigorta
+    'CB': ('Financial', 'Insurance', 'Insurance'),
+    'TRV': ('Financial', 'Insurance', 'Insurance'),
+    'PGR': ('Financial', 'Insurance', 'Insurance'),
+    'AIG': ('Financial', 'Insurance', 'Insurance'),
+    'MET': ('Financial', 'Insurance', 'Insurance'),
+    'PRU': ('Financial', 'Insurance', 'Insurance'),
+    'ALL': ('Financial', 'Insurance', 'Insurance'),
+    'AFL': ('Financial', 'Insurance', 'Insurance'),
+    'MMC': ('Financial', 'Insurance', 'Insurance'),
+    'AON': ('Financial', 'Insurance', 'Insurance'),
+    # Fintech
+    'SOFI': ('Financial', 'Fintech', 'Fintech'),
+    # === CONSUMER DEFENSIVE ===
+    # Tütün
+    'MO': ('ConsumerDef', 'Tobacco', 'Defensive'),
+    'PM': ('ConsumerDef', 'Tobacco', 'Defensive'),
+    'BTI': ('ConsumerDef', 'Tobacco', 'Defensive'),
+    # Telekom
+    'T': ('Communication', 'Telecom', 'Defensive'),
+    'VZ': ('Communication', 'Telecom', 'Defensive'),
+    'TMUS': ('Communication', 'Telecom', 'Defensive'),
+    # İçecek
+    'KO': ('ConsumerDef', 'Beverage', 'Defensive'),
+    'PEP': ('ConsumerDef', 'Beverage', 'Defensive'),
+    'MNST': ('ConsumerDef', 'Beverage', 'Defensive'),
+    'STZ': ('ConsumerDef', 'Beverage', 'Defensive'),
+    # Market/perakende
+    'WMT': ('ConsumerDef', 'Retail', 'Defensive'),
+    'COST': ('ConsumerDef', 'Retail', 'Defensive'),
+    'TGT': ('ConsumerDef', 'Retail', 'Defensive'),
+    'KR': ('ConsumerDef', 'Retail', 'Defensive'),
+    # Ev/kişisel bakım
+    'PG': ('ConsumerDef', 'Household', 'Defensive'),
+    'CL': ('ConsumerDef', 'Household', 'Defensive'),
+    'KMB': ('ConsumerDef', 'Household', 'Defensive'),
+    'CLX': ('ConsumerDef', 'Household', 'Defensive'),
+    'EL': ('ConsumerDef', 'Personal', 'Defensive'),
+    # Gıda
+    'MDLZ': ('ConsumerDef', 'Food', 'Defensive'),
+    'GIS': ('ConsumerDef', 'Food', 'Defensive'),
+    'K': ('ConsumerDef', 'Food', 'Defensive'),
+    'HSY': ('ConsumerDef', 'Food', 'Defensive'),
+    'KHC': ('ConsumerDef', 'Food', 'Defensive'),
+    'SYY': ('ConsumerDef', 'Food', 'Defensive'),
+    'HRL': ('ConsumerDef', 'Food', 'Defensive'),
+    'TSN': ('ConsumerDef', 'Food', 'Defensive'),
+    # === CONSUMER CYCLICAL ===
+    'HD': ('ConsumerCyc', 'HomeImp', 'ConsumerCyc'),
+    'LOW': ('ConsumerCyc', 'HomeImp', 'ConsumerCyc'),
+    'MCD': ('ConsumerCyc', 'Restaurant', 'ConsumerCyc'),
+    'SBUX': ('ConsumerCyc', 'Restaurant', 'ConsumerCyc'),
+    'CMG': ('ConsumerCyc', 'Restaurant', 'ConsumerCyc'),
+    'YUM': ('ConsumerCyc', 'Restaurant', 'ConsumerCyc'),
+    'NKE': ('ConsumerCyc', 'Apparel', 'ConsumerCyc'),
+    'LULU': ('ConsumerCyc', 'Apparel', 'ConsumerCyc'),
+    'TJX': ('ConsumerCyc', 'Retail', 'ConsumerCyc'),
+    'ROST': ('ConsumerCyc', 'Retail', 'ConsumerCyc'),
+    'BKNG': ('ConsumerCyc', 'Travel', 'ConsumerCyc'),
+    'MAR': ('ConsumerCyc', 'Travel', 'ConsumerCyc'),
+    'HLT': ('ConsumerCyc', 'Travel', 'ConsumerCyc'),
+    'ABNB': ('ConsumerCyc', 'Travel', 'ConsumerCyc'),
+    'DIS': ('Communication', 'Entertainment', 'ConsumerCyc'),
+    'F': ('ConsumerCyc', 'Auto', 'ConsumerCyc'),
+    'GM': ('ConsumerCyc', 'Auto', 'ConsumerCyc'),
+    # === UTILITY ===
+    'SO': ('Utility', 'Electric', 'Defensive'),
+    'D': ('Utility', 'Electric', 'Defensive'),
+    'DUK': ('Utility', 'Electric', 'Defensive'),
+    'NEE': ('Utility', 'Electric', 'Defensive'),
+    'AEP': ('Utility', 'Electric', 'Defensive'),
+    'EXC': ('Utility', 'Electric', 'Defensive'),
+    'XEL': ('Utility', 'Electric', 'Defensive'),
+    'SRE': ('Utility', 'Electric', 'Defensive'),
+    'PCG': ('Utility', 'Electric', 'Defensive'),
+    # === REAL ESTATE ===
+    'O': ('RealEstate', 'REIT', 'Defensive'),
+    'AMT': ('RealEstate', 'REIT_Cell', 'DataCenter'),
+    'CCI': ('RealEstate', 'REIT_Cell', 'DataCenter'),
+    'EQIX': ('RealEstate', 'REIT_DC', 'DataCenter'),
+    'DLR': ('RealEstate', 'REIT_DC', 'DataCenter'),
+    'PLD': ('RealEstate', 'REIT_Ind', 'Logistics'),
+    'WELL': ('RealEstate', 'REIT_Health', 'Defensive'),
+    'PSA': ('RealEstate', 'REIT', 'Defensive'),
+    'SPG': ('RealEstate', 'REIT_Mall', 'ConsumerCyc'),
+    # === ENERGY ===
     'XOM': ('Energy', 'Oil', 'Energy'),
     'CVX': ('Energy', 'Oil', 'Energy'),
     'COP': ('Energy', 'Oil', 'Energy'),
+    'EOG': ('Energy', 'Oil', 'Energy'),
+    'SLB': ('Energy', 'Services', 'Energy'),
     'HAL': ('Energy', 'Services', 'Energy'),
+    'FANG': ('Energy', 'Oil', 'Energy'),
+    'OXY': ('Energy', 'Oil', 'Energy'),
+    'DVN': ('Energy', 'Oil', 'Energy'),
+    'VLO': ('Energy', 'Refining', 'Energy'),
+    'MPC': ('Energy', 'Refining', 'Energy'),
+    'PSX': ('Energy', 'Refining', 'Energy'),
+    'KMI': ('Energy', 'Pipeline', 'Energy'),
+    'WMB': ('Energy', 'Pipeline', 'Energy'),
+    'OKE': ('Energy', 'Pipeline', 'Energy'),
+    'AR': ('Energy', 'Gas', 'Energy'),
+    'EQT': ('Energy', 'Gas', 'Energy'),
+    'AROC': ('Energy', 'Services', 'Energy'),
+    'KOS': ('Energy', 'Oil', 'Energy'),
+    'SM': ('Energy', 'Oil', 'Energy'),
+    # === MATERIALS ===
+    'LIN': ('Materials', 'Gases', 'Capex'),
+    'APD': ('Materials', 'Gases', 'Capex'),
+    'ECL': ('Materials', 'Specialty', 'Capex'),
+    'SHW': ('Materials', 'Paint', 'ConsumerCyc'),
+    'FCX': ('Materials', 'Copper', 'Commodity'),
+    'NEM': ('Materials', 'Gold', 'Altin'),
+    'GOLD': ('Materials', 'Gold', 'Altin'),
+    'RGLD': ('Materials', 'Gold', 'Altin'),
+    'FNV': ('Materials', 'Gold', 'Altin'),
+    'WPM': ('Materials', 'Gold', 'Altin'),
+    'MP': ('Materials', 'RareEarth', 'Critical'),
+    'NUE': ('Materials', 'Steel', 'Commodity'),
+    'STLD': ('Materials', 'Steel', 'Commodity'),
+    'CLF': ('Materials', 'Steel', 'Commodity'),
+    'X': ('Materials', 'Steel', 'Commodity'),
+    'DD': ('Materials', 'Chemicals', 'Capex'),
+    'DOW': ('Materials', 'Chemicals', 'Capex'),
 }
 
 
 def get_sector_info(symbol):
-    """Bir sembol için sektör/katman/tema bilgisi döndürür. Bilinmiyorsa UNKNOWN."""
-    return SECTOR_MAP.get(symbol.upper(), ('UNKNOWN', 'UNKNOWN', 'UNKNOWN'))
+    """Bir sembol için sektör/katman/tema bilgisi döndürür.
+    1) Lokal SECTOR_MAP'tan arar
+    2) Yoksa FMP profile'dan sektör çeker ve basit map'ler
+    3) Hiçbiri yoksa UNKNOWN"""
+    sym = symbol.upper()
+    if sym in SECTOR_MAP:
+        return SECTOR_MAP[sym]
+    # FMP fallback: profile endpoint'ten sektör al
+    data = fmp_get("profile", {"symbol": sym})
+    if data and isinstance(data, list) and data:
+        gics = (data[0].get("sector") or "").strip()
+        industry = (data[0].get("industry") or "").strip()
+        gics_map = {
+            "Technology": ("Tech", industry or "Other", "UNKNOWN"),
+            "Information Technology": ("Tech", industry or "Other", "UNKNOWN"),
+            "Communication Services": ("Communication", industry or "Other", "UNKNOWN"),
+            "Energy": ("Energy", industry or "Other", "Energy"),
+            "Industrials": ("Industrial", industry or "Other", "UNKNOWN"),
+            "Health Care": ("Healthcare", industry or "Other", "UNKNOWN"),
+            "Healthcare": ("Healthcare", industry or "Other", "UNKNOWN"),
+            "Financial Services": ("Financial", industry or "Other", "UNKNOWN"),
+            "Financials": ("Financial", industry or "Other", "UNKNOWN"),
+            "Consumer Cyclical": ("ConsumerCyc", industry or "Other", "ConsumerCyc"),
+            "Consumer Discretionary": ("ConsumerCyc", industry or "Other", "ConsumerCyc"),
+            "Consumer Defensive": ("ConsumerDef", industry or "Other", "Defensive"),
+            "Consumer Staples": ("ConsumerDef", industry or "Other", "Defensive"),
+            "Utilities": ("Utility", industry or "Other", "Defensive"),
+            "Basic Materials": ("Materials", industry or "Other", "Commodity"),
+            "Materials": ("Materials", industry or "Other", "Commodity"),
+            "Real Estate": ("RealEstate", industry or "Other", "Defensive"),
+        }
+        if gics in gics_map:
+            return gics_map[gics]
+    return ('UNKNOWN', 'UNKNOWN', 'UNKNOWN')
 
 
 def check_correlation(candidate_list, existing_positions=None):
