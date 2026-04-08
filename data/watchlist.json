@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-04-08T19:46:59.047006",
+  "son_guncelleme": "2026-04-08T20:47:18.894365",
   "not": "3 portföy merkezi aday havuzu. PART 1C 15:38 TR güncelleme: DUK/NEE/GEV yeni EKLE (K-04+K-18 temiz), POWL K-18 ELENDİ ($27.3M insider satış), ön piyasa gap-up sonrası kovalama yasağı 4 aday için aktif.",
   "sistem_referans": "docs/PORTFOLIO_OPPORTUNITY_SYSTEM.md",
   "script": "scripts/portfolio_scan_common.py",
@@ -69,7 +69,7 @@
     {
       "sembol": "CAT",
       "hedef_portfoy": "dengeli",
-      "guncel_fiyat": 770.64,
+      "guncel_fiyat": 771.58,
       "rsi": 54.4,
       "skor": 12,
       "skor_detay": "ROIC 11.4% >10: +1 | 6M 44.3% >20: +3 | RSI 54 nötr: +2 | SMA50 üstü: +2 | Golden cross: +1 | FCF yield 3.0% >3%: +1 | Yeni sektör (Industrial) mevcut portföyde yok: +2",
@@ -96,7 +96,7 @@
     {
       "sembol": "WDC",
       "hedef_portfoy": "agresif",
-      "guncel_fiyat": 338.43,
+      "guncel_fiyat": 338.78,
       "rsi": 59.1,
       "skor": 17,
       "skor_detay": "1M 27.2% >20: +3 | 6M 157.4% >50: +3 | ROIC 25.2% >25: +3 | RSI 59 güçlü: +2 | SMA50 üstü: +2 | Golden cross: +2 | 3M 66.2% >15: +2",
@@ -123,7 +123,7 @@
     {
       "sembol": "KLAC",
       "hedef_portfoy": "agresif",
-      "guncel_fiyat": 1661.95,
+      "guncel_fiyat": 1672.34,
       "rsi": 57.2,
       "skor": 14,
       "skor_detay": "1M 15.2% >10: +2 | 6M 45.8% >30: +2 | P/E 44.7 >40 yüksek: -1 | ROIC 36.8% >25: +3 | RSI 57 güçlü: +2 | SMA50 üstü: +2 | Golden cross: +2 | 3M 16.9% >15: +2",
@@ -150,7 +150,7 @@
     {
       "sembol": "AMAT",
       "hedef_portfoy": "agresif",
-      "guncel_fiyat": 384.265,
+      "guncel_fiyat": 385.72,
       "rsi": 52.4,
       "skor": 14,
       "skor_detay": "1M 9.1% >0: +1 | 6M 62.9% >50: +3 | ROIC 22.6% >15: +2 | RSI 52 güçlü: +2 | SMA50 üstü: +2 | Golden cross: +2 | 3M 25.8% >15: +2",
@@ -177,7 +177,7 @@
     {
       "sembol": "MRK",
       "hedef_portfoy": "temettü",
-      "guncel_fiyat": 123.43,
+      "guncel_fiyat": 123.2,
       "rsi": 54.2,
       "skor": 11,
       "skor_detay": "payout 44.8% <50%: +3 | P/E 16.3 <18: +1 | ROIC 20.8% >15: +2 | FCF yield 4.2% >0: +1 | SMA50 üstü: +1 | SMA200 üstü: +1 | Yeni sektör (Healthcare) portföyde yok: +2",
@@ -204,7 +204,7 @@
     {
       "sembol": "UPS",
       "hedef_portfoy": "temettü",
-      "guncel_fiyat": 100.39,
+      "guncel_fiyat": 100.43,
       "rsi": 40.4,
       "skor": 11,
       "skor_detay": "yield 6.72% 5-7%: +3 | P/E 14.9 <15: +2 | ROIC 10.6% >10: +1 | FCF yield 5.7% >5%: +2 | SMA200 üstü: +1 | Yeni sektör (Industrial) portföyde yok: +2",
@@ -232,7 +232,7 @@
     {
       "sembol": "DUK",
       "hedef_portfoy": "dengeli",
-      "guncel_fiyat": 131.22,
+      "guncel_fiyat": 131.6,
       "rsi": 58.4,
       "skor": 11,
       "skor_detay": "P/E 20.6 <25: +1 | 6M 5.3% >0: +1 | RSI 58 nötr: +2 | SMA50 üstü: +2 | Golden cross: +1 | FCF yield 8.0% >5%: +2 | Yeni sektör (Utility): +2",
@@ -259,7 +259,7 @@
     {
       "sembol": "NEE",
       "hedef_portfoy": "dengeli",
-      "guncel_fiyat": 94,
+      "guncel_fiyat": 94.17,
       "rsi": 59.6,
       "skor": 9,
       "skor_detay": "6M 11.5% >10: +2 | RSI 60 nötr: +2 | SMA50 üstü: +2 | Golden cross: +1 | Yeni sektör (Utility): +2",
@@ -286,7 +286,7 @@
     {
       "sembol": "GEV",
       "hedef_portfoy": "dengeli",
-      "guncel_fiyat": 938.87,
+      "guncel_fiyat": 936.07,
       "rsi": 59.6,
       "skor": 10,
       "skor_detay": "1M pozitif | 6M güçlü | RSI 60 nötr: +2 | SMA50 üstü: +2 | Golden cross: +1 | Nuclear/güç altyapısı AI tedarik zinciri: +3",
@@ -313,7 +313,7 @@
     {
       "sembol": "ATMU",
       "hedef_portfoy": "dengeli",
-      "guncel_fiyat": 62.74,
+      "guncel_fiyat": 63.13,
       "rsi": 61.6,
       "skor": 9,
       "skor_detay": "ROIC 23% >10: +2 | 6M 40.4% >20: +3 | RSI 61.6 sağlıklı: +1 | SMA50 üstü + golden cross: +2 | Op marj 16.9% >15: +1 | Yeni sektör (Industrial - Filtration) dengeli portföyde yok: +2 | PEG 2.29 pahalı: -2",
