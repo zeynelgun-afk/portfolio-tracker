@@ -21,10 +21,10 @@
 >
 > **geçmiş hatalar**: bölüm 4 (kazanç açıklamaları) atlandı → Oracle bilançosu ($17.2B gelir, bulut +%84, AH +%6.3) rapordan tamamen eksik kaldı. bölüm 5 ve 6 da eksik yazıldı. bu tür atlamalar portföy kararlarını olumsuz etkiler. her bölümü tamamla.
 
-> **versiyon**: 1.3 | **son güncelleme**: 6 nisan 2026
+> **versiyon**: 1.4 | **son güncelleme**: 8 nisan 2026 (mantık hatası düzeltme: agresif stop K-06/K-07 ile hizalandı, ön koşul netleşti, K-15a yanlış bağlamı düzeltildi)
 > **çıktı dosyası**: `reports/daily/DAILY_REPORT_YYYY-MM-DD.md`
 > **çalışma zamanı**: TR ~09:00 (NYSE dün gece 23:00'da kapandı, bugün 16:30 açılacak — yaz saati)
-> **ön koşul**: part 1 (sabah raporu) aynı gün veya bir önceki gün çalıştırılmış olmalı
+> **ön koşul**: bir önceki günün PART 1 sabah raporu çalıştırılmış olmalı (çünkü PART 2 dünün seansını değerlendirir, sabah planı ile gerçekleşmeyi karşılaştırır). aynı gün PART 1 bugün seansı için ayrı plan yapar, PART 2 ile doğrudan ilişkili değildir.
 > **dil**: küçük harf türkçe, dilbilgisi kurallarına uygun
 > **kaynak**: sadece "finzora ai"
 > **git commit 1**: `[GÜNCELLEME] DD Ay - kapanış fiyatları`
@@ -55,7 +55,7 @@ ADIM 1 — GIT PULL + HAZIRLIK
 ADIM 2 — FMP VERİ TOPLAMA
   → batch-quote: tüm benzersiz semboller + SPY/QQQ/DIA/IWM/VIXY
   → teknik göstergeler (portföy hisseleri): her sembol için RSI(14), SMA(50), SMA(200)
-  → agresif portföy stopları: 2x ATR(14) trailing (FMP historical-price ile ATR hesapla)
+  → portföy stopları (K-06 giriş + K-07 trailing): FMP historical-price ile ATR(14) hesapla, max(2×ATR, %5) formülü
   → swing pozisyonları için RSI/SMA çekilmez — ichimoku scripti (adım 3) bunu kapsar
   → emtia/döviz: GCUSD, USO (petrol proxy), EURUSD
     ⚠️ CLUSD/WTIUSD güvenilmez → USO kullan. doğrudan ^VIX güvenilmez → VIXY kullan
@@ -150,7 +150,7 @@ kısa, hızlı özet — bugün ne oldu.
 **teknik uyarı kuralları** (playbook referansları ile):
 - RSI > 70 → overbought uyarısı (K-11 katman 1 tetiği, RSI 70+ otomatik satış DEĞİL, momentum teyidi)
 - RSI > 80 → K-11 katman 2 baskın tetik (kısmi satış %25-30 değerlendir)
-- RSI < 35 → K-15a oversold girişinde dikkat (1 gün teyit bekle)
+- RSI < 35 → oversold bölgesi, mevcut pozisyon için tez gözden geçir; K-04 istisna kontrolü uygun mu? (K-15a sadece YENI giriş filtresi, mevcut pozisyon için uygulanmaz)
 - fiyat > SMA50 → ✅ (K-04 trend filtresi), fiyat < SMA50 → ❌ (K-04 istisna kontrolü gerek)
 - fiyat < SMA200 → uzun vadeli trend kırılması uyarısı
 - k/z < -max(2×ATR, %5) → K-06 stop-loss tetikleyici (sabit eşik yok, hisse bazlı)

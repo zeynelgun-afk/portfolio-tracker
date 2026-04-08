@@ -32,7 +32,7 @@
 >
 > **geçmiş hatalar**: adım atlama maliyetli oldu (örn: kazanç açıklaması taramasını atlama, bölüm eksik bırakma). prompttaki her madde bir sebepten var — atlamak portföy kararlarını olumsuz etkiler.
 
-> **versiyon**: 2.2 | **son güncelleme**: 6 nisan 2026
+> **versiyon**: 2.3 | **son güncelleme**: 8 nisan 2026 (kritik: agresif max 6→10 poz, temettü max 6→15 poz, K-13b giriş stop netleşti, K-14→K-07 trailing etiket, stop formül tek kaynak K-06, K-15a mevcut poz bağlam düzeltildi)
 > **çalışma zamanı**: NYSE açıldıktan sonra (TR 16:30+, yaz saati), tercihen açılıştan 30-60dk sonra
 > **ön koşul**: o günün sabah raporu zaten yazılmış olmalı
 > **perspektif**: PİYASA AÇIK — GERÇEK ZAMANLI KARAR VE AKSİYON
@@ -351,7 +351,7 @@ durum kodları:
 **otomatik uyarı tetikleyicileri** (playbook referansları):
 - günlük değişim > +%5 veya < -%5 → acil inceleme
 - RSI > 80 → K-11 katman 2 baskın tetik (RSI 75 değil, 80+)
-- RSI < 35 → K-15a oversold teyit protokolü (1 gün teyit)
+- RSI < 35 → mevcut pozisyon için oversold uyarısı, tez gözden geçir (K-15a YENİ giriş filtresidir, mevcut pozisyon için uygulanmaz)
 - fiyat SMA50 altına düştü → K-04 trend filtresi uyarısı
 - fiyat SMA200 altına düştü → uzun vadeli trend kırılması
 - stop-loss'a mesafe < %2 → K-09 stop yakınlık (scripts/k09_proximity_check.py)
@@ -430,7 +430,7 @@ FMP historical data ile ATR(14) + highest_high hesapla
 
 ```
 □ 1. sinyal var mı? (ichimoku 4/4, kumo kırılımı, portföy tezi)
-□ 2. stop tanımlı mı? (K-06: max(2×ATR(14), %5) normal swing / K-13b: chandelier 3×ATR %5 cap yok kriz modu)
+□ 2. stop tanımlı mı? (K-06 giriş: max(2×ATR(14), %5) / K-13b kriz modu: sadece 2×ATR, %5 taban kaldırılır / K-07 trailing: chandelier kâr kilidi pozisyon kârda iken)
 □ 3. R:R ≥ 2:1 mi?
 □ 4. VIX uygun mu? (K-13 v4.1 sektör bazlı kontrol — 4 bant × 2 sektör kategorisi)
    • faydalanıcı: VIX <22 tam | 22-28 tam | 28-35 yarım | 35+ çeyrek
@@ -533,7 +533,7 @@ her swing pozisyonu için:
 
 1. CHANDELIER STOP TETİKLENDİ Mİ? (K-06 + K-07)
    fiyat <= chandelier stop → 🔴 %100 SAT (override YASAK), closed.json'a kaydet
-   → kaydet: K-rule etiketi (K-06 stop, K-14 trailing, vb.)
+   → kaydet: K-rule etiketi (K-06 stop, K-07 trailing, K-09 stop yakınlık, vb.)
    hayır → devam
 
 2. K-09 STOP YAKINLIK KONTROLÜ
@@ -716,8 +716,8 @@ A) SİNYAL GİRİŞİ (ideal):
 B) TREND DEVAM GİRİŞİ (güçlü trend varken):
 1. ichimoku 4/4 güçlü yükseliş (kumo üstü + tenkan>kijun + chikou pozitif + yeşil kumo)
 2. OBV yükseliş (alıcılar aktif)
-3. K-06 stop hesaplama: max(2×ATR(14), %5) — 2×ATR ile %5'ten büyüğü al
-   (K-13b kriz modu istisna: chandelier 3×ATR, %5 cap yok)
+3. K-06 GİRİŞ STOP hesaplama: max(2×ATR(14), %5) — 2×ATR ile %5'ten büyüğü al
+   (K-13b kriz modu istisna: sadece 2×ATR kullan, %5 taban kaldırılır. chandelier trailing pozisyon kârda iken K-07 ile ayrı devreye girer)
 4. SMA200 üstünde (K-04 trend filtresi)
 → yarım pozisyon (trend güçlü ama spesifik sinyal yok, dikkatli giriş)
 → trend devam ederse ve yeni kırılım gelirse tamamla
@@ -741,26 +741,29 @@ C) ORTAK KOŞULLAR (her giriş için):
 **agresif portföy** ($400K): AI tedarik zinciri tematik, yıllık %30+ hedef
 - tedarik zinciri katmanlarından (ekipman, kimya, güç, optik, soğutma) güçlü hisseler
 - ichimoku 4/4 bullish veya sinyal bazlı giriş
-- pozisyon büyüklüğü: $20K-$70K, max 6 eşzamanlı pozisyon
-- stop: 2x ATR(14) trailing
+- pozisyon büyüklüğü: $20K-$70K, max 10 eşzamanlı pozisyon (K-12 Agresif tek hisse max %20)
+- stop (K-06 ilk giriş): max(2×ATR(14), %5) — sabit %5 tek başına yetersiz
+- trailing (K-07 chandelier kâr kilidi): kâr<%7: 3×ATR / %7-15: 2×ATR / %15+: 1.5×ATR
 - nakit oranı yüksekse ve kaliteli setup varsa → kademeli giriş
 - zayıfı kes, kazananı büyüt prensibi
 
 **değer + temettü portföyü** ($100K): tema + kalite + momentum puanlama sistemi
 - detay: docs/DIVIDEND_SYSTEM.md
 - 5 katman: tema (25p) + temettü kalitesi (25p) + büyüme (20p) + momentum (15p) + değerleme (15p)
-- giriş eşiği: skor ≥65, max 6 pozisyon
+- giriş eşiği: skor ≥65, max 15 pozisyon (K-12 Temettü tek hisse max %15)
 
 ## 3e. satış/çıkış değerlendirmesi
 
 **portföy hissesi satış nedenleri**:
 ```
-1. stop-loss tetiklendi (agresif: 2x ATR(14), dengeli %8, temettü: tema/kalite/skor bazlı çıkış — bkz. DIVIDEND_SYSTEM.md)
+1. K-06 stop-loss tetiklendi (tüm portföyler için: max(2×ATR(14), %5) — ATR tabanlı, sabit % yok)
+   • temettü portföyü ek: tema/kalite/skor bazlı çıkış — bkz. DIVIDEND_SYSTEM.md
 2. tez bozuldu (temel verilerde kötüleşme)
 3. sektör RS sürekli zayıf (3+ gün negatif RS, trend dönüşü)
 4. daha iyi fırsat var (aynı sektörde/temada daha güçlü alternatif)
 5. portföy ağırlık dengesizliği
-6. kar realizasyonu (özellikle RSI > 75 + hedef aşılmış)
+6. kar realizasyonu (K-11 katman 2: RSI 80+ baskın tetik — kısmi çık)
+7. K-16 sell-the-news skor 4-5 (earnings öncesi kısmi çık)
 ```
 
 **satış uygulama süreci** (SEN KARAR VER kuralı geçerli — onay istenmez):
