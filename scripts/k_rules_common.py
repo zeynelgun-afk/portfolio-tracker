@@ -76,24 +76,28 @@ def get_swing_active():
     return data.get("aktif_pozisyonlar", [])
 
 
-# Global quiet mode flag (script'ten set edilir)
-_QUIET_MODE = False
+# Global quiet mode flag (geriye dönük uyumluluk için, artık varsayılan davranış True).
+# YENİ DAVRANIŞ (8 nisan 2026): info severity'si varsayılan olarak telegram'a gitmez.
+# --notify flag'i veya send_k_alert(..., force=True) ile opt-in mümkün.
+_QUIET_MODE = True
 
 def set_quiet_mode(enabled: bool):
-    """Quiet mode'u etkinleştir/kapat. True ise sadece critical/warning alert'ler telegram'a gider."""
+    """Quiet mode set. Varsayılan True (info skip). Eski --quiet flag'i için geriye dönük uyumluluk."""
     global _QUIET_MODE
     _QUIET_MODE = enabled
 
 
-def send_k_alert(rule, symbol, message, severity="info"):
+def send_k_alert(rule, symbol, message, severity="info", force=False):
     """Telegram alert gönder. severity: info, warning, critical.
-    Quiet mode aktifse info severity alert'leri skiplenır (spam azaltma)."""
+    Varsayılan: info severity telegram'a gitmez (spam önleme).
+    force=True → info da gönderilir (kritik sistem bildirimleri için).
+    warning/critical her durumda gider."""
     icons = {"info": "ℹ️", "warning": "⚠️", "critical": "🚨"}
     icon = icons.get(severity, "ℹ️")
 
-    # Quiet mode: sadece warning ve critical telegram'a gider
-    if _QUIET_MODE and severity == "info":
-        print(f"[{rule} {symbol}] info (quiet mode, telegram skip)")
+    # Varsayılan: info severity skip. force=True ile override edilebilir.
+    if severity == "info" and _QUIET_MODE and not force:
+        print(f"[{rule} {symbol}] info (quiet default, telegram skip)")
         return True
 
     text = f"{icon} <b>{rule}</b> | {symbol}\n\n{message}"

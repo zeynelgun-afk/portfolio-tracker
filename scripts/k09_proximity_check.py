@@ -116,9 +116,9 @@ def evaluate_position(symbol, stop_loss, current_price):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--symbol", help="Tek hisse kontrolü")
-    parser.add_argument("--quiet", action="store_true", help="Sadece uyarı verirse yazdır")
+    parser.add_argument("--notify", action="store_true", help="Info seviyeli bildirimleri de telegrama gönder")
     args = parser.parse_args()
-    set_quiet_mode(getattr(args, "quiet", False))
+    set_quiet_mode(not args.notify)
 
     positions = []
     if args.symbol:
@@ -154,7 +154,7 @@ def main():
             continue
 
         if result["action"] == "no_check":
-            if not args.quiet:
+            if args.notify:
                 print(f"  {pos['sembol']:6} ({pos['portfoy']:9}) → mesafe %{result['distance_pct']:.2f} (kontrol gerekmez)")
             continue
 

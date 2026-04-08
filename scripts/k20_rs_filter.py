@@ -91,13 +91,13 @@ def filter_scan(scan_data, rs_cache):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--quiet", action="store_true", help="Sadece warning/critical alerts telegrama gider")
+    parser.add_argument("--notify", action="store_true", help="Info seviyeli bildirimleri de telegrama gönder (varsayılan: kapalı)")
     parser.add_argument("scan_file", nargs="?")
     parser.add_argument("--check", help="Tek sembol kontrol")
     parser.add_argument("--status", action="store_true", help="10 sektör RS durumu")
     parser.add_argument("--write", action="store_true")
     args = parser.parse_args()
-    set_quiet_mode(getattr(args, "quiet", False))
+    set_quiet_mode(not args.notify)
 
     if args.status:
         print("[K-20] 10 SEKTÖR RS DURUMU")

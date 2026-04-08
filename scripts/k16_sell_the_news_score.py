@@ -113,10 +113,10 @@ def calc_score(symbol):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--quiet", action="store_true", help="Sadece warning/critical alerts telegrama gider")
+    parser.add_argument("--notify", action="store_true", help="Info seviyeli bildirimleri de telegrama gönder (varsayılan: kapalı)")
     parser.add_argument("symbol")
     args = parser.parse_args()
-    set_quiet_mode(getattr(args, "quiet", False))
+    set_quiet_mode(not args.notify)
 
     symbol = args.symbol.upper()
     print(f"[K-16] {symbol} sell-the-news skor hesaplanıyor...")

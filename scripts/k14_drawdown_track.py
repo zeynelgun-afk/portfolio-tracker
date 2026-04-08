@@ -76,10 +76,10 @@ def calculate_drawdown(trades, capital=10000):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--quiet", action="store_true")
+    parser.add_argument("--notify", action="store_true", help="Info seviyeli bildirimleri de telegrama gönder")
     parser.add_argument("--days", type=int, default=30, help="Son N gün")
     args = parser.parse_args()
-    set_quiet_mode(getattr(args, "quiet", False))
+    set_quiet_mode(not args.notify)
 
     trades = load_closed_swing()
     if not trades:

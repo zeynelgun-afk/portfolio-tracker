@@ -75,10 +75,15 @@ def check_correlation(new_symbol):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--quiet", action="store_true", help="Sadece warning/critical alerts telegrama gider")
+    parser.add_argument("--notify", action="store_true",
+                        help="Info severity de telegrama gönder (varsayılan: kapalı). Warning/critical her durumda gider.")
+    parser.add_argument("--quiet", action="store_true",
+                        help="(Eski flag, artık varsayılan davranış. Uyumluluk için tutuldu.)")
     parser.add_argument("symbol", help="Yeni eklenecek hisse")
     args = parser.parse_args()
-    set_quiet_mode(getattr(args, "quiet", False))
+    # Varsayılan quiet=True. --notify verilirse info'lar da gider.
+    quiet_default = not args.notify
+    set_quiet_mode(quiet_default)
 
     result = check_correlation(args.symbol)
 
