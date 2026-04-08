@@ -155,10 +155,13 @@ def get_full_data(symbol, delay=0.05):
 # SKOR HESAPLAMA
 # ============================================================
 
-def score_dengeli(data):
+def score_dengeli(data, existing_sectors=None):
     """
-    Dengeli portföy skoru (max ~18).
-    Kriterler: P/E, ROIC, momentum, SMA, RSI, sektör çeşitliliği, FCF.
+    Dengeli portföy skoru (max ~20).
+    Kriterler: P/E, ROIC, momentum, SMA, RSI, FCF, sektör çeşitliliği bonusu.
+    
+    existing_sectors: mevcut dengeli portföyde bulunan sektör listesi.
+                      Adayın sektörü bu listede YOKsa +2 bonus (çeşitlilik).
     """
     score = 0
     detail = []
@@ -203,6 +206,12 @@ def score_dengeli(data):
         score += 2; detail.append(f"FCF yield {fcf:.1f}% >5%: +2")
     elif fcf > 3:
         score += 1; detail.append(f"FCF yield {fcf:.1f}% >3%: +1")
+    
+    # Sektör çeşitliliği bonusu
+    if existing_sectors is not None:
+        sector, _, _ = get_sector_info(data.get('symbol', ''))
+        if sector != 'UNKNOWN' and sector not in existing_sectors:
+            score += 2; detail.append(f"Yeni sektör ({sector}) mevcut portföyde yok: +2")
     
     return score, detail
 
@@ -280,10 +289,10 @@ def score_agresif(data):
     return score, detail
 
 
-def score_temettü(data):
+def score_temettü(data, existing_sectors=None):
     """
-    Değer + Temettü portföy skoru (max ~16).
-    Kriterler: Yield, payout sürdürülebilirliği, P/E, ROIC, trend.
+    Değer + Temettü portföy skoru (max ~18).
+    Kriterler: Yield, payout sürdürülebilirliği, P/E, ROIC, trend, çeşitlilik.
     
     KRİTİK: payout >100% = yield trap, -5 puan + uyarı.
     """
@@ -345,6 +354,12 @@ def score_temettü(data):
     if data.get('above_sma_200'):
         score += 1; detail.append("SMA200 üstü: +1")
     
+    # Sektör çeşitliliği bonusu
+    if existing_sectors is not None:
+        sector, _, _ = get_sector_info(data.get('symbol', ''))
+        if sector != 'UNKNOWN' and sector not in existing_sectors:
+            score += 2; detail.append(f"Yeni sektör ({sector}) portföyde yok: +2")
+    
     return score, detail
 
 
@@ -368,6 +383,158 @@ def get_decision(score, portfolio):
         return 'İZLE'
     else:
         return 'GEÇ'
+
+
+# ============================================================
+# K-17 KORELASYON KONTROLÜ (lokal, aday listesi bazlı)
+# ============================================================
+
+# Basit sektör/tema haritası (manuel, FMP sector kullanılabilir ama çok geniş)
+# Format: sembol → (ana_sektor, alt_katman, tema)
+SECTOR_MAP = {
+    # Memory
+    'WDC': ('Tech', 'Memory', 'AI_tedarik'),
+    'SNDK': ('Tech', 'Memory', 'AI_tedarik'),
+    'MU': ('Tech', 'Memory', 'AI_tedarik'),
+    # Yarıiletken ekipman
+    'KLAC': ('Tech', 'Ekipman', 'AI_tedarik'),
+    'AMAT': ('Tech', 'Ekipman', 'AI_tedarik'),
+    'LRCX': ('Tech', 'Ekipman', 'AI_tedarik'),
+    'ASML': ('Tech', 'Ekipman', 'AI_tedarik'),
+    'ONTO': ('Tech', 'Ekipman', 'AI_tedarik'),
+    'TER': ('Tech', 'Ekipman', 'AI_tedarik'),
+    'CAMT': ('Tech', 'Ekipman', 'AI_tedarik'),
+    'UCTT': ('Tech', 'Ekipman', 'AI_tedarik'),
+    # Optik
+    'GLW': ('Tech', 'Optik', 'AI_tedarik'),
+    'COHR': ('Tech', 'Optik', 'AI_tedarik'),
+    'LITE': ('Tech', 'Optik', 'AI_tedarik'),
+    'FN': ('Tech', 'Optik', 'AI_tedarik'),
+    'AAOI': ('Tech', 'Optik', 'AI_tedarik'),
+    'ANET': ('Tech', 'Networking', 'AI_tedarik'),
+    # Mobil/edge
+    'QCOM': ('Tech', 'Mobil', 'AI_tedarik'),
+    'AVGO': ('Tech', 'Mobil', 'AI_tedarik'),
+    # Güç AI
+    'VRT': ('Industrial', 'GucAI', 'AI_tedarik'),
+    'POWL': ('Industrial', 'GucAI', 'AI_tedarik'),
+    'ETN': ('Industrial', 'GucAI', 'AI_tedarik'),
+    'GEV': ('Industrial', 'Nukleer', 'AI_enerji'),
+    'VST': ('Utility', 'Nukleer', 'AI_enerji'),
+    'CEG': ('Utility', 'Nukleer', 'AI_enerji'),
+    'SMR': ('Utility', 'Nukleer', 'AI_enerji'),
+    # Sanayi
+    'CAT': ('Industrial', 'Machinery', 'Capex'),
+    'DE': ('Industrial', 'Machinery', 'Capex'),
+    'HON': ('Industrial', 'Diversified', 'Capex'),
+    # Sağlık
+    'UNH': ('Healthcare', 'Insurance', 'Medicare'),
+    'HUM': ('Healthcare', 'Insurance', 'Medicare'),
+    'ELV': ('Healthcare', 'Insurance', 'Medicare'),
+    'CVS': ('Healthcare', 'Insurance', 'Medicare'),
+    'JNJ': ('Healthcare', 'Pharma', 'Pharma'),
+    'MRK': ('Healthcare', 'Pharma', 'Pharma'),
+    'LLY': ('Healthcare', 'Pharma', 'Pharma'),
+    'ABBV': ('Healthcare', 'Pharma', 'Pharma'),
+    'PFE': ('Healthcare', 'Pharma', 'Pharma'),
+    # Finans
+    'JPM': ('Financial', 'Bank', 'Bank'),
+    'BAC': ('Financial', 'Bank', 'Bank'),
+    'WFC': ('Financial', 'Bank', 'Bank'),
+    'GS': ('Financial', 'IBank', 'Bank'),
+    'MS': ('Financial', 'IBank', 'Bank'),
+    'V': ('Financial', 'Payments', 'Fintech'),
+    'MA': ('Financial', 'Payments', 'Fintech'),
+    'BLK': ('Financial', 'Asset', 'Asset'),
+    # Tütün
+    'MO': ('ConsumerDef', 'Tobacco', 'Defensive'),
+    'PM': ('ConsumerDef', 'Tobacco', 'Defensive'),
+    # Telekom
+    'T': ('Communication', 'Telecom', 'Defensive'),
+    'VZ': ('Communication', 'Telecom', 'Defensive'),
+    # Temel tüketim
+    'KO': ('ConsumerDef', 'Beverage', 'Defensive'),
+    'PEP': ('ConsumerDef', 'Beverage', 'Defensive'),
+    'WMT': ('ConsumerDef', 'Retail', 'Defensive'),
+    'COST': ('ConsumerDef', 'Retail', 'Defensive'),
+    # Utility
+    'SO': ('Utility', 'Electric', 'Defensive'),
+    'D': ('Utility', 'Electric', 'Defensive'),
+    # REIT
+    'O': ('RealEstate', 'REIT', 'Defensive'),
+    # Savunma
+    'LMT': ('Industrial', 'Defense', 'Defense'),
+    'GD': ('Industrial', 'Defense', 'Defense'),
+    'RTX': ('Industrial', 'Defense', 'Defense'),
+    'NOC': ('Industrial', 'Defense', 'Defense'),
+    # Kargo
+    'UPS': ('Industrial', 'Logistics', 'Logistics'),
+    'FDX': ('Industrial', 'Logistics', 'Logistics'),
+    # Enerji
+    'XOM': ('Energy', 'Oil', 'Energy'),
+    'CVX': ('Energy', 'Oil', 'Energy'),
+    'COP': ('Energy', 'Oil', 'Energy'),
+    'HAL': ('Energy', 'Services', 'Energy'),
+}
+
+
+def get_sector_info(symbol):
+    """Bir sembol için sektör/katman/tema bilgisi döndürür. Bilinmiyorsa UNKNOWN."""
+    return SECTOR_MAP.get(symbol.upper(), ('UNKNOWN', 'UNKNOWN', 'UNKNOWN'))
+
+
+def check_correlation(candidate_list, existing_positions=None):
+    """
+    Aday listesi + mevcut pozisyonlar için K-17 korelasyon kontrolü.
+    
+    candidate_list: [(sembol, portföy), ...]
+    existing_positions: [(sembol, portföy), ...] — mevcut portföy, opsiyonel
+    
+    Returns: {
+        'katman_count': {katman: count},
+        'sektor_count': {sektor: count},
+        'tema_count': {tema: count},
+        'warnings': [list of K-17 ihlalleri],
+    }
+    """
+    if existing_positions is None:
+        existing_positions = []
+    
+    all_positions = list(existing_positions) + list(candidate_list)
+    
+    katman_count = {}
+    sektor_count = {}
+    tema_count = {}
+    
+    for sym, _ in all_positions:
+        sector, katman, tema = get_sector_info(sym)
+        if katman != 'UNKNOWN':
+            katman_count[katman] = katman_count.get(katman, 0) + 1
+        if sector != 'UNKNOWN':
+            sektor_count[sector] = sektor_count.get(sector, 0) + 1
+        if tema != 'UNKNOWN':
+            tema_count[tema] = tema_count.get(tema, 0) + 1
+    
+    warnings = []
+    
+    # K-17 limit: Aynı katman max 3
+    for katman, count in katman_count.items():
+        if count > 3:
+            warnings.append(f"K-17 KATMAN AŞIMI: {katman} = {count} (max 3)")
+        elif count == 3:
+            warnings.append(f"K-17 KATMAN DOLDU: {katman} = 3 (limit)")
+    
+    # K-17 tema yoğunluğu: aynı tema max 5 pozisyon
+    for tema, count in tema_count.items():
+        if count > 5:
+            warnings.append(f"K-17 TEMA AŞIMI: {tema} = {count} (max 5)")
+    
+    return {
+        'katman_count': katman_count,
+        'sektor_count': sektor_count,
+        'tema_count': tema_count,
+        'warnings': warnings,
+    }
 
 
 # ============================================================
