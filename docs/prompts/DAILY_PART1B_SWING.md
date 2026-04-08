@@ -10,15 +10,15 @@
 > - [ ] ADIM 0 — sabah raporunu oku (makro, VIX, trend, senaryolar)
 > - [ ] ADIM 1 — swing sistem durumu (K-14 drawdown status, K-13 VIX bandı, SPY trend)
 > - [ ] ADIM 2 — aktif pozisyonlar (chandelier stop güncelle, çıkış sinyali kontrol)
-> - [ ] ADIM 3 — tam evren tarama (swing_full_universe.py, iki aşamalı)
+> - [ ] ADIM 3 — tam evren tarama (swing_full_universe.py, iki aşamalı; K-19 Aşama 1'de)
 > - [ ] ADIM 4 — ichimoku 4/4 doğrulama (Aşama 2 otomatik)
-> - [ ] ADIM 5 — K filtreleri sırayla (K-17, K-18, K-19, K-20, K-05, K-15)
+> - [ ] ADIM 5 — K filtreleri (K-20, K-15b, K-17, K-18, K-05, K-13) — K-19 atlanır, K-15a swing için UYGULANMAZ
 > - [ ] ADIM 6 — finviz teyit (web search)
-> - [ ] ADIM 7 — giriş planı (varsa) + rapor yaz + git push
+> - [ ] ADIM 7 — giriş planı (K-06 ilk stop + K-07 chandelier trailing) + rapor yaz + git push
 >
 > **geçmiş hatalar**: tarama atlandığında setup kaçırıldı. filtre atlandığında yanlış giriş yapıldı (örn: POWL insider satışı K-18 atlanması). her adımı tamamla.
 
-> **versiyon**: 1.0 | **son güncelleme**: 8 nisan 2026
+> **versiyon**: 1.1 | **son güncelleme**: 8 nisan 2026 (mantık hatası düzeltme: K-15a swing'den çıkarıldı, K-19 duplicate kaldırıldı, stop formülü giriş/trailing ayrıştı)
 > **çıktı dosyası**: `reports/daily/DAILY_SWING_YYYY-MM-DD.md`
 > **çalışma zamanı**: TR ~09:00-14:00 (sabah raporundan SONRA)
 > **amaç**: swing tarama + aktif pozisyon yönetimi + giriş kararı
@@ -90,7 +90,7 @@ ADIM 2 — AKTİF POZİSYON YÖNETİMİ
   → aktif pozisyonların tablo halinde raporu yazılır
 
 ADIM 3 — TAM EVREN TARAMA (İKİ AŞAMALI)
-  → önce K-14 drawdown durumu oku: data/swing/status.json
+  → ADIM 1'de okunan K-14 status'üne göre dallan (tekrar okuma yapma)
   → K-14 aktifse: "yeni swing girişi YASAK" notunu rapora ekle, hedefli evrene geç
   → K-14 kalktıysa: scripts/swing_full_universe.py ile tam evren taraması çalıştır
 
@@ -133,17 +133,18 @@ ADIM 4 — ICHIMOKU 4/4 DOĞRULAMA (Aşama 2 zaten yapıyor)
 ADIM 5 — K FİLTRELERİ (SIRAYLA)
   her geçen filtre aday listesini daraltır. bir sonraki filtreye sadece geçenler geçer.
 
-  1. K-19 — XLP dışlama:
-     scripts/k19_xlp_filter.py SCAN_FILE --write
-     aday sektörü "Consumer Defensive" ise eleme
+  1. ~~K-19 — XLP dışlama~~ (Aşama 1'de otomatik uygulandı, atla):
+     swing_full_universe.py Aşama 1 Consumer Defensive sektörünü zaten ön eliyor.
+     bu adımda tekrar uygulamaya gerek yok — adayların hiçbirinde XLP sektörü yok.
 
   2. K-20 — RS dead cat bounce:
      scripts/k20_rs_filter.py SCAN_FILE --write
      son 1 ay SPY'den %10+ geride + son 5 gün +%5 yukarı = dead cat, eleme
 
-  3. K-15a — RSI <35 teyit:
-     RSI <35 ise 1 gün teyit bekle (giriş sonrası gün)
-     script: scripts/k15a_rsi_confirm.py SYMBOL
+  3. ~~K-15a — RSI <35 teyit~~ (swing akışında UYGULANMAZ):
+     swing Aşama 2 filtresi zaten RSI 40-65 bandına sıkıyor, RSI <35 aday oluşamaz.
+     K-15a sadece PART 1C agresif portföy taramasında anlamlı (orada giriş RSI eşiği daha gevşek).
+     → bu adım swing için atlanır, doğrudan K-15b'ye geç.
 
   4. K-15b — momentum hisse dilüsyon:
      scripts/k15b_dilution_check.py SYMBOL
@@ -182,11 +183,17 @@ ADIM 7 — GİRİŞ PLANI + RAPOR
   → her nihai aday için giriş planı oluştur:
     - giriş koşulu: "ilk 30 dk bekle, $XX.XX üzerinde konfirmasyon mumu"
     - pozisyon büyüklüğü: VIX bandı + K-13 v4.1'e göre (tam/yarım/çeyrek)
-    - stop: chandelier 3×ATR veya %5 max (K-06 kuralı: max(2×ATR, %5))
-    - K-13b modu: VIX 28+ ise chandelier 3×ATR ama %5 cap YOK
+    - İLK GİRİŞ STOP (K-06): max(2×ATR(14), %5) — sabit %5 tek başına yetersiz
+      • örnek: giriş $100, ATR $2.5 → 2×ATR = $5 = %5, stop $95
+      • örnek: giriş $100, ATR $4.0 → 2×ATR = $8 = %8, stop $92 (ATR kazanır)
+    - TRAILING STOP (K-07, pozisyon kârda): chandelier exit
+      • kâr <%7: chandelier 3×ATR
+      • kâr %7-15: chandelier 2×ATR (kâr kilidi sıkılaşır)
+      • kâr %15+: chandelier 1.5×ATR (agresif)
+    - K-13b modu (VIX 28+): giriş stop'unda %5 tabanı ESNETİLİR, sadece 2×ATR kullan
     - hedef 1: +%10 (K-07 kâr kilidi tetik noktası)
-    - hedef 2: chandelier trailing takip
-    - R:R: (hedef - giriş) / (giriş - stop) ≥ 2:1 olmalı
+    - hedef 2: chandelier trailing takip eder
+    - R:R: (hedef1 - giriş) / (giriş - ilk stop) ≥ 2:1 olmalı
   → karşıt argüman zorunlu: her aday için "neden yanlış olabilirim" 1-2 cümle
   → raporu yaz
   → reports/daily/DAILY_SWING_YYYY-MM-DD.md olarak kaydet

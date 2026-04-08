@@ -26,7 +26,7 @@
 > - mevcut pozisyonların büyütme/döndürme kararları hiç yapılmıyordu
 > bu prompt bu eksikleri kapatır
 
-> **versiyon**: 1.0 | **son güncelleme**: 8 nisan 2026
+> **versiyon**: 1.1 | **son güncelleme**: 8 nisan 2026 (mantık hatası düzeltme: K-05 7g→2g, K-17 portföy bazlı eşik, watchlist cleanup 10g→14g)
 > **çıktı dosyası**: `reports/daily/DAILY_PORTFOY_YYYY-MM-DD.md`
 > **çalışma zamanı**: TR ~09:00-14:00 (sabah raporundan SONRA, swing raporundan önce/sonra fark etmez)
 > **amaç**: 3 portföy için fırsat taraması + karar matrisi + watchlist yönetimi
@@ -198,10 +198,14 @@ ADIM 6 — ORTAK FİLTRELER (TÜM 3 PORTFÖY ADAYLARINA)
      - fiyat < SMA50 ve RSI >30 → ❌
 
   2. K-05 earnings proximity:
-     - 7 gün içinde earnings varsa → ❌ (binary gap riski)
+     - 2+ işlem günü içinde earnings varsa → ❌ (binary gap riski, playbook ile uyumlu)
+     - not: PART 1B swing ile aynı eşik (2 gün). PEAD (post-earnings drift) girişleri K-16 ile yönetilir
 
   3. K-17 korelasyon kontrolü:
-     - sektör mevcut portföyde >%25 ise → ❌
+     - sektör mevcut portföyde K-12 limitini aşıyorsa → ❌
+       • dengeli: >%25 → ❌
+       • agresif: >%20 → ❌
+       • temettü: >%15 → ❌
      - aynı tema 2+ pozisyon varsa yeni eleme
      - script: scripts/k17_correlation_check.py SYMBOL
 
@@ -240,8 +244,9 @@ ADIM 8 — WATCHLİST MEKANİK YÖNETİMİ
 
   8c. otomatik eleme (cleanup):
     python scripts/watchlist_manager.py cleanup
-    → kural 1: bekleme_gun >10 + karar GEÇ → sil
+    → kural 1: bekleme_gun >14 + karar GEÇ → sil
     → kural 2: karar GEÇ + skor < İZLE eşiğinin %70'i → sil
+    → kural 3: bekleme_gun >14 + momentum bozuk (RSI<40, SMA50 altı) → sil
     → son_kontrol >14g eski olanlar "eski" etiketi (elle kontrol gerekli)
 
   8d. cool-down kontrolü (yeni ekleme öncesi):
