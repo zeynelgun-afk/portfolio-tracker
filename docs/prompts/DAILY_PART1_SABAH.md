@@ -1,4 +1,4 @@
-# GÜNLÜK RAPOR PART 1 — SABAH RAPORU v2.3
+# GÜNLÜK RAPOR PART 1 — SABAH RAPORU v3.0
 
 > ⛔ **KRİTİK: ADIM ATLAMA YASAĞI**
 >
@@ -6,22 +6,23 @@
 >
 > **zorunlu adımlar (teker teker kontrol et):**
 > - [ ] ADIM 0 — playbook + piyasa istihbaratı (`TRADING_PLAYBOOK.md` + `MARKET_INTELLIGENCE.md` + web arama)
-> - [ ] ADIM 1 — piyasa verisi (FMP batch-quote, teknik göstergeler, emtia, treasury)
-> - [ ] ADIM 2 — haber toplama (FMP news/stock keyword filtresi, web search, piyasa haberleri)
-> - [ ] ADIM 2.5 — twitter takip listesi (RapidAPI ile hesap taraması)
+> - [ ] ADIM 1 — piyasa verisi (FMP batch-quote, teknik göstergeler, emtia, treasury, ön piyasa)
+> - [ ] ADIM 2 — haber toplama (FMP news/stock keyword filtresi, web search, twitter takip listesi)
 > - [ ] ADIM 3 — earnings takvimi (FMP earnings-calendar, market cap filtresi)
-> - [ ] ADIM 4 — swing tarama (FMP screener → ichimoku 4/4 → v2.3 filtreleri)
-> - [ ] ADIM 5 — finviz tarama (teyit katmanı)
-> - [ ] ADIM 6 — analiz, plan ve kayıt (playbook kurallarını planla çapraz kontrol et)
-> - [ ] RAPOR — tüm bölümler (0-5) eksiksiz yazıldı mı?
+> - [ ] ADIM 4 — portföy sağlık kontrolü (3 portföy mevcut pozisyonlar, stop mesafeleri, K-04 trend, K-09 stop yakınlık)
+> - [ ] ADIM 5 — analiz, plan ve kayıt (playbook kurallarını planla çapraz kontrol et)
+> - [ ] RAPOR — tüm bölümler (0-4) eksiksiz yazıldı mı?
 > - [ ] GIT — commit + push yapıldı mı?
 >
-> **geçmiş hatalar**: adım atlama maliyetli oldu (örn: kazanç açıklaması taramasını atlama → Oracle bilançosu rapordan eksik kaldı). bu tür eksiklikler güvenilirliği zedeler. her adımı tamamla, sonra raporu yaz.
+> **geçmiş hatalar**: adım atlama maliyetli oldu (örn: kazanç açıklaması taramasını atlama → Oracle bilançosu rapordan eksik kaldı). her adımı tamamla, sonra raporu yaz.
+>
+> **v3.0 değişikliği (8 nisan 2026)**: swing tarama PART 1B'ye, portföy fırsat taraması PART 1C'ye taşındı. bu prompt artık sadece makro çerçeve + mevcut portföy sağlığı + günün planı üretir. tarama yok.
 
-> **versiyon**: 2.3 | **son güncelleme**: 6 nisan 2026
+> **versiyon**: 3.0 | **son güncelleme**: 8 nisan 2026
 > **çıktı dosyası**: `reports/daily/DAILY_SABAH_YYYY-MM-DD.md`
-> **çalışma zamanı**: TR ~14:00 (NYSE dün 23:00'da kapandı, bugün 16:30 açılacak — yaz saati)
-> **amaç**: piyasa analizi + haberler + otomatik tarama sonuçları + günün planı
+> **çalışma zamanı**: TR ~09:00-14:00 (NYSE dün 23:00'da kapandı, bugün 16:30 açılacak — yaz saati)
+> **amaç**: makro çerçeve + mevcut portföy sağlığı + günün planı
+> **sonraki adım**: bu rapor tamamlandıktan sonra PART 1B (swing) ve PART 1C (portföy fırsat) promptları çalıştırılabilir. bu iki prompt sabah raporunu okur ve üstüne inşa eder
 > **dil**: küçük harf türkçe, dilbilgisi kurallarına uygun
 > **kaynak**: sadece "finzora ai"
 > **git commit**: `[SABAH RAPORU] DD Ay YYYY - kısa özet`
@@ -30,22 +31,20 @@
 
 ## ZAMAN BİLİNCİ
 
-- rapor TR ~14:00'da yazılır — NYSE dün gece 23:00'da kapandı
+- rapor TR ~09:00-14:00 arası yazılır — NYSE dün gece 23:00'da kapandı
 - **yaz saati (mart-kasım)**: NYSE açılış 16:30 TR, kapanış 23:00 TR
 - **kış saati (kasım-mart)**: NYSE açılış 17:30 TR, kapanış 00:00 TR
 - FMP fiyatları = dünün kapanışı (kesinleşmiş)
-- swing tarama: seans içinde FMP screener'dan ~1,100 hisse çekilip ichimoku 4/4 taranır
+- tarama bu promptta yok — swing için PART 1B, portföy için PART 1C
 
 ---
 
 ## ÇALIŞMA AKIŞI
 
-bu prompt tek seferde çalışır. adımları sırayla takip et:
-
 ```
 ADIM 0 — PLAYBOOK + PİYASA İSTİHBARATI
   → docs/TRADING_PLAYBOOK.md dosyasını oku
-  → aktif kuralları gözden geçir (özellikle K-02 ile K-20, K-13 v4.1 sektör bazlı VIX kuralı)
+  → aktif kuralları gözden geçir (özellikle K-02, K-13 v4.1 sektör bazlı VIX, K-14 drawdown freni)
   → docs/MARKET_INTELLIGENCE.md okuyarak istihbarat çerçevesini hatırla
   → web aramasıyla güncel piyasa istihbaratı topla:
     - dünden bu yana kritik haberler (makro, jeopolitik, sektörel)
@@ -63,133 +62,79 @@ ADIM 1 — PİYASA VERİSİ (FMP + WEB)
   → batch-quote: SPY, QQQ, DIA, IWM, VIXY (VIX proxy), GCUSD, USO (petrol proxy)
     ⚠️ doğrudan ^VIX ve CLUSD/WTIUSD güvenilmez — VIXY ve USO kullan
   → stock-price-change: tüm portföy sembolleri (1D, 5D, 1M güvenilir)
+  → teknik göstergeler: portföy hisseleri için RSI(14), SMA50, SMA200
   → sector-performance-snapshot (date = dünün tarihi)
   → biggest-gainers, biggest-losers (limit 15)
   → treasury-rates (son 5 gün)
 
   ⚠️ ÖN PİYASA VERİSİ — WEB ARAMASI ZORUNLU:
   FMP aftermarket-quote endpoint'i NYSE seans dışında sıfır dönüyor.
-  ön piyasa (pre-market) ve vadeli işlem (futures) verileri için:
   → websearch: "S&P 500 futures today" / "stock market premarket today"
   → kaynak önceliği: investing.com, cnbc.com, tradingeconomics.com, robinhood.com
-  → endeks vadeli (ES, NQ, YM), petrol (Brent, WTI), altın, ORCL gibi AH hareketleri
+  → endeks vadeli (ES, NQ, YM), petrol (Brent, WTI), altın, AH hareketleri
   → raporda tablo formatında sun: ticker | dün kapanış | ön piyasa | fark% | not
 
 ADIM 2 — HABER TOPLAMA
   → FMP news/stock: tüm portföy + swing + watchlist sembollerini virgülle birleştir, TEK çağrıda çek (limit 50)
-    - negatif sinyal taraması: lawsuit, downgrade, SEC, investigation, cut dividend, miss, warning, recall, resign
-    - pozitif sinyal taraması: beat, upgrade, raise, target, deal, contract, approval, partnership
+    - negatif sinyal: lawsuit, downgrade, SEC, investigation, cut dividend, miss, warning, recall, resign
+    - pozitif sinyal: beat, upgrade, raise, target, deal, contract, approval, partnership
     - eşleşen haberler → web search ile doğrula ve derinleştir
-    - eşleşmeyen dolgu haberler (zacks "is X undervalued" vb.) → atla
+    - dolgu haberler (zacks "is X undervalued" vb.) → atla
     ⚠️ press-releases endpoint'i symbol filtresini düzgün uygulamıyor — KULLANMA
   → FMP: upgrades-downgrades (portföy hisseleri, limit 20)
-  → websearch: futures ve pre-market durumu
   → websearch: dün gece / bugün sabah önemli piyasa haberleri
   → websearch: portföy hisselerini etkileyen gelişmeler
   → websearch: Fed faiz olasılıkları (Kalshi/Polymarket)
 
-ADIM 2.5 — TWİTTER TAKİP LİSTESİ (RapidAPI / twitter241)
-  → aşağıdaki 10 hesabın son tweetlerini çek (her biri için 15-20 tweet)
+  TWİTTER TAKİP LİSTESİ (RapidAPI / twitter241):
+  → 10 hesabın son tweetlerini çek (her biri için 15-20 tweet)
   → portföy sembolleriyle örtüşenleri öne çıkar
-  → yorum/fikir içerenleri özetle
-  → kaynak: RapidAPI twitter241.p.rapidapi.com
-    key: fe410e5222msh20c82b1bc9f4905p10ad02jsnb1c2402c92b7
-    endpoint: GET /user-tweets?user={numeric_user_id}&count=20
-    user id alma: GET /user?username={username} → id alanını base64 decode et
+  → endpoint: GET /user-tweets?user={numeric_user_id}&count=20
 
   TAKİP LİSTESİ:
-    @CheddarFlow       → opsiyon akışı / kurumsal para hareketleri
-    @berkdemirkiran_   → türk finans yorumcusu
-    @yatirim           → türk finans yorumcusu (içsel analiz)
-    @onestoploss       → teknik analiz / trade fikirleri
-    @StockSavvyShay    → momentum hisse önerileri
-    @BerkUcmz          → türk finans yorumcusu
-    @TrendSpider       → teknik analiz araçları / piyasa gözlemleri
-    @Jake__Wujastyk    → momentum trader / hisse önerileri
-    @RyanDetrick       → piyasa istatistikleri / mevsimsellik verileri
-    @VolSignals        → volatilite analizi / opsiyon stratejileri
+    @CheddarFlow, @berkdemirkiran_, @yatirim, @onestoploss, @StockSavvyShay,
+    @BerkUcmz, @TrendSpider, @Jake__Wujastyk, @RyanDetrick, @VolSignals
 
-  ÖNEMLİ: tweet verileri SADECE claude'un bağlamına (context) girer,
-  rapora yazılmaz. tweet bilgileri yorumlanarak piyasa değerlendirmelerine,
-  sektör analizine veya pozisyon yorumlarına yedirilerek kullanılır.
+  ÖNEMLİ: tweet verileri SADECE claude'un bağlamına girer, rapora yazılmaz.
+  tweet bilgileri yorumlanarak piyasa değerlendirmelerine yedirilir.
 
 ADIM 3 — EARNINGS
   → FMP: earnings-calendar (bugün + 7 gün)
   → websearch: dün gece açıklanan earnings sonuçları (portföy/swing/majör)
   → websearch: bugünkü ekonomik veri takvimi
 
-ADIM 4 — SWİNG TARAMA (FMP screener → ichimoku 4/4 → v2.3 filtreleri)
-  ─────────────────────────────────────────────────────────
-  → swing tarama seans içinde yapılır, otomatik script yok
-  → detay: docs/SWING_SYSTEM_V2.md bölüm 9 (tarama evreni)
-
-  TARAMA AKIŞI:
-  1. FMP company-screener → ~1,100 hisse çek (mcap >$2B, vol >500K, price >$10, US)
-  2. K-19: consumer defensive sektör hisselerini çıkar
-  3. K-13 v4.1 VIX kontrolü (sektör bazlı, 4 bant):
-     - VIX <22 (sakin): faydalanıcı tam | duyarlı tam (SPY > 21EMA kontrol)
-     - VIX 22-28 (dikkatli): faydalanıcı tam | duyarlı YARIM
-     - VIX 28-35 (gergin): faydalanıcı yarım | duyarlı GİRİŞ YOK (K-13b ichimoku 4/4 istisnası hariç, çeyrek poz)
-     - VIX 35+ (panik): faydalanıcı çeyrek | duyarlı giriş yok
-     - Aktif kriz listesi: docs/TRADING_PLAYBOOK.md ADIM 2 kriz tablosu
-  4. ichimoku 4/4 hesapla (kumo üstü + TK bull + tenkan üstü + volume 1.3x)
-  5. K-06 stop hesaplama: max(2×ATR(14), %5) — normal swing
-     K-13b istisna: chandelier 3×ATR, %5 cap YOK (VIX 28+ kriz modu)
-  6. K-14 DRAWDOWN STATUS kontrol: data/swing/status.json oku, "K14_DRAWDOWN_FREN" aktifse YENI GİRİŞ YASAK
-  7. Aday filtreleri (sırayla):
-     a) K-19 XLP filtre: scripts/k19_xlp_filter.py SCAN_FILE --write
-     b) K-20 RS dead cat bounce: scripts/k20_rs_filter.py SCAN_FILE --write
-     c) K-15a RSI<35 ise 1 gün teyit kontrolü
-     d) K-15b momentum hisse ise dilüsyon skoru: scripts/k15b_dilution_check.py SYMBOL
-     e) K-17 korelasyon: scripts/k17_correlation_check.py SYMBOL (sektör + anlatı tema)
-     f) K-18 insider: scripts/k18_insider_check.py SYMBOL (senior + 30g + $5M)
-     g) K-05 earnings: swing için 2+ gün içinde earnings varsa GİRME
-
-  MEVCUT AKTİF POZİSYONLAR:
+ADIM 4 — PORTFÖY SAĞLIK KONTROLÜ
+  → data/portfolios/{balanced,aggressive,dividend}.json oku
   → data/swing/active.json oku
-  → her pozisyon için: chandelier stop güncelle (highest_high, ATR yeniden hesapla)
-  → çıkış sinyali var mı? (chandelier stop tetiklendi, TK cross aşağı, kumo'ya giriş)
+  → her pozisyon için:
+    - güncel fiyat vs maliyet → k/z %
+    - güncel fiyat vs stop → mesafe %
+    - RSI (K-11 tetik: 70+/80+)
+    - SMA50 durumu (K-04 trend filtresi)
+    - SMA200 durumu (uzun vade trend)
+    - günlük değişim (K-09 sert düşüş kontrolü)
+    - konsantrasyon (K-12 limit: Dengeli %25 / Agresif %20 / Temettü %15)
+  → uyarı kategorileri:
+    🔴 ACİL: stop mesafesi <%2 VEYA günlük <-%5 VEYA fiyat < SMA200
+    ⚠️ İZLE: RSI 70+ VEYA RSI <40 VEYA SMA50 altı VEYA K-12 limit yakını
+    🟢 NORMAL: trend içinde, uyarı yok
+  → SEKTÖR EXPOSURE: 3 portföy toplam sektör dağılımı hesapla
+  → NAKİT DURUMU: her portföy için nakit % + kullanılabilir alım gücü
 
-ADIM 5 — FİNVİZ TARAMA (teyit katmanı)
-  → websearch: finviz screener — ADIM 4'teki adayları teyit et
-  → finviz.com/quote.ashx?t=SEMBOL → pattern, float, short float
-  → ADIM 4 listesinde olmayan ama finviz'de öne çıkan varsa ekle
-  → temettü portföy adayları: docs/DIVIDEND_SYSTEM.md kriterlerine göre
-  → sektör heatmap kontrolü: hangi sektörler güçlü/zayıf
-
-ADIM 6 — ANALİZ, PLAN VE KAYIT
+ADIM 5 — ANALİZ, PLAN VE KAYIT
   → tüm verileri sentezle
-  → SEKTÖR EXPOSURE TABLOSU: 3 portföy + swing toplam sektör dağılımı hesapla (docs/DECISION_FRAMEWORK.md bölüm 5)
-  → PLAYBOOK ÇAPRAZ KONTROL: günün planındaki her aksiyonu docs/TRADING_PLAYBOOK.md 17 kuralı ile kontrol et
-    **GİRİŞ KURALLARI**:
-    - K-02 — kriz şokunda momentum giriş yasağı (3 iş günü)
-    - K-04 — SMA50 trend filtresi (üstü normal, altı istisna RSI<30)
-    - K-05 — swing earnings 2+ gün öncesi TAM çık (exception yok)
-    - K-13 v4.1 — sektör bazlı VIX (faydalanıcı/duyarlı × 4 bant)
-    - K-13b — VIX 28+ duyarlı ichimoku 4/4 çeyrek istisnası
-    - K-14 — drawdown status (data/swing/status.json)
-    - K-15a — RSI<35 oversold 1 gün teyit
-    - K-15b — momentum hisse dilüsyon skoru
-    - K-17 — korelasyon + anlatı tema çakışma
-    - K-18 — insider kontrolü (senior sell + $5M eşiği)
-    - K-19 — XLP swing dışlama
-    - K-20 — sektör RS dead cat bounce
-    **ÇIKIŞ KURALLARI**:
-    - K-06 — stop tetiği ÇIKIŞ, override YASAK
-    - K-07 — trailing stop (chandelier + kâr kilidi)
-    - K-09 — stop yakınlık 4 kontrol (3+ negatif → EXIT_NOW)
-    **PORTFÖY**:
-    - K-10 — VIX bazlı savunmacı allokasyon ($600K bazlı)
-    - K-11 — kademeli kâr alma (RSI 80+ baskın tetik, RSI 70+ katman 1 kâr kilidi)
-    - K-12 — konsantrasyon (Dengeli %25/Agresif %20/Temettü %15/sektör %40/tema %40)
-    - K-16 — portföy sell-the-news skor (earnings öncesi)
-    - temel analiz: claude hisse bazında değerlendirir, sabit rasyo filtresi yok
-    - kural ihlali varsa raporda açıkça belirt ve gerekçelendir
-  → KARAR ÇERÇEVESİ: giriş planlarında GO/NO-GO 10 soru kontrol et (sinyal, stop, R:R, VIX, insider, earnings, korelasyon, nakit, plan, karşıt argüman)
-    her giriş planı için düşünce zinciri yaz: (1) VERİ — somut veri (2) KURAL — hangi K/sistem sinyali (3) KARŞIT — neden yanlış olabilir
-    detay: docs/DECISION_FRAMEWORK.md
-  → SENTIMENT: CBOE put/call ratio (web search) + FMP grades-consensus (portföy hisseleri)
-    put/call <0.7 = aşırı iyimser uyarı, >1.0 = aşırı kötümser (contrarian boğa), >1.2 = panik
+  → PLAYBOOK ÇAPRAZ KONTROL: günün planındaki her aksiyonu docs/TRADING_PLAYBOOK.md ile kontrol et
+    - K-04 SMA50 trend filtresi
+    - K-06 stop tetiği — override YASAK
+    - K-09 stop yakınlık kontrolü
+    - K-11 kademeli kâr alma (RSI 70+/80+ tetikler)
+    - K-12 konsantrasyon limitleri
+    - K-13 v4.1 sektör bazlı VIX
+    - K-14 drawdown freni durumu (data/swing/status.json)
+  → NOT: giriş kuralları (K-02, K-05, K-15, K-17, K-18, K-19, K-20) burada kullanılmaz
+    — bunlar PART 1B (swing) ve PART 1C (portföy) promptlarında uygulanır
+  → SENTIMENT: CBOE put/call ratio (web search) + FMP grades-consensus
+    put/call <0.7 = aşırı iyimser uyarı, >1.0 = aşırı kötümser, >1.2 = panik
   → raporu yaz (aşağıdaki format)
   → reports/daily/DAILY_SABAH_YYYY-MM-DD.md olarak kaydet
   → GIT COMMIT + PUSH: "[SABAH RAPORU] DD Ay YYYY - kısa özet"
@@ -202,7 +147,7 @@ ADIM 6 — ANALİZ, PLAN VE KAYIT
 
 ## RAPOR FORMATI (GITHUB'A GÖNDERİLİR)
 
-rapor 6 bölümden oluşur.
+rapor 5 bölümden oluşur (0, 1, 2, 3, 4).
 
 ---
 
@@ -249,12 +194,10 @@ ekipman: [güçlü/zayıf/nötr] | kimya: [...] | güç: [...] | optik: [...] | 
 
 ### dünün kapanışı ({tarih}, {gün})
 
-| ticker | kapanış | değişim | not |
-|--------|---------|---------|-----|
-| SPY | $XXX.XX | +X.XX% | [kısa not] |
-| QQQ | $XXX.XX | +X.XX% | |
-| DIA | $XXX.XX | +X.XX% | |
-| IWM | $XXX.XX | +X.XX% | |
+| ticker | kapanış | değişim | RSI | SMA50 | SMA200 | not |
+|--------|---------|---------|-----|-------|--------|-----|
+| SPY | $XXX.XX | +X.XX% | XX.X | ✅/❌ | ✅/❌ | |
+| QQQ | $XXX.XX | +X.XX% | | | | |
 
 **emtia + döviz**: altın $X,XXX (±%), WTI $XX (±%), DXY XX.X, 10Y %X.XX
 
@@ -264,11 +207,7 @@ ekipman: [güçlü/zayıf/nötr] | kimya: [...] | güç: [...] | optik: [...] | 
 
 | ticker | dün kapanış | ön piyasa | fark | not |
 |--------|------------|-----------|------|-----|
-| S&P 500 vadeli | X,XXX | X,XXX | ±%X.XX | [kısa not] |
-| NASDAQ vadeli | XX,XXX | XX,XXX | ±%X.XX | |
-| Dow vadeli | XX,XXX | XX,XXX | ±%X.XX | |
-| Brent | $XX.XX | $XX.XX | ±%X.XX | |
-| [AH hareket eden hisse] | $XX.XX | $XX.XX | ±%X.XX | [neden] |
+| S&P 500 vadeli | X,XXX | X,XXX | ±%X.XX | |
 
 > kaynak: investing.com / cnbc / robinhood (FMP aftermarket seans dışında sıfır dönüyor)
 
@@ -281,6 +220,8 @@ rotasyon sinyali: [risk-on / risk-off / karışık]
 ### risk değerlendirmesi
 
 - VIX: XX.X → [risk-on/off/nötr]
+- K-13 v4.1 aktif bant: [sakin/dikkatli/gergin/panik]
+- K-14 drawdown status: [aktif/pasif]
 - breadth: gainers/losers oranı
 - prediction markets: Kalshi Fed faiz %XX
 ```
@@ -323,12 +264,42 @@ aksiyon: [ne yapılacak]
 
 ---
 
-### BÖLÜM 3: EARNINGS TAKVİMİ
+### BÖLÜM 3: PORTFÖY SAĞLIK DURUMU + EARNINGS
 
 ```markdown
-## 3. earnings takvimi
+## 3. portföy sağlık durumu
 
-### dün gece (AMC) — sonuçlar
+### 3a. dengeli portföy (X/6 pozisyon, $XXK nakit, %XX nakit oranı)
+
+| sembol | fiyat | günlük | k/z | RSI | 50 | 200 | stop | mesafe | durum |
+|--------|-------|--------|-----|-----|:--:|:---:|------|--------|-------|
+| XXX | $XX.XX | ±%X.X | ±%X.X | XX | ✅ | ✅ | $XX | X.X% | [not] |
+
+**toplam**: $XXX,XXX (±%X.XX) | **nakit**: $XX,XXX (%XX)
+
+### 3b. agresif portföy (X/10 pozisyon, $XXXK nakit, %XX nakit oranı)
+
+[aynı tablo]
+
+### 3c. temettü portföyü (X/15 pozisyon, $XXK nakit, %XX nakit oranı)
+
+[aynı tablo]
+
+### 3d. sektör exposure (3 portföy toplam)
+
+| sektör | $ tutar | % | K-12 limit | durum |
+|--------|--------:|---|-----------:|-------|
+| Teknoloji | $XX,XXX | XX% | %40 | [içinde/sınır/aşım] |
+
+### 3e. uyarı özeti
+
+🔴 **acil**: [SEMBOL] — [neden]
+⚠️ **izle**: [SEMBOL] — [neden]
+🟢 **normal**: [kaç pozisyon]
+
+### 3f. earnings takvimi
+
+**dün gece (AMC) — sonuçlar**:
 
 SEMBOL — [şirket]
   EPS: $X.XX vs beklenti $X.XX → beat/miss %X
@@ -337,7 +308,7 @@ SEMBOL — [şirket]
   AH/PM tepki: $XXX (±%X)
   portföy etkisi: [doğrudan/dolaylı — aksiyon]
 
-### bugün ve haftalık kritik
+**bugün ve haftalık kritik**:
 
 | tarih | sembol | timing | beklenti | portföy etkisi |
 |-------|--------|--------|----------|----------------|
@@ -345,54 +316,19 @@ SEMBOL — [şirket]
 
 ---
 
-### BÖLÜM 4: SWING TARAMA SONUÇLARI
+### BÖLÜM 4: GÜNÜN PLANI
 
 ```markdown
-## 4. swing tarama — {tarih}
-
-> VIX: XX.X | mod: [normal / K-13b / dur] | SPY: 21EMA [üstü/altı], eğim [↗/↘]
-> tarama evreni: ~X,XXX hisse (FMP screener, mcap >$2B)
-
-### ichimoku 4/4 sinyal verenler
-
-| # | sembol | sektör | fiyat | ichimoku | volume | RSI | chandelier stop | mesafe | karar |
-|---|--------|--------|-------|----------|--------|-----|-----------------|--------|-------|
-| 1 | XXX | XLX | $XX.XX | 4/4 | X.Xx | XX | $XX.XX | X.X% | GİR/K-13b/ATLA |
-
-**[SEMBOL] — detay:**
-- sinyal: [kumo kırılımı / kijun bounce]
-- ichimoku: fiyat $XX vs kumo $XX-$XX, tenkan/kijun
-- chandelier stop: $XX.XX (highest_high - 3×ATR), mesafe: %X.X
-- filtreler: K-19 [geçti/XLP], K-20 [geçti/dead cat bounce], SPY [üstü/altı]
-- temel değerlendirme: [sektör bağlamı, hikaye, katalizör]
-
-### mevcut swing pozisyonları
-
-| sembol | PnL | chandelier stop | highest high | ATR | çıkış sinyali | durum |
-|--------|-----|----------------|--------------|-----|----------------|-------|
-| XXX | +X.X% | $XX.XX | $XX.XX | $X.XX | var/yok | [kısa yorum] |
-
-### bugün izlenecek setup önceliği
-
-1. [SEMBOL] — ichimoku sinyal: [kumo kırılımı/kijun bounce] — neden öncelikli
-2. [SEMBOL] — ichimoku sinyal: [tip] — neden öncelikli
-```
-
----
-
-### BÖLÜM 5: GÜNÜN PLANI
-
-```markdown
-## 5. günün planı
+## 4. günün planı
 
 ### strateji notu
 
-[2-3 cümle — bugünün seansı için yön ve yaklaşım]
+[2-3 cümle — bugünün seansı için yön ve yaklaşım, makro çerçeve]
 
-### aksiyonlar
+### mevcut pozisyon aksiyonları
 
 **hemen** (seans açılışında):
-1. [aksiyon] — [sebep]
+1. [aksiyon] — [sebep] — [hangi portföy, hangi hisse]
 
 **izle** (seans içinde):
 2. [koşul] → [aksiyon]
@@ -400,13 +336,10 @@ SEMBOL — [şirket]
 **pasif** (seviye bekle):
 3. [sembol] $XXX'e gelirse → [değerlendir]
 
-### swing giriş planı (varsa)
+### bugün için tarama durumu
 
-**[SEMBOL]** — EP / Breakout
-- giriş koşulu: [ilk 30dk bekle, $XX.XX üzerinde konfirmasyon]
-- pozisyon büyüklüğü: [tam / yarım — VIX'e göre]
-- stop: $XX.XX (chandelier 3×ATR, -%X.X)
-- ichimoku: [sinyal tipi, 4/4 detay]
+- swing tarama: PART 1B promptunda → `DAILY_SWING_YYYY-MM-DD.md`
+- portföy fırsat: PART 1C promptunda → `DAILY_PORTFOY_YYYY-MM-DD.md`
 
 ### dikkat edilecekler
 
@@ -423,11 +356,12 @@ SEMBOL — [şirket]
 ## KURALLAR
 
 - rapor github'a push edilir (`reports/daily/DAILY_SABAH_YYYY-MM-DD.md`)
-- JSON dosyalarına dokunma (veri güncellemesi part 2'de yapılacak)
-- amaç: sabah bilgilendirme + günün planını oluşturma + otomatik tarama okuma
-- swing tarama seans içinde FMP screener'dan çekilir — docs/SWING_SYSTEM_V2.md bölüm 9
-- VIX kuralı: K-13 v4.1 sektör bazlı — kriz tipine göre faydalanıcı sektörlere VIX 28'e kadar tam pozisyon, duyarlı sektörlere 22'den itibaren yarım. aktif kriz: jeopolitik/savaş. detay: docs/TRADING_PLAYBOOK.md
-- EP adaylarında "ilk 30 dakika bekle, konfirmasyon al" kuralı seans promptunda uygulanır — sabah planına yaz
+- JSON dosyalarına dokunma (veri güncellemesi PART 2'de yapılacak)
+- amaç: sabah bilgilendirme + makro çerçeve + mevcut portföy sağlığı
+- **tarama bu promptta YOK** — swing için PART 1B, portföy için PART 1C çalıştır
+- VIX kuralı: K-13 v4.1 sektör bazlı — detay: docs/TRADING_PLAYBOOK.md
+- ADIM 4 sadece MEVCUT pozisyonları yönetir, YENI giriş planı üretmez
+- yeni giriş planları sadece PART 1B ve PART 1C promptlarından gelir
 
 ---
 
