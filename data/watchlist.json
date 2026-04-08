@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-04-08T18:07:54.209866",
+  "son_guncelleme": "2026-04-08 19:01:17 +03:00",
   "not": "3 portföy merkezi aday havuzu. PART 1C 15:38 TR güncelleme: DUK/NEE/GEV yeni EKLE (K-04+K-18 temiz), POWL K-18 ELENDİ ($27.3M insider satış), ön piyasa gap-up sonrası kovalama yasağı 4 aday için aktif.",
   "sistem_referans": "docs/PORTFOLIO_OPPORTUNITY_SYSTEM.md",
   "script": "scripts/portfolio_scan_common.py",
@@ -309,6 +309,35 @@
       "bekleme_gun": 0,
       "karar": "EKLE",
       "momentum_5gun": 0
+    },
+    {
+      "sembol": "ATMU",
+      "hedef_portfoy": "dengeli",
+      "guncel_fiyat": 62.96,
+      "rsi": 61.6,
+      "skor": 9,
+      "skor_detay": "ROIC 23% >10: +2 | 6M 40.4% >20: +3 | RSI 61.6 sağlıklı: +1 | SMA50 üstü + golden cross: +2 | Op marj 16.9% >15: +1 | Yeni sektör (Industrial - Filtration) dengeli portföyde yok: +2 | PEG 2.29 pahalı: -2",
+      "sektor": "Sanayi",
+      "tema": "Kirlilik kontrol filtrasyon, ağır vasıta emisyon standartları, Cummins spin-off kaliteleşmesi, S&P SmallCap 600 inclusion pasif akım",
+      "urgency": "low",
+      "ekleme_tarihi": "2026-04-08",
+      "son_kontrol": "2026-04-08",
+      "hedef_giris": "58-60 (SMA50 testi / pullback)",
+      "hedef_fiyat_1": 66.5,
+      "hedef_fiyat_2": 72,
+      "stop_loss": 55.5,
+      "r_r_orani": "2.1:1 (58 giriş, 55.5 stop, 66.5 hedef1)",
+      "tez": "Fleetguard markası altında global ağır vasıta filtrasyon lideri. ROIC yüzde 23, operasyonel marj yüzde 17, temiz yükseliş trendi (tüm SMA'lar üstünde). Cummins'ten 2023 spin-off sonrası sermaye tahsisi iyileşiyor. Nisan başı S&P SmallCap 600 inclusion pasif fon akımı sağladı. Yapısal emisyon standartları (EPA ve küresel) filtrasyon talebini artırıyor. Mevcut dengeli portföyde endüstri filtrasyon ekseni yok, sektörel çeşitlendirme sağlar.",
+      "karsit_argumani": "PEG 2.29 pahalı, düşük PEG taramasının dışında. Forward büyüme çift haneden tek haneye yavaşlıyor (2026 yüzde 10.8, 2028 yüzde 7.5). Analist hedefleri bayat ve fiyatın çok altında (son hedef ort 39.50 vs fiyat 62.96), kapsam zayıf. Zirveye sadece yüzde 5 uzaklık - risk ödül asimetrisi bozulmuş, aşağı alan yukarıdan geniş. D/E 1.51 spin-off mirası yüksek borç, faiz ortamında refinansman baskısı. Endeks inclusion ralli'si tipik olarak birkaç hafta içinde fade eder. Freight/kamyon siklikal, ABD OEM sipariş zayıflığı direkt vurur. Şu anki fiyatta değil, pullback'te (58-60) makul giriş olabilir.",
+      "k_04_gecis": "beklemede",
+      "k_05_gecis": "beklemede",
+      "k_17_gecis": "temiz",
+      "k_18_gecis": "temiz",
+      "bekleme_gun": 0,
+      "karar": "IZLE",
+      "momentum_5gun": 5.76,
+      "giris_tetigi": "SMA50 (~60.35) veya SMA20 (~58) testi + RSI 45-50 geri çekilme + hacimli yeniden yükseliş + K-14 drawdown freninin kalkması (SPY > SMA50)",
+      "not_ek": "K-14 drawdown freni aktif olduğu için şu anda alım yasak. Pullback bekleme statüsünde izleniyor. Forward P/E 2026 = 21.6. Spin-off tarih: 2023. Mcap 5.1B, small-mid cap, beta 1.59."
     }
   ],
   "haric_tutulanlar": [
