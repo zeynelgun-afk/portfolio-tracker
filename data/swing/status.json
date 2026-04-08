@@ -10,13 +10,41 @@
     "drawdown_yuzde": 16.42,
     "son_ardisik_zarar": 1,
     "kayip_serisi_mart": [
-      {"tarih": "2026-03-09", "sembol": "HAL", "pnl_pct": -5.10},
-      {"tarih": "2026-03-09", "sembol": "CEG", "pnl_pct": -5.05},
-      {"tarih": "2026-03-11", "sembol": "T",   "pnl_pct": -5.54},
-      {"tarih": "2026-03-12", "sembol": "ALMU", "pnl_pct": -6.11},
-      {"tarih": "2026-03-12", "sembol": "SOFI", "pnl_pct": -3.62},
-      {"tarih": "2026-03-24", "sembol": "RTX", "pnl_pct": -5.16},
-      {"tarih": "2026-03-26", "sembol": "AROC", "pnl_pct": -4.95}
+      {
+        "tarih": "2026-03-09",
+        "sembol": "HAL",
+        "pnl_pct": -5.1
+      },
+      {
+        "tarih": "2026-03-09",
+        "sembol": "CEG",
+        "pnl_pct": -5.05
+      },
+      {
+        "tarih": "2026-03-11",
+        "sembol": "T",
+        "pnl_pct": -5.54
+      },
+      {
+        "tarih": "2026-03-12",
+        "sembol": "ALMU",
+        "pnl_pct": -6.11
+      },
+      {
+        "tarih": "2026-03-12",
+        "sembol": "SOFI",
+        "pnl_pct": -3.62
+      },
+      {
+        "tarih": "2026-03-24",
+        "sembol": "RTX",
+        "pnl_pct": -5.16
+      },
+      {
+        "tarih": "2026-03-26",
+        "sembol": "AROC",
+        "pnl_pct": -4.95
+      }
     ],
     "kayip_yogunlugu": "9-12 mart: 5 zarar / 4 gun | 24-26 mart: 2 zarar / 3 gun"
   },
@@ -48,5 +76,18 @@
     "Mart 2026 genel ders: VIX dikkatli + sektor rotasyonu yavas = swing ortami zayif"
   ],
   "guncelleyen": "k14_drawdown_track.py + manuel analiz",
-  "son_guncelleme": "2026-04-07"
+  "son_guncelleme": "2026-04-07",
+  "ortam_testi_8_nisan_2026_faz2": {
+    "vix": 21.02,
+    "vix_degisim_pct": -18.46,
+    "vix_bandi": "normal (<22)",
+    "spy_fiyat": 675.26,
+    "spy_sma50": 674.9,
+    "spy_vs_sma50_pct": 0.05,
+    "spy_trendi": "SMA50 USTU (kil payi)",
+    "kriter_ozeti": "VIX<22 + SPY>SMA50 iki kriter de saglandi",
+    "karar": "K-14 DRAWDOWN FREN AKTIF KALIYOR - 1 gun teyit kurali (kriz rally gun-1 kovalama yasagi)",
+    "gerekce": "Iran ateskes 2 haftalik, reversible. Gun-1 rally kovalama yasagi (K-02 kriz sok momentum). Yarin RSI onayi ve devam teyidi ile yeniden degerlendir.",
+    "yarinki_karar": "SPY SMA50 ustu + VIX<22 devam ederse VE yeni kriz flari yoksa K-14 kaldir"
+  }
 }
