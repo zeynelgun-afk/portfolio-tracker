@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-04-08T12:55:28.671611",
+  "son_guncelleme": "2026-04-08T15:12:32.773122",
   "not": "3 portföy merkezi aday havuzu. PART 1C 15:38 TR güncelleme: DUK/NEE/GEV yeni EKLE (K-04+K-18 temiz), POWL K-18 ELENDİ ($27.3M insider satış), ön piyasa gap-up sonrası kovalama yasağı 4 aday için aktif.",
   "sistem_referans": "docs/PORTFOLIO_OPPORTUNITY_SYSTEM.md",
   "script": "scripts/portfolio_scan_common.py",
@@ -69,7 +69,7 @@
     {
       "sembol": "CAT",
       "hedef_portfoy": "dengeli",
-      "guncel_fiyat": 724.44,
+      "guncel_fiyat": 758.63,
       "rsi": 54.4,
       "skor": 12,
       "skor_detay": "ROIC 11.4% >10: +1 | 6M 44.3% >20: +3 | RSI 54 nötr: +2 | SMA50 üstü: +2 | Golden cross: +1 | FCF yield 3.0% >3%: +1 | Yeni sektör (Industrial) mevcut portföyde yok: +2",
@@ -90,12 +90,13 @@
       "k_17_gecis": true,
       "k_18_gecis": true,
       "bekleme_gun": 1,
-      "karar": "EKLE"
+      "karar": "EKLE",
+      "momentum_5gun": 0
     },
     {
       "sembol": "WDC",
       "hedef_portfoy": "agresif",
-      "guncel_fiyat": 311.96,
+      "guncel_fiyat": 335.17,
       "rsi": 59.1,
       "skor": 17,
       "skor_detay": "1M 27.2% >20: +3 | 6M 157.4% >50: +3 | ROIC 25.2% >25: +3 | RSI 59 güçlü: +2 | SMA50 üstü: +2 | Golden cross: +2 | 3M 66.2% >15: +2",
@@ -116,12 +117,13 @@
       "k_17_gecis": true,
       "k_18_gecis": true,
       "bekleme_gun": 1,
-      "karar": "EKLE"
+      "karar": "EKLE",
+      "momentum_5gun": 0
     },
     {
       "sembol": "KLAC",
       "hedef_portfoy": "agresif",
-      "guncel_fiyat": 1548.85,
+      "guncel_fiyat": 1643.6122,
       "rsi": 57.2,
       "skor": 14,
       "skor_detay": "1M 15.2% >10: +2 | 6M 45.8% >30: +2 | P/E 44.7 >40 yüksek: -1 | ROIC 36.8% >25: +3 | RSI 57 güçlü: +2 | SMA50 üstü: +2 | Golden cross: +2 | 3M 16.9% >15: +2",
@@ -142,12 +144,13 @@
       "k_17_gecis": true,
       "k_18_gecis": true,
       "bekleme_gun": 1,
-      "karar": "EKLE"
+      "karar": "EKLE",
+      "momentum_5gun": 0
     },
     {
       "sembol": "AMAT",
       "hedef_portfoy": "agresif",
-      "guncel_fiyat": 354.31,
+      "guncel_fiyat": 383.37,
       "rsi": 52.4,
       "skor": 14,
       "skor_detay": "1M 9.1% >0: +1 | 6M 62.9% >50: +3 | ROIC 22.6% >15: +2 | RSI 52 güçlü: +2 | SMA50 üstü: +2 | Golden cross: +2 | 3M 25.8% >15: +2",
@@ -168,12 +171,13 @@
       "k_17_gecis": true,
       "k_18_gecis": true,
       "bekleme_gun": 1,
-      "karar": "EKLE"
+      "karar": "EKLE",
+      "momentum_5gun": 0
     },
     {
       "sembol": "MRK",
       "hedef_portfoy": "temettü",
-      "guncel_fiyat": 119.36,
+      "guncel_fiyat": 121.5,
       "rsi": 54.2,
       "skor": 11,
       "skor_detay": "payout 44.8% <50%: +3 | P/E 16.3 <18: +1 | ROIC 20.8% >15: +2 | FCF yield 4.2% >0: +1 | SMA50 üstü: +1 | SMA200 üstü: +1 | Yeni sektör (Healthcare) portföyde yok: +2",
@@ -194,12 +198,13 @@
       "k_17_gecis": true,
       "k_18_gecis": true,
       "bekleme_gun": 1,
-      "karar": "EKLE"
+      "karar": "EKLE",
+      "momentum_5gun": 0
     },
     {
       "sembol": "UPS",
       "hedef_portfoy": "temettü",
-      "guncel_fiyat": 97.58,
+      "guncel_fiyat": 99.53,
       "rsi": 40.4,
       "skor": 11,
       "skor_detay": "yield 6.72% 5-7%: +3 | P/E 14.9 <15: +2 | ROIC 10.6% >10: +1 | FCF yield 5.7% >5%: +2 | SMA200 üstü: +1 | Yeni sektör (Industrial) portföyde yok: +2",
@@ -221,12 +226,13 @@
       "k_18_gecis": true,
       "bekleme_gun": 1,
       "karar": "EKLE",
-      "uyari": "K-04 ihlali (SMA50 altı) - giriş ön koşulu: ilk 30 dk ralli + SMA50 kırılım teyidi. Aksi halde İZLE'ye çek"
+      "uyari": "K-04 ihlali (SMA50 altı) - giriş ön koşulu: ilk 30 dk ralli + SMA50 kırılım teyidi. Aksi halde İZLE'ye çek",
+      "momentum_5gun": 0
     },
     {
       "sembol": "DUK",
       "hedef_portfoy": "dengeli",
-      "guncel_fiyat": 131.82,
+      "guncel_fiyat": 130.845,
       "rsi": 58.4,
       "skor": 11,
       "skor_detay": "P/E 20.6 <25: +1 | 6M 5.3% >0: +1 | RSI 58 nötr: +2 | SMA50 üstü: +2 | Golden cross: +1 | FCF yield 8.0% >5%: +2 | Yeni sektör (Utility): +2",
@@ -247,12 +253,13 @@
       "k_17_gecis": true,
       "k_18_gecis": true,
       "bekleme_gun": 0,
-      "karar": "EKLE"
+      "karar": "EKLE",
+      "momentum_5gun": 0
     },
     {
       "sembol": "NEE",
       "hedef_portfoy": "dengeli",
-      "guncel_fiyat": 93.67,
+      "guncel_fiyat": 93.63,
       "rsi": 59.6,
       "skor": 9,
       "skor_detay": "6M 11.5% >10: +2 | RSI 60 nötr: +2 | SMA50 üstü: +2 | Golden cross: +1 | Yeni sektör (Utility): +2",
@@ -273,12 +280,13 @@
       "k_17_gecis": true,
       "k_18_gecis": true,
       "bekleme_gun": 0,
-      "karar": "EKLE"
+      "karar": "EKLE",
+      "momentum_5gun": 0
     },
     {
       "sembol": "GEV",
       "hedef_portfoy": "dengeli",
-      "guncel_fiyat": 910.75,
+      "guncel_fiyat": 932.825,
       "rsi": 59.6,
       "skor": 10,
       "skor_detay": "1M pozitif | 6M güçlü | RSI 60 nötr: +2 | SMA50 üstü: +2 | Golden cross: +1 | Nuclear/güç altyapısı AI tedarik zinciri: +3",
@@ -299,7 +307,8 @@
       "k_17_gecis": true,
       "k_18_gecis": true,
       "bekleme_gun": 0,
-      "karar": "EKLE"
+      "karar": "EKLE",
+      "momentum_5gun": 0
     }
   ],
   "haric_tutulanlar": [
