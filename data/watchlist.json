@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-04-08T09:12:47.634141",
+  "son_guncelleme": "2026-04-08T11:35:24.386317",
   "not": "3 portföy merkezi aday havuzu. PART 1C promptu + scripts/portfolio_scan_common.py mekanik skor sistemi ile üretilir. v3 şema: FİNAL (8 nisan 2026 kalibre sistem).",
   "sistem_referans": "docs/PORTFOLIO_OPPORTUNITY_SYSTEM.md",
   "script": "scripts/portfolio_scan_common.py",
@@ -52,8 +52,8 @@
       "hedef_portfoy": "dengeli",
       "guncel_fiyat": 724.44,
       "rsi": 54.4,
-      "skor": 10,
-      "skor_detay": "P/E 38 (puan yok), ROIC 11.4%: +1, 6M +44.3%: +3, RSI 54 nötr: +2, SMA50 üstü: +2, Golden cross: +1, FCF yield 3%: +1",
+      "skor": 12,
+      "skor_detay": "ROIC 11.4% >10: +1 | 6M 44.3% >20: +3 | RSI 54 nötr: +2 | SMA50 üstü: +2 | Golden cross: +1 | FCF yield 3.0% >3%: +1 | Yeni sektör (Industrial) mevcut portföyde yok: +2",
       "sektor": "Sanayi",
       "tema": "Global capex, data center inşaat",
       "urgency": "high",
@@ -70,7 +70,7 @@
       "k_05_gecis": true,
       "k_17_gecis": true,
       "k_18_gecis": true,
-      "bekleme_gun": 0,
+      "bekleme_gun": 1,
       "karar": "EKLE"
     },
     {
@@ -79,7 +79,7 @@
       "guncel_fiyat": 311.96,
       "rsi": 59.1,
       "skor": 17,
-      "skor_detay": "1M +27.2%: +3, 6M +157.4%: +3, ROIC 25.2%: +3, RSI 59: +2, SMA50: +2, Golden cross: +2, 3M +66%: +2",
+      "skor_detay": "1M 27.2% >20: +3 | 6M 157.4% >50: +3 | ROIC 25.2% >25: +3 | RSI 59 güçlü: +2 | SMA50 üstü: +2 | Golden cross: +2 | 3M 66.2% >15: +2",
       "sektor": "Teknoloji - Memory",
       "tema": "Samsung Q1 +%755 op profit tezi",
       "urgency": "high",
@@ -96,7 +96,7 @@
       "k_05_gecis": true,
       "k_17_gecis": true,
       "k_18_gecis": true,
-      "bekleme_gun": 0,
+      "bekleme_gun": 1,
       "karar": "EKLE"
     },
     {
@@ -105,7 +105,7 @@
       "guncel_fiyat": 1548.85,
       "rsi": 57.2,
       "skor": 14,
-      "skor_detay": "1M +15.2%: +2, 6M +45.8%: +2, P/E 44 puan yok, ROIC 36.8%: +3, RSI 57: +2, SMA50: +2, Golden cross: +2, 3M 0: 0",
+      "skor_detay": "1M 15.2% >10: +2 | 6M 45.8% >30: +2 | P/E 44.7 >40 yüksek: -1 | ROIC 36.8% >25: +3 | RSI 57 güçlü: +2 | SMA50 üstü: +2 | Golden cross: +2 | 3M 16.9% >15: +2",
       "sektor": "Teknoloji - Yarıiletken ekipman",
       "tema": "Process control monopol, capex cycle",
       "urgency": "high",
@@ -122,7 +122,7 @@
       "k_05_gecis": true,
       "k_17_gecis": true,
       "k_18_gecis": true,
-      "bekleme_gun": 0,
+      "bekleme_gun": 1,
       "karar": "EKLE"
     },
     {
@@ -131,7 +131,7 @@
       "guncel_fiyat": 354.31,
       "rsi": 52.4,
       "skor": 14,
-      "skor_detay": "1M +9.1%: +1, 6M +62.9%: +3, ROIC 22.6%: +2, RSI 52: +2, SMA50: +2, Golden cross: +2, 3M +27%: +2",
+      "skor_detay": "1M 9.1% >0: +1 | 6M 62.9% >50: +3 | ROIC 22.6% >15: +2 | RSI 52 güçlü: +2 | SMA50 üstü: +2 | Golden cross: +2 | 3M 25.8% >15: +2",
       "sektor": "Teknoloji - Yarıiletken ekipman",
       "tema": "Foundry capex",
       "urgency": "high",
@@ -148,7 +148,7 @@
       "k_05_gecis": true,
       "k_17_gecis": true,
       "k_18_gecis": true,
-      "bekleme_gun": 0,
+      "bekleme_gun": 1,
       "karar": "EKLE"
     },
     {
@@ -156,8 +156,8 @@
       "hedef_portfoy": "temettü",
       "guncel_fiyat": 119.36,
       "rsi": 54.2,
-      "skor": 9,
-      "skor_detay": "yield 2.78% (sınır <3% 0 puan), payout 44.8% <50%: +3, P/E 16.3 <18: +1, ROIC 20.8% >15: +2, FCF yield 4.19% >0: +1, SMA50: +1, SMA200: +1",
+      "skor": 11,
+      "skor_detay": "payout 44.8% <50%: +3 | P/E 16.3 <18: +1 | ROIC 20.8% >15: +2 | FCF yield 4.2% >0: +1 | SMA50 üstü: +1 | SMA200 üstü: +1 | Yeni sektör (Healthcare) portföyde yok: +2",
       "sektor": "Sağlık - Pharma",
       "tema": "Keytruda ivme + yüksek kalite",
       "urgency": "high",
@@ -174,7 +174,7 @@
       "k_05_gecis": true,
       "k_17_gecis": true,
       "k_18_gecis": true,
-      "bekleme_gun": 0,
+      "bekleme_gun": 1,
       "karar": "EKLE"
     },
     {
@@ -182,8 +182,8 @@
       "hedef_portfoy": "temettü",
       "guncel_fiyat": 97.58,
       "rsi": 40.4,
-      "skor": 9,
-      "skor_detay": "yield 6.72% 5-7%: +3, payout 96.9% sınır (<100 trap değil 0), P/E 14.9 <15: +2, ROIC 10.6% >10: +1, FCF yield 5.75% >5%: +2, SMA50 altı 0, SMA200 üstü: +1",
+      "skor": 11,
+      "skor_detay": "yield 6.72% 5-7%: +3 | P/E 14.9 <15: +2 | ROIC 10.6% >10: +1 | FCF yield 5.7% >5%: +2 | SMA200 üstü: +1 | Yeni sektör (Industrial) portföyde yok: +2",
       "sektor": "Kargo - Endüstriyel",
       "tema": "Yüksek yield, düşük P/E",
       "urgency": "medium",
@@ -200,7 +200,7 @@
       "k_05_gecis": true,
       "k_17_gecis": true,
       "k_18_gecis": true,
-      "bekleme_gun": 0,
+      "bekleme_gun": 1,
       "karar": "EKLE",
       "uyari": "K-04 ihlali (SMA50 altı) - giriş ön koşulu: ilk 30 dk ralli + SMA50 kırılım teyidi. Aksi halde İZLE'ye çek"
     }
