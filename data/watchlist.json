@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-04-09T11:22:46.164837",
+  "son_guncelleme": "2026-04-09",
   "not": "3 portföy merkezi aday havuzu. PART 1C 15:38 TR güncelleme: DUK/NEE/GEV yeni EKLE (K-04+K-18 temiz), POWL K-18 ELENDİ ($27.3M insider satış), ön piyasa gap-up sonrası kovalama yasağı 4 aday için aktif.",
   "sistem_referans": "docs/PORTFOLIO_OPPORTUNITY_SYSTEM.md",
   "script": "scripts/portfolio_scan_common.py",
@@ -397,17 +397,19 @@
     },
     {
       "sembol": "BMY",
-      "hedef_portfoy": "temettü",
+      "isim": "Bristol-Myers Squibb",
+      "sektor": "Saglik",
       "urgency": "medium",
-      "guncel_fiyat": null,
-      "rsi": null,
-      "skor": 8,
-      "skor_detay": "pharma ucuz temettü",
       "eklenme_tarihi": "2026-04-09",
-      "son_kontrol": "2026-04-09T11:22:46.164837",
-      "bekleme_gun": 0,
-      "karar": "İZLE",
-      "hedef_giris": "MO trim rotasyon adayı"
+      "hedef_portfoy": "temettu",
+      "giris_tetikleyici": "SMA50 ustu donus + earnings sonrasi (23 Nis BMO) guc teyidi",
+      "giris_seviye": "57-60 arasi SMA50 ustu kapanisi",
+      "stop_seviyesi": 54.0,
+      "hedef_fiyat": 68.0,
+      "temel_tez": "P/E 17 ucuz, yield %4.24 saglikli payout ile, FCF yield %10.7, 6M RS +%32. Buyume portfoyu +%17. K-13 faydalanici sektor.",
+      "risk_notu": "23 Nis earnings binary risk. SMA50 alti simdi. Earnings sonrasi guc gorulmesi sart.",
+      "k13_kategori": "faydalanici",
+      "son_guncelleme": "2026-04-09T15:17:21.708956"
     },
     {
       "sembol": "KMB",
@@ -436,6 +438,38 @@
       "bekleme_gun": 0,
       "karar": "İZLE",
       "hedef_giris": "enerji sektor çeşitlilik"
+    },
+    {
+      "sembol": "LLY",
+      "isim": "Eli Lilly",
+      "sektor": "Saglik",
+      "urgency": "low",
+      "eklenme_tarihi": "2026-04-09",
+      "hedef_portfoy": "agresif",
+      "giris_tetikleyici": "SMA50 ustu donus + VIX<25 + earnings sonrasi (27 Nis BMO) teyit",
+      "giris_seviye": "SMA50 ustu kapanisi (SMA50 ~990 bolgesi)",
+      "stop_seviyesi": 880.0,
+      "hedef_fiyat": 1100.0,
+      "temel_tez": "ROIC %30.2 sektor lideri. GLP-1 piyasasi buyume hikayesi devam. 6M +%12.6. Agresif buyume tezi ile uyumlu.",
+      "risk_notu": "P/E 41 pahalı. Yield %0.7 temettu portfoyune uymuyor. SMA50 alti simdi. 27 Nis earnings.",
+      "k13_kategori": "faydalanici",
+      "son_guncelleme": "2026-04-09T15:17:21.708956"
+    },
+    {
+      "sembol": "REGN",
+      "isim": "Regeneron Pharmaceuticals",
+      "sektor": "Saglik",
+      "urgency": "low",
+      "eklenme_tarihi": "2026-04-09",
+      "hedef_portfoy": "agresif",
+      "giris_tetikleyici": "SMA50 ustu donus + VIX<25 teyit",
+      "giris_seviye": "760-780 SMA50 ustu",
+      "stop_seviyesi": 720.0,
+      "hedef_fiyat": 870.0,
+      "temel_tez": "P/E 17 deger. 6M RS +%31. FCF yield %5.1. Dupilumab ve yeni boru hatti. K-13 faydalanici.",
+      "risk_notu": "Yield %0.5 temettu uyumsuz. SMA50 alti. Earnings takvimi netlesmeli.",
+      "k13_kategori": "faydalanici",
+      "son_guncelleme": "2026-04-09T15:17:21.708956"
     }
   ],
   "haric_tutulanlar": [
