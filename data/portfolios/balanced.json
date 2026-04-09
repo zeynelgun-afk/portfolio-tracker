@@ -4,7 +4,7 @@
   "nakit": {
     "miktar": 82612.95,
     "para_birimi": "USD",
-    "agirlik_yuzde": 73.93
+    "agirlik_yuzde": 73.35
   },
   "pozisyonlar": [
     {
@@ -13,17 +13,17 @@
       "sektor": "Temel Tüketim",
       "adet": 267,
       "maliyet_baz": 67.44,
-      "guncel_fiyat": 66.8,
+      "guncel_fiyat": 66.9,
       "yatirim": 18006.48,
-      "guncel_deger": 17835.6,
-      "kar_zarar": -170.88000000000102,
-      "kar_zarar_yuzde": -0.95,
-      "gunluk_degisim_yuzde": 0,
-      "son_guncelleme": "2026-04-08T21:37:40.613918",
+      "guncel_deger": 17862.3,
+      "kar_zarar": -144.18,
+      "kar_zarar_yuzde": -0.8,
+      "gunluk_degisim_yuzde": 0.15,
+      "son_guncelleme": "2026-04-09T14:19:40.692381",
       "giris_tarihi": "2026-02-17",
       "giris_fiyati": 67.44,
       "giris_nedeni": "Initial position - Dividend defensive",
-      "agirlik_yuzde": 15.85
+      "agirlik_yuzde": 15.86
     },
     {
       "sembol": "JNJ",
@@ -31,22 +31,22 @@
       "sektor": "Sağlık",
       "adet": 50,
       "maliyet_baz": 244.14,
-      "guncel_fiyat": 241.3,
+      "guncel_fiyat": 242.92999,
       "yatirim": 12207.0,
-      "guncel_deger": 12065.0,
-      "kar_zarar": -142.0,
-      "kar_zarar_yuzde": -1.16,
-      "gunluk_degisim_yuzde": 0,
-      "son_guncelleme": "2026-04-08T21:37:40.613918",
+      "guncel_deger": 12146.5,
+      "kar_zarar": -60.5,
+      "kar_zarar_yuzde": -0.5,
+      "gunluk_degisim_yuzde": 0.68,
+      "son_guncelleme": "2026-04-09T14:19:40.692381",
       "giris_tarihi": "2026-03-13",
       "giris_fiyati": 244.14,
       "giris_nedeni": "Saglik sektoru diversifikasyonu. Defensif/temettü aristokrati. Iran savasi ortaminda direncli. RSI 59, SMA50 ustu. Portfoyde saglik eksikti.",
-      "agirlik_yuzde": 10.72
+      "agirlik_yuzde": 10.79
     }
   ],
-  "son_guncelleme": "2026-04-08T21:37:40.613918",
-  "toplam_deger": 112513.55,
-  "toplam_getiri_yuzde": 12.51,
+  "son_guncelleme": "2026-04-09T14:19:40.692381",
+  "toplam_deger": 112621.75,
+  "toplam_getiri_yuzde": 12.62,
   "transactions": [
     {
       "tarih": "2026-03-02",
