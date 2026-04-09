@@ -1,5 +1,5 @@
 {
-  "aktif_durum": "K14_DRAWDOWN_FREN",
+  "aktif_durum": "K14_KALDIRILDI_YARIM_POZISYON_PROTOKOLU",
   "tetiklenme_tarihi": "2026-04-07",
   "tetik_sebebi": "Peak-to-trough drawdown %16.42 (esik %15)",
   "detaylar": {
@@ -76,7 +76,7 @@
     "Mart 2026 genel ders: VIX dikkatli + sektor rotasyonu yavas = swing ortami zayif"
   ],
   "guncelleyen": "k14_drawdown_track.py + manuel analiz",
-  "son_guncelleme": "2026-04-07",
+  "son_guncelleme": "2026-04-09",
   "ortam_testi_8_nisan_2026_faz2": {
     "vix": 21.02,
     "vix_degisim_pct": -18.46,
@@ -89,5 +89,32 @@
     "karar": "K-14 DRAWDOWN FREN AKTIF KALIYOR - 1 gun teyit kurali (kriz rally gun-1 kovalama yasagi)",
     "gerekce": "Iran ateskes 2 haftalik, reversible. Gun-1 rally kovalama yasagi (K-02 kriz sok momentum). Yarin RSI onayi ve devam teyidi ile yeniden degerlendir.",
     "yarinki_karar": "SPY SMA50 ustu + VIX<22 devam ederse VE yeni kriz flari yoksa K-14 kaldir"
+  },
+  "ortam_testi_9_nisan_2026": {
+    "vix": 20.18,
+    "vix_bandi": "sakin (<22)",
+    "spy_fiyat": 676.01,
+    "spy_sma50": 674.92,
+    "spy_vs_sma50_pct": 0.16,
+    "spy_trendi": "SMA50 USTU (kil payi, dun +0.05 bugun +0.16)",
+    "kriter_ozeti": "VIX<22 + SPY>SMA50 + yeni kriz flari yok (3/3)",
+    "karar": "K-14 KALDIRILDI - Yarim pozisyon protokolu aktif",
+    "yarim_pozisyon_protokolu": {
+      "madde_3": "Ilk 3 trade yarim pozisyon ($5K max)",
+      "madde_4": "2/3 kazanirsa tam pozisyon ($10K)",
+      "day_2_chase_ekstra_disiplin": "Adaylarin hepsi dun +%6-9 kostu, RSI 65 sinirda. Bugun giris yok, seviye bazli tetik emirleri.",
+      "trade_sayaci": 0
+    },
+    "bugun_giris_karari": "YOK - R:R tum adaylarda 2:1 alti (yuksek ATR + dar %10 hedef), pullback bekleniyor",
+    "takip_listesi": [
+      "AMAT",
+      "CAT",
+      "ATMU"
+    ],
+    "tetik_seviyeleri": {
+      "AMAT": "$360-365 pullback",
+      "CAT": "$745-750 pullback",
+      "ATMU": "$61.50 pullback"
+    }
   }
 }
