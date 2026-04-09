@@ -18,11 +18,11 @@
 >
 > **geçmiş hatalar**: tarama atlandığında setup kaçırıldı. filtre atlandığında yanlış giriş yapıldı (örn: POWL insider satışı K-18 atlanması). her adımı tamamla.
 
-> **versiyon**: 1.1 | **son güncelleme**: 8 nisan 2026 (mantık hatası düzeltme: K-15a swing'den çıkarıldı, K-19 duplicate kaldırıldı, stop formülü giriş/trailing ayrıştı)
+> **versiyon**: 1.2 | **son güncelleme**: 9 nisan 2026 (K-kural referans `K_RULES_QUICK_REF.md`'ye bağlandı)
 > **çıktı dosyası**: `reports/daily/DAILY_SWING_YYYY-MM-DD.md`
 > **çalışma zamanı**: TR ~09:00-14:00 (sabah raporundan SONRA)
 > **amaç**: swing tarama + aktif pozisyon yönetimi + giriş kararı
-> **referans**: `docs/SWING_SYSTEM_V2.md` (sistem detayı), `docs/TRADING_PLAYBOOK.md` (K kuralları)
+> **referans**: `docs/SWING_SYSTEM_V2.md` (sistem detayı), `docs/K_RULES_QUICK_REF.md` (K-kural özet), `docs/TRADING_PLAYBOOK.md` (K-kural tam detay)
 > **dil**: küçük harf türkçe, dilbilgisi kurallarına uygun
 > **kaynak**: sadece "finzora ai"
 > **git commit**: `[SWING RAPORU] DD Ay YYYY - kısa özet`

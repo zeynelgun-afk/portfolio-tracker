@@ -26,11 +26,11 @@
 > - mevcut pozisyonların büyütme/döndürme kararları hiç yapılmıyordu
 > bu prompt bu eksikleri kapatır
 
-> **versiyon**: 1.1 | **son güncelleme**: 8 nisan 2026 (mantık hatası düzeltme: K-05 7g→2g, K-17 portföy bazlı eşik, watchlist cleanup 10g→14g)
+> **versiyon**: 1.2 | **son güncelleme**: 9 nisan 2026 (K-kural referans `K_RULES_QUICK_REF.md`'ye bağlandı)
 > **çıktı dosyası**: `reports/daily/DAILY_PORTFOY_YYYY-MM-DD.md`
 > **çalışma zamanı**: TR ~09:00-14:00 (sabah raporundan SONRA, swing raporundan önce/sonra fark etmez)
 > **amaç**: 3 portföy için fırsat taraması + karar matrisi + watchlist yönetimi
-> **referans**: `docs/PORTFOLIO_OPPORTUNITY_SYSTEM.md`
+> **referans**: `docs/PORTFOLIO_OPPORTUNITY_SYSTEM.md` (sistem detayı), `docs/K_RULES_QUICK_REF.md` (K-kural özet), `docs/TRADING_PLAYBOOK.md` (K-kural tam detay)
 > **dil**: küçük harf türkçe, dilbilgisi kurallarına uygun
 > **kaynak**: sadece "finzora ai"
 > **git commit**: `[PORTFÖY RAPORU] DD Ay YYYY - kısa özet`

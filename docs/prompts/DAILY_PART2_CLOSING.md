@@ -6,6 +6,7 @@
 >
 > **zorunlu adımlar (teker teker kontrol et):**
 > - [ ] ADIM 1 — git pull + hazırlık (JSON'ları oku, dünkü raporu kontrol et)
+> - [ ] ADIM 1.5 — dün session_state.json okuma (faz1/faz2/faz3 aksiyon logları, K-rule etiketleri, trade tarihçesi)
 > - [ ] ADIM 2 — FMP veri toplama (batch-quote, portföy: RSI+SMA, swing: ichimoku, emtia, treasury)
 > - [ ] ADIM 3 — JSON güncelleme (fiyatlar, k/z, ağırlıklar, summary.json, git commit)
 > - [ ] ADIM 3.5 — KAZANÇ AÇIKLAMALARI TARAMASI (earnings-calendar, portföy kesişimi, detaylı analiz)
@@ -14,17 +15,19 @@
 > - [ ] BÖLÜM 2 — portföy takibi (3 portföy + genel özet + uyarılar)
 > - [ ] BÖLÜM 3 — swing trade durumu (aktif pozisyonlar, ichimoku kontrol)
 > - [ ] BÖLÜM 4 — kazanç açıklamaları (bugünkü bilançolar, portföy kesişimi analizi)
-> - [ ] BÖLÜM 5 — günün değerlendirmesi (sabah planı vs gerçekleşme, dersler)
+> - [ ] BÖLÜM 5 — günün değerlendirmesi (sabah planı vs gerçekleşme, seans içi aksiyon logu, dersler)
 > - [ ] BÖLÜM 6 — sonuç + yarın aksiyonları
 > - [ ] ADIM 5 — PLAYBOOK GÜNCELLE (derslerden yeni kural varsa `docs/TRADING_PLAYBOOK.md`'ye ekle)
 > - [ ] GIT — rapor + playbook commit + push yapıldı mı?
 >
 > **geçmiş hatalar**: bölüm 4 (kazanç açıklamaları) atlandı → Oracle bilançosu ($17.2B gelir, bulut +%84, AH +%6.3) rapordan tamamen eksik kaldı. bölüm 5 ve 6 da eksik yazıldı. bu tür atlamalar portföy kararlarını olumsuz etkiler. her bölümü tamamla.
 
-> **versiyon**: 1.4 | **son güncelleme**: 8 nisan 2026 (mantık hatası düzeltme: agresif stop K-06/K-07 ile hizalandı, ön koşul netleşti, K-15a yanlış bağlamı düzeltildi)
+> **versiyon**: 1.5 | **son güncelleme**: 9 nisan 2026 (session_state.json okuma + K-kural referans bağlantısı)
 > **çıktı dosyası**: `reports/daily/DAILY_REPORT_YYYY-MM-DD.md`
 > **çalışma zamanı**: TR ~09:00 (NYSE dün gece 23:00'da kapandı, bugün 16:30 açılacak — yaz saati)
 > **ön koşul**: bir önceki günün PART 1 sabah raporu çalıştırılmış olmalı (çünkü PART 2 dünün seansını değerlendirir, sabah planı ile gerçekleşmeyi karşılaştırır). aynı gün PART 1 bugün seansı için ayrı plan yapar, PART 2 ile doğrudan ilişkili değildir.
+> **session state okuma**: `data/session_state.json` dün FAZ 1/2/3 bloklarını okur, trade kararlarını + K-rule uygulamalarını rapora yansıtır. kapanış raporu yazıldıktan sonra state dosyası yarın sabah PART 1 tarafından flag'ler okunana kadar korunur.
+> **K-kural referansı**: `docs/K_RULES_QUICK_REF.md` — kural detayları için, prompt içinde tekrarlama
 > **dil**: küçük harf türkçe, dilbilgisi kurallarına uygun
 > **kaynak**: sadece "finzora ai"
 > **git commit 1**: `[GÜNCELLEME] DD Ay - kapanış fiyatları`
@@ -51,6 +54,34 @@ ADIM 1 — GIT PULL + HAZIRLIK
   → tüm JSON dosyalarını oku (balanced, aggressive, dividend, swing/active)
   → benzersiz sembol listesi çıkar (3 portföy + swing + SPY)
   → dünkü raporu oku (varsa), bölüm 5 aksiyon planını not al
+
+ADIM 1.5 — DÜN SESSION_STATE OKUMA
+  → data/session_state.json dosyasını oku (yoksa uyar, BÖLÜM 5 seans logu boş kalsın)
+  → tarih kontrolü: state.tarih == dün olmalı (değilse uyar, eski state)
+  → state.faz1 oku:
+    - açılış piyasa verileri (SPY/QQQ/VIX snapshot)
+    - gap raporu
+    - k06/k09 tetikleri (acil aksiyonlar)
+    - BMO earnings etkisi
+    - twitter öne çıkanlar (rapora YAZILMAZ, sadece bağlam)
+  → state.faz2 oku:
+    - teknik durum snapshot'ı
+    - sektör RS ve prediction markets delta'ları
+    - karar matrisi çıktıları (alış/satış/tut/izle)
+    - yeni aday değerlendirmeleri ve GO/NO-GO sonuçları
+  → state.faz3 oku:
+    - power hour aksiyonları (kâr alma, trailing güncelleme, final satış)
+    - AMC earnings listesi
+    - after-hours izleme listesi
+    - yarin_flag_listesi (yarın PART 1 sabah raporu kullanacak)
+  → state.seans_ozet oku: toplam trade, net k/z, aktif pozisyon, nakit oranı
+  → CROSS-CHECK: bu veriyi data/transactions.csv ve portfolio JSON'ları ile karşılaştır
+    - state'te yazan her trade CSV'de var mı?
+    - CSV'de olup state'te olmayan trade var mı? (manuel müdahale flag'i)
+    - tutarsızlık varsa rapor BÖLÜM 5'te belirt
+
+⚠️ ÖNEMLİ: state dosyası silinmez, yarın sabah PART 1 bayrakları okuyacak.
+    state tarihi eski olursa (bir gün atlama) PART 1 kendi durumu raporlar.
 
 ADIM 2 — FMP VERİ TOPLAMA
   → batch-quote: tüm benzersiz semboller + SPY/QQQ/DIA/IWM/VIXY
@@ -310,6 +341,33 @@ kapanan trade review:
 
 ```markdown
 ## 5. günün değerlendirmesi
+
+### seans içi aksiyon logu (session_state.json kaynağı)
+
+> ADIM 1.5'te okunan session_state dosyasından üretilir.
+> state yoksa bu alt bölüm yazılmaz, "state dosyası bulunamadı" notu düşülür.
+
+**faz 1 (açılış, TR 16:30-17:30)**:
+- risk ortamı: [RISK-ON/OFF]
+- gap yapan pozisyonlar: [liste]
+- K-06/K-09 tetikler: [liste]
+- BMO earnings etkisi: [özet]
+- faz 1 aksiyonlar: [liste]
+
+**faz 2 (orta seans, TR 18:00-21:00)**:
+- karar matrisi sonucu: [X alış, Y satış, Z tut]
+- yeni aday değerlendirmesi: [kaç aday, kaç GO/NO-GO geçti]
+- portföyler arası korelasyon: [durum]
+- faz 2 aksiyonlar: [liste, her birine K-rule etiketi]
+
+**faz 3 (power hour, TR 22:00-23:00)**:
+- kapanış öncesi kâr alma: [liste]
+- trailing stop final güncellemeleri: [liste]
+- AMC earnings not edildi: [liste]
+
+**state vs transactions cross-check**:
+- state'teki tüm trade'ler CSV'de ✓/✗
+- CSV'de olup state'te olmayan (manuel müdahale): [varsa liste]
 
 ### sabah planı vs gerçekleşme
 
