@@ -13,6 +13,7 @@ Kullanım:
   python scripts/telegram_notify.py --type report --file rapor.md  # markdown rapor gönder
   python scripts/telegram_notify.py --type custom --msg "mesaj"    # özel mesaj
   python scripts/telegram_notify.py --type winners               # kârdaki pozisyonlar vitrini
+  python scripts/telegram_notify.py --type photo --image panel.png --caption "başlık"  # görsel gönder
 """
 
 import requests
@@ -31,6 +32,49 @@ TELEGRAM_API = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}"
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # --- TELEGRAM GÖNDERME ---
+def send_photo(image_path, caption=None, parse_mode="HTML"):
+    """Telegram'a fotoğraf gönder. Caption max 1024 karakter."""
+    if not TELEGRAM_CHAT_ID:
+        print("HATA: TELEGRAM_CHAT_ID ayarlanmamış!")
+        sys.exit(1)
+
+    if not os.path.exists(image_path):
+        print(f"HATA: görsel bulunamadı: {image_path}")
+        sys.exit(1)
+
+    url = f"{TELEGRAM_API}/sendPhoto"
+    data = {"chat_id": TELEGRAM_CHAT_ID}
+    if caption:
+        # Telegram caption limit 1024 karakter
+        data["caption"] = caption[:1024]
+        data["parse_mode"] = parse_mode
+
+    try:
+        with open(image_path, "rb") as f:
+            files = {"photo": f}
+            r = requests.post(url, data=data, files=files, timeout=60)
+            resp = r.json()
+            if resp.get("ok"):
+                print(f"Görsel gönderildi: {os.path.basename(image_path)}")
+                return True
+            else:
+                desc = resp.get("description", "bilinmeyen hata")
+                print(f"Telegram sendPhoto hatası: {desc}")
+                # parse_mode hatalıysa plain text ile tekrar dene
+                if "can't parse" in desc.lower() and caption:
+                    data.pop("parse_mode", None)
+                    with open(image_path, "rb") as f2:
+                        files = {"photo": f2}
+                        r = requests.post(url, data=data, files=files, timeout=60)
+                        if r.json().get("ok"):
+                            print(f"Görsel gönderildi (düz metin caption)")
+                            return True
+                return False
+    except Exception as e:
+        print(f"sendPhoto exception: {e}")
+        return False
+
+
 def send_message(text, parse_mode="HTML", disable_preview=True):
     """Telegram'a mesaj gönder. Uzun mesajları otomatik böler."""
     if not TELEGRAM_CHAT_ID:
@@ -567,9 +611,11 @@ def format_report_from_file(filepath):
 # --- ANA FONKSİYON ---
 def main():
     parser = argparse.ArgumentParser(description="Finzora AI Telegram Bildirim")
-    parser.add_argument("--type", choices=["session", "action", "alert", "daily", "premarket", "closing", "report", "custom", "winners"], required=True)
+    parser.add_argument("--type", choices=["session", "action", "alert", "daily", "premarket", "closing", "report", "custom", "winners", "photo"], required=True)
     parser.add_argument("--msg", help="Özel mesaj (--type custom için)")
     parser.add_argument("--file", help="Markdown rapor dosyası (--type report için)")
+    parser.add_argument("--image", help="Görsel dosyası (--type photo için)")
+    parser.add_argument("--caption", help="Görsel altı açıklama (--type photo için)")
     parser.add_argument("--theme", help="Piyasa teması / günün özeti (session, premarket, closing için)")
     parser.add_argument("--symbol", help="Sembol (action/alert için)")
     parser.add_argument("--price", type=float, help="Fiyat")
@@ -608,6 +654,12 @@ def main():
             print("custom için --msg gerekli")
             sys.exit(1)
         msg = args.msg
+    elif args.type == "photo":
+        if not args.image:
+            print("photo için --image gerekli")
+            sys.exit(1)
+        success = send_photo(args.image, caption=args.caption)
+        sys.exit(0 if success else 1)
     else:
         print("Geçersiz tip")
         sys.exit(1)
