@@ -16,15 +16,17 @@
       "guncel_fiyat": 67.115,
       "yatirim": 18006.48,
       "guncel_deger": 17919.7,
-      "kar_zarar": 0.0,
-      "kar_zarar_yuzde": 0.0,
+      "kar_zarar": -46.73,
+      "kar_zarar_yuzde": -0.26,
       "gunluk_degisim_yuzde": 0.47,
-      "son_guncelleme": "2026-04-09T16:45:13.135631",
+      "son_guncelleme": "2026-04-09T16:50:01.831162",
       "giris_tarihi": "2026-02-17",
       "giris_fiyati": 67.44,
       "giris_nedeni": "Initial position - Dividend defensive",
       "agirlik_yuzde": 15.86,
-      "maliyet_bazis": 67.11
+      "maliyet_bazis": 67.29,
+      "zarar_kes": 64.89,
+      "cb_kaynak": "transactions-2026-02-17"
     },
     {
       "sembol": "JNJ",
@@ -35,15 +37,17 @@
       "guncel_fiyat": 243.1,
       "yatirim": 12207.0,
       "guncel_deger": 12155.0,
-      "kar_zarar": 0.0,
-      "kar_zarar_yuzde": 0.0,
+      "kar_zarar": -52.0,
+      "kar_zarar_yuzde": -0.43,
       "gunluk_degisim_yuzde": 0.75,
-      "son_guncelleme": "2026-04-09T16:45:13.135631",
+      "son_guncelleme": "2026-04-09T16:50:01.831162",
       "giris_tarihi": "2026-03-13",
       "giris_fiyati": 244.14,
       "giris_nedeni": "Saglik sektoru diversifikasyonu. Defensif/temettü aristokrati. Iran savasi ortaminda direncli. RSI 59, SMA50 ustu. Portfoyde saglik eksikti.",
       "agirlik_yuzde": 10.79,
-      "maliyet_bazis": 243.1
+      "maliyet_bazis": 244.14,
+      "zarar_kes": 235.68,
+      "cb_kaynak": "transactions-2026-03-13"
     },
     {
       "sembol": "DUK",
@@ -57,14 +61,16 @@
       "kar_zarar": 0.0,
       "kar_zarar_yuzde": 0.0,
       "gunluk_degisim_yuzde": 1.32,
-      "son_guncelleme": "2026-04-09T16:45:13.135631",
+      "son_guncelleme": "2026-04-09T16:50:01.831162",
       "giris_tarihi": "2026-04-09",
       "giris_fiyati": 133.84,
       "stop_loss": 129.5,
       "hedef_fiyat": 142.0,
       "giris_nedeni": "Dengeli portföy utility girişi. K-13 v4.1 jeopolitik/savaş krizinde utilities faydalanıcı sektör. VIX 28-35 bant formülü: $9,000×(22/30)=$6,558. SMA50 üstü (+%4.5), analist hedef $143, K-17/K-18 temiz.",
       "agirlik_yuzde": 5.82,
-      "maliyet_bazis": 133.34
+      "maliyet_bazis": 133.34,
+      "zarar_kes": 129.5,
+      "cb_kaynak": "kayit-yok"
     },
     {
       "sembol": "CI",
@@ -78,17 +84,19 @@
       "kar_zarar": 0.0,
       "kar_zarar_yuzde": 0.0,
       "gunluk_degisim_yuzde": 0.22,
-      "son_guncelleme": "2026-04-09T16:45:13.135631",
+      "son_guncelleme": "2026-04-09T16:50:01.831162",
       "giris_tarihi": "2026-04-09",
       "giris_fiyati": 277.63,
       "stop_loss": 265.25,
       "hedef_fiyat": 361.0,
       "giris_nedeni": "K-13 saglik faydalanici. PEG 0.86, FWD P/E 9.1x, EPS tutarli artis (2024:29->2026:30->2028:37). Medicare Advantage yok = CMS rate riski sifir. FCF yield %11.3. CEO Kasim 2025 alimi (K-17 temiz). SMA50 ustu. VIX 28-35 formulu: $9K x (22/30) = $6.6K.",
       "agirlik_yuzde": 5.67,
-      "maliyet_bazis": 278.16
+      "maliyet_bazis": 278.16,
+      "zarar_kes": 265.25,
+      "cb_kaynak": "kayit-yok"
     }
   ],
-  "son_guncelleme": "2026-04-09T16:45:13.135631",
+  "son_guncelleme": "2026-04-09T16:50:01.831162",
   "toplam_deger": 112675.35,
   "toplam_getiri_yuzde": 12.68,
   "transactions": [
