@@ -290,5 +290,127 @@
       "Yarın CPI sonrası: BAL/AGR için fırsat değerlendirmesi yapılacak"
     ],
     "son_guncelleme": "2026-04-09T18:18:09.726686"
+  },
+  "faz3": {
+    "zaman": "19:50",
+    "not": "Power hour erken çalıştırıldı (19:50 TR). Kapanış 23:00.",
+    "spy_son": {
+      "fiyat": 679.04,
+      "gunluk_pct": 0.45
+    },
+    "qqq_son": {
+      "fiyat": 608.31,
+      "gunluk_pct": 0.37
+    },
+    "vixy_son": {
+      "fiyat": 29.61,
+      "gunluk_pct": -2.93
+    },
+    "faz2_delta": "SPY -0.01% | QQQ +0.04% | VIXY -0.35% — stabil, risk ortamı değişmedi",
+    "k11_kontrol": "Tüm 8 pozisyon tetik yok — kapanış öncesi aksiyon yok",
+    "trailing_guncelleme": "Swing pozisyon yok — trailing hesaplaması yapılmadı",
+    "aksiyonlar": {
+      "kar_alma": [],
+      "trailing_guncelleme": [],
+      "final_satis": [],
+      "not": "Seans boyunca 0 trade"
+    },
+    "amc_earnings_bugun": [
+      {
+        "sembol": "UNH",
+        "not": "Portföyde yok. Hisse +9.32% bugün. Managed care sektörü için CI referans.",
+        "etki": "CI dolaylı izle"
+      }
+    ],
+    "amc_portfoy_etkisi": "Portföy/watchlist sembollerinden bugün AMC earnings yok",
+    "after_hours_izleme": [
+      "UNH after-hours — CI ile sektör bağlantısı (managed care)",
+      "İran ateşkes gelişmeleri — gece haberleri USO/GLD etkiler",
+      "CPI beklentisi: Yarın 08:30 ET — gece tahmin güncellemeleri takip"
+    ],
+    "twitter_delta": "Twitter API user endpoint bos, web fallback kullanildi",
+    "yarin_flag_listesi": [
+      {
+        "tip": "makro_veri",
+        "sembol": "CPI",
+        "not": "10 Nisan 08:30 ET, beklenti: %3.70 yıllık. İran enerji şoku yansımış.",
+        "oncelik": "KRİTİK"
+      },
+      {
+        "tip": "amc_takip",
+        "sembol": "UNH",
+        "not": "AMC sonucu gece açıklanacak. CI ile aynı sektör (managed care). Sürpriz varsa CI açılışını etkiler.",
+        "oncelik": "yüksek"
+      },
+      {
+        "tip": "teknik_izle",
+        "sembol": "T",
+        "not": "SMA50 altı devam, RSI 36. CPI yüksek gelirse telecom baskı artar. Stop $25.03.",
+        "oncelik": "yüksek"
+      },
+      {
+        "tip": "teknik_izle",
+        "sembol": "VZ",
+        "not": "RSI 33 aşırı satım bölgesine yakın. Toparlanma olabilir ama trend aşağı. Stop $44.13.",
+        "oncelik": "orta"
+      },
+      {
+        "tip": "teknik_izle",
+        "sembol": "CI",
+        "not": "SMA200 altı. UNH AMC + CPI sonucu managed care sektörünü etkileyebilir.",
+        "oncelik": "orta"
+      },
+      {
+        "tip": "watchlist_giris",
+        "sembol": "LMT",
+        "not": "$620 altı bekleniyor. Şu an $628. CPI sonrası savunma rotasyonu mümkün.",
+        "oncelik": "orta"
+      },
+      {
+        "tip": "watchlist_giris",
+        "sembol": "MU",
+        "not": "Giriş bölgesinde ($411). CPI sonrası R:R netleşirse değerlendirilebilir.",
+        "oncelik": "orta"
+      },
+      {
+        "tip": "enerji_izle",
+        "sembol": "USO",
+        "not": "Ateşkes kırılgan, petrol $100+ geri döndü. Hormuz açılmadı. Oynaklık devam.",
+        "oncelik": "orta"
+      },
+      {
+        "tip": "genel",
+        "not": "Q1 sezon başlıyor: TSLA/META 28-29 Nisan, AMZN 23 Nisan. S&P 500 %12.5 büyüme beklentisi.",
+        "oncelik": "düşük"
+      }
+    ],
+    "portfoy_final": {
+      "dengeli": {
+        "toplam": 112723,
+        "getiri_pct": 12.72,
+        "pozisyon": 4
+      },
+      "agresif": {
+        "toplam": 357823,
+        "getiri_pct": -10.54,
+        "pozisyon": 0
+      },
+      "temettu": {
+        "toplam": 143528,
+        "getiri_pct": 43.53,
+        "pozisyon": 4
+      },
+      "genel_toplam": 614074,
+      "genel_getiri_pct": 2.35
+    },
+    "seans_ozet": {
+      "tarih": "2026-04-09",
+      "toplam_trade_sayisi": 0,
+      "net_kar_zarar": 0,
+      "aktif_pozisyon_sayisi": 8,
+      "nakit_oran": 58.3,
+      "tema": "İran ateşkes kırılgan, CPI beklentisi yüksek, tüm pozisyonlar TUT kararı"
+    },
+    "son_guncelleme": "2026-04-09T19:02:03.518813"
   }
 }

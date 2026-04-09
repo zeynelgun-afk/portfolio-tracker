@@ -1,13 +1,13 @@
 {
-  "son_guncelleme": "2026-04-09T16:45:13.135631",
+  "son_guncelleme": "2026-04-09T19:01:30.732241",
   "toplam_sermaye": 600000,
   "toplam_deger": 614232.92,
   "toplam_kar_zarar": 14232.92,
   "toplam_kar_zarar_yuzde": 2.37,
   "portfolyolar": {
     "dengeli": {
-      "toplam_deger": 112675.35,
-      "getiri_yuzde": 12.68,
+      "toplam_deger": 112722.65,
+      "getiri_yuzde": 12.72,
       "nakit": 69669.3,
       "pozisyon_sayisi": 4
     },
@@ -18,15 +18,15 @@
       "pozisyon_sayisi": 0
     },
     "temettu": {
-      "toplam_deger": 143525.35,
+      "toplam_deger": 143527.8,
       "getiri_yuzde": 43.53,
       "nakit": 96876.48,
       "pozisyon_sayisi": 4
     }
   },
   "tarih": "2026-04-09",
-  "genel_toplam": 614023.85,
-  "genel_getiri_yuzde": 2.34,
+  "genel_toplam": 614073.61,
+  "genel_getiri_yuzde": 2.35,
   "piyasa": {
     "spy": 680.11,
     "qqq": 609.71,
