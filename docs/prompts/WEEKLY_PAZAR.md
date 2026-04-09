@@ -203,6 +203,21 @@ data/swing/status.json:
 - ortam testi: VIX/SPY SMA50 [sağlandı / sağlanmadı]
 - yeni giriş: [izinli / yasak (A-kalite istisna)]
 
+### K-14 fren kaldırma kriterleri (haftalık değerlendirme)
+
+> fren sonsuza kadar aktif kalmasın diye her pazar teker teker kontrol edilir
+
+| koşul | hedef | mevcut | durum |
+|---|---|---|---|
+| VIX (VIXY proxy) | <22 | XX.X | ✓/✗ |
+| SPY fiyat vs SMA50 | üstü | $XXX vs $XXX | ✓/✗ |
+| 11 sektörden SPY'yi haftalık geçen sayısı | ≥6 | X/11 | ✓/✗ |
+| Son swing ardışık zarar serisi bitti mi | evet | [son trade W/L] | ✓/✗ |
+| **karar** | 4/4 → fren kalkar | X/4 | [KALKAR / DEVAM] |
+
+**fren kaldırılırsa**: data/swing/status.json `aktif_durum` → "normal", değişiklik rapora ve playbook'a işlenir, commit edilir.
+**fren devamsa**: haftalık raporda hangi koşulların karşılanmadığı açıkça belirtilir, ek bekleme süresi tahmini verilir.
+
 ### K-rule script raporu (haftalık özet)
 
 **K-09 stop yakınlık (tüm portföy + swing)**: X alert

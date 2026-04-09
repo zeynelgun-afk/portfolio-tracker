@@ -86,8 +86,13 @@ ADIM 1.5 — DÜN SESSION_STATE OKUMA
 ADIM 2 — FMP VERİ TOPLAMA
   → batch-quote: tüm benzersiz semboller + SPY/QQQ/DIA/IWM/VIXY
   → teknik göstergeler (portföy hisseleri): her sembol için RSI(14), SMA(50), SMA(200)
-  → portföy stopları (K-06 giriş + K-07 trailing): FMP historical-price ile ATR(14) hesapla, max(2×ATR, %5) formülü
-  → swing pozisyonları için RSI/SMA çekilmez — ichimoku scripti (adım 3) bunu kapsar
+  → portföy stopları:
+    ⚠️ portföy pozisyonlarının stop_loss alanı JSON'da SABİTTİR (giriş anında belirlenmiş), kapanışta yeniden hesaplanmaz
+    ⚠️ istisna: K-11 katman 1 tetiklendiyse (RSI ≥70 VE kâr ≥%15) kâr kilidi aktifleşir
+      → ATR(14) hesapla, yeni kâr kilidi: max(2×ATR, 20SMA altı)
+      → yeni stop eski stoptan BÜYÜKSE güncelle; ASLA aşağı çekme
+      → tetiklenmediyse stop değişmez
+  → swing pozisyonları için chandelier stop ADIM 3'te güncellenir (RSI/SMA swing için çekilmez, ichimoku scripti kapsar)
   → emtia/döviz: GCUSD, USO (petrol proxy), EURUSD
     ⚠️ CLUSD/WTIUSD güvenilmez → USO kullan. doğrudan ^VIX güvenilmez → VIXY kullan
   → treasury-rates
@@ -309,8 +314,9 @@ bugün kapanış sonrası (veya gün içi) açıklayan şirketlerin analizi.
 
 **teknik notlar**:
 - beklenti vs gerçek fark: `(gerçek - beklenti) / abs(beklenti) × 100`
-- beklenti verisi: FMP `analyst-estimates` (en son çeyrek tahmini)
-- gerçek veri: FMP `income-statement` (son çeyrek)
+- **gerçek EPS/gelir verisi**: FMP `earnings-calendar` endpoint'i `epsActual` ve `revenueActual` alanları (açıklama günü anlık güncellenir)
+- beklenti verisi: FMP `earnings-calendar` `epsEstimated` / `revenueEstimated` (açıklama öncesi)
+- detay kalem analizi: FMP `income-statement` (açıklama sonrası 1-3 gün içinde güncellenir, anlık değil)
 - kazanç sezonu dışında (Ocak/Nisan/Temmuz/Ekim arası) açıklama sayısı az olabilir — normal
 - AH hareketi: web araması ile kapanış sonrası fiyat değişimi (FMP aftermarket-quote seans dışında sıfır dönüyor, kullanma)
 

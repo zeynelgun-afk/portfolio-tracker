@@ -176,16 +176,19 @@ twitter verisi **claude context'ine girer, rapora yazılmaz**. insight organik o
 
 # 6. sabah planı acil aksiyon uygulaması
 
-sabah raporunu oku: `reports/daily/DAILY_SABAH_{TODAY}.md`
+**3 sabah raporunu oku** (sıralı):
+1. `reports/daily/DAILY_SABAH_{TODAY}.md` — mevcut pozisyon aksiyonları
+2. `reports/daily/DAILY_SWING_{TODAY}.md` — swing yeni giriş planı (varsa)
+3. `reports/daily/DAILY_PORTFOY_{TODAY}.md` — portföy EKLE/BÜYÜT/DÖNDÜR planı (varsa)
 
 acil aksiyon listesini tara:
-- "açılışta SEMBOL sat" → uygula
-- "gap-down olursa SEMBOL K-09 çalıştır" → koşul sağlandıysa uygula
-- "açılışta SEMBOL giriş" → FAZ 2'ye ertele (ilk 15dk volatilitesi sonrası)
+- SABAH raporundan "hemen" bölümü → mevcut pozisyon aksiyonları (sat, kısmi kâr, stop yakın izle) → uygula
+- SWING raporundan "hemen" bölümü → yeni giriş planı → FAZ 2'ye ertele (ilk 15dk volatilitesi sonrası)
+- PORTFOY raporundan "hemen" bölümü → BÜYÜT/DÖNDÜR/EKLE → FAZ 2'ye ertele
 
-**kural**: FAZ 1'de yeni giriş yapılmaz. ilk 60 dakika sadece çıkış ve stop yönetimi içindir.
+**kural**: FAZ 1'de (ilk 60 dakika) yeni giriş yapılmaz, sadece çıkış ve stop yönetimi.
 
-**istisna**: sabah planında açıkça "açılışta giriş" yazılıysa + gap durumu uygunsa + K-13 ve K-17/K-18 temizse → uygulanır.
+**istisna** (yeni giriş için): SWING veya PORTFOY raporunun "hemen (seans açılışında)" bölümünde giriş planı varsa + gap durumu uygunsa + GO/NO-GO 16 madde bu sabah tekrar teyit edilirse → uygulanır. Aksi halde ilk 60 dakikada yeni giriş yasak, FAZ 2'ye ertele.
 
 ---
 
@@ -282,7 +285,11 @@ python scripts/telegram_notify.py --type session --theme "faz 1 özet: [tema]"
 
 bu dosya FAZ 2 başlangıcında okunur, ham veriyi tekrar çekmek gerekmez.
 
-⛔ `session_state.json` git'e commit EDİLMEZ. `.gitignore`'a ekli (veya eklenmeli). local çalışma dosyası.
+✅ **`session_state.json` artık git'e commit EDİLİR** (9 nisan 2026 değişikliği):
+- günden güne state handoff mimarisi bu şekilde çalışır (yeni Claude oturumu önceki günün state'ini görebilir)
+- post-trade review için audit log değerli
+- hassas veri yok (fiyat + karar + K-rule etiketleri)
+- commit mesajı: `[SESSION STATE] FAZ 1 - {tarih}`
 
 ---
 
@@ -325,7 +332,7 @@ risk ortamı: RISK-ON/OFF | sabahtan değişim: [aynı/değişti → neden]
 - [ ] JSON güncellemesi tutarlı mı? (yatirim, guncel_deger, nakit, agirlik)
 - [ ] git push başarılı mı?
 - [ ] telegram aksiyon bildirimleri gitti mi?
-- [ ] `session_state.json` FAZ 1 bloğu yazıldı mı?
+- [ ] `session_state.json` FAZ 1 bloğu yazıldı mı ve commit edildi mi?
 - [ ] rapor dosyası (.md) YAZILMADI mı? (yazıldıysa kural ihlali)
 
 ---

@@ -201,13 +201,14 @@ ADIM 6 — ORTAK FİLTRELER (TÜM 3 PORTFÖY ADAYLARINA)
      - 2+ işlem günü içinde earnings varsa → ❌ (binary gap riski, playbook ile uyumlu)
      - not: PART 1B swing ile aynı eşik (2 gün). PEAD (post-earnings drift) girişleri K-16 ile yönetilir
 
-  3. K-17 korelasyon kontrolü:
-     - sektör mevcut portföyde K-12 limitini aşıyorsa → ❌
+  3. K-12 konsantrasyon + K-17 tema çakışması:
+     - K-12 tek hisse limiti (giriş sonrası aşım):
        • dengeli: >%25 → ❌
        • agresif: >%20 → ❌
        • temettü: >%15 → ❌
-     - aynı tema 2+ pozisyon varsa yeni eleme
-     - script: scripts/k17_correlation_check.py SYMBOL
+     - K-12 sektör limiti: 3 portföy toplam o sektörün $600K bazlı payı giriş sonrası >%40 → ❌
+     - K-17 anlatı tema: aynı tema 2+ pozisyon varsa → ❌
+     - script: scripts/k17_correlation_check.py SYMBOL (sektör + tema skanı)
 
   4. K-18 insider trading:
      - son 30 gün senior sell >$5M → ❌
@@ -314,8 +315,8 @@ ADIM 9 — RAPOR YAZ + GIT PUSH
 ### tarama sonuç özeti
 - evren: ~XXX hisse (FMP screener filtresi sonrası)
 - portföy spesifik filtre geçen: XX
-- ortak filtreler (K-04/K-05/K-17/K-18) geçen: X
-- minimum skor (8) geçen: X
+- ortak filtreler (K-04/K-05/K-12-K-17/K-18) geçen: X
+- skor eşik (İZLE ≥6, EKLE ≥9) geçen: X
 - nihai aday: X
 
 ### nihai adaylar
@@ -338,7 +339,7 @@ ADIM 9 — RAPOR YAZ + GIT PUSH
 - AI tedarik zinciri öncelik listesinden: X aday
 - portföy spesifik filtre geçen: XX
 - ortak filtreler geçen: X
-- minimum skor (10) geçen: X
+- skor eşik (İZLE ≥10, EKLE ≥14) geçen: X
 - nihai aday: X
 
 ### nihai adaylar
@@ -356,7 +357,7 @@ ADIM 9 — RAPOR YAZ + GIT PUSH
 - evren: ~XXX hisse
 - portföy spesifik filtre geçen: XX
 - ortak filtreler geçen: X
-- minimum skor (9) geçen: X
+- skor eşik (İZLE ≥6, EKLE ≥9) geçen: X
 - nihai aday: X
 
 ### nihai adaylar

@@ -385,6 +385,7 @@ SEMBOL — [şirket]
 
 ### mevcut pozisyon aksiyonları
 
+> ⛔ bu plan SADECE mevcut pozisyonların yönetimini içerir (sat, kısmi kâr al, trailing güncelle, stop yakın izle). YENİ giriş planları bu prompttan çıkmaz, PART 1B (swing) ve PART 1C (portföy) raporlarından gelir.
 > bu plan BÖLÜM 0.5'teki dün FAZ 3 flag listesini ve BÖLÜM 3'teki uyarıları (🔴 acil / ⚠️ izle) baz alır.
 
 **hemen** (seans açılışında):

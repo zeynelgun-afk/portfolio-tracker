@@ -200,7 +200,7 @@ her pozisyon için karar ağacı:
 
 7. teknik izleme (K-11 zaten yönetiyor):
    - RSI > 80 + kâr %15+ → K-11 katman 2 baskın tetik aktif
-   - RSI < 35 + K-04 SMA üstü → K-15a dip alım (1 gün teyit, YENİ giriş için)
+   - RSI < 35 + mevcut pozisyon: tez gözden geçir (K-15a MEVCUT pozisyona uygulanmaz, sadece yeni giriş filtresi)
    - SMA200 altı kırılım → trend dönüşü uyarısı
 
 8. hiçbir tetik yok → ✅ TUT
@@ -441,10 +441,15 @@ portföy hissesi satış nedenleri:
 6. `data/summary.json` güncelle
 
 ### her ALIŞ için
-1. portföy JSON `pozisyonlar[]` ekle (tüm zorunlu alanlar)
+1. portföy JSON `pozisyonlar[]` ekle — ZORUNLU alanlar:
+   - **temel**: sembol, sektor, adet, maliyet_baz, giris_tarihi, guncel_fiyat
+   - **tez + risk**: giris_nedeni (detaylı tez), katalizor (tetikleyen olay), tez (bull case), risk (bear case)
+   - **seviyeler**: hedef_fiyat, stop_loss (K-06 max(2×ATR(14), %5)), hedef_agirlik
+   - **K-rule etiketleri**: k_rules_applied (hangi filtreler geçti: K-04, K-05, K-13, K-17, K-18)
+   - **giriş filtre sonucu**: giris_filtre_sonuc (GO/NO-GO 16 madde özet)
 2. `nakit.miktar -= adet × fiyat`
-3. portföy `transactions[]` ekle (ALIŞ)
-4. `data/transactions.csv` satır ekle
+3. portföy `transactions[]` ekle (ALIŞ) — tarih, sembol, adet, fiyat, tutar, sebep
+4. `data/transactions.csv` satır ekle (ZORUNLU: date, type=BUY, symbol, shares, price, amount, reason)
 5. swing ise → `data/swing/active.json`'a ekle (zorunlu: id, giris_tarihi, giris_fiyati, giris_sinyali, stop_loss, stop_tipi, kijun_sen, kumo_ust, kumo_alt, tenkan_sen, atr_14, giris_nedeni, katalizor, tez, risk, tarama_yontemi)
 6. `data/summary.json` güncelle
 
@@ -521,7 +526,7 @@ state["faz2"] = {
 }
 ```
 
-⛔ `session_state.json` git'e commit edilmez, local dosya.
+✅ `session_state.json` git'e commit EDİLİR (9 nisan 2026 mimari kararı): `[SESSION STATE] FAZ 2 - {tarih}`.
 
 ---
 

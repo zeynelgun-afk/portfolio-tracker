@@ -10,4 +10,3 @@ build/
 __pycache__/
 *.pyc
 outputs/instagram/*.png
-data/session_state.json

@@ -307,7 +307,7 @@ state["seans_ozet"] = {
 }
 ```
 
-⛔ `session_state.json` git'e commit edilmez. yarın FAZ1 SABAH kendi gereksiz alanları silmeden okur.
+✅ `session_state.json` git'e commit EDİLİR (9 nisan 2026 mimari kararı): `[SESSION STATE] FAZ 3 - {tarih}`. Yarın sabah PART 1 bu dosyayı git pull sonrası okur, `yarin_flag_listesi[]` bölüm 0.5'e yansır.
 
 ---
 

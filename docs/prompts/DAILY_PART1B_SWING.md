@@ -130,43 +130,47 @@ ADIM 4 — ICHIMOKU 4/4 DOĞRULAMA (Aşama 2 zaten yapıyor)
   → bu adımda yalnızca data/daily_full_scan.json'ı oku, stage2_adaylar listesini
     sonraki K filtrelerine gönder
 
-ADIM 5 — K FİLTRELERİ (SIRAYLA)
+ADIM 5 — K FİLTRELERİ (SIRAYLA, UCUZ+KRİTİK ÖNCE)
   her geçen filtre aday listesini daraltır. bir sonraki filtreye sadece geçenler geçer.
+  sıralama prensibi: (1) ucuz/hızlı filtreler önce — pahalı scriptleri gereksiz adaylarda çalıştırma, (2) geri dönüşü olmayan kritik filtreler (K-05 earnings, K-18 insider) en erken, (3) nuanced filtreler (K-17 korelasyon) sona.
 
   1. ~~K-19 — XLP dışlama~~ (Aşama 1'de otomatik uygulandı, atla):
      swing_full_universe.py Aşama 1 Consumer Defensive sektörünü zaten ön eliyor.
-     bu adımda tekrar uygulamaya gerek yok — adayların hiçbirinde XLP sektörü yok.
 
-  2. K-20 — RS dead cat bounce:
+  2. K-05 — earnings 2+ iş günü içinde (EN ÖNCE, ucuz + kritik):
+     FMP earnings-calendar kontrol, tek çağrıda batch
+     2+ gün içinde earnings varsa GİR-ME (binary gap riski, swing için istisna yok)
+     script: scripts/k05_earnings_check.py SYMBOL
+     → bu filtre önce çünkü earnings yaklaşan hisse zaten alınmayacak, pahalı scriptleri koşturmanın anlamı yok
+
+  3. K-18 — insider kontrolü (kritik, geri dönüşü yok):
+     scripts/k18_insider_check.py SYMBOL
+     senior sell (CEO/CFO/direktör) >$5M son 30 gün = eleme
+     → POWL dersi: kaçırılan $25M insider satışı = K-18 atlamanın maliyeti
+
+  4. K-13 v4.1 — sektör bazlı VIX kontrolü:
+     aktif kriz tipi (jeopolitik/savaş) + sektör tipi (faydalanıcı/duyarlı)
+     VIX bandına göre pozisyon boyutu belirlenir (tam/yarım/çeyrek/yok)
+     → hızlı kontrol, giriş boyutunu belirliyor, sonraki filtrelere input
+
+  5. K-20 — RS dead cat bounce:
      scripts/k20_rs_filter.py SCAN_FILE --write
      son 1 ay SPY'den %10+ geride + son 5 gün +%5 yukarı = dead cat, eleme
 
-  3. ~~K-15a — RSI <35 teyit~~ (swing akışında UYGULANMAZ):
-     swing Aşama 2 filtresi zaten RSI 40-65 bandına sıkıyor, RSI <35 aday oluşamaz.
-     K-15a sadece PART 1C agresif portföy taramasında anlamlı (orada giriş RSI eşiği daha gevşek).
-     → bu adım swing için atlanır, doğrudan K-15b'ye geç.
-
-  4. K-15b — momentum hisse dilüsyon:
+  6. K-15b — momentum hisse dilüsyon:
      scripts/k15b_dilution_check.py SYMBOL
      yüksek short interest + recent dilution = eleme
+     → nispeten pahalı script, sadece yukarıdaki 5 filtreyi geçen adaylar için çalıştır
 
-  5. K-17 — korelasyon + tema çakışması:
+  7. K-17 — korelasyon + tema çakışması (nuanced, en sonda):
      scripts/k17_correlation_check.py SYMBOL
      mevcut portföy + swing sektörüyle korelasyon >0.8 = eleme
      aynı anlatı temasından 2+ pozisyon varsa eleme
+     → en nuanced karar, pozisyon adetine bağlı, geri dönüşü olan (watchlist'e at) eleme
 
-  6. K-18 — insider kontrolü:
-     scripts/k18_insider_check.py SYMBOL
-     senior sell (CEO/CFO/direktör) >$5M son 30 gün = eleme
-
-  7. K-05 — earnings 2+ gün içinde:
-     FMP earnings-calendar kontrol
-     2+ gün içinde earnings varsa GİR-ME (binary gap riski)
-     script: scripts/k05_earnings_check.py SYMBOL
-
-  8. K-13 v4.1 — sektör bazlı VIX kontrolü:
-     aktif kriz tipi (jeopolitik/savaş) + sektör tipi (faydalanıcı/duyarlı)
-     VIX bandına göre pozisyon boyutu belirlenir (tam/yarım/çeyrek/yok)
+  8. ~~K-15a — RSI <35 teyit~~ (swing akışında UYGULANMAZ):
+     swing Aşama 2 filtresi zaten RSI 40-65 bandına sıkıyor, RSI <35 aday oluşamaz.
+     K-15a sadece PART 1C portföy taramasında anlamlı.
 
   → sonuç: K filtrelerinden geçen nihai aday listesi (tipik 3-10 hisse)
 
@@ -258,11 +262,11 @@ ADIM 7 — GİRİŞ PLANI + RAPOR
 
 **toplam**: X aday
 
-### K filtreleri sonrası (ADIM 5 sonrası)
+### K filtreleri sonrası (ADIM 5 sonrası, yeni sıra)
 
-| # | sembol | sektör | K-19 | K-20 | K-17 | K-18 | K-05 | K-13 | karar |
-|---|--------|--------|:----:|:----:|:----:|:----:|:----:|:----:|-------|
-| 1 | | | ✅ | ✅ | ✅ | ✅ | ✅ | TAM | ADAY |
+| # | sembol | sektör | K-05 | K-18 | K-13 | K-20 | K-15b | K-17 | karar |
+|---|--------|--------|:----:|:----:|:----:|:----:|:-----:|:----:|-------|
+| 1 | | | ✅ | ✅ | TAM | ✅ | ✅ | ✅ | ADAY |
 
 **elenen**: X (hangi filtreyle)
 **nihai aday**: X
