@@ -1,0 +1,71 @@
+{
+  "tarih": "2026-04-09",
+  "son_guncelleme": "2026-04-09T19:15:00+03:00",
+  "faz1": {
+    "zaman": "19:11",
+    "not": "FAZ 1 penceresi gecikmeyle calistirildi (19:11 TR = FAZ 2 zamani)",
+    "spy": {"fiyat": 680.11, "degisim": 0.61},
+    "qqq": {"fiyat": 609.71, "degisim": 0.60},
+    "dia": {"fiyat": 481.89, "degisim": 0.57},
+    "iwm": {"fiyat": 262.18, "degisim": 0.66},
+    "vixy": {"fiyat": 29.70, "degisim": -2.65},
+    "uso": {"fiyat": 124.34, "degisim": -0.19},
+    "gld": {"fiyat": 440.02, "degisim": 1.26},
+    "risk_ortami": "KAUTUMLU",
+    "risk_notu": "VIXY 29.70 - K-13 aktif. Iran ateskesi kirilgan. Petrol 100 USD uzeri geri dondu.",
+    "makro_temalar": [
+      "Iran ateskes pazartigi - Hormuz tam acilmadi",
+      "WTI 100 USD uzeri - USO baskida",
+      "CPI yarin - Fed politika riski",
+      "GLD 440 - altin yeni zirvede",
+      "SPY SMA50 uzerinde (+0.82%) - K-14 kosul 1/3 karsilandi"
+    ],
+    "gap_raporu": [
+      {"sembol": "MO", "degisim_pct": 0.47, "sinif": "normal"},
+      {"sembol": "JNJ", "degisim_pct": 0.75, "sinif": "normal"},
+      {"sembol": "DUK", "degisim_pct": 1.32, "sinif": "normal"},
+      {"sembol": "CI", "degisim_pct": 0.22, "sinif": "normal"},
+      {"sembol": "T", "degisim_pct": -1.61, "sinif": "normal"},
+      {"sembol": "VZ", "degisim_pct": -1.24, "sinif": "normal"},
+      {"sembol": "MRK", "degisim_pct": -0.31, "sinif": "normal"}
+    ],
+    "acil_aksiyonlar": [],
+    "bmo_earnings": [],
+    "amc_earnings_bugun": [],
+    "twitter_ozet": [
+      {"hesap": "web_fallback", "not": "Twitter API user endpoint bos dondu. Web ile telafi edildi."}
+    ],
+    "k06_tetikler": [],
+    "k09_tetikler": [],
+    "stop_eksikligi_uyari": [
+      {"sembol": "MO", "portfoy": "BAL", "not": "stop tanimli degil"},
+      {"sembol": "JNJ", "portfoy": "BAL", "not": "stop tanimli degil"},
+      {"sembol": "T", "portfoy": "DIV", "not": "stop tanimli degil"},
+      {"sembol": "VZ", "portfoy": "DIV", "not": "stop tanimli degil"},
+      {"sembol": "MRK", "portfoy": "DIV", "not": "stop tanimli degil"}
+    ],
+    "sabah_plani_uygulandi": false,
+    "sabah_raporu_durumu": "bulunamadi - gecikme nedeniyle",
+    "portfoy_ozet": {
+      "dengeli": {"toplam": 112675, "getiri_pct": 12.68, "pozisyon": 4},
+      "agresif": {"toplam": 357823, "getiri_pct": -10.54, "pozisyon": 0},
+      "temettu": {"toplam": 143525, "getiri_pct": 43.53, "pozisyon": 4},
+      "genel_toplam": 614024,
+      "genel_getiri_pct": 2.34
+    },
+    "k_rule_durumu": {
+      "K13": "AKTIF - VIXY 29.70",
+      "K14": "KISMI - SPY SMA50 ustunde EVET, VIX<22 HAYIR",
+      "K17": "her yeni giris oncesi zorunlu",
+      "K18": "her yeni giris oncesi zorunlu"
+    },
+    "faz2_icin_notlar": [
+      "CIP yarin - agresif yeni giris yapma",
+      "AGR portfoyu tam nakit - VIX normalizasyonu bekle",
+      "BAL ve DIV pozisyonlarinda stop seviyeleri tanimlanmali",
+      "GLD 440 ustunde - dengeli portfoy RGLD/GDX izleme listesine al",
+      "Iran ateskesi - enerji sektoru volatil, savunma izle",
+      "T ve VZ bugun -1.6% - temettü portfoyunde izle"
+    ]
+  }
+}
