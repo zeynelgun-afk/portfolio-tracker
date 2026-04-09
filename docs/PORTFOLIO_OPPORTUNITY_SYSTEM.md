@@ -2,8 +2,8 @@
 
 > **amaç**: 3 portföy için sistematik, filtreli, karar matrisi tabanlı aday tarama ve watchlist yönetimi
 > **referans prompt**: `docs/prompts/DAILY_PART1C_PORTFOY.md`
-> **son güncelleme**: 8 nisan 2026
-> **versiyon**: 1.0
+> **son güncelleme**: 9 nisan 2026 (skor sistemi kod ile senkronize edildi, eski EPS surprise/RS rank/analyst consensus puanları kaldırıldı)
+> **versiyon**: 1.1
 
 bu dosya 3 portföyün (dengeli, agresif, temettü) fırsat tarama kriterlerini, filtrelerini ve karar matrisini tanımlar. PART 1C promptu bu dosyanın kurallarını uygular.
 
@@ -51,14 +51,17 @@ betaLessThan=1.5                      (aşırı volatil istemiyoruz)
 5. **debt/equity <2** — finansal sağlık
 6. **sektör çeşitliliği zorunluluğu** — mevcut portföyde olmayan sektörler öncelikli
 
-**skor sistemi** (1-10 arası, toplanır):
+**skor sistemi** (max ~18, kod: `scripts/portfolio_scan_common.py::score_dengeli`):
+- P/E <15: +2, <25: +1
 - ROIC >%15: +3, >%12: +2, >%10: +1
 - 6M momentum >%20: +3, >%10: +2, >%0: +1
-- RSI 40-60 (nötr bölge, aşırı alım değil): +2
-- P/E <15: +2, <20: +1
-- sektör mevcut portföyde değil: +2
-- 5 yıllık EPS büyümesi >%10: +2
-- **minimum skor 8** altı GEÇ, 8-11 İZLE, 12+ EKLE
+- RSI 40-60 (nötr bölge): +2
+- SMA50 üstü: +2
+- Golden cross (50>200): +1
+- FCF yield >%5: +2, >%3: +1
+- Yeni sektör (mevcut portföyde yok): +2
+- (opsiyonel) katalizör override max +2 — `apply_catalyst_override()` sıkı kuralları
+- **eşik**: skor <6 GEÇ, 6-8 İZLE, 9+ EKLE (8 nisan 2026 kalibrasyonu)
 
 ### 2b. Agresif Büyüme Portföyü ($400K, max 10 pozisyon)
 
@@ -91,14 +94,19 @@ betaMoreThan=0.8                      (momentum karakteri)
    - mobil/edge compute: QCOM, AVGO
    - memory: MU, SNDK, WDC (samsung tezi sonrası)
 
-**skor sistemi**:
-- EPS surprise >%20: +4, >%15: +3, >%10: +2
-- RS rank >90: +3, >85: +2, >80: +1
-- hacim oranı >2x: +3, >1.5x: +2, >1.2x: +1
-- AI tedarik zinciri katmanı: +3 (doğrudan), +1 (dolaylı)
-- analyst consensus "Strong Buy": +2, "Buy": +1
-- 6M getiri >%50: +3, >%30: +2, >%15: +1
-- **minimum skor 10** altı GEÇ, 10-13 İZLE, 14+ EKLE
+**skor sistemi** (max ~18, kod: `scripts/portfolio_scan_common.py::score_agresif`, quality guard rails dahil):
+- 1M momentum >%20: +3, >%10: +2, >%0: +1
+- 6M momentum >%50: +3, >%30: +2, >%15: +1
+- P/E quality guard: <0 (negatif) -3, >80 -3, >60 -2, >40 -1
+- ROIC >%25: +3, >%15: +2, >%10: +1, <0 -3, <%8 -1
+- RSI 50-70 (güçlü): +2, 40-50 (nötr-zayıf): +1, >75 (aşırı alım): -1
+- SMA50 üstü: +2
+- Golden cross: +2
+- 3M momentum >%15: +2
+- (opsiyonel) katalizör override max +2
+- **eşik**: skor <10 GEÇ, 10-13 İZLE, 14+ EKLE (8 nisan 2026 kalibrasyonu)
+
+**not**: EPS surprise, RS rank, hacim oranı, 52W high mesafesi ve analyst consensus gibi eski puan kalemleri kodda yok. Bu metrikler portföy spesifik filtrelerde (yukarıda) ön koşul olarak kontrol edilir ama skora girmez. Momentum (1M/3M/6M) + kalite (ROIC/P/E guards) + teknik (RSI/SMA/GC) üçgeni daha az gürültülü sinyal veriyor.
 
 ### 2c. Değer + Temettü Portföyü ($100K, max 15 pozisyon)
 
@@ -125,14 +133,18 @@ betaLessThan=1.2                      (defensive)
 6. **P/E <20** — aşırı değerleme filtresi
 7. **SMA200 üstü VEYA RSI <40** — trend içinde ya da aşırı satım (değer + dönüş)
 
-**skor sistemi**:
-- yield %5-7: +3, %4-5: +2, %3-4: +1
-- payout ratio <%50: +3, <%65: +2, <%75: +1
-- 10+ yıl temettü artışı: +3, 5-10 yıl: +2
-- P/E <12: +3, <15: +2, <18: +1
-- FCF büyümesi son 3 yıl pozitif: +2
-- sektör defensive (XLU/XLP/XLV/Tobacco): +2
-- **minimum skor 9** altı GEÇ, 9-12 İZLE, 13+ EKLE
+**skor sistemi** (max ~18, kod: `scripts/portfolio_scan_common.py::score_temettü`, yield trap koruması dahil):
+- Yield %5-7: +3, %4-5: +2, %3-4: +1, **>%8: -2** (yield trap uyarı)
+- Payout ratio <%50: +3, <%65: +2, <%75: +1, **>100%: -5** (YIELD TRAP — otomatik eleme)
+- P/E <12: +3, <15: +2, <18: +1, <0 (negatif): -3
+- ROIC >%15: +2, >%10: +1
+- FCF yield >%5: +2, >0: +1, <0: -2
+- SMA50 üstü: +1
+- SMA200 üstü: +1
+- Yeni sektör (mevcut portföyde yok): +2
+- (opsiyonel) katalizör override max +2
+- **eşik**: skor <6 GEÇ, 6-8 İZLE, 9+ EKLE (8 nisan 2026 kalibrasyonu)
+- **KRİTİK**: payout >100% tetiklenirse rapora "YIELD TRAP" notu ve -5 cezasıyla otomatik GEÇ kararı verilir, aday EKLE eşiğini geçemez
 
 ---
 
@@ -390,39 +402,43 @@ dosya: `data/watchlist.json`
 
 ---
 
-## 9. ÖRNEK SKOR HESAPLAMA (QCOM için agresif portföy)
+## 9. ÖRNEK SKOR HESAPLAMA (QCOM için agresif portföy, yeni skor sistemi)
 
 ### ham veriler (7 nisan 2026 kapanış)
 - fiyat: $124.07
-- RSI: 32.2
-- son çeyrek EPS surprise: +%14 (tahmin $2.60, gerçek $2.96)
-- 6 aylık getiri: %12 (SPY aynı dönem +%3, RS mesafe +%9)
-- RS rank: ~72 (eşik altı — kriter %80)
-- hacim oranı: 1.3x
-- 52W high: $142 → %12 mesafe
-- sektör: teknoloji, alt tema: mobil/edge compute
-- AVGO/google ASIC haberi dolaylı pozitif
-- SMA50: $128 → fiyat altında ❌ (K-04 soru işareti, istisna değerlendir)
+- RSI 14: 32.2
+- 1M momentum: ~-%8 (düşen)
+- 3M momentum: ~+%3
+- 6M momentum: ~+%12 (SPY +%3 → RS pozitif ama mutlak düşük)
+- P/E: ~14 (tech için düşük, quality guard pozitif tarafta)
+- ROIC: ~%28 (yüksek kalite)
+- SMA50: $128 → fiyat altında ❌ (K-04 istisna kontrolü gerek)
 - SMA200: $135 → fiyat altında ❌
+- Golden cross: yok (fiyat her iki SMA altında)
 
-### skor
-- EPS surprise %14: +3
-- RS rank 72: +0 (eşik altı, puan yok — ama dead cat filtresi engellenmedi)
-- hacim oranı 1.3x: +1 (marjinal)
-- AI tedarik zinciri dolaylı: +1
-- analyst consensus "Buy": +1 (FMP grades-consensus doğrulama gerek)
-- 6M getiri %12: 0 (%15 altı)
-- K-04 istisna (RSI 32 oversold): bonus +1
-- **toplam: 7**
+### skor (score_agresif)
+- 1M momentum -%8: +0 (pozitif bracket altında)
+- 6M momentum %12: +0 (%15 altı)
+- 3M momentum %3: +0 (%15 altı)
+- P/E ~14: +0 (cezası yok, bonus da yok)
+- ROIC %28: +3
+- RSI 32: +0 (hiçbir aralığa girmiyor, aşırı satım cezası yok çünkü >75 değil)
+- SMA50 üstü: +0 (altında)
+- Golden cross: +0
+- **toplam: 3**
 
 ### karar
-- agresif eşik EKLE = 14
-- skor 7 < 14 → **EKLE değil**
-- skor 7 < 10 (İZLE alt eşiği) → **GEÇ**
+- agresif eşik EKLE = 14, İZLE = 10
+- skor 3 < 10 → **GEÇ**
 
-**ama**: CPU darboğazı tezi ve forward P/E cazipliği niteliksel katkı. skor düşük ama ticker manuel "CRITICAL" urgency ile watchlist'te. bu sistematik değerlendirme skorun 14'ü geçmediğini gösteriyor — iyimser tezi mekanik filtrenin önüne koymayalım uyarısı.
+### niteliksel katalizör override değerlendirmesi
+CPU darboğazı tezi ve AVGO/Google ASIC haberi niteliksel katalizör olarak değerlendirilebilir. `apply_catalyst_override` kurallarına göre:
+- max +2 puan → toplam skor 5 olur
+- 5 hala 10'un altında → yine **GEÇ**
+- override bu durumda skoru kurtaramaz
 
-**ders**: mevcut watchlist'teki QCOM sübjektif tutuldu. yeni sistem bu tür durumları engelleyecek — ya skor geçer ya geçmez.
+### ders
+QCOM'un teknik durumu (fiyat her iki SMA altında, 1M/3M/6M momentum zayıf) sistematik tarama için hazır değil. Tez güçlü olabilir ama sistematik giriş için fiyatın SMA50 üstüne çıkıp momentum teyidi vermesi bekleniyor. Watchlist'te "izle" statüsünde tutulur, skoru 10+ olunca otomatik yükselir. Bu sübjektif "CRITICAL urgency" atamalarının yerine mekanik eşiği koyuyor — iyimser tezi filtrenin önüne geçirmiyor.
 
 ---
 
