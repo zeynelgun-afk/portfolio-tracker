@@ -1,0 +1,77 @@
+name: Sabah Evren Taraması
+
+on:
+  schedule:
+    # Her iş günü 06:00 UTC = 09:00 TR (piyasa açılışından 7.5 saat önce)
+    - cron: '0 6 * * 1-5'
+  workflow_dispatch:
+    inputs:
+      min_mcap:
+        description: 'Min market cap (USD)'
+        required: false
+        default: '200000000'
+      max_peg:
+        description: 'Max PEG ratio'
+        required: false
+        default: '2.5'
+      sector:
+        description: 'Sektör filtresi (boş = hepsi)'
+        required: false
+        default: ''
+
+jobs:
+  morning-scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Python setup
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Git config
+        run: |
+          git config user.name "Finzora AI"
+          git config user.email "zeynelgun@users.noreply.github.com"
+
+      - name: Taramayı çalıştır
+        run: |
+          MIN_MCAP="${{ github.event.inputs.min_mcap || '200000000' }}"
+          MAX_PEG="${{ github.event.inputs.max_peg || '2.5' }}"
+          SECTOR="${{ github.event.inputs.sector || '' }}"
+
+          if [ -n "$SECTOR" ]; then
+            python3 scripts/full_universe_screener.py \
+              --min-mcap "$MIN_MCAP" \
+              --max-peg "$MAX_PEG" \
+              --sector "$SECTOR" \
+              --workers 10
+          else
+            python3 scripts/full_universe_screener.py \
+              --min-mcap "$MIN_MCAP" \
+              --max-peg "$MAX_PEG" \
+              --workers 10
+          fi
+        env:
+          PYTHONUNBUFFERED: 1
+
+      - name: Değişiklikleri commit et
+        run: |
+          if [[ -n $(git status --porcelain) ]]; then
+            for i in 1 2 3; do
+              git pull --rebase origin main || true
+              git add data/daily_full_scan.json
+              git commit -m "[TARAMA] Sabah evren taraması - $(date +'%Y-%m-%d %H:%M UTC')" || true
+              git push && echo "✅ Push başarılı" && exit 0
+              sleep 5
+            done
+          else
+            echo "Değişiklik yok"
+          fi
