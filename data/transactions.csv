@@ -142,3 +142,4 @@ date,action,symbol,shares,price,total,reason
 2026-04-07,SELL,dividend,T,86,28.07,2414.02,"K-12 limit asimi duzeltmesi - Temettu portfoyunde T agirligi %16.67 (limit %15). 86 hisse satis ile %15.00 hedeflendi. Kalan 773 hisse. Kar: $163.40 (+7.26%)"
 2026-04-08,SELL,dividend,PM,77,156.82,12075.14,"dondurme - FDA pouch sorunu, SMA50 $174.70 altinda trend kirik, RSI 33.9 oversold ama tez bozuk, sermaye MRK'ye. K/Z: $-267.96 (-2.17%)"
 2026-04-08,BUY,dividend,MRK,50,120.0,6000.00,"plan girisi - saglik defansif cesitlendirme, gap-up rallysinde minimal etki plan araliginda, SMA50 ustu RSI 55 notr, PM dondurmesi"
+2026-04-09,BUY,balanced,DUK,49,133.84,6558.16,"K-13 v4.1 jeopolitik/savaş utilities faydalanıcı. VIX 28-35 bant: $9K×(22/30). SMA50 üstü, K-17 temiz, hedef $143."

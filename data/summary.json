@@ -11,11 +11,11 @@
       "maliyet": 100000,
       "kar_zarar": 12621.75,
       "kar_zarar_yuzde": 12.62,
-      "pozisyon_sayisi": 2,
+      "pozisyon_sayisi": 3,
       "nakit": {
-        "miktar": 82612.95,
+        "miktar": 76054.79,
         "para_birimi": "USD",
-        "agirlik_yuzde": 73.35
+        "agirlik_yuzde": 67.53
       }
     },
     "agresif": {
