@@ -396,22 +396,6 @@
       "hedef_giris": "K-17 korelasyon kontrol sonrası"
     },
     {
-      "sembol": "BMY",
-      "isim": "Bristol-Myers Squibb",
-      "sektor": "Saglik",
-      "urgency": "medium",
-      "eklenme_tarihi": "2026-04-09",
-      "hedef_portfoy": "temettu",
-      "giris_tetikleyici": "SMA50 ustu donus + earnings sonrasi (23 Nis BMO) guc teyidi",
-      "giris_seviye": "57-60 arasi SMA50 ustu kapanisi",
-      "stop_seviyesi": 54.0,
-      "hedef_fiyat": 68.0,
-      "temel_tez": "P/E 17 ucuz, yield %4.24 saglikli payout ile, FCF yield %10.7, 6M RS +%32. Buyume portfoyu +%17. K-13 faydalanici sektor.",
-      "risk_notu": "23 Nis earnings binary risk. SMA50 alti simdi. Earnings sonrasi guc gorulmesi sart.",
-      "k13_kategori": "faydalanici",
-      "son_guncelleme": "2026-04-09T15:17:21.708956"
-    },
-    {
       "sembol": "KMB",
       "hedef_portfoy": "temettü",
       "urgency": "low",
@@ -470,6 +454,38 @@
       "risk_notu": "Yield %0.5 temettu uyumsuz. SMA50 alti. Earnings takvimi netlesmeli.",
       "k13_kategori": "faydalanici",
       "son_guncelleme": "2026-04-09T15:17:21.708956"
+    },
+    {
+      "sembol": "RPRX",
+      "isim": "Royalty Pharma",
+      "sektor": "Saglik/Royalty",
+      "urgency": "low",
+      "eklenme_tarihi": "2026-04-09",
+      "hedef_portfoy": "dengeli",
+      "giris_tetikleyici": "Mevcut durum: SMA50+200 ustu, 52H -2%. Karar: Temettü yield %1.86 sinir disi. Dengeli icin deger yatirimi olarak izle.",
+      "giris_seviye": "275-280 (geri cekilme)",
+      "stop_seviyesi": 265.0,
+      "hedef_fiyat": 340.0,
+      "temel_tez": "PEG 0.83, FWD P/E 9.9x, FCF yield %12.1. Royalty modeli = capital-light, 20+ ilaçtan royalty geliri. ROIC %8.9.",
+      "risk_notu": "Yield %1.86 dusuk. D/E 1.4. Royalty geliri portfoy ilaclara bagli.",
+      "k13_kategori": "faydalanici",
+      "son_guncelleme": "2026-04-09T15:32:53.581322"
+    },
+    {
+      "sembol": "ABBV",
+      "isim": "AbbVie",
+      "sektor": "Buyuk Farma",
+      "urgency": "low",
+      "eklenme_tarihi": "2026-04-09",
+      "hedef_portfoy": "temettu",
+      "giris_tetikleyici": "SMA50+200 donus, iki SMA ustu kapanisi",
+      "giris_seviye": "215-220 (SMA50 donus)",
+      "stop_seviyesi": 200.0,
+      "hedef_fiyat": 250.0,
+      "temel_tez": "PEG 1.33, FWD P/E 14.6x, +11% buyume. Skyrizi+Rinvoq Humira'nin yerini aliyor. Yield %5+ beklenti.",
+      "risk_notu": "SMA50+200 alti simdi. Humira generik rekabet devam ediyor.",
+      "k13_kategori": "faydalanici",
+      "son_guncelleme": "2026-04-09T15:32:53.581322"
     }
   ],
   "haric_tutulanlar": [
