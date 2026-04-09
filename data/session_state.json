@@ -4,13 +4,34 @@
   "faz1": {
     "zaman": "19:11",
     "not": "FAZ 1 penceresi gecikmeyle calistirildi (19:11 TR = FAZ 2 zamani)",
-    "spy": {"fiyat": 680.11, "degisim": 0.61},
-    "qqq": {"fiyat": 609.71, "degisim": 0.60},
-    "dia": {"fiyat": 481.89, "degisim": 0.57},
-    "iwm": {"fiyat": 262.18, "degisim": 0.66},
-    "vixy": {"fiyat": 29.70, "degisim": -2.65},
-    "uso": {"fiyat": 124.34, "degisim": -0.19},
-    "gld": {"fiyat": 440.02, "degisim": 1.26},
+    "spy": {
+      "fiyat": 680.11,
+      "degisim": 0.61
+    },
+    "qqq": {
+      "fiyat": 609.71,
+      "degisim": 0.6
+    },
+    "dia": {
+      "fiyat": 481.89,
+      "degisim": 0.57
+    },
+    "iwm": {
+      "fiyat": 262.18,
+      "degisim": 0.66
+    },
+    "vixy": {
+      "fiyat": 29.7,
+      "degisim": -2.65
+    },
+    "uso": {
+      "fiyat": 124.34,
+      "degisim": -0.19
+    },
+    "gld": {
+      "fiyat": 440.02,
+      "degisim": 1.26
+    },
     "risk_ortami": "KAUTUMLU",
     "risk_notu": "VIXY 29.70 - K-13 aktif. Iran ateskesi kirilgan. Petrol 100 USD uzeri geri dondu.",
     "makro_temalar": [
@@ -21,35 +42,98 @@
       "SPY SMA50 uzerinde (+0.82%) - K-14 kosul 1/3 karsilandi"
     ],
     "gap_raporu": [
-      {"sembol": "MO", "degisim_pct": 0.47, "sinif": "normal"},
-      {"sembol": "JNJ", "degisim_pct": 0.75, "sinif": "normal"},
-      {"sembol": "DUK", "degisim_pct": 1.32, "sinif": "normal"},
-      {"sembol": "CI", "degisim_pct": 0.22, "sinif": "normal"},
-      {"sembol": "T", "degisim_pct": -1.61, "sinif": "normal"},
-      {"sembol": "VZ", "degisim_pct": -1.24, "sinif": "normal"},
-      {"sembol": "MRK", "degisim_pct": -0.31, "sinif": "normal"}
+      {
+        "sembol": "MO",
+        "degisim_pct": 0.47,
+        "sinif": "normal"
+      },
+      {
+        "sembol": "JNJ",
+        "degisim_pct": 0.75,
+        "sinif": "normal"
+      },
+      {
+        "sembol": "DUK",
+        "degisim_pct": 1.32,
+        "sinif": "normal"
+      },
+      {
+        "sembol": "CI",
+        "degisim_pct": 0.22,
+        "sinif": "normal"
+      },
+      {
+        "sembol": "T",
+        "degisim_pct": -1.61,
+        "sinif": "normal"
+      },
+      {
+        "sembol": "VZ",
+        "degisim_pct": -1.24,
+        "sinif": "normal"
+      },
+      {
+        "sembol": "MRK",
+        "degisim_pct": -0.31,
+        "sinif": "normal"
+      }
     ],
     "acil_aksiyonlar": [],
     "bmo_earnings": [],
     "amc_earnings_bugun": [],
     "twitter_ozet": [
-      {"hesap": "web_fallback", "not": "Twitter API user endpoint bos dondu. Web ile telafi edildi."}
+      {
+        "hesap": "web_fallback",
+        "not": "Twitter API user endpoint bos dondu. Web ile telafi edildi."
+      }
     ],
     "k06_tetikler": [],
     "k09_tetikler": [],
     "stop_eksikligi_uyari": [
-      {"sembol": "MO", "portfoy": "BAL", "not": "stop tanimli degil"},
-      {"sembol": "JNJ", "portfoy": "BAL", "not": "stop tanimli degil"},
-      {"sembol": "T", "portfoy": "DIV", "not": "stop tanimli degil"},
-      {"sembol": "VZ", "portfoy": "DIV", "not": "stop tanimli degil"},
-      {"sembol": "MRK", "portfoy": "DIV", "not": "stop tanimli degil"}
+      {
+        "sembol": "MO",
+        "portfoy": "BAL",
+        "not": "stop tanimli degil"
+      },
+      {
+        "sembol": "JNJ",
+        "portfoy": "BAL",
+        "not": "stop tanimli degil"
+      },
+      {
+        "sembol": "T",
+        "portfoy": "DIV",
+        "not": "stop tanimli degil"
+      },
+      {
+        "sembol": "VZ",
+        "portfoy": "DIV",
+        "not": "stop tanimli degil"
+      },
+      {
+        "sembol": "MRK",
+        "portfoy": "DIV",
+        "not": "stop tanimli degil"
+      }
     ],
     "sabah_plani_uygulandi": false,
     "sabah_raporu_durumu": "bulunamadi - gecikme nedeniyle",
     "portfoy_ozet": {
-      "dengeli": {"toplam": 112675, "getiri_pct": 12.68, "pozisyon": 4},
-      "agresif": {"toplam": 357823, "getiri_pct": -10.54, "pozisyon": 0},
-      "temettu": {"toplam": 143525, "getiri_pct": 43.53, "pozisyon": 4},
+      "dengeli": {
+        "toplam": 112675,
+        "getiri_pct": 12.68,
+        "pozisyon": 4
+      },
+      "agresif": {
+        "toplam": 357823,
+        "getiri_pct": -10.54,
+        "pozisyon": 0
+      },
+      "temettu": {
+        "toplam": 143525,
+        "getiri_pct": 43.53,
+        "pozisyon": 4
+      },
       "genel_toplam": 614024,
       "genel_getiri_pct": 2.34
     },
@@ -67,5 +151,144 @@
       "Iran ateskesi - enerji sektoru volatil, savunma izle",
       "T ve VZ bugun -1.6% - temettü portfoyunde izle"
     ]
+  },
+  "faz2": {
+    "zaman": "19:35",
+    "spy_delta": -0.15,
+    "qqq_delta": -0.27,
+    "vixy_delta": 0.07,
+    "uso_delta": 0.77,
+    "risk_ortami_delta": "Aynı — VIXY 29.72 ile kautumlu devam ediyor",
+    "teknik_durum": {
+      "MO_BAL": {
+        "rsi": 58.1,
+        "sma50": "ustu",
+        "sma200": "ustu",
+        "durum": "GÜÇLÜ",
+        "karar": "TUT"
+      },
+      "JNJ_BAL": {
+        "rsi": 57.2,
+        "sma50": "ustu",
+        "sma200": "ustu",
+        "durum": "GÜÇLÜ",
+        "karar": "TUT"
+      },
+      "DUK_BAL": {
+        "rsi": 62.9,
+        "sma50": "ustu",
+        "sma200": "ustu",
+        "durum": "GÜÇLÜ",
+        "karar": "TUT"
+      },
+      "CI_BAL": {
+        "rsi": 57.6,
+        "sma50": "ustu",
+        "sma200": "ALTI",
+        "durum": "TEKNİK ZAYIF",
+        "karar": "TUT (P/E 12.4, tez sağlam, stop $265.25)"
+      },
+      "T_DIV": {
+        "rsi": 36.4,
+        "sma50": "ALTI",
+        "sma200": "esit",
+        "durum": "DİKKAT",
+        "karar": "TUT (temettü verimi yüksek, stop $25.03 mesafe %7)"
+      },
+      "VZ_DIV": {
+        "rsi": 33.3,
+        "sma50": "ALTI",
+        "sma200": "ustu",
+        "durum": "DİKKAT",
+        "karar": "TUT (RSI aşırı satım, kar +20%, stop $44.13)"
+      },
+      "MO_DIV": {
+        "rsi": 58.1,
+        "sma50": "ustu",
+        "sma200": "ustu",
+        "durum": "GÜÇLÜ",
+        "karar": "TUT"
+      },
+      "MRK_DIV": {
+        "rsi": 64.7,
+        "sma50": "ustu",
+        "sma200": "ustu",
+        "durum": "GÜÇLÜ",
+        "karar": "TUT"
+      }
+    },
+    "sektor_rs": {
+      "guclu": [
+        "Consumer Disc +1.08% RS",
+        "Utilities +0.83%",
+        "Industrials +0.66%"
+      ],
+      "zayif": [
+        "Energy -1.56% RS",
+        "Technology -0.83%",
+        "Healthcare -0.46%"
+      ],
+      "not": "Enerji zayıflığı ateşkes etkisi. Teknoloji CPI öncesi baskı."
+    },
+    "cpi_riski": {
+      "aciklama": "10 Nisan 08:30 ET",
+      "beklenti_headline": "%3.70 y/y (FactSet konsensüs)",
+      "beklenti_core": "%2.7 y/y",
+      "risk": "İran savaşı enerji etkisi → sürpriz ihtimali YÜKSEK",
+      "portfoy_etkisi": "Yüksek sürpriz → T/VZ baskı, CI/JNJ sağlık baskı, DUK/MO defansif direnç"
+    },
+    "pm_ozet": "Kalshi/Polymarket data yüklenemiyor. Fed Nisan toplantısında değişiklik yok konsensüs (%99+). Yıl içi 1 kesim beklentisi.",
+    "kararlar": {
+      "alis": [],
+      "satis": [],
+      "tut": [
+        "MO(BAL)",
+        "JNJ(BAL)",
+        "DUK(BAL)",
+        "CI(BAL)",
+        "T(DIV)",
+        "VZ(DIV)",
+        "MO(DIV)",
+        "MRK(DIV)"
+      ],
+      "izle": [
+        "MU ($411, giriş bölgesi üstü, CPI sonrası tekrar değerlendir)",
+        "LMT ($628, $620 altı pullback bekleniyor)"
+      ]
+    },
+    "yeni_giriş": "YOK — CPI öncesi binary risk + tüm adaylar hedef bölge üstü",
+    "go_no_go_sonuclari": {
+      "sonuc": "NO-GO",
+      "gerekce": "CPI yarın (binary risk) + VIXY ~26 (K-13 aktif) + watchlist adayları bölge dışı",
+      "istisna_yok": true
+    },
+    "portfoy_ozet": {
+      "dengeli": {
+        "toplam": 112796,
+        "getiri_pct": 12.8,
+        "pozisyon": 4
+      },
+      "agresif": {
+        "toplam": 357823,
+        "getiri_pct": -10.54,
+        "pozisyon": 0
+      },
+      "temettu": {
+        "toplam": 143608,
+        "getiri_pct": 43.61,
+        "pozisyon": 4
+      },
+      "genel_toplam": 614227,
+      "genel_getiri_pct": 2.37
+    },
+    "faz3_icin_notlar": [
+      "Power hour volatilitesini izle — ateşkes haberi gelebilir",
+      "MU $411 bölgesinde — AMC sonuçları için bekle",
+      "VZ RSI 33 — kısa vadeli toparlanma olabilir, stop değiştirme",
+      "CI SMA200 altı — fundamentaller sağlam ama teknik baskı sürüyor",
+      "GLD 439 — savunmacı pozisyon için RGLD watchlist'e ekle",
+      "Yarın CPI sonrası: BAL/AGR için fırsat değerlendirmesi yapılacak"
+    ],
+    "son_guncelleme": "2026-04-09T18:18:09.726686"
   }
 }
