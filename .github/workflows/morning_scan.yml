@@ -2,12 +2,12 @@ name: Sabah Evren Taraması
 
 on:
   schedule:
-    # Her iş günü 06:00 UTC = 09:00 TR (piyasa açılışından 7.5 saat önce)
-    - cron: '0 6 * * 1-5'
+    # 06:15 UTC = 09:15 TR — saatin tam başı değil (yük önleme)
+    - cron: '15 6 * * 1-5'
   workflow_dispatch:
     inputs:
       min_mcap:
-        description: 'Min market cap (USD)'
+        description: 'Min market cap (USD, default 200M)'
         required: false
         default: '200000000'
       max_peg:
@@ -19,6 +19,10 @@ on:
         required: false
         default: ''
 
+# GITHUB_TOKEN'a push yetkisi ver
+permissions:
+  contents: write
+
 jobs:
   morning-scan:
     runs-on: ubuntu-latest
@@ -26,10 +30,10 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          fetch-depth: 0
+          fetch-depth: 1
 
       - name: Python setup
         uses: actions/setup-python@v4
@@ -52,26 +56,29 @@ jobs:
               --min-mcap "$MIN_MCAP" \
               --max-peg "$MAX_PEG" \
               --sector "$SECTOR" \
-              --workers 10
+              --workers 8
           else
             python3 scripts/full_universe_screener.py \
               --min-mcap "$MIN_MCAP" \
               --max-peg "$MAX_PEG" \
-              --workers 10
+              --workers 8
           fi
         env:
           PYTHONUNBUFFERED: 1
 
-      - name: Değişiklikleri commit et
+      - name: Sonuçları commit et
         run: |
-          if [[ -n $(git status --porcelain) ]]; then
-            for i in 1 2 3; do
+          if [[ -n $(git status --porcelain data/daily_full_scan.json) ]]; then
+            echo "Değişiklik tespit edildi, commit yapılıyor..."
+            for attempt in 1 2 3; do
               git pull --rebase origin main || true
               git add data/daily_full_scan.json
-              git commit -m "[TARAMA] Sabah evren taraması - $(date +'%Y-%m-%d %H:%M UTC')" || true
+              git diff --staged --quiet && echo "Commit edilecek değişiklik yok" && exit 0
+              git commit -m "[AUTO-SCAN] Sabah taraması $(date +'%Y-%m-%d %H:%M UTC') | $(python3 -c \"import json; d=json.load(open('data/daily_full_scan.json')); print(f\\\"{d['toplam_taranan']} hisse tarandı, {d['peg_filtreli']} aday\\\")\")"
               git push && echo "✅ Push başarılı" && exit 0
-              sleep 5
+              sleep $((attempt * 5))
             done
+            echo "❌ Push başarısız" && exit 1
           else
-            echo "Değişiklik yok"
+            echo "Değişiklik yok, commit atlanıyor."
           fi
