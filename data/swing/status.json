@@ -1,5 +1,5 @@
 {
-  "aktif_durum": "K14_KALDIRILDI_YARIM_POZISYON_PROTOKOLU",
+  "aktif_durum": "K14_KALDIRILDI_AKTIF",
   "tetiklenme_tarihi": "2026-04-07",
   "tetik_sebebi": "Peak-to-trough drawdown %16.42 (esik %15)",
   "detaylar": {
@@ -58,10 +58,19 @@
     "kriter_ozeti": "VIX dikkatli + SPY SMA50 alti = K-14 ortam testi SAGLANMIYOR"
   },
   "yeni_giris_kurallari": {
-    "genel": "YENI SWING GIRISI YOK, ortam duzelene kadar",
-    "istisna": "SADECE A-kalite ichimoku 4/4 + K-13 faydalanici sektor + K-17/K-18 temiz",
-    "pozisyon_boyutu": "Normal $10K -> $5K (K-14 katman 2 matematigi)",
-    "ortam_testi_yeniden": "VIX<22 VE SPY>SMA50 VE sektor rotasyonu pozitif"
+    "protokol_versiyon": "v2.2 (10 nisan 2026)",
+    "boyut": "Normal $5K-$10K — SADECE A-kalite setup",
+    "yarım_pozisyon_sayaci": "KALDIRILDI",
+    "A_kalite_tanim": [
+      "Ichimoku 4/4 (kumo+TK+tenkan+volume)",
+      "Sektör ETF lider (9EMA+21EMA üstü)",
+      "RS pozitif (sektör/SPY 20g+ trend)",
+      "K-13 faydalanıcı sektör VEYA K-13b 6 koşulları",
+      "K-17 korelasyon ihlali yok",
+      "K-18 insider temiz"
+    ],
+    "ortam_testi": "VIX<22 + SPY>SMA50 (duyarlı) veya VIX<28 + SPY>SMA50 (faydalanıcı)",
+    "psikoloji_testi": "Bu girişi yarın tekrar inceleseydim, tüm kuralları tam uyguladım mı?"
   },
   "yeniden_baslama_protokolu": [
     "1. Min 5 is gunu soguma",
@@ -76,7 +85,7 @@
     "Mart 2026 genel ders: VIX dikkatli + sektor rotasyonu yavas = swing ortami zayif"
   ],
   "guncelleyen": "k14_drawdown_track.py + manuel analiz",
-  "son_guncelleme": "2026-04-09",
+  "son_guncelleme": "2026-04-10",
   "ortam_testi_8_nisan_2026_faz2": {
     "vix": 21.02,
     "vix_degisim_pct": -18.46,
@@ -98,23 +107,13 @@
     "spy_vs_sma50_pct": 0.16,
     "spy_trendi": "SMA50 USTU (kil payi, dun +0.05 bugun +0.16)",
     "kriter_ozeti": "VIX<22 + SPY>SMA50 + yeni kriz flari yok (3/3)",
-    "karar": "K-14 KALDIRILDI - Yarim pozisyon protokolu aktif",
-    "yarim_pozisyon_protokolu": {
-      "madde_3": "Ilk 3 trade yarim pozisyon ($5K max)",
-      "madde_4": "2/3 kazanirsa tam pozisyon ($10K)",
-      "day_2_chase_ekstra_disiplin": "Adaylarin hepsi dun +%6-9 kostu, RSI 65 sinirda. Bugun giris yok, seviye bazli tetik emirleri.",
-      "trade_sayaci": 0
-    },
-    "bugun_giris_karari": "YOK - R:R tum adaylarda 2:1 alti (yuksek ATR + dar %10 hedef), pullback bekleniyor",
-    "takip_listesi": [
-      "AMAT",
-      "CAT",
-      "ATMU"
-    ],
-    "tetik_seviyeleri": {
-      "AMAT": "$360-365 pullback",
-      "CAT": "$745-750 pullback",
-      "ATMU": "$61.50 pullback"
+    "karar": "K-14 KALDIRILDI — v2.2 protokolü aktif (10 nisan 2026)",
+    "v2_2_protokol": {
+      "boyut": "Normal (K-0K) — SADECE A-kalite setup",
+      "yarım_pozisyon_sayaci": "KALDIRILDI (v2.2 ile)",
+      "soğuma_süresi": "KALDIRILDI — psikoloji testi ile değiştirildi",
+      "psikoloji_testi": "Her trade öncesi: Bu girişi yarın tekrar inceleseydim, tüm kuralları tam uyguladım mı?",
+      "kayip_analizi": "Her kayıp trade için 3 kategori: ORTAM / SİSTEM / PSİKOLOJİ zorunlu"
     }
   }
 }
