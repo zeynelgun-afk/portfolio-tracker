@@ -2,7 +2,6 @@ name: Sabah Evren Taraması
 
 on:
   schedule:
-    # 06:15 UTC = 09:15 TR — saatin tam başı değil (yük önleme)
     - cron: '15 6 * * 1-5'
   workflow_dispatch:
     inputs:
@@ -15,11 +14,10 @@ on:
         required: false
         default: '2.5'
       sector:
-        description: 'Sektör filtresi (boş = hepsi)'
+        description: 'Sektor filtresi (bos = hepsi)'
         required: false
         default: ''
 
-# GITHUB_TOKEN'a push yetkisi ver
 permissions:
   contents: write
 
@@ -45,7 +43,7 @@ jobs:
           git config user.name "Finzora AI"
           git config user.email "zeynelgun@users.noreply.github.com"
 
-      - name: Taramayı çalıştır
+      - name: Taramayi calistir
         run: |
           MIN_MCAP="${{ github.event.inputs.min_mcap || '200000000' }}"
           MAX_PEG="${{ github.event.inputs.max_peg || '2.5' }}"
@@ -66,29 +64,37 @@ jobs:
         env:
           PYTHONUNBUFFERED: 1
 
-      - name: Sonuçları commit et
+      - name: Scan ozeti olustur
+        id: scan_summary
         run: |
-          if [[ -n $(git status --porcelain data/daily_full_scan.json) ]]; then
-            echo "Değişiklik tespit edildi, commit yapılıyor..."
-            TARIH=$(date +'%Y-%m-%d %H:%M UTC')
-            SCAN_INFO=$(python3 -c "
-import json
+          python3 -c "
+import json, sys
 try:
     d = json.load(open('data/daily_full_scan.json'))
-    print(f\"{d.get('toplam_taranan','?')} hisse tarandi, {d.get('peg_filtreli','?')} aday\")
-except Exception as e:
+    tarandi = d.get('toplam_taranan', '?')
+    aday = d.get('peg_filtreli', '?')
+    print(f'{tarandi} hisse tarandi, {aday} aday')
+except Exception:
     print('tarama tamamlandi')
-" 2>/dev/null || echo "tarama tamamlandi")
+" > /tmp/scan_info.txt 2>/dev/null || echo 'tarama tamamlandi' > /tmp/scan_info.txt
+          echo "info=$(cat /tmp/scan_info.txt)" >> "$GITHUB_OUTPUT"
+
+      - name: Sonuclari commit et
+        run: |
+          if [[ -n $(git status --porcelain data/daily_full_scan.json) ]]; then
+            echo "Degisiklik tespit edildi, commit yapiliyor..."
+            TARIH=$(date +'%Y-%m-%d %H:%M UTC')
+            SCAN_INFO="${{ steps.scan_summary.outputs.info }}"
             COMMIT_MSG="[AUTO-SCAN] Sabah taramasi ${TARIH} | ${SCAN_INFO}"
             for attempt in 1 2 3; do
               git pull --rebase origin main || true
               git add data/daily_full_scan.json
               git diff --staged --quiet && echo "Commit edilecek degisiklik yok" && exit 0
               git commit -m "$COMMIT_MSG"
-              git push && echo "✅ Push başarılı" && exit 0
+              git push && echo "Push basarili" && exit 0
               sleep $((attempt * 5))
             done
-            echo "❌ Push başarısız" && exit 1
+            echo "Push basarisiz" && exit 1
           else
-            echo "Değişiklik yok, commit atlanıyor."
+            echo "Degisiklik yok, commit atlaniyor."
           fi
