@@ -40,12 +40,15 @@ def build_portfolio_state(portfolios: dict, market: dict) -> dict:
     state = {
         "timestamp": datetime.now(TR_TZ).isoformat(),
         "market": {
-            "SPY":  market.get("SPY", {}).get("price"),
-            "QQQ":  market.get("QQQ", {}).get("price"),
-            "VIXY": market.get("VIXY", {}).get("price"),
-            "GLD":  market.get("GLD", {}).get("price"),
-            "spy_chg":  market.get("SPY", {}).get("chg"),
-            "qqq_chg":  market.get("QQQ", {}).get("chg"),
+            "SPY":        market.get("SPY", {}).get("price"),
+            "QQQ":        market.get("QQQ", {}).get("price"),
+            "GLD":        market.get("GLD", {}).get("price"),
+            "TLT":        market.get("TLT", {}).get("price"),
+            "spy_chg":    market.get("SPY", {}).get("chg"),
+            "qqq_chg":    market.get("QQQ", {}).get("chg"),
+            "VIX":        market.get("VIX", {}).get("price"),
+            "VIX_chg":    market.get("VIX", {}).get("chg"),
+            "VIX_seviye": market.get("VIX", {}).get("seviye"),
         },
         "portfolios": {}
     }

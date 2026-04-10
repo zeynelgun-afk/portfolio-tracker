@@ -185,12 +185,13 @@ def run_monitor(ctx: dict):
             except (ValueError, TypeError):
                 continue
 
-    # VIX yüksekse uyar
-    vixy = market.get("VIXY", {})
-    vixy_price = vixy.get("price", 0)
-    if vixy_price and float(vixy_price) > 18:
+    # VIX yüksekse uyar (gerçek CBOE VIX)
+    vix_data  = market.get("VIX", {})
+    vix_price = vix_data.get("price")
+    vix_seviye = vix_data.get("seviye", "")
+    if vix_price and float(vix_price) > 25:
         alerts.append(
-            f"🔴 *VIX YÜKSEK* VIXY: ${vixy_price} — K-13 aktif, yeni giriş kısıtlı"
+            f"🔴 VIX YÜKSEK: {vix_price} — {vix_seviye}"
         )
 
     # Sadece alert varsa mesaj gönder (Claude'u meşgul etme)

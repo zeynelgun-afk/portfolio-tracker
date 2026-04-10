@@ -74,19 +74,75 @@ def get_portfolio_snapshot() -> dict:
     return portfolios
 
 
+def get_real_vix() -> dict:
+    """
+    Yahoo Finance'dan gerçek CBOE VIX değerini çeker.
+    VIXY/UVXY kullanma — contango nedeniyle yanıltıcı.
+    """
+    try:
+        r = requests.get(
+            "https://query1.finance.yahoo.com/v8/finance/chart/%5EVIX",
+            params={"interval": "1d", "range": "5d"},
+            headers={"User-Agent": "Mozilla/5.0"},
+            timeout=10,
+        ).json()
+
+        result = r["chart"]["result"][0]
+        meta   = result["meta"]
+        price  = meta.get("regularMarketPrice")
+
+        # Önceki kapanışı geçmiş veriden al
+        closes    = result.get("indicators", {}).get("quote", [{}])[0].get("close", [])
+        valid     = [c for c in closes if c is not None]
+        prev      = valid[-2] if len(valid) >= 2 else None
+        chg       = round((price - prev) / prev * 100, 2) if price and prev else None
+
+        # Seviye yorumu (K-13 v4.1 bazlı)
+        if price is None:
+            seviye = "UNKNOWN"
+        elif price < 18:
+            seviye = "DÜŞÜK (Risk-On)"
+        elif price < 25:
+            seviye = "NORMAL"
+        elif price < 30:
+            seviye = "YÜKSEK — K-13 aktif"
+        else:
+            seviye = "EKSTREM — yeni giriş dur"
+
+        return {
+            "price":   price,
+            "chg":     chg,
+            "seviye":  seviye,
+            "kaynak":  "CBOE/Yahoo",
+        }
+
+    except Exception as e:
+        print(f"[VIX] Yahoo Finance hatası: {e}")
+        return {"price": None, "chg": None, "seviye": "UNKNOWN", "kaynak": "hata"}
+
+
 def get_market_context() -> dict:
-    """SPY, QQQ, VIXY anlık durum."""
-    syms   = ["SPY", "QQQ", "VIXY", "GLD", "TLT"]
+    """SPY, QQQ anlık durum + gerçek VIX."""
+    syms   = ["SPY", "QQQ", "GLD", "TLT"]
     quotes = fmp_get("batch-quote", {"symbols": ",".join(syms)})
 
     result = {}
     if isinstance(quotes, list):
         for q in quotes:
-            result[q["symbol"]] = {
-                "price": q.get("price"),
-                "chg":   q.get("changesPercentage"),
-                "vol":   q.get("volume"),
-            }
+            sym   = q["symbol"]
+            price = q.get("price")
+            prev  = q.get("previousClose")
+
+            # Piyasa kapalıyken changesPercentage None gelir — manuel hesapla
+            chg = q.get("changesPercentage")
+            if chg is None and price and prev and float(prev) != 0:
+                chg = round((float(price) - float(prev)) / float(prev) * 100, 2)
+
+            result[sym] = {"price": price, "chg": chg}
+
+    # Gerçek VIX ekle
+    result["VIX"] = get_real_vix()
+
     return result
 
 
