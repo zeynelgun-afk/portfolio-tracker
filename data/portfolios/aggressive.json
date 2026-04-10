@@ -27,7 +27,7 @@
   },
   "baslangic_sermaye": 400000,
   "nakit": {
-    "miktar": 333028.16,
+    "miktar": 308088.16,
     "para_birimi": "USD",
     "agirlik_yuzde": 100.0
   },
@@ -48,9 +48,26 @@
       "giris_nedeni": "Agresif v2 AI optical supply chain. Ichimoku 3/4, RSI 62.8, SMA200 +72%. Gün içi limit 285 doldu (gün dibi 275.69). Stop 265, hedef 330.",
       "zarar_kes": 265.0,
       "hedef_fiyat": 330.0
+    },
+    {
+      "sembol": "VRT",
+      "isim": "Vertiv Holdings",
+      "sektor": "AI Güç / Soğutma Altyapısı",
+      "adet": 86,
+      "maliyet_baz": 290.0,
+      "guncel_fiyat": 294.5,
+      "yatirim": 24940.0,
+      "guncel_deger": 25327.0,
+      "kar_zarar": 387.0,
+      "kar_zarar_yuzde": 1.55,
+      "giris_tarihi": "2026-04-10",
+      "giris_fiyati": 290.0,
+      "giris_nedeni": "Agresif v2 AI güç/soğutma altyapısı. Ichimoku 3/4, RSI 65, SMA200 +80%. Gün içi limit 290 doldu (gün dibi 289.30). Stop 275, hedef 330.",
+      "zarar_kes": 275.0,
+      "hedef_fiyat": 330.0
     }
   ],
-  "son_guncelleme": "2026-04-10T14:07:42.595734",
+  "son_guncelleme": "2026-04-10T14:10:20.698596",
   "toplam_deger": 357823.16,
   "toplam_getiri_yuzde": -10.54,
   "notes": [
