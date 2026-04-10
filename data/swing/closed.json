@@ -322,5 +322,82 @@
   },
   "yeni_ders": {
     "zaman_disiplini": "18 Şubat'ta zaman çerçevesi kuralı uygulandı - VZ, XOM (kar) ve WMT (zarar) 10 günü aştığı için kapatıldı. Kural çalışıyor!"
+  },
+  "mart_2026_kayip_analizi": {
+    "tarih": "2026-04-10",
+    "kural": "K-14 v2.2 yeniden başlama protokolü — zorunlu kayıp analizi",
+    "toplam_kayip": 7,
+    "dominant_pattern": "PSİKOLOJİ (K-14 ihlali) — 7 trade'in 4'ünde sistemi geçersiz kılan karar",
+    "tradeler": [
+      {
+        "id": "SWING-020",
+        "sembol": "HAL",
+        "pnl_pct": -5.1,
+        "ortam": "İran savaşı aktif, enerji K-13 faydalanıcısı — giriş uygundu",
+        "sistem": "Çıkış senaryosu eksik — savaş sona erince petrol servis ilk satılır öngörülmedi",
+        "psikoloji": "Kovalama yok, kural dışı giriş yok. Ortam değişikliğine tepki geç kaldı",
+        "kategori": "SİSTEM"
+      },
+      {
+        "id": "SWING-022",
+        "sembol": "CEG",
+        "pnl_pct": -5.05,
+        "ortam": "2 Mart kriz günü — VIX zirve, piyasa şok altında",
+        "sistem": "Kriz gün-1 girişi, ichimoku 4/4 tam değil",
+        "psikoloji": "Kovalama. 2 Mart rallisi gün-1 momentum peşinde giriş. K-02 ihlali",
+        "kategori": "PSİKOLOJİ+SİSTEM"
+      },
+      {
+        "id": "SWING-015",
+        "sembol": "T",
+        "pnl_pct": -5.54,
+        "ortam": "Telecom K-13 duyarlı sektör, giriş anında VIX kontrolü yapılmamış",
+        "sistem": "Sektör RS negatifti, ichimoku kontrolü atlandı. Temettü verimi tezi RS teyidinin üstüne geçti",
+        "psikoloji": "Tez baskısı — temettü güvenli liman olur mantığı sistemi geçersiz kıldı",
+        "kategori": "SİSTEM"
+      },
+      {
+        "id": "SWING-024",
+        "sembol": "ALMU",
+        "pnl_pct": -6.11,
+        "ortam": "HAL+CEG+T 3 ardışık zarar sonrası — K-14 katman 2 aktif olmalıydı",
+        "sistem": "Small-cap, hacim ~79K, $2B market cap altı — tarama evreni dışı",
+        "psikoloji": "K-14 uygulanmadı. 3 ardışık zarar sonrası toparlanma baskısıyla standart boyutta giriş — revenge pattern",
+        "kategori": "PSİKOLOJİ+ORTAM"
+      },
+      {
+        "id": "SWING-023",
+        "sembol": "SOFI",
+        "pnl_pct": -3.62,
+        "ortam": "Fintech K-13 duyarlı sektör, risk-off başlıyordu",
+        "sistem": "Sektör RS negatif, K-20 dead cat bounce filtresi uygulanmamış",
+        "psikoloji": "Normal giriş, kovalama yok. Sektör filtresi atlandı",
+        "kategori": "SİSTEM"
+      },
+      {
+        "id": "SWING-025",
+        "sembol": "RTX",
+        "pnl_pct": -5.16,
+        "ortam": "K-14 hala aktif olmalıydı, VIX yüksek",
+        "sistem": "Savunma tezi mantıklı ama sektör beklentinin altında kaldı. Stop düzgün çalıştı",
+        "psikoloji": "K-14 tekrar atlandı. Toparlanma isteği sistemi geçersiz kıldı",
+        "kategori": "PSİKOLOJİ"
+      },
+      {
+        "id": "SWING-027",
+        "sembol": "AROC",
+        "pnl_pct": -4.95,
+        "ortam": "VIX 27+ — K-13 v4.1 ihlali. Duyarlı sektörde VIX>22 yarım pozisyon veya giriş yok kuralı",
+        "sistem": "Tez doğru ama zamanlama kötü",
+        "psikoloji": "VIX kontrolü atlandı. Enerji rallisine yetişme acelecilik",
+        "kategori": "ORTAM"
+      }
+    ],
+    "kategori_dagilimi": {
+      "PSIKOLOJI_dominant": 4,
+      "SISTEM_dominant": 3,
+      "ORTAM_dominant": 2,
+      "not": "4 trade'de K-14 kasıtlı veya unutularak atlandı — otomatik script ihtiyacının kanıtı"
+    }
   }
 }
