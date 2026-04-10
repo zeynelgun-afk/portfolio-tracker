@@ -4,11 +4,11 @@ full_universe_screener.py — Finzora AI v2
 1000+ hisse akıllı tarayıcı: 4 kademeli eleme
   FAZ 1: FMP screener → 1000+ US hisse
   FAZ 2: Batch fiyat + analist tahminleri (hepsi)
-  FAZ 3: PEG < MAX_PEG + min analist filtresi → ~top 200
-  FAZ 4: Fundamenteller + TEKNİK (sadece top 200, rate limit yok)
+  FAZ 3: PEG < MAX_PEG + min analist filtresi → tümü işlenir
+  FAZ 4: Fundamenteller + TEKNİK (PEG filtreli tüm evren)
   FAZ 5: K-kural skorlaması + sıralama
 
-Süre: ~45-60 saniye | Çıktı: data/daily_full_scan.json
+Süre: ~10-20 dakika (evren büyüklüğüne göre) | Çıktı: data/daily_full_scan.json
 Kullanım:
   python3 scripts/full_universe_screener.py
   python3 scripts/full_universe_screener.py --sector Healthcare --max-peg 1.5
@@ -129,7 +129,7 @@ def get_fundamentals(symbols, workers=8):
     log(f"Fundamental: {len(out)} sembol")
     return out
 
-# ─── FAZ 4b: Teknik (sadece kısa liste, rate limit yok) ───────────────────────
+# ─── FAZ 4b: Teknik ─────────────────────────────────────────────────────────────
 
 def _single_technical(sym):
     hist = fetch(f'{BASE}/historical-price-eod/full?symbol={sym}&apikey={API_KEY}')
@@ -305,19 +305,19 @@ def run(args):
     valid_peg.sort(key=lambda x: x['peg'])
     log(f"PEG≤{args.max_peg} büyüyen: {len(valid_peg)} | Düşen: {len(declining)}")
 
-    # AKILLI FİLTRE: Teknik + fundamental sadece top N için
-    top_n = min(len(valid_peg), 200)
-    shortlist_syms = [r['symbol'] for r in valid_peg[:top_n]]
-    log(f"Shortlist: ilk {top_n} hisse için teknik+fundamental çekiliyor...")
+    # Tüm PEG filtreli hisseler işlenir
+    top_n = len(valid_peg)
+    shortlist_syms = [r['symbol'] for r in valid_peg]
+    log(f"Shortlist: {top_n} hisse için teknik+fundamental çekiliyor (limit yok)...")
 
     # Faz 4a: Fundamenteller
     fundamentals = get_fundamentals(shortlist_syms, workers=args.workers)
 
-    # Faz 4b: Teknik (sınırlı, rate limit yok)
-    technicals = get_technicals(shortlist_syms, workers=6)
+    # Faz 4b: Teknik (tüm PEG-filtreli evren)
+    technicals = get_technicals(shortlist_syms, workers=10)
 
     # Faz 5+6: Skor
-    shortlist_rows = [r for r in valid_peg[:top_n]]
+    shortlist_rows = list(valid_peg)
     scored = apply_scores(shortlist_rows, fundamentals, technicals)
     scored.sort(key=lambda x: -(x['score']*10 - (x['peg'] or 99)*2))
 
@@ -368,3 +368,4 @@ if __name__ == '__main__':
     p.add_argument('--sector',       type=str,   default='')
     p.add_argument('--workers',      type=int,   default=12)
     run(p.parse_args())
+
