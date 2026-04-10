@@ -2,7 +2,7 @@
   "portfoy_adi": "Dengeli Portföy",
   "baslangic_sermaye": 100000,
   "nakit": {
-    "miktar": 69669.3,
+    "miktar": 81644.3,
     "para_birimi": "USD",
     "agirlik_yuzde": 61.86
   },
@@ -27,27 +27,6 @@
       "maliyet_bazis": 67.29,
       "zarar_kes": 64.89,
       "cb_kaynak": "transactions-2026-02-17"
-    },
-    {
-      "sembol": "JNJ",
-      "isim": "Johnson & Johnson",
-      "sektor": "Sağlık",
-      "adet": 50,
-      "maliyet_baz": 244.14,
-      "guncel_fiyat": 238.81,
-      "yatirim": 12207.0,
-      "guncel_deger": 11940.5,
-      "kar_zarar": -266.5,
-      "kar_zarar_yuzde": -2.18,
-      "gunluk_degisim_yuzde": 0,
-      "son_guncelleme": "2026-04-10T14:50:33.847442",
-      "giris_tarihi": "2026-03-13",
-      "giris_fiyati": 244.14,
-      "giris_nedeni": "Saglik sektoru diversifikasyonu. Defensif/temettü aristokrati. Iran savasi ortaminda direncli. RSI 59, SMA50 ustu. Portfoyde saglik eksikti.",
-      "agirlik_yuzde": 10.62,
-      "maliyet_bazis": 244.14,
-      "zarar_kes": 235.68,
-      "cb_kaynak": "transactions-2026-03-13"
     },
     {
       "sembol": "DUK",
@@ -96,7 +75,7 @@
       "cb_kaynak": "kayit-yok"
     }
   ],
-  "son_guncelleme": "2026-04-10T14:50:33.847442",
+  "son_guncelleme": "2026-04-10T14:59:21.508393",
   "toplam_deger": 112415.21,
   "toplam_getiri_yuzde": 12.42,
   "transactions": [
