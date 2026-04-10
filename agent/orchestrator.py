@@ -115,12 +115,14 @@ Kısa ve net yaz. Sonda: "Bugün gözüm şunlarda: ..."
 KESİN / MUHTEMEL / SPEKÜLATİF etiket kullan.
 """
 
+    print("[Orkestratör] Claude API çağrılıyor...")
     response = get_claude_decision(prompt, mode="morning")
+    print(f"[Orkestratör] Claude yanıtı ({len(response)} karakter):\n{response[:200]}")
     save_daily_brief(response, "morning")
 
-    msg = f"🌅 *Finzora Agent — Sabah*\n_{ctx['timestamp'][:16]}_\n\n{response}"
-    send_private_telegram(msg)
-    print("[Orkestratör] Sabah analizi gönderildi.")
+    msg = f"Finzora Agent - Sabah Analizi\n{ctx['timestamp'][:16]}\n\n{response}"
+    result = send_private_telegram(msg)
+    print(f"[Orkestratör] Telegram sonucu: {result}")
 
 def run_closing(ctx: dict):
     """Kapanış yorumu — piyasa kapandıktan sonra."""
