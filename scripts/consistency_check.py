@@ -223,6 +223,7 @@ def run_checks(notify=False, strict=False):
                 '--type', 'alert',
                 '--title', 'K-Kural Tutarsızlık Taraması',
                 '--details', summary[:800],
+                '--private',  # sistem uyarısı — gruba değil, sadece Zeynel'e
             ], check=False)
             print("\n📨 Telegram bildirimi gönderildi.")
         except Exception as e:

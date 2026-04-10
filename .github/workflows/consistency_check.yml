@@ -45,7 +45,8 @@ jobs:
           python scripts/telegram_notify.py \
             --type alert \
             --title "K-Kural Tutarsızlık Alarmı" \
-            --details "$(head -20 check_output.txt)"
+            --details "$(head -20 check_output.txt)" \
+            --private
 
       - name: Rapor özeti
         if: always()

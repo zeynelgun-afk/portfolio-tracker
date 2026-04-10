@@ -26,15 +26,17 @@ from datetime import datetime
 
 # --- CONFIG ---
 TELEGRAM_BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN", "8749931249:AAGTLVKLHx5grcGlJhuodg-DbFDkFYjpCcI")
-TELEGRAM_CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID", "-1003827034395")
+TELEGRAM_CHAT_ID    = os.environ.get("TELEGRAM_CHAT_ID",    "-1003827034395")  # Finzora grubu
+TELEGRAM_PRIVATE_ID = os.environ.get("TELEGRAM_PRIVATE_ID", "1403072107")       # Zeynel özel
 TELEGRAM_API = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}"
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # --- TELEGRAM GÖNDERME ---
-def send_photo(image_path, caption=None, parse_mode="HTML"):
+def send_photo(image_path, caption=None, parse_mode="HTML", chat_id=None):
     """Telegram'a fotoğraf gönder. Caption max 1024 karakter."""
-    if not TELEGRAM_CHAT_ID:
+    target = chat_id or TELEGRAM_CHAT_ID
+    if not target:
         print("HATA: TELEGRAM_CHAT_ID ayarlanmamış!")
         sys.exit(1)
 
@@ -43,7 +45,7 @@ def send_photo(image_path, caption=None, parse_mode="HTML"):
         sys.exit(1)
 
     url = f"{TELEGRAM_API}/sendPhoto"
-    data = {"chat_id": TELEGRAM_CHAT_ID}
+    data = {"chat_id": target}
     if caption:
         # Telegram caption limit 1024 karakter
         data["caption"] = caption[:1024]
@@ -75,9 +77,10 @@ def send_photo(image_path, caption=None, parse_mode="HTML"):
         return False
 
 
-def send_message(text, parse_mode="HTML", disable_preview=True):
+def send_message(text, parse_mode="HTML", disable_preview=True, chat_id=None):
     """Telegram'a mesaj gönder. Uzun mesajları otomatik böler."""
-    if not TELEGRAM_CHAT_ID:
+    target = chat_id or TELEGRAM_CHAT_ID
+    if not target:
         print("HATA: TELEGRAM_CHAT_ID ayarlanmamış!")
         sys.exit(1)
 
@@ -85,7 +88,7 @@ def send_message(text, parse_mode="HTML", disable_preview=True):
 
     for i, chunk in enumerate(chunks):
         payload = {
-            "chat_id": TELEGRAM_CHAT_ID,
+            "chat_id": target,
             "text": chunk,
             "parse_mode": parse_mode,
             "disable_web_page_preview": disable_preview,
@@ -622,8 +625,12 @@ def main():
     parser.add_argument("--action", help="Aksiyon tipi: ALIŞ, SATIŞ, STOP, KAR_AL, UYARI")
     parser.add_argument("--details", help="Detay açıklama")
     parser.add_argument("--stop", type=float, help="Stop fiyatı (alert için)")
+    parser.add_argument("--private", action="store_true",
+                        help="Gruba değil sadece Zeynel'e gönder (sistem uyarıları için)")
 
     args = parser.parse_args()
+    # --private: hedef chat_id'yi özel olarak ayarla
+    target_chat = TELEGRAM_PRIVATE_ID if args.private else TELEGRAM_CHAT_ID
 
     if args.type == "session":
         msg = format_session_report(theme=args.theme)
@@ -658,13 +665,13 @@ def main():
         if not args.image:
             print("photo için --image gerekli")
             sys.exit(1)
-        success = send_photo(args.image, caption=args.caption)
+        success = send_photo(args.image, caption=args.caption, chat_id=target_chat)
         sys.exit(0 if success else 1)
     else:
         print("Geçersiz tip")
         sys.exit(1)
 
-    send_message(msg)
+    send_message(msg, chat_id=target_chat)
 
 
 if __name__ == "__main__":
