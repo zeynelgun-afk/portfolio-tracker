@@ -97,9 +97,16 @@ def collect_context(mode: str) -> dict:
     # Sabah ve kapanış: web + twitter ekle (monitor'da ekleme → hızlı kal)
     research = ""
     twitter  = ""
+    print(f"[Debug] mode='{mode}', twitter aktif: {mode in ('morning','closing','weekly')}")
     if mode in ("morning", "closing", "weekly"):
         research = build_research_context(symbols)
-        twitter  = build_twitter_context(symbols)
+        print("[Debug] Twitter başlıyor...")
+        try:
+            twitter = build_twitter_context(symbols)
+            print(f"[Debug] Twitter bitti: {len(twitter)} karakter")
+        except Exception as e:
+            print(f"[Debug] Twitter HATA: {e}")
+            twitter = ""
 
     return {
         "mode":       mode,
