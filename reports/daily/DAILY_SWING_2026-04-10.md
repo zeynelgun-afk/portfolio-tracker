@@ -13,7 +13,7 @@
 - **k-14 drawdown freni**: kaldırıldı (9 nisan 2026)
   - peak: $12,480 (3 mart 2026) | trough: $10,430 (26 mart) | dd: %16.42
   - yeniden başlama kriterleri: vix<22 ✅ + spy>sma50 ✅ + yeni kriz flare yok ✅
-  - **yarım pozisyon protokolü aktif**: ilk 3 trade $5K max (trade sayacı: 0/3)
+  - **yarım pozisyon protokolü aktif**: normal boyut $5K-$10K — SADECE A-kalite (K-14 v2.2, yarım pozisyon sayacı kaldırıldı)
 - **aktif pozisyon**: 0/6 slot | 6 boş slot
 
 ### mod kararı

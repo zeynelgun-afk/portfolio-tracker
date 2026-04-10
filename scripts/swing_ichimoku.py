@@ -418,17 +418,60 @@ def determine_stop(ichi, atr):
 # 8. POZİSYON BOYUTLANDIRMA
 # ============================================================
 
-def calc_position_size(price, stop, atr, account_size=10000, vix=None):
-    """ATR bazlı pozisyon boyutu hesapla."""
-    risk_pct = 0.01  # varsayılan %1
+def calc_position_size(price, stop, atr, account_size=10000, vix=None, sektor_tipi="duyarli"):
+    """
+    K-13 v4.1 sektör bazlı ATR pozisyon boyutu.
 
-    if vix:
-        if vix >= 30:
-            risk_pct = 0.0025
-        elif vix >= 25:
-            risk_pct = 0.005
-        elif vix >= 20:
-            risk_pct = 0.0075
+    sektor_tipi: "faydalanici" veya "duyarli" (jeopolitik/savaş krizi varsayılan)
+    Faydalanıcı: enerji, savunma, altın, sağlık, staples, telekom, utilities, siber güvenlik
+    Duyarlı   : tech/AI yarıiletken, tüketim döngüsel, havacılık, REIT, küçük cap
+
+    K-13 v4.1 VIX bant matrisi:
+      VIX < 22            → tam pozisyon (her iki sektör)
+      VIX 22-28 faydal.  → tam pozisyon
+      VIX 22-28 duyarlı  → yarım pozisyon
+      VIX 28-35 faydal.  → yarım  + formül: standart × (22/VIX)
+      VIX 28-35 duyarlı  → giriş yok → None döner
+      VIX 35+   faydal.  → çeyrek + formül
+      VIX 35+   duyarlı  → giriş yok → None döner
+
+    Not: VIX None gelirse get_vix_level() ile Yahoo Finance'ten çekilir.
+    """
+    # Gerçek VIX seviyesini al
+    if vix is None:
+        try:
+            import urllib.request as _ur
+            req = _ur.Request(
+                "https://query1.finance.yahoo.com/v8/finance/chart/%5EVIX?interval=1d&range=1d",
+                headers={"User-Agent": "Mozilla/5.0"}
+            )
+            data = json.loads(_ur.urlopen(req, timeout=8).read())
+            vix = float(data["chart"]["result"][0]["meta"]["regularMarketPrice"])
+        except Exception:
+            vix = 20.0  # bağlantı yoksa sakin bant varsay
+
+    faydalanici = (sektor_tipi.lower() == "faydalanici")
+
+    # K-13 v4.1 bant kararı
+    if vix < 22:
+        multiplier = 1.0          # tam
+    elif vix < 28:
+        multiplier = 1.0 if faydalanici else 0.5   # faydal=tam, duyarlı=yarım
+    elif vix < 35:
+        if not faydalanici:
+            return None           # duyarlı → giriş yok
+        multiplier = 0.5 * (22 / vix)  # faydal=yarım + formül
+    else:
+        if not faydalanici:
+            return None           # duyarlı → giriş yok
+        multiplier = 0.25 * (22 / vix) # faydal=çeyrek + formül
+
+    # VIX 28+ ek kural: risk %3 max (normal %5 yerine)
+    base_risk_pct = 0.01
+    if vix >= 28:
+        base_risk_pct = 0.005   # %0.5 risk (daha temkinli)
+
+    risk_pct = base_risk_pct * multiplier
 
     risk_amount = account_size * risk_pct
     stop_distance = price - stop

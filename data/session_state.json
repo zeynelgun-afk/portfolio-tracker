@@ -150,7 +150,9 @@
       "GLD 440 ustunde - dengeli portfoy RGLD/GDX izleme listesine al",
       "Iran ateskesi - enerji sektoru volatil, savunma izle",
       "T ve VZ bugun -1.6% - temettü portfoyunde izle"
-    ]
+    ],
+    "vix_level": 19.29,
+    "_vix_notu": "Gercek VIX (Yahoo ^VIX). vixy=ETF, sadece yon."
   },
   "faz2": {
     "zaman": "19:35",
