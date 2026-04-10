@@ -27,12 +27,30 @@
   },
   "baslangic_sermaye": 400000,
   "nakit": {
-    "miktar": 357823.16,
+    "miktar": 333028.16,
     "para_birimi": "USD",
     "agirlik_yuzde": 100.0
   },
-  "pozisyonlar": [],
-  "son_guncelleme": "2026-04-09T16:45:13.135631",
+  "pozisyonlar": [
+    {
+      "sembol": "COHR",
+      "isim": "Coherent Corp",
+      "sektor": "AI Optik / Yarı İletken",
+      "adet": 87,
+      "maliyet_baz": 285.0,
+      "guncel_fiyat": 291.72,
+      "yatirim": 24795.0,
+      "guncel_deger": 25379.640000000003,
+      "kar_zarar": 584.6400000000024,
+      "kar_zarar_yuzde": 2.36,
+      "giris_tarihi": "2026-04-10",
+      "giris_fiyati": 285.0,
+      "giris_nedeni": "Agresif v2 AI optical supply chain. Ichimoku 3/4, RSI 62.8, SMA200 +72%. Gün içi limit 285 doldu (gün dibi 275.69). Stop 265, hedef 330.",
+      "zarar_kes": 265.0,
+      "hedef_fiyat": 330.0
+    }
+  ],
+  "son_guncelleme": "2026-04-10T14:07:42.595734",
   "toplam_deger": 357823.16,
   "toplam_getiri_yuzde": -10.54,
   "notes": [

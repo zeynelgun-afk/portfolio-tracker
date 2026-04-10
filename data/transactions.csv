@@ -144,3 +144,4 @@ date,action,symbol,shares,price,total,reason
 2026-04-08,BUY,dividend,MRK,50,120.0,6000.00,"plan girisi - saglik defansif cesitlendirme, gap-up rallysinde minimal etki plan araliginda, SMA50 ustu RSI 55 notr, PM dondurmesi"
 2026-04-09,BUY,balanced,DUK,49,133.84,6558.16,"K-13 v4.1 jeopolitik/savaş utilities faydalanıcı. VIX 28-35 bant: $9K×(22/30). SMA50 üstü, K-17 temiz, hedef $143."
 2026-04-09,BUY,balanced,CI,23,277.63,6385.49,"K-13 saglik faydalanici. PEG 0.86, FWD P/E 9.1x. Medicare Advantage yok. CEO insider alim. SMA50 ustu. VIX formulu."
+2026-04-10,BUY,OKE,93,85.5,7951.5,"Temettü portföyü - Enerji pipeline. P/E 16, yield %4.8, D/E 1.5. RSI 45.3, SMA50 üstü. Stop 81, hedef 93, R:R 2.1:1"

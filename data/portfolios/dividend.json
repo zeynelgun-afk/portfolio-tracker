@@ -2,7 +2,7 @@
   "portfoy_adi": "Değer + Temettü",
   "baslangic_sermaye": 100000,
   "nakit": {
-    "miktar": 96876.48,
+    "miktar": 88924.98,
     "para_birimi": "USD",
     "agirlik_yuzde": 67.37
   },
@@ -90,9 +90,26 @@
       "maliyet_bazis": 119.95,
       "zarar_kes": 115.95,
       "cb_kaynak": "back-calc-karyuzde"
+    },
+    {
+      "sembol": "OKE",
+      "isim": "ONEOK Inc",
+      "sektor": "Enerji / Doğalgaz Pipeline",
+      "adet": 93,
+      "maliyet_baz": 85.5,
+      "guncel_fiyat": 85.68,
+      "yatirim": 7951.5,
+      "guncel_deger": 7968.240000000001,
+      "kar_zarar": 16.740000000000634,
+      "kar_zarar_yuzde": 0.21,
+      "giris_tarihi": "2026-04-10",
+      "giris_fiyati": 85.5,
+      "giris_nedeni": "Temettü portföyü enerji girişi. P/E 16, yield %4.8, D/E 1.5. RSI 45.3, SMA50 üstü. İran jeopolitik pipeline faydalanıcı. Stop 81, hedef 93.",
+      "zarar_kes": 81.0,
+      "hedef_fiyat": 93.0
     }
   ],
-  "son_guncelleme": "2026-04-09T19:01:30.732241",
+  "son_guncelleme": "2026-04-10T14:07:42.597171",
   "toplam_deger": 143527.8,
   "toplam_getiri_yuzde": 43.53,
   "transactions": [
