@@ -70,11 +70,21 @@ jobs:
         run: |
           if [[ -n $(git status --porcelain data/daily_full_scan.json) ]]; then
             echo "Değişiklik tespit edildi, commit yapılıyor..."
+            TARIH=$(date +'%Y-%m-%d %H:%M UTC')
+            SCAN_INFO=$(python3 -c "
+import json
+try:
+    d = json.load(open('data/daily_full_scan.json'))
+    print(f\"{d.get('toplam_taranan','?')} hisse tarandi, {d.get('peg_filtreli','?')} aday\")
+except Exception as e:
+    print('tarama tamamlandi')
+" 2>/dev/null || echo "tarama tamamlandi")
+            COMMIT_MSG="[AUTO-SCAN] Sabah taramasi ${TARIH} | ${SCAN_INFO}"
             for attempt in 1 2 3; do
               git pull --rebase origin main || true
               git add data/daily_full_scan.json
-              git diff --staged --quiet && echo "Commit edilecek değişiklik yok" && exit 0
-              git commit -m "[AUTO-SCAN] Sabah taraması $(date +'%Y-%m-%d %H:%M UTC') | $(python3 -c \"import json; d=json.load(open('data/daily_full_scan.json')); print(f\\\"{d['toplam_taranan']} hisse tarandı, {d['peg_filtreli']} aday\\\")\")"
+              git diff --staged --quiet && echo "Commit edilecek degisiklik yok" && exit 0
+              git commit -m "$COMMIT_MSG"
               git push && echo "✅ Push başarılı" && exit 0
               sleep $((attempt * 5))
             done
