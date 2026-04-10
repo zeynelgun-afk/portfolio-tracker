@@ -37,6 +37,13 @@ from memory_manager import (
 )
 from web_researcher import build_research_context
 from twitter_monitor import build_twitter_context
+from learning_engine import (
+    build_weekly_learning_context,
+    auto_extract_lessons,
+    analyze_closed_trades,
+    update_k_rule_stats,
+)
+from risk_engine import build_risk_context
 
 REPO_ROOT = Path(__file__).parent.parent
 TR_TZ     = pytz.timezone("Europe/Istanbul")
@@ -94,9 +101,10 @@ def collect_context(mode: str) -> dict:
     # Sıkıştırılmış temel bağlam
     compressed = build_context_for_claude(mode)
 
-    # Sabah ve kapanış: web + twitter ekle (monitor'da ekleme → hızlı kal)
+    # Sabah ve kapanış: web + twitter + risk ekle
     research = ""
     twitter  = ""
+    risk     = ""
     if mode in ("morning", "closing", "weekly"):
         research = build_research_context(symbols)
         try:
@@ -104,6 +112,7 @@ def collect_context(mode: str) -> dict:
         except Exception as e:
             print(f"[Twitter] Hata: {e}")
             twitter = ""
+        risk = build_risk_context(portfolios)
 
     return {
         "mode":       mode,
@@ -111,6 +120,7 @@ def collect_context(mode: str) -> dict:
         "compressed": compressed,
         "research":   research,
         "twitter":    twitter,
+        "risk":       risk,
         "raw": {
             "portfolios": portfolios,
             "market":     market,
@@ -131,14 +141,17 @@ def run_morning(ctx: dict):
 
 {ctx['twitter']}
 
+{ctx['risk']}
+
 === GÖREV: SABAH ANALİZİ ===
 Yukarıdaki verileri değerlendirerek:
-1. Stop'a yakın pozisyon var mı? (stop_pct <= 3 olanları işaretle)
+1. Stop'a yakın pozisyon var mı? Risk analizindeki stop uyarılarına bak
 2. Earnings yaklaşan hisse var mı? K-05 uyarısı gerekiyor mu?
 3. Makro takvimde bugün/bu hafta kritik olay var mı?
-4. Twitter'da portföyle ilgili önemli bir sinyal var mı? (SPEKÜLATİF etiketle)
-5. Piyasa rejimi: RISK_ON / NEUTRAL / RISK_OFF?
-6. Önerdiğim 1-2 aksiyon (uygulama değil, öneri)
+4. Konsantrasyon/korelasyon riski var mı? K-17 uyarısı?
+5. Twitter'da portföyle ilgili önemli sinyal var mı? (SPEKÜLATİF etiketle)
+6. Piyasa rejimi: RISK_ON / NEUTRAL / RISK_OFF?
+7. Önerdiğim 1-2 aksiyon (uygulama değil, öneri)
 
 Kısa ve net. KESİN / MUHTEMEL / SPEKÜLATİF etiket kullan.
 Sonda: "Bugün gözüm şunlarda: ..."
@@ -233,28 +246,40 @@ def run_monitor(ctx: dict):
         print("[Orkestratör] İzleme tamamlandı, uyarı yok.")
 
 def run_weekly(ctx: dict):
-    """Pazar günü haftalık derin analiz."""
+    """Pazar günü haftalık derin analiz + öğrenme döngüsü."""
     print("[Orkestratör] Haftalık mod çalışıyor...")
+
+    learning_ctx = build_weekly_learning_context()
+    trade_stats  = analyze_closed_trades(days_back=7)
+    update_k_rule_stats(trade_stats)
 
     prompt = f"""
 {ctx['compressed']}
 
-=== GÖREV: HAFTALIK DERİN ANALİZ ===
-1. Bu haftanın portföy özeti: toplam getiri, en iyi/kötü pozisyon
-2. Hangi K-kuralı bu hafta kritik rol oynadı?
-3. Tezlerde değişen bir şey var mı? (AI supply chain, temettü, makro)
-4. Gelecek hafta için 3 kritik izleme noktası
-5. Bir kural veya filtre değişikliği öneriyor musun? (BACKTEST GEREKLİ etiketi ile)
-6. Öğrenme özeti: Bu haftadan 2 somut ders
+{ctx['research']}
+
+{ctx['risk']}
+
+{learning_ctx}
+
+=== GÖREV: HAFTALIK DERİN ANALİZ + ÖĞRENME ===
+1. Bu haftanın portföy özeti: en iyi/kötü pozisyon, genel performans
+2. Risk analizi: konsantrasyon, korelasyon, drawdown durumu
+3. Hangi K-kuralı bu hafta kritik rol oynadı?
+4. Trade istatistiklerine göre: win rate, ort P/L, hangi yöntem daha iyi?
+5. Tezlerde değişen bir şey var mı?
+6. Gelecek hafta için 3 kritik izleme noktası
+7. Kural/filtre değişikliği önerisi varsa: BACKTEST GEREKLİ — [değişiklik]
+8. Bu haftadan 2 somut ders
 
 Detaylı Türkçe analiz. Spekülatif önerilere BACKTEST GEREKLİ işareti koy.
 """
 
     response = get_claude_decision(prompt, mode="weekly")
     save_daily_brief(response, "weekly")
-    append_learning(f"Haftalık: {response[:200]}", source="weekly_analysis")
+    auto_extract_lessons(response, "weekly")
 
-    msg = f"📅 *Finzora Agent — Haftalık*\n_{ctx['timestamp'][:16]}_\n\n{response}"
+    msg = f"Finzora Agent — Haftalık Analiz\n{ctx['timestamp'][:16]}\n\n{response}"
     send_private_telegram(msg)
     print("[Orkestratör] Haftalık analiz gönderildi.")
 
