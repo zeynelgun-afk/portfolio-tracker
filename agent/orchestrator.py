@@ -28,6 +28,13 @@ from tools import (
     get_watchlist,
     send_private_telegram
 )
+from memory_manager import (
+    build_portfolio_state,
+    save_portfolio_state,
+    save_daily_brief,
+    build_context_for_claude,
+    append_learning
+)
 
 REPO_ROOT = Path(__file__).parent.parent
 TR_TZ     = pytz.timezone("Europe/Istanbul")
@@ -59,31 +66,34 @@ def get_run_mode() -> str:
 # ── Veri toplama ─────────────────────────────────────────────────────────────
 
 def collect_context(mode: str) -> dict:
-    """Tüm bağlamı topla, Claude'a hazırla."""
+    """
+    Veri topla, memory'yi güncelle, sıkıştırılmış bağlam hazırla.
+    Tam JSON yerine özet → ~1500 token, 10x ucuz.
+    """
     print(f"[Orkestratör] Veri toplanıyor... (mod: {mode})")
 
-    ctx = {
-        "mode":      mode,
-        "timestamp": datetime.now(TR_TZ).isoformat(),
-        "portfolios": get_portfolio_snapshot(),
-        "market":     get_market_context(),
-        "swing":      get_swing_status(),
-        "watchlist":  get_watchlist(),
+    # Ham veri çek
+    portfolios = get_portfolio_snapshot()
+    market     = get_market_context()
+    swing      = get_swing_status()
+
+    # L1 belleği güncelle (her çağrıda)
+    state = build_portfolio_state(portfolios, market)
+    save_portfolio_state(state)
+
+    # Sıkıştırılmış bağlamı derle
+    compressed = build_context_for_claude(mode)
+
+    return {
+        "mode":       mode,
+        "timestamp":  datetime.now(TR_TZ).isoformat(),
+        "compressed": compressed,   # Claude'a bu gider (~1500 token)
+        "raw": {                    # Monitor modunda anlık kontrol için
+            "portfolios": portfolios,
+            "market":     market,
+            "swing":      swing,
+        }
     }
-
-    # K-kuralları playbook'u oku (Claude'un hafızası)
-    playbook_path = REPO_ROOT / "docs" / "TRADING_PLAYBOOK.md"
-    if playbook_path.exists():
-        ctx["playbook"] = playbook_path.read_text(encoding="utf-8")[:8000]  # İlk 8K token
-
-    # Son kapanış raporunu oku (bağlam için)
-    reports_dir = REPO_ROOT / "reports" / "daily"
-    if reports_dir.exists():
-        reports = sorted(reports_dir.glob("*KAPANIS*.md"), reverse=True)
-        if reports:
-            ctx["last_report"] = reports[0].read_text(encoding="utf-8")[:3000]
-
-    return ctx
 
 # ── Mod çalıştırıcıları ───────────────────────────────────────────────────────
 
@@ -92,79 +102,61 @@ def run_morning(ctx: dict):
     print("[Orkestratör] Sabah modu çalışıyor...")
 
     prompt = f"""
-Sen Finzora Agent'sın. Zeynel'in portföy asistanısın.
-Bugün {ctx['timestamp']} — piyasa açılmadan önce sabah analizi yapıyorsun.
+{ctx['compressed']}
 
-PORTFÖY DURUMU:
-{json.dumps(ctx['portfolios'], ensure_ascii=False, indent=2)[:3000]}
+=== GÖREV: SABAH ANALİZİ ===
+1. Stop'a yakın pozisyon var mı? (stop_pct <= 3 olanları işaretle)
+2. Piyasa rejimi: RISK_ON / NEUTRAL / RISK_OFF? Neden?
+3. Bugün dikkat edilmesi gereken 1-2 şey
+4. Swing watchlist'te güçlü setup var mı?
+5. Önerdiğim 1-2 aksiyon (uygulama değil, öneri)
 
-PİYASA BAĞLAMI:
-{json.dumps(ctx['market'], ensure_ascii=False, indent=2)}
-
-SWING DURUMU:
-{json.dumps(ctx['swing'], ensure_ascii=False, indent=2)}
-
-K-KURALLARI (özet):
-{ctx.get('playbook','')[:2000]}
-
-Görevin:
-1. Portföylerdeki pozisyonları tara — stop'a yakın olan var mı? (K-09)
-2. Bugün dikkat edilmesi gereken makro/earnings var mı?
-3. Swing watchlist'te güçlü setup var mı?
-4. Genel piyasa rejimi: RISK_ON / NEUTRAL / RISK_OFF?
-5. Önerdiğin 1-2 aksiyon (henüz UYGULAMA, sadece öneri)
-
-Format: Doğal Türkçe, kısa ve net. Madde madde yaz.
-Belirsiz şeyleri SPEKÜLATİF olarak işaretle.
-Sonda: "Bugün gözüm şunlarda olacak: ..."
+Kısa ve net yaz. Sonda: "Bugün gözüm şunlarda: ..."
+KESİN / MUHTEMEL / SPEKÜLATİF etiket kullan.
 """
 
     response = get_claude_decision(prompt, mode="morning")
-    
-    msg = f"🌅 *Finzora Agent — Sabah Analizi*\n_{ctx['timestamp'][:16]}_\n\n{response}"
+    save_daily_brief(response, "morning")
+
+    msg = f"🌅 *Finzora Agent — Sabah*\n_{ctx['timestamp'][:16]}_\n\n{response}"
     send_private_telegram(msg)
-    print("[Orkestratör] Sabah analizi Telegram'a gönderildi.")
+    print("[Orkestratör] Sabah analizi gönderildi.")
 
 def run_closing(ctx: dict):
     """Kapanış yorumu — piyasa kapandıktan sonra."""
     print("[Orkestratör] Kapanış modu çalışıyor...")
 
     prompt = f"""
-Sen Finzora Agent'sın.
-Bugün {ctx['timestamp']} — piyasa kapandı, kapanış analizi yapıyorsun.
+{ctx['compressed']}
 
-PORTFÖY DURUMU:
-{json.dumps(ctx['portfolios'], ensure_ascii=False, indent=2)[:3000]}
-
-PİYASA BAĞLAMI:
-{json.dumps(ctx['market'], ensure_ascii=False, indent=2)}
-
-SON RAPOR (varsa):
-{ctx.get('last_report','Yok')[:1500]}
-
-Görevin:
-1. Bugün portföylerde ne değişti? Hangi pozisyon en çok etkilendi?
-2. Stop seviyelerine yaklaşan var mı? (kritik olanları vurgula)
+=== GÖREV: KAPANIS YORUMU ===
+1. Bugün portföyde en dikkat çeken hareket neydi?
+2. Stop seviyelerine tehlikeli yaklaşan var mı?
 3. Tezler hâlâ geçerli mi? Bozan bir gelişme var mı?
-4. Yarın için izleme listesi: En önemli 3 şey.
-5. Hafta genelinde bir pattern görüyor musun?
+4. Yarın için en önemli 3 izleme noktası
+5. Bu kapanıştan çıkan 1 ders (learning_log için)
 
-Format: Doğal Türkçe, kısa ve net.
-KESİN / MUHTEMEL / SPEKÜLATİF etiketlerini kullan.
+Kısa ve net. KESİN / MUHTEMEL / SPEKÜLATİF etiket kullan.
 """
 
     response = get_claude_decision(prompt, mode="closing")
+    save_daily_brief(response, "closing")
 
-    msg = f"📊 *Finzora Agent — Kapanış Yorumu*\n_{ctx['timestamp'][:16]}_\n\n{response}"
+    # Öğrenmeyi logla (son satırı yakala)
+    lines = [l.strip() for l in response.split("\n") if l.strip()]
+    if lines:
+        append_learning(lines[-1], source="closing_analysis")
+
+    msg = f"📊 *Finzora Agent — Kapanış*\n_{ctx['timestamp'][:16]}_\n\n{response}"
     send_private_telegram(msg)
-    print("[Orkestratör] Kapanış yorumu Telegram'a gönderildi.")
+    print("[Orkestratör] Kapanış yorumu gönderildi.")
 
 def run_monitor(ctx: dict):
     """Seans içi izleme — sadece acil durumda mesaj atar."""
     print("[Orkestratör] İzleme modu çalışıyor...")
 
-    portfolios = ctx["portfolios"]
-    market     = ctx["market"]
+    portfolios = ctx["raw"]["portfolios"]
+    market     = ctx["raw"]["market"]
     alerts     = []
 
     # Stop yakınlık kontrolü (basit, Claude'suz — ucuz)
@@ -212,32 +204,26 @@ def run_weekly(ctx: dict):
     print("[Orkestratör] Haftalık mod çalışıyor...")
 
     prompt = f"""
-Sen Finzora Agent'sın. Haftalık derin analiz yapıyorsun.
-Tarih: {ctx['timestamp']}
+{ctx['compressed']}
 
-PORTFÖY DURUMU:
-{json.dumps(ctx['portfolios'], ensure_ascii=False, indent=2)[:4000]}
+=== GÖREV: HAFTALIK DERİN ANALİZ ===
+1. Bu haftanın portföy özeti: toplam getiri, en iyi/kötü pozisyon
+2. Hangi K-kuralı bu hafta kritik rol oynadı?
+3. Tezlerde değişen bir şey var mı? (AI supply chain, temettü, makro)
+4. Gelecek hafta için 3 kritik izleme noktası
+5. Bir kural veya filtre değişikliği öneriyor musun? (BACKTEST GEREKLİ etiketi ile)
+6. Öğrenme özeti: Bu haftadan 2 somut ders
 
-K-KURALLARI:
-{ctx.get('playbook','')[:3000]}
-
-Görevin:
-1. Bu haftanın özeti: Portföyler toplamda nasıl performans gösterdi?
-2. En iyi / en kötü pozisyon ve neden?
-3. Hangi K-kuralı bu hafta en çok devreye girdi?
-4. Tezlerde değişen bir şey var mı? (AI supply chain, temettü, makro)
-5. Gelecek hafta için 3 kritik izleme noktası
-6. Bir şeyi değiştirmemi öneriyor musun? (Kural, filtre, pozisyon)
-
-Format: Daha uzun olabilir, detaylı Türkçe analiz.
-Spekülatif öneriler için "BACKTEST GEREKLİ" işareti koy.
+Detaylı Türkçe analiz. Spekülatif önerilere BACKTEST GEREKLİ işareti koy.
 """
 
     response = get_claude_decision(prompt, mode="weekly")
+    save_daily_brief(response, "weekly")
+    append_learning(f"Haftalık: {response[:200]}", source="weekly_analysis")
 
-    msg = f"📅 *Finzora Agent — Haftalık Analiz*\n_{ctx['timestamp'][:16]}_\n\n{response}"
+    msg = f"📅 *Finzora Agent — Haftalık*\n_{ctx['timestamp'][:16]}_\n\n{response}"
     send_private_telegram(msg)
-    print("[Orkestratör] Haftalık analiz Telegram'a gönderildi.")
+    print("[Orkestratör] Haftalık analiz gönderildi.")
 
 # ── Ana giriş ─────────────────────────────────────────────────────────────────
 

@@ -9,3 +9,6 @@ build/
 # Python
 __pycache__/
 *.pyc
+agent/memory/portfolio_state.json
+agent/memory/daily_brief.json
+agent/memory/learning_log.json

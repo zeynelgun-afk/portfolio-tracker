@@ -15,7 +15,7 @@ from datetime import datetime
 FMP_KEY      = os.environ.get("FMP_API_KEY", "g1GFJZtV5rCP49UCir4WuP56VjhmA6F8")
 FMP_BASE     = "https://financialmodelingprep.com/stable"
 BOT_TOKEN    = os.environ.get("TELEGRAM_TOKEN", "")
-PRIVATE_CHAT = os.environ.get("TELEGRAM_PRIVATE_CHAT", "")  # Zeynel'in kişisel chat ID'si
+PRIVATE_CHAT = os.environ.get("TELEGRAM_PRIVATE_CHAT", "1403072107")  # Zeynel private
 REPO_ROOT    = Path(__file__).parent.parent
 
 
