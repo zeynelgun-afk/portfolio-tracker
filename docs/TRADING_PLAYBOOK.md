@@ -491,20 +491,19 @@ KADEMELİ FREN:
 - 4+ ardışık zarar → TAMAMEN DUR, min 1 hafta swing yok
 - Toplam swing drawdown %15+ (peak-to-trough) → DUR, ortamı değerlendir
 
-YENİDEN BAŞLAMA PROTOKOLÜ (v2.1 — 10 nisan 2026):
+YENİDEN BAŞLAMA PROTOKOLÜ (v2.2 — 10 nisan 2026):
 
-1) Min 1 iş günü soğuma
-
-2) Zorunlu kayıp analizi — her kayıp trade için 3 kategori (soğuma sonrası da yapılabilir):
+1) Zorunlu kayıp analizi — her kayıp trade için 3 kategori:
    - ORTAM: Giriş anında VIX ve SPY SMA50 durumu neydi? K-13 uyumlu muydu?
    - SİSTEM: İchimoku 4/4 tam mıydı? Hangi katman eksikti?
    - PSİKOLOJİ: Kovalama, revenge veya kural dışı giriş var mıydı?
 
-3) Normal boyutla devam ($5K-$10K) — SADECE A-kalite setup
+2) Normal boyutla devam ($5K-$10K) — SADECE A-kalite setup
 
 GİRİŞ ÖNCESİ PSİKOLOJİ TESTİ (her trade için, tek soru):
 "Bu girişi yarın tekrar inceleseydim, tüm kuralları tam uyguladım mı?"
 → Cevap net değilse veya tereddüt varsa: giriş yapma.
+(Not: Bu test sabit soğuma süresinin yerini alır — psikolojik sıfırlanmayı anlık ölçer.)
 
 ORTAM TESTİ (K-13'e göre):
 - Faydalanıcı sektörlerde VIX <28 + SPY SMA50 üstü
