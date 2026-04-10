@@ -44,6 +44,8 @@ from learning_engine import (
     update_k_rule_stats,
 )
 from risk_engine import build_risk_context
+from backtester import run_full_backtest, format_backtest_for_claude
+from rule_updater import run_weekly_rule_review, get_applied_changes_summary
 
 REPO_ROOT = Path(__file__).parent.parent
 TR_TZ     = pytz.timezone("Europe/Istanbul")
@@ -275,11 +277,38 @@ def run_weekly(ctx: dict):
 Detaylı Türkçe analiz. Spekülatif önerilere BACKTEST GEREKLİ işareti koy.
 """
 
-    response = get_claude_decision(prompt, mode="weekly")
+    # Backtest çalıştır ve prompt'a ekle
+    backtest     = run_full_backtest()
+    backtest_ctx = format_backtest_for_claude(backtest)
+    applied_log  = get_applied_changes_summary()
+
+    full_prompt = prompt + f"""
+{backtest_ctx}
+
+Son uygulanan değişiklikler:
+{applied_log}
+
+KURAL ÖNERİSİ FORMAT (varsa):
+BACKTEST GEREKLİ — [param_adı]: [eski_değer] → [yeni_değer] | [gerekçe]
+İzin verilen parametreler: rsi_k11_katman1, rsi_k11_katman2, atr_katsayi, swing_max_gun
+"""
+
+    response = get_claude_decision(full_prompt, mode="weekly")
     save_daily_brief(response, "weekly")
     auto_extract_lessons(response, "weekly")
 
+    # Önerileri kuyruğa ekle (gerçekte uygulama yok — Phase 5)
+    proposals = run_weekly_rule_review(response, backtest)
+    if proposals:
+        onay_beklenti = [p for p in proposals if p["durum"] == "ONAY_BEKLIYOR"]
+        reddedilen    = [p for p in proposals if p["durum"] == "REDDEDILDI"]
+        print(f"[Orkestratör] {len(onay_beklenti)} öneri kuyruğa eklendi, {len(reddedilen)} reddedildi.")
+
     msg = f"Finzora Agent — Haftalık Analiz\n{ctx['timestamp'][:16]}\n\n{response}"
+    if proposals:
+        msg += f"\n\n--- KURAL ÖNERİLERİ ---"
+        for p in proposals:
+            msg += f"\n{p['durum']}: {p['param']} = {p['new_value']} ({p['gerekce'][:60]})"
     send_private_telegram(msg)
     print("[Orkestratör] Haftalık analiz gönderildi.")
 

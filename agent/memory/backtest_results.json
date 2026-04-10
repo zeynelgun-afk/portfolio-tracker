@@ -1,0 +1,13 @@
+{
+  "test_tarihi": "2026-04-10",
+  "toplam_trade": 0,
+  "kural_performansi": {
+    "hata": "Kapanmış trade yok"
+  },
+  "rsi_testi": {
+    "hata": "Trade verisi yok"
+  },
+  "stop_testi": {
+    "hata": "Trade verisi yok"
+  }
+}
