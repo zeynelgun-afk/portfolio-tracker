@@ -136,6 +136,7 @@ ADIM 4 — PORTFÖY SAĞLIK KONTROLÜ
     - konsantrasyon (K-12 limitleri — detay: `docs/K_RULES_QUICK_REF.md`)
   → uyarı kategorileri:
     🔴 ACİL: stop mesafesi <%2 VEYA günlük <-%5 VEYA fiyat < SMA200
+      ⚠️ k09_proximity_check.py BURDA ÇALIŞTIRILMAZ — mesafe yüzdesi tabloya yazılır, script SESSION FAZ1'de çalışır
     ⚠️ İZLE: RSI 70+ VEYA RSI <40 VEYA SMA50 altı VEYA K-12 limit yakını
     🟢 NORMAL: trend içinde, uyarı yok
   → SEKTÖR EXPOSURE: 3 portföy toplam sektör dağılımı hesapla (K-12 %40 kontrol)

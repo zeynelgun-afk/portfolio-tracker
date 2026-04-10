@@ -137,9 +137,9 @@ ADIM 5 — K FİLTRELERİ (SIRAYLA, UCUZ+KRİTİK ÖNCE)
   1. ~~K-19 — XLP dışlama~~ (Aşama 1'de otomatik uygulandı, atla):
      swing_full_universe.py Aşama 1 Consumer Defensive sektörünü zaten ön eliyor.
 
-  2. K-05 — earnings 2+ iş günü içinde (EN ÖNCE, ucuz + kritik):
+  2. K-05 — earnings ≤2 iş günü içinde (EN ÖNCE, ucuz + kritik):
      FMP earnings-calendar kontrol, tek çağrıda batch
-     2+ gün içinde earnings varsa GİR-ME (binary gap riski, swing için istisna yok)
+     bugünden itibaren ≤2 iş günü içinde earnings varsa GİR-ME (binary gap riski, swing için istisna yok)
      script: scripts/k05_earnings_check.py SYMBOL
      → bu filtre önce çünkü earnings yaklaşan hisse zaten alınmayacak, pahalı scriptleri koşturmanın anlamı yok
 
@@ -334,7 +334,7 @@ ADIM 7 — GİRİŞ PLANI + RAPOR
 - K-14 aktifse çok sıkı filtre, sadece A-kalite istisna
 - K-13 v4.1 sektör bazlı VIX zorunlu
 - ichimoku 4/4 zorunlu, eksik sinyal ile giriş yapılmaz
-- K-05 zorunlu: earnings 2+ gün içinde → giriş yok (swing için istisna yok)
+- K-05 zorunlu: bugünden itibaren ≤2 iş günü içinde earnings → giriş yok (swing için istisna yok)
 
 ---
 

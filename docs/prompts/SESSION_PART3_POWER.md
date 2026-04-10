@@ -156,7 +156,7 @@ earnings = fmp_get("earnings-calendar", {"from": TODAY, "to": TODAY})
 
 **portföy/swing/watchlist etkisi**:
 - portföy pozisyonunda olan → K-16 skor hesapla, gerekirse kısmi çık
-- swing pozisyonunda olan → K-05 kontrol (2+ iş günü öncesi çıkış olmalıydı, olmadıysa **kural ihlali**)
+- swing pozisyonunda olan → K-05 kontrol (≤2 iş günü öncesi çıkış olmalıydı, olmadıysa **kural ihlali**)
 - watchlist'te olan → post-earnings drift (PEAD) değerlendir
 
 **çıktı**: AMC earnings listesi + etki notu (yarın sabah raporu için)

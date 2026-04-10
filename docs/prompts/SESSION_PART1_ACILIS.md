@@ -137,7 +137,7 @@ açılıştan önce açıklanan BMO (before market open) kazançlar fiyatı etki
 
 **etki değerlendirmesi**:
 - portföy pozisyonu mu? → `scripts/k16_sell_the_news_score.py SYMBOL` çalıştır
-- swing pozisyonu mu? → K-05 zaten 2+ gün öncesi çıkış yapmış olmalı, çıkmadıysa hatadır
+- swing pozisyonu mu? → K-05 zaten earnings ≤2 gün kala çıkış yapmış olmalı, çıkmadıysa hatadır
 - watchlist'teki mi? → izle, giriş sinyali oluştu mu kontrol et
 
 ---
@@ -188,7 +188,7 @@ acil aksiyon listesini tara:
 
 **kural**: FAZ 1'de (ilk 60 dakika) yeni giriş yapılmaz, sadece çıkış ve stop yönetimi.
 
-**istisna** (yeni giriş için): SWING veya PORTFOY raporunun "hemen (seans açılışında)" bölümünde giriş planı varsa + gap durumu uygunsa + GO/NO-GO 16 madde bu sabah tekrar teyit edilirse → uygulanır. Aksi halde ilk 60 dakikada yeni giriş yasak, FAZ 2'ye ertele.
+**istisna** (yeni giriş için): SWING veya PORTFOY raporunun "hemen (seans açılışında)" bölümünde giriş planı varsa + gap durumu uygunsa → uygulanır. "Tekrar teyit" gerekmez — sabah raporunda GO onayı verilmiş olması yeterlidir; açılış gap'i planı bozmuyorsa girilir. Aksi halde ilk 60 dakikada yeni giriş yasak, FAZ 2'ye ertele.
 
 ---
 

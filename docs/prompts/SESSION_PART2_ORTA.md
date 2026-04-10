@@ -232,7 +232,7 @@ her pozisyon için karar ağacı:
    kâr %15+: 1.5×ATR (agresif kilit)
    highest_high arttıysa stop yukarı çek
 
-4. K-05 earnings koruması (2+ iş günü önce ZORUNLU)
+4. K-05 earnings koruması (earnings ≤2 iş günü kala ZORUNLU)
    earnings ≤2 iş günü → ✂️ TAM ÇIK, exception yok
 
 5. hacim + momentum (K-07 zaten yönetiyor, sadece rapor)
@@ -369,9 +369,9 @@ FMP historical data ile ichimoku 4/4 tarama (bkz. `docs/SWING_SYSTEM_V2.md` böl
 □ 4. K-13 v4.1 VIX uygun mu? (sektör kategorisi × VIX bandı matrisi — K_RULES_QUICK_REF.md)
 □ 5. K-18 insider temiz? (scripts/k18_insider_check.py SYMBOL)
 □ 6. K-17 korelasyon temiz? (scripts/k17_correlation_check.py SYMBOL)
-□ 7. K-15a teyit: RSI <35 ise 1 gün bekle?
+□ 7. K-15a teyit: RSI <35 ise 1 gün bekle? (portföy girişlerine — swing için UYGULANMAZ, swing RSI 40-65 bandında zaten filtreli)
 □ 8. K-15b dilüsyon: momentum hisse ise (scripts/k15b_dilution_check.py)
-□ 9. K-05 earnings: swing için ≤2 iş günü içinde earnings → GİRMEZ
+□ 9. K-05 earnings: swing ve portföy için ≤2 iş günü içinde earnings → GİRMEZ
 □ 10. K-19 + K-20: XLP değil mi, sektör RS dead cat yok mu?
 □ 11. K-14 drawdown status: K14_DRAWDOWN_FREN değil mi?
 □ 12. K-12 konsantrasyon: giriş sonrası portföy limiti aşılmıyor mu?

@@ -1,4 +1,4 @@
-# GÜNLÜK RAPOR PART 2 — KAPANIŞ RAPORU v1.3
+# GÜNLÜK RAPOR PART 2 — KAPANIŞ RAPORU v1.5
 
 > ⛔ **KRİTİK: ADIM ATLAMA YASAĞI**
 >
@@ -23,7 +23,7 @@
 > **geçmiş hatalar**: bölüm 4 (kazanç açıklamaları) atlandı → Oracle bilançosu ($17.2B gelir, bulut +%84, AH +%6.3) rapordan tamamen eksik kaldı. bölüm 5 ve 6 da eksik yazıldı. bu tür atlamalar portföy kararlarını olumsuz etkiler. her bölümü tamamla.
 
 > **versiyon**: 1.5 | **son güncelleme**: 9 nisan 2026 (session_state.json okuma + K-kural referans bağlantısı)
-> **çıktı dosyası**: `reports/daily/DAILY_REPORT_YYYY-MM-DD.md`
+> **çıktı dosyası**: `reports/daily/DAILY_KAPANIS_YYYY-MM-DD.md`
 > **çalışma zamanı**: TR ~09:00 (NYSE dün gece 23:00'da kapandı, bugün 16:30 açılacak — yaz saati)
 > **ön koşul**: bir önceki günün PART 1 sabah raporu çalıştırılmış olmalı (çünkü PART 2 dünün seansını değerlendirir, sabah planı ile gerçekleşmeyi karşılaştırır). aynı gün PART 1 bugün seansı için ayrı plan yapar, PART 2 ile doğrudan ilişkili değildir.
 > **session state okuma**: `data/session_state.json` dün FAZ 1/2/3 bloklarını okur, trade kararlarını + K-rule uygulamalarını rapora yansıtır. kapanış raporu yazıldıktan sonra state dosyası yarın sabah PART 1 tarafından flag'ler okunana kadar korunur.
@@ -127,11 +127,11 @@ ADIM 4 — RAPOR YAZ
   → bölüm 1-6'yı sırayla yaz (format aşağıda)
   → bölüm 4 kazanç açıklamaları (adım 3.5 verileriyle) ekle
   → sabah raporundaki planla karşılaştır (bölüm 5)
-  → reports/daily/DAILY_REPORT_YYYY-MM-DD.md olarak kaydet
+  → reports/daily/DAILY_KAPANIS_YYYY-MM-DD.md olarak kaydet
   → GIT COMMIT + PUSH: "[GÜNLÜK RAPOR] DD Ay YYYY - kısa özet"
   → TELEGRAM GÖNDERİMİ (git push'tan SONRA):
     1. python scripts/telegram_notify.py --type closing --theme "[günün özeti]"
-    2. python scripts/telegram_notify.py --type report --file reports/daily/DAILY_REPORT_YYYY-MM-DD.md
+    2. python scripts/telegram_notify.py --type report --file reports/daily/DAILY_KAPANIS_YYYY-MM-DD.md
 
 ADIM 5 — PLAYBOOK GÜNCELLE
   → docs/TRADING_PLAYBOOK.md dosyasını oku
@@ -161,7 +161,6 @@ kısa, hızlı özet — bugün ne oldu.
 ## 1. günün özeti
 
 **tarih**: {tarih}, {gün} | **seans**: NYSE kapandı
-
 ### piyasa
 
 | ticker | kapanış | değişim | RSI | SMA50 | SMA200 |
@@ -325,7 +324,7 @@ bugün kapanış sonrası (veya gün içi) açıklayan şirketlerin analizi.
 - 5 madde: 5g ralli %5+, EPS revizyon %10+, 52w zirve %5 mesafe, sektör 1ay %10+, short float %10+
 - Skor 2-3: portföy pozisyonunda %25 kısmi kâr al + K-11 trailing aktif
 - Skor 4-5: %50 kısmi çık, post-earnings bekle
-- NOT: Swing pozisyonları için K-05 geçerli (2+ gün öncesi TAM çık), K-16 portföy için
+- NOT: Swing pozisyonları için K-05 geçerli (earnings ≤2 gün kala TAM çık), K-16 portföy için
 
 ---
 

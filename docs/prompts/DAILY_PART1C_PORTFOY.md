@@ -198,8 +198,8 @@ ADIM 6 — ORTAK FİLTRELER (TÜM 3 PORTFÖY ADAYLARINA)
      - fiyat < SMA50 ve RSI >30 → ❌
 
   2. K-05 earnings proximity:
-     - 2+ işlem günü içinde earnings varsa → ❌ (binary gap riski, playbook ile uyumlu)
-     - not: PART 1B swing ile aynı eşik (2 gün). PEAD (post-earnings drift) girişleri K-16 ile yönetilir
+     - bugünden itibaren ≤2 işlem günü içinde earnings varsa → ❌ (binary gap riski, playbook ile uyumlu)
+     - not: PART 1B swing ile aynı eşik (≤2 gün). PEAD (post-earnings drift) girişleri K-16 ile yönetilir
 
   3. K-12 konsantrasyon + K-17 tema çakışması:
      - K-12 tek hisse limiti (giriş sonrası aşım):
