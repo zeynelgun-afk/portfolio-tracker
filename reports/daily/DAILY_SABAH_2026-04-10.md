@@ -1,136 +1,95 @@
-# günlük sabah raporu — 10 nisan 2026 (cuma)
+# günlük sabah raporu — 10 nisan 2026
 
-> finzora ai | fmp api | nyse açılışına ~2.5 saat | açılış: 16:30 tr
+**finzora ai** | rapor saati: 12:30 tr | nyse açılış: 16:30 tr
 
 ---
 
 ## 0. piyasa istihbaratı
 
-### aktif temalar
+### kritik — mart 2026 cpi açıklandı
 
-| tema | güç skoru | değişim | neden |
-|------|-----------|---------|-------|
-| iran jeopolitik riski | 7/10 | ↓ | ateşkes kırılgan ama tutuyor, vance bu hafta sonu islamabad'da |
-| ai altyapı harcaması | 8/10 | ↑ | tsm q1 geliri +35%, ai çip talebi güçlü |
-| enerji/petrol volatilitesi | 8/10 | → | wti $98-99, hormuz hala kısıtlı, ateşkes tutarsa düşüş potansiyeli |
-| faiz indirimi beklentisi | 4/10 | ↓ | cpi yüksek baskısı, fed nisan'da %99 tutacak |
-| savunma harcaması | 7/10 | → | iran riski azalmaya başladı ama çözüm yok |
-| altın / defansif | 6/10 | ↓ | gld $437, vix normalleşiyor, risk-on dönüşü |
+| gösterge | beklenti | gerçekleşen | değerlendirme |
+|---|---|---|---|
+| headline cpi aylık | +0.80–0.90% | **+0.30%** | 🟢 büyük dovish sürpriz |
+| headline cpi yıllık | +3.70% | **+2.80%** | 🟢 beklentinin çok altında |
+| core cpi aylık | +0.20–0.30% | **+0.40%** | 🔴 hafif hawkish |
+| core cpi yıllık | +2.70% | **+3.10%** | 🟡 beklenti üzeri ama ılımlı |
 
-### kritik haber → etki zinciri
+iran savaşının ürettiği enerji şoku tüketici enflasyonuna beklenen güçte yansımadı. bu fed'in elini rahatlatıyor. ancak çekirdek enflasyon 3.1% ile hala hedef üstünde — fed mayısta (%98.4 kesinlikle) sabit kalacak. yılın ikinci yarısında indirim penceresi yeniden açılıyor.
 
-**1. iran ateşkes kırılgan (10 nisan)**
-- 1. derece: wti $98-99, brent $96-97 — hormuz hala kapalı
-- 2. derece: enflasyon cpi'da tam görünüyor — enerji şoku mart ayına tam yansıdı
-- 3. derece: vance islamabad görüşmesi bu hafta sonu — olumlu sonuç petrolü $80'lere getirebilir
-- portföy aksiyonu: enerji/utility pozisyonları izleme modunda. agressif portföy deployment'ı ateşkes netleşmesini bekliyor
+**birinci derece etki**: hazine faizleri geriledi (10y 4.29%), hisse piyasaları nefes alıyor.
+**ikinci derece etki**: tüketici harcaması beklentisi yukarı, savunmacı rotasyonun aciliyeti azaldı.
+**üçüncü derece etki**: fed 2026 faiz indirim senaryosu yeniden masaya geliyor — büyüme hisseleri orta vadede daha avantajlı konuma geçiyor.
 
-**2. cpi mart 2026 — bugün 08:30 et'de (11:30 tr) açıklandı**
-- beklenti: +0.9% aylık, +3.3-3.7% yıllık, core +0.3% aylık, +2.7% yıllık
-- piyasa tepkisi: s&p +0.52%, vix 19.90 → yumuşatıcı etki
-- 1. derece: sıcak ama beklenenden aşırı değil → fed mayıs'ta tutacak
-- 2. derece: utility/defansif hisseler için hafif yükseliş etkisi (faiz sabit = mevcut getiri korunuyor)
-- 3. derece: agresif portföy için vix normalizasyonu kapıyı açıyor — k-14 fren kalkabilir
-- portföy aksiyonu: **kritik** — vix 19.90 = k-13 ve k-14 koşulları değişiyor (detay bölüm 4)
+### iran ateşkes kırılıyor
 
-**3. tsm q1 2026 geliri +35% (dün gece)**
-- 1. derece: yapay zeka çip talebinin güçlü olduğu teyitlendi
-- 2. derece: ai tedarik zinciri tezi (ekipman, optik, güç) yeniden güçleniyor
-- 3. derece: agresif portföy için deployment argümanı güçlendi
-- portföy aksiyonu: tsm iyi bekçi — agresif v2 tezi için destekleyici veri
+trump bugün iran'ın ateşkese uymadığını açıkladı. hormuz boğazı tam açılmadı. bu gelişme petrol baskısını canlı tutuyor, vix'in kalıcı olarak 22 altına inmesini engelliyor. ön piyasada spy -0.14%, qqq -0.16%.
 
-### bu haftanın senaryoları
+**portföye etkisi**: enerji faydalanıcıları destekli, telecom ve büyüme hisseleri üzerindeki baskı sürebilir.
 
-**vance-iran islamabad görüşmesi (bu hafta sonu)**
-- senaryo a (%35): görüşmeler başarılı → hormuz açılıyor → wti $85 altı → enflasyon beklentisi normalleşiyor → agresif portföy tam deployment
-- senaryo b (%40): görüşmeler devam ediyor, hormuz kısmi açılıyor → wti $90-95 bölgesi → temkinli iyimserlik
-- senaryo c (%25): görüşmeler çöküyor, yeni kriz → wti $110+ → k-13 yeniden aktif, savunma/utility faydalanıcı
-- önceden pozisyonlama: k-14 kalkması senaryo a/b için hazır. senaryo c olursa agresif portföy nakitte kalmaya devam
+### tsmc — ai talebi savaşa rağmen duruyor
 
-### tedarik zinciri katman durumu
+tsmc q1 2026 geliri yıldan yıla %35 artışla 35.7 milyar dolar rekor kırdı. iran savaşına rağmen yapay zeka altyapı talebi duraksatılamıyor. agresif portföy ai tedarik zinciri tezinin temel datası güçleniyor. koşullar oluştuğunda bu veri katalizör.
 
-ekipman: güçlü (tsm +35% → wafer talebi artıyor) | optik: güçlü | güç altyapısı: güçlü | soğutma: nötr | kimya/malzeme: nötr
+### aktif tema güç skorları
+
+| tema | güç | not |
+|---|---|---|
+| ai tedarik zinciri | 8/10 | tsmc +35% teyit |
+| enerji/petrol | 7/10 | ateşkes kırılıyor, usd desteği |
+| defansif/tütün | 6/10 | cpi dovish baskıyı azalttı |
+| utilities | 6/10 | faiz baskısı hafifliyor |
+| telecom | 4/10 | sma50 altı, iran baskısı |
 
 ---
 
-## 0.5. dün seans sonu notları
+## 0.5. dün faz3 — devredilen notlar
 
-> kaynak: data/session_state.json → faz3.yarin_flag_listesi[]
-> dün seans: 0 işlem, 8 pozisyon tut kararı, nakit oranı %58.3
+**cpi (kritik)** → açıklandı, yukarıda detay.
 
-### dün seans özeti
-- toplam işlem: 0 (alış 0, satış 0)
-- net k/z: $0
-- aktif pozisyon: 8 (bal: 4, div: 4, agr: 0)
-- nakit oranı: ~%58.3 (3 portföy birleşik)
-- tema: iran ateşkes kırılgan, cpi beklentisi yüksek, tüm pozisyonlar tut
+**unh amc flag (hatalı)** → unh 21 nisan'da açıklayacak. dün gece açıklama olmadı. flag yanlış bilgiydi.
 
-### bugün açılışta takip edilecek
+**t teknik izle** → t sma50 altında ($26.84 vs $27.85), rsi 35.9. cpi dovish kısmen destekleyebilir ancak iran faiz belirsizliğini canlı tutuyor. stop $25.03 koruyor.
 
-**amc earnings (dün kapanış sonrası)**:
+**vz teknik izle** → vz sma50 altında ($47.78 vs $48.88), rsi 35.3. trailing stop $44.13, kâr 20% ile güvende. tut.
 
-| sembol | sonuç | tepki | portföy etkisi | aksiyon |
-|--------|-------|-------|----------------|---------|
-| unh | bilinmiyor (portföyde yok) | dün +9.32% | ci ile managed care sektörü bağlantısı | ci açılışını izle |
+**ci sma200 altı** → ci $278.45 vs sma200 $285.10. tez geçerli (k-13 sağlık faydalanıcı) ancak teknik zayıf nokta. unh 21 nisan sektör katalizörü olabilir.
 
-**makro veri — cpi mart 2026 (08:30 et = açıklandı):**
-- beklenti: +0.9% aylık / +3.3-3.7% yıllık / core +0.3% / +2.7%
-- piyasa tepkisi (açılış sonrası): s&p +0.52%, vix 19.90 — piyasa olumlu okudu
-- cpi sonucu SPEKÜLATİF: tahminler dahilinde ya da hafif altında geldiği düşünülüyor (vix 30→20 düşüşü ateşkes + cpi kombosunu gösteriyor)
-
-**stop yakınında geceleyenler:**
-- jnj: kapanış $241.31, stop $235.68 → mesafe %2.33 → ⚠️ izle (açılışta k-09 kontrolü)
-- duk: giriş yeni (dün), stop $129.50, mesafe %2.63 → ⚠️ izle
-
-**açılışta izlenecek:**
-- vix: eğer 19.90 korunursa → k-14 fren resmen kalkıyor (bölüm 4'te detay)
+**lmt watchlist** → $620 altı bekleniyor. ateşkes kırılıyor haberiyle savunma desteği sürüyor.
 
 ---
 
-## 1. piyasa görünümü
+## 1. piyasa verisi
 
-### dünün kapanışı (9 nisan 2026, perşembe)
+### endeksler (dün kapanış / ön piyasa)
 
-| ticker | kapanış | değişim | rsi | sma50 | sma200 | not |
-|--------|---------|---------|-----|-------|--------|-----|
-| spy | $679.91 | +0.58% | 60.3 | ✅ | ✅ | 7 gün üst üste yükseliş |
-| qqq | $610.19 | +0.68% | 60.1 | ✅ | ✅ | |
-| dia | $481.90 | +0.57% | — | ✅ | ✅ | yıl bazında +0.25% |
-| iwm | $261.96 | +0.57% | — | ✅ | ✅ | yıl bazında +5%+ |
-| vixy | $29.40 | -3.64% | 42.4 | — | — | dünkü kapanış |
+| sembol | dün kapanış | ön piyasa | fark% | not |
+|---|---|---|---|---|
+| spy | $679.91 | $678.94 | -0.14% | iran haberiyle baskı |
+| qqq | $610.19 | $609.20 | -0.16% | paralel düşüş |
+| dia | $481.90 | — | — | — |
+| iwm | $261.96 | — | — | — |
+| gld | $437.91 | — | — | altın yüksekte |
+| uso | $126.96 | — | +1.91% dün | iran baskısıyla güçlü |
+| tlt | $86.70 | — | -0.25% dün | faiz stabil |
 
-**emtia + döviz**: altın $437.91 (+0.78%), wti ~$97.87 (+3%), brent ~$95.92, 10y %4.29, 2y %3.78
+### treasury faizleri (9 nisan kapanış)
 
-### bugünün öncü göstergeleri (10 nisan sabahı)
+| vade | faiz |
+|---|---|
+| 2 yıl | 3.78% |
+| 10 yıl | 4.29% |
+| 30 yıl | 4.90% |
 
-**vadeli işlemler / ön piyasa / gerçek zamanlı** (web araması + yahoo finance canlı):
+cpi dovish sürprizi sonrası kısa vade biraz geriledi. faiz eğrisi normale yaklaşıyor.
 
-| ticker | dün kapanış | bugün (seans içi) | fark | not |
-|--------|------------|-------------------|------|-----|
-| s&p 500 | 6,824.66 | 6,818.20 (+0.52%) | cpi açıklandı | piyasa olumlu |
-| dow jones | 48,185.80 | 48,224.21 (+0.66%) | | |
-| nasdaq | 22,822.42 | 22,766.86 (+0.58%) | | |
-| vix | ~29-30 (dün) | **19.90 (-5.41%)** | **KRİTİK DÜŞÜŞ** | k-13 ve k-14 koşulları değişiyor |
-| wti | $97.87 | ~$98-99 | → | hormuz hala kısıtlı |
-| altın | $437.91 | ~$437-440 | → | defansif talep sürüyor |
+### vix durumu
 
-> kaynak: yahoo finance canlı tiker (10 nisan 2026 seans içi verisi)
+vixy dün kapanış: $29.40 (-3.64%). vixy etf ≠ vix seviyesi — k-kural referansı: yahoo ^vix kullan, vixy sadece yön. 8 nisan ateşkes rallisinde ^vix 21.04'e düşmüştü. iran ateşkes kırılıyor haberiyle bugün geri toparlaması bekleniyor.
 
-### sektör performansı (9 nisan dünkü kapanış)
+**k-13 v4.1 tahmin (muhtemel 22-25 bölgesi)**: telecom ve büyüme hisseleri için yeni giriş yarım pozisyon veya yasak. faydalanıcılar (enerji, defansif, utilities) için tam pozisyon izni.
 
-fmp api sektör performansı verisi dün için boş döndü — web kaynağından elde edildi:
-
-güçlü: consumer discretionary, utilities, industrials
-zayıf: energy (-1.56%), technology (-0.83%), healthcare (-0.46%)
-rotasyon sinyali: karışık — enerji ateşkes etkisi düşüyor, tech cpi öncesi baskı altında
-
-### risk değerlendirmesi
-
-- **vix: 19.90** → risk-on, normal bölge — BÜYÜK DEĞİŞİM
-- **k-13 v4.1 aktif bant: artık aktif değil** (vix < 22 → tam pozisyon izni)
-- **k-14 drawdown durumu: fren kalkma koşulları karşılandı** (spy > sma50 ✅ + vix < 22 ✅)
-- breadth: s&p 7 gün üst üste yükseliş — momentum güçlü
-- fed watch: nisan toplantısı %98-99 sabit beklentisi
+**k-14 durumu**: drawdown %16.42, ardışık zarar 1. koşullar: vix<22 + spy>sma50 + iran risk azalması. bugün en iyi senaryo 2/3 — nakitte bekleme devam.
 
 ---
 
@@ -138,142 +97,105 @@ rotasyon sinyali: karışık — enerji ateşkes etkisi düşüyor, tech cpi ön
 
 ### portföyü doğrudan etkileyen
 
-**t (at&t) — yüksek hacimli opsiyon işlemleri (bugün sabah)**
-etki: ⚠️ belirsiz | portföy: temettü
-rsı 35.9, sma50 altı, dün -1.61%. büyük opsiyon hacmi genellikle kurumsal beklenti değişimi sinyali. telekom sektörü cpi yüksek çıkışından baskı alıyor. stop $25.03, mesafe %6.7 — şimdilik güvenli ama teknik zayıf.
-aksiyon: izle. stop $25.03 kırılırsa disiplinli çıkış. opsiyon hareketinin yönü netleşince değerlendir.
+**jnj — earnings 14 nisan bmo (4 gün kaldı)**
+etki: ⚠️ | portföy: dengeli
+pazartesi pazar açılışından önce q1 2026 açıklayacak. eps beklentisi $2.68, gelir beklentisi $23.6 milyar. mevcut pozisyon 50 hisse, maliyet $244.14, güncel $241.31 (-1.2%). k-16 zorunlu devrede — seans açılışında çalıştır.
 
-**vz (verizon) — aşırı satım bölgesinde yüksek hacimli call opsiyonları**
-etki: ✅ kısmen pozitif | portföy: temettü
-call alımı = kurumlar yükseliş bekliyor olabilir. rsi 35.3 oversold (aşırı satım), kar %20. stop $44.13, mesafe %7.6. dip noktası olabilir.
-aksiyon: tut. rsi 30 altına inerse aşırı satım geri dönüşü değerlendirilebilir (ancak trend aşağı).
+**t ve vz — anormal call option hacmi**
+etki: ➡️ | portföy: temettü
+bugün erken saatte t ve vz'de olağandışı çağrı opsiyonu alımı gözlemlendi. cpi dovish sürprizinin faiz duyarlı telecom'u destekleyeceği beklentisi. ancak her ikisi de sma50 altında, teyit gerekiyor. mevcut pozisyonlar tutulacak, yeni ekleme yok.
 
-**duk (duke energy) — 100 yıl kesintisiz temettü, savunmacı özellik**
-etki: ✅ | portföy: dengeli
-dün +1.32%, rsi 62.1, sma50 üstü. utility sektörü cpi sakin çıkışından faydalanıyor (faiz sabit = getiri cazip). k-13 v4.1'de jeopolitik kriz faydalanıcısı.
-aksiyon: tut. hedef $142.
-
-**ci (cigna) — unh after-hours sonucu**
-etki: ➡️ dikkat | portföy: dengeli
-unh dün +9.32% (managed care sektörü güçlü). ci ile aynı sektörde ama medicare advantage yok = ung CMS riski yok. ci yine de managed care sentiment'ından faylanabilir. sma200 altı devam ediyor.
-aksiyon: tut. stop $265.25, mesafe %4.7. fundamentaller sağlam (fwd p/e 9.1x, fcf yield %11.3).
-
-**tsm — q1 geliri +35% (kritik)**
-etki: ✅ büyük | portföy: agresif (dolaylı)
-tsm q1 gelirinin +35% gelmesi ai çip talebinin hız kesmediğini teyitliyor. bu agresif portföy v2 tezi için kritik doğrulama. vix normalizasyonu + tsm beat = agresif portföy deployment penceresi açılıyor.
-aksiyon: agresif portföy için watchlist gözden geçir (part 1c).
-
-### sektör ve makro gelişmeler
-
-| gelişme | etki | ilgili hisse | yorum |
-|---------|------|--------------|-------|
-| iran ateşkes kırılgan, hormuz hala kısıtlı | ⚠️ | uso/ol | wti $98-99 bölgesinde — tam iyileşme yok |
-| vance islamabad görüşmesi (hafta sonu) | ➡️ | tüm portföy | çözüm = büyük piyasa rallisi |
-| fed mayıs toplantısı (%99 sabit) | → | t/vz/duk | mevcut faiz ortamı sabit, temettü cazip |
-| tsm +35% q1 geliri | ✅ | agr (dolaylı) | ai altyapı talebi güçlü |
-| unh +9.32% (dün) | ✅ kısmi | ci | managed care sektörü lehine |
-
-### analist notları
-
-| tarih | sembol | not |
-|-------|--------|-----|
-| 10 nis | t | telus hold konsensüsü (farklı şirket, gürültü) |
-| 10 nis | vz | call opsiyon hacmi artışı — yükselen beklenti |
-| 09 nis | jnj | q1 kazanç açıklaması yaklaşıyor — sat mı tut mu tartışması |
+**tsm +35% gelir — ai talebi teyit**
+etki: ✅ dolaylı | portföy: agresif (koşul bekliyor)
+iran savaşına rağmen ai altyapı talebinin duraksamaması agresif portföy tezini güçlendiriyor. bu hafta tsm ($3.29 eps beklentisi, 16 nisan) ve asml (15 nisan) açıklamaları ai tedarik zinciri temasını daha da besleyebilir.
 
 ### makro yorum
 
-mart cpi verisinin açıklanması ve piyasanın olumlu tepkisi — özellikle vix'in 29-30'dan 19.90'a inmesi — bu haftanın en önemli gelişmesidir. cpi rakamının beklentiler dahilinde kalması, iran ateşkesinin tüm kırılganlığına rağmen sürmesi ve fed'in tutma kararı netliği bir araya gelince piyasa 7 günlük yükseliş serisini korudu. ancak hormuz henüz açılmadı ve islamabad görüşmesi belirsizliği sürüyor. bu kombinasyon "dikkatli iyimserlik" modu için doğru çerçeveyi çiziyor. vix normalizasyonu portföy stratejisi açısından dönüm noktasıdır.
+iki rakip güç: dovish cpi sürprizi vs iran ateşkes bozulması. cpi tarafı beklenmedik kadar iyi geldi, enerji şokunun tüketiciye geçişkenliği düşük kaldı. ancak iran'ın ateşkese uymadığı haberi jeopolitik risk primini canlı tutacak. fed için bir nefes ama faiz indirimi gündemde değil. piyasa bugün bu iki gücü tartacak — ön piyasada küçük eksi, açılış belirsiz.
 
 ### bugünün veri takvimi
 
-| saat (tr) | veri | beklenti | not |
-|-----------|------|----------|-----|
-| 11:30 | mart cpi aylık | +0.9% | açıklandı — piyasa tepkisi pozitif |
-| 13:00 | mart fabrika siparişleri | — | ikincil önce |
-| 16:00 | nisan michigan tüketici güven (öncü) | — | önemli |
-| bu hafta sonu | vance-iran islamabad görüşmesi | — | KRİTİK |
+| saat (tr) | veri | beklenti | sonuç |
+|---|---|---|---|
+| 13:30 | mart cpi | +0.80% aylık | ✅ +0.30% açıklandı |
+| 17:00 | şubat fabrika siparişleri | — | bekleniyor |
+| 17:00 | nisan michigan tüketici güveni | — | bekleniyor |
 
-**genel sentiment: olumlu** — vix 19.90 risk-on sinyali veriyor
+**genel sentiment**: karışık — dovish cpi vs jeopolitik baskı
 
 ---
 
 ## 3. portföy sağlık durumu
 
-### 3a. dengeli portföy (4/6 pozisyon, ~$69,669 nakit, %61.8 nakit)
+### 3a. dengeli portföy (4/6 pozisyon | $69,669 nakit | %61.8)
 
-| sembol | fiyat | günlük | k/z | rsi | 50 | 200 | stop | mesafe | durum |
-|--------|-------|--------|-----|-----|----|-----|------|--------|-------|
-| mo | $67.46 | +0.99% | +0.03% | 58.1 | ✅ | ✅ | $64.89 | 3.8% | 🟢 normal |
-| jnj | $241.31 | +0.004% | -1.16% | 52.5 | ✅ | ✅ | $235.68 | **2.33%** | ⚠️ stop yakın |
-| duk | $133.00 | +1.06% | -0.63% | 62.1 | ✅ | ✅ | $129.50 | **2.63%** | ⚠️ yeni pozisyon |
-| ci | $278.45 | +0.32% | +0.30% | 57.6 | ✅ | ❌ | $265.25 | 4.74% | ⚠️ sma200 altı |
+| sembol | fiyat | günlük% | k/z% | rsi | sma50 | sma200 | stop | mesafe | durum |
+|---|---|---|---|---|---|---|---|---|---|
+| mo | $67.46 | +0.99% | +0.0% | 58.1 | ✅ $66.22 | ✅ $62.69 | $64.89 | 3.8% | ⚠️ trailing yakın |
+| jnj | $241.31 | +0.00% | -1.2% | 52.5 | ✅ $240.45 | ✅ $200.20 | $235.68 | 2.3% | 🔴 earnings 4g, stop yakın |
+| duk | $133.00 | +1.06% | -0.6% | 62.1 | ✅ $128.21 | ✅ $122.91 | $129.50 | 2.6% | ⚠️ stop yakın |
+| ci | $278.45 | +0.32% | +0.3% | 57.6 | ✅ $276.11 | ❌ $285.10 | $265.25 | 4.7% | ⚠️ sma200 altı |
 
-**toplam**: ~$112,723 (+12.72% başlangıçtan) | **nakit**: $69,669 (%61.8)
+**toplam**: $112,668 (+12.67%) | **nakit**: $69,669 (%61.8)
 
-not: jnj ve duk stop mesafeleri k-09 uyarı sınırına (<%3) yakın. k-09 botu seansda çalıştırılacak.
+### 3b. agresif portföy (0/8 pozisyon | $357,823 nakit | %100)
 
-### 3b. agresif büyüme portföyü (0/8 pozisyon, ~$357,823 nakit, %100 nakit)
+k-14 + k-13 aktif. yeni giriş koşulu: vix<22 + spy>sma50 + iran risk azalması. bugün 2/3 (vix borderline, spy sma50 üstü). iran ateşkes bozulması üçüncü koşulu bloke ediyor.
 
-**pozisyon yok — tam nakit**
+**toplam**: $357,823 (-10.54%) | **nakit**: $357,823 (%100)
 
-k-13 bugün vix 19.90 ile resmen aktif değil. k-14 kalkma koşulları karşılanıyor:
-- spy > sma50: ✅ ($679.91 > ~$675)
-- vix < 22: ✅ (19.90)
+### 3c. temettü portföyü (4/15 pozisyon | $96,876 nakit | %67.4)
 
-→ agresif portföy için deployment penceresi açılıyor (detay: part 1c)
+| sembol | fiyat | günlük% | k/z% | rsi | sma50 | sma200 | stop | mesafe | durum |
+|---|---|---|---|---|---|---|---|---|---|
+| t | $26.84 | -1.86% | +2.6% | 35.9 | ❌ $27.85 | ≈ $26.88 | $25.03 | 6.7% | ⚠️ sma50 altı |
+| vz | $47.78 | -0.54% | +20.0% | 35.3 | ❌ $48.88 | ✅ $43.49 | $44.13 | 7.6% | ⚠️ sma50 altı, kâr güvende |
+| mo | $67.46 | +0.99% | +17.7% | 58.1 | ✅ $66.22 | ✅ $62.69 | $64.89 | 3.8% | ⚠️ trailing yakın |
+| mrk | $122.67 | -0.41% | +2.2% | 62.5 | ✅ $118.31 | ✅ $97.23 | $115.95 | 5.5% | 🟢 normal |
 
-### 3c. temettü portföyü (4/15 pozisyon, ~$96,876 nakit, %67.4 nakit)
+**toplam**: $143,576 (+43.58%) | **nakit**: $96,876 (%67.4)
 
-| sembol | fiyat | günlük | k/z | rsi | 50 | 200 | stop | mesafe | durum |
-|--------|-------|--------|-----|-----|----|-----|------|--------|-------|
-| t | $26.84 | -1.87% | +3.83% | 35.9 | ❌ | ≈ | $25.03 | 6.74% | ⚠️ teknik zayıf |
-| vz | $47.78 | -0.54% | +19.97% | 35.3 | ❌ | ✅ | $44.13 | 7.64% | ⚠️ aşırı satım |
-| mo | $67.46 | +0.99% | +17.30% | 58.1 | ✅ | ✅ | $64.89 | 3.81% | 🟢 normal |
-| mrk | $122.67 | -0.41% | +2.23% | 62.5 | ✅ | ✅ | $115.95 | 5.48% | 🟢 normal |
+### 3d. sektör exposure (3 portföy — $600k baz)
 
-**toplam**: ~$143,528 (+43.53% başlangıçtan) | **nakit**: $96,876 (%67.4)
+| sektör | $ tutar | % | k-12 limit | durum |
+|---|---|---|---|---|
+| tütün — mo (2 portföy) | $32,718 | 5.5% | %40 | ✅ güvende |
+| telecom — t + vz | $25,859 | 4.3% | %40 | ✅ güvende |
+| sağlık — jnj + ci + mrk | $24,602 | 4.1% | %40 | ✅ güvende |
+| utilities — duk | $6,517 | 1.1% | %40 | ✅ güvende |
 
-not: t ve vz rsi 35-36 bölgesinde — aşırı satım geri dönüşü mümkün ama sma50 altı trend kırık. call opsiyon hareketleri izleniyor.
-
-### 3d. sektör exposure (3 portföy toplam, pozisyonlar)
-
-| sektör | $ tutar | % (pozisyon) | k-12 limit | durum |
-|--------|--------:|-------------|-----------|-------|
-| sağlık sigortası (ci) | ~$6,404 | 1.0% | %40 | ✅ içinde |
-| sağlık (jnj, mrk) | ~$18,199 | 3.0% | %40 | ✅ içinde |
-| tütün (mo x2) | ~$32,713 | 5.3% | %40 | ✅ içinde |
-| telekomünikasyon (t, vz) | ~$25,827 | 4.2% | %40 | ✅ içinde |
-| utility (duk) | ~$6,517 | 1.1% | %40 | ✅ içinde |
-| nakit | ~$224,269 | 36.5% | — | yüksek |
-
-genel: sektör konsantrasyon riski düşük. asıl sorun yüksek nakit oranı (%64+ birleşik) — k-14 kalkarsa bu değişebilir.
+**mo temettü k-12 uyarısı**: temettü portföyü tek hisse max %15 = $15,000. mo değeri $14,706 — $68.97 üzerine çıkarsa limit tetiklenebilir.
 
 ### 3e. uyarı özeti
 
-🔴 **acil**: yok
+🔴 **acil**: jnj — earnings 14 nisan bmo (4 gün), k-16 zorunlu. stop'a %2.3.
 
 ⚠️ **izle**:
-- jnj — stop $235.68, mesafe %2.33 (k-09 erken kontrol)
-- duk — yeni pozisyon, stop $129.50, mesafe %2.63 (k-09 erken kontrol)
-- t — rsi 35.9, sma50 altı, call opsiyon hareketi
-- vz — rsi 35.3, sma50 altı, aşırı satım bölgesine yakın
-- ci — sma200 altı devam (fundamentaller sağlam, teknik baskı var)
+- duk — stop'a %2.6. yeni pozisyon (9 nisan), yakın mesafe dikkat.
+- mo (her iki portföy) — trailing stop $64.89, mesafe %3.8.
+- t — sma50 altı, rsi 35.9. iran/faiz baskısı sürüyor.
+- vz — sma50 altı, rsi 35.3. trailing stop kârı koruyor.
+- ci — sma200 altı ($278 vs $285). teknik zayıf nokta, tez geçerli.
 
-🟢 **normal**: mo (bal), mo (div), mrk — 3 pozisyon
+🟢 **normal**: mrk (en sağlıklı teknik profil)
 
 ### 3f. earnings takvimi
 
-**bu hafta** (10-17 nisan):
+**dün gece — sonuç yok** (unh amc flag hatalıydı, unh 21 nisan'da açıklıyor)
 
-| tarih | sembol | not |
-|-------|--------|-----|
-| 14 nisan | gs | goldman sachs — q1 |
-| 16 nisan | tsm | taiwan semi (zaten dün açıkladı q1 geliri +35%) |
-| 16 nisan | usb | us bancorp |
-| hafta sonu | — | vance-iran islamabad görüşmesi (piyasa etkisi büyük olabilir) |
+**bu hafta kritik**:
 
-q1 kazanç sezonu başlıyor. s&p 500 için %12.5 büyüme beklentisi mevcut.
+| tarih | sembol | zamanlama | eps beklentisi | portföy etkisi |
+|---|---|---|---|---|
+| 13 nisan | gs | bmo | $16.48 | piyasa yönü |
+| **14 nisan** | **jnj** | **bmo** | **$2.68** | 🔴 **dengeli portföy — k-16 aktif** |
+| 14 nisan | jpm | bmo | $5.42 | piyasa yönü |
+| 14 nisan | wfc | bmo | $1.57 | piyasa yönü |
+| 15 nisan | bac | bmo | $0.99 | — |
+| 15 nisan | asml | bmo | $7.71 | ai tedarik zinciri dolaylı |
+| 16 nisan | tsm | bmo | $3.29 | ai tedarik zinciri dolaylı |
+| 16 nisan | nflx | — | — | tech sentiment |
+| 21 nisan | unh | bmo | $6.67 | ci sektör bağlantısı |
 
 ---
 
@@ -281,44 +203,42 @@ q1 kazanç sezonu başlıyor. s&p 500 için %12.5 büyüme beklentisi mevcut.
 
 ### strateji notu
 
-bugünün en kritik gelişmesi vix'in 29-30'dan 19.90'a inmesidir. cpi açıklandı ve piyasa olumlu tepki verdi — bu, hem k-13 kısıtlamasının hem de k-14 drawdown freninin kalkma koşullarını karşıladığı anlamına geliyor. ancak iran ateşkesi hala kırılgan, hormuz açılmadı. strateji "mevcut pozisyonlarda disiplin + agresif portföy için hazırlık" olacak. yeni giriş kararları part 1c'de değerlendirilecek.
+bugün cpi dovish sürprizi ile iran ateşkes bozulması arasında sıkışık bir seans. cpi piyasaları rahatlattı, iran haberi geri baskıladı. net etki: belirsiz açılış, olası lateral seans. mevcut pozisyonlar için tek öncelikli aksiyon jnj k-16 değerlendirmesi. agresif portföy koşullar olgunlaşana kadar nakitte.
 
 ### mevcut pozisyon aksiyonları
 
-> mevcut pozisyon yönetimi — yeni giriş kararları part 1b ve part 1c'den gelir
+**hemen (seans açılışında)**:
 
-**hemen (seans açılışında 16:30 tr):**
-1. k-09 mesafe kontrolü — jnj ($241.31, stop $235.68 = %2.33) ve duk ($133.00, stop $129.50 = %2.63) için gerçek zamanlı fiyatı kontrol et. eğer jnj $240 altına inerse acil izleme modu.
-2. vix doğrula — vixy'yi seans açılışında oku. eğer vixy < $22 korunuyorsa k-14 fren resmen kalkıyor. bu agresif portföy part 1c'ye giriş sinyali.
+1. **jnj — k-16 çalıştır**: earnings 14 nisan bmo, 4 gün kaldı. `scripts/k16_sell_the_news_score.py JNJ` çalıştır. skor 2-3 → %25 sat, skor 4-5 → %50 sat. jnj son 1 ay flat (-1.2% pozisyon), "sell the news" riski gerçek.
 
-**izle (seans içinde):**
-3. t opsiyon hareketi — seans içinde hangi yönde açıklanırsa (call vs put) sentiment netleşiyor. stop $25.03 izle.
-4. ci — unh etkisi managed care'e yansıdı mı? $278 üzeri tutunursa sma200'e yükseliş için pozitif.
-5. michigan tüketici güven (16:00 tr) — zayıf gelirse utility/defansif hisseler için hafif pozitif.
-6. vz — rsi 35 altına inerse aşırı satım geri dönüş sinyali (ancak trend kırık, sadece izle, işlem yapma).
+2. **jnj stop kontrol**: açılış $240 altında gelirse k-09 proximity check aktif. stop $235.68.
 
-**pasif (seviye bekle):**
-7. agresif portföy deployment — k-14 fren kalkarsa part 1c tamamlandığında watchlist inceleniyor. bugün birden fazla pozisyon açma — önce tek test pozisyonu değerlendir.
+**izle (seans içinde)**:
 
-### **k-rule durumu (kritik güncelleme)**
+3. **vix takibi**: gerçek ^vix borsanın açılışıyla netleşecek. vix<22 → k-14 restart koşulu 1/3 tamamlanır. iran ateşkes kırılıyor — 22 altında kalması zor.
 
-- **k-13 v4.1**: vix 19.90 → jeopolitik kriz dönemi sabit ama vix < 22 = kısıtlama yok. tüm sektörler için tam pozisyon izni teknik olarak mevcut.
-- **k-14 drawdown fren**: spy > sma50 ✅ + vix < 22 ✅ → **k-14 fren kalıyor** (mart drawdown zirveden -%16 geldi, kurtarma devam ediyor — iran riski devam ettiği sürece agresif deployment dikkatli yapılmalı)
-- **k-11**: hiçbir pozisyon rsi 70+ değil → tetik yok, kar alma yok
-- **k-09**: jnj ve duk <%3 stop mesafesi → seans açılışında kontrol et
+4. **t ve vz**: anormal call hacmi vardı. fiyat sma50'ye ($27.85 ve $48.88) doğru hareket ederse tezi güçleniyor. stop'lar sağlam, tut.
+
+5. **mo trailing ($64.89)**: her iki portföyde. $65 yakınına gelirse k-09 çalıştır.
+
+**pasif (seviye bekle)**:
+
+6. **ci**: sma200 $285.10 üzerine çıkması haftalık bazda hedef. acil aksiyon yok.
+
+7. **agresif portföy**: 3/3 koşul gerekiyor (vix<22 + spy>sma50 + iran risk azalması). bugün en iyi 2/3. nakitte bekleme.
 
 ### bugün için tarama durumu
 
-- swing tarama: part 1b promptunda → `daily_swing_2026-04-10.md`
-- portföy fırsat: part 1c promptunda → `daily_portfoy_2026-04-10.md`
+- swing tarama: k-14 aktif — part 1b çalıştırılmaz.
+- portföy fırsat: part 1c isteğe bağlı, temettü için 5. pozisyon değerlendirilebilir.
 
 ### dikkat edilecekler
 
-- **risk**: iran ateşkesi herhangi bir saatte çözülebilir veya tamamen çözümsüz kalabilir — islamabad öncesi piyasa her habere çok hassas
-- **fırsat**: vix 19.90 + k-14 kalkıyor + agresif portföyde $357k nakit → haftalardır beklenen deployment penceresi bugün/bu hafta açılıyor. part 1c öncelikli
-- **risk 2**: 7 günlük s&p yükseliş serisi tarihen ortalama 2-3 gün sonra düzeltme yaşıyor. momentum güçlü ama aşırı iyimser olmaktan kaçın
-- **neden yanlış olabilirim**: vix 19.90 geçici olabilir. iran ateşkesi bugün çökmesi halinde vix 28-30'a geri dönebilir. k-14 kalktığında acele etmek yerine seans içi vix takibi önemli.
+- iran ateşkes haberleri: kötüleşme → vix yukarı, petrol yukarı, telecom baskısı artar
+- jnj açılış fiyatı: $240 altı → hem stop hem earnings riski
+- michigan tüketici güveni (17:00 tr): cpi sonrası piyasa yönünü şekillendirebilir
+- mo fiyatı $68.97 üstü → k-12 temettü limiti tetiklenebilir
 
 ---
 
-*finzora ai | 10 nisan 2026 | nyse açılışına ~2.5 saat | tr 13:52*
+*finzora ai | fmp api | 10 nisan 2026 | nyse açılış 16:30 tr*
