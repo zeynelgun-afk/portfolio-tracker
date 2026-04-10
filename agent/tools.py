@@ -129,9 +129,9 @@ def send_private_telegram(message: str) -> bool:
             r = requests.post(
                 f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage",
                 json={
-                    "chat_id":    PRIVATE_CHAT,
-                    "text":       chunk,
-                    "parse_mode": "Markdown",
+                    "chat_id": PRIVATE_CHAT,
+                    "text":    chunk,
+                    # parse_mode yok — düz metin, markdown hatası olmaz
                 },
                 timeout=10,
             )
