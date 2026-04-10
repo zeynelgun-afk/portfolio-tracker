@@ -150,3 +150,5 @@ date,action,symbol,shares,price,total,reason
 2026-04-10,BUY,ANET,271,146.5,39701.5,"Agresif v2 AI networking altyapısı. RSI 63.6, SMA20/50/200 üstü. Ichimoku 2/4, kumo üstü. %10.4 aylık RS. Stop 136, hedef 165."
 2026-04-10,BUY,MU,95,415.0,39425.0,"Agresif v2 AI bellek teması. RSI 54.5 giriş zonu. SMA50/200 üstü. HBM talebi ivmeleniyor. Stop 385, hedef 470."
 2026-04-10,SELL,JNJ,50,239.5,11975.0,"Çıkış: Teknik tez bozuldu (SMA20/50 altı, RSI 48). Stop mesafesi %1.8 + 14 Nisan earnings binary gap riski. 'Belki iyi gelir' gerekçesi SPEKÜLATİF. K/Z -1.90%, 28 gün. Ders: Earnings 5 gün içinde + stop yakın = pozisyonu taşıma."
+2026-04-10,BUY,DUK,63,132.5,8347.5,DUK büyütme: 49→112 adet. Ort.maliyet 133.09. Utility K-13 faydalanıcı. Barclays hedef 143. Stop 129.50.
+2026-04-10,BUY,NEE,133,94.0,12502.0,"Dengeli portföy yeni utility. AI güç talebi + temiz enerji. K-13 faydalanıcı. Stop 88, hedef 103, R:R 1.5:1"
