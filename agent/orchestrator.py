@@ -35,6 +35,8 @@ from memory_manager import (
     build_context_for_claude,
     append_learning
 )
+from web_researcher import build_research_context
+from twitter_monitor import build_twitter_context
 
 REPO_ROOT = Path(__file__).parent.parent
 TR_TZ     = pytz.timezone("Europe/Istanbul")
@@ -68,27 +70,44 @@ def get_run_mode() -> str:
 def collect_context(mode: str) -> dict:
     """
     Veri topla, memory'yi güncelle, sıkıştırılmış bağlam hazırla.
-    Tam JSON yerine özet → ~1500 token, 10x ucuz.
+    Sabah/kapanış: web + twitter da eklenir.
+    İzleme: sadece portföy + piyasa (hızlı, ucuz).
     """
     print(f"[Orkestratör] Veri toplanıyor... (mod: {mode})")
 
-    # Ham veri çek
     portfolios = get_portfolio_snapshot()
     market     = get_market_context()
     swing      = get_swing_status()
 
-    # L1 belleği güncelle (her çağrıda)
+    # Portföydeki semboller
+    symbols = []
+    for pf in portfolios.values():
+        for pos in pf.get("pozisyonlar", []):
+            sym = pos.get("sembol") or pos.get("symbol")
+            if sym:
+                symbols.append(sym)
+
+    # L1 belleği güncelle
     state = build_portfolio_state(portfolios, market)
     save_portfolio_state(state)
 
-    # Sıkıştırılmış bağlamı derle
+    # Sıkıştırılmış temel bağlam
     compressed = build_context_for_claude(mode)
+
+    # Sabah ve kapanış: web + twitter ekle (monitor'da ekleme → hızlı kal)
+    research = ""
+    twitter  = ""
+    if mode in ("morning", "closing", "weekly"):
+        research = build_research_context(symbols)
+        twitter  = build_twitter_context(symbols)
 
     return {
         "mode":       mode,
         "timestamp":  datetime.now(TR_TZ).isoformat(),
-        "compressed": compressed,   # Claude'a bu gider (~1500 token)
-        "raw": {                    # Monitor modunda anlık kontrol için
+        "compressed": compressed,
+        "research":   research,
+        "twitter":    twitter,
+        "raw": {
             "portfolios": portfolios,
             "market":     market,
             "swing":      swing,
@@ -104,23 +123,27 @@ def run_morning(ctx: dict):
     prompt = f"""
 {ctx['compressed']}
 
-=== GÖREV: SABAH ANALİZİ ===
-1. Stop'a yakın pozisyon var mı? (stop_pct <= 3 olanları işaretle)
-2. Piyasa rejimi: RISK_ON / NEUTRAL / RISK_OFF? Neden?
-3. Bugün dikkat edilmesi gereken 1-2 şey
-4. Swing watchlist'te güçlü setup var mı?
-5. Önerdiğim 1-2 aksiyon (uygulama değil, öneri)
+{ctx['research']}
 
-Kısa ve net yaz. Sonda: "Bugün gözüm şunlarda: ..."
-KESİN / MUHTEMEL / SPEKÜLATİF etiket kullan.
+{ctx['twitter']}
+
+=== GÖREV: SABAH ANALİZİ ===
+Yukarıdaki verileri değerlendirerek:
+1. Stop'a yakın pozisyon var mı? (stop_pct <= 3 olanları işaretle)
+2. Earnings yaklaşan hisse var mı? K-05 uyarısı gerekiyor mu?
+3. Makro takvimde bugün/bu hafta kritik olay var mı?
+4. Twitter'da portföyle ilgili önemli bir sinyal var mı? (SPEKÜLATİF etiketle)
+5. Piyasa rejimi: RISK_ON / NEUTRAL / RISK_OFF?
+6. Önerdiğim 1-2 aksiyon (uygulama değil, öneri)
+
+Kısa ve net. KESİN / MUHTEMEL / SPEKÜLATİF etiket kullan.
+Sonda: "Bugün gözüm şunlarda: ..."
 """
 
-    print("[Orkestratör] Claude API çağrılıyor...")
     response = get_claude_decision(prompt, mode="morning")
-    print(f"[Orkestratör] Claude yanıtı ({len(response)} karakter):\n{response[:200]}")
     save_daily_brief(response, "morning")
 
-    msg = f"Finzora Agent - Sabah Analizi\n{ctx['timestamp'][:16]}\n\n{response}"
+    msg = f"Finzora Agent — Sabah Analizi\n{ctx['timestamp'][:16]}\n\n{response}"
     result = send_private_telegram(msg)
     print(f"[Orkestratör] Telegram sonucu: {result}")
 
@@ -131,25 +154,28 @@ def run_closing(ctx: dict):
     prompt = f"""
 {ctx['compressed']}
 
+{ctx['research']}
+
+{ctx['twitter']}
+
 === GÖREV: KAPANIS YORUMU ===
 1. Bugün portföyde en dikkat çeken hareket neydi?
 2. Stop seviyelerine tehlikeli yaklaşan var mı?
-3. Tezler hâlâ geçerli mi? Bozan bir gelişme var mı?
-4. Yarın için en önemli 3 izleme noktası
-5. Bu kapanıştan çıkan 1 ders (learning_log için)
+3. Tezler hâlâ geçerli mi? Bugünkü haberler bir şeyi değiştiriyor mu?
+4. Twitter'da önemli bir sinyal gördün mü? (SPEKÜLATİF etiketle)
+5. Yarın için en önemli 3 izleme noktası
+6. Bu günden 1 somut ders
 
 Kısa ve net. KESİN / MUHTEMEL / SPEKÜLATİF etiket kullan.
 """
 
     response = get_claude_decision(prompt, mode="closing")
     save_daily_brief(response, "closing")
-
-    # Öğrenmeyi logla (son satırı yakala)
     lines = [l.strip() for l in response.split("\n") if l.strip()]
     if lines:
         append_learning(lines[-1], source="closing_analysis")
 
-    msg = f"📊 *Finzora Agent — Kapanış*\n_{ctx['timestamp'][:16]}_\n\n{response}"
+    msg = f"Finzora Agent — Kapanış\n{ctx['timestamp'][:16]}\n\n{response}"
     send_private_telegram(msg)
     print("[Orkestratör] Kapanış yorumu gönderildi.")
 
