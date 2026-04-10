@@ -74,9 +74,9 @@
       "son_guncelleme": "2026-04-10T19:49:14.960809",
       "gunluk_degisim_yuzde": 0,
       "agirlik_yuzde": 11.17,
-      "stop_loss": 290.37,
-      "stop_aciklama": "break-even stop — SMA20 (264) kabul edilemez uzak, maliyet koruması",
-      "stop_guncelleme": "2026-04-10T18:47:48"
+      "stop_loss": 289.0,
+      "stop_aciklama": "dünkü low (289.3) altı — break-even (290.37) yerine daha anlamlı teknik seviye",
+      "stop_guncelleme": "2026-04-10T19:50:55"
     },
     {
       "sembol": "ANET",
@@ -148,7 +148,7 @@
       "stop_guncelleme": "2026-04-10T18:47:48"
     }
   ],
-  "son_guncelleme": "2026-04-10T19:49:14.960809",
+  "son_guncelleme": "2026-04-10T19:50:55",
   "toplam_deger": 361942.68,
   "toplam_getiri_yuzde": -9.51,
   "notes": [
