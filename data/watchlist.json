@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-04-10T20:40:44.682116",
+  "son_guncelleme": "2026-04-10T21:33:12.884229",
   "not": "3 portföy merkezi aday havuzu. PART 1C 15:38 TR güncelleme: DUK/NEE/GEV yeni EKLE (K-04+K-18 temiz), POWL K-18 ELENDİ ($27.3M insider satış), ön piyasa gap-up sonrası kovalama yasağı 4 aday için aktif.",
   "sistem_referans": "docs/PORTFOLIO_OPPORTUNITY_SYSTEM.md",
   "script": "scripts/portfolio_scan_common.py",
@@ -96,7 +96,7 @@
     {
       "sembol": "WDC",
       "hedef_portfoy": "agresif",
-      "guncel_fiyat": 343.6,
+      "guncel_fiyat": 343.43,
       "rsi": 64.8,
       "skor": 17,
       "skor_detay": "1M 26.9% >20: +3 | 6M 192.7% >50: +3 | ROIC 25.2% >25: +3 | RSI 65 güçlü: +2 | SMA50 üstü: +2 | Golden cross: +2 | 3M 68.6% >15: +2",
@@ -123,7 +123,7 @@
     {
       "sembol": "KLAC",
       "hedef_portfoy": "agresif",
-      "guncel_fiyat": 1737.37,
+      "guncel_fiyat": 1737.28,
       "rsi": 69.6,
       "skor": 15,
       "skor_detay": "1M 18.9% >10: +2 | 6M 75.8% >50: +3 | P/E 49.8 >40 yüksek: -1 | ROIC 36.8% >25: +3 | RSI 70 güçlü: +2 | SMA50 üstü: +2 | Golden cross: +2 | 3M 23.4% >15: +2",
@@ -150,7 +150,7 @@
     {
       "sembol": "AMAT",
       "hedef_portfoy": "agresif",
-      "guncel_fiyat": 399.498,
+      "guncel_fiyat": 399.49,
       "rsi": 65.7,
       "skor": 14,
       "skor_detay": "1M 15.0% >10: +2 | 6M 89.5% >50: +3 | P/E 40.2 >40 yüksek: -1 | ROIC 22.6% >15: +2 | RSI 66 güçlü: +2 | SMA50 üstü: +2 | Golden cross: +2 | 3M 32.1% >15: +2",
@@ -621,7 +621,7 @@
       "risk_notu": "SMA200 altinda simdi. Apple Pay/Google Pay rekabet. Agresif portfoy icin uygun ama VIX normalizasyonu lazim.",
       "k13_kategori": "faydalanici",
       "son_guncelleme": "2026-04-09T15:55:22.982146",
-      "guncel_fiyat": 45.253,
+      "guncel_fiyat": 45.24,
       "rsi": 53.0,
       "skor": 6,
       "skor_detay": "1M 2.1% >0: +1 | ROIC 15.0% >10: +1 | RSI 53 güçlü: +2 | SMA50 üstü: +2",
