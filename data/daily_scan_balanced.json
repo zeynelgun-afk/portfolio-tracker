@@ -1,12 +1,15 @@
 {
   "tarih": "2026-04-10",
   "son_guncelleme": "2026-04-10T09:41:35.534900",
+  "mod": "balanced",
   "toplam_taranan": 1543,
-  "peg_filtreli": 568,
-  "declining_eps": 178,
-  "filtreler": {
-    "mod": "balanced",
-    "workers": 12
+  "filtre_gecen": 554,
+  "skorlanan": 554,
+  "ekle_adaylari": 81,
+  "izle_adaylari": 130,
+  "esikler": {
+    "ekle": 9,
+    "izle": 6
   },
   "sonuclar": [
     {
@@ -16075,37 +16078,5 @@
       "mode": "balanced",
       "yield_trap": false
     }
-  ],
-  "declining_list": [
-    "BRK-B",
-    "MRK",
-    "DE",
-    "PFE",
-    "UBER",
-    "QCOM",
-    "PGR",
-    "CMCSA",
-    "SLB",
-    "ELV",
-    "WBD",
-    "SPG",
-    "DLR",
-    "AFL",
-    "MPLX",
-    "LNG",
-    "ALL",
-    "CRWV",
-    "COIN",
-    "CMG",
-    "DAL",
-    "PYPL",
-    "RBLX",
-    "PRU",
-    "FITB",
-    "UAL",
-    "HAL",
-    "FISV",
-    "KHC",
-    "SYF"
   ]
 }
