@@ -1,6 +1,6 @@
 name: Sabah Evren Taraması
 
-on:
+"on":
   schedule:
     - cron: '15 6 * * 1-5'
   workflow_dispatch:
@@ -48,12 +48,11 @@ jobs:
           PYTHONUNBUFFERED: '1'
 
       - name: Ozet
-        run: |
-          python3 scripts/scan_summary.py || echo "Ozet olusturulamadi"
+        run: python3 scripts/scan_summary.py || echo "Ozet alinamadi"
 
       - name: Commit
         run: |
           git pull --rebase origin main || true
           git add data/daily_scan_*.json data/daily_full_scan.json || true
           git diff --staged --quiet || git commit -m "[AUTO-SCAN] $(date +'%Y-%m-%d %H:%M UTC')"
-          git push || (sleep 10 && git pull --rebase && git push)
+          git push || (sleep 10 && git pull --rebase && git push) || true
