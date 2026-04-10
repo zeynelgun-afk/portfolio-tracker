@@ -28,10 +28,11 @@ TWITTER_ACCOUNTS = {
     "Jake__Wujastyk":   "teknik analiz, momentum",
     "StockSavvyShay":   "swing trade, momentum",
     "onestoploss":      "risk yönetimi",
+    "theaiportfolios":  "LLM portföy yarışması — Grok/ChatGPT/Claude $150M, rakip analiz + içerik ilhamı",
 }
 
 # Öncelikli hesaplar (her çağrıda bunları al, diğerlerini döngüsel)
-PRIORITY_ACCOUNTS = ["CheddarFlow", "RyanDetrick", "VolSignals"]
+PRIORITY_ACCOUNTS = ["CheddarFlow", "RyanDetrick", "VolSignals", "theaiportfolios"]
 
 
 def get_user_tweets(username: str, limit: int = 3) -> list[dict]:

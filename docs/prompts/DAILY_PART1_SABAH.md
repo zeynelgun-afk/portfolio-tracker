@@ -116,7 +116,8 @@ ADIM 2 — HABER TOPLAMA
 
   TAKİP LİSTESİ:
     @CheddarFlow, @berkdemirkiran_, @yatirim, @onestoploss, @StockSavvyShay,
-    @BerkUcmz, @TrendSpider, @Jake__Wujastyk, @RyanDetrick, @VolSignals
+    @BerkUcmz, @TrendSpider, @Jake__Wujastyk, @RyanDetrick, @VolSignals,
+    @theaiportfolios (LLM portföy yarışması — Grok/ChatGPT/Claude $150M, rakip analiz + içerik ilhamı)
 
   ÖNEMLİ: tweet verileri SADECE claude'un bağlamına girer, rapora yazılmaz.
   tweet bilgileri yorumlanarak piyasa değerlendirmelerine yedirilir.
