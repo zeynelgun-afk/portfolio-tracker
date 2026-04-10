@@ -1,0 +1,56 @@
+name: K-Kural Tutarsızlık Kontrolü
+
+on:
+  push:
+    paths:
+      - 'docs/TRADING_PLAYBOOK.md'
+      - 'docs/K_RULES_QUICK_REF.md'
+      - 'scripts/k_rules_common.py'
+  workflow_dispatch:
+    inputs:
+      notify:
+        description: 'Telegram bildirimi gönder'
+        required: false
+        default: 'true'
+
+jobs:
+  tutarsizlik-kontrol:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Repo checkout
+        uses: actions/checkout@v3
+
+      - name: Python kurulum
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Bağımlılıklar
+        run: pip install requests
+
+      - name: K-Kural tutarsızlık taraması
+        id: check
+        run: |
+          python scripts/consistency_check.py --strict 2>&1 | tee check_output.txt
+          echo "exit_code=${PIPESTATUS[0]}" >> $GITHUB_OUTPUT
+
+      - name: Telegram bildirimi (sorun varsa)
+        if: failure()
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          MESAJ="⚠️ K-Kural Tutarsızlığı Tespit Edildi\n\nTetikleyen commit: ${{ github.event.head_commit.message }}\n\n$(head -30 check_output.txt)"
+          python scripts/telegram_notify.py \
+            --type alert \
+            --title "K-Kural Tutarsızlık Alarmı" \
+            --details "$(head -20 check_output.txt)"
+
+      - name: Rapor özeti
+        if: always()
+        run: |
+          echo "### Tutarsızlık Kontrol Sonucu" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          cat check_output.txt >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY

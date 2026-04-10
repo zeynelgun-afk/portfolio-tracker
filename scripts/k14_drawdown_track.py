@@ -103,7 +103,7 @@ def main():
                f"Min 1 hafta swing yasak.\n"
                f"Son: {last_info}\n"
                f"Drawdown: %{dd['drawdown_pct']:.2f}\n"
-               f"Yeniden başlama: 5 iş günü soğuma + neden analizi + ilk 3 trade yarım poz")
+               f"Yeniden başlama: Kayıp analizi (ortam/sistem/psikoloji) + normal boyut A-kalite (K-14 v2.2)")
         send_k_alert("K-14 STOP", "SWING", msg, severity="critical")
     elif consecutive == 3:
         msg = (f"K-14 katman 2: {consecutive} ardışık zarar.\n"

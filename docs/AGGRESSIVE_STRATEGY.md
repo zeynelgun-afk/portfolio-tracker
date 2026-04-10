@@ -56,7 +56,7 @@ iki giriş tipi var:
 → sinyal gelince tamamla
 
 ### ortak koşullar
-- VIX >25 = yarım pozisyon (K-13)
+- K-13 v4.1 sektör bazlı VIX (faydalanıcı/duyarlı matris — detay: docs/TRADING_PLAYBOOK.md)
 - 2x ATR(14) bazlı stop ve pozisyon boyutlandırma
 - aynı alt sektörde 3'ten fazla pozisyon yok
 
