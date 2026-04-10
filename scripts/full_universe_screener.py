@@ -3,7 +3,10 @@
 full_universe_screener.py — Finzora AI v3.1
 3 portföy için ayrı tarama motoru.
 
-Düzeltmeler (10 Nisan 2026):
+v3.2 (10 Nisan 2026) — 2500 çağrı/dk limitine göre optimize:
+  - Workers 20'ye çıkarıldı (fundamentals+technicals+estimates)
+  - RSI tarihi veriden hesaplanır (ayrı API çağrısı yok, ~1000 çağrı tasarruf)
+  - Batch quote sleep kaldırıldı
   - Tüm FMP endpoint'leri ?symbol= parametreli (path param değil)
   - analyst-estimates: epsAvg/epsHigh/numAnalystsEps (estimatedEps* değil)
   - Temettü yield: lastAnnualDividend / price (dividendYield alanı yok)
@@ -23,6 +26,30 @@ BASE      = 'https://financialmodelingprep.com/stable'
 TODAY     = datetime.now().strftime('%Y-%m-%d')
 NOW       = datetime.now().isoformat()
 CUTOFF_DT = (datetime.now() - timedelta(days=180)).strftime('%Y-%m-%d')
+
+def calc_rsi(closes, period=14):
+    """Kapanış fiyatlarından RSI hesapla (closes: newest first)."""
+    if len(closes) < period + 2:
+        return None
+    # newest first → en eski→yeni sırasına çevir
+    c = list(reversed(closes[:period * 3 + 5]))
+    gains, losses = [], []
+    for i in range(1, len(c)):
+        delta = c[i] - c[i-1]
+        gains.append(max(0, delta))
+        losses.append(max(0, -delta))
+    if len(gains) < period:
+        return None
+    avg_g = sum(gains[:period]) / period
+    avg_l = sum(losses[:period]) / period
+    for i in range(period, len(gains)):
+        avg_g = (avg_g * (period - 1) + gains[i]) / period
+        avg_l = (avg_l * (period - 1) + losses[i]) / period
+    if avg_l == 0:
+        return 100.0
+    rs = avg_g / avg_l
+    return round(100 - (100 / (1 + rs)), 2)
+
 
 AI_UNIVERSE = {
     'ASML','AMAT','LRCX','KLAC','CAMT','ONTO','TER','UCTT','ACMR',
@@ -94,7 +121,6 @@ def get_batch_quotes(symbols):
         data = fetch(f'{BASE}/batch-quote?symbols={",".join(batch)}&apikey={API_KEY}') or []
         for q in data:
             quotes[q['symbol']] = q
-        time.sleep(0.05)
     return quotes
 
 # ─── FAZ 3: Analist tahminleri ────────────────────────────────────────────────
@@ -103,7 +129,7 @@ def _estimate(sym):
     data = fetch(f'{BASE}/analyst-estimates?symbol={sym}&period=annual&limit=6&apikey={API_KEY}') or []
     return sym, data
 
-def get_all_estimates(symbols, workers=12):
+def get_all_estimates(symbols, workers=20):
     log(f'Analist tahminleri: {len(symbols)} sembol ({workers} worker)...')
     result = {}
     with ThreadPoolExecutor(max_workers=workers) as ex:
@@ -187,7 +213,7 @@ def _fundamental(sym):
         'npm':        round((r.get('netProfitMarginTTM') or 0) * 100, 1),
     }
 
-def get_fundamentals(symbols, workers=8):
+def get_fundamentals(symbols, workers=20):
     log(f'Fundamenteller: {len(symbols)} sembol ({workers} worker)...')
     result = {}
     with ThreadPoolExecutor(max_workers=workers) as ex:
@@ -199,9 +225,8 @@ def get_fundamentals(symbols, workers=8):
 
 # ─── FAZ 4b: Teknik ───────────────────────────────────────────────────────────
 def _technical(sym):
-    # ✅ Doğru format: ?symbol= parametresi
-    hist     = fetch(f'{BASE}/historical-price-eod/full?symbol={sym}&limit=210&apikey={API_KEY}') or []
-    rsi_data = fetch(f'{BASE}/technical-indicators/rsi?symbol={sym}&periodLength=14&timeframe=1day&apikey={API_KEY}') or []
+    # Tek çağrı: tarihi fiyat (RSI de buradan hesaplanır, ayrı API çağrısı yok)
+    hist = fetch(f'{BASE}/historical-price-eod/full?symbol={sym}&limit=210&apikey={API_KEY}') or []
 
     price = sma50 = sma200 = rsi = mom1m = mom3m = mom6m = None
 
@@ -214,9 +239,7 @@ def _technical(sym):
             if len(closes) > 21:   mom1m  = (closes[0] - closes[21]) / closes[21] * 100
             if len(closes) > 63:   mom3m  = (closes[0] - closes[63]) / closes[63] * 100
             if len(closes) > 126:  mom6m  = (closes[0] - closes[126]) / closes[126] * 100
-
-    if isinstance(rsi_data, list) and rsi_data:
-        rsi = rsi_data[0].get('rsi')
+            rsi = calc_rsi(closes)  # tarihi veriden hesapla
 
     return sym, {
         'rsi':          rsi,
@@ -228,7 +251,7 @@ def _technical(sym):
         'golden_cross': (sma50 > sma200) if sma50  and sma200 else None,
     }
 
-def get_technicals(symbols, workers=10):
+def get_technicals(symbols, workers=20):
     log(f'Teknik: {len(symbols)} sembol ({workers} worker)...')
     result = {}
     with ThreadPoolExecutor(max_workers=workers) as ex:
@@ -422,7 +445,7 @@ def print_results(scored, mode, n=50):
 def main():
     p = argparse.ArgumentParser()
     p.add_argument('--mode', choices=['balanced','dividend','aggressive','all'], default='all')
-    p.add_argument('--workers', type=int, default=12)
+    p.add_argument('--workers', type=int, default=20)
     args = p.parse_args()
 
     modes = ['balanced','dividend','aggressive'] if args.mode == 'all' else [args.mode]
@@ -444,7 +467,7 @@ def main():
     log(f'Fiyat filtresi sonrası: {len(all_syms)} sembol')
 
     # FAZ 3: Tahminler (tek seferlik, tüm evren)
-    estimates = get_all_estimates(all_syms, workers=args.workers)
+    estimates = get_all_estimates(all_syms, workers=20)
 
     # Ham satır hesabı
     log('Ham satır (PEG/EPS/yield) hesabı...')
@@ -465,7 +488,7 @@ def main():
     log(f'Shortlist (3 mod): {len(shortlist)} sembol → teknik+fundamental çekiliyor...')
 
     # FAZ 4: Fundamental + Teknik
-    fundamentals = get_fundamentals(list(shortlist), workers=args.workers)
+    fundamentals = get_fundamentals(list(shortlist), workers=min(args.workers * 2, 25))
     technicals   = get_technicals(list(shortlist), workers=10)
 
     # FAZ 5: Skorlama + kayıt
