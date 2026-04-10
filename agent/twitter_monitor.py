@@ -16,7 +16,7 @@ from datetime import datetime, timedelta
 import pytz
 
 TR_TZ       = pytz.timezone("Europe/Istanbul")
-RAPIDAPI_KEY = os.environ.get("RAPIDAPI_KEY", "fe410e5222msh20c82b1bc9f4905p10ad02jsnb1c2402c92b7")
+RAPIDAPI_KEY = os.environ.get("RAPIDAPI_KEY", "") or "fe410e5222msh20c82b1bc9f4905p10ad02jsnb1c2402c92b7"
 
 # İzlenen Twitter hesapları ve odak alanları
 TWITTER_ACCOUNTS = {
