@@ -5,18 +5,12 @@ on:
     - cron: '15 6 * * 1-5'
   workflow_dispatch:
     inputs:
-      min_mcap:
-        description: 'Min market cap (USD, default 200M)'
+      mode:
+        description: 'Tarama modu'
         required: false
-        default: '200000000'
-      max_peg:
-        description: 'Max PEG ratio'
-        required: false
-        default: '2.5'
-      sector:
-        description: 'Sektor filtresi (bos = hepsi)'
-        required: false
-        default: ''
+        default: 'all'
+        type: choice
+        options: [all, balanced, dividend, aggressive]
 
 permissions:
   contents: write
@@ -24,7 +18,7 @@ permissions:
 jobs:
   morning-scan:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 35
 
     steps:
       - name: Checkout
@@ -45,50 +39,38 @@ jobs:
 
       - name: Taramayi calistir
         run: |
-          MIN_MCAP="${{ github.event.inputs.min_mcap || '200000000' }}"
-          MAX_PEG="${{ github.event.inputs.max_peg || '2.5' }}"
-          SECTOR="${{ github.event.inputs.sector || '' }}"
-
-          if [ -n "$SECTOR" ]; then
-            python3 scripts/full_universe_screener.py \
-              --min-mcap "$MIN_MCAP" \
-              --max-peg "$MAX_PEG" \
-              --sector "$SECTOR" \
-              --workers 8
-          else
-            python3 scripts/full_universe_screener.py \
-              --min-mcap "$MIN_MCAP" \
-              --max-peg "$MAX_PEG" \
-              --workers 8
-          fi
+          MODE="${{ github.event.inputs.mode || 'all' }}"
+          python3 scripts/full_universe_screener.py --mode "$MODE" --workers 12
         env:
           PYTHONUNBUFFERED: 1
 
-      - name: Scan ozeti olustur
-        id: scan_summary
+      - name: Ozet olustur
+        id: ozet
         run: |
           python3 -c "
-import json, sys
-try:
-    d = json.load(open('data/daily_full_scan.json'))
-    tarandi = d.get('toplam_taranan', '?')
-    aday = d.get('peg_filtreli', '?')
-    print(f'{tarandi} hisse tarandi, {aday} aday')
-except Exception:
-    print('tarama tamamlandi')
-" > /tmp/scan_info.txt 2>/dev/null || echo 'tarama tamamlandi' > /tmp/scan_info.txt
-          echo "info=$(cat /tmp/scan_info.txt)" >> "$GITHUB_OUTPUT"
+import json, os
+lines = []
+for mode in ['balanced','dividend','aggressive']:
+    fname = f'data/daily_scan_{mode}.json'
+    if os.path.exists(fname):
+        d = json.load(open(fname))
+        lines.append(f\"{mode}:{d.get('ekle_adaylari','?')}ekle/{d.get('izle_adaylari','?')}izle\")
+print(' | '.join(lines))
+" > /tmp/ozet.txt 2>/dev/null || echo 'tarama tamamlandi' > /tmp/ozet.txt
+          echo "info=$(cat /tmp/ozet.txt)" >> "$GITHUB_OUTPUT"
 
       - name: Sonuclari commit et
         run: |
-          if [[ -n $(git status --porcelain data/daily_full_scan.json) ]]; then
-            echo "Degisiklik tespit edildi, commit yapiliyor..."
+          FILES="data/daily_scan_balanced.json data/daily_scan_dividend.json data/daily_scan_aggressive.json data/daily_full_scan.json"
+          CHANGED=$(git status --porcelain $FILES)
+          if [[ -n "$CHANGED" ]]; then
+            echo "Degisiklik tespit edildi..."
             TARIH=$(date +'%Y-%m-%d %H:%M UTC')
-            SCAN_INFO="${{ steps.scan_summary.outputs.info }}"
-            COMMIT_MSG="[AUTO-SCAN] Sabah taramasi ${TARIH} | ${SCAN_INFO}"
+            INFO="${{ steps.ozet.outputs.info }}"
+            COMMIT_MSG="[AUTO-SCAN] ${TARIH} | ${INFO}"
             for attempt in 1 2 3; do
               git pull --rebase origin main || true
-              git add data/daily_full_scan.json
+              git add $FILES
               git diff --staged --quiet && echo "Commit edilecek degisiklik yok" && exit 0
               git commit -m "$COMMIT_MSG"
               git push && echo "Push basarili" && exit 0
@@ -96,5 +78,5 @@ except Exception:
             done
             echo "Push basarisiz" && exit 1
           else
-            echo "Degisiklik yok, commit atlaniyor."
+            echo "Degisiklik yok."
           fi
