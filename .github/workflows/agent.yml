@@ -1,0 +1,76 @@
+name: Finzora Agent
+
+on:
+  schedule:
+    # Sabah: 13:00 UTC = 16:00 TR (piyasa öncesi)
+    - cron: '0 13 * * 1-5'
+    # Kapanış: 21:30 UTC = 00:30 TR
+    - cron: '30 21 * * 1-5'
+    # Seans içi izleme: her 30dk (14:30-21:00 UTC)
+    - cron: '0,30 14-20 * * 1-5'
+    # Haftalık: Pazar 09:00 UTC = 12:00 TR
+    - cron: '0 9 * * 0'
+
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'Çalışma modu'
+        required: false
+        default: 'morning'
+        type: choice
+        options:
+          - morning
+          - closing
+          - monitor
+          - weekly
+
+permissions:
+  contents: read  # SADECE OKU — Phase 1'de yazma yok
+
+jobs:
+  agent:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Python kurulum
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Bağımlılıklar
+        run: pip install anthropic requests pytz
+
+      - name: Modu belirle
+        id: mode
+        run: |
+          # Manuel tetiklemede input'u kullan
+          if [ -n "${{ github.event.inputs.mode }}" ]; then
+            echo "mode=${{ github.event.inputs.mode }}" >> $GITHUB_OUTPUT
+          else
+            # Saate göre otomatik tespit
+            HOUR=$(date -u +%H)
+            MIN=$(date -u +%M)
+            if [ "$HOUR" = "13" ] && [ "$MIN" = "00" ]; then
+              echo "mode=morning" >> $GITHUB_OUTPUT
+            elif [ "$HOUR" = "21" ] && [ "$MIN" = "30" ]; then
+              echo "mode=closing" >> $GITHUB_OUTPUT
+            elif [ "$(date -u +%u)" = "7" ]; then
+              echo "mode=weekly" >> $GITHUB_OUTPUT
+            else
+              echo "mode=monitor" >> $GITHUB_OUTPUT
+            fi
+          fi
+
+      - name: Agent çalıştır
+        run: python agent/orchestrator.py
+        env:
+          ANTHROPIC_API_KEY:      ${{ secrets.ANTHROPIC_API_KEY }}
+          FMP_API_KEY:            ${{ secrets.FMP_API_KEY }}
+          TELEGRAM_TOKEN:         ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_PRIVATE_CHAT:  ${{ secrets.TELEGRAM_PRIVATE_CHAT }}
+          AGENT_MODE:             ${{ steps.mode.outputs.mode }}
+          PYTHONUNBUFFERED:       "1"
