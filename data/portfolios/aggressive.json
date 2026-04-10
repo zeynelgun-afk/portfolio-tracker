@@ -27,7 +27,7 @@
   },
   "baslangic_sermaye": 400000,
   "nakit": {
-    "miktar": 199196.66,
+    "miktar": 159646.66,
     "para_birimi": "USD",
     "agirlik_yuzde": 100.0
   },
@@ -111,9 +111,26 @@
       "gunluk_degisim_yuzde": 0,
       "son_guncelleme": "2026-04-10T15:56:09.345870",
       "agirlik_yuzde": 10.94
+    },
+    {
+      "sembol": "CAMT",
+      "isim": "Camtek Ltd",
+      "sektor": "Yarı İletken Ekipman / Inspection",
+      "adet": 226,
+      "maliyet_baz": 175.0,
+      "guncel_fiyat": 176.5,
+      "yatirim": 39550.0,
+      "guncel_deger": 39889.0,
+      "kar_zarar": 339.0,
+      "kar_zarar_yuzde": 0.86,
+      "giris_tarihi": "2026-04-10",
+      "giris_fiyati": 175.0,
+      "giris_nedeni": "Agresif v2 yarı iletken ekipman teması. RSI 60, SMA20/50 üstü, +17% aylık RS. AI chip üretimi inspection kritik darboğaz. Limit 175 doldu (gün dibi 174.12). Stop 163, hedef 210.",
+      "zarar_kes": 163.0,
+      "hedef_fiyat": 210.0
     }
   ],
-  "son_guncelleme": "2026-04-10T15:56:09.345870",
+  "son_guncelleme": "2026-04-10T16:42:45.406530",
   "toplam_deger": 361276.01,
   "toplam_getiri_yuzde": -9.68,
   "notes": [
