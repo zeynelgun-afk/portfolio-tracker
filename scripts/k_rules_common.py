@@ -164,6 +164,51 @@ SECTOR_MAP = {
 }
 
 
+
+def get_vix_level():
+    """
+    Gercek VIX seviyesini Yahoo Finance'den ceker (^VIX).
+
+    ONEMLI: FMP'de ^VIX desteklenmez (402 hatasi verir).
+    VIXY ETF fiyati ($29-30) VIX seviyesiyle (tipik 10-40) ESIT DEGILDIR.
+    Aralarinda yonsel korelasyon vardir ama sayisal esit degildir.
+    K-13 eslikleri (<22 / 22-35 / >35) icin mutlaka gercek VIX kullan.
+
+    VIXY su amaclarla kullanilabilir:
+      - VIX'in yon degisimi (changesPercentage >0 = yukseliyor)
+      - Gorsel gosterge
+
+    Donus: float (VIX seviyesi) veya None (hata)
+    """
+    import urllib.request as _ureq
+    url = "https://query1.finance.yahoo.com/v8/finance/chart/%5EVIX?interval=1d&range=1d"
+    try:
+        req = _ureq.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+        resp = _ureq.urlopen(req, timeout=10)
+        data = json.loads(resp.read())
+        price = data["chart"]["result"][0]["meta"]["regularMarketPrice"]
+        return float(price)
+    except Exception as e:
+        print(f"[VIX HATA] Yahoo Finance ^VIX cekilemedi: {e}", file=sys.stderr)
+        return None
+
+
+def get_vix_direction():
+    """
+    VIX'in yonunu VIXY changesPercentage uzerinden dondurur.
+    Yalnizca 'artiyor mu / dusuyor mu' sorusuna cevap verir; seviye degil.
+
+    NOT: VIXY fiyati ($29-30) != VIX seviyesi (10-40). Sadece yon icin kullan.
+
+    Donus: +1 (yukseliyor), -1 (dusuyor), 0 (bilinmiyor)
+    """
+    data = fmp_get("batch-quote", {"symbols": "VIXY"})
+    if data and isinstance(data, list) and data:
+        chg = data[0].get("changesPercentage", 0)
+        return 1 if chg > 0 else (-1 if chg < 0 else 0)
+    return 0
+
+
 def get_sector(symbol):
     """Hisse sembolü için SPDR sektör ETF döndürür. Bilinmiyorsa FMP'den profile çek."""
     sym = symbol.upper()

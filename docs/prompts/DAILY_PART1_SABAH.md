@@ -80,8 +80,10 @@ ADIM 0.5 — DÜN FAZ 3 STATE HANDOFF
   → kapanış raporu (PART 2) bu veriyi zaten işledi — burada tekrar işleme değil, sadece yarına taşınan flag'ler için kullan
 
 ADIM 1 — PİYASA VERİSİ (FMP + WEB)
-  → batch-quote: SPY, QQQ, DIA, IWM, VIXY (VIX proxy), GCUSD, USO (petrol proxy)
-    ⚠️ doğrudan ^VIX ve CLUSD/WTIUSD güvenilmez — VIXY ve USO kullan
+  → batch-quote: SPY, QQQ, DIA, IWM, VIXY, GCUSD, USO (petrol proxy)
+    ⚠️ VIX SEVİYESİ: get_vix_level() [k_rules_common] → Yahoo Finance ^VIX
+       VIXY fiyatı ($29-30) ≠ VIX seviyesi (tipik 10-40). K-13 eşikleri için VIXY fiyatını KULLANMA.
+       VIXY sadece yön için: get_vix_direction(). CLUSD/WTIUSD güvenilmez → USO kullan.
   → stock-price-change: tüm portföy sembolleri (1D, 5D, 1M güvenilir)
   → teknik göstergeler: portföy hisseleri için RSI(14), SMA50, SMA200
   → sector-performance-snapshot (date = dünün tarihi)
@@ -278,7 +280,7 @@ rotasyon sinyali: [risk-on / risk-off / karışık]
 
 ### risk değerlendirmesi
 
-- VIX: XX.X → [risk-on/off/nötr]
+- VIX: XX.X (Yahoo Finance ^VIX — get_vix_level()) → [risk-on/off/nötr]
 - K-13 v4.1 aktif bant: [sakin/dikkatli/gergin/panik]
 - K-14 drawdown status: [aktif/pasif]
 - breadth: gainers/losers oranı

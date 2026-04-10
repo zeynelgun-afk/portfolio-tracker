@@ -32,6 +32,8 @@
     "qqq": 609.71,
     "vixy": 29.7,
     "gld": 440.02,
-    "uso": 124.34
+    "uso": 124.34,
+    "vix": 19.33,
+    "_vix_notu": "vix=gercek seviye (Yahoo ^VIX) | vixy=ETF fiyati, sadece yon icin"
   }
 }

@@ -536,7 +536,7 @@ state["faz2"] = {
 ## 🔔 FAZ 2 orta seans — {tarih} {saat} TR
 
 ### piyasa delta (faz 1'den beri)
-SPY ±%X | QQQ ±%X | VIXY ±%X
+SPY ±%X | QQQ ±%X | VIX XX.X (^VIX) | VIXY ±%X (yön)
 risk ortamı: [aynı/değişti → neden]
 
 ### sektör RS

@@ -84,7 +84,8 @@ günlük toplam FMP bütçesi (tüm fazlar): ~130-150 call. dakikalık limit 2,5
     "qqq": {"fiyat": 0, "degisim_pct": 0},
     "dia": {"fiyat": 0, "degisim_pct": 0},
     "iwm": {"fiyat": 0, "degisim_pct": 0},
-    "vixy": {"fiyat": 0, "degisim_pct": 0},
+    "vixy": {"fiyat": 0, "degisim_pct": 0},  // ETF — sadece yön
+    "vix_level": 0.0,  // gerçek VIX (Yahoo ^VIX, get_vix_level())
     "uso": {"fiyat": 0, "degisim_pct": 0},
     "gld": {"fiyat": 0, "degisim_pct": 0},
     "usdtry": {"fiyat": 0},

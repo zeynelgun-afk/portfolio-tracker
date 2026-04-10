@@ -50,7 +50,8 @@ spy = fmp_get("quote", {"symbol": "SPY"})
 qqq = fmp_get("quote", {"symbol": "QQQ"})
 dia = fmp_get("quote", {"symbol": "DIA"})
 iwm = fmp_get("quote", {"symbol": "IWM"})
-vixy = fmp_get("quote", {"symbol": "VIXY"})  # VIX proxy
+vixy = fmp_get("quote", {"symbol": "VIXY"})  # SADECE YÖN için (artıyor/düşüyor)
+# ⚠️ VIX SEVİYESİ: VIXY fiyatı ≠ VIX seviyesi. K-13 için: vix_level = get_vix_level()
 
 # emtia
 uso = fmp_get("quote", {"symbol": "USO"})   # petrol
@@ -269,7 +270,8 @@ python scripts/telegram_notify.py --type session --theme "faz 1 özet: [tema]"
     "zaman": "HH:MM",
     "spy": {"fiyat": ..., "degisim": ...},
     "qqq": {...},
-    "vixy": {...},
+    "vixy": {...},       // ETF fiyatı — sadece yön
+    "vix_level": 0.0,    // gerçek VIX (Yahoo ^VIX, get_vix_level())
     "risk_ortami": "RISK-ON/OFF",
     "gap_raporu": [{"sembol": "...", "gap_pct": ..., "sinif": "..."}],
     "acil_aksiyonlar": ["SEMBOL satıldı K-06", ...],
@@ -299,7 +301,7 @@ bu dosya FAZ 2 başlangıcında okunur, ham veriyi tekrar çekmek gerekmez.
 ## 🔔 FAZ 1 açılış — {tarih} {saat} TR
 
 ### piyasa
-SPY $XXX (±%X) | QQQ $XXX (±%X) | VIXY $XXX (±%X)
+SPY $XXX (±%X) | QQQ $XXX (±%X) | VIX XX.X (Yahoo ^VIX) | VIXY $XXX ±%X (yön)
 risk ortamı: RISK-ON/OFF | sabahtan değişim: [aynı/değişti → neden]
 
 ### acil aksiyonlar

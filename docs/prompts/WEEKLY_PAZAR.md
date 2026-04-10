@@ -31,7 +31,8 @@
 
 - rapor pazar günü yazılır — cuma NYSE kapanışı baz
 - son seans verisi = cuma kapanış (FMP'de kesin)
-- VIXY = VIX proxy (doğrudan ^VIX güvenilmez)
+- VIX SEVİYESİ: get_vix_level() → Yahoo Finance ^VIX (K-13 eşikleri için zorunlu)
+- VIXY: sadece yön için (get_vix_direction()) — VIXY fiyatı ≠ VIX seviyesi
 - USO = petrol proxy (CLUSD/WTIUSD güvenilmez)
 
 ---
@@ -47,6 +48,7 @@ ADIM 0 — PLAYBOOK + PİYASA İSTİHBARATI + GEÇEN HAFTA
 
 ADIM 1 — MAKRO VERİ TOPLAMA
   → FMP quote: SPY, QQQ, DIA, IWM, VIXY, USO, GCUSD
+  → VIX seviyesi: get_vix_level() [Yahoo ^VIX] — VIXY fiyatını K-13 için kullanma
   → FMP sector-performance-snapshot (son 5 gün)
   → FMP treasury-rates (haftalık değişim)
   → web araması: "weekly market recap {tarih}", "sector rotation week"
@@ -145,7 +147,8 @@ RAPOR YAZ (bölüm 1-8) → git commit + push → telegram
 | altın | $X,XXX | ±X% | |
 | 10Y treasury | %X.XX | ±bps | |
 | dolar (DXY) | XX.X | ±X% | |
-| VIX (VIXY proxy) | XX | ±X% | |
+| VIX (Yahoo ^VIX) | XX.X | ±X% | get_vix_level() |
+| VIXY ETF | $XX.XX | ±X% | sadece yön |
 
 ### prediction markets haftalık değişim
 
@@ -209,7 +212,7 @@ data/swing/status.json:
 
 | koşul | hedef | mevcut | durum |
 |---|---|---|---|
-| VIX (VIXY proxy) | <22 | XX.X | ✓/✗ |
+| VIX (Yahoo ^VIX) | <22 | XX.X | ✓/✗ |
 | SPY fiyat vs SMA50 | üstü | $XXX vs $XXX | ✓/✗ |
 | 11 sektörden SPY'yi haftalık geçen sayısı | ≥6 | X/11 | ✓/✗ |
 | Son swing ardışık zarar serisi bitti mi | evet | [son trade W/L] | ✓/✗ |

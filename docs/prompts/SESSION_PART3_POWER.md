@@ -317,7 +317,7 @@ state["seans_ozet"] = {
 ## 🔔 FAZ 3 power hour — {tarih} {saat} TR
 
 ### gün özeti
-SPY $ (±%) | QQQ $ (±%) | VIXY $ (±%)
+SPY $ (±%) | QQQ $ (±%) | VIX XX.X (^VIX) | VIXY $ (±%) (yön)
 gün teması: [tek cümle]
 
 ### bugün yapılan trade'ler (3 faz toplam)

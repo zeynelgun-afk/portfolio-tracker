@@ -23,7 +23,8 @@ Kullanım:
 import sys
 import argparse
 from k_rules_common import (
-    fmp_get, get_all_positions, get_swing_active, send_k_alert, get_sector, set_quiet_mode
+    fmp_get, get_all_positions, get_swing_active, send_k_alert, get_sector, set_quiet_mode,
+    get_vix_direction
 )
 
 
@@ -76,15 +77,17 @@ def evaluate_position(symbol, stop_loss, current_price):
             negatives += 1
             details.append(f"Yüksek hacim + düşüş ({volume/avg_volume:.1f}x)")
 
-    # 3) SPY günlük + VIX
+    # 3) SPY günlük + VIX yönü
+    # NOT: VIXY fiyati != VIX seviyesi. Burada sadece yon kullanilir.
+    # K-13 eslikleri icin get_vix_level() kullan.
     spy = get_quote("SPY")
-    vixy = get_quote("VIXY")
-    if spy and vixy:
+    vix_dir = get_vix_direction()  # +1=yukseliyor, -1=dusuyor, VIXY uzerinden
+    if spy:
         spy_neg = spy.get("changesPercentage", 0) < 0
-        vix_pos = vixy.get("changesPercentage", 0) > 0
-        if spy_neg and vix_pos:
+        vix_rising = (vix_dir == 1)
+        if spy_neg and vix_rising:
             negatives += 1
-            details.append(f"SPY {spy.get('changesPercentage'):.2f}% + VIX yükseliyor")
+            details.append(f"SPY {spy.get('changesPercentage'):.2f}% + VIX yukseliyor (yon)")
 
     # 4) Sektör ETF
     sector_etf = get_sector(symbol)

@@ -94,7 +94,8 @@ ADIM 2 — FMP VERİ TOPLAMA
       → tetiklenmediyse stop değişmez
   → swing pozisyonları için chandelier stop ADIM 3'te güncellenir (RSI/SMA swing için çekilmez, ichimoku scripti kapsar)
   → emtia/döviz: GCUSD, USO (petrol proxy), EURUSD
-    ⚠️ CLUSD/WTIUSD güvenilmez → USO kullan. doğrudan ^VIX güvenilmez → VIXY kullan
+    ⚠️ VIX SEVİYESİ için get_vix_level() kullan (Yahoo Finance ^VIX). VIXY fiyatı ≠ VIX seviyesi.
+       VIXY sadece yön için (get_vix_direction()). CLUSD/WTIUSD güvenilmez → USO kullan.
   → treasury-rates
 
 ADIM 3 — JSON GÜNCELLEME
