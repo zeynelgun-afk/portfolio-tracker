@@ -6,11 +6,9 @@ on:
   workflow_dispatch:
     inputs:
       mode:
-        description: 'Tarama modu'
+        description: 'Tarama modu (balanced/dividend/aggressive/all)'
         required: false
         default: 'all'
-        type: choice
-        options: [all, balanced, dividend, aggressive]
 
 permissions:
   contents: write
@@ -18,7 +16,7 @@ permissions:
 jobs:
   morning-scan:
     runs-on: ubuntu-latest
-    timeout-minutes: 35
+    timeout-minutes: 45
 
     steps:
       - name: Checkout
@@ -32,6 +30,9 @@ jobs:
         with:
           python-version: '3.11'
 
+      - name: Bagimliliklar
+        run: pip install requests
+
       - name: Git config
         run: |
           git config user.name "Finzora AI"
@@ -40,7 +41,8 @@ jobs:
       - name: Taramayi calistir
         run: |
           MODE="${{ github.event.inputs.mode || 'all' }}"
-          python3 scripts/full_universe_screener.py --mode "$MODE" --workers 12
+          echo "Mod: $MODE"
+          python3 scripts/full_universe_screener.py --mode "$MODE" --workers 8 2>&1
         env:
           PYTHONUNBUFFERED: 1
 
@@ -55,28 +57,28 @@ for mode in ['balanced','dividend','aggressive']:
     if os.path.exists(fname):
         d = json.load(open(fname))
         lines.append(f\"{mode}:{d.get('ekle_adaylari','?')}ekle/{d.get('izle_adaylari','?')}izle\")
-print(' | '.join(lines))
+print(' | '.join(lines) if lines else 'tarama tamamlandi')
 " > /tmp/ozet.txt 2>/dev/null || echo 'tarama tamamlandi' > /tmp/ozet.txt
+          cat /tmp/ozet.txt
           echo "info=$(cat /tmp/ozet.txt)" >> "$GITHUB_OUTPUT"
 
       - name: Sonuclari commit et
         run: |
           FILES="data/daily_scan_balanced.json data/daily_scan_dividend.json data/daily_scan_aggressive.json data/daily_full_scan.json"
-          CHANGED=$(git status --porcelain $FILES)
+          CHANGED=$(git status --porcelain $FILES 2>/dev/null)
           if [[ -n "$CHANGED" ]]; then
-            echo "Degisiklik tespit edildi..."
+            echo "Degisiklik var, commit ediliyor..."
             TARIH=$(date +'%Y-%m-%d %H:%M UTC')
-            INFO="${{ steps.ozet.outputs.info }}"
-            COMMIT_MSG="[AUTO-SCAN] ${TARIH} | ${INFO}"
             for attempt in 1 2 3; do
               git pull --rebase origin main || true
               git add $FILES
-              git diff --staged --quiet && echo "Commit edilecek degisiklik yok" && exit 0
-              git commit -m "$COMMIT_MSG"
+              git diff --staged --quiet && echo "Commit edilecek yok" && exit 0
+              git commit -m "[AUTO-SCAN] ${TARIH} | ${{ steps.ozet.outputs.info }}"
               git push && echo "Push basarili" && exit 0
-              sleep $((attempt * 5))
+              echo "Attempt $attempt basarisiz, bekleniyor..."
+              sleep $((attempt * 10))
             done
-            echo "Push basarisiz" && exit 1
+            echo "Push basarisiz oldu" && exit 1
           else
             echo "Degisiklik yok."
           fi
