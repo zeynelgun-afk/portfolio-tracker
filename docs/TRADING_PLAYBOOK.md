@@ -493,7 +493,7 @@ KADEMELİ FREN:
 
 YENİDEN BAŞLAMA PROTOKOLÜ (v2.1 — 10 nisan 2026):
 
-1) Min 5 iş günü soğuma
+1) Min 1 iş günü soğuma
 
 2) Zorunlu kayıp analizi — her kayıp trade için 3 kategori (soğuma sonrası da yapılabilir):
    - ORTAM: Giriş anında VIX ve SPY SMA50 durumu neydi? K-13 uyumlu muydu?
