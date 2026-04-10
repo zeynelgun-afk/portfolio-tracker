@@ -46,6 +46,9 @@ from learning_engine import (
 from risk_engine import build_risk_context
 from backtester import run_full_backtest, format_backtest_for_claude
 from rule_updater import run_weekly_rule_review, get_applied_changes_summary
+from dry_run_manager import run_dry_run_check
+from trade_feedback import run_auto_feedback
+from screener_optimizer import run_screener_optimization
 
 REPO_ROOT = Path(__file__).parent.parent
 TR_TZ     = pytz.timezone("Europe/Istanbul")
@@ -135,6 +138,9 @@ def collect_context(mode: str) -> dict:
 def run_morning(ctx: dict):
     """Sabah analizi — piyasa açılmadan önce."""
     print("[Orkestratör] Sabah modu çalışıyor...")
+
+    # Gece kapanan trade'leri kontrol et
+    run_auto_feedback(ctx["raw"]["portfolios"])
 
     prompt = f"""
 {ctx['compressed']}
@@ -251,9 +257,16 @@ def run_weekly(ctx: dict):
     """Pazar günü haftalık derin analiz + öğrenme döngüsü."""
     print("[Orkestratör] Haftalık mod çalışıyor...")
 
-    learning_ctx = build_weekly_learning_context()
-    trade_stats  = analyze_closed_trades(days_back=7)
+    learning_ctx  = build_weekly_learning_context()
+    trade_stats   = analyze_closed_trades(days_back=7)
     update_k_rule_stats(trade_stats)
+    backtest      = run_full_backtest()
+    backtest_ctx  = format_backtest_for_claude(backtest)
+    applied_log   = get_applied_changes_summary()
+    screener_rpt  = run_screener_optimization()
+
+    # Dry-run kontrolü — süre dolan önerileri değerlendir
+    dry_run_rpt   = run_dry_run_check(backtest)
 
     prompt = f"""
 {ctx['compressed']}
@@ -264,40 +277,36 @@ def run_weekly(ctx: dict):
 
 {learning_ctx}
 
-=== GÖREV: HAFTALIK DERİN ANALİZ + ÖĞRENME ===
-1. Bu haftanın portföy özeti: en iyi/kötü pozisyon, genel performans
-2. Risk analizi: konsantrasyon, korelasyon, drawdown durumu
-3. Hangi K-kuralı bu hafta kritik rol oynadı?
-4. Trade istatistiklerine göre: win rate, ort P/L, hangi yöntem daha iyi?
-5. Tezlerde değişen bir şey var mı?
-6. Gelecek hafta için 3 kritik izleme noktası
-7. Kural/filtre değişikliği önerisi varsa: BACKTEST GEREKLİ — [değişiklik]
-8. Bu haftadan 2 somut ders
-
-Detaylı Türkçe analiz. Spekülatif önerilere BACKTEST GEREKLİ işareti koy.
-"""
-
-    # Backtest çalıştır ve prompt'a ekle
-    backtest     = run_full_backtest()
-    backtest_ctx = format_backtest_for_claude(backtest)
-    applied_log  = get_applied_changes_summary()
-
-    full_prompt = prompt + f"""
 {backtest_ctx}
+
+{screener_rpt}
 
 Son uygulanan değişiklikler:
 {applied_log}
 
-KURAL ÖNERİSİ FORMAT (varsa):
-BACKTEST GEREKLİ — [param_adı]: [eski_değer] → [yeni_değer] | [gerekçe]
+Dry-run değerlendirmesi:
+{dry_run_rpt}
+
+=== GÖREV: HAFTALIK DERİN ANALİZ + ÖĞRENME ===
+1. Portföy özeti: en iyi/kötü pozisyon, genel performans
+2. Risk: konsantrasyon, korelasyon, drawdown
+3. Hangi K-kuralı bu hafta kritik rol oynadı?
+4. Screener optimizasyonuna göre filtre değişikliği gerekiyor mu?
+5. Tezlerde değişen bir şey var mı?
+6. Gelecek hafta için 3 kritik izleme noktası
+7. Kural/filtre önerisi: BACKTEST GEREKLİ — [param]: [eski] → [yeni] | [gerekçe]
+8. Bu haftadan 2 somut ders
+
+Detaylı Türkçe analiz. Spekülatif önerilere BACKTEST GEREKLİ işareti koy.
+KURAL ÖNERİSİ FORMAT: BACKTEST GEREKLİ — [param_adı]: [eski_değer] → [yeni_değer] | [gerekçe]
 İzin verilen parametreler: rsi_k11_katman1, rsi_k11_katman2, atr_katsayi, swing_max_gun
 """
 
-    response = get_claude_decision(full_prompt, mode="weekly")
+    response = get_claude_decision(prompt, mode="weekly")
     save_daily_brief(response, "weekly")
     auto_extract_lessons(response, "weekly")
 
-    # Önerileri kuyruğa ekle (gerçekte uygulama yok — Phase 5)
+    # Önerileri kuyruğa ekle
     proposals = run_weekly_rule_review(response, backtest)
     if proposals:
         onay_beklenti = [p for p in proposals if p["durum"] == "ONAY_BEKLIYOR"]

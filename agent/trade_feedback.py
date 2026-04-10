@@ -1,0 +1,259 @@
+#!/usr/bin/env python3
+"""
+Finzora Agent — Trade Geri Bildirimi
+======================================
+Bir pozisyon kapandığında otomatik çalışır:
+  1. Claude'a trade detaylarını gönderir
+  2. Claude lessons + post-trade analiz yazar
+  3. closed.json'daki lessons alanını günceller
+  4. K-kuralı istatistiklerini günceller
+  5. Kaynak (Twitter/haber) doğruluğunu kaydeder
+  6. Telegram'a bildirim gönderir
+
+Tetikleme:
+  - Manuel: python agent/trade_feedback.py --symbol MRVL --portfolio aggressive
+  - Otomatik: daily_update.py yeni kapanış tespitinde çağırır (Phase 5)
+"""
+
+import json
+import sys
+import os
+import argparse
+from datetime import datetime
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).parent))
+
+from claude_agent import get_claude_decision
+from tools import send_private_telegram
+from memory_manager import append_learning
+from learning_engine import update_k_rule_stats, auto_extract_lessons
+
+REPO_ROOT  = Path(__file__).parent.parent
+MEMORY_DIR = Path(__file__).parent / "memory"
+
+
+# ── Kapanan Trade'i Bul ───────────────────────────────────────────────────────
+
+def find_closed_trade(symbol: str, portfolio: str) -> dict | None:
+    """
+    closed.json veya portfolios/*.json'da kapanmış trade'i bulur.
+    """
+    # Önce closed.json'a bak
+    closed_path = REPO_ROOT / "data" / "swing" / "closed.json"
+    if closed_path.exists():
+        with open(closed_path, encoding="utf-8") as f:
+            data = json.load(f)
+        trades = data.get("kapali_pozisyonlar", data.get("closed_positions", []))
+        for t in reversed(trades):
+            if t.get("sembol") == symbol or t.get("symbol") == symbol:
+                return t
+
+    # Portfolio transactions'dan bak
+    pf_path = REPO_ROOT / "data" / "portfolios" / f"{portfolio}.json"
+    if pf_path.exists():
+        with open(pf_path, encoding="utf-8") as f:
+            pf = json.load(f)
+        txns = pf.get("transactions", pf.get("islemler", []))
+        sells = [t for t in txns
+                 if (t.get("type") == "SELL" or t.get("tur") == "SATIŞ")
+                 and t.get("symbol") == symbol]
+        if sells:
+            return sells[-1]
+
+    return None
+
+
+# ── Post-Trade Claude Analizi ─────────────────────────────────────────────────
+
+def generate_post_trade_analysis(trade: dict, portfolio: str) -> str:
+    """
+    Claude'a trade detaylarını gönderip post-trade analiz üretir.
+    """
+    symbol      = trade.get("sembol") or trade.get("symbol", "?")
+    entry_price = trade.get("giris_fiyati") or trade.get("entry_price") or trade.get("price", 0)
+    exit_price  = trade.get("cikis_fiyati") or trade.get("exit_price", 0)
+    pnl_pct     = trade.get("pnl_yuzde") or trade.get("pnl_pct", 0)
+    hold_days   = trade.get("tutma_suresi") or trade.get("hold_days", 0)
+    exit_reason = trade.get("cikis_nedeni") or trade.get("exit_reason", "Bilinmiyor")
+    entry_reason = trade.get("giris_nedeni") or trade.get("entry_reason", "")
+
+    # K-kuralları özetini çek
+    digest_path = MEMORY_DIR / "k_rules_digest.md"
+    k_rules     = digest_path.read_text(encoding="utf-8") if digest_path.exists() else ""
+
+    prompt = f"""
+Sen Finzora Agent'sın. Az önce bir pozisyon kapandı. Post-trade analiz yap.
+
+TRADE DETAYLARI:
+  Sembol:      {symbol}
+  Portföy:     {portfolio}
+  Giriş:       {entry_price}
+  Çıkış:       {exit_price}
+  P/L:         %{pnl_pct}
+  Tutma süresi: {hold_days} gün
+  Çıkış nedeni: {exit_reason}
+  Giriş tezi:  {entry_reason}
+
+K-KURALLARI (özet):
+{k_rules[:1000]}
+
+Şunları analiz et:
+1. Bu trade hangi K-kuralına göre yönetildi?
+2. Giriş tezi doğru muydu? Ne oldu?
+3. Çıkış kararı doğru zamanda mı verildi?
+4. Bu trade'den çıkarılan 1-2 somut ders nedir?
+5. Bir sonraki benzer durumda ne farklı yapılmalı?
+
+Kısa ve net. KESİN / MUHTEMEL / SPEKÜLATİF etiket kullan.
+Son satır mutlaka: "DERS: [tek cümle özet]"
+"""
+
+    return get_claude_decision(prompt, mode="monitor")
+
+
+# ── closed.json Güncelle ─────────────────────────────────────────────────────
+
+def update_closed_json_lessons(symbol: str, lessons: str) -> bool:
+    """
+    closed.json'daki ilgili trade'in lessons alanını günceller.
+    """
+    path = REPO_ROOT / "data" / "swing" / "closed.json"
+    if not path.exists():
+        return False
+
+    with open(path, encoding="utf-8") as f:
+        data = json.load(f)
+
+    trades  = data.get("kapali_pozisyonlar", data.get("closed_positions", []))
+    updated = False
+
+    for t in reversed(trades):
+        if t.get("sembol") == symbol or t.get("symbol") == symbol:
+            t["dersler"]   = lessons[:500]
+            t["agent_analiz_tarihi"] = datetime.now().strftime("%Y-%m-%d")
+            updated = True
+            break
+
+    if updated:
+        with open(path, "w", encoding="utf-8") as f:
+            json.dump(data, f, ensure_ascii=False, indent=2)
+        print(f"[TradeFeedback] {symbol} lessons güncellendi.")
+
+    return updated
+
+
+# ── Kapanış Tespiti ───────────────────────────────────────────────────────────
+
+def detect_new_closings(portfolios: dict) -> list[dict]:
+    """
+    Son 24 saatte kapanan pozisyonları tespit eder.
+    daily_update.py'nin çalışmasından sonra transactions.csv'yi kontrol eder.
+    """
+    tx_path = REPO_ROOT / "data" / "transactions.csv"
+    if not tx_path.exists():
+        return []
+
+    import csv
+    from datetime import timedelta
+    import pytz
+
+    yesterday = (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d")
+    closings  = []
+
+    with open(tx_path, encoding="utf-8") as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            row_date = row.get("date", "")
+            row_type = row.get("type", "").upper()
+            if row_date >= yesterday and row_type in ("SELL", "SATIŞ"):
+                closings.append({
+                    "symbol":    row.get("symbol", ""),
+                    "portfolio": row.get("portfolio", "unknown"),
+                    "price":     row.get("price", 0),
+                    "date":      row_date,
+                    "reason":    row.get("reason", ""),
+                })
+
+    return closings
+
+
+# ── Ana İşlev ────────────────────────────────────────────────────────────────
+
+def process_trade_feedback(symbol: str, portfolio: str) -> bool:
+    """
+    Bir trade için tam geri bildirim döngüsünü çalıştırır.
+    """
+    print(f"[TradeFeedback] {symbol} ({portfolio}) analiz ediliyor...")
+
+    # Trade'i bul
+    trade = find_closed_trade(symbol, portfolio)
+    if not trade:
+        print(f"[TradeFeedback] {symbol} için kapanmış trade bulunamadı.")
+        return False
+
+    pnl_pct  = trade.get("pnl_yuzde") or trade.get("pnl_pct", 0)
+    sonuc    = "✅ KAR" if float(pnl_pct) > 0 else "❌ ZARAR"
+
+    # Claude analizi
+    analysis = generate_post_trade_analysis(trade, portfolio)
+
+    # DERS satırını çıkar
+    ders = ""
+    for line in analysis.split("\n"):
+        if line.strip().startswith("DERS:"):
+            ders = line.strip()
+            break
+
+    # closed.json güncelle
+    update_closed_json_lessons(symbol, analysis)
+
+    # Birikimli öğrenmeye ekle
+    if ders:
+        append_learning(f"{symbol}: {ders}", source="post_trade")
+
+    # K-istatistik güncelle
+    exit_reason = (trade.get("cikis_nedeni") or trade.get("exit_reason", "")).lower()
+    fake_stats  = {"k_rule_tetik": {}}
+    if "stop" in exit_reason:
+        fake_stats["k_rule_tetik"]["stop_loss"] = 1
+    if "k-11" in exit_reason:
+        fake_stats["k_rule_tetik"]["K-11"] = 1
+    update_k_rule_stats(fake_stats)
+
+    # Telegram bildirimi
+    msg = (
+        f"📋 Post-Trade Analiz\n"
+        f"{symbol} | {portfolio.upper()} | {sonuc} %{pnl_pct}\n\n"
+        f"{analysis[:800]}"
+    )
+    send_private_telegram(msg)
+
+    print(f"[TradeFeedback] {symbol} tamamlandı.")
+    return True
+
+
+def run_auto_feedback(portfolios: dict):
+    """
+    Otomatik kapanış tespiti ve geri bildirim döngüsü.
+    Sabah/kapanış modunda çağrılır.
+    """
+    closings = detect_new_closings(portfolios)
+    if not closings:
+        return
+
+    print(f"[TradeFeedback] {len(closings)} yeni kapanış tespit edildi.")
+    for c in closings:
+        process_trade_feedback(c["symbol"], c["portfolio"])
+
+
+# ── CLI ───────────────────────────────────────────────────────────────────────
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Trade geri bildirimi")
+    parser.add_argument("--symbol",    required=True, help="Hisse kodu (ör: MRVL)")
+    parser.add_argument("--portfolio", default="aggressive",
+                        choices=["aggressive", "balanced", "dividend", "swing"],
+                        help="Portföy adı")
+    args = parser.parse_args()
+    process_trade_feedback(args.symbol, args.portfolio)
