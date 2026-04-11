@@ -114,6 +114,14 @@ LİTERATÜR DESTEĞİ:
 
 ANA KURAL: trailing stop tetiklendiğinde ÇIKIŞ. sorgulama yok, ASLA bozulmaz. K-06 ile aynı disiplin felsefesi.
 
+MAKRO ŞOK İSTİSNASI (11 nisan 2026 eklendi — VRT/COHR analizi):
+- Koşul: Aynı gün SPY ≥%3 düştü VE VIX tek günde ≥%20 spike yaptı
+- Uygulama: O gün trailing stop tetiklense bile 1 işlem günü bekle
+- Teyit: Ertesi gün fiyat stop seviyesinin altındaysa → ÇIK. Toparladıysa → tut
+- Amaç: Tek günlük makro şok (tarife, jeopolitik, siyaset) sonrası whipsaw önleme
+- Kanıt: VRT Mar-27 (tarife şoku, +%17.4 toparladı), COHR Mar-26 (Bain blok satış, +%18.7 toparladı)
+- UYARI: Bu istisna sadece piyasa geneli şok için. Hisse özgü negatif haberde (insider satış, earnings miss) → ANINDA ÇIK, bekleme yok
+
 SWING TRADE: chandelier exit + kâr kilidi sistemi (matematiksel sıkılaştırma)
 - kâr <%7: chandelier 3×ATR(14)
 - kâr %7-15: chandelier 2×ATR (kâr kilidi devreye girer)
