@@ -294,3 +294,35 @@ v2.1 → v2.3 geçişinde kaldırılan/değişen kurallar:
 ---
 
 > son güncelleme: 9 nisan 2026 v1.0 | finzora ai
+
+---
+
+## Katman 4: Piyasa Rejimi (market_regime.py)
+
+### Her sabah seans başında çalıştır:
+```bash
+# 1. Web'den VIX al (search: "VIX today")
+# 2. Rejim tespit et:
+python3 scripts/market_regime.py --vix [VIX_DEGERI] --full
+
+# 3. Prompt enjeksiyonu için:
+python3 scripts/market_regime.py --inject
+```
+
+### Rejim → Aksiyon tablosu:
+| Rejim | Pos. çarpanı | Tarama | Öne çıkan |
+|---|---|---|---|
+| TREND_BULL | ×1.0 | MOMENTUM | Teknoloji, Sanayi |
+| VOLATILE_BULL | ×0.75 | SEÇİCİ | Sektör ETF >9EMA zorunlu |
+| KRİZ_RALLİ | ×0.75 | SEÇİCİ | Beneficiary: enerji/savunma/altın |
+| CHOP | ×0.5 | BEKLE | Sektör lideri net değil |
+| BEAR | ×0.5 | DEFANS | XLP, XLU, GLD |
+| KRİZ | ×0.0 | KAPALI | Yeni giriş yok, K-14 protokolü |
+
+### Güncel rejim (otomatik güncellenir):
+`data/market_regime.json` → `guncel_rejim.rejim`
+
+### Geçmiş sorgu:
+```bash
+python3 scripts/market_regime.py --history
+```
