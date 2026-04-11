@@ -26,7 +26,8 @@
       "agirlik_yuzde": 14.3,
       "maliyet_bazis": 25.85,
       "zarar_kes": 25.03,
-      "cb_kaynak": "back-calc-karyuzde"
+      "cb_kaynak": "back-calc-karyuzde",
+      "stop_loss": 25.53
     },
     {
       "sembol": "VZ",
@@ -47,7 +48,8 @@
       "agirlik_yuzde": 3.44,
       "maliyet_bazis": 39.47,
       "zarar_kes": 44.13,
-      "cb_kaynak": "back-calc-karyuzde"
+      "cb_kaynak": "back-calc-karyuzde",
+      "stop_loss": 41.33
     },
     {
       "sembol": "MO",
@@ -68,7 +70,8 @@
       "agirlik_yuzde": 10.27,
       "maliyet_bazis": 62.8895,
       "zarar_kes": 64.89,
-      "cb_kaynak": "back-calc-karyuzde"
+      "cb_kaynak": "back-calc-karyuzde",
+      "stop_loss": 59.59
     },
     {
       "sembol": "MRK",
@@ -89,7 +92,8 @@
       "agirlik_yuzde": 4.24,
       "maliyet_bazis": 119.95,
       "zarar_kes": 115.95,
-      "cb_kaynak": "back-calc-karyuzde"
+      "cb_kaynak": "back-calc-karyuzde",
+      "stop_loss": 92.56
     },
     {
       "sembol": "OKE",
@@ -109,7 +113,8 @@
       "hedef_fiyat": 93.0,
       "gunluk_degisim_yuzde": 0,
       "son_guncelleme": "2026-04-10T21:33:12.882382",
-      "agirlik_yuzde": 5.6
+      "agirlik_yuzde": 5.6,
+      "stop_loss": 73.13
     },
     {
       "sembol": "DUK",
@@ -154,10 +159,11 @@
       "gunluk_degisim_yuzde": 0,
       "son_guncelleme": "2026-04-10T21:33:12.878188",
       "agirlik_yuzde": 11.14,
-      "portfoy": "income"
+      "portfoy": "income",
+      "stop_loss": 77.6
     }
   ],
-  "son_guncelleme": "2026-04-11T12:41:55.480442",
+  "son_guncelleme": "2026-04-11T13:37:58.772936",
   "toplam_deger": 170366.91999999998,
   "toplam_getiri_yuzde": 43.09,
   "notes": [

@@ -115,5 +115,9 @@
       "psikoloji_testi": "Her trade öncesi: Bu girişi yarın tekrar inceleseydim, tüm kuralları tam uyguladım mı?",
       "kayip_analizi": "Her kayıp trade için 3 kategori: ORTAM / SİSTEM / PSİKOLOJİ zorunlu"
     }
-  }
+  },
+  "status": "AKTIF",
+  "k14_active": false,
+  "k14_kaldirildi": "2026-04-11",
+  "not": "VIX 19.23 (<22), koşullar karşılandı. Yarım pozisyon ile başla."
 }
