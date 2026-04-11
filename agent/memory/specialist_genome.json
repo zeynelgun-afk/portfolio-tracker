@@ -1,0 +1,32 @@
+{
+  "MACRO_AGENT": {
+    "weight": 1.0,
+    "n": 0,
+    "avg_score": 0.0,
+    "history": []
+  },
+  "SECTOR_AGENT": {
+    "weight": 1.0,
+    "n": 0,
+    "avg_score": 0.0,
+    "history": []
+  },
+  "SIGNAL_AGENT": {
+    "weight": 1.0,
+    "n": 0,
+    "avg_score": 0.0,
+    "history": []
+  },
+  "RISK_AGENT": {
+    "weight": 1.0,
+    "n": 0,
+    "avg_score": 0.0,
+    "history": []
+  },
+  "CIO_AGENT": {
+    "weight": 1.0,
+    "n": 0,
+    "avg_score": 0.0,
+    "history": []
+  }
+}

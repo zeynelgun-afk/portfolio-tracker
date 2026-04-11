@@ -62,6 +62,12 @@ from prediction_logger import (
     score_pending_predictions,
     get_prediction_context,
 )
+from specialist_agents import (
+    run_multi_agent_analysis,
+    format_multi_agent_for_telegram,
+    load_specialist_genome,
+    update_specialist_weights,
+)
 
 REPO_ROOT = Path(__file__).parent.parent
 TR_TZ     = pytz.timezone("Europe/Istanbul")
@@ -167,6 +173,20 @@ def run_morning(ctx: dict):
     tahmin_ctx  = get_prediction_context()
     agirlik_ctx = get_weighted_genome_context(load_genome())
 
+    # Multi-agent analiz çalıştır
+    print("[Orkestratör] Multi-agent analiz başlıyor...")
+    multi_result = run_multi_agent_analysis(
+        compressed_ctx = ctx['compressed'],
+        market_data    = ctx['research'],
+        risk_data      = ctx['risk'],
+        portfolio_ctx  = get_regime_context(),
+    )
+    multi_summary = format_multi_agent_for_telegram(multi_result)
+
+    # Uzman ağırlıklarını güncelle
+    s_genome = load_specialist_genome()
+    update_specialist_weights(s_genome, [])
+
     prompt = f"""
 {ctx['compressed']}
 
@@ -201,7 +221,9 @@ Kısa ve net. KESİN / MUHTEMEL / SPEKÜLATİF etiket.
     response = get_claude_decision(prompt, mode="morning")
     save_daily_brief(response, "morning")
 
-    msg = f"Finzora Agent — Sabah Analizi\n{ctx['timestamp'][:16]}\n\n{response}"
+    # Telegram'a iki mesaj: Multi-agent özeti + genel analiz
+    send_private_telegram(multi_summary)
+    msg    = f"Finzora Agent — Sabah Analizi\n{ctx['timestamp'][:16]}\n\n{response}"
     result = send_private_telegram(msg)
     print(f"[Orkestratör] Telegram sonucu: {result}")
 

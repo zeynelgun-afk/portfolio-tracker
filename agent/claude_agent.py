@@ -36,21 +36,18 @@ ETİKETLER (zorunlu):
 - SPEKÜLATİF: yorum, tahmin, sezgi"""
 
 
-def get_claude_decision(user_prompt: str, mode: str = "monitor") -> str:
+def get_claude_decision(
+    user_prompt: str,
+    mode: str = "monitor",
+    system_override: str = None
+) -> str:
     """
     Claude API'ye prompt gönderir, metin yanıt döner.
-    
-    Args:
-        user_prompt: Analiz için hazırlanmış prompt
-        mode: morning / closing / monitor / weekly
-    
-    Returns:
-        Claude'un Türkçe analiz metni
+    system_override: Uzman agent sistemleri için özel sistem promptu.
     """
     if not ANTHROPIC_KEY:
-        return "⚠️ ANTHROPIC_API_KEY bulunamadı. GitHub Secrets kontrol et."
+        return "⚠️ ANTHROPIC_API_KEY bulunamadı."
 
-    # Mod bazlı token limiti
     max_tokens = {
         "morning": 1500,
         "closing": 1500,
@@ -58,12 +55,14 @@ def get_claude_decision(user_prompt: str, mode: str = "monitor") -> str:
         "weekly":  2500,
     }.get(mode, 1000)
 
+    system = system_override if system_override else SYSTEM_PROMPT
+
     try:
         client   = anthropic.Anthropic(api_key=ANTHROPIC_KEY)
         response = client.messages.create(
             model      = "claude-sonnet-4-5",
             max_tokens = max_tokens,
-            system     = SYSTEM_PROMPT,
+            system     = system,
             messages   = [{"role": "user", "content": user_prompt}],
         )
         return response.content[0].text
