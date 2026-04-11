@@ -410,6 +410,12 @@ def run_exit_checks(
 
     # K-06: Stop tetiklendi
     if current_price <= stop_loss:
+        _log.kritik(
+            f"K-06 STOP TETİKLENDİ: {symbol}",
+            f"Fiyat: ${current_price:.2f} ≤ Stop: ${stop_loss:.2f}\n"
+            f"P&L: {((current_price - entry_price) / entry_price * 100):+.1f}% | ÇIKIŞ GEREKLİ",
+            kaynak="k_engine"
+        )
         return {"action": "EXIT_NOW", "reason": f"K-06: stop tetiklendi ${current_price:.2f}≤${stop_loss:.2f}"}
 
     # Stop mesafesi
@@ -417,10 +423,21 @@ def run_exit_checks(
 
     # K-09: Stop %2 içinde
     if 0 < stop_dist < 2:
+        _log.uyari(
+            f"K-09 STOP YAKINI: {symbol}",
+            f"Fiyat: ${current_price:.2f} | Stop: ${stop_loss:.2f}\n"
+            f"Mesafe: %{stop_dist:.1f} (eşik: %2) — EXIT_NOW",
+            kaynak="k_engine"
+        )
         return {"action": "EXIT_NOW", "reason": f"K-09: stop %{stop_dist:.1f} yakın — çık"}
 
     # K-11: Kısmi kâr alma
     if rsi >= 80 and pnl_pct >= 10:
+        _log.uyari(
+            f"K-11 KISMİ KAR ALMA: {symbol}",
+            f"RSI: {rsi:.0f} | P&L: %{pnl_pct:.1f}\n%25 satış önerildi",
+            kaynak="k_engine"
+        )
         return {"action": "PARTIAL", "pct": 25,
                 "reason": f"K-11 katman 2: RSI {rsi:.0f} + kâr %{pnl_pct:.1f}"}
 
@@ -434,6 +451,11 @@ def run_exit_checks(
             new_stop = highest_high - 3.0 * atr
 
         if new_stop > stop_loss:
+            _log.bilgi(
+                f"K-07 trailing güncellendi: {symbol}",
+                f"Stop: ${stop_loss:.2f} → ${new_stop:.2f} | P&L: %{pnl_pct:.1f}",
+                kaynak="k_engine"
+            )
             return {"action": "TIGHTEN",
                     "new_stop": round(new_stop, 2),
                     "reason": f"K-07: trailing güncelle ${stop_loss:.2f}→${new_stop:.2f}"}

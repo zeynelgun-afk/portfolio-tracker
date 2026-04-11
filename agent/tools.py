@@ -43,7 +43,15 @@ def fmp_get(endpoint: str, params: dict = None) -> list | dict:
         r.raise_for_status()
         return r.json()
     except Exception as e:
-        print(f"[FMP] Hata ({endpoint}): {e}")
+        err_str = str(e)
+        print(f"[FMP] Hata ({endpoint}): {err_str}")
+        # Kritik HTTP hataları Telegram'a git
+        if any(code in err_str for code in ["402", "429", "500", "503", "ConnectionError", "Timeout"]):
+            _log.hata(
+                f"FMP API hatası: {endpoint}",
+                f"Hata: {err_str[:150]}",
+                kaynak="tools.fmp_get"
+            )
         return []
 
 
@@ -131,6 +139,7 @@ def get_real_vix() -> dict:
 
     except Exception as e:
         print(f"[VIX] Yahoo Finance hatası: {e}")
+        _log.uyari("VIX verisi alınamadı", f"{e}", kaynak="tools.get_real_vix")
         return {"price": None, "chg": None, "seviye": "UNKNOWN", "kaynak": "hata"}
 
 

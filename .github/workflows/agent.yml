@@ -83,6 +83,13 @@ jobs:
           AGENT_MODE:             ${{ steps.mode.outputs.mode }}
           PYTHONUNBUFFERED:       "1"
 
+      - name: Günlük özet (sadece closing modunda)
+        if: success() && steps.mode.outputs.mode == 'closing'
+        run: python scripts/heartbeat.py --mode ozet
+        env:
+          TELEGRAM_BOT_TOKEN:  ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_PRIVATE_ID: ${{ secrets.TELEGRAM_PRIVATE_CHAT }}
+
       - name: Hata bildirimi
         if: failure()
         run: |
