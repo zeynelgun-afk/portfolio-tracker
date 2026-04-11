@@ -1,0 +1,31 @@
+{
+  "date": "2026-04-11",
+  "type": "PORTFOLIO_CONSOLIDATION",
+  "description": "3 portföy → 2 portföy (Balanced kapatıldı)",
+  "transfers": [
+    {
+      "from": "balanced",
+      "to": "growth",
+      "symbol": "CI",
+      "reason": "Momentum/sağlık, büyüme portföyüne uygun"
+    },
+    {
+      "from": "balanced",
+      "to": "income",
+      "symbol": "MO",
+      "reason": "Temettü, gelir portföyüne eklendi (birleştirildi)"
+    },
+    {
+      "from": "balanced",
+      "to": "income",
+      "symbol": "DUK",
+      "reason": "Utility temettü, gelir portföyüne uygun"
+    },
+    {
+      "from": "balanced",
+      "to": "income",
+      "symbol": "NEE",
+      "reason": "Utility temettü, gelir portföyüne uygun"
+    }
+  ]
+}
