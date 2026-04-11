@@ -8,11 +8,12 @@
 - **K-01**: kaldırıldı (7 nisan 2026) — K-05 ile çakışma
 - **K-03**: kaldırıldı — içerik K-13 v4.1'e taşındı
 - **K-08**: kaldırıldı — K-07 chandelier zaten kapsıyor
+- **K-14**: kaldırıldı (11 nisan 2026) — psikoloji testi ile değiştirildi. Her giriş öncesi: "Bu girişi yarın tekrar inceleseydim, tüm kuralları tam uyguladım mı?" Drawdown geçmişi `data/swing/status.json`'da kayıtlı.
 - **K-18**: kaldırıldı (11 nisan 2026) — geriye dönük test sonucu: $5M+ insider satışı sonrası hisseler ortalama +2.1% kazandı, kazanma oranı %60. Kural ters çalışıyor. İnsiderlar çoğunlukla rutin sebeplerle satar (10b5-1 planı, vergi, çeşitlendirme) ve piyasa bunu fiyatlıyor. `scripts/k18_insider_check.py` devre dışı bırakıldı.
 
 ---
 
-## aktif kurallar (19 kural)
+## aktif kurallar (18 kural)
 
 ### giriş filtreleri
 
@@ -23,7 +24,6 @@
 | **K-05** | swing pozisyonu için earnings ≤2 iş günü | tam çıkış, exception yok, binary risk alma |
 | **K-13** v4.1 | VIX bantları × sektör kategorisi | 4 bant × 2 kategori matrisi (faydalanıcı/duyarlı) — altta tam tablo |
 | **K-13b** | VIX 28+ duyarlı sektör | ichimoku 4/4 şartıyla çeyrek pozisyon istisnası, stop chandelier 3×ATR (%5 taban yok — VIX yüksek olduğu için geniş stop gerekli) |
-| **K-14** | drawdown fren aktif | yeni swing girişi yok (A-kalite istisna), ortam testi: VIX<22 + SPY>SMA50 |
 | **K-15a** | RSI<35 oversold | 1 gün teyit bekle (mevcut pozisyon için değil, sadece yeni giriş) |
 | **K-15b** | momentum hisse (3ay >%30 + P/E neg/>50) | `scripts/k15b_dilution_check.py SYMBOL` zorunlu |
 | **K-17** | korelasyon + tema çakışması | `scripts/k17_correlation_check.py SYMBOL` — 3 soru testi, tema %40 limit |
@@ -95,7 +95,6 @@ kriz tipi değiştiğinde (pandemi/finansal/ticaret/enflasyon) faydalanıcı ve 
 | script | ne yapar | ne zaman çalıştır |
 |---|---|---|
 | `scripts/k09_proximity_check.py SYMBOL` | stop yakınlık 4 kontrol | fiyat stop'a <%2 kala |
-| `scripts/k14_drawdown_track.py` | drawdown serisi + ortam testi | her sabah + stop tetik sonrası |
 | `scripts/k15b_dilution_check.py SYMBOL` | momentum hisse dilüsyon skoru | yeni momentum giriş öncesi |
 | `scripts/k16_sell_the_news_score.py SYMBOL` | earnings 7g öncesi skor | portföy pozisyonu earnings öncesi |
 | `scripts/k17_correlation_check.py SYMBOL` | sektör + tema çakışması | her yeni giriş öncesi |
@@ -155,14 +154,13 @@ eğer stop_mesafe < min_mesafe:
 
 1. **K-06 stop tetiği** → her şeyin üstünde, override yasak
 2. **K-07 kâr kilidi** > K-11 katman 2 (kazançlı pozisyonda K-11 sıkı, kazançsız K-07 gevşek)
-3. **K-14 drawdown fren** > tüm yeni giriş kuralları (A-kalite istisna hariç)
-4. **K-13 v4.1** > K-02 (kriz şok kuralı artık K-13 v4.1 matrisinde)
+3. **K-13 v4.1** > K-02 (kriz şok kuralı artık K-13 v4.1 matrisinde)
 5. **K-10 portföy seviyesi alt sınır** paralel çalışır, K-13 sektör seçer
 6. **K-17 tema** > K-12 sektör (anlatı tema daha dar tanım)
 
 ---
 
-> son güncelleme: 11 nisan 2026 | finzora ai | K-18 kaldırıldı (backtest); K-ZST/K-EVR/K-ATR eklendi (3+ trade kanıtı)
+> son güncelleme: 12 nisan 2026 | finzora ai | K-14 kaldırıldı (psikoloji testi); K-18 kaldırıldı (backtest); K-ZST/K-EVR/K-ATR eklendi (3+ trade kanıtı)
 
 ---
 

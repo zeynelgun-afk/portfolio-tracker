@@ -56,7 +56,6 @@
   "sektor": "Temel Tüketim",
   "adet": 267,
   "maliyet_baz": 67.44,
-  "maliyet_bazis": 67.29,
   "guncel_fiyat": 67.45,
   "yatirim": 18006.48,
   "guncel_deger": 18009.15,
@@ -68,7 +67,7 @@
   "giris_fiyati": 67.44,
   "giris_nedeni": "Başlangıç pozisyonu - Temettü savunmacı",
   "agirlik_yuzde": 15.86,
-  "zarar_kes": 64.89,
+  "stop_loss": 64.89,
   "cb_kaynak": "transactions-2026-02-17"
 }
 ```
@@ -76,9 +75,8 @@
 | Alan | Hesaplama / Kural |
 |------|-------------------|
 | `maliyet_baz` | Ortalama alış fiyatı (CSV'den hesaplanır) |
-| `maliyet_bazis` | `daily_update.py` tarafından CSV'den türetilir |
-| `zarar_kes` | Stop-loss fiyatı (K-kurallarına göre) |
-| `cb_kaynak` | Maliyet bazısının kaynağı (CSV kayıt tarihi) |
+| `stop_loss` | Stop-loss fiyatı (K-kurallarına göre, ATR14 tabanlı) |
+| `cb_kaynak` | Maliyet bazının kaynağı (CSV kayıt tarihi) |
 | `yatirim` | `adet × maliyet_baz` |
 | `guncel_deger` | `adet × guncel_fiyat` |
 | `kar_zarar` | `guncel_deger - yatirim` |

@@ -1,5 +1,6 @@
 {
   "portfoy_adi": "Agresif Büyüme",
+  "max_pozisyon": 6,
   "strateji": {
     "isim": "Agresif Momentum - Aylık %5",
     "aylik_hedef_yuzde": 5.0,

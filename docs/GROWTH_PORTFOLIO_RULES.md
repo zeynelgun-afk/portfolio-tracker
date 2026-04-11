@@ -107,7 +107,7 @@ Rejim değişimi tespit edildiğinde (sektör ETF'leri veya makro haber):
 - Aynı tematik grupta max 3 hisse (K-17 benzeri)
 
 **Drawdown Freni:**
-- %15+ drawdown → K-14 aktif, yarım boyut
+- %15+ drawdown → Psikoloji testi aktif, sadece A-kalite setup, boyut küçült
 - %20+ drawdown → Yeni giriş yok, mevcut pozisyonları yönet
 - %25+ drawdown → Zorunlu değerlendirme toplantısı (haftalık raporla)
 

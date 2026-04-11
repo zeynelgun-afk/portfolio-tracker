@@ -531,7 +531,7 @@ Swing sistemi artık piyasa rejimini takip eder:
 ```
 GÜÇLÜ BULL: Momentum stratejileri beklenen getiri 0.4R+
 NÖTR/YAN TREND: Beklenti düşer (0.1R veya negatif) → sıklık azalt
-ZAYIF BEAR: K-14 devreye girer → swing boyutunu %50 küçült
+ZAYIF BEAR: psikoloji testi + A-kalite setup zorunlu → sıklık azalt, boyut küçült
 ```
 
 Araştırma kaynağı: "A momentum strategy that produced 2.1R average in trending market might produce 0.8R in choppy conditions." (TradeZella 2026)
