@@ -1,0 +1,261 @@
+{
+  "tarih": "2026-04-11 20:35",
+  "sektor": {
+    "skorlar": {
+      "Teknoloji": 6.4,
+      "Enerji": 7.5,
+      "Savunma": 6.9,
+      "Altın/Emtia": 6.4,
+      "Finans": 6.4,
+      "Sanayi": 6.4,
+      "Sağlık": 6.6,
+      "TüketicD": 7.4,
+      "TüketicS": 7.1,
+      "Gayrimenkul": 5.7
+    },
+    "haber_sayisi": {
+      "Teknoloji": 30,
+      "Enerji": 30,
+      "Savunma": 22,
+      "Altın/Emtia": 22,
+      "Finans": 30,
+      "Sanayi": 18,
+      "Sağlık": 23,
+      "TüketicD": 30,
+      "TüketicS": 17,
+      "Gayrimenkul": 6
+    },
+    "onemli_haberler": {
+      "Teknoloji": [
+        {
+          "baslik": "Is Nvidia the Best Buy in the Entire Stock Market?",
+          "skor": 1.0,
+          "sembol": "NVDA",
+          "tarih": "2026-04-11 14:07"
+        },
+        {
+          "baslik": "Prediction: Nvidia Stock Is a Buy Before May 20",
+          "skor": 1.0,
+          "sembol": "NVDA",
+          "tarih": "2026-04-11 13:30"
+        },
+        {
+          "baslik": "The Smartest Growth Stocks to Invest $1,000 in As Investors Rotate Out of Tech",
+          "skor": 1.0,
+          "sembol": "NVDA",
+          "tarih": "2026-04-11 12:25"
+        }
+      ],
+      "Enerji": [
+        {
+          "baslik": "The Only Dividend Strategy I'd Trust In A 3.5% Fed Funds World",
+          "skor": 1.0,
+          "sembol": "CVX",
+          "tarih": "2026-04-11 13:05"
+        },
+        {
+          "baslik": "Gelion is advancing its battery tech closer to commercialisation - ICYMI",
+          "skor": 1.0,
+          "sembol": "CVX",
+          "tarih": "2026-04-11 07:46"
+        },
+        {
+          "baslik": "BioVie CEO explains Bezisterim Parkinson’s trial results - ICYMI",
+          "skor": 1.0,
+          "sembol": "CVX",
+          "tarih": "2026-04-11 07:27"
+        }
+      ],
+      "Savunma": [
+        {
+          "baslik": "The Final Frontier Is Becoming Big Business. Here Are 3 Space Stocks to Buy Now.",
+          "skor": 1.0,
+          "sembol": "LMT",
+          "tarih": "2026-04-11 09:38"
+        },
+        {
+          "baslik": "The Final Frontier Is Becoming Big Business. Here Are 3 Space Stocks to Buy Now.",
+          "skor": 1.0,
+          "sembol": "RKLB",
+          "tarih": "2026-04-11 09:38"
+        },
+        {
+          "baslik": "Carnegie Investment Counsel Buys 7,507 Shares of Northrop Grumman Corporation $NOC",
+          "skor": 1.0,
+          "sembol": "NOC",
+          "tarih": "2026-04-11 04:17"
+        }
+      ],
+      "Altın/Emtia": [
+        {
+          "baslik": "The Only Dividend Strategy I'd Trust In A 3.5% Fed Funds World",
+          "skor": 1.0,
+          "sembol": "NEM",
+          "tarih": "2026-04-11 13:05"
+        },
+        {
+          "baslik": "The Only Dividend Strategy I'd Trust In A 3.5% Fed Funds World",
+          "skor": 1.0,
+          "sembol": "GLD",
+          "tarih": "2026-04-11 13:05"
+        },
+        {
+          "baslik": "The Only Dividend Strategy I'd Trust In A 3.5% Fed Funds World",
+          "skor": 1.0,
+          "sembol": "AEM",
+          "tarih": "2026-04-11 13:05"
+        }
+      ],
+      "Finans": [
+        {
+          "baslik": "JPMorgan Chase CEO Jamie Dimon Just Issued a Warning to Wall Street. The Famed Banker Sees 3 Big Ris",
+          "skor": -1.0,
+          "sembol": "JPM",
+          "tarih": "2026-04-11 12:47"
+        },
+        {
+          "baslik": "These 3 stocks reporting next week have a history of gaining after earnings",
+          "skor": 1.0,
+          "sembol": "MS",
+          "tarih": "2026-04-11 06:30"
+        },
+        {
+          "baslik": "JPMorgan CEO Jamie Dimon Just Echoed Warren Buffett's Warning From 26 Years Ago",
+          "skor": -1.0,
+          "sembol": "JPM",
+          "tarih": "2026-04-11 02:35"
+        }
+      ],
+      "Sanayi": [
+        {
+          "baslik": "Carnegie Investment Counsel Boosts Stock Position in Deere & Company $DE",
+          "skor": -1.0,
+          "sembol": "DE",
+          "tarih": "2026-04-11 05:22"
+        },
+        {
+          "baslik": "Apollon Wealth Management LLC Has $13.28 Million Position in Caterpillar Inc. $CAT",
+          "skor": -1.0,
+          "sembol": "CAT",
+          "tarih": "2026-04-11 04:19"
+        },
+        {
+          "baslik": "Don't Panic Over UPS: These 2 Mega-Cap Stocks Are the Real Opportunity",
+          "skor": 1.0,
+          "sembol": "CAT",
+          "tarih": "2026-04-10 21:05"
+        }
+      ],
+      "Sağlık": [
+        {
+          "baslik": "Carnegie Investment Counsel Acquires 2,259 Shares of UnitedHealth Group Incorporated $UNH",
+          "skor": 1.0,
+          "sembol": "UNH",
+          "tarih": "2026-04-11 05:20"
+        },
+        {
+          "baslik": "Carnegie Investment Counsel Grows Stake in AbbVie Inc. $ABBV",
+          "skor": -1.0,
+          "sembol": "ABBV",
+          "tarih": "2026-04-11 05:20"
+        },
+        {
+          "baslik": "UnitedHealth Group Incorporated $UNH Stock Holdings Lessened by City Holding Co.",
+          "skor": 1.0,
+          "sembol": "UNH",
+          "tarih": "2026-04-11 04:40"
+        }
+      ],
+      "TüketicD": [
+        {
+          "baslik": "Andy Jassy Just Announced Wonderful News for Amazon Stock Investors",
+          "skor": 1.0,
+          "sembol": "AMZN",
+          "tarih": "2026-04-11 16:00"
+        },
+        {
+          "baslik": "Prediction: A Cheaper EV Could Be a Game Changer for Tesla's Business",
+          "skor": 1.0,
+          "sembol": "TSLA",
+          "tarih": "2026-04-11 15:00"
+        },
+        {
+          "baslik": "These 2 EV Stocks Are Getting No Love Right Now, and That's a Buying Opportunity",
+          "skor": 1.0,
+          "sembol": "TSLA",
+          "tarih": "2026-04-11 10:55"
+        }
+      ],
+      "TüketicS": [
+        {
+          "baslik": "How Much You Really Need Invested to Replace a $100,000 Salary With Dividends",
+          "skor": -1.0,
+          "sembol": "MO",
+          "tarih": "2026-04-11 08:06"
+        },
+        {
+          "baslik": "Carnegie Investment Counsel Raises Stock Holdings in CocaCola Company (The) $KO",
+          "skor": 1.0,
+          "sembol": "KO",
+          "tarih": "2026-04-11 04:19"
+        },
+        {
+          "baslik": "Is Coca-Cola Stock an Undervalued Dividend Stock to Buy?",
+          "skor": 1.0,
+          "sembol": "KO",
+          "tarih": "2026-04-10 19:55"
+        }
+      ],
+      "Gayrimenkul": [
+        {
+          "baslik": "The Only Dividend Strategy I'd Trust In A 3.5% Fed Funds World",
+          "skor": 1.0,
+          "sembol": "O",
+          "tarih": "2026-04-11 13:05"
+        },
+        {
+          "baslik": "How Much You Really Need Invested to Replace a $100,000 Salary With Dividends",
+          "skor": -1.0,
+          "sembol": "O",
+          "tarih": "2026-04-11 08:06"
+        },
+        {
+          "baslik": "High-Yield REITs I Would Trust For Retirement Income",
+          "skor": 1.0,
+          "sembol": "O",
+          "tarih": "2026-04-11 07:15"
+        }
+      ]
+    }
+  },
+  "portfoy": {
+    "SM": {
+      "skor_110": 5.0,
+      "haber_sayisi": 0
+    },
+    "KOS": {
+      "skor_110": 5.0,
+      "haber_sayisi": 0
+    },
+    "MO": {
+      "skor_110": 5.5,
+      "ham_skor": 0.0,
+      "haber_sayisi": 2,
+      "son_baslik": "A $1 Million Portfolio That Quietly Pays You $67,500 a Year, No Job Required"
+    },
+    "XLE": {
+      "skor_110": 5.0,
+      "haber_sayisi": 0
+    },
+    "RGLD": {
+      "skor_110": 5.0,
+      "haber_sayisi": 0
+    },
+    "FCX": {
+      "skor_110": 5.5,
+      "ham_skor": 0.0,
+      "haber_sayisi": 1,
+      "son_baslik": "Freeport-McMoRan Inc. $FCX Shares Sold by Eagle Strategies LLC"
+    }
+  }
+}
