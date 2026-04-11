@@ -68,6 +68,14 @@ from specialist_agents import (
     load_specialist_genome,
     update_specialist_weights,
 )
+from adversarial_debate import run_debate, format_debate_for_telegram
+from multi_cohort import (
+    run_janus_detection,
+    detect_blind_spots,
+    run_weekly_blind_spot_analysis,
+    get_cohort_context,
+    propose_new_specialist,
+)
 
 REPO_ROOT = Path(__file__).parent.parent
 TR_TZ     = pytz.timezone("Europe/Istanbul")
@@ -183,6 +191,22 @@ def run_morning(ctx: dict):
     )
     multi_summary = format_multi_agent_for_telegram(multi_result)
 
+    # Adversarial Debate — CIO kararı tartışmalıysa
+    cio_karar   = multi_result.get("cio", {})
+    debate_msg  = ""
+    if cio_karar.get("guven") in ("LOW", "MEDIUM") or cio_karar.get("karar") in ("ACIL_CIK", "SAT"):
+        print("[Orkestratör] Tartışmalı karar — debate başlıyor...")
+        debate_result = run_debate(
+            symbol     = cio_karar.get("hedef_sembol", "SPY"),
+            context    = ctx['compressed'],
+            initial_decision = cio_karar,
+            portfolio_data   = ctx['risk'],
+        )
+        debate_msg = "\n\n" + format_debate_for_telegram(debate_result)
+
+    # JANUS cohort güncelle
+    janus_ctx = get_cohort_context()
+
     # Uzman ağırlıklarını güncelle
     s_genome = load_specialist_genome()
     update_specialist_weights(s_genome, [])
@@ -191,6 +215,8 @@ def run_morning(ctx: dict):
 {ctx['compressed']}
 
 {get_regime_context()}
+
+{janus_ctx}
 
 {agirlik_ctx}
 
@@ -203,17 +229,14 @@ def run_morning(ctx: dict):
 {ctx['risk']}
 
 === GÖREV: SABAH ANALİZİ ===
-1. Stop'a yakın pozisyon var mı?
-2. Aktif rejim ne? Growth portföy için aksiyon?
-3. Ağırlıklı K-kurallarına göre: Zayıf kurallara dayanan pozisyonlar var mı?
-4. Tahmin logundan: Son tahminlerimiz doğru çıkıyor mu?
-5. Earnings yaklaşan? K-05 uyarısı?
-6. Makro takvimde kritik olay?
-7. Twitter'da önemli sinyal? (SPEKÜLATİF)
-8. Önerilen 1-2 aksiyon
+Multi-agent ve debate sonuçları Telegram'a ayrıca gönderildi.
+Senin görevin: Genel bağlamı değerlendirip özet analiz yaz.
 
-NOT: Öneride bulunurken o önerinin sembolünü, yönünü (UP/DOWN) ve büyüklüğünü (HIGH/MEDIUM/LOW) belirt
-— tahmin logu için kullanacağız.
+1. Stop'a yakın pozisyon var mı?
+2. JANUS'a göre aktif rejim: Yeni mi tarihi mi? Strateji nedir?
+3. Growth rotasyonu gerekiyor mu?
+4. Makro takvimde kritik olay?
+5. Bu haftanın 3 önceliği
 
 Kısa ve net. KESİN / MUHTEMEL / SPEKÜLATİF etiket.
 """
@@ -221,8 +244,8 @@ Kısa ve net. KESİN / MUHTEMEL / SPEKÜLATİF etiket.
     response = get_claude_decision(prompt, mode="morning")
     save_daily_brief(response, "morning")
 
-    # Telegram'a iki mesaj: Multi-agent özeti + genel analiz
-    send_private_telegram(multi_summary)
+    # Telegram'a 3 mesaj: multi-agent + debate (varsa) + genel analiz
+    send_private_telegram(multi_summary + debate_msg)
     msg    = f"Finzora Agent — Sabah Analizi\n{ctx['timestamp'][:16]}\n\n{response}"
     result = send_private_telegram(msg)
     print(f"[Orkestratör] Telegram sonucu: {result}")
@@ -320,12 +343,16 @@ def run_weekly(ctx: dict):
     applied_log   = get_applied_changes_summary()
     screener_rpt  = run_screener_optimization()
 
-    # Darwin — önce test sonuçlarını değerlendir (commit/revert)
+    # Darwin + Cohort + Blind Spot
     evo_results   = evaluate_evolution_results()
-
-    # Darwin — yeni evrim döngüsü çalıştır
     evo_cycle     = run_evolution_cycle(force=False)
     evo_summary   = get_evolution_summary()
+    blind_rpt     = run_weekly_blind_spot_analysis()
+
+    # Blind spot varsa yeni agent öner
+    spots = detect_blind_spots()
+    for spot in spots[:1]:  # Haftalık max 1 yeni agent önerisi
+        propose_new_specialist(spot)
 
     # Dry-run kontrolü
     dry_run_rpt   = run_dry_run_check(backtest)
@@ -349,6 +376,9 @@ Son uygulanan değişiklikler:
 Darwin Evrim Durumu:
 {evo_summary}
 
+Blind Spot + JANUS Analizi:
+{blind_rpt}
+
 Dry-run değerlendirmesi:
 {dry_run_rpt}
 
@@ -356,9 +386,9 @@ Dry-run değerlendirmesi:
 1. Portföy özeti: en iyi/kötü pozisyon, genel performans
 2. Risk: konsantrasyon, korelasyon, drawdown
 3. Hangi K-kuralı bu hafta kritik rol oynadı?
-4. Darwin evrim sonuçları: hangi kural commit/revert edildi? Neden?
-5. Screener optimizasyonuna göre filtre değişikliği gerekiyor mu?
-6. Tezlerde değişen bir şey var mı?
+4. JANUS: Yeni rejim mi tarihi rejim mi? Bu stratejiyi nasıl etkiler?
+5. Darwin evrim sonuçları: Hangi kural güçlendi, hangisi zayıfladı?
+6. Blind spot: Sistemin neyi görmediğini bulduk mu? Yeni agent gerekiyor mu?
 7. Gelecek hafta için 3 kritik izleme noktası
 8. Bu haftadan 2 somut ders
 
