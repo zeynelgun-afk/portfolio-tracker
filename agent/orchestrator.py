@@ -53,8 +53,15 @@ from darwin_evolution import (
     run_evolution_cycle,
     evaluate_evolution_results,
     get_evolution_summary,
+    get_weighted_genome_context,
+    load_genome,
 )
 from regime_detector import run_regime_detection, get_regime_context
+from prediction_logger import (
+    log_prediction,
+    score_pending_predictions,
+    get_prediction_context,
+)
 
 REPO_ROOT = Path(__file__).parent.parent
 TR_TZ     = pytz.timezone("Europe/Istanbul")
@@ -149,13 +156,25 @@ def run_morning(ctx: dict):
     """Sabah analizi — piyasa açılmadan önce."""
     print("[Orkestratör] Sabah modu çalışıyor...")
 
+    # Bekleyen tahminleri skorla (her sabah)
+    scored = score_pending_predictions()
+    if scored:
+        print(f"[Orkestratör] {len(scored)} tahmin skorlandı.")
+
     # Gece kapanan trade'leri kontrol et
     run_auto_feedback(ctx["raw"]["portfolios"])
+
+    tahmin_ctx  = get_prediction_context()
+    agirlik_ctx = get_weighted_genome_context(load_genome())
 
     prompt = f"""
 {ctx['compressed']}
 
 {get_regime_context()}
+
+{agirlik_ctx}
+
+{tahmin_ctx}
 
 {ctx['research']}
 
@@ -164,17 +183,19 @@ def run_morning(ctx: dict):
 {ctx['risk']}
 
 === GÖREV: SABAH ANALİZİ ===
-1. Stop'a yakın pozisyon var mı? Risk analizindeki stop uyarılarına bak
-2. Aktif piyasa rejimi ne? Growth portföy için aksiyon gerekiyor mu?
-3. Mevcut Growth pozisyonları (COHR,VRT,ANET,MU,CAMT,CI) rejime uygun mu?
-   Rejim değiştiyse hangi sektöre rotasyon düşünülmeli?
-4. Earnings yaklaşan hisse var mı? K-05 uyarısı?
-5. Makro takvimde kritik olay var mı?
-6. Twitter'da önemli sinyal? (SPEKÜLATİF etiketle)
-7. Önerilen 1-2 aksiyon (uygulama değil, öneri)
+1. Stop'a yakın pozisyon var mı?
+2. Aktif rejim ne? Growth portföy için aksiyon?
+3. Ağırlıklı K-kurallarına göre: Zayıf kurallara dayanan pozisyonlar var mı?
+4. Tahmin logundan: Son tahminlerimiz doğru çıkıyor mu?
+5. Earnings yaklaşan? K-05 uyarısı?
+6. Makro takvimde kritik olay?
+7. Twitter'da önemli sinyal? (SPEKÜLATİF)
+8. Önerilen 1-2 aksiyon
 
-Kısa ve net. KESİN / MUHTEMEL / SPEKÜLATİF etiket kullan.
-Sonda: "Bugün gözüm şunlarda: ..."
+NOT: Öneride bulunurken o önerinin sembolünü, yönünü (UP/DOWN) ve büyüklüğünü (HIGH/MEDIUM/LOW) belirt
+— tahmin logu için kullanacağız.
+
+Kısa ve net. KESİN / MUHTEMEL / SPEKÜLATİF etiket.
 """
 
     response = get_claude_decision(prompt, mode="morning")

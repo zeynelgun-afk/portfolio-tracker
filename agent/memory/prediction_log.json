@@ -1,0 +1,22 @@
+{
+  "tahminler": [
+    {
+      "id": "pred_20260411_155855",
+      "tarih": "2026-04-11T15:58:57.143523+03:00",
+      "agent": "sabah_analiz",
+      "tip": "BUY",
+      "sembol": "NVDA",
+      "yon": "UP",
+      "buyukluk": "HIGH",
+      "guven": "MEDIUM",
+      "giris_fiyat": 188.63,
+      "gerekce": "AI momentum güçlü, breakout potansiyeli",
+      "kaynak_kural": "swing_rsi_range",
+      "durum": "BEKLIYOR",
+      "skorlar": {},
+      "gercek_fiyatlar": {},
+      "son_skor": null
+    }
+  ],
+  "olusturma": "2026-04-11T15:58:57.143870+03:00"
+}

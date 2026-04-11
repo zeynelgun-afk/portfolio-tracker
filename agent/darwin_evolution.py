@@ -35,15 +35,19 @@ INITIAL_GENOME = {
     "K-11_trailing_stop": {
         "version": 1,
         "description": "Trailing stop tetikleme koşulu",
+        "weight": 1.0,           # Darwinian ağırlık: 0.3 (min) → 2.5 (max)
+        "weight_history": [],    # Günlük ağırlık geçmişi
         "current_prompt": """K-11 Trailing Stop: 
 Pozisyon zirveden 2×ATR aşağı düşerse trailing stop tetiklenir.
-Tek günlük şok hareketinde bile tetiklenir.""",
+Makro şok istisnası: SPY ≥%3 düşüş + VIX ≥%20 spike aynı gün → 1 gün bekle.""",
         "fitness": None,
         "last_modified": None,
     },
     "K-11_partial_sell": {
         "version": 1,
         "description": "Kısmi kâr alma tetikleme koşulu",
+        "weight": 1.0,
+        "weight_history": [],
         "current_prompt": """K-11 Kısmi Kâr Alma:
 Katman 1: RSI 70+ VE kâr %15+ → trailing stop aktif
 Katman 2: RSI 80+ VEYA (RSI 75+ + negatif div/20SMA altı) → %25-30 sat
@@ -54,6 +58,8 @@ Katman 3: 50SMA altı kapanış VEYA chandelier trailing → TAM ÇIK""",
     "K-13_vix_threshold": {
         "version": 1,
         "description": "VIX bazlı pozisyon boyutu",
+        "weight": 1.0,
+        "weight_history": [],
         "current_prompt": """K-13 VIX Kuralı:
 Faydalanıcı sektörler (savunma, enerji, altın): VIX 28'e kadar tam pozisyon
 Duyarlı sektörler (tech, growth): VIX 22'den itibaren yarım pozisyon
@@ -64,6 +70,8 @@ VIX>35: tüm yeni girişler dur""",
     "K-04_entry_filter": {
         "version": 1,
         "description": "Giriş filtresi - SMA ve RSI",
+        "weight": 1.0,
+        "weight_history": [],
         "current_prompt": """K-04 Giriş Filtresi:
 Standart: Giriş fiyatı SMA50 üstünde olmalı
 İstisna: RSI<30 + stabilizasyon + pozitif katalizör → çeyrek pozisyon
@@ -74,6 +82,8 @@ Yasak: SMA50+SMA200 altı + insider satış yoğun → giriş yok""",
     "swing_rsi_range": {
         "version": 1,
         "description": "Swing giriş RSI aralığı",
+        "weight": 1.0,
+        "weight_history": [],
         "current_prompt": """Swing Giriş RSI:
 RSI 40-65 arası giriş bölgesi
 RSI<40: oversold bounce için çeyrek pozisyon
@@ -82,6 +92,11 @@ RSI>65: momentum trade sadece güçlü trend varlığında""",
         "last_modified": None,
     },
 }
+
+WEIGHT_MIN  = 0.3
+WEIGHT_MAX  = 2.5
+WEIGHT_UP   = 1.05   # Üst çeyrek: günlük ×1.05
+WEIGHT_DOWN = 0.95   # Alt çeyrek: günlük ×0.95
 
 
 # ── Fitness Hesaplama ─────────────────────────────────────────────────────────
@@ -136,7 +151,14 @@ def load_all_transactions() -> list:
 def calculate_fitness(rule_name: str, transactions: list) -> dict:
     """
     Bir K-kuralının fitness skorunu hesaplar.
-    Fitness = win_rate × avg_pnl (Sharpe proxy)
+    
+    ATLAS yöntemi: Rolling Sharpe proxy
+    Fitness = (avg_pnl / std_dev) × win_rate
+    
+    Neden bu daha iyi?
+    - win_rate × avg_pnl: %100 win rate, +%0.1 avg = iyi görünür ama aslında kötü
+    - Sharpe: Hem getiri hem tutarlılık (volatilite) ölçülür
+    - Volatilitesi düşük, tutarlı getirili kural > yüksek volatilite
     """
     rule_trades = []
 
@@ -144,7 +166,6 @@ def calculate_fitness(rule_name: str, transactions: list) -> dict:
         reason = (t.get("reason") or "").lower()
         pnl    = t.get("pnl_pct", 0) or 0
 
-        # Kural eşleştir
         matched = False
         if rule_name == "K-11_trailing_stop":
             matched = "trailing stop" in reason or "izleyen zarar kes" in reason
@@ -169,20 +190,30 @@ def calculate_fitness(rule_name: str, transactions: list) -> dict:
             rule_trades.append(float(pnl))
 
     if not rule_trades:
-        return {"fitness": None, "n": 0, "win_rate": None, "avg_pnl": None}
+        return {"fitness": None, "n": 0, "win_rate": None, "avg_pnl": None, "sharpe": None}
 
+    n        = len(rule_trades)
     wins     = sum(1 for p in rule_trades if p > 0)
-    win_rate = wins / len(rule_trades)
-    avg_pnl  = sum(rule_trades) / len(rule_trades)
+    win_rate = wins / n
+    avg_pnl  = sum(rule_trades) / n
 
-    # Fitness: win_rate × avg_pnl (negatif avg_pnl cezalandırır)
-    fitness = win_rate * avg_pnl
+    # Standart sapma (volatilite)
+    variance = sum((p - avg_pnl) ** 2 for p in rule_trades) / n if n > 1 else 1.0
+    std_dev  = variance ** 0.5 if variance > 0 else 1.0
+
+    # Sharpe proxy (risk-free rate = 0 varsayımı)
+    sharpe = avg_pnl / std_dev if std_dev > 0 else 0
+
+    # Nihai fitness: Sharpe × win_rate (hem kalite hem tutarlılık)
+    fitness = sharpe * win_rate
 
     return {
-        "fitness":  round(fitness, 3),
-        "n":        len(rule_trades),
-        "win_rate": round(win_rate * 100, 1),
-        "avg_pnl":  round(avg_pnl, 2),
+        "fitness":   round(fitness, 4),
+        "n":         n,
+        "win_rate":  round(win_rate * 100, 1),
+        "avg_pnl":   round(avg_pnl, 2),
+        "std_dev":   round(std_dev, 2),
+        "sharpe":    round(sharpe, 3),
     }
 
 
@@ -212,7 +243,98 @@ def update_fitness_scores(genome: dict, transactions: list) -> dict:
     return genome
 
 
-def find_weakest_rule(genome: dict) -> tuple[str, dict]:
+def update_darwin_weights(genome: dict) -> dict:
+    """
+    ATLAS Darwinian ağırlık sistemi:
+    - Üst çeyrek fitness → ağırlık ×1.05 (daha yüksek ses)
+    - Alt çeyrek fitness → ağırlık ×0.95 (susturulur)
+    - Min: 0.3, Max: 2.5
+    
+    İyi agentlar daha güçlü konuşur.
+    Kötü agentlar susmaz ama fısıldar.
+    """
+    # Fitness skorlarını topla
+    scored = {
+        name: data["fitness"]
+        for name, data in genome.items()
+        if data.get("fitness") is not None
+    }
+
+    if len(scored) < 2:
+        return genome  # Yeterli veri yok
+
+    fitnesses  = list(scored.values())
+    fitnesses.sort()
+    n          = len(fitnesses)
+    q1_thresh  = fitnesses[n // 4]       # Alt çeyrek eşiği
+    q3_thresh  = fitnesses[3 * n // 4]   # Üst çeyrek eşiği
+
+    today = datetime.now(TR_TZ).strftime("%Y-%m-%d")
+
+    for name, data in genome.items():
+        fitness = data.get("fitness")
+        weight  = data.get("weight", 1.0)
+
+        if fitness is None:
+            continue
+
+        # Ağırlık güncelle
+        if fitness >= q3_thresh:
+            new_weight = min(weight * WEIGHT_UP, WEIGHT_MAX)
+        elif fitness <= q1_thresh:
+            new_weight = max(weight * WEIGHT_DOWN, WEIGHT_MIN)
+        else:
+            new_weight = weight  # Orta grupta değişiklik yok
+
+        genome[name]["weight"] = round(new_weight, 4)
+
+        # Geçmiş tut (son 30)
+        history = genome[name].get("weight_history", [])
+        history.append({"date": today, "weight": new_weight, "fitness": fitness})
+        genome[name]["weight_history"] = history[-30:]
+
+    return genome
+
+
+def get_weighted_genome_context(genome: dict) -> str:
+    """
+    Orchestrator için ağırlıklı kural özetini formatlar.
+    Yüksek ağırlıklı kurallar daha belirgin.
+    """
+    lines = ["=== DARWIN AĞIRLIKLI K-KURALLARI ===\n"]
+
+    # Ağırlığa göre sırala
+    sorted_rules = sorted(
+        genome.items(),
+        key=lambda x: x[1].get("weight", 1.0),
+        reverse=True
+    )
+
+    for name, data in sorted_rules:
+        w       = data.get("weight", 1.0)
+        fitness = data.get("fitness")
+        v       = data.get("version", 1)
+        pending = " ⏳" if data.get("pending_test") else ""
+
+        bar     = "█" * int(w * 4)  # Görsel bar
+        f_str   = f"fitness:{fitness:.3f}" if fitness else "fitness:N/A"
+
+        # Yüksek ağırlıklı kurallara dikkat çek
+        if w >= 2.0:
+            prefix = "🔊 GÜÇLÜ"
+        elif w >= 1.5:
+            prefix = "📢 Normal"
+        elif w <= 0.5:
+            prefix = "🔇 ZAYIF"
+        else:
+            prefix = "📣 Orta"
+
+        lines.append(f"{prefix} | {name} v{v}{pending}")
+        lines.append(f"  Ağırlık: {w:.2f} {bar} | {f_str}")
+        lines.append(f"  {data['current_prompt'].split(chr(10))[0][:80]}")
+        lines.append("")
+
+    return "\n".join(lines)
     """En düşük fitness'e sahip kuralı bulur."""
     scored = {
         name: data for name, data in genome.items()
@@ -326,6 +448,9 @@ def run_evolution_cycle(force: bool = False) -> dict:
     # 2. Genome yükle ve fitness güncelle
     genome = load_genome()
     genome = update_fitness_scores(genome, transactions)
+
+    # 2b. Darwinian ağırlıkları güncelle
+    genome = update_darwin_weights(genome)
     save_genome(genome)
 
     # 3. En zayıf kuralı bul
