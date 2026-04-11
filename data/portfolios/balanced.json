@@ -25,7 +25,10 @@
       "giris_nedeni": "Initial position - Dividend defensive",
       "agirlik_yuzde": 16.02,
       "cb_kaynak": "transactions-2026-02-17",
-      "stop_loss": 64.01
+      "stop_loss": 64.01,
+      "bekleyen_aksiyon": "SATILACAK",
+      "aksiyon_notu": "Dengeli portföyde çift MO tutma sorunu. MO tütün/temettü hissesi — doğal yeri Temettü portföyü. Dengeli maliyet $67.44 vs güncel $67.38 = breakeven çıkış. Pazartesi açılış piyasasında satılacak.",
+      "aksiyon_tarihi": "2026-04-11"
     },
     {
       "sembol": "DUK",
