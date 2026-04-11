@@ -16,7 +16,7 @@ Araştırma dayanakları:
   - Short interest azalması + katalizör = squeeze
 
 Çalıştırma:
-  python scripts/alpha_screener.py --mode growth
+  python scripts/alpha_screener.py --mode aggressive
   python scripts/alpha_screener.py --mode income
   python scripts/alpha_screener.py --mode swing
   python scripts/alpha_screener.py --mode all
@@ -49,7 +49,7 @@ def fetch(url: str, params: dict = None, timeout: int = 15):
 
 def get_universe(mode: str) -> list[dict]:
     """Mod'a göre hisse evrenini çeker ve batch-quote ile zenginleştirir."""
-    if mode == "income":
+    if mode == "dividend":
         url = (f"{BASE}/company-screener"
                f"?marketCapMoreThan=2000000000"
                f"&priceMoreThan=10&volumeMoreThan=300000"
@@ -300,7 +300,7 @@ def get_financial_growth_score(sym: str, mode: str) -> int:
         accelerating = len(rev_growths) >= 2 and rev_growths[0] > rev_growths[1]
 
         s = 0
-        if mode == "income":
+        if mode == "dividend":
             # Income için temettü büyümesi önemli
             div_growth = data[0].get("dividendsPerShareGrowth", 0) * 100 if data else 0
             if div_growth > 10:    s += 3
@@ -550,7 +550,7 @@ def deep_analysis(candidates: list[dict], mode: str, top_n: int = 30) -> list[di
 
 # ── ANA TARAMA ────────────────────────────────────────────────────────────────
 
-def run_screener(mode: str = "growth") -> list[dict]:
+def run_screener(mode: str = "aggressive") -> list[dict]:
     print(f"\n{'='*60}")
     print(f"ALPHA SCREENER v2.0 — {mode.upper()}")
     print(f"{'='*60}")
@@ -602,7 +602,7 @@ def run_screener(mode: str = "growth") -> list[dict]:
     for row in universe:
         sym = row.get("symbol", "")
 
-        if mode == "income":
+        if mode == "dividend":
             result = score_income(row)
         elif mode == "swing":
             result = score_swing(row, sector_stats)
@@ -720,22 +720,22 @@ def find_sector_laggards(universe: list[dict], sector_stats: dict) -> list[dict]
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Finzora Alpha Screener v2.0")
-    parser.add_argument("--mode", default="growth",
-                        choices=["growth","income","swing","all"],
+    parser.add_argument("--mode", default="aggressive",
+                        choices=["aggressive","dividend","swing","all"],
                         help="Tarama modu")
     parser.add_argument("--laggards", action="store_true",
                         help="Sektör laggard taraması da yap")
     args = parser.parse_args()
 
-    modes = ["growth", "income", "swing"] if args.mode == "all" else [args.mode]
+    modes = ["aggressive", "dividend", "swing"] if args.mode == "all" else [args.mode]
 
     for mode in modes:
         results = run_screener(mode)
         print_results(results, mode)
         save_results(results, mode)
 
-        if args.laggards and mode == "growth":
-            universe = get_universe("growth")
+        if args.laggards and mode == "aggressive":
+            universe = get_universe("aggressive")
             sector_stats = calculate_sector_stats(universe)
             laggards = find_sector_laggards(universe, sector_stats)
             print(f"\n=== SEKTÖR LAGGARD'LAR ===")

@@ -141,7 +141,7 @@ def _load_alpha_scan_context() -> str:
     import json
     from pathlib import Path
 
-    scan_path = Path(__file__).parent.parent / "data" / "alpha_scan_growth.json"
+    scan_path = Path(__file__).parent.parent / "data" / "alpha_scan_aggressive.json"
     if not scan_path.exists():
         return ""
 
@@ -274,7 +274,7 @@ def run_morning(ctx: dict):
                 print(f"[Sabah] {len(temalar)} tema için hisse aranıyor...")
                 # Tüm portföylerdeki mevcut sembolleri topla
                 all_syms = []
-                for pf in ["growth","income","balanced","dividend"]:
+                for pf in ["aggressive","balanced","dividend"]:
                     try:
                         pf_data = get_portfolio_status(pf) if get_portfolio_status else {}
                         all_syms.extend(pf_data.get("semboller", []))
@@ -495,7 +495,7 @@ KESİN / MUHTEMEL / SPEKÜLATİF etiket kullan. Küçük harf Türkçe.
     # ── GÜN SONU PORTFÖY ÖZET ────────────────────────────────────────────────
     try:
         toplam = 0
-        for pf in ["growth","income","balanced","dividend"]:
+        for pf in ["aggressive","balanced","dividend"]:
             p = REPO_ROOT / "data" / "portfolios" / f"{pf}.json"
             if p.exists():
                 d = json.load(open(p))
@@ -772,7 +772,7 @@ def _execute_portfolio_opportunities(faz: str, market: dict) -> list:
 
     for aday in buy_list[:5]:  # Seans başına max 5 aday değerlendir
         sym     = aday.get("symbol", "")
-        portföy = aday.get("portföy", "growth")
+        portföy = aday.get("portföy", "aggressive")
         stop    = float(aday.get("stop", 0))
         target  = float(aday.get("target", 0))
         reason  = aday.get("reason", "")
@@ -855,7 +855,7 @@ def _check_portfolio_exits(market: dict) -> list:
 
     aksiyonlar = []
 
-    for pf_name in ["growth","income","balanced","dividend"]:
+    for pf_name in ["aggressive","balanced","dividend"]:
         pf_path = REPO_ROOT / "data" / "portfolios" / f"{pf_name}.json"
         if not pf_path.exists():
             continue

@@ -228,7 +228,7 @@ def k17_correlation_check(symbol: str, portfolio: str = "all") -> dict:
     """Mevcut portföyle sektör/tema çakışması kontrolü."""
     # Tüm portföylerdeki sembolleri topla
     pf_symbols = []
-    for pf in ["growth", "income", "balanced", "aggressive", "dividend"]:
+    for pf in ["aggressive", "balanced", "dividend"]:
         p = REPO_ROOT / "data" / "portfolios" / f"{pf}.json"
         if p.exists():
             try:

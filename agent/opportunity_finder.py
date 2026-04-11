@@ -149,12 +149,12 @@ def find_candidates(
     for tema in tema_listesi:
         tema_adi  = tema.get("tema_adi", "")
         tema_skor = float(tema.get("güç_skoru", 5))
-        _pf_alias = {"aggressive":"growth","agresif":"growth","büyüme":"growth",
-                      "temettü":"dividend","temettu":"dividend","dengeli":"balanced","gelir":"income"}
-        portföy = tema.get("portföy", "growth").lower()
+        _pf_alias = {"agresif":"aggressive","aggressive":"aggressive","büyüme":"aggressive",
+                      "temettü":"dividend","temettu":"dividend","gelir":"dividend","dengeli":"balanced"}
+        portföy = tema.get("portföy", "aggressive").lower()
         portföy = _pf_alias.get(portföy, portföy)
-        if portföy not in ("growth","income","balanced","dividend"):
-            portföy = "growth"  # fallback
+        if portföy not in ("aggressive","balanced","dividend"):
+            portföy = "aggressive"  # fallback
         evren     = tema.get("hisse_evreni", tema.get("önerilen_hisseler", []))
 
         print(f"[Finder] {tema_adi} ({len(evren)} hisse)...")

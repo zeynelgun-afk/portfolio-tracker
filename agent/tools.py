@@ -131,7 +131,7 @@ def get_market_context() -> dict:
     # Portföy + swing hisselerini ekle
     repo = Path(__file__).parent.parent
     pf_syms = set()
-    for pf in ["growth", "income", "balanced", "dividend"]:
+    for pf in ["aggressive", "balanced", "dividend"]:
         p = repo / "data" / "portfolios" / f"{pf}.json"
         if p.exists():
             try:

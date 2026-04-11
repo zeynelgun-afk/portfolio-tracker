@@ -148,7 +148,7 @@ def scan_premarket_gaps(
             tarama_syms.add(p.get("sembol", ""))
 
     # Portföy pozisyonları
-    for pf in ["growth", "income"]:
+    for pf in ["aggressive", "balanced", "dividend"]:
         pf_path = REPO_ROOT / "data" / "portfolios" / f"{pf}.json"
         if pf_path.exists():
             pf_data = json.load(open(pf_path))

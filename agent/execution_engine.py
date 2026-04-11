@@ -22,18 +22,14 @@ REPO_ROOT = Path(__file__).parent.parent
 TR_TZ     = pytz.timezone("Europe/Istanbul")
 
 PORTFOLIO_MAP = {
-    "growth":     "data/portfolios/growth.json",
-    "income":     "data/portfolios/income.json",
+    "aggressive": "data/portfolios/aggressive.json",
     "balanced":   "data/portfolios/balanced.json",
     "dividend":   "data/portfolios/dividend.json",
-    "aggressive": "data/portfolios/aggressive.json",
 }
 
 # Portföy limitleri (K-12)
-MAX_POSITIONS = {"growth": 6, "income": 8, "balanced": 6,
-                 "dividend": 8, "aggressive": 6}
-MAX_WEIGHT    = {"growth": 0.20, "income": 0.15, "balanced": 0.25,
-                 "dividend": 0.15, "aggressive": 0.20}
+MAX_POSITIONS = {"aggressive": 6, "balanced": 6, "dividend": 6}
+MAX_WEIGHT    = {"aggressive": 0.20, "balanced": 0.25, "dividend": 0.15}
 
 
 def _load(portfolio: str) -> dict:
@@ -94,10 +90,9 @@ def buy_position(
     """
     # Portföy adı normalize et
     _ALIAS = {
-        "aggressive": "growth", "agresif": "growth", "büyüme": "growth",
-        "temettü": "dividend", "temettu": "dividend",
-        "dengeli": "balanced",
-        "gelir": "income",
+        "agresif":   "aggressive", "aggressive": "aggressive", "büyüme": "aggressive",
+        "temettü":   "dividend",   "temettu":    "dividend",   "gelir":  "dividend",
+        "dengeli":   "balanced",
     }
     portfolio = _ALIAS.get(portfolio.lower(), portfolio.lower())
 

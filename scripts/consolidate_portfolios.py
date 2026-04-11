@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+# DEVRE DIŞI — 12 Nisan 2026
+raise SystemExit("consolidate_portfolios.py ghost portfoy olusturur, kullanilamaz")
 """
 Finzora — Portföy Konsolidasyonu
 ==================================
