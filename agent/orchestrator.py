@@ -76,6 +76,8 @@ from multi_cohort import (
     get_cohort_context,
     propose_new_specialist,
 )
+from swing_manager import run_swing_morning_check, get_swing_report
+from premarket_gap_scanner import scan_premarket_gaps, get_premarket_context
 
 REPO_ROOT = Path(__file__).parent.parent
 TR_TZ     = pytz.timezone("Europe/Istanbul")
@@ -231,6 +233,24 @@ def run_morning(ctx: dict):
     # Alpha screener sonuçları (dünkü tarama)
     alpha_ctx = _load_alpha_scan_context()
 
+    # Swing sabah kontrolü
+    swing_check = run_swing_morning_check()
+    swing_ctx   = swing_check["rapor"]
+
+    # Pre-market gap taraması
+    try:
+        scan_premarket_gaps(min_gap_pct=2.5)
+    except Exception as e:
+        print(f"[Orkestratör] Pre-market scan hatası: {e}")
+    premarket_ctx = get_premarket_context()
+    swing_ctx   = swing_check["rapor"]
+    swing_uyari = ""
+    if swing_check["uyarilar"]:
+        swing_uyari = "⚠️ SWING UYARI:\n" + "\n".join(u["mesaj"] for u in swing_check["uyarilar"])
+    if swing_check["entry_signals"] and swing_check["bos_slot"] > 0:
+        sigs = ", ".join(swing_check["entry_signals"][:3])
+        swing_uyari += f"\n🎯 Swing giriş sinyali ({swing_check['bos_slot']} boş slot): {sigs}"
+
     # Multi-agent analiz çalıştır
     print("[Orkestratör] Multi-agent analiz başlıyor...")
     multi_result = run_multi_agent_analysis(
@@ -274,6 +294,11 @@ def run_morning(ctx: dict):
 
 {alpha_ctx}
 
+{premarket_ctx}
+
+{swing_ctx}
+{swing_uyari}
+
 {ctx['research']}
 
 {ctx['twitter']}
@@ -282,16 +307,15 @@ def run_morning(ctx: dict):
 
 === GÖREV: SABAH ANALİZİ ===
 Multi-agent ve debate sonuçları Telegram'a ayrıca gönderildi.
-Senin görevin: Genel bağlamı değerlendirip özet analiz yaz.
 
-1. Stop'a yakın pozisyon var mı?
-2. JANUS'a göre aktif rejim: Yeni mi tarihi mi? Strateji nedir?
-3. Alpha screener EKLE listesinden rejime uygun fırsat var mı?
-4. Growth rotasyonu gerekiyor mu?
-5. Makro takvimde kritik olay?
-6. Bu haftanın 3 önceliği
+1. Pre-market gap'lerde portfolyo pozisyonları var mı? Aksiyon gerekiyor mu?
+2. Stop'a yakın pozisyon? (portföy + swing)
+3. Swing giriş sinyali + boş slot → GİRİŞ KARARI (SEN KARAR VER)
+   Format: SWING_GİRİŞ: [SEMBOL] [ADET] adet @ ~$[FİYAT] stop:$[STOP] hedef:$[HEDEF]
+4. Alpha screener fırsatı?
+5. Bu haftanın 3 önceliği
 
-Kısa ve net. KESİN / MUHTEMEL / SPEKÜLATİF etiket.
+Kısa ve net. KESİN / MUHTEMEL / SPEKÜLATİF.
 """
 
     response = get_claude_decision(prompt, mode="morning")
