@@ -561,13 +561,47 @@ def run_screener(mode: str = "growth") -> list[dict]:
         print("Evren boş!")
         return []
 
-    # 2. Sektör istatistikleri (RS rank için)
+    # 2. Ücretsiz alpha sinyallerini çek (OpenInsider + Kongre)
+    print("\n  Alpha sinyalleri çekiliyor (ücretsiz)...")
+    try:
+        import sys
+        sys.path.insert(0, str(Path(__file__).parent))
+        from free_alpha_data import (
+            get_cluster_buys, get_congress_recent_buys,
+            get_insider_buy_score, get_congress_score,
+            load_cached_signals, fetch_all_alpha_signals
+        )
+
+        # Cache varsa kullan
+        cached = load_cached_signals()
+        if cached:
+            alpha_signals = cached
+            print(f"  Alpha sinyalleri cache'den yüklendi ({len(cached)} hisse)")
+        else:
+            insider_buys  = get_cluster_buys(days_back=30, min_value=50000)
+            congress_buys = get_congress_recent_buys(days_back=30)
+            alpha_signals = {}
+            for row in universe[:50]:  # İlk 50 hisse için skor hesapla
+                sym = row.get("symbol", "")
+                alpha_signals[sym] = {
+                    "insider_skor":  get_insider_buy_score(sym, insider_buys),
+                    "congress_skor": get_congress_score(sym, congress_buys),
+                }
+    except ImportError:
+        print("  free_alpha_data modülü yok, atlanıyor")
+        alpha_signals  = {}
+        insider_buys   = []
+        congress_buys  = []
+
+    # 3. Sektör istatistikleri (RS rank için)
     sector_stats = calculate_sector_stats(universe)
     print(f"  Sektör istatistikleri: {len(sector_stats)} sektör")
 
-    # 3. Ön skorlama
+    # 4. Ön skorlama (alpha sinyalleri dahil)
     scored = []
     for row in universe:
+        sym = row.get("symbol", "")
+
         if mode == "income":
             result = score_income(row)
         elif mode == "swing":
@@ -575,20 +609,26 @@ def run_screener(mode: str = "growth") -> list[dict]:
         else:
             result = score_growth(row, sector_stats)
 
+        # Alpha sinyallerini ekle
+        alpha = alpha_signals.get(sym, {})
+        ins_skor  = alpha.get("insider_skor", 0)
+        cong_skor = alpha.get("congress_skor", 0)
+
+        result["score"] += ins_skor * 2   # Insider alım 2x ağırlık
+        result["score"] += cong_skor      # Kongre alım 1x
+        result["insider_alpha_score"]   = ins_skor
+        result["congress_alpha_score"]  = cong_skor
+
         # Tüm veriyi taşı
-        result.update({
-            k: v for k, v in row.items()
-            if k not in result
-        })
+        result.update({k: v for k, v in row.items() if k not in result})
         scored.append(result)
 
-    # 4. Ön sıralama
+    # 5. Sıralama
     scored.sort(key=lambda x: -x["score"])
     print(f"  Ön skorlama tamamlandı: {len(scored)} hisse")
 
-    # 5. Derin analiz (top 30 için)
+    # 6. Derin analiz (top 30 için)
     final = deep_analysis(scored, mode, top_n=30)
-
     return final
 
 
