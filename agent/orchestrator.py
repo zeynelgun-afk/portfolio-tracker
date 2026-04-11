@@ -77,6 +77,10 @@ from multi_cohort import (
     propose_new_specialist,
 )
 from swing_manager import run_swing_morning_check, get_swing_report
+try:
+    from k_engine import run_entry_checks, run_exit_checks
+except ImportError:
+    run_entry_checks = run_exit_checks = None
 from premarket_gap_scanner import scan_premarket_gaps, get_premarket_context
 
 REPO_ROOT = Path(__file__).parent.parent
@@ -281,6 +285,7 @@ def run_morning(ctx: dict):
     s_genome = load_specialist_genome()
     update_specialist_weights(s_genome, [])
 
+    genome_ctx = _load_genome_context()
     prompt = f"""
 {ctx['compressed']}
 
@@ -304,6 +309,8 @@ def run_morning(ctx: dict):
 {ctx['twitter']}
 
 {ctx['risk']}
+
+{genome_ctx}
 
 === GÖREV: SABAH ANALİZİ VE RAPOR ===
 Yukarıdaki gerçek piyasa verileri, portföy durumu ve teknik analizleri kullanarak
@@ -347,6 +354,7 @@ def run_closing(ctx: dict):
     from swing_manager import get_swing_report
     swing_ozet = get_swing_report()
 
+    genome_ctx = _load_genome_context()
     prompt = f"""
 {ctx['compressed']}
 
@@ -355,6 +363,8 @@ def run_closing(ctx: dict):
 {ctx['research']}
 
 {ctx['twitter']}
+
+{genome_ctx}
 
 === GÖREV: KAPANIS RAPORU ===
 Yukarıdaki verilerle docs/prompts/DAILY_PART2_CLOSING.md formatında kapanış raporu üret.
@@ -406,35 +416,106 @@ def _commit_swing_changes():
     except Exception as e:
         print(f"[Swing] Git commit hatası: {e}")
 
+def _load_genome_context() -> str:
+    """Darwin genome'daki aktif kuralları Claude prompt'una ekler."""
+    genome_path = REPO_ROOT / "agent" / "memory" / "prompt_genome.json"
+    if not genome_path.exists():
+        return ""
+    try:
+        genome = json.load(open(genome_path))
+        lines = ["\n=== AKTİF K-KURALLARI (Darwin Genome) ==="]
+        for name, data in sorted(genome.items()):
+            w = data.get("weight", 1.0)
+            f = data.get("fitness")
+            flag = "🔊" if w >= 1.5 else ("🔇" if w <= 0.5 else "")
+            f_str = f"fitness:{f:.2f}" if f else ""
+            lines.append(f"{flag} {name} v{data['version']} {f_str}")
+            lines.append(f"  {data['current_prompt'].split(chr(10))[0][:100]}")
+        return "\n".join(lines)
+    except Exception:
+        return ""
+
+
+def _get_faz(now_tr) -> str:
+    """Türkiye saatine göre aktif seansı döndür."""
+    h = now_tr.hour + now_tr.minute / 60
+    if 16.5 <= h < 17.5:
+        return "FAZ_1"   # Açılış: TR 16:30-17:30
+    elif 17.5 <= h < 21.0:
+        return "FAZ_2"   # Orta seans: TR 17:30-21:00
+    elif 21.0 <= h < 23.0:
+        return "FAZ_3"   # Power hour: TR 21:00-23:00
+    else:
+        return "KAPALI"
+
+
 def run_monitor(ctx: dict):
     """
     Seans içi otonom yönetim — her 30 dakikada çalışır.
-    
-    KARAR VERİR VE KAYDEDERIn:
-    1. Swing giriş: sinyal + uygun fiyat → JSON yaz + Telegram'a "ALIN"
-    2. Swing çıkış: stop/hedef tetiklendi → JSON yaz + Telegram'a "SATIN"
-    3. Portföy stop: yakın ise uyarı, tetiklenince karar
-    4. VIX spike: acil koruma
-    
+    FAZ-aware: açılış / orta seans / power hour için farklı mantık.
+
     SEN KARAR VER kuralı — onay beklemez.
     """
-    print("[Orkestratör] Seans içi otonom yönetim çalışıyor...")
-
     portfolios = ctx["raw"]["portfolios"]
     market     = ctx["raw"]["market"]
     now_tr     = datetime.now(pytz.timezone("Europe/Istanbul"))
     saat       = now_tr.strftime("%H:%M")
+    faz        = _get_faz(now_tr)
 
-    aksiyonlar = []  # Bu sefer yapılan işlemler
-    uyarilar   = []  # Acil bildirimler
+    print(f"[Orkestratör] Monitor çalışıyor — {saat} TR | {faz}")
 
-    # ── 1. SWING ÇIKIŞ KONTROL (Önce çıkışlar) ───────────────────────────────
+    aksiyonlar = []
+    uyarilar   = []
+
+    # ── 1. SWING ÇIKIŞ KONTROL — her FAZ'da ─────────────────────────────────
+    # K-engine ile tüm çıkış kuralları (K-06, K-07, K-09, K-11)
+    if run_exit_checks:
+        active_path = REPO_ROOT / "data" / "swing" / "active.json"
+        if active_path.exists():
+            try:
+                active_data = json.load(open(active_path))
+                for pos in active_data.get("aktif_pozisyonlar", []):
+                    sym    = pos.get("sembol", "")
+                    cur_p  = market.get(sym, {}).get("price")
+                    stop   = pos.get("stop_loss")
+                    entry  = pos.get("giris_fiyati")
+                    if sym and cur_p and stop and entry:
+                        exit_r = run_exit_checks(
+                            sym, float(cur_p), float(stop), float(entry),
+                            rsi=pos.get("rsi", 50),
+                            highest_high=pos.get("highest_high"),
+                            atr=pos.get("atr_14")
+                        )
+                        if exit_r["action"] in ("EXIT_NOW", "PARTIAL"):
+                            aksiyonlar.append(
+                                f"{'🔴' if exit_r['action']=='EXIT_NOW' else '💰'} "
+                                f"*{exit_r['action']}* {sym}: {exit_r['reason']}"
+                            )
+                        elif exit_r["action"] == "TIGHTEN":
+                            uyarilar.append(
+                                f"⚡ *TRAILING GÜNCELLE* {sym}: {exit_r['reason']}"
+                            )
+            except Exception as _e:
+                print(f"[K-Engine exit] {_e}")
+
     swing_exits = _check_swing_exits(market)
     aksiyonlar.extend(swing_exits)
 
-    # ── 2. SWING GİRİŞ KONTROL (Boş slot varsa) ──────────────────────────────
-    swing_entries = _check_swing_entries()
-    aksiyonlar.extend(swing_entries)
+    # ── 2. SWING GİRİŞ KONTROL ───────────────────────────────────────────────
+    # FAZ_1: İlk 30dk gap stabilizasyonu beklenir, FAZ_2'de giriş yapılır
+    if faz in ("FAZ_2", "FAZ_3"):
+        swing_entries = _check_swing_entries()
+        aksiyonlar.extend(swing_entries)
+
+    # ── FAZ_1: AÇILIŞ KONTROL ────────────────────────────────────────────────
+    if faz == "FAZ_1":
+        faz1_alerts = _run_faz1_checks(portfolios, market)
+        uyarilar.extend(faz1_alerts)
+
+    # ── FAZ_3: POWER HOUR FİNAL ──────────────────────────────────────────────
+    if faz == "FAZ_3":
+        faz3_alerts = _run_faz3_checks(market)
+        uyarilar.extend(faz3_alerts)
 
     # ── 3. PORTFÖY STOP KONTROL ───────────────────────────────────────────────
     for pf_name, pf_data in portfolios.items():

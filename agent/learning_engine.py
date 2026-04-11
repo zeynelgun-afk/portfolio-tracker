@@ -343,3 +343,21 @@ def auto_extract_lessons(claude_response: str, mode: str):
         for lesson in lessons_found[:3]:
             append_learning(lesson, source=f"auto_{mode}")
         print(f"[Learning] {len(lessons_found)} ders otomatik çıkarıldı.")
+
+        # Hata içeren dersleri prompt evolver'a ilet
+        hata_dersleri = [l for l in lessons_found if any(
+            kw in l.lower() for kw in ["hata", "yanlış", "kaçır", "kural ihlal"]
+        )]
+        if hata_dersleri and mode in ("closing", "weekly"):
+            try:
+                from prompt_evolver import propose_prompt_improvement
+                for ders in hata_dersleri[:1]:  # Günde max 1 öneri
+                    # K-XX kural adını tespit et
+                    import re
+                    k_match = re.search(r"K-\d+", ders)
+                    rule_name = k_match.group(0).replace("-", "_").lower() if k_match else None
+                    if rule_name:
+                        print(f"[Learning] {rule_name} için prompt iyileştirme önerisi isteniyor...")
+                        propose_prompt_improvement(rule_name, ders)
+            except Exception as e:
+                print(f"[Learning] Prompt evolver hatası: {e}")

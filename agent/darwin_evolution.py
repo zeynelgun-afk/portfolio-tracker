@@ -79,6 +79,44 @@ Yasak: SMA50+SMA200 altı + insider satış yoğun → giriş yok""",
         "fitness": None,
         "last_modified": None,
     },
+    "session_faz1_gap": {
+        "version": 1,
+        "description": "FAZ 1 açılış gap eşikleri",
+        "weight": 1.0,
+        "weight_history": [],
+        "current_prompt": """FAZ 1 Gap Analizi:
+Gap < -%5 → GAP-DOWN uyarı, K-09 tetik
+Gap > +%5 → GAP-UP, ilk 15dk bekle
+Gap -3% ile -5% → negatif gap, stop yakınlık kontrol
+Gap +3% ile +5% → pozitif gap, giriş fırsatı izle""",
+        "fitness": None,
+        "last_modified": None,
+    },
+    "session_faz2_entry": {
+        "version": 1,
+        "description": "FAZ 2 yeni giriş GO/NO-GO eşikleri",
+        "weight": 1.0,
+        "weight_history": [],
+        "current_prompt": """FAZ 2 Giriş Kriterleri:
+GO: Ichimoku 4/4 + R:R ≥2.5:1 + K-13 VIX uygun + K-18 temiz
+NO-GO: FAZ 1'in ilk 15dk içinde + VIX>28 + earnings ≤2 gün + stop>%12
+İlk 30dk yeni giriş yasak (gap stabilizasyonu)""",
+        "fitness": None,
+        "last_modified": None,
+    },
+    "session_faz3_trailing": {
+        "version": 1,
+        "description": "FAZ 3 power hour trailing stop mantığı",
+        "weight": 1.0,
+        "weight_history": [],
+        "current_prompt": """FAZ 3 Trailing Stop:
+Kâr <%7: chandelier 3×ATR
+Kâr %7-15: chandelier 2×ATR (kâr kilidi)
+Kâr %15+: chandelier 1.5×ATR (agresif kilit)
+RSI 80+ kapanışa yakın: %25-30 kısmi satış değerlendir""",
+        "fitness": None,
+        "last_modified": None,
+    },
     "swing_rsi_range": {
         "version": 1,
         "description": "Swing giriş RSI aralığı",
@@ -92,6 +130,11 @@ RSI>65: momentum trade sadece güçlü trend varlığında""",
         "last_modified": None,
     },
 }
+
+try:
+    from prompt_evolver import update_prompt_file as _update_prompt
+except ImportError:
+    _update_prompt = None
 
 WEIGHT_MIN  = 0.3
 WEIGHT_MAX  = 2.5
@@ -496,6 +539,13 @@ def run_evolution_cycle(force: bool = False) -> dict:
     genome[weakest_name]["evolution_data"]   = evolution
 
     save_genome(genome)
+
+    # 6b. Session prompt dosyasını güncelle (session_ prefix'li kurallar)
+    _update_session_prompt_file(weakest_name, new_prompt)
+
+    # 6b. Session/daily prompt dosyalarını güncelle
+    if _update_prompt:
+        _update_prompt(weakest_name, new_prompt, new_version)
 
     # 7. K-rules digest güncelle
     _update_k_rules_digest(genome)

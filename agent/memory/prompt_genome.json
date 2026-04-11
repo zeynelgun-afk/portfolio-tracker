@@ -95,5 +95,140 @@
         "fitness": 1.45
       }
     ]
+  },
+  "K-02_kriz_bekle": {
+    "version": 1,
+    "description": "Kriz/şok sonrası bekleme",
+    "weight": 1.0,
+    "weight_history": [],
+    "fitness": null,
+    "last_modified": null,
+    "current_prompt": "K-02: Kriz/şok başlangıcında momentum sektörlerine 3 iş günü yeni giriş yok. SPY ≥%3 + VIX ≥%20 spike = 1 gün bekle (K-07 makro şok istisnası)."
+  },
+  "K-05_earnings": {
+    "version": 1,
+    "description": "Earnings proximity — swing",
+    "weight": 1.0,
+    "weight_history": [],
+    "fitness": null,
+    "last_modified": null,
+    "current_prompt": "K-05: Swing pozisyonu için earnings ≤2 iş günü içinde tam çıkış, exception yok. Portföy için K-16 skor hesapla (7 gün öncesi)."
+  },
+  "K-06_stop": {
+    "version": 1,
+    "description": "Stop tetiklenince çıkış",
+    "weight": 1.0,
+    "weight_history": [],
+    "fitness": null,
+    "last_modified": null,
+    "current_prompt": "K-06: Stop tetiklendi → %100 çık, override YASAK. Giriş stop: max(2×ATR14, %5). Duygusal karar yok. K-06 tüm kuralların üstünde."
+  },
+  "K-07_trailing": {
+    "version": 1,
+    "description": "Chandelier trailing stop",
+    "weight": 1.0,
+    "weight_history": [],
+    "fitness": null,
+    "last_modified": null,
+    "current_prompt": "K-07: Kâr <%7 → 3×ATR. Kâr %7-15 → 2×ATR. Kâr %15+ → 1.5×ATR. Highest high - multiplier×ATR. Stop ASLA aşağı çekilmez."
+  },
+  "K-09_proximity": {
+    "version": 1,
+    "description": "Stop yakınlık 4 kontrol",
+    "weight": 1.0,
+    "weight_history": [],
+    "fitness": null,
+    "last_modified": null,
+    "current_prompt": "K-09: Fiyat stop'a <%2 → k09_proximity_check.py çalıştır (RSI/hacim/SPY+VIX/sektör). 3+ negatif=EXIT_NOW, 2=WAIT, 0-1=TUT."
+  },
+  "K-10_cash": {
+    "version": 1,
+    "description": "VIX bazlı minimum nakit",
+    "weight": 1.0,
+    "weight_history": [],
+    "fitness": null,
+    "last_modified": null,
+    "current_prompt": "K-10: VIX<22 → %5 min nakit. VIX 22-28 → %10. VIX 28-35 → %20. VIX>35 → %30. K-13 paralel çalışır."
+  },
+  "K-12_concentration": {
+    "version": 1,
+    "description": "Konsantrasyon limitleri",
+    "weight": 1.0,
+    "weight_history": [],
+    "fitness": null,
+    "last_modified": null,
+    "current_prompt": "K-12: Dengeli tek hisse >%25 → küçült. Agresif >%20. Temettü >%15. Sektör/tema $600K bazlı >%40 → en zayıfı kes."
+  },
+  "K-14_drawdown": {
+    "version": 1,
+    "description": "Drawdown fren eşiği",
+    "weight": 1.0,
+    "weight_history": [],
+    "fitness": null,
+    "last_modified": null,
+    "current_prompt": "K-14: 2 ardışık swing kaybı VEYA toplam drawdown >%15 → fren. Kaldırma: VIX<22 + SPY>SMA50 + 11 sektörden ≥6 SPY'yi geçiyor."
+  },
+  "K-15a_rsi_oversold": {
+    "version": 1,
+    "description": "RSI oversold 1 gün teyit",
+    "weight": 1.0,
+    "weight_history": [],
+    "fitness": null,
+    "last_modified": null,
+    "current_prompt": "K-15a: Yeni giriş için RSI<35 → 1 gün stabilizasyon teyit bekle. Mevcut pozisyon için UYGULANMAZ, sadece yeni giriş filtresi."
+  },
+  "K-15b_dilution": {
+    "version": 1,
+    "description": "Momentum hisse dilüsyon",
+    "weight": 1.0,
+    "weight_history": [],
+    "fitness": null,
+    "last_modified": null,
+    "current_prompt": "K-15b: 3ay >%30 + P/E negatif/>50 → k15b_dilution_check.py zorunlu. Short interest yüksek + recent dilution → eleme."
+  },
+  "K-16_sell_news": {
+    "version": 1,
+    "description": "Sell the news skor",
+    "weight": 1.0,
+    "weight_history": [],
+    "fitness": null,
+    "last_modified": null,
+    "current_prompt": "K-16: Portföy pozisyonu earnings 7g öncesi → k16 skor. Skor 2-3: %25 kısmi + trailing. Skor 4-5: %50 çık."
+  },
+  "K-17_correlation": {
+    "version": 1,
+    "description": "Korelasyon ve tema çakışması",
+    "weight": 1.0,
+    "weight_history": [],
+    "fitness": null,
+    "last_modified": null,
+    "current_prompt": "K-17: Sektör + tema çakışması kontrol. Aynı tema 2+ pozisyon → yeni giriş yok. Tema %40 limit ($600K bazlı)."
+  },
+  "K-18_insider": {
+    "version": 1,
+    "description": "Insider trading eşiği",
+    "weight": 1.0,
+    "weight_history": [],
+    "fitness": null,
+    "last_modified": null,
+    "current_prompt": "K-18: Son 30 günde CEO/CFO/Direktör >$5M satış → giriş yasak. POWL dersi: $25M insider satışı = K-18 atlamanın maliyeti."
+  },
+  "K-19_xlp": {
+    "version": 1,
+    "description": "XLP swing yasağı",
+    "weight": 1.0,
+    "weight_history": [],
+    "fitness": null,
+    "last_modified": null,
+    "current_prompt": "K-19: Consumer Defensive sektörü swing girişi yasak. Sadece portföy pozisyonu olarak alınabilir."
+  },
+  "K-20_dead_cat": {
+    "version": 1,
+    "description": "Dead cat bounce RS filtresi",
+    "weight": 1.0,
+    "weight_history": [],
+    "fitness": null,
+    "last_modified": null,
+    "current_prompt": "K-20: Son 1ay SPY'den ≥%10 geride + son 5gün ≥+%5 bounce = dead cat = eleme. Yanıltıcı momentum trapleri önleme."
   }
 }
