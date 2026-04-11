@@ -1,57 +1,347 @@
 {
-  "test_date": "2026-04-11 15:48",
-  "results": [
-    {
-      "rule": "K-18",
-      "blocked_avg": 2.103640189192728,
-      "win_rate": 60.0,
-      "n": 55,
-      "verdict": "❌ DRAG",
-      "detail": "Insider satışı sonrası hisse yükseliyor — kural fırsat kaçırıyor"
+  "olusturulma": "2026-04-11 20:14",
+  "toplam_trade": 22,
+  "metrikler": {
+    "toplam_analiz": 22,
+    "zaman_kurali": {
+      "uyum_sayisi": 16,
+      "ihlal_sayisi": 6,
+      "uyum_orani": "%73",
+      "ihlal_ornekleri": [
+        {
+          "sembol": "GOOGL",
+          "gun": 23,
+          "pnl": 7.79
+        },
+        {
+          "sembol": "LMT",
+          "gun": 18,
+          "pnl": 1.43
+        },
+        {
+          "sembol": "T",
+          "gun": 22,
+          "pnl": -5.54
+        },
+        {
+          "sembol": "SOFI",
+          "gun": 16,
+          "pnl": -3.62
+        },
+        {
+          "sembol": "DUK",
+          "gun": 28,
+          "pnl": 1.52
+        },
+        {
+          "sembol": "DVA",
+          "gun": 27,
+          "pnl": 1.05
+        }
+      ]
     },
-    {
-      "rule": "K-19",
-      "xlp_avg": -0.3042458360528815,
-      "momentum_avg": -3.9567253772039224,
-      "xlp_volatility": 3.5642202997305685,
-      "momentum_volatility": 6.320736095335537,
-      "vol_ratio": 0.5638932311002238,
-      "n_xlp": 60,
-      "n_momentum": 60,
-      "verdict": "✅ DEĞERLİ",
-      "detail": "XLP swing için zayıf. Düşük volatilite sorun"
+    "stop_kurali": {
+      "stop_tetiklenen": 7,
+      "max_zarar_stop_ile": "-5.5%",
+      "max_zarar_stopsuz": "-6.1%"
     },
-    {
-      "rule": "K-14",
-      "crisis_avg": -13.977501528234484,
-      "normal_avg": 6.436008650951408,
-      "crisis_win_rate": 7.142857142857142,
-      "normal_win_rate": 71.42857142857143,
-      "n_crisis": 42,
-      "verdict": "✅ GÜÇLÜ ONAY",
-      "detail": "Kriz dönemlerinde giriş ortalama -14.0% zararlı — brake kesinlikle değerli"
-    },
-    {
-      "rule": "K-20",
-      "dead_cat_avg": -4.006117375012997,
-      "genuine_pull_avg": -2.258199544667907,
-      "dc_win_rate": 34.285714285714285,
-      "gp_win_rate": 45.0,
-      "n_dead_cat": 70,
-      "n_genuine": 60,
-      "verdict": "✅ GÜÇLÜ ONAY",
-      "detail": "Dead cat bounce -4.0% vs güçlü RS -2.3% — fark 1.7%"
-    },
-    {
-      "rule": "K-05",
-      "pre_earn_avg": -3.0473213526192025,
-      "safe_avg": -1.8205302372552954,
-      "pre_volatility": 1.2401286050699045,
-      "safe_volatility": 1.361463283750579,
-      "vol_ratio": 0.9108792134691874,
-      "n_pre": 2,
-      "verdict": "✅ DEĞERLİ",
-      "detail": "Safe giriş 1.2% daha iyi — K-05 değer katıyor"
+    "kural_uyumu_etkisi": {
+      "ihlal_trade_sayisi": 8,
+      "uyumlu_trade_sayisi": 14,
+      "ihlal_ort_pnl": "-1.1%",
+      "uyumlu_ort_pnl": "+1.0%",
+      "ihlal_win_rate": "%50",
+      "uyumlu_win_rate": "%64",
+      "avantaj": "+2.1% fark (kurala uyum lehine)"
     }
-  ]
+  },
+  "kural_ihlalleri": {
+    "K-zaman": {
+      "ihlal_sayisi": 6,
+      "ihlaller": [
+        {
+          "id": "SWING-001",
+          "sembol": "GOOGL",
+          "pnl": 7.79,
+          "gun": 23,
+          "sonuc": "KAZANÇ",
+          "kural_uyumu_notu": "⚠️ 15 GÜN KURALI İHLALİ (23 gün tutuldu).",
+          "puan": 6,
+          "detay": "23 gün tutuldu (limit: 15)"
+        },
+        {
+          "id": "SWING-013",
+          "sembol": "LMT",
+          "pnl": 1.43,
+          "gun": 18,
+          "sonuc": "KAZANÇ",
+          "kural_uyumu_notu": "❌ 15 GÜN KURALI İHLALİ (18 gün).",
+          "puan": 5,
+          "detay": "18 gün tutuldu (limit: 15)"
+        },
+        {
+          "id": "SWING-015",
+          "sembol": "T",
+          "pnl": -5.54,
+          "gun": 22,
+          "sonuc": "ZARAR",
+          "kural_uyumu_notu": "❌ 15 GÜN KURALI İHLALİ (22 gün). ❌ Tez bozulmasında erken çıkış yapılmadı.",
+          "puan": 1,
+          "detay": "22 gün tutuldu (limit: 15)"
+        },
+        {
+          "id": "SWING-023",
+          "sembol": "SOFI",
+          "pnl": -3.62,
+          "gun": 16,
+          "sonuc": "ZARAR",
+          "kural_uyumu_notu": "Sektör RS kontrolü eksikmiş. K-20 uygulanmalıydı.",
+          "puan": 3,
+          "detay": "16 gün tutuldu (limit: 15)"
+        },
+        {
+          "id": "SWING-017",
+          "sembol": "DUK",
+          "pnl": 1.52,
+          "gun": 28,
+          "sonuc": "KAZANÇ",
+          "kural_uyumu_notu": "❌ 15 GÜN KURALI İHLALİ (28 gün).",
+          "puan": 2,
+          "detay": "28 gün tutuldu (limit: 15)"
+        },
+        {
+          "id": "SWING-018",
+          "sembol": "DVA",
+          "pnl": 1.05,
+          "gun": 27,
+          "sonuc": "KAZANÇ",
+          "kural_uyumu_notu": "❌ 15 GÜN KURALI İHLALİ (27 gün).",
+          "puan": 2,
+          "detay": "27 gün tutuldu (limit: 15)"
+        }
+      ]
+    },
+    "K-evren": {
+      "ihlal_sayisi": 7,
+      "ihlaller": [
+        {
+          "id": "SWING-003",
+          "sembol": "VZ",
+          "pnl": 3.89,
+          "gun": 15,
+          "sonuc": "KAZANÇ",
+          "kural_uyumu_notu": "⚠️ 15 GÜN SINIRI. Telekom hedef gerçekçi değildi.",
+          "puan": 4,
+          "detay": "VZ düşük beta (swing evrenine girmemeli)"
+        },
+        {
+          "id": "SWING-008",
+          "sembol": "WMT",
+          "pnl": -3.48,
+          "gun": 12,
+          "sonuc": "ZARAR",
+          "kural_uyumu_notu": "Zaman kuralı çalıştı. Tez seçimi baştan zayıftı.",
+          "puan": 4,
+          "detay": "WMT düşük beta (swing evrenine girmemeli)"
+        },
+        {
+          "id": "SWING-014",
+          "sembol": "AMT",
+          "pnl": -3.3507690714174734,
+          "gun": 2,
+          "sonuc": "ZARAR",
+          "kural_uyumu_notu": "⚠️ Stop mesafesi yetersiz. ATR tabanlı stop kullanılmamış.",
+          "puan": 2,
+          "detay": "AMT düşük beta (swing evrenine girmemeli)"
+        },
+        {
+          "id": "SWING-015",
+          "sembol": "T",
+          "pnl": -5.54,
+          "gun": 22,
+          "sonuc": "ZARAR",
+          "kural_uyumu_notu": "❌ 15 GÜN KURALI İHLALİ (22 gün). ❌ Tez bozulmasında erken çıkış yapılmadı.",
+          "puan": 1,
+          "detay": "T düşük beta (swing evrenine girmemeli)"
+        },
+        {
+          "id": "SWING-024",
+          "sembol": "ALMU",
+          "pnl": -6.11,
+          "gun": 2,
+          "sonuc": "ZARAR",
+          "kural_uyumu_notu": "❌ $2B+ market cap kuralı ihlali. ❌ Hacim 500K+ kuralı ihlali.",
+          "puan": 1,
+          "detay": "❌ $2B+ market cap kuralı ihlali. ❌ Hacim 500K+ kuralı ihlali."
+        },
+        {
+          "id": "SWING-017",
+          "sembol": "DUK",
+          "pnl": 1.52,
+          "gun": 28,
+          "sonuc": "KAZANÇ",
+          "kural_uyumu_notu": "❌ 15 GÜN KURALI İHLALİ (28 gün).",
+          "puan": 2,
+          "detay": "DUK düşük beta (swing evrenine girmemeli)"
+        },
+        {
+          "id": "SWING-018",
+          "sembol": "DVA",
+          "pnl": 1.05,
+          "gun": 27,
+          "sonuc": "KAZANÇ",
+          "kural_uyumu_notu": "❌ 15 GÜN KURALI İHLALİ (27 gün).",
+          "puan": 2,
+          "detay": "DVA düşük beta (swing evrenine girmemeli)"
+        }
+      ]
+    },
+    "K-stop": {
+      "ihlal_sayisi": 1,
+      "ihlaller": [
+        {
+          "id": "SWING-014",
+          "sembol": "AMT",
+          "pnl": -3.3507690714174734,
+          "gun": 2,
+          "sonuc": "ZARAR",
+          "kural_uyumu_notu": "⚠️ Stop mesafesi yetersiz. ATR tabanlı stop kullanılmamış.",
+          "puan": 2,
+          "detay": "⚠️ Stop mesafesi yetersiz. ATR tabanlı stop kullanılmamış."
+        }
+      ]
+    },
+    "K-20": {
+      "ihlal_sayisi": 1,
+      "ihlaller": [
+        {
+          "id": "SWING-023",
+          "sembol": "SOFI",
+          "pnl": -3.62,
+          "gun": 16,
+          "sonuc": "ZARAR",
+          "kural_uyumu_notu": "Sektör RS kontrolü eksikmiş. K-20 uygulanmalıydı.",
+          "puan": 3,
+          "detay": "Sektör RS kontrolü eksikmiş. K-20 uygulanmalıydı."
+        }
+      ]
+    },
+    "K-13": {
+      "ihlal_sayisi": 1,
+      "ihlaller": [
+        {
+          "id": "SWING-027",
+          "sembol": "AROC",
+          "pnl": -4.95,
+          "gun": 2,
+          "sonuc": "ZARAR",
+          "kural_uyumu_notu": "❌ K-13 İHLALİ: VIX>27 ortamında sensitive sektörde giriş.",
+          "puan": 2,
+          "detay": "❌ K-13 İHLALİ: VIX>27 ortamında sensitive sektörde giriş."
+        }
+      ]
+    }
+  },
+  "yeni_kural_adaylari": [
+    {
+      "konu": "K-ZST (Zaman Disiplini)",
+      "tekrar_sayisi": 4,
+      "oncuk": 4,
+      "ornekler": [
+        "GOOGL +7.8%",
+        "XOM +5.5%",
+        "LMT +1.4%"
+      ],
+      "oneri_metni": "Savunma hisselerinde rally 7-10 gün, sonra konsolide. 10. günde momentum teyit et.",
+      "oncelik": "YÜKSEK"
+    },
+    {
+      "konu": "K-EVR (Evren Filtresi — Beta)",
+      "tekrar_sayisi": 4,
+      "oncuk": 4,
+      "ornekler": [
+        "WMT -3.5%",
+        "T -5.5%",
+        "DUK +1.5%"
+      ],
+      "oneri_metni": "Kriz dönemlerinde telekom (T, VZ) defensif zannetme. Yüksek borç + faiz hassasiyeti nedeniyle düşer. Swing evreninden çıkar.",
+      "oncelik": "YÜKSEK"
+    },
+    {
+      "konu": "K-ATR (Stop Mesafesi)",
+      "tekrar_sayisi": 3,
+      "oncuk": 3,
+      "ornekler": [
+        "ZS +2.5%",
+        "AMT -3.4%",
+        "NEM +2.1%"
+      ],
+      "oneri_metni": "Minimum stop mesafesi kuralı: Giriş → stop mesafesi >= 2×ATR(14). Altındaysa pozisyon küçült veya girme.",
+      "oncelik": "ORTA"
+    },
+    {
+      "konu": "K-JEO (Jeopolitik Çıkış)",
+      "tekrar_sayisi": 1,
+      "oncuk": 1,
+      "ornekler": [
+        "HAL -5.1%"
+      ],
+      "oneri_metni": "Jeopolitik trade'lerde çıkış trigger'ını da tanımla: 'Gerilim azalırsa/savaş biterse çık' koşulunu giriş tezine yaz.",
+      "oncelik": "DÜŞÜK"
+    },
+    {
+      "konu": "K-RSI (Minimum Giriş Kriterleri)",
+      "tekrar_sayisi": 1,
+      "oncuk": 1,
+      "ornekler": [
+        "CTSH +1.4%"
+      ],
+      "oneri_metni": "Swing girişinde RSI>50 ve fiyat>SMA50 zorunlu kriter yap. Bu ikisi sağlanmadan pozisyon açma.",
+      "oncelik": "DÜŞÜK"
+    },
+    {
+      "konu": "K-SEC (Sektör ETF Filtresi)",
+      "tekrar_sayisi": 1,
+      "oncuk": 1,
+      "ornekler": [
+        "SOFI -3.6%"
+      ],
+      "oneri_metni": "Her swing girişinde sektör ETF 9EMA üzerinde mi kontrol et. SOFI için XLF>9EMA şart.",
+      "oncelik": "DÜŞÜK"
+    },
+    {
+      "konu": "K-KRZ (Kriz Trade Kuralı)",
+      "tekrar_sayisi": 1,
+      "oncuk": 1,
+      "ornekler": [
+        "RTX -5.2%"
+      ],
+      "oneri_metni": "Kriz trade kuralı: Olay gün-1'de giriş yapma. Min 1 gün cooling + RSI/hacim teyidi. (K-21 adayı)",
+      "oncelik": "DÜŞÜK"
+    },
+    {
+      "konu": "K-13 Güçlendirme",
+      "tekrar_sayisi": 1,
+      "oncuk": 1,
+      "ornekler": [
+        "AROC -5.0%"
+      ],
+      "oneri_metni": "K-13 VIX kontrolünü her swing girişinde otomatik kontrol et. VIX>25 ise swing girişini engelle.",
+      "oncelik": "DÜŞÜK"
+    }
+  ],
+  "ozet": {
+    "en_kritik_ihlal": "15 GÜN ZAMAN KURALI (5 ihlal, ort. +2.5% — kural çalışıyor)",
+    "en_kritik_eksik": "Beta filtresi (DUK, DVA, VZ, WMT, AMT swing evrenine girmemeli)",
+    "hemen_uygulanabilir": [
+      "Swing evreninden çıkar: VZ, T, DUK, DVA, WMT, AMT",
+      "Stop min. 2×ATR(14) zorunlu kıl",
+      "VIX>25'te yeni swing girişi engelle (K-13 güçlendir)"
+    ],
+    "zeynel_onayi_bekleyen": [
+      "K-ZST: 10. günde momentum kontrol protokolü",
+      "K-KRZ: Kriz gün-1 yasak kuralı (K-21 adayı)",
+      "K-EVR: Beta>0.7 swing evren filtresi"
+    ]
+  }
 }

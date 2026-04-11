@@ -142,3 +142,47 @@ not: script'ler `_QUIET_MODE=True` varsayılanı ile çalışır. info severity 
 Bu kritik bir düzeltmedir — API kullanımını gereksiz kısıtlamak zorunda değiliz.
 
 > değişiklik gerektiren güncellemeler doğrudan `docs/TRADING_PLAYBOOK.md`'de yapılır, bu dosya senkron tutulur.
+
+---
+
+## 📊 K-kural performans analizi (11 nisan 2026)
+
+**22 trade üzerinde otomatik analiz — `scripts/k_rule_performance.py`**
+
+### kural uyumunun sayısal etkisi
+
+| metrik | kural ihlali olan (8 trade) | kural uyumlu (14 trade) |
+|---|---|---|
+| ortalama PnL | -1.1% | +1.0% |
+| win rate | %50 | %64 |
+| **avantaj** | — | **+2.1% PnL farkı** |
+
+### en sık ihlal edilen kurallar
+
+| kural | ihlal sayısı | ana hata |
+|---|---|---|
+| K-zaman (15 gün) | 6 trade | GOOGL(23g), T(22g), DVA(27g), DUK(28g) |
+| K-evren (swing evreni) | 7 trade | VZ, WMT, AMT, T, DUK, DVA — düşük beta |
+| K-13 (VIX matrisi) | 1 trade | AROC — VIX>27'de duyarlı sektör girişi |
+| K-stop (ATR mesafesi) | 1 trade | AMT — %1.7 mesafe, ATR kullanılmamış |
+
+### onaylı sistem değişiklikleri
+
+> aşağıdakiler veri destekli — tek kaynak bu bölüm.
+
+**SWING EVRENİ'NDEN ÇIKARILAN:** VZ, T, TMUS, DUK, NEE, SO, DVA, WMT, TGT, COST, AMT  
+(düşük beta, swing %10 hedefe ulaşamaz, temettü/değer portföyüne gönder)
+
+**K-06 GİRİŞ STOP güçlendirildi:** min. stop mesafesi = `max(2×ATR(14), %5)` — %1.7 gibi dar mesafelerde pozisyon yarıya indir veya girme.
+
+### zeynel onayı bekleyen kural adayları
+
+| kod | açıklama | kanıt |
+|---|---|---|
+| **K-ZST** | 10. günde momentum kontrol protokolü | 4 trade (GOOGL, XOM, LMT, GE) |
+| **K-EVR** | Beta>0.7 swing evren zorunlu filtresi | 4 trade (WMT, T, DUK, DVA) |
+| **K-ATR** | Giriş stop mesafesi ≥ 2×ATR(14) zorunlu | 3 trade (ZS, AMT, NEM) |
+| **K-KRZ** | Kriz gün-1 giriş yasağı (1 gün cooling) | 1 trade (RTX, LMT, HAL genel) |
+| **K-JEO** | Jeopolitik trade'de çıkış tetikleyicisi zorunlu | 1 trade (HAL) |
+
+> `scripts/k_rule_performance.py --all` → tam rapor + backtest sonuçları güncelleme
