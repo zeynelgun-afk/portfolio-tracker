@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-03-26",
+  "son_guncelleme": "2026-04-11",
   "kapatilan_pozisyonlar": [
     {
       "id": "SWING-020",
@@ -28,7 +28,26 @@
       "tutulan_gun": 3,
       "cikis_nedeni": "Kısmi satış stratejisi: %50 hedefte, %50 trailing stop",
       "sonuc": "KAZANÇ",
-      "ders": "Partial exit stratejisi çalıştı. Hedef tutturulduğunda %50 satıp kalanı trailing stop ile korumak riski azalttı. Cybersecurity sektöründe ani düşüş oldu ama zararı sınırladık."
+      "ders": "Partial exit stratejisi çalıştı. Cybersecurity'de ani sektör satışları olabilir; %50 hedefte al, kalan için ATR tabanlı trailing stop kullan.",
+      "auto_analiz": {
+        "tez_dogru": true,
+        "tez_degerlendirme": "Siber güvenlik sektörü momentumu gerçekti ve giriş tezi doğruydu. Hedef 3 günde tutturuldu, mükemmel hız. Kısmi çıkış sonrası sektör baskısı geldi, iyi yönetildi.",
+        "timing_hatasi": false,
+        "timing_detay": "Giriş ve kısmi çıkış zamanlaması mükemmeldi. %50 hedefte reali, kalan %50 trailing stop ile yönetme doğru uygulandı.",
+        "stop_uygun": true,
+        "hedef_uygun": true,
+        "risk_yonetimi_notu": "Partial exit stratejisi risk yönetiminin en iyi örneği.",
+        "kural_uyumu": "Tüm kurallara uyuldu. K-11 profit lock doğru uygulandı.",
+        "tekrar_yapilir_mi": true,
+        "tekrar_sartlari": "Siber güvenlik sektöründe benzer momentum + VIX<22 koşulunda.",
+        "guclu_yanlar": "Partial exit disiplini mükemmeldi, kazancın yarısı erkenden kilitlendi.",
+        "zayif_yanlar": "Kalan %50 trailing stop mesafesi biraz dar seçildi.",
+        "sistem_onerisi": "Partial exit sonrası trailing stop ATR tabanlı olmalı: %5 sabit yerine 2×ATR(14) kullan.",
+        "ders_guncel": "Partial exit stratejisi çalıştı. Cybersecurity'de ani sektör satışları olabilir; %50 hedefte al, kalan için ATR tabanlı trailing stop kullan.",
+        "puan": 8,
+        "analiz_tarihi": "2026-04-11 20:10",
+        "model": "claude-sonnet-4-6"
+      }
     },
     {
       "id": "SWING-001",
@@ -41,7 +60,26 @@
       "tutulan_gun": 23,
       "cikis_nedeni": "Hedefe yakın, kar reali edildi",
       "sonuc": "KAZANÇ",
-      "ders": "Momentum devam stratejisi çalıştı. AI hikayesi güçlü kaldı."
+      "ders": "Momentum devam stratejisi çalıştı, AI hikayesi güçlü kaldı. ANCAK 15 gün kuralı ihlal edildi — momentum ne kadar güçlü olursa olsun 15. günde planla.",
+      "auto_analiz": {
+        "tez_dogru": true,
+        "tez_degerlendirme": "GOOGL AI momentum tezi doğruydu, +7.8% güzel kazanç. Ancak 23 gün tutulması 15 günlük kuralı ihlal etti.",
+        "timing_hatasi": true,
+        "timing_detay": "15. günde çıkılmalıydı. 23 güne uzatmak kural ihlali; son 8 günde 1-2% ek kazanç için gereksiz risk.",
+        "stop_uygun": true,
+        "hedef_uygun": true,
+        "risk_yonetimi_notu": "Stop iyi kurulmuştu ama zaman riski göz ardı edildi.",
+        "kural_uyumu": "⚠️ 15 GÜN KURALI İHLALİ (23 gün tutuldu).",
+        "tekrar_yapilir_mi": true,
+        "tekrar_sartlari": "GOOGL/büyük teknoloji momentumu varsa evet, ama 15. günde çıkış disiplini şart.",
+        "guclu_yanlar": "Tez sağlamdı, AI hikayesi tuttu, karlı çıkıldı.",
+        "zayif_yanlar": "15 gün kuralı ihlal edildi.",
+        "sistem_onerisi": "15 gün kuralına istisnasız uy. Güçlü momentum olsa bile çık, 1 gün sonra yeniden değerlendir.",
+        "ders_guncel": "Momentum devam stratejisi çalıştı, AI hikayesi güçlü kaldı. ANCAK 15 gün kuralı ihlal edildi — momentum ne kadar güçlü olursa olsun 15. günde planla.",
+        "puan": 6,
+        "analiz_tarihi": "2026-04-11 20:10",
+        "model": "claude-sonnet-4-6"
+      }
     },
     {
       "id": "SWING-007",
@@ -54,7 +92,26 @@
       "tutulan_gun": 7,
       "cikis_nedeni": "Hedef vurdu ($761 hedef, $775'te çıkış)",
       "sonuc": "KAZANÇ",
-      "ders": "Endüstriyel sektör momentumu mükemmel çalıştı. +5.2% giriş momentumu devam etti. 7 günde +12% hedef tutturuldu."
+      "ders": "Endüstriyel sektör momentumu mükemmel çalıştı. 7 günde +12% referans trade. Giriş kriterleri: sektör RS güçlü + günlük %5+ hareket + 1.5x+ hacim + Ichimoku 4/4.",
+      "auto_analiz": {
+        "tez_dogru": true,
+        "tez_degerlendirme": "Endüstriyel sektör momentumu mükemmel çalıştı. 7 günde %12 hedef tutturuldu. Sistemin referans trade'i.",
+        "timing_hatasi": false,
+        "timing_detay": "Giriş ve çıkış zamanlaması neredeyse kusursuz. 7 günde hedef, minimum sermaye bağlama.",
+        "stop_uygun": true,
+        "hedef_uygun": true,
+        "risk_yonetimi_notu": "Risk yönetimi mükemmeldi.",
+        "kural_uyumu": "Tüm kurallara tam uyum. Ichimoku 4/4, momentum, hacim.",
+        "tekrar_yapilir_mi": true,
+        "tekrar_sartlari": "Endüstriyel sektör rallisinde güçlü momentum varsa her zaman değerlendirilebilir.",
+        "guclu_yanlar": "Sistem kurallarına tam uyum, doğru sektör, güçlü momentum girişi, hızlı hedef tutturma.",
+        "zayif_yanlar": "Hedef tutturulunca ek %2-3 bırakılmış olabilirdi.",
+        "sistem_onerisi": "CAT gibi yüksek puan trade'lerde giriş momentumunu şablon yap: >%5 günlük hareket + 1.5x+ hacim + Ichimoku 4/4.",
+        "ders_guncel": "Endüstriyel sektör momentumu mükemmel çalıştı. 7 günde +12% referans trade. Giriş kriterleri: sektör RS güçlü + günlük %5+ hareket + 1.5x+ hacim + Ichimoku 4/4.",
+        "puan": 10,
+        "analiz_tarihi": "2026-04-11 20:10",
+        "model": "claude-sonnet-4-6"
+      }
     },
     {
       "id": "SWING-003",
@@ -67,7 +124,26 @@
       "tutulan_gun": 15,
       "cikis_nedeni": "Zaman çerçevesi aşıldı (15 gün, hedef 10 gündü), kar reali edildi",
       "sonuc": "KAZANÇ",
-      "ders": "Zaman çerçevesini aştık ama yine de karlıydı. 10-12. günde çıkmalıydık."
+      "ders": "Zaman çerçevesi aşıldı ama karlıydı. Asıl ders: Telekom hisseleri (VZ, T) swing için uygun değil — temettü portföyüne yönlendir.",
+      "auto_analiz": {
+        "tez_dogru": true,
+        "tez_degerlendirme": "VZ defensif tezi işe yaradı ama telekom swing sistemi için verimli değil. Düşük volatilite hisse, %10 hedefe ulaşamaz.",
+        "timing_hatasi": true,
+        "timing_detay": "10. günde çıkılmalıydı. 15 güne uzandı.",
+        "stop_uygun": true,
+        "hedef_uygun": false,
+        "risk_yonetimi_notu": "%10 hedef telekom için gerçekçi değildi. %5 hedef olmalıydı.",
+        "kural_uyumu": "⚠️ 15 GÜN SINIRI. Telekom hedef gerçekçi değildi.",
+        "tekrar_yapilir_mi": false,
+        "tekrar_sartlari": "Telekom swing için yeterli volatilite yoktur. Temettü portföyüne ait.",
+        "guclu_yanlar": "Zarar gelmedi, kar reali yapıldı.",
+        "zayif_yanlar": "Yanlış hisse tipi. Telekom swing için uygun değil.",
+        "sistem_onerisi": "Swing evreninden telekom (VZ, T, TMUS) çıkar. Bu sektör temettü portföyü içindir.",
+        "ders_guncel": "Zaman çerçevesi aşıldı ama karlıydı. Asıl ders: Telekom hisseleri (VZ, T) swing için uygun değil — temettü portföyüne yönlendir.",
+        "puan": 4,
+        "analiz_tarihi": "2026-04-11 20:10",
+        "model": "claude-sonnet-4-6"
+      }
     },
     {
       "id": "SWING-004",
@@ -80,7 +156,26 @@
       "tutulan_gun": 15,
       "cikis_nedeni": "Zaman çerçevesi aşıldı (15 gün, hedef 10 gündü), kar reali edildi",
       "sonuc": "KAZANÇ",
-      "ders": "İyi kar ama fazla uzun tutuldu. Zaman disiplini gerekli."
+      "ders": "İyi kar ama fazla uzun tutuldu. XOM gibi büyük cap enerji hisselerinde 10. günde momentum değerlendir ve çık.",
+      "auto_analiz": {
+        "tez_dogru": true,
+        "tez_degerlendirme": "XOM enerji momentumu tezi doğruydu, +5.5% kazanç. 15 gün kuralı sınırında çıkış.",
+        "timing_hatasi": true,
+        "timing_detay": "10. günde çıkılmalıydı, momentum o noktada zayıflamıştı.",
+        "stop_uygun": true,
+        "hedef_uygun": true,
+        "risk_yonetimi_notu": "Stop iyi kurulmuştu. Zaman disiplini 10. günde uygulanmalıydı.",
+        "kural_uyumu": "⚠️ 15 GÜN SINIRINDA çıkış. 10. gün daha optimal olurdu.",
+        "tekrar_yapilir_mi": true,
+        "tekrar_sartlari": "Enerji sektörü momentumu ve petrol fiyatı desteği varsa. 10 gün disiplini şart.",
+        "guclu_yanlar": "Enerji tezi doğruydu, momentum devam etti, karlı çıkıldı.",
+        "zayif_yanlar": "10. günde momentum kontrolü yapılmadı.",
+        "sistem_onerisi": "10. günde momentum skoru hesapla (RSI yönü + hacim). Skoru düşükse çık, bekleme.",
+        "ders_guncel": "İyi kar ama fazla uzun tutuldu. XOM gibi büyük cap enerji hisselerinde 10. günde momentum değerlendir ve çık.",
+        "puan": 6,
+        "analiz_tarihi": "2026-04-11 20:10",
+        "model": "claude-sonnet-4-6"
+      }
     },
     {
       "id": "SWING-008",
@@ -93,7 +188,26 @@
       "tutulan_gun": 12,
       "cikis_nedeni": "Zaman çerçevesi aşıldı (12 gün, hedef 10 gündü), zarar kesildi",
       "sonuc": "ZARAR",
-      "ders": "Daha erken kesmeliydi. Zaman çerçevesi kuralı daha büyük kayıptan korudu."
+      "ders": "Daha erken kesilmeliydi. Zaman kuralı korudu. Büyük defensif perakende (WMT, TGT) swing için uygun değil.",
+      "auto_analiz": {
+        "tez_dogru": false,
+        "tez_degerlendirme": "WMT defensif/büyüme tezi yanlıştı. Risk-on ortamında büyük perakende momentum yaratamaz.",
+        "timing_hatasi": true,
+        "timing_detay": "7-8. günde tez bozuldu, o noktada çıkılmalıydı.",
+        "stop_uygun": true,
+        "hedef_uygun": false,
+        "risk_yonetimi_notu": "Zaman kuralı çalıştı ama %10 hedef büyük perakende için gerçekçi değildi.",
+        "kural_uyumu": "Zaman kuralı çalıştı. Tez seçimi baştan zayıftı.",
+        "tekrar_yapilir_mi": false,
+        "tekrar_sartlari": "WMT swing için uygun değil. Temettü portföyüne girer.",
+        "guclu_yanlar": "Zaman kuralı daha büyük kayıptan korudu.",
+        "zayif_yanlar": "Yanlış hisse seçimi. WMT swing evrenine girmemeli.",
+        "sistem_onerisi": "WMT, COST, TGT gibi büyük defensif perakende swing evreninden çıkar. Düşük beta momentum yaratamaz.",
+        "ders_guncel": "Daha erken kesilmeliydi. Zaman kuralı korudu. Büyük defensif perakende (WMT, TGT) swing için uygun değil.",
+        "puan": 4,
+        "analiz_tarihi": "2026-04-11 20:10",
+        "model": "claude-sonnet-4-6"
+      }
     },
     {
       "id": "SWING-014",
@@ -106,7 +220,26 @@
       "tutulan_gun": 2,
       "cikis_nedeni": "Stop-loss riski çok yüksek - 1.7% mesafe kaldı, zarar kesildi",
       "sonuc": "ZARAR",
-      "ders": "REIT faiz hassasiyeti doğrulandı. Stop-loss'a yaklaşınca daha erken kes. 2 günde -3.4% kayıp fazla hızlı."
+      "ders": "REIT (AMT) faiz ortamında swing için uygun değil. Stop mesafesi minimum 2×ATR(14) olmalı — %1.7 ile giriş kabul edilemez.",
+      "auto_analiz": {
+        "tez_dogru": false,
+        "tez_degerlendirme": "AMT REIT girişi yanlış zamanlama. Faiz ortamı baskıcıydı. Stop'a %1.7 mesafede giriş yetersiz soluk alanı.",
+        "timing_hatasi": true,
+        "timing_detay": "Stop seviyesine çok yakın giriş yapıldı. Minimum stop mesafesi ATR tabanlı olmalıydı.",
+        "stop_uygun": false,
+        "hedef_uygun": false,
+        "risk_yonetimi_notu": "Stop mesafesi çok dar. %1.7 günlük normal volatilite içinde kalabilir.",
+        "kural_uyumu": "⚠️ Stop mesafesi yetersiz. ATR tabanlı stop kullanılmamış.",
+        "tekrar_yapilir_mi": false,
+        "tekrar_sartlari": "REIT swing için faiz ortamı nötr/düşen olmalı. Stop >= 2×ATR(14).",
+        "guclu_yanlar": "Hızlı çıkış, küçük zarar.",
+        "zayif_yanlar": "Stop mesafesi çok dar, yanlış sektör.",
+        "sistem_onerisi": "Minimum stop mesafesi kuralı: Giriş → stop mesafesi >= 2×ATR(14). Altındaysa pozisyon küçült veya girme.",
+        "ders_guncel": "REIT (AMT) faiz ortamında swing için uygun değil. Stop mesafesi minimum 2×ATR(14) olmalı — %1.7 ile giriş kabul edilemez.",
+        "puan": 2,
+        "analiz_tarihi": "2026-04-11 20:10",
+        "model": "claude-sonnet-4-6"
+      }
     },
     {
       "id": "SWING-011",
@@ -119,7 +252,26 @@
       "tutulan_gun": 11,
       "cikis_nedeni": "Earnings öncesi çıkış — 26 Şubat NVDA earnings riski, +%3.4 kâr güvenceye alındı. Gap-down riski (%10-15 olası) alınmadı.",
       "sonuc": "KAZANÇ",
-      "ders": "Earnings öncesi kâr realizasyonu doğru strateji. Swing pozisyonda kazanç varken earnings riskine girmek R:R bozar. Earnings sonrası temiz giriş için slot açık tutuldu."
+      "ders": "Earnings öncesi çıkış disiplini doğruydu. Alternatif: earnings öncesi %50 sat, kalan %50 earnings gap-up ile yönet.",
+      "auto_analiz": {
+        "tez_dogru": true,
+        "tez_degerlendirme": "NVDA momentumu tezi doğruydu ama earnings öncesi ihtiyatlı çıkış yapıldı. +2.9% güvenli kar alındı.",
+        "timing_hatasi": false,
+        "timing_detay": "Earnings öncesi çıkış disiplini mükemmel. Risk/ödül dengesi korundu.",
+        "stop_uygun": true,
+        "hedef_uygun": true,
+        "risk_yonetimi_notu": "Earnings riski doğru yönetildi.",
+        "kural_uyumu": "K-11 earnings öncesi çıkış kuralına uyuldu.",
+        "tekrar_yapilir_mi": true,
+        "tekrar_sartlari": "Yüksek volatilite AI hisselerinde earnings öncesi kısmi/tam çıkış devam etmeli.",
+        "guclu_yanlar": "Earnings riskini doğru tanımladı ve çıktı.",
+        "zayif_yanlar": "Kazanç potansiyeli kaçırıldı ama bu sistem kuralı gereği.",
+        "sistem_onerisi": "Alternatif: earnings 5 gün öncesinde %50 sat, kalan %50'yi earnings sonrası momentum'a bırak.",
+        "ders_guncel": "Earnings öncesi çıkış disiplini doğruydu. Alternatif: earnings öncesi %50 sat, kalan %50 earnings gap-up ile yönet.",
+        "puan": 7,
+        "analiz_tarihi": "2026-04-11 20:10",
+        "model": "claude-sonnet-4-6"
+      }
     },
     {
       "id": "SWING-010",
@@ -132,7 +284,26 @@
       "tutulan_gun": 12,
       "cikis_nedeni": "Trailing stop tetiklendi - altın fiyatlarında düzeltme",
       "sonuc": "KAZANÇ",
-      "ders": "Trailing stop $122.50'da tetiklendi, giriş fiyatının üzerinde çıkış sağlandı. Trailing stop disiplini çalıştı."
+      "ders": "Trailing stop disiplini çalıştı. Sonraki girişte ATR tabanlı trailing stop kullan.",
+      "auto_analiz": {
+        "tez_dogru": true,
+        "tez_degerlendirme": "NEM altın momentumu tezi doğruydu. Trailing stop düzgün çalıştı. +2.1% sistematik kazanç.",
+        "timing_hatasi": false,
+        "timing_detay": "Trailing stop mekanizması doğru çalıştı, sistematik çıkış.",
+        "stop_uygun": true,
+        "hedef_uygun": true,
+        "risk_yonetimi_notu": "Trailing stop disiplini iyi çalıştı.",
+        "kural_uyumu": "Kural uyumu iyi.",
+        "tekrar_yapilir_mi": true,
+        "tekrar_sartlari": "Altın güçlü trend + NEM RS pozitif + VIX<22.",
+        "guclu_yanlar": "Trailing stop disiplini mükemmel.",
+        "zayif_yanlar": "Giriş biraz geç yapılmış olabilir.",
+        "sistem_onerisi": "Altın hisselerinde trailing stop'u ATR tabanlı yap: sabit % yerine 2.5×ATR(14).",
+        "ders_guncel": "Trailing stop disiplini çalıştı. Sonraki girişte ATR tabanlı trailing stop kullan.",
+        "puan": 7,
+        "analiz_tarihi": "2026-04-11 20:10",
+        "model": "claude-sonnet-4-6"
+      }
     },
     {
       "id": "SWING-013",
@@ -145,7 +316,26 @@
       "tutulan_gun": 18,
       "cikis_nedeni": "18 gün tutuldu, savunma rallisi soğudu, hedefe ulaşma ihtimali düşük. Kâr realize edildi",
       "sonuc": "KAZANÇ",
-      "ders": "Savunma sektörü rallileri kısa ömürlü. 18 gün tutmak swing için fazla — 10 gün sonra momentum yoksa çık."
+      "ders": "Savunma sektörü rallileri kısa ömürlü (5-10 gün). 15 gün kuralı ihlal edilmemeli. 10. günde RSI yönü + RS kontrol et.",
+      "auto_analiz": {
+        "tez_dogru": true,
+        "tez_degerlendirme": "LMT savunma rallisi başlangıçta doğruydu ama 18 gün tutulması ciddi kural ihlali.",
+        "timing_hatasi": true,
+        "timing_detay": "15. günde çıkılmalıydı. 18 gün kural ihlali.",
+        "stop_uygun": true,
+        "hedef_uygun": true,
+        "risk_yonetimi_notu": "Stop iyi ama zaman riski göz ardı edildi.",
+        "kural_uyumu": "❌ 15 GÜN KURALI İHLALİ (18 gün).",
+        "tekrar_yapilir_mi": true,
+        "tekrar_sartlari": "Savunma jeopolitik katalizörü varsa, ama 10. günde momentum kontrol et.",
+        "guclu_yanlar": "Karlı çıkıldı.",
+        "zayif_yanlar": "15 gün kuralı ihlal edildi.",
+        "sistem_onerisi": "Savunma hisselerinde rally 7-10 gün, sonra konsolide. 10. günde momentum teyit et.",
+        "ders_guncel": "Savunma sektörü rallileri kısa ömürlü (5-10 gün). 15 gün kuralı ihlal edilmemeli. 10. günde RSI yönü + RS kontrol et.",
+        "puan": 5,
+        "analiz_tarihi": "2026-04-11 20:10",
+        "model": "claude-sonnet-4-6"
+      }
     },
     {
       "id": "SWING-016",
@@ -158,10 +348,29 @@
       "tutulan_gun": 13,
       "cikis_nedeni": "13 gün tutuldu, bugün -%3 düşüş, stop-loss'a çok yakın. Kâr korunarak çıkıldı",
       "sonuc": "KAZANÇ",
-      "ders": "Endüstriyel momentum yavaşladığında erken çıkmak doğru karar. Stop'a yaklaşmayı beklemek gereksiz risk."
+      "ders": "Sanayi momentum tezi çalıştı. Sert intraday düşüş günlerinde anlık karar yerine kapanış fiyatına göre davran.",
+      "auto_analiz": {
+        "tez_dogru": true,
+        "tez_degerlendirme": "GE sanayi momentumu tezi doğruydu. +1.7% mütevazı kazanç.",
+        "timing_hatasi": true,
+        "timing_detay": "Sert intraday düşüşte anlık karar verildi, sistematik trailing stop kullanılsaydı daha iyi sonuç alınırdı.",
+        "stop_uygun": true,
+        "hedef_uygun": true,
+        "risk_yonetimi_notu": "Kar reali ihtiyatlıydı ama trailing stop yerine anlık karar verildi.",
+        "kural_uyumu": "Kural uyumu genel olarak iyi.",
+        "tekrar_yapilir_mi": true,
+        "tekrar_sartlari": "GE/sanayi momentumu varsa. ATR tabanlı trailing stop ile yönet.",
+        "guclu_yanlar": "Karikatif zarara dönmeden çıkıldı.",
+        "zayif_yanlar": "Sert intraday düşüşte anlık satış yerine kapanış beklenmeli.",
+        "sistem_onerisi": "Sert intraday düşüş (%3+) günü: anlık satış yapma, günlük kapanışa bak. Kapanış stop altındaysa ertesi gün çık.",
+        "ders_guncel": "Sanayi momentum tezi çalıştı. Sert intraday düşüş günlerinde anlık karar yerine kapanış fiyatına göre davran.",
+        "puan": 6,
+        "analiz_tarihi": "2026-04-11 20:10",
+        "model": "claude-sonnet-4-6"
+      }
     },
     {
-      "id": "SWING-020",
+      "id": "SWING-021",
       "sembol": "HAL",
       "giris_tarihi": "2026-02-24",
       "cikis_tarihi": "2026-03-09",
@@ -171,7 +380,26 @@
       "tutulan_gun": 13,
       "cikis_nedeni": "Savaş bitti sinyali, petrol geri çekilmesi, enerji rotasyonu",
       "sonuc": "ZARAR",
-      "ders": "Petrol servis şirketleri savaş sona erdiğinde ilk etkilenir."
+      "ders": "Petrol servis şirketleri (HAL, SLB) savaş sona erdiğinde ilk etkilenir. Jeopolitik trade'lerde hem giriş hem çıkış katalizörünü tanımla.",
+      "auto_analiz": {
+        "tez_dogru": false,
+        "tez_degerlendirme": "HAL petrol servis tezi yanlıştı. Savaş bitti sinyalinde petrol servis en hızlı düşen segment. Jeopolitik değişim yanlış yönde okundu.",
+        "timing_hatasi": true,
+        "timing_detay": "Jeopolitik gelişmelere geç tepki verildi. Savaş bitti = enerji servis sat, bu biliniyordu.",
+        "stop_uygun": true,
+        "hedef_uygun": false,
+        "risk_yonetimi_notu": "Stop çalıştı, -5.1% ile çıkış.",
+        "kural_uyumu": "Stop çalıştı. Giriş tezi sektör dinamiklerini okuyamadı.",
+        "tekrar_yapilir_mi": false,
+        "tekrar_sartlari": "Jeopolitik gerilim artışı dönemlerinde enerji servis alınabilir. Gerilim azalırken kesinlikle alınmamalı.",
+        "guclu_yanlar": "Stop disiplini çalıştı.",
+        "zayif_yanlar": "Sektör dinamiği yanlış okundu.",
+        "sistem_onerisi": "Jeopolitik trade'lerde çıkış trigger'ını da tanımla: 'Gerilim azalırsa/savaş biterse çık' koşulunu giriş tezine yaz.",
+        "ders_guncel": "Petrol servis şirketleri (HAL, SLB) savaş sona erdiğinde ilk etkilenir. Jeopolitik trade'lerde hem giriş hem çıkış katalizörünü tanımla.",
+        "puan": 3,
+        "analiz_tarihi": "2026-04-11 20:10",
+        "model": "claude-sonnet-4-6"
+      }
     },
     {
       "id": "SWING-022",
@@ -184,7 +412,26 @@
       "tutulan_gun": 7,
       "cikis_nedeni": "stop-loss tetiklendi ($312.13). gün içi $311.98'da satıldı.",
       "sonuc": "ZARAR",
-      "ders": "kriz rallisi girişi (2 mart). ilk günün momentumunu kovalama — 5/5 kriz pozisyonu zararda kapandı."
+      "ders": "CEG nükleer teması doğru ama giriş momentumu yetersizdi. Sonraki: politika katalizörü + Ichimoku 4/4 + VIX<20.",
+      "auto_analiz": {
+        "tez_dogru": true,
+        "tez_degerlendirme": "CEG nükleer/temiz enerji tezi uzun vadede doğru. Ama kısa vadede momentum tutmadı, stop tetiklendi.",
+        "timing_hatasi": true,
+        "timing_detay": "Giriş zamanlaması kötü. Daha güçlü momentum teyidi gerekiyordu.",
+        "stop_uygun": true,
+        "hedef_uygun": true,
+        "risk_yonetimi_notu": "Stop disiplinli çalıştı.",
+        "kural_uyumu": "Stop kuralı çalıştı.",
+        "tekrar_yapilir_mi": true,
+        "tekrar_sartlari": "Nükleer/temiz enerji tezi güçlü. Bir sonraki girişte Ichimoku 4/4 tam teyit + VIX<20.",
+        "guclu_yanlar": "Stop mükemmel çalıştı.",
+        "zayif_yanlar": "Giriş momentum teyidi yetersizdi.",
+        "sistem_onerisi": "Temiz enerji girişlerinde politika katalizörü (IRA, nükleer izin) + teknik teyit kombinasyonu gerekli.",
+        "ders_guncel": "CEG nükleer teması doğru ama giriş momentumu yetersizdi. Sonraki: politika katalizörü + Ichimoku 4/4 + VIX<20.",
+        "puan": 5,
+        "analiz_tarihi": "2026-04-11 20:10",
+        "model": "claude-sonnet-4-6"
+      }
     },
     {
       "id": "SWING-015",
@@ -197,7 +444,26 @@
       "tutulan_gun": 22,
       "cikis_nedeni": "Stop-loss tetiklendi: İran savaşı volatilitesinde savunmacı tez beklenen güvenli liman korumasını sağlayamadı. $27.25 stop kırıldı.",
       "sonuc": "ZARAR",
-      "ders": "Savunmacı/telecom hisseleri yüksek VIX ortamında bile basınç altında kalabiliyor. Swing trade'de sektör liderliği tezi için RS teyidi şart — sadece temettü verimi stop tezini desteklemiyor."
+      "ders": "T telekom kriz döneminde beklenen korumayı sağlamadı. Telekom swing evreninden çıkarılmalı. 15 gün kuralı kesinkes uygulanmalı.",
+      "auto_analiz": {
+        "tez_dogru": false,
+        "tez_degerlendirme": "T defensif telekom tezi yanlıştı. İran krizi volatilitesinde koruma sağlamadı. 22 gün tutulması hem kural ihlali hem tez bozulması.",
+        "timing_hatasi": true,
+        "timing_detay": "Kriz başladığında ilk hafta çıkılmalıydı. 22 gün ciddi ihlal.",
+        "stop_uygun": true,
+        "hedef_uygun": false,
+        "risk_yonetimi_notu": "Stop çalıştı ama 22 gün sonra. Bu süre sermaye tamamen kilitliydi.",
+        "kural_uyumu": "❌ 15 GÜN KURALI İHLALİ (22 gün). ❌ Tez bozulmasında erken çıkış yapılmadı.",
+        "tekrar_yapilir_mi": false,
+        "tekrar_sartlari": "Telekom swing için uygun değil.",
+        "guclu_yanlar": "Stop sonunda çalıştı.",
+        "zayif_yanlar": "Kural ihlali, yanlış sektör, geç tepki.",
+        "sistem_onerisi": "Kriz dönemlerinde telekom (T, VZ) defensif zannetme. Yüksek borç + faiz hassasiyeti nedeniyle düşer. Swing evreninden çıkar.",
+        "ders_guncel": "T telekom kriz döneminde beklenen korumayı sağlamadı. Telekom swing evreninden çıkarılmalı. 15 gün kuralı kesinkes uygulanmalı.",
+        "puan": 1,
+        "analiz_tarihi": "2026-04-11 20:10",
+        "model": "claude-sonnet-4-6"
+      }
     },
     {
       "id": "SWING-019",
@@ -210,7 +476,26 @@
       "tutulan_gun": 13,
       "cikis_nedeni": "Tez bozulması: RSI 33, SMA50/200 çok altında, momentum hiç gelmedi. Erken çıkış kararı — stop beklemeden çıkıldı.",
       "sonuc": "KAZANÇ",
-      "ders": "IT outsourcing toparlanma tezi piyasa baskısında geçersiz kaldı. RSI ve SMA teyidi olmadan savunmacı teze giriş yapılmamalı."
+      "ders": "IT outsourcing tezi piyasa baskısında geçersiz kaldı. Minimum giriş: RSI>50 + fiyat>SMA50 + hacim teyidi. Bu üçü olmadan giriş yapılmamalı.",
+      "auto_analiz": {
+        "tez_dogru": false,
+        "tez_degerlendirme": "CTSH IT outsourcing toparlanma tezi yanlıştı. RSI 33 ve SMA altında giriş yapıldı.",
+        "timing_hatasi": true,
+        "timing_detay": "Tez bozulduğunda (RSI 33, SMA altı) çıkılmalıydı.",
+        "stop_uygun": true,
+        "hedef_uygun": false,
+        "risk_yonetimi_notu": "Tez bozulma sinyalleri açıktı ama çıkış gecikti.",
+        "kural_uyumu": "RSI>50 ve fiyat>SMA50 şartları sağlanmadan giriş yapılmış.",
+        "tekrar_yapilir_mi": false,
+        "tekrar_sartlari": "IT hizmetleri yükselen trend hisseleri için değerlendirilebilir. Kırılan trend değil.",
+        "guclu_yanlar": "Küçük kazançla çıkıldı.",
+        "zayif_yanlar": "Giriş tezi zayıftı, teknik şartlar tam sağlanmamıştı.",
+        "sistem_onerisi": "Swing girişinde RSI>50 ve fiyat>SMA50 zorunlu kriter yap. Bu ikisi sağlanmadan pozisyon açma.",
+        "ders_guncel": "IT outsourcing tezi piyasa baskısında geçersiz kaldı. Minimum giriş: RSI>50 + fiyat>SMA50 + hacim teyidi. Bu üçü olmadan giriş yapılmamalı.",
+        "puan": 4,
+        "analiz_tarihi": "2026-04-11 20:10",
+        "model": "claude-sonnet-4-6"
+      }
     },
     {
       "id": "SWING-024",
@@ -223,7 +508,26 @@
       "tutulan_gun": 2,
       "cikis_nedeni": "%5 stop seviyesi ($15.38) kırıldı. Bugün -%5.47 sert düşüş. Hard stop $14.80 beklemeden erken çıkış kararı alındı — standart kural çiğnenmeden kapatma.",
       "sonuc": "ZARAR",
-      "ders": "Küçük sermayeli (small-cap) hisselerde volatilite yüksek olur. ALMU likidite düşük (hacim ~79K), stop seviyesine ulaşmadan fiyat hızla gidebilir. Bir sonraki girişte $2B+ market cap filtresi daha sıkı uygulanmalı."
+      "ders": "Küçük cap hisselerde volatilite yüksek. ALMU hacim düşük, stop seviyesi güvenilmez. ZORUNLU: $2B+ market cap + 500K+ hacim filtresi.",
+      "auto_analiz": {
+        "tez_dogru": false,
+        "tez_degerlendirme": "ALMU küçük cap girişi sistem kurallarını baştan ihlal etti. $2B altı market cap ve düşük hacim temel filtreleri geçemez.",
+        "timing_hatasi": true,
+        "timing_detay": "2 günde stop tetiklendi. Küçük cap yüksek volatilite beklenen sonuçtu.",
+        "stop_uygun": true,
+        "hedef_uygun": false,
+        "risk_yonetimi_notu": "Stop çalıştı ama -6.1% kayıp. Küçük cap slippage riski yüksek.",
+        "kural_uyumu": "❌ $2B+ market cap kuralı ihlali. ❌ Hacim 500K+ kuralı ihlali.",
+        "tekrar_yapilir_mi": false,
+        "tekrar_sartlari": "ALMU gibi küçük cap swing evrenine girmez.",
+        "guclu_yanlar": "Stop hızlı çalıştı.",
+        "zayif_yanlar": "Temel giriş kriterleri ihlal edildi. Bu trade hiç yapılmamalıydı.",
+        "sistem_onerisi": "FMP screener'da $2B+ market cap ve 500K+ hacim filtresi hard constraint yap. Bu filtreler geçilmeden trade onaylanmayacak.",
+        "ders_guncel": "Küçük cap hisselerde volatilite yüksek. ALMU hacim düşük, stop seviyesi güvenilmez. ZORUNLU: $2B+ market cap + 500K+ hacim filtresi.",
+        "puan": 1,
+        "analiz_tarihi": "2026-04-11 20:10",
+        "model": "claude-sonnet-4-6"
+      }
     },
     {
       "id": "SWING-023",
@@ -236,7 +540,26 @@
       "tutulan_gun": 16,
       "cikis_nedeni": "Stop'a $0.26 mesafe kaldı (%1.3). Faz 2'de -%3.74 günlük düşüş hızlandı. RSI 34.2, SMA50'nin %20 altında — downtrend devam edecek. Stop tetiklenmeden proaktif çıkış.",
       "sonuc": "ZARAR",
-      "ders": "Risk-off ortamında fintech hisseleri (SOFI) defensif rotasyonda baskı altında kalır. Sektör RS negatif olduğunda swing giriş yapılmamalı."
+      "ders": "Risk-off ortamında fintech (SOFI) defensif rotasyonda baskı altında kalır. Sektör RS negatifken swing giriş yapılmamalı.",
+      "auto_analiz": {
+        "tez_dogru": false,
+        "tez_degerlendirme": "SOFI fintech tezi yanlış piyasa ortamında. Risk-off dönemde fintech düşer, sektör RS negatifken giriş yapılmış.",
+        "timing_hatasi": true,
+        "timing_detay": "Risk-off ortamında fintech girişi zamanlaması kötü.",
+        "stop_uygun": true,
+        "hedef_uygun": true,
+        "risk_yonetimi_notu": "Stop yakınında çıkış yapıldı.",
+        "kural_uyumu": "Sektör RS kontrolü eksikmiş. K-20 uygulanmalıydı.",
+        "tekrar_yapilir_mi": true,
+        "tekrar_sartlari": "SOFI risk-on ortamında, fintech RS pozitifken tekrar değerlendirilebilir.",
+        "guclu_yanlar": "Stop yakınında çıkış yapıldı.",
+        "zayif_yanlar": "Risk-off dönemde fintech seçimi yanlış.",
+        "sistem_onerisi": "Her swing girişinde sektör ETF 9EMA üzerinde mi kontrol et. SOFI için XLF>9EMA şart.",
+        "ders_guncel": "Risk-off ortamında fintech (SOFI) defensif rotasyonda baskı altında kalır. Sektör RS negatifken swing giriş yapılmamalı.",
+        "puan": 3,
+        "analiz_tarihi": "2026-04-11 20:10",
+        "model": "claude-sonnet-4-6"
+      }
     },
     {
       "id": "SWING-017",
@@ -249,7 +572,26 @@
       "tutulan_gun": 28,
       "cikis_nedeni": "K-08: 28 gün, momentum yok",
       "sonuc": "KAZANÇ",
-      "ders": "Kamu hizmetleri düşük volatilite, swing için uygun değil. 10 gün kuralına uy."
+      "ders": "Kamu hizmetleri düşük volatilite, swing için uygun değil. DUK/NEE/SO temettü portföyüne yönlendir.",
+      "auto_analiz": {
+        "tez_dogru": true,
+        "tez_degerlendirme": "DUK kamu hizmeti güvenli kazanç sağladı ama 28 gün tutulması ciddi kural ihlali. Swing için yanlış sektör.",
+        "timing_hatasi": true,
+        "timing_detay": "28 gün tutuldu, limit 15 gün. 10-12. günde çıkılmalıydı.",
+        "stop_uygun": true,
+        "hedef_uygun": false,
+        "risk_yonetimi_notu": "Düşük volatilite sektör, %10 hedef imkansıza yakın.",
+        "kural_uyumu": "❌ 15 GÜN KURALI İHLALİ (28 gün).",
+        "tekrar_yapilir_mi": false,
+        "tekrar_sartlari": "DUK temettü portföyüne aittir.",
+        "guclu_yanlar": "Karlı çıkıldı.",
+        "zayif_yanlar": "Çok uzun tutuldu, yanlış sektör, verimsiz sermaye.",
+        "sistem_onerisi": "Kamu hizmetleri (DUK, NEE, SO) swing evreninden çıkar. Beta<0.5 hisseler momentum yaratamaz.",
+        "ders_guncel": "Kamu hizmetleri düşük volatilite, swing için uygun değil. DUK/NEE/SO temettü portföyüne yönlendir.",
+        "puan": 2,
+        "analiz_tarihi": "2026-04-11 20:10",
+        "model": "claude-sonnet-4-6"
+      }
     },
     {
       "id": "SWING-018",
@@ -262,7 +604,26 @@
       "tutulan_gun": 27,
       "cikis_nedeni": "K-08: 27 gün, momentum yok",
       "sonuc": "KAZANÇ",
-      "ders": "Sağlık hizmetleri swing'de sermaye maliyeti yüksek."
+      "ders": "Sağlık hizmetleri swing'de sermaye maliyeti yüksek. DVA gibi defensif hisseler swing evrenine girmez. Beta>0.7 filtresi ekle.",
+      "auto_analiz": {
+        "tez_dogru": false,
+        "tez_degerlendirme": "DVA diyaliz şirketi swing için tamamen yanlış seçim. 27 gün tutuldu, hedef tutturulamadı.",
+        "timing_hatasi": true,
+        "timing_detay": "27 gün tutulması aşırı. 15. günde kesinlikle çıkılmalıydı.",
+        "stop_uygun": true,
+        "hedef_uygun": false,
+        "risk_yonetimi_notu": "Sermaye 27 gün %1 karla bağlandı.",
+        "kural_uyumu": "❌ 15 GÜN KURALI İHLALİ (27 gün).",
+        "tekrar_yapilir_mi": false,
+        "tekrar_sartlari": "DVA defensif sağlık hizmeti swing evrenine girmez.",
+        "guclu_yanlar": "Zarar edilmedi.",
+        "zayif_yanlar": "Yanlış sektör, çok uzun tutma.",
+        "sistem_onerisi": "Swing evreni beta filtresi: Beta<0.7 hisseler evreninden çıkar.",
+        "ders_guncel": "Sağlık hizmetleri swing'de sermaye maliyeti yüksek. DVA gibi defensif hisseler swing evrenine girmez. Beta>0.7 filtresi ekle.",
+        "puan": 2,
+        "analiz_tarihi": "2026-04-11 20:10",
+        "model": "claude-sonnet-4-6"
+      }
     },
     {
       "id": "SWING-025",
@@ -275,7 +636,26 @@
       "tutulan_gun": 12,
       "cikis_nedeni": "Stop-loss tetiklendi ($192.81 < SL $193.13)",
       "sonuc": "ZARAR",
-      "ders": "savunma sektörü iran savaşı ortamında beklendiği kadar güçlü performans gösteremedi. 12 gün tutuldu, stop düzgün çalıştı."
+      "ders": "Savunma sektörü İran savaşı ortamında beklenen performansı gösteremedi. Stop düzgün çalıştı. Kriz trade'de gün-1 giriş yapma, 1 gün bekle + teyit al.",
+      "auto_analiz": {
+        "tez_dogru": false,
+        "tez_degerlendirme": "RTX savunma tezi teorik doğru ama piyasa ödüllendirmedi. 12 günde stop tetiklendi.",
+        "timing_hatasi": true,
+        "timing_detay": "7-8. günde momentum kontrol edilseydi erken çıkış yapılabilirdi.",
+        "stop_uygun": true,
+        "hedef_uygun": true,
+        "risk_yonetimi_notu": "Stop çalıştı.",
+        "kural_uyumu": "Stop kuralı çalıştı.",
+        "tekrar_yapilir_mi": true,
+        "tekrar_sartlari": "Savunma sektörü kriz öncesinde alınmalı, kriz başladıktan sonra değil.",
+        "guclu_yanlar": "Stop disiplini çalıştı.",
+        "zayif_yanlar": "Kriz rally'sine geç giriş. Savunma rallileri 1-3 günde oluşur, sonra soğur.",
+        "sistem_onerisi": "Kriz trade kuralı: Olay gün-1'de giriş yapma. Min 1 gün cooling + RSI/hacim teyidi. (K-21 adayı)",
+        "ders_guncel": "Savunma sektörü İran savaşı ortamında beklenen performansı gösteremedi. Stop düzgün çalıştı. Kriz trade'de gün-1 giriş yapma, 1 gün bekle + teyit al.",
+        "puan": 4,
+        "analiz_tarihi": "2026-04-11 20:10",
+        "model": "claude-sonnet-4-6"
+      }
     },
     {
       "id": "SWING-026",
@@ -288,7 +668,26 @@
       "tutulan_gun": 1,
       "cikis_nedeni": "ichimoku çıkış: kumo altı 0/4, kijun altı %9.5 fark. kârdayken disiplinli çıkış",
       "sonuc": "KAZANÇ",
-      "ders": "K-17 ihlaliyle giriş kısa vadede kâr getirdi ama ichimoku yapı bozuk. kumo altında giriş yapma"
+      "ders": "Ichimoku çıkış disiplini mükemmel. Kumo altı 0/4 + kijun altı = hemen çık. Referans örnek.",
+      "auto_analiz": {
+        "tez_dogru": true,
+        "tez_degerlendirme": "NEM altın tezi doğruydu. Ichimoku çıkış sinyalinde +4.2% karla 1 günde çıkış mükemmel disiplin.",
+        "timing_hatasi": false,
+        "timing_detay": "1 günde +4.2% ve Ichimoku çıkış sinyalinde hemen çıkış. Mükemmel.",
+        "stop_uygun": true,
+        "hedef_uygun": true,
+        "risk_yonetimi_notu": "Ichimoku sinyaline uymak doğru çıkış zamanlaması sağladı.",
+        "kural_uyumu": "Ichimoku çıkış kuralı mükemmel uygulandı.",
+        "tekrar_yapilir_mi": true,
+        "tekrar_sartlari": "Altın güçlüyken NEM/altın madencileri sisteme iyi uyuyor.",
+        "guclu_yanlar": "Ichimoku sinyaline anında tepki, hızlı karlı çıkış.",
+        "zayif_yanlar": "Daha uzun tutulabilirdi ama sistem kuralına uyuldu.",
+        "sistem_onerisi": "Ichimoku çıkış sinyalini (kumo altı + kijun altı) her zaman uygula. Referans trade.",
+        "ders_guncel": "Ichimoku çıkış disiplini mükemmel. Kumo altı 0/4 + kijun altı = hemen çık. Referans örnek.",
+        "puan": 10,
+        "analiz_tarihi": "2026-04-11 20:10",
+        "model": "claude-sonnet-4-6"
+      }
     },
     {
       "id": "SWING-027",
@@ -301,7 +700,26 @@
       "tutulan_gun": 2,
       "cikis_nedeni": "Stop-loss gün içi ihlali ($35.66 < SL $35.68). K-09: stop'a %0.06 mesafe, erken çıkış uygulandı",
       "sonuc": "ZARAR",
-      "ders": "doğalgaz sıkıştırma tezi doğru ama giriş zamanlaması kötü. petrol rallisi AROC'u taşımadı, piyasa genel satış baskısında enerji hizmet zayıf kaldı. VIX 27+ ortamında giriş K-13 ile çelişiyor."
+      "ders": "AROC tezi doğru ama VIX 27+ ortamında K-13 ile çelişiyor. Sonraki girişte VIX<22 şart.",
+      "auto_analiz": {
+        "tez_dogru": false,
+        "tez_degerlendirme": "AROC doğal gaz tezi teorik doğru ama VIX>27 ortamında giriş K-13 ile çelişiyordu.",
+        "timing_hatasi": true,
+        "timing_detay": "VIX>27 ortamında swing girişi yapılmamalıydı.",
+        "stop_uygun": true,
+        "hedef_uygun": false,
+        "risk_yonetimi_notu": "Stop çalıştı. 2 günde -5%.",
+        "kural_uyumu": "❌ K-13 İHLALİ: VIX>27 ortamında sensitive sektörde giriş.",
+        "tekrar_yapilir_mi": false,
+        "tekrar_sartlari": "Enerji hizmetleri düşük VIX (<22) + pozitif enerji momentum ile değerlendirilebilir.",
+        "guclu_yanlar": "Stop hızlı çalıştı.",
+        "zayif_yanlar": "K-13 kuralı ihlal edildi.",
+        "sistem_onerisi": "K-13 VIX kontrolünü her swing girişinde otomatik kontrol et. VIX>25 ise swing girişini engelle.",
+        "ders_guncel": "AROC tezi doğru ama VIX 27+ ortamında K-13 ile çelişiyor. Sonraki girişte VIX<22 şart.",
+        "puan": 2,
+        "analiz_tarihi": "2026-04-11 20:10",
+        "model": "claude-sonnet-4-6"
+      }
     }
   ],
   "istatistikler": {
