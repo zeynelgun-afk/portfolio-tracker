@@ -765,7 +765,10 @@ def _execute_portfolio_opportunities(faz: str, market: dict) -> list:
 
         # Canlı fiyat
         q = market.get(sym, {})
-        price = float(q.get("price") or q.get("son_fiyat") or 0)
+        price = float(q.get("price") or q.get("previousClose") or 0)
+        if not price:
+            # market dict'te yoksa sabah fiyatını kullan
+            price = float(aday.get("price", 0))
         if not price:
             continue
 
@@ -873,7 +876,9 @@ def _check_portfolio_exits(market: dict) -> list:
                 continue
 
             # K-11: RSI 80+ VE kâr %15+ → kısmi satış
-            rsi = float(q.get("rsi") or 50)
+            # RSI batch-quote'ta gelmiyor, FMP ayrı çağrı gerekiyor
+            # Burada yaklaşım: pozisyon verisi veya varsayılan 50
+            rsi = float(pos.get("rsi") or 50)
             if rsi >= 80 and pnl >= 15:
                 result = sell_position(sym, pf_name,
                                        f"K-11 katman 2: RSI {rsi:.0f} + kâr %{pnl:.1f}",

@@ -122,9 +122,36 @@ def get_real_vix() -> dict:
 
 
 def get_market_context() -> dict:
-    """SPY, QQQ anlık durum + gerçek VIX."""
-    syms   = ["SPY", "QQQ", "GLD", "TLT"]
-    quotes = fmp_get("batch-quote", {"symbols": ",".join(syms)})
+    """SPY, QQQ, portföy hisseleri anlık durum + gerçek VIX."""
+    import json
+    from pathlib import Path
+
+    base_syms = ["SPY", "QQQ", "GLD", "TLT", "IWM"]
+
+    # Portföy + swing hisselerini ekle
+    repo = Path(__file__).parent.parent
+    pf_syms = set()
+    for pf in ["growth", "income", "balanced", "dividend"]:
+        p = repo / "data" / "portfolios" / f"{pf}.json"
+        if p.exists():
+            try:
+                d = json.load(open(p))
+                for pos in d.get("pozisyonlar", []):
+                    pf_syms.add(pos.get("sembol", ""))
+            except Exception:
+                pass
+
+    swing_p = repo / "data" / "swing" / "active.json"
+    if swing_p.exists():
+        try:
+            sw = json.load(open(swing_p))
+            for pos in sw.get("aktif_pozisyonlar", []):
+                pf_syms.add(pos.get("sembol", ""))
+        except Exception:
+            pass
+
+    all_syms = list(set(base_syms) | pf_syms - {""})
+    quotes   = fmp_get("batch-quote", {"symbols": ",".join(all_syms)})
 
     result = {}
     if isinstance(quotes, list):
@@ -133,16 +160,20 @@ def get_market_context() -> dict:
             price = q.get("price")
             prev  = q.get("previousClose")
 
-            # Piyasa kapalıyken changesPercentage None gelir — manuel hesapla
             chg = q.get("changesPercentage")
             if chg is None and price and prev and float(prev) != 0:
                 chg = round((float(price) - float(prev)) / float(prev) * 100, 2)
 
-            result[sym] = {"price": price, "chg": chg}
+            result[sym] = {
+                "price":         price,
+                "chg":           chg,
+                "previousClose": prev,
+                "volume":        q.get("volume"),
+                "dayHigh":       q.get("dayHigh"),
+                "dayLow":        q.get("dayLow"),
+            }
 
-    # Gerçek VIX ekle
     result["VIX"] = get_real_vix()
-
     return result
 
 

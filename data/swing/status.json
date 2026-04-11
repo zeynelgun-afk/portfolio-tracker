@@ -1,5 +1,5 @@
 {
-  "aktif_durum": "K14_KALDIRILDI_AKTIF",
+  "aktif_durum": "normal",
   "tetiklenme_tarihi": "2026-04-07",
   "tetik_sebebi": "Peak-to-trough drawdown %16.42 (esik %15)",
   "detaylar": {
@@ -116,7 +116,7 @@
       "kayip_analizi": "Her kayıp trade için 3 kategori: ORTAM / SİSTEM / PSİKOLOJİ zorunlu"
     }
   },
-  "status": "AKTIF",
+  "status": "NORMAL",
   "k14_active": false,
   "k14_kaldirildi": "2026-04-11",
   "not": "VIX 19.23 (<22), koşullar karşılandı. Yarım pozisyon ile başla."

@@ -1,14 +1,8 @@
 name: Otomatik Fiyat Güncelleme (Seans Saatleri)
 
 on:
-  # Seans saatlerinde her 30 dakikada bir çalış
-  schedule:
-    # NYSE seans: TR 17:30-00:00 = UTC 14:30-21:00
-    # Her 30 dakikada bir: 14:30, 15:00, 15:30... 21:00
-    - cron: '30,0 14-20 * * 1-5'  # Pazartesi-Cuma
-    - cron: '0 21 * * 1-5'        # Kapanış (21:00 UTC = 00:00 TR)
-  
-  # Manuel tetikleme (GitHub UI'dan)
+  # Devre dışı — agent.yml bu işi üstlendi
+  # Sadece manuel tetikleme aktif
   workflow_dispatch:
 
 jobs:

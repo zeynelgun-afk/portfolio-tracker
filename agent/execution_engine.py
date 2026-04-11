@@ -92,6 +92,15 @@ def buy_position(
     Portföye yeni pozisyon açar veya mevcutu büyütür.
     amount: kaç dolarlık alım yapılacak
     """
+    # Portföy adı normalize et
+    _ALIAS = {
+        "aggressive": "growth", "agresif": "growth", "büyüme": "growth",
+        "temettü": "dividend", "temettu": "dividend",
+        "dengeli": "balanced",
+        "gelir": "income",
+    }
+    portfolio = _ALIAS.get(portfolio.lower(), portfolio.lower())
+
     if portfolio not in PORTFOLIO_MAP:
         return {"ok": False, "hata": f"Bilinmeyen portföy: {portfolio}"}
 
@@ -128,30 +137,52 @@ def buy_position(
         yeni_adet  = eski_adet + shares
         yeni_maly  = round((eski_adet*eski_maly + gercek_tutar) / yeni_adet, 4)
 
-        mevcut["adet"]        = int(yeni_adet)
-        mevcut["maliyet_baz"] = yeni_maly
-        mevcut["guncel_fiyat"] = round(price, 4)
+        mevcut["adet"]              = int(yeni_adet)
+        mevcut["maliyet_baz"]       = yeni_maly
+        mevcut["guncel_fiyat"]      = round(price, 4)
+        mevcut["yatirim"]           = round(yeni_adet * yeni_maly, 2)
+        mevcut["guncel_deger"]      = round(yeni_adet * price, 2)
+        mevcut["giris_tarihi"]      = mevcut.get("giris_tarihi", datetime.now(TR_TZ).strftime("%Y-%m-%d"))
         aksiyon = "BÜYÜT"
     else:
         # Yeni pozisyon
         if len(pozlar) >= max_poz:
             return {"ok": False, "hata": f"Portföy dolu ({max_poz}/{max_poz})"}
 
+        # Sembol bilgisi çek
+        try:
+            import requests as _req
+            pf_info = _req.get(
+                f"https://financialmodelingprep.com/stable/profile",
+                params={"symbol": symbol, "apikey": "g1GFJZtV5rCP49UCir4WuP56VjhmA6F8"},
+                timeout=6
+            ).json()
+            pf_info = pf_info[0] if isinstance(pf_info, list) and pf_info else {}
+        except Exception:
+            pf_info = {}
+
         yeni_poz = {
-            "sembol":           symbol,
-            "adet":             shares,
-            "maliyet_baz":      round(price, 4),
-            "guncel_fiyat":     round(price, 4),
-            "giris_tarihi":     datetime.now(TR_TZ).strftime("%Y-%m-%d"),
-            "stop_loss":        round(stop, 2),
-            "hedef_fiyat":      round(target, 2),
-            "tema":             tema,
-            "giris_nedeni":     reason[:200],
-            "k_checks":         k_checks or {},
-            "kar_zarar":        0,
-            "kar_zarar_yuzde":  0,
-            "agirlik_yuzde":    round(gercek_tutar / toplam * 100, 2),
-            "son_guncelleme":   datetime.now(TR_TZ).strftime("%Y-%m-%d"),
+            "sembol":               symbol,
+            "isim":                 pf_info.get("companyName", symbol),
+            "sektor":               pf_info.get("sector", ""),
+            "adet":                 shares,
+            "maliyet_baz":          round(price, 4),
+            "giris_fiyati":         round(price, 4),
+            "guncel_fiyat":         round(price, 4),
+            "yatirim":              round(gercek_tutar, 2),
+            "guncel_deger":         round(gercek_tutar, 2),
+            "kar_zarar":            0.0,
+            "kar_zarar_yuzde":      0.0,
+            "gunluk_degisim_yuzde": 0.0,
+            "agirlik_yuzde":        round(gercek_tutar / toplam * 100, 2),
+            "giris_tarihi":         datetime.now(TR_TZ).strftime("%Y-%m-%d"),
+            "stop_loss":            round(stop, 2),
+            "zarar_kes":            round(stop, 2),
+            "hedef_fiyat":          round(target, 2),
+            "tema":                 tema,
+            "giris_nedeni":         reason[:200],
+            "son_guncelleme":       datetime.now(TR_TZ).strftime("%Y-%m-%d"),
+            "pnl_pct":              0.0,
         }
         pozlar.append(yeni_poz)
         aksiyon = "YENİ POZİSYON"
@@ -260,6 +291,7 @@ def deploy_cash(
     portfolio:   str,
     candidates:  list,     # [{"symbol","price","stop","target","reason","tema","score"}]
     max_deploy:  float = 0.8,  # Nakitin en fazla %80'i bir seferde konuşlandır
+    add_only:    bool  = False, # True = sadece mevcut pozisyonları büyüt (slot=0)
 ) -> list:
     """
     Boş nakiti fırsat listesine göre konuşlandır.
@@ -269,8 +301,14 @@ def deploy_cash(
     nakit  = status["nakit"]
     slot   = status["slot"]
 
-    if nakit < 1000 or slot <= 0:
+    if nakit < 1000:
         return []
+
+    # Slot yoksa sadece mevcut pozisyonları büyütebiliriz
+    if slot <= 0:
+        add_only = True
+        if nakit < 2000:
+            return []
 
     # Konuşlandırılacak max tutar
     deploy_budget = nakit * max_deploy
@@ -281,8 +319,10 @@ def deploy_cash(
     harcanan = 0
 
     for c in candidates:
-        if harcanan >= deploy_budget or slot <= 0:
+        if harcanan >= deploy_budget:
             break
+        if add_only and slot <= 0 and c.get("symbol","") not in status["semboller"]:
+            continue  # add_only modunda yeni sembol alma
 
         sym    = c.get("symbol","")
         price  = float(c.get("price", 0))

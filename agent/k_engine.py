@@ -163,10 +163,24 @@ def k18_insider_check(symbol: str) -> dict:
         price  = float(tx.get("price", 0) or 0)
         value  = shares * price
 
-        if value >= 5_000_000:
+        # Market cap bazlı eşik (split sonrası fiyat yanıltıcı olabilir)
+        # Büyük şirket (>$50B): $25M eşiği — üst düzey satışlar yaygın
+        # Orta şirket ($5B-50B): $10M eşiği
+        # Küçük şirket (<$5B): $3M eşiği
+        mcap_data = _fmp("profile", {"symbol": symbol}) or []
+        mcap_item = mcap_data[0] if isinstance(mcap_data, list) and mcap_data else {}
+        mcap = float(mcap_item.get("marketCap") or mcap_item.get("mktCap") or 0)
+        if mcap >= 50_000_000_000:      # $50B+
+            threshold = 25_000_000
+        elif mcap >= 5_000_000_000:     # $5B-50B
+            threshold = 10_000_000
+        else:                            # <$5B
+            threshold = 3_000_000
+
+        if value >= threshold:
             return {
                 "passed": False,
-                "reason": f"K-18: ${value/1e6:.1f}M insider satış ({tx.get('reportingName')}, {tx.get('transactionDate')})"
+                "reason": f"K-18: ${value/1e6:.1f}M insider satış ({tx.get('reportingName')}, {tx.get('transactionDate')}) eşik:${threshold/1e6:.0f}M"
             }
 
     return {"passed": True, "reason": "K-18: insider temiz"}
@@ -178,15 +192,15 @@ def k18_insider_check(symbol: str) -> dict:
 
 def k20_dead_cat_check(symbol: str) -> dict:
     """Son 1 ayda SPY'dan %10+ geride + son 5 günde +%5 bounce → dead cat → NO-GO."""
-    spy_data = _fmp("stock-price-change", {"symbol": "SPY"})
-    sym_data = _fmp("stock-price-change", {"symbol": symbol})
+    spy_data = _fmp("stock-price-change", {"symbol": "SPY"}) or []
+    sym_data = _fmp("stock-price-change", {"symbol": symbol}) or []
 
     if not spy_data or not sym_data:
         return {"passed": True, "reason": "K-20: veri alınamadı"}
 
     try:
-        spy = spy_data[0] if isinstance(spy_data, list) else spy_data
-        sym = sym_data[0] if isinstance(sym_data, list) else sym_data
+        spy = spy_data[0] if isinstance(spy_data, list) and spy_data else {}
+        sym = sym_data[0] if isinstance(sym_data, list) and sym_data else {}
 
         spy_1m = float(spy.get("1M", 0) or 0)
         sym_1m = float(sym.get("1M", 0) or 0)
@@ -228,10 +242,11 @@ def k17_correlation_check(symbol: str, portfolio: str = "all") -> dict:
         return {"passed": False, "reason": f"K-17: {symbol} zaten portföyde"}
 
     # Aynı sektördeki pozisyon sayısı
-    sym_info  = _fmp(f"profile/{symbol}")
+    sym_info_r = _fmp("profile", {"symbol": symbol})
     sym_sector = ""
-    if sym_info:
-        sym_sector = (sym_info[0] if isinstance(sym_info, list) else sym_info).get("sector", "")
+    if sym_info_r:
+        item = sym_info_r[0] if isinstance(sym_info_r, list) and sym_info_r else sym_info_r
+        sym_sector = item.get("sector", "") if isinstance(item, dict) else ""
 
     if not sym_sector:
         return {"passed": True, "reason": "K-17: sektör bilgisi yok"}
@@ -254,9 +269,17 @@ def k14_drawdown_check() -> dict:
         return {"passed": True, "reason": "K-14: status dosyası yok"}
     try:
         status = json.load(open(status_path))
-        aktif  = status.get("aktif_durum", "normal")
-        if aktif == "K14_DRAWDOWN_FREN":
-            return {"passed": False, "reason": "K-14: drawdown freni aktif — swing giriş yasak"}
+
+        # k14_active alanı varsa onu kullan (daha güncel)
+        if "k14_active" in status:
+            if status["k14_active"]:
+                return {"passed": False, "reason": "K-14: drawdown freni aktif"}
+            return {"passed": True, "reason": "K-14: normal"}
+
+        # Yoksa aktif_durum'a bak
+        aktif = status.get("aktif_durum", "normal")
+        if aktif in ("K14_DRAWDOWN_FREN", "DRAWDOWN_FREN"):
+            return {"passed": False, "reason": f"K-14: fren aktif ({aktif})"}
         return {"passed": True, "reason": f"K-14: {aktif}"}
     except Exception:
         return {"passed": True, "reason": "K-14: okunamadı"}
@@ -268,10 +291,11 @@ def k14_drawdown_check() -> dict:
 
 def k19_xlp_check(symbol: str) -> dict:
     """Consumer Defensive sektörü swing için yasak."""
-    info = _fmp(f"profile/{symbol}")
+    info = _fmp("profile", {"symbol": symbol}) or []
     if not info:
         return {"passed": True, "reason": "K-19: profil yok"}
-    sector = (info[0] if isinstance(info, list) else info).get("sector", "")
+    item = info[0] if isinstance(info, list) and info else info
+    sector = item.get("sector", "") if isinstance(item, dict) else ""
     if "defensive" in sector.lower() or "staples" in sector.lower():
         return {"passed": False, "reason": f"K-19: {sector} swing girişi yasak"}
     return {"passed": True, "reason": f"K-19: {sector} uygun"}

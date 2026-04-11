@@ -20,7 +20,7 @@ REPO_ROOT = Path(__file__).parent.parent  # portfolio-tracker kök dizini
 
 # Dosya yolları
 BALANCED_JSON = REPO_ROOT / "data/portfolios/balanced.json"
-AGGRESSIVE_JSON = REPO_ROOT / "data/portfolios/aggressive.json"
+AGGRESSIVE_JSON = REPO_ROOT / "data/portfolios/growth.json  # aggressive→growth"
 DIVIDEND_JSON = REPO_ROOT / "data/portfolios/dividend.json"
 SWING_ACTIVE_JSON = REPO_ROOT / "data/swing/active.json"
 WATCHLIST_JSON = REPO_ROOT / "data/watchlist.json"
