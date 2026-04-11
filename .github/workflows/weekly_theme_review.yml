@@ -1,0 +1,42 @@
+name: Weekly Theme Review
+
+on:
+  schedule:
+    # Her Pazar 06:00 UTC (TR 09:00) — piyasalar açılmadan önce
+    - cron: '0 6 * * 0'
+  workflow_dispatch:  # Manuel tetikleme de mümkün
+
+jobs:
+  theme_review:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install requests pytz
+
+      - name: Configure Git
+        run: |
+          git config user.name "Finzora Agent"
+          git config user.email "zeynelgun@users.noreply.github.com"
+
+      - name: Run Weekly Theme Review
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          cd agent
+          python theme_manager.py
+
+      - name: Push changes if any
+        run: |
+          git add -A
+          git diff --staged --quiet || git commit -m "🎯 [Workflow] Haftalık tema incelemesi tamamlandı"
+          git push || echo "Push gerekmedi"
