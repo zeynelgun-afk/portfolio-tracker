@@ -1,123 +1,123 @@
 {
-  "aktif_durum": "normal",
-  "tetiklenme_tarihi": "2026-04-07",
-  "tetik_sebebi": "Peak-to-trough drawdown %16.42 (esik %15)",
-  "detaylar": {
-    "peak_equity": 12480,
-    "peak_tarihi": "2026-03-03",
-    "trough_equity": 10430,
-    "trough_tarihi": "2026-03-26",
-    "drawdown_yuzde": 16.42,
-    "son_ardisik_zarar": 1,
-    "kayip_serisi_mart": [
-      {
-        "tarih": "2026-03-09",
-        "sembol": "HAL",
-        "pnl_pct": -5.1
-      },
-      {
-        "tarih": "2026-03-09",
-        "sembol": "CEG",
-        "pnl_pct": -5.05
-      },
-      {
-        "tarih": "2026-03-11",
-        "sembol": "T",
-        "pnl_pct": -5.54
-      },
-      {
-        "tarih": "2026-03-12",
-        "sembol": "ALMU",
-        "pnl_pct": -6.11
-      },
-      {
-        "tarih": "2026-03-12",
-        "sembol": "SOFI",
-        "pnl_pct": -3.62
-      },
-      {
-        "tarih": "2026-03-24",
-        "sembol": "RTX",
-        "pnl_pct": -5.16
-      },
-      {
-        "tarih": "2026-03-26",
-        "sembol": "AROC",
-        "pnl_pct": -4.95
-      }
+    "aktif_durum": "normal",
+    "tetiklenme_tarihi": "2026-04-07",
+    "tetik_sebebi": "Peak-to-trough drawdown %16.42 (esik %15)",
+    "detaylar": {
+        "peak_equity": 12480,
+        "peak_tarihi": "2026-03-03",
+        "trough_equity": 10430,
+        "trough_tarihi": "2026-03-26",
+        "drawdown_yuzde": 16.42,
+        "son_ardisik_zarar": 1,
+        "kayip_serisi_mart": [
+            {
+                "tarih": "2026-03-09",
+                "sembol": "HAL",
+                "pnl_pct": -5.1
+            },
+            {
+                "tarih": "2026-03-09",
+                "sembol": "CEG",
+                "pnl_pct": -5.05
+            },
+            {
+                "tarih": "2026-03-11",
+                "sembol": "T",
+                "pnl_pct": -5.54
+            },
+            {
+                "tarih": "2026-03-12",
+                "sembol": "ALMU",
+                "pnl_pct": -6.11
+            },
+            {
+                "tarih": "2026-03-12",
+                "sembol": "SOFI",
+                "pnl_pct": -3.62
+            },
+            {
+                "tarih": "2026-03-24",
+                "sembol": "RTX",
+                "pnl_pct": -5.16
+            },
+            {
+                "tarih": "2026-03-26",
+                "sembol": "AROC",
+                "pnl_pct": -4.95
+            }
+        ],
+        "kayip_yogunlugu": "9-12 mart: 5 zarar / 4 gun | 24-26 mart: 2 zarar / 3 gun"
+    },
+    "ortam_testi_7_nisan_2026": {
+        "vix_yaklasik": 25,
+        "vix_bandi": "dikkatli (22-28)",
+        "spy_fiyat": 655.73,
+        "spy_sma50": 675.19,
+        "spy_vs_sma50_pct": -2.88,
+        "spy_trendi": "SMA50 ALTI (tehdit)",
+        "kriter_ozeti": "VIX dikkatli + SPY SMA50 alti = K-14 ortam testi SAGLANMIYOR"
+    },
+    "yeni_giris_kurallari": {
+        "protokol_versiyon": "v2.2 (10 nisan 2026)",
+        "boyut": "Normal $5K-$10K — SADECE A-kalite setup",
+        "yarım_pozisyon_sayaci": "KALDIRILDI",
+        "A_kalite_tanim": [
+            "Ichimoku 4/4 (kumo+TK+tenkan+volume)",
+            "Sektör ETF lider (9EMA+21EMA üstü)",
+            "RS pozitif (sektör/SPY 20g+ trend)",
+            "K-13 faydalanıcı sektör VEYA K-13b 6 koşulları",
+            "K-17 korelasyon ihlali yok",
+            "K-18 insider temiz"
+        ],
+        "ortam_testi": "VIX<22 + SPY>SMA50 (duyarlı) veya VIX<28 + SPY>SMA50 (faydalanıcı)",
+        "psikoloji_testi": "Bu girişi yarın tekrar inceleseydim, tüm kuralları tam uyguladım mı?"
+    },
+    "yeniden_baslama_protokolu": [
+        "1. Min 5 is gunu soguma",
+        "2. Neden analizi: ortam (VIX/SPY), sistem (4/4 sinyal kalitesi), psikoloji (revenge/kovalama)",
+        "3. Ilk 3 trade yarim pozisyon",
+        "4. 2/3 kazanirsa normal boyuta don"
     ],
-    "kayip_yogunlugu": "9-12 mart: 5 zarar / 4 gun | 24-26 mart: 2 zarar / 3 gun"
-  },
-  "ortam_testi_7_nisan_2026": {
-    "vix_yaklasik": 25,
-    "vix_bandi": "dikkatli (22-28)",
-    "spy_fiyat": 655.73,
-    "spy_sma50": 675.19,
-    "spy_vs_sma50_pct": -2.88,
-    "spy_trendi": "SMA50 ALTI (tehdit)",
-    "kriter_ozeti": "VIX dikkatli + SPY SMA50 alti = K-14 ortam testi SAGLANMIYOR"
-  },
-  "yeni_giris_kurallari": {
-    "protokol_versiyon": "v2.2 (10 nisan 2026)",
-    "boyut": "Normal $5K-$10K — SADECE A-kalite setup",
-    "yarım_pozisyon_sayaci": "KALDIRILDI",
-    "A_kalite_tanim": [
-      "Ichimoku 4/4 (kumo+TK+tenkan+volume)",
-      "Sektör ETF lider (9EMA+21EMA üstü)",
-      "RS pozitif (sektör/SPY 20g+ trend)",
-      "K-13 faydalanıcı sektör VEYA K-13b 6 koşulları",
-      "K-17 korelasyon ihlali yok",
-      "K-18 insider temiz"
+    "dersler": [
+        "9-12 mart 5 zarar penceresi: K-14 zamaninda uygulanmadi, boyut kucultulmedi",
+        "K-14 manuel izleme basarisiz, otomatik script sarti (7 nisan 2026'da eklendi)",
+        "POWL+CAMT+VRT 25 mart: K-17 ihlali ayni temada ucluk, K-14 drawdown'un buyuk parcasi",
+        "Mart 2026 genel ders: VIX dikkatli + sektor rotasyonu yavas = swing ortami zayif"
     ],
-    "ortam_testi": "VIX<22 + SPY>SMA50 (duyarlı) veya VIX<28 + SPY>SMA50 (faydalanıcı)",
-    "psikoloji_testi": "Bu girişi yarın tekrar inceleseydim, tüm kuralları tam uyguladım mı?"
-  },
-  "yeniden_baslama_protokolu": [
-    "1. Min 5 is gunu soguma",
-    "2. Neden analizi: ortam (VIX/SPY), sistem (4/4 sinyal kalitesi), psikoloji (revenge/kovalama)",
-    "3. Ilk 3 trade yarim pozisyon",
-    "4. 2/3 kazanirsa normal boyuta don"
-  ],
-  "dersler": [
-    "9-12 mart 5 zarar penceresi: K-14 zamaninda uygulanmadi, boyut kucultulmedi",
-    "K-14 manuel izleme basarisiz, otomatik script sarti (7 nisan 2026'da eklendi)",
-    "POWL+CAMT+VRT 25 mart: K-17 ihlali ayni temada ucluk, K-14 drawdown'un buyuk parcasi",
-    "Mart 2026 genel ders: VIX dikkatli + sektor rotasyonu yavas = swing ortami zayif"
-  ],
-  "guncelleyen": "k14_drawdown_track.py + manuel analiz",
-  "son_guncelleme": "2026-04-10",
-  "ortam_testi_8_nisan_2026_faz2": {
-    "vix": 21.02,
-    "vix_degisim_pct": -18.46,
-    "vix_bandi": "normal (<22)",
-    "spy_fiyat": 675.26,
-    "spy_sma50": 674.9,
-    "spy_vs_sma50_pct": 0.05,
-    "spy_trendi": "SMA50 USTU (kil payi)",
-    "kriter_ozeti": "VIX<22 + SPY>SMA50 iki kriter de saglandi",
-    "karar": "K-14 DRAWDOWN FREN AKTIF KALIYOR - 1 gun teyit kurali (kriz rally gun-1 kovalama yasagi)",
-    "gerekce": "Iran ateskes 2 haftalik, reversible. Gun-1 rally kovalama yasagi (K-02 kriz sok momentum). Yarin RSI onayi ve devam teyidi ile yeniden degerlendir.",
-    "yarinki_karar": "SPY SMA50 ustu + VIX<22 devam ederse VE yeni kriz flari yoksa K-14 kaldir"
-  },
-  "ortam_testi_9_nisan_2026": {
-    "vix": 20.18,
-    "vix_bandi": "sakin (<22)",
-    "spy_fiyat": 676.01,
-    "spy_sma50": 674.92,
-    "spy_vs_sma50_pct": 0.16,
-    "spy_trendi": "SMA50 USTU (kil payi, dun +0.05 bugun +0.16)",
-    "kriter_ozeti": "VIX<22 + SPY>SMA50 + yeni kriz flari yok (3/3)",
-    "karar": "K-14 KALDIRILDI — v2.2 protokolü aktif (10 nisan 2026)",
-    "v2_2_protokol": {
-      "boyut": "Normal (K-0K) — SADECE A-kalite setup",
-      "yarım_pozisyon_sayaci": "KALDIRILDI (v2.2 ile)",
-      "soğuma_süresi": "KALDIRILDI — psikoloji testi ile değiştirildi",
-      "psikoloji_testi": "Her trade öncesi: Bu girişi yarın tekrar inceleseydim, tüm kuralları tam uyguladım mı?",
-      "kayip_analizi": "Her kayıp trade için 3 kategori: ORTAM / SİSTEM / PSİKOLOJİ zorunlu"
-    }
-  },
-  "status": "NORMAL",
-  "k14_active": false,
-  "k14_kaldirildi": "2026-04-11",
-  "not": "VIX 19.23 (<22), koşullar karşılandı. Yarım pozisyon ile başla."
+    "guncelleyen": "k14_drawdown_track.py + manuel analiz",
+    "son_guncelleme": "2026-04-11",
+    "ortam_testi_8_nisan_2026_faz2": {
+        "vix": 21.02,
+        "vix_degisim_pct": -18.46,
+        "vix_bandi": "normal (<22)",
+        "spy_fiyat": 675.26,
+        "spy_sma50": 674.9,
+        "spy_vs_sma50_pct": 0.05,
+        "spy_trendi": "SMA50 USTU (kil payi)",
+        "kriter_ozeti": "VIX<22 + SPY>SMA50 iki kriter de saglandi",
+        "karar": "K-14 DRAWDOWN FREN AKTIF KALIYOR - 1 gun teyit kurali (kriz rally gun-1 kovalama yasagi)",
+        "gerekce": "Iran ateskes 2 haftalik, reversible. Gun-1 rally kovalama yasagi (K-02 kriz sok momentum). Yarin RSI onayi ve devam teyidi ile yeniden degerlendir.",
+        "yarinki_karar": "SPY SMA50 ustu + VIX<22 devam ederse VE yeni kriz flari yoksa K-14 kaldir"
+    },
+    "ortam_testi_9_nisan_2026": {
+        "vix": 20.18,
+        "vix_bandi": "sakin (<22)",
+        "spy_fiyat": 676.01,
+        "spy_sma50": 674.92,
+        "spy_vs_sma50_pct": 0.16,
+        "spy_trendi": "SMA50 USTU (kil payi, dun +0.05 bugun +0.16)",
+        "kriter_ozeti": "VIX<22 + SPY>SMA50 + yeni kriz flari yok (3/3)",
+        "karar": "K-14 KALDIRILDI — v2.2 protokolü aktif (10 nisan 2026)",
+        "v2_2_protokol": {
+            "boyut": "Normal (K-0K) — SADECE A-kalite setup",
+            "yarım_pozisyon_sayaci": "KALDIRILDI (v2.2 ile)",
+            "soğuma_süresi": "KALDIRILDI — psikoloji testi ile değiştirildi",
+            "psikoloji_testi": "Her trade öncesi: Bu girişi yarın tekrar inceleseydim, tüm kuralları tam uyguladım mı?",
+            "kayip_analizi": "Her kayıp trade için 3 kategori: ORTAM / SİSTEM / PSİKOLOJİ zorunlu"
+        }
+    },
+    "status": "NORMAL",
+    "k14_active": false,
+    "k14_kaldirildi": "2026-04-11",
+    "not": "K-14 kaldırıldı (11 Nisan 2026). Normal boyut aktif. Her giriş öncesi psikoloji testi: \"Bu girişi yarın tekrar inceleseydim, tüm kuralları tam uyguladım mı?\""
 }

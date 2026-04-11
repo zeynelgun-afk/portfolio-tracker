@@ -24,8 +24,6 @@
       "giris_fiyati": 24.28,
       "giris_nedeni": "Başlangıç pozisyonu - Temettü + değer portföyü - Telekomünikasyon",
       "agirlik_yuzde": 14.3,
-      "maliyet_bazis": 25.85,
-      "zarar_kes": 25.03,
       "cb_kaynak": "back-calc-karyuzde",
       "stop_loss": 25.14
     },
@@ -46,8 +44,6 @@
       "giris_fiyati": 39.83,
       "giris_nedeni": "Başlangıç pozisyonu - Temettü + değer portföyü - Telekomünikasyon",
       "agirlik_yuzde": 3.44,
-      "maliyet_bazis": 39.47,
-      "zarar_kes": 44.13,
       "cb_kaynak": "back-calc-karyuzde",
       "stop_loss": 43.83
     },
@@ -68,8 +64,6 @@
       "giris_fiyati": 57.31,
       "giris_nedeni": "Initial position - Dividend defensive",
       "agirlik_yuzde": 10.27,
-      "maliyet_bazis": 57.5,
-      "zarar_kes": 64.89,
       "cb_kaynak": "back-calc-karyuzde",
       "stop_loss": 64.01
     },
@@ -90,8 +84,6 @@
       "giris_fiyati": 120.0,
       "giris_nedeni": "Temettu portfoyune saglik sektoru girisi - defansif rotasyon, SMA50 $117.95 ustu, SMA200 $97 guclu uzun vade, RSI 55 notr, gap-up rallysinden minimal etki plan araliginda",
       "agirlik_yuzde": 4.24,
-      "maliyet_bazis": 119.95,
-      "zarar_kes": 115.95,
       "cb_kaynak": "back-calc-karyuzde",
       "stop_loss": 115.35
     },
@@ -109,7 +101,6 @@
       "giris_tarihi": "2026-04-10",
       "giris_fiyati": 85.5,
       "giris_nedeni": "Temettü portföyü enerji girişi. P/E 16, yield %4.8, D/E 1.5. RSI 45.3, SMA50 üstü. İran jeopolitik pipeline faydalanıcı. Stop 81, hedef 93.",
-      "zarar_kes": 81.0,
       "hedef_fiyat": 93.0,
       "gunluk_degisim_yuzde": 0,
       "son_guncelleme": "2026-04-10T21:33:12.882382",
