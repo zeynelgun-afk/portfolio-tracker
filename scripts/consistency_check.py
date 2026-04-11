@@ -18,6 +18,19 @@ Kullanım:
   python scripts/consistency_check.py --strict  # sorun varsa exit(1)
 """
 
+# --- olay kaydı ---
+import sys as _sys
+_sys.path.insert(0, str(__import__('pathlib').Path(__file__).parent.parent / 'scripts'))
+try:
+    from event_logger import log as _log
+    _log.kaynak = 'consistency_check'
+except ImportError:
+    class _FB:
+        kaynak='consistency_check'
+        def __getattr__(self, n): return lambda *a, **kw: None
+    _log = _FB()
+# --- /olay kaydı ---
+
 import os, re, sys, json, argparse
 from pathlib import Path
 

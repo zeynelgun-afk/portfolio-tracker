@@ -10,6 +10,19 @@ Kullanım:
   python scripts/swing_ichimoku.py NEM --detay      # tek hisse detaylı analiz
 """
 
+# --- olay kaydı ---
+import sys as _sys
+_sys.path.insert(0, str(__import__('pathlib').Path(__file__).parent.parent / 'scripts'))
+try:
+    from event_logger import log as _log
+    _log.kaynak = 'swing_ichimoku'
+except ImportError:
+    class _FB:
+        kaynak='swing_ichimoku'
+        def __getattr__(self, n): return lambda *a, **kw: None
+    _log = _FB()
+# --- /olay kaydı ---
+
 import requests
 import json
 import argparse
@@ -769,6 +782,21 @@ def update_active_positions():
             for s in result['exit_signals']:
                 acil = "🔴" if s.get('acil') else "🟡"
                 print(f"  {acil} ÇIKIŞ SİNYALİ: {s['aciklama']}")
+                if s.get('acil'):
+                    _log.kritik(
+                        f"ACİL ÇIKIŞ SİNYALİ: {sym}",
+                        f"{s['aciklama']}\n"
+                        f"Fiyat: ${pos.get('guncel_fiyat',pos.get('son_fiyat',0)):.2f} | Stop: ${pos.get('stop_loss',0):.2f}\n"
+                        f"P&L: {pos.get('pnl_pct',0):+.1f}%",
+                        kaynak="swing_ichimoku"
+                    )
+                else:
+                    _log.uyari(
+                        f"Çıkış sinyali: {sym}",
+                        f"{s['aciklama']}\n"
+                        f"Fiyat: ${pos.get('guncel_fiyat',pos.get('son_fiyat',0)):.2f}",
+                        kaynak="swing_ichimoku"
+                    )
 
     data['son_guncelleme'] = datetime.now().isoformat()
 

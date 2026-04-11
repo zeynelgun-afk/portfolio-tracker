@@ -19,6 +19,19 @@ Yeni giriş sinyalleri (araştırma bazlı):
   - Hedef: R:R min 2:1, max 15 gün tutma
 """
 
+# --- olay kaydı ---
+import sys as _sys
+_sys.path.insert(0, str(__import__('pathlib').Path(__file__).parent.parent / 'scripts'))
+try:
+    from event_logger import log as _log
+    _log.kaynak = 'swing_entry'
+except ImportError:
+    class _FB:
+        kaynak='swing_entry'
+        def __getattr__(self, n): return lambda *a, **kw: None
+    _log = _FB()
+# --- /olay kaydı ---
+
 import requests
 import json
 import sys
@@ -390,6 +403,15 @@ def enhanced_entry_analysis(symbol: str) -> dict:
         en_guclu = max(signals, key=lambda s: {"cok_yuksek": 4, "yuksek": 3, "orta": 2}.get(s["guc"], 1))
         karar    = f"GİRİŞ ✅ ({en_guclu['tip']})"
         sinyal_str = " | ".join(s["tip"] for s in signals)
+
+    # Güçlü sinyal varsa logla
+    if signals and karar in ("GİR", "GÜÇLÜ_GİR"):
+        _log.basarili(
+            f"Swing sinyal: {symbol}",
+            f"Karar: {karar} | Sinyaller: {sinyal_str}\n"
+            f"Giriş: ${price:.2f} | Stop: ${stop_lvl:.2f} | R:R 2.5:1 | RSI: {round(rsi,1) if rsi else '?'}",
+            kaynak="swing_entry"
+        )
 
     return {
         "symbol":      symbol,

@@ -116,3 +116,16 @@ print('Sinyaller:', data['giris_sinyalleri'])
             git commit -m "[AUTO] Swing entry sinyalleri $(date +%Y-%m-%d)"
             git push || true
           fi
+
+      - name: Hata bildirimi
+        if: failure()
+        run: |
+          pip install requests -q
+          python scripts/event_logger.py \
+            --seviye kritik \
+            --baslik "Workflow başarısız: morning_scan" \
+            --detay "GitHub Actions hatası. Commit: ${{ github.sha }}" \
+            --kaynak "github_actions"
+        env:
+          TELEGRAM_BOT_TOKEN:  ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_PRIVATE_ID: ${{ secrets.TELEGRAM_PRIVATE_CHAT }}

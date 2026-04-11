@@ -15,3 +15,6 @@ agent/memory/learning_log.json
 
 # Seans durumu — geçici, git'e gitmesin
 data/session_state.json
+
+# Olay log dosyası — geçici
+logs/event_log.jsonl

@@ -74,3 +74,16 @@ jobs:
           exit 1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Hata bildirimi
+        if: failure()
+        run: |
+          pip install requests -q
+          python scripts/event_logger.py \
+            --seviye kritik \
+            --baslik "Workflow başarısız: daily_update" \
+            --detay "GitHub Actions hatası. Commit: ${{ github.sha }}" \
+            --kaynak "github_actions"
+        env:
+          TELEGRAM_BOT_TOKEN:  ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_PRIVATE_ID: ${{ secrets.TELEGRAM_PRIVATE_CHAT }}

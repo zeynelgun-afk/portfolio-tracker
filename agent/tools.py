@@ -6,6 +6,19 @@ FMP veri çekme, Telegram gönderme, portföy okuma.
 Phase 1: Tüm fonksiyonlar sadece OKUR, yazmaz.
 """
 
+# --- olay kaydı ---
+import sys as _sys
+_sys.path.insert(0, str(__import__('pathlib').Path(__file__).parent.parent / 'scripts'))
+try:
+    from event_logger import log as _log
+    _log.kaynak = 'tools'
+except ImportError:
+    class _FB:
+        kaynak='tools'
+        def __getattr__(self, n): return lambda *a, **kw: None
+    _log = _FB()
+# --- /olay kaydı ---
+
 import os
 import json
 import requests

@@ -20,6 +20,19 @@ Kullanım:
   python scripts/k09_proximity_check.py --symbol AAPL  # tek hisse
 """
 
+# --- olay kaydı ---
+import sys as _sys
+_sys.path.insert(0, str(__import__('pathlib').Path(__file__).parent.parent / 'scripts'))
+try:
+    from event_logger import log as _log
+    _log.kaynak = 'k09'
+except ImportError:
+    class _FB:
+        kaynak='k09'
+        def __getattr__(self, n): return lambda *a, **kw: None
+    _log = _FB()
+# --- /olay kaydı ---
+
 import sys
 import argparse
 from k_rules_common import (
@@ -171,6 +184,11 @@ def main():
 
         if result["action"] == "EXIT_NOW":
             send_k_alert("K-09 EXIT_NOW", pos["sembol"], msg, severity="critical")
+            _log.kritik(
+                f"K-09 EXIT_NOW: {pos['sembol']}",
+                f"Stop'a mesafe: %{distance_pct:.1f}\n{msg[:200]}",
+                kaynak="k09"
+            )
         elif result["action"] == "WAIT_STOP":
             send_k_alert("K-09 WAIT", pos["sembol"], msg, severity="warning")
 
