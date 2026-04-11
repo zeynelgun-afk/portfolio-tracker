@@ -5,49 +5,46 @@ date,action,symbol,shares,price,total,reason
 2026-02-17,BUY,XLE,277,54.13,14994.01,Initial position - Energy sector ETF
 2026-02-17,BUY,RGLD,43,277.50,11932.50,Initial position - Gold royalty
 2026-02-17,BUY,FCX,132,60.54,7991.28,Initial position - Copper play
-2026-02-19,SELL,KOS,6000,1.85,11124.00,Dengeli,Risk azaltma - Yüksek borç ve negatif finansallar
-2026-02-19,SELL,FCX,132,60.17,7943.10,Dengeli,Zayıf performans - Çin talebi risk - Overvalued P/E 40x
-2026-02-19,BUY,XLI,85,175.04,14878.40,Dengeli,Endüstriyel sektör güçlü +11% YTD - FCX yerine
-2026-02-19,SELL,APP,20,408.42,8168.30,Agresif,-33.9% felaket zarar - AI software collapse
-2026-02-19,SELL,AMD,55,199.39,10966.45,Agresif,-10.8% zarar - Chip sektörü zayıf
-2026-02-19,SELL,AMZN,55,203.11,11171.05,Agresif,-10.3% zarar - AI harcaması karlılığı baskılıyor
-2026-02-19,SELL,TSLA,28,405.18,11345.07,Agresif,-7.5% zarar - EV sektörü zayıf - Volatil
-2026-02-19,BUY,XLI,114,175.04,19954.56,Agresif,Endüstriyel güçlü - Tech'ten rotate
-2026-02-19,BUY,XLE,268,55.83,14962.44,Agresif,Enerji +22% YTD - Tech'ten rotate
-2026-02-19,SELL,JPM,38,306.73,11655.74,Temettü,-5.3% - Finans sektörü XLF -3.4% zayıf
-2026-02-19,SELL,BAC,223,52.35,11674.05,Temettü,-6.4% - Finans baskı altında
-2026-02-19,BUY,SCHD,829,28.95,23999.55,Temettü,Diversified temettü ETF - Finans yerine
-2026-02-19,SELL,XLK,138,139.50,19251.00,Rotasyon,-3.3% - Tech sektörü zayıf
-2026-02-19,SELL,XLF,364,52.12,18971.68,Rotasyon,-5.1% - Finans sektörü baskı
-2026-02-19,BUY,XLE,358,55.83,19987.14,Rotasyon,Enerji +22% momentum - Pozisyon artırma
-2026-02-19,BUY,XLI,102,175.04,17854.08,Rotasyon,Endüstriyel +11% güçlü - Pozisyon artırma
+2026-02-19,SELL,KOS,6000,1.85,11124.00,[Dengeli] Risk azaltma - Yüksek borç ve negatif finansallar
+2026-02-19,SELL,FCX,132,60.17,7943.10,[Dengeli] Zayıf performans - Çin talebi risk - Overvalued P/E 40x
+2026-02-19,BUY,XLI,85,175.04,14878.40,[Dengeli] Endüstriyel sektör güçlü +11% YTD - FCX yerine
+2026-02-19,SELL,APP,20,408.42,8168.30,[Agresif] -33.9% felaket zarar - AI software collapse
+2026-02-19,SELL,AMD,55,199.39,10966.45,[Agresif] -10.8% zarar - Chip sektörü zayıf
+2026-02-19,SELL,AMZN,55,203.11,11171.05,[Agresif] -10.3% zarar - AI harcaması karlılığı baskılıyor
+2026-02-19,SELL,TSLA,28,405.18,11345.07,[Agresif] -7.5% zarar - EV sektörü zayıf - Volatil
+2026-02-19,BUY,XLI,114,175.04,19954.56,[Agresif] Endüstriyel güçlü - Tech'ten rotate
+2026-02-19,BUY,XLE,268,55.83,14962.44,[Agresif] Enerji +22% YTD - Tech'ten rotate
+2026-02-19,SELL,JPM,38,306.73,11655.74,[Temettü] -5.3% - Finans sektörü XLF -3.4% zayıf
+2026-02-19,SELL,BAC,223,52.35,11674.05,[Temettü] -6.4% - Finans baskı altında
+2026-02-19,BUY,SCHD,829,28.95,23999.55,[Temettü] Diversified temettü ETF - Finans yerine
+2026-02-19,SELL,XLK,138,139.50,19251.00,[Rotasyon] -3.3% - Tech sektörü zayıf
+2026-02-19,SELL,XLF,364,52.12,18971.68,[Rotasyon] -5.1% - Finans sektörü baskı
+2026-02-19,BUY,XLE,358,55.83,19987.14,[Rotasyon] Enerji +22% momentum - Pozisyon artırma
+2026-02-19,BUY,XLI,102,175.04,17854.08,[Rotasyon] Endüstriyel +11% güçlü - Pozisyon artırma
 2026-02-20,BUY,GILT,342,14.61,4996.62,Agresif portföy - Yarım pozisyon girişi (pullback fırsatı)
 2026-02-20,BUY,BKSY,379,19.77,7492.83,Agresif portföy - Yarım pozisyon girişi (-%5.4 düşüş)
-
 2026-02-23,BUY,NNDM,2550,1.96,4998.0,Giriş bölgesi yakalandı - Agresif portföy - 3D baskı teknoloji watchlist hedefi
 2026-02-23,SELL,NVDA,1,192.33,192.33,"Earnings öncesi çıkış - Swing - +%3.4 kâr güvenceye alındı, gap-down riski kaçınıldı"
 2026-02-23,BUY,PLTR,39,128.42,5008.38,RSI 33 oversold giriş - Agresif portföy - AI/savunma momentum geri dönüş tezi
 2026-02-23,BUY,GILT,347,14.39,4993.33,Yarım pozisyon tamamlandı - Agresif portföy - RSI 41 destek
 2026-02-23,BUY,SHOP,41,119.88,4915.08,SMA200 destek giriş - Agresif portföy - E-ticaret altyapı lideri
 2026-02-24,SELL,NEM,1,120.64,120.64,Stop-loss tetiklendi - Swing SWING-010 kapatıldı
-2026-02-24,SELL,UNH,1,277.65,277.65,Stop-loss tetiklendi - Swing SWING-012 kapatıldı2026-02-24,BUY,ANET,93,128.62,11961.66,AI/data center networking lideri - bulut devleri altyapı harcaması artıyor - RSI
+2026-02-24,SELL,UNH,1,277.65,277.65,Stop-loss tetiklendi - Swing SWING-012 kapatıldı2026-02-24 BUY ANET 93 128.62 11961.66 AI/data center networking lideri - bulut devleri altyapı harcaması artıyor - RSI
 2026-02-24,BUY,RKLB,146,68.44,9992.24,Uzay ekonomisi büyüme oyunu - Electron roket başarı serisi + Neutron geliştirme 
 2026-02-24,BUY,CELH,140,49.76,6966.4,Enerji içecek büyüme hikayesi - Monster ve Red Bull'a alternatif - SMA50 ve SMA2
 2026-02-24,BUY,CTSH,1,61.36,61.36,Swing giriş - RSI 22.5 oversold bounce - IT consulting devi
 2026-02-24,BUY,ZS,1,150.29,150.29,Swing giriş - RSI 26.7 oversold bounce - Cybersecurity lideri
 2026-02-24,BUY,SOFI,1,18.51,18.51,Swing giriş - RSI 27.8 oversold bounce - Fintech yüksek hacim
 2026-02-25,BUY,TYL,30,323.78,9713.4,"Agresif portföy - Devlet yazılım + AI moat, Axon paraleli"
-
 2026-02-25,SELL,XLV,64,158.14,10120.96,"Sektör rotasyonu - XLV zayıf momentum, pozisyon yarıya indirildi"
 2026-02-25,BUY,XLB,94,53.05,4986.7,Sektör rotasyonu - Temel malzemeler güçlü momentum YTD +%15
 2026-02-25,BUY,XLP,59,88.88,5243.92,Sektör rotasyonu - Temel tüketim defensif güç YTD +%14.4
-2026-02-25,SELL,VZ,156,49.51,7723.56,"Kısmi kar alma - RSI 73 aşırı alım, %24 kâr, nakit oluşturma2026-02-26",SELL,CELH,46,56.62,2604.52,Agresif - kademeli çıkış %33 - Q4 earnings rally - strateji kuralı
+2026-02-25,SELL,VZ,156,49.51,7723.56,"Kısmi kar alma - RSI 73 aşırı alım, %24 kâr, nakit oluşturma2026-02-26 SELL CELH 46 56.62 2604.52 Agresif - kademeli çıkış %33 - Q4 earnings rally - strateji kuralı"
 2026-02-26,SELL,TYL,10,351.09,3510.90,Agresif - kademeli çıkış %33 - momentum devam - strateji kuralı
 2026-02-26,SELL,ZS,0,164.03,0,Swing %50 kısmi çıkış - hedefe ulaştı +9.1% - trailing stop aktif
 2026-02-26,SELL,CELH,94,54.44,5117.36,Agresif - trailing stop tetiklendi $54.92 - kalan %67 tam çıkış
 2026-02-27,SELL,ZS,0.5,144.21,72.105,"Swing Trade - Trailing stop tetiklendi (kalan %50 pozisyon) - Kısmi satış stratejisi başarılı: ilk %50 @$164.03 (+9.1%), kalan %50 @$144.21 (-4.1%) = ortalama +2.5%"
 2026-02-27,SELL,KOS,4638,2.25,10435.50,"Dengeli - Kar reali %50 pozisyon - Hedef aşıldı (%39 kar), RSI 67.4 yüksek, pullback riski - Risk yönetimi stratejisi, kalan yarıya trailing stop $2.05"
-
 2026-03-02,BUY,HAL,1,36.245,36.245,"Swing giris - Iran krizi petrol fiyatlarini $79+'ya tasidi, yuksek petrol = daha fazla sondaj "
 2026-03-02,BUY,KTOS,1,96.41,96.41,Swing giris - Iran operasyonunda drone ve insansiz hava araclari yogun kullanildi. KTOS insans
 2026-03-02,BUY,CEG,1,328.56,328.56,Swing giris - Iran krizi enerji guvenligi endiselerini artirdi. CEG ABD'nin en buyuk nukleer o
@@ -62,10 +59,8 @@ date,action,symbol,shares,price,total,reason
 2026-03-04,SELL,MRK,250,120.51,30127.50,Agresif->Temettu transfer
 2026-03-04,BUY,MRK,250,120.41,30102.5,Temettu portfoyune transfer
 2026-03-04,BUY,PLTR,100,153.46,15346.00,Pozisyon buyutme - Agresif - AI+savunma katalizor
-
-2026-03-05,BUY,AMKR,176,45.45,7999.2,"Yarım pozisyon - Agresif - AI chip tedarik zinciri, gelişmiş paketleme/HBM, MRVL earnings beklentisi2026-03-06",SELL,SHOP,41,129.55,5311.55,izleyen zarar kes $130.20 tetiklendi - agresif portföy - NFP şoku
+2026-03-05,BUY,AMKR,176,45.45,7999.2,"Yarım pozisyon - Agresif - AI chip tedarik zinciri, gelişmiş paketleme/HBM, MRVL earnings beklentisi2026-03-06 SELL SHOP 41 129.55 5311.55 izleyen zarar kes $130.20 tetiklendi - agresif portföy - NFP şoku"
 2026-03-06,SELL,AMKR,176,42.67,7509.92,erken disiplinli çıkış - stop yakın - NFP şoku - agresif portföy
-
 2026-03-09,SELL,NNDM,2550,1.77,4513.5,"Agresif - Stop-loss tetiklendi, disiplinli çıkış"
 2026-03-09,SELL,BKSY,379,23.42,8876.18,"Agresif - İzleyen zarar kes tetiklendi, kâr koruması"
 2026-03-09,SELL,SM,416,26.5,11024.0,"Dengeli - Kısmi kâr alma %40, RSI aşırı alım, ağırlık dengeleme"
@@ -77,7 +72,6 @@ date,action,symbol,shares,price,total,reason
 2026-03-10,BUY,ALMU,216,16.19,3497.04,AI fotonik/optik - NVDA optik yatırımı tedarik zinciri - spekülatif küçük poz - stop $14.80 - hedef $18.62 - Swing
 2026-03-10,BUY,GLW,109,136.53,14881.77,AI optik fiber arabağlantı - veri merkezi tedarik zinciri - yarım poz - stop $125.61 - hedef $162.10 - Agresif portföy
 2026-03-10,BUY,ABBV,33,227.07,7493.31,"Temettü portföyü — ABBV pullback girişi, RSI 49, SMA50+200 üzeri, healthcare çeşitlendirmesi"
-
 2026-03-11,SELL,T,0,27.09,27.09,SWING-015 kapanış - stop-loss tetiklendi -%5.54 - İran volatilitesinde savunmacı tez işlemedi
 2026-03-11,SELL,CTSH,0,62.25,62.25,SWING-019 kapanış - tez bozulması - RSI 33 SMA50 altında - +1.45%
 2026-03-12,BUY,MRVL,120,88.73,10647.60,AI çip tedarik zinciri tezi - Agresif portföy - Özel ASIC ve veri merkezi ağ çipleri lideri
@@ -86,7 +80,7 @@ date,action,symbol,shares,price,total,reason
 2026-03-13,SELL,CVX,25,196.84,4921.12,K-11 kısmi kâr alma - RSI 70 ve +%28 - Temettü portföy
 2026-03-13,BUY,COHR,100,246.87,24686.50,AI optik/lazer - GTC katalizoru - Agresif portfoy - K-13 yarim pozisyon
 2026-03-13,BUY,JNJ,50,244.14,12207.00,Saglik sektoru diversifikasyonu - Dengeli portfoy
-2026-03-13,BUY,PFE,330,26.92,8883.27,Yuksek temettü yield saglik defensif - Temettü portfoy2026-03-16,SELL,LASR,74,68.55,5072.70,Breakeven çıkış - K-06 (3x stop override) + K-01 (FOMC haftası) - Agresif portföy
+2026-03-13,BUY,PFE,330,26.92,8883.27,Yuksek temettü yield saglik defensif - Temettü portfoy2026-03-16 SELL LASR 74 68.55 5072.70 Breakeven çıkış - K-06 (3x stop override) + K-01 (FOMC haftası) - Agresif portföy
 2026-03-17,SELL,RKLB,48,77.53,3721.44,Kısmi kâr alma %33 - hedef aşıldı - GTC katalizörü - Agresif portföy
 2026-03-17,SELL,SM,156,27.36,4268.16,Kısmi kâr alma %25 - RSI 72+ K-11 - Dengeli portföy
 2026-03-17,SELL,RKLB,48,77.53,3721.44,Kısmi kâr alma %33 - hedef aşıldı - GTC katalizörü - Agresif portföy
@@ -94,13 +88,11 @@ date,action,symbol,shares,price,total,reason
 2026-03-17,SELL,SM,156,27.36,4268.16,Kısmi kâr alma %25 - RSI 72+ K-11 - Dengeli portföy
 2026-03-18,BUY,CRDO,147,101.56,14929.32,Yarım pozisyon giriş - Agresif portföy - FOMC sonrası - CRDO
 2026-03-18,BUY,PWR,26,574.35,14933.1,Yarım pozisyon giriş - Agresif portföy - FOMC sonrası - PWR
-
 2026-03-20,SELL,RKLB,50,67.61,3380.50,Trailing stop tetiklendi - Agresif portföy
 2026-03-20,SELL,SM,104,29.93,3112.72,K-11 kısmi kar alma 1/3 - RSI 78 - Dengeli portföy
 2026-03-20,SELL,GLW,109,125.46,13675.14,Stop-loss tetiklendi $125.46 < $125.61 - Agresif portföy
 2026-03-23,SELL,SM,62,29.51,1829.62,K-11 kısmi kâr alma - RSI 75 + %43 kâr - petrol düşüşü enerji baskısı - Dengeli portföy
-
-2026-03-23,SELL,SM,52,29.58,1538.16,K-11 kısmi kâr alma %25 - RSI 80 + negatif ayrışma - Dengeli portföy2026-03-24,SELL,SM,47,30.84,1449.48,K-11 kısmi kâr alma - RSI 76.6 + %49 kazanç - Dengeli portföy
+2026-03-23,SELL,SM,52,29.58,1538.16,K-11 kısmi kâr alma %25 - RSI 80 + negatif ayrışma - Dengeli portföy2026-03-24 SELL SM 47 30.84 1449.48 K-11 kısmi kâr alma - RSI 76.6 + %49 kazanç - Dengeli portföy
 2026-03-24,SELL,XOM,25,165.86,4146.5,K-11 kısmi kâr alma - RSI 74.8 + %36 kazanç - Temettü portföy
 2026-03-24,SELL,RTX,1,192.81,192.81,Stop-loss tetiklendi - Swing SWING-025 - $192.81 < SL $193.13
 2026-03-24,BUY,NEM,1,98.47,98.47,"Swing giriş - RSI 31.4 aşırı satım, altın $4431 rekor, K-13 yarım pozisyon"
@@ -130,20 +122,18 @@ date,action,symbol,shares,price,total,reason
 2026-03-26,SELL,PLTR,234,149.9,35076.6,Trailing stop tetiklendi @$150.96 - Agresif portföy
 2026-03-26,SELL,COHR,191,259.05,49478.55,Trailing stop tetiklendi @$263.7 - Bain Capital blok satis baskisi - Agresif portföy
 2026-03-27,SELL,CAMT,114,157.75,17983.5,Stop-loss (2xATR) tetiklendi - stop $157.42 sadece $0.33 mesafe - QQQ -0.69% VIX 29.45 - stop ihlali kaçınılmaz - Agresif portföy
-
 2026-03-27,SELL,XLI,85,160.37,13631.45,Stop-loss %8 tetiklendi - Endüstriyel zayıflık devam - Dengeli portföy
-2026-03-27,SELL,VRT,71,251.40,17849.40,2xATR trailing stop tetiklendi - en yüksek 282.05 ATR 13.84 stop 254.37 guncel 251.40 - Agresif portfoy2026-03-30,SELL,MRVL,375,91.33,34248.75,stop tetiklendi - 2xATR trailing stop $92.09 kirildi. Microsoft-AVGO gecis haberleri + Benchmark downgrade. PnL -3.80% (-$1353.75). 18 gun tutuldu.
+2026-03-27,SELL,VRT,71,251.40,17849.40,2xATR trailing stop tetiklendi - en yüksek 282.05 ATR 13.84 stop 254.37 guncel 251.40 - Agresif portfoy2026-03-30 SELL MRVL 375 91.33 34248.75 stop tetiklendi - 2xATR trailing stop $92.09 kirildi. Microsoft-AVGO gecis haberleri + Benchmark downgrade. PnL -3.80% (-$1353.75). 18 gun tutuldu.
 2026-03-30,SELL,POWL,34,522.92,17779.28,stop tetiklendi - 2xATR trailing stop $524.89 kirildi. $25M insider satisi (Thomas W. Powell) + kar realizasyonu. PnL -10.63% (-$2114.80). 5 gun tutuldu.
-2026-04-01,SELL,balanced,XLE,139,58.98,8198.22,"iran ateşkes umudu - petrol düşüşü, enerji katalizörü zayıflıyor. kar: $783.96 (+10.57%)"
-2026-04-01,SELL,dividend,XOM,199,161.74,32186.26,"iran ateşkes umudu - petrol düşüşü, enerji katalizörü zayıflıyor. kar: $2,843.71 (+9.69%)"
-2026-04-01,SELL,dividend,CVX,99,198.64,19665.36,"iran ateşkes umudu - petrol düşüşü, enerji katalizörü zayıflıyor. kar: $675.18 (+3.56%)"
-
-2026-04-01,SELL,balanced,SM,192,29.48,5660.16,"iran ateşkes tezi - enerji sektörü çıkışı. XLE/XOM/CVX ile aynı mantık. kar: $17.28"
-2026-04-07,SELL,dividend,T,86,28.07,2414.02,"K-12 limit asimi duzeltmesi - Temettu portfoyunde T agirligi %16.67 (limit %15). 86 hisse satis ile %15.00 hedeflendi. Kalan 773 hisse. Kar: $163.40 (+7.26%)"
-2026-04-08,SELL,dividend,PM,77,156.82,12075.14,"dondurme - FDA pouch sorunu, SMA50 $174.70 altinda trend kirik, RSI 33.9 oversold ama tez bozuk, sermaye MRK'ye. K/Z: $-267.96 (-2.17%)"
-2026-04-08,BUY,dividend,MRK,50,120.0,6000.00,"plan girisi - saglik defansif cesitlendirme, gap-up rallysinde minimal etki plan araliginda, SMA50 ustu RSI 55 notr, PM dondurmesi"
-2026-04-09,BUY,balanced,DUK,49,133.84,6558.16,"K-13 v4.1 jeopolitik/savaş utilities faydalanıcı. VIX 28-35 bant: $9K×(22/30). SMA50 üstü, K-17 temiz, hedef $143."
-2026-04-09,BUY,balanced,CI,23,277.63,6385.49,"K-13 saglik faydalanici. PEG 0.86, FWD P/E 9.1x. Medicare Advantage yok. CEO insider alim. SMA50 ustu. VIX formulu."
+2026-04-01,SELL,balanced,XLE,139,58.98,"[8198.22] iran ateşkes umudu - petrol düşüşü, enerji katalizörü zayıflıyor. kar: $783.96 (+10.57%)"
+2026-04-01,SELL,dividend,XOM,199,161.74,"[32186.26] iran ateşkes umudu - petrol düşüşü, enerji katalizörü zayıflıyor. kar: $2,843.71 (+9.69%)"
+2026-04-01,SELL,dividend,CVX,99,198.64,"[19665.36] iran ateşkes umudu - petrol düşüşü, enerji katalizörü zayıflıyor. kar: $675.18 (+3.56%)"
+2026-04-01,SELL,balanced,SM,192,29.48,[5660.16] iran ateşkes tezi - enerji sektörü çıkışı. XLE/XOM/CVX ile aynı mantık. kar: $17.28
+2026-04-07,SELL,dividend,T,86,28.07,[2414.02] K-12 limit asimi duzeltmesi - Temettu portfoyunde T agirligi %16.67 (limit %15). 86 hisse satis ile %15.00 hedeflendi. Kalan 773 hisse. Kar: $163.40 (+7.26%)
+2026-04-08,SELL,dividend,PM,77,156.82,"[12075.14] dondurme - FDA pouch sorunu, SMA50 $174.70 altinda trend kirik, RSI 33.9 oversold ama tez bozuk, sermaye MRK'ye. K/Z: $-267.96 (-2.17%)"
+2026-04-08,BUY,dividend,MRK,50,120.0,"[6000.00] plan girisi - saglik defansif cesitlendirme, gap-up rallysinde minimal etki plan araliginda, SMA50 ustu RSI 55 notr, PM dondurmesi"
+2026-04-09,BUY,balanced,DUK,49,133.84,"[6558.16] K-13 v4.1 jeopolitik/savaş utilities faydalanıcı. VIX 28-35 bant: $9K×(22/30). SMA50 üstü, K-17 temiz, hedef $143."
+2026-04-09,BUY,balanced,CI,23,277.63,"[6385.49] K-13 saglik faydalanici. PEG 0.86, FWD P/E 9.1x. Medicare Advantage yok. CEO insider alim. SMA50 ustu. VIX formulu."
 2026-04-10,BUY,OKE,93,85.5,7951.5,"Temettü portföyü - Enerji pipeline. P/E 16, yield %4.8, D/E 1.5. RSI 45.3, SMA50 üstü. Stop 81, hedef 93, R:R 2.1:1"
 2026-04-10,BUY,COHR,52,287.0,14924.0,Pozisyon büyütme — strateji %10-15 hedefine ulaşmak. 87 → 139 adet. Ortalama maliyet 285.75.
 2026-04-10,BUY,VRT,51,291.0,14841.0,Pozisyon büyütme — strateji %10-15 hedefine ulaşmak. 86 → 137 adet. Ortalama maliyet 290.37.
