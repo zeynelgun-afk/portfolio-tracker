@@ -1,0 +1,37 @@
+{
+  "K-11_trailing_stop": {
+    "version": 1,
+    "description": "Trailing stop tetikleme koşulu",
+    "current_prompt": "K-11 Trailing Stop: \nPozisyon zirveden 2×ATR aşağı düşerse trailing stop tetiklenir.\nTek günlük şok hareketinde bile tetiklenir.",
+    "fitness": null,
+    "last_modified": null
+  },
+  "K-11_partial_sell": {
+    "version": 1,
+    "description": "Kısmi kâr alma tetikleme koşulu",
+    "current_prompt": "K-11 Kısmi Kâr Alma:\nKatman 1: RSI 70+ VE kâr %15+ → trailing stop aktif\nKatman 2: RSI 80+ VEYA (RSI 75+ + negatif div/20SMA altı) → %25-30 sat\nKatman 3: 50SMA altı kapanış VEYA chandelier trailing → TAM ÇIK",
+    "fitness": null,
+    "last_modified": null
+  },
+  "K-13_vix_threshold": {
+    "version": 1,
+    "description": "VIX bazlı pozisyon boyutu",
+    "current_prompt": "K-13 VIX Kuralı:\nFaydalanıcı sektörler (savunma, enerji, altın): VIX 28'e kadar tam pozisyon\nDuyarlı sektörler (tech, growth): VIX 22'den itibaren yarım pozisyon\nVIX>35: tüm yeni girişler dur",
+    "fitness": null,
+    "last_modified": null
+  },
+  "K-04_entry_filter": {
+    "version": 1,
+    "description": "Giriş filtresi - SMA ve RSI",
+    "current_prompt": "K-04 Giriş Filtresi:\nStandart: Giriş fiyatı SMA50 üstünde olmalı\nİstisna: RSI<30 + stabilizasyon + pozitif katalizör → çeyrek pozisyon\nYasak: SMA50+SMA200 altı + insider satış yoğun → giriş yok",
+    "fitness": null,
+    "last_modified": null
+  },
+  "swing_rsi_range": {
+    "version": 1,
+    "description": "Swing giriş RSI aralığı",
+    "current_prompt": "Swing Giriş RSI:\nRSI 40-65 arası giriş bölgesi\nRSI<40: oversold bounce için çeyrek pozisyon\nRSI>65: momentum trade sadece güçlü trend varlığında",
+    "fitness": null,
+    "last_modified": null
+  }
+}

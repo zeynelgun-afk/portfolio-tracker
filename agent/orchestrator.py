@@ -49,6 +49,11 @@ from rule_updater import run_weekly_rule_review, get_applied_changes_summary
 from dry_run_manager import run_dry_run_check
 from trade_feedback import run_auto_feedback
 from screener_optimizer import run_screener_optimization
+from darwin_evolution import (
+    run_evolution_cycle,
+    evaluate_evolution_results,
+    get_evolution_summary,
+)
 
 REPO_ROOT = Path(__file__).parent.parent
 TR_TZ     = pytz.timezone("Europe/Istanbul")
@@ -254,7 +259,7 @@ def run_monitor(ctx: dict):
         print("[Orkestratör] İzleme tamamlandı, uyarı yok.")
 
 def run_weekly(ctx: dict):
-    """Pazar günü haftalık derin analiz + öğrenme döngüsü."""
+    """Pazar günü haftalık derin analiz + öğrenme + Darwin evrimi."""
     print("[Orkestratör] Haftalık mod çalışıyor...")
 
     learning_ctx  = build_weekly_learning_context()
@@ -265,7 +270,14 @@ def run_weekly(ctx: dict):
     applied_log   = get_applied_changes_summary()
     screener_rpt  = run_screener_optimization()
 
-    # Dry-run kontrolü — süre dolan önerileri değerlendir
+    # Darwin — önce test sonuçlarını değerlendir (commit/revert)
+    evo_results   = evaluate_evolution_results()
+
+    # Darwin — yeni evrim döngüsü çalıştır
+    evo_cycle     = run_evolution_cycle(force=False)
+    evo_summary   = get_evolution_summary()
+
+    # Dry-run kontrolü
     dry_run_rpt   = run_dry_run_check(backtest)
 
     prompt = f"""
@@ -284,6 +296,9 @@ def run_weekly(ctx: dict):
 Son uygulanan değişiklikler:
 {applied_log}
 
+Darwin Evrim Durumu:
+{evo_summary}
+
 Dry-run değerlendirmesi:
 {dry_run_rpt}
 
@@ -291,15 +306,13 @@ Dry-run değerlendirmesi:
 1. Portföy özeti: en iyi/kötü pozisyon, genel performans
 2. Risk: konsantrasyon, korelasyon, drawdown
 3. Hangi K-kuralı bu hafta kritik rol oynadı?
-4. Screener optimizasyonuna göre filtre değişikliği gerekiyor mu?
-5. Tezlerde değişen bir şey var mı?
-6. Gelecek hafta için 3 kritik izleme noktası
-7. Kural/filtre önerisi: BACKTEST GEREKLİ — [param]: [eski] → [yeni] | [gerekçe]
+4. Darwin evrim sonuçları: hangi kural commit/revert edildi? Neden?
+5. Screener optimizasyonuna göre filtre değişikliği gerekiyor mu?
+6. Tezlerde değişen bir şey var mı?
+7. Gelecek hafta için 3 kritik izleme noktası
 8. Bu haftadan 2 somut ders
 
 Detaylı Türkçe analiz. Spekülatif önerilere BACKTEST GEREKLİ işareti koy.
-KURAL ÖNERİSİ FORMAT: BACKTEST GEREKLİ — [param_adı]: [eski_değer] → [yeni_değer] | [gerekçe]
-İzin verilen parametreler: rsi_k11_katman1, rsi_k11_katman2, atr_katsayi, swing_max_gun
 """
 
     response = get_claude_decision(prompt, mode="weekly")
