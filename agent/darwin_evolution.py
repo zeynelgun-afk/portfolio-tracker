@@ -464,7 +464,7 @@ def run_evolution_cycle(force: bool = False) -> dict:
     """
     print("[Darwin] Evrim döngüsü başlatılıyor...")
 
-    # Son evrim ne zaman çalıştı?
+    # Son evrim ne zaman çalıştı? (Her 2 iş gününde bir çalışır)
     evo_log_path = MEMORY_DIR / "evolution_log.json"
     evo_log = {"entries": []}
     if evo_log_path.exists():

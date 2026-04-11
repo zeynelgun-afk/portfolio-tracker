@@ -90,6 +90,8 @@ jobs:
           git add \
             data/portfolios/*.json \
             data/swing/active.json \
+            data/buy_candidates.json \
+            data/macro_intelligence.json \
             data/swing/closed.json \
             data/swing/status.json \
             data/transactions.csv \

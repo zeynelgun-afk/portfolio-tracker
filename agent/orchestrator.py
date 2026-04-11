@@ -78,6 +78,19 @@ from multi_cohort import (
 )
 from swing_manager import run_swing_morning_check, get_swing_report
 try:
+    from macro_intelligence import run_macro_intelligence
+    from opportunity_finder import find_candidates
+    from execution_engine import (
+        buy_position, sell_position, deploy_cash,
+        get_portfolio_status
+    )
+except ImportError as _ie:
+    print(f"[Orchestrator] Modül yüklenemedi: {_ie}")
+    run_macro_intelligence = find_candidates = None
+    buy_position = sell_position = deploy_cash = None
+    get_portfolio_status = None
+
+try:
     from k_engine import run_entry_checks, run_exit_checks
 except ImportError:
     run_entry_checks = run_exit_checks = None
@@ -220,8 +233,60 @@ def collect_context(mode: str) -> dict:
 # ── Mod çalıştırıcıları ───────────────────────────────────────────────────────
 
 def run_morning(ctx: dict):
-    """Sabah analizi — piyasa açılmadan önce."""
+    """
+    Sabah analizi — piyasa açılmadan önce (UTC 13:00 = TR 16:00).
+    1. Makro zeka: temalar, sektör rotasyonu, hikaye tespiti
+    2. Fırsat taraması: temalara uygun hisse adayları + puanlama
+    3. Buy list oluştur (seans açılışında hazır olsun)
+    4. Sabah raporu yaz + git push + Telegram
+    """
     print("[Orkestratör] Sabah modu çalışıyor...")
+
+    # ── MAKRO ZİYASAL ZEKA ──────────────────────────────────────────────────
+    macro_ctx = {}
+    buy_candidates = []
+
+    if run_macro_intelligence:
+        try:
+            print("[Sabah] Makro tema analizi...")
+            # VIX al
+            import requests as _req
+            try:
+                vix_r = _req.get("https://query1.finance.yahoo.com/v8/finance/chart/%5EVIX",
+                                  headers={"User-Agent": "Mozilla/5.0"}, timeout=5)
+                vix = float(vix_r.json()["chart"]["result"][0]["meta"]["regularMarketPrice"])
+            except Exception:
+                vix = 20.0
+
+            macro_ctx = run_macro_intelligence(vix=vix)
+
+            # Fırsat taraması
+            temalar = macro_ctx.get("dominant_temalar", [])
+            if temalar and find_candidates:
+                print(f"[Sabah] {len(temalar)} tema için hisse aranıyor...")
+                # Tüm portföylerdeki mevcut sembolleri topla
+                all_syms = []
+                for pf in ["growth","income","balanced","dividend"]:
+                    try:
+                        pf_data = get_portfolio_status(pf) if get_portfolio_status else {}
+                        all_syms.extend(pf_data.get("semboller", []))
+                    except Exception:
+                        pass
+
+                buy_candidates = find_candidates(temalar, vix=vix,
+                                                  mevcut_pozisyonlar=all_syms)
+                print(f"[Sabah] {len(buy_candidates)} alım adayı hazır")
+        except Exception as e:
+            print(f"[Sabah] Makro zeka hatası: {e}")
+
+    # Buy list'i session state'e yaz (monitor okuyacak)
+    _update_session_state("buy_list", {
+        "tarih":      datetime.now(TR_TZ).isoformat(),
+        "adaylar":    buy_candidates[:10],
+        "vix":        macro_ctx.get("vix", 20),
+        "piyasa_mod": macro_ctx.get("piyasa_modu", "nötr"),
+    })
+
 
     # Bekleyen tahminleri skorla (her sabah)
     scored = score_pending_predictions()
@@ -395,6 +460,41 @@ KESİN / MUHTEMEL / SPEKÜLATİF etiket kullan. Küçük harf Türkçe.
     send_private_telegram(msg)
     print("[Orkestratör] Kapanış yorumu gönderildi.")
 
+    # ── OTOMATİK ÖZ-GELİŞİM (her 2 iş günü) ──────────────────────────────
+    try:
+        from darwin_evolution import run_evolution_cycle, get_evolution_summary
+        from prompt_evolver import sync_all_evolutions
+        evo_result = run_evolution_cycle()
+        if evo_result and evo_result.get("changed"):
+            sync_all_evolutions()
+            evo_msg = (
+                f"🧬 *Darwin Evrim*\n"
+                f"Kural: {evo_result.get('rule','?')} v{evo_result.get('version','?')}\n"
+                f"Değişiklik: {evo_result.get('change_summary','')[:100]}"
+            )
+            send_private_telegram(evo_msg)
+            print(f"[Darwin] Evrim tamamlandı: {evo_result.get('rule','?')}")
+    except Exception as e:
+        print(f"[Darwin] Kapanış evrim hatası: {e}")
+
+    # ── GÜN SONU PORTFÖY ÖZET ────────────────────────────────────────────────
+    try:
+        toplam = 0
+        for pf in ["growth","income","balanced","dividend"]:
+            p = REPO_ROOT / "data" / "portfolios" / f"{pf}.json"
+            if p.exists():
+                d = json.load(open(p))
+                toplam += float(d.get("toplam_deger", 0) or 0)
+
+        ozet_msg = (
+            f"📊 *Gün Sonu Portföy*\n"
+            f"Toplam: ${toplam:,.0f}\n"
+            f"Tarih: {datetime.now(TR_TZ).strftime('%d %b %Y')}"
+        )
+        send_private_telegram(ozet_msg)
+    except Exception:
+        pass
+
 
 def _commit_swing_changes():
     """Swing JSON değişikliklerini git'e commit eder."""
@@ -501,11 +601,20 @@ def run_monitor(ctx: dict):
     swing_exits = _check_swing_exits(market)
     aksiyonlar.extend(swing_exits)
 
-    # ── 2. SWING GİRİŞ KONTROL ───────────────────────────────────────────────
+    # ── 2. PORTFÖY ÇIKIŞ KONTROL (stop + kısmi kâr) ─────────────────────────
+    portfolio_exits = _check_portfolio_exits(market)
+    aksiyonlar.extend(portfolio_exits)
+
+    # ── 3. SWING GİRİŞ KONTROL ───────────────────────────────────────────────
     # FAZ_1: İlk 30dk gap stabilizasyonu beklenir, FAZ_2'de giriş yapılır
     if faz in ("FAZ_2", "FAZ_3"):
         swing_entries = _check_swing_entries()
         aksiyonlar.extend(swing_entries)
+
+    # ── 4. PORTFÖY FIRSAT EXECUTION (sabah buy listinden) ─────────────────
+    if faz == "FAZ_2":
+        portfolio_entries = _execute_portfolio_opportunities(faz, market)
+        aksiyonlar.extend(portfolio_entries)
 
     # ── FAZ_1: AÇILIŞ KONTROL ────────────────────────────────────────────────
     if faz == "FAZ_1":
@@ -615,6 +724,166 @@ def _check_swing_exits(market: dict) -> list[str]:
                 f"Neden: {k.get('cikis_nedeni','?')} | P/L: {pnl:+.1f}%\n"
                 f"→ {k.get('adet','?')} adet SATIN"
             )
+
+    return aksiyonlar
+
+
+def _execute_portfolio_opportunities(faz: str, market: dict) -> list:
+    """
+    Sabah buy listinden portföylere alım yapar.
+    FAZ_1: İlk 30dk — sadece izle, giriş yok (gap stabilizasyonu)
+    FAZ_2: Onaylanan fırsatları execute et
+    FAZ_3: Sadece mevcut pozisyon yönetimi
+    """
+    if faz == "FAZ_1" or not buy_position or not get_portfolio_status:
+        return []
+
+    # Session state'ten buy list'i oku
+    state_path = REPO_ROOT / "data" / "session_state.json"
+    if not state_path.exists():
+        return []
+
+    try:
+        state = json.load(open(state_path))
+        buy_list = state.get("buy_list", {}).get("adaylar", [])
+        piyasa_mod = state.get("buy_list", {}).get("piyasa_mod", "nötr")
+    except Exception:
+        return []
+
+    if not buy_list:
+        return []
+
+    aksiyonlar = []
+
+    for aday in buy_list[:5]:  # Seans başına max 5 aday değerlendir
+        sym     = aday.get("symbol", "")
+        portföy = aday.get("portföy", "growth")
+        stop    = float(aday.get("stop", 0))
+        target  = float(aday.get("target", 0))
+        reason  = aday.get("reason", "")
+        tema    = aday.get("tema", "")
+
+        # Canlı fiyat
+        q = market.get(sym, {})
+        price = float(q.get("price") or q.get("son_fiyat") or 0)
+        if not price:
+            continue
+
+        # Fiyat sabah önerilen seviyeye yakın mı? (%2 tolerans)
+        sabah_fiyat = float(aday.get("price", price))
+        if abs(price - sabah_fiyat) / sabah_fiyat > 0.03:
+            print(f"[Execution] {sym}: fiyat çok kaydı (sabah ${sabah_fiyat:.2f} → şimdi ${price:.2f})")
+            continue
+
+        # Stop güncelle (canlı fiyatla)
+        if price < stop:
+            print(f"[Execution] {sym}: fiyat stop altına geçmiş, atlandı")
+            continue
+
+        # K-engine son kontrol (canlı VIX ile)
+        try:
+            import requests as _req
+            vix_r = _req.get("https://query1.finance.yahoo.com/v8/finance/chart/%5EVIX",
+                              headers={"User-Agent":"Mozilla/5.0"}, timeout=5)
+            vix = float(vix_r.json()["chart"]["result"][0]["meta"]["regularMarketPrice"])
+        except Exception:
+            vix = state.get("buy_list", {}).get("vix", 20)
+
+        if run_entry_checks:
+            k_res = run_entry_checks(sym, vix=vix, base_size=5000)
+            if not k_res["go"]:
+                print(f"[Execution] {sym} K-engine veto: {k_res['fail_reason']}")
+                continue
+
+        # Portföy durumu
+        status = get_portfolio_status(portföy)
+        if status["slot"] <= 0:
+            print(f"[Execution] {portföy} dolu, {sym} atlandı")
+            continue
+
+        # Alım miktarı: nakit / kalan slot, max $15K
+        nakit = status["nakit"]
+        slot  = status["slot"]
+        tutar = min(nakit * 0.25, 15000, nakit / max(slot, 1))
+        if tutar < 1000:
+            continue
+
+        result = buy_position(sym, portföy, tutar, price, stop, target,
+                               reason, tema)
+        if result["ok"]:
+            aksiyonlar.append(
+                f"🟢 *ALIŞ* [{portföy.upper()}]\n"
+                f"{sym} {result['adet']} adet @${price:.2f}\n"
+                f"Stop: ${stop:.2f} | Hedef: ${target:.2f}\n"
+                f"Tema: {tema} | ${result['tutar']:,.0f}"
+            )
+            # Buy list'ten çıkar (bir kez execute et)
+            buy_list = [a for a in buy_list if a.get("symbol") != sym]
+            state["buy_list"]["adaylar"] = buy_list
+            try:
+                json.dump(state, open(state_path,"w"), ensure_ascii=False, indent=2)
+            except Exception:
+                pass
+
+    return aksiyonlar
+
+
+def _check_portfolio_exits(market: dict) -> list:
+    """
+    K-06, K-11, K-04 SMA200 ihlali, tez bozulması için portföy çıkışları.
+    """
+    if not sell_position:
+        return []
+
+    aksiyonlar = []
+
+    for pf_name in ["growth","income","balanced","dividend"]:
+        pf_path = REPO_ROOT / "data" / "portfolios" / f"{pf_name}.json"
+        if not pf_path.exists():
+            continue
+
+        try:
+            data = json.load(open(pf_path))
+        except Exception:
+            continue
+
+        for pos in data.get("pozisyonlar", []):
+            sym    = pos.get("sembol","")
+            stop   = float(pos.get("stop_loss") or 0)
+            mal    = float(pos.get("maliyet_baz") or 0)
+            q      = market.get(sym, {})
+            price  = float(q.get("price") or pos.get("guncel_fiyat") or mal)
+
+            if not price or not stop:
+                continue
+
+            pnl = (price - mal) / mal * 100 if mal else 0
+
+            # K-06: Stop tetiklendi
+            if price <= stop:
+                result = sell_position(sym, pf_name,
+                                       f"K-06 stop tetiklendi ${price:.2f}≤${stop:.2f}",
+                                       pct=100, price=price)
+                if result["ok"]:
+                    aksiyonlar.append(
+                        f"🔴 *K-06 STOP* [{pf_name.upper()}]\n"
+                        f"{sym} @${price:.2f} | P/L: {pnl:+.1f}%\n"
+                        f"→ *SATIN {result['adet']} ADET*"
+                    )
+                continue
+
+            # K-11: RSI 80+ VE kâr %15+ → kısmi satış
+            rsi = float(q.get("rsi") or 50)
+            if rsi >= 80 and pnl >= 15:
+                result = sell_position(sym, pf_name,
+                                       f"K-11 katman 2: RSI {rsi:.0f} + kâr %{pnl:.1f}",
+                                       pct=25, price=price)
+                if result["ok"]:
+                    aksiyonlar.append(
+                        f"💰 *K-11 KISMİ KÂR* [{pf_name.upper()}]\n"
+                        f"{sym} %25 @${price:.2f} | kâr %{pnl:.1f}%\n"
+                        f"→ *SATIN {result['adet']} ADET*"
+                    )
 
     return aksiyonlar
 
