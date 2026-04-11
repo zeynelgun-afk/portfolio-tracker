@@ -331,10 +331,9 @@ def run_closing(ctx: dict):
     """Kapanış yorumu — piyasa kapandıktan sonra."""
     print("[Orkestratör] Kapanış modu çalışıyor...")
 
-    # Swing değişikliği varsa git'e kaydet
+    # Swing flag'ini temizle (workflow zaten commit ediyor)
     flag = REPO_ROOT / "data" / ".swing_updated"
     if flag.exists():
-        _commit_swing_changes()
         flag.unlink()
 
     # Swing günlük özeti

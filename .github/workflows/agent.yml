@@ -25,7 +25,7 @@ on:
           - weekly
 
 permissions:
-  contents: read  # SADECE OKU — Phase 1'de yazma yok
+  contents: write  # Yazma izni — JSON + CSV güncellemeleri için
 
 jobs:
   agent:
@@ -35,6 +35,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 1
 
       - name: Python kurulum
         uses: actions/setup-python@v4
@@ -42,16 +45,19 @@ jobs:
           python-version: '3.11'
 
       - name: Bağımlılıklar
-        run: pip install anthropic requests pytz
+        run: pip install anthropic requests pytz beautifulsoup4
+
+      - name: Git kimlik
+        run: |
+          git config user.name "Finzora Agent"
+          git config user.email "zeynelgun@users.noreply.github.com"
 
       - name: Modu belirle
         id: mode
         run: |
-          # Manuel tetiklemede input'u kullan
           if [ -n "${{ github.event.inputs.mode }}" ]; then
             echo "mode=${{ github.event.inputs.mode }}" >> $GITHUB_OUTPUT
           else
-            # Saate göre otomatik tespit
             HOUR=$(date -u +%H)
             MIN=$(date -u +%M)
             if [ "$HOUR" = "13" ] && [ "$MIN" = "00" ]; then
@@ -75,3 +81,32 @@ jobs:
           RAPIDAPI_KEY:           ${{ secrets.RAPIDAPI_KEY }}
           AGENT_MODE:             ${{ steps.mode.outputs.mode }}
           PYTHONUNBUFFERED:       "1"
+
+      - name: Değişiklikleri kaydet
+        run: |
+          git pull --rebase origin main || true
+          git add \
+            data/portfolios/*.json \
+            data/swing/active.json \
+            data/swing/closed.json \
+            data/swing/status.json \
+            data/transactions.csv \
+            data/watchlist.json \
+            data/summary.json \
+            agent/memory/*.json \
+            data/premarket_gaps.json \
+            data/swing_entry_signals.json \
+            data/alpha_scan_*.json \
+            data/.swing_updated \
+            reports/ 2>/dev/null || true
+          
+          MODE="${{ steps.mode.outputs.mode }}"
+          ZAMAN=$(date -u '+%Y-%m-%d %H:%M UTC')
+          
+          if git diff --staged --quiet; then
+            echo "Değişiklik yok — commit atlanıyor"
+          else
+            git commit -m "[Agent/$MODE] Otomatik güncelleme — $ZAMAN"
+            git push origin main
+            echo "✅ Repo güncellendi"
+          fi
