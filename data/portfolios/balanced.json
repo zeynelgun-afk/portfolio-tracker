@@ -26,7 +26,8 @@
       "agirlik_yuzde": 16.02,
       "maliyet_bazis": 67.29,
       "zarar_kes": 64.89,
-      "cb_kaynak": "transactions-2026-02-17"
+      "cb_kaynak": "transactions-2026-02-17",
+      "stop_loss": 64.01
     },
     {
       "sembol": "DUK",
@@ -92,10 +93,11 @@
       "hedef_fiyat": 106.0,
       "gunluk_degisim_yuzde": 0,
       "son_guncelleme": "2026-04-10T21:33:12.878188",
-      "agirlik_yuzde": 11.14
+      "agirlik_yuzde": 11.14,
+      "stop_loss": 90.14
     }
   ],
-  "son_guncelleme": "2026-04-10T21:33:12.878188",
+  "son_guncelleme": "2026-04-11T15:06:33.969150",
   "toplam_deger": 112297.13,
   "toplam_getiri_yuzde": 12.3,
   "transactions": [
