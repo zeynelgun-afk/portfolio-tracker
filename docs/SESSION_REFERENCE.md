@@ -133,7 +133,7 @@ günlük toplam FMP bütçesi (tüm fazlar): ~130-150 call. dakikalık limit 2,5
       {"sembol": "", "tema": "", "ichimoku": "4/4", "stop": 0, "hedef": 0, "karar": "giriş | bekle | geç"}
     ],
     "go_no_go_sonuclari": {
-      "SYMBOL": {"gecenler": 14, "toplam": 16, "failed": ["K-17", "K-18"]}
+      "SYMBOL": {"gecenler": 14, "toplam": 15, "failed": ["K-17"]}
     },
     "faz3_icin_notlar": []
   },

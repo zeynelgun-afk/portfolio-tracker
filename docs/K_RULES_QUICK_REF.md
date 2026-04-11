@@ -22,7 +22,7 @@
 | **K-04** | SMA50+SMA200 altı | giriş yok (RSI<30 istisnası hariç), SMA50+SMA200 altı + insider yoğun → mutlak yasak |
 | **K-05** | swing pozisyonu için earnings ≤2 iş günü | tam çıkış, exception yok, binary risk alma |
 | **K-13** v4.1 | VIX bantları × sektör kategorisi | 4 bant × 2 kategori matrisi (faydalanıcı/duyarlı) — altta tam tablo |
-| **K-13b** | VIX 28+ duyarlı sektör | ichimoku 4/4 şartıyla çeyrek pozisyon istisnası, stop sadece 2×ATR (%5 taban yok) |
+| **K-13b** | VIX 28+ duyarlı sektör | ichimoku 4/4 şartıyla çeyrek pozisyon istisnası, stop chandelier 3×ATR (%5 taban yok — VIX yüksek olduğu için geniş stop gerekli) |
 | **K-14** | drawdown fren aktif | yeni swing girişi yok (A-kalite istisna), ortam testi: VIX<22 + SPY>SMA50 |
 | **K-15a** | RSI<35 oversold | 1 gün teyit bekle (mevcut pozisyon için değil, sadece yeni giriş) |
 | **K-15b** | momentum hisse (3ay >%30 + P/E neg/>50) | `scripts/k15b_dilution_check.py SYMBOL` zorunlu |
@@ -35,7 +35,7 @@
 | kural | kısa tetik | ana aksiyon |
 |---|---|---|
 | **K-06** | stop tetiklendi | %100 çık, override YASAK, duygusal karar yok, K-09 ile sıralı |
-| **K-06 giriş stop** | ilk giriş | `max(2×ATR(14), %5)` — sabit %5 tek başına yetersiz, K-13b modunda sadece 2×ATR |
+| **K-06 giriş stop** | ilk giriş | `max(2×ATR(14), %5)` — sabit %5 tek başına yetersiz, K-13b modunda chandelier 3×ATR (sabit %5 taban yok) |
 | **K-07** | chandelier trailing tetiklendi | %100 çık, sadece yukarı çekilir — matematik tek yön |
 | **K-07 kâr kilidi** | pozisyon kârda | kâr <%7 → 3×ATR / %7-15 → 2×ATR / %15+ → 1.5×ATR |
 | **K-09** | fiyat stop'a <%2 | `scripts/k09_proximity_check.py` — 4 kontrol (RSI/hacim/SPY+VIX/sektör) → 3+ negatif=EXIT_NOW, 2=WAIT, 0-1=TUT |

@@ -259,7 +259,7 @@ her pazar günü raporunda:
 - `historical-price-eod`: teknik analiz (SMA, momentum)
 - `analyst-estimates`: tahmin revizyonları
 - `stock-dividend-calendar`: temettü geçmişi ve takvim
-- `insider-trading`: K-18 insider kontrol
+- `insider-trading`: K-18 kaldırıldı (11 Nisan 2026). CEO/CFO distress satışı bağlam olarak takip edilebilir
 
 ### tarama akışı (seans içi)
 

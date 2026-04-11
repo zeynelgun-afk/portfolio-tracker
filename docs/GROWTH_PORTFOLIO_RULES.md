@@ -27,7 +27,6 @@ Rejim netleşmeden yeni pozisyon açma.
 - Hisse SMA50 üstünde (istisnasız)
 - RS (Relative Strength) sektör içinde üst %30
 - Makro rejim bu sektörü destekliyor
-- K-18: Insider kontrol yapıldı
 - K-17: Aynı sektörde aynı gün 2+ giriş yok
 
 **2.3 Pozisyon Boyutu**
@@ -70,7 +69,7 @@ Rejim netleşmeden yeni pozisyon açma.
 Şunlardan biri gerçekleşirse çık (kâr/zarar fark etmez):
 - Hisse için temel katalizör ortadan kalktı
 - Earnings miss + guidance düşürüldü
-- Insider büyük satış (K-18)
+- CEO/CFO düşüş trendinde büyük satış + K-15b kötü (bütünsel değerlendirme)
 - Sektör ETF SMA50 altına kalıcı geçiş
 - Rekabetçi tehdit tezi geçersiz kıldı (Microsoft-AVGO örneği)
 

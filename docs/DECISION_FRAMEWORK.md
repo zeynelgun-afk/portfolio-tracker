@@ -18,7 +18,7 @@ her yeni pozisyon açmadan önce bu 10 soruyu sırasıyla geç.
 
 □ 2. stop tanımlı mı?
      chandelier (3×ATR) veya portföy stop seviyesi hesaplandı mı?
-     stop mesafesi ≥%5 mi? (aksi halde R:R bozulur)
+     stop mesafesi ≥%5 mi? (aksi halde whipsaw riski — normal volatilite stop'u tetikler)
 
 □ 3. R:R ≥ 2:1 mi?
      hedef fiyat / stop mesafesi oranı en az 2:1
@@ -30,17 +30,18 @@ her yeni pozisyon açmadan önce bu 10 soruyu sırasıyla geç.
      - duyarlı sektör → VIX 22'den itibaren yarım
      - VIX >35 → hiç giriş yok
 
-□ 5. insider temiz mi? (K-17/K-18)
-     FMP insider-trading endpoint kontrolü
-     son 90 günde büyük satış (>$5M) var mı?
+□ 5. korelasyon temiz mi? (K-17)
+     K-17 korelasyon kontrolü: scripts/k17_correlation_check.py
+     aynı tema/sektörden kaçıncı pozisyon?
+     (K-18 kaldırıldı — 11 Nisan 2026. CEO/CFO düşüş trendinde satış + K-15b kötüyse bağlam olarak değerlendir)
 
 □ 6. earnings riski var mı?
      5 gün içinde earnings açıklaması var mı?
      varsa: binary risk, K-11 erken uygula veya bekle
 
-□ 7. korelasyon uygun mu?
+□ 7. konsantrasyon uygun mu? (K-12)
      aynı alt sektörde 3'ten fazla pozisyon olacak mı? (3 portföy + swing toplam)
-     sektör exposure %30'u aşacak mı?
+     sektör exposure %40'ı aşacak mı? (K-12 sektör limiti)
 
 □ 8. nakit yeterli mi?
      giriş sonrası nakit oranı %5 altına düşecek mi?

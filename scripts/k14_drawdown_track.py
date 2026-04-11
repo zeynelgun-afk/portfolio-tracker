@@ -107,7 +107,7 @@ def main():
         send_k_alert("K-14 STOP", "SWING", msg, severity="critical")
     elif consecutive == 3:
         msg = (f"K-14 katman 2: {consecutive} ardışık zarar.\n"
-               f"Boyut %50 küçült + SADECE A-kalite (ichimoku 4/4 + sektör lider + RS pozitif + K-13 + K-17 + K-18).\n"
+               f"Boyut %50 küçült + SADECE A-kalite (ichimoku 4/4 + sektör lider + RS pozitif + K-13 + K-17).\n"
                f"Standart $10K → $5K, $5K → $2.5K\n"
                f"Son: {last_info}")
         send_k_alert("K-14 KATMAN 2", "SWING", msg, severity="critical")

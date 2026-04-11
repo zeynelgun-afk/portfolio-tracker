@@ -118,7 +118,10 @@ her iki koşul da sağlanmalı. SPY 21EMA altındaysa VEYA 21EMA düşüş eğim
 
 - XLP (temel tüketim / defansif) sektöründen swing girişi YAPILMAZ
 - kapsam: MO, PM, KO, PEP, WMT, COST ve XLP'ye dahil diğer hisseler
-- gerekçe: backtestinde XLP'den 0 kâr, 2 zarar. defansif hisseler yapısal olarak düşük volatiliteye sahip, %10 hedefe ulaşamıyor
+- gerekçe: Defansif hisseler yapısal düşük volatiliteye sahip — swing %10 hedefe ulaşamıyor
+  Nisan 2026 backtest (FMP, n=60, RSI oversold entry): XLP std sapma 3.56% vs momentum 6.32% (oran: 0.56x)
+  İç backtest (61 dönem swing sistemi): XLP'den 0 kâr, 2 zarar — hedefe ulaşamadı
+  Her iki test aynı yönde: düşük volatilite swing için elverişsiz, %10 hedef matematiksel olarak zor
 - bu kural sadece swing trade için geçerli. portföy pozisyonu olarak XLP alınabilir
 - K-13b kriz modunda da XLP'den swing girişi yapılmaz
 
@@ -131,7 +134,7 @@ sektör ETF'inin SPY'a göre relative strength'i kontrol edilir. orta vadede zay
   RS20 = (RS_bugün - RS_20gün_önce) / RS_20gün_önce × 100
   RS10 = (RS_bugün - RS_10gün_önce) / RS_10gün_önce × 100
 - kural: RS20 < 0 VE RS10 > 0 ise → GİRME (dead cat bounce riski)
-- sektör ETF eşleştirme: XLK (tech), XLC (iletişim), XLE (enerji), XLI (sanayi), XLV (sağlık), XLF (finans), XLY (tüketici isteğe bağlı)
+- sektör ETF eşleştirme (10 sektör): XLK (tech), XLC (iletişim), XLE (enerji), XLI (sanayi), XLV (sağlık), XLF (finans), XLY (tüketici isteğe bağlı), XLU (utilities), XLB (malzeme), XLRE (gayrimenkul)
 - gerekçe: 76 trade backtestinde bu kombinasyon %80 zarar oranı gösterdi (3 kâr / 12 zarar). sektör orta vadede zayıflamış ama kısa vadede sıçramış → sahte toparlanma, trend devam ediyor
 - filtre etkisi: filtresiz %47 kâr → filtre ile %54 kâr (+7 puan). 12 zarar önlendi, 3 küçük kâr kaçırıldı
 - K-13b istisnası pozisyonlarında bu filtre uygulanmaz (K-13b'nin kendi sektör ETF SMA filtresi var). diğer tüm VIX bantlarında uygulanır
@@ -143,7 +146,7 @@ K-13 v4.1 ile K-13b artık sadece duyarlı sektörlere uygulanır. faydalanıcı
 2. hissenin sektör ETF'i (XLK/XLE/XLI/XLC/XLV/XLF/XLY/XLU/XLB) hem 9EMA hem 21EMA üzerinde (**not**: XLP hisseleri K-19 gereği swing'de alınmaz, ancak XLP ETF genel piyasa sağlık göstergesi olarak kontrol edilebilir)
 3. mcap >$2B
 4. RSI 40-70
-5. K-18 insider temiz
+5. ~~K-18 kaldırıldı~~ (11 Nisan 2026 — backtest negatif kanıt, insider satış sistematik edge sağlamıyor)
 6. K-17 korelasyon >%50
 uygulama kuralları: max 2 eşzamanlı, sektör başına 1, kâr kilidi sistemi (<%7: 3×ATR, %7-15: 2×ATR, %15+: 1.5×ATR), stop: chandelier exit — normal modla aynı
 
@@ -475,7 +478,7 @@ XLP sektörüne dahil tüm hisseler otomatik dışlanır. FMP screener'dan secto
 ### seans içi / FAZ2-FAZ3
 4. stop tetiklendi mi → çık
 5. swing tarama çalıştır: FMP screener → ichimoku 4/4 filtre → karar akışı
-6. aday varsa: temel kontrol (K-18 insider, earnings tarihi) → giriş kararı
+6. aday varsa: temel kontrol (earnings tarihi, K-17 korelasyon) → giriş kararı
 
 ### seans sonrası
 7. JSON güncelle, git push

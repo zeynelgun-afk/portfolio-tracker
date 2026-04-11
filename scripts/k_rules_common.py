@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """
 Finzora AI - K Kuralları Ortak Yardımcı Modülü
-TRADING_PLAYBOOK.md K-09, K-14, K-15b, K-16, K-17, K-18, K-19, K-20 scriptleri için.
+TRADING_PLAYBOOK.md K-09, K-14, K-15b, K-16, K-17, K-19, K-20 scriptleri için.
+(K-18 kaldırıldı — 11 Nisan 2026, backtest sonucu)
 
 Kullanım (diğer k* scriptlerinden):
   from k_rules_common import fmp_get, load_portfolios, get_all_positions, send_k_alert, get_sector

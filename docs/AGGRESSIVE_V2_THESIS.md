@@ -212,7 +212,7 @@ tetikleyici olusana kadar $358K nakit korunur. acele yok.
 
 ## risk yonetimi
 
-- insider trading kontrolu: giris oncesi mutlaka FMP insider-trading endpoint kontrol (K-17/K-18)
+- insider trading kontrolu: CEO/CFO düşüş trendinde büyük satış yapıyorsa + K-15b skoru kötüyse manuel değerlendirme (K-18 kaldırıldı — 11 Nisan 2026, backtest negatif kanıt)
 - korelasyon kontrolu: ayni seansta ayni katmandan 2+ pozisyon acma
 - senaryo planlamasi: iran/fed/kazanc sezonu oncesi A/B/C senaryolari hazirla
 - kismi kar alma: K-11 (RSI 70+ ve %20+ kar) tetiklenince %50 sat
