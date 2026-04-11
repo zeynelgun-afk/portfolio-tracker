@@ -1,0 +1,27 @@
+{
+  "son_guncelleme": "2026-04-11",
+  "aktif_tema": "BILINMIYOR",
+  "onceki_tema": null,
+  "rotasyon_alarmi": false,
+  "tema_puanlari": {
+    "AI_ALTYAPI": 0,
+    "SAVUNMA_JEOPOLITIK": 0,
+    "ENERJI_HAMMADDE": 0,
+    "SAGLIK_BIOTEK": 0,
+    "FINANS_BANKALAR": 0,
+    "INSAAT_ALTYAPI": 0,
+    "TUKETICI_TICARET": 0
+  },
+  "puan_aciklamasi": {
+    "momentum": 0,
+    "katalizor": 0,
+    "vix_uyumu": 0,
+    "hareketlilik": 0,
+    "genislik": 0,
+    "sektor_rotasyonu": 0,
+    "makro_uyum": 0
+  },
+  "makro_rejim": "BILINMIYOR",
+  "spy_21ema_pozisyon": null,
+  "vix": null
+}

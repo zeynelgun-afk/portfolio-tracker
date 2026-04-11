@@ -495,3 +495,69 @@ XLP sektörüne dahil tüm hisseler otomatik dışlanır. FMP screener'dan secto
 ---
 
 *finzora ai | swing sistemi v2.3 | 6 nisan 2026*
+
+---
+
+## 12. SİSTEM GELİŞTİRMELERİ v2.3.1 → v2.4 (11 Nisan 2026)
+
+### Stepped ATR Trailing (Stop Management v2 ile entegrasyon)
+
+**ESKİ sistem:**
+```
+<%7: chandelier 3×ATR | %7-15: 2×ATR | %15+: 1.5×ATR
+```
+
+**YENİ stepped ATR:**
+```
+Kâr <%5:    3.0×ATR  (gürültü toleransı)
+Kâr %5-10:  2.5×ATR  (kâr kilidi başlıyor)
+Kâr %10-20: 2.0×ATR  (orta koruma)
+Kâr %20-35: 1.5×ATR  (agresif koruma)
+Kâr >%35:   1.0×ATR  (maksimum kilitlenme)
+```
+
+**VIX bazlı ilk stop çarpanı:**
+| VIX | ATR çarpanı |
+|-----|------------|
+| <22 | 2.0× (normal) |
+| 22-28 | 2.5× |
+| 28-35 | 3.0× |
+| >35 | 3.5× / giriş yok |
+
+### Piyasa Rejimi Adaptasyonu (YENİ)
+
+Swing sistemi artık piyasa rejimini takip eder:
+
+```
+GÜÇLÜ BULL: Momentum stratejileri beklenen getiri 0.4R+
+NÖTR/YAN TREND: Beklenti düşer (0.1R veya negatif) → sıklık azalt
+ZAYIF BEAR: K-14 devreye girer → swing boyutunu %50 küçült
+```
+
+Araştırma kaynağı: "A momentum strategy that produced 2.1R average in trending market might produce 0.8R in choppy conditions." (TradeZella 2026)
+
+Bu nedenle **SPY rejim durumu** swing karar ağacına eklendi:
+
+```
+SPY 21EMA üstü + eğim ↗ + VIX <22 → FULL SWING MODE
+SPY 21EMA üstü + eğim → + VIX 22-28 → HALF SWING (yarım pozisyon)
+SPY 21EMA altı OR VIX 28+ → MINIMAL SWING (sadece A-kalite, K-13b)
+```
+
+### Çoklu Teyit Gereksinimi (YENİ)
+
+Araştırma: "Combining multiple confirmation signals reduces false positives by 40-60%."
+
+Mevcut 4/4 ichimoku + SPY master switch'e ek olarak, yüksek piyasa belirsizliğinde (VIX >24) **çoklu teyit** aranır:
+
+- Tema puanı >50 (THEMATIC_SYSTEM.md)
+- Sektör ETF RS20 pozitif (K-20 tersi — güçlü sektör)
+- Ichimoku 4/4 + volume 1.3x+
+
+### Seans İçi Tarama (YENİ)
+
+Tetikleyiciler oluşursa (tema ETF %2+ hareket, büyük haber) seans içinde ek tarama yapılır. Detay: `docs/SECTOR_AGENTS.md` — "Seans içi tema taraması" bölümü.
+
+---
+
+*swing sistemi v2.4 | 11 nisan 2026*

@@ -49,8 +49,8 @@
 | **K-11 katman 2** | RSI 80+ VEYA (RSI 75+ + negatif div/20SMA altı) | %25-30 kısmi sat |
 | **K-11 katman 3** | 50SMA altı kapanış VEYA chandelier trailing | tam çık |
 | **K-12 Dengeli** | tek hisse > %25 | küçült |
-| **K-12 Agresif** | tek hisse > %20 | küçült |
-| **K-12 Temettü** | tek hisse > %15 | küçült |
+| **K-12 Agresif** | tek hisse > %20 (max 6 poz) | küçült |
+| **K-12 Temettü** | tek hisse > %15 (max 6 poz) | küçült |
 | **K-12 sektör/tema** | toplam $600K bazlı > %40 | en zayıfı kes |
 | **K-16** | portföy pozisyonu earnings 7g öncesi | `scripts/k16_sell_the_news_score.py` — skor 2-3 → %25, skor 4-5 → %50 |
 
@@ -115,4 +115,30 @@ not: script'ler `_QUIET_MODE=True` varsayılanı ile çalışır. info severity 
 ---
 
 > son güncelleme: 11 nisan 2026 | finzora ai | K-18 kaldırıldı (backtest), K-19 argümanı güncellendi
+
+---
+
+## YENİ DÖKÜMANLAR (11 Nisan 2026)
+
+| Döküman | İçerik |
+|---------|--------|
+| `docs/THEMATIC_SYSTEM.md` | Tema bazlı portföy rotasyonu, TEMA_PUANI sistemi, 7 ana tema |
+| `docs/SECTOR_AGENTS.md` | Araştırma ajanları, supply chain haritası, conviction scorer |
+| `docs/STOP_MANAGEMENT_V2.md` | Stepped ATR trailing, VIX bazlı çarpan, confluence stop |
+| `docs/DECISION_ARCHITECTURE_V2.md` | 3 katmanlı karar sistemi, rejim adaptasyonu, bias korumaları |
+
+## HEDEFLER (11 Nisan 2026 itibaren)
+
+| Portföy | Sermaye | Max Poz | Hedef |
+|---------|---------|---------|-------|
+| Dengeli | 00K | **6** | **%50+/yıl** |
+| Agresif | 00K | **6** | **%80+/yıl** |
+| Temettü | 00K | **6** | **%25+/yıl + temettü** |
+| Swing | Ayrı | 5 | Aylık pozitif beklenti |
+
+## FMP API LİMİTİ DÜZELTMESİ
+
+~~Günlük 2,500 call~~ **YANLIŞ** — Gerçek limit: **Dakikada 2,500 call, günlük limitsiz.**
+Bu kritik bir düzeltmedir — API kullanımını gereksiz kısıtlamak zorunda değiliz.
+
 > değişiklik gerektiren güncellemeler doğrudan `docs/TRADING_PLAYBOOK.md`'de yapılır, bu dosya senkron tutulur.

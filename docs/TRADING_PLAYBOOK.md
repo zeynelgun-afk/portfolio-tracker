@@ -313,9 +313,11 @@ LİTERATÜR:
 KAPSAM AYRIMI: hisse limitleri PORTFÖY BAZLI, sektör limiti TOPLAM bazlı
 
 HİSSE LİMİTLERİ (her portföy kendi değeri içinde):
-- Dengeli (max 6 pozisyon, $100K): tek hisse max %25 portföy ağırlığı
-- Agresif (max 10 pozisyon, $400K): tek hisse max %20 portföy ağırlığı
-- Temettü (max 15 pozisyon, $100K): tek hisse max %15 portföy ağırlığı
+- Dengeli (max 6 pozisyon, $100K): tek hisse max %25 portföy ağırlığı | Hedef: %50+/yıl
+- Agresif (max 6 pozisyon, $400K): tek hisse max %20 portföy ağırlığı | Hedef: %80+/yıl
+- Temettü (max 6 pozisyon, $100K): tek hisse max %15 portföy ağırlığı | Hedef: %25+/yıl + temettü
+
+NOT: Agresif portföy max pozisyon 10'dan 6'ya indirildi (11 Nisan 2026). Odak kalitesi artırmak için. Temettü max 15'ten 6'ya indirildi — tema odaklı yüksek FCF hisseler yeterli.
 
 GEREKÇE (pozisyon sayısı × eşit ağırlık matematiği):
 - Dengeli 6 pozisyon eşit ağırlık = %16.67 → %25 limit (eşit + esneklik)
