@@ -72,15 +72,37 @@
       },
       "risk_on_genel": {
         "birincil": [
-          "Momentum liderleri (RS sıralaması)"
+          "En güçlü RS hisseleri",
+          "Momentum liderleri"
         ],
         "ikincil": [
-          "Earnings beat hisseleri"
+          "Earnings beat hisseleri",
+          "Küçük şirketler (IWM)"
         ],
         "kacin": [
-          "Defansifler"
+          "Defansifler",
+          "Utility"
         ],
-        "ornekler": "Sakin piyasa → en güçlü RS hisseleri"
+        "ornekler": "Sakin yükselen piyasa → RS sıralaması en üstteki hisseler"
+      },
+      "risk_off": {
+        "birincil": [
+          "Savunma (ITA, LMT, RTX, KTOS)",
+          "Altın (GLD, RGLD, NEM)",
+          "Enerji (XLE, CVX, OXY)"
+        ],
+        "ikincil": [
+          "Inverse ETF (SH, PSQ, SQQQ)",
+          "Siber güvenlik (PANW, CRWD)",
+          "Dolar endeksi (UUP)"
+        ],
+        "kacin": [
+          "Growth tech",
+          "Tüketim döngüsel",
+          "Küçük şirketler (IWM)"
+        ],
+        "ornekler": "Piyasa düşüşü = yön değiştir. Savunma/altın/enerji al, gerekirse inverse ETF",
+        "not": "Risk-off pasif bekleme değil. Para hep bir yere akıyor — o yeri bul."
       }
     },
     "rotasyon_kurallari": {
@@ -102,7 +124,15 @@
       "İran/savaş → savunma ve enerji, AI tezini geçici sat",
       "K-13 v4.1 VIX eşiklerini aşmadıkça tam pozisyon hakkı var",
       "Rejimleri sürekli izle, haber akışı → 1./2./3. derece etki zinciri"
-    ]
+    ],
+    "aksiyon_ozeti": {
+      "jeopolitik_kriz": "Savunma + Enerji + Altın. AI tezini geçici koru ama yeni AI girişi yapma.",
+      "ai_boom": "AI pozisyonları tut + yeni AI fırsatları tara.",
+      "faiz_dusus": "Growth hisseleri al — PLTR, APP, SQ, küçük şirketler.",
+      "tarife_gerilimi": "İç üretim + hammadde (FCX, CLF). Çin bağlantılı tech sat.",
+      "risk_on_genel": "En güçlü RS hisselerine gir. Momentum liderlerine yüklen.",
+      "risk_off": "YÖN DEĞİŞTİR — savunma, altın, enerji. Gerekirse inverse ETF ile düşüşten kazan."
+    }
   },
   "baslangic_sermaye": 400000,
   "nakit": {

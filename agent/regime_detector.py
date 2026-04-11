@@ -127,7 +127,7 @@ def detect_regime(market: dict, sektor: dict, vix: float) -> dict:
         "faiz_dusus":       "Büyüme hisseleri (PLTR, APP, SQ) radar'ına al. AI pozisyonlar korunur.",
         "tarife_gerilimi":  "İç üretim + hammadde (FCX, CLF, NUE) tara. Çin bağlantılı tech dikkatli.",
         "risk_on_genel":    "En güçlü RS hisselerine odaklan. Momentum liderleri.",
-        "risk_off":         "Mevcut pozisyonları koru, yeni giriş yapma. K-14 aktif.",
+        "risk_off":         "YÖN DEĞİŞTİR: Savunma (ITA, LMT) + Altın (GLD, RGLD) + Enerji (XLE). Gerekirse inverse ETF (SH, PSQ). Para hep bir yere akıyor — o yeri bul.",
     }
 
     return {
