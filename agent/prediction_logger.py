@@ -331,3 +331,111 @@ def _load_log() -> dict:
 def _save_log(log: dict):
     with open(LOG_PATH, "w", encoding="utf-8") as f:
         json.dump(log, f, ensure_ascii=False, indent=2)
+
+
+# ── Gerçek Çıkış Kontrolü — v2 Düzeltmesi ─────────────────────────────────────
+# SORUN: score_pending_predictions() 5/10/14 günlük fiyatı FMP'den çekiyor.
+# Ama trade 3. günde stop-loss ile kapandıysa:
+#   → Gerçek sonuç: zarar
+#   → 5. günde fiyat iyileştiyse: sistem "başarılı tahmin" sayıyor
+# Bu Darwin fitness'ını bozar çünkü "başarılı tahmin ≠ başarılı trade".
+#
+# ÇÖZÜM: score_pending_predictions() çağrılmadan önce bu fonksiyon kontrol eder.
+# Eğer trade score_window'dan önce gerçek çıkış yaptıysa → exit P/L kullan.
+
+def find_real_exit_before(symbol: str, entry_price: float, before_date: str) -> float | None:
+    """
+    transactions.csv'den before_date'ten önce gerçekleşen çıkış P/L'ını döner.
+    Yoksa None.
+    """
+    import csv
+    tx_path = REPO_ROOT / "data" / "transactions.csv"
+    if not tx_path.exists() or float(entry_price or 0) <= 0:
+        return None
+    try:
+        with open(tx_path, encoding="utf-8") as f:
+            rows = list(csv.DictReader(f))
+        for row in rows:
+            sym    = row.get("symbol", "").upper()
+            action = row.get("action", "").upper()
+            edate  = row.get("date", "")
+            eprice = float(row.get("price", 0) or 0)
+            if sym == symbol.upper() and action in ("SELL", "SATIŞ"):
+                if edate and edate < before_date and eprice > 0:
+                    return (eprice - float(entry_price)) / float(entry_price) * 100
+    except Exception:
+        pass
+    return None
+
+
+def score_pending_predictions_v2() -> list[dict]:
+    """
+    v2: Gerçek çıkış farkında tahmin skoru.
+    Her score_window için önce transactions.csv'e bakar.
+    Erken çıkış varsa → gerçek exit P/L ile skor.
+    Yoksa → FMP'den o günkü fiyatı çek (orijinal davranış).
+    """
+    log    = _load_log()
+    today  = datetime.now(TR_TZ).strftime("%Y-%m-%d")
+    scored = []
+
+    for pred in log["tahminler"]:
+        if pred.get("durum") == "SKORLANDI":
+            continue
+
+        pred_date   = pred.get("tarih", "")[:10]
+        entry_price = pred.get("giris_fiyat")
+        symbol      = pred.get("sembol", "")
+        direction   = pred.get("yon", "")
+        magnitude   = pred.get("buyukluk", "")
+
+        if not entry_price or not symbol:
+            continue
+
+        pred_dt    = datetime.strptime(pred_date, "%Y-%m-%d")
+        all_scored = True
+
+        for window in SCORE_WINDOWS:
+            if str(window) in pred.get("skorlar", {}):
+                continue
+
+            target_date = (pred_dt + timedelta(days=window)).strftime("%Y-%m-%d")
+            if target_date > today:
+                all_scored = False
+                continue
+
+            # Önce gerçek çıkışa bak (erken stop/hedef)
+            real_exit_pnl = find_real_exit_before(symbol, entry_price, target_date)
+            if real_exit_pnl is not None:
+                score      = _calculate_score(direction, magnitude, real_exit_pnl)
+                pct_change = real_exit_pnl
+                method     = "gercek_exit"
+                real_price = float(entry_price) * (1 + real_exit_pnl / 100)
+            else:
+                # Gerçek çıkış yok → FMP'den o günkü fiyat
+                real_price = _get_price_on_date(symbol, target_date)
+                if real_price is None:
+                    all_scored = False
+                    continue
+                pct_change = (real_price - float(entry_price)) / float(entry_price) * 100
+                score      = _calculate_score(direction, magnitude, pct_change)
+                method     = "piyasa_fiyat"
+
+            pred["skorlar"][str(window)]         = score
+            pred["gercek_fiyatlar"][str(window)] = real_price
+            pred.setdefault("skor_metod", {})[str(window)] = method
+
+            print(f"[Tahmin v2] {pred.get('id','')} | {symbol} | "
+                  f"{window}g | {method}: {pct_change:+.1f}% → skor {score:+.1f}")
+
+        if all_scored and len(pred.get("skorlar", {})) == len(SCORE_WINDOWS):
+            weights   = {5: 0.2, 10: 0.3, 14: 0.5}
+            final     = sum(pred["skorlar"].get(str(w), 0) * weights[w] for w in SCORE_WINDOWS)
+            pred["son_skor"] = round(final, 3)
+            pred["durum"]    = "SKORLANDI"
+            scored.append(pred)
+
+    _save_log(log)
+    if scored:
+        print(f"[Tahmin v2] {len(scored)} tahmin skorlandı")
+    return scored

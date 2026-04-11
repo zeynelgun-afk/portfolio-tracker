@@ -207,3 +207,55 @@ Kullanım: `python conviction_scorer.py NVDA LMT XOM`
 | Conviction scorer | ✅ YENİ — Çalışıyor |
 | Adversarial debate | ✅ GENİŞLETİLDİ — BUY dahil |
 | Tema × Portföy matrisi | ✅ YENİ — Çalışıyor |
+
+---
+
+## DÜZELTMELER (v2) — 11 Nisan 2026
+
+### Hata 1 — Kilitli Kural Kaldırıldı ✅
+`rule_updater.py` içindeki `LOCKED_RULES` dict'i silindi.
+Bunun yerine **Tiered Confidence (Kademeli Güven)** sistemi eklendi:
+
+| Tier | Parametreler | Min Trade | Min Güven | Max Değişim |
+|------|-------------|-----------|-----------|-------------|
+| Normal | RSI, ATR, swing günü | 10 | 6/10 | %30 |
+| Critical | K-13 VIX, K-14 drawdown, K-17 korel. | 30 | 8/10 | %20 |
+
+Hiçbir kural değişemez değil — kritik kurallar **daha zor** değişir.
+
+### Hata 2 — Fitness Formülü Belge ↔ Kod Uyuşmazlığı ✅
+Belge `win_rate × avg_pnl` yazıyordu, kod `Sharpe × win_rate` kullanıyordu.
+Belge güncellendi: **Fitness = `Sharpe × win_rate` = `(avg_pnl / std_dev) × win_rate`**
+
+### Hata 3 — Çakışan Darwin Testleri ✅
+`find_weakest_rule()` güncellendi: `pending_test=True` olan kurallar seçim listesinden dışlanır.
+Sonuç: K-11 test altındayken Darwin K-04 seçer, aynı kural çift teste girmez.
+Tüm kurallar test altındaysa döngü ertelenir, geçerli bir mesaj döner.
+
+### Hata 4 — Tahmin Skoru / Gerçek Trade Çıkışı Uyuşmazlığı ✅
+`prediction_logger.py`'e `score_pending_predictions_v2()` eklendi.
+Her score_window için önce `transactions.csv` kontrol edilir.
+3. günde stop-loss olan trade → 5. günde fiyat iyileşse de gerçek exit P/L ile skorlanır.
+
+### Hata 5 — Takvim Günü vs. İş Günü ✅
+`darwin_evolution.py`'e `is_trading_day()` ve `count_trading_days_since()` eklendi.
+Hafta sonu Darwin çalışmaz. "5 gün" artık takvim günü değil iş günüdür.
+
+### Hata 6 — AI Teması Tek ETF Proxy ✅
+`theme_manager.py`'de `THEME_ETFS` → `THEME_BASKETS` (ağırlıklı ETF sepeti):
+```
+AI_ALTYAPI: SMH(%25) + GRID(%20) + BOTZ(%20) + SOXX(%15) + PAVE(%10) + FAN(%10)
+```
+Ayrıca iki katmanlı ölçüm:
+1. Gerçek trade P/L (`tema_portfolio_matrix.json`) — öncelikli
+2. ETF sepeti composite RS — veri yoksa yedek
+
+### Hata 7 — L3 Digest Gecikmesi ✅
+`darwin_evolution.py` içinde `_update_k_rules_digest()` artık:
+- Her evrim başlangıcında (pending_test=True kaydında)
+- Her değerlendirme sonucunda (COMMIT veya REVERT)
+anlık çağrılıyor. "Haftalık" bekleme yok.
+
+---
+
+*finzora ai | self improvement system v2 | 11 nisan 2026*

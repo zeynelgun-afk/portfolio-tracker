@@ -30,19 +30,61 @@ FMP_BASE   = "https://financialmodelingprep.com/stable"
 MEMORY_DIR.mkdir(exist_ok=True)
 
 # Tema → ETF eşleştirmesi (performans ölçümü için)
-THEME_ETFS = {
-    "AI_ALTYAPI":          "SMH",   # Semiconductor ETF
-    "SAVUNMA_JEOPOLITIK":  "ITA",   # iShares Defense ETF
-    "ENERJI_HAMMADDE":     "XLE",   # Energy ETF
-    "SAGLIK_BIOTEK":       "IBB",   # Biotech ETF
-    "FINANS_BANKALAR":     "XLF",   # Financials ETF
-    "INSAAT_ALTYAPI":      "PAVE",  # Infrastructure ETF
-    "TUKETICI_TICARET":    "XLY",   # Consumer Discretionary ETF
+# ── Tema → ETF Sepeti ────────────────────────────────────────────────────────
+# DÜZELTME (v2): Tek ETF yerine ağırlıklı ETF sepeti (composite basket)
+# Neden? Tek ETF (ör: SMH) temayı eksik temsil eder.
+#   AI_ALTYAPI yalnızca yarı iletken değil; güç, soğutma, optik, veri merkezi de içerir.
+#   Sepet ağırlıkları Agresif portföy v2 thesis'ine göre ayarlandı.
+# Öncelik: Gerçek trade P/L varsa (tema_portfolio_tracker) → ETF sepeti ikincil.
+
+THEME_BASKETS = {
+    "AI_ALTYAPI": {
+        "SMH":  0.25,   # Yarı iletken (semiconductor)
+        "GRID": 0.20,   # Güç şebekesi (power grid)
+        "BOTZ": 0.20,   # Yapay zeka & robotik
+        "SOXX": 0.15,   # Geniş yar. iletken
+        "PAVE": 0.10,   # Altyapı (veri merkezi inşaat)
+        "FAN":  0.10,   # Soğutma (fan/cooling — yakın proxy)
+    },
+    "SAVUNMA_JEOPOLITIK": {
+        "ITA":  0.40,   # iShares Defense
+        "XAR":  0.30,   # SPDR Aerospace & Defense
+        "PPA":  0.30,   # Invesco Defense
+    },
+    "ENERJI_HAMMADDE": {
+        "XLE":  0.40,   # Geniş enerji
+        "XOP":  0.30,   # Petrol üreticileri
+        "GLD":  0.20,   # Altın
+        "COPX": 0.10,   # Bakır madenciliği
+    },
+    "SAGLIK_BIOTEK": {
+        "IBB":  0.40,   # Biotech
+        "XLV":  0.35,   # Geniş sağlık
+        "ARKG": 0.25,   # Genomik/yenilikçi sağlık
+    },
+    "FINANS_BANKALAR": {
+        "XLF":  0.50,   # Geniş finansal
+        "KBE":  0.30,   # Banka ETF
+        "IAI":  0.20,   # Yatırım bankacılığı
+    },
+    "INSAAT_ALTYAPI": {
+        "PAVE": 0.50,   # Altyapı
+        "ITB":  0.30,   # Konut inşaat
+        "XHB":  0.20,   # Ev inşaatçıları
+    },
+    "TUKETICI_TICARET": {
+        "XLY":  0.50,   # Tüketici takdiri
+        "XRT":  0.30,   # Perakende
+        "MCHI": 0.20,   # Çin tüketimi (global)
+    },
 }
 
+# Geriye dönük uyumluluk — tek ETF isteyenler için (ilk ETF'i kullan)
+THEME_ETFS = {tema: list(sepet.keys())[0] for tema, sepet in THEME_BASKETS.items()}
+
 # Performans eşikleri
-WEAK_THEME_THRESHOLD = -3.0   # 4 hafta RS ortalaması bu altındaysa uyarı
-STRONG_CANDIDATE_THRESHOLD = 5.0  # Yeni tema adayı için min RS
+WEAK_THEME_THRESHOLD      = -3.0   # 4 hafta RS ortalaması bu altındaysa uyarı
+STRONG_CANDIDATE_THRESHOLD = 5.0   # Yeni tema adayı için min RS
 
 def fmp_get(endpoint, params=None):
     if params is None:
@@ -57,43 +99,109 @@ def fmp_get(endpoint, params=None):
         return None
 
 
+def _get_etf_return(symbol: str, from_date: str, to_date: str) -> float | None:
+    """Tek ETF için tarih aralığı getirisi (%)."""
+    data = fmp_get("historical-price-eod/light", {"symbol": symbol, "from": from_date, "to": to_date})
+    if not data or len(data) < 5:
+        return None
+    srt   = sorted(data, key=lambda x: x["date"])
+    start = srt[0]["price"]
+    end   = srt[-1]["price"]
+    return (end - start) / start * 100 if start > 0 else None
+
+
+def _get_real_trade_rs(theme: str, spy_return: float) -> float | None:
+    """
+    Gerçek trade P/L'ından tema RS hesaplar.
+    tema_portfolio_tracker.py entegrasyonu — veri yoksa None döner.
+    """
+    try:
+        matrix_path = Path(__file__).parent / "memory" / "tema_portfolio_matrix.json"
+        if not matrix_path.exists():
+            return None
+        with open(matrix_path, encoding="utf-8") as f:
+            matrix = json.load(f)
+        if theme not in matrix:
+            return None
+        # Tüm portföylerdeki tema ortalama P/L
+        all_pnl = []
+        for portfoy, stats in matrix[theme].items():
+            n   = stats.get("trade_sayisi", 0)
+            pnl = stats.get("ortalama_pnl", None)
+            if n >= 3 and pnl is not None:   # En az 3 trade → güvenilir
+                all_pnl.extend([pnl] * n)
+        if len(all_pnl) < 3:
+            return None
+        avg_pnl = sum(all_pnl) / len(all_pnl)
+        return round(avg_pnl - spy_return, 2)
+    except Exception:
+        return None
+
+
 def measure_theme_performance(weeks_back: int = 4) -> dict:
     """
-    Her temanın son N haftadaki ETF performansını SPY'a göre ölçer.
-    RS = (tema_ETF_getiri - SPY_getiri)
+    Her temanın son N haftadaki performansını SPY'a göre ölçer.
+    RS = tema_getiri - SPY_getiri
+
+    DÜZELTME (v2): İki katmanlı ölçüm:
+      1. Gerçek trade P/L (tema_portfolio_tracker) → güvenilir, öncelikli
+      2. ETF sepeti (composite basket) → veri yoksa yedek
+    Tek ETF proxy yerine ağırlıklı sepet kullanılır.
     """
     from_date = (datetime.now(TR_TZ) - timedelta(weeks=weeks_back)).strftime("%Y-%m-%d")
     to_date   = datetime.now(TR_TZ).strftime("%Y-%m-%d")
 
     # SPY referans
-    spy_data = fmp_get("historical-price-eod/light", {"symbol": "SPY", "from": from_date, "to": to_date})
-    if not spy_data or len(spy_data) < 5:
+    spy_return_val = _get_etf_return("SPY", from_date, to_date)
+    if spy_return_val is None:
         return {}
-
-    spy_sorted  = sorted(spy_data, key=lambda x: x['date'])
-    spy_start   = spy_sorted[0]['price']
-    spy_end     = spy_sorted[-1]['price']
-    spy_return  = (spy_end - spy_start) / spy_start * 100
+    spy_return = spy_return_val
 
     results = {}
-    for theme, etf in THEME_ETFS.items():
-        etf_data = fmp_get("historical-price-eod/light", {"symbol": etf, "from": from_date, "to": to_date})
-        if not etf_data or len(etf_data) < 5:
-            results[theme] = {"etf": etf, "rs": None, "hata": "Veri eksik"}
+    for theme, basket in THEME_BASKETS.items():
+        # Katman 1: Gerçek trade P/L
+        real_rs = _get_real_trade_rs(theme, spy_return)
+        if real_rs is not None:
+            results[theme] = {
+                "olcum_yontemi": "gercek_trade",
+                "etf_sepeti":    list(basket.keys()),
+                "rs":            real_rs,
+                "spy_getiri":    round(spy_return, 2),
+                "durum":         "ZAYIF" if real_rs < WEAK_THEME_THRESHOLD else "NORMAL",
+            }
             continue
 
-        etf_sorted = sorted(etf_data, key=lambda x: x['date'])
-        etf_start  = etf_sorted[0]['price']
-        etf_end    = etf_sorted[-1]['price']
-        etf_return = (etf_end - etf_start) / etf_start * 100
-        rs         = round(etf_return - spy_return, 2)
+        # Katman 2: ETF sepeti composite RS
+        weighted_return = 0.0
+        total_weight    = 0.0
+        etf_details     = {}
+        for etf_sym, weight in basket.items():
+            etf_ret = _get_etf_return(etf_sym, from_date, to_date)
+            if etf_ret is not None:
+                weighted_return += etf_ret * weight
+                total_weight    += weight
+                etf_details[etf_sym] = round(etf_ret, 2)
+
+        if total_weight < 0.4:   # En az %40 veri gelmediyse güvenilmez
+            results[theme] = {
+                "olcum_yontemi": "etf_sepeti",
+                "rs":            None,
+                "hata":          f"Yetersiz ETF verisi (ağırlık: {total_weight:.2f})",
+            }
+            continue
+
+        # Eksik ETF varsa ağırlığı normalize et
+        composite_return = weighted_return / total_weight
+        rs               = round(composite_return - spy_return, 2)
 
         results[theme] = {
-            "etf":         etf,
-            "etf_getiri":  round(etf_return, 2),
-            "spy_getiri":  round(spy_return, 2),
-            "rs":          rs,
-            "durum":       "ZAYIF" if rs < WEAK_THEME_THRESHOLD else "NORMAL",
+            "olcum_yontemi": "etf_sepeti",
+            "etf_sepeti":    etf_details,
+            "tema_getiri":   round(composite_return, 2),
+            "spy_getiri":    round(spy_return, 2),
+            "rs":            rs,
+            "agirlik_kapsamı": round(total_weight, 2),
+            "durum":         "ZAYIF" if rs < WEAK_THEME_THRESHOLD else "NORMAL",
         }
 
     return results
