@@ -41,12 +41,15 @@ def load_pf(name):
 
 def save_pf(name, data):
     path = REPO_ROOT / "data" / "portfolios" / f"{name}.json"
-    # Önce yedek al
-    backup = REPO_ROOT / "data" / "portfolios" / f"{name}_backup_{datetime.now().strftime('%Y%m%d_%H%M')}.json"
-    shutil.copy(path, backup)
+    # Yedek al (sadece dosya varsa)
+    if path.exists():
+        backup = REPO_ROOT / "data" / "portfolios" / f"{name}_backup_{datetime.now().strftime('%Y%m%d_%H%M')}.json"
+        shutil.copy(path, backup)
+        print(f"  ✅ {name}.json güncellendi (yedek: {backup.name})")
+    else:
+        print(f"  ✅ {name}.json oluşturuldu (yeni)")
     with open(path, 'w', encoding='utf-8') as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
-    print(f"  ✅ {name}.json güncellendi (yedek: {backup.name})")
 
 def run_consolidation(dry_run=True):
     print(f"\n{'='*60}")

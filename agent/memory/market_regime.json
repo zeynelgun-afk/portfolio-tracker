@@ -1,0 +1,63 @@
+{
+  "rejim": {
+    "aktif_rejim": "ai_boom",
+    "skor": 1,
+    "guven": "DÜŞÜK",
+    "tum_skorlar": {
+      "jeopolitik_kriz": 0,
+      "ai_boom": 1,
+      "faiz_dusus": 0,
+      "tarife_gerilimi": 0,
+      "risk_on_genel": 0,
+      "risk_off": 0
+    },
+    "growth_aksiyon": "Mevcut AI pozisyonlar (COHR, VRT, ANET, MU, CAMT) tutulmaya devam. Yeni AI fırsatları ara.",
+    "tespit_zamani": "2026-04-11T15:43:57.537481+03:00"
+  },
+  "sektor_data": {
+    "XLE": {
+      "price": 56.94,
+      "gunluk_chg": -0.68
+    },
+    "XLK": {
+      "price": 142.62,
+      "gunluk_chg": 0.39
+    },
+    "XLI": {
+      "price": 171.52,
+      "gunluk_chg": -0.39
+    },
+    "XLF": {
+      "price": 50.77,
+      "gunluk_chg": -1.09
+    },
+    "XLV": {
+      "price": 147.31,
+      "gunluk_chg": -1.35
+    },
+    "XLU": {
+      "price": 46.96,
+      "gunluk_chg": -0.4
+    },
+    "XLP": {
+      "price": 82.37,
+      "gunluk_chg": -1.29
+    },
+    "XLY": {
+      "price": 112.89,
+      "gunluk_chg": 0.13
+    },
+    "XLB": {
+      "price": 51.96,
+      "gunluk_chg": 0.56
+    },
+    "GLD": {
+      "price": 437.13,
+      "gunluk_chg": -0.18
+    },
+    "ITA": {
+      "price": 229.64,
+      "gunluk_chg": -0.91
+    }
+  }
+}

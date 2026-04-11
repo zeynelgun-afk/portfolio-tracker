@@ -54,6 +54,7 @@ from darwin_evolution import (
     evaluate_evolution_results,
     get_evolution_summary,
 )
+from regime_detector import run_regime_detection, get_regime_context
 
 REPO_ROOT = Path(__file__).parent.parent
 TR_TZ     = pytz.timezone("Europe/Istanbul")
@@ -108,6 +109,10 @@ def collect_context(mode: str) -> dict:
     state = build_portfolio_state(portfolios, market)
     save_portfolio_state(state)
 
+    # Rejim tespiti (VIX'ten al)
+    vix_price = market.get("VIX", {}).get("price")
+    regime    = run_regime_detection(market=market, vix=vix_price)
+
     # Sıkıştırılmış temel bağlam
     compressed = build_context_for_claude(mode)
 
@@ -150,6 +155,8 @@ def run_morning(ctx: dict):
     prompt = f"""
 {ctx['compressed']}
 
+{get_regime_context()}
+
 {ctx['research']}
 
 {ctx['twitter']}
@@ -157,14 +164,14 @@ def run_morning(ctx: dict):
 {ctx['risk']}
 
 === GÖREV: SABAH ANALİZİ ===
-Yukarıdaki verileri değerlendirerek:
 1. Stop'a yakın pozisyon var mı? Risk analizindeki stop uyarılarına bak
-2. Earnings yaklaşan hisse var mı? K-05 uyarısı gerekiyor mu?
-3. Makro takvimde bugün/bu hafta kritik olay var mı?
-4. Konsantrasyon/korelasyon riski var mı? K-17 uyarısı?
-5. Twitter'da portföyle ilgili önemli sinyal var mı? (SPEKÜLATİF etiketle)
-6. Piyasa rejimi: RISK_ON / NEUTRAL / RISK_OFF?
-7. Önerdiğim 1-2 aksiyon (uygulama değil, öneri)
+2. Aktif piyasa rejimi ne? Growth portföy için aksiyon gerekiyor mu?
+3. Mevcut Growth pozisyonları (COHR,VRT,ANET,MU,CAMT,CI) rejime uygun mu?
+   Rejim değiştiyse hangi sektöre rotasyon düşünülmeli?
+4. Earnings yaklaşan hisse var mı? K-05 uyarısı?
+5. Makro takvimde kritik olay var mı?
+6. Twitter'da önemli sinyal? (SPEKÜLATİF etiketle)
+7. Önerilen 1-2 aksiyon (uygulama değil, öneri)
 
 Kısa ve net. KESİN / MUHTEMEL / SPEKÜLATİF etiket kullan.
 Sonda: "Bugün gözüm şunlarda: ..."

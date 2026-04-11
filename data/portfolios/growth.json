@@ -1,29 +1,108 @@
 {
   "portfoy_adi": "Büyüme Portföyü",
   "strateji": {
-    "isim": "Agresif Momentum - Aylık %5",
-    "aylik_hedef_yuzde": 5.0,
-    "max_esanli_pozisyon": 8,
-    "pozisyon_buyuklugu_yuzde": "10-15",
-    "ortalama_tutma_gun": "3-7",
-    "max_tutma_gun": 10,
-    "stop_loss_yuzde": 4.0,
-    "kar_hedefi_yuzde": "8-12",
-    "min_rr_orani": "2:1",
-    "min_win_rate_yuzde": 55,
-    "aylik_max_drawdown_yuzde": 8.0,
-    "gunluk_max_kayip_yuzde": 2.0,
-    "haftalik_max_kayip_yuzde": 4.0,
-    "sinyal_tipleri": [
-      "earnings_momentum",
-      "breakout",
-      "mean_reversion"
-    ],
-    "baslangic_tarihi": "2026-02-26",
-    "dokuman": "docs/AGGRESSIVE_MOMENTUM_STRATEGY.md",
+    "isim": "Agresif Momentum + Sektör Rotasyonu",
+    "versiyon": "v2.0",
+    "guncelleme": "2026-04-11",
+    "felsefe": "En güçlü momentumun olduğu sektöre tam yüklen. Tek sektör %100 ağırlık taşıyabilir — bu risk değil, odak. Piyasa rejimi değişince sektör değiştir.",
     "sermaye": 400000,
-    "sermaye_degisiklik_tarihi": "2026-02-26",
-    "sermaye_notu": "$100K → $400K sermaye artırımı. $300K yeni nakit eklendi."
+    "max_pozisyon": 8,
+    "pozisyon_buyuklugu": "ATR bazlı, portföy %10-20 arası",
+    "stop_loss": "2×ATR(14) + K-07 makro şok istisnası",
+    "rejim_bazli_sektorler": {
+      "jeopolitik_kriz": {
+        "birincil": [
+          "Savunma (ITA, LMT, RTX, KTOS)",
+          "Enerji (XLE, CVX, XOM)"
+        ],
+        "ikincil": [
+          "Altın (GLD, RGLD)",
+          "Siber güvenlik"
+        ],
+        "kacin": [
+          "Growth tech",
+          "Tüketim döngüsel"
+        ],
+        "ornekler": "İran krizi → LMT, KTOS, HAL, CEG, CVX"
+      },
+      "ai_boom": {
+        "birincil": [
+          "Yarı iletken ekipman (AMAT, KLAC, CAMT)",
+          "AI altyapı (ANET, COHR, VRT)"
+        ],
+        "ikincil": [
+          "Güç/enerji (CEG, VST, GEV)",
+          "Data center"
+        ],
+        "kacin": [
+          "Enerji",
+          "Savunma (savaş dışı)"
+        ],
+        "ornekler": "AI boom → NVDA, COHR, VRT, ANET, MU"
+      },
+      "faiz_dusus": {
+        "birincil": [
+          "Büyüme hisseleri",
+          "Küçük şirketler (IWM)"
+        ],
+        "ikincil": [
+          "Finans (XLF)",
+          "Emlak (XLRE)"
+        ],
+        "kacin": [
+          "Utility",
+          "Temettü hisseleri"
+        ],
+        "ornekler": "Fed pivot → PLTR, SQ, APP, RKLB"
+      },
+      "tarife_ticaret_savasi": {
+        "birincil": [
+          "İç pazara odaklı şirketler",
+          "Hammadde (XLB, FCX)"
+        ],
+        "ikincil": [
+          "Savunma",
+          "Enerji"
+        ],
+        "kacin": [
+          "Çin bağlantılı tech",
+          "İhracatçılar"
+        ],
+        "ornekler": "Tarife → hammadde, iç üretim"
+      },
+      "risk_on_genel": {
+        "birincil": [
+          "Momentum liderleri (RS sıralaması)"
+        ],
+        "ikincil": [
+          "Earnings beat hisseleri"
+        ],
+        "kacin": [
+          "Defansifler"
+        ],
+        "ornekler": "Sakin piyasa → en güçlü RS hisseleri"
+      }
+    },
+    "rotasyon_kurallari": {
+      "giris_tetigi": "Sektör ETF 20SMA üstü + sektör RS 3 ayda +%10 üstü + makro katalizör",
+      "cikis_tetigi": "K-11 veya K-07 tetiklenir VEYA makro rejim değişir",
+      "gecis_suresi": "Rejim değişiminde 2-3 işlem günü içinde pozisyon döndür",
+      "max_bekleme": "Yeni rejim neti değilse nakit tut, acele etme"
+    },
+    "mevcut_pozisyon_mantigi": {
+      "COHR": "AI altyapı — fotonik bağlantı darboğazı. AI boom rejimi.",
+      "VRT": "Veri merkezi güç — AI enerji altyapısı. AI boom + enerji rejimi.",
+      "ANET": "AI ağ altyapısı — Ethernet hyperscale. AI boom rejimi.",
+      "MU": "AI bellek — HBM shortage thesis. AI boom rejimi.",
+      "CAMT": "Yarı iletken muayene ekipmanı — AI chip inspection. AI boom rejimi.",
+      "CI": "Sağlık sigortası — defansif büyüme, ACA momentum. Karma rejim."
+    },
+    "notlar": [
+      "Sektör ağırlığı %100 olabilir — bu odak, risk değil",
+      "İran/savaş → savunma ve enerji, AI tezini geçici sat",
+      "K-13 v4.1 VIX eşiklerini aşmadıkça tam pozisyon hakkı var",
+      "Rejimleri sürekli izle, haber akışı → 1./2./3. derece etki zinciri"
+    ]
   },
   "baslangic_sermaye": 400000,
   "nakit": {
@@ -173,7 +252,7 @@
       "portfoy": "growth"
     }
   ],
-  "son_guncelleme": "2026-04-11T12:41:55.480305",
+  "son_guncelleme": "2026-04-11T12:42:48.271265",
   "toplam_deger": 368389.66,
   "toplam_getiri_yuzde": -9.46,
   "notes": [
