@@ -1,0 +1,57 @@
+{
+  "test_date": "2026-04-11 15:48",
+  "results": [
+    {
+      "rule": "K-18",
+      "blocked_avg": 2.103640189192728,
+      "win_rate": 60.0,
+      "n": 55,
+      "verdict": "❌ DRAG",
+      "detail": "Insider satışı sonrası hisse yükseliyor — kural fırsat kaçırıyor"
+    },
+    {
+      "rule": "K-19",
+      "xlp_avg": -0.3042458360528815,
+      "momentum_avg": -3.9567253772039224,
+      "xlp_volatility": 3.5642202997305685,
+      "momentum_volatility": 6.320736095335537,
+      "vol_ratio": 0.5638932311002238,
+      "n_xlp": 60,
+      "n_momentum": 60,
+      "verdict": "✅ DEĞERLİ",
+      "detail": "XLP swing için zayıf. Düşük volatilite sorun"
+    },
+    {
+      "rule": "K-14",
+      "crisis_avg": -13.977501528234484,
+      "normal_avg": 6.436008650951408,
+      "crisis_win_rate": 7.142857142857142,
+      "normal_win_rate": 71.42857142857143,
+      "n_crisis": 42,
+      "verdict": "✅ GÜÇLÜ ONAY",
+      "detail": "Kriz dönemlerinde giriş ortalama -14.0% zararlı — brake kesinlikle değerli"
+    },
+    {
+      "rule": "K-20",
+      "dead_cat_avg": -4.006117375012997,
+      "genuine_pull_avg": -2.258199544667907,
+      "dc_win_rate": 34.285714285714285,
+      "gp_win_rate": 45.0,
+      "n_dead_cat": 70,
+      "n_genuine": 60,
+      "verdict": "✅ GÜÇLÜ ONAY",
+      "detail": "Dead cat bounce -4.0% vs güçlü RS -2.3% — fark 1.7%"
+    },
+    {
+      "rule": "K-05",
+      "pre_earn_avg": -3.0473213526192025,
+      "safe_avg": -1.8205302372552954,
+      "pre_volatility": 1.2401286050699045,
+      "safe_volatility": 1.361463283750579,
+      "vol_ratio": 0.9108792134691874,
+      "n_pre": 2,
+      "verdict": "✅ DEĞERLİ",
+      "detail": "Safe giriş 1.2% daha iyi — K-05 değer katıyor"
+    }
+  ]
+}
