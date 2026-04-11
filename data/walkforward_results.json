@@ -1,0 +1,750 @@
+{
+  "olusturulma": "2026-04-11 20:31",
+  "toplam_trade": 22,
+  "baz_performans": {
+    "toplam": 22,
+    "win_rate": 59.1,
+    "ort_pnl": 0.26,
+    "sharpe": 0.05,
+    "max_drawdown": -26.45,
+    "beklenti": 0.26,
+    "toplam_pnl": 5.74
+  },
+  "kural_sonuclari": {
+    "K-ZAMAN": {
+      "kural": "K-ZAMAN",
+      "aciklama": "Maksimum tutma süresi (gün)",
+      "mevcut_deger": 15,
+      "test_degerleri": [
+        7,
+        10,
+        12,
+        15,
+        18,
+        21
+      ],
+      "baz_performans": {
+        "toplam": 22,
+        "win_rate": 59.1,
+        "ort_pnl": 0.26,
+        "sharpe": 0.05,
+        "max_drawdown": -26.45,
+        "beklenti": 0.26,
+        "toplam_pnl": 5.74
+      },
+      "param_sonuclari": {
+        "7": {
+          "toplam": 22,
+          "win_rate": 59.1,
+          "ort_pnl": 0.04,
+          "sharpe": 0.01,
+          "max_drawdown": -19.5,
+          "beklenti": 0.04,
+          "toplam_pnl": 0.89
+        },
+        "10": {
+          "toplam": 22,
+          "win_rate": 59.1,
+          "ort_pnl": 0.07,
+          "sharpe": 0.02,
+          "max_drawdown": -22.39,
+          "beklenti": 0.07,
+          "toplam_pnl": 1.58
+        },
+        "12": {
+          "toplam": 22,
+          "win_rate": 59.1,
+          "ort_pnl": 0.08,
+          "sharpe": 0.02,
+          "max_drawdown": -24.32,
+          "beklenti": 0.08,
+          "toplam_pnl": 1.77
+        },
+        "15": {
+          "toplam": 22,
+          "win_rate": 59.1,
+          "ort_pnl": 0.16,
+          "sharpe": 0.04,
+          "max_drawdown": -25.64,
+          "beklenti": 0.16,
+          "toplam_pnl": 3.6
+        },
+        "18": {
+          "toplam": 22,
+          "win_rate": 59.1,
+          "ort_pnl": 0.19,
+          "sharpe": 0.04,
+          "max_drawdown": -26.33,
+          "beklenti": 0.19,
+          "toplam_pnl": 4.17
+        },
+        "21": {
+          "toplam": 22,
+          "win_rate": 59.1,
+          "ort_pnl": 0.21,
+          "sharpe": 0.05,
+          "max_drawdown": -26.81,
+          "beklenti": 0.21,
+          "toplam_pnl": 4.7
+        }
+      },
+      "in_sample_en_iyi": 21,
+      "loocv": {
+        "yontem": "LOOCV",
+        "toplam_fold": 22,
+        "iyilesen_trade": 1,
+        "kotulesen_trade": 3,
+        "ort_fark": -0.26,
+        "en_cok_param": 18,
+        "param_frekans": {
+          "7": 1,
+          "21": 9,
+          "18": 12
+        },
+        "detay": [
+          {
+            "trade": "SWING-001",
+            "sembol": "GOOGL",
+            "gercek_pnl": 7.79,
+            "simule_pnl": 2.37,
+            "en_iyi_param": 7,
+            "fark": -5.42
+          },
+          {
+            "trade": "SWING-003",
+            "sembol": "VZ",
+            "gercek_pnl": 3.89,
+            "simule_pnl": 3.89,
+            "en_iyi_param": 21,
+            "fark": 0.0
+          },
+          {
+            "trade": "SWING-004",
+            "sembol": "XOM",
+            "gercek_pnl": 5.53,
+            "simule_pnl": 5.53,
+            "en_iyi_param": 18,
+            "fark": 0.0
+          },
+          {
+            "trade": "SWING-007",
+            "sembol": "CAT",
+            "gercek_pnl": 12.02,
+            "simule_pnl": 12.02,
+            "en_iyi_param": 21,
+            "fark": 0.0
+          },
+          {
+            "trade": "SWING-008",
+            "sembol": "WMT",
+            "gercek_pnl": -3.48,
+            "simule_pnl": -3.48,
+            "en_iyi_param": 18,
+            "fark": 0.0
+          },
+          {
+            "trade": "SWING-011",
+            "sembol": "NVDA",
+            "gercek_pnl": 2.88,
+            "simule_pnl": 2.88,
+            "en_iyi_param": 21,
+            "fark": 0.0
+          },
+          {
+            "trade": "SWING-010",
+            "sembol": "NEM",
+            "gercek_pnl": 2.13,
+            "simule_pnl": 2.13,
+            "en_iyi_param": 21,
+            "fark": 0.0
+          },
+          {
+            "trade": "SWING-013",
+            "sembol": "LMT",
+            "gercek_pnl": 1.43,
+            "simule_pnl": 1.43,
+            "en_iyi_param": 18,
+            "fark": 0.0
+          },
+          {
+            "trade": "SWING-014",
+            "sembol": "AMT",
+            "gercek_pnl": -3.3507690714174734,
+            "simule_pnl": -3.3507690714174734,
+            "en_iyi_param": 18,
+            "fark": 0.0
+          },
+          {
+            "trade": "SWING-015",
+            "sembol": "T",
+            "gercek_pnl": -5.54,
+            "simule_pnl": -5.29,
+            "en_iyi_param": 21,
+            "fark": 0.25
+          },
+          {
+            "trade": "SWING-016",
+            "sembol": "GE",
+            "gercek_pnl": 1.68,
+            "simule_pnl": 1.68,
+            "en_iyi_param": 18,
+            "fark": 0.0
+          },
+          {
+            "trade": "SWING-017",
+            "sembol": "DUK",
+            "gercek_pnl": 1.52,
+            "simule_pnl": 1.14,
+            "en_iyi_param": 21,
+            "fark": -0.38
+          },
+          {
+            "trade": "SWING-018",
+            "sembol": "DVA",
+            "gercek_pnl": 1.05,
+            "simule_pnl": 0.82,
+            "en_iyi_param": 21,
+            "fark": -0.23
+          },
+          {
+            "trade": "SWING-020",
+            "sembol": "ZS",
+            "gercek_pnl": 2.55,
+            "simule_pnl": 2.55,
+            "en_iyi_param": 18,
+            "fark": 0.0
+          },
+          {
+            "trade": "SWING-021",
+            "sembol": "HAL",
+            "gercek_pnl": -5.1,
+            "simule_pnl": -5.1,
+            "en_iyi_param": 18,
+            "fark": 0.0
+          },
+          {
+            "trade": "SWING-023",
+            "sembol": "SOFI",
+            "gercek_pnl": -3.62,
+            "simule_pnl": -3.62,
+            "en_iyi_param": 18,
+            "fark": 0.0
+          },
+          {
+            "trade": "SWING-019",
+            "sembol": "CTSH",
+            "gercek_pnl": 1.45,
+            "simule_pnl": 1.45,
+            "en_iyi_param": 18,
+            "fark": 0.0
+          },
+          {
+            "trade": "SWING-022",
+            "sembol": "CEG",
+            "gercek_pnl": -5.05,
+            "simule_pnl": -5.05,
+            "en_iyi_param": 18,
+            "fark": 0.0
+          },
+          {
+            "trade": "SWING-024",
+            "sembol": "ALMU",
+            "gercek_pnl": -6.11,
+            "simule_pnl": -6.11,
+            "en_iyi_param": 18,
+            "fark": 0.0
+          },
+          {
+            "trade": "SWING-025",
+            "sembol": "RTX",
+            "gercek_pnl": -5.16,
+            "simule_pnl": -5.16,
+            "en_iyi_param": 18,
+            "fark": 0.0
+          },
+          {
+            "trade": "SWING-026",
+            "sembol": "NEM",
+            "gercek_pnl": 4.18,
+            "simule_pnl": 4.18,
+            "en_iyi_param": 21,
+            "fark": 0.0
+          },
+          {
+            "trade": "SWING-027",
+            "sembol": "AROC",
+            "gercek_pnl": -4.95,
+            "simule_pnl": -4.95,
+            "en_iyi_param": 21,
+            "fark": 0.0
+          }
+        ]
+      },
+      "walk_forward": {
+        "pencere_sayisi": 4,
+        "pencereler": [
+          {
+            "pencere": 1,
+            "train_aralik": "2026-01-02 → 2026-02-17",
+            "test_aralik": "2026-02-18 → 2026-02-20",
+            "en_iyi_param": 15,
+            "in_sample_sharpe": 0.47,
+            "oos_sharpe": 2.16,
+            "oos_win_rate": 100.0,
+            "oos_ort_pnl": 1.02,
+            "baz_sharpe": 5.3,
+            "baz_win_rate": 100.0,
+            "baz_ort_pnl": 1.42,
+            "gelisme": -0.4
+          },
+          {
+            "pencere": 2,
+            "train_aralik": "2026-02-04 → 2026-02-20",
+            "test_aralik": "2026-02-24 → 2026-02-24",
+            "en_iyi_param": 10,
+            "in_sample_sharpe": 0.26,
+            "oos_sharpe": -0.44,
+            "oos_win_rate": 33.3,
+            "oos_ort_pnl": -1.21,
+            "baz_sharpe": -0.62,
+            "baz_win_rate": 33.3,
+            "baz_ort_pnl": -2.06,
+            "gelisme": 0.85
+          },
+          {
+            "pencere": 3,
+            "train_aralik": "2026-02-12 → 2026-02-24",
+            "test_aralik": "2026-02-26 → 2026-03-10",
+            "en_iyi_param": 7,
+            "in_sample_sharpe": -0.2,
+            "oos_sharpe": -1.14,
+            "oos_win_rate": 33.3,
+            "oos_ort_pnl": -3.46,
+            "baz_sharpe": -0.97,
+            "baz_win_rate": 33.3,
+            "baz_ort_pnl": -3.24,
+            "gelisme": -0.22
+          },
+          {
+            "pencere": 4,
+            "train_aralik": "2026-02-17 → 2026-03-10",
+            "test_aralik": "2026-03-12 → 2026-03-24",
+            "en_iyi_param": 7,
+            "in_sample_sharpe": -0.47,
+            "oos_sharpe": -0.32,
+            "oos_win_rate": 33.3,
+            "oos_ort_pnl": -1.26,
+            "baz_sharpe": -0.45,
+            "baz_win_rate": 33.3,
+            "baz_ort_pnl": -1.98,
+            "gelisme": 0.72
+          }
+        ],
+        "ortalama_gelisme": 0.24,
+        "oos_tutarlilik": 50.0
+      },
+      "oneri": "Fark istatistiksel olarak önemsiz — MEVCUT değeri koru"
+    },
+    "K-STOP": {
+      "kural": "K-STOP",
+      "aciklama": "Maksimum stop yüzdesi",
+      "mevcut_deger": 5.0,
+      "test_degerleri": [
+        3.5,
+        4.0,
+        5.0,
+        6.0,
+        7.0
+      ],
+      "baz_performans": {
+        "toplam": 22,
+        "win_rate": 59.1,
+        "ort_pnl": 0.26,
+        "sharpe": 0.05,
+        "max_drawdown": -26.45,
+        "beklenti": 0.26,
+        "toplam_pnl": 5.74
+      },
+      "param_sonuclari": {
+        "3.5": {
+          "toplam": 22,
+          "win_rate": 59.1,
+          "ort_pnl": 0.25,
+          "sharpe": 0.05,
+          "max_drawdown": -26.6,
+          "beklenti": 0.25,
+          "toplam_pnl": 5.57
+        },
+        "4.0": {
+          "toplam": 22,
+          "win_rate": 59.1,
+          "ort_pnl": 0.19,
+          "sharpe": 0.04,
+          "max_drawdown": -27.48,
+          "beklenti": 0.19,
+          "toplam_pnl": 4.19
+        },
+        "5.0": {
+          "toplam": 22,
+          "win_rate": 59.1,
+          "ort_pnl": 0.26,
+          "sharpe": 0.05,
+          "max_drawdown": -26.45,
+          "beklenti": 0.26,
+          "toplam_pnl": 5.74
+        },
+        "6.0": {
+          "toplam": 22,
+          "win_rate": 59.1,
+          "ort_pnl": 0.27,
+          "sharpe": 0.06,
+          "max_drawdown": -26.34,
+          "beklenti": 0.27,
+          "toplam_pnl": 5.85
+        },
+        "7.0": {
+          "toplam": 22,
+          "win_rate": 59.1,
+          "ort_pnl": 0.26,
+          "sharpe": 0.05,
+          "max_drawdown": -26.45,
+          "beklenti": 0.26,
+          "toplam_pnl": 5.74
+        }
+      },
+      "in_sample_en_iyi": 6.0,
+      "loocv": {
+        "yontem": "LOOCV",
+        "toplam_fold": 22,
+        "iyilesen_trade": 0,
+        "kotulesen_trade": 2,
+        "ort_fark": -0.01,
+        "en_cok_param": 3.5,
+        "param_frekans": {
+          "3.5": 18,
+          "5.0": 3,
+          "6.0": 1
+        },
+        "detay": [
+          {
+            "trade": "SWING-001",
+            "sembol": "GOOGL",
+            "gercek_pnl": 7.79,
+            "simule_pnl": 7.79,
+            "en_iyi_param": 3.5,
+            "fark": 0.0
+          },
+          {
+            "trade": "SWING-003",
+            "sembol": "VZ",
+            "gercek_pnl": 3.89,
+            "simule_pnl": 3.89,
+            "en_iyi_param": 3.5,
+            "fark": 0.0
+          },
+          {
+            "trade": "SWING-004",
+            "sembol": "XOM",
+            "gercek_pnl": 5.53,
+            "simule_pnl": 5.53,
+            "en_iyi_param": 3.5,
+            "fark": 0.0
+          },
+          {
+            "trade": "SWING-007",
+            "sembol": "CAT",
+            "gercek_pnl": 12.02,
+            "simule_pnl": 12.02,
+            "en_iyi_param": 3.5,
+            "fark": 0.0
+          },
+          {
+            "trade": "SWING-008",
+            "sembol": "WMT",
+            "gercek_pnl": -3.48,
+            "simule_pnl": -3.5,
+            "en_iyi_param": 3.5,
+            "fark": -0.02
+          },
+          {
+            "trade": "SWING-011",
+            "sembol": "NVDA",
+            "gercek_pnl": 2.88,
+            "simule_pnl": 2.88,
+            "en_iyi_param": 3.5,
+            "fark": 0.0
+          },
+          {
+            "trade": "SWING-010",
+            "sembol": "NEM",
+            "gercek_pnl": 2.13,
+            "simule_pnl": 2.13,
+            "en_iyi_param": 5.0,
+            "fark": 0.0
+          },
+          {
+            "trade": "SWING-013",
+            "sembol": "LMT",
+            "gercek_pnl": 1.43,
+            "simule_pnl": 1.43,
+            "en_iyi_param": 3.5,
+            "fark": 0.0
+          },
+          {
+            "trade": "SWING-014",
+            "sembol": "AMT",
+            "gercek_pnl": -3.3507690714174734,
+            "simule_pnl": -3.5,
+            "en_iyi_param": 3.5,
+            "fark": -0.15
+          },
+          {
+            "trade": "SWING-015",
+            "sembol": "T",
+            "gercek_pnl": -5.54,
+            "simule_pnl": -5.54,
+            "en_iyi_param": 6.0,
+            "fark": 0.0
+          },
+          {
+            "trade": "SWING-016",
+            "sembol": "GE",
+            "gercek_pnl": 1.68,
+            "simule_pnl": 1.68,
+            "en_iyi_param": 3.5,
+            "fark": 0.0
+          },
+          {
+            "trade": "SWING-017",
+            "sembol": "DUK",
+            "gercek_pnl": 1.52,
+            "simule_pnl": 1.52,
+            "en_iyi_param": 3.5,
+            "fark": 0.0
+          },
+          {
+            "trade": "SWING-018",
+            "sembol": "DVA",
+            "gercek_pnl": 1.05,
+            "simule_pnl": 1.05,
+            "en_iyi_param": 5.0,
+            "fark": 0.0
+          },
+          {
+            "trade": "SWING-020",
+            "sembol": "ZS",
+            "gercek_pnl": 2.55,
+            "simule_pnl": 2.55,
+            "en_iyi_param": 3.5,
+            "fark": 0.0
+          },
+          {
+            "trade": "SWING-021",
+            "sembol": "HAL",
+            "gercek_pnl": -5.1,
+            "simule_pnl": -5.1,
+            "en_iyi_param": 3.5,
+            "fark": 0.0
+          },
+          {
+            "trade": "SWING-023",
+            "sembol": "SOFI",
+            "gercek_pnl": -3.62,
+            "simule_pnl": -3.62,
+            "en_iyi_param": 3.5,
+            "fark": 0.0
+          },
+          {
+            "trade": "SWING-019",
+            "sembol": "CTSH",
+            "gercek_pnl": 1.45,
+            "simule_pnl": 1.45,
+            "en_iyi_param": 3.5,
+            "fark": 0.0
+          },
+          {
+            "trade": "SWING-022",
+            "sembol": "CEG",
+            "gercek_pnl": -5.05,
+            "simule_pnl": -5.05,
+            "en_iyi_param": 3.5,
+            "fark": 0.0
+          },
+          {
+            "trade": "SWING-024",
+            "sembol": "ALMU",
+            "gercek_pnl": -6.11,
+            "simule_pnl": -6.11,
+            "en_iyi_param": 3.5,
+            "fark": 0.0
+          },
+          {
+            "trade": "SWING-025",
+            "sembol": "RTX",
+            "gercek_pnl": -5.16,
+            "simule_pnl": -5.16,
+            "en_iyi_param": 3.5,
+            "fark": 0.0
+          },
+          {
+            "trade": "SWING-026",
+            "sembol": "NEM",
+            "gercek_pnl": 4.18,
+            "simule_pnl": 4.18,
+            "en_iyi_param": 5.0,
+            "fark": 0.0
+          },
+          {
+            "trade": "SWING-027",
+            "sembol": "AROC",
+            "gercek_pnl": -4.95,
+            "simule_pnl": -4.95,
+            "en_iyi_param": 3.5,
+            "fark": 0.0
+          }
+        ]
+      },
+      "walk_forward": {
+        "pencere_sayisi": 4,
+        "pencereler": [
+          {
+            "pencere": 1,
+            "train_aralik": "2026-01-02 → 2026-02-17",
+            "test_aralik": "2026-02-18 → 2026-02-20",
+            "en_iyi_param": 3.5,
+            "in_sample_sharpe": 0.45,
+            "oos_sharpe": 5.3,
+            "oos_win_rate": 100.0,
+            "oos_ort_pnl": 1.42,
+            "baz_sharpe": 5.3,
+            "baz_win_rate": 100.0,
+            "baz_ort_pnl": 1.42,
+            "gelisme": 0.0
+          },
+          {
+            "pencere": 2,
+            "train_aralik": "2026-02-04 → 2026-02-20",
+            "test_aralik": "2026-02-24 → 2026-02-24",
+            "en_iyi_param": 5.0,
+            "in_sample_sharpe": 0.23,
+            "oos_sharpe": -0.62,
+            "oos_win_rate": 33.3,
+            "oos_ort_pnl": -2.06,
+            "baz_sharpe": -0.62,
+            "baz_win_rate": 33.3,
+            "baz_ort_pnl": -2.06,
+            "gelisme": 0.0
+          },
+          {
+            "pencere": 3,
+            "train_aralik": "2026-02-12 → 2026-02-24",
+            "test_aralik": "2026-02-26 → 2026-03-10",
+            "en_iyi_param": 3.5,
+            "in_sample_sharpe": -0.24,
+            "oos_sharpe": -0.97,
+            "oos_win_rate": 33.3,
+            "oos_ort_pnl": -3.24,
+            "baz_sharpe": -0.97,
+            "baz_win_rate": 33.3,
+            "baz_ort_pnl": -3.24,
+            "gelisme": 0.0
+          },
+          {
+            "pencere": 4,
+            "train_aralik": "2026-02-17 → 2026-03-10",
+            "test_aralik": "2026-03-12 → 2026-03-24",
+            "en_iyi_param": 3.5,
+            "in_sample_sharpe": -0.5,
+            "oos_sharpe": -0.45,
+            "oos_win_rate": 33.3,
+            "oos_ort_pnl": -1.98,
+            "baz_sharpe": -0.45,
+            "baz_win_rate": 33.3,
+            "baz_ort_pnl": -1.98,
+            "gelisme": 0.0
+          }
+        ],
+        "ortalama_gelisme": 0.0,
+        "oos_tutarlilik": 0.0
+      },
+      "oneri": "Fark istatistiksel olarak önemsiz — MEVCUT değeri koru"
+    },
+    "K-EVR": {
+      "kural": "K-EVR",
+      "aciklama": "Swing evreninden çıkarılan düşük beta hisseler",
+      "yasaklanan_hisse_sayisi": 11,
+      "etkilenen_trade": 6,
+      "tum_trade_perf": {
+        "toplam": 22,
+        "win_rate": 59.1,
+        "ort_pnl": 0.26,
+        "sharpe": 0.05,
+        "max_drawdown": -26.45,
+        "beklenti": 0.26,
+        "toplam_pnl": 5.74
+      },
+      "yasak_trade_perf": {
+        "toplam": 6,
+        "win_rate": 50.0,
+        "ort_pnl": -0.99,
+        "sharpe": -0.3,
+        "max_drawdown": -12.37,
+        "beklenti": -0.99,
+        "toplam_pnl": -5.91
+      },
+      "temiz_trade_perf": {
+        "toplam": 16,
+        "win_rate": 62.5,
+        "ort_pnl": 0.73,
+        "sharpe": 0.14,
+        "max_drawdown": -24.36,
+        "beklenti": 0.73,
+        "toplam_pnl": 11.65
+      },
+      "gelisme": {
+        "win_rate_farki": 3.4,
+        "ort_pnl_farki": 0.47,
+        "sharpe_farki": 0.09
+      },
+      "yasak_trade_listesi": [
+        {
+          "sembol": "VZ",
+          "pnl": 3.89,
+          "gun": 15,
+          "sonuc": "KAZANÇ"
+        },
+        {
+          "sembol": "WMT",
+          "pnl": -3.48,
+          "gun": 12,
+          "sonuc": "ZARAR"
+        },
+        {
+          "sembol": "AMT",
+          "pnl": -3.3507690714174734,
+          "gun": 2,
+          "sonuc": "ZARAR"
+        },
+        {
+          "sembol": "T",
+          "pnl": -5.54,
+          "gun": 22,
+          "sonuc": "ZARAR"
+        },
+        {
+          "sembol": "DUK",
+          "pnl": 1.52,
+          "gun": 28,
+          "sonuc": "KAZANÇ"
+        },
+        {
+          "sembol": "DVA",
+          "pnl": 1.05,
+          "gun": 27,
+          "sonuc": "KAZANÇ"
+        }
+      ],
+      "oneri": "K-EVR etkili: Yasak liste uygulanırsa ort. PnL +0.7% (mevcut: +0.3%), win rate %62 (mevcut: %59). ✅ Devam et."
+    }
+  }
+}
