@@ -47,8 +47,8 @@ istisna (SMA50 altında giriş — sadece oversold bounce için):
 - ilişkili: K-15a (RSI <35 oversold girişleri)
 
 çift kırmızı bayrak (giriş kesin yasak):
-- SMA50 + SMA200 altı + insider 30g satış yoğun (K-18 ile birlikte)
-- bu durumda hiçbir koşulda giriş yapma — K-04 ve K-18 kesişimi
+- SMA50 + SMA200 altı + son 30g yoğun insider satış (manuel kontrol — K-18 otomasyonu kaldırıldı)
+- bu durumda hiçbir koşulda giriş yapma
 - kanıt: CRDO 10-17 mart 2026 (-%8.77, SMA altı + 365 insider satış)
 
 repo verisi (n=22 swing test, 7 nisan 2026):
@@ -130,7 +130,7 @@ SWING TRADE: chandelier exit + kâr kilidi sistemi (matematiksel sıkılaştırm
 
 POZİSYON TRADE (uzun vadeli portföy): 50SMA günlük kapanış altı VEYA ichimoku kumo altı kapanış
 
-YENİ GİRİŞ: trailing tetiklenen pozisyon yeni bir sinyal verirse tekrar girilebilir. "intikam trade'i" değil, yeni trade olarak değerlendirilir ve kendi K-04/K-13/K-17/K-18 kontrollerinden geçer.
+YENİ GİRİŞ: trailing tetiklenen pozisyon yeni bir sinyal verirse tekrar girilebilir. "intikam trade'i" değil, yeni trade olarak değerlendirilir ve kendi K-04/K-13/K-17 kontrollerinden geçer.
 
 ÇAKIŞMA AÇIKLAMASI:
 - "VIX yükselince sıkılaştır" → K-13 v4.1 yönetir (sektör bazlı VIX)
@@ -443,7 +443,7 @@ LİTERATÜR KALIBRASYONu:
     2) sektör ETF 9EMA + 21EMA üstü (XLK, XLE, XLI, XLC, XLV, XLF, XLY, XLU, XLB, XLRE) — XLP kaldırıldı (K-19 önceliği), XLRE eklendi (K-20 ile tutarlılık)
     3) mcap >$2B
     4) RSI 40-70
-    5) K-18 temiz (30g CEO/CFO satışı yok)
+    5) ~~K-18 kaldırıldı~~ (11 Nisan 2026 — backtest negatif kanıt)
     6) K-17 korelasyon >%50
   - güvenlik:
     a) stop: chandelier (highest_high − 3×ATR(14)). sabit %5 cap YOK (K-06 ANA KURALDAN FARKI: K-06 normal swing'de min %5 garanti eder, K-13b kriz modu istisnası daha geniş chandelier kullanır çünkü VIX 28+'da volatilite zaten yüksek)
@@ -487,7 +487,7 @@ TANIMLAR (netleştirildi):
   • RS pozitif (sektör/SPY 20g+ trend)
   • K-13 faydalanıcı sektör VEYA K-13b 6 koşulları
   • K-17 korelasyon ihlali yok
-  • K-18 insider temiz
+  • K-18 kaldırıldı (11 Nisan 2026)
 
 KADEMELİ FREN:
 - 2 ardışık zarar → boyut %25 küçült
@@ -770,9 +770,19 @@ LİTERATÜR DESTEĞİ:
 
 ESKİ "IBKR notu" KALDIRILDI: "AI/yarıiletken %63 → sınır aşıldı, yeni AI öncesi azaltma şart" notu eski bir durumla ilgiliydi. Mevcut portföy %86 nakit, AI exposure ~%0. Mevcut durum kontrolü için günlük summary.json kullanılır.
 
-**K-18: giriş öncesi insider kontrolü — netleştirilmiş 7 nisan 2026**
+**K-18: giriş öncesi insider kontrolü — KALDIRILDI 11 nisan 2026**
 
-KAPSAM: tüm portföyler (Dengeli, Agresif, Temettü, Swing). giriş ÖNCESİ zorunlu kontrol, atlama yasak.
+> **DURUM: DEVRE DIŞI** — Geriye dönük test sonucu K-18'in ters çalıştığını gösterdi.
+> FMP verisi, 2022-2025, n=55: $5M+ insider satışı sonrası ortalama +2.1% getiri, %60 kazanma oranı.
+> Kural fırsat kaçırıyordu. `scripts/k18_insider_check.py` devre dışı.
+> Gerekçe: İnsiderlar 10b5-1 planı / vergi / çeşitlendirme amacıyla satar; piyasa bunu zaten fiyatlar.
+>
+> **POWL/CRDO uyarısı:** Bu pozisyonlardaki kayıplar gerçek. Ancak backtest, bu vakaların
+> münferit olduğunu, genel kuralın sistematik bir edge sağlamadığını gösterdi.
+> CEO distress satışı (düşüş trendinde, zararda satış) izlenmeye devam edilebilir —
+> ancak otomatik blocker olarak değil, bağlam bilgisi olarak.
+>
+> **Detay:** `reports/k_rules_backtest_2026-04-11.md`
 
 KATMAN 1: İNSİDER SATIŞ ANALİZİ (FMP insider-trading endpoint)
 
@@ -1037,7 +1047,7 @@ EKSILER (gelecek genişleme):
 **GİRİŞ FİLTRELERİ (normal swing/portföy kurallarından farkları)**:
 - K-04: SMA50 trend filtresi aynen uygulanır (LEAPS için trend kritik)
 - K-13 v4.1: VIX bandı aynen uygulanır (faydalanıcı/duyarlı sektör)
-- K-18 insider check: ZORUNLU (CEO/CFO senior sell = LEAPS için daha da kritik, 12+ ay horizon)
+- K-18 kaldırıldı (11 Nisan 2026 — LEAPS için de geçerli, CEO/CFO satışı bağlam bilgisi olarak takip edilebilir)
 - K-15b dilüsyon: momentum LEAPS için zorunlu (shelf registration LEAPS'i öldürür)
 - Theta decay: giriş anında hesaplanmalı, 1 yıl horizonda beklenen kayıp
 - Implied volatility: IV percentile <50 olmalı (yüksek IV'de LEAPS pahalı, theta riski yüksek)

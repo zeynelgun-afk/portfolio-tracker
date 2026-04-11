@@ -8,10 +8,11 @@
 - **K-01**: kaldırıldı (7 nisan 2026) — K-05 ile çakışma
 - **K-03**: kaldırıldı — içerik K-13 v4.1'e taşındı
 - **K-08**: kaldırıldı — K-07 chandelier zaten kapsıyor
+- **K-18**: kaldırıldı (11 nisan 2026) — geriye dönük test sonucu: $5M+ insider satışı sonrası hisseler ortalama +2.1% kazandı, kazanma oranı %60. Kural ters çalışıyor. İnsiderlar çoğunlukla rutin sebeplerle satar (10b5-1 planı, vergi, çeşitlendirme) ve piyasa bunu fiyatlıyor. `scripts/k18_insider_check.py` devre dışı bırakıldı.
 
 ---
 
-## aktif kurallar (17 kural)
+## aktif kurallar (16 kural)
 
 ### giriş filtreleri
 
@@ -26,8 +27,7 @@
 | **K-15a** | RSI<35 oversold | 1 gün teyit bekle (mevcut pozisyon için değil, sadece yeni giriş) |
 | **K-15b** | momentum hisse (3ay >%30 + P/E neg/>50) | `scripts/k15b_dilution_check.py SYMBOL` zorunlu |
 | **K-17** | korelasyon + tema çakışması | `scripts/k17_correlation_check.py SYMBOL` — 3 soru testi, tema %40 limit |
-| **K-18** | giriş öncesi insider kontrolü | `scripts/k18_insider_check.py SYMBOL` — son 30g CEO/CFO satışı, $5M eşiği |
-| **K-19** | XLP swing girişi | yasak, sadece portföy pozisyonu olarak alınabilir |
+| **K-19** | XLP swing girişi | yasak — düşük volatilite (std 3.6% vs momentum 6.3%) swing hedef fiyatına ulaşmayı engeller; sadece portföy pozisyonu olarak alınabilir |
 | **K-20** | sektör RS dead cat bounce | `scripts/k20_rs_filter.py` — son 3g RS negatif + bounce yanıltıcı |
 
 ### çıkış disiplini
@@ -96,7 +96,6 @@ kriz tipi değiştiğinde (pandemi/finansal/ticaret/enflasyon) faydalanıcı ve 
 | `scripts/k15b_dilution_check.py SYMBOL` | momentum hisse dilüsyon skoru | yeni momentum giriş öncesi |
 | `scripts/k16_sell_the_news_score.py SYMBOL` | earnings 7g öncesi skor | portföy pozisyonu earnings öncesi |
 | `scripts/k17_correlation_check.py SYMBOL` | sektör + tema çakışması | her yeni giriş öncesi |
-| `scripts/k18_insider_check.py SYMBOL` | 30g CEO/CFO satış + $5M eşik | her yeni giriş öncesi |
 | `scripts/k19_xlp_filter.py SCAN_FILE` | XLP swing elemesi | swing tarama çıktısı üzerinde |
 | `scripts/k20_rs_filter.py SCAN_FILE` | dead cat bounce elemesi | swing tarama çıktısı üzerinde |
 
@@ -115,5 +114,5 @@ not: script'ler `_QUIET_MODE=True` varsayılanı ile çalışır. info severity 
 
 ---
 
-> son güncelleme: 9 nisan 2026 | finzora ai
+> son güncelleme: 11 nisan 2026 | finzora ai | K-18 kaldırıldı (backtest), K-19 argümanı güncellendi
 > değişiklik gerektiren güncellemeler doğrudan `docs/TRADING_PLAYBOOK.md`'de yapılır, bu dosya senkron tutulur.

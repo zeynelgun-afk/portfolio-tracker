@@ -1,13 +1,32 @@
 #!/usr/bin/env python3
 """
 K-18: Giriş öncesi insider kontrolü
-TRADING_PLAYBOOK.md K-18 kuralı uygulaması.
+DURUM: KALDIRILDI — 11 Nisan 2026
 
-3 katmanlı kontrol:
-- Katman 1: İnsider satış analizi (FMP insider-trading)
-  • CEO/CFO/Chairman 30g satışı varsa → girme/çeyrek
-  • Toplam 30g satış >$5M → yarım pozisyon
-  • Kelly nüansı: zararda satış (downtrend) → özellikle kaçın
+Geriye dönük test sonucu (FMP, 2022-2025, n=55):
+  - $5M+ insider satışı sonrası ortalama getiri: +2.1%
+  - Kazanma oranı: %60 (piyasanın üstünde)
+  - Sonuç: Kural ters çalışıyor, fırsat kaçırıyor.
+  - Kaldırma gerekçesi: İnsiderlar 10b5-1 planı/vergi/çeşitlendirme 
+    amacıyla satar; piyasa bunu zaten fiyatlar.
+
+Bu script artık çağrılmıyor. Referans için korunuyor.
+Aksiyon gerekiyorsa: k17_correlation_check.py kullan.
+"""
+import sys
+print("K-18 kaldırıldı (11 Nisan 2026). Bu script çalışmıyor.")
+print("Backtest gerekçesi: reports/k_rules_backtest_2026-04-11.md")
+sys.exit(0)
+
+# --- Orijinal kod aşağıda korunmaktadır ---
+# TRADING_PLAYBOOK.md K-18 kuralı uygulaması.
+#
+# 3 katmanlı kontrol:
+# - Katman 1: İnsider satış analizi (FMP insider-trading)
+#   • CEO/CFO/Chairman 30g satışı varsa → girme/çeyrek
+#   • Toplam 30g satış >$5M → yarım pozisyon
+#   • Kelly nüansı: zararda satış (downtrend) → özellikle kaçın
+
   • Insider alışı varsa → pozitif sinyal
 - Katman 2: Kısa vadeli baskı
   • Analist downgrade'leri (FMP analyst-stock-recommendations)
