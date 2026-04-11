@@ -331,18 +331,30 @@ def run_closing(ctx: dict):
     """Kapanış yorumu — piyasa kapandıktan sonra."""
     print("[Orkestratör] Kapanış modu çalışıyor...")
 
+    # Swing değişikliği varsa git'e kaydet
+    flag = REPO_ROOT / "data" / ".swing_updated"
+    if flag.exists():
+        _commit_swing_changes()
+        flag.unlink()
+
+    # Swing günlük özeti
+    from swing_manager import get_swing_report
+    swing_ozet = get_swing_report()
+
     prompt = f"""
 {ctx['compressed']}
+
+{swing_ozet}
 
 {ctx['research']}
 
 {ctx['twitter']}
 
 === GÖREV: KAPANIS YORUMU ===
-1. Bugün portföyde en dikkat çeken hareket neydi?
-2. Stop seviyelerine tehlikeli yaklaşan var mı?
-3. Tezler hâlâ geçerli mi? Bugünkü haberler bir şeyi değiştiriyor mu?
-4. Twitter'da önemli bir sinyal gördün mü? (SPEKÜLATİF etiketle)
+1. Bugünkü swing aksiyonları (varsa) doğru muydu? Neden?
+2. Portföyde en dikkat çeken hareket neydi?
+3. Stop seviyelerine tehlikeli yaklaşan var mı?
+4. Tezler hâlâ geçerli mi?
 5. Yarın için en önemli 3 izleme noktası
 6. Bu günden 1 somut ders
 
@@ -359,19 +371,62 @@ Kısa ve net. KESİN / MUHTEMEL / SPEKÜLATİF etiket kullan.
     send_private_telegram(msg)
     print("[Orkestratör] Kapanış yorumu gönderildi.")
 
+
+def _commit_swing_changes():
+    """Swing JSON değişikliklerini git'e commit eder."""
+    import subprocess
+    try:
+        os.chdir(REPO_ROOT)
+        subprocess.run(["git", "config", "user.name", "Finzora Agent"], capture_output=True)
+        subprocess.run(["git", "config", "user.email", "zeynelgun@users.noreply.github.com"], capture_output=True)
+        subprocess.run(["git", "pull", "--rebase", "origin", "main"], capture_output=True)
+        subprocess.run(["git", "add",
+                        "data/swing/active.json",
+                        "data/swing/closed.json",
+                        "data/transactions.csv"], capture_output=True)
+        msg = f"🔄 [Swing] Otomatik işlem kaydı — {datetime.now().strftime('%Y-%m-%d %H:%M')}"
+        result = subprocess.run(["git", "commit", "-m", msg], capture_output=True)
+        if result.returncode == 0:
+            subprocess.run(["git", "push"], capture_output=True)
+            print("[Swing] Git commit başarılı")
+    except Exception as e:
+        print(f"[Swing] Git commit hatası: {e}")
+
 def run_monitor(ctx: dict):
-    """Seans içi izleme — sadece acil durumda mesaj atar."""
-    print("[Orkestratör] İzleme modu çalışıyor...")
+    """
+    Seans içi otonom yönetim — her 30 dakikada çalışır.
+    
+    KARAR VERİR VE KAYDEDERIn:
+    1. Swing giriş: sinyal + uygun fiyat → JSON yaz + Telegram'a "ALIN"
+    2. Swing çıkış: stop/hedef tetiklendi → JSON yaz + Telegram'a "SATIN"
+    3. Portföy stop: yakın ise uyarı, tetiklenince karar
+    4. VIX spike: acil koruma
+    
+    SEN KARAR VER kuralı — onay beklemez.
+    """
+    print("[Orkestratör] Seans içi otonom yönetim çalışıyor...")
 
     portfolios = ctx["raw"]["portfolios"]
     market     = ctx["raw"]["market"]
-    alerts     = []
+    now_tr     = datetime.now(pytz.timezone("Europe/Istanbul"))
+    saat       = now_tr.strftime("%H:%M")
 
-    # Stop yakınlık kontrolü (basit, Claude'suz — ucuz)
+    aksiyonlar = []  # Bu sefer yapılan işlemler
+    uyarilar   = []  # Acil bildirimler
+
+    # ── 1. SWING ÇIKIŞ KONTROL (Önce çıkışlar) ───────────────────────────────
+    swing_exits = _check_swing_exits(market)
+    aksiyonlar.extend(swing_exits)
+
+    # ── 2. SWING GİRİŞ KONTROL (Boş slot varsa) ──────────────────────────────
+    swing_entries = _check_swing_entries()
+    aksiyonlar.extend(swing_entries)
+
+    # ── 3. PORTFÖY STOP KONTROL ───────────────────────────────────────────────
     for pf_name, pf_data in portfolios.items():
         for pos in pf_data.get("pozisyonlar", []):
-            symbol   = pos.get("sembol", "?")
-            stop     = pos.get("stop_loss")
+            symbol    = pos.get("sembol", "?")
+            stop      = pos.get("stop_loss")
             cur_price = pos.get("guncel_fiyat") or pos.get("son_fiyat")
 
             if not stop or not cur_price:
@@ -382,31 +437,186 @@ def run_monitor(ctx: dict):
                 cur_price = float(cur_price)
                 pct       = (cur_price - stop) / stop * 100
 
-                if pct <= 2.0:
-                    alerts.append(
+                if cur_price <= stop:
+                    # STOP TETİKLENDİ
+                    uyarilar.append(
+                        f"🔴 *STOP TETİKLENDİ* [{pf_name.upper()}]\n"
+                        f"{symbol}: ${cur_price:.2f} ≤ Stop ${stop:.2f}\n"
+                        f"→ SATIN — K-07 gereği"
+                    )
+                elif pct <= 2.0:
+                    uyarilar.append(
                         f"⚠️ *STOP YAKINI* [{pf_name.upper()}]\n"
-                        f"{symbol}: ${cur_price:.2f} — Stop ${stop:.2f} "
-                        f"(%{pct:.1f} uzakta)"
+                        f"{symbol}: ${cur_price:.2f} — Stop ${stop:.2f} (%{pct:.1f} uzakta)"
                     )
             except (ValueError, TypeError):
                 continue
 
-    # VIX yüksekse uyar (gerçek CBOE VIX)
-    vix_data  = market.get("VIX", {})
-    vix_price = vix_data.get("price")
-    vix_seviye = vix_data.get("seviye", "")
-    if vix_price and float(vix_price) > 25:
-        alerts.append(
-            f"🔴 VIX YÜKSEK: {vix_price} — {vix_seviye}"
+    # ── 4. VIX SPIKE ──────────────────────────────────────────────────────────
+    vix_price = market.get("VIX", {}).get("price")
+    if vix_price and float(vix_price) > 28:
+        uyarilar.append(
+            f"🔴 VIX YÜKSEK: {vix_price} — K-13 aktif, yeni giriş yapma"
         )
 
-    # Sadece alert varsa mesaj gönder (Claude'u meşgul etme)
-    if alerts:
-        msg = "🔔 *Finzora Agent — Seans Uyarısı*\n\n" + "\n\n".join(alerts)
+    # ── 5. TELEGRAMIn ─────────────────────────────────────────────────────────
+    # Aksiyonlar (yapılan işlemler)
+    if aksiyonlar:
+        msg = f"🤖 *Finzora Agent — Seans Aksiyonu* ({saat})\n\n"
+        msg += "\n\n".join(aksiyonlar)
         send_private_telegram(msg)
-        print(f"[Orkestratör] {len(alerts)} uyarı gönderildi.")
-    else:
-        print("[Orkestratör] İzleme tamamlandı, uyarı yok.")
+        print(f"[Orkestratör] {len(aksiyonlar)} aksiyon alındı.")
+
+    # Uyarılar (acil bildirimler)
+    if uyarilar:
+        msg = f"🔔 *Finzora Agent — Uyarı* ({saat})\n\n"
+        msg += "\n\n".join(uyarilar)
+        send_private_telegram(msg)
+        print(f"[Orkestratör] {len(uyarilar)} uyarı gönderildi.")
+
+    if not aksiyonlar and not uyarilar:
+        print("[Orkestratör] İzleme tamamlandı, aksiyon yok.")
+
+
+def _check_swing_exits(market: dict) -> list[str]:
+    """
+    Aktif swing pozisyonlarında çıkış koşullarını kontrol et.
+    Stop veya hedef tetiklendiyse JSON'a yaz + aksiyon mesajı döndür.
+    """
+    import sys as _sys
+    _sys.path.insert(0, str(REPO_ROOT / "agent"))
+
+    from swing_manager import update_swing_positions
+
+    aksiyonlar = []
+
+    # Swing manager çalıştır — stop/hedef kontrolü yapar
+    uyarilar = update_swing_positions()
+
+    for u in uyarilar:
+        tip = u.get("tip", "")
+        if tip == "STOP_YAKIN":
+            aksiyonlar.append(
+                f"⚠️ {u['mesaj']}\n→ Stop seviyesini takip et"
+            )
+        elif tip == "K11_AKTIF":
+            aksiyonlar.append(
+                f"💰 {u['mesaj']}\n→ K-11: %25-30 kısmi satış düşün"
+            )
+
+    # Kapatılan pozisyonlar (swing_manager kapattı, biz bildirelim)
+    closed_path = REPO_ROOT / "data" / "swing" / "closed.json"
+    if closed_path.exists():
+        closed = json.load(open(closed_path))
+        kapalilar = closed.get("kapali_pozisyonlar", [])
+        # Bugün kapananları bul
+        bugun = datetime.now().strftime("%Y-%m-%d")
+        bugun_kapali = [k for k in kapalilar if k.get("cikis_tarihi") == bugun]
+        for k in bugun_kapali[-3:]:  # Son 3
+            pnl  = k.get("pnl_pct", 0)
+            icon = "✅" if pnl > 0 else "❌"
+            aksiyonlar.append(
+                f"{icon} *SWING KAPANDI*: {k['sembol']}\n"
+                f"Neden: {k.get('cikis_nedeni','?')} | P/L: {pnl:+.1f}%\n"
+                f"→ {k.get('adet','?')} adet SATIN"
+            )
+
+    return aksiyonlar
+
+
+def _check_swing_entries() -> list[str]:
+    """
+    Swing giriş sinyallerini kontrol et.
+    Uygun koşul varsa JSON'a yaz + aksiyon mesajı döndür.
+    """
+    import sys as _sys
+    _sys.path.insert(0, str(REPO_ROOT / "scripts"))
+
+    aksiyonlar = []
+
+    # Kapasite kontrol
+    active = json.load(open(REPO_ROOT / "data" / "swing" / "active.json"))
+    mevcut_poz = len(active.get("aktif_pozisyonlar", []))
+    if mevcut_poz >= 5:
+        return []  # Dolu
+
+    # Dün kaydedilen entry sinyallerini yükle
+    sig_path = REPO_ROOT / "data" / "swing_entry_signals.json"
+    if not sig_path.exists():
+        return []
+
+    sig_data = json.load(open(sig_path))
+    giris_syms = sig_data.get("giris_sinyalleri", [])
+
+    if not giris_syms:
+        return []
+
+    # Her sinyal için canlı analiz yap
+    try:
+        from swing_entry_engine import enhanced_entry_analysis
+        from swing_manager import open_swing_position
+    except ImportError:
+        return []
+
+    for sym in giris_syms[:3]:  # Max 3 kontrol
+        # Kapasite yeterliyse devam
+        if mevcut_poz >= 5:
+            break
+
+        # Zaten açık mı?
+        if any(p.get("sembol") == sym for p in active.get("aktif_pozisyonlar", [])):
+            continue
+
+        # Canlı analiz
+        try:
+            r = enhanced_entry_analysis(sym)
+        except Exception:
+            continue
+
+        if "GİRİŞ ✅" not in r.get("karar", ""):
+            continue
+
+        # GİRİŞ KARARI — Kaydedelim
+        sinyaller = r.get("sinyaller", [])
+        shares    = r.get("shares", 0)
+        price     = r.get("price", 0)
+        stop      = r.get("stop", 0)
+        target    = r.get("target", 0)
+        sinyal_str = ", ".join(s.get("tip","") for s in sinyaller)
+
+        if not shares or not price or not stop:
+            continue
+
+        # JSON'a yaz
+        result = open_swing_position(
+            symbol    = sym,
+            shares    = shares,
+            price     = price,
+            stop      = stop,
+            target    = target,
+            sinyaller = sinyaller,
+            reasoning = f"Seans içi otomatik giriş — {sinyal_str}",
+        )
+
+        if result:
+            mevcut_poz += 1
+            aksiyonlar.append(
+                f"🟢 *SWING GİRİŞ KAYIT*: {sym}\n"
+                f"Sinyal: {sinyal_str}\n"
+                f"→ *ALIN: {shares} adet @ ~${price:.2f}*\n"
+                f"Stop: ${stop:.2f} | Hedef: ${target:.2f} | R:R 2.5:1"
+            )
+
+            # Git commit için işaret bırak
+            _flag_for_commit()
+
+    return aksiyonlar
+
+
+def _flag_for_commit():
+    """Swing değişikliği oldu — kapanışta commit edilecek."""
+    flag = REPO_ROOT / "data" / ".swing_updated"
+    flag.write_text(datetime.now().isoformat())
 
 def run_weekly(ctx: dict):
     """Pazar günü haftalık derin analiz + öğrenme + Darwin evrimi."""

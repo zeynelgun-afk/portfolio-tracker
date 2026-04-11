@@ -1,0 +1,57 @@
+{
+  "tarih": "2026-04-11T14:10:46.890765",
+  "ham_cikti": "",
+  "giris_sinyalleri": [
+    "CAT",
+    "KLAC",
+    "AMAT",
+    "GEV"
+  ],
+  "detay": [
+    {
+      "symbol": "CAT",
+      "karar": "GİRİŞ ✅ (tenkan_bounce)",
+      "stop": 730.35,
+      "target": 941.43,
+      "shares": 4,
+      "sinyaller": [
+        "tenkan_bounce",
+        "sma50_bounce",
+        "kijun_bounce_v2",
+        "nr7_sikisma"
+      ]
+    },
+    {
+      "symbol": "KLAC",
+      "karar": "GİRİŞ ✅ (tenkan_bounce)",
+      "stop": 1540.49,
+      "target": 2229.26,
+      "shares": 1,
+      "sinyaller": [
+        "tenkan_bounce",
+        "kijun_bounce_v2"
+      ]
+    },
+    {
+      "symbol": "AMAT",
+      "karar": "GİRİŞ ✅ (sma50_bounce)",
+      "stop": 361.98,
+      "target": 493.26,
+      "shares": 6,
+      "sinyaller": [
+        "sma50_bounce"
+      ]
+    },
+    {
+      "symbol": "GEV",
+      "karar": "GİRİŞ ✅ (tenkan_bounce)",
+      "stop": 888.21,
+      "target": 1249.1,
+      "shares": 2,
+      "sinyaller": [
+        "tenkan_bounce",
+        "kijun_bounce_v2"
+      ]
+    }
+  ]
+}
