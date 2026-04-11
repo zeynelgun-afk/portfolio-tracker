@@ -95,6 +95,14 @@ try:
 except ImportError:
     run_entry_checks = run_exit_checks = None
 from premarket_gap_scanner import scan_premarket_gaps, get_premarket_context
+try:
+    from conviction_scorer import batch_score as conviction_batch_score
+    from tema_portfolio_tracker import tag_trade_with_theme, run as run_tema_matrix
+except ImportError as _ie2:
+    print(f"[Orchestrator] Yeni modül yüklenemedi: {_ie2}")
+    conviction_batch_score = None
+    tag_trade_with_theme = None
+    run_tema_matrix = None
 
 REPO_ROOT = Path(__file__).parent.parent
 TR_TZ     = pytz.timezone("Europe/Istanbul")
@@ -330,14 +338,21 @@ def run_morning(ctx: dict):
     )
     multi_summary = format_multi_agent_for_telegram(multi_result)
 
-    # Adversarial Debate — CIO kararı tartışmalıysa
-    cio_karar   = multi_result.get("cio", {})
-    debate_msg  = ""
-    if cio_karar.get("guven") in ("LOW", "MEDIUM") or cio_karar.get("karar") in ("ACIL_CIK", "SAT"):
-        print("[Orkestratör] Tartışmalı karar — debate başlıyor...")
+    # Adversarial Debate — genişletildi (11 Nisan 2026)
+    # Eski: sadece LOW güven veya SAT kararında
+    # Yeni: BUY kararları dahil tüm önemli kararlar tartışılır
+    cio_karar     = multi_result.get("cio", {})
+    cio_karar_tip = cio_karar.get("karar", "")
+    debate_msg    = ""
+    debate_tetik  = (
+        cio_karar.get("guven") in ("LOW", "MEDIUM") or
+        cio_karar_tip in ("ACIL_CIK", "SAT", "KISMI_CIK", "AL", "KISMI_EKLE")
+    )
+    if debate_tetik:
+        print(f"[Orkestratör] {cio_karar_tip} kararı için debate başlıyor...")
         debate_result = run_debate(
-            symbol     = cio_karar.get("hedef_sembol", "SPY"),
-            context    = ctx['compressed'],
+            symbol           = cio_karar.get("hedef_sembol", "SPY"),
+            context          = ctx['compressed'],
             initial_decision = cio_karar,
             portfolio_data   = ctx['risk'],
         )
@@ -1030,6 +1045,16 @@ def run_weekly(ctx: dict):
     backtest_ctx  = format_backtest_for_claude(backtest)
     applied_log   = get_applied_changes_summary()
     screener_rpt  = run_screener_optimization()
+
+    # Tema × Portföy Matris Güncellemesi (11 Nisan 2026)
+    tema_matrix_rpt = ""
+    if run_tema_matrix:
+        try:
+            run_tema_matrix()
+            tema_matrix_rpt = "Tema × portföy başarı matrisi güncellendi (agent/memory/tema_portfolio_matrix.json)"
+            print("[Orkestratör] Tema matrisi güncellendi")
+        except Exception as e:
+            tema_matrix_rpt = f"Tema matrisi hata: {e}"
 
     # Darwin + Cohort + Blind Spot
     evo_results   = evaluate_evolution_results()

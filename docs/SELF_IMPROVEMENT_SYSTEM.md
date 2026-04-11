@@ -135,3 +135,75 @@ Düşük skorlu kaynaklar (<50%) → Otomatik olarak ihmal edilir
 ---
 
 *finzora ai | self improvement system | 11 nisan 2026*
+
+---
+
+## DÜZELTMELER (11 Nisan 2026)
+
+### Eksik 1 — Tema Performansı → Portföy Sonucuna Bağlandı ✅
+
+**`agent/tema_portfolio_tracker.py`** — Yeni oluşturuldu.
+
+Her trade açılışında `tag_trade_with_theme()` çağrılır, aktif tema kaydedilir. Trade kapanınca P&L hangi temaya ait olduğu bilinir. Haftalık `run_weekly()` içinde matris güncellenir.
+
+Çıktı: `agent/memory/tema_portfolio_matrix.json`
+```json
+{
+  "AI_ALTYAPI": {
+    "agresif": {"ortalama_pnl": 4.2, "win_rate": 67, "trade_sayisi": 9},
+    "swing":   {"ortalama_pnl": 8.3, "win_rate": 55, "trade_sayisi": 20}
+  }
+}
+```
+
+### Eksik 2 — Multi-Agent Debate Aktive Edildi ✅
+
+`orchestrator.py` güncellendi. Eski: sadece LOW güven veya SAT kararında debate. Yeni: AL dahil tüm önemli kararlar tartışılır.
+
+```python
+debate_tetik = (
+    cio_karar.get("guven") in ("LOW", "MEDIUM") or
+    cio_karar_tip in ("ACIL_CIK", "SAT", "KISMI_CIK", "AL", "KISMI_EKLE")
+)
+```
+
+### Eksik 3 — Conviction Scorer Otomasyonu ✅
+
+**`agent/conviction_scorer.py`** — Yeni oluşturuldu. 5 bileşen, tamamen FMP API:
+
+| Bileşen | Max | FMP Endpoint |
+|---------|-----|---|
+| Teknik güç | 25 | historical-price-eod + RSI hesabı |
+| Tema uyumu | 25 | data/theme_scores.json × katman ağırlığı |
+| Momentum | 20 | stock-price-change + analyst-estimates |
+| Temel kalite | 15 | key-metrics-ttm + ratios-ttm |
+| Risk faktörü | 15 | cash-flow-statement + earnings-calendar |
+
+Kullanım: `python conviction_scorer.py NVDA LMT XOM`
+
+### Eksik 4 — Portfolio × Tema Başarı Matrisi ✅
+
+`tema_portfolio_tracker.py` içindeki `analyze_trades_by_theme()` fonksiyonu:
+- `data/swing/closed.json` tarar
+- `data/transactions.csv` tarar
+- Her trade için entry tarihinde aktif temayı bulur
+- Tema × portföy bazında P&L, win rate, trade sayısı hesaplar
+- Haftalık orchestrator içinde otomatik çalışır
+
+**Kalan tek eksik:** Tema etiketi geriye dönük olarak eski trade'lere uygulanamaz (tema o tarihte kaydedilmemişti). Yeni trade'lerden itibaren doğru çalışır.
+
+---
+
+## GÜNCEL DURUM
+
+| Mekanizma | Durum |
+|---|---|
+| Trade öğrenme | ✅ Çalışıyor |
+| Kaynak skoru | ✅ Çalışıyor |
+| Kural güncelleme | ✅ Çalışıyor |
+| Prompt evrimi (Darwin) | ✅ Çalışıyor |
+| Tahmin takibi | ✅ Çalışıyor |
+| Tema yönetimi (haftalık) | ✅ YENİ — Çalışıyor |
+| Conviction scorer | ✅ YENİ — Çalışıyor |
+| Adversarial debate | ✅ GENİŞLETİLDİ — BUY dahil |
+| Tema × Portföy matrisi | ✅ YENİ — Çalışıyor |
