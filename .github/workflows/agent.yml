@@ -84,7 +84,9 @@ jobs:
 
       - name: Değişiklikleri kaydet
         run: |
-          git pull --rebase origin main || true
+          MODE="${{ steps.mode.outputs.mode }}"
+          ZAMAN=$(date -u '+%Y-%m-%d %H:%M UTC')
+          
           git add \
             data/portfolios/*.json \
             data/swing/active.json \
@@ -97,16 +99,11 @@ jobs:
             data/premarket_gaps.json \
             data/swing_entry_signals.json \
             data/alpha_scan_*.json \
-            data/.swing_updated \
             reports/ 2>/dev/null || true
-          
-          MODE="${{ steps.mode.outputs.mode }}"
-          ZAMAN=$(date -u '+%Y-%m-%d %H:%M UTC')
           
           if git diff --staged --quiet; then
             echo "Değişiklik yok — commit atlanıyor"
           else
             git commit -m "[Agent/$MODE] Otomatik güncelleme — $ZAMAN"
-            git push origin main
-            echo "✅ Repo güncellendi"
+            git push origin main && echo "✅ Repo güncellendi"
           fi
