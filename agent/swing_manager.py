@@ -12,6 +12,16 @@ Agent'ın swing kararlarını yürütür:
 import json
 import csv
 import requests
+import sys as _sys
+_sys.path.insert(0, str(__import__("pathlib").Path(__file__).parent.parent / "scripts"))
+try:
+    from event_logger import log as _log
+    _log.kaynak = "swing_manager"
+except ImportError:
+    class _FB:
+        def __getattr__(self, n): return lambda *a, **kw: None
+    _log = _FB()
+
 import sys
 from datetime import datetime, timedelta
 from pathlib import Path

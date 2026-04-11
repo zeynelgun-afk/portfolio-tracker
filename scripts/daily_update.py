@@ -9,6 +9,16 @@ import json
 import os
 import sys
 import requests
+import sys as _sys
+_sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+try:
+    from event_logger import log as _log
+    _log.kaynak = "daily_update"
+except ImportError:
+    class _FallbackLog:
+        kaynak = "daily_update"
+        def __getattr__(self, n): return lambda *a, **kw: None
+    _log = _FallbackLog()
 from datetime import datetime, timedelta
 import subprocess
 from pathlib import Path

@@ -18,6 +18,18 @@ from datetime import datetime
 from pathlib import Path
 import pytz
 
+# Olay kaydı
+sys.path.insert(0, str(Path(__file__).parent.parent / "scripts"))
+try:
+    from event_logger import log as _log
+    _log.kaynak = "orchestrator"
+except ImportError:
+    class _FallbackLog:
+        kaynak = "orchestrator"
+        def __getattr__(self, n):
+            return lambda *a, **kw: None
+    _log = _FallbackLog()
+
 # Agent modülleri
 sys.path.insert(0, str(Path(__file__).parent))
 from claude_agent import get_claude_decision
@@ -1130,12 +1142,22 @@ Detaylı Türkçe analiz. Spekülatif önerilere BACKTEST GEREKLİ işareti koy.
 # ── Ana giriş ─────────────────────────────────────────────────────────────────
 
 def main():
-    print(f"[Finzora Agent] Başlatılıyor — {datetime.now(TR_TZ).strftime('%Y-%m-%d %H:%M TR')}")
+    baslama = datetime.now(TR_TZ)
+    print(f"[Finzora Agent] Başlatılıyor — {baslama.strftime('%Y-%m-%d %H:%M TR')}")
 
     mode = get_run_mode()
     print(f"[Finzora Agent] Mod: {mode.upper()}")
+    _log.calistirma(
+        f"Agent başladı — {mode.upper()}",
+        f"Zaman: {baslama.strftime('%d.%m.%Y %H:%M TR')}",
+        kaynak="orchestrator"
+    )
 
-    ctx = collect_context(mode)
+    try:
+        ctx = collect_context(mode)
+    except Exception as e:
+        _log.hata("Bağlam toplama başarısız", str(e), kaynak="orchestrator.collect_context")
+        raise
 
     if mode == "morning":
         run_morning(ctx)
@@ -1152,4 +1174,17 @@ def main():
     print("[Finzora Agent] Tamamlandı.")
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+        _log.calistirma(
+            "Agent tamamlandı",
+            f"Süre: {datetime.now(TR_TZ).strftime('%H:%M TR')}",
+            kaynak="orchestrator"
+        )
+    except Exception as e:
+        _log.hata(
+            "Agent çöktü",
+            f"Hata: {str(e)[:300]}",
+            kaynak="orchestrator"
+        )
+        raise

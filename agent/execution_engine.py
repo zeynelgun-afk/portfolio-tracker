@@ -14,9 +14,22 @@ Kurallar:
 
 import csv
 import json
+import sys
 from datetime import datetime
 from pathlib import Path
 import pytz
+
+# Olay kaydı
+sys.path.insert(0, str(Path(__file__).parent.parent / "scripts"))
+try:
+    from event_logger import log as _log
+    _log.kaynak = "execution_engine"
+except ImportError:
+    class _FallbackLog:
+        kaynak = "execution_engine"
+        def __getattr__(self, name):
+            return lambda *a, **kw: None
+    _log = _FallbackLog()
 
 REPO_ROOT = Path(__file__).parent.parent
 TR_TZ     = pytz.timezone("Europe/Istanbul")
@@ -109,6 +122,7 @@ def buy_position(
     if amount > nakit:
         amount = min(nakit * 0.95, amount)  # Max nakitin %95'i
         if amount < 500:
+            _log.hata(f"ALIŞ BAŞARISIZ: {symbol}", f"Yetersiz nakit: ${nakit:.0f} | {portfolio}", kaynak="execution_engine.buy")
             return {"ok": False, "hata": f"Yetersiz nakit: ${nakit:.0f}"}
 
     # K-12 ağırlık kontrolü
@@ -142,7 +156,8 @@ def buy_position(
     else:
         # Yeni pozisyon
         if len(pozlar) >= max_poz:
-            return {"ok": False, "hata": f"Portföy dolu ({max_poz}/{max_poz})"}
+            _log.hata(f"ALIŞ BAŞARISIZ: {symbol}", f"Portföy dolu {max_poz}/{max_poz} | {portfolio}", kaynak="execution_engine")
+        return {"ok": False, "hata": f"Portföy dolu ({max_poz}/{max_poz})"}
 
         # Sembol bilgisi çek
         try:
@@ -201,6 +216,13 @@ def buy_position(
     print(f"[Execution] {aksiyon} {portfolio.upper()} — {symbol} "
           f"{shares} adet @${price:.2f} = ${gercek_tutar:,.0f}")
 
+    _log.islem(
+        f"ALIŞ: {symbol}",
+        f"{shares} adet @ ${price:.2f} | {portfolio.upper()} | ${gercek_tutar:,.0f}\n"
+        f"Stop: ${stop:.2f} | Hedef: ${target:.2f}\n"
+        f"Neden: {reason[:120]}",
+        kaynak="execution_engine"
+    )
     return {
         "ok":      True,
         "aksiyon": aksiyon,
@@ -271,6 +293,13 @@ def sell_position(
         "reason": reason[:100],
     })
 
+    _log.islem(
+        f"SATIŞ: {symbol} {pnl_pct:+.1f}%",
+        f"{satis_adet} adet @ ${satis_fiyat:.2f} | {portfolio.upper()} | ${tutar:,.0f}\n"
+        f"P&L: {pnl_pct:+.1f}%\n"
+        f"Neden: {reason[:120]}",
+        kaynak="execution_engine"
+    )
     return {
         "ok":      True,
         "sembol":  symbol,
