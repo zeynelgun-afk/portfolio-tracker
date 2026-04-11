@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+# DEVRE DIŞI — K-18 kaldırıldı 11 Nisan 2026
+raise SystemExit("K-18 kaldırıldı 11 Nisan 2026 — bu script artık çalışmıyor")
+
 """
 K-18: Giriş öncesi insider kontrolü
 DURUM: KALDIRILDI — 11 Nisan 2026

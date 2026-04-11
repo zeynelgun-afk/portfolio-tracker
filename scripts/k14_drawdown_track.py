@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+# DEVRE DIŞI — K-14 kaldırıldı 11 Nisan 2026
+raise SystemExit("K-14 kaldırıldı 11 Nisan 2026 — bu script artık çalışmıyor")
+
 """
 K-14: Kayıp serisi yönetimi (drawdown fren)
 TRADING_PLAYBOOK.md K-14 kuralı uygulaması.

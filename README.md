@@ -1,146 +1,192 @@
-# portfolio tracker
+# Finzora AI — Otonom Portföy Yönetim Sistemi
 
-> 3 portföy simülasyonu + swing trade sistemi
-> başlangıç: 17 şubat 2026 | toplam sermaye: $600,000
-> yönetim: finzora ai
+> **Başlangıç:** 17 Şubat 2026 | **Sermaye:** $600,000 | **Yönetim:** Finzora AI (otonom)
 
----
-
-## portföy yapısı
-
-| portföy | sermaye | strateji | hedef |
-|---------|---------|----------|-------|
-| **dengeli** | $100K | multi-sector value + momentum | %15-20/yıl |
-| **agresif büyüme** | $400K | sektör-agnostik momentum + katalizör | %30+/yıl |
-| **değer + temettü** | $100K | düşük P/E (<20), temettü >%3 | %8-12/yıl + temettü |
-
-> sektör rotasyonu portföyü 26 şubat 2026'da kapatıldı → `data/archive/`
+Finzora AI, ABD borsasında üç portföyü ve bir swing trade hesabını otonom olarak yöneten Claude tabanlı yapay zeka sistemidir. GitHub Actions üzerinde her 30 dakikada bir çalışır; fiyat takibi, stop-loss izleme, sinyal tarama ve işlem kararlarını insan müdahalesi olmadan gerçekleştirir.
 
 ---
 
-## klasör yapısı
+## Portföy Yapısı
+
+| Portföy | Sermaye | Güncel Değer | Pozisyonlar | Strateji |
+|---------|---------|-------------|-------------|----------|
+| **Dengeli** | $100K | ~$112K | MO*, DUK, CI, NEE | Multi-sector value + defansif |
+| **Agresif** | $400K | ~$362K | COHR, VRT, ANET, MU, CAMT | AI tedarik zinciri tematik |
+| **Temettü** | $100K | ~$143K | T, VZ, MO, MRK, OKE | Yüksek temettü + değer |
+| **Swing** | — | — | CAT, KLAC, AMAT | Ichimoku 4/4 momentum |
+
+*MO Dengeli'den satılacak — Pazartesi açılışı*  
+**Toplam sistem değeri:** ~$617,542
+
+---
+
+## Dosya Yapısı
 
 ```
-data/
-├── portfolios/
-│   ├── balanced.json        # dengeli ($100K)
-│   ├── aggressive.json      # agresif momentum ($400K)
-│   └── dividend.json        # değer + temettü ($100K)
-├── swing/
-│   ├── active.json          # açık swing pozisyonları (max 10)
-│   ├── closed.json          # kapatılmış trade'ler + dersler
-│   └── watchlist.json       # swing trade izleme listesi
-├── archive/                 # kapatılmış portföyler
-│   └── rotation_kapandi_2026-02-26.json
-├── watchlist.json           # merkezi izleme listesi
-├── summary.json             # genel portföy özeti
-└── transactions.csv         # tüm alış/satış işlemleri
-
-docs/
-├── AGGRESSIVE_MOMENTUM_STRATEGY.md  # ⭐ agresif momentum strateji detayları
-├── PORTFOLIO_DATA_SKILL.md          # ⭐ portföy JSON şemaları + hesaplama kuralları
-├── SWING_TRADE_RULES.md             # ⭐ swing trade kural seti v2.0
-├── BALANCED_STRATEGY.md             # dengeli portföy stratejisi
-├── DIVIDEND_STRATEGY.md             # temettü portföy stratejisi
-├── DOSYA_SISTEMI.md                 # dosya yapısı detayları
-├── PREDICTION_MARKETS_GUIDE.md      # kalshi/polymarket rehberi
-├── SELF_VALIDATION.md               # veri doğrulama sistemi
-└── prompts/
-    ├── DAILY_REPORT_PROMPT.md       # günlük rapor prompt
-    └── SESSION_ACTION_PROMPT.md     # seans içi aksiyon prompt
-
-reports/
-├── daily/                   # DAILY_REPORT_YYYY-MM-DD.md (pzt-cuma)
-├── weekly/                  # WEEKLY_REPORT_YYYY-MM-DD.md (pazar)
-└── monthly/                 # MONTHLY_YYYY-MM.md (ay sonu)
-```
-
----
-
-## agresif büyüme stratejisi ($400K)
-
-ana portföy — toplam sermayenin %67'si.
-
-| parametre | değer |
-|-----------|-------|
-| yıllık hedef | %30+ |
-| max eşzamanlı pozisyon | 10 |
-| pozisyon büyüklüğü | max %10 ($40K) |
-| çıkış kriteri | stop-loss / hedef / momentum kaybı |
-| stop-loss | %8 |
-| kar hedefi | minimum %10 |
-| R:R minimum | 2:1 |
-| sektör kısıtı | YOK — herhangi bir sektör |
-| min sektör dengesi | 3 farklı sektör |
-
-**giriş kriterleri**: güçlü katalizör (earnings, M&A, contract, jeopolitik) + teknik momentum + risk-ödül dengesi
-
-**sektörler**: enerji, sağlık, finans, savunma, tüketici, materials, industrial, teknoloji vs — önemli olan momentum!
-
-detay: `docs/AGGRESSIVE_STRATEGY.md`
-
----
-
-## swing trade
-
-| kural | değer |
-|-------|-------|
-| max eşzamanlı | 10 |
-| stop-loss | ATR tabanlı dinamik (2.0 × ATR14) |
-| kar hedefi | kademeli: %50 hedefte sat + %50 trailing stop |
-| min R:R | 2:1 |
-
-detay: `docs/SWING_TRADE_RULES.md`
-
----
-
-## dokümantasyon haritası
-
-| konu | kaynak |
-|------|--------|
-| agresif büyüme strateji detayları | `docs/AGGRESSIVE_STRATEGY.md` |
-| portföy JSON şemaları, hesaplama kuralları | `docs/PORTFOLIO_DATA_SKILL.md` |
-| swing trade kuralları + JSON şemaları | `docs/SWING_TRADE_RULES.md` |
-| portföy bazlı strateji kuralları | `PORTFOY_KURALLARI.md` |
-| dosya yapısı | `docs/DOSYA_SISTEMI.md` |
-| prediction markets | `docs/PREDICTION_MARKETS_GUIDE.md` |
-| veri doğrulama | `docs/SELF_VALIDATION.md` |
-| FMP API | `FMP_SKILL.md` (project file) |
-
----
-
-## günlük rutin
-
-| zaman (TR) | aktivite | çıktı |
-|------------|----------|-------|
-| ~14:00 | günlük rapor (NYSE kapanış sonrası) | `reports/daily/DAILY_REPORT_*.md` |
-| 17:30+ | seans açılış | JSON güncelleme + trade kararları |
-| 19:00-22:00 | mid-session | watchlist + fırsat tarama |
-| 23:00-00:00 | kapanış öncesi | trailing stop + son kontrol |
-
----
-
-## veri kaynakları
-
-- **FMP API** (premium): fiyat, temel veriler, teknik göstergeler, haberler
-- **kalshi / polymarket**: prediction markets sentiment
-- **web search**: makro haberler, earnings sonuçları
-
----
-
-## git commit formatı
-
-```
-[ALIŞ] Portföy - SEMBOL @FİYAT - neden
-[SATIŞ] Portföy - SEMBOL @FİYAT - neden
-[GÜNCELLEME] tüm portföyler - tarih kapanış fiyatları
-[SWING-GİRİŞ] SEMBOL @FİYAT - neden
-[SWING-ÇIKIŞ] SEMBOL @FİYAT - sonuç +/-%X
-[STRATEJİ] strateji değişikliği açıklaması
-[YAPISAL] yapısal değişiklik açıklaması
-[DOKÜMAN] açıklama
+finzora-ai/
+│
+├── agent/                          # Otonom karar motoru
+│   ├── orchestrator.py             # Ana orkestratör — sabah/seans/kapanış/haftalık
+│   ├── execution_engine.py         # Portföy alım/satım executor
+│   ├── claude_agent.py             # Anthropic API bağlantısı
+│   ├── swing_manager.py            # Swing trade yönetimi
+│   ├── k_engine.py                 # K-kuralları otomatik kontrolcü
+│   ├── opportunity_finder.py       # Portföy fırsat tarayıcı
+│   ├── risk_engine.py              # Risk hesaplama
+│   ├── regime_detector.py          # Piyasa rejim tespiti
+│   ├── learning_engine.py          # Geçmiş trade'den öğrenme
+│   ├── specialist_agents.py        # Çok-ajan analiz (Makro/Sektör/Sinyal/Risk)
+│   ├── adversarial_debate.py       # Bull vs Bear otomatik tartışma
+│   ├── darwin_evolution.py         # Prompt/strateji evrim motoru
+│   ├── backtester.py               # Geriye dönük test
+│   ├── tools.py                    # FMP + Telegram + veri araçları
+│   ├── memory_manager.py           # Token tasarruflu bağlam yönetimi
+│   └── memory/                     # Kalıcı agent hafızası
+│       ├── market_regime.json      # Aktif piyasa rejimi
+│       ├── theme_scores.json       # Tema skorları (1-10, haftalık)
+│       ├── k_rules_digest.md       # K-kuralları özeti (agent için)
+│       ├── prediction_log.json     # Tahmin kaydı ve doğruluk skoru
+│       ├── prompt_genome.json      # Evrimleşen prompt genomi
+│       └── specialist_genome.json  # Uzman agent ağırlıkları
+│
+├── scripts/                        # Yardımcı scriptler
+│   ├── daily_update.py             # Saatlik fiyat güncellemesi
+│   ├── swing_ichimoku.py           # Ichimoku hesaplama + chandelier trailing
+│   ├── swing_entry_engine.py       # Swing sinyal üretici
+│   ├── swing_full_universe.py      # ~1100 hisse tam tarama
+│   ├── portfolio_scan_aggressive.py
+│   ├── portfolio_scan_balanced.py
+│   ├── portfolio_scan_dividend.py
+│   ├── risk_panel_generator.py     # Günlük risk paneli PNG → Telegram
+│   ├── telegram_notify.py          # Telegram bildirimleri
+│   ├── watchlist_manager.py        # İzleme listesi (7 gün cool-down)
+│   ├── k09_proximity_check.py      # Stop yakınlık 4-kontrol
+│   ├── k15b_dilution_check.py      # Momentum hisse dilüsyon skoru
+│   ├── k16_sell_the_news_score.py  # Earnings öncesi skor
+│   ├── k17_correlation_check.py    # Korelasyon + tema çakışma
+│   ├── k19_xlp_filter.py           # XLP swing girişi yasağı
+│   ├── k20_rs_filter.py            # RS dead cat bounce filtresi
+│   ├── alpha_screener.py           # FMP hisse tarayıcı (aggressive/dividend/swing)
+│   ├── consistency_check.py        # Veri tutarlılık kontrolü
+│   ├── sentiment_engine.py         # Haber duygu analizi
+│   ├── premarket_gap_scanner.py    # Pre-market gap fırsatları
+│   ├── auto_trade_review.py        # Trade sonrası otomatik analiz
+│   ├── walk_forward_backtest.py    # Walk-forward backtest
+│   └── consolidate_portfolios.py   # DEVRE DIŞI — ghost portföy oluşturur
+│
+├── data/                           # Canlı veri
+│   ├── portfolios/
+│   │   ├── aggressive.json         # ← CANONICAL
+│   │   ├── balanced.json           # ← CANONICAL
+│   │   └── dividend.json           # ← CANONICAL
+│   ├── swing/
+│   │   ├── active.json             # Açık swing pozisyonları (max 8)
+│   │   ├── closed.json             # Kapanan trade'ler + dersler
+│   │   ├── status.json             # Sistem durumu
+│   │   └── watchlist.json          # Swing izleme listesi
+│   ├── transactions.csv            # Tüm işlem geçmişi (TEK KAYNAK)
+│   ├── watchlist.json              # Portföy izleme listesi
+│   ├── daily_full_scan.json        # ~1100 hisse tarama sonuçları
+│   ├── daily_scan_{aggressive,balanced,dividend}.json
+│   ├── alpha_scan_aggressive.json
+│   ├── summary.json
+│   └── episodic_memory/            # Agent uzun dönem hafıza
+│
+├── docs/                           # Strateji belgeleri
+│   ├── K_RULES_QUICK_REF.md        # ⭐ K-kuralları tek kaynak
+│   ├── TRADING_PLAYBOOK.md         # ⭐ Tam strateji kitabı
+│   ├── SWING_SYSTEM_V2.md          # Swing sistem v2.3
+│   ├── AGGRESSIVE_V2_THESIS.md     # AI tedarik zinciri tezi
+│   └── prompts/                    # Seans prompt şablonları
+│
+├── reports/
+│   ├── daily/                      # SABAH / SWING / PORTFOY / KAPANIS
+│   └── weekly/                     # WEEKLY_YYYY-MM-DD
+│
+├── outputs/risk_panel/             # Günlük risk paneli PNG
+│
+└── .github/workflows/
+    ├── agent.yml                   # ⭐ Ana agent (her 30dk, piyasa saatlerinde)
+    ├── daily_update.yml            # Saatlik fiyat güncellemesi
+    ├── morning_scan.yml            # Sabah tarama
+    ├── consistency_check.yml       # Veri tutarlılık
+    ├── weekly_theme_review.yml     # Haftalık tema gözden geçirme
+    └── notify-transactions.yml     # İşlem bildirimi
 ```
 
 ---
 
-> son güncelleme: 26 şubat 2026 | finzora ai
+## Otomasyon Mimarisi
+
+```
+GitHub Actions (zamanlanmış)
+        │
+        ▼
+agent/orchestrator.py
+        │
+        ├── Sabah  (16:00 TR)   → Makro analiz + fırsat tarama + günün planı
+        ├── Seans  (her 30 dk)  → Stop izleme + sinyal tarama + execution
+        ├── Kapanış (00:30 TR)  → P&L raporu + dersler + veri güncelleme
+        └── Haftalık (Pazar)    → Tema skoru + rejim + kural gözden geçirme
+                │
+                ├── execution_engine.py → portfolios/*.json günceller
+                ├── swing_manager.py    → swing/active.json günceller
+                ├── k_engine.py         → K-kuralları + Telegram uyarı
+                └── telegram_notify.py  → Zeynel'e bildirim
+```
+
+---
+
+## Canonical Veri Kaynakları
+
+| Veri | Dosya | Yazar |
+|------|-------|-------|
+| Portföy pozisyonları | `data/portfolios/{aggressive,balanced,dividend}.json` | Agent + Manuel |
+| Tüm işlemler | `data/transactions.csv` — 7 sütun: `date,action,symbol,shares,price,total,reason` | Agent + Manuel |
+| Swing pozisyonlar | `data/swing/active.json` | Agent (otomatik) |
+| Swing geçmişi | `data/swing/closed.json` | Agent (otomatik) |
+| Agent hafızası | `agent/memory/*.json` | Agent (otomatik) |
+
+> `data/session_state.json` geçici, `.gitignore`'da — commit'lenmez.
+
+---
+
+## K-Kural Sistemi
+
+Aktif 17 kural. Tam referans: `docs/K_RULES_QUICK_REF.md`
+
+| Kategori | Kurallar |
+|----------|----------|
+| Giriş filtreleri | K-02, K-04, K-05, K-13 v4.1, K-13b, K-15a, K-15b, K-17, K-19, K-20 |
+| Çıkış disiplini | K-06, K-07, K-09, K-ZST, K-EVR, K-ATR |
+| Portföy yönetimi | K-10, K-11 v3, K-12, K-16 |
+
+Kaldırılan: K-01, K-03, K-08, K-14 (psikoloji testi ile değiştirildi), K-18 (backtest ters sonuç)
+
+---
+
+## Ortam Değişkenleri (GitHub Secrets)
+
+| Secret | Kullanım |
+|--------|----------|
+| `ANTHROPIC_API_KEY` | Claude API — karar motoru |
+| `FMP_API_KEY` | Financial Modeling Prep — fiyat ve temel veri |
+| `TELEGRAM_TOKEN` | Finzora AI bot bildirimleri |
+| `TELEGRAM_PRIVATE_CHAT` | Zeynel'e özel chat ID |
+| `RAPIDAPI_KEY` | Twitter monitoring |
+
+---
+
+## Önemli Teknik Notlar
+
+- **VIX proxy:** VIXY/UVXY kullanılmaz. VIX için web_search ("CBOE VIX current").
+- **Stop alanı:** `stop_loss` canonical. `zarar_kes` tüm JSON'lardan kaldırıldı (12 Nisan 2026).
+- **Maliyet alanı:** `maliyet_baz` canonical. `maliyet_bazis` kaldırıldı (12 Nisan 2026).
+- **Ghost portföyler:** `growth.json` ve `income.json` archived (12 Nisan 2026). Canonical: aggressive / balanced / dividend.
+- **Psikoloji testi:** Her swing girişi öncesi — "Bu girişi yarın tekrar inceleseydim, tüm kuralları tam uyguladım mı?"
+- **FMP limit:** 2,500 çağrı/gün. Sadece `/stable/` endpoint (v3/v4 kapalı).
+- **Chandelier stop:** 3×ATR(14) trailing, sadece yukarı çekilir. `stop_loss` > `chandelier_stop` ise `stop_loss` aktif seviyedir.
+
+---
+
+*Son güncelleme: 12 Nisan 2026 | Finzora AI*
