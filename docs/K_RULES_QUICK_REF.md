@@ -12,7 +12,7 @@
 
 ---
 
-## aktif kurallar (16 kural)
+## aktif kurallar (19 kural)
 
 ### giriş filtreleri
 
@@ -29,6 +29,9 @@
 | **K-17** | korelasyon + tema çakışması | `scripts/k17_correlation_check.py SYMBOL` — 3 soru testi, tema %40 limit |
 | **K-19** | XLP swing girişi | yasak — düşük volatilite (std 3.6% vs momentum 6.3%) swing hedef fiyatına ulaşmayı engeller; sadece portföy pozisyonu olarak alınabilir |
 | **K-20** | sektör RS dead cat bounce | `scripts/k20_rs_filter.py` — son 3g RS negatif + bounce yanıltıcı |
+| **K-ZST** | swing pozisyon 10. gün | RSI yönü + hacim + RS → 2/3 negatifse çık (bekleme yok) |
+| **K-EVR** | swing aday tarama | beta(1Y) < 0.7 olan hisseyi evrenden ele; swing %10 hedefe ulaşamaz |
+| **K-ATR** | giriş stop kurulumu | stop mesafesi < 2×ATR(14) ise pozisyon yarıya indir veya girme |
 
 ### çıkış disiplini
 
@@ -103,6 +106,51 @@ not: script'ler `_QUIET_MODE=True` varsayılanı ile çalışır. info severity 
 
 ---
 
+
+---
+
+## K-ZST 10. gün momentum protokolü
+
+10. günde 3 kontrol yap, 2/3 negatifse çık:
+
+| kontrol | negatif sinyal |
+|---|---|
+| RSI yönü | 10. gün RSI < giriş günü RSI |
+| Hacim trendi | son 3g ort. hacim < ilk 3g ort. hacim |
+| Relative Strength | hisse son 5g SPY'dan zayıf (RS negatif) |
+
+→ 2/3 negatif = **ÇIK** | 1/3 negatif = izle | 0/3 = tut
+
+**Kanıt:** GOOGL(23g→+7.8%), XOM(15g→+5.5%), LMT(18g→+1.4%), GE(13g→+1.7%) — 4 trade'de erken çıkış optimal olurdu.
+
+## K-EVR swing evreni beta filtresi
+
+Beta(1Y) < 0.7 olan hisseler swing evrenine giremez.
+
+**Evrenden çıkarılanlar (örnekler):**
+- Telekom: VZ, T, TMUS
+- Kamu hizmetleri: DUK, NEE, SO, EXC
+- Defensif sağlık: DVA, HUM, UHS
+- Büyük defensif perakende: WMT, TGT, COST
+- Defensif REIT (swing): AMT, O, VICI
+
+Bu hisseler dengeli/temettü portföyüne gönderilir.
+
+**Kanıt:** WMT(-3.5%), T(-5.5%), DUK(+1.5%), DVA(+1.1%) — 4 trade, ortalama puan 2.25/10.
+
+## K-ATR giriş stop mesafesi zorunlu kontrolü
+
+```
+stop_mesafe  = giris_fiyati − stop_fiyati
+min_mesafe   = 2 × ATR(14)
+
+eğer stop_mesafe < min_mesafe:
+    → pozisyonu yarıya indir
+    → veya girme
+```
+
+**Kanıt:** AMT(-3.4%, %1.7 mesafe), ZS(+2.5%, dar trailing), NEM(+2.1%, ATR önerisi) — 3 trade.
+
 ## kural hiyerarşisi (çakışma durumunda)
 
 1. **K-06 stop tetiği** → her şeyin üstünde, override yasak
@@ -114,7 +162,7 @@ not: script'ler `_QUIET_MODE=True` varsayılanı ile çalışır. info severity 
 
 ---
 
-> son güncelleme: 11 nisan 2026 | finzora ai | K-18 kaldırıldı (backtest), K-19 argümanı güncellendi
+> son güncelleme: 11 nisan 2026 | finzora ai | K-18 kaldırıldı (backtest); K-ZST/K-EVR/K-ATR eklendi (3+ trade kanıtı)
 
 ---
 
