@@ -51,12 +51,16 @@ jobs:
       - name: Ozet
         run: python3 scripts/scan_summary.py || echo "Ozet alinamadi"
 
-      - name: Commit
+      - name: Sonuclari kaydet
         run: |
           git pull --rebase origin main || true
-          git add data/daily_scan_*.json data/daily_full_scan.json || true
-          git diff --staged --quiet || git commit -m "[AUTO-SCAN] $(date +'%Y-%m-%d %H:%M UTC')"
-          git push || (sleep 10 && git pull --rebase && git push) || true
+          git add data/daily_scan_*.json data/daily_full_scan.json 2>/dev/null || true
+          if git diff --staged --quiet; then
+            echo "Degisiklik yok — commit atlanıyor"
+          else
+            git commit -m "[AUTO-SCAN] $(date +'%Y-%m-%d %H:%M UTC')"
+            git push || (sleep 10 && git pull --rebase origin main && git push)
+          fi
 
   swing-entry-scan:
     runs-on: ubuntu-latest
@@ -85,28 +89,30 @@ jobs:
           git pull --rebase origin main || true
           python scripts/swing_entry_engine.py --watchlist 2>&1 | tee /tmp/swing_entry.txt
 
-      - name: Sonuç kaydet
+      - name: Sonuc kaydet
         run: |
           python3 -c "
-import json, subprocess
+import json
 from datetime import datetime
 result = open('/tmp/swing_entry.txt').read()
-# JSON'a kaydet
 data = {
     'tarih': datetime.now().isoformat(),
     'ham_cikti': result,
     'giris_sinyalleri': []
 }
-# Parse et
 for line in result.split('\n'):
-    if 'GİRİŞ ✅' in line:
+    if 'GİRİŞ' in line and '✅' in line:
         parts = line.strip().split()
         if parts:
             data['giris_sinyalleri'].append(parts[0])
 with open('data/swing_entry_signals.json', 'w') as f:
     json.dump(data, f, ensure_ascii=False, indent=2)
-print('Tespit edilen sinyaller:', data['giris_sinyalleri'])
+print('Sinyaller:', data['giris_sinyalleri'])
 "
           git add data/swing_entry_signals.json
-          git commit -m "[AUTO] Swing entry sinyalleri $(date +%Y-%m-%d)" || true
-          git push || true
+          if git diff --staged --quiet; then
+            echo "Degisiklik yok"
+          else
+            git commit -m "[AUTO] Swing entry sinyalleri $(date +%Y-%m-%d)"
+            git push || true
+          fi

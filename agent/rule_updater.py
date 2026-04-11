@@ -332,13 +332,13 @@ def parse_claude_rule_proposal(claude_response: str) -> list[dict]:
 def run_weekly_rule_review(claude_response: str, backtest_results: dict) -> list[dict]:
     """
     Haftalık analizden önerileri çıkarır, güvenlik kontrolünden geçirir.
-    Phase 4'te sadece "öneri" aşamasındayız — gerçek uygulama Phase 5'te.
+    Backtest kanıtı geçtiyse otomatik uygula.
     """
     proposals = parse_claude_rule_proposal(claude_response)
     results   = []
 
     for p in proposals:
-        # Sadece güvenlik kontrolü yap, gerçekte uygulama yapma
+        # Güvenlik kontrolü geçtiyse otomatik uygula
         allowed, reason = validate_change_request(
             p["param"], p["new_value"], backtest_results
         )
@@ -348,7 +348,7 @@ def run_weekly_rule_review(claude_response: str, backtest_results: dict) -> list
             "new_value": p["new_value"],
             "izin":      allowed,
             "gerekce":   reason,
-            "durum":     "ONAY_BEKLIYOR" if allowed else "REDDEDILDI",
+            "durum":     "ONAYLANDI" if allowed else "REDDEDILDI",
         }
         results.append(result)
 

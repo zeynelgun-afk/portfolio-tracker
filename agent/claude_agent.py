@@ -3,15 +3,17 @@
 Finzora Agent — Claude Karar Motoru
 =====================================
 Anthropic API ile iletişim kurar.
-Phase 1: Sadece analiz ve yorum üretir, karar uygulamaz.
+Otonom karar verir, uygular, kaydeder.
 """
 
 import os
 import anthropic
+from pathlib import Path
 
 ANTHROPIC_KEY = os.environ.get("ANTHROPIC_API_KEY", "")
+REPO_ROOT = Path(__file__).parent.parent
 
-SYSTEM_PROMPT = """Sen Finzora Agent'sın — Zeynel'in otonom portföy izleme asistanısın.
+SYSTEM_PROMPT = """Sen Finzora Agent'sın — Zeynel'in otonom portföy yönetim asistanısın.
 
 KİMLİĞİN:
 - Türk yatırımcılar için ABD piyasasını takip ediyorsun
@@ -21,19 +23,29 @@ KİMLİĞİN:
 
 KONUŞMA TARZI:
 - Türkçe, sade, profesyonel
-- Gereksiz süsleme yok
+- Gereksiz süsleme yok — dolgu cümle, "mükemmel", "kesinlikle" gibi ifadeler yasak
 - Rakamlar somut, gerekçeler net
 - Belirsizlik varsa açıkça söyle
 
-PHASE 1 SINIRI:
-- Şu an SADECE izliyorsun ve yorum yapıyorsun
-- Hiçbir işlem kararı uygulamıyorsun
-- Önerilerin "ben olsam..." formatında, emir değil
+OTONOM KARAR KURALI (SEN KARAR VER):
+- Tüm aksiyonlar onay beklemeden uygulanır
+- Stop-loss tetiklendiğinde: hemen çık, override yasak
+- Swing giriş/çıkış: karar ver, JSON'a yaz, Telegram'a bildir
+- Portföy rebalancing: K-12 aşımında küçült
+- Onay istemek = kural ihlali
 
 ETİKETLER (zorunlu):
 - KESİN: FMP verisi, doğrulanmış rakam
-- MUHTEMEL: güçlü kanıta dayalı çıkarım  
+- MUHTEMEL: güçlü kanıta dayalı çıkarım
 - SPEKÜLATİF: yorum, tahmin, sezgi"""
+
+
+def load_prompt_file(filename: str) -> str:
+    """docs/prompts/ klasöründen prompt dosyasını okur."""
+    path = REPO_ROOT / "docs" / "prompts" / filename
+    if path.exists():
+        return path.read_text(encoding="utf-8")
+    return ""
 
 
 def get_claude_decision(
@@ -49,10 +61,10 @@ def get_claude_decision(
         return "⚠️ ANTHROPIC_API_KEY bulunamadı."
 
     max_tokens = {
-        "morning": 1500,
-        "closing": 1500,
+        "morning": 4000,
+        "closing": 4000,
         "monitor": 800,
-        "weekly":  2500,
+        "weekly":  4000,
     }.get(mode, 1000)
 
     system = system_override if system_override else SYSTEM_PROMPT
@@ -60,7 +72,7 @@ def get_claude_decision(
     try:
         client   = anthropic.Anthropic(api_key=ANTHROPIC_KEY)
         response = client.messages.create(
-            model      = "claude-sonnet-4-5",
+            model      = "claude-opus-4-5",
             max_tokens = max_tokens,
             system     = system,
             messages   = [{"role": "user", "content": user_prompt}],

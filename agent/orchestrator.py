@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-Finzora Agent — Orkestratör (Phase 1)
-======================================
-SADECE İZLER. Hiçbir veri dosyasına yazmaz.
+Finzora Agent — Orkestratör
+============================
+Otonom karar verir ve uygular.
 Tüm yorumlar Zeynel'e özel Telegram'a gider.
 
 Çalışma zamanları (GitHub Actions):
@@ -305,21 +305,28 @@ def run_morning(ctx: dict):
 
 {ctx['risk']}
 
-=== GÖREV: SABAH ANALİZİ ===
-Multi-agent ve debate sonuçları Telegram'a ayrıca gönderildi.
+=== GÖREV: SABAH ANALİZİ VE RAPOR ===
+Yukarıdaki gerçek piyasa verileri, portföy durumu ve teknik analizleri kullanarak
+docs/prompts/DAILY_PART1_SABAH.md formatında eksiksiz sabah raporu üret.
 
-1. Pre-market gap'lerde portfolyo pozisyonları var mı? Aksiyon gerekiyor mu?
-2. Stop'a yakın pozisyon? (portföy + swing)
-3. Swing giriş sinyali + boş slot → GİRİŞ KARARI (SEN KARAR VER)
-   Format: SWING_GİRİŞ: [SEMBOL] [ADET] adet @ ~$[FİYAT] stop:$[STOP] hedef:$[HEDEF]
-4. Alpha screener fırsatı?
-5. Bu haftanın 3 önceliği
+Zorunlu bölümler (hepsini yaz):
+0. piyasa istihbaratı (aktif temalar, haber etki zinciri)
+0.5. dün seans sonu notları (session_state flag'leri)
+1. piyasa görünümü (endeks tablosu, ön piyasa, sektörler, VIX/K-13)
+2. haber ve analiz (portföyü etkileyen gelişmeler, analist notları)
+3. portföy sağlık durumu (3 portföy tablo, uyarılar, earnings takvimi)
+4. günün planı (aksiyonlar: hemen / izle / pasif)
 
-Kısa ve net. KESİN / MUHTEMEL / SPEKÜLATİF.
+Swing giriş kararı varsa: SWING_GİRİŞ: [SEMBOL] [ADET] adet @ ~$[FİYAT] stop:$[STOP] hedef:$[HEDEF]
+
+KESİN / MUHTEMEL / SPEKÜLATİF etiket kullan. Küçük harf Türkçe.
 """
 
     response = get_claude_decision(prompt, mode="morning")
     save_daily_brief(response, "morning")
+
+    # Tam raporu reports/daily/'e kaydet
+    _save_report(response, "SABAH")
 
     # Telegram'a 3 mesaj: multi-agent + debate (varsa) + genel analiz
     send_private_telegram(multi_summary + debate_msg)
@@ -349,15 +356,20 @@ def run_closing(ctx: dict):
 
 {ctx['twitter']}
 
-=== GÖREV: KAPANIS YORUMU ===
-1. Bugünkü swing aksiyonları (varsa) doğru muydu? Neden?
-2. Portföyde en dikkat çeken hareket neydi?
-3. Stop seviyelerine tehlikeli yaklaşan var mı?
-4. Tezler hâlâ geçerli mi?
-5. Yarın için en önemli 3 izleme noktası
-6. Bu günden 1 somut ders
+=== GÖREV: KAPANIS RAPORU ===
+Yukarıdaki verilerle docs/prompts/DAILY_PART2_CLOSING.md formatında kapanış raporu üret.
 
-Kısa ve net. KESİN / MUHTEMEL / SPEKÜLATİF etiket kullan.
+Zorunlu bölümler:
+1. günün özeti (endeks tablosu, sektörler, trend)
+2. portföy takibi (3 portföy tablo, uyarılar, aksiyonlar)
+3. swing trade durumu (chandelier stop kontrolü)
+4. kazanç açıklamaları (portföy/watchlist kesişimi)
+5. günün değerlendirmesi (sabah planı vs gerçekleşme, dersler)
+6. yarın aksiyonları (hemen / izle / pasif)
+
+JSON güncellemeleri (fiyat/k-z) zaten yapılıyor, rapor bölümlerine yansıt.
+Kapanan trade varsa post-trade review ekle.
+KESİN / MUHTEMEL / SPEKÜLATİF etiket kullan. Küçük harf Türkçe.
 """
 
     response = get_claude_decision(prompt, mode="closing")
@@ -365,6 +377,9 @@ Kısa ve net. KESİN / MUHTEMEL / SPEKÜLATİF etiket kullan.
     lines = [l.strip() for l in response.split("\n") if l.strip()]
     if lines:
         append_learning(lines[-1], source="closing_analysis")
+
+    # Tam raporu reports/daily/'e kaydet
+    _save_report(response, "KAPANIS")
 
     msg = f"Finzora Agent — Kapanış\n{ctx['timestamp'][:16]}\n\n{response}"
     send_private_telegram(msg)
@@ -611,6 +626,38 @@ def _check_swing_entries() -> list[str]:
 
     return aksiyonlar
 
+
+
+def _save_report(content: str, rapor_tipi: str):
+    """
+    Claude yanıtını reports/daily/ klasörüne .md dosyası olarak kaydeder.
+    rapor_tipi: SABAH, KAPANIS, SWING, PORTFOY
+    """
+    import subprocess
+    from pathlib import Path
+    
+    tarih = datetime.now(TR_TZ).strftime("%Y-%m-%d")
+    dosya = REPO_ROOT / "reports" / "daily" / f"DAILY_{rapor_tipi}_{tarih}.md"
+    dosya.parent.mkdir(parents=True, exist_ok=True)
+    
+    baslik = f"# {rapor_tipi.lower()} raporu — {tarih}\n\n> finzora ai | otomatik oluşturuldu\n\n"
+    dosya.write_text(baslik + content, encoding="utf-8")
+    print(f"[Rapor] {dosya.name} kaydedildi")
+    
+    # Git commit
+    try:
+        os.chdir(REPO_ROOT)
+        subprocess.run(["git", "config", "user.name", "Finzora AI"], capture_output=True)
+        subprocess.run(["git", "config", "user.email", "zeynelgun@users.noreply.github.com"], capture_output=True)
+        subprocess.run(["git", "pull", "--rebase", "origin", "main"], capture_output=True)
+        subprocess.run(["git", "add", str(dosya)], capture_output=True)
+        msg = f"[{rapor_tipi} RAPORU] {tarih}"
+        result = subprocess.run(["git", "commit", "-m", msg], capture_output=True)
+        if result.returncode == 0:
+            subprocess.run(["git", "push"], capture_output=True)
+            print(f"[Rapor] Git push başarılı: {dosya.name}")
+    except Exception as e:
+        print(f"[Rapor] Git hatası: {e}")
 
 def _flag_for_commit():
     """Swing değişikliği oldu — kapanışta commit edilecek."""
