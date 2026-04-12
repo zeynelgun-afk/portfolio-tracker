@@ -26,7 +26,8 @@
             "notlar": [],
             "pnl_pct": 0.0,
             "atr14": 25.88,
-            "chandelier_guncelleme": "2026-04-11"
+            "chandelier_guncelleme": "2026-04-11",
+            "maliyet_baz": 790.66
         },
         {
             "id": "SWING-202604111410-KLAC",
@@ -52,7 +53,8 @@
             "notlar": [],
             "pnl_pct": 0.0,
             "atr14": 68.85,
-            "chandelier_guncelleme": "2026-04-11"
+            "chandelier_guncelleme": "2026-04-11",
+            "maliyet_baz": 1737.28
         },
         {
             "id": "SWING-202604111410-AMAT",
@@ -78,13 +80,14 @@
             "notlar": [],
             "pnl_pct": 0.0,
             "atr14": 16.69,
-            "chandelier_guncelleme": "2026-04-11"
+            "chandelier_guncelleme": "2026-04-11",
+            "maliyet_baz": 399.49
         }
     ],
     "ozet": {
-        "toplam_pozisyon": 2,
-        "bos_slot": 6,
+        "toplam_pozisyon": 3,
+        "bos_slot": 5,
         "maksimum_pozisyon": 8,
-        "ortalama_kar_zarar_yuzde": -0.44
+        "ortalama_kar_zarar_yuzde": 0.0
     }
 }

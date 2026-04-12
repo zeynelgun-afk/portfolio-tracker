@@ -302,7 +302,12 @@ def update_watchlist(quote_dict):
         candidate['guncel_fiyat'] = new_price
         
         # 5 günlük momentum hesapla
-        candidate['momentum_5gun'] = quote.get('changesPercentage', 0)
+        # changesPercentage piyasa dışında 0 döner — manuel hesap
+        prev_close = quote.get('previousClose', 0)
+        if prev_close and prev_close > 0:
+            candidate['momentum_5gun'] = round(((new_price - prev_close) / prev_close) * 100, 2)
+        else:
+            candidate['momentum_5gun'] = 0
         
         candidate['son_kontrol'] = datetime.now().strftime('%Y-%m-%d')
         
@@ -373,8 +378,8 @@ def update_summary():
             "swing_trade": {
                 "isim": "Swing Trade",
                 "pozisyon_sayisi": len(swing.get('aktif_pozisyonlar', [])),
-                "bos_slot": 5 - len(swing.get('aktif_pozisyonlar', [])),
-                "durum": f"{len(swing.get('aktif_pozisyonlar', []))}/5 pozisyon aktif"
+                "bos_slot": 8 - len(swing.get('aktif_pozisyonlar', [])),
+                "durum": f"{len(swing.get('aktif_pozisyonlar', []))}/8 pozisyon aktif"
             }
         }
     }

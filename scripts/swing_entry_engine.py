@@ -522,5 +522,18 @@ if __name__ == "__main__":
         syms = [h["symbol"] for h in scan.get("ekle", []) + scan.get("izle", [])][:20]
         print(f"Alpha screener'dan {len(syms)} hisse alındı")
 
+    # ── Kapasite kontrolü (max 8 pozisyon) ──────────────────────
+    try:
+        active = json.load(open(REPO_ROOT / "data" / "swing" / "active.json"))
+        current = len(active.get("aktif_pozisyonlar", []))
+        MAX_SWING = 8
+        bos_slot  = MAX_SWING - current
+        print(f"\n[Kapasite] {current}/{MAX_SWING} pozisyon aktif — {bos_slot} boş slot")
+        if bos_slot <= 0:
+            print("⛔ Kapasite DOLU — yeni giriş yapılamaz. Çıkış bekleyip tekrar çalıştırın.")
+            raise SystemExit(0)
+    except (FileNotFoundError, KeyError, json.JSONDecodeError):
+        print("⚠️  Kapasite kontrolü atlandı (active.json okunamadı)")
+
     all_results, giris = scan_for_entries(syms, verbose=args.verbose)
     print_entry_report(giris)
