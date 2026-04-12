@@ -308,12 +308,13 @@ def send_telegram_direct(message, severity="warning"):
     """
     try:
         notify_script = Path(__file__).parent / "telegram_notify.py"
-        # telegram_notify.py CLI: --type alert --msg / --type custom --msg
         t_type = "alert" if severity == "critical" else "custom"
-        subprocess.run(
+        result = subprocess.run(
             ["python3", str(notify_script), "--type", t_type, "--msg", message],
-            timeout=15, capture_output=True
+            timeout=15, capture_output=True, text=True
         )
+        if result.returncode != 0:
+            log(f"  ⚠️  Telegram script hata kodu {result.returncode}: {result.stderr[:200]}")
     except Exception as e:
         log(f"  ⚠️  Telegram gönderim hatası: {e}")
 
@@ -400,10 +401,11 @@ def update_portfolio(filepath, quote_dict):
     
     portfolio_name = portfolio.get('portfoy_adi', filepath.stem)
     log(f"\n📂 {portfolio_name} güncelleniyor...")
-    
+
     now = datetime.now().isoformat()
     updated_count = 0
-    
+    p_turu = _portfoy_turu(filepath)   # Döngü dışında bir kez hesapla
+
     for pos in portfolio.get('pozisyonlar', []):
         symbol = pos['sembol']
         
@@ -436,7 +438,6 @@ def update_portfolio(filepath, quote_dict):
             pos['zirve_fiyat'] = new_price
 
         # ── 3 FAZLI STOP GÜNCELLEMESİ ──────────────────────────────────
-        p_turu = _portfoy_turu(filepath)
         if p_turu:
             eski_stop = pos.get('stop_loss', 0) or 0
             eski_faz  = pos.get('stop_faz', 0)
@@ -645,13 +646,17 @@ def update_summary():
     if not all([balanced, aggressive, dividend]):
         log("❌ Portföy dosyaları yüklenemedi!")
         return False
-    
+
+    # swing None olabilir (active.json henüz oluşmamış) — guard
+    swing_pozisyonlar = swing.get('aktif_pozisyonlar', []) if swing else []
+    swing_slot_max = 8
+
     # Toplam değerleri hesapla
     total_capital = 600000  # $100K + $400K + $100K
     total_value = balanced['toplam_deger'] + aggressive['toplam_deger'] + dividend['toplam_deger']
     total_pnl = total_value - total_capital
     total_pnl_pct = (total_pnl / total_capital) * 100
-    
+
     summary = {
         "son_guncelleme": datetime.now().strftime('%Y-%m-%d'),
         "toplam_sermaye": total_capital,
@@ -688,9 +693,9 @@ def update_summary():
             },
             "swing_trade": {
                 "isim": "Swing Trade",
-                "pozisyon_sayisi": len(swing.get('aktif_pozisyonlar', [])),
-                "bos_slot": 8 - len(swing.get('aktif_pozisyonlar', [])),
-                "durum": f"{len(swing.get('aktif_pozisyonlar', []))}/8 pozisyon aktif"
+                "pozisyon_sayisi": len(swing_pozisyonlar),
+                "bos_slot": swing_slot_max - len(swing_pozisyonlar),
+                "durum": f"{len(swing_pozisyonlar)}/{swing_slot_max} pozisyon aktif"
             }
         }
     }
