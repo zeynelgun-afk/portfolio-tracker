@@ -1124,6 +1124,17 @@ Detaylı Türkçe analiz. Spekülatif önerilere BACKTEST GEREKLİ işareti koy.
     save_daily_brief(response, "weekly")
     auto_extract_lessons(response, "weekly")
 
+    # Raporu reports/weekly/ klasörüne kaydet
+    try:
+        tarih = datetime.now(TR_TZ).strftime("%Y-%m-%d")
+        haftalik_dosya = REPO_ROOT / "reports" / "weekly" / f"WEEKLY_{tarih.replace('-','_')}.md"
+        haftalik_dosya.parent.mkdir(parents=True, exist_ok=True)
+        baslik = f"# haftalık rapor — {tarih}\n\n> finzora ai | otomatik oluşturuldu\n\n"
+        haftalik_dosya.write_text(baslik + response, encoding="utf-8")
+        print(f"[Rapor] {haftalik_dosya.name} kaydedildi")
+    except Exception as e:
+        print(f"[Rapor] Haftalık dosya yazma hatası: {e}")
+
     # Önerileri kuyruğa ekle
     proposals = run_weekly_rule_review(response, backtest)
     if proposals:
