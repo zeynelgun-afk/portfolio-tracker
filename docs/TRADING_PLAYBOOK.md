@@ -219,6 +219,9 @@ SAVUNMACI TANIMI (3 koşuldan EN AZ 1 sağlanmalı):
 2) Beta <1.0
 3) Defansif sektör (utilities/temel tüketim/sağlık/telekom)
 
+AGRESİF PORTFÖY İSTİSNASI — ÖNEMLİ:
+K-10 savunmacı+nakit eşiği karşılanıyor olsa bile, agresif portföyde nakit >%50 ise bu portföy için AGGRESSIVE_V2_THESIS.md "NAKİT HEDEF KURALI" devreye girer. Agresif portföyde yüksek nakit, "K-10 karşılandı, bekleyebiliriz" anlamına GELMEZ. Aksine agresif portföyde yüksek nakit = portföy görevini yerine getirmiyor = aktif giriş araştır. Nakit tutmak agresif portföyde başarısızlıktır.
+
 NAKİT MUAMELESİ: nakit "savunmacı + nakit" toplamına dahildir. nakit kayıp riski olmayan en savunmacı varlıktır, savunmacı oranına sayılır.
 
 ENERJİ İSTİSNASI: çatışma dönemlerinde enerji sektörü saldırgan olabilir. K-13 v4.1 faydalanıcı listesinde değerlendirilir, K-10 savunmacısı sayılmaz ama K-13 boyut izinleri korunur.

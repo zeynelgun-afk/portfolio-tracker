@@ -1,10 +1,10 @@
 # agresif portfoy v2 — AI deger zinciri tezi
 
-> versiyon: 2.0 | tarih: 31 mart 2026
-> sermaye: $357,823 (tamamen nakit)
+> versiyon: 2.1 | tarih: 12 nisan 2026
+> sermaye: ~$358K (Nisan 2026 güncel)
 > baslangic sermayesi: $400,000
 > v1 kaybi: -$42,177 (-%10.54)
-> durum: piyasa stabilizasyonu bekleniyor (VIX <25 + iran riski azalmasi)
+> durum: AKTİF — piyasa normale dönüyor, nakit pozisyon AÇILMALIDIR
 
 ---
 
@@ -155,6 +155,19 @@ v2 kurali: max 2-3 pozisyon, toplam agirlik <%30. uzun vadede en buyuk alfa pota
 
 ## v2 portfoy kurallari
 
+### ⚠️ NAKİT HEDEF KURALI — AGRESİF PORTFÖY İÇİN ZORUNLU
+
+bu portföy AGRESIF büyüme portföyüdür. nakit tutmak bu portföyün göreviyle çelişir.
+
+| durum | hedef nakit | eylem |
+|-------|-------------|-------|
+| 0-2 açık pozisyon | max %20 (≈$80K) | ACELE GİRİŞ — fırsat ara, bu an en yüksek öncelik |
+| 3-4 açık pozisyon | max %30 (≈$120K) | aktif giriş — varlık ara |
+| 5-6 açık pozisyon | max %40 (≈$160K) | normal, yeni fırsat beklentisi |
+| 6 pozisyon (dolu) | kalan nakit OK | tam dolu, yönet |
+
+**KURAL: her seansta açık pozisyon sayısı <4 ise, nakit çalıştırma birinci önceliktir. "bekleyeyim" kararı verilemez.**
+
 ### pozisyon limitleri
 
 | kural | deger |
@@ -164,9 +177,9 @@ v2 kurali: max 2-3 pozisyon, toplam agirlik <%30. uzun vadede en buyuk alfa pota
 | max tek katman agirligi | %30 |
 | max tek pozisyon agirligi | %20 |
 | stop | 2xATR(14) trailing |
-| giris kosulu | ichimoku 4/4 veya kumo kirilimi + hacim teyidi |
-| VIX >25 | yarim pozisyon (K-13) |
-| VIX >30 | yeni giris yok |
+| giris kosulu | ichimoku 4/4 VEYA kumo kirilimi + hacim teyidi VEYA RSI <40 oversold bounce |
+| VIX >28 | yarim pozisyon (K-13) |
+| VIX >35 | yeni giris yok |
 
 ### giris onceligi (piyasa normale dondugunde)
 
@@ -197,16 +210,35 @@ oncelik 4 (opsiyonel): katman 1 veya 4 — enerji veya veri
 
 ---
 
-## giris tetikleyicileri (bekle)
+## giriş tetikleyicileri (NİSAN 2026 GÜNCELLEMESİ)
 
-asagidaki kosullar saglaninca girise basla:
+### giriş koşulları (hepsi birden şart DEĞİL — herhangi 2'si yeterli):
 
-1. VIX < 25 (K-13 deaktif)
-2. iran ateskes/muzakere ilerlemesi (6 nisan sonrasi netlik)
-3. NASDAQ 20 gunluk SMA uzerine donmus
-4. en az 2 katman 5-6 ismi ichimoku 4/4 sinyali vermis
+1. VIX < 28 ✅ (Nisan 2026 itibarıyla sağlanıyor)
+2. NASDAQ 20 günlük SMA üzerinde veya yakınında
+3. hedef isim ichimoku 4/4 sinyali
+4. hedef isim RSI 40-60 arası momentum sinyali
+5. pozitif sektör rotasyonu var
 
-tetikleyici olusana kadar $358K nakit korunur. acele yok.
+### aktif giriş sıralaması (piyasa açıkken bu sırayla tara):
+
+öncelik 1 (çekirdek — en az 2 pozisyon): katman 5 temel modeller
+- MSFT, GOOGL, AMZN, META
+
+öncelik 2 (büyüme — en az 2 pozisyon): katman 6 uygulamalar
+- NOW, CRWD, CRM, WDAY
+
+öncelik 3 (taktik — 1-2 pozisyon): katman 2-3 donanım/altyapı
+- NVDA, AVGO, COHR, ETN, VRT
+
+### nakit çalıştırma kuralı:
+
+$358K'nın %70'i (≈$250K) en geç 30 işlem günü içinde pozisyonlara taşınmalıdır.
+bu süre: 12 Nisan — 23 Mayıs 2026.
+her seans en az 1 giriş ARAŞTIRMASI zorunludur.
+"koşullar yok" kararı sadece VIX>35 veya K-02 kriz protokolü aktifken verilebilir.
+
+~~tetikleyici oluşana kadar $358K nakit korunur. acele yok.~~ → **BU KURAL GEÇERSİZDİR.**
 
 ---
 
