@@ -117,6 +117,246 @@ def save_json(filepath, data):
         return False
 
 
+# ====== 3 FAZLI PORTFÖY STOP KONFİGURASYONU ======
+# Faz 1: Giriş tamponu (geniş ATR stop — tez kanıtlanana kadar)
+# Faz 2: Başa baş (breakeven) — yeterli kâr sonrası stop = maliyet_baz
+# Faz 3: İzleyen (trailing) — MA veya chandelier ile trend takibi
+STOP_CONFIG = {
+    "dengeli": {
+        "faz1_katsayi":      3.0,
+        "atr_period":        21,
+        "faz2_tetik_pct":    5.0,   # %5 kârda başa baş geçiş
+        "faz3_yontem":       "sma",
+        "faz3_sma_period":   50,
+        "faz3_sma_buffer":   0.98,  # 50SMA'nın %98'i
+    },
+    "agresif": {
+        "faz1_katsayi":      3.0,
+        "atr_period":        21,
+        "faz2_tetik_pct":    7.0,   # %7 kârda başa baş geçiş
+        "faz3_yontem":       "chandelier",
+        "faz3_chan_period":  20,    # Son 20 gün zirvesi
+        "faz3_chan_katsayi": 3.5,   # +%30 kârda 2.5'e iner (K-11 uyumu)
+    },
+    "temettü": {
+        "faz1_katsayi":      2.5,   # Temettü hisseleri daha az hareketli
+        "atr_period":        21,
+        "faz2_tetik_pct":    4.0,   # %4 kârda başa baş geçiş
+        "faz3_yontem":       "sma",
+        "faz3_sma_period":   100,
+        "faz3_sma_buffer":   0.985, # 100SMA'nın %98.5'i
+    }
+}
+
+# Temettü kesintisi ve kritik haber anahtar kelimeleri
+TEMETTÜ_KESINTI_KW = [
+    "dividend cut", "cuts dividend", "reduces dividend", "suspends dividend",
+    "eliminates dividend", "dividend suspension", "dividend reduction",
+    "cuts its dividend", "slashes dividend", "halves dividend",
+    "dividend eliminated", "dividend suspended", "reduced its dividend",
+    "suspend its dividend", "eliminate its dividend",
+]
+KRITIK_HABER_KW = [
+    "bankruptcy", "bankrupt", "fraud", "sec investigation", "going concern",
+    "class action", "accounting irregularity", "delist", "delisted",
+    "restatement", "material weakness",
+]
+
+
+def calculate_atr21(symbol, period=21):
+    """ATR(period) — historical OHLCV'den manuel hesap. FMP endpoint bağımsız."""
+    from_date = (datetime.now() - timedelta(days=period * 2 + 10)).strftime("%Y-%m-%d")
+    data = fmp_get("historical-price-eod/full", {
+        "symbol": symbol,
+        "from": from_date,
+        "limit": period + 10,
+    })
+    if not data or not isinstance(data, list) or len(data) < period + 1:
+        return None
+    # FMP yeniden eskiye sıralar — ters çevir
+    data_asc = sorted(data, key=lambda x: x.get("date", ""))
+    true_ranges = []
+    for i in range(1, len(data_asc)):
+        c = data_asc[i]
+        p = data_asc[i - 1]
+        tr = max(
+            (c.get("high") or 0) - (c.get("low") or 0),
+            abs((c.get("high") or 0) - (p.get("close") or 0)),
+            abs((c.get("low") or 0) - (p.get("close") or 0)),
+        )
+        true_ranges.append(tr)
+    if len(true_ranges) >= period:
+        return round(sum(true_ranges[-period:]) / period, 4)
+    return None
+
+
+def get_sma_value(symbol, period):
+    """SMA(period) — FMP technical indicator, son değer."""
+    data = fmp_get("technical-indicators/sma", {
+        "symbol": symbol,
+        "periodLength": period,
+        "timeframe": "1day",
+    })
+    if data and isinstance(data, list) and data:
+        return data[0].get("sma")
+    return None
+
+
+def _portfoy_turu(filepath):
+    """Dosya adından portföy türünü döndür."""
+    name = Path(filepath).stem  # balanced / aggressive / dividend
+    return {"balanced": "dengeli", "aggressive": "agresif", "dividend": "temettü"}.get(name)
+
+
+def hesapla_portfoy_stop(pos, portfoy_turu, current_price):
+    """
+    3 Fazlı stop hesaplama.
+    Döndürür: (yeni_stop_loss, yeni_faz) | (None, None) hata durumunda.
+    Stop asla aşağı çekilmez — sadece yukarı.
+    """
+    cfg = STOP_CONFIG.get(portfoy_turu)
+    if not cfg:
+        return None, None
+
+    sembol       = pos["sembol"]
+    maliyet      = pos.get("maliyet_baz", 0)
+    mevcut_stop  = pos.get("stop_loss", 0) or 0
+    mevcut_faz   = pos.get("stop_faz", 0)   # 0 = henüz hesaplanmamış
+
+    if not maliyet or not current_price:
+        return None, None
+
+    pnl_pct = ((current_price - maliyet) / maliyet) * 100
+
+    # ── FAZ 1 İLK KURULUM ──────────────────────────────────────────────────
+    if mevcut_faz == 0:
+        atr = calculate_atr21(sembol, cfg["atr_period"])
+        if atr:
+            faz1_stop = round(maliyet - atr * cfg["faz1_katsayi"], 2)
+            # Mevcut stop daha iyiyse onu koru
+            return max(faz1_stop, mevcut_stop) if mevcut_stop else faz1_stop, 1
+        return mevcut_stop, 0  # ATR çekilemedi — değiştirme
+
+    # ── FAZ 2 TETİK: yeterli kâr → başa baş ───────────────────────────────
+    if mevcut_faz == 1 and pnl_pct >= cfg["faz2_tetik_pct"]:
+        basbas = round(maliyet, 2)
+        return max(basbas, mevcut_stop), 2
+
+    # ── FAZ 1: Stop sabit kal (sadece yukarı gidebilir, orijinal ATR stop) ─
+    if mevcut_faz == 1:
+        return mevcut_stop, 1
+
+    # ── FAZ 3: İzleyen stop ────────────────────────────────────────────────
+    if mevcut_faz >= 2:
+        if cfg["faz3_yontem"] == "sma":
+            sma = get_sma_value(sembol, cfg["faz3_sma_period"])
+            if sma:
+                trailing = round(sma * cfg["faz3_sma_buffer"], 2)
+                return max(trailing, mevcut_stop), 3
+
+        elif cfg["faz3_yontem"] == "chandelier":
+            atr = calculate_atr21(sembol, cfg["atr_period"])
+            zirve = max(pos.get("zirve_fiyat", current_price), current_price)
+            if atr:
+                katsayi = cfg["faz3_chan_katsayi"]
+                if pnl_pct >= 30:    # K-11 v3 Tier 1 uyumu
+                    katsayi = 2.5
+                trailing = round(zirve - atr * katsayi, 2)
+                return max(trailing, mevcut_stop), 3
+
+        return mevcut_stop, mevcut_faz  # Veri yoksa mevcut stop'u koru
+
+    return mevcut_stop, mevcut_faz
+
+
+# ====== TEMELTTü KESİNTİSİ VE KRİTİK HABER İZLEME ======
+
+def send_telegram_direct(message, severity="warning"):
+    """Telegram'a direkt bildirim gönder (telegram_notify.py üzerinden)."""
+    try:
+        notify_script = Path(__file__).parent / "telegram_notify.py"
+        level_map = {"critical": "critical", "warning": "warning", "info": "info"}
+        level = level_map.get(severity, "warning")
+        subprocess.run(
+            ["python3", str(notify_script), "--message", message, "--level", level],
+            timeout=15, capture_output=True
+        )
+    except Exception as e:
+        log(f"  ⚠️  Telegram gönderim hatası: {e}")
+
+
+def temettu_ve_kritik_haber_kontrolu(portfoy_semboller):
+    """
+    Tüm portföy hisselerinin son 48 saatlik haberlerini tara.
+    Temettü kesintisi veya kritik olumsuz haber varsa Telegram'a gönder.
+    Günlük otomatik güncelleme sırasında çalışır.
+    """
+    if not portfoy_semboller:
+        return
+
+    log(f"\n📰 Haber taraması: {', '.join(sorted(portfoy_semboller))}")
+    symbols_str = ",".join(portfoy_semboller)
+    haberler = fmp_get("news/stock", {"symbols": symbols_str, "limit": 60})
+
+    if not haberler:
+        log("  ⚠️  FMP haber çekilemedi")
+        return
+
+    from datetime import timezone
+    sinir_dt = datetime.now(timezone.utc) - timedelta(hours=48)
+
+    uyarilar = []
+    for h in haberler:
+        # Tarih filtresi
+        try:
+            pub_str = h.get("publishedDate", "")
+            if "T" in pub_str:
+                pub_dt = datetime.fromisoformat(pub_str.replace("Z", "+00:00"))
+            else:
+                pub_dt = datetime.strptime(pub_str[:19], "%Y-%m-%d %H:%M:%S").replace(tzinfo=timezone.utc)
+            if pub_dt < sinir_dt:
+                continue
+        except Exception:
+            continue
+
+        baslik   = (h.get("title", "") or "").lower()
+        icerik   = (h.get("text", "") or "")[:600].lower()
+        tam_metin = baslik + " " + icerik
+        sembol   = h.get("symbol", "")
+
+        # Temettü kesintisi
+        for kw in TEMETTÜ_KESINTI_KW:
+            if kw in tam_metin:
+                uyarilar.append({
+                    "sembol": sembol, "tur": "TEMETTÜ KESİNTİSİ",
+                    "baslik": h.get("title", "")[:200],
+                    "url": h.get("url", ""), "severity": "critical",
+                })
+                break
+
+        # Kritik haber
+        for kw in KRITIK_HABER_KW:
+            if kw in tam_metin:
+                uyarilar.append({
+                    "sembol": sembol, "tur": "KRİTİK HABER",
+                    "baslik": h.get("title", "")[:200],
+                    "url": h.get("url", ""), "severity": "warning",
+                })
+                break
+
+    if uyarilar:
+        for u in uyarilar:
+            msg = (
+                f"🚨 {u['tur']}: {u['sembol']}\n"
+                f"Başlık: {u['baslik']}\n"
+                f"Link: {u['url']}"
+            )
+            log(f"  🚨 {u['tur']} — {u['sembol']}: {u['baslik'][:80]}")
+            send_telegram_direct(msg, severity=u["severity"])
+    else:
+        log(f"  ✅ Kritik haber yok ({len(haberler)} haber tarandı, son 48 saat)")
+
+
 def update_portfolio(filepath, quote_dict):
     """Bir portföy dosyasını güncelle"""
     portfolio = load_json(filepath)
@@ -151,13 +391,49 @@ def update_portfolio(filepath, quote_dict):
         
         # Hesaplamaları güncelle
         pos['guncel_deger'] = round(pos['adet'] * new_price, 2)
-        pos['yatirim'] = round(pos['adet'] * pos['maliyet_baz'], 2)  # maliyet_baz kanonik, yatirim turetilir
+        pos['yatirim'] = round(pos['adet'] * pos['maliyet_baz'], 2)
         pos['kar_zarar'] = round(pos['guncel_deger'] - pos['yatirim'], 2)
         pos['kar_zarar_yuzde'] = round((pos['kar_zarar'] / pos['yatirim']) * 100, 2)
         pos['son_guncelleme'] = now
-        
+
+        # Zirve fiyat takibi (Faz 3 chandelier için)
+        if new_price > pos.get('zirve_fiyat', 0):
+            pos['zirve_fiyat'] = new_price
+
+        # ── 3 FAZLI STOP GÜNCELLEMESİ ──────────────────────────────────
+        p_turu = _portfoy_turu(filepath)
+        if p_turu:
+            eski_stop = pos.get('stop_loss', 0) or 0
+            eski_faz  = pos.get('stop_faz', 0)
+            yeni_stop, yeni_faz = hesapla_portfoy_stop(pos, p_turu, new_price)
+            if yeni_stop is not None:
+                pos['stop_loss'] = yeni_stop
+                pos['stop_faz']  = yeni_faz
+                faz_ad = {1: "Giriş Tamponu", 2: "Başa Baş", 3: "İzleyen"}
+                if yeni_faz != eski_faz:
+                    log(f"    📍 {symbol} STOP FAZ {eski_faz}→{yeni_faz} "
+                        f"({faz_ad.get(yeni_faz,'?')}): ${eski_stop:.2f} → ${yeni_stop:.2f}")
+                elif abs(yeni_stop - eski_stop) > 0.01:
+                    log(f"    🔄 {symbol} stop: ${eski_stop:.2f} → ${yeni_stop:.2f} (Faz {yeni_faz})")
+
+        # Stop mesafesi ve durum
+        aktif_stop = pos.get('stop_loss', 0) or 0
+        if aktif_stop > 0 and new_price > 0:
+            stop_mesafe = ((new_price - aktif_stop) / new_price) * 100
+            pos['stop_mesafe_pct'] = round(stop_mesafe, 2)
+            if new_price <= aktif_stop:
+                pos['durum'] = "🔴 STOP-LOSS TETİKLENDİ!"
+            elif stop_mesafe <= 3:
+                pos['durum'] = f"⚠️ Stop yakın ({stop_mesafe:.1f}%)"
+            elif pos.get('kar_zarar_yuzde', 0) >= 20:
+                pos['durum'] = f"🚀 Güçlü (+{pos['kar_zarar_yuzde']:.1f}%)"
+            else:
+                pos['durum'] = "✅ Normal"
+        # ────────────────────────────────────────────────────────────────
+
         change = ((new_price - old_price) / old_price) * 100 if old_price > 0 else 0
-        log(f"  ✅ {symbol}: ${old_price:.2f} → ${new_price:.2f} ({change:+.2f}%)")
+        stop_info = f" | stop ${aktif_stop:.2f} Faz{pos.get('stop_faz',0)}" if aktif_stop else ""
+        log(f"  ✅ {symbol}: ${old_price:.2f} → ${new_price:.2f} ({change:+.2f}%) | P&L {pos['kar_zarar_yuzde']:+.1f}%{stop_info}")
         updated_count += 1
     
     # Toplam değer hesapla
@@ -481,6 +757,14 @@ def main():
     success &= update_swing_trades(quote_dict)
     success &= update_watchlist(quote_dict)
     success &= update_summary()
+
+    # Portföy hisselerinde temettü kesintisi / kritik haber taraması
+    portfoy_semboller = set()
+    for fp in [BALANCED_JSON, AGGRESSIVE_JSON, DIVIDEND_JSON]:
+        pf = load_json(fp)
+        if pf:
+            portfoy_semboller.update(p['sembol'] for p in pf.get('pozisyonlar', []))
+    temettu_ve_kritik_haber_kontrolu(portfoy_semboller)
     
     if not success:
         log("\n⚠️  Bazı dosyalar güncellenemedi!")

@@ -100,8 +100,25 @@ SEKTOR_SEMBOLLERI = {
     "Gayrimenkul":   ["XLRE", "AMT", "PLD", "O"],
 }
 
-# Portföy sembolleri
-PORTFOY_SEMBOLLERI = ["SM", "KOS", "MO", "XLE", "RGLD", "FCX"]
+# Portföy sembolleri — JSON dosyalarından dinamik olarak okunur
+def _portfoy_sembollerini_oku() -> list[str]:
+    """Tüm portföy JSON'larından aktif sembolleri döndür."""
+    import json as _json
+    _root = Path(__file__).parent.parent
+    semboller = set()
+    for fp in ["data/portfolios/balanced.json",
+               "data/portfolios/aggressive.json",
+               "data/portfolios/dividend.json"]:
+        try:
+            with open(_root / fp, encoding="utf-8") as f:
+                d = _json.load(f)
+            semboller.update(p["sembol"] for p in d.get("pozisyonlar", []))
+        except Exception:
+            pass
+    # Fallback — dosya okunamazsa eski liste
+    return list(semboller) or ["MO", "DUK", "CI", "NEE", "VZ", "T", "MRK", "OKE"]
+
+PORTFOY_SEMBOLLERI = _portfoy_sembollerini_oku()
 
 
 # ══════════════════════════════════════════════════════════════════════════════
