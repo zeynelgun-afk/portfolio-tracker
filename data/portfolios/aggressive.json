@@ -53,7 +53,9 @@
       "agirlik_yuzde": 11.8,
       "stop_loss": 285.75,
       "stop_aciklama": "break-even stop — yüksek ATR (22.92), SMA20 çok uzak, maliyet koruması",
-      "stop_guncelleme": "2026-04-10T18:47:48"
+      "stop_guncelleme": "2026-04-10T18:47:48",
+      "stop_faz": 3,
+      "zirve_fiyat": 307.5
     },
     {
       "sembol": "VRT",
@@ -73,9 +75,11 @@
       "son_guncelleme": "2026-04-10T21:33:12.880184",
       "gunluk_degisim_yuzde": 0,
       "agirlik_yuzde": 11.16,
-      "stop_loss": 289.0,
+      "stop_loss": 246.01,
       "stop_aciklama": "dünkü low (289.3) altı — break-even (290.37) yerine daha anlamlı teknik seviye",
-      "stop_guncelleme": "2026-04-10T19:50:55"
+      "stop_guncelleme": "2026-04-10T19:50:55",
+      "stop_faz": 1,
+      "zirve_fiyat": 295.11
     },
     {
       "sembol": "ANET",
@@ -95,9 +99,11 @@
       "gunluk_degisim_yuzde": 0,
       "son_guncelleme": "2026-04-10T21:33:12.880184",
       "agirlik_yuzde": 11.03,
-      "stop_loss": 134.5,
+      "stop_loss": 128.01,
       "stop_aciklama": "2xATR (134.73) + SMA50 (134.43) confluence — anlamlı teknik seviye",
-      "stop_guncelleme": "2026-04-10T18:47:48"
+      "stop_guncelleme": "2026-04-10T18:47:48",
+      "stop_faz": 1,
+      "zirve_fiyat": 147.35
     },
     {
       "sembol": "MU",
@@ -117,9 +123,11 @@
       "gunluk_degisim_yuzde": 0,
       "son_guncelleme": "2026-04-10T21:33:12.880184",
       "agirlik_yuzde": 11.03,
-      "stop_loss": 402.99,
+      "stop_loss": 340.3,
       "stop_aciklama": "SMA50 teknik destek — altı = trend bozulması",
-      "stop_guncelleme": "2026-04-10T18:47:48"
+      "stop_guncelleme": "2026-04-10T18:47:48",
+      "stop_faz": 1,
+      "zirve_fiyat": 420.59
     },
     {
       "sembol": "CAMT",
@@ -139,9 +147,11 @@
       "gunluk_degisim_yuzde": 0,
       "son_guncelleme": "2026-04-10T21:33:12.880184",
       "agirlik_yuzde": 10.89,
-      "stop_loss": 163.0,
+      "stop_loss": 143.5,
       "stop_aciklama": "SMA20 teknik destek — pozisyon maliyet altında, dikkat",
-      "stop_guncelleme": "2026-04-10T18:47:48"
+      "stop_guncelleme": "2026-04-10T18:47:48",
+      "stop_faz": 1,
+      "zirve_fiyat": 174.53
     }
   ],
   "son_guncelleme": "2026-04-10T21:33:12.880184",

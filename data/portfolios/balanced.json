@@ -25,10 +25,12 @@
       "giris_nedeni": "Initial position - Dividend defensive",
       "agirlik_yuzde": 16.02,
       "cb_kaynak": "transactions-2026-02-17",
-      "stop_loss": 64.01,
+      "stop_loss": 63.04,
       "bekleyen_aksiyon": "SATILACAK",
       "aksiyon_notu": "Dengeli portföyde çift MO tutma sorunu. MO tütün/temettü hissesi — doğal yeri Temettü portföyü. Dengeli maliyet $67.44 vs güncel $67.38 = breakeven çıkış. Pazartesi açılış piyasasında satılacak.",
-      "aksiyon_tarihi": "2026-04-11"
+      "aksiyon_tarihi": "2026-04-11",
+      "stop_faz": 1,
+      "zirve_fiyat": 67.38
     },
     {
       "sembol": "DUK",
@@ -45,11 +47,13 @@
       "son_guncelleme": "2026-04-10T21:33:12.878188",
       "giris_tarihi": "2026-04-09",
       "giris_fiyati": 133.84,
-      "stop_loss": 129.5,
+      "stop_loss": 126.42,
       "hedef_fiyat": 142.0,
       "giris_nedeni": "Dengeli portföy utility girişi. K-13 v4.1 jeopolitik/savaş krizinde utilities faydalanıcı sektör. VIX 28-35 bant formülü: $9,000×(22/30)=$6,558. SMA50 üstü (+%4.5), analist hedef $143, K-17/K-18 temiz.",
       "agirlik_yuzde": 13.14,
-      "cb_kaynak": "kayit-yok"
+      "cb_kaynak": "kayit-yok",
+      "stop_faz": 1,
+      "zirve_fiyat": 131.79
     },
     {
       "sembol": "CI",
@@ -66,11 +70,13 @@
       "son_guncelleme": "2026-04-10T21:33:12.878188",
       "giris_tarihi": "2026-04-09",
       "giris_fiyati": 277.63,
-      "stop_loss": 265.25,
+      "stop_loss": 258.02,
       "hedef_fiyat": 361.0,
       "giris_nedeni": "K-13 saglik faydalanici. PEG 0.86, FWD P/E 9.1x, EPS tutarli artis (2024:29->2026:30->2028:37). Medicare Advantage yok = CMS rate riski sifir. FCF yield %11.3. CEO Kasim 2025 alimi (K-17 temiz). SMA50 ustu. VIX 28-35 formulu: $9K x (22/30) = $6.6K.",
       "agirlik_yuzde": 5.56,
-      "cb_kaynak": "kayit-yok"
+      "cb_kaynak": "kayit-yok",
+      "stop_faz": 1,
+      "zirve_fiyat": 271.25
     },
     {
       "sembol": "NEE",
@@ -90,7 +96,9 @@
       "gunluk_degisim_yuzde": 0,
       "son_guncelleme": "2026-04-10T21:33:12.878188",
       "agirlik_yuzde": 11.14,
-      "stop_loss": 90.14
+      "stop_loss": 88.27,
+      "stop_faz": 1,
+      "zirve_fiyat": 94.08
     }
   ],
   "son_guncelleme": "2026-04-11T15:06:33.969150",

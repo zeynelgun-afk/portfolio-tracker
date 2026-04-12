@@ -19,7 +19,7 @@ except ImportError:
         kaynak = "daily_update"
         def __getattr__(self, n): return lambda *a, **kw: None
     _log = _FallbackLog()
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 import subprocess
 from pathlib import Path
 
@@ -126,25 +126,28 @@ STOP_CONFIG = {
         "faz1_katsayi":      3.0,
         "atr_period":        21,
         "faz2_tetik_pct":    5.0,   # %5 kârda başa baş geçiş
+        "max_kayip_pct":     0.12,  # Stop asla girişin %12'sinden aşağı gidemez (ATR şişmesi koruması)
         "faz3_yontem":       "sma",
         "faz3_sma_period":   50,
-        "faz3_sma_buffer":   0.98,  # 50SMA'nın %98'i
+        "faz3_sma_buffer":   0.98,
     },
     "agresif": {
         "faz1_katsayi":      3.0,
         "atr_period":        21,
         "faz2_tetik_pct":    7.0,   # %7 kârda başa baş geçiş
+        "max_kayip_pct":     0.18,  # Stop asla girişin %18'inden aşağı gidemez
         "faz3_yontem":       "chandelier",
-        "faz3_chan_period":  20,    # Son 20 gün zirvesi
-        "faz3_chan_katsayi": 3.5,   # +%30 kârda 2.5'e iner (K-11 uyumu)
+        "faz3_chan_period":  20,
+        "faz3_chan_katsayi": 3.5,
     },
     "temettü": {
-        "faz1_katsayi":      2.5,   # Temettü hisseleri daha az hareketli
+        "faz1_katsayi":      2.5,
         "atr_period":        21,
         "faz2_tetik_pct":    4.0,   # %4 kârda başa baş geçiş
+        "max_kayip_pct":     0.10,  # Stop asla girişin %10'undan aşağı gidemez
         "faz3_yontem":       "sma",
         "faz3_sma_period":   100,
-        "faz3_sma_buffer":   0.985, # 100SMA'nın %98.5'i
+        "faz3_sma_buffer":   0.985,
     }
 }
 
@@ -164,26 +167,28 @@ KRITIK_HABER_KW = [
 
 
 def calculate_atr21(symbol, period=21):
-    """ATR(period) — historical OHLCV'den manuel hesap. FMP endpoint bağımsız."""
-    from_date = (datetime.now() - timedelta(days=period * 2 + 10)).strftime("%Y-%m-%d")
+    """ATR(period) — historical OHLCV'den manuel hesap. FMP endpoint bağımsız.
+    limit=period+20 ile yeterli veri garanti altında; from_date kullanılmaz
+    (from+limit birlikte FMP'de bazen beklenenden az kayıt döndürür).
+    """
     data = fmp_get("historical-price-eod/full", {
         "symbol": symbol,
-        "from": from_date,
-        "limit": period + 10,
+        "limit": period + 20,   # 21+20=41 — hafta sonu/tatil tampon dahil
     })
     if not data or not isinstance(data, list) or len(data) < period + 1:
         return None
-    # FMP yeniden eskiye sıralar — ters çevir
+    # FMP yeniden eskiye sıralar → ters çevir (eskiden yeniye)
     data_asc = sorted(data, key=lambda x: x.get("date", ""))
     true_ranges = []
     for i in range(1, len(data_asc)):
         c = data_asc[i]
         p = data_asc[i - 1]
-        tr = max(
-            (c.get("high") or 0) - (c.get("low") or 0),
-            abs((c.get("high") or 0) - (p.get("close") or 0)),
-            abs((c.get("low") or 0) - (p.get("close") or 0)),
-        )
+        hi = c.get("high") or 0
+        lo = c.get("low") or 0
+        pc = p.get("close") or 0
+        if not (hi and lo and pc):
+            continue
+        tr = max(hi - lo, abs(hi - pc), abs(lo - pc))
         true_ranges.append(tr)
     if len(true_ranges) >= period:
         return round(sum(true_ranges[-period:]) / period, 4)
@@ -229,13 +234,39 @@ def hesapla_portfoy_stop(pos, portfoy_turu, current_price):
     pnl_pct = ((current_price - maliyet) / maliyet) * 100
 
     # ── FAZ 1 İLK KURULUM ──────────────────────────────────────────────────
+    # Faz 0: Mevcut P&L'e göre doğru faza doğrudan gir.
+    # Önemli: Uzun süredir tutulmuş pozisyonlar zaten Faz 2/3 eşiğini geçmiş olabilir.
+    # max_kayip_pct: kriz ATR şişmesini önler (COHR ATR$22 → stop %30 aşağı gibi durumlar).
     if mevcut_faz == 0:
         atr = calculate_atr21(sembol, cfg["atr_period"])
-        if atr:
-            faz1_stop = round(maliyet - atr * cfg["faz1_katsayi"], 2)
-            # Mevcut stop daha iyiyse onu koru
-            return max(faz1_stop, mevcut_stop) if mevcut_stop else faz1_stop, 1
-        return mevcut_stop, 0  # ATR çekilemedi — değiştirme
+        if not atr:
+            return mevcut_stop, 0   # ATR çekilemedi — değiştirme
+
+        # P&L yeterince yüksekse Faz 2/3'e atla
+        if pnl_pct >= cfg["faz2_tetik_pct"]:
+            # Floor: maliyet_baz ve eski manuel stop'un en iyisi (stop hiç gerilememeli)
+            floor = max(round(maliyet, 2), mevcut_stop)
+            # Faz 3: izleyen stop ile başla
+            if cfg["faz3_yontem"] == "sma":
+                sma = get_sma_value(sembol, cfg["faz3_sma_period"])
+                if sma:
+                    trailing = round(sma * cfg["faz3_sma_buffer"], 2)
+                    return max(trailing, floor), 3
+            elif cfg["faz3_yontem"] == "chandelier":
+                zirve = max(pos.get("zirve_fiyat", current_price), current_price)
+                katsayi = cfg["faz3_chan_katsayi"]
+                if pnl_pct >= 30:
+                    katsayi = 2.5
+                trailing = round(zirve - atr * katsayi, 2)
+                return max(trailing, floor), 3
+            # SMA/chandelier verisi yoksa başa baş ile Faz 2'de başla
+            return floor, 2
+
+        # Normal Faz 1: ATR stop + cap
+        faz1_stop_atr = round(maliyet - atr * cfg["faz1_katsayi"], 2)
+        min_stop      = round(maliyet * (1 - cfg["max_kayip_pct"]), 2)
+        faz1_stop     = max(faz1_stop_atr, min_stop)
+        return round(faz1_stop, 2), 1
 
     # ── FAZ 2 TETİK: yeterli kâr → başa baş ───────────────────────────────
     if mevcut_faz == 1 and pnl_pct >= cfg["faz2_tetik_pct"]:
@@ -272,13 +303,15 @@ def hesapla_portfoy_stop(pos, portfoy_turu, current_price):
 # ====== TEMELTTü KESİNTİSİ VE KRİTİK HABER İZLEME ======
 
 def send_telegram_direct(message, severity="warning"):
-    """Telegram'a direkt bildirim gönder (telegram_notify.py üzerinden)."""
+    """Telegram'a direkt bildirim gönder (telegram_notify.py üzerinden).
+    severity: 'critical' → --type alert, 'warning'/'info' → --type custom
+    """
     try:
         notify_script = Path(__file__).parent / "telegram_notify.py"
-        level_map = {"critical": "critical", "warning": "warning", "info": "info"}
-        level = level_map.get(severity, "warning")
+        # telegram_notify.py CLI: --type alert --msg / --type custom --msg
+        t_type = "alert" if severity == "critical" else "custom"
         subprocess.run(
-            ["python3", str(notify_script), "--message", message, "--level", level],
+            ["python3", str(notify_script), "--type", t_type, "--msg", message],
             timeout=15, capture_output=True
         )
     except Exception as e:
@@ -302,7 +335,6 @@ def temettu_ve_kritik_haber_kontrolu(portfoy_semboller):
         log("  ⚠️  FMP haber çekilemedi")
         return
 
-    from datetime import timezone
     sinir_dt = datetime.now(timezone.utc) - timedelta(hours=48)
 
     uyarilar = []
@@ -323,8 +355,9 @@ def temettu_ve_kritik_haber_kontrolu(portfoy_semboller):
         icerik   = (h.get("text", "") or "")[:600].lower()
         tam_metin = baslik + " " + icerik
         sembol   = h.get("symbol", "")
+        tetiklendi = False   # Bir haber için tek uyarı gönder
 
-        # Temettü kesintisi
+        # Temettü kesintisi — öncelikli kontrol
         for kw in TEMETTÜ_KESINTI_KW:
             if kw in tam_metin:
                 uyarilar.append({
@@ -332,17 +365,19 @@ def temettu_ve_kritik_haber_kontrolu(portfoy_semboller):
                     "baslik": h.get("title", "")[:200],
                     "url": h.get("url", ""), "severity": "critical",
                 })
+                tetiklendi = True
                 break
 
-        # Kritik haber
-        for kw in KRITIK_HABER_KW:
-            if kw in tam_metin:
-                uyarilar.append({
-                    "sembol": sembol, "tur": "KRİTİK HABER",
-                    "baslik": h.get("title", "")[:200],
-                    "url": h.get("url", ""), "severity": "warning",
-                })
-                break
+        # Kritik haber — temettü uyarısı verildiyse atla (çift mesaj önleme)
+        if not tetiklendi:
+            for kw in KRITIK_HABER_KW:
+                if kw in tam_metin:
+                    uyarilar.append({
+                        "sembol": sembol, "tur": "KRİTİK HABER",
+                        "baslik": h.get("title", "")[:200],
+                        "url": h.get("url", ""), "severity": "warning",
+                    })
+                    break
 
     if uyarilar:
         for u in uyarilar:

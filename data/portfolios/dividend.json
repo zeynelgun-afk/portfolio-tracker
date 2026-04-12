@@ -25,7 +25,9 @@
       "giris_nedeni": "Başlangıç pozisyonu - Temettü + değer portföyü - Telekomünikasyon",
       "agirlik_yuzde": 14.3,
       "cb_kaynak": "back-calc-karyuzde",
-      "stop_loss": 25.14
+      "stop_loss": 24.62,
+      "stop_faz": 1,
+      "zirve_fiyat": 26.475
     },
     {
       "sembol": "VZ",
@@ -45,7 +47,9 @@
       "giris_nedeni": "Başlangıç pozisyonu - Temettü + değer portföyü - Telekomünikasyon",
       "agirlik_yuzde": 3.44,
       "cb_kaynak": "back-calc-karyuzde",
-      "stop_loss": 43.83
+      "stop_loss": 44.01,
+      "stop_faz": 3,
+      "zirve_fiyat": 46.04
     },
     {
       "sembol": "MO",
@@ -65,7 +69,9 @@
       "giris_nedeni": "Initial position - Dividend defensive",
       "agirlik_yuzde": 10.27,
       "cb_kaynak": "back-calc-karyuzde",
-      "stop_loss": 64.01
+      "stop_loss": 64.01,
+      "stop_faz": 3,
+      "zirve_fiyat": 67.38
     },
     {
       "sembol": "MRK",
@@ -85,7 +91,9 @@
       "giris_nedeni": "Temettu portfoyune saglik sektoru girisi - defansif rotasyon, SMA50 $117.95 ustu, SMA200 $97 guclu uzun vade, RSI 55 notr, gap-up rallysinden minimal etki plan araliginda",
       "agirlik_yuzde": 4.24,
       "cb_kaynak": "back-calc-karyuzde",
-      "stop_loss": 115.35
+      "stop_loss": 113.28,
+      "stop_faz": 1,
+      "zirve_fiyat": 121.42
     },
     {
       "sembol": "OKE",
@@ -105,7 +113,9 @@
       "gunluk_degisim_yuzde": 0,
       "son_guncelleme": "2026-04-10T21:33:12.882382",
       "agirlik_yuzde": 5.6,
-      "stop_loss": 81.9
+      "stop_loss": 78.59,
+      "stop_faz": 1,
+      "zirve_fiyat": 86.21
     }
   ],
   "son_guncelleme": "2026-04-11T15:06:33.968324",
