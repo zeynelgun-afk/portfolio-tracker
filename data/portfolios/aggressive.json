@@ -744,5 +744,6 @@
       "tutar": 17849.4,
       "aciklama": "2xATR trailing stop tetiklendi. en yüksek $282.05, ATR(14) $13.84, stop $254.37. güncel $251.40 stop altı. bugün dip $248.50"
     }
-  ]
+  ],
+  "toplam_getiri": -37849.09
 }
