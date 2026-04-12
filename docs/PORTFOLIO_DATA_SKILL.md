@@ -246,9 +246,9 @@ python scripts/watchlist_manager.py cooldown
       "id": "SWING-042",
       "sembol": "NEM",
       "giris_tarihi": "2026-04-01",
-      "giris_fiyati": 58.40,
+      "giris_fiyat": 58.40,
       "guncel_fiyat": 62.10,
-      "guncel_kar_zarar_yuzde": 6.34,
+      "pnl_pct": 6.34,
       "hedef_fiyat": 65.00,
       "stop_loss": 55.50,
       "tutulan_gun": 9,
@@ -265,8 +265,8 @@ python scripts/watchlist_manager.py cooldown
   ],
   "ozet": {
     "toplam_pozisyon": 1,
-    "bos_slot": 7,
-    "maksimum_pozisyon": 8,
+    "bos_slot": 4,
+    "maksimum_pozisyon": 5,
     "ortalama_kar_zarar_yuzde": 6.34
   }
 }
@@ -307,7 +307,7 @@ python scripts/watchlist_manager.py cooldown
 
 ```json
 {
-  "k14_aktif": true,
+  "k14_aktif": false,
   "peak_deger": 12480,
   "trough_deger": 10430,
   "mevcut_drawdown_yuzde": 16.42,
@@ -372,7 +372,7 @@ Günlük seans sırasında otomatik update scripti tarafından yazılır.
   "spy_sma50_ustu": false,
   "k13_aktif": true,
   "k13_mod": "yari_pozisyon",
-  "k14_aktif": true,
+  "k14_aktif": false,
   "son_guncelleme": "2026-04-09T21:41:00"
 }
 ```

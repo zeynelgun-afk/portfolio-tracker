@@ -151,9 +151,11 @@ def main():
             "portfoy": p["portfoy"],
         })
     for s in get_swing_active():
+        # Etkin stop = max(chandelier_stop, stop_loss) — K-07 chandelier öncelikli
+        aktif_stop = max(s.get("chandelier_stop") or 0, s.get("stop_loss") or 0)
         positions.append({
             "sembol": s.get("sembol"),
-            "stop_loss": s.get("stop_loss"),
+            "stop_loss": aktif_stop if aktif_stop > 0 else s.get("stop_loss"),
             "current_price": s.get("guncel_fiyat"),
             "portfoy": "swing",
         })
@@ -186,7 +188,7 @@ def main():
             send_k_alert("K-09 EXIT_NOW", pos["sembol"], msg, severity="critical")
             _log.kritik(
                 f"K-09 EXIT_NOW: {pos['sembol']}",
-                f"Stop'a mesafe: %{distance_pct:.1f}\n{msg[:200]}",
+                f"Stop'a mesafe: %{result['distance_pct']:.1f}\n{msg[:200]}",
                 kaynak="k09"
             )
         elif result["action"] == "WAIT_STOP":

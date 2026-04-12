@@ -30,7 +30,7 @@ REPO_ROOT = Path(__file__).parent.parent  # portfolio-tracker kök dizini
 
 # Dosya yolları
 BALANCED_JSON = REPO_ROOT / "data/portfolios/balanced.json"
-AGGRESSIVE_JSON = REPO_ROOT / "data/portfolios/growth.json  # aggressive→growth"
+AGGRESSIVE_JSON = REPO_ROOT / "data/portfolios/aggressive.json"
 DIVIDEND_JSON = REPO_ROOT / "data/portfolios/dividend.json"
 SWING_ACTIVE_JSON = REPO_ROOT / "data/swing/active.json"
 WATCHLIST_JSON = REPO_ROOT / "data/watchlist.json"
@@ -142,11 +142,17 @@ def update_portfolio(filepath, quote_dict):
         
         # Fiyatları güncelle
         pos['guncel_fiyat'] = new_price
-        pos['gunluk_degisim_yuzde'] = quote.get('changesPercentage', 0)
+        # changesPercentage piyasa dışında 0 döner — manuel hesap öncelikli
+        prev_close = quote.get('previousClose', 0)
+        if prev_close and prev_close > 0:
+            pos['gunluk_degisim_yuzde'] = round(((new_price - prev_close) / prev_close) * 100, 2)
+        else:
+            pos['gunluk_degisim_yuzde'] = quote.get('changesPercentage', 0)
         
         # Hesaplamaları güncelle
-        pos['guncel_deger'] = pos['adet'] * new_price
-        pos['kar_zarar'] = pos['guncel_deger'] - pos['yatirim']
+        pos['guncel_deger'] = round(pos['adet'] * new_price, 2)
+        pos['yatirim'] = round(pos['adet'] * pos['maliyet_baz'], 2)  # maliyet_baz kanonik, yatirim turetilir
+        pos['kar_zarar'] = round(pos['guncel_deger'] - pos['yatirim'], 2)
         pos['kar_zarar_yuzde'] = round((pos['kar_zarar'] / pos['yatirim']) * 100, 2)
         pos['son_guncelleme'] = now
         
@@ -161,6 +167,7 @@ def update_portfolio(filepath, quote_dict):
     
     # Toplam getiri hesapla
     starting_capital = portfolio.get('baslangic_sermaye', 100000)
+    portfolio['toplam_getiri'] = round(portfolio['toplam_deger'] - starting_capital, 2)
     portfolio['toplam_getiri_yuzde'] = round(
         ((portfolio['toplam_deger'] - starting_capital) / starting_capital) * 100, 2
     )
@@ -210,28 +217,48 @@ def update_swing_trades(quote_dict):
         
         # Fiyat güncelle
         pos['guncel_fiyat'] = new_price
+        pos['son_fiyat'] = new_price
         
-        # Kar/zarar hesapla
-        entry_price = pos['giris_fiyati']
-        pos['guncel_kar_zarar_yuzde'] = round(
-            ((new_price - entry_price) / entry_price) * 100, 2
-        )
+        # Kar/zarar hesapla — giris_fiyat (JSON'daki alan adı)
+        entry_price = pos.get('giris_fiyat', pos.get('giris_fiyati', 0))
+        pnl_pct = round(((new_price - entry_price) / entry_price) * 100, 2) if entry_price > 0 else 0
+        pos['pnl_pct'] = pnl_pct
+        
+        # Zirve fiyat takibi — chandelier trailing için şart
+        if new_price > pos.get('zirve_fiyat', 0):
+            pos['zirve_fiyat'] = new_price
+        
+        # Chandelier stop güncelle: zirve - 3×ATR(14)
+        atr14 = pos.get('atr14', 0)
+        if atr14 > 0:
+            yeni_chandelier = round(pos['zirve_fiyat'] - 3 * atr14, 2)
+            eski_chandelier = pos.get('chandelier_stop', 0)
+            # Chandelier sadece yukarı çekilir (K-07)
+            if yeni_chandelier > eski_chandelier:
+                pos['chandelier_stop'] = yeni_chandelier
+                pos['chandelier_guncelleme'] = today.isoformat()
+        
+        # Etkin stop = chandelier_stop ile stop_loss'un büyüğü
+        aktif_stop = max(pos.get('chandelier_stop', 0), pos.get('stop_loss', 0))
+        
+        # Stop mesafesi: (fiyat - stop) / fiyat × 100
+        stop_distance = ((new_price - aktif_stop) / new_price) * 100 if new_price > 0 else 999
+        target_distance = ((pos['hedef_fiyat'] - new_price) / new_price) * 100 if pos.get('hedef_fiyat') else 999
         
         # Tutulan gün hesapla
-        entry_date = datetime.strptime(pos['giris_tarihi'], '%Y-%m-%d').date()
-        pos['tutulan_gun'] = (today - entry_date).days
-        
-        # Stop-loss / hedef kontrolü
-        stop_distance = ((new_price - pos['stop_loss']) / pos['stop_loss']) * 100
-        target_distance = ((pos['hedef_fiyat'] - new_price) / new_price) * 100
+        try:
+            entry_date = datetime.strptime(pos['giris_tarihi'], '%Y-%m-%d').date()
+            pos['tutulan_gun'] = (today - entry_date).days
+        except (KeyError, ValueError):
+            pass
         
         # Durum güncelle
-        if new_price <= pos['stop_loss']:
+        if new_price <= aktif_stop:
             pos['durum'] = "🔴 STOP-LOSS TETİKLENDİ!"
-        elif new_price >= pos['hedef_fiyat']:
+        elif pos.get('hedef_fiyat') and new_price >= pos['hedef_fiyat']:
             pos['durum'] = "🎯 HEDEF ULAŞILDI!"
         elif stop_distance < 2:
-            pos['durum'] = f"⚠️ Stop-loss yakın ({stop_distance:.1f}%)"
+            pos['durum'] = f"⚠️ Stop yakın ({stop_distance:.1f}%)"
         elif target_distance < 5:
             pos['durum'] = f"🎯 Hedefe yakın ({target_distance:.1f}%)"
         else:
@@ -240,7 +267,7 @@ def update_swing_trades(quote_dict):
         pos['son_guncelleme'] = now
         
         change = ((new_price - old_price) / old_price) * 100 if old_price > 0 else 0
-        log(f"  ✅ {symbol}: ${old_price:.2f} → ${new_price:.2f} ({change:+.2f}%) | P&L: {pos['guncel_kar_zarar_yuzde']:+.2f}% | {pos['durum']}")
+        log(f"  ✅ {symbol}: ${old_price:.2f} → ${new_price:.2f} ({change:+.2f}%) | P&L: {pnl_pct:+.2f}% | {pos['durum']}")
         updated_count += 1
     
     swing['son_guncelleme'] = now
@@ -344,10 +371,10 @@ def update_summary():
                 "nakit": dividend.get('nakit', {"miktar": 0})
             },
             "swing_trade": {
-                "isim": "Swing Trade (Simülasyon)",
+                "isim": "Swing Trade",
                 "pozisyon_sayisi": len(swing.get('aktif_pozisyonlar', [])),
-                "bos_slot": 10 - len(swing.get('aktif_pozisyonlar', [])),
-                "durum": f"{len(swing.get('aktif_pozisyonlar', []))}/10 pozisyon aktif"
+                "bos_slot": 5 - len(swing.get('aktif_pozisyonlar', [])),
+                "durum": f"{len(swing.get('aktif_pozisyonlar', []))}/5 pozisyon aktif"
             }
         }
     }
