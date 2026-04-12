@@ -798,30 +798,11 @@ def main():
     success &= update_watchlist(quote_dict)
     success &= update_summary()
 
-    # Portföy hisselerinde Claude haber analizi — otonom karar motoru
-    # (ANTHROPIC_API_KEY yoksa eski keyword taramasına düşer)
-    anthropic_key = os.environ.get("ANTHROPIC_API_KEY", "")
-    if anthropic_key:
-        log("\n🤖 Claude Haber Ajanı çağrılıyor...")
-        haber_script = Path(__file__).parent / "claude_haber_ajan.py"
-        subprocess.run(
-            ["python3", str(haber_script), "--no-push"],
-            timeout=120, env={**os.environ}
-        )
-    else:
-        # Fallback: basit keyword taraması (API key yoksa)
-        portfoy_semboller = set()
-        for fp in [BALANCED_JSON, AGGRESSIVE_JSON, DIVIDEND_JSON]:
-            pf = load_json(fp)
-            if pf:
-                portfoy_semboller.update(p['sembol'] for p in pf.get('pozisyonlar', []))
-        temettu_ve_kritik_haber_kontrolu(portfoy_semboller)
-    
     if not success:
         log("\n⚠️  Bazı dosyalar güncellenemedi!")
-    
+
     # Git commit + push
-    commit_message = f"[GÜNCELLEME] Otomatik fiyat güncellemesi - {datetime.now().strftime('%d %b %Y %H:%M')}"
+    commit_message = f"[GÜNCELLEME] Fiyat + stop güncellemesi - {datetime.now().strftime('%d %b %Y %H:%M')}"
     git_commit_and_push(commit_message)
     
     log("\n" + "="*60)

@@ -217,6 +217,75 @@ def get_watchlist() -> dict:
         return json.load(f)
 
 
+def get_portfolio_news(saat: int = 24) -> str:
+    """
+    Aktif portföy hisselerinin son N saatlik haberlerini FMP'den çeker.
+    Orchestrator'ın Claude bağlamına eklenir — haber bazlı tez analizi için.
+    Döndürür: Düz metin (prompt'a doğrudan eklenebilir).
+    """
+    from datetime import timezone, timedelta
+
+    # Tüm portföy sembollerini topla
+    semboller = set()
+    for pf in ["aggressive", "balanced", "dividend"]:
+        p = REPO_ROOT / "data" / "portfolios" / f"{pf}.json"
+        if p.exists():
+            try:
+                d = json.load(open(p, encoding="utf-8"))
+                for pos in d.get("pozisyonlar", []):
+                    s = pos.get("sembol") or pos.get("symbol")
+                    if s:
+                        semboller.add(s)
+            except Exception:
+                pass
+
+    if not semboller:
+        return ""
+
+    haberler = fmp_get("news/stock", {"symbols": ",".join(semboller), "limit": 60})
+    if not haberler or not isinstance(haberler, list):
+        return ""
+
+    sinir = datetime.now(timezone.utc) - timedelta(hours=saat)
+    guncel = []
+    for h in haberler:
+        try:
+            pub = h.get("publishedDate", "")
+            if "T" in pub:
+                dt = datetime.fromisoformat(pub.replace("Z", "+00:00"))
+            else:
+                dt = datetime.strptime(pub[:19], "%Y-%m-%d %H:%M:%S").replace(tzinfo=timezone.utc)
+            if dt < sinir:
+                continue
+            yas_s = int((datetime.now(timezone.utc) - dt).total_seconds() / 3600)
+            guncel.append((yas_s, h))
+        except Exception:
+            continue
+
+    if not guncel:
+        return f"[Portföy Haberleri] Son {saat} saatte haber yok."
+
+    guncel.sort(key=lambda x: x[0])
+
+    satirlar = [f"=== PORTFÖY HABERLERİ (son {saat} saat, {len(guncel)} haber) ==="]
+    # Sembol başına max 3 haber, toplam max 15
+    sembol_sayac: dict[str, int] = {}
+    for yas_s, h in guncel:
+        sym = h.get("symbol", "?")
+        if sembol_sayac.get(sym, 0) >= 3:
+            continue
+        if sum(sembol_sayac.values()) >= 15:
+            break
+        sembol_sayac[sym] = sembol_sayac.get(sym, 0) + 1
+        satirlar.append(
+            f"[{sym} — {yas_s}s önce — {h.get('site','')}]\n"
+            f"  {h.get('title','')}\n"
+            f"  {(h.get('text') or '')[:200]}"
+        )
+
+    return "\n".join(satirlar)
+
+
 # ── Telegram ─────────────────────────────────────────────────────────────────
 
 def send_private_telegram(message: str) -> bool:

@@ -223,10 +223,11 @@ def collect_context(mode: str) -> dict:
     # Sıkıştırılmış temel bağlam
     compressed = build_context_for_claude(mode)
 
-    # Sabah ve kapanış: web + twitter + risk ekle
-    research = ""
-    twitter  = ""
-    risk     = ""
+    # Sabah ve kapanış: web + twitter + risk + portföy haberleri ekle
+    research      = ""
+    twitter       = ""
+    risk          = ""
+    portfolio_news = ""
     if mode in ("morning", "closing", "weekly"):
         research = build_research_context(symbols)
         try:
@@ -235,14 +236,29 @@ def collect_context(mode: str) -> dict:
             print(f"[Twitter] Hata: {e}")
             twitter = ""
         risk = build_risk_context(portfolios)
+        # Portföy hisseleri için son 24s FMP haberleri
+        try:
+            from tools import get_portfolio_news
+            portfolio_news = get_portfolio_news(saat=24)
+        except Exception as e:
+            print(f"[PortföyNews] Hata: {e}")
+            portfolio_news = ""
+    elif mode == "monitor":
+        # İzleme modunda da son 4s haber — stop/çıkış kararlarında bağlam
+        try:
+            from tools import get_portfolio_news
+            portfolio_news = get_portfolio_news(saat=4)
+        except Exception as e:
+            portfolio_news = ""
 
     return {
-        "mode":       mode,
-        "timestamp":  datetime.now(TR_TZ).isoformat(),
-        "compressed": compressed,
-        "research":   research,
-        "twitter":    twitter,
-        "risk":       risk,
+        "mode":           mode,
+        "timestamp":      datetime.now(TR_TZ).isoformat(),
+        "compressed":     compressed,
+        "research":       research,
+        "twitter":        twitter,
+        "risk":           risk,
+        "portfolio_news": portfolio_news,
         "raw": {
             "portfolios": portfolios,
             "market":     market,
@@ -402,6 +418,8 @@ def run_morning(ctx: dict):
 
 {ctx['risk']}
 
+{ctx['portfolio_news']}
+
 {genome_ctx}
 
 === GÖREV: SABAH ANALİZİ VE RAPOR ===
@@ -455,6 +473,8 @@ def run_closing(ctx: dict):
 {ctx['research']}
 
 {ctx['twitter']}
+
+{ctx['portfolio_news']}
 
 {genome_ctx}
 
@@ -690,7 +710,31 @@ def run_monitor(ctx: dict):
             f"🔴 VIX YÜKSEK: {vix_price} — K-13 aktif, yeni giriş yapma"
         )
 
-    # ── 5. TELEGRAMIn ─────────────────────────────────────────────────────────
+    # ── 5. PORTFÖY HABERLERİ — kritik anahtar kelime tarama ─────────────────
+    # Orchestrator portfolio_news'i sadece morning/closing için çekiyor.
+    # Monitor'da da 4 saatlik haber bağlamı gelirse uyarı ver.
+    portfolio_news = ctx.get("portfolio_news", "")
+    if portfolio_news:
+        KRITIK_KW = [
+            "dividend cut", "cuts dividend", "suspends dividend", "eliminates dividend",
+            "bankruptcy", "bankrupt", "fraud", "sec investigation", "going concern",
+            "delist", "material weakness", "restatement",
+        ]
+        haber_satirlari = portfolio_news.lower().split("\n")
+        for satir in haber_satirlari:
+            for kw in KRITIK_KW:
+                if kw in satir:
+                    # Orijinal satırı (küçük harf olmayan) bul
+                    idx = portfolio_news.lower().find(satir[:40])
+                    orj = portfolio_news[idx:idx+200] if idx >= 0 else satir
+                    uyarilar.append(
+                        f"🚨 *KRİTİK HABER TESPİTİ*\n"
+                        f"Anahtar kelime: '{kw}'\n"
+                        f"{orj[:200]}"
+                    )
+                    break
+
+    # ── 6. TELEGRAM ───────────────────────────────────────────────────────────
     # Aksiyonlar (yapılan işlemler)
     if aksiyonlar:
         msg = f"🤖 *Finzora Agent — Seans Aksiyonu* ({saat})\n\n"

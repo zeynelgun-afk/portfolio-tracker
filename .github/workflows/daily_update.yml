@@ -1,9 +1,10 @@
-name: Otomatik Fiyat Güncelleme (Seans Saatleri)
+name: Otomatik Fiyat ve Stop Güncellemesi
 
 on:
-  # Devre dışı — agent.yml bu işi üstlendi
-  # Sadece manuel tetikleme aktif
-  workflow_dispatch:
+  schedule:
+    # NYSE kapanışı: 23:05 UTC+3 (TR) = 20:05 UTC — kapanış fiyatları oturdu
+    - cron: '5 20 * * 1-5'
+  workflow_dispatch:  # Manuel tetikleme aktif
 
 jobs:
   update-prices:
