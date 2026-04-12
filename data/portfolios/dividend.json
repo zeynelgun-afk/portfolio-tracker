@@ -111,30 +111,5 @@
   "son_guncelleme": "2026-04-11T15:06:33.968324",
   "toplam_deger": 143093.8,
   "toplam_getiri_yuzde": 43.09,
-  "transactions": [
-    {
-      "tarih": "2026-04-08",
-      "tip": "SATIS",
-      "sembol": "PM",
-      "adet": 77,
-      "fiyat": 156.82,
-      "toplam": 12075.14,
-      "kar_zarar": -267.96,
-      "kar_zarar_yuzde": -2.17,
-      "neden": "dondurme - FDA pouch idiosyncratic sorun, SMA50 $174.70 altinda, RSI 33.9 trend kirik, sermaye MRK'ye aktariliyor"
-    },
-    {
-      "tarih": "2026-04-08",
-      "tip": "ALIS",
-      "sembol": "MRK",
-      "adet": 50,
-      "fiyat": 120.0,
-      "toplam": 6000.0,
-      "neden": "plan girisi - temettu + saglik defansif cesitlendirme, PM'den dondurme"
-    }
-  ],
-  "notes": [
-    "2026-04-07: K-12 limit asimi duzeltmesi - T 86 hisse @ $28.07 satildi. Onceki %16.67 -> %15.00. Kar $163.40 (+7.26%)."
-  ],
   "toplam_getiri": 43093.8
 }

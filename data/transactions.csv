@@ -144,3 +144,4 @@ date,action,symbol,shares,price,total,reason
 2026-04-11,BUY,CAT,4,790.66,3162.64,"Swing giriş — tenkan_bounce, sma50_bounce, kijun_bounce_v2, nr7_sikisma. Stop: $730.35, Hedef: $941.43"
 2026-04-11,BUY,KLAC,1,1737.28,1737.28,"Swing giriş — tenkan_bounce, kijun_bounce_v2. Stop: $1540.49, Hedef: $2229.26"
 2026-04-11,BUY,AMAT,6,399.49,2396.94,"Swing giriş — sma50_bounce. Stop: $361.98, Hedef: $493.26"
+2026-02-26,CAPITAL_ADD,-,0,0,300000,"Portföy yeniden yapılandırma - $300K yeni sermaye eklendi. Rotasyon portföyü kapatıldı, agresif momentum stratejisine geçiş."
