@@ -169,7 +169,7 @@ GÖREV: Bugün için en güçlü 2-3 temayı tespit et ve her tema için alım a
       "neden": "Büyük teknoloji şirketleri capex artışı, güç altyapısı talebi",
       "öncelikli_alt_dal": "güç_soğutma",
       "önerilen_hisseler": ["VRT","ETN","PWR"],
-      "portföy": "growth (zorunlu: growth/income/balanced/dividend)",
+      "portföy": "aggressive (zorunlu: aggressive/balanced/dividend)",
       "aciliyet": "yüksek"
     }}
   ],

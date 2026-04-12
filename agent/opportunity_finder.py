@@ -95,18 +95,20 @@ def score_technical(symbol: str, price: float) -> tuple[float, dict]:
 
 def score_fundamental(symbol: str) -> tuple[float, dict]:
     """Fundamental skor 0-10."""
-    ratios = _fmp(f"ratios-ttm/{symbol}") or {}
+    # Doğru format: ?symbol= query param (/symbol path param değil — 404 döner)
+    ratios = _fmp("ratios-ttm", {"symbol": symbol}) or {}
     if isinstance(ratios, list):
         ratios = ratios[0] if ratios else {}
 
-    metrics = _fmp(f"key-metrics-ttm/{symbol}") or {}
+    metrics = _fmp("key-metrics-ttm", {"symbol": symbol}) or {}
     if isinstance(metrics, list):
         metrics = metrics[0] if metrics else {}
 
-    pe    = float(ratios.get("priceEarningsRatioTTM") or ratios.get("peRatioTTM") or 0)
-    roic  = float(metrics.get("roicTTM") or 0) * 100
-    fcf_y = float(metrics.get("fcfYieldTTM") or metrics.get("freeCashFlowYieldTTM") or 0) * 100
-    eps_g = float(metrics.get("revenueGrowthTTM") or 0) * 100
+    # Doğru alan adları (FMP stable API)
+    pe    = float(ratios.get("priceToEarningsRatioTTM") or 0)
+    roic  = float(metrics.get("returnOnInvestedCapitalTTM") or 0) * 100
+    fcf_y = float(metrics.get("freeCashFlowYieldTTM") or 0) * 100
+    roe   = float(metrics.get("returnOnEquityTTM") or 0) * 100   # büyüme proxy
 
     skor = 0
     detay = {}
@@ -127,8 +129,8 @@ def score_fundamental(symbol: str) -> tuple[float, dict]:
     elif fcf_y > 2: skor += 1
 
     # Büyüme
-    if eps_g > 20: skor += 2; detay["büyüme"] = f"✅ {eps_g:.1f}%"
-    elif eps_g > 10: skor += 1
+    if roe > 20: skor += 2; detay["büyüme"] = f"✅ ROE {roe:.1f}%"
+    elif roe > 10: skor += 1
 
     detay["skor"] = min(10, max(0, skor))
     return min(10, max(0, skor)), detay
@@ -164,7 +166,7 @@ def find_candidates(
                 continue
 
             # Fiyat
-            q = _fmp(f"quote/{sym}")
+            q = _fmp("quote", {"symbol": sym})
             if not q:
                 continue
             q = q[0] if isinstance(q, list) else q
