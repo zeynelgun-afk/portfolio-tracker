@@ -1124,16 +1124,28 @@ Detaylı Türkçe analiz. Spekülatif önerilere BACKTEST GEREKLİ işareti koy.
     save_daily_brief(response, "weekly")
     auto_extract_lessons(response, "weekly")
 
-    # Raporu reports/weekly/ klasörüne kaydet
+    # Raporu reports/weekly/ klasörüne kaydet + git push
     try:
+        import subprocess
         tarih = datetime.now(TR_TZ).strftime("%Y-%m-%d")
         haftalik_dosya = REPO_ROOT / "reports" / "weekly" / f"WEEKLY_{tarih.replace('-','_')}.md"
         haftalik_dosya.parent.mkdir(parents=True, exist_ok=True)
         baslik = f"# haftalık rapor — {tarih}\n\n> finzora ai | otomatik oluşturuldu\n\n"
         haftalik_dosya.write_text(baslik + response, encoding="utf-8")
         print(f"[Rapor] {haftalik_dosya.name} kaydedildi")
+        os.chdir(REPO_ROOT)
+        subprocess.run(["git", "config", "user.name", "Finzora AI"], capture_output=True)
+        subprocess.run(["git", "config", "user.email", "zeynelgun@users.noreply.github.com"], capture_output=True)
+        subprocess.run(["git", "pull", "--rebase", "origin", "main"], capture_output=True)
+        subprocess.run(["git", "add", str(haftalik_dosya)], capture_output=True)
+        result = subprocess.run(["git", "commit", "-m", f"[HAFTALIK RAPOR] {tarih}"], capture_output=True)
+        if result.returncode == 0:
+            subprocess.run(["git", "push", "origin", "main"], capture_output=True)
+            print(f"[Rapor] Git push başarılı: {haftalik_dosya.name}")
+        else:
+            print(f"[Rapor] Commit atlandı (değişiklik yok veya hata)")
     except Exception as e:
-        print(f"[Rapor] Haftalık dosya yazma hatası: {e}")
+        print(f"[Rapor] Haftalık kayıt hatası: {e}")
 
     # Önerileri kuyruğa ekle
     proposals = run_weekly_rule_review(response, backtest)
