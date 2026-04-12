@@ -455,6 +455,14 @@ def run_closing(ctx: dict):
     """Kapanış yorumu — piyasa kapandıktan sonra."""
     print("[Orkestratör] Kapanış modu çalışıyor...")
 
+    # Fiyat + ATR stop güncellemesi — daily_update.py mekanik hesabı
+    # daily_update.yml silindi, bu görevi orchestrator closing üstlendi
+    import subprocess as _sp
+    _du = REPO_ROOT / "scripts" / "daily_update.py"
+    if _du.exists():
+        print("[Orkestratör] Fiyat + stop güncellemesi başlatılıyor...")
+        _sp.run(["python3", str(_du)], timeout=180, env=os.environ.copy())
+
     # Swing flag'ini temizle (workflow zaten commit ediyor)
     flag = REPO_ROOT / "data" / ".swing_updated"
     if flag.exists():
