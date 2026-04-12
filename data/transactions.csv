@@ -83,9 +83,7 @@ date,action,symbol,shares,price,total,reason
 2026-03-13,BUY,PFE,330,26.92,8883.27,Yuksek temettü yield saglik defensif - Temettü portfoy2026-03-16 SELL LASR 74 68.55 5072.70 Breakeven çıkış - K-06 (3x stop override) + K-01 (FOMC haftası) - Agresif portföy
 2026-03-17,SELL,RKLB,48,77.53,3721.44,Kısmi kâr alma %33 - hedef aşıldı - GTC katalizörü - Agresif portföy
 2026-03-17,SELL,SM,156,27.36,4268.16,Kısmi kâr alma %25 - RSI 72+ K-11 - Dengeli portföy
-2026-03-17,SELL,RKLB,48,77.53,3721.44,Kısmi kâr alma %33 - hedef aşıldı - GTC katalizörü - Agresif portföy
 2026-03-17,SELL,CRDO,87,104.26,9070.62,Stop-loss tetiklendi ($108) - fiyat $104.26 - insider + margin compression - Agresif portföy
-2026-03-17,SELL,SM,156,27.36,4268.16,Kısmi kâr alma %25 - RSI 72+ K-11 - Dengeli portföy
 2026-03-18,BUY,CRDO,147,101.56,14929.32,Yarım pozisyon giriş - Agresif portföy - FOMC sonrası - CRDO
 2026-03-18,BUY,PWR,26,574.35,14933.1,Yarım pozisyon giriş - Agresif portföy - FOMC sonrası - PWR
 2026-03-20,SELL,RKLB,50,67.61,3380.50,Trailing stop tetiklendi - Agresif portföy
@@ -125,15 +123,15 @@ date,action,symbol,shares,price,total,reason
 2026-03-27,SELL,XLI,85,160.37,13631.45,Stop-loss %8 tetiklendi - Endüstriyel zayıflık devam - Dengeli portföy
 2026-03-27,SELL,VRT,71,251.40,17849.40,2xATR trailing stop tetiklendi - en yüksek 282.05 ATR 13.84 stop 254.37 guncel 251.40 - Agresif portfoy2026-03-30 SELL MRVL 375 91.33 34248.75 stop tetiklendi - 2xATR trailing stop $92.09 kirildi. Microsoft-AVGO gecis haberleri + Benchmark downgrade. PnL -3.80% (-$1353.75). 18 gun tutuldu.
 2026-03-30,SELL,POWL,34,522.92,17779.28,stop tetiklendi - 2xATR trailing stop $524.89 kirildi. $25M insider satisi (Thomas W. Powell) + kar realizasyonu. PnL -10.63% (-$2114.80). 5 gun tutuldu.
-2026-04-01,SELL,balanced,XLE,139,58.98,"[8198.22] iran ateşkes umudu - petrol düşüşü, enerji katalizörü zayıflıyor. kar: $783.96 (+10.57%)"
-2026-04-01,SELL,dividend,XOM,199,161.74,"[32186.26] iran ateşkes umudu - petrol düşüşü, enerji katalizörü zayıflıyor. kar: $2,843.71 (+9.69%)"
-2026-04-01,SELL,dividend,CVX,99,198.64,"[19665.36] iran ateşkes umudu - petrol düşüşü, enerji katalizörü zayıflıyor. kar: $675.18 (+3.56%)"
-2026-04-01,SELL,balanced,SM,192,29.48,[5660.16] iran ateşkes tezi - enerji sektörü çıkışı. XLE/XOM/CVX ile aynı mantık. kar: $17.28
-2026-04-07,SELL,dividend,T,86,28.07,[2414.02] K-12 limit asimi duzeltmesi - Temettu portfoyunde T agirligi %16.67 (limit %15). 86 hisse satis ile %15.00 hedeflendi. Kalan 773 hisse. Kar: $163.40 (+7.26%)
-2026-04-08,SELL,dividend,PM,77,156.82,"[12075.14] dondurme - FDA pouch sorunu, SMA50 $174.70 altinda trend kirik, RSI 33.9 oversold ama tez bozuk, sermaye MRK'ye. K/Z: $-267.96 (-2.17%)"
-2026-04-08,BUY,dividend,MRK,50,120.0,"[6000.00] plan girisi - saglik defansif cesitlendirme, gap-up rallysinde minimal etki plan araliginda, SMA50 ustu RSI 55 notr, PM dondurmesi"
-2026-04-09,BUY,balanced,DUK,49,133.84,"[6558.16] K-13 v4.1 jeopolitik/savaş utilities faydalanıcı. VIX 28-35 bant: $9K×(22/30). SMA50 üstü, K-17 temiz, hedef $143."
-2026-04-09,BUY,balanced,CI,23,277.63,"[6385.49] K-13 saglik faydalanici. PEG 0.86, FWD P/E 9.1x. Medicare Advantage yok. CEO insider alim. SMA50 ustu. VIX formulu."
+2026-04-01,SELL,XLE,139,58.98,8198.22,"iran ateşkes umudu - petrol düşüşü, enerji katalizörü zayıflıyor. kar: $783.96 (+10.57%)"
+2026-04-01,SELL,XOM,199,161.74,32186.26,"iran ateşkes umudu - petrol düşüşü, enerji katalizörü zayıflıyor. kar: $2,843.71 (+9.69%)"
+2026-04-01,SELL,CVX,99,198.64,19665.36,"iran ateşkes umudu - petrol düşüşü, enerji katalizörü zayıflıyor. kar: $675.18 (+3.56%)"
+2026-04-01,SELL,SM,192,29.48,5660.16,iran ateşkes tezi - enerji sektörü çıkışı. XLE/XOM/CVX ile aynı mantık. kar: $17.28
+2026-04-07,SELL,T,86,28.07,2414.02,K-12 limit asimi duzeltmesi - Temettu portfoyunde T agirligi %16.67 (limit %15). 86 hisse satis ile %15.00 hedeflendi. Kalan 773 hisse. Kar: $163.40 (+7.26%)
+2026-04-08,SELL,PM,77,156.82,12075.14,"dondurme - FDA pouch sorunu, SMA50 $174.70 altinda trend kirik, RSI 33.9 oversold ama tez bozuk, sermaye MRK'ye. K/Z: $-267.96 (-2.17%)"
+2026-04-08,BUY,MRK,50,120.0,6000.00,"plan girisi - saglik defansif cesitlendirme, gap-up rallysinde minimal etki plan araliginda, SMA50 ustu RSI 55 notr, PM dondurmesi"
+2026-04-09,BUY,DUK,49,133.84,6558.16,"K-13 v4.1 jeopolitik/savaş utilities faydalanıcı. VIX 28-35 bant: $9K×(22/30). SMA50 üstü, K-17 temiz, hedef $143."
+2026-04-09,BUY,CI,23,277.63,6385.49,"K-13 saglik faydalanici. PEG 0.86, FWD P/E 9.1x. Medicare Advantage yok. CEO insider alim. SMA50 ustu. VIX formulu."
 2026-04-10,BUY,OKE,93,85.5,7951.5,"Temettü portföyü - Enerji pipeline. P/E 16, yield %4.8, D/E 1.5. RSI 45.3, SMA50 üstü. Stop 81, hedef 93, R:R 2.1:1"
 2026-04-10,BUY,COHR,52,287.0,14924.0,Pozisyon büyütme — strateji %10-15 hedefine ulaşmak. 87 → 139 adet. Ortalama maliyet 285.75.
 2026-04-10,BUY,VRT,51,291.0,14841.0,Pozisyon büyütme — strateji %10-15 hedefine ulaşmak. 86 → 137 adet. Ortalama maliyet 290.37.

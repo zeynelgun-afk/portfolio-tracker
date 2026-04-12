@@ -171,6 +171,12 @@ def update_portfolio(filepath, quote_dict):
             (pos['guncel_deger'] / portfolio['toplam_deger']) * 100, 2
         )
     
+    # Nakit ağırlığını güncelle
+    if 'nakit' in portfolio:
+        portfolio['nakit']['agirlik_yuzde'] = round(
+            (portfolio['nakit']['miktar'] / portfolio['toplam_deger']) * 100, 2
+        )
+    
     portfolio['son_guncelleme'] = now
     
     log(f"  💰 Toplam değer: ${portfolio['toplam_deger']:,.2f} ({portfolio['toplam_getiri_yuzde']:+.2f}%)")
