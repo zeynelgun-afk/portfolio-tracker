@@ -12,52 +12,52 @@
       "risk_off": 0
     },
     "growth_aksiyon": "Mevcut AI pozisyonlar (COHR, VRT, ANET, MU, CAMT) tutulmaya devam. Yeni AI fırsatları ara.",
-    "tespit_zamani": "2026-04-13T18:21:00.759133+03:00"
+    "tespit_zamani": "2026-04-13T18:22:12.104353+03:00"
   },
   "sektor_data": {
     "XLE": {
-      "price": 57.24,
-      "gunluk_chg": 0.53
+      "price": 57.215,
+      "gunluk_chg": 0.48
     },
     "XLK": {
-      "price": 143.99,
-      "gunluk_chg": 0.96
+      "price": 144.03,
+      "gunluk_chg": 0.99
     },
     "XLI": {
-      "price": 170.93,
-      "gunluk_chg": -0.34
+      "price": 170.83,
+      "gunluk_chg": -0.4
     },
     "XLF": {
-      "price": 50.92,
-      "gunluk_chg": 0.3
+      "price": 50.9,
+      "gunluk_chg": 0.26
     },
     "XLV": {
-      "price": 146.5,
-      "gunluk_chg": -0.55
+      "price": 146.36,
+      "gunluk_chg": -0.64
     },
     "XLU": {
-      "price": 46.445,
-      "gunluk_chg": -1.1
+      "price": 46.405,
+      "gunluk_chg": -1.18
     },
     "XLP": {
-      "price": 81.32,
-      "gunluk_chg": -1.27
+      "price": 81.28,
+      "gunluk_chg": -1.32
     },
     "XLY": {
-      "price": 112.69,
-      "gunluk_chg": -0.18
+      "price": 112.675,
+      "gunluk_chg": -0.19
     },
     "XLB": {
-      "price": 51.72,
-      "gunluk_chg": -0.46
+      "price": 51.7,
+      "gunluk_chg": -0.5
     },
     "GLD": {
-      "price": 432.54,
-      "gunluk_chg": -1.05
+      "price": 432.395,
+      "gunluk_chg": -1.08
     },
     "ITA": {
-      "price": 230.625,
-      "gunluk_chg": 0.43
+      "price": 230.36,
+      "gunluk_chg": 0.31
     }
   }
 }
