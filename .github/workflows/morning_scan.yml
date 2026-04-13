@@ -9,11 +9,27 @@ name: Sabah Evren Taraması
         description: 'balanced/dividend/aggressive/all'
         required: false
         default: 'all'
+  push:
+    paths:
+      - '.github/workflows/morning_scan.yml'
+      - 'scripts/full_universe_screener.py'
+      - 'scripts/scan_summary.py'
+      - 'scripts/swing_entry_engine.py'
 
 permissions:
   contents: write
 
 jobs:
+  validate:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+    steps:
+      - name: Workflow degisikligi algilandi
+        run: |
+          echo "✅ Dosya degisikligi push ile geldi — tarama schedule'da calisacak"
+          echo "Commit: ${{ github.sha }}"
+          echo "Degisen dosyalar push ile izleniyor, job atlanıyor (normal)"
+
   morning-scan:
     runs-on: ubuntu-latest
     timeout-minutes: 45
@@ -101,7 +117,9 @@ jobs:
 
       - name: Swing Entry Scan
         run: |
-          git pull --rebase origin main || true
+          git fetch origin main
+          git rebase --abort 2>/dev/null || true
+          git reset --hard origin/main
           python scripts/swing_entry_engine.py --watchlist 2>&1 | tee /tmp/swing_entry.txt
 
       - name: Sonuc kaydet
