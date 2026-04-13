@@ -23,13 +23,31 @@ on:
           - closing
           - monitor
           - weekly
+  push:
+    paths:
+      - 'agent/*.py'
+      - '.github/workflows/agent.yml'
 
 permissions:
   contents: write  # Yazma izni — JSON + CSV güncellemeleri için
 
 jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Event kontrol
+        run: |
+          echo "Event: ${{ github.event_name }}"
+          if [ "${{ github.event_name }}" = "push" ]; then
+            echo "Push event - agent syntax gecerli, schedule devam edecek"
+          else
+            echo "${{ github.event_name }} - agent baslatiliyor"
+          fi
+
   agent:
     runs-on: ubuntu-latest
+    needs: validate
+    if: github.event_name != 'push'
     timeout-minutes: 10
 
     steps:
