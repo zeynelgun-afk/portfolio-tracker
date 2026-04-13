@@ -1,6 +1,6 @@
 name: Sabah Evren Taraması
 
-"on":
+on:
   schedule:
     - cron: '15 6 * * 1-5'
   workflow_dispatch:
