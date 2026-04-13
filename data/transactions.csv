@@ -41,7 +41,7 @@ date,action,symbol,shares,price,total,reason
 2026-02-25,BUY,XLB,94,53.05,4986.7,Sektör rotasyonu - Temel malzemeler güçlü momentum YTD +%15
 2026-02-25,BUY,XLP,59,88.88,5243.92,Sektör rotasyonu - Temel tüketim defensif güç YTD +%14.4
 2026-02-25,SELL,VZ,156,49.51,7723.56,"Kısmi kar alma - RSI 73 aşırı alım, %24 kâr, nakit oluşturma"
-2026-02-26,SELL,CELH,46,56.62,2604.52,Agresif - kademeli çıkış %33 - Q4 earnings rally - strateji kuralı"
+2026-02-26,SELL,CELH,46,56.62,2604.52,"Agresif - kademeli çıkış %33 - Q4 earnings rally - strateji kuralı"""
 2026-02-26,SELL,TYL,10,351.09,3510.90,Agresif - kademeli çıkış %33 - momentum devam - strateji kuralı
 2026-02-26,SELL,ZS,0,164.03,0,Swing %50 kısmi çıkış - hedefe ulaştı +9.1% - trailing stop aktif
 2026-02-26,SELL,CELH,94,54.44,5117.36,Agresif - trailing stop tetiklendi $54.92 - kalan %67 tam çıkış
@@ -62,7 +62,7 @@ date,action,symbol,shares,price,total,reason
 2026-03-04,BUY,MRK,250,120.41,30102.5,Temettu portfoyune transfer
 2026-03-04,BUY,PLTR,100,153.46,15346.00,Pozisyon buyutme - Agresif - AI+savunma katalizor
 2026-03-05,BUY,AMKR,176,45.45,7999.2,"Yarım pozisyon - Agresif - AI chip tedarik zinciri, gelişmiş paketleme/HBM, MRVL earnings beklentisi"
-2026-03-06,SELL,SHOP,41,129.55,5311.55,izleyen zarar kes $130.20 tetiklendi - agresif portföy - NFP şoku"
+2026-03-06,SELL,SHOP,41,129.55,5311.55,"izleyen zarar kes $130.20 tetiklendi - agresif portföy - NFP şoku"""
 2026-03-06,SELL,AMKR,176,42.67,7509.92,erken disiplinli çıkış - stop yakın - NFP şoku - agresif portföy
 2026-03-09,SELL,NNDM,2550,1.77,4513.5,"Agresif - Stop-loss tetiklendi, disiplinli çıkış"
 2026-03-09,SELL,BKSY,379,23.42,8876.18,"Agresif - İzleyen zarar kes tetiklendi, kâr koruması"
@@ -148,7 +148,7 @@ date,action,symbol,shares,price,total,reason
 2026-04-10,BUY,DUK,63,132.5,8347.5,DUK büyütme: 49→112 adet. Ort.maliyet 133.09. Utility K-13 faydalanıcı. Barclays hedef 143. Stop 129.50.
 2026-04-10,BUY,NEE,133,94.0,12502.0,"Dengeli portföy yeni utility. AI güç talebi + temiz enerji. K-13 faydalanıcı. Stop 88, hedef 103, R:R 1.5:1"
 2026-04-10,BUY,CAMT,226,175.0,39550.0,"Agresif v2 yarı iletken ekipman. RSI 60, SMA üstü, +17% aylık. AI chip inspection darboğaz. Limit 175 doldu (gün dibi 174.12). Stop 163, hedef 210, R:R 2.9:1"
-2026-04-11,BUY,CAT,4,790.66,3162.64,"Swing giriş — tenkan_bounce, sma50_bounce, kijun_bounce_v2, nr7_sikisma. Stop: $730.35, Hedef: $941.43"
-2026-04-11,BUY,KLAC,1,1737.28,1737.28,"Swing giriş — tenkan_bounce, kijun_bounce_v2. Stop: $1540.49, Hedef: $2229.26"
-2026-04-11,BUY,AMAT,6,399.49,2396.94,"Swing giriş — sma50_bounce. Stop: $361.98, Hedef: $493.26"
+2026-04-10,BUY,CAT,4,790.66,3162.64,"Swing giriş — tenkan_bounce, sma50_bounce, kijun_bounce_v2, nr7_sikisma. Stop: $730.35, Hedef: $941.43 [Tarih düzeltmesi: 10 Nisan Cuma]"
+2026-04-10,BUY,KLAC,1,1737.28,1737.28,"Swing giriş — tenkan_bounce, kijun_bounce_v2. Stop: $1540.49, Hedef: $2229.26 [Tarih düzeltmesi: 10 Nisan Cuma]"
+2026-04-10,BUY,AMAT,6,399.49,2396.94,"Swing giriş — sma50_bounce. Stop: $361.98, Hedef: $493.26 [Tarih düzeltmesi: 10 Nisan Cuma]"
 2026-02-26,CAPITAL_ADD,-,0,0,300000,"Portföy yeniden yapılandırma - $300K yeni sermaye eklendi. Rotasyon portföyü kapatıldı, agresif momentum stratejisine geçiş."

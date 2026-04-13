@@ -611,6 +611,18 @@ def _load_genome_context() -> str:
 
 def _get_faz(now_tr) -> str:
     """Türkiye saatine göre aktif seansı döndür."""
+    # Hafta sonu kontrolü — Cumartesi(5) ve Pazar(6) piyasa kapalı
+    if now_tr.weekday() >= 5:
+        return "KAPALI"   # Hafta sonu
+
+    # NYSE tatil listesi (sabit)
+    NYSE_TATIL = {
+        "2026-01-01", "2026-01-19", "2026-02-16", "2026-04-03",
+        "2026-05-25", "2026-07-03", "2026-09-07", "2026-11-26", "2026-12-25",
+    }
+    if now_tr.strftime("%Y-%m-%d") in NYSE_TATIL:
+        return "KAPALI"   # NYSE tatili
+
     h = now_tr.hour + now_tr.minute / 60
     if 16.5 <= h < 17.5:
         return "FAZ_1"   # Açılış: TR 16:30-17:30
@@ -634,6 +646,12 @@ def run_monitor(ctx: dict):
     now_tr     = datetime.now(pytz.timezone("Europe/Istanbul"))
     saat       = now_tr.strftime("%H:%M")
     faz        = _get_faz(now_tr)
+
+    # Hafta sonu veya piyasa dışı saatte çalıştıysa giriş yapma
+    if faz == "KAPALI":
+        gun = ["Pazartesi","Salı","Çarşamba","Perşembe","Cuma","Cumartesi","Pazar"][now_tr.weekday()]
+        print(f"[Orkestratör] {gun} {saat} TR — piyasa kapalı. Giriş yok, sadece monitoring.")
+        return
 
     print(f"[Orkestratör] Monitor çalışıyor — {saat} TR | {faz}")
 

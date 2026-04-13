@@ -3,11 +3,11 @@
   "not": "SWING TRADE SADECE SİMÜLASYON - Sadece % kazanç/kayıp takibi (MAX: 8 pozisyon)",
   "aktif_pozisyonlar": [
     {
-      "id": "SWING-202604111410-CAT",
+      "id": "SWING-202604101410-CAT",
       "sembol": "CAT",
       "adet": 4,
       "giris_fiyat": 790.66,
-      "giris_tarihi": "2026-04-11",
+      "giris_tarihi": "2026-04-10",
       "stop_loss": 730.35,
       "hedef_fiyat": 941.43,
       "rr_oran": 2.5,
@@ -23,18 +23,20 @@
       "k11_aktif": false,
       "k11_profit_lock": null,
       "son_guncelleme": "2026-04-13",
-      "notlar": [],
+      "notlar": [
+        "Tarih düzeltmesi: 11 Nisan Cumartesi piyasa kapalı — 10 Nisan Cuma kapanış fiyatına göre düzeltildi"
+      ],
       "pnl_pct": 1.0,
       "atr14": 25.88,
-      "chandelier_guncelleme": "2026-04-11",
+      "chandelier_guncelleme": "2026-04-10",
       "maliyet_baz": 790.66
     },
     {
-      "id": "SWING-202604111410-KLAC",
+      "id": "SWING-202604101410-KLAC",
       "sembol": "KLAC",
       "adet": 1,
       "giris_fiyat": 1737.28,
-      "giris_tarihi": "2026-04-11",
+      "giris_tarihi": "2026-04-10",
       "stop_loss": 1540.49,
       "hedef_fiyat": 2229.26,
       "rr_oran": 2.5,
@@ -50,18 +52,20 @@
       "k11_aktif": false,
       "k11_profit_lock": null,
       "son_guncelleme": "2026-04-13",
-      "notlar": [],
+      "notlar": [
+        "Tarih düzeltmesi: 11 Nisan Cumartesi piyasa kapalı — 10 Nisan Cuma kapanış fiyatına göre düzeltildi"
+      ],
       "pnl_pct": 0.66,
       "atr14": 68.85,
-      "chandelier_guncelleme": "2026-04-11",
+      "chandelier_guncelleme": "2026-04-10",
       "maliyet_baz": 1737.28
     },
     {
-      "id": "SWING-202604111410-AMAT",
+      "id": "SWING-202604101410-AMAT",
       "sembol": "AMAT",
       "adet": 6,
       "giris_fiyat": 399.49,
-      "giris_tarihi": "2026-04-11",
+      "giris_tarihi": "2026-04-10",
       "stop_loss": 361.98,
       "hedef_fiyat": 493.26,
       "rr_oran": 2.5,
@@ -77,10 +81,12 @@
       "k11_aktif": false,
       "k11_profit_lock": null,
       "son_guncelleme": "2026-04-13",
-      "notlar": [],
+      "notlar": [
+        "Tarih düzeltmesi: 11 Nisan Cumartesi piyasa kapalı — 10 Nisan Cuma kapanış fiyatına göre düzeltildi"
+      ],
       "pnl_pct": -0.28,
       "atr14": 16.69,
-      "chandelier_guncelleme": "2026-04-11",
+      "chandelier_guncelleme": "2026-04-10",
       "maliyet_baz": 399.49
     }
   ],
