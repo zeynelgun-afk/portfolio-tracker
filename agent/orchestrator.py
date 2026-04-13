@@ -1126,14 +1126,14 @@ def _check_swing_entries() -> list[str]:
     except ImportError:
         return []
 
-    for sym in giris_syms[:3]:  # Max 3 kontrol
+    # Zaten açık olanları listeden çıkar, kalan 3'ü kontrol et
+    aktif_semboller = {p.get("sembol") for p in active.get("aktif_pozisyonlar", [])}
+    kontrol_listesi = [s for s in giris_syms if s not in aktif_semboller][:3]
+
+    for sym in kontrol_listesi:
         # Kapasite yeterliyse devam
         if mevcut_poz >= 5:
             break
-
-        # Zaten açık mı?
-        if any(p.get("sembol") == sym for p in active.get("aktif_pozisyonlar", [])):
-            continue
 
         # Canlı analiz
         try:
