@@ -269,6 +269,23 @@ def collect_context(mode: str) -> dict:
 
 # ── Mod çalıştırıcıları ───────────────────────────────────────────────────────
 
+# ── Session State Yardımcısı ───────────────────────────────────────────────────
+
+def _update_session_state(key: str, value) -> None:
+    """data/session_state.json'ı günceller — FAZ handoff için."""
+    state_path = REPO_ROOT / "data" / "session_state.json"
+    try:
+        state = json.load(open(state_path)) if state_path.exists() else {}
+    except Exception:
+        state = {}
+    state[key]        = value
+    state["timestamp"] = datetime.now(TR_TZ).isoformat()
+    try:
+        json.dump(state, open(state_path, "w"), ensure_ascii=False, indent=2)
+    except Exception as e:
+        print(f"[SessionState] Yazma hatası: {e}")
+
+
 def run_morning(ctx: dict):
     """
     Sabah analizi — piyasa açılmadan önce (UTC 13:00 = TR 16:00).
