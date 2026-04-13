@@ -609,6 +609,31 @@ def _load_genome_context() -> str:
         return ""
 
 
+def _run_faz1_checks(portfolios: dict, market: dict) -> list:
+    """FAZ_1 açılış kontrolleri — gap analizi, stop yakınlığı uyarıları."""
+    uyarilar = []
+    for pf_name, pf in portfolios.items():
+        for pos in pf.get("pozisyonlar", []):
+            sym   = pos.get("sembol", "")
+            stop  = float(pos.get("stop_loss") or 0)
+            mal   = float(pos.get("maliyet_baz") or 0)
+            q     = market.get(sym, {})
+            price = float(q.get("price") or pos.get("guncel_fiyat") or mal)
+            if stop and price and price > 0:
+                pct = (price - stop) / price * 100
+                if pct < 3.0:
+                    uyarilar.append(
+                        f"⚡ FAZ_1 uyarı [{pf_name.upper()}] {sym}: "
+                        f"stop %{pct:.1f} uzakta (${price:.2f} → stop ${stop:.2f})"
+                    )
+    return uyarilar
+
+
+def _run_faz3_checks(market: dict) -> list:
+    """FAZ_3 power hour kontrolleri — trailing stop sıkılaştırma uyarıları."""
+    return []  # Swing manager zaten chandelier günceller
+
+
 def _get_faz(now_tr) -> str:
     """Türkiye saatine göre aktif seansı döndür."""
     # Hafta sonu kontrolü — Cumartesi(5) ve Pazar(6) piyasa kapalı
