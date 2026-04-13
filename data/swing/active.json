@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-04-13T17:53:12.606574",
+  "son_guncelleme": "2026-04-13T19:02:40.136968",
   "not": "SWING TRADE SADECE SİMÜLASYON - Sadece % kazanç/kayıp takibi (MAX: 8 pozisyon)",
   "aktif_pozisyonlar": [
     {
@@ -16,8 +16,8 @@
       "katalizor": "",
       "max_sure_gun": 15,
       "durum": "AKTIF",
-      "guncel_fiyat": 788.64,
-      "son_fiyat": 788.64,
+      "guncel_fiyat": 788.08,
+      "son_fiyat": 788.08,
       "zirve_fiyat": 798.54,
       "chandelier_stop": 713.01,
       "k11_aktif": false,
@@ -26,7 +26,7 @@
       "notlar": [
         "Tarih düzeltmesi: 11 Nisan Cumartesi piyasa kapalı — 10 Nisan Cuma kapanış fiyatına göre düzeltildi"
       ],
-      "pnl_pct": -0.26,
+      "pnl_pct": -0.33,
       "atr14": 25.88,
       "chandelier_guncelleme": "2026-04-10",
       "maliyet_baz": 790.66
@@ -45,9 +45,9 @@
       "katalizor": "",
       "max_sure_gun": 15,
       "durum": "AKTIF",
-      "guncel_fiyat": 1752.42,
-      "son_fiyat": 1752.42,
-      "zirve_fiyat": 1752.42,
+      "guncel_fiyat": 1757.26,
+      "son_fiyat": 1757.26,
+      "zirve_fiyat": 1757.26,
       "chandelier_stop": 1530.73,
       "k11_aktif": false,
       "k11_profit_lock": null,
@@ -55,7 +55,7 @@
       "notlar": [
         "Tarih düzeltmesi: 11 Nisan Cumartesi piyasa kapalı — 10 Nisan Cuma kapanış fiyatına göre düzeltildi"
       ],
-      "pnl_pct": 0.87,
+      "pnl_pct": 1.15,
       "atr14": 68.85,
       "chandelier_guncelleme": "2026-04-10",
       "maliyet_baz": 1737.28
@@ -74,8 +74,8 @@
       "katalizor": "",
       "max_sure_gun": 15,
       "durum": "AKTIF",
-      "guncel_fiyat": 391.69,
-      "son_fiyat": 391.69,
+      "guncel_fiyat": 392.88,
+      "son_fiyat": 392.88,
       "zirve_fiyat": 399.49,
       "chandelier_stop": 349.41,
       "k11_aktif": false,
@@ -84,7 +84,7 @@
       "notlar": [
         "Tarih düzeltmesi: 11 Nisan Cumartesi piyasa kapalı — 10 Nisan Cuma kapanış fiyatına göre düzeltildi"
       ],
-      "pnl_pct": -1.95,
+      "pnl_pct": -1.65,
       "atr14": 16.69,
       "chandelier_guncelleme": "2026-04-10",
       "maliyet_baz": 399.49
