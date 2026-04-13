@@ -1,7 +1,8 @@
 # K-KURALLARI ÖZET (Agent için)
 
 ## Giriş Kuralları
-- K-02: Kriz başında momentum/AI sektörüne 3 gün giriş yok
+- K-02: Kriz BAŞLANGICI günü momentum/AI sektörüne 3 iş günü giriş yok
+  (NOT: Devam eden jeopolitik kriz K-02 tetiklemez — sadece YENİ şok anı. İran ateşkes süreci devam eden durum, kriz başlangıcı değil)
 - K-04: SMA50 üstü giriş tercih. Altıysa: RSI<30 + stabilizasyon + çeyrek pozisyon
 - K-05: Swing pozisyonu earnings'ten 2+ gün önce kapat
 
@@ -17,9 +18,10 @@
 - Duyarlılar (tech, growth, AI): VIX 22'den itibaren yarım pozisyon
 - VIX>35: tüm yeni girişler dur
 
-## Drawdown (K-14)
-- SPY SMA50 altındaysa: yeni swing girişi yasak, boyut 5K max
-- Yeniden başlama: VIX<22 + SPY>SMA50 + sektör rotasyonu pozitif
+## Drawdown (K-14) — KALDIRILDI 11 Nisan 2026
+- K-14 psikoloji testi ile değiştirildi: "Bu girişi yarın tekrar inceleseydim, tüm kuralları tam uyguladım mı?"
+- Normal boyut aktif ($5K-$10K). Yarı pozisyon sayacı kaldırıldı.
+- Drawdown freni YOKTUR — stop disiplini (K-06) + K-13 VIX filtresi yeterli
 
 ## Zorunlu Kontroller
 - K-17: Aynı sektörden aynı gün birden fazla giriş yapma
