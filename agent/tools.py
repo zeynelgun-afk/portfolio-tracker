@@ -321,3 +321,36 @@ def send_private_telegram(message: str) -> bool:
             success = False
 
     return success
+
+# ── Canlı RSI Batch Fetch ──────────────────────────────────────────────────────
+
+def get_rsi_batch(symbols: list, period: int = 14) -> dict:
+    """
+    Verilen semboller için FMP'den güncel RSI değerlerini çeker.
+    Döner: {symbol: rsi_float}  — başarısız semboller eksik kalır.
+    
+    Kullanım: monitor modunda portföy + swing RSI gerçek zamanlı alınır.
+    API: /stable/technical-indicators/rsi?symbol=X&periodLength=14&timeframe=1day
+    """
+    rsi_map = {}
+    if not symbols:
+        return rsi_map
+
+    print(f"[RSI] {len(symbols)} sembol için canlı RSI çekiliyor...")
+    for sym in symbols:
+        try:
+            data = fmp_get(
+                "technical-indicators/rsi",
+                {"symbol": sym, "periodLength": period, "timeframe": "1day"}
+            )
+            if isinstance(data, list) and data:
+                val = data[0].get("rsi")
+                if val is not None:
+                    rsi_map[sym] = round(float(val), 2)
+        except Exception as e:
+            print(f"[RSI] {sym} hatası: {e}")
+
+    found = len(rsi_map)
+    print(f"[RSI] Tamamlandı: {found}/{len(symbols)} sembol → {rsi_map}")
+    return rsi_map
+

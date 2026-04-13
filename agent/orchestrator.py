@@ -38,7 +38,8 @@ from tools import (
     get_market_context,
     get_swing_status,
     get_watchlist,
-    send_private_telegram
+    send_private_telegram,
+    get_rsi_batch,
 )
 from memory_manager import (
     build_portfolio_state,
@@ -622,6 +623,29 @@ def run_monitor(ctx: dict):
     aksiyonlar = []
     uyarilar   = []
 
+    # ── 0. CANLI RSI FETCH — tüm aktif semboller ─────────────────────────────
+    # Portföy + swing pozisyonlarının sembollerini topla
+    _rsi_syms = set()
+    for _pf in portfolios.values():
+        for _pos in _pf.get("pozisyonlar", []):
+            _sym = _pos.get("sembol") or _pos.get("symbol")
+            if _sym:
+                _rsi_syms.add(_sym)
+    try:
+        _sw = json.load(open(REPO_ROOT / "data" / "swing" / "active.json"))
+        for _pos in _sw.get("aktif_pozisyonlar", []):
+            if _pos.get("sembol"):
+                _rsi_syms.add(_pos["sembol"])
+    except Exception:
+        pass
+    # FMP'den canlı RSI çek (sembol başına 1 çağrı)
+    try:
+        rsi_map = get_rsi_batch(list(_rsi_syms))
+    except Exception as _e:
+        print(f"[RSI] Batch fetch başarısız: {_e}")
+        rsi_map = {}
+    # ─────────────────────────────────────────────────────────────────────────
+
     # ── 1. SWING ÇIKIŞ KONTROL — her FAZ'da ─────────────────────────────────
     # K-engine ile tüm çıkış kuralları (K-06, K-07, K-09, K-11)
     if run_exit_checks:
@@ -637,7 +661,7 @@ def run_monitor(ctx: dict):
                     if sym and cur_p and stop and entry:
                         exit_r = run_exit_checks(
                             sym, float(cur_p), float(stop), float(entry),
-                            rsi=pos.get("rsi", 50),
+                            rsi=rsi_map.get(sym) or pos.get("rsi", 50),
                             highest_high=pos.get("highest_high"),
                             atr=pos.get("atr_14")
                         )
@@ -657,7 +681,7 @@ def run_monitor(ctx: dict):
     aksiyonlar.extend(swing_exits)
 
     # ── 2. PORTFÖY ÇIKIŞ KONTROL (stop + kısmi kâr) ─────────────────────────
-    portfolio_exits = _check_portfolio_exits(market)
+    portfolio_exits = _check_portfolio_exits(market, rsi_map=rsi_map)
     aksiyonlar.extend(portfolio_exits)
 
     # ── 3. SWING GİRİŞ KONTROL ───────────────────────────────────────────────
@@ -910,7 +934,7 @@ def _execute_portfolio_opportunities(faz: str, market: dict) -> list:
     return aksiyonlar
 
 
-def _check_portfolio_exits(market: dict) -> list:
+def _check_portfolio_exits(market: dict, rsi_map: dict = None) -> list:
     """
     K-06, K-11, K-04 SMA200 ihlali, tez bozulması için portföy çıkışları.
     """
@@ -955,9 +979,9 @@ def _check_portfolio_exits(market: dict) -> list:
                 continue
 
             # K-11: RSI 80+ VE kâr %15+ → kısmi satış
-            # RSI batch-quote'ta gelmiyor, FMP ayrı çağrı gerekiyor
-            # Burada yaklaşım: pozisyon verisi veya varsayılan 50
-            rsi = float(pos.get("rsi") or 50)
+            # rsi_map: monitor başında FMP'den çekilen canlı RSI değerleri
+            rsi_live = (rsi_map or {}).get(sym)
+            rsi = float(rsi_live if rsi_live is not None else pos.get("rsi") or 50)
             if rsi >= 80 and pnl >= 15:
                 result = sell_position(sym, pf_name,
                                        f"K-11 katman 2: RSI {rsi:.0f} + kâr %{pnl:.1f}",
