@@ -22,16 +22,19 @@ permissions:
 jobs:
   validate:
     runs-on: ubuntu-latest
-    if: github.event_name == 'push'
     steps:
-      - name: Workflow degisikligi algilandi
+      - name: Event kontrol
         run: |
-          echo "✅ Dosya degisikligi push ile geldi — tarama schedule'da calisacak"
-          echo "Commit: ${{ github.sha }}"
-          echo "Degisen dosyalar push ile izleniyor, job atlanıyor (normal)"
+          echo "Event tipi: ${{ github.event_name }}"
+          if [ "${{ github.event_name }}" = "push" ]; then
+            echo "✅ Push event — workflow syntax gecerli, tarama schedule'da calisacak"
+          else
+            echo "✅ ${{ github.event_name }} event — morning-scan baslatiliyor"
+          fi
 
   morning-scan:
     runs-on: ubuntu-latest
+    needs: validate
     timeout-minutes: 45
     if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
 
