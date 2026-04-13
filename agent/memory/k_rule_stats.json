@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-04-13T09:28:54.604727",
+  "son_guncelleme": "2026-04-13T09:49:02.502006",
   "analiz_donemi": "2026-02-17 → 2026-04-13",
   "toplam_trade": 62,
   "k_kural_istatistikleri": {
@@ -18,6 +18,24 @@
         "kazanan_konfig": "stop_5pct (PF 1.97) = stop_3xATR (PF 1.97)",
         "kaybeden_konfig": "stop_2xATR (PF 1.09)",
         "sonuc": "%5 sabit ve 3xATR dinamik eşdeğer. %7 stop PF'yi düşürüyor."
+      },
+      "nasdaq_2021_2023": {
+        "rejim_bazli": {
+          "2021_boga": {
+            "stop5_pf": 2.25,
+            "stop3xATR_pf": 1.61
+          },
+          "2022_ayi": {
+            "stop5_pf": 2.32,
+            "stop3xATR_pf": 1.5
+          },
+          "2023_top": {
+            "stop5_pf": 2.9,
+            "stop3xATR_pf": 2.6
+          }
+        },
+        "yasak": "stop_8pct — 2022 ayısında MaxDD -%36.7",
+        "sonuc": "min(%5, 3xATR) her rejimde güvenli. %8 stop asla kullanma."
       }
     },
     "K-11": {
@@ -41,6 +59,28 @@
         "kaybeden_konfig": "k11_2xATR_rsi70",
         "kaybeden_pf": 1.14,
         "sonuc": "3xATR chandelier + RSI 70 eşiği onaylandı. 2xATR çok dar."
+      },
+      "nasdaq_2021_2023": {
+        "rejim_bazli": {
+          "2021_boga": {
+            "pf": 1.66,
+            "avg": 0.79
+          },
+          "2022_ayi": {
+            "pf": 1.89,
+            "avg": -2.75
+          },
+          "2023_top": {
+            "pf": 2.04,
+            "avg": 1.1
+          }
+        },
+        "rsi_esigi": {
+          "rsi70_2023_pf": 2.04,
+          "rsi75_2023_pf": 2.28,
+          "oneri": "VIX<20→RSI75, VIX20-28→RSI70, VIX>28→chandelier yeterli"
+        },
+        "sonuc": "3xATR chandelier tüm rejimlerde 2xATR'den üstün. Ayıda en güvenli."
       }
     },
     "K-13": {
@@ -51,7 +91,11 @@
       "win_rate_pct": 62.5,
       "avg_pnl_pct": 4.2,
       "not": "İran krizi döneminde savunma/enerji pozisyonları doğru yönetildi.",
-      "guncelleme": "Ateşkes = beneficiary sektörleri değişir, K-13 buna göre güncellenmeli"
+      "guncelleme": "Ateşkes = beneficiary sektörleri değişir, K-13 buna göre güncellenmeli",
+      "nasdaq_2021_2023": {
+        "bulgu": "2022 ayı piyasasında tüm stratejiler negatif avg (-2 ile -4%). K-13 (VIX>22 pozisyon küçültme) kritik — ayı giriş sayısını azaltmalı.",
+        "oneri": "SPY SMA200 altı → max 1 yeni giriş/hafta, pozisyon %50 küçük."
+      }
     },
     "K-17": {
       "aciklama": "Aynı sektörde max 2 pozisyon",

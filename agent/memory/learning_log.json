@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-04-13T09:28:54.603585",
+  "son_guncelleme": "2026-04-13T09:49:02.500511",
   "kaynak": "transactions.csv analizi (17 Şubat — 13 Nisan 2026)",
   "toplam_trade_analiz_edilen": 62,
   "sistem_metrikleri": {
@@ -334,6 +334,69 @@
       "aksiyon": "Swing/portföy girişlerde: RSI ≤ 40 + SMA200 üstü kombinasyonu kullan. RSI 35'e düşürme.",
       "guven": "MUHTEMEL",
       "n_trade": 111
+    },
+    {
+      "id": "BT004",
+      "tarih": "2026-04-13",
+      "kaynak": "backtest_nasdaq_30hisse_2021_2023",
+      "kategori": "rejim_farkliligi",
+      "ders": "2022 ayı piyasasında TÜM stratejiler negatif ortalama getiri üretti. 2022 stop_5pct: WR %11.3, avg -3.88% (piyasa sürekli düşünce stop keser). 2023 toparlanmada stop_5pct: WR %32.6, avg +1.57%, PF 2.90. SONUÇ: Rejim tespiti kritik. VIX > 30 veya SPY SMA200 altındayken normal giriş kuralları çalışmıyor — ya daha az pozisyon ya da hiç giriş yok. K-13 (VIX bazlı konum boyutu) bu nedenle var — ayı piyasasında küçük poz al.",
+      "veri": {
+        "2021_boga_avg": 1.67,
+        "2022_ayi_avg": -3.88,
+        "2023_top_avg": 1.57
+      },
+      "aksiyon": "SPY SMA200 altındayken: pozisyon büyüklüğünü yarıya indir, stop'u %5'e çek, yeni giriş sayısını max 1'e sınırla.",
+      "guven": "KESİN",
+      "n_trade": 695
+    },
+    {
+      "id": "BT005",
+      "tarih": "2026-04-13",
+      "kaynak": "backtest_nasdaq_30hisse_2021_2023",
+      "kategori": "k11_ayı_performansı",
+      "ders": "K-11 3xATR chandelier 2022 ayı piyasasında PF 1.89 — en yüksek PF. Neden: Ayı piyasasında nadiren RSI 70'e çıkıldığı için K-11 exit nadiren tetikleniyor, chandelier trailing stop büyük kazançları koruyor (avg win +16%). 2xATR ayı piyasasında PF 1.42 — dar stop çok erken kesiyor. K-11 3xATR tüm rejimlerde en yüksek PF'yi veriyor.",
+      "veri": {
+        "2022_k11_3xATR_pf": 1.89,
+        "2022_k11_2xATR_pf": 1.42,
+        "2022_stop5pct_pf": 2.32,
+        "2022_k11_3xATR_aw": 16.05
+      },
+      "aksiyon": "K-11 3xATR chandelier ayı piyasasında da koru. Minimum 3xATR — 2xATR'ye asla düşme.",
+      "guven": "KESİN",
+      "n_trade": 900
+    },
+    {
+      "id": "BT006",
+      "tarih": "2026-04-13",
+      "kaynak": "backtest_nasdaq_30hisse_2021_2023",
+      "kategori": "stop_loss_rejim",
+      "ders": "Stop genişliği ve rejim ilişkisi: 2021 boğa: %5 sabit stop en iyi (PF 2.25, avg +1.67%). 2022 ayı: %5 sabit stop en yüksek PF (2.32) ama avg -3.88% — kazanılan az. 2023 toparlanma: stop_3xATR en iyi (PF 2.60, avg +2.48%). GENEL: %5 sabit stop tüm dönemlerde tutarlı PF 1.99-2.90 arası. stop_8pct: 2022'de MaxDD -%36.7 — çok tehlikeli ayı piyasasında. KURAL: %8 stop hiçbir rejimde kullanma. %5 veya 3xATR hangisi daha dar ise onu al.",
+      "veri": {
+        "2021_stop5_pf": 2.25,
+        "2022_stop5_pf": 2.32,
+        "2023_stop5_pf": 2.9,
+        "2022_stop8_mdd": -36.7
+      },
+      "aksiyon": "Portföy stop kuralı: min(%5, 3xATR). %8 stop yasak. Ayı piyasasında (SPY<SMA200) %5'e zorla.",
+      "guven": "KESİN",
+      "n_trade": 695
+    },
+    {
+      "id": "BT007",
+      "tarih": "2026-04-13",
+      "kaynak": "backtest_nasdaq_30hisse_2021_2023",
+      "kategori": "en_iyi_strateji_profili",
+      "ders": "Tüm dönemler konsolide: stop_5pct PF 1.99 en tutarlı strateji. k11_3xATR_rsi70: PF 1.39 — negatif avg (-1.08%) ancak dönem seçimi kötü (rastgele giriş, RSI filtresiz). Gerçek sistemde RSI≤40+SMA200 filtresi var. 2023 toparlanmada k11_3xATR_rsi75 en iyi: PF 2.28, avg +1.70%. RSI 75 eşiği 2023'te RSI 70'ten iyi çünkü güçlü momentum var — 70'te çıkış erken. Ancak 2022'de RSI 75 nadiren geldiği için etkisiz.",
+      "veri": {
+        "tam_donem_stop5_pf": 1.99,
+        "tam_donem_k11_3x_pf": 1.39,
+        "2023_k11_rsi75_pf": 2.28,
+        "2023_k11_rsi75_avg": 1.7
+      },
+      "aksiyon": "RSI eşiği rejim bazlı: VIX<20 (güçlü boğa) → RSI 75 kullan. VIX 20-28 (normal) → RSI 70. VIX>28 (kriz/ayı) → K-11 pasif, chandelier yeterli.",
+      "guven": "MUHTEMEL",
+      "n_trade": 695
     }
   ],
   "bos_hafiza_uyarisi": false,
@@ -342,5 +405,18 @@
     "toplam_backtest_trade": 2211,
     "hisse_sayisi": 45,
     "donem": "2024-2026 (600-730 gun)"
-  }
+  },
+  "backtest_gecmis": [
+    {
+      "etiket": "nasdaq_2021_2023",
+      "tarih": "2026-04-13",
+      "hisse": 30,
+      "trade": 2390,
+      "donemler": [
+        "2021_boga",
+        "2022_ayi",
+        "2023_toparlama"
+      ]
+    }
+  ]
 }

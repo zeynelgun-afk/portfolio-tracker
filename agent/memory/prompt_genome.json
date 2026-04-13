@@ -1,6 +1,6 @@
 {
   "nesil": 1,
-  "son_guncelleme": "2026-04-13T09:28:54.605377",
+  "son_guncelleme": "2026-04-13T09:49:02.502910",
   "bootstrap": {
     "tarih": "2026-04-13",
     "kaynak": "62 trade, 17 Şub - 13 Nis 2026"
@@ -12,13 +12,19 @@
       "weight": 1.0,
       "weight_history": [],
       "current_prompt": "K-11 Trailing Stop:\nPozisyon zirveden 2×ATR aşağı düşerse trailing stop tetiklenir.\nMakro şok istisnası: SPY ≥%3 düşüş + VIX ≥%20 spike aynı gün → 1 gün bekle.",
-      "fitness": 2.13,
+      "fitness": 1.86,
       "last_modified": "2026-04-13T09:22:42.430373",
       "gercek_wr": 0.62,
       "gercek_avg_pnl": 5.1,
       "pending_test": false,
       "not": "3xATR chandelier + RSI70 backtest ile onaylandı (n=300, PF 2.13)",
-      "backtest_pf": 2.13
+      "backtest_pf": 2.13,
+      "fitness_rejim": {
+        "boga_2021": 1.66,
+        "ayi_2022": 1.89,
+        "toparlama_2023": 2.04
+      },
+      "rsi_esigi_oneri": "VIX<20→75, VIX20-28→70, VIX>28→chandelier"
     },
     "K-11_partial_sell": {
       "version": 1,
@@ -46,7 +52,8 @@
       "gercek_wr": 0.625,
       "gercek_avg_pnl": 4.2,
       "pending_test": false,
-      "not": "İran krizi döneminde doğru tetiklendi."
+      "not": "İran krizi döneminde doğru tetiklendi.",
+      "nasdaq_2022_bulgu": "2022 ayısında RSI filtreli girim dahi tüm stratejilerde negatif avg. K-13 (VIX>22 pozisyon küçültme) kritik öneme sahip."
     },
     "K-14_drawdown_brake": {
       "version": 1,
@@ -110,5 +117,6 @@
     "profit_factor": 2.26,
     "avg_win_pct": 13.0,
     "avg_loss_pct": -5.8
-  }
+  },
+  "toplam_backtest_trade": 4601
 }
