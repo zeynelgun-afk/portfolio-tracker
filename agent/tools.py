@@ -354,3 +354,35 @@ def get_rsi_batch(symbols: list, period: int = 14) -> dict:
     print(f"[RSI] Tamamlandı: {found}/{len(symbols)} sembol → {rsi_map}")
     return rsi_map
 
+# ── Grup Telegram ─────────────────────────────────────────────────────────────
+
+GROUP_CHAT = "-1003827034395"  # Finzora grubu
+
+def send_group_telegram(message: str) -> bool:
+    """Finzora grubuna mesaj gönderir.
+    Sadece: alım/satım aksiyonları + günlük kapanış özeti.
+    Detaylı raporlar finzora.ai üzerinden erişilebilir.
+    """
+    if not BOT_TOKEN:
+        print("[Telegram/Grup] BOT_TOKEN yok")
+        return False
+    try:
+        import requests as _req
+        r = _req.post(
+            f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage",
+            json={
+                "chat_id":    GROUP_CHAT,
+                "text":       message,
+                "parse_mode": "HTML",
+                "disable_web_page_preview": True,
+            },
+            timeout=10,
+        )
+        ok = r.json().get("ok", False)
+        if not ok:
+            print(f"[Telegram/Grup] Hata: {r.json().get('description','?')}")
+        return ok
+    except Exception as e:
+        print(f"[Telegram/Grup] Exception: {e}")
+        return False
+

@@ -39,6 +39,7 @@ from tools import (
     get_swing_status,
     get_watchlist,
     send_private_telegram,
+    send_group_telegram,
     get_rsi_batch,
 )
 from memory_manager import (
@@ -533,6 +534,31 @@ KESİN / MUHTEMEL / SPEKÜLATİF etiket kullan. Küçük harf Türkçe.
     send_private_telegram(msg)
     print("[Orkestratör] Kapanış yorumu gönderildi.")
 
+    # Gruba: günlük özet (portföy P/L + açık pozisyonlar)
+    try:
+        pfs = ctx["raw"]["portfolios"]
+        ozet_lines = ["<b>Finzora AI — Günlük Özet</b>", ""]
+        toplam_baslangic = 600000
+        toplam_deger = 0
+        for pf_name, pf in pfs.items():
+            pozlar = pf.get("pozisyonlar", [])
+            nakit  = float(pf.get("nakit", {}).get("miktar", 0))
+            deger  = sum(p.get("adet",0)*float(p.get("guncel_fiyat") or p.get("maliyet_baz",0))
+                         for p in pozlar) + nakit
+            toplam_deger += deger
+            pf_label = {"aggressive":"Agresif","balanced":"Dengeli","dividend":"Temettü"}.get(pf_name, pf_name)
+            ozet_lines.append(f"{pf_label}: ${deger:,.0f} ({len(pozlar)} poz)")
+        ozet_lines.append("")
+        toplam_pnl = (toplam_deger - toplam_baslangic) / toplam_baslangic * 100
+        icon = "🟢" if toplam_pnl >= 0 else "🔴"
+        ozet_lines.append(f"{icon} <b>Toplam: ${toplam_deger:,.0f} ({toplam_pnl:+.2f}%)</b>")
+        ozet_lines.append("")
+        ozet_lines.append("<i>Detaylı rapor: finzora.ai</i>")
+        send_group_telegram("\n".join(ozet_lines))
+        print("[Orkestratör] Günlük özet gruba gönderildi.")
+    except Exception as _e:
+        print(f"[Orkestratör] Grup özet hatası: {_e}")
+
     # ── OTOMATİK ÖZ-GELİŞİM (her 2 iş günü) ──────────────────────────────
     try:
         from darwin_evolution import run_evolution_cycle, get_evolution_summary
@@ -827,14 +853,24 @@ def run_monitor(ctx: dict):
                     break
 
     # ── 6. TELEGRAM ───────────────────────────────────────────────────────────
-    # Aksiyonlar (yapılan işlemler)
+    # Aksiyonlar (yapılan işlemler) → private + gruba
     if aksiyonlar:
-        msg = f"🤖 *Finzora Agent — Seans Aksiyonu* ({saat})\n\n"
-        msg += "\n\n".join(aksiyonlar)
-        send_private_telegram(msg)
+        msg_private = f"🤖 *Finzora Agent — Seans Aksiyonu* ({saat})\n\n"
+        msg_private += "\n\n".join(aksiyonlar)
+        send_private_telegram(msg_private)
+
+        # Gruba: sadece alım/satım aksiyonları (kısa format)
+        grup_aksiyonlar = [a for a in aksiyonlar
+                           if any(k in a for k in ["ALIŞ","SATIŞ","STOP","GİRİŞ","ÇIKIŞ","K-06","K-11"])]
+        if grup_aksiyonlar:
+            msg_grup = f"<b>Finzora AI — İşlem</b> ({saat})\n\n"
+            msg_grup += "\n\n".join(grup_aksiyonlar)
+            msg_grup += "\n\n<i>Detaylı analiz: finzora.ai</i>"
+            send_group_telegram(msg_grup)
+
         print(f"[Orkestratör] {len(aksiyonlar)} aksiyon alındı.")
 
-    # Uyarılar (acil bildirimler)
+    # Uyarılar (acil bildirimler) → sadece private
     if uyarilar:
         msg = f"🔔 *Finzora Agent — Uyarı* ({saat})\n\n"
         msg += "\n\n".join(uyarilar)
