@@ -71,14 +71,18 @@ K13_FAYDALANICI = {
 def log(msg): print(f'[{datetime.now().strftime("%H:%M:%S")}] {msg}', flush=True)
 
 # ─── HTTP ─────────────────────────────────────────────────────────────────────
-def fetch(url, timeout=15, retries=2):
+def fetch(url, timeout=20, retries=4):
     for attempt in range(retries):
         try:
             with urllib.request.urlopen(url, timeout=timeout) as r:
                 return json.loads(r.read())
-        except Exception:
+        except Exception as e:
             if attempt < retries - 1:
-                time.sleep(1.5 * (attempt + 1))
+                wait = 3 * (2 ** attempt)  # 3s, 6s, 12s
+                log(f'  fetch retry {attempt+1}/{retries-1} — {wait}s bekleniyor ({e})')
+                time.sleep(wait)
+            else:
+                log(f'  fetch başarısız (4 deneme): {url[:80]}')
     return None
 
 # ─── FAZ 1: Screener'lar ─────────────────────────────────────────────────────
@@ -86,24 +90,44 @@ def screener_balanced():
     url = (f'{BASE}/company-screener?marketCapMoreThan=3000000000'
            f'&priceMoreThan=10&volumeMoreThan=500000'
            f'&country=US&isActivelyTrading=true&limit=2000&apikey={API_KEY}')
-    data = fetch(url, timeout=25) or []
-    log(f'  Dengeli screener: {len(data)} hisse')
-    return data
+    for attempt in range(3):
+        data = fetch(url, timeout=30) or []
+        if data:
+            log(f'  Dengeli screener: {len(data)} hisse')
+            return data
+        log(f'  Dengeli screener boş döndü (deneme {attempt+1}/3) — 10s bekleniyor')
+        time.sleep(10)
+    log('  ⚠️  Dengeli screener 3 denemede de boş — API sorunu olabilir')
+    return []
 
 def screener_dividend():
     url = (f'{BASE}/company-screener?marketCapMoreThan=5000000000'
            f'&priceMoreThan=10&volumeMoreThan=300000'
            f'&dividendMoreThan=0.5&peRatioLessThan=30'
            f'&country=US&isActivelyTrading=true&limit=1000&apikey={API_KEY}')
-    data = fetch(url, timeout=25) or []
-    log(f'  Temettü screener: {len(data)} hisse')
-    return data
+    for attempt in range(3):
+        data = fetch(url, timeout=30) or []
+        if data:
+            log(f'  Temettü screener: {len(data)} hisse')
+            return data
+        log(f'  Temettü screener boş (deneme {attempt+1}/3) — 10s bekleniyor')
+        time.sleep(10)
+    log('  ⚠️  Temettü screener 3 denemede boş')
+    return []
 
 def screener_aggressive():
     url = (f'{BASE}/company-screener?marketCapMoreThan=2000000000'
            f'&priceMoreThan=15&volumeMoreThan=1000000'
            f'&country=US&isActivelyTrading=true&limit=2000&apikey={API_KEY}')
-    data = fetch(url, timeout=25) or []
+    data = []
+    for attempt in range(3):
+        data = fetch(url, timeout=30) or []
+        if data:
+            break
+        log(f'  Agresif screener boş (deneme {attempt+1}/3) — 10s bekleniyor')
+        time.sleep(10)
+    if not data:
+        log('  ⚠️  Agresif screener boş — sadece AI evreni kullanılıyor')
     existing = {r['symbol'] for r in data}
     for sym in AI_UNIVERSE:
         if sym not in existing:

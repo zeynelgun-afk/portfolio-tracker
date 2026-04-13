@@ -53,13 +53,28 @@ jobs:
 
       - name: Sonuclari kaydet
         run: |
-          git pull --rebase origin main || true
+          # Tarama sonuclarini gecici yere kaydet
+          cp data/daily_scan_balanced.json  /tmp/scan_balanced.json  2>/dev/null || true
+          cp data/daily_scan_dividend.json  /tmp/scan_dividend.json  2>/dev/null || true
+          cp data/daily_scan_aggressive.json /tmp/scan_aggressive.json 2>/dev/null || true
+          cp data/daily_full_scan.json      /tmp/scan_full.json      2>/dev/null || true
+          # Temiz git state — tum conflict'leri atla
+          git fetch origin main
+          git rebase --abort 2>/dev/null || true
+          git merge --abort  2>/dev/null || true
+          git reset --hard origin/main
+          # Taze verileri geri koy
+          cp /tmp/scan_balanced.json   data/daily_scan_balanced.json  2>/dev/null || true
+          cp /tmp/scan_dividend.json   data/daily_scan_dividend.json  2>/dev/null || true
+          cp /tmp/scan_aggressive.json data/daily_scan_aggressive.json 2>/dev/null || true
+          cp /tmp/scan_full.json       data/daily_full_scan.json      2>/dev/null || true
+          # Commit + push
           git add data/daily_scan_*.json data/daily_full_scan.json 2>/dev/null || true
           if git diff --staged --quiet; then
             echo "Degisiklik yok — commit atlanıyor"
           else
             git commit -m "[AUTO-SCAN] $(date +'%Y-%m-%d %H:%M UTC')"
-            git push || (sleep 10 && git pull --rebase origin main && git push)
+            git push origin main || (sleep 15 && git fetch origin main && git reset --hard origin/main && cp /tmp/scan_*.json data/ 2>/dev/null; git add data/daily_scan_*.json data/daily_full_scan.json && git commit -m "[AUTO-SCAN-RETRY] $(date +'%Y-%m-%d %H:%M UTC')" && git push origin main)
           fi
 
   swing-entry-scan:
@@ -109,12 +124,18 @@ with open('data/swing_entry_signals.json', 'w') as f:
     json.dump(data, f, ensure_ascii=False, indent=2)
 print('Sinyaller:', data['giris_sinyalleri'])
 "
+          cp data/swing_entry_signals.json /tmp/swing_signals_bak.json 2>/dev/null || true
+          git fetch origin main
+          git rebase --abort 2>/dev/null || true
+          git merge --abort  2>/dev/null || true
+          git reset --hard origin/main
+          cp /tmp/swing_signals_bak.json data/swing_entry_signals.json 2>/dev/null || true
           git add data/swing_entry_signals.json
           if git diff --staged --quiet; then
             echo "Degisiklik yok"
           else
             git commit -m "[AUTO] Swing entry sinyalleri $(date +%Y-%m-%d)"
-            git push || true
+            git push origin main || (sleep 10 && git pull origin main && git push origin main) || true
           fi
 
       - name: Hata bildirimi
