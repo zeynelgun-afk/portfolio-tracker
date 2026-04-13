@@ -1,0 +1,84 @@
+{
+  "macro": {
+    "sinyal": "RISK_OFF",
+    "guven": "MEDIUM",
+    "ana_tema": "VIX'te %7.18'lik ani yükseliş ve yaklaşan enflasyon verisi risk-off senaryosunu destekliyor",
+    "beklentiler": [
+      "17 Nisan CPI verisi piyasa için kritik - YoY 1.5% beklentisi mevcut 1.3%'ün üzerinde",
+      "Fed Waller konuşması para politikası sinyali verebilir",
+      "Core enflasyonun 2%'ye çıkması Fed'in faiz indirim beklentilerini erteleyebilir"
+    ],
+    "risk_faktoru": "VIX 20.61 seviyesinde ve günlük %7+ artış - volatilite yükselişi başlangıç sinyali olabilir",
+    "tahmin": {
+      "yon": "DOWN",
+      "buyukluk": "MEDIUM",
+      "sembol": "SPY"
+    },
+    "_agent": "MACRO_AGENT",
+    "_timestamp": "2026-04-13T13:44:10.840795"
+  },
+  "sector": {
+    "aktif_rejim": "risk_off",
+    "lider_sektor": "Savunma/Havacılık - ITA, Altın - GLD",
+    "zayif_sektor": "Teknoloji/AI - XLK, QQQ",
+    "rotasyon_onerisi": "Agresif portföydeki AI/yarıiletken ağırlığını (COHR, VRT, ANET, MU, CAMT) azalt, savunma (ITA) ve değer hisselerine (VTV) kaydır",
+    "guven": "MEDIUM",
+    "tahmin": {
+      "yon": "UP",
+      "buyukluk": "MEDIUM",
+      "sembol": "GLD"
+    },
+    "_agent": "SECTOR_AGENT",
+    "_timestamp": "2026-04-13T13:44:15.997921"
+  },
+  "signal": {
+    "_agent": "SIGNAL_AGENT",
+    "_raw": "```json\n{\n  \"portfoy_sinyalleri\": [\n    {\n      \"sembol\": \"COHR\",\n      \"sinyal\": \"HOLD\",\n      \"rsi_yorumu\": \"normal\",\n      \"sma_durumu\": \"ustunde\",\n      \"aciklama\": \"Stop %7.8 ile hedefe yakın, momentum korunuyor\"\n    },\n    {\n      \"sembol\": \"VRT\",\n      \"sinyal\": \"WATCH\",\n      \"rsi_yorumu\": \"",
+    "_parse_hata": true,
+    "guven": "LOW"
+  },
+  "risk": {
+    "risk_seviyesi": "HIGH",
+    "stop_yakini": [
+      "VZ - %3.8 uzakta (en yakın stop)",
+      "DUK - %3.8 uzakta",
+      "CI - %4.8 uzakta",
+      "MO (balanced) - %6.9 uzakta",
+      "T - %6.0 uzakta"
+    ],
+    "konsantrasyon_uyarisi": "Technology sektörü %65.7 konsantrasyon - K-17 kuralı ihlal riski yüksek. Aggressive portföyde 5 pozisyonun tamamı tech/yarı iletken ağırlıklı (COHR, VRT, ANET, MU, CAMT). Tek sektör şoku tüm agresif portföyü vurabilir.",
+    "senaryo_5pct_dusus": "Toplam tahmini kayıp: $17,920 (-%5.8). VZ stop tetiklenir (43.38 ≤ 44.01 stop seviyesi). DUK ve CI de kritik eşiğe yakın. Aggressive portföy zaten -%9.5 drawdown'da - K-14 çiğnenmiş durumda.",
+    "onerileri": [
+      "COHR %7.8 stop uzaklığı ile en yakın - %5 düşüşte tetiklenir, sabah ilk iş trailing stop sıkılaştır",
+      "VZ pozisyonunu proaktif olarak %50 azalt - stop çok yakın ve tetiklenme riski yüksek",
+      "Aggressive portföyde yeni tech girişi kesinlikle yapma - K-14 aktif (drawdown >%5)",
+      "Technology konsantrasyonunu azaltmak için MU veya CAMT'tan birini %30-40 trim et",
+      "VIX 20.61 ve %7.18 artışta - K-13 gereği tech/growth pozisyonlarında temkinli ol"
+    ],
+    "guven": "HIGH",
+    "_agent": "RISK_AGENT",
+    "_timestamp": "2026-04-13T13:44:42.759931"
+  },
+  "cio": {
+    "karar": "DONDUR",
+    "hedef_sembol": "MU",
+    "gerekce": "Risk yöneticisi (ağırlık 0.67, güven HIGH) ve sektör analisti (ağırlık 1.53) teknoloji konsantrasyonunu azaltma konusunda mutabık. Aggressive portföy %65.7 tech ağırlığı ile K-17 ihlal sınırında, K-14 zaten çiğnenmiş (-%9.5 drawdown). MU, COHR'a göre daha düşük momentum gösteriyor ve trim için uygun aday. VIX %7.18 artışı ve yaklaşan CPI verisi risk-off ortamını destekliyor. Pozisyonun %30-40'ını azaltarak hem konsantrasyon riskini düşür hem de olası volatilite artışına karşı nakit tamponu oluştur.",
+    "uyari": "VZ stop seviyesine %3.8 uzakta - yarın açılışta tetiklenme riski var. COHR trailing stop'u sıkılaştırılmalı.",
+    "guven": "MEDIUM",
+    "analist_uzlasma": "ORTA",
+    "tahmin": {
+      "yon": "DOWN",
+      "buyukluk": "MEDIUM",
+      "sembol": "SPY"
+    },
+    "_agent": "CIO_AGENT",
+    "_timestamp": "2026-04-13T13:44:51.112167"
+  },
+  "weights": {
+    "MACRO_AGENT": 0.8925,
+    "SECTOR_AGENT": 1.5307,
+    "SIGNAL_AGENT": 0.738,
+    "RISK_AGENT": 0.6663,
+    "CIO_AGENT": 0.8231
+  }
+}

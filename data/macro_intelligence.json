@@ -1,0 +1,135 @@
+{
+  "tarih": "2026-04-13T16:43:29.326149+03:00",
+  "vix": 20.61,
+  "sektor_performans": {
+    "Basic Materials": 0.0,
+    "Communication Services": 0.0,
+    "Consumer Cyclical": 0.0,
+    "Consumer Defensive": 0.0,
+    "Energy": 0.0,
+    "Financial Services": 0.0,
+    "Healthcare": 0.0,
+    "Industrials": 0.0,
+    "Real Estate": 0.0,
+    "Technology": 0.0,
+    "Utilities": 0.0
+  },
+  "dominant_temalar": [
+    {
+      "tema_adi": "enerji_geçiş",
+      "güç_skoru": 9,
+      "neden": "Hürmüz Boğazı abluka tehdidi enerji güvenliğini ön plana çıkardı. Petrol arzı riski yükseldi, alternatif enerji ve enerji bağımsızlığı teması güçleniyor. ABD LNG, nükleer ve yerli üretim avantajlı konumda.",
+      "öncelikli_alt_dal": "enerji_güvenliği_LNG_nükleer",
+      "önerilen_hisseler": [
+        "CEG",
+        "VST",
+        "LNG",
+        "OXY"
+      ],
+      "portföy": "aggressive",
+      "aciliyet": "yüksek",
+      "hisse_evreni": [
+        "WMB",
+        "CEG",
+        "KMI",
+        "VST",
+        "ET",
+        "RUN",
+        "NRG",
+        "CCJ",
+        "ENPH",
+        "OKE",
+        "NEE",
+        "FSLR"
+      ]
+    },
+    {
+      "tema_adi": "savunma_uzay",
+      "güç_skoru": 8,
+      "neden": "Hürmüz abluka senaryosu doğrudan askeri gerilim sinyali. Deniz kuvvetleri, füze savunma, istihbarat sistemleri talebi artabilir. Jeopolitik risk primi yükseliyor.",
+      "öncelikli_alt_dal": "deniz_savunma_ISR",
+      "önerilen_hisseler": [
+        "HII",
+        "LMT",
+        "NOC",
+        "RTX"
+      ],
+      "portföy": "aggressive",
+      "aciliyet": "yüksek",
+      "hisse_evreni": [
+        "S",
+        "RKLB",
+        "AJRD",
+        "LHX",
+        "KTOS",
+        "GD",
+        "ZS",
+        "LMT",
+        "NOC",
+        "CRWD",
+        "PANW",
+        "RTX",
+        "RDW"
+      ]
+    },
+    {
+      "tema_adi": "emtia_kaynak",
+      "güç_skoru": 7,
+      "neden": "Enerji şoku + Çin tarife tehdidi emtia fiyatlarını destekliyor. Altın güvenli liman talebi, bakır ve nadir toprak stratejik önem kazanıyor.",
+      "öncelikli_alt_dal": "altın_bakır",
+      "önerilen_hisseler": [
+        "NEM",
+        "FCX",
+        "GOLD"
+      ],
+      "portföy": "balanced",
+      "aciliyet": "orta",
+      "hisse_evreni": [
+        "USA",
+        "MP",
+        "PAAS",
+        "NOVN",
+        "GOLD",
+        "FCX",
+        "HBM",
+        "SCCO",
+        "TECK",
+        "NEM",
+        "AEM"
+      ]
+    }
+  ],
+  "kacınılacak": [
+    "Consumer Cyclical",
+    "Communication Services"
+  ],
+  "piyasa_modu": "risk-off geçiş riski yüksek",
+  "genel_yorum": "Hürmüz Boğazı abluka haberleri piyasayı domine ediyor. Enerji güvenliği ve savunma temaları en net fırsat. VIX 20.6 seviyesinde, futures düşüşte — volatilite artabilir. Sektör performansları flat gözükse de haber akışı enerji/savunmayı öne çıkaracak. Agresif pozisyonlar için sabah seansı kritik.",
+  "haberler": [
+    {
+      "baslik": "Why The U.S. Blockade May Be The Move That Ends The War",
+      "kaynak": "seekingalpha.com",
+      "tarih": "2026-04-13 09:30"
+    },
+    {
+      "baslik": "Hormuz Blockade: American Resilience Is Both A Boon And A Risk",
+      "kaynak": "seekingalpha.com",
+      "tarih": "2026-04-13 09:14"
+    },
+    {
+      "baslik": "'STAGGRING AMOUNT': Trump THREATENS China with new tariffs if they do this",
+      "kaynak": "youtube.com",
+      "tarih": "2026-04-13 09:01"
+    },
+    {
+      "baslik": "Can Trump Actually Blockade The Strait Of Hormuz?",
+      "kaynak": "seekingalpha.com",
+      "tarih": "2026-04-13 09:00"
+    },
+    {
+      "baslik": "Why the best stock-markets bets are Chinese tech stocks and this out-of-fashion sector, according to Bank of America",
+      "kaynak": "marketwatch.com",
+      "tarih": "2026-04-13 08:58"
+    }
+  ]
+}
