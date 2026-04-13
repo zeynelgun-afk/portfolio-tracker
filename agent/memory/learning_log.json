@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-04-13T09:21:42.003691",
+  "son_guncelleme": "2026-04-13T09:28:54.603585",
   "kaynak": "transactions.csv analizi (17 Şubat — 13 Nisan 2026)",
   "toplam_trade_analiz_edilen": 62,
   "sistem_metrikleri": {
@@ -217,7 +217,130 @@
       },
       "aksiyon": "Dengeli portföyde KOS benzeri deep-value + sektör katalog kombinasyonuna ağırlık ver.",
       "guven": "KESİN"
+    },
+    {
+      "id": "BT001",
+      "tarih": "2026-04-13",
+      "kaynak": "backtest_45_hisse_600gun",
+      "kategori": "k11_trailing_stop",
+      "ders": "3xATR chandelier trailing, 2xATR'den çok daha iyi. 2xATR: PF 1.14, ort -0.52% (çok erken çıkış, 8.3 gün). 3xATR RSI-70: PF 2.13, ort +0.72% (15.3 gün). 2xATR pozisyonu nefes alamadan keserek büyük kazançları kaçırıyor. ONAY: Mevcut 3xATR implementasyonu doğru. RSI 70 eşiği en uygun.",
+      "veri": {
+        "k11_2xATR": {
+          "n": 300,
+          "wr": 40.0,
+          "avg": -0.52,
+          "pf": 1.14,
+          "hold": 8.3,
+          "aw": 4.05,
+          "al": -3.57
+        },
+        "k11_3xATR_rsi70": {
+          "n": 300,
+          "wr": 37.3,
+          "avg": 0.72,
+          "pf": 2.13,
+          "hold": 15.3,
+          "aw": 9.1,
+          "al": -4.26
+        },
+        "k11_3xATR_rsi75": {
+          "n": 300,
+          "wr": 37.0,
+          "avg": 0.49,
+          "pf": 2.02,
+          "hold": 15.7,
+          "aw": 8.56,
+          "al": -4.25
+        }
+      },
+      "aksiyon": "K-11: 3xATR chandelier + RSI 70 eşiği koru. 2xATR'ye düşürme.",
+      "guven": "KESİN",
+      "n_trade": 900
+    },
+    {
+      "id": "BT002",
+      "tarih": "2026-04-13",
+      "kaynak": "backtest_45_hisse_600gun",
+      "kategori": "k06_stop_loss",
+      "ders": "Stop-loss karşılaştırması: %5 sabit stop PF 1.97 (AvgWin +10.5%, AvgLoss -5.3%). 3xATR dinamik stop da PF 1.97 — neredeyse aynı sonuç. %7 sabit stop WR'ı %48.7'ye çıkarıyor ama PF 1.48'e düşüyor (stop geniş = pozisyon daha fazla yaşıyor ama kayıplar da büyüyor). 2xATR stop ise çok dar — PF 1.09, neredeyse breakeven.",
+      "veri": {
+        "stop_5pct": {
+          "n": 300,
+          "wr": 39.3,
+          "avg": 0.9,
+          "pf": 1.97,
+          "hold": 19.7,
+          "aw": 10.49,
+          "al": -5.31
+        },
+        "stop_7pct": {
+          "n": 300,
+          "wr": 48.7,
+          "avg": 1.36,
+          "pf": 1.48,
+          "hold": 23.0,
+          "aw": 9.74,
+          "al": -6.59
+        },
+        "stop_3xATR": {
+          "n": 300,
+          "wr": 38.0,
+          "avg": 0.55,
+          "pf": 1.97,
+          "hold": 15.5,
+          "aw": 8.47,
+          "al": -4.3
+        },
+        "stop_2xATR": {
+          "n": 300,
+          "wr": 40.0,
+          "avg": -0.59,
+          "pf": 1.09,
+          "hold": 8.3,
+          "aw": 3.88,
+          "al": -3.57
+        }
+      },
+      "aksiyon": "K-06: %5 sabit stop VEYA 3xATR (ikisi eşdeğer). %7 stop kullanma — PF düşüyor.",
+      "guven": "KESİN",
+      "n_trade": 1200
+    },
+    {
+      "id": "BT003",
+      "tarih": "2026-04-13",
+      "kaynak": "backtest_25_hisse_730gun",
+      "kategori": "giris_sinyali",
+      "ders": "Giriş filtresi karşılaştırması: RSI≤40 + SMA200 üstü en iyi. RSI≤40/SMA200: PF 1.46, WR 53.2%, 79 sinyal (yeterli fırsat). RSI≤35/SMA200: PF 1.10, WR 56.2%, sadece 32 sinyal (çok az fırsat). Daha sıkı RSI filtresi (35) daha az trade + daha düşük PF veriyor. SMA200 üstü olmak kritik — aşağısında bounce denemeleri çok riskli.",
+      "veri": {
+        "entry_rsi40_sma200": {
+          "n": 79,
+          "wr": 53.2,
+          "avg": 2.14,
+          "pf": 1.46,
+          "hold": 23.5,
+          "aw": 10.17,
+          "al": -6.97
+        },
+        "entry_rsi35_sma200": {
+          "n": 32,
+          "wr": 56.2,
+          "avg": 1.4,
+          "pf": 1.1,
+          "hold": 22.5,
+          "aw": 8.52,
+          "al": -7.76
+        }
+      },
+      "aksiyon": "Swing/portföy girişlerde: RSI ≤ 40 + SMA200 üstü kombinasyonu kullan. RSI 35'e düşürme.",
+      "guven": "MUHTEMEL",
+      "n_trade": 111
     }
   ],
-  "bos_hafiza_uyarisi": false
+  "bos_hafiza_uyarisi": false,
+  "backtest_eklendi": {
+    "tarih": "2026-04-13",
+    "toplam_backtest_trade": 2211,
+    "hisse_sayisi": 45,
+    "donem": "2024-2026 (600-730 gun)"
+  }
 }

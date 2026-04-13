@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-04-13T09:22:08.284297",
+  "son_guncelleme": "2026-04-13T09:28:54.604727",
   "analiz_donemi": "2026-02-17 → 2026-04-13",
   "toplam_trade": 62,
   "k_kural_istatistikleri": {
@@ -12,7 +12,13 @@
       "avg_pnl_pct": 0.3,
       "not": "Düşük WR normal — zaten zararı sınırlamak için var. Override = kesinlikle yasak (LASR dersi).",
       "override_sayisi": 3,
-      "override_sonucu": "Her seferinde kayıp büyüdü"
+      "override_sonucu": "Her seferinde kayıp büyüdü",
+      "backtest": {
+        "n": 1200,
+        "kazanan_konfig": "stop_5pct (PF 1.97) = stop_3xATR (PF 1.97)",
+        "kaybeden_konfig": "stop_2xATR (PF 1.09)",
+        "sonuc": "%5 sabit ve 3xATR dinamik eşdeğer. %7 stop PF'yi düşürüyor."
+      }
     },
     "K-11": {
       "aciklama": "RSI 70+ ve kâr 15%+ kısmi çıkış",
@@ -23,7 +29,19 @@
       "avg_pnl_pct": 0.7,
       "not": "SM'deki kademeli çıkış (+39%→+45%→+54%) doğru uygulandı. Layer 2 RSI 80 eşiği doğru.",
       "en_iyi_uygulama": "SM kademeli çıkış",
-      "iyilestirme": "Layer 2 için RSI + negatif divergence kombine koşul eklenebilir"
+      "iyilestirme": "Layer 2 için RSI + negatif divergence kombine koşul eklenebilir",
+      "backtest": {
+        "n": 600,
+        "kazanan_konfig": "k11_3xATR_rsi70",
+        "pf": 2.13,
+        "wr_pct": 37.3,
+        "avg_win_pct": 9.1,
+        "avg_loss_pct": -4.26,
+        "avg_hold_days": 15.3,
+        "kaybeden_konfig": "k11_2xATR_rsi70",
+        "kaybeden_pf": 1.14,
+        "sonuc": "3xATR chandelier + RSI 70 eşiği onaylandı. 2xATR çok dar."
+      }
     },
     "K-13": {
       "aciklama": "Kriz türüne göre sektör bazlı VIX eşiği",
@@ -57,5 +75,11 @@
     "en_etkin_kural": "K-06 (stop disiplini) — override olmadığında doğru çalışıyor",
     "en_problemli": "K-17 ihlali 27 Mart (3 koreleli pozisyon)",
     "iyilestirme_onceligi": "K-11 Layer 2 koşullarını güçlendir (RSI + divergence kombine)"
+  },
+  "giris_sinyali_backtest": {
+    "n": 111,
+    "kazanan": "RSI≤40 + SMA200 üstü (PF 1.46, WR 53.2%)",
+    "kaybeden": "RSI≤35 + SMA200 üstü (PF 1.10, WR 56.2% ama çok az sinyal)",
+    "sonuc": "RSI 40 eşiği RSI 35'ten daha iyi. SMA200 zorunlu."
   }
 }

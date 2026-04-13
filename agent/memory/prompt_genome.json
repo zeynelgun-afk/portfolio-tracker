@@ -1,6 +1,6 @@
 {
   "nesil": 1,
-  "son_guncelleme": "2026-04-13T09:22:42.430403",
+  "son_guncelleme": "2026-04-13T09:28:54.605377",
   "bootstrap": {
     "tarih": "2026-04-13",
     "kaynak": "62 trade, 17 Şub - 13 Nis 2026"
@@ -12,12 +12,13 @@
       "weight": 1.0,
       "weight_history": [],
       "current_prompt": "K-11 Trailing Stop:\nPozisyon zirveden 2×ATR aşağı düşerse trailing stop tetiklenir.\nMakro şok istisnası: SPY ≥%3 düşüş + VIX ≥%20 spike aynı gün → 1 gün bekle.",
-      "fitness": 0.62,
+      "fitness": 2.13,
       "last_modified": "2026-04-13T09:22:42.430373",
       "gercek_wr": 0.62,
       "gercek_avg_pnl": 5.1,
       "pending_test": false,
-      "not": "3xATR chandelier işe yarıyor. KOS/SM'de iyi korudu."
+      "not": "3xATR chandelier + RSI70 backtest ile onaylandı (n=300, PF 2.13)",
+      "backtest_pf": 2.13
     },
     "K-11_partial_sell": {
       "version": 1,
@@ -25,12 +26,13 @@
       "weight": 1.0,
       "weight_history": [],
       "current_prompt": "K-11 Kısmi Kâr Alma:\nKatman 1: RSI 70+ VE kâr %15+ → trailing stop aktif\nKatman 2: RSI 80+ VEYA (RSI 75+ + negatif div/20SMA altı) → %25-30 sat\nKatman 3: 50SMA altı kapanış VEYA chandelier trailing → TAM ÇIK",
-      "fitness": 0.33,
+      "fitness": 0.72,
       "last_modified": "2026-04-13T09:22:42.430384",
       "gercek_wr": 0.33,
       "gercek_avg_pnl": 0.7,
       "pending_test": false,
-      "not": "SM kademeli çıkış doğru. WR düşük ama bağlamı önemli — zirve yakını çıkışlar."
+      "not": "SM kademeli çıkış doğru. WR düşük ama bağlamı önemli — zirve yakını çıkışlar.",
+      "backtest_avg_pnl": 0.72
     },
     "K-13_vix_threshold": {
       "version": 1,
@@ -62,8 +64,9 @@
       "weight": 1.0,
       "weight_history": [],
       "current_prompt": "K-04 Giriş Filtresi:\nStandart: Giriş fiyatı SMA50 üstünde olmalı\nİstisna: RSI<30 + stabilizasyon + pozitif katalizör → çeyrek pozisyon\nYasak: SMA50+SMA200 altı + insider satış yoğun → giriş yok",
-      "fitness": null,
-      "last_modified": "2026-04-13T09:22:42.430389"
+      "fitness": 1.46,
+      "last_modified": "2026-04-13T09:22:42.430389",
+      "not": "RSI≤40 + SMA200 backtest ile en iyi (n=79, PF 1.46)"
     },
     "session_faz1_gap": {
       "version": 1,
