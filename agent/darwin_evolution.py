@@ -286,6 +286,14 @@ def load_genome() -> dict:
     for k, v in INITIAL_GENOME.items():
         if k not in genome:
             genome[k] = v
+        else:
+            # Eksik alanları INITIAL_GENOME'dan tamamla (özellikle current_prompt)
+            for field in ('current_prompt', 'version', 'description', 'weight'):
+                if field not in genome[k] and field in v:
+                    genome[k][field] = v[field]
+    # _ ile başlayan meta anahtarları ve dict olmayan değerleri temizle
+    genome = {k: v for k, v in genome.items()
+              if isinstance(v, dict) and not k.startswith('_')}
     return genome
 
 
@@ -372,7 +380,10 @@ def find_weakest_rule(genome: dict) -> tuple[str, dict]:
 def get_weighted_genome_context(genome: dict) -> str:
     """Orchestrator için ağırlıklı kural özeti."""
     lines = ["=== DARWIN AĞIRLIKLI K-KURALLARI ===\n"]
-    sorted_rules = sorted(genome.items(), key=lambda x: x[1].get("weight", 1.0), reverse=True)
+    # _meta ve _ ile başlayan anahtarları atla, dict olmayanları atla
+    valid = {k: v for k, v in genome.items()
+             if not k.startswith('_') and isinstance(v, dict)}
+    sorted_rules = sorted(valid.items(), key=lambda x: x[1].get("weight", 1.0), reverse=True)
     for name, data in sorted_rules:
         w       = data.get("weight", 1.0)
         fitness = data.get("fitness")
@@ -381,9 +392,11 @@ def get_weighted_genome_context(genome: dict) -> str:
         bar     = "█" * int(w * 4)
         f_str   = f"fitness:{fitness:.3f}" if fitness else "fitness:N/A"
         prefix  = "🔊 GÜÇLÜ" if w >= 2.0 else "📢 Normal" if w >= 1.5 else "🔇 ZAYIF" if w <= 0.5 else "📣 Orta"
+        prompt_line = data.get('current_prompt', data.get('not', data.get('description', '')))
         lines.append(f"{prefix} | {name} v{v}{pending}")
         lines.append(f"  Ağırlık: {w:.2f} {bar} | {f_str}")
-        lines.append(f"  {data['current_prompt'].split(chr(10))[0][:80]}")
+        if prompt_line:
+            lines.append(f"  {str(prompt_line).split(chr(10))[0][:80]}")
         lines.append("")
     return "\n".join(lines)
 
