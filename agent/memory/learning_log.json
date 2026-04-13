@@ -1,0 +1,223 @@
+{
+  "son_guncelleme": "2026-04-13T09:21:42.003691",
+  "kaynak": "transactions.csv analizi (17 Şubat — 13 Nisan 2026)",
+  "toplam_trade_analiz_edilen": 62,
+  "sistem_metrikleri": {
+    "win_rate_pct": 50.0,
+    "avg_kazanc_pct": 12.98,
+    "avg_kayip_pct": -5.75,
+    "profit_factor": 2.26,
+    "sinyal_bazli": {
+      "value": {
+        "n": 9,
+        "avg": 22.1,
+        "wr": 77.8
+      },
+      "rsi_oversold": {
+        "n": 6,
+        "avg": 8.33,
+        "wr": 83.3
+      },
+      "breakout_sma": {
+        "n": 4,
+        "avg": 5.65,
+        "wr": 75.0
+      },
+      "diger": {
+        "n": 39,
+        "avg": -0.58,
+        "wr": 41.0
+      },
+      "swing_ichimoku": {
+        "n": 3,
+        "avg": -6.2,
+        "wr": 0.0
+      },
+      "earnings": {
+        "n": 1,
+        "avg": -6.12,
+        "wr": 0.0
+      }
+    },
+    "cikis_bazli": {
+      "diger": {
+        "n": 23,
+        "avg": 9.25,
+        "wr": 69.6
+      },
+      "stop_loss": {
+        "n": 25,
+        "avg": 0.28,
+        "wr": 40.0
+      },
+      "k11_kar": {
+        "n": 12,
+        "avg": 0.68,
+        "wr": 33.3
+      },
+      "tez_bozulma": {
+        "n": 2,
+        "avg": -1.94,
+        "wr": 50.0
+      }
+    }
+  },
+  "dersler": [
+    {
+      "id": "L001",
+      "tarih": "2026-04-13",
+      "kaynak": "transactions_analysis",
+      "kategori": "sinyal_performansi",
+      "ders": "Value/deep-value girişler en yüksek performansı veriyor: %78 WR, ortalama +22.1%. RSI oversold bounce da güçlü: %83 WR, +8.3%. Swing/ichimoku sinyalleri ise şu ana kadar %0 WR (-6.2% ort.) — bu sinyal türünde koşullar daha sıkı tutulmalı.",
+      "veri": {
+        "value": {
+          "n": 9,
+          "avg": 22.1,
+          "wr": 77.8
+        },
+        "rsi_oversold": {
+          "n": 6,
+          "avg": 8.33,
+          "wr": 83.3
+        },
+        "breakout_sma": {
+          "n": 4,
+          "avg": 5.65,
+          "wr": 75.0
+        },
+        "diger": {
+          "n": 39,
+          "avg": -0.58,
+          "wr": 41.0
+        },
+        "swing_ichimoku": {
+          "n": 3,
+          "avg": -6.2,
+          "wr": 0.0
+        },
+        "earnings": {
+          "n": 1,
+          "avg": -6.12,
+          "wr": 0.0
+        }
+      },
+      "aksiyon": "Swing ichimoku girişlerinde ek filtre ekle: en az 2 ichimoku sinyali + sektör momentumu pozitif olmalı",
+      "guven": "KESİN"
+    },
+    {
+      "id": "L002",
+      "tarih": "2026-04-13",
+      "kaynak": "transactions_analysis",
+      "kategori": "profit_factor",
+      "ders": "Sistem Profit Factor: 2.26. Ortalama kazanç +12.98% / ortalama kayıp -5.75%. Win rate %50 olsa bile pozitif beklenti var. Büyük kazananlar küçük kayıpları fazlasıyla karşılıyor — bu asimetri korunmalı.",
+      "veri": {
+        "win_rate": 50.0,
+        "avg_win": 12.98,
+        "avg_loss": -5.75
+      },
+      "aksiyon": "Mevcut stop disiplinini koru. Büyük kazananlarda (KOS +54%, SM +45%) kademelı çıkış doğru çalışıyor.",
+      "guven": "KESİN"
+    },
+    {
+      "id": "L003",
+      "tarih": "2026-04-13",
+      "kaynak": "ktos_lasr_hatasi",
+      "kategori": "kriz_rallisi",
+      "ders": "2 Mart 2026: HAL/CEG/KTOS/LASR — kriz rallisi gününde 5/5 kayıp. Kriz rallyisi gün 1'de pozisyon girme yasak. Minimum 1 soğuma günü + RSI onayı bekle.",
+      "veri": {
+        "tarih": "2026-03-02",
+        "semboller": [
+          "HAL",
+          "KTOS",
+          "LASR"
+        ],
+        "sonuc": "5/5 kayıp"
+      },
+      "aksiyon": "K-kural olarak kodlandı. Monitor'da haber 'kriz/ateşkes/çözüm' içeriyorsa ve VIX ani düşüş varsa o gün giriş yok.",
+      "guven": "KESİN"
+    },
+    {
+      "id": "L004",
+      "tarih": "2026-04-13",
+      "kaynak": "lasr_stop_override",
+      "kategori": "stop_disiplini",
+      "ders": "LASR pozisyonunda 3 kez stop override yapıldı, her seferinde kayıp büyüdü. Stop override = kural ihlali. Gerekçe ne olursa olsun stop tetiklenirse çık.",
+      "veri": {
+        "sembol": "LASR",
+        "override_sayisi": 3,
+        "sonuc": "kayıp büyüdü"
+      },
+      "aksiyon": "K-06: Stop tetiklendiğinde override yasak. execution_engine'de hard-coded.",
+      "guven": "KESİN"
+    },
+    {
+      "id": "L005",
+      "tarih": "2026-04-13",
+      "kaynak": "k11_analiz",
+      "kategori": "kar_alma",
+      "ders": "K-11 kâr alma çıkışları %33 WR ve ortalama +0.7% veriyor — bu düşük görünse de bağlamı önemli: bu çıkışlar zirveye yakın olduğunda yapılıyor. SM'de kademeli çıkış (+39% → +45% → +54%) doğru uygulandı. K-11'i tamamen kaldırmak yerine katman yapısı korunmalı.",
+      "veri": {
+        "n": 12,
+        "avg": 0.68,
+        "wr": 33.3
+      },
+      "aksiyon": "K-11 Layer 1 (trailing stop aktivasyonu) kalsın. Layer 2 (%25 satış) için minimum 2 RSI+SMA koşulu şart.",
+      "guven": "MUHTEMEL"
+    },
+    {
+      "id": "L006",
+      "tarih": "2026-04-13",
+      "kaynak": "corr_risk_analysis",
+      "kategori": "korelasyon_riski",
+      "ders": "27 Mart 2026: CAMT+VRT+POWL aynı gün stop, hepsi AI tedarik zinciri. Aynı sektörde aynı anda 3 pozisyon = korelasyon riski. K-17: Aynı sektörde max 2 pozisyon, biri hedge olmalı.",
+      "veri": {
+        "tarih": "2026-03-27",
+        "semboller": [
+          "CAMT",
+          "VRT",
+          "POWL"
+        ],
+        "kayip_pct": [
+          -9.5,
+          -9.7,
+          -10.6
+        ]
+      },
+      "aksiyon": "Agresif portföyde AI supply chain alt sektörlerine göre dağıt: optik/termal/güç/yarı iletken ayrı say.",
+      "guven": "KESİN"
+    },
+    {
+      "id": "L007",
+      "tarih": "2026-04-13",
+      "kaynak": "sell_the_news_cases",
+      "kategori": "haber_yorumu",
+      "ders": "Güçlü kazanç bile otomatik ralli yaratmıyor (MU, RKLB). Kazanç sonrası 'sat the news' riski yüksek. Kazanç geçmişi ne olursa olsun ilk 30dk bekle, sonra fiyat yönünü konfirme et.",
+      "veri": {
+        "semboller": [
+          "MU",
+          "RKLB"
+        ],
+        "patern": "güçlü kazanç sonrası satış"
+      },
+      "aksiyon": "Earnings günü FAZ_1'de kesinlikle giriş yok. FAZ_2'de bile %2 yukarı konfirmasyon bekle.",
+      "guven": "MUHTEMEL"
+    },
+    {
+      "id": "L008",
+      "tarih": "2026-04-13",
+      "kaynak": "cos_analysis",
+      "kategori": "en_iyi_trade",
+      "ders": "KOS en iyi trade: +54.5% (45 gün). Deep value + güçlü sektör katalog + kademeli çıkış kombinasyonu. Başarı formülü: düşük değerleme + net sektör katalizörü + K-11 kademeli çıkış + stop-loss kurtarma yok.",
+      "veri": {
+        "sembol": "KOS",
+        "giris": "2026-02-17",
+        "cikis": "2026-03-09",
+        "pnl": 54.5,
+        "hold_days": 20
+      },
+      "aksiyon": "Dengeli portföyde KOS benzeri deep-value + sektör katalog kombinasyonuna ağırlık ver.",
+      "guven": "KESİN"
+    }
+  ],
+  "bos_hafiza_uyarisi": false
+}

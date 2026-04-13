@@ -1,234 +1,111 @@
 {
-  "K-11_trailing_stop": {
-    "version": 1,
-    "description": "Trailing stop tetikleme koşulu",
-    "current_prompt": "K-11 Trailing Stop: \nPozisyon zirveden 2×ATR aşağı düşerse trailing stop tetiklenir.\nTek günlük şok hareketinde bile tetiklenir.",
-    "fitness": 0.1646,
-    "last_modified": null,
-    "fitness_detail": {
-      "fitness": 0.1646,
-      "n": 10,
-      "win_rate": 50.0,
-      "avg_pnl": 4.12,
-      "std_dev": 12.51,
-      "sharpe": 0.329
-    },
-    "weight": 0.95,
-    "weight_history": [
-      {
-        "date": "2026-04-11",
-        "weight": 0.95,
-        "fitness": 0.1646
-      }
-    ]
+  "nesil": 1,
+  "son_guncelleme": "2026-04-13T09:22:42.430403",
+  "bootstrap": {
+    "tarih": "2026-04-13",
+    "kaynak": "62 trade, 17 Şub - 13 Nis 2026"
   },
-  "K-11_partial_sell": {
-    "version": 1,
-    "description": "Kısmi kâr alma tetikleme koşulu",
-    "current_prompt": "K-11 Kısmi Kâr Alma:\nKatman 1: RSI 70+ VE kâr %15+ → trailing stop aktif\nKatman 2: RSI 80+ VEYA (RSI 75+ + negatif div/20SMA altı) → %25-30 sat\nKatman 3: 50SMA altı kapanış VEYA chandelier trailing → TAM ÇIK",
-    "fitness": 5.4623,
-    "last_modified": null,
-    "fitness_detail": {
-      "fitness": 5.4623,
-      "n": 7,
-      "win_rate": 100.0,
-      "avg_pnl": 35.33,
-      "std_dev": 6.47,
-      "sharpe": 5.462
+  "aktif_kurallar": {
+    "K-11_trailing_stop": {
+      "version": 1,
+      "description": "Trailing stop tetikleme koşulu",
+      "weight": 1.0,
+      "weight_history": [],
+      "current_prompt": "K-11 Trailing Stop:\nPozisyon zirveden 2×ATR aşağı düşerse trailing stop tetiklenir.\nMakro şok istisnası: SPY ≥%3 düşüş + VIX ≥%20 spike aynı gün → 1 gün bekle.",
+      "fitness": 0.62,
+      "last_modified": "2026-04-13T09:22:42.430373",
+      "gercek_wr": 0.62,
+      "gercek_avg_pnl": 5.1,
+      "pending_test": false,
+      "not": "3xATR chandelier işe yarıyor. KOS/SM'de iyi korudu."
     },
-    "weight": 1.05,
-    "weight_history": [
-      {
-        "date": "2026-04-11",
-        "weight": 1.05,
-        "fitness": 5.4623
-      }
-    ]
-  },
-  "K-13_vix_threshold": {
-    "version": 1,
-    "description": "VIX bazlı pozisyon boyutu",
-    "current_prompt": "K-13 VIX Kuralı:\nFaydalanıcı sektörler (savunma, enerji, altın): VIX 28'e kadar tam pozisyon\nDuyarlı sektörler (tech, growth): VIX 22'den itibaren yarım pozisyon\nVIX>35: tüm yeni girişler dur",
-    "fitness": null,
-    "last_modified": null,
-    "fitness_detail": {
+    "K-11_partial_sell": {
+      "version": 1,
+      "description": "Kısmi kâr alma tetikleme koşulu",
+      "weight": 1.0,
+      "weight_history": [],
+      "current_prompt": "K-11 Kısmi Kâr Alma:\nKatman 1: RSI 70+ VE kâr %15+ → trailing stop aktif\nKatman 2: RSI 80+ VEYA (RSI 75+ + negatif div/20SMA altı) → %25-30 sat\nKatman 3: 50SMA altı kapanış VEYA chandelier trailing → TAM ÇIK",
+      "fitness": 0.33,
+      "last_modified": "2026-04-13T09:22:42.430384",
+      "gercek_wr": 0.33,
+      "gercek_avg_pnl": 0.7,
+      "pending_test": false,
+      "not": "SM kademeli çıkış doğru. WR düşük ama bağlamı önemli — zirve yakını çıkışlar."
+    },
+    "K-13_vix_threshold": {
+      "version": 1,
+      "description": "VIX bazlı pozisyon boyutu (kritik)",
+      "weight": 1.0,
+      "weight_history": [],
+      "current_prompt": "K-13 VIX Kuralı:\nFaydalanıcı sektörler (savunma, enerji, altın): VIX 28'e kadar tam pozisyon\nDuyarlı sektörler (tech, growth): VIX 22'den itibaren yarım pozisyon\nVIX>35: tüm yeni girişler dur",
+      "fitness": 0.62,
+      "last_modified": "2026-04-13T09:22:42.430387",
+      "min_trades_to_evolve": 30,
+      "gercek_wr": 0.625,
+      "gercek_avg_pnl": 4.2,
+      "pending_test": false,
+      "not": "İran krizi döneminde doğru tetiklendi."
+    },
+    "K-14_drawdown_brake": {
+      "version": 1,
+      "description": "Drawdown freni mantığı (kritik)",
+      "weight": 1.0,
+      "weight_history": [],
+      "current_prompt": "K-14 Drawdown Freni:\nTepe-to-trough %16+ düşüş → swing yeni giriş durdu\nYeniden başlama: VIX<22 + SPY>SMA50 + pozitif sektör rotasyonu\nYeniden başlamada yarım pozisyon boyutu",
       "fitness": null,
-      "n": 0,
-      "win_rate": null,
-      "avg_pnl": null,
-      "sharpe": null
+      "last_modified": "2026-04-13T09:22:42.430388",
+      "min_trades_to_evolve": 30
+    },
+    "K-04_entry_filter": {
+      "version": 1,
+      "description": "Giriş filtresi - SMA ve RSI",
+      "weight": 1.0,
+      "weight_history": [],
+      "current_prompt": "K-04 Giriş Filtresi:\nStandart: Giriş fiyatı SMA50 üstünde olmalı\nİstisna: RSI<30 + stabilizasyon + pozitif katalizör → çeyrek pozisyon\nYasak: SMA50+SMA200 altı + insider satış yoğun → giriş yok",
+      "fitness": null,
+      "last_modified": "2026-04-13T09:22:42.430389"
+    },
+    "session_faz1_gap": {
+      "version": 1,
+      "description": "FAZ 1 açılış gap eşikleri",
+      "weight": 1.0,
+      "weight_history": [],
+      "current_prompt": "FAZ 1 Gap Analizi:\nGap < -%5 → GAP-DOWN uyarı, K-09 tetik\nGap > +%5 → GAP-UP, ilk 15dk bekle\nGap -3% ile -5% → negatif gap, stop yakınlık kontrol\nGap +3% ile +5% → pozitif gap, giriş fırsatı izle",
+      "fitness": null,
+      "last_modified": "2026-04-13T09:22:42.430391"
+    },
+    "session_faz2_entry": {
+      "version": 1,
+      "description": "FAZ 2 yeni giriş GO/NO-GO eşikleri",
+      "weight": 1.0,
+      "weight_history": [],
+      "current_prompt": "FAZ 2 Giriş Kriterleri:\nGO: Ichimoku 4/4 + R:R ≥2.5:1 + K-13 VIX uygun + K-18 temiz\nNO-GO: FAZ 1'in ilk 15dk içinde + VIX>28 + earnings ≤2 gün + stop>%12\nİlk 30dk yeni giriş yasak (gap stabilizasyonu)",
+      "fitness": null,
+      "last_modified": "2026-04-13T09:22:42.430392"
+    },
+    "session_faz3_trailing": {
+      "version": 1,
+      "description": "FAZ 3 power hour trailing stop mantığı",
+      "weight": 1.0,
+      "weight_history": [],
+      "current_prompt": "FAZ 3 Trailing Stop:\nKâr <%7: chandelier 3×ATR\nKâr %7-15: chandelier 2×ATR (kâr kilidi)\nKâr %15+: chandelier 1.5×ATR (agresif kilit)\nRSI 80+ kapanışa yakın: %25-30 kısmi satış değerlendir",
+      "fitness": null,
+      "last_modified": "2026-04-13T09:22:42.430393"
+    },
+    "swing_rsi_range": {
+      "version": 1,
+      "description": "Swing giriş RSI aralığı",
+      "weight": 1.0,
+      "weight_history": [],
+      "current_prompt": "Swing Giriş RSI:\nRSI 40-65 arası giriş bölgesi\nRSI<40: oversold bounce için çeyrek pozisyon\nRSI>65: momentum trade sadece güçlü trend varlığında",
+      "fitness": null,
+      "last_modified": "2026-04-13T09:22:42.430394"
     }
   },
-  "K-04_entry_filter": {
-    "version": 1,
-    "description": "Giriş filtresi - SMA ve RSI",
-    "current_prompt": "K-04 Giriş Filtresi:\nStandart: Giriş fiyatı SMA50 üstünde olmalı\nİstisna: RSI<30 + stabilizasyon + pozitif katalizör → çeyrek pozisyon\nYasak: SMA50+SMA200 altı + insider satış yoğun → giriş yok",
-    "fitness": null,
-    "last_modified": null,
-    "fitness_detail": {
-      "fitness": null,
-      "n": 0,
-      "win_rate": null,
-      "avg_pnl": null,
-      "sharpe": null
-    }
-  },
-  "swing_rsi_range": {
-    "version": 1,
-    "description": "Swing giriş RSI aralığı",
-    "current_prompt": "Swing Giriş RSI:\nRSI 40-65 arası giriş bölgesi\nRSI<40: oversold bounce için çeyrek pozisyon\nRSI>65: momentum trade sadece güçlü trend varlığında",
-    "fitness": 1.45,
-    "last_modified": null,
-    "fitness_detail": {
-      "fitness": 1.45,
-      "n": 1,
-      "win_rate": 100.0,
-      "avg_pnl": 1.45,
-      "std_dev": 1.0,
-      "sharpe": 1.45
-    },
-    "weight": 1.0,
-    "weight_history": [
-      {
-        "date": "2026-04-11",
-        "weight": 1.0,
-        "fitness": 1.45
-      }
-    ]
-  },
-  "K-02_kriz_bekle": {
-    "version": 1,
-    "description": "Kriz/şok sonrası bekleme",
-    "weight": 1.0,
-    "weight_history": [],
-    "fitness": null,
-    "last_modified": null,
-    "current_prompt": "K-02: Kriz/şok başlangıcında momentum sektörlerine 3 iş günü yeni giriş yok. SPY ≥%3 + VIX ≥%20 spike = 1 gün bekle (K-07 makro şok istisnası)."
-  },
-  "K-05_earnings": {
-    "version": 1,
-    "description": "Earnings proximity — swing",
-    "weight": 1.0,
-    "weight_history": [],
-    "fitness": null,
-    "last_modified": null,
-    "current_prompt": "K-05: Swing pozisyonu için earnings ≤2 iş günü içinde tam çıkış, exception yok. Portföy için K-16 skor hesapla (7 gün öncesi)."
-  },
-  "K-06_stop": {
-    "version": 1,
-    "description": "Stop tetiklenince çıkış",
-    "weight": 1.0,
-    "weight_history": [],
-    "fitness": null,
-    "last_modified": null,
-    "current_prompt": "K-06: Stop tetiklendi → %100 çık, override YASAK. Giriş stop: max(2×ATR14, %5). Duygusal karar yok. K-06 tüm kuralların üstünde."
-  },
-  "K-07_trailing": {
-    "version": 1,
-    "description": "Chandelier trailing stop",
-    "weight": 1.0,
-    "weight_history": [],
-    "fitness": null,
-    "last_modified": null,
-    "current_prompt": "K-07: Kâr <%7 → 3×ATR. Kâr %7-15 → 2×ATR. Kâr %15+ → 1.5×ATR. Highest high - multiplier×ATR. Stop ASLA aşağı çekilmez."
-  },
-  "K-09_proximity": {
-    "version": 1,
-    "description": "Stop yakınlık 4 kontrol",
-    "weight": 1.0,
-    "weight_history": [],
-    "fitness": null,
-    "last_modified": null,
-    "current_prompt": "K-09: Fiyat stop'a <%2 → k09_proximity_check.py çalıştır (RSI/hacim/SPY+VIX/sektör). 3+ negatif=EXIT_NOW, 2=WAIT, 0-1=TUT."
-  },
-  "K-10_cash": {
-    "version": 1,
-    "description": "VIX bazlı minimum nakit",
-    "weight": 1.0,
-    "weight_history": [],
-    "fitness": null,
-    "last_modified": null,
-    "current_prompt": "K-10: VIX<22 → %5 min nakit. VIX 22-28 → %10. VIX 28-35 → %20. VIX>35 → %30. K-13 paralel çalışır."
-  },
-  "K-12_concentration": {
-    "version": 1,
-    "description": "Konsantrasyon limitleri",
-    "weight": 1.0,
-    "weight_history": [],
-    "fitness": null,
-    "last_modified": null,
-    "current_prompt": "K-12: Dengeli tek hisse >%25 → küçült. Agresif >%20. Temettü >%15. Sektör/tema $600K bazlı >%40 → en zayıfı kes."
-  },
-  "K-14_drawdown": {
-    "version": 1,
-    "description": "Drawdown fren eşiği",
-    "weight": 1.0,
-    "weight_history": [],
-    "fitness": null,
-    "last_modified": null,
-    "current_prompt": "K-14: 2 ardışık swing kaybı VEYA toplam drawdown >%15 → fren. Kaldırma: VIX<22 + SPY>SMA50 + 11 sektörden ≥6 SPY'yi geçiyor."
-  },
-  "K-15a_rsi_oversold": {
-    "version": 1,
-    "description": "RSI oversold 1 gün teyit",
-    "weight": 1.0,
-    "weight_history": [],
-    "fitness": null,
-    "last_modified": null,
-    "current_prompt": "K-15a: Yeni giriş için RSI<35 → 1 gün stabilizasyon teyit bekle. Mevcut pozisyon için UYGULANMAZ, sadece yeni giriş filtresi."
-  },
-  "K-15b_dilution": {
-    "version": 1,
-    "description": "Momentum hisse dilüsyon",
-    "weight": 1.0,
-    "weight_history": [],
-    "fitness": null,
-    "last_modified": null,
-    "current_prompt": "K-15b: 3ay >%30 + P/E negatif/>50 → k15b_dilution_check.py zorunlu. Short interest yüksek + recent dilution → eleme."
-  },
-  "K-16_sell_news": {
-    "version": 1,
-    "description": "Sell the news skor",
-    "weight": 1.0,
-    "weight_history": [],
-    "fitness": null,
-    "last_modified": null,
-    "current_prompt": "K-16: Portföy pozisyonu earnings 7g öncesi → k16 skor. Skor 2-3: %25 kısmi + trailing. Skor 4-5: %50 çık."
-  },
-  "K-17_correlation": {
-    "version": 1,
-    "description": "Korelasyon ve tema çakışması",
-    "weight": 1.0,
-    "weight_history": [],
-    "fitness": null,
-    "last_modified": null,
-    "current_prompt": "K-17: Sektör + tema çakışması kontrol. Aynı tema 2+ pozisyon → yeni giriş yok. Tema %40 limit ($600K bazlı)."
-  },
-  "K-18_insider": {
-    "version": 1,
-    "description": "Insider trading eşiği",
-    "weight": 1.0,
-    "weight_history": [],
-    "fitness": null,
-    "last_modified": null,
-    "current_prompt": "K-18: Son 30 günde CEO/CFO/Direktör >$5M satış → giriş yasak. POWL dersi: $25M insider satışı = K-18 atlamanın maliyeti."
-  },
-  "K-19_xlp": {
-    "version": 1,
-    "description": "XLP swing yasağı",
-    "weight": 1.0,
-    "weight_history": [],
-    "fitness": null,
-    "last_modified": null,
-    "current_prompt": "K-19: Consumer Defensive sektörü swing girişi yasak. Sadece portföy pozisyonu olarak alınabilir."
-  },
-  "K-20_dead_cat": {
-    "version": 1,
-    "description": "Dead cat bounce RS filtresi",
-    "weight": 1.0,
-    "weight_history": [],
-    "fitness": null,
-    "last_modified": null,
-    "current_prompt": "K-20: Son 1ay SPY'den ≥%10 geride + son 5gün ≥+%5 bounce = dead cat = eleme. Yanıltıcı momentum trapleri önleme."
+  "parametreler": {
+    "sistem_wr": 0.5,
+    "profit_factor": 2.26,
+    "avg_win_pct": 13.0,
+    "avg_loss_pct": -5.8
   }
 }

@@ -26,7 +26,7 @@ def get_market_news(limit: int = 8) -> list[dict]:
     """
     try:
         r = requests.get(
-            f"{FMP_BASE}/news/general-latest",
+            f"{FMP_BASE}/fmp-articles",
             params={"apikey": FMP_KEY, "limit": limit},
             timeout=10,
         ).json()

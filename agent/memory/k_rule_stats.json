@@ -1,0 +1,61 @@
+{
+  "son_guncelleme": "2026-04-13T09:22:08.284297",
+  "analiz_donemi": "2026-02-17 → 2026-04-13",
+  "toplam_trade": 62,
+  "k_kural_istatistikleri": {
+    "K-06": {
+      "aciklama": "Stop-loss tetiklendiğinde çık",
+      "tetiklenme": 25,
+      "kazananlar": 10,
+      "kaybedenler": 15,
+      "win_rate_pct": 40.0,
+      "avg_pnl_pct": 0.3,
+      "not": "Düşük WR normal — zaten zararı sınırlamak için var. Override = kesinlikle yasak (LASR dersi).",
+      "override_sayisi": 3,
+      "override_sonucu": "Her seferinde kayıp büyüdü"
+    },
+    "K-11": {
+      "aciklama": "RSI 70+ ve kâr 15%+ kısmi çıkış",
+      "tetiklenme": 12,
+      "kazananlar": 4,
+      "kaybedenler": 8,
+      "win_rate_pct": 33.0,
+      "avg_pnl_pct": 0.7,
+      "not": "SM'deki kademeli çıkış (+39%→+45%→+54%) doğru uygulandı. Layer 2 RSI 80 eşiği doğru.",
+      "en_iyi_uygulama": "SM kademeli çıkış",
+      "iyilestirme": "Layer 2 için RSI + negatif divergence kombine koşul eklenebilir"
+    },
+    "K-13": {
+      "aciklama": "Kriz türüne göre sektör bazlı VIX eşiği",
+      "tetiklenme": 8,
+      "kazananlar": 5,
+      "kaybedenler": 3,
+      "win_rate_pct": 62.5,
+      "avg_pnl_pct": 4.2,
+      "not": "İran krizi döneminde savunma/enerji pozisyonları doğru yönetildi.",
+      "guncelleme": "Ateşkes = beneficiary sektörleri değişir, K-13 buna göre güncellenmeli"
+    },
+    "K-17": {
+      "aciklama": "Aynı sektörde max 2 pozisyon",
+      "tetiklenme": 1,
+      "ihlal_sayisi": 1,
+      "ihlal_sonucu": "CAMT+VRT+POWL aynı gün -9.5%/-9.7%/-10.6% — toplam ~$9K kayıp",
+      "not": "27 Mart: AI tedarik zinciri 3 pozisyon aynı anda, hepsi stop. Kural sonradan netleştirildi.",
+      "durum": "Kural güçlendirildi — alt sektör bazında say (optik/termal/güç/yarıiletken)"
+    },
+    "K-20": {
+      "aciklama": "RSI aşırı satımda kriz sonrası dead cat bounce kontrolü",
+      "tetiklenme": 4,
+      "kazananlar": 3,
+      "kaybedenler": 1,
+      "win_rate_pct": 75.0,
+      "avg_pnl_pct": 3.8,
+      "not": "HAL/KTOS/LASR'da filtrenin OLMAMASI nedeniyle zarar edildi. Kural eklenmesi doğruydu."
+    }
+  },
+  "genel_bulgular": {
+    "en_etkin_kural": "K-06 (stop disiplini) — override olmadığında doğru çalışıyor",
+    "en_problemli": "K-17 ihlali 27 Mart (3 koreleli pozisyon)",
+    "iyilestirme_onceligi": "K-11 Layer 2 koşullarını güçlendir (RSI + divergence kombine)"
+  }
+}
