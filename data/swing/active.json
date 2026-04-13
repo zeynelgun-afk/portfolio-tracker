@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-04-13T15:22:19.990108",
+  "son_guncelleme": "2026-04-13T16:39:59.125861",
   "not": "SWING TRADE SADECE SİMÜLASYON - Sadece % kazanç/kayıp takibi (MAX: 8 pozisyon)",
   "aktif_pozisyonlar": [
     {
@@ -16,8 +16,8 @@
       "katalizor": "",
       "max_sure_gun": 15,
       "durum": "AKTIF",
-      "guncel_fiyat": 787.51,
-      "son_fiyat": 787.51,
+      "guncel_fiyat": 788.72,
+      "son_fiyat": 788.72,
       "zirve_fiyat": 798.54,
       "chandelier_stop": 713.01,
       "k11_aktif": false,
@@ -26,7 +26,7 @@
       "notlar": [
         "Tarih düzeltmesi: 11 Nisan Cumartesi piyasa kapalı — 10 Nisan Cuma kapanış fiyatına göre düzeltildi"
       ],
-      "pnl_pct": -0.4,
+      "pnl_pct": -0.25,
       "atr14": 25.88,
       "chandelier_guncelleme": "2026-04-10",
       "maliyet_baz": 790.66
@@ -45,8 +45,8 @@
       "katalizor": "",
       "max_sure_gun": 15,
       "durum": "AKTIF",
-      "guncel_fiyat": 1736.07,
-      "son_fiyat": 1736.07,
+      "guncel_fiyat": 1745.17,
+      "son_fiyat": 1745.17,
       "zirve_fiyat": 1748.74,
       "chandelier_stop": 1530.73,
       "k11_aktif": false,
@@ -55,7 +55,7 @@
       "notlar": [
         "Tarih düzeltmesi: 11 Nisan Cumartesi piyasa kapalı — 10 Nisan Cuma kapanış fiyatına göre düzeltildi"
       ],
-      "pnl_pct": -0.07,
+      "pnl_pct": 0.45,
       "atr14": 68.85,
       "chandelier_guncelleme": "2026-04-10",
       "maliyet_baz": 1737.28
@@ -74,8 +74,8 @@
       "katalizor": "",
       "max_sure_gun": 15,
       "durum": "AKTIF",
-      "guncel_fiyat": 393.02,
-      "son_fiyat": 393.02,
+      "guncel_fiyat": 392.01,
+      "son_fiyat": 392.01,
       "zirve_fiyat": 399.49,
       "chandelier_stop": 349.41,
       "k11_aktif": false,
@@ -84,7 +84,7 @@
       "notlar": [
         "Tarih düzeltmesi: 11 Nisan Cumartesi piyasa kapalı — 10 Nisan Cuma kapanış fiyatına göre düzeltildi"
       ],
-      "pnl_pct": -1.62,
+      "pnl_pct": -1.87,
       "atr14": 16.69,
       "chandelier_guncelleme": "2026-04-10",
       "maliyet_baz": 399.49
