@@ -18,5 +18,71 @@
       "son_skor": null
     }
   ],
-  "olusturma": "2026-04-11T15:58:57.143870+03:00"
+  "olusturma": "2026-04-11T15:58:57.143870+03:00",
+  "sim_bootstrap": {
+    "son_guncelleme": "2026-04-13T10:21:21.765199",
+    "sim_donemi": "2026-01-02 → 2026-04-11",
+    "toplam_gun": 67,
+    "ajan_performansi": {
+      "MACRO_AGENT": {
+        "wr": 14.9,
+        "avg": -0.0717,
+        "weight": 0.8925
+      },
+      "SIGNAL_AGENT": {
+        "wr": 13.4,
+        "avg": -0.1747,
+        "weight": 0.738
+      },
+      "RISK_AGENT": {
+        "wr": 4.5,
+        "avg": -0.2225,
+        "weight": 0.6663
+      },
+      "SECTOR_AGENT": {
+        "wr": 49.3,
+        "avg": 0.3538,
+        "weight": 1.5307
+      },
+      "CIO_AGENT": {
+        "wr": 14.9,
+        "avg": -0.118,
+        "weight": 0.8231
+      }
+    },
+    "kritik_gunler": [
+      {
+        "tarih": "2026-03-30",
+        "spy_fwd": 2.91,
+        "event": "Ateşkes öncesi ralli",
+        "cio": "AL doğru"
+      },
+      {
+        "tarih": "2026-01-16",
+        "spy_fwd": -2.04,
+        "event": "Tarife haberi şoku",
+        "cio": "yanlış (NEUTRAL)"
+      },
+      {
+        "tarih": "2026-03-25",
+        "spy_fwd": -1.79,
+        "event": "Enerji çıkışı",
+        "cio": "yanlış (AL)"
+      },
+      {
+        "tarih": "2026-04-07",
+        "spy_fwd": 2.55,
+        "event": "Tarife endişe rallisi",
+        "cio": "NEUTRAL"
+      },
+      {
+        "tarih": "2026-02-05",
+        "spy_fwd": 1.92,
+        "event": "Toparlanma",
+        "cio": "yanlış (AŞAĞI)"
+      }
+    ],
+    "tahminler": []
+  },
+  "son_guncelleme": "2026-04-13T10:21:21.765506"
 }

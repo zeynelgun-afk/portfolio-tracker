@@ -1,27 +1,63 @@
 {
-  "son_guncelleme": "2026-04-11",
-  "aktif_tema": "BILINMIYOR",
-  "onceki_tema": null,
-  "rotasyon_alarmi": false,
-  "tema_puanlari": {
-    "AI_ALTYAPI": 0,
-    "SAVUNMA_JEOPOLITIK": 0,
-    "ENERJI_HAMMADDE": 0,
-    "SAGLIK_BIOTEK": 0,
-    "FINANS_BANKALAR": 0,
-    "INSAAT_ALTYAPI": 0,
-    "TUKETICI_TICARET": 0
-  },
-  "puan_aciklamasi": {
-    "momentum": 0,
-    "katalizor": 0,
-    "vix_uyumu": 0,
-    "hareketlilik": 0,
-    "genislik": 0,
-    "sektor_rotasyonu": 0,
-    "makro_uyum": 0
-  },
-  "makro_rejim": "BILINMIYOR",
-  "spy_21ema_pozisyon": null,
-  "vix": null
+  "tarih": "2026-04-13",
+  "sim_donemi": "2026-01-02 → 2026-04-11",
+  "guncelleme": "2026-04-13T10:21:21.764631",
+  "temalar": {
+    "AI_ALTYAPI": {
+      "skor": 6.7,
+      "kumulatif_pct": 13.92,
+      "gunluk_ort_pct": 0.208,
+      "aktif": true,
+      "trend": "yukselis",
+      "portfoy_uyumu": "AI_ALTYAPI"
+    },
+    "SAVUNMA_JEOPOLITIK": {
+      "skor": 6.4,
+      "kumulatif_pct": 11.11,
+      "gunluk_ort_pct": 0.166,
+      "aktif": true,
+      "trend": "yukselis",
+      "portfoy_uyumu": "SAVUNMA"
+    },
+    "ENERJI_HAMMADDE": {
+      "skor": 7.8,
+      "kumulatif_pct": 22.49,
+      "gunluk_ort_pct": 0.336,
+      "aktif": true,
+      "trend": "yukselis",
+      "portfoy_uyumu": "ENERJI"
+    },
+    "SAGLIK_BIOTEK": {
+      "skor": 5.0,
+      "kumulatif_pct": -0.3,
+      "gunluk_ort_pct": -0.005,
+      "aktif": false,
+      "trend": "yatay",
+      "portfoy_uyumu": "DIGER"
+    },
+    "FINANS_BANKALAR": {
+      "skor": 5.0,
+      "kumulatif_pct": -0.3,
+      "gunluk_ort_pct": -0.004,
+      "aktif": false,
+      "trend": "yatay",
+      "portfoy_uyumu": "DIGER"
+    },
+    "INSAAT_ALTYAPI": {
+      "skor": 5.8,
+      "kumulatif_pct": 6.8,
+      "gunluk_ort_pct": 0.101,
+      "aktif": false,
+      "trend": "yukselis",
+      "portfoy_uyumu": "DIGER"
+    },
+    "TUKETICI_TICARET": {
+      "skor": 4.6,
+      "kumulatif_pct": -3.19,
+      "gunluk_ort_pct": -0.048,
+      "aktif": false,
+      "trend": "dusus",
+      "portfoy_uyumu": "DIGER"
+    }
+  }
 }

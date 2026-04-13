@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-04-13T09:55:22.450136",
+  "son_guncelleme": "2026-04-13T10:21:21.766500",
   "kaynak": "transactions.csv analizi (17 Şubat — 13 Nisan 2026)",
   "toplam_trade_analiz_edilen": 62,
   "sistem_metrikleri": {
@@ -580,6 +580,22 @@
       "aksiyon": "Sharpe optimize: atr3x boğa + TP15/stop5 ayı. Stop_7pct görünürde cazip ama ayı riski çok yüksek.",
       "guven": "MUHTEMEL",
       "n_trade": 306
+    },
+    {
+      "id": "SIM001",
+      "tarih": "2026-04-13",
+      "kaynak": "simulasyon_2026-01-02_2026-04-11",
+      "kategori": "ajan_agirlik_kalibrasyonu",
+      "ders": "67 günlük simülasyon sonuçları (Ocak-Nisan 2026): SECTOR_AGENT en iyi (WR %49.3, avg +0.35, ağırlık 1.53) — sektör rotasyonunu takip etmek yön tahmininden daha tutarlı. RISK_AGENT en kötü (WR %4.5, avg -0.22, ağırlık 0.67) — Ocak-Nisan 2026 boğa döneminde risk uyarıları çok sık yanlış geldi. MACRO_AGENT orta (WR %14.9, avg -0.07) — mevcut dönemde genel yönü tutturmakta zorlandı. Tema sıralaması: ENERJİ_HAMMADDE 🔥 (+22.5%), AI_ALTYAPI ✅ (+13.9%), SAVUNMA ✅ (+11.1%), TÜKETİCİ ❌ (-3.2%).",
+      "veri": {
+        "sector_agent_wr": 49.3,
+        "risk_agent_wr": 4.5,
+        "en_iyi_tema": "ENERJI_HAMMADDE",
+        "en_kotu_tema": "TUKETICI_TICARET"
+      },
+      "aksiyon": "CIO SECTOR_AGENT'a 1.53 ağırlık ver (diğerleri 0.67-0.89). Risk uyarısı geldiğinde VIX>25 olup olmadığını çift kontrol et — düşük VIX'te risk ajanını override etme.",
+      "guven": "MUHTEMEL",
+      "n_gun": 67
     }
   ],
   "bos_hafiza_uyarisi": false,

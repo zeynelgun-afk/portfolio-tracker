@@ -1,32 +1,77 @@
 {
   "MACRO_AGENT": {
-    "weight": 1.0,
-    "n": 0,
-    "avg_score": 0.0,
-    "history": []
+    "weight": 0.8925,
+    "n": 67,
+    "avg_score": -0.0717,
+    "history": [
+      {
+        "date": "2026-04-13",
+        "weight": 0.8925,
+        "avg_score": -0.0717,
+        "wr_pct": 14.9,
+        "n_samples": 67,
+        "kaynak": "simülasyon_2026-01-02_2026-04-11"
+      }
+    ]
   },
   "SECTOR_AGENT": {
-    "weight": 1.0,
-    "n": 0,
-    "avg_score": 0.0,
-    "history": []
+    "weight": 1.5307,
+    "n": 67,
+    "avg_score": 0.3538,
+    "history": [
+      {
+        "date": "2026-04-13",
+        "weight": 1.5307,
+        "avg_score": 0.3538,
+        "wr_pct": 49.3,
+        "n_samples": 67,
+        "kaynak": "simülasyon_2026-01-02_2026-04-11"
+      }
+    ]
   },
   "SIGNAL_AGENT": {
-    "weight": 1.0,
-    "n": 0,
-    "avg_score": 0.0,
-    "history": []
+    "weight": 0.738,
+    "n": 67,
+    "avg_score": -0.1747,
+    "history": [
+      {
+        "date": "2026-04-13",
+        "weight": 0.738,
+        "avg_score": -0.1747,
+        "wr_pct": 13.4,
+        "n_samples": 67,
+        "kaynak": "simülasyon_2026-01-02_2026-04-11"
+      }
+    ]
   },
   "RISK_AGENT": {
-    "weight": 1.0,
-    "n": 0,
-    "avg_score": 0.0,
-    "history": []
+    "weight": 0.6663,
+    "n": 67,
+    "avg_score": -0.2225,
+    "history": [
+      {
+        "date": "2026-04-13",
+        "weight": 0.6663,
+        "avg_score": -0.2225,
+        "wr_pct": 4.5,
+        "n_samples": 67,
+        "kaynak": "simülasyon_2026-01-02_2026-04-11"
+      }
+    ]
   },
   "CIO_AGENT": {
-    "weight": 1.0,
-    "n": 0,
-    "avg_score": 0.0,
-    "history": []
+    "weight": 0.8231,
+    "n": 67,
+    "avg_score": -0.118,
+    "history": [
+      {
+        "date": "2026-04-13",
+        "weight": 0.8231,
+        "avg_score": -0.118,
+        "wr_pct": 14.9,
+        "n_samples": 67,
+        "kaynak": "simülasyon_2026-01-02_2026-04-11"
+      }
+    ]
   }
 }
