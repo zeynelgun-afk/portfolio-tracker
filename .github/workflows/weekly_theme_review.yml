@@ -37,6 +37,13 @@ jobs:
 
       - name: Push changes if any
         run: |
+          git fetch origin main
+          git rebase --abort 2>/dev/null || true
+          git reset --hard origin/main
           git add -A
-          git diff --staged --quiet || git commit -m "🎯 [Workflow] Haftalık tema incelemesi tamamlandı"
-          git push || echo "Push gerekmedi"
+          if ! git diff --staged --quiet; then
+            git commit -m "🎯 [Workflow] Haftalık tema incelemesi tamamlandı"
+            git push origin main || (sleep 10 && git pull origin main && git push origin main) || echo "Push başarısız"
+          else
+            echo "Değişiklik yok"
+          fi

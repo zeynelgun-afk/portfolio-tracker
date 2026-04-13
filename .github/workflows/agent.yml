@@ -103,6 +103,32 @@ jobs:
           MODE="${{ steps.mode.outputs.mode }}"
           ZAMAN=$(date -u '+%Y-%m-%d %H:%M UTC')
           
+          # Degisen dosyalari gecici yere yedekle
+          mkdir -p /tmp/agent_backup/data/portfolios /tmp/agent_backup/data/swing /tmp/agent_backup/agent/memory
+          cp data/portfolios/*.json          /tmp/agent_backup/data/portfolios/ 2>/dev/null || true
+          cp data/swing/active.json          /tmp/agent_backup/data/swing/      2>/dev/null || true
+          cp data/swing/closed.json          /tmp/agent_backup/data/swing/      2>/dev/null || true
+          cp data/swing/status.json          /tmp/agent_backup/data/swing/      2>/dev/null || true
+          cp data/transactions.csv           /tmp/agent_backup/data/             2>/dev/null || true
+          cp data/watchlist.json             /tmp/agent_backup/data/             2>/dev/null || true
+          cp data/summary.json               /tmp/agent_backup/data/             2>/dev/null || true
+          cp data/buy_candidates.json        /tmp/agent_backup/data/             2>/dev/null || true
+          cp data/macro_intelligence.json    /tmp/agent_backup/data/             2>/dev/null || true
+          cp agent/memory/*.json             /tmp/agent_backup/agent/memory/     2>/dev/null || true
+          
+          # Temiz git state
+          git fetch origin main
+          git rebase --abort 2>/dev/null || true
+          git merge --abort  2>/dev/null || true
+          git reset --hard origin/main
+          
+          # Yedekleri geri yukle
+          cp /tmp/agent_backup/data/portfolios/*.json data/portfolios/ 2>/dev/null || true
+          cp /tmp/agent_backup/data/swing/*.json      data/swing/      2>/dev/null || true
+          cp /tmp/agent_backup/data/*.json            data/            2>/dev/null || true
+          cp /tmp/agent_backup/data/*.csv             data/            2>/dev/null || true
+          cp /tmp/agent_backup/agent/memory/*.json    agent/memory/    2>/dev/null || true
+          
           git add \
             data/portfolios/*.json \
             data/swing/active.json \
@@ -123,5 +149,5 @@ jobs:
             echo "Değişiklik yok — commit atlanıyor"
           else
             git commit -m "[Agent/$MODE] Otomatik güncelleme — $ZAMAN"
-            git push origin main && echo "✅ Repo güncellendi"
+            git push origin main && echo "✅ Repo güncellendi" || (sleep 15 && git fetch origin main && git reset --hard origin/main && cp /tmp/agent_backup/data/portfolios/*.json data/portfolios/ 2>/dev/null && cp /tmp/agent_backup/data/*.json data/ 2>/dev/null && cp /tmp/agent_backup/data/*.csv data/ 2>/dev/null && git add -A && git commit -m "[Agent/$MODE] Retry — $ZAMAN" && git push origin main)
           fi
