@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-04-13T09:49:02.502006",
+  "son_guncelleme": "2026-04-13T09:55:22.451983",
   "analiz_donemi": "2026-02-17 → 2026-04-13",
   "toplam_trade": 62,
   "k_kural_istatistikleri": {
@@ -36,6 +36,25 @@
         },
         "yasak": "stop_8pct — 2022 ayısında MaxDD -%36.7",
         "sonuc": "min(%5, 3xATR) her rejimde güvenli. %8 stop asla kullanma."
+      },
+      "kapsamli_boga_ayi": {
+        "boga_stop5": {
+          "pf": 2.42,
+          "sharpe": 4.22,
+          "n": 306
+        },
+        "ayi_stop5": {
+          "pf": 0.0,
+          "avg": -6.24,
+          "n": 22,
+          "uyari": "AYIDA ÇALIŞMIYOR"
+        },
+        "ayida_en_iyi": "tp_10_stop5 (PF 1.82) veya tp_15_stop5 (PF 2.50)",
+        "yasak": "stop_8pct ve stop_10pct — ayıda MaxDD -%34'e kadar çıkıyor",
+        "rejim_bazli": {
+          "boga_VIX_lt_22": "stop_5pct veya 3xATR chandelier",
+          "ayi_VIX_gt_30": "TP10+stop5 kombinasyonu, sabit % chandelier değil"
+        }
       }
     },
     "K-11": {
@@ -81,6 +100,31 @@
           "oneri": "VIX<20→RSI75, VIX20-28→RSI70, VIX>28→chandelier yeterli"
         },
         "sonuc": "3xATR chandelier tüm rejimlerde 2xATR'den üstün. Ayıda en güvenli."
+      },
+      "kapsamli_boga_ayi": {
+        "boga_k11_atr3_rsi70": {
+          "pf": 2.16,
+          "sharpe": 4.28,
+          "avg": 2.73,
+          "n": 306
+        },
+        "ayi_2008_k11_atr3_rsi65": {
+          "pf": 1.56,
+          "avg": -4.65,
+          "n": 22
+        },
+        "ayi_2008_k11_atr3_rsi70": {
+          "pf": 0.69,
+          "avg": -6.01,
+          "n": 22
+        },
+        "sonuc": "Ayıda RSI eşiğini 65'e indir. Boğada RSI 70 optimal.",
+        "rsi_rejim_kurali": {
+          "VIX_lt_20": "RSI 75 eşiği (güçlü momentum)",
+          "VIX_20_28": "RSI 70 eşiği (normal)",
+          "VIX_28_35": "RSI 65 eşiği (kriz başlangıcı)",
+          "VIX_gt_35": "K-11 pasif, TP10+stop5 kullan"
+        }
       }
     },
     "K-13": {
@@ -125,5 +169,40 @@
     "kazanan": "RSI≤40 + SMA200 üstü (PF 1.46, WR 53.2%)",
     "kaybeden": "RSI≤35 + SMA200 üstü (PF 1.10, WR 56.2% ama çok az sinyal)",
     "sonuc": "RSI 40 eşiği RSI 35'ten daha iyi. SMA200 zorunlu."
+  },
+  "giris_sinyali_nihai": {
+    "sirala": [
+      {
+        "sinyal": "RSI≤40 + SMA200",
+        "pf": 2.05,
+        "sharpe": 3.42,
+        "n": 329,
+        "mdd": -20.68
+      },
+      {
+        "sinyal": "RSI≤50 + SMA200",
+        "pf": 1.97,
+        "sharpe": 2.6,
+        "n": 836,
+        "mdd": -25.43
+      },
+      {
+        "sinyal": "RSI≤40 (SMA yok)",
+        "pf": 1.76,
+        "sharpe": 1.53,
+        "n": 1792,
+        "mdd": -42.97
+      },
+      {
+        "sinyal": "Düzgün (kontrol)",
+        "pf": 1.7,
+        "sharpe": 0.9,
+        "n": 2581,
+        "mdd": -34.35
+      }
+    ],
+    "kazanan": "RSI≤40 + SMA200 üstü",
+    "sma200_kritik": "SMA200 filtresi MaxDD'yi -%43'ten -%21'e düşürüyor",
+    "rsi40_50_kural": "RSI 40-50 arası sinyal = yarım pozisyon al"
   }
 }

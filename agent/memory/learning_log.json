@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-04-13T09:49:02.500511",
+  "son_guncelleme": "2026-04-13T09:55:22.450136",
   "kaynak": "transactions.csv analizi (17 Şubat — 13 Nisan 2026)",
   "toplam_trade_analiz_edilen": 62,
   "sistem_metrikleri": {
@@ -397,6 +397,189 @@
       "aksiyon": "RSI eşiği rejim bazlı: VIX<20 (güçlü boğa) → RSI 75 kullan. VIX 20-28 (normal) → RSI 70. VIX>28 (kriz/ayı) → K-11 pasif, chandelier yeterli.",
       "guven": "MUHTEMEL",
       "n_trade": 695
+    },
+    {
+      "id": "BT008",
+      "tarih": "2026-04-13",
+      "kaynak": "kapsamli_backtest_40hisse_boga_ayi_2008_2024",
+      "kategori": "stop_loss_boga_ayi_karsilastirma",
+      "ders": "Sabit % stop-loss boğa vs ayı karşılaştırması (306 boğa / 22 ayı trade): Boğada stop_5pct: PF 2.42, avg +3.32%, Sharpe 4.22. Ayıda stop_5pct: PF 0.00, avg -6.24% — 2008 GFC'de hiçbir trade kazanmadı. KRİTİK: Sabit %stop ayı piyasasında çalışmıyor. ATR3x ayıda PF 0.69 (negatif avg -6.01%) ama en azından bazı kazananlar var. SONUÇ: Ayı tespiti (SPY SMA200 altı) + giriş durdurma = hayatta kalma. Giriş yapılacaksa bile lot boyutunu %50 küç ve stop'u 3xATR yap.",
+      "veri": {
+        "boga_stop5_pf": 2.42,
+        "boga_stop5_avg": 3.32,
+        "ayi_stop5_pf": 0.0,
+        "ayi_stop5_avg": -6.24,
+        "ayi_atr3x_pf": 0.69
+      },
+      "aksiyon": "SPY SMA200 altında = giriş yasak. Çok güçlü sinyal varsa: %50 lot + 3xATR stop. Sabit % stop hiçbir şekilde kullanma.",
+      "guven": "KESİN",
+      "n_trade": 328
+    },
+    {
+      "id": "BT009",
+      "tarih": "2026-04-13",
+      "kaynak": "kapsamli_backtest_40hisse_boga_ayi_2008_2024",
+      "kategori": "optimal_strateji_boğa",
+      "ders": "Boğa piyasasında dönem bazlı en iyi strateji: 2013 (QE boğası): stop_5pct en iyi (PF 2.44, avg +4.69%). 2019 (normal boğa): k11_atr3_rsi70 en iyi (PF 1.79, avg +0.94%). 2020-V (post-COVID): stop_3pct en iyi PF (3.62) ama avg +2.37% — volatile piyasada dar stop paradoksu çalışıyor. 2023 (AI rallisi): atr3x en iyi (PF 2.19, avg +3.57%). GENEL BOĞA: stop_5pct en tutarlı (PF 2.42, Sharpe 4.22 — 4 boğa döneminde de pozitif). k11_atr3_rsi70 ikinci (PF 2.16, Sharpe 4.28 — biraz daha düşük PF ama daha az MaxDD).",
+      "veri": {
+        "boga_2013": {
+          "stop_5pct": {
+            "avg": 4.69,
+            "pf": 2.44
+          },
+          "atr3x": {
+            "avg": 1.8,
+            "pf": 1.88
+          },
+          "k11_atr3_rsi70": {
+            "avg": 1.81,
+            "pf": 1.89
+          }
+        },
+        "boga_2019": {
+          "stop_5pct": {
+            "avg": 0.43,
+            "pf": 1.11
+          },
+          "atr3x": {
+            "avg": 0.65,
+            "pf": 1.62
+          },
+          "k11_atr3_rsi70": {
+            "avg": 0.94,
+            "pf": 1.79
+          }
+        },
+        "boga_2020v": {
+          "stop_5pct": {
+            "avg": 3.55,
+            "pf": 2.68
+          },
+          "atr3x": {
+            "avg": 3.32,
+            "pf": 2.43
+          },
+          "k11_atr3_rsi70": {
+            "avg": 3.2,
+            "pf": 2.38
+          }
+        },
+        "boga_2023": {
+          "stop_5pct": {
+            "avg": 3.31,
+            "pf": 2.49
+          },
+          "atr3x": {
+            "avg": 3.57,
+            "pf": 2.19
+          },
+          "k11_atr3_rsi70": {
+            "avg": 2.86,
+            "pf": 1.92
+          }
+        },
+        "ayi_2008": {
+          "stop_5pct": {
+            "avg": -6.24,
+            "pf": 0.0
+          },
+          "atr3x": {
+            "avg": -6.01,
+            "pf": 0.69
+          },
+          "k11_atr3_rsi65": {
+            "avg": -4.65,
+            "pf": 1.56
+          }
+        }
+      },
+      "aksiyon": "Ana strateji: stop_5pct (güvenli, tutarlı). Güçlü momentum varsa (VIX<18, SPY >SMA20): atr3x kullan.",
+      "guven": "KESİN",
+      "n_trade": 306
+    },
+    {
+      "id": "BT010",
+      "tarih": "2026-04-13",
+      "kaynak": "kapsamli_backtest_40hisse_boga_ayi_2008_2024",
+      "kategori": "giriş_sinyali_nihai",
+      "ders": "Giriş sinyali nihai sıralama (atr3x exit, tüm dönemler): 1. RSI≤40 + SMA200 üstü: PF 2.05, WR 48%, avg +2.39%, Sharpe 3.42 (329 trade) ✅ EN İYİ 2. RSI≤50 + SMA200 üstü: PF 1.97, WR 44.9%, avg +1.61%, Sharpe 2.60 (836 trade) 3. RSI≤40 herhangi: PF 1.76, WR 42.9%, avg +1.17%, Sharpe 1.53 (1792 trade) 4. Düzgün giriş (kontrol): PF 1.70, WR 40.9%, avg +0.58% (2581 trade) SMA200 filtresi kritik: olmadan MaxDD -%42.97, olanla -%20.68. RSI 40 eşiği RSI 50'den PF 0.08 daha iyi, ama sinyal sayısı 2.5x az. ÖNERI: RSI≤40 + SMA200 birincil. RSI 40-50 arası + SMA200 → yarım pozisyon.",
+      "veri": {
+        "rsi40_sma200": {
+          "n": 329,
+          "wr": 48.0,
+          "avg": 2.39,
+          "pf": 2.05,
+          "sharpe": 3.42
+        },
+        "rsi40_sma50": {
+          "n": 33,
+          "wr": 33.3,
+          "avg": -0.13,
+          "pf": 1.93,
+          "sharpe": -0.19
+        },
+        "rsi50_sma200": {
+          "n": 836,
+          "wr": 44.9,
+          "avg": 1.61,
+          "pf": 1.97,
+          "sharpe": 2.6
+        },
+        "rsi40_any": {
+          "n": 1792,
+          "wr": 42.9,
+          "avg": 1.17,
+          "pf": 1.76,
+          "sharpe": 1.53
+        },
+        "uniform_20d": {
+          "n": 2581,
+          "wr": 40.9,
+          "avg": 0.58,
+          "pf": 1.7,
+          "sharpe": 0.9
+        }
+      },
+      "aksiyon": "Giriş koşulu: RSI≤40 + fiyat SMA200 üstü. RSI 40-50 arasında sinyal gelirse lot %50 küçük.",
+      "guven": "KESİN",
+      "n_trade": 5571
+    },
+    {
+      "id": "BT011",
+      "tarih": "2026-04-13",
+      "kaynak": "kapsamli_backtest_40hisse_boga_ayi_2008_2024",
+      "kategori": "ayı_survival_stratejisi",
+      "ders": "2008 GFC'de sadece 2 strateji pozitif PF verdi: tp_15_stop5 (PF 2.50, avg -5.04%, WR %4.5) ve tp_10_stop5 (PF 1.82, avg -3.38%, WR %13.6). Sabit kâr hedefi (TP) GFC'de neden işe yarıyor: Piyasa aşağı giderken ara sıra bounce gelir, TP yakındaysa o bounce'u yakala ve hemen çık. Bekle-koy stratejisi çalışmıyor. k11_atr3_rsi65 da PF 1.56 verdi — RSI 65'te çıkış (düşük eşik) doğru çünkü GFC'de RSI 70'e nadiren çıkıyor, 65'te sat daha pragmatik. KURAL: SPY SMA200 altı + VIX>30 → TP %10-15 + stop %5 kombinasyonu kullan.",
+      "veri": {
+        "gfc_tp15_pf": 2.5,
+        "gfc_tp10_pf": 1.82,
+        "gfc_k11rsi65_pf": 1.56,
+        "gfc_atr3x_pf": 0.69,
+        "gfc_stop5_pf": 0.0
+      },
+      "aksiyon": "Derin ayı (VIX>30, SPY SMA200 altı): TP %10 + stop %5 kullan. RSI 65'te çık. 3xATR bırakma.",
+      "guven": "MUHTEMEL",
+      "n_trade": 22
+    },
+    {
+      "id": "BT012",
+      "tarih": "2026-04-13",
+      "kaynak": "kapsamli_backtest_40hisse_boga_ayi_2008_2024",
+      "kategori": "sharpe_maksimizasyonu",
+      "ders": "Sharpe oranı sıralaması (boğa): stop_7pct: Sharpe 5.24 (en yüksek ama MaxDD -%21) atr3x: Sharpe 4.23 k11_atr3_rsi70: Sharpe 4.28 stop_5pct: Sharpe 4.22 Görüntüde stop_7pct en iyi Sharpe'ı veriyor. Ama 2022 Nasdaq testi ve 2008 GFC gösteriyor ki %7 stop ayı piyasasında yıkıcı (WR %0, avg -8.89%). Risk-adjusted gerçek şampiyon: atr3x ve k11_atr3_rsi70 — boğada iyi Sharpe, ayıda k11 PF daha iyi koruyor.",
+      "veri": {
+        "boga_sharpe": {
+          "stop_5pct": 4.22,
+          "stop_7pct": 5.24,
+          "atr3x": 4.23,
+          "k11_atr3_rsi70": 4.28,
+          "k11_atr3_rsi75": 4.11,
+          "tp_15_stop5": 4.04
+        }
+      },
+      "aksiyon": "Sharpe optimize: atr3x boğa + TP15/stop5 ayı. Stop_7pct görünürde cazip ama ayı riski çok yüksek.",
+      "guven": "MUHTEMEL",
+      "n_trade": 306
     }
   ],
   "bos_hafiza_uyarisi": false,
@@ -417,6 +600,15 @@
         "2022_ayi",
         "2023_toparlama"
       ]
+    },
+    {
+      "etiket": "kapsamli_boga_ayi_2008_2024",
+      "tarih": "2026-04-13",
+      "hisse": 40,
+      "donem_sayisi": 7,
+      "strateji_sayisi": 16,
+      "giris_varyant": 7,
+      "toplam_trade": 5571
     }
   ]
 }

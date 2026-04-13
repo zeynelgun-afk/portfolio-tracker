@@ -1,6 +1,6 @@
 {
   "nesil": 1,
-  "son_guncelleme": "2026-04-13T09:49:02.502910",
+  "son_guncelleme": "2026-04-13T09:55:22.452771",
   "bootstrap": {
     "tarih": "2026-04-13",
     "kaynak": "62 trade, 17 Şub - 13 Nis 2026"
@@ -12,7 +12,7 @@
       "weight": 1.0,
       "weight_history": [],
       "current_prompt": "K-11 Trailing Stop:\nPozisyon zirveden 2×ATR aşağı düşerse trailing stop tetiklenir.\nMakro şok istisnası: SPY ≥%3 düşüş + VIX ≥%20 spike aynı gün → 1 gün bekle.",
-      "fitness": 1.86,
+      "fitness": 1.43,
       "last_modified": "2026-04-13T09:22:42.430373",
       "gercek_wr": 0.62,
       "gercek_avg_pnl": 5.1,
@@ -24,7 +24,15 @@
         "ayi_2022": 1.89,
         "toparlama_2023": 2.04
       },
-      "rsi_esigi_oneri": "VIX<20→75, VIX20-28→70, VIX>28→chandelier"
+      "rsi_esigi_oneri": "VIX<20→75, VIX20-28→70, VIX>28→chandelier",
+      "rsi_rejim_kurali": {
+        "VIX_lt_20": 75,
+        "VIX_20_28": 70,
+        "VIX_28_35": 65,
+        "VIX_gt_35": "TP_mod"
+      },
+      "boga_pf": 2.16,
+      "ayi_pf": 0.69
     },
     "K-11_partial_sell": {
       "version": 1,
@@ -73,7 +81,10 @@
       "current_prompt": "K-04 Giriş Filtresi:\nStandart: Giriş fiyatı SMA50 üstünde olmalı\nİstisna: RSI<30 + stabilizasyon + pozitif katalizör → çeyrek pozisyon\nYasak: SMA50+SMA200 altı + insider satış yoğun → giriş yok",
       "fitness": 1.46,
       "last_modified": "2026-04-13T09:22:42.430389",
-      "not": "RSI≤40 + SMA200 backtest ile en iyi (n=79, PF 1.46)"
+      "not": "RSI≤40 + SMA200 backtest ile en iyi (n=79, PF 1.46)",
+      "nihai_kural": "RSI≤40 + SMA200 üstü",
+      "pf": 2.05,
+      "mdd_kiyasi": "SMA200 filtreli MaxDD -%21 vs filtresiz -%43"
     },
     "session_faz1_gap": {
       "version": 1,
@@ -118,5 +129,5 @@
     "avg_win_pct": 13.0,
     "avg_loss_pct": -5.8
   },
-  "toplam_backtest_trade": 4601
+  "toplam_backtest_trade": 10172
 }
