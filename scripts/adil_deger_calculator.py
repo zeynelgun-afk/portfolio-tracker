@@ -323,6 +323,7 @@ def fetch_smart_peer_evrev(symbol, subj_profile, hisse_tipi):
     """
     # Rule of 40 skoru her zaman hesapla
     rof40 = (subj_profile.get("rev_gr") or 0) + (subj_profile.get("fcf_m") or 0)
+    rof40 = max(rof40, 0)
 
     if hisse_tipi == "buyume":
         # Büyüme hissesi → SaaS evreninden benzer profil bul
