@@ -49,6 +49,89 @@ PEER_PRIM_ESIK    = 3.0   # peer ortalamasının 3x üstü → prim uyarısı
 
 # ─── YARDIMCI FONKSİYONLAR ─────────────────────────────────────────────────
 
+
+# ═══════════════════════════════════════════════════════════════
+# v4.x: İLERİYE BAKAN PE + KALİTE SKORU + ROIC
+# ═══════════════════════════════════════════════════════════════
+
+def calc_blended_pe(avg_pe_252g, rate_pe, fwd_peg, eps_growth_pct, eps_momentum=0):
+    """Büyüme hızına göre ağırlıklı karışık PE."""
+    g = max(eps_growth_pct or 0, 0)
+    if   g > 60:  peg_h = 0.65
+    elif g > 40:  peg_h = 0.80
+    elif g > 25:  peg_h = 1.00
+    elif g > 15:  peg_h = 1.20
+    elif g > 8:   peg_h = 1.40
+    else:         peg_h = None
+    growth_pe  = (peg_h * g) if peg_h else rate_pe
+    market_fwd = (fwd_peg * g) if (fwd_peg and fwd_peg > 0 and g > 5) else None
+    if g > 40:   wh, wg, wm = 0.15, 0.50, 0.35
+    elif g > 20: wh, wg, wm = 0.30, 0.45, 0.25
+    elif g > 8:  wh, wg, wm = 0.50, 0.35, 0.15
+    else:        wh, wg, wm = 0.75, 0.25, 0.00
+    if not market_fwd: wg += wm; wm = 0; market_fwd = growth_pe
+    blended = wh * (avg_pe_252g or rate_pe) + wg * growth_pe + wm * market_fwd
+    if eps_momentum > 0:  blended *= 1.15
+    elif eps_momentum < 0: blended *= 0.85
+    return max(rate_pe * 0.80, min(blended, rate_pe * 8))
+
+
+def calc_quality_score(price, bvps, roe, roic, fcf_ps, gp_m, inc_ann):
+    """Kalite skoru (0-100): ciro CV + brüt marj + ROE/ROIC + FCF verimi."""
+    skor = 0
+    # 1. Ciro tutarlılığı — M&A dirençli
+    revs = [safe(q.get("revenue")) for q in (inc_ann or [])[:5] if q.get("revenue")]
+    cv = 999
+    if len(revs) >= 3:
+        grs = [(revs[i]/revs[i+1]-1)*100 for i in range(len(revs)-1) if revs[i+1]>0]
+        grs_r = [min(g, 50) for g in grs]
+        avg = sum(grs_r)/len(grs_r) if grs_r else 0
+        std = (sum((g-avg)**2 for g in grs_r)/len(grs_r))**0.5 if len(grs_r)>1 else 0
+        cv = abs(std/avg)*100 if avg else 999
+        if cv<15: skor+=40
+        elif cv<30: skor+=32
+        elif cv<50: skor+=22
+        elif cv<80: skor+=12
+        else: skor+=5
+    # 2. Brüt marj
+    gp_m = gp_m or 0
+    if gp_m>0.60: skor+=25
+    elif gp_m>0.40: skor+=20
+    elif gp_m>0.25: skor+=14
+    elif gp_m>0.12: skor+=8
+    else: skor+=3
+    gp_bonus = 5 if gp_m > 0.50 and cv > 50 else 0
+    # 3. ROE veya ROIC
+    bvps = bvps or 0
+    if bvps>0 and roe and 0<roe<2.0:
+        verim = roe
+    elif roic and 0<roic<2.0:
+        verim = roic
+    else:
+        verim = None
+    if verim:
+        if verim>0.30: skor+=20
+        elif verim>0.20: skor+=16
+        elif verim>0.12: skor+=10
+        elif verim>0.06: skor+=5
+    # 4. FCF verimi
+    fcf_ps = fcf_ps or 0
+    price  = price or 1
+    fcf_y  = fcf_ps/price if price>0 and fcf_ps>0 else 0
+    if fcf_y>0.05: skor+=15
+    elif fcf_y>0.03: skor+=12
+    elif fcf_y>0.02: skor+=8
+    elif fcf_y>0.01: skor+=4
+    return min(skor + gp_bonus, 100)
+
+
+def quality_premium_mult(q_skor):
+    if q_skor>=80: return 1.35
+    elif q_skor>=70: return 1.25
+    elif q_skor>=60: return 1.15
+    elif q_skor>=50: return 1.07
+    return 1.0
+
 def fmp_get(endpoint, params=None):
     if params is None: params = {}
     params['apikey'] = FMP_API_KEY
@@ -581,6 +664,17 @@ def hesapla(symbol, pe_modu='average', manuel_pe=None, fwd_eps_input=None, sessi
             cv  = abs(std/ort)*100 if ort else 100
             guven = max(0, min(100, round(100-cv)))
 
+    # v4.x — Kalite skoru + Haklı Prim
+    gp_m_val = safe(rtm.get('grossProfitMarginTTM'))
+    roic_val  = safe(mttm.get('returnOnInvestedCapitalTTM'))
+    q_skor = calc_quality_score(price, bvps, roe, roic_val, fcf_ps, gp_m_val, inc_ann)
+    q_mult = quality_premium_mult(q_skor)
+    adil_q = adil
+    fark_q = fark
+    if adil and fark and fark > 20 and q_mult > 1.0:
+        adil_q = adil * q_mult
+        fark_q = (price / adil_q - 1) * 100
+
     # Analist hedefi
     pt_data = fmp_get("price-target-summary", {"symbol": symbol})
     analyst_target = safe(pt_data[0].get('lastQuarterAvgPriceTarget')) if pt_data else None
@@ -609,7 +703,14 @@ def hesapla(symbol, pe_modu='average', manuel_pe=None, fwd_eps_input=None, sessi
         print(f"\n{'='*62}")
 
     return {
-        'symbol': symbol, 'price': price, 'adil_deger': adil, 'fark_pct': fark,
+        'symbol': symbol, 'price': price,
+        'adil_deger': adil_q if adil_q else adil,
+        'adil_ham': adil,
+        'fark_pct': fark_q if fark_q else fark,
+        'fark_ham': fark,
+        'quality_skor': q_skor,
+        'quality_mult': q_mult,
+
         'guven': guven, 'hisse_tipi': hisse_tipi, 'analyst_target': analyst_target,
         'sector': sector_str, 'peg': peg_fmp, 'fwd_peg': fwd_peg,
         'metotlar': M, '252g': his_252g,
