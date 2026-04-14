@@ -76,9 +76,9 @@ jobs:
             WDAY=$(date +%u)
             if [ "$WDAY" -eq 7 ]; then
               echo "mode=weekly" >> $GITHUB_OUTPUT
-            elif [ "$HOUR" -eq 13 ] || ([ "$HOUR" -eq 12 ] && [ "$MIN" -ge 45 ]); then
+            elif [ "$HOUR" -eq 16 ] || ([ "$HOUR" -eq 15 ] && [ "$MIN" -ge 45 ]); then
               echo "mode=morning" >> $GITHUB_OUTPUT
-            elif [ "$HOUR" -eq 21 ] && [ "$MIN" -ge 25 ]; then
+            elif [ "$HOUR" -eq 0 ] || [ "$HOUR" -eq 1 ]; then
               echo "mode=closing" >> $GITHUB_OUTPUT
             else
               echo "mode=monitor" >> $GITHUB_OUTPUT
