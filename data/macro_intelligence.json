@@ -1,6 +1,6 @@
 {
-  "tarih": "2026-04-13T16:43:29.326149+03:00",
-  "vix": 20.61,
+  "tarih": "2026-04-14T17:12:23.903825+03:00",
+  "vix": 18.09,
   "sektor_performans": {
     "Basic Materials": 0.0,
     "Communication Services": 0.0,
@@ -16,120 +16,130 @@
   },
   "dominant_temalar": [
     {
-      "tema_adi": "enerji_geçiş",
-      "güç_skoru": 9,
-      "neden": "Hürmüz Boğazı abluka tehdidi enerji güvenliğini ön plana çıkardı. Petrol arzı riski yükseldi, alternatif enerji ve enerji bağımsızlığı teması güçleniyor. ABD LNG, nükleer ve yerli üretim avantajlı konumda.",
-      "öncelikli_alt_dal": "enerji_güvenliği_LNG_nükleer",
+      "tema_adi": "AI_altyapı",
+      "güç_skoru": 8,
+      "neden": "Nasdaq 100 teknoloji liderliği, 'fastest growth' haber odağı. PPI yumuşak geldi = Fed baskısı azaldı, büyüme hisselerine rotasyon devam ediyor.",
+      "öncelikli_alt_dal": "yazılım_bulut",
       "önerilen_hisseler": [
-        "CEG",
-        "VST",
-        "LNG",
-        "OXY"
+        "NVDA",
+        "AVGO",
+        "VRT"
       ],
       "portföy": "aggressive",
       "aciliyet": "yüksek",
       "hisse_evreni": [
-        "WMB",
-        "CEG",
-        "KMI",
-        "VST",
-        "ET",
-        "RUN",
-        "NRG",
-        "CCJ",
-        "ENPH",
-        "OKE",
-        "NEE",
-        "FSLR"
+        "IREN",
+        "EQIX",
+        "ASML",
+        "VRT",
+        "FN",
+        "ETN",
+        "COHR",
+        "AAOI",
+        "GNRC",
+        "WDC",
+        "STX",
+        "PWR",
+        "ONTO",
+        "HUBB",
+        "CAMT",
+        "KLAC",
+        "ANET",
+        "DLR",
+        "LITE",
+        "AMAT",
+        "LRCX",
+        "MU",
+        "TER"
       ]
     },
     {
       "tema_adi": "savunma_uzay",
-      "güç_skoru": 8,
-      "neden": "Hürmüz abluka senaryosu doğrudan askeri gerilim sinyali. Deniz kuvvetleri, füze savunma, istihbarat sistemleri talebi artabilir. Jeopolitik risk primi yükseliyor.",
-      "öncelikli_alt_dal": "deniz_savunma_ISR",
-      "önerilen_hisseler": [
-        "HII",
-        "LMT",
-        "NOC",
-        "RTX"
-      ],
-      "portföy": "aggressive",
-      "aciliyet": "yüksek",
-      "hisse_evreni": [
-        "S",
-        "RKLB",
-        "AJRD",
-        "LHX",
-        "KTOS",
-        "GD",
-        "ZS",
-        "LMT",
-        "NOC",
-        "CRWD",
-        "PANW",
-        "RTX",
-        "RDW"
-      ]
-    },
-    {
-      "tema_adi": "emtia_kaynak",
       "güç_skoru": 7,
-      "neden": "Enerji şoku + Çin tarife tehdidi emtia fiyatlarını destekliyor. Altın güvenli liman talebi, bakır ve nadir toprak stratejik önem kazanıyor.",
-      "öncelikli_alt_dal": "altın_bakır",
+      "neden": "İran görüşmeleri haberi risk-on rallisi getirdi ancak IMF uyarısı jeopolitik belirsizliği koruyor. Savunma harcamaları hedge pozisyonu olarak mantıklı.",
+      "öncelikli_alt_dal": "havacılık_savunma",
       "önerilen_hisseler": [
-        "NEM",
-        "FCX",
-        "GOLD"
+        "LMT",
+        "RTX",
+        "GD"
       ],
       "portföy": "balanced",
       "aciliyet": "orta",
       "hisse_evreni": [
-        "USA",
-        "MP",
-        "PAAS",
-        "NOVN",
-        "GOLD",
-        "FCX",
-        "HBM",
-        "SCCO",
-        "TECK",
-        "NEM",
-        "AEM"
+        "LHX",
+        "LMT",
+        "GD",
+        "KTOS",
+        "AJRD",
+        "RDW",
+        "PANW",
+        "CRWD",
+        "ZS",
+        "S",
+        "RTX",
+        "RKLB",
+        "NOC"
+      ]
+    },
+    {
+      "tema_adi": "finansal_döngüsel",
+      "güç_skoru": 6,
+      "neden": "Earnings sezonu odakta, yumuşak PPI ile faiz beklentileri gevşedi. Finansal sektör flat ama kazanç sürprizleri katalist olabilir.",
+      "öncelikli_alt_dal": "büyük_bankalar",
+      "önerilen_hisseler": [
+        "JPM",
+        "GS",
+        "MS"
+      ],
+      "portföy": "balanced",
+      "aciliyet": "orta",
+      "hisse_evreni": [
+        "MA",
+        "GS",
+        "MS",
+        "CB",
+        "MET",
+        "PRU",
+        "BAC",
+        "JPM",
+        "V",
+        "AFRM",
+        "AIG",
+        "PYPL"
       ]
     }
   ],
   "kacınılacak": [
-    "Consumer Cyclical",
-    "Communication Services"
+    "Consumer Defensive",
+    "Healthcare"
   ],
-  "piyasa_modu": "risk-off geçiş riski yüksek",
-  "genel_yorum": "Hürmüz Boğazı abluka haberleri piyasayı domine ediyor. Enerji güvenliği ve savunma temaları en net fırsat. VIX 20.6 seviyesinde, futures düşüşte — volatilite artabilir. Sektör performansları flat gözükse de haber akışı enerji/savunmayı öne çıkaracak. Agresif pozisyonlar için sabah seansı kritik.",
+  "piyasa_modu": "risk-on",
+  "genel_yorum": "VIX 18.1 ile volatilite kontrol altında. İran diplomasisi + yumuşak PPI kombinasyonu büyüme hisselerine rotasyonu destekliyor. Teknoloji ağırlıklı agresif pozisyon mantıklı, savunma hedge olarak tutulabilir.",
   "haberler": [
     {
-      "baslik": "Why The U.S. Blockade May Be The Move That Ends The War",
-      "kaynak": "seekingalpha.com",
-      "tarih": "2026-04-13 09:30"
+      "baslik": "Fed Nominee Kevin Warsh Discloses Vast Wealth",
+      "kaynak": "wsj.com",
+      "tarih": "2026-04-14 10:01"
     },
     {
-      "baslik": "Hormuz Blockade: American Resilience Is Both A Boon And A Risk",
-      "kaynak": "seekingalpha.com",
-      "tarih": "2026-04-13 09:14"
+      "baslik": "Kevin Warsh Could Become Richest Fed Chair Ever—Discloses Assets Worth Over $100 Million",
+      "kaynak": "forbes.com",
+      "tarih": "2026-04-14 10:00"
     },
     {
-      "baslik": "'STAGGRING AMOUNT': Trump THREATENS China with new tariffs if they do this",
-      "kaynak": "youtube.com",
-      "tarih": "2026-04-13 09:01"
-    },
-    {
-      "baslik": "Can Trump Actually Blockade The Strait Of Hormuz?",
-      "kaynak": "seekingalpha.com",
-      "tarih": "2026-04-13 09:00"
-    },
-    {
-      "baslik": "Why the best stock-markets bets are Chinese tech stocks and this out-of-fashion sector, according to Bank of America",
+      "baslik": "These 20 stocks in the now-cheap tech sector are positioned for the fastest growth through 2028",
       "kaynak": "marketwatch.com",
-      "tarih": "2026-04-13 08:58"
+      "tarih": "2026-04-14 09:55"
+    },
+    {
+      "baslik": "Nasdaq 100: Tech Stocks Lead US Indices Higher After Soft PPI Today",
+      "kaynak": "fxempire.com",
+      "tarih": "2026-04-14 09:48"
+    },
+    {
+      "baslik": "Iran war will hit UK growth the hardest of any rich economies, IMF says",
+      "kaynak": "cnbc.com",
+      "tarih": "2026-04-14 09:44"
     }
   ]
 }

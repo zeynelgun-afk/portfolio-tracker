@@ -65,6 +65,69 @@
         }
       },
       "karar_degisti_mi": true
+    },
+    {
+      "symbol": "PORTFÖY_GENELI",
+      "tarih": "2026-04-14T14:14:04.485644",
+      "ilk_karar": {
+        "karar": "BEKLE",
+        "hedef_sembol": "PORTFÖY_GENELI",
+        "gerekce": "Risk yöneticisi HIGH güvenle kritik uyarılar veriyor: Technology sektörü %66.9 konsantrasyon K-17 ihlali sınırında, dividend portföyünde VZ/MO/DUK stoplara %2-3 mesafede tehlikeli yakın. Makro ve sektör analistleri RISK_ON sinyali verse de (ağırlıklı) risk analistinin konsantrasyon ve stop yakınlık uyarıları öncelikli. 17 Nisan Fed konuşmaları öncesi yeni pozisyon açmak veya tech ağırlığını artırmak K-17 ve K-13 kurallarına aykırı. Mevcut pozisyonlar korunmalı, ancak dividend portföyünde VZ ve MO için stop seviyelerinin %3-4'e gevşetilmesi veya pozisyon küçültme değerlendirilmeli.",
+        "uyari": "KRITIK: Technology konsantrasyonu %66.9 — yeni tech girişi K-17 ihlali. Dividend portföyü %5 düşüşte 4 stop tetikler ($18K kayıp riski). Fed Waller/Barkin konuşmaları 17 Nisan'da — şahin ton gelirse VIX spike riski.",
+        "guven": "MEDIUM",
+        "analist_uzlasma": "DUSUK",
+        "tahmin": {
+          "yon": "NEUTRAL",
+          "buyukluk": "LOW",
+          "sembol": "SPY"
+        },
+        "_agent": "CIO_AGENT",
+        "_timestamp": "2026-04-14T14:13:31.471629"
+      },
+      "boğa": {
+        "argümanlar": [
+          "VIX 18.09 seviyesinde ve günlük %5.39 düşüşle piyasa korkusunun hızla azaldığını gösteriyor - bu risk iştahının arttığının net göstergesi",
+          "SPY (+0.62%) ve QQQ (+0.82%) birlikte yükselirken teknoloji liderliğinde sağlıklı bir ralli görüyoruz - %66.9 teknoloji konsantrasyonumuz bu ortamda avantaj",
+          "Balanced portföy +%12.3, Dividend portföy +%43.1 ile güçlü performans sergiliyor - genel strateji çalışıyor, aggressive sadece döngüsel geri kalmışlık yaşıyor"
+        ],
+        "katalizörler": [
+          "Q1 2026 kazanç sezonu başlamak üzere - COHR ve ANET AI/data center temasıyla güçlü guidance verebilir",
+          "VRT ($306) zaten hedef fiyat $330'a %7.8 mesafede - teknik breakout potansiyeli yüksek"
+        ],
+        "hedef_fiyat_gerekce": "COHR hedef $330 mevcut fiyat $309.57'den sadece %6.6 yukarıda, VRT %7.8 uzakta - normal piyasa koşullarında 2-4 haftalık hareket mesafesi. Teknoloji ralisi devam ederse her iki pozisyon da hedeflere ulaşabilir",
+        "boga_skoru": 7,
+        "en_guclu_nokta": "VIX'in %5.4 düşüşü ve QQQ'nun SPY'ı outperform etmesi, mevcut teknoloji ağırlıklı pozisyonlarımızın tam olarak doğru zamanda doğru yerde olduğunu kanıtlıyor"
+      },
+      "ayı": {
+        "argümanlar": [
+          "Aggressive portföy -%9.46 drawdown'da — $37,849 kayıp realize edilmiş, %5 eşik çoktan aşıldı ve trend devam ediyor",
+          "Teknoloji konsantrasyonu %66.9 ile kritik seviyede — tek sektör riski, NASDAQ düzeltmesinde portföy çarpan etkisiyle ezilir",
+          "VRT pozisyonu %24.4 stop mesafesiyle tamamen kontrolden çıkmış — bu seviye risk yönetimi değil, umut ticareti"
+        ],
+        "katalizörler": [
+          "Fed toplantısı öncesi teknoloji sektörü kar realizasyonu baskısı",
+          "Q1 kazanç sezonu başlıyor — ANET, COHR yüksek beklentiler karşılanamayabilir",
+          "VIX 18'de ama düşüş yanıltıcı — düşük volatilite genelde fırtına öncesi sessizlik"
+        ],
+        "stop_gerekce": "Piyasa %5 düşüş senaryosunda $18,301 kayıp öngörülüyor — aggressive portföy -%15 seviyesine gider, bu noktada psikolojik çöküş başlar",
+        "ayı_skoru": 7,
+        "en_güçlü_nokta": "Aggressive portföyde VRT %24.4 stop mesafesi, risk yönetimi prensiplerinin tamamen terk edildiğini gösteriyor — bu pozisyon ya kesilmeli ya da ciddi şekilde küçültülmeli"
+      },
+      "nihai": {
+        "nihai_karar": "KISMI_CIK",
+        "kazan_taraf": "AYI",
+        "karar_gerekce": "VRT pozisyonunun %24.4 stop mesafesi kabul edilemez risk seviyesinde. Aggressive portföyün -%9.5 drawdown'ı ve %66.9 teknoloji konsantrasyonu, piyasa iyimserliğine rağmen acil risk azaltma gerektiriyor. Önce en sorunlu pozisyondan çıkış yapılmalı.",
+        "boga_hakli_cunku": "VIX düşüşü ve SPY/QQQ rallisi kısa vadede olumlu momentum sağlıyor — bu window'u çıkış için kullanmalıyız",
+        "ayi_hakli_cunku": "VRT %24.4 stop mesafesi risk yönetimi ihlali, pozisyon kontrol edilemez hale gelmiş ve kesilmeli",
+        "goz_ardi_edilen": "COHR, ANET gibi diğer aggressive pozisyonların durumu ve sektör rotasyonu ihtimali yeterince tartışılmadı",
+        "guven": "HIGH",
+        "tahmin": {
+          "yon": "NEUTRAL",
+          "buyukluk": "MEDIUM",
+          "sembol": "SPY"
+        }
+      },
+      "karar_degisti_mi": true
     }
   ]
 }

@@ -414,5 +414,12 @@
       "tema": "İran ateşkes kırılgan, CPI beklentisi yüksek, tüm pozisyonlar TUT kararı"
     },
     "son_guncelleme": "2026-04-09T19:02:03.518813"
-  }
+  },
+  "buy_list": {
+    "tarih": "2026-04-14T17:12:43.198415+03:00",
+    "adaylar": [],
+    "vix": 18.09,
+    "piyasa_mod": "risk-on"
+  },
+  "timestamp": "2026-04-14T17:12:43.198746+03:00"
 }

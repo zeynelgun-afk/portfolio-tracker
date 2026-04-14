@@ -1,78 +1,79 @@
 {
   "macro": {
-    "sinyal": "RISK_OFF",
+    "sinyal": "RISK_ON",
     "guven": "MEDIUM",
-    "ana_tema": "VIX'te %7.18'lik ani yükseliş ve yaklaşan enflasyon verisi risk-off senaryosunu destekliyor",
+    "ana_tema": "VIX normalleşmesi ve Fed konuşmaları öncesi temkinli iyimserlik hakim",
     "beklentiler": [
-      "17 Nisan CPI verisi piyasa için kritik - YoY 1.5% beklentisi mevcut 1.3%'ün üzerinde",
-      "Fed Waller konuşması para politikası sinyali verebilir",
-      "Core enflasyonun 2%'ye çıkması Fed'in faiz indirim beklentilerini erteleyebilir"
+      "17 Nisan Fed Waller ve Barkin konuşmaları piyasa yönünü belirleyecek",
+      "CPI verileri enflasyon beklentilerini şekillendirecek",
+      "VIX 18 seviyesinde stabilize, risk iştahı artıyor"
     ],
-    "risk_faktoru": "VIX 20.61 seviyesinde ve günlük %7+ artış - volatilite yükselişi başlangıç sinyali olabilir",
+    "risk_faktoru": "Fed yetkilileri şahin ton kullanırsa faiz indirim beklentileri ertelenebilir",
     "tahmin": {
-      "yon": "DOWN",
+      "yon": "UP",
       "buyukluk": "MEDIUM",
       "sembol": "SPY"
     },
     "_agent": "MACRO_AGENT",
-    "_timestamp": "2026-04-13T13:44:10.840795"
+    "_timestamp": "2026-04-14T14:12:51.112503"
   },
   "sector": {
-    "aktif_rejim": "risk_off",
-    "lider_sektor": "Savunma/Havacılık - ITA, Altın - GLD",
-    "zayif_sektor": "Teknoloji/AI - XLK, QQQ",
-    "rotasyon_onerisi": "Agresif portföydeki AI/yarıiletken ağırlığını (COHR, VRT, ANET, MU, CAMT) azalt, savunma (ITA) ve değer hisselerine (VTV) kaydır",
+    "aktif_rejim": "risk_on",
+    "lider_sektor": "Teknoloji - XLK (AI/Yarı iletken momentum devam)",
+    "zayif_sektor": "Utilities - XLU (para çıkışı, faiz beklentileri)",
+    "rotasyon_onerisi": "Defensivlerden (XLU, XLP) teknoloji/AI'ya (XLK, SMH) doğru rotasyon devam ediyor. VIX 18 seviyesinde risk iştahı güçlü.",
     "guven": "MEDIUM",
     "tahmin": {
       "yon": "UP",
       "buyukluk": "MEDIUM",
-      "sembol": "GLD"
+      "sembol": "XLK"
     },
     "_agent": "SECTOR_AGENT",
-    "_timestamp": "2026-04-13T13:44:15.997921"
+    "_timestamp": "2026-04-14T14:12:55.994013"
   },
   "signal": {
     "_agent": "SIGNAL_AGENT",
-    "_raw": "```json\n{\n  \"portfoy_sinyalleri\": [\n    {\n      \"sembol\": \"COHR\",\n      \"sinyal\": \"HOLD\",\n      \"rsi_yorumu\": \"normal\",\n      \"sma_durumu\": \"ustunde\",\n      \"aciklama\": \"Stop %7.8 ile hedefe yakın, momentum korunuyor\"\n    },\n    {\n      \"sembol\": \"VRT\",\n      \"sinyal\": \"WATCH\",\n      \"rsi_yorumu\": \"",
+    "_raw": "```json\n{\n  \"portfoy_sinyalleri\": [\n    {\n      \"sembol\": \"COHR\",\n      \"sinyal\": \"HOLD\",\n      \"rsi_yorumu\": \"normal\",\n      \"sma_durumu\": \"ustunde\",\n      \"aciklama\": \"Stop %8.3 ile hedefe yakın, momentum korunuyor\"\n    },\n    {\n      \"sembol\": \"VRT\",\n      \"sinyal\": \"WATCH\",\n      \"rsi_yorumu\": \"",
     "_parse_hata": true,
     "guven": "LOW"
   },
   "risk": {
     "risk_seviyesi": "HIGH",
     "stop_yakini": [
-      "VZ - %3.8 uzakta (en yakın stop)",
-      "DUK - %3.8 uzakta",
-      "CI - %4.8 uzakta",
-      "MO (balanced) - %6.9 uzakta",
-      "T - %6.0 uzakta"
+      "dividend/VZ - %2.1 uzakta",
+      "balanced/DUK - %2.3 uzakta",
+      "dividend/MO - %2.5 uzakta",
+      "dividend/T - %3.0 uzakta",
+      "balanced/NEE - %3.5 uzakta",
+      "balanced/MO - %4.1 uzakta"
     ],
-    "konsantrasyon_uyarisi": "Technology sektörü %65.7 konsantrasyon - K-17 kuralı ihlal riski yüksek. Aggressive portföyde 5 pozisyonun tamamı tech/yarı iletken ağırlıklı (COHR, VRT, ANET, MU, CAMT). Tek sektör şoku tüm agresif portföyü vurabilir.",
-    "senaryo_5pct_dusus": "Toplam tahmini kayıp: $17,920 (-%5.8). VZ stop tetiklenir (43.38 ≤ 44.01 stop seviyesi). DUK ve CI de kritik eşiğe yakın. Aggressive portföy zaten -%9.5 drawdown'da - K-14 çiğnenmiş durumda.",
+    "konsantrasyon_uyarisi": "Technology sektörü %66.9 ile KRITIK seviyede konsantre. Aggressive portföyün tamamı (COHR, VRT, ANET, MU, CAMT) teknoloji/yarı iletken ağırlıklı. K-17 kuralı gereği aynı sektörden ek giriş yapılmamalı. Sektör korelasyonu çok yüksek — tek bir tech selloff tüm aggressive portföyü vurur.",
+    "senaryo_5pct_dusus": "Tahmini kayıp: $18,301 (-%5.9). 4 pozisyon stop tetiklenir: DUK, T, VZ, MO. Dividend portföyü en savunmasız — 3 pozisyon stoplarına %2-3 mesafede. Aggressive portföy %5 düşüşte yaklaşık $18K kayıp yaşar ama stoplara uzak.",
     "onerileri": [
-      "COHR %7.8 stop uzaklığı ile en yakın - %5 düşüşte tetiklenir, sabah ilk iş trailing stop sıkılaştır",
-      "VZ pozisyonunu proaktif olarak %50 azalt - stop çok yakın ve tetiklenme riski yüksek",
-      "Aggressive portföyde yeni tech girişi kesinlikle yapma - K-14 aktif (drawdown >%5)",
-      "Technology konsantrasyonunu azaltmak için MU veya CAMT'tan birini %30-40 trim et",
-      "VIX 20.61 ve %7.18 artışta - K-13 gereği tech/growth pozisyonlarında temkinli ol"
+      "Dividend portföyünde VZ ve MO stoplarını %3-4 seviyesine gevşet veya pozisyon küçült — %5 düşüşte tüm pozisyon kaybı riski var",
+      "Aggressive'de COHR %8.3 stop ile en yakın — earnings/haber kontrolü yap, trailing stop düşün",
+      "Technology konsantrasyonu acil azaltılmalı — yeni tech girişi K-17 ihlali olur",
+      "DUK %2.3 stop mesafesi çok dar, utility için geniş stop mantıklı olabilir",
+      "VIX 18 normal seviyede ama technology ağırlığı göz önüne alındığında VIX>22'de aggressive pozisyonlar yarıya inmeli (K-13)"
     ],
     "guven": "HIGH",
     "_agent": "RISK_AGENT",
-    "_timestamp": "2026-04-13T13:44:42.759931"
+    "_timestamp": "2026-04-14T14:13:21.631304"
   },
   "cio": {
-    "karar": "DONDUR",
-    "hedef_sembol": "MU",
-    "gerekce": "Risk yöneticisi (ağırlık 0.67, güven HIGH) ve sektör analisti (ağırlık 1.53) teknoloji konsantrasyonunu azaltma konusunda mutabık. Aggressive portföy %65.7 tech ağırlığı ile K-17 ihlal sınırında, K-14 zaten çiğnenmiş (-%9.5 drawdown). MU, COHR'a göre daha düşük momentum gösteriyor ve trim için uygun aday. VIX %7.18 artışı ve yaklaşan CPI verisi risk-off ortamını destekliyor. Pozisyonun %30-40'ını azaltarak hem konsantrasyon riskini düşür hem de olası volatilite artışına karşı nakit tamponu oluştur.",
-    "uyari": "VZ stop seviyesine %3.8 uzakta - yarın açılışta tetiklenme riski var. COHR trailing stop'u sıkılaştırılmalı.",
+    "karar": "BEKLE",
+    "hedef_sembol": "PORTFÖY_GENELI",
+    "gerekce": "Risk yöneticisi HIGH güvenle kritik uyarılar veriyor: Technology sektörü %66.9 konsantrasyon K-17 ihlali sınırında, dividend portföyünde VZ/MO/DUK stoplara %2-3 mesafede tehlikeli yakın. Makro ve sektör analistleri RISK_ON sinyali verse de (ağırlıklı) risk analistinin konsantrasyon ve stop yakınlık uyarıları öncelikli. 17 Nisan Fed konuşmaları öncesi yeni pozisyon açmak veya tech ağırlığını artırmak K-17 ve K-13 kurallarına aykırı. Mevcut pozisyonlar korunmalı, ancak dividend portföyünde VZ ve MO için stop seviyelerinin %3-4'e gevşetilmesi veya pozisyon küçültme değerlendirilmeli.",
+    "uyari": "KRITIK: Technology konsantrasyonu %66.9 — yeni tech girişi K-17 ihlali. Dividend portföyü %5 düşüşte 4 stop tetikler ($18K kayıp riski). Fed Waller/Barkin konuşmaları 17 Nisan'da — şahin ton gelirse VIX spike riski.",
     "guven": "MEDIUM",
-    "analist_uzlasma": "ORTA",
+    "analist_uzlasma": "DUSUK",
     "tahmin": {
-      "yon": "DOWN",
-      "buyukluk": "MEDIUM",
+      "yon": "NEUTRAL",
+      "buyukluk": "LOW",
       "sembol": "SPY"
     },
     "_agent": "CIO_AGENT",
-    "_timestamp": "2026-04-13T13:44:51.112167"
+    "_timestamp": "2026-04-14T14:13:31.471629"
   },
   "weights": {
     "MACRO_AGENT": 0.8925,
