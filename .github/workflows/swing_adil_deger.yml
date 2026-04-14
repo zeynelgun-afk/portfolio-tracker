@@ -1,0 +1,26 @@
+name: Swing Adil Değer Filtresi
+
+on:
+  workflow_dispatch:
+    inputs:
+      semboller:
+        description: 'Semboller (boşlukla ayır)'
+        required: true
+        default: 'NVDA AMD MSFT AAPL'
+
+jobs:
+  filtre:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - name: Bağımlılıklar
+        run: pip install requests
+      - name: Swing Filtresi
+        run: |
+          python3 scripts/portfoy_adil_deger.py \
+            --swing ${{ github.event.inputs.semboller }}
+        env:
+          PYTHONPATH: ${{ github.workspace }}/scripts
