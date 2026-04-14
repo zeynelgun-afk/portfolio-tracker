@@ -453,6 +453,8 @@ def hesapla(symbol, pe_modu='average', manuel_pe=None, fwd_eps_input=None, sessi
     cf8     = fmp_get("cash-flow-statement", {"symbol": symbol, "period": "quarter", "limit": 8}) or []
     ttm_fcf = sum((q.get('freeCashFlow') or 0) for q in cf8[:4])
     prev_fcf= sum((q.get('freeCashFlow') or 0) for q in cf8[4:])
+    rev_gr = 0.10  # varsayılan — inc_ann'den sonra ezilecek
+    eps_gr = 0.10  # varsayılan — inc_ann'den sonra ezilecek
     # Sektöre göre FCF büyüme tavanı — utilities/financial daha muhafazakâr
     _fcf_cap = {'utilities': 0.12, 'financial': 0.12, 'energy': 0.20,
                 'industrial': 0.20, 'consumer': 0.20}.get(sector_cat, 0.50)

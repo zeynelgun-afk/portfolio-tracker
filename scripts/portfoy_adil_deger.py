@@ -172,8 +172,15 @@ def karar_puani(res, cycle):
         puan = -2; aciklama = f"PAHALI 🔴 orta (güven {guven})"
     elif -10 <= fark <= 10:
         puan = 0; aciklama = "ADİL 🟡"
-    else:
+    elif 10 < fark <= 20:
         puan = -1; aciklama = f"Hafif primli ({fark:+.0f}%)"
+    elif fark > 20:
+        # Pahalı ama düşük güven — yine de negatif
+        puan = -1; aciklama = f"PAHALI ({fark:+.0f}%) düşük güven:{guven} — dikkat"
+    elif fark < -10:
+        puan = 0; aciklama = f"Hafif ucuz ({fark:+.0f}%) — izle"
+    else:
+        puan = 0; aciklama = "Bant içi"
 
     # Market cycle düzeltmesi
     if cycle == "RISK_OFF" and puan > 0:
@@ -212,13 +219,20 @@ def swing_filtre(sym, res, cycle):
     if fark > 20 and guven >= 50 and not hakli_prim:
         return "DIKKAT", f"Hafif PAHALI {fark:+.0f}% — stop sıkı tut, lot küçült"
 
+    # Yüksek prim + düşük güven → özel uyarı
+    if fark > 30 and not hakli_prim:
+        return "DIKKAT", f"Yüksek prim {fark:+.0f}% (güven:{guven}) — dikkatli ol, stop sıkı"
+
     if fark < -20 and guven >= 60:
         return "ONAY", f"UCUZ {fark:+.0f}% güven:{guven} — adil değer desteği var ✓"
 
     if hakli_prim:
         return "ONAY", f"HAKLI PRİM kalite:{q} — prim hak ediliyor, giriş uygun"
 
-    return "ONAY", f"ADİL değer bölgesi ({fark:+.0f}%) — normal swing kuralları geçerli"
+    if fark > 10:
+        return "DIKKAT", f"Hafif primli {fark:+.0f}% — normal koşullar ama prim var"
+
+    return "ONAY", f"ADİL/UCUZ bölgesi ({fark:+.0f}%) — swing kuralları geçerli"
 
 
 # ═══════════════════════════════════════════════════════════════
@@ -346,12 +360,14 @@ def portfoy_tara(hizli=False):
         wl_syms = [i["sembol"] for i in items_s[:8]]
     except: pass
 
-    # Tüm sembolleri topla
-    portfoy_syms = {}
+    # Tüm sembolleri topla — çakışan semboller (MO gibi) ayrı kayıt tutar
+    portfoy_syms = {}  # sym → [(portfoy_adi, poz), ...]
     for ad, pozlar in portfoyler.items():
         for poz in pozlar:
             sym = poz["sembol"]
-            portfoy_syms[sym] = (ad, poz)
+            if sym not in portfoy_syms:
+                portfoy_syms[sym] = []
+            portfoy_syms[sym].append((ad, poz))
 
     tum_syms = list(portfoy_syms.keys()) + [s for s in wl_syms if s not in portfoy_syms]
 
@@ -388,7 +404,8 @@ def rapor_olustur(portfoyler, portfoy_syms, wl_syms, sonuclar, cycle, cycle_deta
     satirlar.append("| Sembol | Portföy | Maliyet | Fiyat | Adil Değer | Fark% | Güven | Sinyal | K.Puanı | Çıkış? |")
     satirlar.append("|--------|---------|---------|-------|------------|-------|-------|--------|---------|--------|")
 
-    for sym, (portfoy_adi, poz) in portfoy_syms.items():
+    for sym, kayitlar in portfoy_syms.items():
+      for (portfoy_adi, poz) in kayitlar:
         res = sonuclar.get(sym)
         if not res:
             satirlar.append(f"| {sym} | {portfoy_adi} | - | - | - | - | - | ❓ | - | - |")
@@ -587,7 +604,8 @@ def main():
     # Adım 3: Karar puanları + Adım 5: Çıkış sinyalleri
     print(f"\n{'─'*68}")
     print("  PORTFÖY ÖZETİ\n")
-    for sym, (portfoy_adi, poz) in portfoy_syms.items():
+    for sym, kayitlar in portfoy_syms.items():
+      for (portfoy_adi, poz) in kayitlar:
         res = sonuclar.get(sym)
         if not res: continue
         puan, puan_ac = karar_puani(res, cycle)
