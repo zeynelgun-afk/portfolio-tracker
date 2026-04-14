@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-04-14T19:15:14.805528",
+  "son_guncelleme": "2026-04-14T21:13:40.886490",
   "not": "SWING TRADE SADECE SİMÜLASYON - Sadece % kazanç/kayıp takibi (MAX: 8 pozisyon)",
   "aktif_pozisyonlar": [
     {
@@ -15,21 +15,22 @@
       "giris_nedeni": "Seans içi otomatik giriş — tenkan_bounce, sma50_bounce, kijun_bounce_v2, nr7_sikisma",
       "katalizor": "",
       "max_sure_gun": 15,
-      "durum": "AKTIF",
-      "guncel_fiyat": 794.46,
-      "son_fiyat": 794.46,
+      "durum": "✅ Normal aralıkta",
+      "guncel_fiyat": 794.25,
+      "son_fiyat": 794.25,
       "zirve_fiyat": 798.54,
-      "chandelier_stop": 713.01,
+      "chandelier_stop": 720.9,
       "k11_aktif": false,
       "k11_profit_lock": null,
-      "son_guncelleme": "2026-04-14",
+      "son_guncelleme": "2026-04-14T21:13:40.886490",
       "notlar": [
         "Tarih düzeltmesi: 11 Nisan Cumartesi piyasa kapalı — 10 Nisan Cuma kapanış fiyatına göre düzeltildi"
       ],
-      "pnl_pct": 0.48,
+      "pnl_pct": 0.45,
       "atr14": 25.88,
-      "chandelier_guncelleme": "2026-04-10",
-      "maliyet_baz": 790.66
+      "chandelier_guncelleme": "2026-04-14",
+      "maliyet_baz": 790.66,
+      "tutulan_gun": 4
     },
     {
       "id": "SWING-202604101410-KLAC",
@@ -44,21 +45,22 @@
       "giris_nedeni": "Seans içi otomatik giriş — tenkan_bounce, kijun_bounce_v2",
       "katalizor": "",
       "max_sure_gun": 15,
-      "durum": "AKTIF",
-      "guncel_fiyat": 1796.34,
-      "son_fiyat": 1796.34,
+      "durum": "✅ Normal aralıkta",
+      "guncel_fiyat": 1795.91,
+      "son_fiyat": 1795.91,
       "zirve_fiyat": 1796.34,
-      "chandelier_stop": 1530.73,
+      "chandelier_stop": 1589.79,
       "k11_aktif": false,
       "k11_profit_lock": null,
-      "son_guncelleme": "2026-04-14",
+      "son_guncelleme": "2026-04-14T21:13:40.886490",
       "notlar": [
         "Tarih düzeltmesi: 11 Nisan Cumartesi piyasa kapalı — 10 Nisan Cuma kapanış fiyatına göre düzeltildi"
       ],
-      "pnl_pct": 3.4,
+      "pnl_pct": 3.37,
       "atr14": 68.85,
-      "chandelier_guncelleme": "2026-04-10",
-      "maliyet_baz": 1737.28
+      "chandelier_guncelleme": "2026-04-14",
+      "maliyet_baz": 1737.28,
+      "tutulan_gun": 4
     },
     {
       "id": "SWING-202604101410-AMAT",
@@ -73,21 +75,22 @@
       "giris_nedeni": "Seans içi otomatik giriş — sma50_bounce",
       "katalizor": "",
       "max_sure_gun": 15,
-      "durum": "AKTIF",
-      "guncel_fiyat": 397,
-      "son_fiyat": 397,
+      "durum": "✅ Normal aralıkta",
+      "guncel_fiyat": 395.64,
+      "son_fiyat": 395.64,
       "zirve_fiyat": 399.49,
-      "chandelier_stop": 349.41,
+      "chandelier_stop": 349.42,
       "k11_aktif": false,
       "k11_profit_lock": null,
-      "son_guncelleme": "2026-04-14",
+      "son_guncelleme": "2026-04-14T21:13:40.886490",
       "notlar": [
         "Tarih düzeltmesi: 11 Nisan Cumartesi piyasa kapalı — 10 Nisan Cuma kapanış fiyatına göre düzeltildi"
       ],
-      "pnl_pct": -0.62,
+      "pnl_pct": -0.96,
       "atr14": 16.69,
-      "chandelier_guncelleme": "2026-04-10",
-      "maliyet_baz": 399.49
+      "chandelier_guncelleme": "2026-04-14",
+      "maliyet_baz": 399.49,
+      "tutulan_gun": 4
     },
     {
       "id": "SWING-202604141454-GEV",
@@ -102,16 +105,17 @@
       "giris_nedeni": "Seans içi otomatik giriş — tenkan_bounce",
       "katalizor": "",
       "max_sure_gun": 15,
-      "durum": "AKTIF",
-      "guncel_fiyat": 989.69,
-      "son_fiyat": 989.69,
+      "durum": "✅ Normal aralıkta",
+      "guncel_fiyat": 987.5,
+      "son_fiyat": 987.5,
       "zirve_fiyat": 1001.82,
       "chandelier_stop": 678.39,
       "k11_aktif": false,
       "k11_profit_lock": null,
-      "son_guncelleme": "2026-04-14",
+      "son_guncelleme": "2026-04-14T21:13:40.886490",
       "notlar": [],
-      "pnl_pct": -1.03
+      "pnl_pct": -1.25,
+      "tutulan_gun": 0
     },
     {
       "id": "SWING-202604141454-RPRX",
@@ -126,16 +130,17 @@
       "giris_nedeni": "Seans içi otomatik giriş — tenkan_bounce, kijun_bounce_v2, nr7_sikisma",
       "katalizor": "",
       "max_sure_gun": 15,
-      "durum": "AKTIF",
+      "durum": "✅ Normal aralıkta",
       "guncel_fiyat": 48.82,
       "son_fiyat": 48.82,
       "zirve_fiyat": 48.82,
       "chandelier_stop": 43.93,
       "k11_aktif": false,
       "k11_profit_lock": null,
-      "son_guncelleme": "2026-04-14",
+      "son_guncelleme": "2026-04-14T21:13:40.886490",
       "notlar": [],
-      "pnl_pct": 0.61
+      "pnl_pct": 0.62,
+      "tutulan_gun": 0
     }
   ],
   "ozet": {
