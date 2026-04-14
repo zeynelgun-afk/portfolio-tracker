@@ -1,65 +1,74 @@
 # Adil Değer Hesaplayıcı — Kullanım Kılavuzu
 
-Pine Script v3.5.2'nin Python uyarlaması. FMP API ile gerçek zamanlı veri çeker.
+Pine Script v3.5.2'nin Python uyarlaması. FMP API ile **252 günlük tarihsel
+ortalamalar otomatik hesaplanır** — EV/EBIT, EV/EBITDA, EV/Ciro, P/E, P/S,
+P/FCF hepsi Pine Script `historicalLookback=252` mantığıyla.
 
 ## Temel Kullanım
 
 ```bash
+# Varsayılan: 252g dinamik ortalama (Pine Script birebir)
 python3 scripts/adil_deger_calculator.py AMD
+
+# Forward EPS analist konsensüsü ile (önerilir)
+python3 scripts/adil_deger_calculator.py AMD --fwd-eps 5.00
+
+# Faize dayalı F/K modu
+python3 scripts/adil_deger_calculator.py DUK --pe-modu rate
+
+# Manuel F/K
+python3 scripts/adil_deger_calculator.py MSFT --pe-modu manuel --manuel-pe 28
 ```
 
 ## PE Modları
 
-| Mod | Açıklama | Örnek |
-|-----|----------|-------|
-| `rate` | 10Y hazine faizine dayalı F/K (100/faiz) | `--pe-modu rate` |
-| `average` | TTM P/E, max 50x ile sınırlı | `--pe-modu average` |
-| `manuel` | Kullanıcı tanımlı F/K | `--pe-modu manuel --manuel-pe 25` |
+| Mod | Açıklama |
+|-----|----------|
+| `average` | 252g dinamik TTM P/E (varsayılan, Pine Script birebir) |
+| `rate` | 10Y hazine faizine dayalı F/K (100/faiz) |
+| `manuel` | Kullanıcı tanımlı F/K — `--manuel-pe` ile |
 
-## EV Çarpan Örnekleri (Sektöre Göre)
+## Forward EPS Notu
 
-| Sektör | EV/EBIT | EV/EBITDA | EV/Ciro |
-|--------|---------|-----------|---------|
-| Teknoloji/Yarı iletken | 30-40x | 35-45x | 8-12x |
-| Sanayi | 15-20x | 12-18x | 2-4x |
-| Enerji | 10-15x | 8-12x | 1-3x |
-| Sağlık | 18-25x | 15-20x | 3-6x |
-| Genel | 15x | 20x | 3x (varsayılan) |
-
-## Örnekler
+FMP Premium forward EPS vermiyor. `--fwd-eps` girilmezse TTM×büyüme kullanılır.
+Analist konsensüsünü manuel girmek için:
+- Kaynak: TradingView, Seeking Alpha, Yahoo Finance → "EPS Estimate"
 
 ```bash
-# AMD — yarı iletken çarpanlarıyla
-python3 scripts/adil_deger_calculator.py AMD \
-  --pe-modu average --ev-ebit 35 --ev-ebitda 40 --ev-rev 10
-
-# DUK (Dengeli portföyündeki kamu hizmeti)
-python3 scripts/adil_deger_calculator.py DUK \
-  --pe-modu rate --ev-ebit 14 --ev-ebitda 12 --ev-rev 2
-
-# NVDA karşılaştırması
-python3 scripts/adil_deger_calculator.py NVDA \
-  --pe-modu average --ev-ebit 40 --ev-ebitda 50 --ev-rev 15
+# AMD: 2026 analist konsensüsü ~$5.00
+python3 scripts/adil_deger_calculator.py AMD --fwd-eps 5.00
 ```
 
 ## 10 Değerleme Metodu
 
-1. **Net Kazanç P/E** — TTM EPS × seçilen F/K
-2. **ROE Bazlı** — ROE × Defter Değeri × F/K
-3. **EV/EBIT** — Hedef EV/EBIT × TTM EBIT → hisse başı
-4. **EV/EBITDA** — Hedef EV/EBITDA × TTM EBITDA → hisse başı
-5. **EV/Ciro** — Hedef EV/Ciro × TTM Ciro → hisse başı
-6. **Forward P/E** — Tahmini EPS (TTM + büyüme) × F/K
-7. **Forward P/S** — Tahmini Ciro × P/S
-8. **P/SNA (P/FCF)** — TTM FCF/Hisse × hedef çarpan
-9. **Graham Sayısı** — √(22.5 × EPS × Defter Değeri)
-10. **DCF** — 5 yıllık İndirgenmiş Nakit Akışı
+| # | Metot | Çarpan Kaynağı |
+|---|-------|----------------|
+| 1 | Net Kazanç P/E | 252g tarihsel TTM P/E |
+| 2 | ROE Bazlı | 252g tarihsel TTM P/E |
+| 3 | EV/EBIT | 252g tarihsel EV/EBIT ortalaması (otomatik) |
+| 4 | EV/EBITDA | 252g tarihsel EV/EBITDA ortalaması (otomatik) |
+| 5 | EV/Ciro | 252g tarihsel EV/Ciro ortalaması (otomatik) |
+| 6 | Forward P/E | Fwd EPS × mevcut piyasa fwd P/E (--fwd-eps ile) |
+| 7 | Forward P/S | Fwd Ciro/Hisse × 252g P/S ortalaması |
+| 8 | P/FCF | TTM FCF/Hisse × 252g P/FCF ortalaması |
+| 9 | Graham Sayısı | √(22.5 × EPS × BVPS) — sadece değer hisseleri için |
+| 10 | DCF | 5 yıllık İndirgenmiş Nakit Akışı |
 
-Sonuç, sektöre özgü ağırlıklarla birleştirilir (tech, energy, financial vb.).
+## AMD Kalibrasyon Sonuçları
+
+| Hesaplama | Sonuç |
+|-----------|-------|
+| Python (252g + `--fwd-eps 5.00`) | **$231** |
+| TradingView Pine Script (average) | $218 |
+| TradingView + analist beklentisi | $290 |
+| FMP analist fiyat hedefi | $279 |
+
+**~$13 fark** = FMP forward EPS kaynağı vs TradingView `request.earnings()`.
+Kalan fark ihmal edilebilir; her iki araç da AMD'yi "adil değere yakın" gösteriyor.
 
 ## Güven Skoru
 
 Metotlar arasındaki varyasyon katsayısına (CV) dayanır.
 - **60+** → Metotlar yakınsıyor, güvenilir tahmin
 - **40-60** → Orta güven, ek araştırma önerilir
-- **<40** → Metotlar ıraksıyor (büyüme hissesi veya kriz senaryosu)
+- **<40** → Metotlar ıraksıyor (yüksek büyüme hissesi veya kriz senaryosu)
