@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-04-14T19:54:54",
+  "son_guncelleme": "2026-04-14T19:56:39",
   "not": "3 portföy merkezi aday havuzu. PART 1C 15:38 TR güncelleme: DUK/NEE/GEV yeni EKLE (K-04+K-18 temiz), POWL K-18 ELENDİ ($27.3M insider satış), ön piyasa gap-up sonrası kovalama yasağı 4 aday için aktif. | 11 Nisan: Nükleer tema adayları eklendi (CCJ, OKLO, NNE, UEC, VST) — tematik araştırma, K-14 aktif olduğu için hepsi İZLE statüsünde. | 11 Nisan ek: BWXT (savunma tekel+NRC katalizör), LEU (HALEU tekeli), DNN (Wheeler River) İZLE. SMR (class action lawsuit) ve UUUU (%6 upside) GEÇ. | 2026-04-14: ALAB+PLAB+COHU eklendi — optik/bağlantı/test ekipmanı tematik araştırması. Hepsi IZLE statüsünde, geri çekilme bekleniyor.",
   "sistem_referans": "docs/PORTFOLIO_OPPORTUNITY_SYSTEM.md",
   "script": "scripts/portfolio_scan_common.py",
@@ -918,8 +918,8 @@
       "tez": "ABD merkezli tek güvenilir fotomaske üreticisi. Op marj %24.5, borçsuz, kasada $588M. Samsung ile Tesla AI6 chip ortaklığı. Allen Texas fabrikası H2 2026 üretime giriyor. Reshoring trendinin doğrudan faydalanıcısı. Küçük analist coverage = gizli fırsat potansiyeli.",
       "karsit_argumani": "Gelir büyümesi yıllık -%2 — hâlâ daralıyor. CEO dahil birden fazla yönetici büyük satış yaptı. Hisse 52h zirvesinde — geri çekilme yok. AI chip talebinin fotomaske gelirine yansıması gecikebilir.",
       "karar": "IZLE",
-      "kataliz": "Allen Texas fabrikası üretime girişi (H2 2026) ve gelir büyümesinin pozitife dönmesi",
-      "not": "Geri çekilme olmadan giriş yapmak istemiyoruz. $38-42 bandına düşerse yeniden değerlendir."
+      "kataliz": "Allen Texas fabrikasından ilk anlamlı gelir geldiğinde — ve bu gelir hisse fiyatına henüz yansımamışsa. Açılış haberi aralık 2025'te %45 tek günlük yükselişle fiyatlandı. Gerçek fırsat: beklenti aşımı veya öngörülmeyen erken ramp.",
+      "not": "Fabrika açılışı katalizörü zaten fiyatlandı (Ara 2025 +%45). Giriş için ya geri çekilme ($38-42) ya da beklenmedik hız aşımı gerekir. Mevcut $46 seviyesi riski ödüllendirmiyor."
     },
     {
       "sembol": "COHU",
