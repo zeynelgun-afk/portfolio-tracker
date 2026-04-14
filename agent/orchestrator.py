@@ -930,9 +930,9 @@ def _check_swing_exits(market: dict) -> list[str]:
 def _execute_portfolio_opportunities(faz: str, market: dict) -> list:
     """
     Sabah buy listinden portföylere alım yapar.
-    FAZ_1: İlk 30dk — sadece izle, giriş yok (gap stabilizasyonu)
-    FAZ_2: Onaylanan fırsatları execute et
-    FAZ_3: Sadece mevcut pozisyon yönetimi
+    FAZ_1: 16:30-17:30 TR — sadece izle, giriş YOK (gap stabilizasyonu)
+    FAZ_2: 17:30-21:00 TR — onaylanan fırsatları execute et (swing + portföy girişleri)
+    FAZ_3: 21:00-23:00 TR — sadece mevcut pozisyon yönetimi, yeni giriş yok
     """
     if faz == "FAZ_1" or not buy_position or not get_portfolio_status:
         return []

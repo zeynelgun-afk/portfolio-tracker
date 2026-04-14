@@ -24,7 +24,8 @@
 - Drawdown freni YOKTUR — stop disiplini (K-06) + K-13 VIX filtresi yeterli
 
 ## Zorunlu Kontroller
-- K-17: Aynı sektörden aynı gün birden fazla giriş yapma
+- K-17: Aynı sektörden veya temadan **aynı gün** birden fazla yeni giriş yapma — mevcut portföy pozisyonlarını KAPSAMAZ
+  (NOT: Portföyde %60+ tech varken K-17 tetiklenmez — bu K-12 konsantrasyon limiti konusudur)
 - K-18: Her yeni girişten önce insider trading kontrol et
 - K-19: XLP sektörüne swing girişi yok
 - K-20: RS dead cat bounce filtresi — güçlü RS gerekli

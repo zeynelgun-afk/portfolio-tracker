@@ -290,11 +290,11 @@ def check_drawdown_status(portfolios: dict) -> dict:
 
         uyari = ""
         if dd_pct <= -15:
-            uyari = "🔴 K-14 KRİTİK: >%15 drawdown"
+            uyari = "🔴 KRİTİK drawdown >%15 — psikoloji testi: mevcut pozisyonları yarın tekrar değerlendir"
         elif dd_pct <= -10:
-            uyari = "🟡 K-14 UYARI: >%10 drawdown"
+            uyari = "🟡 UYARI drawdown >%10 — yeni giriş öncesi psikoloji testi zorunlu"
         elif dd_pct <= -5:
-            uyari = "K-14 dikkat: >%5 drawdown"
+            uyari = "ℹ️ Drawdown >%5 — normal, stop disiplini koru"
 
         results[pf_name] = {
             "baslangic":  round(baslangic),
