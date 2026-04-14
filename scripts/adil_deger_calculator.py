@@ -87,7 +87,36 @@ def calc_dcf(base_fcf, growth_rate, wacc, terminal_growth, years, net_debt, shar
 # =========================================================================
 # ANA HESAPLAMA
 # =========================================================================
-def hesapla(symbol: str, pe_modu: str = 'rate', manuel_pe: float = None,
+
+def fetch_avg_pe_252(symbol, shares, fmp_get_fn):
+    """Pine Script historicalLookback=252 mantığı: 252 günlük dinamik TTM P/E ortalaması."""
+    from datetime import datetime, timedelta
+    today    = datetime.now().strftime("%Y-%m-%d")
+    from_dt  = (datetime.now() - timedelta(days=380)).strftime("%Y-%m-%d")
+    prices   = fmp_get_fn("historical-price-eod/light", {"symbol": symbol, "from": from_dt, "to": today})
+    inc_q    = fmp_get_fn("income-statement", {"symbol": symbol, "period": "quarter", "limit": 8})
+    if not prices or not inc_q or len(inc_q) < 4:
+        return None
+    # TTM EPS per quarter end date
+    ttm_eps_map = {}
+    for i in range(len(inc_q) - 3):
+        ttm_ni = sum((q.get("netIncome") or 0) for q in inc_q[i:i+4])
+        ttm_eps_map[inc_q[i]["date"]] = ttm_ni / shares
+    sorted_eps_dates = sorted(ttm_eps_map.keys(), reverse=True)
+    def eps_for(dt):
+        for d in sorted_eps_dates:
+            if dt >= d:
+                return ttm_eps_map[d]
+        return list(ttm_eps_map.values())[-1]
+    # 252g P/E
+    pe_vals = []
+    for p in prices[:252]:
+        eps = eps_for(p["date"])
+        if eps and eps > 0:
+            pe_vals.append(p["price"] / eps)
+    return sum(pe_vals) / len(pe_vals) if pe_vals else None
+
+def hesapla(symbol: str, pe_modu: str = 'rate', manuel_pe: float = None, fwd_eps_input: float = None,
             ev_ebit_hedef: float = 15.0, ev_ebitda_hedef: float = 20.0,
             ev_rev_hedef: float = 3.0):
 
@@ -157,9 +186,9 @@ def hesapla(symbol: str, pe_modu: str = 'rate', manuel_pe: float = None,
         kullanilan_pe = manuel_pe
     elif pe_modu == 'rate':
         kullanilan_pe = rate_pe
-    else:  # 'average' — gerçek TTM P/E'yi baz al ama makul sınırla
-        mevcut_pe = safe(rtm.get('priceToEarningsRatioTTM'))
-        kullanilan_pe = min(mevcut_pe, 50.0) if mevcut_pe else rate_pe  # max 50x cap
+    else:  # 'average' — 252 günlük dinamik TTM P/E ortalaması (Pine Script mantığı)
+        dinamik_pe = fetch_avg_pe_252(symbol, shares, fmp_get)
+        kullanilan_pe = dinamik_pe if dinamik_pe else rate_pe
 
     # ----- ÖZET BİLGİ -----
     print(f"  Sembol     : {symbol.upper()} | Sektör: {sector} ({sector_cat})")
@@ -171,6 +200,8 @@ def hesapla(symbol: str, pe_modu: str = 'rate', manuel_pe: float = None,
     print(f"  10Y Hazine : {bond_y:.2f}%  →  Faize Dayalı F/K: {rate_pe:.1f}x")
     print(f"  Kullanılan F/K: {kullanilan_pe:.1f}x ({pe_modu})")
     print(f"  Net Borç   : ${net_debt/1e9:.2f}B {'(Net Nakit ✓)' if net_debt < 0 else ''}")
+    kullanilan_fwd_eps = fwd_eps_input if fwd_eps_input else (eps_ttm * (1 + eps_growth) if eps_ttm else None)
+    print(f"  Forward EPS: ${kullanilan_fwd_eps:.2f}" + (" (analist)" if fwd_eps_input else " (TTM×büyüme)") if kullanilan_fwd_eps else "")
     print(f"  FCF Büyüme : {fcf_growth*100:.1f}% YoY | EPS Büyüme: {eps_growth*100:.1f}% YoY")
     print()
 
@@ -202,16 +233,18 @@ def hesapla(symbol: str, pe_modu: str = 'rate', manuel_pe: float = None,
         ev_fair = ttm_rev * ev_rev_hedef
         metotlar['EV/Ciro'] = max(0, (ev_fair - net_debt) / shares)
 
-    # 6. Forward P/E (TTM EPS × büyüme ile tahmin)
+    # 6. Forward P/E — manuel analist EPS varsa onu kullan, yoksa TTM × büyüme
     if eps_ttm and eps_ttm > 0:
-        fwd_eps = eps_ttm * (1 + eps_growth)
+        fwd_eps = fwd_eps_input if fwd_eps_input else (eps_ttm * (1 + eps_growth))
         metotlar['Forward P/E'] = fwd_eps * kullanilan_pe
 
     # 7. Forward P/S (TTM ciro × büyüme ile tahmin)
     if ttm_rev > 0:
         ps_ttm = price / (ttm_rev / shares)
-        fwd_ps = min(ps_ttm, 10.0)  # P/S'i makul sınırla
-        fwd_rev_ps = (ttm_rev * (1 + eps_growth)) / shares
+        fwd_ps = min(ps_ttm, 10.0)
+        # fwd_eps_input varsa büyüme oranını oradan türet
+        rev_growth = (fwd_eps_input / eps_ttm - 1) if (fwd_eps_input and eps_ttm) else eps_growth
+        fwd_rev_ps = (ttm_rev * (1 + rev_growth)) / shares
         metotlar['Forward P/S'] = fwd_rev_ps * fwd_ps
 
     # 8. P/FCF (Serbest Nakit Akışı)
@@ -297,16 +330,18 @@ if __name__ == "__main__":
     parser.add_argument("--pe-modu", default="rate", choices=["rate", "manuel", "average"],
                         help="F/K kaynağı: rate (faize dayalı) | manuel | average (TTM cap'li)")
     parser.add_argument("--manuel-pe", type=float, help="Manuel F/K değeri")
+    parser.add_argument("--fwd-eps",    type=float, help="Manuel analist Forward EPS (ör. 5.00)")
     parser.add_argument("--ev-ebit",   type=float, default=15.0, help="Hedef EV/EBIT çarpanı")
     parser.add_argument("--ev-ebitda", type=float, default=20.0, help="Hedef EV/EBITDA çarpanı")
     parser.add_argument("--ev-rev",    type=float, default=3.0,  help="Hedef EV/Ciro çarpanı")
     args = parser.parse_args()
 
     hesapla(
-        symbol        = args.symbol,
-        pe_modu       = args.pe_modu,
-        manuel_pe     = args.manuel_pe,
-        ev_ebit_hedef = args.ev_ebit,
+        symbol          = args.symbol,
+        pe_modu         = args.pe_modu,
+        manuel_pe       = args.manuel_pe,
+        fwd_eps_input   = args.fwd_eps,
+        ev_ebit_hedef   = args.ev_ebit,
         ev_ebitda_hedef = args.ev_ebitda,
-        ev_rev_hedef  = args.ev_rev,
+        ev_rev_hedef    = args.ev_rev,
     )
