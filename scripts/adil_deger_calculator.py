@@ -189,25 +189,111 @@ def calc_dcf_multistage(base_fcf, growth_rate, wacc, terminal_growth, net_debt, 
     return max(0, equity_val / shares) if equity_val > 0 else None
 
 
-# ─── PEER MEDIAN SANITY CHECK ───────────────────────────────────────────────
+# ─── AKILlI PEER SEÇİCİ ────────────────────────────────────────────────────
 
-def fetch_peer_median_evrev(symbol):
-    """Peer medyan EV/Ciro — peer listesinden hesaplar."""
-    peers = fmp_get("stock-peers", {"symbol": symbol})
-    if not peers: return None, []
-    peer_syms = [p['symbol'] for p in peers[:8]]
-    evrev_list = []
-    for sym in peer_syms:
-        try:
-            m = fmp_get("key-metrics-ttm", {"symbol": sym})
-            if m:
-                v = m[0].get('evToSalesTTM')
-                if v and 0 < v < 200:
-                    evrev_list.append(v)
-        except: pass
-    evrev_list.sort()
-    median = evrev_list[len(evrev_list)//2] if evrev_list else None
-    return median, peer_syms
+# Brüt marj yüksek büyüme/SaaS için küratörlü evren
+SAAS_EVREN = [
+    'DDOG','SNOW','NET','ZS','CRWD','NOW','APP','AXON','GTLB',
+    'SMAR','MNDY','HUBS','MDB','CFLT','KVYO','ASAN','TWLO','TTD',
+    'OKTA','DOCU','ZOOM','ESTC','PYCR','SPSC','VEEV','WDAY','ADSK',
+]
+
+def _get_peer_profile(sym):
+    """Tek peer için büyüme profili çeker."""
+    try:
+        inc = fmp_get("income-statement", {"symbol": sym, "period": "annual", "limit": 2})
+        m   = fmp_get("key-metrics-ttm",  {"symbol": sym})
+        r   = fmp_get("ratios-ttm",        {"symbol": sym})
+        cf  = fmp_get("cash-flow-statement", {"symbol": sym, "period": "annual", "limit": 1})
+        if not (inc and len(inc) >= 2 and m and r): return None
+        rev_now  = inc[0].get("revenue") or 0
+        rev_prev = inc[1].get("revenue") or 1
+        fcf_m = 0
+        if cf and rev_now > 0:
+            fcf_m = ((cf[0].get("freeCashFlow") or 0) / rev_now) * 100
+        return {
+            "sym":    sym,
+            "rev_gr": (rev_now / rev_prev - 1) * 100,
+            "gp_m":   (r[0].get("grossProfitMarginTTM") or 0) * 100,
+            "fcf_m":  fcf_m,
+            "ev_rev": m[0].get("evToSalesTTM"),
+            "mktcap": (m[0].get("marketCap") or 0) / 1e9,
+            "rev_ttm": rev_now,
+        }
+    except: return None
+
+def _similarity(subj, tgt):
+    """Düşük skor = daha benzer. Brüt marj + büyüme ağırlıklı."""
+    if not tgt or tgt.get("rev_gr") is None or tgt.get("gp_m") is None:
+        return float("inf")
+    rev_diff = abs(subj["rev_gr"] - tgt["rev_gr"]) / max(abs(subj["rev_gr"]), 1)
+    gp_diff  = abs(subj["gp_m"]  - tgt["gp_m"])   / max(abs(subj["gp_m"]),  1)
+    mc_diff  = abs(math.log(subj["mktcap"]+1) - math.log(tgt["mktcap"]+1)) / max(math.log(subj["mktcap"]+1), 1)
+    return 0.50*rev_diff + 0.40*gp_diff + 0.10*mc_diff
+
+def fetch_smart_peer_evrev(symbol, subj_profile, hisse_tipi):
+    """
+    Akıllı peer seçici:
+    - Büyüme/narratif hisseler → brüt marj + büyüme benzerliği ile SaaS evreninden seç
+    - Diğerleri → FMP peer listesini kullan, basit filtre
+    Döndürür: (medyan_evrev, growth_adj_evrev, peer_listesi, rof40_skoru)
+    """
+    # Rule of 40 skoru her zaman hesapla
+    rof40 = (subj_profile.get("rev_gr") or 0) + (subj_profile.get("fcf_m") or 0)
+
+    if hisse_tipi == "buyume":
+        # Büyüme hissesi → SaaS evreninden benzer profil bul
+        kandidatlar = []
+        for sym in SAAS_EVREN:
+            if sym == symbol: continue
+            p = _get_peer_profile(sym)
+            if not p: continue
+            if (p.get("gp_m") or 0) < 55: continue      # brüt marj filtresi
+            if (p.get("mktcap") or 0) < 5: continue      # min. $5B market cap
+            score = _similarity(subj_profile, p)
+            if p.get("ev_rev") and score < 0.65:
+                kandidatlar.append({**p, "score": score})
+
+        kandidatlar.sort(key=lambda x: x["score"])
+        secilen = kandidatlar[:8]
+        if not secilen: return None, None, [], rof40
+
+        evrev_list = sorted([p["ev_rev"] for p in secilen])
+        raw_median = evrev_list[len(evrev_list)//2]
+
+        # Büyüme düzeltmesi (kendi büyümesi / peer ortalama büyüme, max 3x)
+        peer_avg_gr = sum(p["rev_gr"] for p in secilen) / len(secilen)
+        subj_gr     = subj_profile.get("rev_gr") or peer_avg_gr
+        growth_adj  = min(subj_gr / max(peer_avg_gr, 1), 3.0)
+        adj_median  = raw_median * growth_adj
+
+        # Rule of 40 bazlı EV/Rev (peer medyan katsayısı × konu RoF40)
+        peer_rof40s = [(p["rev_gr"] + p.get("fcf_m", 0)) for p in secilen]
+        peer_evrevs = [p["ev_rev"] for p in secilen]
+        k_list = [ev/rof for ev, rof in zip(peer_evrevs, peer_rof40s) if rof > 0]
+        k_list.sort()
+        k_median    = k_list[len(k_list)//2] if k_list else 0.2
+        rof40_evrev = k_median * rof40
+
+        peer_syms = [p["sym"] for p in secilen]
+        return raw_median, adj_median, peer_syms, rof40, rof40_evrev
+    else:
+        # Normal hisse → FMP peer listesi, basit filtre
+        fmp_peers = fmp_get("stock-peers", {"symbol": symbol})
+        if not fmp_peers: return None, None, [], rof40, None
+        peer_syms = [p["symbol"] for p in fmp_peers[:8]]
+        evrev_list = []
+        for sym in peer_syms:
+            try:
+                m = fmp_get("key-metrics-ttm", {"symbol": sym})
+                if m:
+                    v = m[0].get("evToSalesTTM")
+                    if v and 0 < v < 200:
+                        evrev_list.append(v)
+            except: pass
+        evrev_list.sort()
+        median = evrev_list[len(evrev_list)//2] if evrev_list else None
+        return median, median, peer_syms, rof40, None
 
 
 # ─── FORWARD EPS OTOMATİK TÜRETİM ─────────────────────────────────────────
@@ -283,7 +369,14 @@ def hesapla(symbol, pe_modu='average', manuel_pe=None, fwd_eps_input=None, sessi
     cf8     = fmp_get("cash-flow-statement", {"symbol": symbol, "period": "quarter", "limit": 8}) or []
     ttm_fcf = sum((q.get('freeCashFlow') or 0) for q in cf8[:4])
     prev_fcf= sum((q.get('freeCashFlow') or 0) for q in cf8[4:])
-    fcf_gr  = min(0.60, max(-0.20, ttm_fcf / prev_fcf - 1.0)) if prev_fcf > 0 else 0.12
+    # Sektöre göre FCF büyüme tavanı — utilities/financial daha muhafazakâr
+    _fcf_cap = {'utilities': 0.12, 'financial': 0.12, 'energy': 0.20,
+                'industrial': 0.20, 'consumer': 0.20}.get(sector_cat, 0.50)
+    if prev_fcf > 0 and abs(prev_fcf) > ttm_fcf * 10:
+        # prev_fcf çok küçük/negatifse yıllık gelir tablosundan büyüme al
+        fcf_gr = min(_fcf_cap, max(-0.20, rev_gr))
+    else:
+        fcf_gr  = min(_fcf_cap, max(-0.20, ttm_fcf / prev_fcf - 1.0)) if prev_fcf > 0 else min(0.10, rev_gr)
 
     inc_ann = fmp_get("income-statement", {"symbol": symbol, "period": "annual", "limit": 2}) or []
     if len(inc_ann) >= 2 and (inc_ann[1].get('eps') or 0) > 0:
@@ -325,12 +418,20 @@ def hesapla(symbol, pe_modu='average', manuel_pe=None, fwd_eps_input=None, sessi
 
     fwd_pe_mult = (price / fwd_eps) if (fwd_eps and fwd_eps > 0) else kullanilan_pe
 
-    # ── PEER SANITY CHECK ───────────────────────────────────────
-    peer_ev_rev_median, peer_list = fetch_peer_median_evrev(symbol)
-    sirkket_ev_rev = his_252g.get('ev_rev')
+    # ── AKILlI PEER SEÇİCİ ──────────────────────────────────────
+    _fcf_m    = (ttm_fcf / ttm_rev * 100) if ttm_rev > 0 else 0
+    subj_profile = {
+        "rev_gr": rev_gr * 100,
+        "gp_m":   (safe(rtm.get("grossProfitMarginTTM"), 0)) * 100,
+        "fcf_m":  _fcf_m,
+        "mktcap": mktcap / 1e9,
+    }
+    sirkket_ev_rev = his_252g.get("ev_rev")
+    peer_result  = fetch_smart_peer_evrev(symbol, subj_profile, hisse_tipi)
+    peer_raw_median, peer_adj_median, peer_list, rof40_skoru, rof40_evrev = peer_result
     prim_uyarisi = (
-        peer_ev_rev_median and sirkket_ev_rev and
-        sirkket_ev_rev > peer_ev_rev_median * PEER_PRIM_ESIK
+        peer_raw_median and sirkket_ev_rev and
+        sirkket_ev_rev > peer_raw_median * PEER_PRIM_ESIK
     )
 
     # ── ÖZET ────────────────────────────────────────────────────
@@ -348,12 +449,17 @@ def hesapla(symbol, pe_modu='average', manuel_pe=None, fwd_eps_input=None, sessi
               f"EV/EBITDA={his_252g.get('ev_ebitda'):.1f}x | EV/Ciro={sirkket_ev_rev:.1f}x"
               if all([avg_pe, his_252g.get('ps'), his_252g.get('ev_ebitda'), sirkket_ev_rev]) else "")
 
-        if peer_ev_rev_median:
-            print(f"  Peer EV/Ciro medyan: {peer_ev_rev_median:.1f}x", end="")
+        if peer_raw_median:
+            print(f"  Peer seçimi ({len(peer_list)} şirket): {', '.join(peer_list[:6])}")
+            print(f"  Peer EV/Ciro: ham={peer_raw_median:.1f}x | büyüme-düzeltmeli={peer_adj_median:.1f}x", end="")
             if prim_uyarisi:
-                print(f"  ⚠️  PRİM UYARISI: {sirkket_ev_rev:.1f}x > peer {peer_ev_rev_median:.1f}x × {PEER_PRIM_ESIK}x")
+                print(f"  ⚠️  PRİM: kendi 252g {sirkket_ev_rev:.1f}x > peer {peer_raw_median:.1f}x × {PEER_PRIM_ESIK}x")
             else:
                 print()
+        if rof40_skoru:
+            print(f"  Rule of 40: {rof40_skoru:.1f} (büyüme {subj_profile['rev_gr']:.1f}% + FCF marj {_fcf_m:.1f}%)")
+            if rof40_evrev:
+                print(f"  RoF40 hedef EV/Ciro: {rof40_evrev:.1f}x")
 
         if hisse_tipi == 'buyume':
             print(f"  ⚠️  252g P/E {avg_pe:.0f}x > {BUYUME_PE_ESIK}x — büyüme/narratif hissesi, güveni düşük olabilir")
@@ -385,9 +491,14 @@ def hesapla(symbol, pe_modu='average', manuel_pe=None, fwd_eps_input=None, sessi
     if ttm_ebitda > 0 and his_252g.get('ev_ebitda'):
         M['EV/EBITDA'] = ev2p(ttm_ebitda * his_252g['ev_ebitda'])
 
-    # 5. EV/Ciro (252g ort.)
-    if ttm_rev > 0 and sirkket_ev_rev:
-        M['EV/Ciro'] = ev2p(ttm_rev * sirkket_ev_rev)
+    # 5. EV/Ciro
+    # Büyüme hisseleri için büyüme-düzeltmeli peer median kullan
+    # Diğerleri için 252g kendi tarihsel ortalaması
+    if ttm_rev > 0:
+        if hisse_tipi == "buyume" and peer_adj_median:
+            M["EV/Ciro"] = ev2p(ttm_rev * peer_adj_median)
+        elif sirkket_ev_rev:
+            M["EV/Ciro"] = ev2p(ttm_rev * sirkket_ev_rev)
 
     # 6. Forward P/E
     if fwd_eps and fwd_eps > 0:
@@ -403,9 +514,13 @@ def hesapla(symbol, pe_modu='average', manuel_pe=None, fwd_eps_input=None, sessi
 
     # 9. Graham
     if eps_ttm and eps_ttm > 0 and bvps and bvps > 0:
-        M['Graham'] = math.sqrt(22.5 * eps_ttm * bvps)
+        M["Graham"] = math.sqrt(22.5 * eps_ttm * bvps)
     elif graham_fmp:
-        M['Graham'] = graham_fmp
+        M["Graham"] = graham_fmp
+
+    # 9b. Rule of 40 EV/Ciro (büyüme hisseleri için ek mercek — ağırlıklı toplama dahil değil, sadece gösterim)
+    if hisse_tipi == "buyume" and rof40_evrev and ttm_rev > 0:
+        M["RoF40 EV/Ciro*"] = ev2p(ttm_rev * rof40_evrev)
 
     # 10. Multi-stage DCF
     if ttm_fcf > 0:
@@ -414,14 +529,20 @@ def hesapla(symbol, pe_modu='average', manuel_pe=None, fwd_eps_input=None, sessi
         if dcf: M['DCF (3 aşama)'] = dcf
 
     # 11. PEG Bazlı (Forward PEG = 1.0 → adil değer)
-    if fwd_peg and fwd_peg > 0 and fwd_eps and fwd_eps > 0 and eps_gr > 0:
-        fair_pe_peg = 1.0 * (eps_gr * 100)  # PEG=1 → P/E = büyüme %
-        M['PEG Bazlı'] = fwd_eps * fair_pe_peg
+    # Sadece makul büyüme varsa ve PEG pozitifse hesapla
+    if fwd_peg and fwd_peg > 0 and fwd_eps and fwd_eps > 0 and eps_gr > 0.05:
+        fair_pe_peg = 1.0 * (eps_gr * 100)   # PEG=1 → P/E = büyüme %
+        fair_pe_peg = max(fair_pe_peg, rate_pe)  # en az faize dayalı P/E
+        M["PEG Bazlı"] = fwd_eps * fair_pe_peg
 
     # ── AĞIRLIKLI TOPLAM ────────────────────────────────────────
-    sirasi = ['Net Kazanç P/E','ROE Bazlı','EV/EBIT','EV/EBITDA','EV/Ciro',
-              'Forward P/E','Forward P/S','P/FCF','Graham','DCF (3 aşama)','PEG Bazlı']
-    agirlar = SECTOR_WEIGHTS.get(sector_cat, SECTOR_WEIGHTS['other'])
+    sirasi  = ["Net Kazanç P/E","ROE Bazlı","EV/EBIT","EV/EBITDA","EV/Ciro",
+               "Forward P/E","Forward P/S","P/FCF","Graham","DCF (3 aşama)","PEG Bazlı"]
+    agirlar = SECTOR_WEIGHTS.get(sector_cat, SECTOR_WEIGHTS["other"])
+    # RoF40 EV/Ciro → ağırlıksız, sadece gösterim
+    if "RoF40 EV/Ciro*" in M:
+        sirasi.append("RoF40 EV/Ciro*")
+        agirlar = list(agirlar) + [0]
 
     if not sessiz:
         print(f"  {'─'*62}")
@@ -445,13 +566,20 @@ def hesapla(symbol, pe_modu='average', manuel_pe=None, fwd_eps_input=None, sessi
     adil = ws / tw if tw > 0 else None
     fark = (price / adil - 1) * 100 if adil else None
 
-    # Güven skoru
+    # Güven skoru — IQR bazlı outlier filtresi sonrası CV
     guven = 0
     if tum and len(tum) >= 3:
-        ort = sum(tum) / len(tum)
-        std = math.sqrt(sum((v-ort)**2 for v in tum) / len(tum))
-        cv  = abs(std/ort)*100 if ort else 100
-        guven = max(0, min(100, round(100-cv)))
+        s = sorted(tum)
+        q1, q3 = s[len(s)//4], s[3*len(s)//4]
+        iqr = q3 - q1
+        # Outlier = medyanın 3x IQR dışındakiler
+        median_v = s[len(s)//2]
+        temiz = [v for v in tum if abs(v - median_v) <= 3 * max(iqr, median_v * 0.5)]
+        if len(temiz) >= 2:
+            ort = sum(temiz) / len(temiz)
+            std = math.sqrt(sum((v-ort)**2 for v in temiz) / len(temiz))
+            cv  = abs(std/ort)*100 if ort else 100
+            guven = max(0, min(100, round(100-cv)))
 
     # Analist hedefi
     pt_data = fmp_get("price-target-summary", {"symbol": symbol})
@@ -468,9 +596,16 @@ def hesapla(symbol, pe_modu='average', manuel_pe=None, fwd_eps_input=None, sessi
             at_diff = (price / analyst_target - 1) * 100
             print(f"  Analist Hedefi:            ${analyst_target:>10.2f}  ({at_diff:+.1f}%)")
         print(f"\n  Bantlar: %20 Prim → ${adil*1.2:.2f} | %20 İskonto → ${adil*0.8:.2f}")
-        if hisse_tipi == 'buyume':
-            print(f"\n  ⚠️  UYARI: Güven skoru düşük olabilir — narratif hisseler tarihsel")
-            print(f"  çarpanlarla kendini meşrulaştırır. DCF ve PEG'e öncelik verin.")
+        if hisse_tipi == "buyume":
+            rof40_fv = M.get("RoF40 EV/Ciro*")
+            narrative_prim = ((price - rof40_fv) / price * 100) if rof40_fv else None
+            print(f"\n  Rule of 40 EV/Ciro bazlı adil değer: ${rof40_fv:.2f}" if rof40_fv else "")
+            if narrative_prim:
+                print(f"  Narrative prim (RoF40 üstü)       : %{narrative_prim:.0f}")
+                print(f"  → Piyasa bu farkı AI platform opsiyonelliğine bağlıyor")
+            print(f"\n  ⚠️  Güven skoru: {guven}/100 — narratif hisseler için")
+            print(f"  DCF, PEG ve RoF40 merceklerine öncelik verin.")
+            print(f"  Analist konsensüs ${analyst_target:.2f} referans olarak kullanın." if analyst_target else "")
         print(f"\n{'='*62}")
 
     return {
