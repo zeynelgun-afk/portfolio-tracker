@@ -1,51 +1,26 @@
-name: Haftalık Adil Değer Taraması
+name: Adil Değer Taraması (Manuel)
 
 on:
-  schedule:
-    - cron: '0 6 * * 1'   # Pazartesi 06:00 UTC (TR 09:00)
-  workflow_dispatch:       # Elle tetikleme
+  workflow_dispatch:   # Sadece elle tetiklenir, otomatik schedule yok
 
 jobs:
   adil-deger:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
-      - name: Python kur
-        uses: actions/setup-python@v5
+      - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-
-      - name: Bağımlılıklar
-        run: pip install requests
-
-      - name: Portföy taraması
+      - run: pip install requests
+      - name: Tarama
         run: |
           python3 scripts/adil_deger_calculator.py \
             --portfolio balanced \
             --report --telegram
-
-      - name: İzleme listesi taraması
-        run: |
-          # Watchlist'ten sembolleri çek
-          python3 - << 'PY'
-          import json, subprocess, sys, os
-
-          try:
-              with open('data/watchlist.json') as f:
-                  wl = json.load(f)
-              symbols = [item['symbol'] for item in wl.get('izleme_listesi', [])[:10]]
-              if symbols:
-                  cmd = ['python3', 'scripts/adil_deger_calculator.py'] + symbols + ['--report', '--telegram']
-                  subprocess.run(cmd)
-          except Exception as e:
-              print(f"Watchlist hatası: {e}")
-          PY
-
       - name: Git commit
         run: |
           git config user.name "Finzora AI"
           git config user.email "zeynelgun@users.noreply.github.com"
           git add reports/
-          git diff --staged --quiet || git commit -m "auto: haftalık adil değer raporu $(date +%Y-%m-%d)"
+          git diff --staged --quiet || git commit -m "auto: adil değer raporu $(date +%Y-%m-%d)"
           git push
