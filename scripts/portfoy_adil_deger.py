@@ -641,7 +641,7 @@ def main():
     if args.telegram:
         # Kısa özet gönder
         msg = f"📊 <b>Adil Değer Paneli</b>\n{cycle_detay}\n\n"
-        for sym, (_, poz) in portfoy_syms.items():
+        for sym, kayitlar in portfoy_syms.items():
             res = sonuclar.get(sym)
             if not res: continue
             fark = res.get("fark_pct") or 0
