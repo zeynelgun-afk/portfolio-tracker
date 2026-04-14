@@ -196,48 +196,45 @@ def karar_puani(res, cycle):
 
 def swing_filtre(sym, res, cycle):
     """
-    Swing giriş onayı.
-    Dönüş: ('ONAY' | 'RED' | 'DIKKAT', mesaj)
+    Adil değer bazlı swing bilgi notu.
+
+    MİMARİ KARAR: Bu fonksiyon YASAKLAMAZ.
+    Gerçek yasaklar K-kurallarının görevi (K-04, K-18, K-19 vb.)
+    Adil değer → pozisyon boyutunu etkiler, girişi engellemez.
+
+    Dönüş: ('DESTEKLI' | 'NOTR' | 'DIKKAT', mesaj)
     """
     if not res:
-        return "DIKKAT", "adil değer hesaplanamadı"
+        return "NOTR", "adil değer hesaplanamadı — K-kuralları geçerli"
 
-    fark  = res.get("fark_pct") or 0
-    guven = res.get("guven") or 0
-    q     = res.get("quality_skor") or 0
-    q_mult= res.get("quality_mult", 1.0)
+    fark     = res.get("fark_pct") or 0
+    guven    = res.get("guven") or 0
+    q        = res.get("quality_skor") or 0
+    q_mult   = res.get("quality_mult", 1.0)
     fark_ham = res.get("fark_ham") or fark
-
     hakli_prim = fark_ham > 20 and q_mult > 1.0 and (fark_ham - fark) > 5
 
-    if cycle == "RISK_OFF":
-        return "RED", f"Market cycle RISK_OFF — swing duraksatıldı"
-
-    if fark > 20 and guven >= 70 and not hakli_prim:
-        return "RED", f"PAHALI {fark:+.0f}% güven:{guven} — risk/ödül bozuk, giriş iptal"
-
-    if fark > 20 and guven >= 50 and not hakli_prim:
-        return "DIKKAT", f"Hafif PAHALI {fark:+.0f}% — stop sıkı tut, lot küçült"
-
-    # Yüksek prim + düşük güven → özel uyarı
-    if fark > 30 and not hakli_prim:
-        return "DIKKAT", f"Yüksek prim {fark:+.0f}% (güven:{guven}) — dikkatli ol, stop sıkı"
-
-    if fark < -20 and guven >= 60:
-        return "ONAY", f"UCUZ {fark:+.0f}% güven:{guven} — adil değer desteği var ✓"
-
+    # DESTEKLI: Adil değer girişi güçlendiriyor
+    if fark < -20 and guven >= 70:
+        return "DESTEKLI", f"UCUZ {fark:+.0f}% güven:{guven} — güçlü değer desteği, tam lot"
+    if fark < -20 and guven >= 50:
+        return "DESTEKLI", f"UCUZ {fark:+.0f}% güven:{guven} — değer desteği, normal lot"
     if hakli_prim:
-        return "ONAY", f"HAKLI PRİM kalite:{q} — prim hak ediliyor, giriş uygun"
+        return "DESTEKLI", f"HAKLI PRİM Q{q} — kalite prim hak ediyor, normal lot"
+    if cycle == "RISK_OFF" and fark < -10:
+        return "DESTEKLI", f"RISK_OFF ama UCUZ {fark:+.0f}% — defansif değer, küçük lot"
 
-    if fark > 10:
-        return "DIKKAT", f"Hafif primli {fark:+.0f}% — normal koşullar ama prim var"
+    # DIKKAT: Adil değer risk ekliyor — girebilirsin, boyutu küçült
+    if fark > 30 and guven >= 60 and not hakli_prim:
+        return "DIKKAT", f"Primli {fark:+.0f}% güven:{guven} — lot küçük tut, stop sıkı"
+    if fark > 20 and guven >= 50 and not hakli_prim:
+        return "DIKKAT", f"Hafif primli {fark:+.0f}% — normal lot ama stop yakın"
+    if cycle == "RISK_OFF":
+        return "DIKKAT", f"RISK_OFF ortamı — lot küçük tut"
 
-    return "ONAY", f"ADİL/UCUZ bölgesi ({fark:+.0f}%) — swing kuralları geçerli"
+    # NOTR: Adil değer nötr
+    return "NOTR", f"ADİL bölge ({fark:+.0f}%) — K-kuralları belirleyici"
 
-
-# ═══════════════════════════════════════════════════════════════
-# ADIM 5 — Dinamik Çıkış Sinyali (Açık Pozisyon)
-# ═══════════════════════════════════════════════════════════════
 
 def cikis_sinyali(pozisyon, res):
     """
@@ -315,8 +312,9 @@ def pozisyon_buyuklugu(res, portfoy_tipi="dengeli"):
         oran = 0.25
         not_ = f"ADİL {fark:+.0f}% — %25 pozisyon (izle)"
     else:
-        oran = 0.0
-        not_ = f"Primli {fark:+.0f}% — pozisyon açma"
+        # Pahalı görünse de giriş yasak değil — K-kuralları ve teknik belirleyici
+        oran = 0.20
+        not_ = f"Primli {fark:+.0f}% — küçük lot (%20 limit), K-kuralları belirleyici"
 
     # Kalite ayarı (+%10 bonus kaliteli hisselerde)
     if q >= 70 and oran > 0:
@@ -481,7 +479,7 @@ def rapor_olustur(portfoyler, portfoy_syms, wl_syms, sonuclar, cycle, cycle_deta
     for sym in wl_syms[:6]:
         res = sonuclar.get(sym)
         durum, msg = swing_filtre(sym, res, cycle)
-        emoji = {"ONAY":"✅","RED":"❌","DIKKAT":"⚠️"}.get(durum,"?")
+        emoji = {"DESTEKLI":"💚","NOTR":"⚪","DIKKAT":"⚠️"}.get(durum,"?")
         satirlar.append(f"- **{sym}**: {emoji} {durum} — {msg}")
 
     # ── Pozisyon önerileri özeti ──────────────────────────────
