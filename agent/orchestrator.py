@@ -413,6 +413,20 @@ def run_morning(ctx: dict):
     update_specialist_weights(s_genome, [])
 
     genome_ctx = _load_genome_context()
+
+    # Tarih/gün bilgisini açıkça inject et
+    _now_tr  = datetime.now(TR_TZ)
+    _gunler  = ["Pazartesi","Salı","Çarşamba","Perşembe","Cuma","Cumartesi","Pazar"]
+    _bugun_tarih = _now_tr.strftime("%d %B %Y")
+    _bugun_gun   = _gunler[_now_tr.weekday()]
+    _bugun_saat  = _now_tr.strftime("%H:%M")
+    _piyasa_durumu = (
+        "KAPALI (hafta sonu)" if _now_tr.weekday() >= 5
+        else "AÇILIŞ ÖNCESİ" if _now_tr.hour < 16 or (_now_tr.hour == 16 and _now_tr.minute < 30)
+        else "SEANS İÇİ" if _now_tr.hour < 23
+        else "KAPANDI"
+    )
+
     prompt = f"""
 {ctx['compressed']}
 
@@ -442,8 +456,14 @@ def run_morning(ctx: dict):
 {genome_ctx}
 
 === GÖREV: SABAH ANALİZİ VE RAPOR ===
+BUGÜNÜN TARİHİ: {_bugun_tarih}
+BUGÜNÜN GÜNÜ: {_bugun_gun}
+ŞUAN SAAT: {_bugun_saat} TR
+NYSE PAZARI: {_piyasa_durumu}
+
 Yukarıdaki gerçek piyasa verileri, portföy durumu ve teknik analizleri kullanarak
 docs/prompts/DAILY_PART1_SABAH.md formatında eksiksiz sabah raporu üret.
+Rapor başlığında tarih ve gün bilgisini YUKARIDAN al — kendi tahminini kullanma.
 
 Zorunlu bölümler (hepsini yaz):
 0. piyasa istihbaratı (aktif temalar, haber etki zinciri)
@@ -454,6 +474,8 @@ Zorunlu bölümler (hepsini yaz):
 4. günün planı (aksiyonlar: hemen / izle / pasif)
 
 Swing giriş kararı varsa: SWING_GİRİŞ: [SEMBOL] [ADET] adet @ ~$[FİYAT] stop:$[STOP] hedef:$[HEDEF]
+
+FAZ_2 giriş penceresi: 17:30-21:00 TR (FAZ_1 = 16:30-17:30 TR, giriş yok)
 
 KESİN / MUHTEMEL / SPEKÜLATİF etiket kullan. Küçük harf Türkçe.
 """
@@ -492,6 +514,20 @@ def run_closing(ctx: dict):
     swing_ozet = get_swing_report()
 
     genome_ctx = _load_genome_context()
+
+    # Tarih/gün bilgisini açıkça inject et
+    _now_tr  = datetime.now(TR_TZ)
+    _gunler  = ["Pazartesi","Salı","Çarşamba","Perşembe","Cuma","Cumartesi","Pazar"]
+    _bugun_tarih = _now_tr.strftime("%d %B %Y")
+    _bugun_gun   = _gunler[_now_tr.weekday()]
+    _bugun_saat  = _now_tr.strftime("%H:%M")
+    _piyasa_durumu = (
+        "KAPALI (hafta sonu)" if _now_tr.weekday() >= 5
+        else "AÇILIŞ ÖNCESİ" if _now_tr.hour < 16 or (_now_tr.hour == 16 and _now_tr.minute < 30)
+        else "SEANS İÇİ" if _now_tr.hour < 23
+        else "KAPANDI"
+    )
+
     prompt = f"""
 {ctx['compressed']}
 
@@ -506,7 +542,11 @@ def run_closing(ctx: dict):
 {genome_ctx}
 
 === GÖREV: KAPANIS RAPORU ===
+BUGÜNÜN TARİHİ: {_bugun_tarih}
+BUGÜNÜN GÜNÜ: {_bugun_gun}
+
 Yukarıdaki verilerle docs/prompts/DAILY_PART2_CLOSING.md formatında kapanış raporu üret.
+Rapor başlığında tarih ve gün bilgisini YUKARIDAN al.
 
 Zorunlu bölümler:
 1. günün özeti (endeks tablosu, sektörler, trend)
@@ -1253,6 +1293,11 @@ def run_weekly(ctx: dict):
 
     # Dry-run kontrolü
     dry_run_rpt   = run_dry_run_check(backtest)
+
+    _now_tr  = datetime.now(TR_TZ)
+    _gunler  = ["Pazartesi","Salı","Çarşamba","Perşembe","Cuma","Cumartesi","Pazar"]
+    _bugun_tarih = _now_tr.strftime("%d %B %Y")
+    _bugun_gun   = _gunler[_now_tr.weekday()]
 
     prompt = f"""
 {ctx['compressed']}
