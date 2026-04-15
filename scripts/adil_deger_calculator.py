@@ -36,7 +36,7 @@ SECTOR_WEIGHTS = {
     'industrial': [0.09, 0.05, 0.16, 0.16, 0.04, 0.07, 0.04, 0.12, 0.07, 0.09, 0.11],
     'consumer':   [0.11, 0.09, 0.11, 0.11, 0.09, 0.09, 0.09, 0.09, 0.04, 0.05, 0.13],
     'energy':     [0.09, 0.09, 0.17, 0.19, 0.04, 0.04, 0.00, 0.16, 0.04, 0.09, 0.09],
-    'healthcare': [0.11, 0.09, 0.09, 0.11, 0.09, 0.11, 0.09, 0.09, 0.04, 0.05, 0.13],
+    'healthcare': [0.13, 0.10, 0.10, 0.13, 0.09, 0.13, 0.09, 0.09, 0.00, 0.07, 0.07],  # Graham=0 (intangibles/patent)
     'utilities':  [0.11, 0.07, 0.11, 0.16, 0.04, 0.07, 0.00, 0.11, 0.09, 0.11, 0.13],
     'other':      [0.10, 0.10, 0.10, 0.10, 0.09, 0.10, 0.09, 0.09, 0.04, 0.05, 0.14],
 }
@@ -389,15 +389,27 @@ def derive_fwd_eps(price, ratios_ttm, eps_ttm, eps_gr):
 
     Formula: forward_pe = forward_peg × growth_pct
              fwd_eps    = price / forward_pe
+
+    GUARD: fwd_eps, TTM EPS'in 0.5x - 2.5x aralığında olmalı.
+    Dışarıda kalırsa fallback: TTM × büyüme.
     """
     fwd_peg = safe(ratios_ttm.get('forwardPriceToEarningsGrowthRatioTTM'))
     if fwd_peg and fwd_peg > 0 and eps_gr and eps_gr > 0:
         growth_pct = eps_gr * 100      # 0.30 → 30
         fwd_pe     = fwd_peg * growth_pct
-        if fwd_pe > 0:
-            return price / fwd_pe, 'fwd_peg_türetme'
+        # Fwd P/E sanity check: 3x ile 80x arasında olmalı
+        if fwd_pe >= 3 and fwd_pe <= 80:
+            fwd_eps_candidate = price / fwd_pe
+            # Guard: TTM EPS'in makul aralığında mı?
+            if eps_ttm and eps_ttm > 0:
+                lower = eps_ttm * 0.5
+                upper = eps_ttm * 2.5
+                if lower <= fwd_eps_candidate <= upper:
+                    return fwd_eps_candidate, 'fwd_peg_türetme'
+            elif fwd_eps_candidate > 0:
+                return fwd_eps_candidate, 'fwd_peg_türetme'
 
-    # Fallback: TTM × büyüme
+    # Fallback: TTM × büyüme (güvenilir, basit)
     if eps_ttm and eps_ttm > 0:
         return eps_ttm * (1 + eps_gr), 'ttm_büyüme'
 
@@ -460,9 +472,15 @@ def hesapla(symbol, pe_modu='average', manuel_pe=None, fwd_eps_input=None, sessi
                 'industrial': 0.20, 'consumer': 0.20}.get(sector_cat, 0.50)
     if prev_fcf > 0 and abs(prev_fcf) > ttm_fcf * 10:
         # prev_fcf çok küçük/negatifse yıllık gelir tablosundan büyüme al
-        fcf_gr = min(_fcf_cap, max(-0.20, rev_gr))
+        fcf_gr = min(_fcf_cap, max(-0.10, rev_gr))
     else:
-        fcf_gr  = min(_fcf_cap, max(-0.20, ttm_fcf / prev_fcf - 1.0)) if prev_fcf > 0 else min(0.10, rev_gr)
+        raw_fcf_gr = (ttm_fcf / prev_fcf - 1.0) if prev_fcf > 0 else 0
+        # FCF büyüme volatil — aşırı negatif değerleri sınırla
+        # COVID/tek seferlik etki: -20% yerine max(-10%, rev_gr ile ortalama)
+        if raw_fcf_gr < -0.10:
+            fcf_gr = max(-0.10, (raw_fcf_gr + rev_gr) / 2)
+        else:
+            fcf_gr = min(_fcf_cap, max(-0.10, raw_fcf_gr))
 
     inc_ann = fmp_get("income-statement", {"symbol": symbol, "period": "annual", "limit": 2}) or []
     if len(inc_ann) >= 2 and (inc_ann[1].get('eps') or 0) > 0:
