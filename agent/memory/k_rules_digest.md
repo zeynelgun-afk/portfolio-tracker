@@ -4,7 +4,8 @@
 - K-02: Kriz BAŞLANGICI günü momentum/AI sektörüne 3 iş günü giriş yok
   (NOT: Devam eden jeopolitik kriz K-02 tetiklemez — sadece YENİ şok anı. İran ateşkes süreci devam eden durum, kriz başlangıcı değil)
 - K-04: SMA50 üstü giriş tercih. Altıysa: RSI<30 + stabilizasyon + çeyrek pozisyon
-- K-05: Swing pozisyonu earnings'ten 2+ gün önce kapat
+- K-05: Earnings'ten 2 iş günü önce **yeni swing girişi yapma** (mevcut açık pozisyon tutulabilir, kapatma zorunlu değil)
+  (Örnek: 22 Nisan earnings → 20 Nisan'dan itibaren yeni giriş yok. Mevcut SWING pozisyon K-05'ten etkilenmez)
 
 ## Kâr Alma (K-11 v3)
 - Katman1: RSI 70+ VE kâr %15+ → trailing stop aktif (2×ATR veya 20SMA altı), satma

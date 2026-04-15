@@ -327,7 +327,10 @@ def get_swing_report() -> str:
             sym   = p["sembol"]
             pnl   = p.get("pnl_pct", 0)
             price = p.get("guncel_fiyat", 0)
-            stop  = p.get("chandelier_stop") or p.get("stop_loss", 0)
+            # stop: chandelier varsa max(chandelier, stop_loss), yoksa stop_loss
+            stop_loss_val = float(p.get("stop_loss", 0) or 0)
+            chandelier_val = float(p.get("chandelier_stop", 0) or 0)
+            stop = max(stop_loss_val, chandelier_val) if chandelier_val else stop_loss_val
             icon  = "📈" if pnl > 0 else "📉"
             stop_dist = (price - stop) / price * 100 if price and stop else 0
             lines.append(f"  {icon} {sym}: {pnl:+.1f}% | stop %{stop_dist:.1f} uzak")

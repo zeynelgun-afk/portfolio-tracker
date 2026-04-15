@@ -66,7 +66,7 @@ def build_portfolio_state(portfolios: dict, market: dict) -> dict:
             sym        = pos.get("sembol") or pos.get("symbol", "?")
             cur_price  = pos.get("guncel_fiyat") or pos.get("son_fiyat")
             stop       = pos.get("stop_loss")
-            maliyet    = pos.get("maliyet_bazis")
+            maliyet    = pos.get("maliyet_baz") or pos.get("maliyet_bazis")
             hedef      = pos.get("hedef_fiyat")
             adet       = pos.get("adet") or pos.get("shares", 0)
 
@@ -74,7 +74,8 @@ def build_portfolio_state(portfolios: dict, market: dict) -> dict:
             stop_pct = None
             if stop and cur_price:
                 try:
-                    stop_pct = round((float(cur_price) - float(stop)) / float(stop) * 100, 1)
+                    # Stop uzaklığı: fiyattan stop'a yüzde mesafe
+                    stop_pct = round((float(cur_price) - float(stop)) / float(cur_price) * 100, 1)
                 except (ValueError, TypeError):
                     pass
 
@@ -98,6 +99,36 @@ def build_portfolio_state(portfolios: dict, market: dict) -> dict:
             })
 
         state["portfolios"][pf_name] = pf_state
+
+    # Swing pozisyonları da ekle — Claude tabloda yanlış hesaplamasın
+    try:
+        import json as _j
+        sw = _j.load(open(REPO_ROOT / "data" / "swing" / "active.json"))
+        swing_pozlar = []
+        for sp in sw.get("aktif_pozisyonlar", []):
+            gun   = float(sp.get("guncel_fiyat", 0) or 0)
+            stop_l = float(sp.get("stop_loss", 0) or 0)
+            chand  = float(sp.get("chandelier_stop", 0) or 0)
+            stop   = max(stop_l, chand) if chand else stop_l
+            giris  = float(sp.get("giris_fiyat", sp.get("maliyet_baz", 0)) or 0)
+            pnl    = round((gun - giris) / giris * 100, 2) if giris else 0
+            stop_uzak = round((gun - stop) / gun * 100, 1) if gun and stop else 0
+            swing_pozlar.append({
+                "sym":       sp.get("sembol", ""),
+                "fiyat":     gun,
+                "pnl_pct":   pnl,
+                "stop":      round(stop, 2),
+                "stop_uzak_pct": stop_uzak,
+                "hedef":     sp.get("hedef_fiyat"),
+                "giris_tarihi": sp.get("giris_tarihi"),
+            })
+        state["swing"] = {
+            "aktif_sayisi": len(swing_pozlar),
+            "max_kapasite": 5,
+            "pozisyonlar":  swing_pozlar,
+        }
+    except Exception:
+        state["swing"] = {"aktif_sayisi": 0, "pozisyonlar": []}
 
     return state
 

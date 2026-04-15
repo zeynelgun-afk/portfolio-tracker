@@ -109,13 +109,16 @@
       "guncel_fiyat": 987.5,
       "son_fiyat": 987.5,
       "zirve_fiyat": 1001.82,
-      "chandelier_stop": 678.39,
+      "chandelier_stop": 893.55,
       "k11_aktif": false,
       "k11_profit_lock": null,
       "son_guncelleme": "2026-04-15",
-      "notlar": [],
+      "notlar": [
+        "chandelier_stop düzeltildi: 678.39 → 893.55 (ATR14=37.94, zirve=1007.38)"
+      ],
       "pnl_pct": -1.25,
-      "tutulan_gun": 1
+      "tutulan_gun": 1,
+      "atr14": 37.94
     },
     {
       "id": "SWING-202604141454-RPRX",
