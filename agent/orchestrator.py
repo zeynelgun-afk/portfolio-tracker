@@ -574,28 +574,97 @@ KESİN / MUHTEMEL / SPEKÜLATİF etiket kullan. Küçük harf Türkçe.
     send_private_telegram(msg)
     print("[Orkestratör] Kapanış yorumu gönderildi.")
 
-    # Gruba: günlük özet (portföy P/L + açık pozisyonlar)
+    # Gruba: ayrıntılı günlük özet
     try:
-        pfs = ctx["raw"]["portfolios"]
-        ozet_lines = ["<b>Finzora AI — Günlük Özet</b>", ""]
+        pfs   = ctx["raw"]["portfolios"]
+        _now  = datetime.now(TR_TZ)
+        _gun  = ["Pazartesi","Salı","Çarşamba","Perşembe","Cuma","Cumartesi","Pazar"][_now.weekday()]
+        _tarih = _now.strftime("%d %B %Y")
+
+        BASLANGIC = {"aggressive": 400000, "balanced": 100000, "dividend": 100000}
+        PF_LABEL  = {"aggressive": "⚡ Agresif", "balanced": "⚖️ Dengeli", "dividend": "💰 Temettü"}
+
+        toplam_deger   = 0
         toplam_baslangic = 600000
-        toplam_deger = 0
+        ozet_lines = [
+            f"<b>Finzora AI — Günlük Kapanış Özeti</b>",
+            f"<i>{_tarih} {_gun}</i>",
+            "",
+        ]
+
+        tum_pozlar = []   # En iyi/kötü için
+
         for pf_name, pf in pfs.items():
             pozlar = pf.get("pozisyonlar", [])
             nakit  = float(pf.get("nakit", {}).get("miktar", 0))
-            deger  = sum(p.get("adet",0)*float(p.get("guncel_fiyat") or p.get("maliyet_baz",0))
-                         for p in pozlar) + nakit
-            toplam_deger += deger
-            pf_label = {"aggressive":"Agresif","balanced":"Dengeli","dividend":"Temettü"}.get(pf_name, pf_name)
-            ozet_lines.append(f"{pf_label}: ${deger:,.0f} ({len(pozlar)} poz)")
-        ozet_lines.append("")
+            pf_bas = BASLANGIC.get(pf_name, 0)
+            pf_deg = sum(
+                p.get("adet", 0) * float(p.get("guncel_fiyat") or p.get("maliyet_baz", 0))
+                for p in pozlar
+            ) + nakit
+            toplam_deger += pf_deg
+            pf_pnl = (pf_deg - pf_bas) / pf_bas * 100 if pf_bas else 0
+            pf_icon = "🟢" if pf_pnl >= 0 else "🔴"
+            label = PF_LABEL.get(pf_name, pf_name)
+            ozet_lines.append(f"{pf_icon} <b>{label}</b> ${pf_deg:,.0f} ({pf_pnl:+.1f}%)")
+
+            # Pozisyon detayları
+            for p in pozlar:
+                sym   = p.get("sembol", "")
+                mal   = float(p.get("maliyet_baz") or 0)
+                gun   = float(p.get("guncel_fiyat") or mal)
+                pnl   = (gun - mal) / mal * 100 if mal else 0
+                adet  = p.get("adet", 0)
+                tutar = (gun - mal) * adet
+                p_icon = "🟢" if pnl >= 0 else "🔴"
+                ozet_lines.append(
+                    f"  {p_icon} {sym:5} {pnl:+.1f}%  ${gun:.2f}  "
+                    f"({'+'if tutar>=0 else ''}{tutar:,.0f}$)"
+                )
+                tum_pozlar.append((sym, pnl, pf_name))
+            ozet_lines.append("")
+
+        # Swing
+        try:
+            sw_data = json.load(open(REPO_ROOT / "data" / "swing" / "active.json"))
+            sw_pozlar = sw_data.get("aktif_pozisyonlar", [])
+            if sw_pozlar:
+                ozet_lines.append("🔄 <b>Swing Trade</b>")
+                for sp in sw_pozlar:
+                    sym    = sp.get("sembol", "")
+                    pnl    = sp.get("pnl_pct", 0)
+                    gun_f  = sp.get("guncel_fiyat", 0)
+                    stop   = sp.get("stop_loss", 0)
+                    hedef  = sp.get("hedef_fiyat", 0)
+                    stop_uzak = (gun_f - stop) / gun_f * 100 if gun_f and stop else 0
+                    sp_icon = "🟢" if pnl >= 0 else "🔴"
+                    ozet_lines.append(
+                        f"  {sp_icon} {sym:5} {pnl:+.1f}%  stop %{stop_uzak:.1f} uzak"
+                    )
+                ozet_lines.append("")
+        except Exception:
+            pass
+
+        # Toplam
         toplam_pnl = (toplam_deger - toplam_baslangic) / toplam_baslangic * 100
-        icon = "🟢" if toplam_pnl >= 0 else "🔴"
-        ozet_lines.append(f"{icon} <b>Toplam: ${toplam_deger:,.0f} ({toplam_pnl:+.2f}%)</b>")
+        t_icon = "🟢" if toplam_pnl >= 0 else "🔴"
+        ozet_lines.append("━━━━━━━━━━━━━━━")
+        ozet_lines.append(f"{t_icon} <b>Toplam: ${toplam_deger:,.0f} ({toplam_pnl:+.2f}%)</b>")
+        ozet_lines.append(f"   Başlangıç: ${toplam_baslangic:,.0f}")
+
+        # En iyi / en kötü
+        if tum_pozlar:
+            en_iyi  = max(tum_pozlar, key=lambda x: x[1])
+            en_kotu = min(tum_pozlar, key=lambda x: x[1])
+            ozet_lines.append("")
+            ozet_lines.append(f"🏆 Günün en iyisi: <b>{en_iyi[0]}</b> {en_iyi[1]:+.1f}%")
+            ozet_lines.append(f"📉 Günün en kötüsü: <b>{en_kotu[0]}</b> {en_kotu[1]:+.1f}%")
+
         ozet_lines.append("")
-        ozet_lines.append("<i>Detaylı rapor: finzora.ai</i>")
+        ozet_lines.append("<i>Detaylı analiz: finzora.ai</i>")
+
         send_group_telegram("\n".join(ozet_lines))
-        print("[Orkestratör] Günlük özet gruba gönderildi.")
+        print("[Orkestratör] Ayrıntılı günlük özet gruba gönderildi.")
     except Exception as _e:
         print(f"[Orkestratör] Grup özet hatası: {_e}")
 
