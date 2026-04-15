@@ -17,3 +17,4 @@ data/session_state.json
 
 # Olay log dosyası — geçici
 logs/event_log.jsonl
+data/vix_cache.json
