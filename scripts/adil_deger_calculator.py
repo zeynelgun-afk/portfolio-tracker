@@ -149,7 +149,8 @@ def safe(val, default=None):
 
 def detect_sector(s):
     s = (s or '').lower()
-    if any(x in s for x in ['tech','software','semiconductor','electronic','communication']): return 'tech'
+    if any(x in s for x in ['tech','software','semiconductor','electronic']): return 'tech'
+    if any(x in s for x in ['communication services','telecom','wireless']): return 'utilities'
     if any(x in s for x in ['finance','bank','insurance']): return 'financial'
     if any(x in s for x in ['health','pharma','biotech','medical']): return 'healthcare'
     if any(x in s for x in ['energy','oil','gas','mineral']): return 'energy'
@@ -238,7 +239,14 @@ def fetch_all_252g_ratios(symbol, shares):
         if ttm['ebitda'] > 0:       vals['ev_ebitda'].append(ev / ttm['ebitda'])
         if ttm['rev']    > 0:       vals['ev_rev'].append(ev   / ttm['rev'])
 
-    result = {k: (sum(v)/len(v) if v else None) for k, v in vals.items()}
+    # Trimmed mean: üst/alt %10 çıkar → outlier dirençli
+    def _trimmed_mean(lst):
+        if not lst: return None
+        s = sorted(lst); n = len(s)
+        cut = max(1, int(n * 0.10))
+        trimmed = s[cut:-cut] if n > 10 else s
+        return sum(trimmed)/len(trimmed)
+    result = {k: _trimmed_mean(v) for k, v in vals.items()}
     print(f"{len(mktcap_hist[:252])} gün tamamlandı.")
     return result
 
@@ -433,7 +441,8 @@ def hesapla(symbol, pe_modu='average', manuel_pe=None, fwd_eps_input=None, sessi
     q       = quote[0]
     price   = q['price']
     mktcap  = q['marketCap']
-    shares  = mktcap / price
+    # sharesOutstanding doğrudan al — mktcap/price gün içi değişimden etkilenir
+    shares  = safe(q.get('sharesOutstanding')) or (mktcap / price if price else 0)
 
     profile    = fmp_get("profile", {"symbol": symbol})
     sector_str = profile[0].get('sector', '') if profile else ''
@@ -583,9 +592,16 @@ def hesapla(symbol, pe_modu='average', manuel_pe=None, fwd_eps_input=None, sessi
     if eps_ttm and eps_ttm > 0:
         M['Net Kazanç P/E'] = eps_ttm * kullanilan_pe
 
-    # 2. ROE Bazlı
-    if roe and roe > 0 and bvps:
-        M['ROE Bazlı'] = (roe * bvps) * kullanilan_pe
+    # 2. ROE/ROIC Bazlı — ROE kalitesini fiyatlama
+    # Sadece eps_ttm'den farklı bir şey söylemeli: ROE yüksekse prim, düşükse iskonto
+    # SEKTÖR_ROE referansları (yaklaşık ortalamalar)
+    _SEKTOR_ROE = {'tech':0.25,'financial':0.14,'healthcare':0.20,
+                   'consumer':0.20,'energy':0.15,'industrial':0.15,
+                   'utilities':0.12,'other':0.15}
+    _ref_roe = _SEKTOR_ROE.get(sector_cat, 0.15)
+    if roe and roe > 0 and bvps and bvps > 0 and eps_ttm and eps_ttm > 0:
+        _roe_mult = min(roe / _ref_roe, 2.0)  # ROE prim çarpanı (max 2x)
+        M['ROE Bazlı'] = eps_ttm * kullanilan_pe * _roe_mult
 
     # 3. EV/EBIT (252g ort.)
     if ttm_ebit > 0 and his_252g.get('ev_ebit'):
@@ -604,9 +620,17 @@ def hesapla(symbol, pe_modu='average', manuel_pe=None, fwd_eps_input=None, sessi
         elif sirkket_ev_rev:
             M["EV/Ciro"] = ev2p(ttm_rev * sirkket_ev_rev)
 
-    # 6. Forward P/E
+    # 6. Forward P/E — Bağımsız çarpan (dairesel referans engeli)
+    # fwd_pe_mult = price/fwd_eps → dairesel → kullanma
+    # Yerine: 252g ortalaması ile faize dayalı P/E arasında dengeli çarpan
     if fwd_eps and fwd_eps > 0:
-        M['Forward P/E'] = fwd_eps * fwd_pe_mult
+        _hist_pe = avg_pe if avg_pe else kullanilan_pe
+        if hisse_tipi == 'buyume':
+            _fwd_mult = min(_hist_pe * 0.85, rate_pe * 2.0)
+        else:
+            _fwd_mult = (_hist_pe + rate_pe) / 2   # ikisinin ortası
+        _fwd_mult = max(5.0, min(_fwd_mult, 80.0))  # 5x-80x sınır
+        M['Forward P/E'] = fwd_eps * _fwd_mult
 
     # 7. Forward P/S (252g P/S × ileri ciro)
     if ttm_rev > 0 and his_252g.get('ps'):
