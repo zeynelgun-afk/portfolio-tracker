@@ -210,7 +210,7 @@ def run_scenario_test(portfolios: dict, drop_pct: float = 5.0) -> dict:
 
         for pos in pf_data.get("pozisyonlar", []):
             sym   = pos.get("sembol") or pos.get("symbol", "?")
-            price = pos.get("guncel_fiyat") or pos.get("maliyet_bazis") or 0
+            price = pos.get("guncel_fiyat") or pos.get("maliyet_baz") or pos.get("maliyet_bazis") or 0
             adet  = pos.get("adet") or pos.get("shares") or 0
 
             try:
@@ -232,11 +232,21 @@ def run_scenario_test(portfolios: dict, drop_pct: float = 5.0) -> dict:
                 except (TypeError, ValueError):
                     pass
 
+            # Stop tetikleniyorsa detay bilgisi
+            stop_tetiklendi = bool(stop_tetik)
+            stop_seviye     = float(stop) if stop else 0
+            cur_price       = float(price) if price else 0
+            uzaklik         = round((cur_price - stop_seviye) / cur_price * 100, 1) if cur_price and stop_seviye else 0
+
             pos_results.append({
-                "sembol":       sym,
-                "tahmini_kayip": round(beklenen_dd),
-                "beta":         beta,
-                "stop":         stop_tetik,
+                "sembol":           sym,
+                "fiyat":            round(cur_price, 2),
+                "tahmini_kayip":    round(beklenen_dd),
+                "tahmini_zarar":    -round(beklenen_dd),
+                "beta":             beta,
+                "stop":             stop_tetik if stop_tetiklendi else "",
+                "stop_seviye":      stop_seviye,
+                "stop_uzaklik_pct": uzaklik,
             })
             pf_kayip += beklenen_dd
             pf_deger += value
@@ -337,18 +347,30 @@ def build_risk_context(portfolios: dict) -> str:
             lines.append(f"  {w}")
         lines.append("")
 
-    # Senaryo
+    # Senaryo — her hisse stop seviyesi ve uzaklık detaylı
     s = scenario
     lines.append(f"--- SENARYO: {s['senaryo']} ---")
     lines.append(
         f"  Toplam tahmini kayıp: ${s['tahmini_toplam_kayip']:,} "
         f"(-%{s['kayip_yuzde']})"
     )
+    lines.append("  Stop tetiklenecek pozisyonlar:")
+    stop_tetik_sayisi = 0
     for pf_name, pf_data in s["portfoyler"].items():
-        stop_uyari = [p for p in pf_data["pozisyonlar"] if p.get("stop")]
-        if stop_uyari:
-            for p in stop_uyari:
-                lines.append(f"  {pf_name}/{p['sembol']}: {p['stop']}")
+        for p in pf_data.get("pozisyonlar", []):
+            if p.get("stop"):
+                cur  = p.get("fiyat", 0)
+                stop = p.get("stop_seviye", 0)
+                uzak = p.get("stop_uzaklik_pct", 0)
+                zarar = p.get("tahmini_zarar", 0)
+                lines.append(
+                    f"  ❌ [{pf_name[:3].upper()}] {p['sembol']:6} "
+                    f"${cur:,.2f} → stop ${stop:,.2f} "
+                    f"(%{uzak:.1f} uzakta | ${zarar:+,.0f})"
+                )
+                stop_tetik_sayisi += 1
+    if stop_tetik_sayisi == 0:
+        lines.append("  ✅ Hiçbir stop tetiklenmez")
     lines.append("")
 
     print("[Risk] Analiz tamamlandı.")

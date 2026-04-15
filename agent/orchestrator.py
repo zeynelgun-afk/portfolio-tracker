@@ -477,6 +477,14 @@ Swing giriş kararı varsa: SWING_GİRİŞ: [SEMBOL] [ADET] adet @ ~$[FİYAT] st
 
 FAZ_2 giriş penceresi: 17:30-21:00 TR (FAZ_1 = 16:30-17:30 TR, giriş yok)
 
+TABLO YORUMLAMA KURALLARI (Kesin olarak uygula):
+- Stop% sütunu = fiyattan stop seviyesine uzaklık. DÜŞÜK = tehlikeli.
+- ⚠️ Stop% < 4 → tabloda görünür, uyarı olarak belirt.
+- Bugün sütunu = o günkü hareket. P/L sütunu = giriş fiyatından toplam getiri. İKİSİNİ KARIŞTIRAMA.
+- K-05 earnings uyarısı: YENI GİRİŞ yasağı. Mevcut açık pozisyon K-05'ten ETKİLENMEZ, tutulabilir.
+- K-17: Aynı GÜNDE aynı sektörden YENI GİRİŞ yasağı. Portföyde mevcut tech pozisyonu K-17 tetiklemez.
+- Senaryo testinde listelenen semboller stop tetiklenenlerdir — fiyat ve stop seviyesi verilmiştir, kullan.
+
 KESİN / MUHTEMEL / SPEKÜLATİF etiket kullan. Küçük harf Türkçe.
 """
 

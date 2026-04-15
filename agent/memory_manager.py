@@ -308,7 +308,7 @@ def append_learning(insight: str, source: str = "agent"):
 def build_context_for_claude(mode: str) -> str:
     """
     Claude'a gönderilecek sıkıştırılmış bağlamı derler.
-    Tam JSON yerine sadece özet → ~1500 token, 10x ucuz.
+    Tam JSON yerine okunabilir tablo formatı → hata riski düşük.
     """
     state   = load_portfolio_state()
     brief   = load_daily_brief()
@@ -316,14 +316,87 @@ def build_context_for_claude(mode: str) -> str:
     learned = load_learning_log()
 
     now = datetime.now(TR_TZ).strftime("%Y-%m-%d %H:%M TR")
+    _gunler = ["Pazartesi","Salı","Çarşamba","Perşembe","Cuma","Cumartesi","Pazar"]
+    _gun = _gunler[datetime.now(TR_TZ).weekday()]
 
-    context = f"""=== ZAMAN: {now} | MOD: {mode.upper()} ===
+    # Piyasa özet satırı
+    mkt = state.get("market", {})
+    mkt_lines = []
+    for sym in ["SPY","QQQ","GLD","TLT"]:
+        p   = mkt.get(sym)
+        chg = mkt.get(f"{sym.lower()}_chg") or mkt.get(f"{sym}_chg")
+        if p:
+            chg_str = f"{float(chg):+.2f}%" if chg is not None else "—"
+            mkt_lines.append(f"  {sym:4}: ${float(p):,.2f} ({chg_str})")
+    vix = mkt.get("VIX")
+    vix_chg = mkt.get("VIX_chg")
+    vix_sev = mkt.get("VIX_seviye","")
+    if vix:
+        vchg = f"{float(vix_chg):+.2f}%" if vix_chg else "—"
+        mkt_lines.append(f"  VIX : {float(vix):.2f} ({vchg}) [{vix_sev}]")
+
+    # Portföy tablosu — okunabilir format
+    pf_lines = []
+    PF_LABEL = {"aggressive":"Agresif","balanced":"Dengeli","dividend":"Temettü"}
+    for pf_name, pf_data in state.get("portfolios", {}).items():
+        label = PF_LABEL.get(pf_name, pf_name)
+        deg   = pf_data.get("toplam_deger")
+        getiri = pf_data.get("getiri_yuzde")
+        deg_str    = f"${float(deg):,.0f}" if deg else "—"
+        getiri_str = f"{float(getiri):+.1f}%" if getiri is not None else "—"
+        pf_lines.append(f"\n[{label}] {deg_str} ({getiri_str})")
+        pf_lines.append(f"  {'Sembol':<6} {'Fiyat':>8} {'Bugün':>7} {'P/L':>7} {'Stop%':>6} {'Hedef':>8}")
+        pf_lines.append(f"  {'-'*50}")
+        for pos in pf_data.get("pozisyonlar", []):
+            sym      = str(pos.get("sym","?"))
+            fiyat    = pos.get("fiyat")
+            gunluk   = pos.get("gunluk")
+            pnl_pct  = pos.get("pnl_pct")
+            stop_pct = pos.get("stop_pct")
+            hedef    = pos.get("hedef")
+            f_str = f"${float(fiyat):,.2f}" if fiyat else "—"
+            g_str = f"{float(gunluk):+.1f}%" if gunluk is not None else "—"
+            p_str = f"{float(pnl_pct):+.1f}%" if pnl_pct is not None else "—"
+            s_str = f"%{float(stop_pct):.1f}" if stop_pct is not None else "—"
+            h_str = f"${float(hedef):,.0f}" if hedef else "—"
+            # Stop yakınsa uyarı
+            uyari = " ⚠️" if stop_pct is not None and float(stop_pct) < 4 else ""
+            pf_lines.append(f"  {sym:<6} {f_str:>8} {g_str:>7} {p_str:>7} {s_str:>6} {h_str:>8}{uyari}")
+
+    # Swing tablosu
+    sw_lines = []
+    swing = state.get("swing", {})
+    sw_pozlar = swing.get("pozisyonlar", [])
+    if sw_pozlar:
+        akt = swing.get("aktif_sayisi", 0)
+        sw_lines.append(f"\n[Swing Trade] {akt}/5 slot dolu")
+        sw_lines.append(f"  {'Sembol':<6} {'Fiyat':>8} {'P/L':>7} {'Stop':>8} {'Stop%':>6} {'Hedef':>8}")
+        sw_lines.append(f"  {'-'*50}")
+        for sp in sw_pozlar:
+            sym   = str(sp.get("sym","?"))
+            fiyat = sp.get("fiyat")
+            pnl   = sp.get("pnl_pct")
+            stop  = sp.get("stop")
+            uzak  = sp.get("stop_uzak_pct")
+            hedef = sp.get("hedef")
+            f_str = f"${float(fiyat):,.2f}" if fiyat else "—"
+            p_str = f"{float(pnl):+.1f}%" if pnl is not None else "—"
+            s_str = f"${float(stop):,.2f}" if stop else "—"
+            u_str = f"%{float(uzak):.1f}" if uzak is not None else "—"
+            h_str = f"${float(hedef):,.0f}" if hedef else "—"
+            uyari = " ⚠️ YAKIN" if uzak is not None and float(uzak) < 5 else ""
+            sw_lines.append(f"  {sym:<6} {f_str:>8} {p_str:>7} {s_str:>8} {u_str:>6} {h_str:>8}{uyari}")
+
+    context = f"""=== ZAMAN: {now} ({_gun}) | MOD: {mode.upper()} ===
 
 === PİYASA DURUMU ===
-{json.dumps(state.get('market', {}), ensure_ascii=False)}
+{chr(10).join(mkt_lines)}
 
-=== PORTFÖY METRİKLERİ ===
-{json.dumps(state.get('portfolios', {}), ensure_ascii=False, indent=2)}
+=== PORTFÖY (Sembol | Fiyat | Bugün | Giriş P/L | StopUzak% | Hedef) ===
+NOT: Stop% = fiyattan stop seviyesine uzaklık. ⚠️ = Stop %4 altında (acil takip).
+P/L = giriş fiyatına göre toplam getiri. Bugün = o günkü hareket.
+{chr(10).join(pf_lines)}
+{chr(10).join(sw_lines)}
 
 === DÜNKÜ/ÖNCEKİ ANALİZ (brief) ===
 {brief}
