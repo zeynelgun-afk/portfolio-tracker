@@ -1,6 +1,6 @@
 {
-  "tarih": "2026-04-14T17:12:23.903825+03:00",
-  "vix": 18.09,
+  "tarih": "2026-04-15T16:18:07.261487+03:00",
+  "vix": 17.75,
   "sektor_performans": {
     "Basic Materials": 0.0,
     "Communication Services": 0.0,
@@ -16,75 +16,37 @@
   },
   "dominant_temalar": [
     {
-      "tema_adi": "AI_altyapı",
-      "güç_skoru": 8,
-      "neden": "Nasdaq 100 teknoloji liderliği, 'fastest growth' haber odağı. PPI yumuşak geldi = Fed baskısı azaldı, büyüme hisselerine rotasyon devam ediyor.",
-      "öncelikli_alt_dal": "yazılım_bulut",
-      "önerilen_hisseler": [
-        "NVDA",
-        "AVGO",
-        "VRT"
-      ],
-      "portföy": "aggressive",
-      "aciliyet": "yüksek",
-      "hisse_evreni": [
-        "IREN",
-        "EQIX",
-        "ASML",
-        "VRT",
-        "FN",
-        "ETN",
-        "COHR",
-        "AAOI",
-        "GNRC",
-        "WDC",
-        "STX",
-        "PWR",
-        "ONTO",
-        "HUBB",
-        "CAMT",
-        "KLAC",
-        "ANET",
-        "DLR",
-        "LITE",
-        "AMAT",
-        "LRCX",
-        "MU",
-        "TER"
-      ]
-    },
-    {
       "tema_adi": "savunma_uzay",
-      "güç_skoru": 7,
-      "neden": "İran görüşmeleri haberi risk-on rallisi getirdi ancak IMF uyarısı jeopolitik belirsizliği koruyor. Savunma harcamaları hedge pozisyonu olarak mantıklı.",
-      "öncelikli_alt_dal": "havacılık_savunma",
+      "güç_skoru": 8,
+      "neden": "İran savaşı haberleri, piyasa complacency uyarısı ve jeopolitik gerilim devam ediyor. Fed faiz beklemede tutacak → savunma harcamaları korunur.",
+      "öncelikli_alt_dal": "savunma_müteahhitleri",
       "önerilen_hisseler": [
         "LMT",
         "RTX",
-        "GD"
+        "NOC"
       ],
       "portföy": "balanced",
-      "aciliyet": "orta",
+      "aciliyet": "yüksek",
       "hisse_evreni": [
-        "LHX",
-        "LMT",
         "GD",
-        "KTOS",
-        "AJRD",
+        "ZS",
+        "NOC",
+        "CRWD",
         "RDW",
         "PANW",
-        "CRWD",
-        "ZS",
-        "S",
-        "RTX",
+        "AJRD",
+        "LMT",
         "RKLB",
-        "NOC"
+        "LHX",
+        "KTOS",
+        "S",
+        "RTX"
       ]
     },
     {
       "tema_adi": "finansal_döngüsel",
       "güç_skoru": 6,
-      "neden": "Earnings sezonu odakta, yumuşak PPI ile faiz beklentileri gevşedi. Finansal sektör flat ama kazanç sürprizleri katalist olabilir.",
+      "neden": "Fed faiz beklemede → spread korunur, import fiyatları beklenenden düşük → enflasyon baskısı hafif. Trump-Powell gerilimi kısa vadeli volatilite riski taşısa da bankalar için net faiz marjı olumlu.",
       "öncelikli_alt_dal": "büyük_bankalar",
       "önerilen_hisseler": [
         "JPM",
@@ -94,52 +56,78 @@
       "portföy": "balanced",
       "aciliyet": "orta",
       "hisse_evreni": [
-        "MA",
-        "GS",
-        "MS",
-        "CB",
-        "MET",
+        "V",
+        "PYPL",
+        "AIG",
+        "AFRM",
         "PRU",
         "BAC",
+        "MS",
+        "MA",
+        "GS",
         "JPM",
-        "V",
-        "AFRM",
-        "AIG",
-        "PYPL"
+        "CB",
+        "MET"
+      ]
+    },
+    {
+      "tema_adi": "emtia_kaynak",
+      "güç_skoru": 5,
+      "neden": "Jeopolitik risk + enerji güvenliği endişesi altın ve petrol talebini destekliyor. Savaş ortamında emtia hedge işlevi görüyor.",
+      "öncelikli_alt_dal": "altın_madencileri",
+      "önerilen_hisseler": [
+        "NEM",
+        "GOLD",
+        "AEM"
+      ],
+      "portföy": "balanced",
+      "aciliyet": "orta",
+      "hisse_evreni": [
+        "AEM",
+        "HBM",
+        "FCX",
+        "USA",
+        "SCCO",
+        "MP",
+        "GOLD",
+        "NEM",
+        "NOVN",
+        "TECK",
+        "PAAS"
       ]
     }
   ],
   "kacınılacak": [
-    "Consumer Defensive",
-    "Healthcare"
+    "Consumer Cyclical",
+    "Communication Services"
   ],
-  "piyasa_modu": "risk-on",
-  "genel_yorum": "VIX 18.1 ile volatilite kontrol altında. İran diplomasisi + yumuşak PPI kombinasyonu büyüme hisselerine rotasyonu destekliyor. Teknoloji ağırlıklı agresif pozisyon mantıklı, savunma hedge olarak tutulabilir.",
+  "piyasa_modu": "risk-neutral",
+  "genel_yorum": "VIX 17.8 nötr seviyede ama İran savaşı + Trump-Powell gerilimi beklenmedik spike riski taşıyor. Piyasa complacent görünüyor — savunma ve emtia hedge mantıklı. Sektör performansları flat olduğundan tematik seçicilik önemli.",
   "haberler": [
     {
-      "baslik": "Fed Nominee Kevin Warsh Discloses Vast Wealth",
+      "baslik": "Fed's Beth Hammack says she expects rates will 'remain on hold for a good while'",
+      "kaynak": "youtube.com",
+      "tarih": "2026-04-15 09:12"
+    },
+    {
+      "baslik": "U.S. Import Prices Rise Less Than Expected in March",
       "kaynak": "wsj.com",
-      "tarih": "2026-04-14 10:01"
+      "tarih": "2026-04-15 09:10"
     },
     {
-      "baslik": "Kevin Warsh Could Become Richest Fed Chair Ever—Discloses Assets Worth Over $100 Million",
-      "kaynak": "forbes.com",
-      "tarih": "2026-04-14 10:00"
+      "baslik": "Is The Economy Better Off Today Than Before The War Started?",
+      "kaynak": "seekingalpha.com",
+      "tarih": "2026-04-15 09:03"
     },
     {
-      "baslik": "These 20 stocks in the now-cheap tech sector are positioned for the fastest growth through 2028",
-      "kaynak": "marketwatch.com",
-      "tarih": "2026-04-14 09:55"
+      "baslik": "Market Becoming Complacent in U.S.-Iran War? Robert Conzo's Bull Case",
+      "kaynak": "youtube.com",
+      "tarih": "2026-04-15 09:01"
     },
     {
-      "baslik": "Nasdaq 100: Tech Stocks Lead US Indices Higher After Soft PPI Today",
-      "kaynak": "fxempire.com",
-      "tarih": "2026-04-14 09:48"
-    },
-    {
-      "baslik": "Iran war will hit UK growth the hardest of any rich economies, IMF says",
-      "kaynak": "cnbc.com",
-      "tarih": "2026-04-14 09:44"
+      "baslik": "Is The FTSE 100 Expensive After Its Recent Gains?",
+      "kaynak": "seekingalpha.com",
+      "tarih": "2026-04-15 09:00"
     }
   ]
 }
