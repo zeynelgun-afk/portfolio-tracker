@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-04-15T07:00:30.395405",
+  "son_guncelleme": "2026-04-15T21:11:49.986937",
   "not": "3 portföy merkezi aday havuzu. PART 1C 15:38 TR güncelleme: DUK/NEE/GEV yeni EKLE (K-04+K-18 temiz), POWL K-18 ELENDİ ($27.3M insider satış), ön piyasa gap-up sonrası kovalama yasağı 4 aday için aktif. | 11 Nisan: Nükleer tema adayları eklendi (CCJ, OKLO, NNE, UEC, VST) — tematik araştırma, K-14 aktif olduğu için hepsi İZLE statüsünde. | 11 Nisan ek: BWXT (savunma tekel+NRC katalizör), LEU (HALEU tekeli), DNN (Wheeler River) İZLE. SMR (class action lawsuit) ve UUUU (%6 upside) GEÇ. | 2026-04-14: ALAB+PLAB+COHU eklendi — optik/bağlantı/test ekipmanı tematik araştırması. Hepsi IZLE statüsünde, geri çekilme bekleniyor.",
   "sistem_referans": "docs/PORTFOLIO_OPPORTUNITY_SYSTEM.md",
   "script": "scripts/portfolio_scan_common.py",
@@ -72,7 +72,7 @@
     {
       "sembol": "CAT",
       "hedef_portfoy": "dengeli",
-      "guncel_fiyat": 794.25,
+      "guncel_fiyat": 770.17,
       "rsi": 66.6,
       "skor": 9,
       "skor_detay": "ROIC 11.4% >10: +1 | 6M 60.2% >20: +3 | SMA50 üstü: +2 | Golden cross: +1 | Yeni sektör (Industrial) mevcut portföyde yok: +2",
@@ -93,12 +93,12 @@
       "k_17_gecis": true,
       "bekleme_gun": 3,
       "karar": "EKLE",
-      "momentum_5gun": 0.32
+      "momentum_5gun": -3.03
     },
     {
       "sembol": "WDC",
       "hedef_portfoy": "agresif",
-      "guncel_fiyat": 366.22,
+      "guncel_fiyat": 365,
       "rsi": 64.8,
       "skor": 17,
       "skor_detay": "1M 26.9% >20: +3 | 6M 192.7% >50: +3 | ROIC 25.2% >25: +3 | RSI 65 güçlü: +2 | SMA50 üstü: +2 | Golden cross: +2 | 3M 68.6% >15: +2",
@@ -119,12 +119,12 @@
       "k_17_gecis": true,
       "bekleme_gun": 3,
       "karar": "EKLE",
-      "momentum_5gun": 4.59
+      "momentum_5gun": -0.33
     },
     {
       "sembol": "KLAC",
       "hedef_portfoy": "agresif",
-      "guncel_fiyat": 1795.91,
+      "guncel_fiyat": 1748.11,
       "rsi": 69.6,
       "skor": 15,
       "skor_detay": "1M 18.9% >10: +2 | 6M 75.8% >50: +3 | P/E 49.8 >40 yüksek: -1 | ROIC 36.8% >25: +3 | RSI 70 güçlü: +2 | SMA50 üstü: +2 | Golden cross: +2 | 3M 23.4% >15: +2",
@@ -145,12 +145,12 @@
       "k_17_gecis": true,
       "bekleme_gun": 3,
       "karar": "EKLE",
-      "momentum_5gun": 1.53
+      "momentum_5gun": -2.66
     },
     {
       "sembol": "AMAT",
       "hedef_portfoy": "agresif",
-      "guncel_fiyat": 395.64,
+      "guncel_fiyat": 394.26,
       "rsi": 65.7,
       "skor": 14,
       "skor_detay": "1M 15.0% >10: +2 | 6M 89.5% >50: +3 | P/E 40.2 >40 yüksek: -1 | ROIC 22.6% >15: +2 | RSI 66 güçlü: +2 | SMA50 üstü: +2 | Golden cross: +2 | 3M 32.1% >15: +2",
@@ -171,12 +171,12 @@
       "k_17_gecis": true,
       "bekleme_gun": 3,
       "karar": "EKLE",
-      "momentum_5gun": -0.02
+      "momentum_5gun": -0.35
     },
     {
       "sembol": "MRK",
       "hedef_portfoy": "temettü",
-      "guncel_fiyat": 119.96,
+      "guncel_fiyat": 117.9,
       "rsi": 62.5,
       "skor": 9,
       "skor_detay": "payout 44.8% <50%: +3 | P/E 16.7 <18: +1 | ROIC 20.8% >15: +2 | FCF yield 4.1% >0: +1 | SMA50 üstü: +1 | SMA200 üstü: +1",
@@ -197,12 +197,12 @@
       "k_17_gecis": true,
       "bekleme_gun": 3,
       "karar": "EKLE",
-      "momentum_5gun": -0.16
+      "momentum_5gun": -1.72
     },
     {
       "sembol": "UPS",
       "hedef_portfoy": "temettü",
-      "guncel_fiyat": 103.22,
+      "guncel_fiyat": 103.59,
       "rsi": 53.1,
       "skor": 10,
       "skor_detay": "yield 6.46% 5-7%: +3 | P/E 15.5 <18: +1 | ROIC 10.6% >10: +1 | FCF yield 5.5% >5%: +2 | SMA200 üstü: +1 | Yeni sektör (Industrial) portföyde yok: +2",
@@ -224,12 +224,12 @@
       "bekleme_gun": 3,
       "karar": "EKLE",
       "uyari": "K-04 ihlali (SMA50 altı) - giriş ön koşulu: ilk 30 dk ralli + SMA50 kırılım teyidi. Aksi halde İZLE'ye çek",
-      "momentum_5gun": 1.18
+      "momentum_5gun": 0.36
     },
     {
       "sembol": "DUK",
       "hedef_portfoy": "dengeli",
-      "guncel_fiyat": 129.78,
+      "guncel_fiyat": 127.99,
       "rsi": 62.1,
       "skor": 7,
       "skor_detay": "P/E 20.8 <25: +1 | 6M 4.7% >0: +1 | SMA50 üstü: +2 | Golden cross: +1 | FCF yield 7.9% >5%: +2",
@@ -250,12 +250,12 @@
       "k_17_gecis": true,
       "bekleme_gun": 2,
       "karar": "İZLE",
-      "momentum_5gun": -0.48
+      "momentum_5gun": -1.38
     },
     {
       "sembol": "NEE",
       "hedef_portfoy": "dengeli",
-      "guncel_fiyat": 91.31,
+      "guncel_fiyat": 91.24,
       "rsi": 62.8,
       "skor": 5,
       "skor_detay": "6M 13.4% >10: +2 | SMA50 üstü: +2 | Golden cross: +1",
@@ -276,12 +276,12 @@
       "k_17_gecis": true,
       "bekleme_gun": 2,
       "karar": "GEÇ",
-      "momentum_5gun": -1.07
+      "momentum_5gun": -0.08
     },
     {
       "sembol": "GEV",
       "hedef_portfoy": "dengeli",
-      "guncel_fiyat": 987.5,
+      "guncel_fiyat": 985.92,
       "rsi": 66.9,
       "skor": 8,
       "skor_detay": "6M 60.1% >20: +3 | SMA50 üstü: +2 | Golden cross: +1 | Yeni sektör (Industrial) mevcut portföyde yok: +2",
@@ -302,12 +302,12 @@
       "k_17_gecis": true,
       "bekleme_gun": 2,
       "karar": "İZLE",
-      "momentum_5gun": -0.37
+      "momentum_5gun": -0.16
     },
     {
       "sembol": "ATMU",
       "hedef_portfoy": "dengeli",
-      "guncel_fiyat": 63.98,
+      "guncel_fiyat": 62.19,
       "rsi": 62.7,
       "skor": 12,
       "skor_detay": "P/E 25.0 <25: +1 | ROIC 23.0% >15: +3 | 6M 48.5% >20: +3 | SMA50 üstü: +2 | Golden cross: +1 | Yeni sektör (Industrial) mevcut portföyde yok: +2",
@@ -328,7 +328,7 @@
       "k_17_gecis": "temiz",
       "bekleme_gun": 2,
       "karar": "EKLE",
-      "momentum_5gun": 0.87,
+      "momentum_5gun": -2.8,
       "giris_tetigi": "SMA50 (~60.35) veya SMA20 (~58) testi + RSI 45-50 geri çekilme + hacimli yeniden yükseliş + K-14 drawdown freninin kalkması (SPY > SMA50)",
       "not_ek": "K-14 drawdown freni aktif olduğu için şu anda alım yasak. Pullback bekleme statüsünde izleniyor. Forward P/E 2026 = 21.6. Spin-off tarih: 2023. Mcap 5.1B, small-mid cap, beta 1.59."
     },
@@ -336,7 +336,7 @@
       "sembol": "MU",
       "hedef_portfoy": "agresif",
       "urgency": "high",
-      "guncel_fiyat": 465.66,
+      "guncel_fiyat": 456.23,
       "rsi": 57.6,
       "skor": 15,
       "skor_detay": "1M 4.6% >0: +1 | 6M 132.1% >50: +3 | ROIC 27.7% >25: +3 | RSI 58 güçlü: +2 | SMA50 üstü: +2 | Golden cross: +2 | 3M 22.1% >15: +2",
@@ -345,13 +345,13 @@
       "bekleme_gun": 1,
       "karar": "EKLE",
       "hedef_giris": "406-410 day-2 deployment",
-      "momentum_5gun": 9.17
+      "momentum_5gun": -2.03
     },
     {
       "sembol": "LMT",
       "hedef_portfoy": "dengeli",
       "urgency": "high",
-      "guncel_fiyat": 611.58,
+      "guncel_fiyat": 611.1,
       "rsi": 47.9,
       "skor": 12,
       "skor_detay": "ROIC 17.4% >15: +3 | 6M 23.5% >20: +3 | RSI 48 nötr: +2 | Golden cross: +1 | FCF yield 4.8% >3%: +1 | Yeni sektör (Industrial) mevcut portföyde yok: +2",
@@ -360,13 +360,13 @@
       "bekleme_gun": 1,
       "karar": "EKLE",
       "hedef_giris": "620 altı pullback",
-      "momentum_5gun": -1.31
+      "momentum_5gun": -0.08
     },
     {
       "sembol": "VRT",
       "hedef_portfoy": "agresif",
       "urgency": "medium",
-      "guncel_fiyat": 310.51,
+      "guncel_fiyat": 301.16,
       "rsi": 64.2,
       "skor": 11,
       "skor_detay": "1M 6.5% >0: +1 | 6M 70.2% >50: +3 | P/E 82.5 >80 AŞIRI PAHALI: -3 | ROIC 18.2% >15: +2 | RSI 64 güçlü: +2 | SMA50 üstü: +2 | Golden cross: +2 | 3M 75.8% >15: +2",
@@ -375,13 +375,13 @@
       "bekleme_gun": 1,
       "karar": "İZLE",
       "hedef_giris": "FAZ 3 adayı pullback 265 altı",
-      "momentum_5gun": 3.52
+      "momentum_5gun": -3.01
     },
     {
       "sembol": "ANET",
       "hedef_portfoy": "agresif",
       "urgency": "medium",
-      "guncel_fiyat": 154.37,
+      "guncel_fiyat": 154.33,
       "rsi": 62.3,
       "skor": 10,
       "skor_detay": "1M 4.6% >0: +1 | P/E 52.3 >40 yüksek: -1 | ROIC 22.6% >15: +2 | RSI 62 güçlü: +2 | SMA50 üstü: +2 | Golden cross: +2 | 3M 18.8% >15: +2",
@@ -390,13 +390,13 @@
       "bekleme_gun": 1,
       "karar": "İZLE",
       "hedef_giris": "K-17 korelasyon kontrol sonrası",
-      "momentum_5gun": 1.55
+      "momentum_5gun": -0.03
     },
     {
       "sembol": "KMB",
       "hedef_portfoy": "temettü",
       "urgency": "low",
-      "guncel_fiyat": 97.16,
+      "guncel_fiyat": 96.81,
       "rsi": 46.4,
       "skor": 8,
       "skor_detay": "yield 5.17% 5-7%: +3 | P/E 16.1 <18: +1 | ROIC 17.7% >15: +2 | FCF yield 7.3% >5%: +2",
@@ -405,13 +405,13 @@
       "bekleme_gun": 1,
       "karar": "İZLE",
       "hedef_giris": "trim alternatif",
-      "momentum_5gun": 0.58
+      "momentum_5gun": -0.36
     },
     {
       "sembol": "OKE",
       "hedef_portfoy": "temettü",
       "urgency": "low",
-      "guncel_fiyat": 84.84,
+      "guncel_fiyat": 84.1,
       "rsi": 45.4,
       "skor": 8,
       "skor_detay": "yield 4.83% 4-5%: +2 | P/E 16.0 <18: +1 | FCF yield 4.5% >0: +1 | SMA50 üstü: +1 | SMA200 üstü: +1 | Yeni sektör (Energy) portföyde yok: +2",
@@ -420,7 +420,7 @@
       "bekleme_gun": 1,
       "karar": "İZLE",
       "hedef_giris": "enerji sektor çeşitlilik",
-      "momentum_5gun": -0.57
+      "momentum_5gun": -0.87
     },
     {
       "sembol": "LLY",
@@ -437,14 +437,14 @@
       "risk_notu": "P/E 41 pahalı. Yield %0.7 temettu portfoyune uymuyor. SMA50 alti simdi. 27 Nis earnings.",
       "k13_kategori": "faydalanici",
       "son_guncelleme": "2026-04-09T15:17:21.708956",
-      "guncel_fiyat": 922.5,
+      "guncel_fiyat": 905.13,
       "rsi": 51.3,
       "skor": 6,
       "skor_detay": "P/E 41.6 >40 yüksek: -1 | ROIC 30.2% >25: +3 | RSI 51 güçlü: +2 | Golden cross: +2",
       "son_kontrol": "2026-04-15",
       "karar": "GEÇ",
       "bekleme_gun": 1,
-      "momentum_5gun": -0.76
+      "momentum_5gun": -1.88
     },
     {
       "sembol": "REGN",
@@ -461,14 +461,14 @@
       "risk_notu": "Yield %0.5 temettu uyumsuz. SMA50 alti. Earnings takvimi netlesmeli.",
       "k13_kategori": "faydalanici",
       "son_guncelleme": "2026-04-09T15:17:21.708956",
-      "guncel_fiyat": 755.51,
+      "guncel_fiyat": 753.93,
       "rsi": 52.5,
       "skor": 8,
       "skor_detay": "6M 36.0% >30: +2 | RSI 53 güçlü: +2 | SMA50 üstü: +2 | Golden cross: +2",
       "son_kontrol": "2026-04-15",
       "karar": "GEÇ",
       "bekleme_gun": 1,
-      "momentum_5gun": 1.21
+      "momentum_5gun": -0.21
     },
     {
       "sembol": "RPRX",
@@ -485,14 +485,14 @@
       "risk_notu": "Yield %1.86 dusuk. D/E 1.4. Royalty geliri portfoy ilaclara bagli.",
       "k13_kategori": "faydalanici",
       "son_guncelleme": "2026-04-09T15:32:53.581322",
-      "guncel_fiyat": 48.82,
+      "guncel_fiyat": 48.7,
       "rsi": 62.5,
       "skor": 8,
       "skor_detay": "6M 34.1% >20: +3 | SMA50 üstü: +2 | Golden cross: +1 | FCF yield 12.0% >5%: +2",
       "son_kontrol": "2026-04-15",
       "karar": "İZLE",
       "bekleme_gun": 1,
-      "momentum_5gun": 0.81
+      "momentum_5gun": -0.25
     },
     {
       "sembol": "ABBV",
@@ -509,8 +509,8 @@
       "risk_notu": "SMA50+200 alti simdi. Humira generik rekabet devam ediyor.",
       "k13_kategori": "faydalanici",
       "son_guncelleme": "2026-04-09T15:32:53.581322",
-      "guncel_fiyat": 210.32,
-      "momentum_5gun": 1.86,
+      "guncel_fiyat": 208.43,
+      "momentum_5gun": -0.87,
       "son_kontrol": "2026-04-15"
     },
     {
@@ -528,8 +528,8 @@
       "risk_notu": "RSI 67 giris icin biraz yukse, geri cekilme bekle. Bolgesel banka = faiz duyarli, 2027 Fed yolu kritik.",
       "k13_kategori": "faydalanici",
       "son_guncelleme": "2026-04-09T15:55:22.982146",
-      "guncel_fiyat": 21.63,
-      "momentum_5gun": -0.41,
+      "guncel_fiyat": 21.57,
+      "momentum_5gun": -0.28,
       "son_kontrol": "2026-04-15"
     },
     {
@@ -547,14 +547,14 @@
       "risk_notu": "Yield yok. ROIC %5 dusuk. Dogal gaz spot fiyat duyarli. Iran ateşkesi kalici olursa enerji dususu riski.",
       "k13_kategori": "faydalanici",
       "son_guncelleme": "2026-04-09T15:55:22.982146",
-      "guncel_fiyat": 36.11,
+      "guncel_fiyat": 36.34,
       "rsi": 40.0,
       "skor": 11,
       "skor_detay": "P/E 18.7 <25: +1 | 6M 20.9% >20: +3 | SMA50 üstü: +2 | Golden cross: +1 | FCF yield 11.6% >5%: +2 | Yeni sektör (Energy) mevcut portföyde yok: +2",
       "son_kontrol": "2026-04-15",
       "karar": "EKLE",
       "bekleme_gun": 1,
-      "momentum_5gun": -2.96
+      "momentum_5gun": 0.64
     },
     {
       "sembol": "TFC",
@@ -571,8 +571,8 @@
       "risk_notu": "ROIC %4 dusuk. RSI 68 giris icin yuksek. SBB benzeri risk kontrolu gerekli.",
       "k13_kategori": "faydalanici",
       "son_guncelleme": "2026-04-09T15:55:22.982146",
-      "guncel_fiyat": 49.53,
-      "momentum_5gun": -0.96,
+      "guncel_fiyat": 49.59,
+      "momentum_5gun": 0.12,
       "son_kontrol": "2026-04-15"
     },
     {
@@ -590,14 +590,14 @@
       "risk_notu": "Yield yok. Egitim sektoru duzenleyici risk. Az bilinen sirket.",
       "k13_kategori": "faydalanici",
       "son_guncelleme": "2026-04-09T15:55:22.982146",
-      "guncel_fiyat": 33.19,
+      "guncel_fiyat": 33.01,
       "rsi": 46.0,
       "skor": 11,
       "skor_detay": "P/E 17.5 <25: +1 | ROIC 17.3% >15: +3 | 6M 15.7% >10: +2 | RSI 46 nötr: +2 | Golden cross: +1 | FCF yield 5.5% >5%: +2",
       "son_kontrol": "2026-04-15",
       "karar": "EKLE",
       "bekleme_gun": 1,
-      "momentum_5gun": -0.48
+      "momentum_5gun": -0.54
     },
     {
       "sembol": "PYPL",
@@ -614,19 +614,19 @@
       "risk_notu": "SMA200 altinda simdi. Apple Pay/Google Pay rekabet. Agresif portfoy icin uygun ama VIX normalizasyonu lazim.",
       "k13_kategori": "faydalanici",
       "son_guncelleme": "2026-04-09T15:55:22.982146",
-      "guncel_fiyat": 47.97,
+      "guncel_fiyat": 49.57,
       "rsi": 53.0,
       "skor": 6,
       "skor_detay": "1M 2.1% >0: +1 | ROIC 15.0% >10: +1 | RSI 53 güçlü: +2 | SMA50 üstü: +2",
       "son_kontrol": "2026-04-15",
       "karar": "GEÇ",
       "bekleme_gun": 1,
-      "momentum_5gun": 0.97
+      "momentum_5gun": 3.34
     },
     {
       "sembol": "LRCX",
       "hedef_portfoy": "agresif",
-      "guncel_fiyat": 272.41,
+      "guncel_fiyat": 265.16,
       "rsi": 65.4,
       "skor": 16,
       "skor_detay": "1M 20.2% >20: +3 | 6M 97.0% >50: +3 | P/E 52.5 >40 yüksek: -1 | ROIC 38.6% >25: +3 | RSI 65 güçlü: +2 | SMA50 üstü: +2 | Golden cross: +2 | 3M 18.5% >15: +2",
@@ -637,13 +637,13 @@
       "son_kontrol": "2026-04-15",
       "bekleme_gun": 0,
       "karar": "EKLE",
-      "momentum_5gun": 1.9
+      "momentum_5gun": -2.66
     },
     {
       "sembol": "CCJ",
       "isim": "Cameco Corporation",
       "hedef_portfoy": "agresif",
-      "guncel_fiyat": 116.06,
+      "guncel_fiyat": 119.11,
       "rsi": 56.3,
       "skor": 8,
       "skor_detay": "SMA50 üstü: +2 | SMA200 üstü: +2 | 6M +33.9% >20%: +3 | RSI 56 nötr-güçlü: +1",
@@ -665,13 +665,13 @@
       "bekleme_gun": 0,
       "karar": "İZLE",
       "kategori": "nukleer_uranyum",
-      "momentum_5gun": -0.55
+      "momentum_5gun": 2.63
     },
     {
       "sembol": "OKLO",
       "isim": "Oklo Inc.",
       "hedef_portfoy": "agresif",
-      "guncel_fiyat": 58.58,
+      "guncel_fiyat": 63.35,
       "rsi": 42.7,
       "skor": 3,
       "skor_detay": "Gelir yok: -3 | Konsensüs Buy: +1 | Tema gücü: +3 | SMA50 altı: -1 | SMA200 altı: -1 | Analist hedef $82 = %63 upside: +4",
@@ -695,13 +695,13 @@
       "kategori": "nukleer_smr_spekulatif",
       "giris_tetigi": "SMA50 üstüne geçiş + NRC lisans haberi katalizör",
       "uyari": "SPEKÜLATİF — gelir yok, yalnızca tema. Max pozisyon boyutu normal limitin yarısı.",
-      "momentum_5gun": 8.6
+      "momentum_5gun": 8.14
     },
     {
       "sembol": "NNE",
       "isim": "Nano Nuclear Energy",
       "hedef_portfoy": "agresif",
-      "guncel_fiyat": 23.52,
+      "guncel_fiyat": 24.29,
       "rsi": 43.5,
       "skor": 1,
       "skor_detay": "Gelir yok: -3 | Beta 7.26 aşırı volatil: -2 | Tema: +3 | Mikro cap $0.9B: +1 | SMA50/200 altı: -2 | Potansiyel upside yüksek: +4",
@@ -725,13 +725,13 @@
       "kategori": "nukleer_mikro_cok_spekulatif",
       "giris_tetigi": "SMA50 kırılımı + sektör katalizör haberi",
       "uyari": "ÇOK SPEKÜLATİF — beta 7.26, gelir yok, analist takibi yok. En fazla $2-3K pozisyon, bilinçli riskle.",
-      "momentum_5gun": 7.54
+      "momentum_5gun": 3.27
     },
     {
       "sembol": "UEC",
       "isim": "Uranium Energy Corp",
       "hedef_portfoy": "agresif",
-      "guncel_fiyat": 14.13,
+      "guncel_fiyat": 14.82,
       "rsi": 48.2,
       "skor": 4,
       "skor_detay": "SMA200 üstü: +2 | Analist hedef $18.67 = %38 upside: +3 | SMA50 altı: -1 | Gelir negatif: -2 | YTD +3.2% pozitif: +2",
@@ -755,13 +755,13 @@
       "kategori": "nukleer_uranyum_kucuk",
       "giris_tetigi": "SMA50 kırılımı + CCJ aynı yönde hareket",
       "uyari": "SPEKÜLATİF — CCJ ile aynı anda tutmak sektör konsantrasyonu yaratır, dikkat.",
-      "momentum_5gun": 1.29
+      "momentum_5gun": 4.88
     },
     {
       "sembol": "VST",
       "isim": "Vistra Corp",
       "hedef_portfoy": "agresif",
-      "guncel_fiyat": 163.97,
+      "guncel_fiyat": 162.94,
       "rsi": 48.1,
       "skor": 5,
       "skor_detay": "P/E 55.7 >40 yüksek: -1 | Analist hedef $233 = %50 upside: +4 | RSI 48 nötr: +1 | SMA50/200 altı ama yakın: +1",
@@ -784,13 +784,13 @@
       "karar": "İZLE",
       "kategori": "nukleer_operasyonel",
       "giris_tetigi": "SMA50 üstüne geçiş + hacim artışı",
-      "momentum_5gun": 3.65
+      "momentum_5gun": -0.63
     },
     {
       "sembol": "BWXT",
       "isim": "BWX Technologies",
       "hedef_portfoy": "agresif",
-      "guncel_fiyat": 238.27,
+      "guncel_fiyat": 238.42,
       "rsi": 62.3,
       "skor": 9,
       "skor_detay": "SMA50+200 üstü: +4 | 1M +17%: +2 | YTD +26%: +2 | Yeni NRC savunma lisansı katalizörü: +1",
@@ -813,13 +813,13 @@
       "karar": "İZLE",
       "kategori": "nukleer_savunma",
       "giris_tetigi": "Pullback $210-218 bölgesi + NRC lisans süreci haberleri",
-      "momentum_5gun": 2.34
+      "momentum_5gun": 0.06
     },
     {
       "sembol": "LEU",
       "isim": "Centrus Energy",
       "hedef_portfoy": "agresif",
-      "guncel_fiyat": 193.11,
+      "guncel_fiyat": 197.79,
       "rsi": 46.4,
       "skor": 6,
       "skor_detay": "ABD HALEU tekeli benzersiz pozisyon: +4 | SMA'lar altında: -2 | Analist hedef %19 upside: +2 | RSI 46 nötr-pullback: +2",
@@ -843,13 +843,13 @@
       "kategori": "nukleer_yakit_tekel",
       "giris_tetigi": "SMA50 ($209) üstüne geçiş — o seviyeyi kırana kadar bekle",
       "uyari": "Teknik zayıf, SMA50 kırılımını bekliyorum. Giriş acele değil.",
-      "momentum_5gun": 0.58
+      "momentum_5gun": 2.42
     },
     {
       "sembol": "DNN",
       "isim": "Denison Mines",
       "hedef_portfoy": "agresif",
-      "guncel_fiyat": 3.76,
+      "guncel_fiyat": 3.88,
       "rsi": 47.5,
       "skor": 5,
       "skor_detay": "SMA200 üstü: +2 | 6M +23.6%: +2 | YTD +17.5%: +1 | SMA50 altı: -1 | Analist hedef %19: +1",
@@ -873,12 +873,12 @@
       "kategori": "nukleer_uranyum_kanada",
       "giris_tetigi": "SMA50 kırılımı + CCJ ile aynı yönde hareket teyidi",
       "uyari": "CCJ veya UEC ile aynı anda açmak sektör konsantrasyonu — biri seç.",
-      "momentum_5gun": 0.8
+      "momentum_5gun": 3.19
     },
     {
       "sembol": "ALAB",
       "hedef_portfoy": "agresif",
-      "guncel_fiyat": 170.6,
+      "guncel_fiyat": 172.09,
       "rsi": 73.4,
       "skor": 0,
       "skor_detay": "Manuel ekleme — tematik araştırma. Detaylı puanlama bekliyor.",
@@ -897,12 +897,12 @@
       "karar": "IZLE",
       "kataliz": "5 Mayıs Q1 2026 kazanç açıklaması — Scorpio X-Series ramp güncellemesi kritik",
       "not": "Optik/bağlantı araştırması sonucu. SMA50 ($130) kırılırsa veya 5 Mayıs sonrası güçlü sonuç gelirse pozisyon aç.",
-      "momentum_5gun": 2.28
+      "momentum_5gun": 0.87
     },
     {
       "sembol": "PLAB",
       "hedef_portfoy": "agresif",
-      "guncel_fiyat": 45.71,
+      "guncel_fiyat": 45.86,
       "rsi": 67.0,
       "skor": 0,
       "skor_detay": "Manuel ekleme — tematik araştırma. Detaylı puanlama bekliyor.",
@@ -921,12 +921,12 @@
       "karar": "IZLE",
       "kataliz": "Allen Texas fabrikasından ilk anlamlı gelir geldiğinde — ve bu gelir hisse fiyatına henüz yansımamışsa. Açılış haberi aralık 2025'te %45 tek günlük yükselişle fiyatlandı. Gerçek fırsat: beklenti aşımı veya öngörülmeyen erken ramp.",
       "not": "Fabrika açılışı katalizörü zaten fiyatlandı (Ara 2025 +%45). Giriş için ya geri çekilme ($38-42) ya da beklenmedik hız aşımı gerekir. Mevcut $46 seviyesi riski ödüllendirmiyor.",
-      "momentum_5gun": 0.09
+      "momentum_5gun": 0.33
     },
     {
       "sembol": "COHU",
       "hedef_portfoy": "agresif",
-      "guncel_fiyat": 38.51,
+      "guncel_fiyat": 38.95,
       "rsi": 76.3,
       "skor": 0,
       "skor_detay": "Manuel ekleme — tematik araştırma. Detaylı puanlama bekliyor.",
@@ -945,7 +945,7 @@
       "karar": "IZLE",
       "kataliz": "Karlılığa geçiş — ilk pozitif op kar çeyregi tetikleyici olacak",
       "not": "Şu an en zayıf üç adaydan biri. $28-32 bandına kadar beklemeyi tercih ederiz. Kazanç açıklaması tarihi takip et.",
-      "momentum_5gun": 2.37
+      "momentum_5gun": 1.14
     }
   ],
   "haric_tutulanlar": [
