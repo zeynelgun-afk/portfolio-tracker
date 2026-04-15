@@ -596,6 +596,11 @@
       "aksiyon": "CIO SECTOR_AGENT'a 1.53 ağırlık ver (diğerleri 0.67-0.89). Risk uyarısı geldiğinde VIX>25 olup olmadığını çift kontrol et — düşük VIX'te risk ajanını override etme.",
       "guven": "MUHTEMEL",
       "n_gun": 67
+    },
+    {
+      "date": "2026-04-15",
+      "source": "closing_analysis",
+      "insight": "**Özet**: Piyasa İran iyimserliği ile güçlü kapattı. Portföylerde acil stop ihlali yok. VRT earnings öncesi kapatılacak. MU hedefe yaklaştı, RSI takibi şart. Yarın öncelik: VRT çıkışı."
     }
   ],
   "bos_hafiza_uyarisi": false,
@@ -625,6 +630,547 @@
       "strateji_sayisi": 16,
       "giris_varyant": 7,
       "toplam_trade": 5571
+    }
+  ],
+  "entries": [
+    {
+      "id": "L001",
+      "tarih": "2026-04-13",
+      "kaynak": "transactions_analysis",
+      "kategori": "sinyal_performansi",
+      "ders": "Value/deep-value girişler en yüksek performansı veriyor: %78 WR, ortalama +22.1%. RSI oversold bounce da güçlü: %83 WR, +8.3%. Swing/ichimoku sinyalleri ise şu ana kadar %0 WR (-6.2% ort.) — bu sinyal türünde koşullar daha sıkı tutulmalı.",
+      "veri": {
+        "value": {
+          "n": 9,
+          "avg": 22.1,
+          "wr": 77.8
+        },
+        "rsi_oversold": {
+          "n": 6,
+          "avg": 8.33,
+          "wr": 83.3
+        },
+        "breakout_sma": {
+          "n": 4,
+          "avg": 5.65,
+          "wr": 75.0
+        },
+        "diger": {
+          "n": 39,
+          "avg": -0.58,
+          "wr": 41.0
+        },
+        "swing_ichimoku": {
+          "n": 3,
+          "avg": -6.2,
+          "wr": 0.0
+        },
+        "earnings": {
+          "n": 1,
+          "avg": -6.12,
+          "wr": 0.0
+        }
+      },
+      "aksiyon": "Swing ichimoku girişlerinde ek filtre ekle: en az 2 ichimoku sinyali + sektör momentumu pozitif olmalı",
+      "guven": "KESİN"
+    },
+    {
+      "id": "L002",
+      "tarih": "2026-04-13",
+      "kaynak": "transactions_analysis",
+      "kategori": "profit_factor",
+      "ders": "Sistem Profit Factor: 2.26. Ortalama kazanç +12.98% / ortalama kayıp -5.75%. Win rate %50 olsa bile pozitif beklenti var. Büyük kazananlar küçük kayıpları fazlasıyla karşılıyor — bu asimetri korunmalı.",
+      "veri": {
+        "win_rate": 50.0,
+        "avg_win": 12.98,
+        "avg_loss": -5.75
+      },
+      "aksiyon": "Mevcut stop disiplinini koru. Büyük kazananlarda (KOS +54%, SM +45%) kademelı çıkış doğru çalışıyor.",
+      "guven": "KESİN"
+    },
+    {
+      "id": "L003",
+      "tarih": "2026-04-13",
+      "kaynak": "ktos_lasr_hatasi",
+      "kategori": "kriz_rallisi",
+      "ders": "2 Mart 2026: HAL/CEG/KTOS/LASR — kriz rallisi gününde 5/5 kayıp. Kriz rallyisi gün 1'de pozisyon girme yasak. Minimum 1 soğuma günü + RSI onayı bekle.",
+      "veri": {
+        "tarih": "2026-03-02",
+        "semboller": [
+          "HAL",
+          "KTOS",
+          "LASR"
+        ],
+        "sonuc": "5/5 kayıp"
+      },
+      "aksiyon": "K-kural olarak kodlandı. Monitor'da haber 'kriz/ateşkes/çözüm' içeriyorsa ve VIX ani düşüş varsa o gün giriş yok.",
+      "guven": "KESİN"
+    },
+    {
+      "id": "L004",
+      "tarih": "2026-04-13",
+      "kaynak": "lasr_stop_override",
+      "kategori": "stop_disiplini",
+      "ders": "LASR pozisyonunda 3 kez stop override yapıldı, her seferinde kayıp büyüdü. Stop override = kural ihlali. Gerekçe ne olursa olsun stop tetiklenirse çık.",
+      "veri": {
+        "sembol": "LASR",
+        "override_sayisi": 3,
+        "sonuc": "kayıp büyüdü"
+      },
+      "aksiyon": "K-06: Stop tetiklendiğinde override yasak. execution_engine'de hard-coded.",
+      "guven": "KESİN"
+    },
+    {
+      "id": "L005",
+      "tarih": "2026-04-13",
+      "kaynak": "k11_analiz",
+      "kategori": "kar_alma",
+      "ders": "K-11 kâr alma çıkışları %33 WR ve ortalama +0.7% veriyor — bu düşük görünse de bağlamı önemli: bu çıkışlar zirveye yakın olduğunda yapılıyor. SM'de kademeli çıkış (+39% → +45% → +54%) doğru uygulandı. K-11'i tamamen kaldırmak yerine katman yapısı korunmalı.",
+      "veri": {
+        "n": 12,
+        "avg": 0.68,
+        "wr": 33.3
+      },
+      "aksiyon": "K-11 Layer 1 (trailing stop aktivasyonu) kalsın. Layer 2 (%25 satış) için minimum 2 RSI+SMA koşulu şart.",
+      "guven": "MUHTEMEL"
+    },
+    {
+      "id": "L006",
+      "tarih": "2026-04-13",
+      "kaynak": "corr_risk_analysis",
+      "kategori": "korelasyon_riski",
+      "ders": "27 Mart 2026: CAMT+VRT+POWL aynı gün stop, hepsi AI tedarik zinciri. Aynı sektörde aynı anda 3 pozisyon = korelasyon riski. K-17: Aynı sektörde max 2 pozisyon, biri hedge olmalı.",
+      "veri": {
+        "tarih": "2026-03-27",
+        "semboller": [
+          "CAMT",
+          "VRT",
+          "POWL"
+        ],
+        "kayip_pct": [
+          -9.5,
+          -9.7,
+          -10.6
+        ]
+      },
+      "aksiyon": "Agresif portföyde AI supply chain alt sektörlerine göre dağıt: optik/termal/güç/yarı iletken ayrı say.",
+      "guven": "KESİN"
+    },
+    {
+      "id": "L007",
+      "tarih": "2026-04-13",
+      "kaynak": "sell_the_news_cases",
+      "kategori": "haber_yorumu",
+      "ders": "Güçlü kazanç bile otomatik ralli yaratmıyor (MU, RKLB). Kazanç sonrası 'sat the news' riski yüksek. Kazanç geçmişi ne olursa olsun ilk 30dk bekle, sonra fiyat yönünü konfirme et.",
+      "veri": {
+        "semboller": [
+          "MU",
+          "RKLB"
+        ],
+        "patern": "güçlü kazanç sonrası satış"
+      },
+      "aksiyon": "Earnings günü FAZ_1'de kesinlikle giriş yok. FAZ_2'de bile %2 yukarı konfirmasyon bekle.",
+      "guven": "MUHTEMEL"
+    },
+    {
+      "id": "L008",
+      "tarih": "2026-04-13",
+      "kaynak": "cos_analysis",
+      "kategori": "en_iyi_trade",
+      "ders": "KOS en iyi trade: +54.5% (45 gün). Deep value + güçlü sektör katalog + kademeli çıkış kombinasyonu. Başarı formülü: düşük değerleme + net sektör katalizörü + K-11 kademeli çıkış + stop-loss kurtarma yok.",
+      "veri": {
+        "sembol": "KOS",
+        "giris": "2026-02-17",
+        "cikis": "2026-03-09",
+        "pnl": 54.5,
+        "hold_days": 20
+      },
+      "aksiyon": "Dengeli portföyde KOS benzeri deep-value + sektör katalog kombinasyonuna ağırlık ver.",
+      "guven": "KESİN"
+    },
+    {
+      "id": "BT001",
+      "tarih": "2026-04-13",
+      "kaynak": "backtest_45_hisse_600gun",
+      "kategori": "k11_trailing_stop",
+      "ders": "3xATR chandelier trailing, 2xATR'den çok daha iyi. 2xATR: PF 1.14, ort -0.52% (çok erken çıkış, 8.3 gün). 3xATR RSI-70: PF 2.13, ort +0.72% (15.3 gün). 2xATR pozisyonu nefes alamadan keserek büyük kazançları kaçırıyor. ONAY: Mevcut 3xATR implementasyonu doğru. RSI 70 eşiği en uygun.",
+      "veri": {
+        "k11_2xATR": {
+          "n": 300,
+          "wr": 40.0,
+          "avg": -0.52,
+          "pf": 1.14,
+          "hold": 8.3,
+          "aw": 4.05,
+          "al": -3.57
+        },
+        "k11_3xATR_rsi70": {
+          "n": 300,
+          "wr": 37.3,
+          "avg": 0.72,
+          "pf": 2.13,
+          "hold": 15.3,
+          "aw": 9.1,
+          "al": -4.26
+        },
+        "k11_3xATR_rsi75": {
+          "n": 300,
+          "wr": 37.0,
+          "avg": 0.49,
+          "pf": 2.02,
+          "hold": 15.7,
+          "aw": 8.56,
+          "al": -4.25
+        }
+      },
+      "aksiyon": "K-11: 3xATR chandelier + RSI 70 eşiği koru. 2xATR'ye düşürme.",
+      "guven": "KESİN",
+      "n_trade": 900
+    },
+    {
+      "id": "BT002",
+      "tarih": "2026-04-13",
+      "kaynak": "backtest_45_hisse_600gun",
+      "kategori": "k06_stop_loss",
+      "ders": "Stop-loss karşılaştırması: %5 sabit stop PF 1.97 (AvgWin +10.5%, AvgLoss -5.3%). 3xATR dinamik stop da PF 1.97 — neredeyse aynı sonuç. %7 sabit stop WR'ı %48.7'ye çıkarıyor ama PF 1.48'e düşüyor (stop geniş = pozisyon daha fazla yaşıyor ama kayıplar da büyüyor). 2xATR stop ise çok dar — PF 1.09, neredeyse breakeven.",
+      "veri": {
+        "stop_5pct": {
+          "n": 300,
+          "wr": 39.3,
+          "avg": 0.9,
+          "pf": 1.97,
+          "hold": 19.7,
+          "aw": 10.49,
+          "al": -5.31
+        },
+        "stop_7pct": {
+          "n": 300,
+          "wr": 48.7,
+          "avg": 1.36,
+          "pf": 1.48,
+          "hold": 23.0,
+          "aw": 9.74,
+          "al": -6.59
+        },
+        "stop_3xATR": {
+          "n": 300,
+          "wr": 38.0,
+          "avg": 0.55,
+          "pf": 1.97,
+          "hold": 15.5,
+          "aw": 8.47,
+          "al": -4.3
+        },
+        "stop_2xATR": {
+          "n": 300,
+          "wr": 40.0,
+          "avg": -0.59,
+          "pf": 1.09,
+          "hold": 8.3,
+          "aw": 3.88,
+          "al": -3.57
+        }
+      },
+      "aksiyon": "K-06: %5 sabit stop VEYA 3xATR (ikisi eşdeğer). %7 stop kullanma — PF düşüyor.",
+      "guven": "KESİN",
+      "n_trade": 1200
+    },
+    {
+      "id": "BT003",
+      "tarih": "2026-04-13",
+      "kaynak": "backtest_25_hisse_730gun",
+      "kategori": "giris_sinyali",
+      "ders": "Giriş filtresi karşılaştırması: RSI≤40 + SMA200 üstü en iyi. RSI≤40/SMA200: PF 1.46, WR 53.2%, 79 sinyal (yeterli fırsat). RSI≤35/SMA200: PF 1.10, WR 56.2%, sadece 32 sinyal (çok az fırsat). Daha sıkı RSI filtresi (35) daha az trade + daha düşük PF veriyor. SMA200 üstü olmak kritik — aşağısında bounce denemeleri çok riskli.",
+      "veri": {
+        "entry_rsi40_sma200": {
+          "n": 79,
+          "wr": 53.2,
+          "avg": 2.14,
+          "pf": 1.46,
+          "hold": 23.5,
+          "aw": 10.17,
+          "al": -6.97
+        },
+        "entry_rsi35_sma200": {
+          "n": 32,
+          "wr": 56.2,
+          "avg": 1.4,
+          "pf": 1.1,
+          "hold": 22.5,
+          "aw": 8.52,
+          "al": -7.76
+        }
+      },
+      "aksiyon": "Swing/portföy girişlerde: RSI ≤ 40 + SMA200 üstü kombinasyonu kullan. RSI 35'e düşürme.",
+      "guven": "MUHTEMEL",
+      "n_trade": 111
+    },
+    {
+      "id": "BT004",
+      "tarih": "2026-04-13",
+      "kaynak": "backtest_nasdaq_30hisse_2021_2023",
+      "kategori": "rejim_farkliligi",
+      "ders": "2022 ayı piyasasında TÜM stratejiler negatif ortalama getiri üretti. 2022 stop_5pct: WR %11.3, avg -3.88% (piyasa sürekli düşünce stop keser). 2023 toparlanmada stop_5pct: WR %32.6, avg +1.57%, PF 2.90. SONUÇ: Rejim tespiti kritik. VIX > 30 veya SPY SMA200 altındayken normal giriş kuralları çalışmıyor — ya daha az pozisyon ya da hiç giriş yok. K-13 (VIX bazlı konum boyutu) bu nedenle var — ayı piyasasında küçük poz al.",
+      "veri": {
+        "2021_boga_avg": 1.67,
+        "2022_ayi_avg": -3.88,
+        "2023_top_avg": 1.57
+      },
+      "aksiyon": "SPY SMA200 altındayken: pozisyon büyüklüğünü yarıya indir, stop'u %5'e çek, yeni giriş sayısını max 1'e sınırla.",
+      "guven": "KESİN",
+      "n_trade": 695
+    },
+    {
+      "id": "BT005",
+      "tarih": "2026-04-13",
+      "kaynak": "backtest_nasdaq_30hisse_2021_2023",
+      "kategori": "k11_ayı_performansı",
+      "ders": "K-11 3xATR chandelier 2022 ayı piyasasında PF 1.89 — en yüksek PF. Neden: Ayı piyasasında nadiren RSI 70'e çıkıldığı için K-11 exit nadiren tetikleniyor, chandelier trailing stop büyük kazançları koruyor (avg win +16%). 2xATR ayı piyasasında PF 1.42 — dar stop çok erken kesiyor. K-11 3xATR tüm rejimlerde en yüksek PF'yi veriyor.",
+      "veri": {
+        "2022_k11_3xATR_pf": 1.89,
+        "2022_k11_2xATR_pf": 1.42,
+        "2022_stop5pct_pf": 2.32,
+        "2022_k11_3xATR_aw": 16.05
+      },
+      "aksiyon": "K-11 3xATR chandelier ayı piyasasında da koru. Minimum 3xATR — 2xATR'ye asla düşme.",
+      "guven": "KESİN",
+      "n_trade": 900
+    },
+    {
+      "id": "BT006",
+      "tarih": "2026-04-13",
+      "kaynak": "backtest_nasdaq_30hisse_2021_2023",
+      "kategori": "stop_loss_rejim",
+      "ders": "Stop genişliği ve rejim ilişkisi: 2021 boğa: %5 sabit stop en iyi (PF 2.25, avg +1.67%). 2022 ayı: %5 sabit stop en yüksek PF (2.32) ama avg -3.88% — kazanılan az. 2023 toparlanma: stop_3xATR en iyi (PF 2.60, avg +2.48%). GENEL: %5 sabit stop tüm dönemlerde tutarlı PF 1.99-2.90 arası. stop_8pct: 2022'de MaxDD -%36.7 — çok tehlikeli ayı piyasasında. KURAL: %8 stop hiçbir rejimde kullanma. %5 veya 3xATR hangisi daha dar ise onu al.",
+      "veri": {
+        "2021_stop5_pf": 2.25,
+        "2022_stop5_pf": 2.32,
+        "2023_stop5_pf": 2.9,
+        "2022_stop8_mdd": -36.7
+      },
+      "aksiyon": "Portföy stop kuralı: min(%5, 3xATR). %8 stop yasak. Ayı piyasasında (SPY<SMA200) %5'e zorla.",
+      "guven": "KESİN",
+      "n_trade": 695
+    },
+    {
+      "id": "BT007",
+      "tarih": "2026-04-13",
+      "kaynak": "backtest_nasdaq_30hisse_2021_2023",
+      "kategori": "en_iyi_strateji_profili",
+      "ders": "Tüm dönemler konsolide: stop_5pct PF 1.99 en tutarlı strateji. k11_3xATR_rsi70: PF 1.39 — negatif avg (-1.08%) ancak dönem seçimi kötü (rastgele giriş, RSI filtresiz). Gerçek sistemde RSI≤40+SMA200 filtresi var. 2023 toparlanmada k11_3xATR_rsi75 en iyi: PF 2.28, avg +1.70%. RSI 75 eşiği 2023'te RSI 70'ten iyi çünkü güçlü momentum var — 70'te çıkış erken. Ancak 2022'de RSI 75 nadiren geldiği için etkisiz.",
+      "veri": {
+        "tam_donem_stop5_pf": 1.99,
+        "tam_donem_k11_3x_pf": 1.39,
+        "2023_k11_rsi75_pf": 2.28,
+        "2023_k11_rsi75_avg": 1.7
+      },
+      "aksiyon": "RSI eşiği rejim bazlı: VIX<20 (güçlü boğa) → RSI 75 kullan. VIX 20-28 (normal) → RSI 70. VIX>28 (kriz/ayı) → K-11 pasif, chandelier yeterli.",
+      "guven": "MUHTEMEL",
+      "n_trade": 695
+    },
+    {
+      "id": "BT008",
+      "tarih": "2026-04-13",
+      "kaynak": "kapsamli_backtest_40hisse_boga_ayi_2008_2024",
+      "kategori": "stop_loss_boga_ayi_karsilastirma",
+      "ders": "Sabit % stop-loss boğa vs ayı karşılaştırması (306 boğa / 22 ayı trade): Boğada stop_5pct: PF 2.42, avg +3.32%, Sharpe 4.22. Ayıda stop_5pct: PF 0.00, avg -6.24% — 2008 GFC'de hiçbir trade kazanmadı. KRİTİK: Sabit %stop ayı piyasasında çalışmıyor. ATR3x ayıda PF 0.69 (negatif avg -6.01%) ama en azından bazı kazananlar var. SONUÇ: Ayı tespiti (SPY SMA200 altı) + giriş durdurma = hayatta kalma. Giriş yapılacaksa bile lot boyutunu %50 küç ve stop'u 3xATR yap.",
+      "veri": {
+        "boga_stop5_pf": 2.42,
+        "boga_stop5_avg": 3.32,
+        "ayi_stop5_pf": 0.0,
+        "ayi_stop5_avg": -6.24,
+        "ayi_atr3x_pf": 0.69
+      },
+      "aksiyon": "SPY SMA200 altında = giriş yasak. Çok güçlü sinyal varsa: %50 lot + 3xATR stop. Sabit % stop hiçbir şekilde kullanma.",
+      "guven": "KESİN",
+      "n_trade": 328
+    },
+    {
+      "id": "BT009",
+      "tarih": "2026-04-13",
+      "kaynak": "kapsamli_backtest_40hisse_boga_ayi_2008_2024",
+      "kategori": "optimal_strateji_boğa",
+      "ders": "Boğa piyasasında dönem bazlı en iyi strateji: 2013 (QE boğası): stop_5pct en iyi (PF 2.44, avg +4.69%). 2019 (normal boğa): k11_atr3_rsi70 en iyi (PF 1.79, avg +0.94%). 2020-V (post-COVID): stop_3pct en iyi PF (3.62) ama avg +2.37% — volatile piyasada dar stop paradoksu çalışıyor. 2023 (AI rallisi): atr3x en iyi (PF 2.19, avg +3.57%). GENEL BOĞA: stop_5pct en tutarlı (PF 2.42, Sharpe 4.22 — 4 boğa döneminde de pozitif). k11_atr3_rsi70 ikinci (PF 2.16, Sharpe 4.28 — biraz daha düşük PF ama daha az MaxDD).",
+      "veri": {
+        "boga_2013": {
+          "stop_5pct": {
+            "avg": 4.69,
+            "pf": 2.44
+          },
+          "atr3x": {
+            "avg": 1.8,
+            "pf": 1.88
+          },
+          "k11_atr3_rsi70": {
+            "avg": 1.81,
+            "pf": 1.89
+          }
+        },
+        "boga_2019": {
+          "stop_5pct": {
+            "avg": 0.43,
+            "pf": 1.11
+          },
+          "atr3x": {
+            "avg": 0.65,
+            "pf": 1.62
+          },
+          "k11_atr3_rsi70": {
+            "avg": 0.94,
+            "pf": 1.79
+          }
+        },
+        "boga_2020v": {
+          "stop_5pct": {
+            "avg": 3.55,
+            "pf": 2.68
+          },
+          "atr3x": {
+            "avg": 3.32,
+            "pf": 2.43
+          },
+          "k11_atr3_rsi70": {
+            "avg": 3.2,
+            "pf": 2.38
+          }
+        },
+        "boga_2023": {
+          "stop_5pct": {
+            "avg": 3.31,
+            "pf": 2.49
+          },
+          "atr3x": {
+            "avg": 3.57,
+            "pf": 2.19
+          },
+          "k11_atr3_rsi70": {
+            "avg": 2.86,
+            "pf": 1.92
+          }
+        },
+        "ayi_2008": {
+          "stop_5pct": {
+            "avg": -6.24,
+            "pf": 0.0
+          },
+          "atr3x": {
+            "avg": -6.01,
+            "pf": 0.69
+          },
+          "k11_atr3_rsi65": {
+            "avg": -4.65,
+            "pf": 1.56
+          }
+        }
+      },
+      "aksiyon": "Ana strateji: stop_5pct (güvenli, tutarlı). Güçlü momentum varsa (VIX<18, SPY >SMA20): atr3x kullan.",
+      "guven": "KESİN",
+      "n_trade": 306
+    },
+    {
+      "id": "BT010",
+      "tarih": "2026-04-13",
+      "kaynak": "kapsamli_backtest_40hisse_boga_ayi_2008_2024",
+      "kategori": "giriş_sinyali_nihai",
+      "ders": "Giriş sinyali nihai sıralama (atr3x exit, tüm dönemler): 1. RSI≤40 + SMA200 üstü: PF 2.05, WR 48%, avg +2.39%, Sharpe 3.42 (329 trade) ✅ EN İYİ 2. RSI≤50 + SMA200 üstü: PF 1.97, WR 44.9%, avg +1.61%, Sharpe 2.60 (836 trade) 3. RSI≤40 herhangi: PF 1.76, WR 42.9%, avg +1.17%, Sharpe 1.53 (1792 trade) 4. Düzgün giriş (kontrol): PF 1.70, WR 40.9%, avg +0.58% (2581 trade) SMA200 filtresi kritik: olmadan MaxDD -%42.97, olanla -%20.68. RSI 40 eşiği RSI 50'den PF 0.08 daha iyi, ama sinyal sayısı 2.5x az. ÖNERI: RSI≤40 + SMA200 birincil. RSI 40-50 arası + SMA200 → yarım pozisyon.",
+      "veri": {
+        "rsi40_sma200": {
+          "n": 329,
+          "wr": 48.0,
+          "avg": 2.39,
+          "pf": 2.05,
+          "sharpe": 3.42
+        },
+        "rsi40_sma50": {
+          "n": 33,
+          "wr": 33.3,
+          "avg": -0.13,
+          "pf": 1.93,
+          "sharpe": -0.19
+        },
+        "rsi50_sma200": {
+          "n": 836,
+          "wr": 44.9,
+          "avg": 1.61,
+          "pf": 1.97,
+          "sharpe": 2.6
+        },
+        "rsi40_any": {
+          "n": 1792,
+          "wr": 42.9,
+          "avg": 1.17,
+          "pf": 1.76,
+          "sharpe": 1.53
+        },
+        "uniform_20d": {
+          "n": 2581,
+          "wr": 40.9,
+          "avg": 0.58,
+          "pf": 1.7,
+          "sharpe": 0.9
+        }
+      },
+      "aksiyon": "Giriş koşulu: RSI≤40 + fiyat SMA200 üstü. RSI 40-50 arasında sinyal gelirse lot %50 küçük.",
+      "guven": "KESİN",
+      "n_trade": 5571
+    },
+    {
+      "id": "BT011",
+      "tarih": "2026-04-13",
+      "kaynak": "kapsamli_backtest_40hisse_boga_ayi_2008_2024",
+      "kategori": "ayı_survival_stratejisi",
+      "ders": "2008 GFC'de sadece 2 strateji pozitif PF verdi: tp_15_stop5 (PF 2.50, avg -5.04%, WR %4.5) ve tp_10_stop5 (PF 1.82, avg -3.38%, WR %13.6). Sabit kâr hedefi (TP) GFC'de neden işe yarıyor: Piyasa aşağı giderken ara sıra bounce gelir, TP yakındaysa o bounce'u yakala ve hemen çık. Bekle-koy stratejisi çalışmıyor. k11_atr3_rsi65 da PF 1.56 verdi — RSI 65'te çıkış (düşük eşik) doğru çünkü GFC'de RSI 70'e nadiren çıkıyor, 65'te sat daha pragmatik. KURAL: SPY SMA200 altı + VIX>30 → TP %10-15 + stop %5 kombinasyonu kullan.",
+      "veri": {
+        "gfc_tp15_pf": 2.5,
+        "gfc_tp10_pf": 1.82,
+        "gfc_k11rsi65_pf": 1.56,
+        "gfc_atr3x_pf": 0.69,
+        "gfc_stop5_pf": 0.0
+      },
+      "aksiyon": "Derin ayı (VIX>30, SPY SMA200 altı): TP %10 + stop %5 kullan. RSI 65'te çık. 3xATR bırakma.",
+      "guven": "MUHTEMEL",
+      "n_trade": 22
+    },
+    {
+      "id": "BT012",
+      "tarih": "2026-04-13",
+      "kaynak": "kapsamli_backtest_40hisse_boga_ayi_2008_2024",
+      "kategori": "sharpe_maksimizasyonu",
+      "ders": "Sharpe oranı sıralaması (boğa): stop_7pct: Sharpe 5.24 (en yüksek ama MaxDD -%21) atr3x: Sharpe 4.23 k11_atr3_rsi70: Sharpe 4.28 stop_5pct: Sharpe 4.22 Görüntüde stop_7pct en iyi Sharpe'ı veriyor. Ama 2022 Nasdaq testi ve 2008 GFC gösteriyor ki %7 stop ayı piyasasında yıkıcı (WR %0, avg -8.89%). Risk-adjusted gerçek şampiyon: atr3x ve k11_atr3_rsi70 — boğada iyi Sharpe, ayıda k11 PF daha iyi koruyor.",
+      "veri": {
+        "boga_sharpe": {
+          "stop_5pct": 4.22,
+          "stop_7pct": 5.24,
+          "atr3x": 4.23,
+          "k11_atr3_rsi70": 4.28,
+          "k11_atr3_rsi75": 4.11,
+          "tp_15_stop5": 4.04
+        }
+      },
+      "aksiyon": "Sharpe optimize: atr3x boğa + TP15/stop5 ayı. Stop_7pct görünürde cazip ama ayı riski çok yüksek.",
+      "guven": "MUHTEMEL",
+      "n_trade": 306
+    },
+    {
+      "id": "SIM001",
+      "tarih": "2026-04-13",
+      "kaynak": "simulasyon_2026-01-02_2026-04-11",
+      "kategori": "ajan_agirlik_kalibrasyonu",
+      "ders": "67 günlük simülasyon sonuçları (Ocak-Nisan 2026): SECTOR_AGENT en iyi (WR %49.3, avg +0.35, ağırlık 1.53) — sektör rotasyonunu takip etmek yön tahmininden daha tutarlı. RISK_AGENT en kötü (WR %4.5, avg -0.22, ağırlık 0.67) — Ocak-Nisan 2026 boğa döneminde risk uyarıları çok sık yanlış geldi. MACRO_AGENT orta (WR %14.9, avg -0.07) — mevcut dönemde genel yönü tutturmakta zorlandı. Tema sıralaması: ENERJİ_HAMMADDE 🔥 (+22.5%), AI_ALTYAPI ✅ (+13.9%), SAVUNMA ✅ (+11.1%), TÜKETİCİ ❌ (-3.2%).",
+      "veri": {
+        "sector_agent_wr": 49.3,
+        "risk_agent_wr": 4.5,
+        "en_iyi_tema": "ENERJI_HAMMADDE",
+        "en_kotu_tema": "TUKETICI_TICARET"
+      },
+      "aksiyon": "CIO SECTOR_AGENT'a 1.53 ağırlık ver (diğerleri 0.67-0.89). Risk uyarısı geldiğinde VIX>25 olup olmadığını çift kontrol et — düşük VIX'te risk ajanını override etme.",
+      "guven": "MUHTEMEL",
+      "n_gun": 67
+    },
+    {
+      "date": "2026-04-15",
+      "source": "closing_analysis",
+      "insight": "**Özet**: Piyasa İran iyimserliği ile güçlü kapattı. Portföylerde acil stop ihlali yok. VRT earnings öncesi kapatılacak. MU hedefe yaklaştı, RSI takibi şart. Yarın öncelik: VRT çıkışı."
     }
   ]
 }
