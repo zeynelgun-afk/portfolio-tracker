@@ -209,6 +209,12 @@ def _log_debate(result: dict):
         with open(DEBATE_LOG, encoding="utf-8") as f:
             log = json.load(f)
 
+    if "tartismalar" not in log:
+
+
+        log["tartismalar"] = []
+
+
     log["tartismalar"].append(result)
     log["tartismalar"] = log["tartismalar"][-100:]
 

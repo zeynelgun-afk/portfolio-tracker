@@ -566,6 +566,10 @@ def run_evolution_cycle(force: bool = False) -> dict:
         "degisiklik":  evolution.get("degisiklik", "")[:200],
         "risk":        evolution.get("risk", "")[:100],
     }
+    if "entries" not in evo_log:
+
+        evo_log["entries"] = []
+
     evo_log["entries"].append(log_entry)
     evo_log["entries"] = evo_log["entries"][-50:]
     with open(evo_log_path, "w", encoding="utf-8") as f:

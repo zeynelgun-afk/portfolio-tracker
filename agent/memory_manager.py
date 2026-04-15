@@ -86,6 +86,8 @@ def build_portfolio_state(portfolios: dict, market: dict) -> dict:
                 except (ValueError, TypeError):
                     pass
 
+            if "pozisyonlar" not in pf_state:
+                pf_state["pozisyonlar"] = []
             pf_state["pozisyonlar"].append({
                 "sym":       sym,
                 "fiyat":     cur_price,

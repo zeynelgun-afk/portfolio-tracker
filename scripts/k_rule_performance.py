@@ -29,7 +29,8 @@ OUTPUT_FILE  = BASE / "data"  / "k_rules_backtest_results.json"
 
 def load_trades() -> list[dict]:
     with open(CLOSED_SWING, encoding="utf-8") as f:
-        return json.load(f)["kapatilan_pozisyonlar"]
+        d = json.load(f)
+        return d.get("kapatilan_pozisyonlar", d.get("kapali_pozisyonlar", []))
 
 
 def siniflandir_ihlaller(trades: list[dict]) -> dict:

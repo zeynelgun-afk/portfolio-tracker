@@ -379,6 +379,12 @@ def save_weekly_review(performance: dict, decision: dict):
         with open(path, encoding="utf-8") as f:
             reviews = json.load(f)
 
+    if "incelemeler" not in reviews:
+
+
+        reviews["incelemeler"] = []
+
+
     reviews["incelemeler"].append({
         "tarih":       datetime.now(TR_TZ).strftime("%Y-%m-%d"),
         "performans":  performance,

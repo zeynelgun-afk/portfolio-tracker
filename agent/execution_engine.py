@@ -372,6 +372,8 @@ def deploy_cash(
             harcanan += result["tutar"]
             if sym not in status["semboller"]:
                 slot -= 1
+            if "semboller" not in status:
+                status["semboller"] = []
             status["semboller"].append(sym)
 
     return işlemler

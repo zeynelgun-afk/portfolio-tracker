@@ -298,6 +298,10 @@ def apply_rule_change(
         "guven":      guven_skoru,
         "backtest_n": backtest_result.get("toplam_trade", 0),
     }
+    if "list" not in applied:
+
+        applied["list"] = []
+
     applied["list"].append(record)
     applied["list"] = applied["list"][-50:]
     with open(changes_path, "w", encoding="utf-8") as f:
