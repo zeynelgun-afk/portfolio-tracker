@@ -208,7 +208,7 @@ def find_candidates(
                 atr  = sum(trs) / 14
 
             stop   = round(price - 2*atr, 2) if atr else round(price*0.93, 2)
-            target = round(price + 3*atr, 2) if atr else round(price*1.12, 2)
+            target = round(price + 4*atr, 2) if atr else round(price*1.15, 2)
             rr     = round((target-price)/(price-stop), 2) if price > stop else 0
 
             if rr < 2:  # R:R minimum 2:1
