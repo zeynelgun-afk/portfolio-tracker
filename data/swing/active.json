@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-04-14T22:08:40.596079",
+  "son_guncelleme": "2026-04-15T07:00:30.392324",
   "not": "SWING TRADE SADECE SİMÜLASYON - Sadece % kazanç/kayıp takibi (MAX: 8 pozisyon)",
   "aktif_pozisyonlar": [
     {
@@ -22,7 +22,7 @@
       "chandelier_stop": 720.9,
       "k11_aktif": false,
       "k11_profit_lock": null,
-      "son_guncelleme": "2026-04-14T22:08:40.596079",
+      "son_guncelleme": "2026-04-15T07:00:30.392324",
       "notlar": [
         "Tarih düzeltmesi: 11 Nisan Cumartesi piyasa kapalı — 10 Nisan Cuma kapanış fiyatına göre düzeltildi"
       ],
@@ -30,7 +30,7 @@
       "atr14": 25.88,
       "chandelier_guncelleme": "2026-04-14",
       "maliyet_baz": 790.66,
-      "tutulan_gun": 4
+      "tutulan_gun": 5
     },
     {
       "id": "SWING-202604101410-KLAC",
@@ -52,7 +52,7 @@
       "chandelier_stop": 1589.79,
       "k11_aktif": false,
       "k11_profit_lock": null,
-      "son_guncelleme": "2026-04-14T22:08:40.596079",
+      "son_guncelleme": "2026-04-15T07:00:30.392324",
       "notlar": [
         "Tarih düzeltmesi: 11 Nisan Cumartesi piyasa kapalı — 10 Nisan Cuma kapanış fiyatına göre düzeltildi"
       ],
@@ -60,7 +60,7 @@
       "atr14": 68.85,
       "chandelier_guncelleme": "2026-04-14",
       "maliyet_baz": 1737.28,
-      "tutulan_gun": 4
+      "tutulan_gun": 5
     },
     {
       "id": "SWING-202604101410-AMAT",
@@ -82,7 +82,7 @@
       "chandelier_stop": 349.42,
       "k11_aktif": false,
       "k11_profit_lock": null,
-      "son_guncelleme": "2026-04-14T22:08:40.596079",
+      "son_guncelleme": "2026-04-15T07:00:30.392324",
       "notlar": [
         "Tarih düzeltmesi: 11 Nisan Cumartesi piyasa kapalı — 10 Nisan Cuma kapanış fiyatına göre düzeltildi"
       ],
@@ -90,7 +90,7 @@
       "atr14": 16.69,
       "chandelier_guncelleme": "2026-04-14",
       "maliyet_baz": 399.49,
-      "tutulan_gun": 4
+      "tutulan_gun": 5
     },
     {
       "id": "SWING-202604141454-GEV",
@@ -112,10 +112,10 @@
       "chandelier_stop": 678.39,
       "k11_aktif": false,
       "k11_profit_lock": null,
-      "son_guncelleme": "2026-04-14T22:08:40.596079",
+      "son_guncelleme": "2026-04-15T07:00:30.392324",
       "notlar": [],
       "pnl_pct": -1.25,
-      "tutulan_gun": 0
+      "tutulan_gun": 1
     },
     {
       "id": "SWING-202604141454-RPRX",
@@ -137,10 +137,10 @@
       "chandelier_stop": 43.93,
       "k11_aktif": false,
       "k11_profit_lock": null,
-      "son_guncelleme": "2026-04-14T22:08:40.596079",
+      "son_guncelleme": "2026-04-15T07:00:30.392324",
       "notlar": [],
       "pnl_pct": 0.62,
-      "tutulan_gun": 0
+      "tutulan_gun": 1
     }
   ],
   "ozet": {
