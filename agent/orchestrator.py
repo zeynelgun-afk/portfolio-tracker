@@ -1054,17 +1054,65 @@ def _execute_portfolio_opportunities(faz: str, market: dict) -> list:
     if faz == "FAZ_1" or not buy_position or not get_portfolio_status:
         return []
 
-    # Session state'ten buy list'i oku
+    # Session state'ten buy list'i oku (gitignored — GitHub Actions'ta olmayabilir)
     state_path = REPO_ROOT / "data" / "session_state.json"
-    if not state_path.exists():
-        return []
+    state = None
+    buy_list = []
+    piyasa_mod = "nötr"
 
-    try:
-        state = json.load(open(state_path))
-        buy_list = state.get("buy_list", {}).get("adaylar", [])
-        piyasa_mod = state.get("buy_list", {}).get("piyasa_mod", "nötr")
-    except Exception:
-        return []
+    if state_path.exists():
+        try:
+            state = json.load(open(state_path))
+            buy_list = state.get("buy_list", {}).get("adaylar", [])
+            piyasa_mod = state.get("buy_list", {}).get("piyasa_mod", "nötr")
+        except Exception:
+            pass  # fallback devam edecek
+
+    # Fallback 1: buy_candidates.json
+    if not buy_list:
+        try:
+            bc_path = REPO_ROOT / "data" / "buy_candidates.json"
+            if bc_path.exists():
+                bc = json.load(open(bc_path))
+                buy_list = bc.get("adaylar", [])
+                piyasa_mod = "tarama"
+                if buy_list:
+                    print(f"[Execution] session_state boş → buy_candidates.json'dan {len(buy_list)} aday alındı")
+        except Exception as _e:
+            print(f"[Execution] buy_candidates fallback hatası: {_e}")
+
+    # Fallback 2: daily_scan dosyalarından oku (buy_candidates da boşsa)
+    if not buy_list:
+        _EKLE_ESIK = {"balanced": 9, "dividend": 9, "aggressive": 14}
+        for _pf in ["balanced", "dividend", "aggressive"]:
+            _scan_path = REPO_ROOT / "data" / f"daily_scan_{_pf}.json"
+            if not _scan_path.exists():
+                continue
+            try:
+                _scan = json.load(open(_scan_path))
+                _bugun = datetime.now(TR_TZ).strftime("%Y-%m-%d")
+                if _scan.get("tarih", "") != _bugun:
+                    continue  # Eski tarama — atla
+                _esik = _EKLE_ESIK.get(_pf, 9)
+                for _s in _scan.get("sonuclar", [])[:20]:
+                    if float(_s.get("score", 0)) >= _esik:
+                        _fiyat = float(_s.get("price", 0))
+                        if not _fiyat:
+                            continue
+                        _atr = _fiyat * 0.025  # %2.5 ATR proxy
+                        buy_list.append({
+                            "symbol":  _s["symbol"],
+                            "portföy": _pf,
+                            "price":   _fiyat,
+                            "stop":    round(_fiyat - 2 * _atr, 2),
+                            "target":  round(_fiyat + 4 * _atr, 2),
+                            "reason":  f"daily_scan_{_pf} skor:{_s.get('score')} | {_s.get('sector','')}",
+                            "tema":    _s.get("sector", ""),
+                        })
+            except Exception as _e2:
+                print(f"[Execution] daily_scan_{_pf} fallback hatası: {_e2}")
+        if buy_list:
+            print(f"[Execution] daily_scan fallback: {len(buy_list)} aday yüklendi")
 
     if not buy_list:
         return []
@@ -1106,7 +1154,7 @@ def _execute_portfolio_opportunities(faz: str, market: dict) -> list:
                               headers={"User-Agent":"Mozilla/5.0"}, timeout=5)
             vix = float(vix_r.json()["chart"]["result"][0]["meta"]["regularMarketPrice"])
         except Exception:
-            vix = state.get("buy_list", {}).get("vix", 20)
+            vix = state.get("buy_list", {}).get("vix", 20) if state else 20
 
         if run_entry_checks:
             k_res = run_entry_checks(sym, vix=vix, base_size=5000)
@@ -1138,11 +1186,12 @@ def _execute_portfolio_opportunities(faz: str, market: dict) -> list:
             )
             # Buy list'ten çıkar (bir kez execute et)
             buy_list = [a for a in buy_list if a.get("symbol") != sym]
-            state["buy_list"]["adaylar"] = buy_list
-            try:
-                json.dump(state, open(state_path,"w"), ensure_ascii=False, indent=2)
-            except Exception:
-                pass
+            if state and "buy_list" in state:
+                state["buy_list"]["adaylar"] = buy_list
+                try:
+                    json.dump(state, open(state_path,"w"), ensure_ascii=False, indent=2)
+                except Exception:
+                    pass
 
     return aksiyonlar
 
