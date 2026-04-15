@@ -1,0 +1,56 @@
+name: Finzora Telegram Bot
+
+on:
+  schedule:
+    - cron: '*/5 * * * *'   # Her 5 dakika
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  bot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Bagimliliklar
+        run: pip install requests
+
+      - name: Offset geri yukle
+        run: |
+          git config user.name "Finzora Bot"
+          git config user.email "zeynelgun@users.noreply.github.com"
+
+      - name: Bot calistir
+        run: python scripts/telegram_bot.py
+        env:
+          TELEGRAM_TOKEN:        ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_PRIVATE_CHAT: ${{ secrets.TELEGRAM_PRIVATE_CHAT }}
+          FMP_API_KEY:           ${{ secrets.FMP_API_KEY }}
+          PYTHONUNBUFFERED: '1'
+
+      - name: Offset kaydet
+        run: |
+          git fetch origin main
+          git reset --hard origin/main
+          # Offset dosyasını koru
+          if [ -f data/telegram_offset.json ]; then
+            cp data/telegram_offset.json /tmp/offset_backup.json
+            git add data/telegram_offset.json 2>/dev/null || true
+            if git diff --staged --quiet; then
+              echo "Offset değişmedi"
+            else
+              git commit -m "[Bot] Telegram offset güncellendi"
+              git push origin main || true
+            fi
+          fi
