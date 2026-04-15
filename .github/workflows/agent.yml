@@ -1,0 +1,134 @@
+name: Finzora Agent
+
+on:
+  schedule:
+    - cron: '0 13 * * 1-5'
+    - cron: '30 21 * * 1-5'
+    - cron: '0,30 14-20 * * 1-5'
+    - cron: '0 9 * * 0'
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'Calisma modu'
+        required: false
+        default: 'morning'
+        type: choice
+        options:
+          - morning
+          - closing
+          - monitor
+          - weekly
+  push:
+    paths:
+      - 'agent/*.py'
+      - '.github/workflows/agent.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Event kontrol
+        run: echo "Event=${{ github.event_name }} — schedule devam ediyor"
+
+  agent:
+    runs-on: ubuntu-latest
+    needs: validate
+    if: github.event_name != 'push'
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Bagimliliklar
+        run: pip install anthropic requests pytz beautifulsoup4
+
+      - name: Git kimlik
+        run: |
+          git config user.name "Finzora Agent"
+          git config user.email "zeynelgun@users.noreply.github.com"
+
+      - name: Modu belirle
+        id: mode
+        run: |
+          if [ -n "${{ github.event.inputs.mode }}" ]; then
+            echo "mode=${{ github.event.inputs.mode }}" >> $GITHUB_OUTPUT
+          else
+            HOUR=$(TZ=Europe/Istanbul date +%H)
+            MIN=$(TZ=Europe/Istanbul date +%M)
+            WDAY=$(date +%u)
+            if [ "$WDAY" -eq 7 ]; then
+              echo "mode=weekly" >> $GITHUB_OUTPUT
+            elif [ "$HOUR" -eq 16 ] || ([ "$HOUR" -eq 15 ] && [ "$MIN" -ge 45 ]); then
+              echo "mode=morning" >> $GITHUB_OUTPUT
+            elif [ "$HOUR" -eq 0 ] || [ "$HOUR" -eq 1 ]; then
+              echo "mode=closing" >> $GITHUB_OUTPUT
+            else
+              echo "mode=monitor" >> $GITHUB_OUTPUT
+            fi
+          fi
+
+      - name: Agent calistir
+        run: python agent/orchestrator.py
+        env:
+          ANTHROPIC_API_KEY:     ${{ secrets.ANTHROPIC_API_KEY }}
+          FMP_API_KEY:           ${{ secrets.FMP_API_KEY }}
+          TELEGRAM_TOKEN:        ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_PRIVATE_CHAT: ${{ secrets.TELEGRAM_PRIVATE_CHAT }}
+          RAPIDAPI_KEY:          ${{ secrets.RAPIDAPI_KEY }}
+          AGENT_MODE:            ${{ steps.mode.outputs.mode }}
+          PYTHONUNBUFFERED:      '1'
+
+      - name: Kapanis ozeti
+        if: success() && steps.mode.outputs.mode == 'closing'
+        run: python scripts/heartbeat.py --mode ozet
+        env:
+          TELEGRAM_BOT_TOKEN:  ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_PRIVATE_ID: ${{ secrets.TELEGRAM_PRIVATE_CHAT }}
+
+      - name: Hata bildirimi
+        if: failure()
+        run: |
+          pip install requests -q
+          python scripts/event_logger.py \
+            --seviye kritik \
+            --baslik "Agent coktu" \
+            --detay "Commit: ${{ github.sha }}" \
+            --kaynak "github_actions"
+        env:
+          TELEGRAM_BOT_TOKEN:  ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_PRIVATE_ID: ${{ secrets.TELEGRAM_PRIVATE_CHAT }}
+
+      - name: Degisiklikleri kaydet
+        run: |
+          mkdir -p /tmp/ab/data/portfolios /tmp/ab/data/swing /tmp/ab/agent/memory
+          cp data/portfolios/*.json /tmp/ab/data/portfolios/ 2>/dev/null || true
+          cp data/swing/*.json      /tmp/ab/data/swing/      2>/dev/null || true
+          cp data/*.json            /tmp/ab/data/            2>/dev/null || true
+          cp data/*.csv             /tmp/ab/data/            2>/dev/null || true
+          cp agent/memory/*.json    /tmp/ab/agent/memory/    2>/dev/null || true
+          git fetch origin main
+          git rebase --abort 2>/dev/null || true
+          git reset --hard origin/main
+          cp /tmp/ab/data/portfolios/*.json data/portfolios/ 2>/dev/null || true
+          cp /tmp/ab/data/swing/*.json      data/swing/      2>/dev/null || true
+          cp /tmp/ab/data/*.json            data/            2>/dev/null || true
+          cp /tmp/ab/data/*.csv             data/            2>/dev/null || true
+          cp /tmp/ab/agent/memory/*.json    agent/memory/    2>/dev/null || true
+          MODE="${{ steps.mode.outputs.mode }}"
+          ZAMAN=$(date -u '+%Y-%m-%d %H:%M UTC')
+          git add data/ agent/memory/ reports/ 2>/dev/null || true
+          if git diff --staged --quiet; then
+            echo "Degisiklik yok"
+          else
+            git commit -m "[Agent/$MODE] Otomatik guncelleme — $ZAMAN"
+            git push origin main || (sleep 10 && git fetch origin main && git reset --hard origin/main && cp /tmp/ab/data/portfolios/*.json data/portfolios/ 2>/dev/null && cp /tmp/ab/data/*.json data/ 2>/dev/null && cp /tmp/ab/data/*.csv data/ 2>/dev/null && git add -A && git commit -m "[Agent/$MODE] Retry — $ZAMAN" && git push origin main)
+          fi
