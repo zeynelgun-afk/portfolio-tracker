@@ -374,22 +374,14 @@ def isle_mesaj(msg: dict):
 
 # ── Ana Döngü ─────────────────────────────────────────────────────────────────
 
-def main():
-    print(f"[Bot] Telegram bot başlatılıyor — {datetime.now().strftime('%H:%M:%S')}")
-
-    offset = load_offset()
-    print(f"[Bot] Başlangıç offset: {offset}")
-
-    updates = tg_get("getUpdates", {"offset": offset, "timeout": 5, "limit": 20})
+def _process_updates(offset: int) -> int:
+    """Tek bir getUpdates turu — offset döndürür."""
+    updates = tg_get("getUpdates", {"offset": offset, "timeout": 30, "limit": 20})
     if not updates or not updates.get("ok"):
-        print("[Bot] getUpdates başarısız veya mesaj yok")
-        return
-
-    msgs = updates.get("result", [])
-    print(f"[Bot] {len(msgs)} güncelleme")
+        return offset
 
     new_offset = offset
-    for upd in msgs:
+    for upd in updates.get("result", []):
         new_offset = max(new_offset, upd["update_id"] + 1)
         msg = upd.get("message") or upd.get("edited_message")
         if msg:
@@ -397,9 +389,52 @@ def main():
 
     if new_offset > offset:
         save_offset(new_offset)
-        print(f"[Bot] Offset güncellendi: {offset} → {new_offset}")
 
-    print("[Bot] Tamamlandı.")
+    return new_offset
+
+
+def main():
+    """
+    Mod seçimi:
+    - RAILWAY=1 → Sürekli polling (7/24)
+    - Aksi halde → GitHub Actions modu (tek çalışma)
+    """
+    railway_mode = os.environ.get("RAILWAY") or os.environ.get("RAILWAY_ENVIRONMENT")
+
+    if railway_mode:
+        # ── Railway: Sürekli polling ──────────────────────────────
+        print(f"[Bot] Railway modu — sürekli polling başlıyor")
+        print(f"[Bot] {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+
+        offset = load_offset()
+        hata_sayisi = 0
+
+        while True:
+            try:
+                offset = _process_updates(offset)
+                hata_sayisi = 0
+                time.sleep(1)   # 1sn bekleme — rate limit koruması
+            except KeyboardInterrupt:
+                print("[Bot] Durduruldu.")
+                break
+            except Exception as e:
+                hata_sayisi += 1
+                print(f"[Bot] Hata #{hata_sayisi}: {e}")
+                if hata_sayisi > 5:
+                    print("[Bot] Çok fazla hata — 60sn bekleniyor")
+                    time.sleep(60)
+                    hata_sayisi = 0
+                else:
+                    time.sleep(5)
+    else:
+        # ── GitHub Actions: Tek çalışma ───────────────────────────
+        print(f"[Bot] GitHub Actions modu — {datetime.now().strftime('%H:%M:%S')}")
+        offset = load_offset()
+        new_offset = _process_updates(offset)
+        if new_offset > offset:
+            save_offset(new_offset)
+            print(f"[Bot] Offset: {offset} → {new_offset}")
+        print("[Bot] Tamamlandı.")
 
 
 if __name__ == "__main__":
