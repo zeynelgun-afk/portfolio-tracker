@@ -250,6 +250,13 @@ def append_learning(insight: str, source: str = "agent"):
         with open(path, encoding="utf-8") as f:
             log = json.load(f)
 
+    # 'dersler' formatına da uyum sağla (bootstrap formatı)
+    if "entries" not in log:
+        if "dersler" in log:
+            log["entries"] = log["dersler"]
+        else:
+            log["entries"] = []
+
     log["entries"].append({
         "date":    datetime.now(TR_TZ).strftime("%Y-%m-%d"),
         "source":  source,

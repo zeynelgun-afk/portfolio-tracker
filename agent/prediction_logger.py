@@ -324,7 +324,11 @@ def get_prediction_context() -> str:
 def _load_log() -> dict:
     if LOG_PATH.exists():
         with open(LOG_PATH, encoding="utf-8") as f:
-            return json.load(f)
+            log = json.load(f)
+        # Guard: tahminler anahtarı yoksa oluştur
+        if "tahminler" not in log:
+            log["tahminler"] = []
+        return log
     return {"tahminler": [], "olusturma": datetime.now(TR_TZ).isoformat()}
 
 
