@@ -97,50 +97,87 @@ def get_portfolio_snapshot() -> dict:
 
 def get_real_vix() -> dict:
     """
-    Yahoo Finance'dan gerçek CBOE VIX değerini çeker.
-    VIXY/UVXY kullanma — contango nedeniyle yanıltıcı.
+    VIX değerini çeker.
+    Kaynak sırası: 1) Yahoo Finance  2) FMP (VIXY proxy düzeltmeli)  3) Cached
+    VIXY/UVXY doğrudan kullanma — contango nedeniyle yanıltıcı.
     """
+    def _seviye(price):
+        if price is None: return "UNKNOWN"
+        if price < 18:   return "DÜŞÜK (Risk-On)"
+        if price < 25:   return "NORMAL"
+        if price < 30:   return "YÜKSEK — K-13 aktif"
+        return "EKSTREM — yeni giriş dur"
+
+    # ── 1. Yahoo Finance ──────────────────────────────────────────────────────
+    for yahoo_url in [
+        "https://query1.finance.yahoo.com/v8/finance/chart/%5EVIX",
+        "https://query2.finance.yahoo.com/v8/finance/chart/%5EVIX",
+    ]:
+        try:
+            r = requests.get(
+                yahoo_url,
+                params={"interval": "1d", "range": "5d"},
+                headers={"User-Agent": "Mozilla/5.0 (compatible; Finzora/1.0)"},
+                timeout=8,
+            ).json()
+            result = r["chart"]["result"][0]
+            price  = result["meta"].get("regularMarketPrice")
+            closes = result.get("indicators", {}).get("quote", [{}])[0].get("close", [])
+            valid  = [c for c in closes if c is not None]
+            prev   = valid[-2] if len(valid) >= 2 else None
+            chg    = round((price - prev) / prev * 100, 2) if price and prev else None
+            if price:
+                vix_result = {"price": price, "chg": chg,
+                        "seviye": _seviye(price), "kaynak": "CBOE/Yahoo",
+                        "timestamp": __import__("datetime").datetime.now().isoformat()}
+                try:
+                    import json as _jc
+                    _jc.dump(vix_result, open(
+                        str(Path(__file__).parent.parent / "data" / "vix_cache.json"), "w"))
+                except Exception:
+                    pass
+                return vix_result
+        except Exception:
+            continue
+
+    # ── 2. FMP fallback ───────────────────────────────────────────────────────
     try:
+        fmp_key = os.environ.get("FMP_API_KEY", "g1GFJZtV5rCP49UCir4WuP56VjhmA6F8")
         r = requests.get(
-            "https://query1.finance.yahoo.com/v8/finance/chart/%5EVIX",
-            params={"interval": "1d", "range": "5d"},
-            headers={"User-Agent": "Mozilla/5.0"},
-            timeout=10,
+            "https://financialmodelingprep.com/stable/quote",
+            params={"symbol": "VIXY", "apikey": fmp_key},
+            timeout=8,
         ).json()
+        if r and isinstance(r, list):
+            vixy_price = float(r[0].get("price", 0))
+            vixy_prev  = float(r[0].get("previousClose", vixy_price))
+            vixy_chg   = (vixy_price - vixy_prev) / vixy_prev * 100 if vixy_prev else 0
+            # VIXY → VIX kaba dönüşüm (yaklaşık 0.5x çarpan — contango)
+            vix_est = round(vixy_price / 0.5, 2)
+            print(f"[VIX] FMP/VIXY proxy: VIXY={vixy_price:.2f} → VIX≈{vix_est:.1f} (yaklaşık)")
+            return {"price": vix_est, "chg": round(vixy_chg, 2),
+                    "seviye": _seviye(vix_est), "kaynak": "FMP/VIXY-proxy",
+                    "uyari": "VIXY proxy — yaklaşık değer"}
+    except Exception as e2:
+        print(f"[VIX] FMP fallback hatası: {e2}")
 
-        result = r["chart"]["result"][0]
-        meta   = result["meta"]
-        price  = meta.get("regularMarketPrice")
+    # ── 3. Cache ──────────────────────────────────────────────────────────────
+    try:
+        cache_path = Path(__file__).parent.parent / "data" / "vix_cache.json"
+        if cache_path.exists():
+            import json as _j
+            cached = _j.load(open(cache_path))
+            age_min = (datetime.now() - datetime.fromisoformat(cached["timestamp"])).seconds // 60
+            if age_min < 120:  # 2 saatten eskiyse kullanma
+                print(f"[VIX] Cache kullanıldı ({age_min}dk önce): {cached['price']}")
+                cached["kaynak"] = f"cache({age_min}dk önce)"
+                return cached
+    except Exception:
+        pass
 
-        # Önceki kapanışı geçmiş veriden al
-        closes    = result.get("indicators", {}).get("quote", [{}])[0].get("close", [])
-        valid     = [c for c in closes if c is not None]
-        prev      = valid[-2] if len(valid) >= 2 else None
-        chg       = round((price - prev) / prev * 100, 2) if price and prev else None
-
-        # Seviye yorumu (K-13 v4.1 bazlı)
-        if price is None:
-            seviye = "UNKNOWN"
-        elif price < 18:
-            seviye = "DÜŞÜK (Risk-On)"
-        elif price < 25:
-            seviye = "NORMAL"
-        elif price < 30:
-            seviye = "YÜKSEK — K-13 aktif"
-        else:
-            seviye = "EKSTREM — yeni giriş dur"
-
-        return {
-            "price":   price,
-            "chg":     chg,
-            "seviye":  seviye,
-            "kaynak":  "CBOE/Yahoo",
-        }
-
-    except Exception as e:
-        print(f"[VIX] Yahoo Finance hatası: {e}")
-        _log.uyari("VIX verisi alınamadı", f"{e}", kaynak="tools.get_real_vix")
-        return {"price": None, "chg": None, "seviye": "UNKNOWN", "kaynak": "hata"}
+    print("[VIX] Tüm kaynaklar başarısız — UNKNOWN döndürülüyor")
+    _log.uyari("VIX verisi alınamadı — tüm kaynaklar denendi", kaynak="tools.get_real_vix")
+    return {"price": None, "chg": None, "seviye": "UNKNOWN", "kaynak": "hata"}
 
 
 def get_market_context() -> dict:
