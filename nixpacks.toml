@@ -1,8 +1,0 @@
-[phases.setup]
-nixPkgs = ["python311", "python311Packages.pip"]
-
-[phases.install]
-cmds = ["npm ci", "pip3 install requests"]
-
-[start]
-cmd = "python3 scripts/telegram_bot.py & npm start"
