@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-04-15T21:11:49.983954",
+  "son_guncelleme": "2026-04-15T22:07:28.169138",
   "not": "SWING TRADE SADECE SİMÜLASYON - Sadece % kazanç/kayıp takibi (MAX: 8 pozisyon)",
   "aktif_pozisyonlar": [
     {
@@ -22,7 +22,7 @@
       "chandelier_stop": 720.9,
       "k11_aktif": false,
       "k11_profit_lock": null,
-      "son_guncelleme": "2026-04-15T21:11:49.983954",
+      "son_guncelleme": "2026-04-15T22:07:28.169138",
       "notlar": [
         "Tarih düzeltmesi: 11 Nisan Cumartesi piyasa kapalı — 10 Nisan Cuma kapanış fiyatına göre düzeltildi"
       ],
@@ -52,7 +52,7 @@
       "chandelier_stop": 1589.79,
       "k11_aktif": false,
       "k11_profit_lock": null,
-      "son_guncelleme": "2026-04-15T21:11:49.983954",
+      "son_guncelleme": "2026-04-15T22:07:28.169138",
       "notlar": [
         "Tarih düzeltmesi: 11 Nisan Cumartesi piyasa kapalı — 10 Nisan Cuma kapanış fiyatına göre düzeltildi"
       ],
@@ -82,7 +82,7 @@
       "chandelier_stop": 349.42,
       "k11_aktif": false,
       "k11_profit_lock": null,
-      "son_guncelleme": "2026-04-15T21:11:49.983954",
+      "son_guncelleme": "2026-04-15T22:07:28.169138",
       "notlar": [
         "Tarih düzeltmesi: 11 Nisan Cumartesi piyasa kapalı — 10 Nisan Cuma kapanış fiyatına göre düzeltildi"
       ],
@@ -112,7 +112,7 @@
       "chandelier_stop": 893.55,
       "k11_aktif": false,
       "k11_profit_lock": null,
-      "son_guncelleme": "2026-04-15T21:11:49.983954",
+      "son_guncelleme": "2026-04-15T22:07:28.169138",
       "notlar": [
         "chandelier_stop düzeltildi: 678.39 → 893.55 (ATR14=37.94, zirve=1007.38)"
       ],
@@ -140,7 +140,7 @@
       "chandelier_stop": 43.93,
       "k11_aktif": false,
       "k11_profit_lock": null,
-      "son_guncelleme": "2026-04-15T21:11:49.983954",
+      "son_guncelleme": "2026-04-15T22:07:28.169138",
       "notlar": [],
       "pnl_pct": 0.37,
       "tutulan_gun": 1
