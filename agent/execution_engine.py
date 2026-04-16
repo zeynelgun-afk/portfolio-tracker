@@ -157,7 +157,7 @@ def buy_position(
         # Yeni pozisyon
         if len(pozlar) >= max_poz:
             _log.hata(f"ALIŞ BAŞARISIZ: {symbol}", f"Portföy dolu {max_poz}/{max_poz} | {portfolio}", kaynak="execution_engine")
-        return {"ok": False, "hata": f"Portföy dolu ({max_poz}/{max_poz})"}
+            return {"ok": False, "hata": f"Portföy dolu ({len(pozlar)}/{max_poz})"}
 
         # Sembol bilgisi çek
         try:

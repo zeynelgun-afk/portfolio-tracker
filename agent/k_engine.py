@@ -153,7 +153,7 @@ def k05_earnings_check(symbol: str) -> dict:
 
 def k18_insider_check(symbol: str) -> dict:
     """Son 30 günde CEO/CFO/Direktör $5M+ satışı → NO-GO."""
-    data = _fmp("insider-trading", {"symbol": symbol, "limit": 30})
+    data = _fmp("insider-trading/search", {"symbol": symbol, "limit": 30})
     if not data:
         return {"passed": True, "reason": "insider veri yok"}
 
