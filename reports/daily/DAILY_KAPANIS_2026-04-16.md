@@ -2,26 +2,24 @@
 
 > finzora ai | otomatik oluşturuldu
 
-# KAPANIŞ RAPORU — 16 Nisan 2026, Perşembe
-
----
+# KAPANIŞ RAPORU — 16 NİSAN 2026 PERŞEMBE
 
 ## 1. GÜNÜN ÖZETİ
 
-| Endeks | Kapanış | Değişim |
-|--------|---------|---------|
-| SPY | $699.94 | +0.79% |
-| QQQ | $637.40 | +1.40% |
-| GLD | $440.46 | — |
-| TLT | $86.83 | — |
-| VIX | 18.17 | -1.03% |
+| Endeks | Kapanış | Günlük | Trend |
+|--------|---------|--------|-------|
+| SPY | $701.66 | +0.25% | Yükseliş |
+| QQQ | $640.47 | +0.48% | Yükseliş |
+| GLD | $440.08 | — | Nötr |
+| TLT | $86.28 | — | Nötr |
+| VIX | 17.94 | -1.27% | Risk-On |
 
-**Trend**: [KESİN] Tech liderliğinde risk-on gün. QQQ +1.40% ile SPY'ı net geçti. VIX 18 seviyesinde stabil — piyasa İran ateşkes sürecini fiyatlamaya devam ediyor.
+**[KESİN]** Piyasa tech liderliğinde pozitif kapattı. VIX 17.94 seviyesinde düşük volatilite ortamı devam ediyor. QQQ %0.48 ile SPY'ı outperform etti — growth/AI sektörlerine ilgi güçlü.
 
-**Sektör Notları**:
-- Semiconductor: ASML guidance hayal kırıklığı yarattı, MU %5 düştü (haberlere göre). Sektör geneli yine pozitif ama hafif soluklanma mevcut.
-- Utilities: Baskı altında. DUK, NEE, MO hepsi negatif kapattı — muhtemelen rate cut beklentilerinin geri çekilmesi etkisi.
-- Temettü/Defensive: Zayıf performans. Portföy stoplara yaklaştı.
+**Sektör Notları:**
+- **[KESİN]** Utility sektörü baskı altında: DUK, NEE, MO negatif P/L'de
+- **[KESİN]** Semiconductor güçlü: MU +10.2%, COHR +14.8% giriş P/L
+- **[SPEKÜLATİF]** Nükleer/uranyum temaları (CCJ, BWXT, DNN) sinyal veriyor — AI enerji talebi hikayesi
 
 ---
 
@@ -29,120 +27,162 @@
 
 ### AGRESİF PORTFÖY — $369,489 (-7.6% toplam)
 
-| Sembol | Fiyat | Bugün | P/L | Stop% | Durum |
-|--------|-------|-------|-----|-------|-------|
-| COHR | $308.20 | — | +7.9% | %7.3 | Normal |
-| VRT | $301.16 | — | +3.7% | %18.3 | ⚠️ K-05: Yarın earnings öncesi çıkış |
-| ANET | $154.33 | — | +5.3% | %17.1 | Normal |
-| MU | $456.23 | — | +9.9% | %9.0 | ASML etkisiyle düştü, RSI takip |
-| CAMT | $179.55 | — | +2.6% | %20.1 | Normal |
+| Sembol | Fiyat | Bugün | Giriş P/L | Stop% | Hedef | Durum |
+|--------|-------|-------|-----------|-------|-------|-------|
+| COHR | $328.00 | — | +14.8% | %12.9 | $330 | ✅ Hedefe 0.6% |
+| VRT | $294.13 | — | +1.3% | %16.4 | $330 | ⚠️ K-05 ÇIKIŞ |
+| ANET | $161.01 | — | +9.9% | %20.5 | $165 | ✅ Hedefe 2.5% |
+| MU | $457.23 | — | +10.2% | %9.2 | $470 | ✅ Hedefe 2.8% |
+| CAMT | $180.63 | — | +3.2% | %20.6 | $210 | ✅ Sağlıklı |
 
-**Aksiyon**:
-- [YARIN SABAH] VRT çıkışı yapılacak (K-05: 22 Nisan earnings, 20 Nisan'dan giriş yok ama mevcut pozisyon bu kapsamda kapatılmalı — dün kararı alındı).
-- MU hedefe ($470) yakın ama %5 düşüşle $456'ya geriledi. RSI 70+ olduğunda K-11 uygulanacak.
+**ACİL AKSİYON — VRT:**
+- **[KESİN]** VRT earnings 22 Nisan → K-05 gereği 20 Nisan'dan itibaren yeni giriş yasak
+- **[KESİN]** Mevcut pozisyon 2 iş günü içinde kapatılmalı → **YARIN (17 Nisan) AÇILIŞTA ÇIKIŞ**
+- Kâr: +1.3% (mütevazı ama kurala uygun)
+
+**COHR TAKİP:**
+- **[KESİN]** Hedefe $2 kala — RSI takibi başlasın
+- Yarın RSI 70+ gelirse trailing stop aktif (K-11)
 
 ---
 
 ### DENGELİ PORTFÖY — $110,643 (+10.6% toplam)
 
-| Sembol | Fiyat | Bugün | P/L | Stop% | Durum |
-|--------|-------|-------|-----|-------|-------|
-| MO | $64.42 | — | -4.5% | %2.1 | ⚠️ KRİTİK |
-| DUK | $127.99 | — | -3.8% | %1.2 | ⚠️ KRİTİK |
-| CI | $268.63 | — | -3.2% | %3.9 | ⚠️ Yakın |
-| NEE | $91.24 | — | -2.9% | %3.3 | ⚠️ Yakın |
+| Sembol | Fiyat | Bugün | Giriş P/L | Stop% | Hedef | Durum |
+|--------|-------|-------|-----------|-------|-------|-------|
+| MO | $64.94 | — | -3.7% | %2.9 | $78 | ⚠️ TEHLİKE |
+| DUK | $128.63 | — | -3.3% | %1.7 | $142 | 🚨 KRİTİK |
+| CI | $276.37 | — | -0.5% | %6.6 | $361 | ✅ Güvenli |
+| NEE | $91.83 | — | -2.3% | %3.9 | $106 | ⚠️ Dikkat |
 
-**⚠️ UYARI**: DUK stop'a %1.2 mesafede. MO %2.1 mesafede. Yarın açılışta gap-down ile tetiklenme riski yüksek.
+**UYARILAR:**
+- **[KESİN]** DUK stopa %1.7 uzak — açılışta %2 düşüş = tetikleme
+- **[KESİN]** MO stopa %2.9 uzak — utility baskısı devam ederse risk yüksek
+- **[KESİN]** NEE earnings 23 Nisan + stop %3.9 uzak — çift risk
 
-**Aksiyon**:
-- [PASIF] Stop tetiklenirse müdahale yok — K-06 gereği direkt çıkış.
-- Utility sektörü zayıf, pozisyon koruma anlamsız.
+**STRATEJİ:** Utility sektörü baskı altında. Stop tetiklenirse K-06 gereği hemen çık, override yok.
 
 ---
 
 ### TEMETTÜ PORTFÖYÜ — $141,191 (+41.2% toplam)
 
-| Sembol | Fiyat | Bugün | P/L | Stop% | Durum |
-|--------|-------|-------|-----|-------|-------|
-| T | $25.47 | — | -2.7% | %3.3 | ⚠️ Earnings 22 Nisan |
-| VZ | $45.03 | — | +13.1% | %2.0 | ⚠️ Yakın |
-| MO | $64.42 | — | +12.4% | %0.6 | ⚠️ EN KRİTİK |
-| MRK | $117.90 | — | -1.7% | %3.9 | ⚠️ Yakın |
-| OKE | $84.10 | — | -1.6% | %6.6 | Normal |
+| Sembol | Fiyat | Bugün | Giriş P/L | Stop% | Hedef | Durum |
+|--------|-------|-------|-----------|-------|-------|-------|
+| T | $26.39 | — | +0.8% | %6.7 | $27 | ✅ Earnings 22/4 |
+| VZ | $46.78 | — | +17.4% | %5.7 | $45 | 🎯 HEDEF AŞILDI |
+| MO | $64.94 | — | +13.3% | %1.4 | $64 | 🚨 KRİTİK |
+| MRK | $115.44 | — | -3.8% | %1.9 | $134 | 🚨 KRİTİK |
+| OKE | $85.21 | — | -0.3% | %7.8 | $93 | ✅ Sağlıklı |
 
-**⚠️ ACİL**: MO (Temettü) stop'a sadece %0.6 mesafede — yarın açılışta tetiklenme olasılığı çok yüksek.
+**ACİL DURUMLAR:**
+- **[KESİN]** MO (Temettü) stopa %1.4 uzak — yarın açılış kritik
+- **[KESİN]** MRK stopa %1.9 uzak — pharma zayıflığı devam ederse tetiklenir
+- **[KESİN]** VZ hedef $45'i aştı ($46.78) → K-11 gereği kâr alma değerlendir
 
-**Aksiyon**:
-- [PASIF] MO (Temettü) stop tetiklenirse çık. Override yok.
-- T earnings 22 Nisan — pozisyon mevcut, K-05 mevcut swing'leri kapsamıyor ama volatilite artabilir.
-
----
-
-## 3. SWING TRADE DURUMU (5/5 slot dolu)
-
-| Sembol | Fiyat | P/L | Stop | Stop% | Hedef | Durum |
-|--------|-------|-----|------|-------|-------|-------|
-| CAT | $770.17 | -2.6% | $730.35 | %5.2 | $941 | Normal |
-| KLAC | $1,748.11 | +0.6% | $1,589.79 | %9.1 | $2,229 | Normal |
-| AMAT | $394.26 | -1.3% | $361.98 | %8.2 | $493 | Normal |
-| GEV | $985.92 | -1.4% | $893.55 | %9.4 | $1,270 | Normal |
-| RPRX | $48.70 | +0.4% | $46.89 | %3.7 | $53 | ⚠️ Yakın |
-
-**Chandelier Stop Kontrolü**: [KESİN] Hiçbir pozisyon stop'un altına inmedi. RPRX en yakın (%3.7) ama tehlikeli değil.
-
-**Bugünkü Sinyaller**: RPRX (mevcut), PYPL yeni sinyal var ama 5/5 slot dolu — giriş yok.
+**VZ KARARI:**
+- Hedef aşıldı (+17.4% kâr) ama RSI kontrolü gerekli
+- RSI 70+ ise %25-30 kısmi satış düşünülmeli
+- Temettü portföyü için uzun vade öncelik — acele etme
 
 ---
 
-## 4. YAKLAŞAN KAZANÇ AÇIKLAMALARI
+## 3. SWING TRADE DURUMU (5/5 Slot Dolu)
 
-| Tarih | Sembol | Portföy | Not |
-|-------|--------|---------|-----|
-| 22 Nisan | VRT | Agresif | ⚠️ K-05 gereği YARIN çıkış |
-| 22 Nisan | T | Temettü | Mevcut pozisyon, K-05 kapsamaz |
-| 23 Nisan | NEE | Dengeli | Stop'a yakın, önce stop takibi |
+| Sembol | Fiyat | P/L | Stop | Stop% | Hedef | Chandelier |
+|--------|-------|-----|------|-------|-------|------------|
+| CAT | $771.75 | -2.4% | $730.35 | %5.4 | $941 | ✅ Güvenli |
+| KLAC | $1,730.57 | -0.4% | $1,589.79 | %8.1 | $2,229 | ✅ Güvenli |
+| AMAT | $390.04 | -2.4% | $361.98 | %7.2 | $493 | ✅ Güvenli |
+| GEV | $980.62 | -1.9% | $893.55 | %8.9 | $1,270 | ✅ Güvenli |
+| RPRX | $48.42 | -0.2% | $46.89 | %3.2 | $53 | ⚠️ YAKIN |
+
+**[KESİN]** Tüm swing pozisyonlar hafif negatif ama stoplardan uzak. RPRX en yakın (%3.2) — izle.
+
+**GİRİŞ SİNYALLERİ (4 adet):**
+- PYPL, CCJ, BWXT, DNN sinyal verdi
+- **[KESİN]** 5/5 slot dolu → giriş için slot açılması gerekli
+- **[MUHTEMEL]** CCJ, BWXT, DNN nükleer/uranyum teması — AI enerji hikayesi destekliyor
+
+---
+
+## 4. KAZANÇ AÇIKLAMALARI
+
+| Sembol | Tarih | Portföy | Risk | Aksiyon |
+|--------|-------|---------|------|---------|
+| VRT | 22 Nisan | Agresif | K-05 | **YARIN ÇIKIŞ** |
+| T | 22 Nisan | Temettü | Düşük | Mevcut tut |
+| NEE | 23 Nisan | Dengeli | Orta | Stop takibi |
+
+**[KESİN]** VRT için K-05 kuralı: earnings'ten 2 iş günü önce yeni giriş yok, mevcut pozisyon kapatılabilir. Yarın (17 Nisan Cuma) çıkış yapılacak.
+
+**[KESİN]** T ve NEE için K-05 yeni giriş yasağı var ama mevcut pozisyon tutulabilir.
 
 ---
 
 ## 5. GÜNÜN DEĞERLENDİRMESİ
 
-**Sabah Planı vs Gerçekleşme**:
-- Plan: VRT yarın kapatılacak → [AÇIK] Beklemede, yarın uygulanacak.
-- Plan: Stop tetiklenmeleri izlenecek → [AÇIK] DUK, MO (her iki portföy) yarın tetiklenebilir.
+### Sabah Planı vs Gerçekleşme
 
-**Dersler**:
-1. [KESİN] Utility sektörü defensive olarak çalışmıyor — rate-sensitive karakteri ön plana çıktı.
-2. [MUHTEMEL] ASML'in guidance'ı semiconductor rallisinin soluklanmasına yol açabilir. MU, KLAC, AMAT izlenmeli.
-3. [SPEKÜLATİF] $700 SPY call wall (Twitter) yarın OPEX öncesi direnç oluşturabilir.
+| Plan | Sonuç |
+|------|-------|
+| VRT çıkışı yarın | ✅ Plan geçerli, yarın uygulanacak |
+| DUK/MO stop takibi | ⚠️ İkisi de kritik seviyede, tetiklenmedi |
+| MU RSI takibi | ✅ +10.2% kârda, RSI henüz aşırı değil |
+
+### Dersler
+
+1. **[KESİN]** Utility sektörü baskısı portföy genelinde hissediliyor — DUK, MO, NEE hepsi negatif
+2. **[MUHTEMEL]** AI enerji talebi haberleri (Twitter: +393% AI traffic) nükleer tezini destekliyor
+3. **[KESİN]** VZ hedef aşımı iyi sinyal ama temettü portföyünde uzun vade öncelik
+
+### Kaçırılan Fırsatlar
+- Swing slotları dolu olduğu için CCJ/BWXT/DNN sinyallerine giriş yapılamadı
+- **[SPEKÜLATİF]** Nükleer teması güçlenirse slot açmak için zayıf pozisyon kapatılabilir
 
 ---
 
 ## 6. YARIN AKSİYONLARI
 
-### HEMEN (Açılışta)
-| Aksiyon | Sembol | Gerekçe |
-|---------|--------|---------|
-| SAT | VRT | K-05: Earnings 22 Nisan, 2 iş günü kuralı |
-| İZLE | MO (Temettü) | Stop %0.6 mesafede — tetiklenirse çık |
-| İZLE | DUK | Stop %1.2 mesafede — tetiklenirse çık |
+### HEMEN (Açılış)
+| Aksiyon | Sembol | Detay |
+|---------|--------|-------|
+| **ÇIKIŞ** | VRT | K-05 gereği earnings öncesi çıkış — +1.3% kâr |
+| **STOP İZLE** | DUK | %1.7 uzak — tetiklenirse hemen çık |
+| **STOP İZLE** | MO (Temettü) | %1.4 uzak — tetiklenirse hemen çık |
+| **STOP İZLE** | MRK | %1.9 uzak — tetiklenirse hemen çık |
 
-### İZLE
-- MU: RSI 70+ ve $470 hedefe yaklaşırsa K-11 Katman1 uygulanacak.
-- RPRX: Stop %3.7 mesafede, gün içi izle.
-- SPY $700 direnci: OPEX öncesi call wall etkisi olabilir.
+### İZLE (Gün İçi)
+| Sembol | Neden |
+|--------|-------|
+| COHR | Hedefe $2 kala — RSI 70+ kontrol |
+| MU | RSI takibi — %15+ kârda trailing başlat |
+| VZ | Hedef aşıldı — kısmi satış değerlendir |
+| RPRX | Stop %3.2 uzak — yakın takip |
 
 ### PASİF
-- PYPL sinyal var ama slot yok — watchlist'te tut.
-- NEE earnings 23 Nisan — önce stop/momentum izle.
+| Sembol | Neden |
+|--------|-------|
+| CCJ, BWXT, DNN | Slot açılırsa değerlendir |
+| PYPL | Slot açılırsa değerlendir |
 
 ---
 
-## 7. BRIEF (Sonraki Rapor için)
+## 7. POST-TRADE REVIEW
 
-```
-[2026-04-16] Tech rallisi devam etti, QQQ +1.4%. ASML etkisiyle MU %5 düştü ama +9.9% kârda. Utility sektörü baskı altında: DUK (%1.2), MO (%0.6-2.1) stoplara çok yakın. VRT yarın K-05 gereği kapatılacak. T earnings 22 Nisan. 5/5 swing slot dolu, PYPL sinyali pas geçildi. Yarın öncelik: VRT satış, stop tetiklenmeleri.
-```
+*Bugün kapanan işlem yok. VRT yarın kapanacak.*
 
 ---
 
-*Rapor sonu. Tüm aksiyonlar K-kurallarına uygun, onay beklenmeden uygulanacak.*
+## 8. RİSK MATRİSİ
+
+| Seviye | Pozisyonlar | Risk |
+|--------|-------------|------|
+| 🚨 KRİTİK (<2%) | DUK, MO (Tem), MRK | Yarın tetiklenebilir |
+| ⚠️ TEHLİKE (2-4%) | MO (Den), NEE, RPRX | Yakın takip |
+| ✅ GÜVENLİ (>4%) | Diğer tümü | Normal izle |
+
+---
+
+**Rapor sonu. Tüm aksiyonlar K-kurallarına uygun, onay beklenmeden uygulanacak.**
+
+---
