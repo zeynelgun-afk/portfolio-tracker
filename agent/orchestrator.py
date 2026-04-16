@@ -32,7 +32,7 @@ except ImportError:
 
 # Agent modülleri
 sys.path.insert(0, str(Path(__file__).parent))
-from claude_agent import get_claude_decision
+from claude_agent import get_claude_decision, get_claude_decision_with_actions
 from tools import (
     get_portfolio_snapshot,
     get_market_context,
@@ -491,11 +491,28 @@ TABLO YORUMLAMA KURALLARI (Kesin olarak uygula):
 KESİN / MUHTEMEL / SPEKÜLATİF etiket kullan. Küçük harf Türkçe.
 """
 
-    response = get_claude_decision(prompt, mode="morning")
+    # ── YENİ: yapılandırılmış karar desteği (Seçenek A) ──────────────────────
+    response, claude_kararlar = get_claude_decision_with_actions(prompt, mode="morning")
     save_daily_brief(response, "morning")
 
     # Tam raporu reports/daily/'e kaydet
     _save_report(response, "SABAH")
+
+    # Claude kararlarını execute et (piyasa açıksa)
+    _now_tr2 = datetime.now(TR_TZ)
+    piyasa_acik = _now_tr2.weekday() < 5 and (
+        (_now_tr2.hour == 16 and _now_tr2.minute >= 30)
+        or (17 <= _now_tr2.hour < 23)
+    )
+    if claude_kararlar and piyasa_acik:
+        try:
+            market_ctx = get_market_context()
+            karar_aksiyonlar = _execute_claude_decisions(claude_kararlar, market_ctx)
+            for msg_k in karar_aksiyonlar:
+                send_private_telegram(msg_k)
+                send_group_telegram(msg_k)
+        except Exception as _ce:
+            print(f"[Orkestratör] Claude karar execute hatası: {_ce}")
 
     # Telegram'a 3 mesaj: multi-agent + debate (varsa) + genel analiz
     send_private_telegram(multi_summary + debate_msg)
@@ -575,7 +592,8 @@ Kapanan trade varsa post-trade review ekle.
 KESİN / MUHTEMEL / SPEKÜLATİF etiket kullan. Küçük harf Türkçe.
 """
 
-    response = get_claude_decision(prompt, mode="closing")
+    # ── YENİ: yapılandırılmış karar desteği (Seçenek A) ──────────────────────
+    response, claude_kararlar = get_claude_decision_with_actions(prompt, mode="closing")
     save_daily_brief(response, "closing")
     lines = [l.strip() for l in response.split("\n") if l.strip()]
     if lines:
@@ -583,6 +601,23 @@ KESİN / MUHTEMEL / SPEKÜLATİF etiket kullan. Küçük harf Türkçe.
 
     # Tam raporu reports/daily/'e kaydet
     _save_report(response, "KAPANIS")
+
+    # Claude kapanış kararlarını kaydet (yarın FAZ_2'de execute edilecek)
+    if claude_kararlar:
+        import json as _json2
+        _ss_path = REPO_ROOT / "data" / "session_state.json"
+        try:
+            _ss = _json2.load(open(_ss_path)) if _ss_path.exists() else {}
+        except Exception:
+            _ss = {}
+        _ss["claude_kararlar"] = {
+            "tarih": datetime.now(TR_TZ).isoformat(),
+            "kararlar": claude_kararlar,
+            "kaynak": "closing"
+        }
+        with open(_ss_path, "w") as _f:
+            _json2.dump(_ss, _f, ensure_ascii=False, indent=2)
+        print(f"[Orkestratör] {len(claude_kararlar)} karar session_state'e kaydedildi.")
 
     msg = f"Finzora Agent — Kapanış\n{ctx['timestamp'][:16]}\n\n{response}"
     send_private_telegram(msg)
@@ -903,6 +938,36 @@ def run_monitor(ctx: dict):
     if faz == "FAZ_2":
         portfolio_entries = _execute_portfolio_opportunities(faz, market)
         aksiyonlar.extend(portfolio_entries)
+
+    # ── 4b. CLAUDE KARAR EXECUTE (kapanış kararları + sabah kararları) ────
+    if faz == "FAZ_2":
+        try:
+            import json as _json3
+            _ss_path2 = REPO_ROOT / "data" / "session_state.json"
+            if _ss_path2.exists():
+                _ss2 = _json3.load(open(_ss_path2))
+                _ck  = _ss2.get("claude_kararlar", {})
+                if _ck.get("kararlar"):
+                    _bugun_str = datetime.now(TR_TZ).strftime("%Y-%m-%d")
+                    _karar_tarih = _ck.get("tarih", "")[:10]
+                    # Bugün veya dün üretilmiş kararları execute et (bir kez)
+                    if _karar_tarih >= _bugun_str or _karar_tarih == (
+                        datetime.now(TR_TZ).date().__str__()
+                    ):
+                        if not _ck.get("executed"):
+                            print(f"[Monitor] {len(_ck['kararlar'])} Claude kararı execute ediliyor...")
+                            karar_aks = _execute_claude_decisions(_ck["kararlar"], market)
+                            for _msg in karar_aks:
+                                send_private_telegram(_msg)
+                                send_group_telegram(_msg)
+                                aksiyonlar.append(_msg)
+                            # Execute edildi olarak işaretle
+                            _ck["executed"] = True
+                            _ss2["claude_kararlar"] = _ck
+                            with open(_ss_path2, "w") as _ff:
+                                _json3.dump(_ss2, _ff, ensure_ascii=False, indent=2)
+        except Exception as _ce2:
+            print(f"[Monitor] Claude karar execute hatası: {_ce2}")
 
     # ── FAZ_1: AÇILIŞ KONTROL ────────────────────────────────────────────────
     if faz == "FAZ_1":
@@ -1567,3 +1632,181 @@ if __name__ == "__main__":
             kaynak="orchestrator"
         )
         raise
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+# CLAUDE KARAR EXECUTOR — Seçenek A: Yapısal Claude → Execution bağlantısı
+# ═══════════════════════════════════════════════════════════════════════════
+
+def _execute_claude_decisions(kararlar: list, market: dict) -> list:
+    """
+    Claude'un ürettiği yapılandırılmış kararları execute eder.
+    get_claude_decision_with_actions() çıktısını alır.
+
+    Desteklenen tipler: EKLE, BÜYÜT, ÇIK, DÖNDÜR, STOP_GÜNCELLE, İZLE
+    """
+    if not kararlar:
+        return []
+    if not buy_position or not sell_position:
+        print("[Decisions] execution_engine yüklenemedi, kararlar atlandı.")
+        return []
+
+    aksiyonlar = []
+
+    for k in kararlar:
+        tip       = k.get("tip", "").upper()
+        portfoy   = k.get("portfoy", "")
+        sembol    = k.get("sembol", "")
+        pct       = float(k.get("pct", 100))
+        neden     = k.get("neden", "Claude kararı")
+        stop      = float(k.get("stop") or 0)
+        hedef     = float(k.get("hedef_fiyat") or 0)
+        tutar     = float(k.get("tutar") or 0)
+        aciliyet  = k.get("aciliyet", "bugün")
+        dondur_al = k.get("dondur_al")
+
+        if not sembol or not portfoy:
+            continue
+
+        # Güncel fiyat
+        q     = market.get(sembol, {})
+        price = float(q.get("price") or q.get("previousClose") or 0)
+        if not price:
+            print(f"[Decisions] {sembol} fiyat alınamadı, atlandı.")
+            continue
+
+        try:
+            if tip == "ÇIK":
+                result = sell_position(sembol, portfoy, f"Claude: {neden}", pct=pct, price=price)
+                if result["ok"]:
+                    aksiyonlar.append(
+                        f"🔴 *CLAUDE ÇIKİŞ* [{portfoy.upper()}]\n"
+                        f"{sembol} %{pct:.0f} @${price:.2f} | P/L: {result.get('pnl_pct',0):+.1f}%\n"
+                        f"Neden: {neden}"
+                    )
+
+            elif tip in ("EKLE", "BÜYÜT"):
+                # Nakit kontrolü
+                status = get_portfolio_status(portfoy) if get_portfolio_status else {}
+                nakit  = float(status.get("nakit", tutar or 10000))
+                miktar = tutar if tutar > 0 else min(nakit * 0.25, 15000, nakit)
+                if miktar < 500:
+                    print(f"[Decisions] {portfoy} yetersiz nakit ({nakit:.0f}$), {sembol} atlandı.")
+                    continue
+
+                # K-engine kontrolü
+                if run_entry_checks:
+                    vix = 20.0
+                    try:
+                        import requests as _req
+                        vr = _req.get("https://query1.finance.yahoo.com/v8/finance/chart/%5EVIX",
+                                      headers={"User-Agent": "Mozilla/5.0"}, timeout=5)
+                        vix = float(vr.json()["chart"]["result"][0]["meta"]["regularMarketPrice"])
+                    except Exception:
+                        pass
+                    k_res = run_entry_checks(sembol, vix=vix, base_size=5000)
+                    if not k_res["go"]:
+                        print(f"[Decisions] {sembol} K-engine veto: {k_res['fail_reason']}")
+                        continue
+
+                result = buy_position(sembol, portfoy, miktar, price,
+                                      stop or price * 0.92,
+                                      hedef or price * 1.15,
+                                      f"Claude: {neden}", "")
+                if result["ok"]:
+                    aksiyonlar.append(
+                        f"🟢 *CLAUDE ALIŞ* [{portfoy.upper()}]\n"
+                        f"{sembol} {result['adet']} adet @${price:.2f}\n"
+                        f"Stop: ${stop:.2f} | Hedef: ${hedef:.2f}\n"
+                        f"Neden: {neden}"
+                    )
+
+            elif tip == "DÖNDÜR":
+                # Adım 1: Sat
+                sat_r = sell_position(sembol, portfoy, f"DÖNDÜR — {neden}", pct=pct, price=price)
+                if not sat_r["ok"]:
+                    print(f"[Decisions] DÖNDÜR satış başarısız: {sat_r.get('hata','?')}")
+                    continue
+
+                pnl_pct = sat_r.get("pnl_pct", 0)
+                kazanilan = sat_r["tutar"]
+
+                # Adım 2: Al (dondur_al varsa)
+                if dondur_al:
+                    al_q     = market.get(dondur_al, {})
+                    al_price = float(al_q.get("price") or al_q.get("previousClose") or 0)
+
+                    if al_price:
+                        # K-engine kontrolü (döndür alışı için de)
+                        if run_entry_checks:
+                            vix = 20.0
+                            try:
+                                import requests as _req2
+                                vr2 = _req2.get("https://query1.finance.yahoo.com/v8/finance/chart/%5EVIX",
+                                                headers={"User-Agent": "Mozilla/5.0"}, timeout=5)
+                                vix = float(vr2.json()["chart"]["result"][0]["meta"]["regularMarketPrice"])
+                            except Exception:
+                                pass
+                            k_res2 = run_entry_checks(dondur_al, vix=vix, base_size=5000)
+                            if not k_res2["go"]:
+                                print(f"[Decisions] DÖNDÜR alış {dondur_al} K-veto: {k_res2['fail_reason']}")
+                                aksiyonlar.append(
+                                    f"🔄 *DÖNDÜR SATIŞ TAMAM* [{portfoy.upper()}]\n"
+                                    f"{sembol} @${price:.2f} P/L:{pnl_pct:+.1f}% | ${kazanilan:,.0f}\n"
+                                    f"⚠️ {dondur_al} alış K-veto: {k_res2['fail_reason']}"
+                                )
+                                continue
+
+                        al_r = buy_position(dondur_al, portfoy, kazanilan, al_price,
+                                            al_price * 0.92, al_price * 1.15,
+                                            f"DÖNDÜR giriş — {neden}", "")
+                        if al_r["ok"]:
+                            aksiyonlar.append(
+                                f"🔄 *DÖNDÜR* [{portfoy.upper()}]\n"
+                                f"SAT: {sembol} @${price:.2f} P/L:{pnl_pct:+.1f}%\n"
+                                f"AL:  {dondur_al} {al_r['adet']} adet @${al_price:.2f}\n"
+                                f"Neden: {neden}"
+                            )
+                        else:
+                            aksiyonlar.append(
+                                f"🔄 *DÖNDÜR — KISMÎ* [{portfoy.upper()}]\n"
+                                f"SAT: {sembol} OK | AL: {dondur_al} başarısız\n"
+                                f"${kazanilan:,.0f} nakite döndü"
+                            )
+                    else:
+                        aksiyonlar.append(
+                            f"🔄 *DÖNDÜR — KISMÎ* [{portfoy.upper()}]\n"
+                            f"SAT: {sembol} @${price:.2f} OK | {dondur_al} fiyat alınamadı\n"
+                            f"${kazanilan:,.0f} nakite döndü"
+                        )
+                else:
+                    # dondur_al yok → sadece sat
+                    aksiyonlar.append(
+                        f"🔄 *DÖNDÜR SATIŞ* [{portfoy.upper()}]\n"
+                        f"{sembol} @${price:.2f} P/L:{pnl_pct:+.1f}% | ${kazanilan:,.0f}\n"
+                        f"Neden: {neden}"
+                    )
+
+            elif tip == "STOP_GÜNCELLE":
+                # JSON dosyasını doğrudan güncelle
+                pf_path = REPO_ROOT / "data" / "portfolios" / f"{portfoy}.json"
+                if pf_path.exists():
+                    import json as _json
+                    pf_data = _json.load(open(pf_path))
+                    for poz in pf_data.get("pozisyonlar", []):
+                        if poz["sembol"] == sembol and stop > 0:
+                            poz["stop_loss"] = stop
+                    with open(pf_path, "w") as f:
+                        _json.dump(pf_data, f, ensure_ascii=False, indent=2)
+                    aksiyonlar.append(
+                        f"⚡ *STOP GÜNCELLE* [{portfoy.upper()}]\n"
+                        f"{sembol} stop → ${stop:.2f}\nNeden: {neden}"
+                    )
+
+            elif tip == "İZLE":
+                print(f"[Decisions] İZLE: {portfoy} {sembol} — {neden}")
+
+        except Exception as exc:
+            print(f"[Decisions] {tip} {sembol} hata: {exc}")
+
+    return aksiyonlar
