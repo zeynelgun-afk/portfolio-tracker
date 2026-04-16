@@ -421,5 +421,83 @@
     "vix": 17.75,
     "piyasa_mod": "risk-neutral"
   },
-  "timestamp": "2026-04-15T16:18:30.852699+03:00"
+  "timestamp": "2026-04-15T16:18:30.852699+03:00",
+  "claude_kararlar": {
+    "tarih": "2026-04-17T01:04:40.053195+03:00",
+    "kararlar": [
+      {
+        "tip": "ÇIK",
+        "portfoy": "aggressive",
+        "sembol": "VRT",
+        "pct": 100,
+        "neden": "K-05: Earnings 22 Nisan, 2 iş günü kuralı. Yarın açılışta tam çıkış.",
+        "hedef_fiyat": 0.0,
+        "stop": 0.0,
+        "tutar": 0,
+        "aciliyet": "hemen",
+        "dondur_al": null
+      },
+      {
+        "tip": "İZLE",
+        "portfoy": "balanced",
+        "sembol": "DUK",
+        "pct": 0,
+        "neden": "Stop %1.7 uzak. Tetiklenirse K-06 gereği hemen çık.",
+        "hedef_fiyat": 0.0,
+        "stop": 0.0,
+        "tutar": 0,
+        "aciliyet": "hemen",
+        "dondur_al": null
+      },
+      {
+        "tip": "İZLE",
+        "portfoy": "dividend",
+        "sembol": "MO",
+        "pct": 0,
+        "neden": "Stop %1.4 uzak. Kritik seviye, açılışta takip.",
+        "hedef_fiyat": 0.0,
+        "stop": 0.0,
+        "tutar": 0,
+        "aciliyet": "hemen",
+        "dondur_al": null
+      },
+      {
+        "tip": "İZLE",
+        "portfoy": "dividend",
+        "sembol": "MRK",
+        "pct": 0,
+        "neden": "Stop %1.9 uzak. Pharma zayıflığı devam ederse tetiklenir.",
+        "hedef_fiyat": 0.0,
+        "stop": 0.0,
+        "tutar": 0,
+        "aciliyet": "hemen",
+        "dondur_al": null
+      },
+      {
+        "tip": "İZLE",
+        "portfoy": "aggressive",
+        "sembol": "COHR",
+        "pct": 0,
+        "neden": "Hedefe $2 kala. RSI 70+ gelirse K-11 trailing aktif.",
+        "hedef_fiyat": 330.0,
+        "stop": 0.0,
+        "tutar": 0,
+        "aciliyet": "bugün",
+        "dondur_al": null
+      },
+      {
+        "tip": "İZLE",
+        "portfoy": "dividend",
+        "sembol": "VZ",
+        "pct": 0,
+        "neden": "Hedef aşıldı +17.4%. RSI 70+ ise %25 kısmi satış değerlendir.",
+        "hedef_fiyat": 45.0,
+        "stop": 0.0,
+        "tutar": 0,
+        "aciliyet": "bugün",
+        "dondur_al": null
+      }
+    ],
+    "kaynak": "closing"
+  }
 }
