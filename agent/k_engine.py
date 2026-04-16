@@ -128,6 +128,10 @@ def k05_earnings_check(symbol: str) -> dict:
         return {"passed": True, "reason": "earnings verisi alınamadı"}
 
     for event in data:
+        # FMP earnings-calendar endpoint symbol filtresini görmezden geliyor
+        # — tüm şirketlerin takvimini döndürüyor. Manuel filtre zorunlu.
+        if event.get("symbol", "").upper() != symbol.upper():
+            continue
         e_date = event.get("date", "")
         try:
             d = datetime.strptime(e_date, "%Y-%m-%d")
@@ -149,7 +153,7 @@ def k05_earnings_check(symbol: str) -> dict:
 
 def k18_insider_check(symbol: str) -> dict:
     """Son 30 günde CEO/CFO/Direktör $5M+ satışı → NO-GO."""
-    data = _fmp("insider-trading/search", {"symbol": symbol, "limit": 30})
+    data = _fmp("insider-trading", {"symbol": symbol, "limit": 30})
     if not data:
         return {"passed": True, "reason": "insider veri yok"}
 
@@ -264,11 +268,28 @@ def k17_correlation_check(symbol: str, portfolio: str = "all") -> dict:
     if not sym_sector:
         return {"passed": True, "reason": "K-17: sektör bilgisi yok"}
 
-    same_sector = sum(1 for s in pf_symbols if s)
-    if same_sector >= 3:
-        return {"passed": True, "reason": f"K-17: sektör OK ({sym_sector})"}
+    # Aynı sektördeki pozisyon sayısını gerçekten say
+    same_sector_count = 0
+    for s in pf_symbols:
+        if not s:
+            continue
+        try:
+            s_info = _fmp("profile", {"symbol": s}) or []
+            s_item = s_info[0] if isinstance(s_info, list) and s_info else {}
+            s_sector = s_item.get("sector", "") if isinstance(s_item, dict) else ""
+            if s_sector and s_sector.lower() == sym_sector.lower():
+                same_sector_count += 1
+        except Exception:
+            continue
 
-    return {"passed": True, "reason": f"K-17: korelasyon temiz ({sym_sector})"}
+    # Aynı sektörden 2+ pozisyon varsa uyar, 3+ ise reddet
+    if same_sector_count >= 3:
+        return {
+            "passed": False,
+            "reason": f"K-17: {sym_sector} sektöründe {same_sector_count} pozisyon var — yoğunlaşma riski"
+        }
+
+    return {"passed": True, "reason": f"K-17: korelasyon temiz ({sym_sector}, aynı sektör: {same_sector_count})"}
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -432,7 +453,7 @@ def run_exit_checks(
         return {"action": "EXIT_NOW", "reason": f"K-09: stop %{stop_dist:.1f} yakın — çık"}
 
     # K-11: Kısmi kâr alma
-    if rsi >= 80 and pnl_pct >= 10:
+    if rsi >= 80 and pnl_pct >= 15:  # K-11: orchestrator ile tutarlı eşik
         _log.uyari(
             f"K-11 KISMİ KAR ALMA: {symbol}",
             f"RSI: {rsi:.0f} | P&L: %{pnl_pct:.1f}\n%25 satış önerildi",

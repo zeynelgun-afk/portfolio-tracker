@@ -29,7 +29,8 @@
       "stop_faz": 1,
       "zirve_fiyat": 26.475,
       "stop_mesafe_pct": 3.34,
-      "durum": "✅ Normal"
+      "durum": "✅ Normal",
+      "hedef_fiyat": 27.19
     },
     {
       "sembol": "VZ",
@@ -53,7 +54,8 @@
       "stop_faz": 3,
       "zirve_fiyat": 46.04,
       "stop_mesafe_pct": 2.0,
-      "durum": "⚠️ Stop yakın (2.0%)"
+      "durum": "⚠️ Stop yakın (2.0%)",
+      "hedef_fiyat": 44.61
     },
     {
       "sembol": "MO",
@@ -77,7 +79,8 @@
       "stop_faz": 3,
       "zirve_fiyat": 67.38,
       "stop_mesafe_pct": 0.64,
-      "durum": "⚠️ Stop yakın (0.6%)"
+      "durum": "⚠️ Stop yakın (0.6%)",
+      "hedef_fiyat": 64.19
     },
     {
       "sembol": "MRK",
@@ -101,7 +104,8 @@
       "stop_faz": 1,
       "zirve_fiyat": 121.42,
       "stop_mesafe_pct": 3.92,
-      "durum": "✅ Normal"
+      "durum": "✅ Normal",
+      "hedef_fiyat": 134.4
     },
     {
       "sembol": "OKE",

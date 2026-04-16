@@ -273,8 +273,25 @@ def collect_context(mode: str) -> dict:
 # ── Session State Yardımcısı ───────────────────────────────────────────────────
 
 def _update_session_state(key: str, value) -> None:
-    """data/session_state.json'ı günceller — FAZ handoff için."""
+    """data/session_state.json'ı günceller — FAZ handoff için. File lock ile race condition önlenir."""
+    import fcntl
     state_path = REPO_ROOT / "data" / "session_state.json"
+    lock_path  = state_path.with_suffix(".lock")
+    try:
+        with open(lock_path, "w") as lf:
+            fcntl.flock(lf, fcntl.LOCK_EX | fcntl.LOCK_NB)
+            try:
+                state = json.load(open(state_path)) if state_path.exists() else {}
+            except Exception:
+                state = {}
+            state[key]         = value
+            state["timestamp"] = datetime.now(TR_TZ).isoformat()
+            with open(state_path, "w") as f:
+                json.dump(state, f, ensure_ascii=False, indent=2)
+            fcntl.flock(lf, fcntl.LOCK_UN)
+        return
+    except (IOError, OSError):
+        pass  # Lock alınamadı — fallback: lock'suz yaz (en kötü senaryo)
     try:
         state = json.load(open(state_path)) if state_path.exists() else {}
     except Exception:
@@ -948,12 +965,11 @@ def run_monitor(ctx: dict):
                 _ss2 = _json3.load(open(_ss_path2))
                 _ck  = _ss2.get("claude_kararlar", {})
                 if _ck.get("kararlar"):
-                    _bugun_str = datetime.now(TR_TZ).strftime("%Y-%m-%d")
+                    _bugun_str   = datetime.now(TR_TZ).strftime("%Y-%m-%d")
+                    _dun_str     = (datetime.now(TR_TZ).date() - __import__("datetime").timedelta(days=1)).strftime("%Y-%m-%d")
                     _karar_tarih = _ck.get("tarih", "")[:10]
-                    # Bugün veya dün üretilmiş kararları execute et (bir kez)
-                    if _karar_tarih >= _bugun_str or _karar_tarih == (
-                        datetime.now(TR_TZ).date().__str__()
-                    ):
+                    # Bugün veya dün kapanış kararlarını bir kez execute et
+                    if _karar_tarih in (_bugun_str, _dun_str):
                         if not _ck.get("executed"):
                             print(f"[Monitor] {len(_ck['kararlar'])} Claude kararı execute ediliyor...")
                             karar_aks = _execute_claude_decisions(_ck["kararlar"], market)
@@ -979,27 +995,32 @@ def run_monitor(ctx: dict):
         faz3_alerts = _run_faz3_checks(market)
         uyarilar.extend(faz3_alerts)
 
-    # ── 3. PORTFÖY STOP KONTROL ───────────────────────────────────────────────
+    # ── 3. PORTFÖY STOP KONTROL (canlı fiyat + gerçek satış) ─────────────────
+    # Not: _check_portfolio_exits() da stop kontrolü yapıyor (canlı market dict ile).
+    # Bu blok sadece monitor context'teki pozisyon verisinden YAKINI uyarır.
+    # Gerçek K-06 satışı _check_portfolio_exits() içinde market dict ile yapılıyor.
     for pf_name, pf_data in portfolios.items():
         for pos in pf_data.get("pozisyonlar", []):
             symbol    = pos.get("sembol", "?")
             stop      = pos.get("stop_loss")
-            cur_price = pos.get("guncel_fiyat") or pos.get("son_fiyat")
+            # Canlı fiyatı market dict'ten al, yoksa dosyadakine bak
+            live_q    = market.get(symbol, {})
+            cur_price = float(live_q.get("price") or 0) or float(pos.get("guncel_fiyat") or 0)
 
             if not stop or not cur_price:
                 continue
 
             try:
                 stop      = float(stop)
-                cur_price = float(cur_price)
                 pct       = (cur_price - stop) / stop * 100
 
                 if cur_price <= stop:
-                    # STOP TETİKLENDİ
+                    # _check_portfolio_exits() canlı market dict ile bu satışı yapıyor.
+                    # Burada sadece anlık uyarı loglanır — çift satış önlenir.
                     uyarilar.append(
                         f"🔴 *STOP TETİKLENDİ* [{pf_name.upper()}]\n"
                         f"{symbol}: ${cur_price:.2f} ≤ Stop ${stop:.2f}\n"
-                        f"→ SATIN — K-07 gereği"
+                        f"K-06 çıkışı _check_portfolio_exits tarafından işleniyor"
                     )
                 elif pct <= 2.0:
                     uyarilar.append(
@@ -1228,7 +1249,8 @@ def _execute_portfolio_opportunities(faz: str, market: dict) -> list:
             vix = state.get("buy_list", {}).get("vix", 20) if state else 20
 
         if run_entry_checks:
-            k_res = run_entry_checks(sym, vix=vix, base_size=5000)
+            _sector_p = tema if tema else ""
+            k_res = run_entry_checks(sym, vix=vix, sector=_sector_p, base_size=5000)
             if not k_res["go"]:
                 print(f"[Execution] {sym} K-engine veto: {k_res['fail_reason']}")
                 continue

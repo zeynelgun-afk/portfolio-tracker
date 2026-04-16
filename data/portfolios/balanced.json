@@ -32,7 +32,8 @@
       "stop_faz": 1,
       "zirve_fiyat": 67.38,
       "stop_mesafe_pct": 2.14,
-      "durum": "⚠️ Stop yakın (2.1%)"
+      "durum": "⚠️ Stop yakın (2.1%)",
+      "hedef_fiyat": 77.56
     },
     {
       "sembol": "DUK",

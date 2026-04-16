@@ -179,7 +179,9 @@ def find_candidates(
             # K-engine kontrolü
             try:
                 from k_engine import run_entry_checks
-                k_res = run_entry_checks(sym, vix=vix, base_size=5000)
+                # tema_adi'nı sector proxy olarak geç (K-13 VIX matrisi için)
+                _sector_proxy = tema_adi.replace("_", " ").title()
+                k_res = run_entry_checks(sym, vix=vix, sector=_sector_proxy, base_size=5000)
                 if not k_res["go"]:
                     print(f"  ❌ {sym}: {k_res['fail_reason']}")
                     continue
