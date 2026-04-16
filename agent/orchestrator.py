@@ -415,10 +415,13 @@ def run_morning(ctx: dict):
     genome_ctx = _load_genome_context()
 
     # Tarih/gün bilgisini açıkça inject et
+    # Kapanış gece yarısından sonra çalışır (UTC 21:30 = TR 00:30) — seans günü = önceki gün
     _now_tr  = datetime.now(TR_TZ)
+    from datetime import timedelta as _td
+    _seans_gun = _now_tr - _td(days=1) if _now_tr.hour < 6 else _now_tr
     _gunler  = ["Pazartesi","Salı","Çarşamba","Perşembe","Cuma","Cumartesi","Pazar"]
-    _bugun_tarih = _now_tr.strftime("%d %B %Y")
-    _bugun_gun   = _gunler[_now_tr.weekday()]
+    _bugun_tarih = _seans_gun.strftime("%d %B %Y")
+    _bugun_gun   = _gunler[_seans_gun.weekday()]
     _bugun_saat  = _now_tr.strftime("%H:%M")
     _piyasa_durumu = (
         "KAPALI (hafta sonu)" if _now_tr.weekday() >= 5
@@ -524,10 +527,13 @@ def run_closing(ctx: dict):
     genome_ctx = _load_genome_context()
 
     # Tarih/gün bilgisini açıkça inject et
+    # Kapanış gece yarısından sonra çalışır (UTC 21:30 = TR 00:30) — seans günü = önceki gün
     _now_tr  = datetime.now(TR_TZ)
+    from datetime import timedelta as _td
+    _seans_gun = _now_tr - _td(days=1) if _now_tr.hour < 6 else _now_tr
     _gunler  = ["Pazartesi","Salı","Çarşamba","Perşembe","Cuma","Cumartesi","Pazar"]
-    _bugun_tarih = _now_tr.strftime("%d %B %Y")
-    _bugun_gun   = _gunler[_now_tr.weekday()]
+    _bugun_tarih = _seans_gun.strftime("%d %B %Y")
+    _bugun_gun   = _gunler[_seans_gun.weekday()]
     _bugun_saat  = _now_tr.strftime("%H:%M")
     _piyasa_durumu = (
         "KAPALI (hafta sonu)" if _now_tr.weekday() >= 5
@@ -1356,7 +1362,14 @@ def _save_report(content: str, rapor_tipi: str):
     import subprocess
     from pathlib import Path
     
-    tarih = datetime.now(TR_TZ).strftime("%Y-%m-%d")
+    _simdi = datetime.now(TR_TZ)
+    # Kapanış raporu gece yarısından sonra çalışır (UTC 21:30 = TR 00:30)
+    # Bu durumda rapor önceki güne ait, bir gün geri al
+    if rapor_tipi == "KAPANIS" and _simdi.hour < 6:
+        from datetime import timedelta
+        tarih = (_simdi - timedelta(days=1)).strftime("%Y-%m-%d")
+    else:
+        tarih = _simdi.strftime("%Y-%m-%d")
     dosya = REPO_ROOT / "reports" / "daily" / f"DAILY_{rapor_tipi}_{tarih}.md"
     dosya.parent.mkdir(parents=True, exist_ok=True)
     
