@@ -1,63 +1,63 @@
 {
   "rejim": {
-    "aktif_rejim": "jeopolitik_kriz",
-    "skor": 1,
-    "guven": "DÜŞÜK",
+    "aktif_rejim": "ai_boom",
+    "skor": 2,
+    "guven": "ORTA",
     "tum_skorlar": {
       "jeopolitik_kriz": 1,
-      "ai_boom": 1,
+      "ai_boom": 2,
       "faiz_dusus": 0,
       "tarife_gerilimi": 0,
       "risk_on_genel": 0,
       "risk_off": 0
     },
-    "growth_aksiyon": "Savunma (ITA, LMT, RTX) + Enerji (XLE, CVX) ağırlığını artır. AI tezini koru ama yeni giriş yapma.",
-    "tespit_zamani": "2026-04-16T21:03:21.451996+03:00"
+    "growth_aksiyon": "Mevcut AI pozisyonlar (COHR, VRT, ANET, MU, CAMT) tutulmaya devam. Yeni AI fırsatları ara.",
+    "tespit_zamani": "2026-04-16T22:42:07.963186+03:00"
   },
   "sektor_data": {
     "XLE": {
-      "price": 56.57,
-      "gunluk_chg": 1.45
+      "price": 56.58,
+      "gunluk_chg": 1.47
     },
     "XLK": {
-      "price": 151.53,
-      "gunluk_chg": 0.82
+      "price": 151.905,
+      "gunluk_chg": 1.07
     },
     "XLI": {
-      "price": 170.26,
-      "gunluk_chg": -0.54
+      "price": 170.37,
+      "gunluk_chg": -0.47
     },
     "XLF": {
       "price": 52.105,
       "gunluk_chg": -0.12
     },
     "XLV": {
-      "price": 146.59,
-      "gunluk_chg": -0.8
+      "price": 146.6,
+      "gunluk_chg": -0.79
     },
     "XLU": {
-      "price": 46.045,
-      "gunluk_chg": 0.05
+      "price": 46.215,
+      "gunluk_chg": 0.42
     },
     "XLP": {
-      "price": 81.325,
-      "gunluk_chg": 0.33
+      "price": 81.43,
+      "gunluk_chg": 0.46
     },
     "XLY": {
-      "price": 117.68,
-      "gunluk_chg": -0.42
+      "price": 117.6197,
+      "gunluk_chg": -0.47
     },
     "XLB": {
-      "price": 51.635,
-      "gunluk_chg": 0.5
+      "price": 51.7,
+      "gunluk_chg": 0.62
     },
     "GLD": {
-      "price": 439.995,
-      "gunluk_chg": -0.11
+      "price": 440.41,
+      "gunluk_chg": -0.01
     },
     "ITA": {
-      "price": 229.4,
-      "gunluk_chg": -1.97
+      "price": 229.42,
+      "gunluk_chg": -1.96
     }
   }
 }
