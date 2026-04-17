@@ -1,50 +1,90 @@
 {
-  "tarih": "2026-04-16T08:08:54.895056",
+  "tarih": "2026-04-17T08:09:48.222123",
   "toplam_taranan": 37,
-  "giris_sayisi": 4,
+  "giris_sayisi": 8,
   "giris_sinyalleri": [
+    "CAT",
+    "GEV",
+    "KEY",
     "PYPL",
     "CCJ",
-    "BWXT",
-    "DNN"
+    "OKLO",
+    "UEC",
+    "VST"
   ],
   "detaylar": [
     {
-      "sembol": "DNN",
-      "fiyat": 3.88,
-      "stop": 3.7,
-      "stop_pct": 4.6,
-      "hedef": 4.33,
-      "rsi": 62,
-      "adet": 1388
-    },
-    {
       "sembol": "PYPL",
-      "fiyat": 49.57,
-      "stop": 46.54,
-      "stop_pct": 6.1,
-      "hedef": 57.15,
+      "fiyat": 49.81,
+      "stop": 46.64,
+      "stop_pct": 6.4,
+      "hedef": 57.74,
       "rsi": 70,
-      "adet": 82
+      "adet": 78
     },
     {
-      "sembol": "CCJ",
-      "fiyat": 119.11,
-      "stop": 111.2,
-      "stop_pct": 6.6,
-      "hedef": 138.88,
-      "rsi": 67,
+      "sembol": "UEC",
+      "fiyat": 15.16,
+      "stop": 13.62,
+      "stop_pct": 10.2,
+      "hedef": 19.01,
+      "rsi": 71,
+      "adet": 162
+    },
+    {
+      "sembol": "VST",
+      "fiyat": 165.53,
+      "stop": 157.67,
+      "stop_pct": 4.7,
+      "hedef": 185.18,
+      "rsi": 65,
       "adet": 31
     },
     {
-      "sembol": "BWXT",
-      "fiyat": 238.42,
-      "stop": 214.62,
-      "stop_pct": 10.0,
-      "hedef": 297.92,
-      "rsi": 60,
-      "adet": 10
+      "sembol": "CCJ",
+      "fiyat": 120.27,
+      "stop": 111.43,
+      "stop_pct": 7.4,
+      "hedef": 142.37,
+      "rsi": 80,
+      "adet": 28
+    },
+    {
+      "sembol": "OKLO",
+      "fiyat": 64.21,
+      "stop": 56.82,
+      "stop_pct": 11.5,
+      "hedef": 82.68,
+      "rsi": 67,
+      "adet": 33
+    },
+    {
+      "sembol": "CAT",
+      "fiyat": 772.66,
+      "stop": 731.56,
+      "stop_pct": 5.3,
+      "hedef": 875.41,
+      "rsi": 66,
+      "adet": 6
+    },
+    {
+      "sembol": "GEV",
+      "fiyat": 978.32,
+      "stop": 905.07,
+      "stop_pct": 7.5,
+      "hedef": 1161.45,
+      "rsi": 72,
+      "adet": 3
+    },
+    {
+      "sembol": "KEY",
+      "fiyat": 21.67,
+      "stop": 20.41,
+      "stop_pct": 5.8,
+      "hedef": 24.82,
+      "rsi": 76,
+      "adet": 198
     }
   ],
-  "ham_cikti": "\n[Kapasite] 5/8 pozisyon aktif — 3 boş slot\n\n[SwingEntry] 37 hisse taranıyor...\n  [ 1/37] CAT... —\n  [ 2/37] WDC... —\n  [ 3/37] KLAC... —\n  [ 4/37] AMAT... —\n  [ 5/37] MRK... —\n  [ 6/37] UPS... —\n  [ 7/37] DUK... —\n  [ 8/37] NEE... —\n  [ 9/37] GEV... —\n  [10/37] ATMU... —\n  [11/37] MU... —\n  [12/37] LMT... —\n  [13/37] VRT... —\n  [14/37] ANET... —\n  [15/37] KMB... —\n  [16/37] OKE... —\n  [17/37] LLY... —\n  [18/37] REGN... —\n  [19/37] RPRX... —\n  [20/37] ABBV... —\n  [21/37] KEY... —\n  [22/37] AR... —\n  [23/37] TFC... —\n  [24/37] LAUR... —\n  [25/37] PYPL... ✅ GİRİŞ ✅ (tenkan_bounce)\n  [26/37] LRCX... —\n  [27/37] CCJ... ✅ GİRİŞ ✅ (tenkan_bounce)\n  [28/37] OKLO... —\n  [29/37] NNE... —\n  [30/37] UEC... —\n  [31/37] VST... —\n  [32/37] BWXT... ✅ GİRİŞ ✅ (tenkan_bounce)\n  [33/37] LEU... —\n  [34/37] DNN... ✅ GİRİŞ ✅ (sma50_bounce)\n  [35/37] ALAB... —\n  [36/37] PLAB... —\n  [37/37] COHU... —\n\n[SwingEntry] Sonuç: 4/37 giriş sinyali\n\n======================================================================\nGİRİŞ SİNYALLERİ (4 hisse)\n======================================================================\nSYM      Fiyat    Stop  Stop%   Hedef  RSI Sinyal\n----------------------------------------------------------------------\nDNN    $   3.88 $   3.70   4.6% $   4.33   62 tenkan_bounce, sma50_bounce, kijun_bounce_v2\n       Adet: 1388 | ATR: $0.23 | GİRİŞ ✅ (sma50_bounce)\n\nPYPL   $  49.57 $  46.54   6.1% $  57.15   70 tenkan_bounce, kijun_bounce_v2\n       Adet: 82 | ATR: $1.46 | GİRİŞ ✅ (tenkan_bounce)\n\nCCJ    $ 119.11 $ 111.20   6.6% $ 138.88   67 tenkan_bounce, kijun_bounce_v2\n       Adet: 31 | ATR: $5.17 | GİRİŞ ✅ (tenkan_bounce)\n\nBWXT   $ 238.42 $ 214.62  10.0% $ 297.92   60 tenkan_bounce\n       Adet: 10 | ATR: $9.93 | GİRİŞ ✅ (tenkan_bounce)\n\n"
+  "ham_cikti": "\n[Kapasite] 5/8 pozisyon aktif — 3 boş slot\n\n[SwingEntry] 37 hisse taranıyor...\n  [ 1/37] CAT... ✅ GİRİŞ ✅ (tenkan_bounce)\n  [ 2/37] WDC... —\n  [ 3/37] KLAC... —\n  [ 4/37] AMAT... —\n  [ 5/37] MRK... —\n  [ 6/37] UPS... —\n  [ 7/37] DUK... —\n  [ 8/37] NEE... —\n  [ 9/37] GEV... ✅ GİRİŞ ✅ (nr7_sikisma)\n  [10/37] ATMU... —\n  [11/37] MU... —\n  [12/37] LMT... —\n  [13/37] VRT... —\n  [14/37] ANET... —\n  [15/37] KMB... —\n  [16/37] OKE... —\n  [17/37] LLY... —\n  [18/37] REGN... —\n  [19/37] RPRX... —\n  [20/37] ABBV... —\n  [21/37] KEY... ✅ GİRİŞ ✅ (tenkan_bounce)\n  [22/37] AR... —\n  [23/37] TFC... —\n  [24/37] LAUR... —\n  [25/37] PYPL... ✅ GİRİŞ ✅ (tenkan_bounce)\n  [26/37] LRCX... —\n  [27/37] CCJ... ✅ GİRİŞ ✅ (tenkan_bounce)\n  [28/37] OKLO... ✅ GİRİŞ ✅ (tenkan_bounce)\n  [29/37] NNE... —\n  [30/37] UEC... ✅ GİRİŞ ✅ (tenkan_bounce)\n  [31/37] VST... ✅ GİRİŞ ✅ (sma50_bounce)\n  [32/37] BWXT... —\n  [33/37] LEU... —\n  [34/37] DNN... —\n  [35/37] ALAB... —\n  [36/37] PLAB... —\n  [37/37] COHU... —\n\n[SwingEntry] Sonuç: 8/37 giriş sinyali\n\n======================================================================\nGİRİŞ SİNYALLERİ (8 hisse)\n======================================================================\nSYM      Fiyat    Stop  Stop%   Hedef  RSI Sinyal\n----------------------------------------------------------------------\nPYPL   $  49.81 $  46.64   6.4% $  57.74   70 tenkan_bounce, sma50_bounce, kijun_bounce_v2\n       Adet: 78 | ATR: $1.46 | GİRİŞ ✅ (tenkan_bounce)\n\nUEC    $  15.16 $  13.62  10.2% $  19.01   71 tenkan_bounce, kijun_bounce_v2, nr7_sikisma\n       Adet: 162 | ATR: $0.89 | GİRİŞ ✅ (tenkan_bounce)\n\nVST    $ 165.53 $ 157.67   4.7% $ 185.18   65 tenkan_bounce, sma50_bounce, kijun_bounce_v2\n       Adet: 31 | ATR: $6.76 | GİRİŞ ✅ (sma50_bounce)\n\nCCJ    $ 120.27 $ 111.43   7.4% $ 142.37   80 tenkan_bounce, kijun_bounce_v2\n       Adet: 28 | ATR: $5.09 | GİRİŞ ✅ (tenkan_bounce)\n\nOKLO   $  64.21 $  56.82  11.5% $  82.68   67 tenkan_bounce, kijun_bounce_v2\n       Adet: 33 | ATR: $4.93 | GİRİŞ ✅ (tenkan_bounce)\n\nCAT    $ 772.66 $ 731.56   5.3% $ 875.41   66 tenkan_bounce\n       Adet: 6 | ATR: $25.94 | GİRİŞ ✅ (tenkan_bounce)\n\nGEV    $ 978.32 $ 905.07   7.5% $1161.45   72 nr7_sikisma\n       Adet: 3 | ATR: $36.51 | GİRİŞ ✅ (nr7_sikisma)\n\nKEY    $  21.67 $  20.41   5.8% $  24.82   76 tenkan_bounce\n       Adet: 198 | ATR: $0.49 | GİRİŞ ✅ (tenkan_bounce)\n\n"
 }
