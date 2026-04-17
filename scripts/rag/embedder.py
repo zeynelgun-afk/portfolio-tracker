@@ -38,10 +38,13 @@ except ImportError:
     voyageai = None
     _voyage_available = False
 
-# Tercih sırasıyla modeller (ilki yoksa sonrakiler dene)
-_MODEL_FALLBACK = ["voyage-3", "voyage-3-lite", "voyage-2"]
+# voyage-3-lite TEK model olarak kullanılıyor:
+# - 512 boyut (ChromaDB koleksiyonu buna göre oluşur)
+# - voyage-2 (1024) fallback olsaydı boyut mismatch olurdu
+# - Overloaded olursa retry/backoff yeterli
+_MODEL_FALLBACK = ["voyage-3-lite"]
 _BATCH_SIZE = 128  # Voyage API sınırı
-_MAX_RETRIES = 3
+_MAX_RETRIES = 5  # Fallback yok, retry sayısını artır
 _RETRY_BACKOFF = 2.0
 
 # Client lazy init

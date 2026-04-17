@@ -48,6 +48,14 @@ jobs:
         with:
           python-version: '3.11'
 
+      - name: ChromaDB cache
+        uses: actions/cache@v4
+        with:
+          path: data/rag/chroma
+          key: chroma-${{ hashFiles('logs/events.jsonl') }}
+          restore-keys: |
+            chroma-
+
       - name: Bagimliliklar
         run: pip install anthropic requests pytz beautifulsoup4 voyageai chromadb
 
@@ -75,6 +83,13 @@ jobs:
               echo "mode=monitor" >> $GITHUB_OUTPUT
             fi
           fi
+
+      - name: RAG index guncelle
+        run: |
+          python scripts/rag/indexer.py 2>&1 | tail -20 || echo "RAG index atlandi (toleransli hata)"
+        env:
+          VOYAGE_API_KEY: ${{ secrets.VOYAGE_API_KEY }}
+        continue-on-error: true
 
       - name: Agent calistir
         run: python agent/orchestrator.py

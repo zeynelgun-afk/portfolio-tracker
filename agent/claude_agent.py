@@ -4,6 +4,7 @@ Finzora Agent — Claude Karar Motoru
 """
 
 import os
+import sys
 import json
 import re
 import time
@@ -17,10 +18,53 @@ except ImportError:
     log_claude_call = lambda *a, **kw: None
     log_decision = lambda *a, **kw: None
 
+# RAG retrieval (opsiyonel — eksikse RAG'sız çalış)
+_RAG_AVAILABLE = False
+try:
+    _rag_dir = Path(__file__).resolve().parent.parent / "scripts" / "rag"
+    if str(_rag_dir) not in sys.path:
+        sys.path.insert(0, str(_rag_dir))
+    from retriever import retrieve as _rag_retrieve, format_context_for_claude as _rag_format
+    _RAG_AVAILABLE = True
+except Exception as _rag_err:
+    _rag_retrieve = None
+    _rag_format = None
+
 ANTHROPIC_KEY = os.environ.get("ANTHROPIC_API_KEY", "")
 REPO_ROOT = Path(__file__).parent.parent
 
 CLAUDE_MODEL = "claude-opus-4-6"
+
+# Mode bazlı varsayılan RAG sorguları — her Claude çağrısı öncesi retrieval için
+DEFAULT_RAG_QUERIES = {
+    "morning": "portföy pozisyon durumu stop seviyesi açılış öncesi karar",
+    "closing": "gün sonu trade sonuç kapanış performans ders",
+    "monitor": "aktif pozisyon stop yakınlık fırsat izleme",
+    "weekly": "sektör rotasyon tema performans haftalık değerlendirme pattern",
+}
+
+
+def _build_rag_context(mode: str, user_prompt: str, top_k: int = 5) -> str:
+    """
+    Mode + user_prompt'a göre RAG'dan ilgili chunk'ları çek.
+    Hata olursa boş string döner (Claude RAG'sız devam eder).
+    """
+    if not _RAG_AVAILABLE or _rag_retrieve is None:
+        return ""
+
+    try:
+        # Sorgu: mode default + user_prompt'un ilk kısmı (anahtar kelime kaynağı)
+        base = DEFAULT_RAG_QUERIES.get(mode, "")
+        # User prompt'un ilk 400 karakteri → sembol/tarih/sektör sinyalleri yakalar
+        query = f"{base} {user_prompt[:400]}".strip()
+
+        hits = _rag_retrieve(query, top_k=top_k)
+        if not hits:
+            return ""
+        return _rag_format(hits, max_chars=3000)
+    except Exception as e:
+        print(f"[claude_agent] RAG context alınamadı (göz ardı edildi): {e}")
+        return ""
 
 SYSTEM_PROMPT = """Sen Finzora Agent'sın — Zeynel'in otonom portföy yönetim asistanısın.
 
@@ -85,13 +129,19 @@ def load_prompt_file(filename):
     return ""
 
 
-def get_claude_decision(user_prompt, mode="monitor", system_override=None):
+def get_claude_decision(user_prompt, mode="monitor", system_override=None, rag_enabled=True):
     """Metin yanıt döner (eski API — geriye uyumluluk)."""
     if not ANTHROPIC_KEY:
         return "⚠️ ANTHROPIC_API_KEY bulunamadı."
 
     max_tokens = {"morning": 4000, "closing": 4000, "monitor": 800, "weekly": 4000}.get(mode, 1000)
-    system = system_override or SYSTEM_PROMPT
+    base_system = system_override or SYSTEM_PROMPT
+
+    # RAG context inject (fail-safe: hata olursa RAG'sız devam)
+    rag_ctx = ""
+    if rag_enabled:
+        rag_ctx = _build_rag_context(mode, user_prompt, top_k=5)
+    system = base_system + ("\n\n" + rag_ctx if rag_ctx else "")
 
     _t0 = time.time()
     _in_tokens, _out_tokens = 0, 0
@@ -132,7 +182,7 @@ def get_claude_decision(user_prompt, mode="monitor", system_override=None):
         )
 
 
-def get_claude_decision_with_actions(user_prompt, mode="morning", system_override=None):
+def get_claude_decision_with_actions(user_prompt, mode="morning", system_override=None, rag_enabled=True):
     """
     Rapor metni + yapılandırılmış kararlar döner.
     Returns: (rapor_str, kararlar_list)
@@ -142,7 +192,13 @@ def get_claude_decision_with_actions(user_prompt, mode="morning", system_overrid
 
     enhanced = user_prompt + DECISION_SCHEMA
     max_tokens = {"morning": 5000, "closing": 5000, "monitor": 1500, "weekly": 5000}.get(mode, 2000)
-    system = system_override or SYSTEM_PROMPT
+    base_system = system_override or SYSTEM_PROMPT
+
+    # RAG context inject (fail-safe: hata olursa RAG'sız devam)
+    rag_ctx = ""
+    if rag_enabled:
+        rag_ctx = _build_rag_context(mode, user_prompt, top_k=5)
+    system = base_system + ("\n\n" + rag_ctx if rag_ctx else "")
 
     _t0 = time.time()
     _in_tokens, _out_tokens = 0, 0
