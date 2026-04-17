@@ -323,8 +323,11 @@ def k14_drawdown_check() -> dict:
 # K-19 XLP Filtresi
 # ─────────────────────────────────────────────────────────────────────────────
 
-def k19_xlp_check(symbol: str) -> dict:
-    """Consumer Defensive sektörü swing için yasak."""
+def k19_xlp_check(symbol: str, portfolio: str = "swing") -> dict:
+    """Consumer Defensive sektörü swing için yasak. Portföy alımlarına uygulanmaz."""
+    # Portföy alımlarında K-19 geçerli değil — sadece swing için
+    if portfolio in ("balanced", "dividend", "aggressive"):
+        return {"passed": True, "reason": f"K-19: portföy alımı ({portfolio}) — atlandı"}
     info = _fmp("profile", {"symbol": symbol}) or []
     if not info:
         return {"passed": True, "reason": "K-19: profil yok"}
@@ -363,8 +366,8 @@ def run_entry_checks(
         return {"go": False, "position_size": 0,
                 "checks": checks, "fail_reason": checks["K-14"]["reason"]}
 
-    # 2. K-19 XLP (ucuz kontrol)
-    checks["K-19"] = k19_xlp_check(symbol)
+    # 2. K-19 XLP (ucuz kontrol — sadece swing)
+    checks["K-19"] = k19_xlp_check(symbol, portfolio)
     if not checks["K-19"]["passed"]:
         return {"go": False, "position_size": 0,
                 "checks": checks, "fail_reason": checks["K-19"]["reason"]}

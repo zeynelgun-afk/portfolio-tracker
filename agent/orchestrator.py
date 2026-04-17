@@ -1250,7 +1250,7 @@ def _execute_portfolio_opportunities(faz: str, market: dict) -> list:
 
         if run_entry_checks:
             _sector_p = tema if tema else ""
-            k_res = run_entry_checks(sym, vix=vix, sector=_sector_p, base_size=5000)
+            k_res = run_entry_checks(sym, vix=vix, sector=_sector_p, base_size=5000, portfolio=portföy)
             if not k_res["go"]:
                 print(f"[Execution] {sym} K-engine veto: {k_res['fail_reason']}")
                 continue
@@ -1726,7 +1726,7 @@ def _execute_claude_decisions(kararlar: list, market: dict) -> list:
                         vix = float(vr.json()["chart"]["result"][0]["meta"]["regularMarketPrice"])
                     except Exception:
                         pass
-                    k_res = run_entry_checks(sembol, vix=vix, base_size=5000)
+                    k_res = run_entry_checks(sembol, vix=vix, base_size=5000, portfolio=portfoy)
                     if not k_res["go"]:
                         print(f"[Decisions] {sembol} K-engine veto: {k_res['fail_reason']}")
                         continue
@@ -1769,7 +1769,7 @@ def _execute_claude_decisions(kararlar: list, market: dict) -> list:
                                 vix = float(vr2.json()["chart"]["result"][0]["meta"]["regularMarketPrice"])
                             except Exception:
                                 pass
-                            k_res2 = run_entry_checks(dondur_al, vix=vix, base_size=5000)
+                            k_res2 = run_entry_checks(dondur_al, vix=vix, base_size=5000, portfolio=portfoy)
                             if not k_res2["go"]:
                                 print(f"[Decisions] DÖNDÜR alış {dondur_al} K-veto: {k_res2['fail_reason']}")
                                 aksiyonlar.append(
