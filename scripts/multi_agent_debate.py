@@ -13,6 +13,7 @@ Kullanım:
   python3 scripts/multi_agent_debate.py --symbol NVDA --json # JSON çıktı
 """
 
+import os
 import json
 import sys
 import argparse

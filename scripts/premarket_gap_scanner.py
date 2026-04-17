@@ -17,6 +17,7 @@ Veri kaynakları (ücretsiz):
   - Web araştırma: Haber teyidi
 """
 
+import os
 import requests
 import json
 from datetime import datetime, timedelta

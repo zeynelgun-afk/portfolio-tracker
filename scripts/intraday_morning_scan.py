@@ -6,6 +6,7 @@ Strateji: EMA21 filtreli, sektör pozitif, hacim patlamalı küçük/orta cap a�
 Kullanım: python3 intraday_morning_scan.py
 """
 
+import os
 import requests
 from datetime import datetime, timedelta
 import json

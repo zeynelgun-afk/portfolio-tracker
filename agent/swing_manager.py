@@ -9,6 +9,7 @@ Agent'ın swing kararlarını yürütür:
   4. Raporlama → Telegram'a günlük durum
 """
 
+import os
 import json
 import csv
 import requests

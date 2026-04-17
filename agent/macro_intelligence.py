@@ -12,6 +12,7 @@ Akış:
   4. Çıktı: tema_listesi + hisse_adayları → opportunity_finder'a gider
 """
 
+import os
 import json
 import requests
 import time

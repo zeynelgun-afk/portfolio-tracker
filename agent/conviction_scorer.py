@@ -13,6 +13,7 @@ Skor bileşenleri:
   Risk faktörü    (0-15): K-15b skoru + earnings yakınlık + korelasyon
 """
 
+import os
 import json
 import requests
 import time

@@ -20,6 +20,7 @@ Yeni giriş sinyalleri (araştırma bazlı):
 """
 
 # --- olay kaydı ---
+import os
 import sys as _sys
 _sys.path.insert(0, str(__import__('pathlib').Path(__file__).parent.parent / 'scripts'))
 try:

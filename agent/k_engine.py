@@ -11,6 +11,7 @@ Kullanım:
   result = run_entry_checks("AAPL", portfolio="aggressive", vix=21.5)
 """
 
+import os
 # --- olay kaydı ---
 import sys as _sys
 _sys.path.insert(0, str(__import__('pathlib').Path(__file__).parent.parent / 'scripts'))

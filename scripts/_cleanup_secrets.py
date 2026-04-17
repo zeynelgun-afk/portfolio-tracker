@@ -10,6 +10,7 @@ Yaptıkları:
 3. Değişen dosya sayısını raporlar.
 """
 
+import os
 import re
 from pathlib import Path
 

@@ -20,6 +20,7 @@ Kullanım:
   python3 scripts/portfoy_adil_deger.py --rapor            # MD dosyasına yaz
 """
 
+import os
 import sys, os, json, math, argparse, subprocess
 from datetime import datetime
 

@@ -14,6 +14,7 @@ Her aday için:
 Çıktı: data/buy_candidates.json (her sabah yenilenir)
 """
 
+import os
 import json
 import requests
 import time

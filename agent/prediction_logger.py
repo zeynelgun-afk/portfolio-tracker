@@ -20,6 +20,7 @@ Skor sistemi:
   -2.0: Yön ve büyüklük yanlış (>%5 hareket, ters yön)
 """
 
+import os
 import json
 import requests
 from datetime import datetime, timedelta

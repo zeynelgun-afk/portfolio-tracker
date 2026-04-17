@@ -9,6 +9,7 @@ Kullanım:
   python scripts/finzora_stats.py --telegram       # Telegram'a gönder
 """
 
+import os
 import sys
 import argparse
 from pathlib import Path

@@ -6,6 +6,7 @@ Haber, makro takvim, earnings, insider verisi çeker.
 Claude'a tool_use yerine ham veri olarak gönderilir → ucuz.
 """
 
+import os
 import requests
 import json
 from datetime import datetime, timedelta

@@ -14,6 +14,7 @@ Rejimler:
   - risk_off          : VIX yüksek, defansif liderlik
 """
 
+import os
 import requests
 import json
 from pathlib import Path

@@ -20,6 +20,7 @@ Kullanım:
   python3 scripts/adil_deger_calculator.py AMD --report --telegram
 """
 
+import os
 import requests, math, argparse, json, os, sys
 from datetime import datetime, timedelta
 

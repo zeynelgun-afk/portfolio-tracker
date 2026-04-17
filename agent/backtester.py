@@ -18,6 +18,7 @@ Test Edilebilir Parametreler:
   - VIX eşikleri (K-13)
 """
 
+import os
 import json
 import requests
 from datetime import datetime, timedelta

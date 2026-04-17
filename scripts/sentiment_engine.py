@@ -12,6 +12,7 @@ Kullanım:
   python3 scripts/sentiment_engine.py --twitter    # Twitter da dahil et
 """
 
+import os
 import json
 import re
 import argparse

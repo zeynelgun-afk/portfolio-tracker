@@ -12,6 +12,7 @@ Portföy risk metrikleri:
 Tüm hesaplamalar sadece okuma — veri dosyalarına yazmaz.
 """
 
+import os
 import json
 import requests
 from pathlib import Path
