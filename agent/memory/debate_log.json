@@ -191,6 +191,48 @@
         }
       },
       "karar_degisti_mi": false
+    },
+    {
+      "symbol": "MO",
+      "tarih": "2026-04-17T19:32:22.025388",
+      "ilk_karar": {
+        "karar": "ACIL_CIK",
+        "hedef_sembol": "MO",
+        "gerekce": "MO stop-loss seviyesine sadece %0.6 mesafede — $0.38'lik bir düşüşle tetiklenir. Risk-on ortamında defansif/tütün sektöründen para çıkışı belirgin; Sektör Analisti (ağırlık 1.53, en yüksek) defansif zayıflığını açıkça teyit ediyor ve MO'nun 'neredeyse kesin tetikleneceğini' belirtiyor. Risk Yöneticisi de MO'yu KRİTİK seviyede işaretlemiş. Pazartesi açılışında gap-down riski göz önüne alındığında, stop seviyesinin altında kapanma ihtimali çok yüksek. K-kuralları gereği stop tetiklenmesinde override yasak — beklemek ekstra kayıp riski yaratır. Piyasa açılışında market order ile çıkılmalı. Serbest kalan nakit, mevcut AI_BOOM rejimi doğrultusunda semicon/AI altyapı fırsatları için hazır tutulmalı. Ek not: NEE de %3.7 mesafede, utility baskısı devam ederse hafta içinde tetiklenebilir — yakın takipte kalmalı. VRT 22 Nisan earnings öncesi K-05 çıkış planı uygulanmalı.",
+        "uyari": "MO Pazartesi açılışta stop tetiklenme olasılığı çok yüksek. NEE ikinci risk — utility sektörü risk-on'da kan kaybediyor. VRT earnings 22 Nisan — K-05 gereği pozisyon planı hazır olmalı. Tech konsantrasyon riski portföyde yükseliyor, yeni alımlarda dikkat.",
+        "guven": "HIGH",
+        "analist_uzlasma": "YUKSEK",
+        "tahmin": {
+          "yon": "UP",
+          "buyukluk": "LOW",
+          "sembol": "SPY"
+        },
+        "_agent": "CIO_AGENT",
+        "_timestamp": "2026-04-17T19:31:27.561749"
+      },
+      "boğa": {
+        "_raw": "\n\n```json\n{\n  \"argümanlar\": [\n    \"MO zaten 17 Nisan'da $64.45'ten satıldı — bu tartışma geriye dönük. Pozisyon portföyde yok, dolayısıyla 'ACIL_CIK' kararı zaten uygulanmış durumda.\",\n    \"MO'nun tem",
+        "_parse_hata": true
+      },
+      "ayı": {
+        "_raw": "\n\n```json\n{\n  \"argümanlar\": [\n    \"MO zaten 17 Nisan'da $64.45'ten -%4.43 zararla satıldı — bu trade kayıtlarda mevcut. CIO'nun ACIL_CIK kararı zaten gerçekleşmiş bir işlemi tekrar ediyor olabilir, am",
+        "_parse_hata": true
+      },
+      "nihai": {
+        "nihai_karar": "BEKLE",
+        "kazan_taraf": "BAĞLANTI",
+        "karar_gerekce": "MO şu an portföyde görünmüyor — daha önce 17 Nisan'da -%4.43 K/Z ile satılmış. Zaten pozisyon yok, dolayısıyla ACIL_CIK uygulanacak bir şey kalmamış. Boğa ve ayı tarafları argüman sunmamış, tartışma boş kalmış.",
+        "boğa_haklı_çünkü": "Argüman sunulmadı — MO portföyde değil, dolayısıyla tartışma konusuz.",
+        "ayı_haklı_çünkü": "Argüman sunulmadı — ancak önceki -%4.43 K/Z ile satış kararı doğruydu, defansif tez çalışmadı.",
+        "göz_ardı_edilen": "MO zaten bugün satılmış (RAG kaydı 2026-04-17). Portföy tablosunda MO yok. İlk CIO kararı ACIL_CIK gereksizdi çünkü pozisyon mevcut değil. Sistem bu tutarsızlığı yakalamalıydı.",
+        "güven": "HIGH",
+        "tahmin": {
+          "yon": "NEUTRAL",
+          "buyukluk": "LOW",
+          "sembol": "SPY"
+        }
+      },
+      "karar_degisti_mi": true
     }
   ]
 }

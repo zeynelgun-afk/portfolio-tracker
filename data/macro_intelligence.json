@@ -1,6 +1,6 @@
 {
-  "tarih": "2026-04-15T16:18:07.261487+03:00",
-  "vix": 17.75,
+  "tarih": "2026-04-17T22:28:39.727661+03:00",
+  "vix": 17.8,
   "sektor_performans": {
     "Basic Materials": 0.0,
     "Communication Services": 0.0,
@@ -16,118 +16,130 @@
   },
   "dominant_temalar": [
     {
-      "tema_adi": "savunma_uzay",
-      "güç_skoru": 8,
-      "neden": "İran savaşı haberleri, piyasa complacency uyarısı ve jeopolitik gerilim devam ediyor. Fed faiz beklemede tutacak → savunma harcamaları korunur.",
-      "öncelikli_alt_dal": "savunma_müteahhitleri",
+      "tema_adi": "AI_altyapı",
+      "güç_skoru": 9,
+      "neden": "Nasdaq 1992'den beri en uzun kazanma serisine yönelirken, AI ve earnings temalı rekor haberler manşetlerde. BZAI(+51.7%) ve YXT(+49.2%) gibi AI-ilişkili hisseler günün en güçlüleri arasında. 'Peace, Earnings, and AI Lead Stocks to New Records' başlığı AI momentum'un devam ettiğini doğruluyor. VIX 17.8 ile risk-on ortamı AI altyapı harcamalarına olan iştahı destekliyor.",
+      "öncelikli_alt_dal": "güç_soğutma_ve_optik",
       "önerilen_hisseler": [
-        "LMT",
-        "RTX",
-        "NOC"
+        "VRT",
+        "ETN",
+        "ANET"
       ],
-      "portföy": "balanced",
+      "portföy": "aggressive",
       "aciliyet": "yüksek",
       "hisse_evreni": [
-        "GD",
+        "PWR",
+        "GNRC",
+        "FN",
+        "EQIX",
+        "CAMT",
+        "STX",
+        "LRCX",
+        "COHR",
+        "MU",
+        "VRT",
+        "AMAT",
+        "IREN",
+        "DLR",
+        "ANET",
+        "LITE",
+        "ONTO",
+        "AAOI",
+        "KLAC",
+        "ETN",
+        "WDC",
+        "HUBB",
+        "TER",
+        "ASML"
+      ]
+    },
+    {
+      "tema_adi": "savunma_uzay",
+      "güç_skoru": 7,
+      "neden": "İran savaşı ateşkes umutları piyasayı yükseltiyor ancak Fed Waller 'İran savaşı ve işgücü piyasası riskleri' diyerek belirsizliğin devam ettiğini vurguluyor. Yabancı liderler 'daha temkinli' yaklaşıyor — bu da barış sonrası savunma harcamalarının azalmayacağına, aksine NATO yeniden yapılanma döngüsünün başlayacağına işaret ediyor. Ateşkes = stok yenileme harcamaları. Kısa vadede dip alım fırsatı olabilir, uzun vadede harcama trendi sağlam.",
+      "öncelikli_alt_dal": "savunma_elektronik_uzay",
+      "önerilen_hisseler": [
+        "LHX",
+        "AXON",
+        "RKLB"
+      ],
+      "portföy": "aggressive",
+      "aciliyet": "orta",
+      "hisse_evreni": [
+        "LMT",
+        "RKLB",
         "ZS",
         "NOC",
         "CRWD",
         "RDW",
+        "KTOS",
         "PANW",
         "AJRD",
-        "LMT",
-        "RKLB",
-        "LHX",
-        "KTOS",
         "S",
-        "RTX"
+        "LHX",
+        "RTX",
+        "GD"
       ]
     },
     {
       "tema_adi": "finansal_döngüsel",
       "güç_skoru": 6,
-      "neden": "Fed faiz beklemede → spread korunur, import fiyatları beklenenden düşük → enflasyon baskısı hafif. Trump-Powell gerilimi kısa vadeli volatilite riski taşısa da bankalar için net faiz marjı olumlu.",
-      "öncelikli_alt_dal": "büyük_bankalar",
+      "neden": "Tarihi rally devam ederken earnings sezonu güçlü geliyor. Fed Waller faiz indirimi konusunda temkinli ama piyasa ateşkes + güçlü kazançlarla risk-on modunda. Finans sektörü bugün flat (%0.0) olması rağmen, 'stocks surging' ortamında hacim artışı ve kredi döngüsü canlanması finans hisselerine kısa vadeli katalizör sağlayabilir. Short squeeze adayları da mevcut (Barron's '14 to Sell Short' listesi kontra sinyal).",
+      "öncelikli_alt_dal": "fintech_ve_sermaye_piyasaları",
       "önerilen_hisseler": [
-        "JPM",
-        "GS",
-        "MS"
+        "HOOD",
+        "COIN",
+        "LPLA"
       ],
-      "portföy": "balanced",
+      "portföy": "aggressive",
       "aciliyet": "orta",
       "hisse_evreni": [
-        "V",
+        "JPM",
         "PYPL",
-        "AIG",
-        "AFRM",
+        "MET",
         "PRU",
-        "BAC",
-        "MS",
         "MA",
-        "GS",
-        "JPM",
+        "V",
+        "AFRM",
         "CB",
-        "MET"
-      ]
-    },
-    {
-      "tema_adi": "emtia_kaynak",
-      "güç_skoru": 5,
-      "neden": "Jeopolitik risk + enerji güvenliği endişesi altın ve petrol talebini destekliyor. Savaş ortamında emtia hedge işlevi görüyor.",
-      "öncelikli_alt_dal": "altın_madencileri",
-      "önerilen_hisseler": [
-        "NEM",
-        "GOLD",
-        "AEM"
-      ],
-      "portföy": "balanced",
-      "aciliyet": "orta",
-      "hisse_evreni": [
-        "AEM",
-        "HBM",
-        "FCX",
-        "USA",
-        "SCCO",
-        "MP",
-        "GOLD",
-        "NEM",
-        "NOVN",
-        "TECK",
-        "PAAS"
+        "MS",
+        "BAC",
+        "GS",
+        "AIG"
       ]
     }
   ],
   "kacınılacak": [
-    "Consumer Cyclical",
-    "Communication Services"
+    "Consumer Defensive",
+    "Healthcare"
   ],
-  "piyasa_modu": "risk-neutral",
-  "genel_yorum": "VIX 17.8 nötr seviyede ama İran savaşı + Trump-Powell gerilimi beklenmedik spike riski taşıyor. Piyasa complacent görünüyor — savunma ve emtia hedge mantıklı. Sektör performansları flat olduğundan tematik seçicilik önemli.",
+  "piyasa_modu": "risk-on",
+  "genel_yorum": "Piyasa üçlü katalizörle (İran ateşkes umutları + güçlü earnings + AI momentum) tarihi rally modunda. Nasdaq 1992'den beri en uzun kazanma serisine yöneliyor, VIX 17.8 ile kontrollü bir risk-on ortamı var. Ancak Barron's'un 'short sell' listesi ve Fed'in temkinli duruşu aşırı iyimserliğe karşı uyarı niteliğinde — pozisyon boyutlarında disiplin şart. [ETİKET: KESİN — VIX ve fiyat verileri; MUHTEMEL — rally devamı ve tema gücü; SPEKÜLATİF — ateşkes sonrası savunma harcama döngüsü]",
   "haberler": [
     {
-      "baslik": "Fed's Beth Hammack says she expects rates will 'remain on hold for a good while'",
-      "kaynak": "youtube.com",
-      "tarih": "2026-04-15 09:12"
+      "baslik": "Nasdaq heads toward its longest winning streak since 1992 as historic stock-market comeback continues",
+      "kaynak": "marketwatch.com",
+      "tarih": "2026-04-17 15:18"
     },
     {
-      "baslik": "U.S. Import Prices Rise Less Than Expected in March",
-      "kaynak": "wsj.com",
-      "tarih": "2026-04-15 09:10"
+      "baslik": "Stocks Are Surging. Here Are 14 to Sell Short.",
+      "kaynak": "barrons.com",
+      "tarih": "2026-04-17 15:01"
     },
     {
-      "baslik": "Is The Economy Better Off Today Than Before The War Started?",
-      "kaynak": "seekingalpha.com",
-      "tarih": "2026-04-15 09:03"
+      "baslik": "U.S. Stocks Surge on Hope Iran War Nearing End. Foreign Leaders Have a More Sober View.",
+      "kaynak": "barrons.com",
+      "tarih": "2026-04-17 14:57"
     },
     {
-      "baslik": "Market Becoming Complacent in U.S.-Iran War? Robert Conzo's Bull Case",
-      "kaynak": "youtube.com",
-      "tarih": "2026-04-15 09:01"
+      "baslik": "Peace, Earnings, and AI Lead Stocks to New Records",
+      "kaynak": "barrons.com",
+      "tarih": "2026-04-17 14:43"
     },
     {
-      "baslik": "Is The FTSE 100 Expensive After Its Recent Gains?",
-      "kaynak": "seekingalpha.com",
-      "tarih": "2026-04-15 09:00"
+      "baslik": "Stocks Hit Records on Iran Truce Hopes. Why the Rally May Have Further to Run.",
+      "kaynak": "barrons.com",
+      "tarih": "2026-04-17 14:40"
     }
   ]
 }

@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-04-17T19:23:10.591331",
+  "son_guncelleme": "2026-04-17T19:30:04.971999",
   "not": "SWING TRADE SADECE SİMÜLASYON - Sadece % kazanç/kayıp takibi (MAX: 8 pozisyon)",
   "aktif_pozisyonlar": [
     {
@@ -16,8 +16,8 @@
       "katalizor": "",
       "max_sure_gun": 15,
       "durum": "✅ Normal aralıkta",
-      "guncel_fiyat": 792.91,
-      "son_fiyat": 792.91,
+      "guncel_fiyat": 792.34,
+      "son_fiyat": 792.34,
       "zirve_fiyat": 800.83,
       "chandelier_stop": 720.9,
       "k11_aktif": false,
@@ -26,7 +26,7 @@
       "notlar": [
         "Tarih düzeltmesi: 11 Nisan Cumartesi piyasa kapalı — 10 Nisan Cuma kapanış fiyatına göre düzeltildi"
       ],
-      "pnl_pct": 0.28,
+      "pnl_pct": 0.21,
       "atr14": 25.88,
       "chandelier_guncelleme": "2026-04-14",
       "maliyet_baz": 790.66,
@@ -46,8 +46,8 @@
       "katalizor": "",
       "max_sure_gun": 15,
       "durum": "✅ Normal aralıkta",
-      "guncel_fiyat": 1779.03,
-      "son_fiyat": 1779.03,
+      "guncel_fiyat": 1778.83,
+      "son_fiyat": 1778.83,
       "zirve_fiyat": 1796.34,
       "chandelier_stop": 1589.79,
       "k11_aktif": false,
@@ -56,7 +56,7 @@
       "notlar": [
         "Tarih düzeltmesi: 11 Nisan Cumartesi piyasa kapalı — 10 Nisan Cuma kapanış fiyatına göre düzeltildi"
       ],
-      "pnl_pct": 2.4,
+      "pnl_pct": 2.39,
       "atr14": 68.85,
       "chandelier_guncelleme": "2026-04-14",
       "maliyet_baz": 1737.28,
@@ -76,8 +76,8 @@
       "katalizor": "",
       "max_sure_gun": 15,
       "durum": "✅ Normal aralıkta",
-      "guncel_fiyat": 392.71,
-      "son_fiyat": 392.71,
+      "guncel_fiyat": 392.82,
+      "son_fiyat": 392.82,
       "zirve_fiyat": 399.49,
       "chandelier_stop": 349.42,
       "k11_aktif": false,
@@ -86,7 +86,7 @@
       "notlar": [
         "Tarih düzeltmesi: 11 Nisan Cumartesi piyasa kapalı — 10 Nisan Cuma kapanış fiyatına göre düzeltildi"
       ],
-      "pnl_pct": -1.7,
+      "pnl_pct": -1.67,
       "atr14": 16.69,
       "chandelier_guncelleme": "2026-04-14",
       "maliyet_baz": 399.49,
@@ -106,8 +106,8 @@
       "katalizor": "",
       "max_sure_gun": 15,
       "durum": "✅ Normal aralıkta",
-      "guncel_fiyat": 1004.46,
-      "son_fiyat": 1004.46,
+      "guncel_fiyat": 1003.46,
+      "son_fiyat": 1003.46,
       "zirve_fiyat": 1005.18,
       "chandelier_stop": 893.55,
       "k11_aktif": false,
@@ -116,7 +116,7 @@
       "notlar": [
         "chandelier_stop düzeltildi: 678.39 → 893.55 (ATR14=37.94, zirve=1007.38)"
       ],
-      "pnl_pct": 0.45,
+      "pnl_pct": 0.35,
       "tutulan_gun": 2,
       "atr14": 37.94,
       "maliyet_baz": 1000.0
@@ -135,15 +135,15 @@
       "katalizor": "",
       "max_sure_gun": 15,
       "durum": "✅ Normal aralıkta",
-      "guncel_fiyat": 49.63,
-      "son_fiyat": 49.63,
-      "zirve_fiyat": 49.63,
-      "chandelier_stop": 44.74,
+      "guncel_fiyat": 49.67,
+      "son_fiyat": 49.67,
+      "zirve_fiyat": 49.67,
+      "chandelier_stop": 44.78,
       "k11_aktif": false,
       "k11_profit_lock": null,
       "son_guncelleme": "2026-04-17",
       "notlar": [],
-      "pnl_pct": 2.28,
+      "pnl_pct": 2.38,
       "tutulan_gun": 2,
       "maliyet_baz": 48.52
     }

@@ -2,77 +2,62 @@
   "macro": {
     "sinyal": "RISK_ON",
     "guven": "MEDIUM",
-    "ana_tema": "İran ateşkes iyimserliği ve düşen VIX ile risk iştahı artıyor, ancak hafta ortasındaki BoC kararı ve CPI verileri belirsizlik yaratabilir",
+    "ana_tema": "VIX 17.80 ile düşük volatilite ortamında SPY ve QQQ %1+ yükselişle risk iştahı devam ediyor; İran ateşkes iyimserliği ve tech liderliği piyasayı destekliyor",
     "beklentiler": [
-      "Fed'in mevcut faiz politikasını sürdürmesi bekleniyor, Kanada merkez bankası kararı (20 Nisan) öncü sinyal verebilir",
-      "VIX 17.77 seviyesinde ve düşüş trendinde (%3.21 gerileme) - klasik risk-on ortamı",
-      "CPI verisi (20 Nisan) enflasyonun %2.8'e gerilemesi beklentisiyle piyasayı destekleyebilir",
-      "Jeopolitik risk arka planda devam ediyor ancak İran ateşkes süreci piyasayı rahatlatıyor"
+      "22 Nisan GDP verisi beklentisi (QoQ +0.3% vs önceki -0.2%) pozitif sürpriz potansiyeli taşıyor, piyasa hafta başına kadar mevcut risk-on tonunu koruyabilir",
+      "Earnings sezonu yoğunlaşıyor — T (22 Nisan), VRT (22 Nisan), HIG (23 Nisan), NEE (23 Nisan) sonuçları sektörel volatilite yaratabilir",
+      "Fed faiz beklentilerinde değişiklik yok; düşük VIX ve güçlü tech performansı kısa vadede momentum korumasını destekliyor",
+      "Altın (GLD $445.94) yüksek seviyelerde konsolide — jeopolitik hedge talebi tam olarak çözülmedi, İran süreci belirsizlik taşıyor"
     ],
-    "risk_faktoru": "20 Nisan'daki CPI verisinin beklentilerin üzerinde gelmesi halinde Fed faiz beklentileri yeniden fiyatlanabilir ve risk-off tetiklenebilir",
+    "risk_faktoru": "Earnings yoğunluğu: VRT (K-05 gereği çıkış planlanmış), T, NEE ve HIG earnings sonuçları portföy volatilitesini artırabilir; ayrıca GDP verisi beklentinin altında gelirse risk-off dönüşü hızlı olabilir",
     "tahmin": {
       "yon": "UP",
-      "buyukluk": "MEDIUM",
+      "buyukluk": "LOW",
       "sembol": "SPY"
     },
     "_agent": "MACRO_AGENT",
-    "_timestamp": "2026-04-15T13:18:42.308702"
+    "_timestamp": "2026-04-17T19:30:20.678000"
   },
   "sector": {
-    "aktif_rejim": "risk_on",
-    "lider_sektor": "Teknoloji - XLK (AI/Yarı iletken odaklı)",
-    "zayif_sektor": "Tahvil/Defansif - TLT (faiz baskısı altında)",
-    "rotasyon_onerisi": "Defansif utility/telecom'dan teknoloji/yarı iletken sektörüne rotasyon devam ediyor. QQQ +1.82% ile SPY'ı outperform etti. VIX 17.77 düşük seviye risk iştahını destekliyor.",
+    "aktif_rejim": "ai_boom",
+    "lider_sektor": "Teknoloji / Yarı İletken - XLK, SMH. Portföyde COHR (+20.2%), ANET (+12.2%), MU (+9.8%), KLAC (+2.4%) gibi semicon/AI altyapı isimleri lider. QQQ +1.13% ile SPY'ı geçiyor. AI altyapı harcamaları teması devam ediyor (Linde helium/AI haberi, AppLovin AdTech/AI, Roku AI tailwind). VIX 17.80 risk-on ortamı destekliyor.",
+    "zayif_sektor": "Utilities / Defansif - XLU. NEE -2.5% P/L ile stop'a %3.7 mesafede (⚠️). Önceki analizde 'Utility sektörü baskı altında' notu var. DUK zaten çıkılmış. Risk-on ortamında defansif sektörlerden para çıkışı belirgin. MO (Tütün/Defansif) stop'a %0.6 mesafede — neredeyse kesin tetiklenecek.",
+    "rotasyon_onerisi": "Utilities/Defansif → Yarı İletken/AI Altyapı. NEE stop tetiklenme riski yüksek, MO neredeyse kesin çıkış. Serbest kalan nakit ile semicon temasına (KLAC, AMAT zaten swing'de) veya AI altyapı data center temasına (elektrik altyapı, soğutma) yönlendirilmeli. Ancak portföyde tech ağırlığı zaten yüksek — konsantrasyon riski gözetilmeli. Alternatif olarak sanayi/CAT tipi capex plays da değerlendirilebilir (XLI güçlü, CAT swing'de +0.3%).",
     "guven": "HIGH",
     "tahmin": {
       "yon": "UP",
       "buyukluk": "MEDIUM",
-      "sembol": "XLK"
+      "sembol": "SMH"
     },
     "_agent": "SECTOR_AGENT",
-    "_timestamp": "2026-04-15T13:18:47.521375"
+    "_timestamp": "2026-04-17T19:30:37.747787"
   },
   "signal": {
     "_agent": "SIGNAL_AGENT",
-    "_raw": "```json\n{\n  \"portfoy_sinyalleri\": [\n    {\n      \"sembol\": \"COHR\",\n      \"sinyal\": \"HOLD\",\n      \"rsi_yorumu\": \"normal\",\n      \"sma_durumu\": \"ustunde\",\n      \"aciklama\": \"Hedefe %5 uzaklıkta, momentum pozitif, stop %9.7 güvenli mesafede\"\n    },\n    {\n      \"sembol\": \"VRT\",\n      \"sinyal\": \"SELL\",\n   ",
+    "_raw": "```json\n{\n  \"portfoy_sinyalleri\": [\n    {\n      \"sembol\": \"COHR\",\n      \"sinyal\": \"HOLD\",\n      \"rsi_yorumu\": \"normal\",\n      \"sma_durumu\": \"ustunde\",\n      \"aciklama\": \"+%20.2 kârda, stop %16.8 uzakta, hedefe ($330) yakın ama momentum hâlâ sağlam — trailing stop ile tutulmaya devam.\"\n    },\n    {\n ",
     "_parse_hata": true,
     "guven": "LOW"
   },
   "risk": {
-    "risk_seviyesi": "MEDIUM",
-    "stop_yakini": [
-      "DUK - %2.7 uzakta (balanced)",
-      "MO - %2.5 uzakta (dividend)",
-      "VZ - %3.2 uzakta (dividend)",
-      "NEE - %3.4 uzakta (balanced)"
-    ],
-    "konsantrasyon_uyarisi": "Technology sektörü %67.3 ile kritik seviyede. Aggressive portföy neredeyse tamamen tech/AI odaklı (COHR, VRT, ANET, MU, CAMT). Korelasyon riski yüksek - tek bir sektör şoku tüm portföyü vurabilir.",
-    "senaryo_5pct_dusus": "Toplam $18,631 kayıp (-%5.9). Dividend portföyünde T, VZ ve MO pozisyonları stop tetikler. DUK ve NEE de risk altında. Aggressive portföy en fazla nominal kayıp yaşar (~$18K+).",
-    "onerileri": [
-      "DUK (%2.7) ve MO-dividend (%2.5) en yakın stoplar - yarın sabah ilk fiyat hareketlerini yakın takip et",
-      "VRT earnings öncesi BUGÜN kapatılmalı (K-05 zorunlu) - %26 stop mesafesi yanıltıcı, earnings volatilitesi hesapta yok",
-      "Technology konsantrasyonunu azaltmak için MU hedefe yaklaştığında (470 hedef, şu an 465.66) kısmi kâr al",
-      "Yeni tech girişi yapma - mevcut pozisyonlar zaten K-17 sınırında",
-      "Dividend portföyü defansif görünse de stopları sıkı - VIX spike'ta domino etkisi riski var"
-    ],
-    "guven": "MEDIUM",
     "_agent": "RISK_AGENT",
-    "_timestamp": "2026-04-15T13:19:11.046317"
+    "_raw": "```json\n{\n  \"risk_seviyesi\": \"HIGH\",\n  \"stop_yakini\": [\n    \"MO - %0.6 uzakta ⚠️ KRITIK — Pazartesi açılışta tetiklenme olasılığı çok yüksek, $0.38 mesafe\",\n    \"NEE - %3.7 uzakta ⚠️ — Utility sektörü baskı altında, yakın takip şart\",\n    \"MRK - %4.3 uzakta — Orta risk\",\n    \"VZ - %5.5 uzakta — Kâr ",
+    "_parse_hata": true,
+    "guven": "LOW"
   },
   "cio": {
-    "karar": "SAT",
-    "hedef_sembol": "VRT",
-    "gerekce": "K-05 kuralı gereği VRT earnings öncesi BUGÜN kapatılmalı. Risk Yöneticisi (0.67 ağırlık) bunu zorunlu olarak işaretlemiş, %26 stop mesafesi earnings volatilitesini yansıtmıyor. Ayrıca Technology sektörü %67.3 konsantrasyon ile K-12 sınırını aşmış durumda. VRT çıkışı hem earnings riskini elimine eder hem konsantrasyonu hafifletir. Makro (risk-on) ve Sektör (tech lider) analistleri pozitif olsa da, risk yönetimi öncelikli - otonom kural ihlali yapılamaz.",
-    "uyari": "VRT kapanış öncesi satış emri girilmeli. MU hedefe yaklaştığında (470) kısmi kar al planla. DUK ve MO-dividend stopları %2.5-2.7 mesafede - sabah ilk 30dk kritik.",
+    "karar": "ACIL_CIK",
+    "hedef_sembol": "MO",
+    "gerekce": "MO stop-loss seviyesine sadece %0.6 mesafede — $0.38'lik bir düşüşle tetiklenir. Risk-on ortamında defansif/tütün sektöründen para çıkışı belirgin; Sektör Analisti (ağırlık 1.53, en yüksek) defansif zayıflığını açıkça teyit ediyor ve MO'nun 'neredeyse kesin tetikleneceğini' belirtiyor. Risk Yöneticisi de MO'yu KRİTİK seviyede işaretlemiş. Pazartesi açılışında gap-down riski göz önüne alındığında, stop seviyesinin altında kapanma ihtimali çok yüksek. K-kuralları gereği stop tetiklenmesinde override yasak — beklemek ekstra kayıp riski yaratır. Piyasa açılışında market order ile çıkılmalı. Serbest kalan nakit, mevcut AI_BOOM rejimi doğrultusunda semicon/AI altyapı fırsatları için hazır tutulmalı. Ek not: NEE de %3.7 mesafede, utility baskısı devam ederse hafta içinde tetiklenebilir — yakın takipte kalmalı. VRT 22 Nisan earnings öncesi K-05 çıkış planı uygulanmalı.",
+    "uyari": "MO Pazartesi açılışta stop tetiklenme olasılığı çok yüksek. NEE ikinci risk — utility sektörü risk-on'da kan kaybediyor. VRT earnings 22 Nisan — K-05 gereği pozisyon planı hazır olmalı. Tech konsantrasyon riski portföyde yükseliyor, yeni alımlarda dikkat.",
     "guven": "HIGH",
-    "analist_uzlasma": "ORTA",
+    "analist_uzlasma": "YUKSEK",
     "tahmin": {
       "yon": "UP",
-      "buyukluk": "MEDIUM",
+      "buyukluk": "LOW",
       "sembol": "SPY"
     },
     "_agent": "CIO_AGENT",
-    "_timestamp": "2026-04-15T13:19:19.281110"
+    "_timestamp": "2026-04-17T19:31:27.561749"
   },
   "weights": {
     "MACRO_AGENT": 0.8925,
