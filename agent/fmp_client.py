@@ -23,6 +23,12 @@ from typing import Optional
 
 from _config import FMP_KEY, FMP_BASE
 
+# Observability (opsiyonel — eksikse sessizce geç)
+try:
+    from observability import log_fmp_call
+except ImportError:
+    log_fmp_call = lambda *a, **kw: None
+
 _DEFAULT_TIMEOUT = 15
 _MAX_RETRIES = 3
 _RETRY_BACKOFF = 2.0  # exponential base
@@ -53,6 +59,7 @@ def fmp_get(
     """
     if not FMP_KEY:
         print(f"[fmp_client] FMP_API_KEY tanımsız. endpoint={endpoint}")
+        log_fmp_call(endpoint=endpoint, status=0, duration_ms=0, error="no_api_key")
         return []
 
     p = dict(params or {})
@@ -60,14 +67,25 @@ def fmp_get(
     url = f"{FMP_BASE}/{endpoint}"
 
     last_err: Optional[str] = None
+    last_status: int = 0
+    response_size: Optional[int] = None
+    t_total_start = time.time()
 
     for attempt in range(max_retries):
         try:
             r = requests.get(url, params=p, timeout=timeout)
+            last_status = r.status_code
 
             # 402: Premium dışı endpoint — retry'ın anlamı yok
             if r.status_code == 402:
                 print(f"[fmp_client] 402 Payment Required: {endpoint}")
+                log_fmp_call(
+                    endpoint=endpoint,
+                    status=402,
+                    duration_ms=int((time.time() - t_total_start) * 1000),
+                    retry_count=attempt,
+                    error="402_payment_required",
+                )
                 return []
 
             # 429: Rate limit — backoff ile bekle
@@ -79,12 +97,28 @@ def fmp_get(
 
             r.raise_for_status()
             data = r.json()
+            response_size = len(r.content) if r.content else 0
 
             # FMP bazen {"Error Message": "..."} döner
             if isinstance(data, dict) and "Error Message" in data:
                 print(f"[fmp_client] FMP Error: {data['Error Message']}")
+                log_fmp_call(
+                    endpoint=endpoint,
+                    status=r.status_code,
+                    duration_ms=int((time.time() - t_total_start) * 1000),
+                    retry_count=attempt,
+                    response_size=response_size,
+                    error=data["Error Message"][:200],
+                )
                 return []
 
+            log_fmp_call(
+                endpoint=endpoint,
+                status=200,
+                duration_ms=int((time.time() - t_total_start) * 1000),
+                retry_count=attempt,
+                response_size=response_size,
+            )
             return data
 
         except requests.exceptions.Timeout:
@@ -93,6 +127,7 @@ def fmp_get(
             last_err = f"ConnectionError: {str(e)[:100]}"
         except requests.exceptions.HTTPError as e:
             last_err = f"HTTPError {e.response.status_code}"
+            last_status = e.response.status_code
             if e.response.status_code in (500, 502, 503, 504):
                 # Geçici sunucu hatası, retry'a değer
                 time.sleep(_RETRY_BACKOFF ** (attempt + 1))
@@ -107,6 +142,14 @@ def fmp_get(
             time.sleep(_RETRY_BACKOFF ** (attempt + 1))
 
     print(f"[fmp_client] Başarısız ({endpoint}): {last_err}")
+
+    log_fmp_call(
+        endpoint=endpoint,
+        status=last_status,
+        duration_ms=int((time.time() - t_total_start) * 1000),
+        retry_count=max_retries,
+        error=last_err,
+    )
 
     if notify_on_error:
         _notify_telegram(endpoint, last_err or "Bilinmeyen hata")

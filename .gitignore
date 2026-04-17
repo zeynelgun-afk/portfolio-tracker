@@ -28,6 +28,13 @@ data/session_state.json
 data/vix_cache.json
 data/telegram_offset.json
 
+# Observability (runtime state)
+data/finzora.db
+data/finzora.db-journal
+data/finzora.db-shm
+data/finzora.db-wal
+logs/events.jsonl
+
 # Olay log
 logs/event_log.jsonl
 logs/*.log
