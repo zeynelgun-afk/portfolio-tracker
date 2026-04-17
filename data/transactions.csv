@@ -158,3 +158,7 @@ date,action,symbol,shares,price,total,reason
 2026-04-17,BUY,CF,120,124.72,14966.4,daily_scan_balanced skor:15 | Basic Materials
 2026-04-17,BUY,CPRX,578,25.89,14964.42,daily_scan_balanced skor:15 | Healthcare
 2026-04-17,BUY,PARR,176,63.71,11212.96,daily_scan_balanced skor:15 | Energy
+2026-04-17,SELL,CF,120,112.02,13442.4,K-06 stop tetiklendi $112.02≤$118.48
+2026-04-17,SELL,PARR,176,55.23,9719.6,K-06 stop tetiklendi $55.23≤$60.52
+2026-04-17,BUY,EOG,106,134.07,14211.42,daily_scan_balanced skor:14 | Energy
+2026-04-17,BUY,HIG,77,138.28,10647.56,daily_scan_balanced skor:14 | Financial Services

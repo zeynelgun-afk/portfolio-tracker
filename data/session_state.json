@@ -428,24 +428,6 @@
         "tema": "Technology"
       },
       {
-        "symbol": "EOG",
-        "portföy": "balanced",
-        "price": 134.07,
-        "stop": 127.37,
-        "target": 147.48,
-        "reason": "daily_scan_balanced skor:14 | Energy",
-        "tema": "Energy"
-      },
-      {
-        "symbol": "HIG",
-        "portföy": "balanced",
-        "price": 138.28,
-        "stop": 131.37,
-        "target": 152.11,
-        "reason": "daily_scan_balanced skor:14 | Financial Services",
-        "tema": "Financial Services"
-      },
-      {
         "symbol": "PFG",
         "portföy": "balanced",
         "price": 93.98,
@@ -696,15 +678,6 @@
         "target": 51.46,
         "reason": "daily_scan_dividend skor:12 | Communication Services",
         "tema": "Communication Services"
-      },
-      {
-        "symbol": "EOG",
-        "portföy": "dividend",
-        "price": 134.07,
-        "stop": 127.37,
-        "target": 147.48,
-        "reason": "daily_scan_dividend skor:12 | Energy",
-        "tema": "Energy"
       },
       {
         "symbol": "PRU",
