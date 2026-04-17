@@ -109,12 +109,13 @@ jobs:
 
       - name: Degisiklikleri kaydet
         run: |
-          mkdir -p /tmp/ab/data/portfolios /tmp/ab/data/swing /tmp/ab/agent/memory
+          mkdir -p /tmp/ab/data/portfolios /tmp/ab/data/swing /tmp/ab/agent/memory /tmp/ab/logs
           cp data/portfolios/*.json /tmp/ab/data/portfolios/ 2>/dev/null || true
           cp data/swing/*.json      /tmp/ab/data/swing/      2>/dev/null || true
           cp data/*.json            /tmp/ab/data/            2>/dev/null || true
           cp data/*.csv             /tmp/ab/data/            2>/dev/null || true
           cp agent/memory/*.json    /tmp/ab/agent/memory/    2>/dev/null || true
+          cp logs/events.jsonl      /tmp/ab/logs/            2>/dev/null || true
           git fetch origin main
           git rebase --abort 2>/dev/null || true
           git reset --hard origin/main
@@ -123,12 +124,35 @@ jobs:
           cp /tmp/ab/data/*.json            data/            2>/dev/null || true
           cp /tmp/ab/data/*.csv             data/            2>/dev/null || true
           cp /tmp/ab/agent/memory/*.json    agent/memory/    2>/dev/null || true
+          # Observability JSONL merge — upstream'den gelen satırları da koru
+          if [ -f /tmp/ab/logs/events.jsonl ] && [ -f logs/events.jsonl ]; then
+            # Upstream + bizim satırları birleştir, tekilleştir (id bazlı)
+            cat logs/events.jsonl /tmp/ab/logs/events.jsonl \
+              | python3 -c "
+import sys, json
+seen = set()
+for line in sys.stdin:
+    line = line.strip()
+    if not line: continue
+    try:
+        obj = json.loads(line)
+        eid = obj.get('id')
+        if eid and eid not in seen:
+            seen.add(eid)
+            print(line)
+    except Exception:
+        print(line)
+" > logs/events.jsonl.new
+            mv logs/events.jsonl.new logs/events.jsonl
+          elif [ -f /tmp/ab/logs/events.jsonl ]; then
+            cp /tmp/ab/logs/events.jsonl logs/events.jsonl
+          fi
           MODE="${{ steps.mode.outputs.mode }}"
           ZAMAN=$(date -u '+%Y-%m-%d %H:%M UTC')
-          git add data/ agent/memory/ reports/ 2>/dev/null || true
+          git add data/ agent/memory/ reports/ logs/events.jsonl 2>/dev/null || true
           if git diff --staged --quiet; then
             echo "Degisiklik yok"
           else
             git commit -m "[Agent/$MODE] Otomatik guncelleme — $ZAMAN"
-            git push origin main || (sleep 10 && git fetch origin main && git reset --hard origin/main && cp /tmp/ab/data/portfolios/*.json data/portfolios/ 2>/dev/null && cp /tmp/ab/data/*.json data/ 2>/dev/null && cp /tmp/ab/data/*.csv data/ 2>/dev/null && git add -A && git commit -m "[Agent/$MODE] Retry — $ZAMAN" && git push origin main)
+            git push origin main || (sleep 10 && git fetch origin main && git reset --hard origin/main && cp /tmp/ab/data/portfolios/*.json data/portfolios/ 2>/dev/null && cp /tmp/ab/data/*.json data/ 2>/dev/null && cp /tmp/ab/data/*.csv data/ 2>/dev/null && cp /tmp/ab/logs/events.jsonl logs/ 2>/dev/null && git add -A && git commit -m "[Agent/$MODE] Retry — $ZAMAN" && git push origin main)
           fi

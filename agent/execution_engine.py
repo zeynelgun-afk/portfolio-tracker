@@ -14,6 +14,7 @@ Kurallar:
 
 import csv
 import json
+import os
 import sys
 from datetime import datetime
 from pathlib import Path
@@ -30,6 +31,12 @@ except ImportError:
         def __getattr__(self, name):
             return lambda *a, **kw: None
     _log = _FallbackLog()
+
+# Observability (opsiyonel)
+try:
+    from observability import log_trade
+except ImportError:
+    log_trade = lambda *a, **kw: None
 
 REPO_ROOT = Path(__file__).parent.parent
 TR_TZ     = pytz.timezone("Europe/Istanbul")
@@ -129,8 +136,8 @@ def _save(portfolio: str, data: dict):
     json.dump(data, open(path, "w", encoding="utf-8"), ensure_ascii=False, indent=2)
 
 
-def _append_transaction(row: dict):
-    """transactions.csv'ye satır ekle."""
+def _append_transaction(row: dict, portfoy: str = ""):
+    """transactions.csv'ye satır ekle + observability kaydı."""
     tx_path = REPO_ROOT / "data" / "transactions.csv"
     fieldnames = ["date","action","symbol","shares","price","total","reason"]
     file_exists = tx_path.exists()
@@ -139,6 +146,20 @@ def _append_transaction(row: dict):
         if not file_exists:
             w.writeheader()
         w.writerow({k: row.get(k,"") for k in fieldnames})
+
+    # Observability kaydı (başarısız olursa sessizce geç)
+    try:
+        log_trade(
+            action=row.get("action", ""),
+            portfoy=portfoy,
+            sembol=row.get("symbol", ""),
+            shares=float(row.get("shares", 0) or 0),
+            price=float(row.get("price", 0) or 0),
+            total=float(row.get("total", 0) or 0),
+            reason=row.get("reason", ""),
+        )
+    except Exception as _e:
+        print(f"[execution_engine] log_trade uyarısı: {_e}")
 
 
 def get_portfolio_status(portfolio: str) -> dict:
@@ -287,7 +308,7 @@ def buy_position(
         "price":  round(price, 2),
         "total":  gercek_tutar,
         "reason": reason[:100],
-    })
+    }, portfoy=portfolio)
 
     print(f"[Execution] {aksiyon} {portfolio.upper()} — {symbol} "
           f"{shares} adet @${price:.2f} = ${gercek_tutar:,.0f}")
@@ -367,7 +388,7 @@ def sell_position(
         "price":  round(satis_fiyat, 2),
         "total":  tutar,
         "reason": reason[:100],
-    })
+    }, portfoy=portfolio)
 
     _log.islem(
         f"SATIŞ: {symbol} {pnl_pct:+.1f}%",
