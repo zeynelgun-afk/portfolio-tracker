@@ -15,6 +15,10 @@ beautifulsoup4>=4.12.0     # Haber ve web sayfası parsing
 # ── Görsel üretimi ────────────────────────────────────────────────────────────
 Pillow>=10.0.0             # scripts/risk_panel_generator.py — 1080x1920 PNG
 
+# ── RAG altyapısı ─────────────────────────────────────────────────────────────
+voyageai>=0.2.0            # Embedding API (voyage-3-lite default, voyage-3 retry)
+chromadb>=0.4.0            # Local vector database
+
 # ── Not: Aşağıdakiler standart kütüphane, pip ile kurulmaz ───────────────────
 # json, csv, pathlib, datetime, concurrent.futures, urllib, subprocess,
 # argparse, re, math, collections, itertools, typing, os, sys, time

@@ -25,6 +25,7 @@ ANTHROPIC_KEY = os.environ.get("ANTHROPIC_API_KEY", "").strip()
 # ── Opsiyonel anahtarlar ──────────────────────────────────────────────────────
 RAPIDAPI_KEY = os.environ.get("RAPIDAPI_KEY", "").strip()
 TELEGRAM_GROUP_CHAT = os.environ.get("TELEGRAM_GROUP_CHAT", "").strip()
+VOYAGE_API_KEY = os.environ.get("VOYAGE_API_KEY", "").strip()
 
 # ── Sabitler ──────────────────────────────────────────────────────────────────
 FMP_BASE = "https://financialmodelingprep.com/stable"

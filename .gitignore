@@ -35,6 +35,9 @@ data/finzora.db-journal
 data/finzora.db-shm
 data/finzora.db-wal
 
+# RAG vector store (JSONL'den rebuild edilebilir)
+data/rag/chroma/
+
 # Olay log
 logs/event_log.jsonl
 logs/*.log
