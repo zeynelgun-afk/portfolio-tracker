@@ -2,7 +2,7 @@
   "portfoy_adi": "Dengeli Portföy",
   "baslangic_sermaye": 100000,
   "nakit": {
-    "miktar": 60794.8,
+    "miktar": 74919.12,
     "para_birimi": "USD",
     "agirlik_yuzde": 54.72
   },
@@ -34,31 +34,6 @@
       "stop_mesafe_pct": 2.93,
       "durum": "⚠️ Stop yakın (2.9%)",
       "hedef_fiyat": 77.56
-    },
-    {
-      "sembol": "DUK",
-      "isim": "Duke Energy Corporation",
-      "sektor": "Utilities",
-      "adet": 112,
-      "maliyet_baz": 133.0863,
-      "guncel_fiyat": 128.63,
-      "yatirim": 14905.67,
-      "guncel_deger": 14406.56,
-      "kar_zarar": -499.11,
-      "kar_zarar_yuzde": -3.35,
-      "gunluk_degisim_yuzde": 0.51,
-      "son_guncelleme": "2026-04-16T22:03:26.635653",
-      "giris_tarihi": "2026-04-09",
-      "giris_fiyati": 133.84,
-      "stop_loss": 126.42,
-      "hedef_fiyat": 142.0,
-      "giris_nedeni": "Dengeli portföy utility girişi. K-13 v4.1 jeopolitik/savaş krizinde utilities faydalanıcı sektör. VIX 28-35 bant formülü: $9,000×(22/30)=$6,558. SMA50 üstü (+%4.5), analist hedef $143, K-17/K-18 temiz.",
-      "agirlik_yuzde": 12.97,
-      "cb_kaynak": "kayit-yok",
-      "stop_faz": 1,
-      "zirve_fiyat": 131.79,
-      "stop_mesafe_pct": 1.72,
-      "durum": "⚠️ Stop yakın (1.7%)"
     },
     {
       "sembol": "CI",
@@ -110,7 +85,7 @@
       "durum": "✅ Normal"
     }
   ],
-  "son_guncelleme": "2026-04-16T22:03:26.635653",
+  "son_guncelleme": "2026-04-17T17:23:06.114708+03:00",
   "toplam_deger": 111110.24,
   "toplam_getiri_yuzde": 11.11,
   "toplam_getiri": 11110.24

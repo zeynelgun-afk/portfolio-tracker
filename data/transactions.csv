@@ -154,3 +154,4 @@ date,action,symbol,shares,price,total,reason
 2026-02-26,CAPITAL_ADD,-,0,0,300000,"Portföy yeniden yapılandırma - $300K yeni sermaye eklendi. Rotasyon portföyü kapatıldı, agresif momentum stratejisine geçiş."
 2026-04-14,BUY,GEV,2,1000,2000,"Swing giriş — tenkan_bounce. Stop: $892.19, Hedef: $1269.52"
 2026-04-14,BUY,RPRX,152,48.52,7375.04,"Swing giriş — tenkan_bounce, kijun_bounce_v2, nr7_sikisma. Stop: $46.89, Hedef: $52.61"
+2026-04-17,SELL,DUK,112,126.11,14124.32,K-06 stop tetiklendi $126.11≤$126.42

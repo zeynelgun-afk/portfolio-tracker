@@ -1,63 +1,63 @@
 {
   "rejim": {
     "aktif_rejim": "ai_boom",
-    "skor": 2,
+    "skor": 3,
     "guven": "ORTA",
     "tum_skorlar": {
-      "jeopolitik_kriz": 1,
-      "ai_boom": 2,
+      "jeopolitik_kriz": 2,
+      "ai_boom": 3,
       "faiz_dusus": 0,
       "tarife_gerilimi": 0,
-      "risk_on_genel": 0,
-      "risk_off": 0
+      "risk_on_genel": 2,
+      "risk_off": 1
     },
     "growth_aksiyon": "Mevcut AI pozisyonlar (COHR, VRT, ANET, MU, CAMT) tutulmaya devam. Yeni AI fırsatları ara.",
-    "tespit_zamani": "2026-04-17T01:03:22.781597+03:00"
+    "tespit_zamani": "2026-04-17T17:23:02.753174+03:00"
   },
   "sektor_data": {
     "XLE": {
-      "price": 56.58,
-      "gunluk_chg": 1.47
+      "price": 53.945,
+      "gunluk_chg": -4.66
     },
     "XLK": {
-      "price": 152.02,
-      "gunluk_chg": 1.14
+      "price": 154.09,
+      "gunluk_chg": 1.36
     },
     "XLI": {
-      "price": 170.33,
-      "gunluk_chg": -0.5
+      "price": 174.41499,
+      "gunluk_chg": 2.4
     },
     "XLF": {
-      "price": 52.03,
-      "gunluk_chg": -0.27
+      "price": 52.615,
+      "gunluk_chg": 1.12
     },
     "XLV": {
-      "price": 146.61,
-      "gunluk_chg": -0.79
+      "price": 148.8,
+      "gunluk_chg": 1.49
     },
     "XLU": {
-      "price": 46.35,
-      "gunluk_chg": 0.72
+      "price": 45.705,
+      "gunluk_chg": -1.39
     },
     "XLP": {
-      "price": 81.43,
-      "gunluk_chg": 0.46
+      "price": 81.99,
+      "gunluk_chg": 0.69
     },
     "XLY": {
-      "price": 117.63,
-      "gunluk_chg": -0.47
+      "price": 121,
+      "gunluk_chg": 2.87
     },
     "XLB": {
-      "price": 51.75,
-      "gunluk_chg": 0.72
+      "price": 52.145,
+      "gunluk_chg": 0.76
     },
     "GLD": {
-      "price": 440.08,
-      "gunluk_chg": -0.09
+      "price": 447.74,
+      "gunluk_chg": 1.74
     },
     "ITA": {
-      "price": 229.03,
-      "gunluk_chg": -2.12
+      "price": 235.54,
+      "gunluk_chg": 2.84
     }
   }
 }
