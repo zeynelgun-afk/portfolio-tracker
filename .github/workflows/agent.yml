@@ -140,25 +140,9 @@ jobs:
           cp /tmp/ab/data/*.json            data/            2>/dev/null || true
           cp /tmp/ab/data/*.csv             data/            2>/dev/null || true
           cp /tmp/ab/agent/memory/*.json    agent/memory/    2>/dev/null || true
-          # Observability JSONL merge — upstream'den gelen satırları da koru
+          # Observability JSONL merge (id bazlı dedup) — ayrı script, YAML temiz kalsın
           if [ -f /tmp/ab/logs/events.jsonl ] && [ -f logs/events.jsonl ]; then
-            # Upstream + bizim satırları birleştir, tekilleştir (id bazlı)
-            cat logs/events.jsonl /tmp/ab/logs/events.jsonl \
-              | python3 -c "
-import sys, json
-seen = set()
-for line in sys.stdin:
-    line = line.strip()
-    if not line: continue
-    try:
-        obj = json.loads(line)
-        eid = obj.get('id')
-        if eid and eid not in seen:
-            seen.add(eid)
-            print(line)
-    except Exception:
-        print(line)
-" > logs/events.jsonl.new
+            python3 scripts/_merge_events_jsonl.py logs/events.jsonl /tmp/ab/logs/events.jsonl > logs/events.jsonl.new
             mv logs/events.jsonl.new logs/events.jsonl
           elif [ -f /tmp/ab/logs/events.jsonl ]; then
             cp /tmp/ab/logs/events.jsonl logs/events.jsonl
