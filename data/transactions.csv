@@ -163,3 +163,4 @@ date,action,symbol,shares,price,total,reason
 2026-04-17,BUY,EOG,106,134.07,14211.42,daily_scan_balanced skor:14 | Energy
 2026-04-17,BUY,HIG,77,138.28,10647.56,daily_scan_balanced skor:14 | Financial Services
 2026-04-17,SELL,EOG,106,126.19,13376.14,"Stop tetiklendi: açılış gap-down -%5.57 ile $126.60, intraday low $124.31. Stop $127.37 altı kapanış $126.03. Mekanik K-06 stop. Aynı gün alınıp aynı gün satılan 3. pozisyon (CF, PARR sonrası). Sistem dünkü kapanış fiyatıyla kayıt oluşturmuş, gerçek açılış çok daha düşüktü. Ders: daily_scan_balanced gap-down filtresi yok."
+2026-04-17,SELL,MO,267,64.45,17208.15,"Pazartesi satılacak işareti 11 Nisan'dan beri bekliyordu, 6 gün gecikme. Hafta sonu gap riski + stop mesafesi %2.19 çok yakın. Dengeli'de çift MO tutma sorunu çözülüyor. K/Z -%4.43. Ders: bekleyen_aksiyon alanı açılış sabahı otomatik işlenmeli, manuel takibe bırakılmamalı."

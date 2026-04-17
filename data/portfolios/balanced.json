@@ -2,39 +2,11 @@
   "portfoy_adi": "Dengeli Portföy",
   "baslangic_sermaye": 100000,
   "nakit": {
-    "miktar": 45454.5,
+    "miktar": 62662.65,
     "para_birimi": "USD",
-    "agirlik_yuzde": 42.42
+    "agirlik_yuzde": 58.48
   },
   "pozisyonlar": [
-    {
-      "sembol": "MO",
-      "isim": "Altria Group Inc",
-      "sektor": "Temel Tüketim",
-      "adet": 267,
-      "maliyet_baz": 67.44,
-      "guncel_fiyat": 64.45,
-      "yatirim": 18006.48,
-      "guncel_deger": 17208.15,
-      "kar_zarar": -798.33,
-      "kar_zarar_yuzde": -4.43,
-      "gunluk_degisim_yuzde": -0.75,
-      "son_guncelleme": "2026-04-17T16:11:38+03:00",
-      "giris_tarihi": "2026-02-17",
-      "giris_fiyati": 67.44,
-      "giris_nedeni": "Initial position - Dividend defensive",
-      "agirlik_yuzde": 16.06,
-      "cb_kaynak": "transactions-2026-02-17",
-      "stop_loss": 63.04,
-      "bekleyen_aksiyon": "SATILACAK",
-      "aksiyon_notu": "Dengeli portföyde çift MO tutma sorunu. MO tütün/temettü hissesi — doğal yeri Temettü portföyü. Dengeli maliyet $67.44 vs güncel $67.38 = breakeven çıkış. Pazartesi açılış piyasasında satılacak.",
-      "aksiyon_tarihi": "2026-04-11",
-      "stop_faz": 1,
-      "zirve_fiyat": 67.38,
-      "stop_mesafe_pct": 2.19,
-      "durum": "⚠️ Stop yakın",
-      "hedef_fiyat": 77.56
-    },
     {
       "sembol": "CI",
       "isim": "The Cigna Group",
@@ -135,7 +107,7 @@
       "durum": "✅ Normal"
     }
   ],
-  "son_guncelleme": "2026-04-17T16:11:38+03:00",
+  "son_guncelleme": "2026-04-17T16:20:03+03:00",
   "toplam_deger": 107155.72,
   "toplam_getiri_yuzde": 7.16,
   "toplam_getiri": 7155.72
