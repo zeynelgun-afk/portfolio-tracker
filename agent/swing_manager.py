@@ -77,6 +77,7 @@ def open_swing_position(
         "sembol":          symbol,
         "adet":            shares,
         "giris_fiyat":     round(price, 2),
+        "maliyet_baz":     round(price, 2),
         "giris_tarihi":    datetime.now().strftime("%Y-%m-%d"),
         "stop_loss":       round(stop, 2),
         "hedef_fiyat":     round(target, 2),

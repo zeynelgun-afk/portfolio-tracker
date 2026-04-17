@@ -86,7 +86,7 @@ def get_claude_decision(user_prompt, mode="monitor", system_override=None):
     try:
         client = anthropic.Anthropic(api_key=ANTHROPIC_KEY)
         resp = client.messages.create(
-            model="claude-opus-4-5",
+            model="claude-opus-4-6",
             max_tokens=max_tokens,
             system=system,
             messages=[{"role": "user", "content": user_prompt}],
@@ -113,7 +113,7 @@ def get_claude_decision_with_actions(user_prompt, mode="morning", system_overrid
     try:
         client = anthropic.Anthropic(api_key=ANTHROPIC_KEY)
         resp = client.messages.create(
-            model="claude-opus-4-5",
+            model="claude-opus-4-6",
             max_tokens=max_tokens,
             system=system,
             messages=[{"role": "user", "content": enhanced}],

@@ -9,7 +9,7 @@ Her Pazar haftalık tema incelemesi yapar:
   4. Onay gerektirmeden değil — Claude API'ye karar aldırır
   5. Karar verilirse THEMATIC_SYSTEM.md'yi günceller + git push
 
-ÖNEMLI: Bu script Claude API'yi çağırır (claude-sonnet-4-20250514).
+ÖNEMLI: Bu script Claude API'yi çağırır (claude-sonnet-4-6).
 Tema ekleme/çıkarma kararını Claude verir — insan onayı beklenmez.
 """
 
@@ -263,7 +263,7 @@ Mevcut küresel trendler, jeopolitik durum ve piyasa yapısını değerlendirere
                 "anthropic-version": "2023-06-01"
             },
             json={
-                "model": "claude-sonnet-4-20250514",
+                "model": "claude-sonnet-4-6",
                 "max_tokens": 1000,
                 "system": system_prompt,
                 "messages": [{"role": "user", "content": user_prompt}]

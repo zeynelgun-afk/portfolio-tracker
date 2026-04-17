@@ -26,7 +26,7 @@ CLOSED_SWING = BASE / "data" / "swing" / "closed.json"
 REPORT_DIR   = BASE / "data" / "episodic_memory"
 
 # Anthropic API — model ve anahtar
-CLAUDE_MODEL = "claude-sonnet-4-20250514"
+CLAUDE_MODEL = "claude-sonnet-4-6"
 API_URL      = "https://api.anthropic.com/v1/messages"
 
 # Bu scriptin kendi API anahtarını kullanmaması lazım —

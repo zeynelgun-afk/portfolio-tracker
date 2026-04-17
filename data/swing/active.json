@@ -118,7 +118,8 @@
       ],
       "pnl_pct": -2.17,
       "tutulan_gun": 2,
-      "atr14": 37.94
+      "atr14": 37.94,
+      "maliyet_baz": 1000.0
     },
     {
       "id": "SWING-202604141454-RPRX",
@@ -143,7 +144,8 @@
       "son_guncelleme": "2026-04-16T22:03:27.060044",
       "notlar": [],
       "pnl_pct": -0.08,
-      "tutulan_gun": 2
+      "tutulan_gun": 2,
+      "maliyet_baz": 48.52
     }
   ],
   "ozet": {

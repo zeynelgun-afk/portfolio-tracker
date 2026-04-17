@@ -918,7 +918,7 @@ def run_monitor(ctx: dict):
                     sym    = pos.get("sembol", "")
                     cur_p  = market.get(sym, {}).get("price")
                     stop   = pos.get("stop_loss")
-                    entry  = pos.get("giris_fiyati")
+                    entry  = pos.get("giris_fiyat") or pos.get("giris_fiyati")
                     if sym and cur_p and stop and entry:
                         exit_r = run_exit_checks(
                             sym, float(cur_p), float(stop), float(entry),
