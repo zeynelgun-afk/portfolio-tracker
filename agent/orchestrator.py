@@ -96,13 +96,14 @@ try:
     from opportunity_finder import find_candidates
     from execution_engine import (
         buy_position, sell_position, deploy_cash,
-        get_portfolio_status
+        get_portfolio_status, compute_atr_stop, fetch_live_price
     )
 except ImportError as _ie:
     print(f"[Orchestrator] Modül yüklenemedi: {_ie}")
     run_macro_intelligence = find_candidates = None
     buy_position = sell_position = deploy_cash = None
     get_portfolio_status = None
+    compute_atr_stop = fetch_live_price = None
 
 try:
     from k_engine import run_entry_checks, run_exit_checks
@@ -1191,13 +1192,14 @@ def _execute_portfolio_opportunities(faz: str, market: dict) -> list:
                         _fiyat = float(_s.get("price", 0))
                         if not _fiyat:
                             continue
-                        _atr = _fiyat * 0.025  # %2.5 ATR proxy
+                        # stop/target boş bırakılıyor — execution buy loop canlı fiyat
+                        # üzerinden compute_atr_stop ile yeniden hesaplayacak.
                         buy_list.append({
                             "symbol":  _s["symbol"],
                             "portföy": _pf,
                             "price":   _fiyat,
-                            "stop":    round(_fiyat - 2 * _atr, 2),
-                            "target":  round(_fiyat + 4 * _atr, 2),
+                            "stop":    0,
+                            "target":  0,
                             "reason":  f"daily_scan_{_pf} skor:{_s.get('score')} | {_s.get('sector','')}",
                             "tema":    _s.get("sector", ""),
                         })
@@ -1262,25 +1264,9 @@ def _execute_portfolio_opportunities(faz: str, market: dict) -> list:
             continue
 
         # K-2: Canlı fiyat FMP'den ZORUNLU çek (previousClose fallback kaldırıldı)
-        import requests as _req
-        try:
-            _r = _req.get(
-                "https://financialmodelingprep.com/stable/quote",
-                params={"symbol": sym, "apikey": _FMP_KEY},
-                timeout=8
-            )
-            _qd = _r.json()
-            if not (isinstance(_qd, list) and _qd):
-                print(f"[Execution] {sym}: FMP quote boş, alım atlandı")
-                continue
-            price      = float(_qd[0].get("price", 0) or 0)
-            prev_close = float(_qd[0].get("previousClose", 0) or 0)
-        except Exception as _e_q:
-            print(f"[Execution] {sym}: canlı fiyat çekilemedi ({_e_q}), alım atlandı")
-            continue
-
+        price, prev_close = fetch_live_price(sym) if fetch_live_price else (None, None)
         if not price or not prev_close:
-            print(f"[Execution] {sym}: fiyat geçersiz (price={price}, prev={prev_close})")
+            print(f"[Execution] {sym}: canlı fiyat alınamadı, alım atlandı")
             continue
 
         # K-3: Gap-down koruması — açılış dünden %2.5+ aşağıdaysa alım yok
@@ -1301,46 +1287,15 @@ def _execute_portfolio_opportunities(faz: str, market: dict) -> list:
             print(f"[Execution] {sym}: fiyat çok kaydı (sabah ${sabah_fiyat:.2f} → şimdi ${price:.2f})")
             continue
 
-        # K-5: ATR14 tabanlı stop — kör %5 yerine gerçek volatilite
-        try:
-            _hr = _req.get(
-                "https://financialmodelingprep.com/stable/historical-price-eod/full",
-                params={"symbol": sym, "apikey": _FMP_KEY},
-                timeout=10
-            )
-            _hd = _hr.json()
-            if isinstance(_hd, list) and len(_hd) >= 15:
-                _trs = []
-                for _i in range(0, 14):
-                    _h = _hd[_i]["high"]
-                    _l = _hd[_i]["low"]
-                    _pc = _hd[_i+1]["close"]
-                    _trs.append(max(_h-_l, abs(_h-_pc), abs(_l-_pc)))
-                atr14 = sum(_trs) / len(_trs)
-                stop = round(price - 2.0 * atr14, 2)
-                # SMA50 confluence — stop SMA50 yakınındaysa SMA50'nin %1 altına hizala
-                if len(_hd) >= 50:
-                    sma50 = sum(_d["close"] for _d in _hd[:50]) / 50
-                    if abs(stop - sma50) / price < 0.015 and price > sma50:
-                        stop = round(sma50 * 0.99, 2)
-                # Minimum %5, maksimum %10 stop mesafesi
-                stop_pct = (price - stop) / price
-                if stop_pct < 0.05:
-                    stop = round(price * 0.95, 2)
-                elif stop_pct > 0.10:
-                    stop = round(price * 0.92, 2)
-                if not target or target <= price:
-                    target = round(price + 4.0 * atr14, 2)
-                print(f"[Execution] {sym}: ATR14={atr14:.2f} → stop=${stop:.2f} (-%{(price-stop)/price*100:.2f})")
-            else:
-                stop = round(price * 0.92, 2)  # Fallback %8
-                if not target or target <= price:
-                    target = round(price * 1.12, 2)
-        except Exception as _e_atr:
-            print(f"[Execution] {sym}: ATR hesaplama hatası ({_e_atr}), fallback stop %8")
-            stop = round(price * 0.92, 2)
-            if not target or target <= price:
-                target = round(price * 1.12, 2)
+        # K-5: ATR14 tabanlı stop — ortak compute_atr_stop helper'ı kullanılır
+        _atr_stop, _atr_target, atr14 = compute_atr_stop(sym, price)
+        stop = _atr_stop
+        if not target or target <= price:
+            target = _atr_target
+        if atr14:
+            print(f"[Execution] {sym}: ATR14={atr14} → stop=${stop:.2f} (-%{(price-stop)/price*100:.2f})")
+        else:
+            print(f"[Execution] {sym}: ATR çekilemedi, fallback stop=${stop:.2f}")
 
         # Canlı fiyat zaten stop altına düşmüşse atla
         if price < stop:

@@ -199,18 +199,14 @@ def find_candidates(
             # Fundamental skor
             f_skor, f_det = score_fundamental(sym)
 
-            # ATR hesapla
-            hist = _fmp(f"historical-price-eod/full", {"symbol": sym, "limit": 20})
-            atr  = 0
-            if hist and isinstance(hist, list) and len(hist) > 14:
-                trs  = [max(float(h["high"])-float(h["low"]),
-                            abs(float(h["high"])-float(hist[i+1]["close"])),
-                            abs(float(h["low"])-float(hist[i+1]["close"])))
-                        for i, h in enumerate(hist[:14])]
-                atr  = sum(trs) / 14
-
-            stop   = round(price - 2*atr, 2) if atr else round(price*0.93, 2)
-            target = round(price + 4*atr, 2) if atr else round(price*1.15, 2)
+            # ATR14 + SMA50 bazlı stop (ortak helper) — kör %7 fallback yerine
+            try:
+                from execution_engine import compute_atr_stop as _cas_of
+                stop, target, atr = _cas_of(sym, price)
+            except Exception:
+                stop   = round(price * 0.92, 2)
+                target = round(price * 1.12, 2)
+                atr    = None
             rr     = round((target-price)/(price-stop), 2) if price > stop else 0
 
             if rr < 2:  # R:R minimum 2:1
