@@ -46,6 +46,15 @@ BUYUME_PE_ESIK    = 150   # üstü → büyüme/narratif uyarısı
 TEMETTU_YIELD_MIN = 3.0   # % üstü → temettü modu
 PEER_PRIM_ESIK    = 3.0   # peer ortalamasının 3x üstü → prim uyarısı
 
+# ─── PİYASA REJİMİ SABİTLERİ ───────────────────────────────────────────────
+# Boğa: SPY > SMA21 → tarihsel çarpanlar, tam kalite primi, WACC normal
+# Ayı:  SPY < SMA21 → faiz bazlı PE, yarı kalite primi, +1% WACC, %87 final değer
+BOGA_REJIM_MULT  = 1.00   # Boğa piyasası — değerleme değişmez
+AYI_REJIM_MULT   = 0.87   # Ayı piyasası — çarpan sıkışması (%13 iskonto)
+AYI_WACC_EK      = 0.01   # Ayı DCF WACC eki (+1%)
+
+_MARKET_REGIME_CACHE = None  # Oturum boyunca bir kez çekilir
+
 
 # ─── YARDIMCI FONKSİYONLAR ─────────────────────────────────────────────────
 
@@ -167,6 +176,50 @@ def tg_send(msg):
             timeout=10
         )
     except: pass
+
+
+# ─── PİYASA REJİMİ TESPİTİ ─────────────────────────────────────────────────
+
+def get_market_regime():
+    """
+    SPY SMA21 bazlı boğa/ayı piyasası rejim tespiti.
+
+    BOGA: SPY fiyatı > 21 günlük hareketli ortalama
+    AYI:  SPY fiyatı < 21 günlük hareketli ortalama
+
+    Sonuç oturum boyunca önbelleklenir (tek API çağrısı).
+    Dönüş: (rejim: 'BOGA'|'AYI', spy_price, sma21, detay_str)
+    """
+    global _MARKET_REGIME_CACHE
+    if _MARKET_REGIME_CACHE is not None:
+        return _MARKET_REGIME_CACHE
+
+    try:
+        spy_q    = fmp_get("quote", {"symbol": "SPY"})
+        spy_sma  = fmp_get("technical-indicators/sma",
+                           {"symbol": "SPY", "periodLength": 21, "timeframe": "1day"})
+        spy_p    = safe(spy_q[0].get("price"))    if spy_q    else None
+        sma21    = safe(spy_sma[0].get("sma"))    if spy_sma  else None
+
+        if spy_p and sma21:
+            fark_pct = (spy_p / sma21 - 1) * 100
+            rejim    = "BOGA" if spy_p >= sma21 else "AYI"
+            emoji    = "🐂" if rejim == "BOGA" else "🐻"
+            yon      = ">" if rejim == "BOGA" else "<"
+            detay    = (f"{emoji} {rejim} PİYASASI: "
+                        f"SPY ${spy_p:.2f} {yon} SMA21 ${sma21:.2f} ({fark_pct:+.1f}%)")
+        else:
+            rejim = "BOGA"
+            detay = "🐂 BOGA (SPY verisi alınamadı — varsayılan)"
+            spy_p = sma21 = None
+
+        _MARKET_REGIME_CACHE = (rejim, spy_p, sma21, detay)
+
+    except Exception as e:
+        _MARKET_REGIME_CACHE = ("BOGA", None, None,
+                                f"🐂 BOGA (hata: {e} — varsayılan)")
+
+    return _MARKET_REGIME_CACHE
 
 
 # ─── 252G TARİHSEL ORAN HESAPLAMA ──────────────────────────────────────────
@@ -503,6 +556,10 @@ def hesapla(symbol, pe_modu='average', manuel_pe=None, fwd_eps_input=None, sessi
     bond_y = safe(tr[0].get('year10')) if tr else 4.5
     rate_pe = max(4.0, min(30.0, 100.0 / bond_y))
 
+    # ── PİYASA REJİMİ TESPİTİ ──────────────────────────────────
+    rejim, spy_p, sma21_v, rejim_detay = get_market_regime()
+    BOGA = (rejim == "BOGA")
+
     # ── HİSSE TİPİ TESPİTİ ─────────────────────────────────────
     his_252g = fetch_all_252g_ratios(symbol, shares)
     avg_pe   = his_252g.get('pe')
@@ -516,12 +573,18 @@ def hesapla(symbol, pe_modu='average', manuel_pe=None, fwd_eps_input=None, sessi
         hisse_tipi = 'dongusel'
 
     # ── PE ÇARPANI ──────────────────────────────────────────────
+    # Boğa: tarihsel 252g ortalama P/E (piyasa zirveye yakın fiyatlar)
+    # Ayı:  faize dayalı PE (daha muhafazakâr, çarpan sıkışması dönemler için)
     if pe_modu == 'manuel' and manuel_pe:
         kullanilan_pe = manuel_pe
     elif pe_modu == 'rate':
         kullanilan_pe = rate_pe
-    else:
+    elif BOGA:
+        # Boğa: tarihsel PE (mevcut davranış)
         kullanilan_pe = avg_pe if avg_pe else rate_pe
+    else:
+        # Ayı: muhafazakâr — faiz bazlı PE, tarihsel varsa ortalamasının düşüğü
+        kullanilan_pe = rate_pe if not avg_pe else min(rate_pe, avg_pe * 0.85)
 
     # ── FORWARD EPS (OTOMATIK) ──────────────────────────────────
     if fwd_eps_input:
@@ -557,6 +620,11 @@ def hesapla(symbol, pe_modu='average', manuel_pe=None, fwd_eps_input=None, sessi
         print(f"  Net Borç: ${nd/1e9:.2f}B {'(Net Nakit ✓)' if nd<0 else ''}")
         print(f"  10Y: {bond_y:.2f}% → F/K faiz bazlı: {rate_pe:.1f}x")
         print(f"  PEG: {peg_fmp:.2f} | Fwd PEG: {fwd_peg:.2f}" if peg_fmp and fwd_peg else "")
+        print()
+        print(f"  📊 REJİM: {rejim_detay}")
+        if not BOGA:
+            print(f"  ⚠️  AYI MODU AKTIF: PE muhafazakâr ({kullanilan_pe:.1f}x), "
+                  f"kalite primi ½, WACC +1%, final ×{AYI_REJIM_MULT:.2f}")
         print()
         print(f"  252G ORANLAR: P/E={avg_pe:.1f}x | P/S={his_252g.get('ps'):.1f}x | "
               f"EV/EBITDA={his_252g.get('ev_ebitda'):.1f}x | EV/Ciro={sirkket_ev_rev:.1f}x"
@@ -653,6 +721,8 @@ def hesapla(symbol, pe_modu='average', manuel_pe=None, fwd_eps_input=None, sessi
     # 10. Multi-stage DCF
     if ttm_fcf > 0:
         wacc = bond_y / 100 + 0.05
+        if not BOGA:
+            wacc += AYI_WACC_EK   # Ayı: sermaye maliyeti +1%
         dcf  = calc_dcf_multistage(ttm_fcf, fcf_gr, wacc, 0.025, nd, shares)
         if dcf: M['DCF (3 aşama)'] = dcf
 
@@ -710,15 +780,33 @@ def hesapla(symbol, pe_modu='average', manuel_pe=None, fwd_eps_input=None, sessi
             guven = max(0, min(100, round(100-cv)))
 
     # v4.x — Kalite skoru + Haklı Prim
+    # Ayı piyasasında kalite primini yarıya indir (çarpan sıkışması döneminde
+    # prim genişleme yerine daralır)
     gp_m_val = safe(rtm.get('grossProfitMarginTTM'))
     roic_val  = safe(mttm.get('returnOnInvestedCapitalTTM'))
     q_skor = calc_quality_score(price, bvps, roe, roic_val, fcf_ps, gp_m_val, inc_ann)
-    q_mult = quality_premium_mult(q_skor)
+    q_mult_ham = quality_premium_mult(q_skor)
+    if BOGA:
+        q_mult = q_mult_ham                        # Boğa: tam kalite primi
+    else:
+        q_mult = (q_mult_ham - 1) * 0.50 + 1.0   # Ayı: kalite primini %50 azalt
+
     adil_q = adil
     fark_q = fark
     if adil and fark and fark > 20 and q_mult > 1.0:
         adil_q = adil * q_mult
         fark_q = (price / adil_q - 1) * 100
+
+    # ── REJİM ÇARPANI — FİNAL UYGULAMA ────────────────────────
+    # Ayı piyasasında tüm metodların ağırlıklı ortalamasına çarpan uygula.
+    # Bu, tarihsel PE'nin boğa dönemine ait yüksek değerlerini düzeltir.
+    rejim_mult = BOGA_REJIM_MULT if BOGA else AYI_REJIM_MULT
+    if adil_q:
+        adil_q = adil_q * rejim_mult
+        fark_q = (price / adil_q - 1) * 100 if adil_q else fark_q
+    if adil:
+        adil = adil * rejim_mult
+        fark = (price / adil - 1) * 100 if adil else fark
 
     # Analist hedefi
     pt_data = fmp_get("price-target-summary", {"symbol": symbol})
@@ -728,6 +816,8 @@ def hesapla(symbol, pe_modu='average', manuel_pe=None, fwd_eps_input=None, sessi
         yon = "PAHALI 🔴" if fark > 20 else "UCUZ 🟢" if fark < -20 else "ADİL 🟡"
         print(f"  {'─'*62}")
         print(f"\n  ADİL DEĞER (Ağırlıklı):    ${adil:>10.2f}")
+        if not BOGA:
+            print(f"  Ayı Rejim Çarpanı:         ×{AYI_REJIM_MULT:.2f}  (SPY < SMA21)")
         print(f"  Güncel Fiyat:              ${price:>10.2f}")
         print(f"  Fark:                      {fark:>+10.1f}%  →  {yon}")
         print(f"  Güven Skoru:               {guven}/100")
@@ -755,6 +845,9 @@ def hesapla(symbol, pe_modu='average', manuel_pe=None, fwd_eps_input=None, sessi
         'fark_ham': fark,
         'quality_skor': q_skor,
         'quality_mult': q_mult,
+        'rejim': rejim,
+        'rejim_detay': rejim_detay,
+        'rejim_mult': rejim_mult,
 
         'guven': guven, 'hisse_tipi': hisse_tipi, 'analyst_target': analyst_target,
         'sector': sector_str, 'peg': peg_fmp, 'fwd_peg': fwd_peg,

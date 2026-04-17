@@ -397,6 +397,18 @@ def rapor_olustur(portfoyler, portfoy_syms, wl_syms, sonuclar, cycle, cycle_deta
     if cycle == "RISK_OFF":
         satirlar.append("> ⚠️ **UYARI:** RISK_OFF — UCUZ sinyalleri susturuldu. Sadece PAHALI uyarıları aktif.\n")
 
+    # Adil değer rejimi (adil_deger_calculator'dan)
+    try:
+        from adil_deger_calculator import get_market_regime, AYI_REJIM_MULT, BOGA_REJIM_MULT
+        _rejim, _spy, _sma21, _rejim_detay = get_market_regime()
+        _mult = BOGA_REJIM_MULT if _rejim == "BOGA" else AYI_REJIM_MULT
+        satirlar.append(f"**Değerleme Rejimi:** {_rejim_detay} | Çarpan: ×{_mult:.2f}\n")
+        if _rejim == "AYI":
+            satirlar.append("> 🐻 **AYI MODU:** Tüm adil değerler ×0.87 iskontolu. "
+                            "PE muhafazakâr, DCF WACC +1%, kalite primi ½.\n")
+    except Exception:
+        pass
+
     # ── Portföy pozisyonları ──────────────────────────────────
     satirlar.append("### Portföy Pozisyonları\n")
     satirlar.append("| Sembol | Portföy | Maliyet | Fiyat | Adil Değer | Fark% | Güven | Sinyal | K.Puanı | Çıkış? |")
