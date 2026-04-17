@@ -49,7 +49,7 @@ PEER_PRIM_ESIK    = 3.0   # peer ortalamasının 3x üstü → prim uyarısı
 # ─── PİYASA REJİMİ SABİTLERİ ───────────────────────────────────────────────
 # Boğa: SPY > SMA21 → tarihsel çarpanlar, tam kalite primi, WACC normal
 # Ayı:  SPY < SMA21 → faiz bazlı PE, yarı kalite primi, +1% WACC, %87 final değer
-BOGA_REJIM_MULT  = 1.00   # Boğa piyasası — değerleme değişmez
+BOGA_REJIM_MULT  = 1.12   # Boğa piyasası — çarpan genişlemesi (+%12 primi)
 AYI_REJIM_MULT   = 0.87   # Ayı piyasası — çarpan sıkışması (%13 iskonto)
 AYI_WACC_EK      = 0.01   # Ayı DCF WACC eki (+1%)
 
