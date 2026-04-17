@@ -33,7 +33,7 @@ from collections import deque
 
 BASE       = Path(__file__).parent.parent
 REGIME_FILE = BASE / "data" / "market_regime.json"
-FMP_KEY    = "g1GFJZtV5rCP49UCir4WuP56VjhmA6F8"
+FMP_KEY    = os.environ.get("FMP_API_KEY", "")
 FMP_BASE   = "https://financialmodelingprep.com/stable"
 
 

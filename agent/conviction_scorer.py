@@ -23,7 +23,7 @@ import sys
 REPO_ROOT = Path(__file__).parent.parent
 sys.path.insert(0, str(REPO_ROOT / "agent"))
 
-FMP_KEY  = "g1GFJZtV5rCP49UCir4WuP56VjhmA6F8"
+FMP_KEY  = os.environ.get("FMP_API_KEY", "")
 FMP_BASE = "https://financialmodelingprep.com/stable"
 MEMORY_DIR = Path(__file__).parent / "memory"
 

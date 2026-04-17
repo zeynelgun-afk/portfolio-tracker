@@ -23,13 +23,13 @@ from datetime import datetime
 from pathlib import Path
 
 # ── Config ────────────────────────────────────────────────────────────────────
-BOT_TOKEN    = os.environ.get("TELEGRAM_TOKEN", "8749931249:AAGTLVKLHx5grcGlJhuodg-DbFDkFYjpCcI")
-PRIVATE_CHAT = os.environ.get("TELEGRAM_PRIVATE_CHAT", "1403072107")
+BOT_TOKEN    = os.environ.get("TELEGRAM_TOKEN", "")
+PRIVATE_CHAT = os.environ.get("TELEGRAM_PRIVATE_CHAT", "")
 GROUP_CHAT   = "-1003827034395"
 API_BASE     = f"https://api.telegram.org/bot{BOT_TOKEN}"
 REPO_ROOT    = Path(__file__).parent.parent
 OFFSET_FILE  = REPO_ROOT / "data" / "telegram_offset.json"
-FMP_KEY      = "g1GFJZtV5rCP49UCir4WuP56VjhmA6F8"
+FMP_KEY      = os.environ.get("FMP_API_KEY", "")
 FMP_BASE     = "https://financialmodelingprep.com/stable"
 
 # Yanıt gönderilebilecek chat ID'ler (güvenlik)

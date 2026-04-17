@@ -21,7 +21,7 @@ import pytz
 
 REPO_ROOT = Path(__file__).parent.parent
 TR_TZ     = pytz.timezone("Europe/Istanbul")
-FMP_KEY   = "g1GFJZtV5rCP49UCir4WuP56VjhmA6F8"
+FMP_KEY   = os.environ.get("FMP_API_KEY", "")
 FMP_BASE  = "https://financialmodelingprep.com/stable"
 
 # Bilinen tema→hisse evreni (statik başlangıç, Darwin evrimleştirir)

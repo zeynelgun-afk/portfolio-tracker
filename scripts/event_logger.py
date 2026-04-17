@@ -25,8 +25,8 @@ import requests
 from datetime import datetime
 
 # --- CONFIG ---
-BOT_TOKEN  = os.environ.get("TELEGRAM_BOT_TOKEN",  "8749931249:AAGTLVKLHx5grcGlJhuodg-DbFDkFYjpCcI")
-PRIVATE_ID = os.environ.get("TELEGRAM_PRIVATE_ID", "1403072107")   # sadece Zeynel görür
+BOT_TOKEN  = os.environ.get("TELEGRAM_BOT_TOKEN", "")
+PRIVATE_ID = os.environ.get("TELEGRAM_PRIVATE_ID", "") or os.environ.get("TELEGRAM_PRIVATE_CHAT", "")   # sadece Zeynel görür
 CHAT_ID    = os.environ.get("TELEGRAM_CHAT_ID",    "-1003827034395")
 API        = f"https://api.telegram.org/bot{BOT_TOKEN}"
 REPO_ROOT  = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))

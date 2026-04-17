@@ -17,11 +17,12 @@ Modlar:  --mode balanced | dividend | aggressive | all
 Süre:    --mode all için ~15-25 dk
 """
 
+import os
 import urllib.request, json, time, argparse
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timedelta
 
-API_KEY   = 'g1GFJZtV5rCP49UCir4WuP56VjhmA6F8'
+API_KEY   = os.environ.get("FMP_API_KEY", "")
 BASE      = 'https://financialmodelingprep.com/stable'
 TODAY     = datetime.now().strftime('%Y-%m-%d')
 NOW       = datetime.now().isoformat()

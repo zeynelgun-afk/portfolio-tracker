@@ -13,7 +13,7 @@ from pathlib import Path
 import pytz
 
 TR_TZ    = pytz.timezone("Europe/Istanbul")
-FMP_KEY  = "g1GFJZtV5rCP49UCir4WuP56VjhmA6F8"
+FMP_KEY  = os.environ.get("FMP_API_KEY", "")
 FMP_BASE = "https://financialmodelingprep.com/stable"
 
 

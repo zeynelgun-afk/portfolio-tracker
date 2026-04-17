@@ -28,7 +28,7 @@ import pytz
 REPO_ROOT  = Path(__file__).parent.parent
 MEMORY_DIR = Path(__file__).parent / "memory"
 TR_TZ      = pytz.timezone("Europe/Istanbul")
-FMP_KEY    = "g1GFJZtV5rCP49UCir4WuP56VjhmA6F8"
+FMP_KEY    = os.environ.get("FMP_API_KEY", "")
 FMP_BASE   = "https://financialmodelingprep.com/stable"
 
 # Mevcut screener parametreleri

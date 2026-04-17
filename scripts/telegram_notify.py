@@ -25,9 +25,9 @@ import re
 from datetime import datetime
 
 # --- CONFIG ---
-TELEGRAM_BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN", "8749931249:AAGTLVKLHx5grcGlJhuodg-DbFDkFYjpCcI")
+TELEGRAM_BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN", "")
 TELEGRAM_CHAT_ID    = os.environ.get("TELEGRAM_CHAT_ID",    "-1003827034395")  # Finzora grubu
-TELEGRAM_PRIVATE_ID = os.environ.get("TELEGRAM_PRIVATE_ID", "1403072107")       # Zeynel özel
+TELEGRAM_PRIVATE_ID = os.environ.get("TELEGRAM_PRIVATE_ID", "") or os.environ.get("TELEGRAM_PRIVATE_CHAT", "")       # Zeynel özel
 TELEGRAM_API = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}"
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))

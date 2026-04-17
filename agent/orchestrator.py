@@ -1232,7 +1232,7 @@ def _execute_portfolio_opportunities(faz: str, market: dict) -> list:
         print(f"[Execution] stop kilidi okuma hatası: {_e_lock}")
 
     # Bugün stop yemiş pozisyonların sektörlerini FMP'den çek
-    _FMP_KEY = "g1GFJZtV5rCP49UCir4WuP56VjhmA6F8"
+    _FMP_KEY = os.environ.get("FMP_API_KEY", "")
     if _bugun_stop_semboller:
         import requests as _req
         for _stop_sym in _bugun_stop_semboller:

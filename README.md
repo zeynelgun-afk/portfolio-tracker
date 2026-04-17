@@ -26,9 +26,9 @@ Finzora AI, ABD borsasında üç portföyü ve bir swing trade hesabını otonom
 finzora-ai/
 │
 ├── agent/                          # Otonom karar motoru
-│   ├── orchestrator.py             # Ana orkestratör — sabah/seans/kapanış/haftalık
+│   ├── orchestrator.py             # Ana orkestratör — sabah/seans/kapanış/haftalık (~2000 satır)
 │   ├── execution_engine.py         # Portföy alım/satım executor
-│   ├── claude_agent.py             # Anthropic API bağlantısı
+│   ├── claude_agent.py             # Anthropic API bağlantısı (Opus 4.6)
 │   ├── swing_manager.py            # Swing trade yönetimi
 │   ├── k_engine.py                 # K-kuralları otomatik kontrolcü
 │   ├── opportunity_finder.py       # Portföy fırsat tarayıcı
@@ -37,10 +37,25 @@ finzora-ai/
 │   ├── learning_engine.py          # Geçmiş trade'den öğrenme
 │   ├── specialist_agents.py        # Çok-ajan analiz (Makro/Sektör/Sinyal/Risk)
 │   ├── adversarial_debate.py       # Bull vs Bear otomatik tartışma
+│   ├── multi_cohort.py             # Janus kör-nokta tespiti + yeni ajan önerisi
 │   ├── darwin_evolution.py         # Prompt/strateji evrim motoru
+│   ├── prompt_evolver.py           # Prompt mutasyon mekaniği
+│   ├── rule_updater.py             # Haftalık kural gözden geçirme
+│   ├── prediction_logger.py        # Tahmin kayıt ve doğruluk skorlama
+│   ├── conviction_scorer.py        # Pozisyon kararlılık puanlama
+│   ├── dry_run_manager.py          # Canlıya almadan simülasyon
+│   ├── screener_optimizer.py       # Tarayıcı parametre optimizasyonu
+│   ├── trade_feedback.py           # Kapanan trade otomatik geri bildirim
+│   ├── macro_intelligence.py       # Makro bağlam (fed, vix, ekonomi)
+│   ├── theme_manager.py            # Tematik skor yönetimi
+│   ├── tema_portfolio_tracker.py   # Tema bazlı P/L takibi
+│   ├── web_researcher.py           # Haber ve araştırma toplayıcı
+│   ├── twitter_monitor.py          # Twitter sinyal takibi (RapidAPI)
 │   ├── backtester.py               # Geriye dönük test
-│   ├── tools.py                    # FMP + Telegram + veri araçları
 │   ├── memory_manager.py           # Token tasarruflu bağlam yönetimi
+│   ├── tools.py                    # FMP + Telegram + veri araçları
+│   ├── fmp_client.py               # ⭐ Ortak FMP wrapper (retry + rate limit)
+│   ├── _config.py                  # ⭐ Merkezi env konfigürasyonu
 │   └── memory/                     # Kalıcı agent hafızası
 │       ├── market_regime.json      # Aktif piyasa rejimi
 │       ├── theme_scores.json       # Tema skorları (1-10, haftalık)
@@ -189,4 +204,34 @@ Kaldırılan: K-01, K-03, K-08, K-14 (psikoloji testi ile değiştirildi), K-18 
 
 ---
 
-*Son güncelleme: 12 Nisan 2026 | Finzora AI*
+## Geliştirme Notları (17 Nisan 2026 güncellemesi)
+
+**Merkezi konfigürasyon**: Tüm API anahtarları artık `agent/_config.py` üzerinden okunur. Hardcoded fallback kaldırıldı. Yeni kod:
+
+```python
+from agent._config import FMP_KEY, TELEGRAM_TOKEN, require
+
+# Zorunlu anahtar → eksikse exception
+api_key = require("ANTHROPIC_API_KEY")
+
+# Opsiyonel anahtar → eksikse stderr uyarısı
+from agent._config import warn_if_missing
+warn_if_missing(["RAPIDAPI_KEY"])
+```
+
+**Ortak FMP istemcisi**: `agent/fmp_client.py` yeni dosyalarda kullanılmalı. Retry + 429 backoff + 402 tespiti + isteğe bağlı Telegram bildirimi içerir. Eski `fmp_get` kopyaları hâlâ çalışıyor, yenileme sırasında değiştirilebilir.
+
+**Şema standartlaştırma**: `data/portfolios/*.json` dosyaları 25 alanlık tek kanonik şemaya sabitlendi. Meta alan `_sema_versiyonu` eklendi. Yeni alanlar varsayılanla doldu (cb_kaynak, stop_aciklama, stop_guncelleme).
+
+**Local geliştirme için**: Repo kök dizininde `.env` dosyası oluştur:
+```
+ANTHROPIC_API_KEY=sk-ant-...
+FMP_API_KEY=...
+TELEGRAM_TOKEN=...
+TELEGRAM_PRIVATE_CHAT=...
+```
+`.env` zaten `.gitignore`'da. Script'ler çalıştırılmadan önce `source .env && export $(cut -d= -f1 .env)` ile env'e yüklenmeli.
+
+---
+
+*Son güncelleme: 17 Nisan 2026 | Finzora AI*

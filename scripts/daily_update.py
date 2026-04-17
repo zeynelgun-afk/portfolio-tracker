@@ -24,7 +24,7 @@ import subprocess
 from pathlib import Path
 
 # ====== KONFIGURASYON ======
-FMP_API_KEY = "g1GFJZtV5rCP49UCir4WuP56VjhmA6F8"
+FMP_API_KEY = os.environ.get("FMP_API_KEY", "")
 FMP_BASE = "https://financialmodelingprep.com/stable"
 REPO_ROOT = Path(__file__).parent.parent  # portfolio-tracker kök dizini
 

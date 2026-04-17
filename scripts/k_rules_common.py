@@ -16,7 +16,7 @@ from datetime import datetime, timedelta
 from pathlib import Path
 
 # --- CONFIG ---
-FMP_KEY = os.environ.get("FMP_KEY", "g1GFJZtV5rCP49UCir4WuP56VjhmA6F8")
+FMP_KEY = os.environ.get("FMP_KEY", "")
 FMP_BASE = "https://financialmodelingprep.com/stable"
 REPO_ROOT = Path(__file__).resolve().parent.parent
 DATA_DIR = REPO_ROOT / "data"

@@ -23,9 +23,9 @@ Kullanım:
 import requests, math, argparse, json, os, sys
 from datetime import datetime, timedelta
 
-FMP_API_KEY  = "g1GFJZtV5rCP49UCir4WuP56VjhmA6F8"
+FMP_API_KEY  = os.environ.get("FMP_API_KEY", "")
 FMP_BASE     = "https://financialmodelingprep.com/stable"
-TG_TOKEN     = "8749931249:AAGTLVKLHx5grcGlJhuodg-DbFDkFYjpCcI"
+TG_TOKEN     = os.environ.get("TELEGRAM_TOKEN", "")
 TG_CHAT      = "-1003827034395"
 REPO_ROOT    = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 

@@ -28,7 +28,7 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).parent.parent
 FMP_BASE  = "https://financialmodelingprep.com/stable"
-FMP_KEY   = "g1GFJZtV5rCP49UCir4WuP56VjhmA6F8"
+FMP_KEY   = os.environ.get("FMP_API_KEY", "")
 
 sys.path.insert(0, str(REPO_ROOT / "scripts"))
 

@@ -27,9 +27,9 @@ REPO   = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(REPO, "scripts"))
 
 import requests
-FMP_KEY   = "g1GFJZtV5rCP49UCir4WuP56VjhmA6F8"
+FMP_KEY   = os.environ.get("FMP_API_KEY", "")
 FMP_BASE  = "https://financialmodelingprep.com/stable"
-TG_TOKEN  = "8749931249:AAGTLVKLHx5grcGlJhuodg-DbFDkFYjpCcI"
+TG_TOKEN  = os.environ.get("TELEGRAM_TOKEN", "")
 TG_CHAT   = "-1003827034395"
 
 # Agresif v2 tedarik zinciri evreni

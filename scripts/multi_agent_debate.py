@@ -22,7 +22,7 @@ from pathlib import Path
 from datetime import datetime, date
 
 BASE      = Path(__file__).parent.parent
-FMP_KEY   = "g1GFJZtV5rCP49UCir4WuP56VjhmA6F8"
+FMP_KEY   = os.environ.get("FMP_API_KEY", "")
 FMP_BASE  = "https://financialmodelingprep.com/stable"
 
 SCAN_FILE   = BASE / "data" / "swing_entry_signals.json"

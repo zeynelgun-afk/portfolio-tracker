@@ -18,8 +18,8 @@ from pathlib import Path
 ROOT = Path(__file__).parent.parent
 sys.path.insert(0, str(ROOT / "scripts"))
 
-BOT_TOKEN  = os.environ.get("TELEGRAM_BOT_TOKEN",  "8749931249:AAGTLVKLHx5grcGlJhuodg-DbFDkFYjpCcI")
-PRIVATE_ID = os.environ.get("TELEGRAM_PRIVATE_ID", "1403072107")
+BOT_TOKEN  = os.environ.get("TELEGRAM_BOT_TOKEN", "")
+PRIVATE_ID = os.environ.get("TELEGRAM_PRIVATE_ID", "") or os.environ.get("TELEGRAM_PRIVATE_CHAT", "")
 API        = f"https://api.telegram.org/bot{BOT_TOKEN}"
 LOG_FILE   = ROOT / "logs" / "event_log.jsonl"
 

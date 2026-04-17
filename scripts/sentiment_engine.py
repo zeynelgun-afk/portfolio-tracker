@@ -22,7 +22,7 @@ from datetime import datetime, timedelta
 from collections import defaultdict
 
 BASE         = Path(__file__).parent.parent
-FMP_KEY      = "g1GFJZtV5rCP49UCir4WuP56VjhmA6F8"
+FMP_KEY      = os.environ.get("FMP_API_KEY", "")
 FMP_BASE     = "https://financialmodelingprep.com/stable"
 RAPIDAPI_KEY = "fe410e5222msh20c82b1bc9f4905p10ad02jsnb1c2402c92b7"
 

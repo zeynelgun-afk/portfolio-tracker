@@ -9,10 +9,10 @@
 
 const https = require('https');
 
-const BOT_TOKEN    = process.env.TELEGRAM_TOKEN    || '8749931249:AAGTLVKLHx5grcGlJhuodg-DbFDkFYjpCcI';
-const PRIVATE_CHAT = process.env.TELEGRAM_PRIVATE_CHAT || '1403072107';
+const BOT_TOKEN    = process.env.TELEGRAM_TOKEN || '';
+const PRIVATE_CHAT = process.env.TELEGRAM_PRIVATE_CHAT || '';
 const GROUP_CHAT   = '-1003827034395';
-const FMP_KEY      = process.env.FMP_API_KEY       || 'g1GFJZtV5rCP49UCir4WuP56VjhmA6F8';
+const FMP_KEY      = process.env.FMP_API_KEY || '';
 const FMP_BASE     = 'https://financialmodelingprep.com/stable';
 const TG_BASE      = `https://api.telegram.org/bot${BOT_TOKEN}`;
 

@@ -1,1 +1,20 @@
-requests>=2.28.0
+# Finzora AI — Python bağımlılıkları
+# Sürüm alt sınırları: stabilite için test edildi.
+# Üst sınır yok — Dependabot yönetsin.
+
+# ── Çekirdek ──────────────────────────────────────────────────────────────────
+requests>=2.28.0           # HTTP istemci (FMP, Telegram, web)
+pytz>=2023.3               # Zaman dilimi (TR/ET)
+
+# ── AI ─────────────────────────────────────────────────────────────────────────
+anthropic>=0.34.0          # Claude API — karar motoru
+
+# ── Web scraping / parsing ────────────────────────────────────────────────────
+beautifulsoup4>=4.12.0     # Haber ve web sayfası parsing
+
+# ── Görsel üretimi ────────────────────────────────────────────────────────────
+Pillow>=10.0.0             # scripts/risk_panel_generator.py — 1080x1920 PNG
+
+# ── Not: Aşağıdakiler standart kütüphane, pip ile kurulmaz ───────────────────
+# json, csv, pathlib, datetime, concurrent.futures, urllib, subprocess,
+# argparse, re, math, collections, itertools, typing, os, sys, time

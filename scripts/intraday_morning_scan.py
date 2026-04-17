@@ -12,7 +12,7 @@ import json
 import sys
 
 # ─── KONFİGÜRASYON ────────────────────────────────────────────
-FMP_KEY  = "g1GFJZtV5rCP49UCir4WuP56VjhmA6F8"
+FMP_KEY  = os.environ.get("FMP_API_KEY", "")
 FMP_BASE = "https://financialmodelingprep.com/stable"
 
 CAPITAL          = 5_000      # İşlem başı sermaye ($)

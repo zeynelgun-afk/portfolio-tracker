@@ -16,10 +16,11 @@ Kullanım:
   python3 scripts/session_watchlist_scan.py --alert-only # sadece uyarılar
 """
 
+import os
 import json, urllib.request, time, argparse
 from datetime import datetime
 
-API_KEY = 'g1GFJZtV5rCP49UCir4WuP56VjhmA6F8'
+API_KEY = os.environ.get("FMP_API_KEY", "")
 BASE    = 'https://financialmodelingprep.com/stable'
 
 def fetch(url, timeout=8):

@@ -44,7 +44,7 @@ PORTFOLIO_MAP = {
 MAX_POSITIONS = {"aggressive": 6, "balanced": 6, "dividend": 6}
 MAX_WEIGHT    = {"aggressive": 0.20, "balanced": 0.25, "dividend": 0.15}
 
-_FMP_KEY = "g1GFJZtV5rCP49UCir4WuP56VjhmA6F8"
+_FMP_KEY = os.environ.get("FMP_API_KEY", "")
 
 
 def compute_atr_stop(symbol: str, price: float, fallback_pct: float = 0.08):
@@ -237,7 +237,7 @@ def buy_position(
             import requests as _req
             pf_info = _req.get(
                 f"https://financialmodelingprep.com/stable/profile",
-                params={"symbol": symbol, "apikey": "g1GFJZtV5rCP49UCir4WuP56VjhmA6F8"},
+                params={"symbol": symbol, "apikey": os.environ.get("FMP_API_KEY", "")},
                 timeout=6
             ).json()
             pf_info = pf_info[0] if isinstance(pf_info, list) and pf_info else {}

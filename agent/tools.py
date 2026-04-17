@@ -25,11 +25,19 @@ import requests
 from pathlib import Path
 from datetime import datetime
 
-FMP_KEY      = os.environ.get("FMP_API_KEY", "g1GFJZtV5rCP49UCir4WuP56VjhmA6F8")
-FMP_BASE     = "https://financialmodelingprep.com/stable"
-BOT_TOKEN    = os.environ.get("TELEGRAM_TOKEN", "") or "8749931249:AAGTLVKLHx5grcGlJhuodg-DbFDkFYjpCcI"
-PRIVATE_CHAT = os.environ.get("TELEGRAM_PRIVATE_CHAT", "") or "1403072107"
-REPO_ROOT    = Path(__file__).parent.parent
+# Merkezi config (eksik env'de uyarı verir, crash etmez)
+try:
+    from _config import FMP_KEY, FMP_BASE, TELEGRAM_TOKEN, TELEGRAM_PRIVATE_CHAT
+    BOT_TOKEN = TELEGRAM_TOKEN
+    PRIVATE_CHAT = TELEGRAM_PRIVATE_CHAT
+except ImportError:
+    # Geriye uyumluluk: _config.py yoksa direkt env'den oku
+    FMP_KEY = os.environ.get("FMP_API_KEY", "")
+    FMP_BASE = "https://financialmodelingprep.com/stable"
+    BOT_TOKEN = os.environ.get("TELEGRAM_TOKEN", "")
+    PRIVATE_CHAT = os.environ.get("TELEGRAM_PRIVATE_CHAT", "")
+
+REPO_ROOT = Path(__file__).parent.parent
 
 
 # ── FMP Yardımcısı ────────────────────────────────────────────────────────────
@@ -142,7 +150,7 @@ def get_real_vix() -> dict:
 
     # ── 2. FMP fallback ───────────────────────────────────────────────────────
     try:
-        fmp_key = os.environ.get("FMP_API_KEY", "g1GFJZtV5rCP49UCir4WuP56VjhmA6F8")
+        fmp_key = os.environ.get("FMP_API_KEY", "")
         r = requests.get(
             "https://financialmodelingprep.com/stable/quote",
             params={"symbol": "VIXY", "apikey": fmp_key},

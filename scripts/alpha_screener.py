@@ -22,6 +22,7 @@ Araştırma dayanakları:
   python scripts/alpha_screener.py --mode all
 """
 
+import os
 import requests
 import json
 import time
@@ -31,7 +32,7 @@ from pathlib import Path
 import argparse
 
 BASE     = "https://financialmodelingprep.com/stable"
-API_KEY  = "g1GFJZtV5rCP49UCir4WuP56VjhmA6F8"
+API_KEY  = os.environ.get("FMP_API_KEY", "")
 OUT_DIR  = Path(__file__).parent.parent / "data"
 REPO_ROOT = Path(__file__).parent.parent
 
