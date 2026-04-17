@@ -49,7 +49,7 @@ jobs:
           python-version: '3.11'
 
       - name: Bagimliliklar
-        run: pip install anthropic requests pytz beautifulsoup4
+        run: pip install anthropic requests pytz beautifulsoup4 voyageai chromadb
 
       - name: Git kimlik
         run: |
@@ -81,9 +81,10 @@ jobs:
         env:
           ANTHROPIC_API_KEY:     ${{ secrets.ANTHROPIC_API_KEY }}
           FMP_API_KEY:           ${{ secrets.FMP_API_KEY }}
-          TELEGRAM_TOKEN:        ${{ secrets.TELEGRAM_TOKEN }}
-          TELEGRAM_PRIVATE_CHAT: ${{ secrets.TELEGRAM_PRIVATE_CHAT }}
+          TELEGRAM_TOKEN:        ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_PRIVATE_CHAT: ${{ secrets.TELEGRAM_CHAT_ID }}
           RAPIDAPI_KEY:          ${{ secrets.RAPIDAPI_KEY }}
+          VOYAGE_API_KEY:        ${{ secrets.VOYAGE_API_KEY }}
           AGENT_MODE:            ${{ steps.mode.outputs.mode }}
           PYTHONUNBUFFERED:      '1'
 
@@ -91,8 +92,8 @@ jobs:
         if: success() && steps.mode.outputs.mode == 'closing'
         run: python scripts/heartbeat.py --mode ozet
         env:
-          TELEGRAM_BOT_TOKEN:  ${{ secrets.TELEGRAM_TOKEN }}
-          TELEGRAM_PRIVATE_ID: ${{ secrets.TELEGRAM_PRIVATE_CHAT }}
+          TELEGRAM_BOT_TOKEN:  ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_PRIVATE_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
 
       - name: Hata bildirimi
         if: failure()
@@ -104,8 +105,8 @@ jobs:
             --detay "Commit: ${{ github.sha }}" \
             --kaynak "github_actions" || true
         env:
-          TELEGRAM_BOT_TOKEN:  ${{ secrets.TELEGRAM_TOKEN }}
-          TELEGRAM_PRIVATE_ID: ${{ secrets.TELEGRAM_PRIVATE_CHAT }}
+          TELEGRAM_BOT_TOKEN:  ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_PRIVATE_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
 
       - name: Degisiklikleri kaydet
         run: |

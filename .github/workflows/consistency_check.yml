@@ -38,7 +38,7 @@ jobs:
       - name: Telegram bildirimi (sorun varsa)
         if: failure()
         env:
-          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: |
           MESAJ="⚠️ K-Kural Tutarsızlığı Tespit Edildi\n\nTetikleyen commit: ${{ github.event.head_commit.message }}\n\n$(head -30 check_output.txt)"

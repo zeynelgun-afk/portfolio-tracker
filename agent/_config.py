@@ -18,8 +18,15 @@ from pathlib import Path
 
 # ── Zorunlu anahtarlar ────────────────────────────────────────────────────────
 FMP_KEY = os.environ.get("FMP_API_KEY", "").strip()
-TELEGRAM_TOKEN = os.environ.get("TELEGRAM_TOKEN", "").strip()
-TELEGRAM_PRIVATE_CHAT = os.environ.get("TELEGRAM_PRIVATE_CHAT", "").strip()
+# Telegram: iki farklı naming convention destekle (TELEGRAM_TOKEN vs TELEGRAM_BOT_TOKEN)
+TELEGRAM_TOKEN = (
+    os.environ.get("TELEGRAM_TOKEN", "").strip()
+    or os.environ.get("TELEGRAM_BOT_TOKEN", "").strip()
+)
+TELEGRAM_PRIVATE_CHAT = (
+    os.environ.get("TELEGRAM_PRIVATE_CHAT", "").strip()
+    or os.environ.get("TELEGRAM_CHAT_ID", "").strip()
+)
 ANTHROPIC_KEY = os.environ.get("ANTHROPIC_API_KEY", "").strip()
 
 # ── Opsiyonel anahtarlar ──────────────────────────────────────────────────────

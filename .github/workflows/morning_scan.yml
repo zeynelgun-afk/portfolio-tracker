@@ -148,5 +148,5 @@ jobs:
             --detay "GitHub Actions hatasi. Commit: ${{ github.sha }}" \
             --kaynak "github_actions"
         env:
-          TELEGRAM_BOT_TOKEN:  ${{ secrets.TELEGRAM_TOKEN }}
-          TELEGRAM_PRIVATE_ID: ${{ secrets.TELEGRAM_PRIVATE_CHAT }}
+          TELEGRAM_BOT_TOKEN:  ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_PRIVATE_ID: ${{ secrets.TELEGRAM_CHAT_ID }}

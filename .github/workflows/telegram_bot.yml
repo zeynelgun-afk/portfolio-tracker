@@ -34,8 +34,8 @@ jobs:
       - name: Bot calistir
         run: python scripts/telegram_bot.py
         env:
-          TELEGRAM_TOKEN:        ${{ secrets.TELEGRAM_TOKEN }}
-          TELEGRAM_PRIVATE_CHAT: ${{ secrets.TELEGRAM_PRIVATE_CHAT }}
+          TELEGRAM_TOKEN:        ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_PRIVATE_CHAT: ${{ secrets.TELEGRAM_CHAT_ID }}
           FMP_API_KEY:           ${{ secrets.FMP_API_KEY }}
           PYTHONUNBUFFERED: '1'
 
