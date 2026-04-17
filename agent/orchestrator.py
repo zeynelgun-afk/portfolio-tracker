@@ -1211,32 +1211,140 @@ def _execute_portfolio_opportunities(faz: str, market: dict) -> list:
 
     aksiyonlar = []
 
+    # Bugün stop tetiklenen sembolleri ve sektörlerini topla (aynı gün yeniden alım kilidi)
+    _bugun_str = datetime.now(TR_TZ).strftime("%Y-%m-%d")
+    _bugun_stop_semboller = set()
+    _bugun_stop_sektorler = set()
+    try:
+        import csv as _csv
+        _tx_path = REPO_ROOT / "data" / "transactions.csv"
+        if _tx_path.exists():
+            with open(_tx_path, "r", encoding="utf-8") as _f:
+                _rdr = _csv.reader(_f)
+                for _row in _rdr:
+                    if len(_row) >= 7 and _row[0] == _bugun_str and _row[1] == "SELL":
+                        _r_reason = _row[6].lower() if _row[6] else ""
+                        if "stop" in _r_reason or "k-06" in _r_reason:
+                            _bugun_stop_semboller.add(_row[2])
+    except Exception as _e_lock:
+        print(f"[Execution] stop kilidi okuma hatası: {_e_lock}")
+
+    # Bugün stop yemiş pozisyonların sektörlerini FMP'den çek
+    _FMP_KEY = "g1GFJZtV5rCP49UCir4WuP56VjhmA6F8"
+    if _bugun_stop_semboller:
+        import requests as _req
+        for _stop_sym in _bugun_stop_semboller:
+            try:
+                _pr = _req.get(
+                    "https://financialmodelingprep.com/stable/profile",
+                    params={"symbol": _stop_sym, "apikey": _FMP_KEY},
+                    timeout=6
+                )
+                _pd = _pr.json()
+                if isinstance(_pd, list) and _pd:
+                    _sec = _pd[0].get("sector", "")
+                    if _sec:
+                        _bugun_stop_sektorler.add(_sec)
+            except Exception:
+                continue
+        print(f"[Execution] Bugün stop tetiklenen: {_bugun_stop_semboller} | sektörler: {_bugun_stop_sektorler}")
+
     for aday in buy_list[:5]:  # Seans başına max 5 aday değerlendir
         sym     = aday.get("symbol", "")
         portföy = aday.get("portföy", "aggressive")
-        stop    = float(aday.get("stop", 0))
         target  = float(aday.get("target", 0))
         reason  = aday.get("reason", "")
         tema    = aday.get("tema", "")
 
-        # Canlı fiyat
-        q = market.get(sym, {})
-        price = float(q.get("price") or q.get("previousClose") or 0)
-        if not price:
-            # market dict'te yoksa sabah fiyatını kullan
-            price = float(aday.get("price", 0))
-        if not price:
+        # K-1: Aynı gün stop kilidi (revenge trade önleme)
+        if sym in _bugun_stop_semboller:
+            print(f"[Execution] {sym}: bugün stop tetiklenmişti, aynı gün yeniden alım kilidi")
             continue
 
-        # Fiyat sabah önerilen seviyeye yakın mı? (%2 tolerans)
+        # K-2: Canlı fiyat FMP'den ZORUNLU çek (previousClose fallback kaldırıldı)
+        import requests as _req
+        try:
+            _r = _req.get(
+                "https://financialmodelingprep.com/stable/quote",
+                params={"symbol": sym, "apikey": _FMP_KEY},
+                timeout=8
+            )
+            _qd = _r.json()
+            if not (isinstance(_qd, list) and _qd):
+                print(f"[Execution] {sym}: FMP quote boş, alım atlandı")
+                continue
+            price      = float(_qd[0].get("price", 0) or 0)
+            prev_close = float(_qd[0].get("previousClose", 0) or 0)
+        except Exception as _e_q:
+            print(f"[Execution] {sym}: canlı fiyat çekilemedi ({_e_q}), alım atlandı")
+            continue
+
+        if not price or not prev_close:
+            print(f"[Execution] {sym}: fiyat geçersiz (price={price}, prev={prev_close})")
+            continue
+
+        # K-3: Gap-down koruması — açılış dünden %2.5+ aşağıdaysa alım yok
+        gap_pct = (price - prev_close) / prev_close * 100
+        if gap_pct < -2.5:
+            print(f"[Execution] {sym}: gap-down %{gap_pct:.2f} — alım atlandı (gap-down koruması)")
+            continue
+
+        # K-4: Aynı sektörde bugün stop olan varsa yarım pozisyona düş
+        sektor_penalty = False
+        if tema and tema in _bugun_stop_sektorler:
+            print(f"[Execution] {sym}: {tema} sektöründe bugün stop var, pozisyon boyutu yarıya iniyor")
+            sektor_penalty = True
+
+        # Fiyat sabah önerilen seviyeye yakın mı? (%3 tolerans)
         sabah_fiyat = float(aday.get("price", price))
-        if abs(price - sabah_fiyat) / sabah_fiyat > 0.03:
+        if sabah_fiyat and abs(price - sabah_fiyat) / sabah_fiyat > 0.03:
             print(f"[Execution] {sym}: fiyat çok kaydı (sabah ${sabah_fiyat:.2f} → şimdi ${price:.2f})")
             continue
 
-        # Stop güncelle (canlı fiyatla)
+        # K-5: ATR14 tabanlı stop — kör %5 yerine gerçek volatilite
+        try:
+            _hr = _req.get(
+                "https://financialmodelingprep.com/stable/historical-price-eod/full",
+                params={"symbol": sym, "apikey": _FMP_KEY},
+                timeout=10
+            )
+            _hd = _hr.json()
+            if isinstance(_hd, list) and len(_hd) >= 15:
+                _trs = []
+                for _i in range(0, 14):
+                    _h = _hd[_i]["high"]
+                    _l = _hd[_i]["low"]
+                    _pc = _hd[_i+1]["close"]
+                    _trs.append(max(_h-_l, abs(_h-_pc), abs(_l-_pc)))
+                atr14 = sum(_trs) / len(_trs)
+                stop = round(price - 2.0 * atr14, 2)
+                # SMA50 confluence — stop SMA50 yakınındaysa SMA50'nin %1 altına hizala
+                if len(_hd) >= 50:
+                    sma50 = sum(_d["close"] for _d in _hd[:50]) / 50
+                    if abs(stop - sma50) / price < 0.015 and price > sma50:
+                        stop = round(sma50 * 0.99, 2)
+                # Minimum %5, maksimum %10 stop mesafesi
+                stop_pct = (price - stop) / price
+                if stop_pct < 0.05:
+                    stop = round(price * 0.95, 2)
+                elif stop_pct > 0.10:
+                    stop = round(price * 0.92, 2)
+                if not target or target <= price:
+                    target = round(price + 4.0 * atr14, 2)
+                print(f"[Execution] {sym}: ATR14={atr14:.2f} → stop=${stop:.2f} (-%{(price-stop)/price*100:.2f})")
+            else:
+                stop = round(price * 0.92, 2)  # Fallback %8
+                if not target or target <= price:
+                    target = round(price * 1.12, 2)
+        except Exception as _e_atr:
+            print(f"[Execution] {sym}: ATR hesaplama hatası ({_e_atr}), fallback stop %8")
+            stop = round(price * 0.92, 2)
+            if not target or target <= price:
+                target = round(price * 1.12, 2)
+
+        # Canlı fiyat zaten stop altına düşmüşse atla
         if price < stop:
-            print(f"[Execution] {sym}: fiyat stop altına geçmiş, atlandı")
+            print(f"[Execution] {sym}: fiyat ({price}) stop ({stop}) altına geçmiş, atlandı")
             continue
 
         # K-engine son kontrol (canlı VIX ile)
@@ -1265,6 +1373,9 @@ def _execute_portfolio_opportunities(faz: str, market: dict) -> list:
         nakit = status["nakit"]
         slot  = status["slot"]
         tutar = min(nakit * 0.25, 15000, nakit / max(slot, 1))
+        # K-4 penalty: aynı sektörde bugün stop yedikse yarım pozisyon
+        if sektor_penalty:
+            tutar = tutar * 0.5
         if tutar < 1000:
             continue
 

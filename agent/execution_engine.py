@@ -187,12 +187,15 @@ def buy_position(
             "agirlik_yuzde":        round(gercek_tutar / toplam * 100, 2),
             "giris_tarihi":         datetime.now(TR_TZ).strftime("%Y-%m-%d"),
             "stop_loss":            round(stop, 2),
-            "zarar_kes":            round(stop, 2),
             "hedef_fiyat":          round(target, 2),
             "tema":                 tema,
             "giris_nedeni":         reason[:200],
             "son_guncelleme":       datetime.now(TR_TZ).strftime("%Y-%m-%d"),
-            "pnl_pct":              0.0,
+            "cb_kaynak":            f"transactions-{datetime.now(TR_TZ).strftime('%Y-%m-%d')}",
+            "stop_faz":             1,
+            "zirve_fiyat":          round(price, 2),
+            "stop_mesafe_pct":      round((price - stop) / price * 100, 2),
+            "durum":                "✅ Normal",
         }
         pozlar.append(yeni_poz)
         aksiyon = "YENİ POZİSYON"
