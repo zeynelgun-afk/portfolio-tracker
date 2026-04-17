@@ -1756,11 +1756,19 @@ def _execute_claude_decisions(kararlar: list, market: dict) -> list:
         if not sembol or not portfoy:
             continue
 
-        # Güncel fiyat
-        q     = market.get(sembol, {})
-        price = float(q.get("price") or q.get("previousClose") or 0)
+        # Güncel fiyat — canlı fiyat zorunlu, previousClose fallback yasak
+        price = 0.0
+        if fetch_live_price:
+            _p, _ = fetch_live_price(sembol)
+            if _p:
+                price = float(_p)
         if not price:
-            print(f"[Decisions] {sembol} fiyat alınamadı, atlandı.")
+            # Market dict'te canlı price (previousClose'u asla kabul etme)
+            q = market.get(sembol, {})
+            if q.get("price"):
+                price = float(q["price"])
+        if not price:
+            print(f"[Decisions] {sembol} canlı fiyat alınamadı, atlandı.")
             continue
 
         try:
