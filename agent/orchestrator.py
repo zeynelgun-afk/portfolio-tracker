@@ -1842,9 +1842,24 @@ def _execute_claude_decisions(kararlar: list, market: dict) -> list:
                         print(f"[Decisions] {sembol} K-engine veto: {k_res['fail_reason']}")
                         continue
 
+                # Stop/hedef yoksa ATR14 bazlı hesapla (kör %8/%15 fallback yasak)
+                if not stop or not hedef or stop >= price or hedef <= price:
+                    try:
+                        from execution_engine import compute_atr_stop as _cas
+                        _stop, _hedef, _ = _cas(sembol, price)
+                        if not stop or stop >= price:
+                            stop = _stop
+                        if not hedef or hedef <= price:
+                            hedef = _hedef
+                    except Exception as _e_s:
+                        print(f"[Decisions] {sembol} ATR stop hesaplanamadı ({_e_s}), fallback %8")
+                        if not stop or stop >= price:
+                            stop = round(price * 0.92, 2)
+                        if not hedef or hedef <= price:
+                            hedef = round(price * 1.12, 2)
+
                 result = buy_position(sembol, portfoy, miktar, price,
-                                      stop or price * 0.92,
-                                      hedef or price * 1.15,
+                                      stop, hedef,
                                       f"Claude: {neden}", "")
                 if result["ok"]:
                     aksiyonlar.append(
@@ -1866,8 +1881,32 @@ def _execute_claude_decisions(kararlar: list, market: dict) -> list:
 
                 # Adım 2: Al (dondur_al varsa)
                 if dondur_al:
-                    al_q     = market.get(dondur_al, {})
-                    al_price = float(al_q.get("price") or al_q.get("previousClose") or 0)
+                    # Canlı fiyat FMP'den ZORUNLU — previousClose fallback yasak
+                    try:
+                        from execution_engine import fetch_live_price as _flp
+                        al_price, _al_prev = _flp(dondur_al)
+                    except Exception:
+                        al_price, _al_prev = None, None
+
+                    if not al_price:
+                        # Market dict'te canlı fiyat varsa kullan (previousClose'u kabul etme)
+                        al_q  = market.get(dondur_al, {})
+                        _p    = al_q.get("price")
+                        if _p:
+                            al_price = float(_p)
+                            _al_prev = float(al_q.get("previousClose") or 0)
+
+                    # Gap-down koruması (aynı sembol bug'ı tekrar yaşamasın)
+                    if al_price and _al_prev:
+                        _gap = (al_price - _al_prev) / _al_prev * 100
+                        if _gap < -2.5:
+                            print(f"[Decisions] DÖNDÜR alış {dondur_al}: gap-down %{_gap:.2f}, alım atlandı")
+                            aksiyonlar.append(
+                                f"🔄 *DÖNDÜR SATIŞ TAMAM* [{portfoy.upper()}]\n"
+                                f"{sembol} @${price:.2f} P/L:{pnl_pct:+.1f}% | ${kazanilan:,.0f}\n"
+                                f"⚠️ {dondur_al} alış gap-down koruması ile atlandı (%{_gap:.2f})"
+                            )
+                            continue
 
                     if al_price:
                         # K-engine kontrolü (döndür alışı için de)
@@ -1890,8 +1929,16 @@ def _execute_claude_decisions(kararlar: list, market: dict) -> list:
                                 )
                                 continue
 
+                        # ATR14 bazlı stop/hedef (kör %8/%15 fallback yasak)
+                        try:
+                            from execution_engine import compute_atr_stop as _cas2
+                            _al_stop, _al_tgt, _ = _cas2(dondur_al, al_price)
+                        except Exception:
+                            _al_stop = round(al_price * 0.92, 2)
+                            _al_tgt  = round(al_price * 1.12, 2)
+
                         al_r = buy_position(dondur_al, portfoy, kazanilan, al_price,
-                                            al_price * 0.92, al_price * 1.15,
+                                            _al_stop, _al_tgt,
                                             f"DÖNDÜR giriş — {neden}", "")
                         if al_r["ok"]:
                             aksiyonlar.append(

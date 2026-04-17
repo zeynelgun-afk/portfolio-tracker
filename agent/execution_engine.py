@@ -44,6 +44,79 @@ PORTFOLIO_MAP = {
 MAX_POSITIONS = {"aggressive": 6, "balanced": 6, "dividend": 6}
 MAX_WEIGHT    = {"aggressive": 0.20, "balanced": 0.25, "dividend": 0.15}
 
+_FMP_KEY = "g1GFJZtV5rCP49UCir4WuP56VjhmA6F8"
+
+
+def compute_atr_stop(symbol: str, price: float, fallback_pct: float = 0.08):
+    """
+    ATR14 + SMA50 confluence bazlı stop hesaplar.
+    Min %5 max %10 bandında tutulur.
+    Hedef = price + 4×ATR.
+    FMP'den veri çekilemezse fallback_pct altı stop döner (target = +fallback_pct×1.5).
+
+    Returns: (stop, target, atr14)  — atr14 None ise fallback kullanıldı demektir.
+    """
+    import requests as _req
+    try:
+        r = _req.get(
+            "https://financialmodelingprep.com/stable/historical-price-eod/full",
+            params={"symbol": symbol, "apikey": _FMP_KEY}, timeout=10
+        )
+        if r.status_code != 200:
+            raise RuntimeError(f"FMP {r.status_code}")
+        d = r.json()
+        if not (isinstance(d, list) and len(d) >= 15):
+            raise RuntimeError("yetersiz historical")
+        trs = []
+        for i in range(14):
+            h = d[i]["high"]; l = d[i]["low"]; pc = d[i+1]["close"]
+            trs.append(max(h-l, abs(h-pc), abs(l-pc)))
+        atr = sum(trs) / len(trs)
+        stop = price - 2.0 * atr
+        # SMA50 confluence: stop SMA50 yakınındaysa SMA50×0.99'a hizala
+        if len(d) >= 50:
+            sma50 = sum(x["close"] for x in d[:50]) / 50
+            if abs(stop - sma50) / price < 0.015 and price > sma50:
+                stop = sma50 * 0.99
+        # Min %5, max %10 band
+        pct = (price - stop) / price
+        if pct < 0.05:
+            stop = price * 0.95
+        elif pct > 0.10:
+            stop = price * 0.92
+        target = price + 4.0 * atr
+        return round(stop, 2), round(target, 2), round(atr, 2)
+    except Exception:
+        return (round(price * (1 - fallback_pct), 2),
+                round(price * (1 + fallback_pct * 1.5), 2),
+                None)
+
+
+def fetch_live_price(symbol: str):
+    """
+    FMP'den anlık canlı fiyat + previousClose döner.
+    previousClose fallback YASAKTIR — eğer canlı fiyat yoksa None döner.
+    Returns: (price, previousClose) veya (None, None)
+    """
+    import requests as _req
+    try:
+        r = _req.get(
+            "https://financialmodelingprep.com/stable/quote",
+            params={"symbol": symbol, "apikey": _FMP_KEY}, timeout=8
+        )
+        if r.status_code != 200:
+            return None, None
+        d = r.json()
+        if not (isinstance(d, list) and d):
+            return None, None
+        price = float(d[0].get("price", 0) or 0)
+        prev  = float(d[0].get("previousClose", 0) or 0)
+        if not price or not prev:
+            return None, None
+        return price, prev
+    except Exception:
+        return None, None
+
 
 def _load(portfolio: str) -> dict:
     path = REPO_ROOT / PORTFOLIO_MAP[portfolio]
@@ -353,14 +426,20 @@ def deploy_cash(
 
         sym    = c.get("symbol","")
         price  = float(c.get("price", 0))
-        stop   = float(c.get("stop", price*0.95))
-        target = float(c.get("target", price*1.10))
         reason = c.get("reason","")
         tema   = c.get("tema","")
         k_res  = c.get("k_checks",{})
 
         if not sym or not price:
             continue
+
+        # Stop/target ATR14 bazlı (aday dict'te yoksa veya 0 ise)
+        cand_stop   = float(c.get("stop", 0) or 0)
+        cand_target = float(c.get("target", 0) or 0)
+        if cand_stop and cand_target and cand_stop < price < cand_target:
+            stop, target = cand_stop, cand_target
+        else:
+            stop, target, _atr = compute_atr_stop(sym, price)
 
         # Mevcut pozisyonda var mı?
         if sym in status["semboller"]:

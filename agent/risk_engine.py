@@ -64,7 +64,7 @@ def analyze_portfolio_correlation(portfolios: dict) -> dict:
     for pf_name, pf_data in portfolios.items():
         for pos in pf_data.get("pozisyonlar", []):
             sym      = pos.get("sembol") or pos.get("symbol", "?")
-            price    = pos.get("guncel_fiyat") or pos.get("maliyet_bazis") or 0
+            price    = pos.get("guncel_fiyat") or pos.get("maliyet_baz") or pos.get("maliyet_bazis") or 0
             adet     = pos.get("adet") or pos.get("shares") or 0
 
             try:

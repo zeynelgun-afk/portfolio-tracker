@@ -254,7 +254,7 @@ def format_session_report(theme=None):
     # stop yakını uyarıları
     alerts = []
     for p in all_pos:
-        sl = p.get("stop_loss") or p.get("zarar_kes")
+        sl = p.get("stop_loss")
         if sl and p["guncel_fiyat"] > 0:
             dist_pct = ((p["guncel_fiyat"] - sl) / p["guncel_fiyat"]) * 100
             if dist_pct < 3:
@@ -345,7 +345,7 @@ def format_premarket(theme=None):
     # Stop'a yakın
     alerts = []
     for p in all_pos:
-        sl = p.get("stop_loss") or p.get("zarar_kes")
+        sl = p.get("stop_loss")
         if sl and p["guncel_fiyat"] > 0:
             dist_pct = ((p["guncel_fiyat"] - sl) / p["guncel_fiyat"]) * 100
             if dist_pct < 3:
