@@ -1,32 +1,21 @@
-# K-KURALLARI ÖZET (Agent için)
+# K-KURALLARI ÖZET (playbook'tan üretildi)
 
-## Giriş Kuralları
-- K-02: Kriz rallisi ilk günü kovalama — min 1 gün soğuma + RSI onayı
-- K-04: SMA50 üstü giriş tercih. Altıysa: RSI<30 + stabilizasyon + çeyrek pozisyon
-- K-05: Swing pozisyonu earnings'ten 2+ gün önce kapat
+- **K-02**: kriz/şok başlangıcında momentum sektörlerine yeni giriş yapılmaz**
+- **K-04**: SMA trend filtresi (basitleştirilmiş 7 nisan 2026)**
+- **K-05**: kazanç açıklaması koruma (basitleştirilmiş 7 nisan 2026)**
+- **K-06**: stop disiplini (sertleştirilmiş 7 nisan 2026)**
+- **K-07**: trailing stop disiplini (sadeleştirilmiş 7 nisan 2026)**
+- **K-09**: İLE İLİŞKİ: K-09 stop tetiklenmeden önceki hareketi yönetir (yakınlık erken çıkışı), K-06 tetik anında çalışır. çakışma yok, sıralı tamamlayıcı.
+- **K-10**: VIX bazlı savunmacı allokasyon kuralı (netleştirilmiş 7 nisan 2026)**
+- **K-11**: kademeli kâr alma sistemi (sadeleştirilmiş 7 nisan 2026)**
+- **K-12**: pozisyon konsantrasyon limitleri (netleştirilmiş 7 nisan 2026)**
+- **K-13**: İLE İLİŞKİ:
+- **K-16**: sell the news riski değerlendirmesi — netleştirilmiş 7 nisan 2026**
+- **K-17**: İLE ENTEGRASYON: K-17 anlatı bazlı tema tanımını sağlar, K-12 limit eşiğini sağlar (%40 ortak).
+- **K-18**: giriş öncesi insider kontrolü — KALDIRILDI 11 nisan 2026**
+- **K-19**: XLP swing dışlama — güncellenmiş 11 nisan 2026**
+- **K-20**: sektör RS dead cat bounce filtresi — netleştirilmiş 7 nisan 2026**
 
-## Kâr Alma (K-11 v3)
-- Katman1: RSI 70+ VE kâr %15+ → trailing stop aktif (2×ATR veya 20SMA altı), satma
-- Katman2: RSI 80+ VEYA (RSI 75+ + negatif div/20SMA altı) → %25-30 kısmi sat
-- Katman3: 50SMA altı kapanış VEYA chandelier trailing → TAM ÇIK
-- İstisnalar: earnings 5g içinde→70'te, VIX>28→72'de, LEAPS→80+
-
-## VIX/Risk Kuralları (K-13 v4.1)
-- Aktif kriz: jeopolitik/İran
-- Faydalanıcılar (savunma, enerji, altın): VIX 28'e kadar tam pozisyon
-- Duyarlılar (tech, growth, AI): VIX 22'den itibaren yarım pozisyon
-- VIX>35: tüm yeni girişler dur
-
-## Zorunlu Kontroller
-- K-17: Aynı sektörden aynı gün birden fazla giriş yapma
-- K-18: Her yeni girişten önce insider trading kontrol et
-- K-19: XLP sektörüne swing girişi yok
-- K-20: RS dead cat bounce filtresi — güçlü RS gerekli
-
-## Stop Disiplini
-- Stop seviyeleri ASLA override edilmez
-- Bir kez geçilirse direkt uygula, bekleme
-
-## Kaldırılan Kurallar (11 Nisan 2026)
-- K-01, K-03, K-08: erken kaldırıldı
-- K-14 drawdown freni: kaldırıldı — normal pozisyon boyutlandırma, pre-entry psikoloji testi devrede
+## Kaldırılan Kurallar
+- K-01/K-03/K-08: erken kaldırıldı
+- K-14 drawdown freni: 11 Nisan 2026'da kaldırıldı

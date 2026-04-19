@@ -374,7 +374,7 @@ def enhanced_entry_analysis(symbol: str) -> dict:
     stop_dist = (price - stop_lvl) / price * 100
     target    = price + (price - stop_lvl) * 2.5  # R:R 2.5:1
 
-    # Pozisyon boyutu ($5K K-14 restart)
+    # Pozisyon boyutu ($5K standart — K-14 kaldırıldı, restart konsepti yok)
     account   = 5000
     risk_per  = account * 0.05  # %5 risk
     shares    = int(risk_per / (price - stop_lvl)) if price > stop_lvl else 0

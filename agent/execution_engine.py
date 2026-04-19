@@ -246,6 +246,19 @@ def buy_position(
         mevcut["yatirim"]           = round(yeni_adet * yeni_maly, 2)
         mevcut["guncel_deger"]      = round(yeni_adet * price, 2)
         mevcut["giris_tarihi"]      = mevcut.get("giris_tarihi", datetime.now(TR_TZ).strftime("%Y-%m-%d"))
+
+        # BÜYÜT'te stop/hedef: caller explicit verdiyse güncelle, yoksa koru.
+        # Önceden: caller stop gönderse bile uygulanmıyordu → mevcut pozisyon
+        # yeni ortalamaya göre güncel stop almıyordu.
+        if stop_loss and float(stop_loss) > 0:
+            mevcut["stop_loss"] = round(float(stop_loss), 2)
+            # Stop mesafesi pct
+            if price > 0:
+                mevcut["stop_mesafe_pct"] = round((price - float(stop_loss)) / price * 100, 2)
+        if hedef_fiyat and float(hedef_fiyat) > price:
+            mevcut["hedef_fiyat"] = round(float(hedef_fiyat), 2)
+        mevcut["son_guncelleme"] = datetime.now(TR_TZ).strftime("%Y-%m-%d")
+
         aksiyon = "BÜYÜT"
     else:
         # Yeni pozisyon
