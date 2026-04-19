@@ -85,7 +85,7 @@ def evaluate_position(symbol, stop_loss, current_price):
     if quote:
         volume = quote.get("volume", 0)
         avg_volume = quote.get("avgVolume", 1)
-        change_pct = quote.get("changesPercentage", 0)
+        change_pct = quote.get("changePercentage", 0)
         if volume > avg_volume * 1.2 and change_pct < 0:
             negatives += 1
             details.append(f"Yüksek hacim + düşüş ({volume/avg_volume:.1f}x)")
@@ -96,19 +96,19 @@ def evaluate_position(symbol, stop_loss, current_price):
     spy = get_quote("SPY")
     vix_dir = get_vix_direction()  # +1=yukseliyor, -1=dusuyor, VIXY uzerinden
     if spy:
-        spy_neg = spy.get("changesPercentage", 0) < 0
+        spy_neg = spy.get("changePercentage", 0) < 0
         vix_rising = (vix_dir == 1)
         if spy_neg and vix_rising:
             negatives += 1
-            details.append(f"SPY {spy.get('changesPercentage'):.2f}% + VIX yukseliyor (yon)")
+            details.append(f"SPY {spy.get('changePercentage'):.2f}% + VIX yukseliyor (yon)")
 
     # 4) Sektör ETF
     sector_etf = get_sector(symbol)
     if sector_etf and sector_etf != "UNKNOWN":
         sector_quote = get_quote(sector_etf)
-        if sector_quote and sector_quote.get("changesPercentage", 0) < 0:
+        if sector_quote and sector_quote.get("changePercentage", 0) < 0:
             negatives += 1
-            details.append(f"Sektör {sector_etf} {sector_quote.get('changesPercentage'):.2f}%")
+            details.append(f"Sektör {sector_etf} {sector_quote.get('changePercentage'):.2f}%")
 
     # Karar
     if negatives >= 3:

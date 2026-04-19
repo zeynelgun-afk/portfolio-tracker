@@ -209,16 +209,25 @@ def get_vix_level():
 
 def get_vix_direction():
     """
-    VIX'in yonunu VIXY changesPercentage uzerinden dondurur.
-    Yalnizca 'artiyor mu / dusuyor mu' sorusuna cevap verir; seviye degil.
+    VIX'in yonunu dondurur (+1 yukseliyor, -1 dusuyor, 0 bilinmiyor).
 
-    NOT: VIXY fiyati ($29-30) != VIX seviyesi (10-40). Sadece yon icin kullan.
+    19 Nisan 2026 guncellenmesi: FMP ^VIX endpoint'i artik calisiyor,
+    VIXY proxy'ye gerek kalmadi. ^VIX dogrudan gercek VIX degerini donuyor.
+    VIXY fallback olarak kaliyor (^VIX 200 doner ama bazen gecici hata olabilir).
 
-    Donus: +1 (yukseliyor), -1 (dusuyor), 0 (bilinmiyor)
+    NOT: batch-quote alan adi changePercentage (TEKIL), changesPercentage DEGIL.
     """
+    # 1. Once ^VIX dene (dogrudan VIX)
+    data = fmp_get("quote", {"symbol": "^VIX"})
+    if data and isinstance(data, list) and data:
+        chg = data[0].get("changePercentage", 0) or 0
+        if chg != 0:
+            return 1 if chg > 0 else -1
+
+    # 2. VIXY fallback (sadece yon; contango nedeniyle seviye degil)
     data = fmp_get("batch-quote", {"symbols": "VIXY"})
     if data and isinstance(data, list) and data:
-        chg = data[0].get("changesPercentage", 0)
+        chg = data[0].get("changePercentage", 0) or 0
         return 1 if chg > 0 else (-1 if chg < 0 else 0)
     return 0
 

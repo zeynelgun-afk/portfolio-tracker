@@ -97,7 +97,7 @@ def get_portfolio_snapshot() -> dict:
                 if sym and sym in price_map:
                     q = price_map[sym]
                     pos["guncel_fiyat"]   = q.get("price")
-                    pos["gunluk_degisim"] = q.get("changesPercentage")
+                    pos["gunluk_degisim"] = q.get("changePercentage")
                     pos["hacim"]          = q.get("volume")
 
     return portfolios
@@ -106,7 +106,8 @@ def get_portfolio_snapshot() -> dict:
 def get_real_vix() -> dict:
     """
     VIX değerini çeker (merkezi vix_fetcher üzerinden).
-    Kaynak zinciri: cache → Yahoo q1 → Yahoo q2 → FMP → stale cache → default
+    Kaynak zinciri: cache → FMP ^VIX → Yahoo q1 → Yahoo q2 → stale cache → default
+    (19 Nisan 2026: FMP ^VIX stabil çalışıyor, birincil kaynak oldu)
     VIXY/UVXY doğrudan kullanılmaz — contango nedeniyle yanıltıcı.
     """
     def _seviye(price):
@@ -272,7 +273,7 @@ def get_market_context() -> dict:
             price = q.get("price")
             prev  = q.get("previousClose")
 
-            chg = q.get("changesPercentage")
+            chg = q.get("changePercentage")
             if chg is None and price and prev and float(prev) != 0:
                 chg = round((float(price) - float(prev)) / float(prev) * 100, 2)
 

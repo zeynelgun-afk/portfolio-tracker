@@ -102,7 +102,8 @@ def get_sector_performance() -> dict:
         date = (datetime.now() - timedelta(days=i)).strftime("%Y-%m-%d")
         data = _fmp("sector-performance-snapshot", {"date": date})
         if data and isinstance(data, list) and len(data) > 5:
-            return {s.get("sector", ""): float(s.get("changesPercentage", 0))
+            # sector-performance-snapshot alanı: averageChange (changesPercentage DEĞİL, changePercentage de DEĞİL)
+            return {s.get("sector", ""): float(s.get("averageChange", 0))
                     for s in data}
     return {}
 

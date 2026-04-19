@@ -5,7 +5,7 @@ description: Comprehensive guide for integrating Financial Modeling Prep (FMP) A
 
 # FMP API Integration — Premium Plan Reference
 
-> **Last verified**: February 2026 | **Plan**: Premium | **Base URL**: `https://financialmodelingprep.com/stable/`
+> **Last verified**: 19 April 2026 | **Plan**: Premium | **Base URL**: `https://financialmodelingprep.com/stable/`
 
 ---
 
@@ -30,6 +30,39 @@ API key always goes as `apikey` query parameter. Key is stored in user memory.
 | Coverage | US, UK, Canada |
 
 > **⚠️ CRITICAL**: Legacy `/api/v3/` and `/api/v4/` routes are **completely blocked** (403 "Legacy Endpoint" error). **Always use `/stable/` only.**
+
+---
+
+## ⚠️ KRİTİK: ALAN ADI TUZAKLARI (Field Name Gotchas)
+
+> **19 Nisan 2026 — Doğrulanmış kritik hatalar.** Bu alan isimleri Python `.get(key, 0)` ile sessizce yanlış (0/None) döner, hiçbir hata fırlatmaz. FMP dokümanları bazen eski/yanlış adları gösterir.
+>
+> **⚠️ FMP kendi içinde tutarsızdır** — aynı konsept için farklı endpoint'lerde farklı alan adı kullanılır. Endpoint'e göre doğrulamak şart.
+
+### Yüzde Değişim Alanı (endpoint'e göre değişiyor!)
+
+| Endpoint | ✅ Doğru Alan | Not |
+|----------|---------------|-----|
+| `quote`, `batch-quote`, `profile` | **`changePercentage`** (TEKİL) | `changesPercentage` DEĞİL, `.get("changesPercentage",0)` sessiz 0 döner |
+| `biggest-gainers`, `biggest-losers`, `most-actives` | **`changesPercentage`** (ÇOĞUL) | Burada çoğul doğru — FMP'nin kendi tutarsızlığı |
+| `sector-performance-snapshot`, `industry-performance-snapshot` | **`averageChange`** | Ne "change" ne "changesPercentage" — tamamen farklı |
+| `stock-price-change` | `1D`, `5D`, `1M`, `3M`, `6M`, `ytd`, `1Y`, ... | Alanlar dönem adı; `ytd` küçük harf |
+
+### Diğer Alan Adı Tuzakları
+
+| ❌ YANLIŞ Alan (yaygın hata) | ✅ DOĞRU Alan | Etkilenen Endpoint'ler |
+|------------------------------|---------------|-----------------------|
+| `estimatedEpsAvg` | **`epsAvg`** | analyst-estimates |
+| `estimatedEpsHigh` | **`epsHigh`** | analyst-estimates |
+| `estimatedEpsLow` | **`epsLow`** | analyst-estimates |
+| `numberAnalystsEstimatedEps` | **`numAnalystsEps`** | analyst-estimates |
+| `numberAnalystEstimatedRevenue` | **`numAnalystsRevenue`** | analyst-estimates |
+| `actualEPS` / `estimatedEPS` | **`epsActual`** / **`epsEstimated`** | earnings |
+| `actualRevenue` / `estimatedRevenue` | **`revenueActual`** / **`revenueEstimated`** | earnings |
+
+**⚠️ NEDEN TEHLİKELİ**: `quote.get("changesPercentage", 0)` HER ZAMAN `0` döner çünkü quote endpoint'inde bu alan yok (asıl ad `changePercentage`, tekil). "Piyasa dışında 0 dönüyor, manuel hesaplayalım" diye yorumlanır ama aslında alan hep yoktur — kod sessiz sessiz yanlış çalışır.
+
+**TEST YAKLAŞIMI**: Yeni bir endpoint kullanmadan önce `curl -s 'URL' | jq 'keys'` ile gerçek alan adlarını doğrula. Production kodunda doğrudan `dict["key"]` (KeyError fırlatır) kullan, `.get()` sadece varsayılan gerçekten makulse.
 
 ---
 
@@ -78,6 +111,8 @@ Many endpoints were renamed. Wrong names silently return `[]`. Always use these:
 | `news/general` | `fmp-articles` | completely renamed |
 | `rating` | `ratings-snapshot` | completely renamed |
 | `financial-score` | `financial-scores` | plural |
+| `earnings-surprises` / `earnings-surprise` | `earnings` | earnings endpoint'i hem geçmiş hem gelecek veriyor; surprise manuel hesaplanır |
+| `historical-earnings` / `earnings-historical` | `earnings` | tek endpoint — limit param ile geçmiş tahmini dönüyor |
 
 ---
 
@@ -151,7 +186,22 @@ quotes = fmp_get("batch-quote", {"symbols": "SM,KOS,MO,XLE,RGLD,FCX"})
 eurusd = fmp_get("quote", {"symbol": "EURUSD"})
 btc = fmp_get("quote", {"symbol": "BTCUSD"})
 gold = fmp_get("quote", {"symbol": "GCUSD"})
+
+# Index sembolleri — ÇALIŞIR (19 Nisan 2026 doğrulandı)
+vix = fmp_get("quote", {"symbol": "^VIX"})    # CBOE Volatility Index
+spx = fmp_get("quote", {"symbol": "^GSPC"})   # S&P 500 Index
+ndx = fmp_get("quote", {"symbol": "^IXIC"})   # Nasdaq Composite
 ```
+
+> **✅ quote alanları** (19 Nisan 2026 doğrulandı — stocks, ETF, forex, crypto, commodity, index hepsi aynı):
+>
+> `symbol, name, price, changePercentage, change, volume, dayLow, dayHigh, yearHigh, yearLow, marketCap, priceAvg50, priceAvg200, exchange, open, previousClose, timestamp`
+>
+> **KRİTİK**: Alan adı `changePercentage` (TEKİL) — `changesPercentage` DEĞİL. Bkz. "Alan Adı Tuzakları" bölümü.
+
+> **✅ `^VIX` endpoint ÇALIŞIYOR** (19 Nisan 2026): Skill'de önceden "VIX için sadece web search" yazıyordu — bu bilgi artık eski. FMP `^VIX` stabil şekilde gerçek VIX değerini döndürüyor. VIXY proxy'ye (contango riski) gerek yok.
+
+> **⚠️ aftermarket-quote farklı şema**: Alanlar `symbol, bidSize, bidPrice, askSize, askPrice, volume, timestamp`. `price` alanı **YOKTUR** — fiyat için `(bidPrice + askPrice) / 2` hesaplanmalı. Seans dışı son tick bid/ask değerini döner.
 
 ---
 
@@ -208,13 +258,31 @@ geo = fmp_get("revenue-geographic-segmentation", {"symbol": "AAPL"})
 | Endpoint | Params | Description |
 |----------|--------|-------------|
 | `ratios` | `symbol`, `period`, `limit` | All financial ratios |
-| `ratios-ttm` | `symbol` | TTM ratios |
+| `ratios-ttm` | `symbol` | TTM ratios (60+ alan) |
 | `key-metrics` | `symbol`, `period`, `limit` | Key metrics |
-| `key-metrics-ttm` | `symbol` | TTM key metrics |
+| `key-metrics-ttm` | `symbol` | TTM key metrics (42+ alan) |
 | `discounted-cash-flow` | `symbol` | DCF valuation |
 | `owner-earnings` | `symbol` | Owner earnings |
 | `ratings-snapshot` | `symbol` | Overall rating + sub-scores (**NOT `rating`**) |
 | `financial-scores` | `symbol` | Altman Z-score, Piotroski score (**NOT `financial-score`**) |
+
+> **✅ ratios-ttm önemli alanlar** (19 Nisan 2026 doğrulandı — TTM suffix'li):
+> - Değerleme: `priceToEarningsRatioTTM`, `priceToBookRatioTTM`, `priceToSalesRatioTTM`, `priceToFreeCashFlowRatioTTM`, `priceToOperatingCashFlowRatioTTM`, `priceToEarningsGrowthRatioTTM`, `enterpriseValueMultipleTTM`, `priceToFairValueTTM`
+> - Kârlılık: `grossProfitMarginTTM`, `operatingProfitMarginTTM`, `netProfitMarginTTM`, `ebitdaMarginTTM`, `ebitMarginTTM`
+> - Borç: `debtToEquityRatioTTM`, `debtToAssetsRatioTTM`, `debtToCapitalRatioTTM`, `debtToMarketCapTTM`, `interestCoverageRatioTTM`, `financialLeverageRatioTTM`
+> - Likidite: `currentRatioTTM`, `quickRatioTTM`, `cashRatioTTM`, `solvencyRatioTTM`
+> - Temettü: `dividendYieldTTM`, `dividendPayoutRatioTTM`, `dividendPerShareTTM`
+> - Diğer: `effectiveTaxRateTTM`, `enterpriseValueTTM`, `bookValuePerShareTTM`, `revenuePerShareTTM`, `freeCashFlowPerShareTTM`
+
+> **✅ key-metrics-ttm önemli alanlar** (19 Nisan 2026 doğrulandı):
+> - `marketCap`, `enterpriseValueTTM`, `evToSalesTTM`, `evToEBITDATTM`, `evToFreeCashFlowTTM`, `evToOperatingCashFlowTTM`, `netDebtToEBITDATTM`
+> - `returnOnEquityTTM`, `returnOnAssetsTTM`, `returnOnInvestedCapitalTTM`, `returnOnCapitalEmployedTTM`, `returnOnTangibleAssetsTTM`
+> - `earningsYieldTTM`, `freeCashFlowYieldTTM`, `incomeQualityTTM`, `grahamNumberTTM`, `grahamNetNetTTM`
+> - `workingCapitalTTM`, `investedCapitalTTM`, `capexToRevenueTTM`, `capexToOperatingCashFlowTTM`, `researchAndDevelopementToRevenueTTM`
+
+> **✅ ratings-snapshot alanları**: `symbol, rating, overallScore, discountedCashFlowScore, returnOnEquityScore, returnOnAssetsScore, debtToEquityScore, priceToEarningsScore, priceToBookScore` — rating A-F arası harf, skorlar 1-5 arası tam sayı.
+
+> **✅ financial-scores alanları**: `symbol, reportedCurrency, altmanZScore, piotroskiScore, workingCapital, totalAssets, retainedEarnings, ebit, marketCap, totalLiabilities, revenue`
 
 ```python
 rating = fmp_get("ratings-snapshot", {"symbol": "AAPL"})
@@ -304,6 +372,17 @@ tech_hist = fmp_get("historical-sector-performance", {
 # fmp_get("sector-performance")
 ```
 
+> **⚠️ Piyasa kapalı günü uyarısı** (19 Nisan 2026): Pazar/Cumartesi/tatil günlerinde bugünün tarihiyle `sector-performance-snapshot` **boş `[]` döner**. Son iş gününe düş:
+> ```python
+> from datetime import datetime, timedelta
+> d = datetime.now()
+> # Cumartesi(5)/Pazar(6) ise en son Cuma'ya in
+> if d.weekday() >= 5:
+>     d = d - timedelta(days=d.weekday() - 4)
+> sectors = fmp_get("sector-performance-snapshot", {"date": d.strftime("%Y-%m-%d")})
+> ```
+> Tatil günleri için benzer şekilde bir önceki iş gününe düşmek gerekir. Aynı kural `industry-performance-snapshot`, `sector-pe-snapshot`, `industry-pe-snapshot` için de geçerli.
+
 **Valid sector names**: `Technology`, `Healthcare`, `Financial Services`, `Energy`, `Consumer Cyclical`, `Industrials`, `Consumer Defensive`, `Basic Materials`, `Real Estate`, `Communication Services`, `Utilities`
 
 ---
@@ -371,14 +450,30 @@ articles = fmp_get("fmp-articles", {"limit": 20})
 
 | Endpoint | Params | Description |
 |----------|--------|-------------|
+| `earnings` | `symbol`, `limit` | **Past + future earnings birlikte** — epsActual, epsEstimated, revenueActual, revenueEstimated |
 | `earnings-calendar` | `from`, `to` | Upcoming earnings (max 90 days) |
 | `analyst-estimates` | `symbol`, `period`, `limit` | EPS/revenue estimates |
-| `dividends` | `symbol` | Dividend history |
+| `dividends` | `symbol`, `limit` | Dividend history |
 | `stock-split-calendar` | `from`, `to` | Stock splits |
 | `ipo-calendar` | `from`, `to` | IPO calendar |
 | `economic-calendar` | `from`, `to` | Economic events |
 
-> **Note**: `earnings-surprise` / `earnings-surprises` are **not available** on Premium plan (requires Ultimate or Bulk tier). Use `analyst-estimates` instead.
+> **✅ Earnings Surprise Hesaplama** (19 Nisan 2026 — doküman güncellemesi): Eski dokümanlar `earnings-surprises` endpoint'ine işaret ediyordu; **bu endpoint FMP'de mevcut değildir (404)**, Ultimate plan meselesi de değildir. Doğru endpoint: **`earnings`** (tekil, parametresiz isim).
+>
+> ```python
+> earnings = fmp_get("earnings", {"symbol": "AAPL", "limit": 10})
+> # Alanlar: symbol, date, epsActual, epsEstimated, revenueActual, revenueEstimated, lastUpdated
+> # epsActual == None → gelecek earnings (henüz açıklanmadı)
+> # epsActual != None → geçmiş earnings
+> for e in earnings:
+>     if e["epsActual"] is not None:
+>         surprise_pct = ((e["epsActual"] - e["epsEstimated"]) / e["epsEstimated"]) * 100
+>         print(f"{e['date']}: EPS surprise {surprise_pct:+.2f}%")
+> ```
+
+> **✅ dividends alanları** (19 Nisan 2026 doğrulandı):
+> `symbol, date, recordDate, paymentDate, declarationDate, adjDividend, dividend, yield, frequency`
+> `frequency` değerleri: `Quarterly`, `Semi-Annual`, `Annual`, `Monthly`.
 
 ---
 
@@ -441,12 +536,11 @@ fmp_get("historical-price-eod/full", {"symbol": "BTCUSD", "from": "2025-01-01"})
 
 | Feature | Plan Needed |
 |---------|-------------|
-| Earnings Call Transcripts | Ultimate |
+| Earnings Call Transcripts (`earnings-transcript-list`) | Ultimate (402) |
 | ETF & Mutual Fund Holdings (full) | Ultimate |
 | 13F Institutional Holdings (full analytics) | Ultimate |
 | 1-Minute Intraday Charting | Ultimate |
 | `income-statement-ttm` | Returns 402 |
-| `earnings-surprises` / `earnings-surprise` | Ultimate (Bulk only) |
 | Bulk delivery endpoints | Ultimate |
 
 ---
@@ -565,3 +659,23 @@ All v3/v4 routes are **blocked**. Use these stable equivalents:
 - Screener: `stock-screener` → `company-screener`
 - Market movers renamed (remove `market-` prefix)
 - Enterprise value: singular → plural (`enterprise-values`)
+
+---
+
+## CHANGELOG
+
+### 19 Nisan 2026 — Kritik alan adı düzeltmeleri
+- **Alan Adı Tuzakları bölümü eklendi** — `changesPercentage` (YANLIŞ) → `changePercentage` (DOĞRU), `estimatedEpsAvg` → `epsAvg`, `actualEPS` → `epsActual`, vs. Python `.get(k, 0)` ile sessiz 0 dönüşünün kaynağı bu alanlardı.
+- **`earnings` endpoint eklendi** — eski belgedeki "earnings-surprises Ultimate gerekir" bilgisi yanlıştı: endpoint hem Premium hem Ultimate'da mevcut değil, doğrusu `earnings` (tekil). Geçmiş + gelecek tahmin aynı yanıtta.
+- **`^VIX` çalışıyor notu eklendi** — Eski notlarda "402 döner, web search gerekli" yazıyordu, bu artık geçerli değil. Tüm index sembolleri (^VIX, ^GSPC, ^IXIC) standart `quote` ile alınıyor.
+- **`aftermarket-quote` şema uyarısı eklendi** — `price` alanı yok, sadece `bidPrice/askPrice`. Manual midpoint hesabı gerekir.
+- **Pazar/tatil günü sector-performance boş dönüş uyarısı** — date parametresi piyasa kapalı günü için boş `[]` döner.
+- **ratios-ttm (60+ alan) ve key-metrics-ttm (42+ alan) tam alan listeleri** eklendi — daha önce sadece "vs" olarak geçiyordu.
+- **dividends alanları** netleştirildi — frequency değerleri dahil.
+
+### 10 Nisan 2026
+- Plan limitleri düzeltildi (2500/dakika, günlük sınırsız).
+- `analyst-estimates` alan isimleri eklendi (`epsAvg`, `numAnalystsEps`).
+
+### Şubat 2026
+- İlk sürüm — stable endpoint referansı.

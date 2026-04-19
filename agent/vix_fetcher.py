@@ -5,14 +5,14 @@ Finzora — Merkezi VIX Fetcher
 Tüm agent + scripts VIX ihtiyacını buradan karşılar.
 6 farklı yerde kopyalanmış VIX çekme mantığını tek yere topladı.
 
-Sıralı kaynaklar:
-  1. data/vix_cache.json (≤ 15 dakika eski) — FMP rate limit'i koruma
-  2. Yahoo Finance query1 (^VIX endpoint)
-  3. Yahoo Finance query2 (query1 patlarsa)
-  4. FMP stable ^VIX (çoğu zaman 402 döner ama dene)
+Sıralı kaynaklar (19 Nisan 2026 güncellemesi — FMP ^VIX stabil çalışıyor):
+  1. data/vix_cache.json (≤ 15 dakika eski) — rate limit'i koruma
+  2. FMP stable ^VIX — birincil kaynak (19 Nisan 2026'da doğrulandı, 17.48 döndü)
+  3. Yahoo Finance query1 (^VIX endpoint) — fallback
+  4. Yahoo Finance query2 — son fallback
 
 Cache: data/vix_cache.json
-  {"value": 21.04, "ts": "2026-04-19T17:30:00Z", "source": "yahoo_q1"}
+  {"value": 21.04, "ts": "2026-04-19T17:30:00Z", "source": "fmp"}
 """
 
 import os
@@ -83,7 +83,7 @@ def _yahoo(host: str) -> float | None:
 
 
 def _fmp() -> float | None:
-    """FMP stable ^VIX — genelde 402 döner ama bazen çalışır."""
+    """FMP stable ^VIX — 19 Nisan 2026 doğrulandı: stabil çalışıyor (birincil kaynak)."""
     api_key = os.environ.get("FMP_API_KEY", "")
     if not api_key:
         return None
@@ -121,23 +121,23 @@ def get_vix(force_refresh: bool = False, default: float = 20.0) -> tuple[float, 
         if cached and "value" in cached:
             return float(cached["value"]), "cache"
 
-    # Yahoo q1
+    # FMP ^VIX — birincil (19 Nisan 2026 doğrulandı)
+    v = _fmp()
+    if v is not None and 0 < v < 200:
+        _save_cache(v, "fmp")
+        return v, "fmp"
+
+    # Yahoo q1 fallback
     v = _yahoo("query1")
     if v is not None and 0 < v < 200:
         _save_cache(v, "yahoo_q1")
         return v, "yahoo_q1"
 
-    # Yahoo q2
+    # Yahoo q2 fallback
     v = _yahoo("query2")
     if v is not None and 0 < v < 200:
         _save_cache(v, "yahoo_q2")
         return v, "yahoo_q2"
-
-    # FMP
-    v = _fmp()
-    if v is not None and 0 < v < 200:
-        _save_cache(v, "fmp")
-        return v, "fmp"
 
     # Eski cache varsa (TTL geçmiş bile olsa) default'tan iyidir
     try:

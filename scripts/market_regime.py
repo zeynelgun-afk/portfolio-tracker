@@ -133,10 +133,10 @@ def sektor_performans() -> dict:
     for item in data:
         sym  = item.get("symbol", "")
         isim = SEKTORLER.get(sym, sym)
-        pct  = item.get("changesPercentage", 0)
+        pct  = item.get("changePercentage", 0)
         fiy  = item.get("price", 0)
         prev = item.get("previousClose", fiy)
-        # changesPercentage piyasa dışında 0 döner, manuel hesapla
+        # batch-quote alanı changePercentage (TEKİL) — yine de güvenlik için manuel hesap
         if prev and prev > 0:
             pct = (fiy - prev) / prev * 100
         sonuc[sym] = {"isim": isim, "gunluk": round(pct, 2), "fiyat": fiy}

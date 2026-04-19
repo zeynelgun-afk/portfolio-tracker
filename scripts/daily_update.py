@@ -449,12 +449,12 @@ def update_portfolio(filepath, quote_dict):
         
         # Fiyatları güncelle
         pos['guncel_fiyat'] = new_price
-        # changesPercentage piyasa dışında 0 döner — manuel hesap öncelikli
+        # batch-quote alanı: changePercentage (TEKİL) — manuel hesabı öncelikli tut
         prev_close = quote.get('previousClose', 0)
         if prev_close and prev_close > 0:
             pos['gunluk_degisim_yuzde'] = round(((new_price - prev_close) / prev_close) * 100, 2)
         else:
-            pos['gunluk_degisim_yuzde'] = quote.get('changesPercentage', 0)
+            pos['gunluk_degisim_yuzde'] = quote.get('changePercentage', 0)
         
         # Hesaplamaları güncelle
         pos['guncel_deger'] = round(pos['adet'] * new_price, 2)
@@ -644,7 +644,7 @@ def update_watchlist(quote_dict):
         candidate['guncel_fiyat'] = new_price
         
         # 5 günlük momentum hesapla
-        # changesPercentage piyasa dışında 0 döner — manuel hesap
+        # batch-quote alanı changePercentage (TEKİL) — previousClose ile manuel hesap güvenlidir
         prev_close = quote.get('previousClose', 0)
         if prev_close and prev_close > 0:
             candidate['momentum_5gun'] = round(((new_price - prev_close) / prev_close) * 100, 2)

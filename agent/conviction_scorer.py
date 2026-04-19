@@ -146,8 +146,8 @@ def score_momentum(symbol: str) -> tuple[float, dict]:
     estimates = fmp("analyst-estimates", {"symbol": symbol, "period": "quarter", "limit": 2})
     eps_revizyon = 0
     if estimates and isinstance(estimates, list) and len(estimates) >= 2:
-        eps_new = float(estimates[0].get("estimatedEpsAvg", 0) or 0)
-        eps_old = float(estimates[1].get("estimatedEpsAvg", 0) or 0)
+        eps_new = float(estimates[0].get("epsAvg", 0) or 0)
+        eps_old = float(estimates[1].get("epsAvg", 0) or 0)
         if eps_old and eps_old != 0:
             eps_revizyon = (eps_new - eps_old) / abs(eps_old) * 100
 

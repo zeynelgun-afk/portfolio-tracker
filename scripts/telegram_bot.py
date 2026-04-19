@@ -128,7 +128,7 @@ def get_analyst_data(symbol: str) -> dict:
     est = fmp("analyst-estimates", {"symbol": symbol, "period": "annual", "limit": 2})
     if est:
         next_yr = est[0] if est else {}
-        result["fwd_eps_est"]   = next_yr.get("estimatedEpsAvg")
+        result["fwd_eps_est"]   = next_yr.get("epsAvg")
         result["fwd_rev_est"]   = next_yr.get("estimatedRevenueAvg")
         result["est_tarih"]     = next_yr.get("date", "")[:7]
 

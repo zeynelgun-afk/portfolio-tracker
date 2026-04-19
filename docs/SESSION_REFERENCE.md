@@ -205,7 +205,7 @@ günlük toplam FMP bütçesi (tüm fazlar): ~130-150 call. dakikalık limit 2,5
 ```
 ✓ yanıt boş değil mi?
 ✓ fiyatlar mantıklı mı? (> 0, < 100K, |değişim| < %50)
-✓ |changesPercentage| > %20 → haber teyidi yap
+✓ |changePercentage| > %20 → haber teyidi yap
 ```
 
 ### katman 2: JSON güncelleme sonrası

@@ -116,13 +116,13 @@ def stage1_momentum_prefilter(max_candidates=None):
     
     # stock-price-change ile 1M/3M (tek tek; FMP bunu batch desteklemez)
     # Bu çok API çağrısı demek. Alternatif: değişim%'yi batch-quote'tan al
-    # batch-quote dönüşü: price, previousClose, changesPercentage (günlük), price
+    # batch-quote dönüşü: price, previousClose, changePercentage (günlük), price
     # 1M/3M için ayrı çağrı gerekir — maliyetli, o yüzden YAKLAŞIK filtre kullanıyoruz:
     # Günlük değişim pozitif + price > SMA50 yaklaşımıyla
     
     # Ancak ideal: historical-price ile 1M/3M hesaplaması. Bu pahalı.
     # Pragmatik çözüm: stock-price-change endpoint (tek tek), ama sadece filtered listedeki semboller için
-    # ve batch-quote'ın changesPercentage'i pozitif olanları ön eleyelim.
+    # ve batch-quote'ın changePercentage'i pozitif olanları ön eleyelim.
     
     pre_filtered = []
     for s in symbols:

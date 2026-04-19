@@ -77,7 +77,7 @@ betaMoreThan=0.8                      (momentum karakteri)
 ```
 
 **portföy spesifik filtreler** (sırayla uygulanır):
-1. **son çeyrek EPS surprise >%10** — FMP earnings-surprises (actualEPS vs estimatedEPS)
+1. **son çeyrek EPS surprise >%10** — FMP `earnings` endpoint'i (epsActual vs epsEstimated). Not: `earnings-surprises` endpoint'i FMP'de mevcut değildir, `earnings` tekil endpoint'i hem geçmiş hem gelecek tahmini döndürür — bkz. `docs/FMP_SKILL.md`.
 2. **RS rank >80** — 6 aylık getiri SPY'yi en az %15 geride bırakmış (FMP stock-price-change `6M` SPY ile karşılaştır)
 3. **ortalama hacim oranı >1.5x** — son 10 gün ortalama hacim / 50 gün ortalama hacim
 4. **SMA50 üstü** — trend teyidi

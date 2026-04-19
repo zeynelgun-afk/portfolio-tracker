@@ -52,7 +52,7 @@ def calc_score(symbol):
     if estimates and isinstance(estimates, list) and len(estimates) >= 2:
         # En yakın dönem + 3 ay önceki estimate karşılaştırması zor — basitleştirme:
         # Mevcut estimate'i 3 ay öncekiyle kıyasla yerine, son 4 dönem ortalama trend kullan
-        recent_eps = [e.get("estimatedEpsAvg", 0) for e in estimates[:2]]
+        recent_eps = [e.get("epsAvg", 0) for e in estimates[:2]]
         if len(recent_eps) >= 2 and recent_eps[1] != 0:
             change = ((recent_eps[0] - recent_eps[1]) / abs(recent_eps[1])) * 100
             if change >= 10:
