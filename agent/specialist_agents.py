@@ -144,7 +144,9 @@ Başka metin ekleme.
     response = get_claude_decision(
         prompt,
         mode="monitor",
-        system_override=system_prompt
+        system_override=system_prompt,
+        rag_enabled=False,   # Uzmanların portföy geçmişine erişimi gereksiz; prompt
+                             # zaten compressed_ctx + market/risk/portfolio içeriyor.
     )
 
     # JSON parse
@@ -220,7 +222,12 @@ GÖREV:
   }}
 }}"""
 
-    response = get_claude_decision(cio_prompt, mode="morning")
+    response = get_claude_decision(
+        cio_prompt,
+        mode="morning",
+        rag_enabled=False,   # 4 uzman çıktısı + portfolio_context prompt'ta zaten;
+                             # ek RAG inject tokensuz değer katmıyor.
+    )
 
     try:
         import re

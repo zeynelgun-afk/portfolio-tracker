@@ -29,6 +29,15 @@ TR_TZ      = pytz.timezone("Europe/Istanbul")
 
 MEMORY_DIR.mkdir(exist_ok=True)
 
+# Swing max kapasite — tek kaynak swing_manager.SWING_MAX_POSITIONS
+try:
+    import sys as _sys
+    if str(Path(__file__).parent) not in _sys.path:
+        _sys.path.insert(0, str(Path(__file__).parent))
+    from swing_manager import SWING_MAX_POSITIONS as _SWING_MAX
+except Exception:
+    _SWING_MAX = 5
+
 
 # ── L1: Portföy Durumu (anlık, her çağrıda yenilenir) ────────────────────────
 
@@ -124,7 +133,7 @@ def build_portfolio_state(portfolios: dict, market: dict) -> dict:
             })
         state["swing"] = {
             "aktif_sayisi": len(swing_pozlar),
-            "max_kapasite": 5,
+            "max_kapasite": _SWING_MAX,
             "pozisyonlar":  swing_pozlar,
         }
     except Exception:
@@ -209,12 +218,29 @@ def get_k_rules_digest() -> str:
     if path.exists():
         return path.read_text(encoding="utf-8")
 
-    # Playbook'tan otomatik özet çıkar (ilk kez)
+    # Playbook'tan otomatik özet çıkar (haftalık cache, mtime tabanlı)
     playbook_path = REPO_ROOT / "docs" / "TRADING_PLAYBOOK.md"
     if not playbook_path.exists():
         return "K-kuralları bulunamadı."
 
-    # Statik özet yaz (manuel, değişmez — haftalık Claude günceller)
+    # Cache taze mi? (playbook değişmediyse ve cache <7 gün)
+    if path.exists():
+        try:
+            cache_mtime = path.stat().st_mtime
+            pb_mtime = playbook_path.stat().st_mtime
+            age_days = (datetime.now().timestamp() - cache_mtime) / 86400
+            if cache_mtime > pb_mtime and age_days < 7:
+                return path.read_text(encoding="utf-8")
+        except Exception:
+            pass
+
+    # Playbook'tan aktif K-xx bloklarını extract et
+    extracted = _extract_k_rules_from_playbook(playbook_path)
+    if extracted and len(extracted) > 200:
+        path.write_text(extracted, encoding="utf-8")
+        return extracted
+
+    # Fallback: statik özet
     digest = """# K-KURALLARI ÖZET (Agent için)
 
 ## Giriş Kuralları
@@ -250,6 +276,50 @@ def get_k_rules_digest() -> str:
 """
     path.write_text(digest, encoding="utf-8")
     return digest
+
+
+def _extract_k_rules_from_playbook(playbook_path: Path) -> str:
+    """TRADING_PLAYBOOK.md'den aktif K-xx madde satırlarını extract et.
+
+    Playbook `## 1. KANITLANMIŞ KURALLAR` gibi organize — K kuralları
+    bölüm içinde bullet olarak geçiyor. Basit yaklaşım:
+    "K-xx:" veya "K-xx " ile başlayan madde satırlarını topla,
+    kaldırılmış kuralları ele.
+    """
+    try:
+        text = playbook_path.read_text(encoding="utf-8")
+    except Exception:
+        return ""
+
+    import re
+    # K-xx ile başlayan bullet/madde satırlarını bul
+    # Örnek: "- K-02: kriz..." veya "K-13 v4.1: VIX..."
+    pattern = re.compile(
+        r"^[\-\*\s]*K-(\d{2})[\s:v.\d]+(.+?)$",
+        re.MULTILINE,
+    )
+    found: dict[str, str] = {}  # "K-xx" -> ilk bulunan açıklama (en kısa genelde baş)
+    for m in pattern.finditer(text):
+        num = m.group(1)
+        desc = m.group(2).strip()
+        key = f"K-{num}"
+        # Kaldırılan kuralları atla
+        if num in ("01", "03", "08", "14"):
+            continue
+        # İlk bulunanı al (genelde playbook'un başında özet olur)
+        if key not in found and 10 < len(desc) < 300:
+            found[key] = desc
+
+    if not found:
+        return ""
+
+    out = ["# K-KURALLARI ÖZET (playbook'tan üretildi)\n"]
+    for key in sorted(found.keys(), key=lambda k: int(k.split("-")[1])):
+        out.append(f"- **{key}**: {found[key]}")
+
+    out.append("\n## Kaldırılan Kurallar\n- K-01/K-03/K-08: erken kaldırıldı")
+    out.append("- K-14 drawdown freni: 11 Nisan 2026'da kaldırıldı")
+    return "\n".join(out)
 
 
 # ── L4: Öğrenme Logu (birikimli) ─────────────────────────────────────────────

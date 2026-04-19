@@ -50,7 +50,7 @@ def ask_with_context(
     query: str,
     top_k: int = 5,
     filter: dict = None,
-    model: str = "claude-opus-4-6",
+    model: str = "claude-opus-4-7",
     max_tokens: int = 1500,
 ) -> dict:
     """
@@ -140,7 +140,7 @@ def main():
     ap.add_argument("--type", help="event_type filtresi")
     ap.add_argument("--portfoy", help="portfoy filtresi")
     ap.add_argument("--show-context", action="store_true", help="RAG context'i bastır")
-    ap.add_argument("--model", default="claude-opus-4-6")
+    ap.add_argument("--model", default="claude-opus-4-7")
     ap.add_argument("--max-tokens", type=int, default=1500)
     args = ap.parse_args()
 

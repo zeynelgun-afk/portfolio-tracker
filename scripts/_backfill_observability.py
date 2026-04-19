@@ -140,7 +140,12 @@ def backfill_closed_swings(existing_ids: set) -> tuple[int, int]:
         sembol = p.get("sembol", "")
         entry_date = p.get("giris_tarihi", "")
         exit_date = p.get("cikis_tarihi", "")
-        shares = p.get("adet", 0)
+        # adet int veya string olabilir; normalize et
+        _raw_shares = p.get("adet", 0)
+        try:
+            shares = float(_raw_shares) if _raw_shares else 0
+        except (ValueError, TypeError):
+            shares = 0
         entry_price = p.get("giris_fiyati", 0)
         exit_price = p.get("cikis_fiyati", 0)
         reason = p.get("cikis_nedeni", "") or p.get("giris_nedeni", "")
@@ -165,7 +170,7 @@ def backfill_closed_swings(existing_ids: set) -> tuple[int, int]:
                     "sembol": sembol,
                     "shares": shares,
                     "price": entry_price,
-                    "total": shares * entry_price if isinstance(shares, (int, float)) else 0,
+                    "total": round(shares * entry_price, 2),
                     "reason": p.get("giris_nedeni", "")[:300],
                     "success": 1,
                 })

@@ -105,10 +105,55 @@ def get_portfolio_snapshot() -> dict:
 
 def get_real_vix() -> dict:
     """
-    VIX değerini çeker.
-    Kaynak sırası: 1) Yahoo Finance  2) FMP (VIXY proxy düzeltmeli)  3) Cached
-    VIXY/UVXY doğrudan kullanma — contango nedeniyle yanıltıcı.
+    VIX değerini çeker (merkezi vix_fetcher üzerinden).
+    Kaynak zinciri: cache → Yahoo q1 → Yahoo q2 → FMP → stale cache → default
+    VIXY/UVXY doğrudan kullanılmaz — contango nedeniyle yanıltıcı.
     """
+    def _seviye(price):
+        if price is None: return "UNKNOWN"
+        if price < 18:   return "DÜŞÜK (Risk-On)"
+        if price < 25:   return "NORMAL"
+        if price < 30:   return "YÜKSEK — K-13 aktif"
+        return "EKSTREM — yeni giriş dur"
+
+    # Merkezi vix_fetcher (cache + Yahoo + FMP fallback)
+    try:
+        from vix_fetcher import get_vix
+        price, source = get_vix()
+    except Exception as e:
+        print(f"[VIX] vix_fetcher hatası: {e}")
+        price, source = 20.0, "error_default"
+
+    # Dünkü kapanışı + değişim hesabı için Yahoo'dan 5 gün çekme denemesi
+    # (sadece chg hesabı için; ana VIX fiyatı yukarıda merkezi modülden geldi)
+    chg = None
+    try:
+        r = requests.get(
+            "https://query1.finance.yahoo.com/v8/finance/chart/%5EVIX",
+            params={"interval": "1d", "range": "5d"},
+            headers={"User-Agent": "Mozilla/5.0 (compatible; Finzora/1.0)"},
+            timeout=6,
+        ).json()
+        result = r["chart"]["result"][0]
+        closes = result.get("indicators", {}).get("quote", [{}])[0].get("close", [])
+        valid  = [c for c in closes if c is not None]
+        if price and len(valid) >= 2:
+            prev = valid[-2]
+            chg  = round((price - prev) / prev * 100, 2) if prev else None
+    except Exception:
+        pass
+
+    return {
+        "price":     round(float(price), 2),
+        "chg":       chg,
+        "seviye":    _seviye(price),
+        "kaynak":    f"vix_fetcher:{source}",
+        "timestamp": __import__("datetime").datetime.now().isoformat(),
+    }
+
+
+def _old_get_real_vix_legacy_reference() -> dict:
+    """Referans amaçlı eski multi-source implementasyon (kullanılmıyor)."""
     def _seviye(price):
         if price is None: return "UNKNOWN"
         if price < 18:   return "DÜŞÜK (Risk-On)"
