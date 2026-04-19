@@ -1,0 +1,30 @@
+{
+  "aktif_kriz": "jeopolitik",
+  "baslangic": "2026-04-06",
+  "son_guncelleme": "2026-04-19",
+  "aciklama": "İran jeopolitik gerilim aktif. Kriz değişirse (pandemi/finansal/ticaret/enflasyon) benef+sensitive listelerini güncelle.",
+  "beneficiary": [
+    "Energy",
+    "Defense",
+    "Gold",
+    "Materials",
+    "Real Estate",
+    "Consumer Defensive"
+  ],
+  "sensitive": [
+    "Technology",
+    "Consumer Cyclical",
+    "Communication Services",
+    "Healthcare",
+    "Financial Services",
+    "Industrials"
+  ],
+  "matris_versiyon": "v4.1",
+  "notlar": {
+    "jeopolitik": "savunma+enerji+altın beneficiary, tech+tüketici duyarlı",
+    "pandemi": "healthcare+tech+e-ticaret beneficiary, energy+travel+banking duyarlı",
+    "finansal": "gold+bonds+defensive beneficiary, banks+real_estate duyarlı",
+    "ticaret": "domestic_focused+utilities beneficiary, exporters+tech duyarlı",
+    "enflasyon": "energy+materials+real_estate beneficiary, growth+consumer duyarlı"
+  }
+}

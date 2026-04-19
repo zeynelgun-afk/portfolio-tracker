@@ -181,8 +181,9 @@ def closed_swings_as_lesson_chunks() -> list[tuple[str, dict]]:
         pnl_pct = p.get("kar_zarar_yuzde", 0)
         giris_nedeni = p.get("giris_nedeni", "")
         cikis_nedeni = p.get("cikis_nedeni", "")
-        dersler = p.get("dersler") or p.get("lessons", "")
-        scan_method = p.get("scan_method", "")
+        # Canonical alan: 'ders' (tekil). Fallback: 'dersler' (eski), 'lessons' (İngilizce).
+        dersler = p.get("ders") or p.get("dersler") or p.get("lessons", "")
+        scan_method = p.get("scan_method", "") or p.get("tarama_yontemi", "")
 
         parts = [
             f"[SWING DERS] {sembol}",

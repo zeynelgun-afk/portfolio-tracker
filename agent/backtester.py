@@ -67,7 +67,7 @@ def test_current_rules() -> dict:
 
     for t in trades:
         exit_reason = (t.get("cikis_nedeni") or t.get("exit_reason", "")).lower()
-        pnl = float(t.get("pnl_yuzde") or t.get("pnl_pct") or 0)
+        pnl = float(t.get("kar_zarar_yuzde") or t.get("pnl_yuzde") or t.get("pnl_pct") or 0)
 
         # Hangi kural tetikledi?
         rules_triggered = []
@@ -128,7 +128,7 @@ def test_rsi_threshold(
 
     for t in closed_trades:
         exit_reason = (t.get("cikis_nedeni") or t.get("exit_reason", "")).lower()
-        pnl = float(t.get("pnl_yuzde") or t.get("pnl_pct") or 0)
+        pnl = float(t.get("kar_zarar_yuzde") or t.get("pnl_yuzde") or t.get("pnl_pct") or 0)
         hold_days = int(t.get("tutma_suresi") or t.get("hold_days") or 0)
 
         if "k-11" in exit_reason or "rsi" in exit_reason:
@@ -183,7 +183,7 @@ def test_stop_threshold(
     # Daha sıkı stop: Bazı trade'ler daha erken kesilir
     # Daha geniş stop: Bazı trade'ler toparlar
     avg_stop_loss = sum(
-        float(t.get("pnl_yuzde") or t.get("pnl_pct") or 0)
+        float(t.get("kar_zarar_yuzde") or t.get("pnl_yuzde") or t.get("pnl_pct") or 0)
         for t in stop_trades
     ) / len(stop_trades)
 

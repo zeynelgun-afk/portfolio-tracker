@@ -85,18 +85,45 @@ def _run_script(script: str, symbol: str) -> dict:
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# K-13 VIX Matrisi
+# K-13 VIX Matrisi (v4.1 — kriz tipine göre sektör matrisi)
 # ─────────────────────────────────────────────────────────────────────────────
+#
+# Matris data/k13_crisis_matrix.json'dan yüklenir. Örnek:
+# {
+#   "aktif_kriz": "jeopolitik",
+#   "beneficiary": ["Energy","Defense","Gold","Materials","Real Estate","Consumer Defensive"],
+#   "sensitive":   ["Technology","Consumer Cyclical","Communication Services",...]
+# }
+#
+# Kriz değişince sadece bu dosyayı güncelle (pandemi → sağlık/tech benef, finansal → altın+bonds, vs).
 
-BENEFICIARY_SECTORS = {
+_DEFAULT_BENEFICIARY = {
     "Energy", "Defense", "Gold", "Materials",
     "Real Estate", "Consumer Defensive"
 }
-
-SENSITIVE_SECTORS = {
+_DEFAULT_SENSITIVE = {
     "Technology", "Consumer Cyclical", "Communication Services",
     "Healthcare", "Financial Services", "Industrials"
 }
+
+
+def _load_crisis_matrix() -> tuple[set, set, str]:
+    """data/k13_crisis_matrix.json → (beneficiary, sensitive, kriz_adi). Yoksa default."""
+    p = REPO_ROOT / "data" / "k13_crisis_matrix.json"
+    if not p.exists():
+        return _DEFAULT_BENEFICIARY, _DEFAULT_SENSITIVE, "jeopolitik (default)"
+    try:
+        d = json.load(open(p))
+        benef = set(d.get("beneficiary", []) or _DEFAULT_BENEFICIARY)
+        sens  = set(d.get("sensitive",   []) or _DEFAULT_SENSITIVE)
+        kriz  = d.get("aktif_kriz", "bilinmeyen")
+        return benef, sens, kriz
+    except Exception as e:
+        print(f"[K-13] matrix okuma hatası: {e}, default kullanılıyor")
+        return _DEFAULT_BENEFICIARY, _DEFAULT_SENSITIVE, "default_fallback"
+
+
+BENEFICIARY_SECTORS, SENSITIVE_SECTORS, _K13_AKTIF_KRIZ = _load_crisis_matrix()
 
 
 def k13_position_size(vix: float, sector: str, base_size: float) -> tuple[float, str]:

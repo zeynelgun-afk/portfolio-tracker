@@ -17,6 +17,11 @@ jobs:
           python3 scripts/adil_deger_calculator.py \
             --portfolio balanced \
             --report --telegram
+        env:
+          FMP_API_KEY: ${{ secrets.FMP_API_KEY }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TELEGRAM_PRIVATE_ID: ${{ secrets.TELEGRAM_PRIVATE_ID }}
       - name: Git commit
         run: |
           git config user.name "Finzora AI"

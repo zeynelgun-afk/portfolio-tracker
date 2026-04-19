@@ -119,7 +119,10 @@ def build_portfolio_state(portfolios: dict, market: dict) -> dict:
             stop_l = float(sp.get("stop_loss", 0) or 0)
             chand  = float(sp.get("chandelier_stop", 0) or 0)
             stop   = max(stop_l, chand) if chand else stop_l
-            giris  = float(sp.get("giris_fiyat", sp.get("maliyet_baz", 0)) or 0)
+            giris  = float(
+                sp.get("giris_fiyati", sp.get("giris_fiyat", sp.get("maliyet_baz", 0)))
+                or 0
+            )
             pnl    = round((gun - giris) / giris * 100, 2) if giris else 0
             stop_uzak = round((gun - stop) / gun * 100, 1) if gun and stop else 0
             swing_pozlar.append({

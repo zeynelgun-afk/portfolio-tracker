@@ -114,7 +114,9 @@ def score_tema_uyumu(symbol: str, tema_puani: float, tier: str = "tier_1") -> tu
     tema_normalized = min(tema_puani / 70, 1.0) if tema_puani > 0 else 0
     tier_weight     = TIER_WEIGHTS.get(tier, 15)
 
-    skor = round(tema_normalized * (tier_weight / 25) * 25, 1)
+    # Skor = normalize * tier_weight (0-25 aralığında; tier_weight max 25)
+    # Eski: tema_normalized * (tier_weight/25) * 25 = pleonasm
+    skor = round(tema_normalized * tier_weight, 1)
     return min(skor, 25), {
         "tema_puani": tema_puani, "tier": tier,
         "tier_weight": tier_weight, "tema_skor": skor

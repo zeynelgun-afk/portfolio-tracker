@@ -81,13 +81,19 @@ THEME_UNIVERSE = {
 
 
 def _fmp(endpoint, params=None):
-    p = (params or {})
-    p["apikey"] = FMP_KEY
+    """FMP çağrısı — merkezi fmp_client (observability loglanır)."""
     try:
-        r = requests.get(f"{FMP_BASE}/{endpoint}", params=p, timeout=10)
-        return r.json()
-    except Exception:
-        return None
+        from fmp_client import fmp_get as _centralized_fmp_get
+        return _centralized_fmp_get(endpoint, params or {})
+    except ImportError:
+        # Fallback: manuel requests
+        p = (params or {})
+        p["apikey"] = FMP_KEY
+        try:
+            r = requests.get(f"{FMP_BASE}/{endpoint}", params=p, timeout=10)
+            return r.json()
+        except Exception:
+            return None
 
 
 def get_sector_performance() -> dict:

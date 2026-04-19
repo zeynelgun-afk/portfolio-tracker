@@ -215,8 +215,10 @@ def find_candidates(
             if rr < 2:  # R:R minimum 2:1
                 continue
 
-            # Final skor
-            final = round(t_skor*0.4 + f_skor*0.35 + (tema_skor/10)*10*0.25, 2)
+            # Final skor (0-10 ölçekli, ağırlıklı ortalama)
+            # t_skor, f_skor, tema_skor hepsi 0-10 — doğrudan ağırlıklı ortalama al.
+            # Eski: (tema_skor/10)*10*0.25 = tema_skor*0.25 (pleonasm; normalize→denormalize)
+            final = round(t_skor * 0.4 + f_skor * 0.35 + tema_skor * 0.25, 2)
 
             tüm_adaylar[sym] = {
                 "symbol":      sym,
