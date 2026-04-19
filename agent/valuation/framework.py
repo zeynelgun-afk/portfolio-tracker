@@ -158,7 +158,17 @@ def valuate(ticker: str, verbose: bool = False, apply_regime: bool = True) -> di
             continue
 
         try:
-            result = fn(data)
+            result = fn(data, archetype=archetype_key)
+        except TypeError:
+            # Eski signature (archetype parameter yok) ile uyumluluk
+            try:
+                result = fn(data)
+            except Exception as e:
+                methods_failed.append({
+                    "name": method_name, "weight": weight, "tier": tier,
+                    "reason": f"exception: {e}"
+                })
+                continue
         except Exception as e:
             methods_failed.append({
                 "name": method_name, "weight": weight, "tier": tier,
