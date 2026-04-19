@@ -27,7 +27,11 @@ from datetime import datetime
 # --- CONFIG ---
 TELEGRAM_BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN", "")
 TELEGRAM_CHAT_ID    = os.environ.get("TELEGRAM_CHAT_ID",    "-1003827034395")  # Finzora grubu
-TELEGRAM_PRIVATE_ID = os.environ.get("TELEGRAM_PRIVATE_ID", "") or os.environ.get("TELEGRAM_PRIVATE_CHAT", "")       # Zeynel özel
+# Zeynel özel DM (chat_id 1403072107, @Zeynelgun) — sistem bakım, denetim, bugfix, teknik rapor buraya.
+# Grubu bu mesajlarla kirletme kuralı: memory #9
+TELEGRAM_PRIVATE_ID = os.environ.get("TELEGRAM_PRIVATE_ID", "") or \
+                      os.environ.get("TELEGRAM_PRIVATE_CHAT", "") or \
+                      "1403072107"
 TELEGRAM_API = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}"
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -625,12 +629,34 @@ def main():
     parser.add_argument("--action", help="Aksiyon tipi: ALIŞ, SATIŞ, STOP, KAR_AL, UYARI")
     parser.add_argument("--details", help="Detay açıklama")
     parser.add_argument("--stop", type=float, help="Stop fiyatı (alert için)")
-    parser.add_argument("--private", action="store_true",
-                        help="Gruba değil sadece Zeynel'e gönder (sistem uyarıları için)")
+    parser.add_argument("--private", "--dm", action="store_true", dest="private",
+                        help="Gruba değil sadece Zeynel'e DM gönder (sistem bakım, bugfix, teknik rapor)")
 
     args = parser.parse_args()
-    # --private: hedef chat_id'yi özel olarak ayarla
-    target_chat = TELEGRAM_PRIVATE_ID if args.private else TELEGRAM_CHAT_ID
+
+    # Hedef kanal kuralları (memory #9):
+    #   GRUP:  alım/satım aksiyonu, açılış/kapanış raporu, günlük özet
+    #   DM:    sistem mesajları, hata/bakım, kural güncelleme, denetim özeti
+    #
+    # custom + alert gibi belirsiz tiplerde --dm açık belirtilmediyse grup'a değil
+    # DM'e düşsün (yanlış yere gidip grubu kirletme riskini kesiyoruz).
+    _DM_DEFAULT_TYPES = {"alert", "custom"}   # Açık --dm olmadıkça da DM'e
+    _GROUP_SAFE_TYPES = {"action", "premarket", "closing", "daily", "report", "photo",
+                         "session", "winners"}
+
+    if args.private:
+        target_chat = TELEGRAM_PRIVATE_ID
+    elif args.type in _DM_DEFAULT_TYPES:
+        target_chat = TELEGRAM_PRIVATE_ID
+        print(f"[telegram_notify] {args.type} default olarak DM'e yönlendirildi "
+              f"(--private açıkça belirtilmedi ama sistem mesajı kabul edildi)")
+    else:
+        target_chat = TELEGRAM_CHAT_ID
+
+    # DM hedefi boşsa gruba düşmek yerine HATA ver (yanlış kanala göndermek yok)
+    if args.private and not TELEGRAM_PRIVATE_ID:
+        print("HATA: --private belirtildi ama TELEGRAM_PRIVATE_ID ayarlı değil.")
+        sys.exit(1)
 
     if args.type == "session":
         msg = format_session_report(theme=args.theme)
