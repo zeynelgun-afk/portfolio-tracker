@@ -1,8 +1,9 @@
-name: Finzora Telegram Bot
+name: Finzora Telegram Bot (Devre Dışı — Railway'de çalışıyor)
 
 on:
-  schedule:
-    - cron: '*/5 * * * *'   # Her 5 dakika
+  # Cron kapatıldı — Railway 7/24 long-polling yapıyor.
+  # Çakışma riski: iki instance getUpdates yaparsa aynı mesajı çift işler.
+  # Sadece manuel tetiklenebilir kalsın (test amaçlı).
   workflow_dispatch:
 
 permissions:

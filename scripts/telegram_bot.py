@@ -33,7 +33,8 @@ FMP_KEY      = os.environ.get("FMP_API_KEY", "")
 FMP_BASE     = "https://financialmodelingprep.com/stable"
 
 # Yanıt gönderilebilecek chat ID'ler (güvenlik)
-IZINLI_CHATLER = {PRIVATE_CHAT, GROUP_CHAT, str(PRIVATE_CHAT)}
+# Sadece Zeynel DM (1403072107). Grup'ta komut alma yasak — grupta sadece alım/satım bildirimi.
+IZINLI_CHATLER = {PRIVATE_CHAT, str(PRIVATE_CHAT), "1403072107"}
 
 # Ticker pattern: 1-6 büyük harf, opsiyonel rakam
 TICKER_PATTERN = re.compile(r'^[A-Z]{1,6}[0-9]?$')
@@ -248,19 +249,33 @@ def format_adil_deger(symbol: str, res: dict, analyst: dict) -> str:
 def format_yardim() -> str:
     return """<b>🤖 Finzora AI Bot — Komutlar</b>
 
+<b>Portföy &amp; Pozisyon:</b>
+  <code>/portfoy</code> (<code>/pf</code>) — Açık pozisyon özeti
+  <code>/swing</code> (<code>/sw</code>) — Aktif swing pozisyonları
+  <code>/stats</code> — Bu ay/hafta P&amp;L istatistikleri
+  <code>/kapanan</code> (<code>/kp</code>) — Son 5 kapanan trade + dersler
+  <code>/watchlist</code> (<code>/iz</code>) — Günlük tarama adayları
+
+<b>Piyasa:</b>
+  <code>/vix</code> — Güncel VIX + seviye
+  <code>/kriz</code> — K-13 aktif kriz matrisi
+  <code>/fiyat AAPL</code> — Canlı fiyat + değişim
+
 <b>Hisse Analizi:</b>
   <code>AAPL</code> veya <code>/deger AAPL</code>
   → Adil değer, değerleme metotları, analist görüşü
+  <code>/beklenti AAPL</code> — Analist + EPS beklentileri
 
-<b>Diğer:</b>
-  <code>/portfoy</code> — Açık pozisyon özeti
-  <code>/yardim</code>  — Bu menü
+<b>AI (Claude):</b>
+  <code>/sor &lt;soru&gt;</code> — Serbest soru (portföy bağlamında)
+  <code>/analiz AAPL</code> — Tam tez + risk + portföy uygunluğu
 
 <b>Örnek:</b>
-  <code>MU</code> → Micron adil değer analizi
-  <code>NVDA</code> → Nvidia analizi
+  <code>MU</code> → Micron adil değer
+  <code>/sor bugün enerji sektörü risk-on mu?</code>
+  <code>/analiz POWL</code> → POWL tam tez
 
-<i>Yanıt süresi: ~1-2 dakika</i>"""
+<i>Yanıt süresi: statik 2-5sn, Claude komutları 20-60sn</i>"""
 
 
 def format_portfoy() -> str:
@@ -291,6 +306,372 @@ def format_portfoy() -> str:
     return "\n".join(lines)
 
 
+def format_swing() -> str:
+    """Aktif swing pozisyonları."""
+    try:
+        d = json.load(open(REPO_ROOT / "data" / "swing" / "active.json"))
+        pozlar = d.get("aktif_pozisyonlar", [])
+        if not pozlar:
+            return "📊 <b>Swing</b>\n\nAktif pozisyon yok — tarama devam ediyor."
+
+        lines = [f"<b>📊 Swing Pozisyonları ({len(pozlar)}/5)</b>", ""]
+        for p in pozlar:
+            sym   = p.get("sembol", "?")
+            giris = float(p.get("giris_fiyati", p.get("giris_fiyat", 0)) or 0)
+            cur   = float(p.get("guncel_fiyat", 0) or 0)
+            stop  = float(p.get("stop_loss", 0) or 0)
+            hedef = float(p.get("hedef_fiyat", 0) or 0)
+            pnl   = float(p.get("kar_zarar_yuzde", p.get("pnl_pct", 0)) or 0)
+            gun   = int(p.get("tutulan_gun", 0) or 0)
+            ico   = "🟢" if pnl >= 0 else "🔴"
+            sd    = (cur - stop) / cur * 100 if cur and stop else 0
+            lines.append(
+                f"{ico} <b>{sym}</b>  {pnl:+.1f}%  ({gun}g)\n"
+                f"   Giriş ${giris:.2f} → ${cur:.2f}\n"
+                f"   Stop ${stop:.2f} (%{sd:.1f} uzak) | Hedef ${hedef:.2f}"
+            )
+        return "\n\n".join(lines)
+    except Exception as e:
+        return f"Swing verisi okunamadı: {e}"
+
+
+def format_vix() -> str:
+    """Güncel VIX."""
+    try:
+        import sys as _s
+        _s.path.insert(0, str(REPO_ROOT / "agent"))
+        from vix_fetcher import get_vix
+        value, source = get_vix()
+        if value < 18:
+            seviye = "🟢 DÜŞÜK (Risk-On)"
+        elif value < 25:
+            seviye = "🟡 NORMAL"
+        elif value < 30:
+            seviye = "🟠 YÜKSEK (K-13 aktif)"
+        else:
+            seviye = "🔴 EKSTREM (giriş dur)"
+        return f"<b>📉 VIX</b>\n\nSeviye: <b>{value:.2f}</b>\n{seviye}\n<i>Kaynak: {source}</i>"
+    except Exception as e:
+        return f"VIX okunamadı: {e}"
+
+
+def format_kriz() -> str:
+    """K-13 kriz matrisi özeti."""
+    try:
+        d = json.load(open(REPO_ROOT / "data" / "k13_crisis_matrix.json"))
+        kriz  = d.get("aktif_kriz", "bilinmiyor")
+        benef = d.get("beneficiary", [])
+        sens  = d.get("sensitive", [])
+        ardisik = d.get("ardisik_gun", 1)
+        guven = d.get("son_guven", "?")
+        last  = d.get("son_guncelleme", "?")
+
+        lines = [
+            f"<b>🌍 K-13 Kriz Matrisi</b>",
+            "",
+            f"Aktif kriz: <b>{kriz}</b> ({ardisik}. gün)",
+            f"Claude güveni: {guven}/10",
+            f"Son güncelleme: {last}",
+        ]
+        if benef:
+            lines.append(f"\n<b>🟢 Faydalanıcı sektörler:</b>")
+            lines.append("  " + ", ".join(benef))
+        if sens:
+            lines.append(f"\n<b>🔴 Duyarlı sektörler:</b>")
+            lines.append("  " + ", ".join(sens))
+        if not benef and not sens:
+            lines.append("\n<i>Kriz yok — standart VIX eşikleri aktif</i>")
+        return "\n".join(lines)
+    except Exception as e:
+        return f"Kriz matrisi okunamadı: {e}"
+
+
+def format_stats() -> str:
+    """Bu ay/hafta P&L istatistikleri."""
+    try:
+        d = json.load(open(REPO_ROOT / "data" / "swing" / "closed.json"))
+        trades = d.get("kapatilan_pozisyonlar", d.get("kapali_pozisyonlar", []))
+
+        if not trades:
+            return "📈 İstatistik yok — henüz kapanan trade yok."
+
+        from datetime import datetime, timedelta
+        bugun = datetime.now()
+        ay_onces = bugun - timedelta(days=30)
+        hafta_onces = bugun - timedelta(days=7)
+
+        son_30 = []
+        son_7  = []
+        for t in trades:
+            try:
+                cd = datetime.strptime(t.get("cikis_tarihi", ""), "%Y-%m-%d")
+                if cd >= ay_onces:
+                    son_30.append(t)
+                if cd >= hafta_onces:
+                    son_7.append(t)
+            except ValueError:
+                continue
+
+        def _stats(batch):
+            if not batch:
+                return "0 trade"
+            n = len(batch)
+            pnls = [float(t.get("kar_zarar_yuzde", t.get("pnl_pct", 0)) or 0) for t in batch]
+            wins = sum(1 for p in pnls if p > 0)
+            avg = sum(pnls)/n
+            best = max(pnls)
+            worst = min(pnls)
+            return f"{n} trade | %{wins/n*100:.0f} win | ort {avg:+.1f}% | en iyi {best:+.1f}% / en kötü {worst:+.1f}%"
+
+        lines = [
+            "<b>📈 Swing İstatistikleri</b>",
+            "",
+            f"Son 7 gün: {_stats(son_7)}",
+            f"Son 30 gün: {_stats(son_30)}",
+            f"Tüm zaman ({len(trades)} trade):",
+        ]
+        all_pnls = [float(t.get("kar_zarar_yuzde", t.get("pnl_pct", 0)) or 0) for t in trades]
+        all_wins = sum(1 for p in all_pnls if p > 0)
+        lines.append(f"  %{all_wins/len(trades)*100:.0f} win | ort {sum(all_pnls)/len(trades):+.2f}%")
+        return "\n".join(lines)
+    except Exception as e:
+        return f"Stats okunamadı: {e}"
+
+
+def format_watchlist() -> str:
+    """Günlük tarama watchlist."""
+    try:
+        p = REPO_ROOT / "data" / "watchlist.json"
+        if not p.exists():
+            return "📋 Watchlist henüz oluşturulmamış."
+        d = json.load(open(p))
+        adaylar = d.get("adaylar", d.get("izlenenler", []))[:10]
+        if not adaylar:
+            return "📋 Watchlist boş."
+        lines = [f"<b>📋 Watchlist ({len(adaylar)})</b>", ""]
+        for a in adaylar:
+            sym = a.get("sembol", a.get("symbol", "?"))
+            skor = a.get("skor", a.get("score", "?"))
+            port = a.get("portfoy", a.get("portföy", "-"))
+            neden = (a.get("neden", a.get("reason", "")) or "")[:60]
+            lines.append(f"• <b>{sym}</b> ({port}) skor {skor}\n  {neden}")
+        return "\n".join(lines)
+    except Exception as e:
+        return f"Watchlist okunamadı: {e}"
+
+
+def format_kapanan() -> str:
+    """Son 5 kapanan swing trade."""
+    try:
+        d = json.load(open(REPO_ROOT / "data" / "swing" / "closed.json"))
+        trades = d.get("kapatilan_pozisyonlar", d.get("kapali_pozisyonlar", []))
+        if not trades:
+            return "📕 Henüz kapanan trade yok."
+
+        son5 = trades[-5:][::-1]
+        lines = ["<b>📕 Son 5 Kapanan Swing</b>", ""]
+        for t in son5:
+            sym = t.get("sembol", "?")
+            pnl = float(t.get("kar_zarar_yuzde", t.get("pnl_pct", 0)) or 0)
+            gun = int(t.get("tutulan_gun", t.get("hold_days", 0)) or 0)
+            neden = (t.get("cikis_nedeni", "") or "")[:50]
+            tarih = t.get("cikis_tarihi", "?")
+            ders = (t.get("ders", t.get("dersler", "")) or "")[:100]
+            ico = "🟢" if pnl > 0 else "🔴"
+            lines.append(f"{ico} <b>{sym}</b> {pnl:+.1f}% ({gun}g) — {tarih}")
+            lines.append(f"   Çıkış: {neden}")
+            if ders:
+                lines.append(f"   💡 {ders}")
+            lines.append("")
+        return "\n".join(lines)
+    except Exception as e:
+        return f"Kapanan trade'ler okunamadı: {e}"
+
+
+def format_fiyat(ticker: str) -> str:
+    """Canlı fiyat."""
+    try:
+        r = requests.get(f"{FMP_BASE}/quote",
+                         params={"symbol": ticker, "apikey": FMP_KEY},
+                         timeout=8).json()
+        if not r or not isinstance(r, list):
+            return f"❌ {ticker} bulunamadı"
+        q = r[0]
+        price = float(q.get("price", 0) or 0)
+        prev  = float(q.get("previousClose", 0) or 0)
+        chg   = ((price - prev) / prev * 100) if prev else 0
+        ico   = "🟢" if chg >= 0 else "🔴"
+        mcap  = float(q.get("marketCap", 0) or 0)
+        vol   = float(q.get("volume", 0) or 0)
+        return (
+            f"{ico} <b>{ticker}</b>\n\n"
+            f"Fiyat: <b>${price:.2f}</b> ({chg:+.2f}%)\n"
+            f"Önceki kapanış: ${prev:.2f}\n"
+            f"Mkt cap: ${mcap/1e9:.1f}B\n"
+            f"Hacim: {vol/1e6:.1f}M"
+        )
+    except Exception as e:
+        return f"Fiyat okunamadı: {e}"
+
+
+def claude_sor(soru: str) -> str:
+    """Serbest Claude sorgusu — portföy bağlamında."""
+    try:
+        import sys as _s
+        _s.path.insert(0, str(REPO_ROOT / "agent"))
+
+        # Portföy bağlamını oku
+        ctx_parts = []
+        for pf in ["aggressive", "balanced", "dividend"]:
+            try:
+                d = json.load(open(REPO_ROOT / "data" / "portfolios" / f"{pf}.json"))
+                syms = [p.get("sembol","?") for p in d.get("pozisyonlar", [])]
+                ctx_parts.append(f"{pf}: {', '.join(syms)}")
+            except Exception:
+                pass
+        try:
+            sw = json.load(open(REPO_ROOT / "data" / "swing" / "active.json"))
+            swing_syms = [p.get("sembol","?") for p in sw.get("aktif_pozisyonlar", [])]
+            ctx_parts.append(f"swing: {', '.join(swing_syms)}")
+        except Exception:
+            pass
+        try:
+            v = json.load(open(REPO_ROOT / "data" / "vix_cache.json"))
+            ctx_parts.append(f"VIX: {v.get('value','?')}")
+        except Exception:
+            pass
+        try:
+            k = json.load(open(REPO_ROOT / "data" / "k13_crisis_matrix.json"))
+            ctx_parts.append(f"Aktif kriz: {k.get('aktif_kriz','?')}")
+        except Exception:
+            pass
+
+        ctx = "\n".join(ctx_parts)
+
+        prompt = f"""Mevcut Finzora portföy bağlamı:
+{ctx}
+
+Zeynel'in sorusu: {soru}
+
+Kurallar:
+- Türkçe cevap ver, cümleler büyük harfle başlasın
+- Kısa ve öz ol (max 6 cümle veya 3 madde)
+- Em dash yok, AI kokusu olmasın
+- Spekülatif/muhtemel/kesin ayrımını belirt
+- Risk tarafını atlama"""
+
+        from claude_agent import get_claude_decision
+        # Haiku tier için explicit model — ucuz serbest sorular
+        import os
+        os.environ['CLAUDE_MODEL'] = os.environ.get('CLAUDE_MODEL_BOT', 'claude-haiku-4-5-20251001')
+
+        yanit = get_claude_decision(prompt, mode="monitor", rag_enabled=False)
+        # Telegram HTML — escape
+        yanit = yanit.replace("<", "&lt;").replace(">", "&gt;")
+        return f"🤖 <b>Claude</b>\n\n{yanit[:3500]}"
+    except Exception as e:
+        return f"Claude hatası: {e}"
+
+
+def claude_analiz(ticker: str) -> str:
+    """Tam ticker analizi — Opus (daha detaylı)."""
+    try:
+        import sys as _s
+        _s.path.insert(0, str(REPO_ROOT / "agent"))
+
+        # FMP'den profil + metrikleri topla
+        def fmp(ep, p=None):
+            pp = (p or {}); pp["apikey"] = FMP_KEY
+            try:
+                r = requests.get(f"{FMP_BASE}/{ep}", params=pp, timeout=8)
+                return r.json()
+            except Exception:
+                return None
+
+        prof = fmp("profile", {"symbol": ticker}) or []
+        prof = prof[0] if prof else {}
+        quote = fmp("quote", {"symbol": ticker}) or []
+        quote = quote[0] if quote else {}
+        ratios = fmp("ratios-ttm", {"symbol": ticker}) or []
+        ratios = ratios[0] if ratios else {}
+        metrics = fmp("key-metrics-ttm", {"symbol": ticker}) or []
+        metrics = metrics[0] if metrics else {}
+
+        if not prof:
+            return f"❌ {ticker} FMP'de bulunamadı"
+
+        veri = f"""Sembol: {ticker}
+Şirket: {prof.get('companyName','?')}
+Sektör: {prof.get('sector','?')}
+Mkt cap: ${float(quote.get('marketCap',0) or 0)/1e9:.1f}B
+Fiyat: ${float(quote.get('price',0) or 0):.2f}
+P/E: {ratios.get('priceToEarningsRatioTTM','?')}
+P/B: {ratios.get('priceToBookRatioTTM','?')}
+D/E: {ratios.get('debtToEquityRatioTTM','?')}
+ROE: {ratios.get('returnOnEquityTTM','?')}
+FCF yield: {metrics.get('freeCashFlowYieldTTM','?')}
+Div yield: {ratios.get('dividendYieldTTM','?')}"""
+
+        # Mevcut portföy
+        portfoyde_mi = False
+        for pf in ["aggressive", "balanced", "dividend"]:
+            try:
+                d = json.load(open(REPO_ROOT / "data" / "portfolios" / f"{pf}.json"))
+                if any(p.get("sembol") == ticker for p in d.get("pozisyonlar", [])):
+                    portfoyde_mi = pf
+                    break
+            except Exception:
+                pass
+
+        prompt = f"""{ticker} için kapsamlı analiz yap:
+
+{veri}
+
+{'Portföyde var: ' + portfoyde_mi if portfoyde_mi else 'Portföyde yok.'}
+
+İstenen format (Türkçe, kısa):
+1. NEDEN BAKIYORUZ? — Tetikleyen sinyal (1-2 cümle)
+2. VERİ DAYANAĞI — P/E, büyüme, FCF, ROIC metrikleri yorumu (3-4 satır)
+3. BULL CASE — Tez (2-3 cümle)
+4. BEAR CASE — Risk senaryosu (2-3 cümle)
+5. PORTFÖY UYGUNLUĞU — Dengeli/Agresif/Temettü/Swing hangisi?
+6. KESİN KARAR — AL / BEKLE / PAS / ÇIK (portföyde varsa)
+
+Kurallar: Em dash yok, cümleler büyük harfle, spekülatif/muhtemel/kesin ayrımı belirt."""
+
+        from claude_agent import get_claude_decision
+        import os
+        os.environ['CLAUDE_MODEL'] = os.environ.get('CLAUDE_MODEL_BOT_ANALIZ', 'claude-opus-4-7')
+
+        yanit = get_claude_decision(prompt, mode="morning", rag_enabled=True)
+        yanit = yanit.replace("<", "&lt;").replace(">", "&gt;")
+        return f"🔬 <b>{ticker} Tam Analiz</b>\n\n{yanit[:3800]}"
+    except Exception as e:
+        return f"Analiz hatası: {e}"
+
+
+# ── Rate Limit (chat bazlı, dakika penceresi) ─────────────────────────────────
+
+_RATE_LIMIT_STATE: dict = {}  # chat_id -> [ts1, ts2, ...]
+_RATE_LIMIT_MAX = 15
+_RATE_LIMIT_WINDOW = 60  # saniye
+
+
+def _rate_limit_check(chat_id: str) -> bool:
+    """True dönerse geçebilir, False ise limit aşıldı."""
+    import time as _t
+    now = _t.time()
+    timestamps = _RATE_LIMIT_STATE.get(chat_id, [])
+    # Eski timestampleri temizle
+    timestamps = [t for t in timestamps if now - t < _RATE_LIMIT_WINDOW]
+    if len(timestamps) >= _RATE_LIMIT_MAX:
+        _RATE_LIMIT_STATE[chat_id] = timestamps
+        return False
+    timestamps.append(now)
+    _RATE_LIMIT_STATE[chat_id] = timestamps
+    return True
+
+
 # ── Mesaj İşleyici ────────────────────────────────────────────────────────────
 
 def isle_mesaj(msg: dict):
@@ -302,19 +683,81 @@ def isle_mesaj(msg: dict):
     if not text or chat_id not in IZINLI_CHATLER:
         return
 
+    # Rate limit (dakikada max 15 komut, chat bazlı)
+    if not _rate_limit_check(chat_id):
+        tg_send(chat_id, "⚠️ Rate limit — dakikada max 15 komut. Biraz bekle.", reply_to=msg_id)
+        return
+
     print(f"[Bot] Mesaj [{chat_id}] {user}: {text[:50]}")
 
     text_upper = text.upper().strip()
+    text_lower = text.lower().strip()
 
     # ── /yardim ──────────────────────────────────────────────────
-    if text.lower() in ("/yardim", "/help", "/start"):
+    if text_lower in ("/yardim", "/help", "/start"):
         tg_send(chat_id, format_yardim(), reply_to=msg_id)
         return
 
     # ── /portfoy ─────────────────────────────────────────────────
-    if text.lower() in ("/portfoy", "/portfolio", "/portföy"):
+    if text_lower in ("/portfoy", "/portfolio", "/portföy", "/pf"):
         tg_send(chat_id, format_portfoy(), reply_to=msg_id)
         return
+
+    # ── /swing ────────────────────────────────────────────────────
+    if text_lower in ("/swing", "/sw"):
+        tg_send(chat_id, format_swing(), reply_to=msg_id)
+        return
+
+    # ── /vix ──────────────────────────────────────────────────────
+    if text_lower in ("/vix",):
+        tg_send(chat_id, format_vix(), reply_to=msg_id)
+        return
+
+    # ── /kriz ─────────────────────────────────────────────────────
+    if text_lower in ("/kriz", "/crisis"):
+        tg_send(chat_id, format_kriz(), reply_to=msg_id)
+        return
+
+    # ── /stats ────────────────────────────────────────────────────
+    if text_lower in ("/stats", "/istatistik"):
+        tg_send(chat_id, format_stats(), reply_to=msg_id)
+        return
+
+    # ── /watchlist ────────────────────────────────────────────────
+    if text_lower in ("/watchlist", "/izleme", "/iz"):
+        tg_send(chat_id, format_watchlist(), reply_to=msg_id)
+        return
+
+    # ── /kapanan ──────────────────────────────────────────────────
+    if text_lower in ("/kapanan", "/closed", "/kp"):
+        tg_send(chat_id, format_kapanan(), reply_to=msg_id)
+        return
+
+    # ── /fiyat TICKER ─────────────────────────────────────────────
+    if text_upper.startswith("/FIYAT ") or text_upper.startswith("/PRICE "):
+        parts = text.split()
+        if len(parts) >= 2:
+            tg_send(chat_id, format_fiyat(parts[1].upper()), reply_to=msg_id)
+            return
+
+    # ── /sor <soru> (Claude serbest) ──────────────────────────────
+    if text_lower.startswith("/sor ") or text_lower.startswith("/ask "):
+        soru = text[5:].strip()
+        if len(soru) < 3:
+            tg_send(chat_id, "Soru kısa — örnek: /sor bugün NVDA için ne dersin?", reply_to=msg_id)
+            return
+        tg_send(chat_id, "🤔 Düşünüyorum...", reply_to=msg_id)
+        tg_send(chat_id, claude_sor(soru), reply_to=msg_id)
+        return
+
+    # ── /analiz TICKER (Claude tam analiz) ────────────────────────
+    if text_upper.startswith("/ANALIZ ") or text_upper.startswith("/ANALYZE "):
+        parts = text.split()
+        if len(parts) >= 2:
+            tkr = parts[1].upper()
+            tg_send(chat_id, f"🔍 <b>{tkr}</b> için tam analiz hazırlanıyor (30-60sn)...", reply_to=msg_id)
+            tg_send(chat_id, claude_analiz(tkr), reply_to=msg_id)
+            return
 
     # ── Ticker tespiti ────────────────────────────────────────────
     ticker = None
