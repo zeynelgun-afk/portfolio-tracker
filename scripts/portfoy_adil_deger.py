@@ -72,10 +72,48 @@ def tg(msg):
     except: pass
 
 def hesapla_sembol(sym):
-    """adil_deger_calculator.hesapla() çağrısı — import ile."""
+    """
+    Valuation hesaplama — v5 framework önceliklidir.
+    v5 başarısız olursa v2 fallback. v5 result'ı v2 şemasına uyumlu hale getirir.
+    """
+    sym = sym.upper()
+
+    # ── v5 framework (archetype-routed) ──────────────────────────────
+    try:
+        import sys as _s
+        from pathlib import Path as _P
+        agent_dir = str(_P(__file__).parent.parent / "agent")
+        if agent_dir not in _s.path:
+            _s.path.insert(0, agent_dir)
+        from valuation.framework import valuate
+        res = valuate(sym, verbose=False)
+        if res and not res.get("error"):
+            # v5 result'ı v2-uyumlu flat dict'e indir
+            fv = res["fair_value"]
+            cls = res["classification"]
+            conf = res["confidence"]
+            return {
+                "symbol":      sym,
+                "price":       fv["current_price"],
+                "adil_deger":  fv["point"],
+                "fark_pct":    fv["upside_pct"],
+                "guven":       conf["score"],
+                "hisse_tipi":  cls["archetype"],  # archetype key
+                "sector":      res.get("data_snapshot", {}).get("sector", ""),
+                "karar":       fv["karar"],
+                "_v5_full":    res,  # tam v5 çıktısı
+                "_version":    "v5",
+            }
+    except Exception as ex:
+        print(f"  [{sym}] v5 exception: {ex} — v2 fallback")
+
+    # ── v2 legacy fallback ───────────────────────────────────────────
     try:
         from adil_deger_calculator import hesapla
-        return hesapla(sym.upper(), sessiz=True)
+        r = hesapla(sym, sessiz=True)
+        if r:
+            r["_version"] = "v2"
+        return r
     except Exception as ex:
         print(f"  [{sym}] hata: {ex}")
         return None
