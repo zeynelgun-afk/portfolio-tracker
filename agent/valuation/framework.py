@@ -110,9 +110,15 @@ def _compute_confidence(
     return score, factors, red_flags
 
 
-def valuate(ticker: str, verbose: bool = False) -> dict:
+def valuate(ticker: str, verbose: bool = False, apply_regime: bool = True) -> dict:
     """
     Ana giriş noktası — ticker → full valuation report.
+
+    Args:
+        ticker: örn "AAPL"
+        verbose: stdout log
+        apply_regime: True ise fair value SPY SMA21 rejimine göre çarpanla düzeltilir
+                      (BOGA: ×1.12, AYI: ×0.87)
     """
     # 1. Classify
     cls = classify(ticker)
@@ -211,6 +217,29 @@ def valuate(ticker: str, verbose: bool = False) -> dict:
     range_low = min(vals)
     range_high = max(vals)
 
+    # 5b. Market regime multiplier (opsiyonel)
+    regime_info = None
+    if apply_regime:
+        try:
+            from valuation.market_regime import get_market_regime, get_regime_multiplier
+            rejim, spy_p, sma21, detay = get_market_regime()
+            mult = get_regime_multiplier()
+            fair_value_raw = fair_value
+            fair_value = fair_value * mult
+            range_low = range_low * mult
+            range_high = range_high * mult
+            regime_info = {
+                "rejim": rejim,
+                "multiplier": mult,
+                "spy_price": spy_p,
+                "sma21": sma21,
+                "detay": detay,
+                "fair_value_pre_regime": round(fair_value_raw, 2),
+            }
+        except Exception as e:
+            if verbose:
+                print(f"[Valuation v5] Regime multiplier atlandı: {e}")
+
     price = data["price"]
     upside_pct = ((fair_value / price) - 1.0) * 100 if price > 0 else 0
 
@@ -288,6 +317,8 @@ def valuate(ticker: str, verbose: bool = False) -> dict:
         "methods_excluded": methods_excluded,
         "methods_failed": methods_failed,
 
+        "market_regime": regime_info,
+
         "data_snapshot": {
             "sector":       data.get("sector"),
             "industry":     data.get("industry"),
@@ -329,9 +360,12 @@ def format_report(result: dict, style: str = "terminal") -> str:
             f"Aralık: ${fv['range_low']:.2f} — ${fv['range_high']:.2f}",
             f"Karar: <b>{fv['karar']}</b>",
             f"Güven skoru: <b>{conf['score']}/100</b>",
-            "",
-            f"<b>Kullanılan metodlar:</b>",
         ]
+        regime = result.get("market_regime")
+        if regime:
+            out.append(f"{regime['detay']} (×{regime['multiplier']:.2f})")
+        out.append("")
+        out.append(f"<b>Kullanılan metodlar:</b>")
         for m in result["methods_used"]:
             ic = "⭐" if m["tier"] == "primary" else "◽"
             out.append(f"  {ic} {m['name']:28} ${m['fair_value']:.2f}  (w={m['weight']:.0%})")
