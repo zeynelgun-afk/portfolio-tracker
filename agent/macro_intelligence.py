@@ -151,7 +151,7 @@ def analyze_themes_with_claude(
         f"  {k}: {v['açıklama']}" for k, v in THEME_UNIVERSE.items()
     )
 
-    prompt = f"""Sen Finzora AI trading sistemisin. Piyasa analizine dayalı tematik fırsat tespiti yapıyorsun.
+    prompt = f"""Sen Finzora AI trading sistemisin. Piyasa analizine dayalı tematik fırsat tespiti + aktif kriz tipi tespiti yapıyorsun.
 
 SEKTÖR PERFORMANSI (bugün):
 {sektor_ozet}
@@ -165,7 +165,23 @@ VIX: {vix:.1f}
 BİLİNEN TEMA EVRENİ:
 {tema_listesi}
 
-GÖREV: Bugün için en güçlü 2-3 temayı tespit et ve her tema için alım adayları belirle.
+GÖREV 1: Bugün için en güçlü 2-3 temayı tespit et ve her tema için alım adayları belirle.
+
+GÖREV 2 (K-13 KRİZ MATRİSİ): Piyasada bir stres/kriz sinyali var mı? Varsa kriz tipini belirle:
+- yok: VIX<20, sektörler mixed, haberler stabil → kriz yok (normal risk-on)
+- jeopolitik: savaş/gerilim haberleri, savunma sektörü güçlü, altın yükseliyor
+- pandemi: sağlık alarmları, healthcare yükselir, travel/enerji düşer
+- finansal: bankacılık stresi, tahvil getirileri oynak, altın yükselir
+- ticaret: tarife/embargo haberleri, domestic sektörler lehe, exporters baskıda
+- enflasyon: enerji+hammadde yükseliş, tüketici baskıda, FED söylemleri sıkı
+
+Kriz tipine göre:
+- Faydalanıcı sektörler (beneficiary): bu krizden GÜÇLENEN sektörler (tam pozisyon)
+- Duyarlı sektörler (sensitive): bu krizden ZAYIFLAYAN sektörler (yarım pozisyon veya dur)
+
+Valid sektör isimleri: Technology, Healthcare, Financial Services, Energy,
+Consumer Cyclical, Industrials, Consumer Defensive, Basic Materials,
+Real Estate, Communication Services, Utilities, Defense, Gold
 
 ÇIKTI FORMAT (SADECE JSON):
 {{
@@ -176,14 +192,25 @@ GÖREV: Bugün için en güçlü 2-3 temayı tespit et ve her tema için alım a
       "neden": "Büyük teknoloji şirketleri capex artışı, güç altyapısı talebi",
       "öncelikli_alt_dal": "güç_soğutma",
       "önerilen_hisseler": ["VRT","ETN","PWR"],
-      "portföy": "aggressive (zorunlu: aggressive/balanced/dividend)",
+      "portföy": "aggressive",
       "aciliyet": "yüksek"
     }}
   ],
   "kaçınılacak_sektörler": ["Consumer Defensive", "Real Estate"],
   "piyasa_modu": "risk-on",
+  "aktif_kriz": {{
+    "tip": "jeopolitik",
+    "guven": 7,
+    "kanit": "2-3 cümle somut kanıt: hangi haberler, hangi sektör hareketleri",
+    "beneficiary_sectors": ["Energy","Defense","Gold","Materials","Real Estate","Consumer Defensive"],
+    "sensitive_sectors": ["Technology","Consumer Cyclical","Communication Services","Healthcare","Financial Services","Industrials"]
+  }},
   "genel_yorum": "2-3 cümle"
-}}"""
+}}
+
+KRİTİK: aktif_kriz.tip için olası değerler: "yok", "jeopolitik", "pandemi", "finansal", "ticaret", "enflasyon".
+Kriz yoksa tip="yok", beneficiary_sectors=[], sensitive_sectors=[] (bu durumda K-13 standart VIX bazlı çalışır).
+guven: 1-10 (kanıt gücü; düşükse değişiklik yapılmayacak)."""
 
     response = get_claude_decision(prompt, mode="morning")
 
@@ -191,14 +218,19 @@ GÖREV: Bugün için en güçlü 2-3 temayı tespit et ve her tema için alım a
         import re
         m = re.search(r'\{.*\}', response, re.DOTALL)
         if m:
-            return json.loads(m.group())
-    except Exception:
-        pass
+            parsed = json.loads(m.group())
+            # aktif_kriz alanı yoksa ekle (kriz değişikliği yapma default)
+            if "aktif_kriz" not in parsed:
+                parsed["aktif_kriz"] = {"tip": "belirsiz", "guven": 0}
+            return parsed
+    except Exception as e:
+        print(f"[Makro] Claude JSON parse hatası: {e}")
 
-    # Fallback: varsayılan tema
+    # Fallback: varsayılan tema + kriz belirsiz
     return {
         "dominant_temalar": [],
         "piyasa_modu": "nötr",
+        "aktif_kriz": {"tip": "belirsiz", "guven": 0},  # Kriz tespiti başarısız
         "genel_yorum": response[:200]
     }
 
@@ -244,6 +276,7 @@ def run_macro_intelligence(vix: float = 20.0) -> dict:
         "dominant_temalar": analiz.get("dominant_temalar", []),
         "kacınılacak":      analiz.get("kaçınılacak_sektörler", []),
         "piyasa_modu":      analiz.get("piyasa_modu", "nötr"),
+        "aktif_kriz":       analiz.get("aktif_kriz", {"tip": "yok", "guven": 0}),
         "genel_yorum":      analiz.get("genel_yorum", ""),
         "haberler":         haberler[:5],
     }
@@ -252,4 +285,112 @@ def run_macro_intelligence(vix: float = 20.0) -> dict:
     json.dump(output, open(out_path, "w"), ensure_ascii=False, indent=2)
     print(f"[Makro] {len(output['dominant_temalar'])} tema tespit edildi → {out_path.name}")
 
+    # K-13 kriz matrisini otomatik güncelle (guven ≥ 6 ise)
+    _update_k13_matrix_if_changed(analiz.get("aktif_kriz", {}), vix=vix)
+
     return output
+
+
+def _update_k13_matrix_if_changed(kriz: dict, vix: float = 0) -> None:
+    """Claude'un tespit ettiği kriz matrisini data/k13_crisis_matrix.json'a yazar.
+
+    Şartlar:
+    - Yeni kriz tipi mevcuttan farklı olmalı
+    - Güven skoru ≥ 6 (düşük güvenle matris değiştirme)
+    - beneficiary + sensitive sektör listeleri boş olmamalı (kriz "yok" hariç)
+    - Histerezis: aynı kriz 2 gün üst üste tespit edilmiş olmalı (tek gün flip-flop önle)
+    """
+    new_tip = (kriz.get("tip") or "").lower().strip()
+    guven   = int(kriz.get("guven", 0) or 0)
+
+    # Güven düşükse dokunma
+    if guven < 6:
+        print(f"[K-13] Kriz tespit güveni düşük ({guven}/10), matris dokunulmadı (mevcut: {new_tip or 'belirsiz'})")
+        return
+
+    # Geçerli tip mi
+    VALID_TYPES = {"yok", "jeopolitik", "pandemi", "finansal", "ticaret", "enflasyon"}
+    if new_tip not in VALID_TYPES:
+        print(f"[K-13] Geçersiz kriz tipi '{new_tip}', matris dokunulmadı")
+        return
+
+    matrix_path = REPO_ROOT / "data" / "k13_crisis_matrix.json"
+
+    # Mevcut matris
+    current = {}
+    if matrix_path.exists():
+        try:
+            current = json.load(open(matrix_path))
+        except Exception:
+            current = {}
+
+    current_tip = (current.get("aktif_kriz") or "").lower().strip()
+
+    # Aynıysa sadece son_guncelleme + gun_sayisi artır
+    if new_tip == current_tip:
+        gun = int(current.get("ardisik_gun", 1)) + 1
+        current["ardisik_gun"]    = gun
+        current["son_guncelleme"] = datetime.now(TR_TZ).strftime("%Y-%m-%d")
+        current["son_guven"]      = guven
+        json.dump(current, open(matrix_path, "w"), ensure_ascii=False, indent=2)
+        print(f"[K-13] Aynı kriz ({new_tip}) {gun}. gün, güven {guven}/10")
+        return
+
+    # Değişiklik: "kriz yok" hariç, sektör listesi gerekli
+    benef_new = kriz.get("beneficiary_sectors") or []
+    sens_new  = kriz.get("sensitive_sectors") or []
+
+    if new_tip != "yok" and (not benef_new or not sens_new):
+        print(f"[K-13] Yeni kriz tipi '{new_tip}' için sektör listeleri boş, matris dokunulmadı")
+        return
+
+    # Histerezis: tek gün flip etmeyi engellemek için state dosyası
+    pending_path = REPO_ROOT / "data" / "k13_pending_change.json"
+    pending = {}
+    if pending_path.exists():
+        try:
+            pending = json.load(open(pending_path))
+        except Exception:
+            pending = {}
+
+    pending_tip = (pending.get("tip") or "").lower().strip()
+    bugun = datetime.now(TR_TZ).strftime("%Y-%m-%d")
+
+    if pending_tip == new_tip:
+        # İkinci gün aynı — artık uygulayabiliriz
+        pending_days = pending.get("days", []) + [bugun]
+        if len(set(pending_days)) >= 2:
+            # Uygula
+            yeni_matris = {
+                "aktif_kriz":     new_tip,
+                "baslangic":      bugun,
+                "son_guncelleme": bugun,
+                "ardisik_gun":    1,
+                "son_guven":      guven,
+                "kanit":          kriz.get("kanit", ""),
+                "vix_anlik":      vix,
+                "aciklama":       f"Claude otomatik tespit (güven {guven}/10, 2 gün üst üste)",
+                "beneficiary":    benef_new if new_tip != "yok" else [],
+                "sensitive":      sens_new  if new_tip != "yok" else [],
+                "matris_versiyon": "v4.2_claude_auto",
+                "notlar": current.get("notlar", {}),  # Kriz tipi rehber notları koru
+            }
+            json.dump(yeni_matris, open(matrix_path, "w"), ensure_ascii=False, indent=2)
+            pending_path.unlink(missing_ok=True)
+            print(f"[K-13] MATRİS GÜNCELLENDİ: {current_tip or 'yok'} → {new_tip} (güven {guven}/10, 2 gün üst üste)")
+            return
+        else:
+            pending["days"] = pending_days
+            json.dump(pending, open(pending_path, "w"), ensure_ascii=False, indent=2)
+            print(f"[K-13] Kriz değişim adayı '{new_tip}' bekliyor (2. gün onayı gerekiyor)")
+            return
+    else:
+        # Yeni aday — ilk gün, bekleme başlat
+        pending = {
+            "tip": new_tip,
+            "days": [bugun],
+            "guven": guven,
+            "onceki_tip": current_tip,
+        }
+        json.dump(pending, open(pending_path, "w"), ensure_ascii=False, indent=2)
+        print(f"[K-13] Kriz değişim adayı: {current_tip or 'yok'} → {new_tip} (1. gün, 2. gün onayı bekleniyor)")

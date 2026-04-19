@@ -108,15 +108,27 @@ _DEFAULT_SENSITIVE = {
 
 
 def _load_crisis_matrix() -> tuple[set, set, str]:
-    """data/k13_crisis_matrix.json → (beneficiary, sensitive, kriz_adi). Yoksa default."""
+    """data/k13_crisis_matrix.json → (beneficiary, sensitive, kriz_adi).
+
+    Kriz 'yok' durumunda beneficiary+sensitive boş olabilir (K-13 sade VIX'e düşer).
+    Dosya hiç yoksa default (jeopolitik) matris döner.
+    """
     p = REPO_ROOT / "data" / "k13_crisis_matrix.json"
     if not p.exists():
         return _DEFAULT_BENEFICIARY, _DEFAULT_SENSITIVE, "jeopolitik (default)"
     try:
         d = json.load(open(p))
-        benef = set(d.get("beneficiary", []) or _DEFAULT_BENEFICIARY)
-        sens  = set(d.get("sensitive",   []) or _DEFAULT_SENSITIVE)
-        kriz  = d.get("aktif_kriz", "bilinmeyen")
+        # Önemli: boş liste kriz='yok' durumunda geçerli. sadece 'beneficiary' anahtarı
+        # hiç yoksa default kullan.
+        kriz = d.get("aktif_kriz", "bilinmeyen")
+        if "beneficiary" in d:
+            benef = set(d["beneficiary"])
+        else:
+            benef = _DEFAULT_BENEFICIARY
+        if "sensitive" in d:
+            sens = set(d["sensitive"])
+        else:
+            sens = _DEFAULT_SENSITIVE
         return benef, sens, kriz
     except Exception as e:
         print(f"[K-13] matrix okuma hatası: {e}, default kullanılıyor")
@@ -128,28 +140,33 @@ BENEFICIARY_SECTORS, SENSITIVE_SECTORS, _K13_AKTIF_KRIZ = _load_crisis_matrix()
 
 def k13_position_size(vix: float, sector: str, base_size: float) -> tuple[float, str]:
     """
-    K-13 v4.1 sektör bazlı VIX matrisi.
+    K-13 v4.2 sektör bazlı VIX matrisi.
+    Matrisi HER çağrıda taze okur — Claude kriz tespitini macro_intelligence run'ında
+    güncelleyebiliyor, bu değişikliğin aynı gün içinde yansıması için.
     Döndürür: (pozisyon_büyüklüğü, açıklama)
     """
-    is_beneficiary = any(s.lower() in sector.lower() for s in BENEFICIARY_SECTORS)
+    # Matrisi her çağrıda yeniden yükle (dosya cache OS seviyesinde hızlı)
+    benef, sens, kriz = _load_crisis_matrix()
+
+    is_beneficiary = any(s.lower() in sector.lower() for s in benef)
 
     if vix < 22:
-        return base_size, f"VIX {vix:.1f}<22 tam pozisyon"
+        return base_size, f"VIX {vix:.1f}<22 tam pozisyon [{kriz}]"
     elif vix < 28:
         if is_beneficiary:
-            return base_size, f"VIX {vix:.1f} faydalanıcı → tam"
+            return base_size, f"VIX {vix:.1f} [{kriz}] faydalanıcı → tam"
         else:
-            return base_size * 0.5, f"VIX {vix:.1f} duyarlı → yarım"
+            return base_size * 0.5, f"VIX {vix:.1f} [{kriz}] duyarlı → yarım"
     elif vix < 35:
         if is_beneficiary:
-            return base_size * 0.5, f"VIX {vix:.1f} faydalanıcı → yarım"
+            return base_size * 0.5, f"VIX {vix:.1f} [{kriz}] faydalanıcı → yarım"
         else:
-            return 0, f"VIX {vix:.1f} duyarlı → giriş yok"
+            return 0, f"VIX {vix:.1f} [{kriz}] duyarlı → giriş yok"
     else:
         if is_beneficiary:
-            return base_size * 0.25, f"VIX {vix:.1f} faydalanıcı → çeyrek"
+            return base_size * 0.25, f"VIX {vix:.1f} [{kriz}] faydalanıcı → çeyrek"
         else:
-            return 0, f"VIX {vix:.1f}≥35 duyarlı → giriş yok"
+            return 0, f"VIX {vix:.1f}≥35 [{kriz}] duyarlı → giriş yok"
 
 
 # ─────────────────────────────────────────────────────────────────────────────
