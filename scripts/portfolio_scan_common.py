@@ -140,20 +140,122 @@ def get_technical(symbol):
     }
 
 
-def get_full_data(symbol, delay=0.05):
+def get_valuation(symbol):
+    """
+    v5 framework fair value sonucu. Hata durumunda None döner.
+    Returns: dict with fark_pct, guven, karar, archetype, gap_vs_analyst
+    """
+    try:
+        # valuation framework'ü import et
+        import sys as _s
+        from pathlib import Path as _P
+        agent_dir = str(_P(__file__).parent.parent / "agent")
+        if agent_dir not in _s.path:
+            _s.path.insert(0, agent_dir)
+        from valuation.framework import valuate
+        r = valuate(symbol, verbose=False)
+        if not r or r.get("error"):
+            return None
+        fv = r["fair_value"]
+        ac = r.get("analyst_consensus") or {}
+        return {
+            "fark_pct":        fv["upside_pct"],
+            "guven":           r["confidence"]["score"],
+            "karar":           fv["karar"],
+            "archetype":       r["classification"]["archetype"],
+            "archetype_label": r["classification"]["archetype_label"],
+            "analyst_gap":     ac.get("framework_gap_pct", 0),
+            "analyst_consensus": ac.get("consensus", 0),
+        }
+    except Exception as e:
+        print(f"  [get_valuation] {symbol}: {e}")
+        return None
+
+
+def get_full_data(symbol, delay=0.05, with_valuation=False):
     """
     Bir sembol için fundamentals + technical birlikte.
     Batch kullanımlar için delay parametresi.
+    
+    Args:
+        with_valuation: True ise v5 framework sonucu da eklenir (val_* alanları).
+                        Yaklaşık +9 FMP call/ticker, yavaşlatır.
     """
     fund = get_fundamentals(symbol)
     tech = get_technical(symbol)
     time.sleep(delay)
-    return {**fund, **(tech or {})}
+    out = {**fund, **(tech or {})}
+    if with_valuation:
+        val = get_valuation(symbol)
+        if val:
+            out["val_fark_pct"]  = val["fark_pct"]
+            out["val_guven"]     = val["guven"]
+            out["val_karar"]     = val["karar"]
+            out["val_archetype"] = val["archetype"]
+            out["val_analyst_gap"] = val["analyst_gap"]
+    return out
 
 
 # ============================================================
 # SKOR HESAPLAMA
 # ============================================================
+
+def apply_valuation_signal(score, detail, data):
+    """
+    v5 framework fair value sonucunu skora eklenen bonus/penalty'ye çevirir.
+    
+    Sinyal mantığı (güven ≥70 olduğunda):
+      +3: fark_pct > +20%  (UCUZ, yüksek güven, analiz tutarlı)
+      +2: fark_pct > +10%
+      +1: fark_pct >  +5%
+       0: -5 ile +5 arası (ADİL)
+      -1: fark_pct < -10%
+      -2: fark_pct < -20%
+      -3: fark_pct < -30%  (PAHALI)
+    
+    analyst_gap aşırı büyükse (±30%) puan yarıya iner (karar bulanık).
+    Güven <50 → sinyal yok.
+    Data'da val_* alanları yoksa sinyal yok.
+    """
+    if "val_fark_pct" not in data or data.get("val_guven", 0) < 50:
+        return score, detail
+    
+    fark = data["val_fark_pct"]
+    guven = data["val_guven"]
+    analyst_gap = abs(data.get("val_analyst_gap", 0))
+    
+    # Base puan
+    if fark > 20:   base = 3
+    elif fark > 10: base = 2
+    elif fark > 5:  base = 1
+    elif fark > -5: base = 0
+    elif fark > -10: base = -1
+    elif fark > -20: base = -2
+    else:           base = -3
+    
+    if base == 0:
+        return score, detail
+    
+    # Analyst consensus çok farklıysa gücü yarıya indir
+    if analyst_gap > 30:
+        base = base // 2
+        if base == 0:
+            detail.append(f"Valuation: {fark:+.0f}% (analyst gap büyük, görmezden geliniyor)")
+            return score, detail
+    
+    # Güven düşükse puanı yarıya indir
+    if guven < 70:
+        base = base // 2
+        if base == 0:
+            return score, detail
+    
+    score += base
+    sign = "+" if base > 0 else ""
+    archetype = data.get("val_archetype", "generic")
+    karar = data.get("val_karar", "?")
+    detail.append(f"Valuation [{archetype}, {karar}] {fark:+.0f}% güven {guven}: {sign}{base}")
+    return score, detail
+
 
 def score_dengeli(data, existing_sectors=None, catalyst_override=None):
     """
@@ -215,6 +317,9 @@ def score_dengeli(data, existing_sectors=None, catalyst_override=None):
         sector, _, _ = get_sector_info(data.get('symbol', ''))
         if sector != 'UNKNOWN' and sector not in existing_sectors:
             score += 2; detail.append(f"Yeni sektör ({sector}) mevcut portföyde yok: +2")
+    
+    # v5 valuation sinyali (fair value + güven + analyst gap)
+    score, detail = apply_valuation_signal(score, detail, data)
     
     # Niteliksel katalizör override (opsiyonel, sıkı kurallı)
     score, detail = apply_catalyst_override(score, detail, catalyst_override)
@@ -292,6 +397,11 @@ def score_agresif(data, catalyst_override=None):
     if m3m > 15:
         score += 2; detail.append(f"3M {m3m:.1f}% >15: +2")
     
+    # v5 valuation sinyali (fair value + güven + analyst gap)
+    # Agresif: yüksek büyüme hisselerde framework yüksek multiple uygular,
+    # bu yüzden fark_pct analyst_gap ile birlikte değerlendirilir.
+    score, detail = apply_valuation_signal(score, detail, data)
+    
     # Niteliksel katalizör override (opsiyonel, sıkı kurallı)
     score, detail = apply_catalyst_override(score, detail, catalyst_override)
     
@@ -368,6 +478,10 @@ def score_temettü(data, existing_sectors=None, catalyst_override=None):
         sector, _, _ = get_sector_info(data.get('symbol', ''))
         if sector != 'UNKNOWN' and sector not in existing_sectors:
             score += 2; detail.append(f"Yeni sektör ({sector}) portföyde yok: +2")
+    
+    # v5 valuation sinyali (fair value + güven + analyst gap)
+    # Temettü: REIT/utility için P/FFO, P/AFFO, DDM uygulanır
+    score, detail = apply_valuation_signal(score, detail, data)
     
     # Niteliksel katalizör override (opsiyonel, sıkı kurallı)
     score, detail = apply_catalyst_override(score, detail, catalyst_override)

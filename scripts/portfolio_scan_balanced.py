@@ -39,7 +39,7 @@ def mevcut_sektorler():
 
 
 def tara(sym, existing_sectors, catalyst_override=None):
-    data = psc.get_full_data(sym)
+    data = psc.get_full_data(sym, with_valuation=True)
     if not data or not data.get("price"):
         return None
     score, detail = psc.score_dengeli(
