@@ -56,17 +56,6 @@
     "not": "İran krizi döneminde doğru tetiklendi.",
     "nasdaq_2022_bulgu": "2022 ayısında RSI filtreli girim dahi tüm stratejilerde negatif avg. K-13 (VIX>22 pozisyon küçültme) kritik öneme sahip."
   },
-  "K-14_drawdown_brake": {
-    "version": 1,
-    "description": "Drawdown freni mantığı (kritik)",
-    "weight": 1.0,
-    "weight_history": [],
-    "current_prompt": "K-14 KALDIRILDI (11 Nisan 2026). Yerine psikoloji testi: 'Bu girişi yarın tekrar inceleseydim, tüm kuralları tam uyguladım mı?' Drawdown freni yok — stop disiplini (K-06) + K-13 VIX filtresi yönetir.",
-    "fitness": null,
-    "last_modified": "2026-04-13T09:22:42.430388",
-    "min_trades_to_evolve": 30,
-    "not": "K-14 kaldırıldı 11 Nisan 2026"
-  },
   "K-04_entry_filter": {
     "version": 1,
     "description": "Giriş filtresi - SMA ve RSI",

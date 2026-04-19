@@ -8,8 +8,9 @@ Bunun yerine: Kademeli Güven Eşiği (Tiered Confidence) sistemi.
   Normal kurallar  → min 10 trade, backtest kanıtı, haftalık max 1
   Kritik kurallar  → min 30 trade, güven ≥8/10, değişim ±%20 sınırı
   
-Kritik = K-13 (VIX), K-14 (drawdown freni), K-17 (korelasyon limiti)
+Kritik = K-13 (VIX), K-17 (korelasyon limiti)
   Bu kurallar değişebilir ama DAHA ZOR değişir.
+  (K-14 drawdown freni 11 Nisan 2026'da kaldırıldı.)
   
 Güvenlik katmanları:
   1. Her parametre için min/max aralık
@@ -83,11 +84,7 @@ CHANGEABLE_PARAMS = {
         "tier": "critical",
         "desc": "K-13: Yeni giriş dur eşiği",
     },
-    "k14_brake_esik": {
-        "min": 10, "max": 25, "current": 16,
-        "tier": "critical",
-        "desc": "K-14: Drawdown freni tetik eşiği (%)",
-    },
+    # K-14 kaldırıldı (11 Nisan 2026) — k14_brake_esik parametresi de kaldırıldı
     "k17_korelasyon_limit": {
         "min": 0.55, "max": 0.85, "current": 0.70,
         "tier": "critical",
@@ -112,6 +109,47 @@ TIER_CONFIG = {
 }
 
 MAX_WEEKLY_CHANGES = 1
+
+
+# ── Runtime state persistence ─────────────────────────────────────────────────
+# Problem: apply_rule_change() sadece hafızadaki CHANGEABLE_PARAMS[param]["current"]
+# güncelliyordu. Python process yeniden başlayınca bu kayboluyor, validate_change_request
+# yanlış "eski" current değerinden hareket ediyor — değişim büyüklük sınırı yanlış hesaplanıyor.
+#
+# Çözüm: Modül ilk yüklendiğinde applied_changes.json'dan her parametrenin en son
+# uygulanan değerini okuyup CHANGEABLE_PARAMS["current"]'ı gerçek hale getir.
+
+def _hydrate_current_values_from_history() -> None:
+    """Modül yüklendiğinde CHANGEABLE_PARAMS.current değerlerini
+    applied_changes.json'dan hidrate et (runtime state persistence)."""
+    changes_path = MEMORY_DIR / "applied_changes.json"
+    if not changes_path.exists():
+        return
+    try:
+        with open(changes_path, encoding="utf-8") as f:
+            data = json.load(f)
+    except Exception as e:
+        print(f"[rule_updater] applied_changes.json hidrasyonu atlandı: {e}")
+        return
+
+    # Her parametre için en son uygulanan yeni_deger'i bul
+    history = data.get("list", [])
+    latest_by_param: dict[str, float] = {}
+    for record in history:
+        p = record.get("param")
+        v = record.get("yeni_deger")
+        if p in CHANGEABLE_PARAMS and v is not None:
+            latest_by_param[p] = v  # Son kayıt kazanır (kronolojik append)
+
+    for p, v in latest_by_param.items():
+        old = CHANGEABLE_PARAMS[p]["current"]
+        if old != v:
+            CHANGEABLE_PARAMS[p]["current"] = v
+            print(f"[rule_updater] Hidrate: {p} {old} → {v} (history'den)")
+
+
+# Modül yüklendiğinde bir kez çalıştır
+_hydrate_current_values_from_history()
 
 
 # ── Değişiklik Güvenlik Kontrolü ──────────────────────────────────────────────
@@ -215,7 +253,6 @@ def update_playbook_param(
         "vix_tam_pozisyon":    (f"VIX {int(old_value)}'e kadar", f"VIX {int(new_value)}'e kadar"),
         "vix_yari_pozisyon":   (f"VIX {int(old_value)}'den",     f"VIX {int(new_value)}'den"),
         "vix_dur":             (f"VIX>{int(old_value)}",          f"VIX>{int(new_value)}"),
-        "k14_brake_esik":      (f"%{int(old_value)} drawdown",   f"%{int(new_value)} drawdown"),
         "k17_korelasyon_limit":(f"korelasyon {old_value}",       f"korelasyon {new_value}"),
         "k04_sma_esik":        (f"SMA{int(old_value)}",          f"SMA{int(new_value)}"),
         "k11_atr_katman3":     (f"chandelier {old_value}×ATR",   f"chandelier {new_value}×ATR"),
@@ -311,7 +348,7 @@ def apply_rule_change(
     print(f"[RuleUpdater] ✅ {tier.upper()} parametre değiştirildi: {param} = {new_value}")
 
     return {
-        "durum":      "UYGULANMADI",   # dry-run → apply_after_dryrun ile kalıcılaşır
+        "durum":      "UYGULANDI",
         "param":      param,
         "tier":       tier,
         "eski_deger": old_value,

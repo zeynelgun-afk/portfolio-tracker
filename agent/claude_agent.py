@@ -259,7 +259,7 @@ def get_claude_decision_with_actions(user_prompt, mode="morning", system_overrid
         )
         # Her kararı ayrıca logla (execution aşaması executed=True ile update edecek)
         for k in kararlar:
-            log_decision(
+            decision_id = log_decision(
                 mode=mode,
                 tip=k.get("tip", "?"),
                 portfoy=k.get("portfoy", "?"),
@@ -272,3 +272,6 @@ def get_claude_decision_with_actions(user_prompt, mode="morning", system_overrid
                 claude_call_id=claude_call_id,
                 executed=False,
             )
+            # Karar dict'ine id ekle — orchestrator execute sonrası update edecek
+            if decision_id:
+                k["_decision_id"] = decision_id

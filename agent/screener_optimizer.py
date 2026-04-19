@@ -65,7 +65,7 @@ def analyze_scan_method_performance() -> dict:
     with open(path, encoding="utf-8") as f:
         data = json.load(f)
 
-    trades = data.get("kapali_pozisyonlar", data.get("closed_positions", []))
+    trades = data.get("kapatilan_pozisyonlar", data.get("kapali_pozisyonlar", data.get("closed_positions", [])))
     method_stats = defaultdict(lambda: {"trades": [], "win": 0, "total": 0})
 
     for t in trades:
@@ -253,7 +253,7 @@ def run_screener_optimization() -> str:
     if path.exists():
         with open(path, encoding="utf-8") as f:
             data = json.load(f)
-        trades = data.get("kapali_pozisyonlar", data.get("closed_positions", []))
+        trades = data.get("kapatilan_pozisyonlar", data.get("kapali_pozisyonlar", data.get("closed_positions", [])))
 
     method_perf  = analyze_scan_method_performance()
     optimal      = find_optimal_params(trades)

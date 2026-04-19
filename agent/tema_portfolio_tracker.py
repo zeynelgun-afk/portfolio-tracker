@@ -77,7 +77,7 @@ def analyze_trades_by_theme() -> dict:
     if swing_path.exists():
         with open(swing_path, encoding="utf-8") as f:
             data = json.load(f)
-        trades = data.get("kapali_pozisyonlar", data.get("closed_positions", []))
+        trades = data.get("kapatilan_pozisyonlar", data.get("kapali_pozisyonlar", data.get("closed_positions", [])))
 
         for t in trades:
             entry_date = t.get("giris_tarihi") or t.get("entry_date", "")

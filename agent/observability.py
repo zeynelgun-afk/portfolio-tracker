@@ -408,6 +408,52 @@ def log_decision(
     )
 
 
+def update_decision_executed(
+    decision_id: str,
+    executed: bool = True,
+    skipped_reason: Optional[str] = None,
+    trade_id: Optional[str] = None,
+) -> bool:
+    """
+    Daha önce log_decision ile kaydedilmiş kararın executed alanını günceller.
+    Decision → trade loop'unu kapar, query_decision_hitrate anlamlı olur.
+
+    NOT: JSONL append-only. SQLite index'te UPDATE + JSONL'e "decision_update" event
+    kaydı (audit trail). Yeniden indexleme durumunda JSONL'den SQLite rebuild
+    update kaydını görüp SQL'de güncelleyebilir.
+    """
+    if not decision_id:
+        return False
+
+    # JSONL'e audit event
+    try:
+        log_event("decision_update", {
+            "decision_id": decision_id,
+            "executed": 1 if executed else 0,
+            "skipped_reason": skipped_reason,
+            "trade_id": trade_id,
+        })
+    except Exception as e:
+        print(f"[observability] decision_update audit yazımı atlandı: {e}")
+
+    # SQLite update
+    try:
+        conn = _get_conn()
+        conn.execute(
+            """
+            UPDATE decisions
+            SET executed = ?, skipped_reason = COALESCE(?, skipped_reason)
+            WHERE id = ?
+            """,
+            (1 if executed else 0, skipped_reason, decision_id),
+        )
+        conn.close()
+        return True
+    except Exception as e:
+        print(f"[observability] update_decision_executed hata: {e}")
+        return False
+
+
 def log_trade(
     action: str,
     portfoy: str,

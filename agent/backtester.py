@@ -58,7 +58,7 @@ def test_current_rules() -> dict:
     with open(path, encoding="utf-8") as f:
         data = json.load(f)
 
-    trades = data.get("kapali_pozisyonlar", data.get("closed_positions", []))
+    trades = data.get("kapatilan_pozisyonlar", data.get("kapali_pozisyonlar", data.get("closed_positions", [])))
     if not trades:
         return {"hata": "Kapanmış trade yok"}
 
@@ -261,7 +261,7 @@ def run_full_backtest() -> dict:
     with open(path, encoding="utf-8") as f:
         data = json.load(f)
 
-    trades = data.get("kapali_pozisyonlar", data.get("closed_positions", []))
+    trades = data.get("kapatilan_pozisyonlar", data.get("kapali_pozisyonlar", data.get("closed_positions", [])))
 
     results = {
         "test_tarihi":      datetime.now(TR_TZ).strftime("%Y-%m-%d"),

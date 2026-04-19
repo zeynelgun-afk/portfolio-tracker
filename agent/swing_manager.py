@@ -77,7 +77,7 @@ def open_swing_position(
         "id":              poz_id,
         "sembol":          symbol,
         "adet":            shares,
-        "giris_fiyat":     round(price, 2),
+        "giris_fiyati":    round(price, 2),   # CANONICAL (closed.json ile uyumlu)
         "maliyet_baz":     round(price, 2),
         "giris_tarihi":    datetime.now().strftime("%Y-%m-%d"),
         "stop_loss":       round(stop, 2),
@@ -96,7 +96,9 @@ def open_swing_position(
         "k11_profit_lock": None,
         "son_guncelleme":  datetime.now().strftime("%Y-%m-%d"),
         "notlar":          [],
-        "pnl_pct":         0.0,
+        "kar_zarar_yuzde": 0.0,               # CANONICAL (pnl_pct yerine)
+        "tutulan_gun":     0,                 # CANONICAL (hold_days yerine)
+        "atr14":           round(atr, 4),     # Trailing hesap için şart
     }
 
     mevcut.append(yeni_poz)
@@ -160,24 +162,27 @@ def update_swing_positions() -> list[dict]:
     for poz in pozlar:
         sym     = poz["sembol"]
         price   = prices.get(sym, poz.get("guncel_fiyat", 0))
-        giris   = poz["giris_fiyat"]
+        giris   = float(poz.get("giris_fiyati", poz.get("giris_fiyat", 0)) or 0)  # Backward compat
         stop    = poz["stop_loss"]
         hedef   = poz["hedef_fiyat"]
         adet    = poz["adet"]
         zirve   = max(poz.get("zirve_fiyat", giris), price)
 
-        if not price:
+        if not price or not giris:
             continue
 
         pnl_pct = (price - giris) / giris * 100
-        atr     = abs(giris - stop)
+        # ATR14 — pozisyondan kaynaklanıyor (open'da kaydedildi); yoksa fallback stop-giris farkı
+        atr     = float(poz.get("atr14") or abs(giris - stop))
 
         # Zirveyi güncelle
-        poz["zirve_fiyat"]  = round(zirve, 2)
-        poz["guncel_fiyat"] = round(price, 2)
-        poz["son_fiyat"]    = round(price, 2)
-        poz["pnl_pct"]      = round(pnl_pct, 2)
-        poz["son_guncelleme"] = datetime.now().strftime("%Y-%m-%d")
+        poz["zirve_fiyat"]      = round(zirve, 2)
+        poz["guncel_fiyat"]     = round(price, 2)
+        poz["son_fiyat"]        = round(price, 2)
+        poz["kar_zarar_yuzde"]  = round(pnl_pct, 2)   # CANONICAL
+        poz["son_guncelleme"]   = datetime.now().strftime("%Y-%m-%d")
+        # Backward compat: eski pnl_pct alanı da güncel tutulsun (diğer scriptler geçene kadar)
+        poz["pnl_pct"]          = round(pnl_pct, 2)
 
         # Chandelier stop güncelle (3×ATR trailing)
         new_chandelier = round(zirve - 3 * atr, 2)
@@ -232,36 +237,55 @@ def update_swing_positions() -> list[dict]:
 
 
 def _close_position(poz: dict, neden: str, cikis_fiyat: float, active: dict):
-    """Pozisyonu kapatır — active → closed."""
+    """Pozisyonu kapatır — active → closed (canonical şema ile).
+
+    closed.json kanonik alanları:
+      sembol, id, giris_fiyati, cikis_fiyati, giris_tarihi, cikis_tarihi,
+      kar_zarar_yuzde, tutulan_gun, cikis_nedeni, sonuc, ders,
+      giris_nedeni, tarama_yontemi, katalizor, partial_exits
+    """
     sym   = poz["sembol"]
-    giris = poz["giris_fiyat"]
+    giris = float(poz.get("giris_fiyati", poz.get("giris_fiyat", 0)) or 0)
     adet  = poz["adet"]
-    pnl   = (cikis_fiyat - giris) / giris * 100
+    pnl   = (cikis_fiyat - giris) / giris * 100 if giris else 0
 
     # Closed pozisyona taşı
     closed_path = REPO_ROOT / "data" / "swing" / "closed.json"
     with open(closed_path, encoding="utf-8") as f:
         closed = json.load(f)
 
-    giris_dt   = datetime.strptime(poz["giris_tarihi"], "%Y-%m-%d")
-    hold_days  = (datetime.now() - giris_dt).days
+    giris_dt    = datetime.strptime(poz["giris_tarihi"], "%Y-%m-%d")
+    tutulan_gun = (datetime.now() - giris_dt).days
 
+    sonuc = "KAZANC" if pnl > 0 else ("NOTR" if abs(pnl) < 0.1 else "ZARAR")
+
+    # Canonical şema ile kaydet
     kapali_poz = {
-        **poz,
-        "cikis_fiyat":  round(cikis_fiyat, 2),
-        "cikis_tarihi": datetime.now().strftime("%Y-%m-%d"),
-        "cikis_nedeni": neden,
-        "pnl":          round((cikis_fiyat - giris) * adet, 2),
-        "pnl_pct":      round(pnl, 2),
-        "hold_days":    hold_days,
-        "durum":        "KAPALI",
-        "dersler":      _auto_lesson(poz, neden, pnl),
+        "id":              poz.get("id", f"SWING-{sym}-{datetime.now().strftime('%Y%m%d')}"),
+        "sembol":          sym,
+        "adet":            adet,
+        "giris_fiyati":    round(giris, 2),        # CANONICAL
+        "cikis_fiyati":    round(cikis_fiyat, 2),  # CANONICAL
+        "giris_tarihi":    poz["giris_tarihi"],
+        "cikis_tarihi":    datetime.now().strftime("%Y-%m-%d"),
+        "cikis_nedeni":    neden,
+        "kar_zarar_yuzde": round(pnl, 2),          # CANONICAL
+        "tutulan_gun":     tutulan_gun,            # CANONICAL
+        "sonuc":           sonuc,                  # KAZANC / ZARAR / NOTR
+        "ders":            _auto_lesson(poz, neden, pnl),
+        "giris_nedeni":    poz.get("giris_nedeni", ""),
+        "tarama_yontemi":  poz.get("tarama_yontemi", ""),
+        "katalizor":       poz.get("katalizor", ""),
+        "stop_loss":       poz.get("stop_loss"),
+        "hedef_fiyat":     poz.get("hedef_fiyat"),
+        "zirve_fiyat":     poz.get("zirve_fiyat"),
+        "partial_exits":   poz.get("partial_exits", []),
     }
 
-    kapalilar = closed.get("kapali_pozisyonlar", [])
-    kapalilar.append(kapali_poz)
-    closed["kapali_pozisyonlar"] = kapalilar
-    closed["son_guncelleme"]     = datetime.now().isoformat()
+    kapatilanlar = closed.get("kapatilan_pozisyonlar", [])  # CANONICAL KEY
+    kapatilanlar.append(kapali_poz)
+    closed["kapatilan_pozisyonlar"] = kapatilanlar
+    closed["son_guncelleme"]        = datetime.now().isoformat()
 
     with open(closed_path, "w", encoding="utf-8") as f:
         json.dump(closed, f, ensure_ascii=False, indent=2)
@@ -280,15 +304,29 @@ def _close_position(poz: dict, neden: str, cikis_fiyat: float, active: dict):
         "shares": str(adet),
         "price":  str(round(cikis_fiyat, 2)),
         "total":  str(round(adet * cikis_fiyat, 2)),
-        "reason": f"Swing çıkış — {neden}. P/L: {pnl:+.1f}% ({hold_days} gün)",
+        "reason": f"Swing çıkış — {neden}. P/L: {pnl:+.1f}% ({tutulan_gun} gün)",
     }
 
     with open(REPO_ROOT / "data" / "transactions.csv", "a", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(f, fieldnames=["date","action","symbol","shares","price","total","reason"])
         writer.writerow(tx_row)
 
+    # Observability kaydı — canonical alanlarla
+    try:
+        import sys as _s
+        _s.path.insert(0, str(REPO_ROOT / "agent"))
+        from observability import log_trade
+        log_trade(
+            action="SELL", portfoy="swing", sembol=sym,
+            shares=float(adet), price=float(cikis_fiyat),
+            total=float(adet * cikis_fiyat),
+            reason=f"Swing çıkış — {neden}. P/L: {pnl:+.1f}%",
+        )
+    except Exception as _e:
+        print(f"[swing_manager] observability log_trade atlandı: {_e}")
+
     icon = "✅" if pnl > 0 else "❌"
-    print(f"[Swing] {icon} {sym} kapatıldı: {neden} | P/L: {pnl:+.1f}% | {hold_days}g")
+    print(f"[Swing] {icon} {sym} kapatıldı: {neden} | P/L: {pnl:+.1f}% | {tutulan_gun}g")
 
 
 def _auto_lesson(poz: dict, neden: str, pnl: float) -> str:
@@ -317,8 +355,8 @@ def get_swing_report() -> str:
     with open(closed_path, encoding="utf-8") as f:
         closed = json.load(f)
 
-    pozlar   = active.get("aktif_pozisyonlar", [])
-    kapalilar = closed.get("kapali_pozisyonlar", [])
+    pozlar    = active.get("aktif_pozisyonlar", [])
+    kapalilar = closed.get("kapatilan_pozisyonlar", [])  # CANONICAL
 
     lines = ["📊 SWING DURUMU\n"]
 
@@ -327,9 +365,8 @@ def get_swing_report() -> str:
         lines.append(f"Aktif ({len(pozlar)}/5):")
         for p in pozlar:
             sym   = p["sembol"]
-            pnl   = p.get("pnl_pct", 0)
+            pnl   = p.get("kar_zarar_yuzde", p.get("pnl_pct", 0))  # canonical, fallback eski
             price = p.get("guncel_fiyat", 0)
-            # stop: chandelier varsa max(chandelier, stop_loss), yoksa stop_loss
             stop_loss_val = float(p.get("stop_loss", 0) or 0)
             chandelier_val = float(p.get("chandelier_stop", 0) or 0)
             stop = max(stop_loss_val, chandelier_val) if chandelier_val else stop_loss_val
@@ -342,8 +379,10 @@ def get_swing_report() -> str:
     # Son 5 kapalı trade
     if kapalilar:
         son5   = kapalilar[-5:]
-        kazanc = sum(1 for k in son5 if k.get("pnl_pct", 0) > 0)
-        avg    = sum(k.get("pnl_pct", 0) for k in son5) / len(son5)
+        # canonical: kar_zarar_yuzde, fallback eski: pnl_pct
+        kazanc = sum(1 for k in son5 if (k.get("kar_zarar_yuzde", k.get("pnl_pct", 0)) or 0) > 0)
+        pnls   = [(k.get("kar_zarar_yuzde", k.get("pnl_pct", 0)) or 0) for k in son5]
+        avg    = sum(pnls) / len(pnls) if pnls else 0
         lines.append(f"\nSon {len(son5)} trade: {kazanc}/{len(son5)} kâr | ort {avg:+.1f}%")
 
     # Entry sinyalleri varsa

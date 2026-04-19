@@ -208,6 +208,8 @@ def find_candidates(
                 stop   = round(price * 0.92, 2)
                 target = round(price * 1.12, 2)
                 atr    = None
+            # compute_atr_stop FMP patlarsa atr=None dönüyor — None'a round() TypeError atar
+            atr_display = round(atr, 2) if atr is not None else None
             rr     = round((target-price)/(price-stop), 2) if price > stop else 0
 
             if rr < 2:  # R:R minimum 2:1
@@ -228,7 +230,7 @@ def find_candidates(
                 "teknik":      t_skor,
                 "fundamental": f_skor,
                 "tema_güç":    tema_skor,
-                "atr":         round(atr, 2),
+                "atr":         atr_display,
                 "k_checks":    k_res.get("checks", {}),
                 "reason":      f"{tema_adi} teması — teknik:{t_skor}/10 fundamental:{f_skor}/10",
                 "detay":       {**t_det, **f_det},
