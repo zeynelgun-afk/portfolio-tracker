@@ -31,8 +31,9 @@ MEMORY_DIR.mkdir(exist_ok=True)
 
 # ── Evrimleştirilebilir K-kuralları ──────────────────────────────────────────
 # KILITLI KURAL YOK. Her kural evrimleştirilebilir.
-# Kritik kurallar (K-13, K-14) Darwin'de de yer alır.
+# Kritik kurallar (K-13) Darwin'de de yer alır.
 # Yüksek etki → daha fazla dikkat, daha fazla kanıt gerekir (rule_updater.py'de tier="critical").
+# (K-14 drawdown freni 11 Nisan 2026'da tamamen kaldırıldı — genome'dan da çıkarıldı.)
 
 INITIAL_GENOME = {
     "K-11_trailing_stop": {
@@ -68,18 +69,7 @@ INITIAL_GENOME = {
         "fitness": None, "last_modified": None,
         "min_trades_to_evolve": 30,   # Kritik kural → daha fazla kanıt
     },
-    "K-14_drawdown_brake": {
-        "version": 1, "description": "Drawdown freni mantığı (kritik)",
-        "weight": 1.0, "weight_history": [],
-        "current_prompt": (
-            "K-14 Drawdown Freni:\n"
-            "Tepe-to-trough %16+ düşüş → swing yeni giriş durdu\n"
-            "Yeniden başlama: VIX<22 + SPY>SMA50 + pozitif sektör rotasyonu\n"
-            "Yeniden başlamada yarım pozisyon boyutu"
-        ),
-        "fitness": None, "last_modified": None,
-        "min_trades_to_evolve": 30,   # Kritik kural
-    },
+    # K-14 KALDIRILDI (11 Nisan 2026) — genome'dan da çıkarıldı
     "K-04_entry_filter": {
         "version": 1, "description": "Giriş filtresi - SMA ve RSI",
         "weight": 1.0, "weight_history": [],
@@ -236,8 +226,7 @@ def calculate_fitness(rule_name: str, transactions: list, min_trades: int = 5) -
             matched = "k-13" in reason or (
                 "vix" in reason and ("pozisyon" in reason or "kriz" in reason)
             )
-        elif rule_name == "K-14_drawdown_brake":
-            matched = "k-14" in reason or "drawdown" in reason or "fren" in reason
+        # K-14 kaldırıldı — matcher da kaldırıldı
         elif rule_name == "K-04_entry_filter":
             matched = "k-04" in reason or ("sma" in reason and "giriş" in reason)
         elif rule_name == "swing_rsi_range":

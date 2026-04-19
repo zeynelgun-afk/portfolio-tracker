@@ -44,7 +44,7 @@ def analyze_closed_trades(days_back: int = 30) -> dict:
     with open(path, encoding="utf-8") as f:
         data = json.load(f)
 
-    trades    = data.get("kapali_pozisyonlar", data.get("closed_positions", []))
+    trades    = data.get("kapatilan_pozisyonlar", data.get("kapali_pozisyonlar", data.get("closed_positions", [])))
     cutoff    = (datetime.now(TR_TZ) - timedelta(days=days_back)).strftime("%Y-%m-%d")
 
     recent    = []
@@ -65,7 +65,10 @@ def analyze_closed_trades(days_back: int = 30) -> dict:
     lessons      = []
 
     for t in recent:
-        pnl = t.get("pnl_yuzde") or t.get("pnl_pct") or 0
+        # Canonical alan: kar_zarar_yuzde. Fallback'ler: pnl_yuzde, pnl_pct.
+        pnl = t.get("kar_zarar_yuzde")
+        if pnl is None:
+            pnl = t.get("pnl_yuzde") or t.get("pnl_pct") or 0
         try:
             pnl = float(pnl)
         except (ValueError, TypeError):
@@ -88,7 +91,8 @@ def analyze_closed_trades(days_back: int = 30) -> dict:
         if "K-05" in exit_reason or "earnings" in exit_reason.lower():
             k_rules_hit["K-05_earnings"] += 1
 
-        lesson = t.get("dersler") or t.get("lessons", "")
+        # Canonical alan: 'ders' (tekil). Fallback: 'dersler', 'lessons'.
+        lesson = t.get("ders") or t.get("dersler") or t.get("lessons", "")
         if lesson:
             lessons.append(f"{t.get('sembol','?')}: {lesson[:150]}")
 

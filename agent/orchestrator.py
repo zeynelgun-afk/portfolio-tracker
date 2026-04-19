@@ -1121,12 +1121,12 @@ def _check_swing_exits(market: dict) -> list[str]:
     closed_path = REPO_ROOT / "data" / "swing" / "closed.json"
     if closed_path.exists():
         closed = json.load(open(closed_path))
-        kapalilar = closed.get("kapali_pozisyonlar", [])
+        kapalilar = closed.get("kapatilan_pozisyonlar", closed.get("kapali_pozisyonlar", []))  # CANONICAL, fallback eski
         # Bugün kapananları bul
         bugun = datetime.now().strftime("%Y-%m-%d")
         bugun_kapali = [k for k in kapalilar if k.get("cikis_tarihi") == bugun]
         for k in bugun_kapali[-3:]:  # Son 3
-            pnl  = k.get("pnl_pct", 0)
+            pnl  = k.get("kar_zarar_yuzde", k.get("pnl_pct", 0))   # canonical, fallback
             icon = "✅" if pnl > 0 else "❌"
             aksiyonlar.append(
                 f"{icon} *SWING KAPANDI*: {k['sembol']}\n"
@@ -1732,12 +1732,30 @@ def _execute_claude_decisions(kararlar: list, market: dict) -> list:
     get_claude_decision_with_actions() çıktısını alır.
 
     Desteklenen tipler: EKLE, BÜYÜT, ÇIK, DÖNDÜR, STOP_GÜNCELLE, İZLE
+
+    Decision → execution loop'u kapatmak için her karar sonrası
+    observability.update_decision_executed çağrılır. Böylece
+    query_decision_hitrate anlamlı çalışır.
     """
     if not kararlar:
         return []
     if not buy_position or not sell_position:
         print("[Decisions] execution_engine yüklenemedi, kararlar atlandı.")
         return []
+
+    # Observability update helper (opsiyonel — modül yoksa no-op)
+    try:
+        from observability import update_decision_executed as _upd_dec
+    except ImportError:
+        _upd_dec = lambda *a, **kw: None
+
+    def _mark(k: dict, executed: bool, reason: str | None = None):
+        did = k.get("_decision_id")
+        if did:
+            try:
+                _upd_dec(did, executed=executed, skipped_reason=reason)
+            except Exception as _e:
+                print(f"[Decisions] decision update atlandı: {_e}")
 
     aksiyonlar = []
 
@@ -1754,6 +1772,7 @@ def _execute_claude_decisions(kararlar: list, market: dict) -> list:
         dondur_al = k.get("dondur_al")
 
         if not sembol or not portfoy:
+            _mark(k, False, "eksik_sembol_veya_portfoy")
             continue
 
         # Güncel fiyat — canlı fiyat zorunlu, previousClose fallback yasak
@@ -1769,17 +1788,21 @@ def _execute_claude_decisions(kararlar: list, market: dict) -> list:
                 price = float(q["price"])
         if not price:
             print(f"[Decisions] {sembol} canlı fiyat alınamadı, atlandı.")
+            _mark(k, False, "canli_fiyat_alinamadi")
             continue
 
         try:
             if tip == "ÇIK":
                 result = sell_position(sembol, portfoy, f"Claude: {neden}", pct=pct, price=price)
                 if result["ok"]:
+                    _mark(k, True)
                     aksiyonlar.append(
                         f"🔴 *CLAUDE ÇIKİŞ* [{portfoy.upper()}]\n"
                         f"{sembol} %{pct:.0f} @${price:.2f} | P/L: {result.get('pnl_pct',0):+.1f}%\n"
                         f"Neden: {neden}"
                     )
+                else:
+                    _mark(k, False, result.get("hata", "sell_basarisiz"))
 
             elif tip in ("EKLE", "BÜYÜT"):
                 # Nakit kontrolü
@@ -1788,6 +1811,7 @@ def _execute_claude_decisions(kararlar: list, market: dict) -> list:
                 miktar = tutar if tutar > 0 else min(nakit * 0.25, 15000, nakit)
                 if miktar < 500:
                     print(f"[Decisions] {portfoy} yetersiz nakit ({nakit:.0f}$), {sembol} atlandı.")
+                    _mark(k, False, f"yetersiz_nakit_${nakit:.0f}")
                     continue
 
                 # K-engine kontrolü
@@ -1803,6 +1827,7 @@ def _execute_claude_decisions(kararlar: list, market: dict) -> list:
                     k_res = run_entry_checks(sembol, vix=vix, base_size=5000, portfolio=portfoy)
                     if not k_res["go"]:
                         print(f"[Decisions] {sembol} K-engine veto: {k_res['fail_reason']}")
+                        _mark(k, False, f"k_engine_veto: {k_res['fail_reason'][:80]}")
                         continue
 
                 # Stop/hedef yoksa ATR14 bazlı hesapla (kör %8/%15 fallback yasak)
@@ -1825,18 +1850,22 @@ def _execute_claude_decisions(kararlar: list, market: dict) -> list:
                                       stop, hedef,
                                       f"Claude: {neden}", "")
                 if result["ok"]:
+                    _mark(k, True)
                     aksiyonlar.append(
                         f"🟢 *CLAUDE ALIŞ* [{portfoy.upper()}]\n"
                         f"{sembol} {result['adet']} adet @${price:.2f}\n"
                         f"Stop: ${stop:.2f} | Hedef: ${hedef:.2f}\n"
                         f"Neden: {neden}"
                     )
+                else:
+                    _mark(k, False, result.get("hata", "buy_basarisiz"))
 
             elif tip == "DÖNDÜR":
                 # Adım 1: Sat
                 sat_r = sell_position(sembol, portfoy, f"DÖNDÜR — {neden}", pct=pct, price=price)
                 if not sat_r["ok"]:
                     print(f"[Decisions] DÖNDÜR satış başarısız: {sat_r.get('hata','?')}")
+                    _mark(k, False, f"dondur_sat_basarisiz: {sat_r.get('hata','?')}")
                     continue
 
                 pnl_pct = sat_r.get("pnl_pct", 0)
@@ -1864,6 +1893,7 @@ def _execute_claude_decisions(kararlar: list, market: dict) -> list:
                         _gap = (al_price - _al_prev) / _al_prev * 100
                         if _gap < -2.5:
                             print(f"[Decisions] DÖNDÜR alış {dondur_al}: gap-down %{_gap:.2f}, alım atlandı")
+                            _mark(k, True, f"dondur_al_gap_down_{_gap:.1f}%")
                             aksiyonlar.append(
                                 f"🔄 *DÖNDÜR SATIŞ TAMAM* [{portfoy.upper()}]\n"
                                 f"{sembol} @${price:.2f} P/L:{pnl_pct:+.1f}% | ${kazanilan:,.0f}\n"
@@ -1885,6 +1915,7 @@ def _execute_claude_decisions(kararlar: list, market: dict) -> list:
                             k_res2 = run_entry_checks(dondur_al, vix=vix, base_size=5000, portfolio=portfoy)
                             if not k_res2["go"]:
                                 print(f"[Decisions] DÖNDÜR alış {dondur_al} K-veto: {k_res2['fail_reason']}")
+                                _mark(k, True, f"dondur_al_k_veto: {k_res2['fail_reason'][:80]}")
                                 aksiyonlar.append(
                                     f"🔄 *DÖNDÜR SATIŞ TAMAM* [{portfoy.upper()}]\n"
                                     f"{sembol} @${price:.2f} P/L:{pnl_pct:+.1f}% | ${kazanilan:,.0f}\n"
@@ -1904,6 +1935,7 @@ def _execute_claude_decisions(kararlar: list, market: dict) -> list:
                                             _al_stop, _al_tgt,
                                             f"DÖNDÜR giriş — {neden}", "")
                         if al_r["ok"]:
+                            _mark(k, True)
                             aksiyonlar.append(
                                 f"🔄 *DÖNDÜR* [{portfoy.upper()}]\n"
                                 f"SAT: {sembol} @${price:.2f} P/L:{pnl_pct:+.1f}%\n"
@@ -1911,19 +1943,24 @@ def _execute_claude_decisions(kararlar: list, market: dict) -> list:
                                 f"Neden: {neden}"
                             )
                         else:
+                            # Sat kısmı oldu, al başarısız — kısmi kabul
+                            _mark(k, True, f"al_kismi_basarisiz: {al_r.get('hata','?')}")
                             aksiyonlar.append(
                                 f"🔄 *DÖNDÜR — KISMÎ* [{portfoy.upper()}]\n"
                                 f"SAT: {sembol} OK | AL: {dondur_al} başarısız\n"
                                 f"${kazanilan:,.0f} nakite döndü"
                             )
                     else:
+                        # Sat oldu, al fiyatı yok — kısmi kabul
+                        _mark(k, True, f"al_fiyati_yok: {dondur_al}")
                         aksiyonlar.append(
                             f"🔄 *DÖNDÜR — KISMÎ* [{portfoy.upper()}]\n"
                             f"SAT: {sembol} @${price:.2f} OK | {dondur_al} fiyat alınamadı\n"
                             f"${kazanilan:,.0f} nakite döndü"
                         )
                 else:
-                    # dondur_al yok → sadece sat
+                    # dondur_al yok → sadece sat, bu da executed sayılır
+                    _mark(k, True)
                     aksiyonlar.append(
                         f"🔄 *DÖNDÜR SATIŞ* [{portfoy.upper()}]\n"
                         f"{sembol} @${price:.2f} P/L:{pnl_pct:+.1f}% | ${kazanilan:,.0f}\n"
@@ -1931,25 +1968,40 @@ def _execute_claude_decisions(kararlar: list, market: dict) -> list:
                     )
 
             elif tip == "STOP_GÜNCELLE":
-                # JSON dosyasını doğrudan güncelle
+                # JSON dosyasını doğrudan güncelle — stop_mesafe_pct, son_guncelleme de tazelensin
                 pf_path = REPO_ROOT / "data" / "portfolios" / f"{portfoy}.json"
-                if pf_path.exists():
+                if pf_path.exists() and stop > 0:
                     import json as _json
                     pf_data = _json.load(open(pf_path))
+                    touched = False
                     for poz in pf_data.get("pozisyonlar", []):
-                        if poz["sembol"] == sembol and stop > 0:
+                        if poz["sembol"] == sembol:
                             poz["stop_loss"] = stop
-                    with open(pf_path, "w") as f:
-                        _json.dump(pf_data, f, ensure_ascii=False, indent=2)
-                    aksiyonlar.append(
-                        f"⚡ *STOP GÜNCELLE* [{portfoy.upper()}]\n"
-                        f"{sembol} stop → ${stop:.2f}\nNeden: {neden}"
-                    )
+                            cur = float(poz.get("guncel_fiyat") or 0)
+                            if cur:
+                                poz["stop_mesafe_pct"] = round((cur - stop) / cur * 100, 2)
+                            poz["son_guncelleme"] = datetime.now(TR_TZ).strftime("%Y-%m-%d")
+                            touched = True
+                    if touched:
+                        with open(pf_path, "w") as f:
+                            _json.dump(pf_data, f, ensure_ascii=False, indent=2)
+                        _mark(k, True)
+                        aksiyonlar.append(
+                            f"⚡ *STOP GÜNCELLE* [{portfoy.upper()}]\n"
+                            f"{sembol} stop → ${stop:.2f}\nNeden: {neden}"
+                        )
+                    else:
+                        _mark(k, False, f"sembol_pozisyonda_yok: {sembol}")
+                else:
+                    _mark(k, False, "stop_degeri_gecersiz_veya_dosya_yok")
 
             elif tip == "İZLE":
+                # İZLE bir no-op karar — "yürütüldü" sayılır (gözlem kararı verildi).
+                _mark(k, True, "izle_karari")
                 print(f"[Decisions] İZLE: {portfoy} {sembol} — {neden}")
 
         except Exception as exc:
             print(f"[Decisions] {tip} {sembol} hata: {exc}")
+            _mark(k, False, f"exception: {str(exc)[:100]}")
 
     return aksiyonlar

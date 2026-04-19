@@ -4,7 +4,8 @@ Finzora K-Engine — Tüm K-kuralları tek modülde
 ================================================
 Her giriş kararında çağrılır. 17 kural, sıralı kontrol.
 Kural hiyerarşisi:
-  K-06 stop > K-07 kâr kilidi > K-14 fren > K-13 VIX > K-18/K-20 giriş filtreleri
+  K-06 stop > K-07 kâr kilidi > K-13 VIX > K-18/K-20 giriş filtreleri
+(K-14 drawdown freni 11 Nisan 2026'da kaldırıldı — normal pozisyon boyutlandırma kullanılır)
 
 Kullanım:
   from k_engine import run_entry_checks, run_exit_checks, get_position_size
@@ -294,30 +295,15 @@ def k17_correlation_check(symbol: str, portfolio: str = "all") -> dict:
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# K-14 Drawdown Fren
+# K-14 KALDIRILDI (11 Nisan 2026) — no-op stub
 # ─────────────────────────────────────────────────────────────────────────────
+# K-14 drawdown freni tamamen kaldırıldı. Normal pozisyon boyutlandırma yapılır,
+# psikoloji pre-entry test'i devrede (conviction_scorer'daki risk bileşeni).
+# Bu stub sadece eski çağrı yerlerinin kırılmaması için var.
 
 def k14_drawdown_check() -> dict:
-    """K-14 drawdown fren aktif mi?"""
-    status_path = REPO_ROOT / "data" / "swing" / "status.json"
-    if not status_path.exists():
-        return {"passed": True, "reason": "K-14: status dosyası yok"}
-    try:
-        status = json.load(open(status_path))
-
-        # k14_active alanı varsa onu kullan (daha güncel)
-        if "k14_active" in status:
-            if status["k14_active"]:
-                return {"passed": False, "reason": "K-14: drawdown freni aktif"}
-            return {"passed": True, "reason": "K-14: normal"}
-
-        # Yoksa aktif_durum'a bak
-        aktif = status.get("aktif_durum", "normal")
-        if aktif in ("K14_DRAWDOWN_FREN", "DRAWDOWN_FREN"):
-            return {"passed": False, "reason": f"K-14: fren aktif ({aktif})"}
-        return {"passed": True, "reason": f"K-14: {aktif}"}
-    except Exception:
-        return {"passed": True, "reason": "K-14: okunamadı"}
+    """K-14 KALDIRILDI — her zaman geçer. Geriye uyumluluk için stub."""
+    return {"passed": True, "reason": "K-14 kaldırıldı (11 Nisan 2026)"}
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -361,43 +347,40 @@ def run_entry_checks(
     """
     checks = {}
 
-    # 1. K-14 Drawdown Fren (en önce — sistemik yasak)
-    checks["K-14"] = k14_drawdown_check()
-    if not checks["K-14"]["passed"]:
-        return {"go": False, "position_size": 0,
-                "checks": checks, "fail_reason": checks["K-14"]["reason"]}
+    # Not: K-14 drawdown freni 11 Nisan 2026'da kaldırıldı.
+    # Doğrudan K-19 ile başlıyoruz.
 
-    # 2. K-19 XLP (ucuz kontrol — sadece swing)
+    # 1. K-19 XLP (ucuz kontrol — sadece swing)
     checks["K-19"] = k19_xlp_check(symbol, portfolio)
     if not checks["K-19"]["passed"]:
         return {"go": False, "position_size": 0,
                 "checks": checks, "fail_reason": checks["K-19"]["reason"]}
 
-    # 3. K-05 Earnings (ucuz + kritik)
+    # 2. K-05 Earnings (ucuz + kritik)
     checks["K-05"] = k05_earnings_check(symbol)
     if not checks["K-05"]["passed"]:
         return {"go": False, "position_size": 0,
                 "checks": checks, "fail_reason": checks["K-05"]["reason"]}
 
-    # 4. K-18 Insider (kritik, geri dönüşsüz)
+    # 3. K-18 Insider (kritik, geri dönüşsüz)
     checks["K-18"] = k18_insider_check(symbol)
     if not checks["K-18"]["passed"]:
         return {"go": False, "position_size": 0,
                 "checks": checks, "fail_reason": checks["K-18"]["reason"]}
 
-    # 5. K-20 Dead Cat
+    # 4. K-20 Dead Cat
     checks["K-20"] = k20_dead_cat_check(symbol)
     if not checks["K-20"]["passed"]:
         return {"go": False, "position_size": 0,
                 "checks": checks, "fail_reason": checks["K-20"]["reason"]}
 
-    # 6. K-17 Korelasyon
+    # 5. K-17 Korelasyon
     checks["K-17"] = k17_correlation_check(symbol, portfolio)
     if not checks["K-17"]["passed"]:
         return {"go": False, "position_size": 0,
                 "checks": checks, "fail_reason": checks["K-17"]["reason"]}
 
-    # 7. K-13 VIX → pozisyon büyüklüğü
+    # 6. K-13 VIX → pozisyon büyüklüğü
     pos_size, k13_note = k13_position_size(vix, sector, base_size)
     checks["K-13"] = {"passed": pos_size > 0, "reason": k13_note, "size": pos_size}
     if pos_size == 0:

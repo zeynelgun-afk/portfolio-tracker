@@ -39,12 +39,12 @@ def find_closed_trade(symbol: str, portfolio: str) -> dict | None:
     """
     closed.json veya portfolios/*.json'da kapanmış trade'i bulur.
     """
-    # Önce closed.json'a bak
+    # Önce closed.json'a bak (CANONICAL kapatilan_pozisyonlar)
     closed_path = REPO_ROOT / "data" / "swing" / "closed.json"
     if closed_path.exists():
         with open(closed_path, encoding="utf-8") as f:
             data = json.load(f)
-        trades = data.get("kapali_pozisyonlar", data.get("closed_positions", []))
+        trades = data.get("kapatilan_pozisyonlar", data.get("kapali_pozisyonlar", data.get("closed_positions", [])))
         for t in reversed(trades):
             if t.get("sembol") == symbol or t.get("symbol") == symbol:
                 return t
@@ -125,12 +125,13 @@ def update_closed_json_lessons(symbol: str, lessons: str) -> bool:
     with open(path, encoding="utf-8") as f:
         data = json.load(f)
 
-    trades  = data.get("kapali_pozisyonlar", data.get("closed_positions", []))
+    trades  = data.get("kapatilan_pozisyonlar", data.get("kapali_pozisyonlar", data.get("closed_positions", [])))
     updated = False
 
     for t in reversed(trades):
         if t.get("sembol") == symbol or t.get("symbol") == symbol:
-            t["dersler"]   = lessons[:500]
+            t["ders"]                = lessons[:500]          # CANONICAL (dersler değil)
+            t["dersler"]             = lessons[:500]          # Backward compat
             t["agent_analiz_tarihi"] = datetime.now().strftime("%Y-%m-%d")
             updated = True
             break
@@ -148,7 +149,11 @@ def update_closed_json_lessons(symbol: str, lessons: str) -> bool:
 def detect_new_closings(portfolios: dict) -> list[dict]:
     """
     Son 24 saatte kapanan pozisyonları tespit eder.
-    daily_update.py'nin çalışmasından sonra transactions.csv'yi kontrol eder.
+    daily_update.py çalıştıktan sonra transactions.csv'yi kontrol eder.
+
+    CSV şeması (canonical, 2026-04):
+      date, action, symbol, shares, price, total, reason
+    Portföy alanı CSV'de yok — aktif portföylere bakarak tespit ederiz.
     """
     tx_path = REPO_ROOT / "data" / "transactions.csv"
     if not tx_path.exists():
@@ -156,24 +161,50 @@ def detect_new_closings(portfolios: dict) -> list[dict]:
 
     import csv
     from datetime import timedelta
-    import pytz
 
-    yesterday = (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d")
-    closings  = []
+    # Pencere: son 48 saat (sabah + kapanış çift run, hafta sonu boşluğu)
+    cutoff = (datetime.now() - timedelta(days=2)).strftime("%Y-%m-%d")
+    closings = []
+
+    # Mevcut portföylerde hangi sembol nerede? — sonrada backward tespit için
+    # (satış anında artık portföyde olmadığı için geçmiş işlemleri de düşün)
+    sym_to_portfolio = {}
+    for pf_name, pf_data in (portfolios or {}).items():
+        for pos in pf_data.get("pozisyonlar", []):
+            sym = pos.get("sembol") or pos.get("symbol")
+            if sym:
+                sym_to_portfolio[sym] = pf_name
 
     with open(tx_path, encoding="utf-8") as f:
         reader = csv.DictReader(f)
         for row in reader:
-            row_date = row.get("date", "")
-            row_type = row.get("type", "").upper()
-            if row_date >= yesterday and row_type in ("SELL", "SATIŞ"):
-                closings.append({
-                    "symbol":    row.get("symbol", ""),
-                    "portfolio": row.get("portfolio", "unknown"),
-                    "price":     row.get("price", 0),
-                    "date":      row_date,
-                    "reason":    row.get("reason", ""),
-                })
+            row_date = (row.get("date", "") or "").strip()
+            # Canonical kolon: 'action' (SELL/BUY). Geriye uyum: 'type' de kabul et.
+            row_action = (row.get("action") or row.get("type") or "").strip().upper()
+            if row_date < cutoff:
+                continue
+            if row_action not in ("SELL", "SATIS", "SATIŞ"):
+                continue
+
+            symbol = (row.get("symbol") or "").strip()
+            if not symbol:
+                continue
+
+            # Portföyü tahmin et: hâlâ aktif portföyde → oradan; değilse 'swing' (büyük ihtimalle)
+            # Transaction reason içinde "swing" geçiyorsa swing kabul et.
+            reason = (row.get("reason") or "")
+            if "swing" in reason.lower():
+                portfolio = "swing"
+            else:
+                portfolio = sym_to_portfolio.get(symbol, "unknown")
+
+            closings.append({
+                "symbol":    symbol,
+                "portfolio": portfolio,
+                "price":     (row.get("price") or 0),
+                "date":      row_date,
+                "reason":    reason,
+            })
 
     return closings
 
@@ -237,14 +268,44 @@ def run_auto_feedback(portfolios: dict):
     """
     Otomatik kapanış tespiti ve geri bildirim döngüsü.
     Sabah/kapanış modunda çağrılır.
+
+    Dedup: agent/memory/processed_closings.json dosyasında işlenmiş (symbol,date)
+    tuple'larını tutarız — aynı kapanış iki kez analiz edilmesin.
     """
     closings = detect_new_closings(portfolios)
     if not closings:
         return
 
-    print(f"[TradeFeedback] {len(closings)} yeni kapanış tespit edildi.")
-    for c in closings:
-        process_trade_feedback(c["symbol"], c["portfolio"])
+    # İşlenmiş kapanışları yükle
+    processed_path = MEMORY_DIR / "processed_closings.json"
+    processed = {}
+    if processed_path.exists():
+        try:
+            with open(processed_path, encoding="utf-8") as f:
+                processed = json.load(f)
+        except Exception:
+            processed = {}
+    processed.setdefault("islenen", [])  # [{symbol, date}]
+
+    islenen_set = {(p["symbol"], p["date"]) for p in processed["islenen"]}
+
+    yeniler = [c for c in closings if (c["symbol"], c["date"]) not in islenen_set]
+
+    if not yeniler:
+        print(f"[TradeFeedback] {len(closings)} kapanış tespit edildi, hepsi zaten işlenmiş.")
+        return
+
+    print(f"[TradeFeedback] {len(yeniler)} yeni kapanış tespit edildi (toplam {len(closings)}).")
+
+    for c in yeniler:
+        ok = process_trade_feedback(c["symbol"], c["portfolio"])
+        if ok:
+            processed["islenen"].append({"symbol": c["symbol"], "date": c["date"]})
+
+    # Sadece son 200 kaydı tut (dosya sonsuz büyümesin)
+    processed["islenen"] = processed["islenen"][-200:]
+    with open(processed_path, "w", encoding="utf-8") as f:
+        json.dump(processed, f, ensure_ascii=False, indent=2)
 
 
 # ── CLI ───────────────────────────────────────────────────────────────────────
