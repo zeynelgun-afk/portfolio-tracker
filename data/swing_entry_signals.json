@@ -1,8 +1,8 @@
 {
-  "tarih": "2026-04-17T18:29:13.557059",
-  "toplam_taranan": 0,
+  "tarih": "2026-04-19T14:03:37.596243",
+  "toplam_taranan": 37,
   "giris_sayisi": 0,
   "giris_sinyalleri": [],
   "detaylar": [],
-  "ham_cikti": "Traceback (most recent call last):\n  File \"/home/runner/work/portfolio-tracker/portfolio-tracker/scripts/swing_entry_engine.py\", line 41, in <module>\n    FMP_KEY  = os.environ.get(\"FMP_API_KEY\", \"\")\n               ^^\nNameError: name 'os' is not defined\n"
+  "ham_cikti": "\n[Kapasite] 5/8 pozisyon aktif — 3 boş slot\n\n[SwingEntry] 37 hisse taranıyor...\n  [ 1/37] CAT... —\n  [ 2/37] WDC... —\n  [ 3/37] KLAC... —\n  [ 4/37] AMAT... —\n  [ 5/37] MRK... —\n  [ 6/37] UPS... —\n  [ 7/37] DUK... —\n  [ 8/37] NEE... —\n  [ 9/37] GEV... —\n  [10/37] ATMU... —\n  [11/37] MU... —\n  [12/37] LMT... —\n  [13/37] VRT... —\n  [14/37] ANET... —\n  [15/37] KMB... —\n  [16/37] OKE... —\n  [17/37] LLY... —\n  [18/37] REGN... —\n  [19/37] RPRX... —\n  [20/37] ABBV... —\n  [21/37] KEY... —\n  [22/37] AR... —\n  [23/37] TFC... —\n  [24/37] LAUR... —\n  [25/37] PYPL... —\n  [26/37] LRCX... —\n  [27/37] CCJ... —\n  [28/37] OKLO... —\n  [29/37] NNE... —\n  [30/37] UEC... —\n  [31/37] VST... —\n  [32/37] BWXT... —\n  [33/37] LEU... —\n  [34/37] DNN... —\n  [35/37] ALAB... —\n  [36/37] PLAB... —\n  [37/37] COHU... —\n\n[SwingEntry] Sonuç: 0/37 giriş sinyali\n\nGiriş sinyali yok.\n"
 }
