@@ -324,6 +324,9 @@ def temettu_ve_kritik_haber_kontrolu(portfoy_semboller):
     Tüm portföy hisselerinin son 48 saatlik haberlerini tara.
     Temettü kesintisi veya kritik olumsuz haber varsa Telegram'a gönder.
     Günlük otomatik güncelleme sırasında çalışır.
+
+    Dedup: işlenmiş haber URL'leri data/news_seen.json'a kaydedilir,
+    aynı haber iki kez Telegram'a düşmez (sabah + kapanış run'larında).
     """
     if not portfoy_semboller:
         return
@@ -337,6 +340,16 @@ def temettu_ve_kritik_haber_kontrolu(portfoy_semboller):
         return
 
     sinir_dt = datetime.now(timezone.utc) - timedelta(hours=48)
+
+    # İşlenmiş haber cache'i — URL hash'leri
+    seen_path = REPO_ROOT / "data" / "news_seen.json"
+    seen = {"urls": [], "updated": ""}
+    if seen_path.exists():
+        try:
+            seen = json.loads(seen_path.read_text(encoding="utf-8"))
+        except Exception:
+            seen = {"urls": [], "updated": ""}
+    seen_set = set(seen.get("urls", []))
 
     uyarilar = []
     for h in haberler:
@@ -352,10 +365,15 @@ def temettu_ve_kritik_haber_kontrolu(portfoy_semboller):
         except Exception:
             continue
 
-        baslik   = (h.get("title", "") or "").lower()
-        icerik   = (h.get("text", "") or "")[:600].lower()
+        url = h.get("url", "") or ""
+        # Dedup — bu URL daha önce işlendiyse atla
+        if url and url in seen_set:
+            continue
+
+        baslik    = (h.get("title", "") or "").lower()
+        icerik    = (h.get("text", "") or "")[:600].lower()
         tam_metin = baslik + " " + icerik
-        sembol   = h.get("symbol", "")
+        sembol    = h.get("symbol", "")
         tetiklendi = False   # Bir haber için tek uyarı gönder
 
         # Temettü kesintisi — öncelikli kontrol
@@ -364,8 +382,10 @@ def temettu_ve_kritik_haber_kontrolu(portfoy_semboller):
                 uyarilar.append({
                     "sembol": sembol, "tur": "TEMETTÜ KESİNTİSİ",
                     "baslik": h.get("title", "")[:200],
-                    "url": h.get("url", ""), "severity": "critical",
+                    "url": url, "severity": "critical",
                 })
+                if url:
+                    seen_set.add(url)
                 tetiklendi = True
                 break
 
@@ -376,9 +396,19 @@ def temettu_ve_kritik_haber_kontrolu(portfoy_semboller):
                     uyarilar.append({
                         "sembol": sembol, "tur": "KRİTİK HABER",
                         "baslik": h.get("title", "")[:200],
-                        "url": h.get("url", ""), "severity": "warning",
+                        "url": url, "severity": "warning",
                     })
+                    if url:
+                        seen_set.add(url)
                     break
+
+    # Cache'i güncelle — sadece son 500 URL tut (dosya büyümesin)
+    seen["urls"]    = list(seen_set)[-500:]
+    seen["updated"] = datetime.now(timezone.utc).isoformat(timespec="seconds")
+    try:
+        seen_path.write_text(json.dumps(seen, ensure_ascii=False, indent=2), encoding="utf-8")
+    except Exception as e:
+        log(f"  ⚠️  news_seen.json yazımı atlandı: {e}")
 
     if uyarilar:
         for u in uyarilar:
@@ -390,7 +420,7 @@ def temettu_ve_kritik_haber_kontrolu(portfoy_semboller):
             log(f"  🚨 {u['tur']} — {u['sembol']}: {u['baslik'][:80]}")
             send_telegram_direct(msg, severity=u["severity"])
     else:
-        log(f"  ✅ Kritik haber yok ({len(haberler)} haber tarandı, son 48 saat)")
+        log(f"  ✅ Yeni kritik haber yok ({len(haberler)} haber tarandı, son 48 saat, dedup aktif)")
 
 
 def update_portfolio(filepath, quote_dict):
@@ -649,7 +679,13 @@ def update_summary():
 
     # swing None olabilir (active.json henüz oluşmamış) — guard
     swing_pozisyonlar = swing.get('aktif_pozisyonlar', []) if swing else []
-    swing_slot_max = 8
+    # Tek kaynak: agent.swing_manager.SWING_MAX_POSITIONS
+    try:
+        import sys as _sys
+        _sys.path.insert(0, str(REPO_ROOT / "agent"))
+        from swing_manager import SWING_MAX_POSITIONS as swing_slot_max
+    except Exception:
+        swing_slot_max = 5  # fallback
 
     # Toplam değerleri hesapla
     total_capital = 600000  # $100K + $400K + $100K

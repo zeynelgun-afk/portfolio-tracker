@@ -322,13 +322,13 @@ def run_morning(ctx: dict):
     if run_macro_intelligence:
         try:
             print("[Sabah] Makro tema analizi...")
-            # VIX al
-            import requests as _req
+            # VIX al — merkezi vix_fetcher (cache + Yahoo + FMP fallback zinciri)
             try:
-                vix_r = _req.get("https://query1.finance.yahoo.com/v8/finance/chart/%5EVIX",
-                                  headers={"User-Agent": "Mozilla/5.0"}, timeout=5)
-                vix = float(vix_r.json()["chart"]["result"][0]["meta"]["regularMarketPrice"])
-            except Exception:
+                from vix_fetcher import get_vix
+                vix, vix_src = get_vix()
+                print(f"[Sabah] VIX={vix} (kaynak: {vix_src})")
+            except Exception as _vx:
+                print(f"[Sabah] VIX fetcher hatası: {_vx}, default 20.0")
                 vix = 20.0
 
             macro_ctx = run_macro_intelligence(vix=vix)
@@ -1302,12 +1302,10 @@ def _execute_portfolio_opportunities(faz: str, market: dict) -> list:
             print(f"[Execution] {sym}: fiyat ({price}) stop ({stop}) altına geçmiş, atlandı")
             continue
 
-        # K-engine son kontrol (canlı VIX ile)
+        # K-engine son kontrol (canlı VIX ile) — merkezi vix_fetcher
         try:
-            import requests as _req
-            vix_r = _req.get("https://query1.finance.yahoo.com/v8/finance/chart/%5EVIX",
-                              headers={"User-Agent":"Mozilla/5.0"}, timeout=5)
-            vix = float(vix_r.json()["chart"]["result"][0]["meta"]["regularMarketPrice"])
+            from vix_fetcher import get_vix
+            vix, _ = get_vix()
         except Exception:
             vix = state.get("buy_list", {}).get("vix", 20) if state else 20
 
@@ -1816,14 +1814,11 @@ def _execute_claude_decisions(kararlar: list, market: dict) -> list:
 
                 # K-engine kontrolü
                 if run_entry_checks:
-                    vix = 20.0
                     try:
-                        import requests as _req
-                        vr = _req.get("https://query1.finance.yahoo.com/v8/finance/chart/%5EVIX",
-                                      headers={"User-Agent": "Mozilla/5.0"}, timeout=5)
-                        vix = float(vr.json()["chart"]["result"][0]["meta"]["regularMarketPrice"])
+                        from vix_fetcher import get_vix
+                        vix, _ = get_vix()
                     except Exception:
-                        pass
+                        vix = 20.0
                     k_res = run_entry_checks(sembol, vix=vix, base_size=5000, portfolio=portfoy)
                     if not k_res["go"]:
                         print(f"[Decisions] {sembol} K-engine veto: {k_res['fail_reason']}")
@@ -1904,14 +1899,11 @@ def _execute_claude_decisions(kararlar: list, market: dict) -> list:
                     if al_price:
                         # K-engine kontrolü (döndür alışı için de)
                         if run_entry_checks:
-                            vix = 20.0
                             try:
-                                import requests as _req2
-                                vr2 = _req2.get("https://query1.finance.yahoo.com/v8/finance/chart/%5EVIX",
-                                                headers={"User-Agent": "Mozilla/5.0"}, timeout=5)
-                                vix = float(vr2.json()["chart"]["result"][0]["meta"]["regularMarketPrice"])
+                                from vix_fetcher import get_vix
+                                vix, _ = get_vix()
                             except Exception:
-                                pass
+                                vix = 20.0
                             k_res2 = run_entry_checks(dondur_al, vix=vix, base_size=5000, portfolio=portfoy)
                             if not k_res2["go"]:
                                 print(f"[Decisions] DÖNDÜR alış {dondur_al} K-veto: {k_res2['fail_reason']}")

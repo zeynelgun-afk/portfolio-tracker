@@ -29,6 +29,15 @@ TR_TZ      = pytz.timezone("Europe/Istanbul")
 
 MEMORY_DIR.mkdir(exist_ok=True)
 
+# Swing max kapasite — tek kaynak swing_manager.SWING_MAX_POSITIONS
+try:
+    import sys as _sys
+    if str(Path(__file__).parent) not in _sys.path:
+        _sys.path.insert(0, str(Path(__file__).parent))
+    from swing_manager import SWING_MAX_POSITIONS as _SWING_MAX
+except Exception:
+    _SWING_MAX = 5
+
 
 # ── L1: Portföy Durumu (anlık, her çağrıda yenilenir) ────────────────────────
 
@@ -124,7 +133,7 @@ def build_portfolio_state(portfolios: dict, market: dict) -> dict:
             })
         state["swing"] = {
             "aktif_sayisi": len(swing_pozlar),
-            "max_kapasite": 5,
+            "max_kapasite": _SWING_MAX,
             "pozisyonlar":  swing_pozlar,
         }
     except Exception:

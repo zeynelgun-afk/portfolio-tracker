@@ -168,30 +168,43 @@ SECTOR_MAP = {
 
 def get_vix_level():
     """
-    Gercek VIX seviyesini Yahoo Finance'den ceker (^VIX).
+    Gercek VIX seviyesini merkezi vix_fetcher uzerinden ceker.
+    Kaynak zinciri: data/vix_cache.json (15dk TTL) -> Yahoo q1 -> Yahoo q2 -> FMP.
 
-    ONEMLI: FMP'de ^VIX desteklenmez (402 hatasi verir).
-    VIXY ETF fiyati ($29-30) VIX seviyesiyle (tipik 10-40) ESIT DEGILDIR.
-    Aralarinda yonsel korelasyon vardir ama sayisal esit degildir.
-    K-13 eslikleri (<22 / 22-35 / >35) icin mutlaka gercek VIX kullan.
+    ONEMLI: FMP'de ^VIX cogu zaman 402 dondurur (plan sinirli).
+    VIXY ETF fiyati VIX seviyesiyle ESIT DEGILDIR (contango).
+    K-13 eslikleri (<22 / 22-35 / >35) icin bu fonksiyonu kullan.
 
-    VIXY su amaclarla kullanilabilir:
-      - VIX'in yon degisimi (changesPercentage >0 = yukseliyor)
-      - Gorsel gosterge
-
-    Donus: float (VIX seviyesi) veya None (hata)
+    Donus: float (VIX seviyesi) veya None (tum kaynaklar patladi)
     """
-    import urllib.request as _ureq
-    url = "https://query1.finance.yahoo.com/v8/finance/chart/%5EVIX?interval=1d&range=1d"
     try:
-        req = _ureq.Request(url, headers={"User-Agent": "Mozilla/5.0"})
-        resp = _ureq.urlopen(req, timeout=10)
-        data = json.loads(resp.read())
-        price = data["chart"]["result"][0]["meta"]["regularMarketPrice"]
-        return float(price)
+        # agent/ klasoruna path ekle
+        import sys
+        from pathlib import Path
+        _agent_dir = Path(__file__).resolve().parent.parent / "agent"
+        if str(_agent_dir) not in sys.path:
+            sys.path.insert(0, str(_agent_dir))
+        from vix_fetcher import get_vix
+        value, source = get_vix()
+        if source == "default":
+            # Hicbir kaynak calismadi, None don ki caller fallback yapsin
+            print(f"[VIX] Tum kaynaklar basarisiz, None donuluyor", file=sys.stderr)
+            return None
+        return float(value)
     except Exception as e:
-        print(f"[VIX HATA] Yahoo Finance ^VIX cekilemedi: {e}", file=sys.stderr)
-        return None
+        print(f"[VIX HATA] vix_fetcher cekilemedi: {e}", file=sys.stderr)
+        # Eski Yahoo fallback (vix_fetcher import patlarsa)
+        import urllib.request as _ureq
+        url = "https://query1.finance.yahoo.com/v8/finance/chart/%5EVIX?interval=1d&range=1d"
+        try:
+            req = _ureq.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+            resp = _ureq.urlopen(req, timeout=10)
+            data = json.loads(resp.read())
+            price = data["chart"]["result"][0]["meta"]["regularMarketPrice"]
+            return float(price)
+        except Exception as e2:
+            print(f"[VIX HATA] Yahoo fallback da basarisiz: {e2}", file=sys.stderr)
+            return None
 
 
 def get_vix_direction():

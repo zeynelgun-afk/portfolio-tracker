@@ -33,7 +33,9 @@ except Exception as _rag_err:
 ANTHROPIC_KEY = os.environ.get("ANTHROPIC_API_KEY", "")
 REPO_ROOT = Path(__file__).parent.parent
 
-CLAUDE_MODEL = "claude-opus-4-6"
+# Model env'den — hardcoded değil. Default: en güncel Opus.
+# Override: export CLAUDE_MODEL="claude-opus-4-7" (veya başka versiyon)
+CLAUDE_MODEL = os.environ.get("CLAUDE_MODEL", "claude-opus-4-7")
 
 # Mode bazlı varsayılan RAG sorguları — her Claude çağrısı öncesi retrieval için
 DEFAULT_RAG_QUERIES = {

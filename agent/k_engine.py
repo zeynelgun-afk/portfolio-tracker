@@ -34,23 +34,33 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).parent.parent
 sys.path.insert(0, str(REPO_ROOT / "scripts"))
+sys.path.insert(0, str(REPO_ROOT / "agent"))
 
 FMP_KEY = os.environ.get("FMP_API_KEY", "")
 FMP_BASE = "https://financialmodelingprep.com/stable"
 
 # ─────────────────────────────────────────────────────────────────────────────
-# Yardımcı
+# Yardımcı — merkezi fmp_client üzerinden (observability entegrasyonu için).
+# Eski `_fmp` manuel requests kullanıyordu → FMP çağrıları finzora_stats'ta görünmüyordu.
 # ─────────────────────────────────────────────────────────────────────────────
 
 def _fmp(endpoint: str, params: dict = None) -> dict | list | None:
-    import requests
-    p = params or {}
-    p["apikey"] = FMP_KEY
+    """FMP çağrısı — merkezi fmp_client (observability loglanır)."""
     try:
-        r = requests.get(f"{FMP_BASE}/{endpoint}", params=p, timeout=10)
-        return r.json()
-    except Exception:
-        return None
+        from fmp_client import fmp_get as _centralized_fmp_get
+        result = _centralized_fmp_get(endpoint, params or {})
+        # Merkezi client [] veya None dönebilir; k_engine None bekler.
+        return result if result else None
+    except ImportError:
+        # Fallback: eski manuel requests (fmp_client modülü yoksa)
+        import requests
+        p = dict(params or {})
+        p["apikey"] = FMP_KEY
+        try:
+            r = requests.get(f"{FMP_BASE}/{endpoint}", params=p, timeout=10)
+            return r.json()
+        except Exception:
+            return None
 
 
 def _run_script(script: str, symbol: str) -> dict:
@@ -244,7 +254,10 @@ def k20_dead_cat_check(symbol: str) -> dict:
 # ─────────────────────────────────────────────────────────────────────────────
 
 def k17_correlation_check(symbol: str, portfolio: str = "all") -> dict:
-    """Mevcut portföyle sektör/tema çakışması kontrolü."""
+    """Mevcut portföyle sektör/tema çakışması kontrolü.
+
+    Sektör lookup sector_cache üzerinden yapılır — her çağrıda N×FMP profile
+    çağrısı yerine 7 gün TTL'li cache. Rate limit koruması + hızlı."""
     # Tüm portföylerdeki sembolleri topla
     pf_symbols = []
     for pf in ["aggressive", "balanced", "dividend"]:
@@ -260,29 +273,27 @@ def k17_correlation_check(symbol: str, portfolio: str = "all") -> dict:
     if symbol in pf_symbols:
         return {"passed": False, "reason": f"K-17: {symbol} zaten portföyde"}
 
-    # Aynı sektördeki pozisyon sayısı
-    sym_info_r = _fmp("profile", {"symbol": symbol})
-    sym_sector = ""
-    if sym_info_r:
-        item = sym_info_r[0] if isinstance(sym_info_r, list) and sym_info_r else sym_info_r
-        sym_sector = item.get("sector", "") if isinstance(item, dict) else ""
+    # Sektör lookup (merkezi cache — FMP profile sadece ilk çağrıda)
+    try:
+        from sector_cache import get_sector as _get_sector
+    except ImportError:
+        def _get_sector(s):
+            r = _fmp("profile", {"symbol": s}) or []
+            item = r[0] if isinstance(r, list) and r else {}
+            return (item.get("sector", "") or "").strip().lower().replace(" ", "_")
 
-    if not sym_sector:
+    sym_sector = _get_sector(symbol)
+    if not sym_sector or sym_sector == "diger":
         return {"passed": True, "reason": "K-17: sektör bilgisi yok"}
 
-    # Aynı sektördeki pozisyon sayısını gerçekten say
+    # Aynı sektördeki pozisyon sayısı
     same_sector_count = 0
     for s in pf_symbols:
         if not s:
             continue
-        try:
-            s_info = _fmp("profile", {"symbol": s}) or []
-            s_item = s_info[0] if isinstance(s_info, list) and s_info else {}
-            s_sector = s_item.get("sector", "") if isinstance(s_item, dict) else ""
-            if s_sector and s_sector.lower() == sym_sector.lower():
-                same_sector_count += 1
-        except Exception:
-            continue
+        s_sector = _get_sector(s)
+        if s_sector and s_sector == sym_sector:
+            same_sector_count += 1
 
     # Aynı sektörden 2+ pozisyon varsa uyar, 3+ ise reddet
     if same_sector_count >= 3:

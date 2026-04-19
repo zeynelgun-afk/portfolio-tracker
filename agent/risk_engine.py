@@ -40,7 +40,8 @@ def fmp_get(endpoint: str, params: dict = None) -> list | dict:
 
 # ── 1. Korelasyon Analizi ─────────────────────────────────────────────────────
 
-# Sektör haritası (temel)
+# Fallback sektör haritası (sector_cache yüklenemezse kullan).
+# Normalde sector_cache FMP profile'dan dinamik çeker.
 SECTOR_MAP = {
     "COHR": "technology", "VRT": "technology", "ANET": "technology",
     "MU": "technology", "CAMT": "technology", "NVDA": "technology",
@@ -51,6 +52,15 @@ SECTOR_MAP = {
     "OKE": "energy", "FCX": "materials", "RGLD": "materials",
     "GLD": "commodities", "SPY": "index", "QQQ": "index",
 }
+
+
+def _get_sector_dynamic(symbol: str) -> str:
+    """sector_cache varsa kullan, yoksa hardcoded SECTOR_MAP'e düş."""
+    try:
+        from sector_cache import get_sector
+        return get_sector(symbol)
+    except Exception:
+        return SECTOR_MAP.get(symbol, "diger")
 
 
 def analyze_portfolio_correlation(portfolios: dict) -> dict:
@@ -73,7 +83,7 @@ def analyze_portfolio_correlation(portfolios: dict) -> dict:
             except (TypeError, ValueError):
                 value = 0
 
-            sector = SECTOR_MAP.get(sym, "diger")
+            sector = _get_sector_dynamic(sym)
             sector_positions[sector].append({
                 "sembol":   sym,
                 "portfoy":  pf_name,
@@ -219,7 +229,7 @@ def run_scenario_test(portfolios: dict, drop_pct: float = 5.0) -> dict:
             except (TypeError, ValueError):
                 value = 0
 
-            sector      = SECTOR_MAP.get(sym, "diger")
+            sector      = _get_sector_dynamic(sym)
             beta        = SECTOR_BETA.get(sector, 1.0)
             beklenen_dd = value * (drop_pct / 100) * beta
             stop        = pos.get("stop_loss")

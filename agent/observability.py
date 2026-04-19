@@ -309,16 +309,40 @@ def _index_to_sqlite(event: dict) -> None:
 
 # ── Yüksek seviye yardımcılar ────────────────────────────────────────────────
 
-# Claude Opus 4.6 fiyat tahmini (doğrulanmadı, MUHTEMEL)
-# Gerçek fiyat için https://www.anthropic.com/pricing
-_CLAUDE_COST_PER_M_IN = 15.0   # $/M input tokens (tahmini Opus seviyesi)
-_CLAUDE_COST_PER_M_OUT = 75.0  # $/M output tokens
+# Claude model bazlı fiyat tablosu ($/M token)
+# Not: Gerçek fiyatlar https://www.anthropic.com/pricing adresinden doğrulanmalı.
+# Bu değerler SPEKÜLATİF — yaklaşık karar vermek için yeterli, faturalama için değil.
+_CLAUDE_PRICING = {
+    "opus":   {"in": 15.0,  "out": 75.0},
+    "sonnet": {"in":  3.0,  "out": 15.0},
+    "haiku":  {"in":  0.80, "out":  4.0},
+}
+_DEFAULT_TIER = "opus"  # bilinmeyen model → en kötü durum
 
 
-def estimate_claude_cost(in_tokens: int, out_tokens: int) -> float:
-    """Yaklaşık USD maliyet. SPEKÜLATİF — gerçek pricing'i doğrula."""
-    cost_in = (in_tokens or 0) / 1_000_000 * _CLAUDE_COST_PER_M_IN
-    cost_out = (out_tokens or 0) / 1_000_000 * _CLAUDE_COST_PER_M_OUT
+def _model_tier(model: str) -> str:
+    """Model adından fiyat tier'ı çıkar (opus/sonnet/haiku)."""
+    if not model:
+        return _DEFAULT_TIER
+    m = model.lower()
+    if "opus" in m:
+        return "opus"
+    if "sonnet" in m:
+        return "sonnet"
+    if "haiku" in m:
+        return "haiku"
+    return _DEFAULT_TIER
+
+
+def estimate_claude_cost(in_tokens: int, out_tokens: int, model: str = "") -> float:
+    """
+    Yaklaşık USD maliyet. Model adından tier seçer (opus/sonnet/haiku).
+    SPEKÜLATİF — kesin pricing için api dokümantasyonunu kullan.
+    """
+    tier = _model_tier(model)
+    rates = _CLAUDE_PRICING.get(tier, _CLAUDE_PRICING[_DEFAULT_TIER])
+    cost_in = (in_tokens or 0) / 1_000_000 * rates["in"]
+    cost_out = (out_tokens or 0) / 1_000_000 * rates["out"]
     return round(cost_in + cost_out, 4)
 
 
@@ -341,7 +365,7 @@ def log_claude_call(
             "model": model,
             "input_tokens": input_tokens,
             "output_tokens": output_tokens,
-            "cost_usd": estimate_claude_cost(input_tokens, output_tokens),
+            "cost_usd": estimate_claude_cost(input_tokens, output_tokens, model=model),
             "context_chars": context_chars,
             "decisions_count": decisions_count,
             "duration_ms": duration_ms,
@@ -588,7 +612,7 @@ if __name__ == "__main__":
     # Test kayıtlar
     eid = log_claude_call(
         mode="test",
-        model="claude-opus-4-6",
+        model="claude-opus-4-7",
         input_tokens=1000,
         output_tokens=500,
         duration_ms=3500,

@@ -31,6 +31,10 @@ REPO_ROOT = Path(__file__).parent.parent
 FMP_BASE  = "https://financialmodelingprep.com/stable"
 FMP_KEY   = os.environ.get("FMP_API_KEY", "")
 
+# Tek kaynak: max eşzamanlı swing pozisyon sayısı.
+# daily_update.py, memory_manager, swing_manager hepsi buradan okur.
+SWING_MAX_POSITIONS = 5
+
 sys.path.insert(0, str(REPO_ROOT / "scripts"))
 
 
@@ -58,8 +62,8 @@ def open_swing_position(
 
     # Kapasite kontrolü
     mevcut = active.get("aktif_pozisyonlar", [])
-    if len(mevcut) >= 5:
-        print(f"[Swing] Kapasite dolu (5/5) — {symbol} için yer yok")
+    if len(mevcut) >= SWING_MAX_POSITIONS:
+        print(f"[Swing] Kapasite dolu ({SWING_MAX_POSITIONS}/{SWING_MAX_POSITIONS}) — {symbol} için yer yok")
         return {}
 
     # Aynı sembold zaten var mı?
@@ -68,7 +72,24 @@ def open_swing_position(
         return {}
 
     poz_id = f"SWING-{datetime.now().strftime('%Y%m%d%H%M')}-{symbol}"
-    atr    = abs(price - stop)
+
+    # Gerçek ATR14 hesaplaması (önce execution_engine, FMP historical fallback).
+    # Eski: atr = abs(price - stop) → bu ATR değil, stop'un büyüklüğüydü.
+    # Chandelier/trailing hesaplarında yanlış sonuç veriyordu.
+    atr = None
+    try:
+        import sys as _sys
+        _sys.path.insert(0, str(REPO_ROOT / "agent"))
+        from execution_engine import compute_atr_stop as _cas_sw
+        _s, _t, _atr = _cas_sw(symbol, price)
+        if _atr is not None:
+            atr = float(_atr)
+    except Exception as _e:
+        print(f"[Swing] ATR14 hesaplanamadı ({_e}), fallback abs(price-stop)")
+
+    if atr is None or atr <= 0:
+        # Son çare: stop mesafesi / 2 (stop ~2×ATR konvansiyonu)
+        atr = abs(price - stop) / 2.0 if stop and stop < price else price * 0.02
 
     # Chandelier stop: zirve - 3×ATR (başlangıçta giriş fiyatı = zirve)
     chandelier = round(price - 3 * atr, 2)
@@ -362,7 +383,7 @@ def get_swing_report() -> str:
 
     # Aktif pozisyonlar
     if pozlar:
-        lines.append(f"Aktif ({len(pozlar)}/5):")
+        lines.append(f"Aktif ({len(pozlar)}/{SWING_MAX_POSITIONS}):")
         for p in pozlar:
             sym   = p["sembol"]
             pnl   = p.get("kar_zarar_yuzde", p.get("pnl_pct", 0))  # canonical, fallback eski
@@ -426,7 +447,7 @@ def run_swing_morning_check() -> dict:
         "uyarilar":      uyarilar,
         "entry_signals": entry_signals,
         "kapasite":      kapasite,
-        "max_kapasite":  5,
-        "bos_slot":      5 - kapasite,
+        "max_kapasite":  SWING_MAX_POSITIONS,
+        "bos_slot":      SWING_MAX_POSITIONS - kapasite,
         "rapor":         get_swing_report(),
     }

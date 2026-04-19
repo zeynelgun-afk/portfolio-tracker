@@ -95,17 +95,23 @@ TIER_WEIGHTS = {"tier_0": 25, "tier_1": 22, "tier_2": 15, "tier_3": 8}
 def score_tema_uyumu(symbol: str, tema_puani: float, tier: str = "tier_1") -> tuple[float, dict]:
     """
     Tema puanı (0-70) × katman ağırlığı → normalize edilmiş 0-25 puan.
-    Tema puanı FMP'den gelmiyorsa data/theme_scores.json'dan okunur.
+    Tema puanı ≤ 0 ise theme_scores.json'dan ORTALAMA puan kullanılır
+    (eskiden max alınıyordu → her sembol aynı skoru alıyordu → sıralama bozuluyordu).
     """
     # Güncel tema puanı
     scores_path = REPO_ROOT / "data" / "theme_scores.json"
     if tema_puani <= 0 and scores_path.exists():
-        with open(scores_path, encoding="utf-8") as f:
-            data = json.load(f)
-        tema_puani = max(data.get("tema_puanlari", {}).values() or [0])
+        try:
+            with open(scores_path, encoding="utf-8") as f:
+                data = json.load(f)
+            puanlar = list(data.get("tema_puanlari", {}).values() or [])
+            # Max yerine ortalama — her sembole sabit max atanmasını önler
+            tema_puani = sum(puanlar) / len(puanlar) if puanlar else 0
+        except Exception:
+            tema_puani = 0
 
     # Normalize: 70 puan → max puan
-    tema_normalized = min(tema_puani / 70, 1.0)
+    tema_normalized = min(tema_puani / 70, 1.0) if tema_puani > 0 else 0
     tier_weight     = TIER_WEIGHTS.get(tier, 15)
 
     skor = round(tema_normalized * (tier_weight / 25) * 25, 1)
@@ -213,7 +219,10 @@ def score_risk(symbol: str) -> tuple[float, dict]:
         elif neg_fcf_count >= 2: skor -= 2
         detay["neg_fcf_quarters"] = neg_fcf_count
 
-    # Earnings yakınlığı (K-05)
+    # Earnings yakınlığı — k_engine K-05 ile uyumlu (2 iş günü içinde = NO-GO)
+    # 8 gün penceresi k_engine ile çakışıyordu: k_engine pozisyonu reddediyor,
+    # conviction aynı sembol için hâlâ -4 puan veriyor → çifte ceza.
+    # Şimdi: 2 gün içinde earnings varsa -4, 3-7 gün arası -1 (hafif).
     today = datetime.now()
     earn_cal = fmp("earnings-calendar", {
         "from": today.strftime("%Y-%m-%d"),
@@ -222,8 +231,17 @@ def score_risk(symbol: str) -> tuple[float, dict]:
     if earn_cal and isinstance(earn_cal, list):
         sym_earnings = [e for e in earn_cal if e.get("symbol") == symbol]
         if sym_earnings:
-            skor -= 4  # Yakın earnings = risk
-            detay["yakın_earnings"] = sym_earnings[0].get("date", "?")
+            try:
+                e_date = datetime.strptime(sym_earnings[0].get("date", ""), "%Y-%m-%d")
+                delta = (e_date - today).days
+                if 0 <= delta <= 2:
+                    skor -= 4       # k_engine zaten NO-GO verecek, bu yedek ceza
+                    detay["yakın_earnings"] = f"{sym_earnings[0].get('date','?')} ({delta}g, K-05 NO-GO)"
+                elif 3 <= delta <= 7:
+                    skor -= 1       # Hafif ceza — giriş yasak değil ama risk
+                    detay["yakın_earnings"] = f"{sym_earnings[0].get('date','?')} ({delta}g)"
+            except ValueError:
+                pass
 
     # Beta yüksekliği
     profile = fmp("profile", {"symbol": symbol})
