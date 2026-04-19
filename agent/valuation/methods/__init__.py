@@ -161,6 +161,14 @@ def fetch_all_data(ticker: str) -> dict:
             "num_analysts": int(_safe(e.get("numberAnalystsEstimatedEps"), 0)),
         })
 
+    # 7b. Analyst price target consensus (reality check)
+    pt = fmp_get("price-target-consensus", {"symbol": ticker}) or []
+    pt = pt[0] if pt else {}
+    d["analyst_target_high"]      = _safe(pt.get("targetHigh"))
+    d["analyst_target_low"]       = _safe(pt.get("targetLow"))
+    d["analyst_target_consensus"] = _safe(pt.get("targetConsensus"))
+    d["analyst_target_median"]    = _safe(pt.get("targetMedian"))
+
     # Forward EPS 1Y, 2Y, 3Y (sırala, bugünden sonrakiler)
     from datetime import datetime
     today = datetime.now()

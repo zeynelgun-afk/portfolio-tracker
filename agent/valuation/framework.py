@@ -217,6 +217,21 @@ def valuate(ticker: str, verbose: bool = False, apply_regime: bool = True) -> di
     range_low = min(vals)
     range_high = max(vals)
 
+    # 5a. Analyst consensus reality check
+    analyst_target = data.get("analyst_target_consensus") or data.get("analyst_target_median") or 0
+    analyst_info = None
+    framework_vs_analyst = None
+    if analyst_target > 0:
+        gap_pct = ((fair_value / analyst_target) - 1.0) * 100
+        framework_vs_analyst = round(gap_pct, 1)
+        analyst_info = {
+            "consensus": round(analyst_target, 2),
+            "median": round(data.get("analyst_target_median", 0), 2),
+            "high": round(data.get("analyst_target_high", 0), 2),
+            "low": round(data.get("analyst_target_low", 0), 2),
+            "framework_gap_pct": framework_vs_analyst,
+        }
+
     # 5b. Market regime multiplier (opsiyonel)
     regime_info = None
     if apply_regime:
@@ -260,6 +275,17 @@ def valuate(ticker: str, verbose: bool = False, apply_regime: bool = True) -> di
     # SBC dilution warning
     if data.get("sbc_intensity", 0) > 0.10:
         red_flags.append(f"high_sbc_{data['sbc_intensity']:.0%}_rev")
+
+    # Analyst alignment — hem red flag hem confidence bonus
+    if framework_vs_analyst is not None:
+        if abs(framework_vs_analyst) < 15:
+            conf_factors.append(f"analyst_consensus_aligned (gap={framework_vs_analyst:+.0f}%)")
+            # Eğer analystlerle aynı yönde ve yakınsak confidence boost
+            confidence = min(100, confidence + 5)
+        elif framework_vs_analyst > 30:
+            red_flags.append(f"framework_bullish_vs_analysts ({framework_vs_analyst:+.0f}% above consensus ${analyst_target:.0f})")
+        elif framework_vs_analyst < -30:
+            red_flags.append(f"framework_bearish_vs_analysts ({framework_vs_analyst:+.0f}% below consensus ${analyst_target:.0f})")
 
     # 7. Output
     karar_etiket = "YETERSİZ VERİ"
@@ -318,6 +344,7 @@ def valuate(ticker: str, verbose: bool = False, apply_regime: bool = True) -> di
         "methods_failed": methods_failed,
 
         "market_regime": regime_info,
+        "analyst_consensus": analyst_info,
 
         "data_snapshot": {
             "sector":       data.get("sector"),
@@ -364,6 +391,13 @@ def format_report(result: dict, style: str = "terminal") -> str:
         regime = result.get("market_regime")
         if regime:
             out.append(f"{regime['detay']} (×{regime['multiplier']:.2f})")
+
+        ac = result.get("analyst_consensus")
+        if ac:
+            gap = ac["framework_gap_pct"]
+            gap_ico = "≈" if abs(gap) < 10 else ("↑" if gap > 0 else "↓")
+            out.append(f"📊 Analist hedef: ${ac['consensus']:.0f} (range ${ac['low']:.0f}-${ac['high']:.0f}), framework vs {gap_ico}{gap:+.0f}%")
+
         out.append("")
         out.append(f"<b>Kullanılan metodlar:</b>")
         for m in result["methods_used"]:
@@ -403,8 +437,15 @@ def format_report(result: dict, style: str = "terminal") -> str:
         "",
         f"  Trigger: {cls['trigger']}",
         "",
-        "  Kullanılan Metotlar (ağırlıklı):",
     ]
+
+    ac = result.get("analyst_consensus")
+    if ac:
+        gap = ac["framework_gap_pct"]
+        out.append(f"  📊 Analist konsensüsü: ${ac['consensus']:.2f} (${ac['low']:.0f}–${ac['high']:.0f}), framework vs {gap:+.1f}%")
+        out.append("")
+
+    out.append("  Kullanılan Metotlar (ağırlıklı):")
     for m in result["methods_used"]:
         star = "⭐" if m["tier"] == "primary" else " "
         out.append(f"    {star} {m['name']:28} ${m['fair_value']:8.2f}  w={m['weight']:.0%}  — {m['notes'][:40]}")
