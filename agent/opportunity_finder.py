@@ -137,6 +137,77 @@ def score_fundamental(symbol: str) -> tuple[float, dict]:
     return min(10, max(0, skor)), detay
 
 
+def _score_valuation(symbol: str) -> tuple[float, dict]:
+    """
+    v5 framework fair value sonucunu 0-10 skora çevirir.
+    
+    Skor mantığı:
+      UCUZ + yüksek güven (≥75) + analyst aligned  → 9-10
+      UCUZ + güven ≥60                              → 7-8
+      ADİL-UCUZ                                     → 6
+      ADİL                                          → 5
+      ADİL-PAHALI                                   → 3-4
+      PAHALI                                        → 1-2
+      PAHALI + yüksek güven                         → 0
+    
+    Veri yoksa 5.0 (neutral) döner. analyst_gap büyükse sınır skor uygulanır.
+    """
+    try:
+        import sys as _s
+        from pathlib import Path as _P
+        agent_dir = str(_P(__file__).parent)
+        if agent_dir not in _s.path:
+            _s.path.insert(0, agent_dir)
+        from valuation.framework import valuate
+        r = valuate(symbol, verbose=False)
+        if not r or r.get("error"):
+            return 5.0, {"val": "veri yok"}
+    except Exception:
+        return 5.0, {"val": "hata"}
+
+    fv = r["fair_value"]
+    conf = r["confidence"]["score"]
+    fark = fv["upside_pct"]
+    karar = fv["karar"]
+    ac = r.get("analyst_consensus") or {}
+    analyst_gap = abs(ac.get("framework_gap_pct", 0))
+
+    # Temel skor
+    if fark > 25:      base = 9.5
+    elif fark > 15:    base = 8.5
+    elif fark > 8:     base = 7.5
+    elif fark > 3:     base = 6.0
+    elif fark > -3:    base = 5.0
+    elif fark > -8:    base = 4.0
+    elif fark > -15:   base = 3.0
+    elif fark > -25:   base = 2.0
+    else:              base = 1.0
+
+    # Güven ayarı: neutral'a doğru çek
+    if conf < 50:
+        base = 5.0 + (base - 5.0) * 0.3
+    elif conf < 70:
+        base = 5.0 + (base - 5.0) * 0.6
+
+    # Analyst gap büyükse neutral'a doğru çek (framework consensus ile çelişiyor)
+    if analyst_gap > 40:
+        base = 5.0 + (base - 5.0) * 0.3
+    elif analyst_gap > 25:
+        base = 5.0 + (base - 5.0) * 0.6
+
+    skor = round(max(0, min(10, base)), 1)
+    archetype = r["classification"]["archetype"]
+    detay = {
+        "val_karar":     karar,
+        "val_fark":      f"{fark:+.1f}%",
+        "val_guven":     conf,
+        "val_archetype": archetype,
+        "val_gap":       f"{ac.get('framework_gap_pct', 0):+.0f}%",
+        "val_skor":      skor,
+    }
+    return skor, detay
+
+
 def find_candidates(
     tema_listesi: list,
     vix: float = 20.0,
@@ -200,6 +271,9 @@ def find_candidates(
             # Fundamental skor
             f_skor, f_det = score_fundamental(sym)
 
+            # v5 valuation sinyali (0-10 ölçekli, analyst consensus ile doğrulanmış)
+            val_skor, val_det = _score_valuation(sym)
+
             # ATR14 + SMA50 bazlı stop (ortak helper) — kör %7 fallback yerine
             try:
                 from execution_engine import compute_atr_stop as _cas_of
@@ -216,9 +290,10 @@ def find_candidates(
                 continue
 
             # Final skor (0-10 ölçekli, ağırlıklı ortalama)
-            # t_skor, f_skor, tema_skor hepsi 0-10 — doğrudan ağırlıklı ortalama al.
-            # Eski: (tema_skor/10)*10*0.25 = tema_skor*0.25 (pleonasm; normalize→denormalize)
-            final = round(t_skor * 0.4 + f_skor * 0.35 + tema_skor * 0.25, 2)
+            # Ağırlıklar: teknik %35 + fundamental %25 + tema %20 + valuation %20
+            # Valuation yoksa 5.0 neutral kullanılır (val_skor 0 ise), ağırlık yine %20 kalır.
+            _val = val_skor if val_skor > 0 else 5.0
+            final = round(t_skor * 0.35 + f_skor * 0.25 + tema_skor * 0.20 + _val * 0.20, 2)
 
             tüm_adaylar[sym] = {
                 "symbol":      sym,
@@ -232,12 +307,13 @@ def find_candidates(
                 "teknik":      t_skor,
                 "fundamental": f_skor,
                 "tema_güç":    tema_skor,
+                "valuation":   val_skor,  # 0-10
                 "atr":         atr_display,
                 "k_checks":    k_res.get("checks", {}),
-                "reason":      f"{tema_adi} teması — teknik:{t_skor}/10 fundamental:{f_skor}/10",
-                "detay":       {**t_det, **f_det},
+                "reason":      f"{tema_adi} teması — teknik:{t_skor}/10 fundamental:{f_skor}/10 valuation:{val_skor:.1f}/10",
+                "detay":       {**t_det, **f_det, **val_det},
             }
-            print(f"  ✅ {sym}: skor {final:.1f} (T:{t_skor} F:{f_skor} R:R {rr}:1)")
+            print(f"  ✅ {sym}: skor {final:.1f} (T:{t_skor} F:{f_skor} V:{val_skor:.1f} R:R {rr}:1)")
 
     # Skora göre sırala
     sonuç = sorted(tüm_adaylar.values(), key=lambda x: -x["score"])
