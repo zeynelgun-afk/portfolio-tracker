@@ -146,14 +146,38 @@ def get_analyst_data(symbol: str) -> dict:
 
 # ── Adil Değer Hesaplama ──────────────────────────────────────────────────────
 
-def adil_deger_hesapla(symbol: str) -> dict | None:
-    """adil_deger_calculator.hesapla() çağır."""
+def adil_deger_hesapla(symbol: str, use_v5: bool = True) -> dict | None:
+    """
+    Adil değer hesapla. Öncelik: v5 framework (archetype-routed).
+    Fallback: eski v2 (adil_deger_calculator).
+    """
+    symbol = symbol.upper()
+
+    # ── v5 framework ──────────────────────────────────────────────────
+    if use_v5:
+        try:
+            agent_dir = str(REPO_ROOT / "agent")
+            if agent_dir not in sys.path:
+                sys.path.insert(0, agent_dir)
+            from valuation.framework import valuate
+            res = valuate(symbol, verbose=False)
+            if res and not res.get("error"):
+                res["_version"] = "v5"
+                return res
+            print(f"[Bot] v5 fail {symbol}: {res.get('error') if res else 'None'} — v2'ye düşüyor")
+        except Exception as e:
+            print(f"[Bot] v5 exception {symbol}: {e} — v2'ye düşüyor")
+
+    # ── v2 fallback ──────────────────────────────────────────────────
     try:
         scripts_dir = str(REPO_ROOT / "scripts")
         if scripts_dir not in sys.path:
             sys.path.insert(0, scripts_dir)
         from adil_deger_calculator import hesapla
-        return hesapla(symbol.upper(), sessiz=True)
+        r = hesapla(symbol, sessiz=True)
+        if r:
+            r["_version"] = "v2"
+        return r
     except Exception as e:
         print(f"[Bot] Hesaplama hatası {symbol}: {e}")
         return None
@@ -161,8 +185,58 @@ def adil_deger_hesapla(symbol: str) -> dict | None:
 
 # ── Mesaj Formatları ──────────────────────────────────────────────────────────
 
+def _format_v5_fallback(symbol: str, res: dict) -> str:
+    """v5 formatter crash ederse elle HTML."""
+    cls = res.get("classification", {})
+    fv = res.get("fair_value", {})
+    conf = res.get("confidence", {})
+    methods = res.get("methods_used", [])
+    excluded = res.get("methods_excluded", [])
+
+    price = fv.get("current_price", 0)
+    fair = fv.get("point", 0)
+    upside = fv.get("upside_pct", 0)
+    ico = "🟢" if upside > 5 else "🔴" if upside < -5 else "🟡"
+
+    lines = [
+        f"<b>{symbol} — Adil Değer v5</b>",
+        f"<i>{cls.get('archetype_label','?')} (güven %{cls.get('confidence',0)*100:.0f})</i>",
+        "",
+        f"{ico} <b>${price:.2f}</b> → hedef <b>${fair:.2f}</b> ({upside:+.1f}%)",
+        f"Aralık: ${fv.get('range_low',0):.2f} — ${fv.get('range_high',0):.2f}",
+        f"Karar: <b>{fv.get('karar','?')}</b>",
+        f"Güven: <b>{conf.get('score',0)}/100</b>",
+    ]
+    if methods:
+        lines.append("")
+        lines.append("<b>Kullanılan metotlar:</b>")
+        for m in methods[:6]:
+            lines.append(f"  {m['name']:28} ${m['fair_value']:.2f} (w={m['weight']:.0%})")
+    if excluded:
+        lines.append("")
+        lines.append(f"<b>Yasaklı ({len(excluded)}):</b> " + ", ".join(e['name'] for e in excluded[:4]))
+    if conf.get("red_flags"):
+        lines.append("")
+        lines.append(f"⚠ {', '.join(conf['red_flags'][:3])}")
+    return "\n".join(lines)
+
+
 def format_adil_deger(symbol: str, res: dict, analyst: dict) -> str:
-    """Adil değer sonucu formatla."""
+    """Adil değer sonucu formatla. v5 ve v2 result'ları farklı şemaya sahip."""
+
+    # ── v5 result ise framework'ün kendi formatter'ını kullan ────────
+    if res.get("_version") == "v5":
+        try:
+            agent_dir = str(REPO_ROOT / "agent")
+            if agent_dir not in sys.path:
+                sys.path.insert(0, agent_dir)
+            from valuation.framework import format_report
+            return format_report(res, style="telegram")
+        except Exception as e:
+            # Formatter fail → v5 ham çıktısını elle formatla
+            return _format_v5_fallback(symbol, res)
+
+    # ── v2 legacy format (aşağıdaki orijinal kod) ────────────────────
     price = res.get("price", 0)
     adil  = res.get("adil_deger", 0) or 0
     fark  = res.get("fark_pct", 0) or 0
