@@ -320,7 +320,7 @@ def valuate(ticker: str, verbose: bool = False, apply_regime: bool = True) -> di
     else:
         karar_etiket = "YETERSİZ GÜVEN"
 
-    return {
+    output = {
         "ticker": ticker,
         "framework_version": "v5.0",
         "timestamp": __import__("datetime").datetime.now().isoformat(),
@@ -370,6 +370,15 @@ def valuate(ticker: str, verbose: bool = False, apply_regime: bool = True) -> di
             "analyst_count": data.get("analyst_count"),
         },
     }
+
+    # Prediction log — her valuate() çağrısı kayda geçer (backtest altyapısı)
+    try:
+        from valuation.prediction_log import log_valuation
+        log_valuation(output)
+    except Exception:
+        pass  # log hatası kritik değil
+
+    return output
 
 
 # ─────────────────────────────────────────────────────────────────────────────
