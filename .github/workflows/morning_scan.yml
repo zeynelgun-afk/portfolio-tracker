@@ -78,6 +78,7 @@ jobs:
           cp data/daily_scan_dividend.json   /tmp/scan_dividend.json   2>/dev/null || true
           cp data/daily_scan_aggressive.json /tmp/scan_aggressive.json 2>/dev/null || true
           cp data/daily_full_scan.json       /tmp/scan_full.json       2>/dev/null || true
+          cp logs/valuation_predictions.jsonl /tmp/scan_vpred.jsonl    2>/dev/null || true
           git fetch origin main
           git rebase --abort 2>/dev/null || true
           git merge --abort  2>/dev/null || true
@@ -86,12 +87,19 @@ jobs:
           cp /tmp/scan_dividend.json   data/daily_scan_dividend.json   2>/dev/null || true
           cp /tmp/scan_aggressive.json data/daily_scan_aggressive.json 2>/dev/null || true
           cp /tmp/scan_full.json       data/daily_full_scan.json       2>/dev/null || true
-          git add data/daily_scan_*.json data/daily_full_scan.json 2>/dev/null || true
+          # Valuation predictions append-merge (timestamp'li satirlar, sort -u dedup eder)
+          if [ -f /tmp/scan_vpred.jsonl ] && [ -f logs/valuation_predictions.jsonl ]; then
+            cat logs/valuation_predictions.jsonl /tmp/scan_vpred.jsonl | sort -u > logs/valuation_predictions.jsonl.new
+            mv logs/valuation_predictions.jsonl.new logs/valuation_predictions.jsonl
+          elif [ -f /tmp/scan_vpred.jsonl ]; then
+            cp /tmp/scan_vpred.jsonl logs/valuation_predictions.jsonl
+          fi
+          git add data/daily_scan_*.json data/daily_full_scan.json logs/valuation_predictions.jsonl 2>/dev/null || true
           if git diff --staged --quiet; then
             echo "Degisiklik yok - commit atlaniyor"
           else
             git commit -m "[AUTO-SCAN] $(date +'%Y-%m-%d %H:%M UTC')"
-            git push origin main || (sleep 15 && git fetch origin main && git reset --hard origin/main && cp /tmp/scan_*.json data/ 2>/dev/null; git add data/daily_scan_*.json data/daily_full_scan.json && git commit -m "[AUTO-SCAN-RETRY] $(date +'%Y-%m-%d %H:%M UTC')" && git push origin main)
+            git push origin main || (sleep 15 && git fetch origin main && git reset --hard origin/main && cp /tmp/scan_*.json data/ 2>/dev/null; cp /tmp/scan_vpred.jsonl logs/valuation_predictions.jsonl 2>/dev/null; git add data/daily_scan_*.json data/daily_full_scan.json logs/valuation_predictions.jsonl && git commit -m "[AUTO-SCAN-RETRY] $(date +'%Y-%m-%d %H:%M UTC')" && git push origin main)
           fi
 
   swing-entry-scan:
