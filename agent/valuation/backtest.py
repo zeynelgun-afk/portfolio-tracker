@@ -61,9 +61,11 @@ def _get_current_price(ticker: str) -> float:
     if not q:
         return 0.0
     q = q[0] if isinstance(q, list) else q
+    if not q or not isinstance(q, dict):
+        return 0.0
     try:
         return float(q.get("price") or 0)
-    except (ValueError, TypeError):
+    except (ValueError, TypeError, AttributeError):
         return 0.0
 
 

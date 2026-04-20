@@ -447,7 +447,7 @@ def build_context_for_claude(mode: str) -> str:
             f_str = f"${float(fiyat):,.2f}" if fiyat else "—"
             g_str = f"{float(gunluk):+.1f}%" if gunluk is not None else "—"
             p_str = f"{float(pnl_pct):+.1f}%" if pnl_pct is not None else "—"
-            s_str = f"%{float(stop_pct):.1f}" if stop_pct is not None else "—"
+            s_str = f"{float(stop_pct):+.1f}%" if stop_pct is not None else "—"
             h_str = f"${float(hedef):,.0f}" if hedef else "—"
             # v5 fair value sütunu: "+15% UCUZ(82)" veya "—"
             val_fark  = pos.get("val_fark")
@@ -483,7 +483,7 @@ def build_context_for_claude(mode: str) -> str:
             f_str = f"${float(fiyat):,.2f}" if fiyat else "—"
             p_str = f"{float(pnl):+.1f}%" if pnl is not None else "—"
             s_str = f"${float(stop):,.2f}" if stop else "—"
-            u_str = f"%{float(uzak):.1f}" if uzak is not None else "—"
+            u_str = f"{float(uzak):+.1f}%" if uzak is not None else "—"
             h_str = f"${float(hedef):,.0f}" if hedef else "—"
             uyari = " ⚠️ YAKIN" if uzak is not None and float(uzak) < 5 else ""
             sw_lines.append(f"  {sym:<6} {f_str:>8} {p_str:>7} {s_str:>8} {u_str:>6} {h_str:>8}{uyari}")
