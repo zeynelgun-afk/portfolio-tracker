@@ -187,6 +187,12 @@ def classify(ticker: str, verbose: bool = False) -> dict:
         signals["trigger"] = f"Insurance P&C: {industry}"
         return _result(ticker, "insurer_pc", 0.85, signals, fmp_raw)
 
+    # Healthcare plans / managed care (UNH, CI, ELV, HUM, CVS) —
+    # aktüeryel model bakımından insurer_pc'ye yakın (premium topla, claim öde)
+    if "healthcare plan" in industry_lc or "managed care" in industry_lc:
+        signals["trigger"] = f"Healthcare plan (insurer-like): {industry}"
+        return _result(ticker, "insurer_pc", 0.85, signals, fmp_raw)
+
     if any(x in industry_lc for x in ["asset management", "capital markets"]):
         signals["trigger"] = f"Asset mgmt / capital markets: {industry}"
         return _result(ticker, "asset_manager", 0.85, signals, fmp_raw)
@@ -294,6 +300,13 @@ def classify(ticker: str, verbose: bool = False) -> dict:
         return _result(ticker, "consumer_cyclical", 0.80, signals, fmp_raw)
 
     if "industrial" in sector_lc:
+        # Data center / AI beneficiaries (VRT, POWL, ETN power/cooling) —
+        # FMP "Industrial" kategorisine koyar ama gerçek hayatta growth profile
+        # hyper-growth tech'e yakın. Cyclical multiple uygulamak aşırı düşük
+        # fair value üretir. Büyüme %20+ ise profitable_growth_software'e yakın.
+        if rev_growth > 0.20 and op_margin > 0.12:
+            signals["trigger"] = f"Industrial growth (gr={rev_growth:.0%}, op_m={op_margin:.0%}) — tech-adjacent"
+            return _result(ticker, "profitable_growth_software", 0.70, signals, fmp_raw)
         signals["trigger"] = "Industrial cyclical"
         return _result(ticker, "industrial_cyclical", 0.75, signals, fmp_raw)
 
