@@ -5,7 +5,7 @@ Finzora Agent — Tema × Portföy Başarı Matrisi
 "AI teması aktifken Agresif portföy ne kazandı?" sorusunu cevaplar.
 
 Her trade açılışında:
-  → Aktif temayı kaydet (agent/memory/theme_scores.json'dan)
+  → Aktif temayı kaydet (data/macro_intelligence.json'dan)
   → Trade kapandığında P&L hangi temaya ait olduğunu bil
 
 Çıktı: agent/memory/tema_portfolio_matrix.json
@@ -37,10 +37,11 @@ MEMORY_DIR.mkdir(exist_ok=True)
 def get_active_theme_on_date(date_str: str) -> str:
     """
     Belirli bir tarihte aktif temanın ne olduğunu bul.
-    Önce theme_weekly_reviews.json'a bak, yoksa agent/memory/theme_scores.json'a.
-    Not: Eski data/theme_scores.json (sentiment_engine output) kaldırıldı (20 Nisan 2026).
+    Önce theme_weekly_reviews.json'a bak, yoksa data/macro_intelligence.json'a.
+    Not: theme_manager.py sistemi kaldırıldı (20 Nisan 2026).
+          macro_intelligence.py tek kaynak oldu.
     """
-    # Haftalık review geçmişinden bul
+    # Haftalık review geçmişinden bul (eski veriler için)
     reviews_path = MEMORY_DIR / "theme_weekly_reviews.json"
     if reviews_path.exists():
         with open(reviews_path, encoding="utf-8") as f:
@@ -55,19 +56,17 @@ def get_active_theme_on_date(date_str: str) -> str:
                     best = max(puanlar.items(), key=lambda x: x[1].get("rs", 0) if isinstance(x[1], dict) else x[1])
                     return best[0]
 
-    # Anlık fallback: theme_manager.py'nin yazdığı authoritative dosya
-    scores_path = MEMORY_DIR / "theme_scores.json"
-    if scores_path.exists():
+    # Anlık kaynak: macro_intelligence.py'nin yazdığı authoritative dosya
+    macro_path = REPO_ROOT / "data" / "macro_intelligence.json"
+    if macro_path.exists():
         try:
-            with open(scores_path, encoding="utf-8") as f:
+            with open(macro_path, encoding="utf-8") as f:
                 data = json.load(f)
-            temalar = data.get("temalar", {})
+            temalar = data.get("dominant_temalar", [])
             if temalar:
-                # Aktif (aktif=True) ve en yüksek skorlu temayı al
-                aktif = {k: v for k, v in temalar.items() if v.get("aktif")}
-                kaynak = aktif if aktif else temalar
-                best = max(kaynak.items(), key=lambda x: x[1].get("skor", 0))
-                return best[0]
+                # En yüksek güç_skoru temasını al
+                best = max(temalar, key=lambda t: t.get("güç_skoru", t.get("guc_skoru", 0)))
+                return best.get("tema_adi", "BILINMIYOR")
         except Exception:
             pass
 

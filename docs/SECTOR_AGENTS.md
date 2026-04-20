@@ -33,19 +33,20 @@ ORCHESTRATOR (Claude)
 - Tema ETF'leri: BOTZ, ARKQ, CIBR, ITA, GDX, IBB
 - VIX seviyesi (web_search)
 
-**Çıktı:** `agent/memory/theme_scores.json` (theme_manager.py tarafından yazılır, haftalık)
+**Çıktı:** `data/macro_intelligence.json` (macro_intelligence.py tarafından yazılır, her sabah)
 ```json
 {
-  "tarih": "2026-04-13",
-  "temalar": {
-    "AI_ALTYAPI": {"skor": 6.7, "kumulatif_pct": 13.92, "aktif": true, "trend": "yukselis"},
-    "SAVUNMA_JEOPOLITIK": {"skor": 6.4, "aktif": true, "trend": "yukselis"},
-    "ENERJI_HAMMADDE": {"skor": 7.8, "aktif": true, "trend": "yukselis"},
-    "SAGLIK_BIOTEK": {"skor": 5.0, "aktif": false, "trend": "yatay"},
-    "FINANS_BANKALAR": {"skor": 5.0}
-  },
-  "sim_donemi": "2026-01-02 → 2026-04-11",
-  "guncelleme": "2026-04-13T10:21:21"
+  "tarih": "2026-04-17T22:28:39+03:00",
+  "vix": 17.8,
+  "piyasa_modu": "risk-on",
+  "aktif_kriz": {"tip": "yok", "guven": 0},
+  "dominant_temalar": [
+    {"tema_adi": "AI_altyapı", "güç_skoru": 9, "portföy": "aggressive", "aciliyet": "yüksek"},
+    {"tema_adi": "savunma_uzay", "güç_skoru": 7, "portföy": "aggressive", "aciliyet": "orta"}
+  ],
+  "kaçınılacak_sektörler": ["Consumer Defensive", "Healthcare"],
+  "genel_yorum": "...",
+  "guncelleme": "2026-04-17T22:28:39"
 }
 ```
 

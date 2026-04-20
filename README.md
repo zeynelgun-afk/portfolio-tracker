@@ -46,8 +46,7 @@ finzora-ai/
 │   ├── dry_run_manager.py          # Canlıya almadan simülasyon
 │   ├── screener_optimizer.py       # Tarayıcı parametre optimizasyonu
 │   ├── trade_feedback.py           # Kapanan trade otomatik geri bildirim
-│   ├── macro_intelligence.py       # Makro bağlam (fed, vix, ekonomi)
-│   ├── theme_manager.py            # Tematik skor yönetimi
+│   ├── macro_intelligence.py       # Makro tema + kriz tespiti (tek kaynak)
 │   ├── tema_portfolio_tracker.py   # Tema bazlı P/L takibi
 │   ├── web_researcher.py           # Haber ve araştırma toplayıcı
 │   ├── twitter_monitor.py          # Twitter sinyal takibi (RapidAPI)
@@ -124,7 +123,6 @@ finzora-ai/
     ├── daily_update.yml            # Saatlik fiyat güncellemesi
     ├── morning_scan.yml            # Sabah tarama
     ├── consistency_check.yml       # Veri tutarlılık
-    ├── weekly_theme_review.yml     # Haftalık tema gözden geçirme
     └── notify-transactions.yml     # İşlem bildirimi
 ```
 

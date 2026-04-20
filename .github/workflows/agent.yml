@@ -107,6 +107,14 @@ jobs:
           AGENT_MODE:            ${{ steps.mode.outputs.mode }}
           PYTHONUNBUFFERED:      '1'
 
+      - name: Macro intelligence Telegram DM (sabah)
+        if: success() && steps.mode.outputs.mode == 'morning'
+        run: python3 scripts/macro_intelligence_notify.py
+        env:
+          TELEGRAM_BOT_TOKEN:  ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_PRIVATE_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        continue-on-error: true
+
       - name: Kapanis ozeti
         if: success() && steps.mode.outputs.mode == 'closing'
         run: python scripts/heartbeat.py --mode ozet

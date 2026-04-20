@@ -12,7 +12,7 @@
 | Kural güncelleme | `rule_updater.py` | Haftalık | Backtest kanıtıyla parametreleri PLAYBOOK'ta değiştirir, git push |
 | Prompt evrimi | `darwin_evolution.py` | 5 işlem gününde 1 | En zayıf K-kuralını bulur, yeni prompt versiyonu dener, 14 gün test |
 | Tahmin takibi | `prediction_logger.py` | Her analizde | Claude'un tahminlerini kaydeder, gerçekleşmeyi ölçer |
-| **Tema yönetimi** | **`theme_manager.py`** | **Her Pazar** | **Tema performansını ölçer, Claude API'ye karar aldırır, repo'yu günceller** |
+| **Tema yönetimi** | **`macro_intelligence.py`** | **Her sabah** | **Dominant temalar + aktif kriz tespit, data/macro_intelligence.json'a yazar, Zeynel DM'e özet** |
 | Dry-run | `dry_run_manager.py` | Sürekli | Önerilen değişiklikleri gerçek para kullanmadan test eder |
 
 ---
@@ -29,12 +29,14 @@ update_playbook_param(param, old_value, new_value, rationale)
 # → Değişiklik GitHub'da görünür
 ```
 
-Yeni `theme_manager.py` da aynı şekilde:
+Tema yönetimi ise artık `macro_intelligence.py` üzerinden çalışıyor (eski theme_manager.py kaldırıldı, 20 Nisan 2026):
 ```python
-apply_theme_change(decision)
-# → THEMATIC_SYSTEM.md dosyasına yeni tema ekler / eski temayı çıkarır
-# → git commit + push
-# → Bir sonraki seansta yeni tema aktif
+run_macro_intelligence(vix)
+# → Sektör perf + haberler + en güçlü hisseler toplar
+# → Claude'a "dominant tema + kriz tipi" sorar
+# → data/macro_intelligence.json'a yazar
+# → K-13 kriz matrisini histerezisle (2 gün üst üste) günceller
+# → scripts/macro_intelligence_notify.py → Zeynel DM
 ```
 
 **Güvenlik katmanları:**
@@ -45,24 +47,34 @@ apply_theme_change(decision)
 
 ---
 
-## TEMA HAFTALIK İNCELEME AKIŞI
+## GÜNLÜK TEMA TESPİT AKIŞI (macro_intelligence.py)
+
+*Eski "haftalık theme_manager" akışı 20 Nisan 2026'da kaldırıldı. Tema tespiti artık günlük ve daha bağlam duyarlı.*
 
 ```
-Her Pazar 06:00 UTC — GitHub Actions tetiklenir
+Her sabah TR 16:00 (UTC 13:00) — GitHub Actions (agent.yml) tetiklenir, morning mode
             │
-            ├── ADIM 1: FMP API → 7 tema ETF'inin son 4 hafta RS hesabı
+            ├── ADIM 1: FMP verisi çekilir
+            │     • sector-performance-snapshot (son 5 gün)
+            │     • news/general-latest (son 24 saat, 15 başlık)
+            │     • biggest-gainers (momentum sinyali)
+            │     • VIX (vix_fetcher cache + Yahoo + FMP fallback)
             │
-            ├── ADIM 2: Claude API'ye sorulur:
-            │     "Bu performansla ne yapmalıyız? Yeni tema var mı?"
-            │     Sistem prompt: Karar JSON formatında — sadece JSON yaz
+            ├── ADIM 2: Claude API'ye sorulur (macro_intelligence.analyze_themes_with_claude):
+            │     "Bugün para nereye gidiyor? Hangi kriz tipi aktif?"
+            │     Çıktı: dominant_temalar + aktif_kriz + kaçınılacak_sektörler
             │
-            ├── ADIM 3: Karar değerlendirmesi
-            │     • DEGISIKLIK_YOK: Hiçbir şey yapma
-            │     • UYARI: Zayıf temayı izlemeye al, değiştirme
-            │     • YENİ_TEMA: Güven ≥7 ise THEMATIC_SYSTEM.md'ye ekle + git push
-            │     • TEMA_CIKAR: Güven ≥7 ise temayı listeden çıkar + git push
+            ├── ADIM 3: Tema evrenine eşleme
+            │     Her tema için THEME_UNIVERSE'den alt dal hisseleri eklenir
+            │     (AI_altyapı → güç_soğutma → VRT/ETN/PWR/GNRC/HUBB)
             │
-            └── ADIM 4: Sonucu agent/memory/theme_weekly_reviews.json'a yaz
+            ├── ADIM 4: K-13 kriz matrisi histerezis ile güncellenir
+            │     • Güven ≥6 + aynı kriz 2 gün üst üste → matris güncelle
+            │     • Tek gün flip-flop engellenir (data/k13_pending_change.json)
+            │
+            ├── ADIM 5: data/macro_intelligence.json'a yazılır
+            │
+            └── ADIM 6: scripts/macro_intelligence_notify.py → Zeynel DM özeti
 ```
 
 ---
@@ -174,7 +186,7 @@ debate_tetik = (
 | Bileşen | Max | FMP Endpoint |
 |---------|-----|---|
 | Teknik güç | 25 | historical-price-eod + RSI hesabı |
-| Tema uyumu | 25 | agent/memory/theme_scores.json × katman ağırlığı |
+| Tema uyumu | 25 | data/macro_intelligence.json × katman ağırlığı |
 | Momentum | 20 | stock-price-change + analyst-estimates |
 | Temel kalite | 15 | key-metrics-ttm + ratios-ttm |
 | Risk faktörü | 15 | cash-flow-statement + earnings-calendar |
@@ -241,14 +253,16 @@ Her score_window için önce `transactions.csv` kontrol edilir.
 `darwin_evolution.py`'e `is_trading_day()` ve `count_trading_days_since()` eklendi.
 Hafta sonu Darwin çalışmaz. "5 gün" artık takvim günü değil iş günüdür.
 
-### Hata 6 — AI Teması Tek ETF Proxy ✅
-`theme_manager.py`'de `THEME_ETFS` → `THEME_BASKETS` (ağırlıklı ETF sepeti):
+### Hata 6 — AI Teması Tek ETF Proxy ✅ *(arşiv — theme_manager.py 20 Nisan 2026'da kaldırıldı)*
+Eski `theme_manager.py`'de `THEME_ETFS` → `THEME_BASKETS` (ağırlıklı ETF sepeti) düzeltmesi yapılmıştı:
 ```
 AI_ALTYAPI: SMH(%25) + GRID(%20) + BOTZ(%20) + SOXX(%15) + PAVE(%10) + FAN(%10)
 ```
-Ayrıca iki katmanlı ölçüm:
-1. Gerçek trade P/L (`tema_portfolio_matrix.json`) — öncelikli
-2. ETF sepeti composite RS — veri yoksa yedek
+İki katmanlı ölçüm:
+1. Gerçek trade P/L (`tema_portfolio_matrix.json`) — öncelikli, hâlâ aktif
+2. ETF sepeti composite RS — veri yoksa yedek (theme_manager.py ile kaldırıldı)
+
+Not: Artık tema puanlaması `macro_intelligence.py` tarafından Claude üzerinden günlük yapılıyor.
 
 ### Hata 7 — L3 Digest Gecikmesi ✅
 `darwin_evolution.py` içinde `_update_k_rules_digest()` artık:
