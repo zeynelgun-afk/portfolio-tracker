@@ -54,6 +54,7 @@ def classify(ticker: str, verbose: bool = False) -> dict:
             "fallback_used": bool
         }
     """
+    ticker = ticker.upper().strip()  # tutarlı cache + FMP davranışı
     signals = {}
     fmp_raw = {}
 

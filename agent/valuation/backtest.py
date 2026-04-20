@@ -10,12 +10,14 @@ Mantık:
   4. Framework karar/upside ile gerçek performans karşılaştır
 
 Başarı metriği:
-  - "UCUZ" dedi + hisse %10+ yükseldi → HIT
-  - "UCUZ" dedi + hisse %10- düştü → MISS
-  - "PAHALI" dedi + hisse %10- düştü → HIT
-  - "PAHALI" dedi + hisse %10+ yükseldi → MISS
-  - "ADİL" → sinyal yok, değerlendirme dışı
-  - Aradaki bölge → PARTIAL
+  - "UCUZ" dedi + hisse %5+ yükseldi → HIT
+  - "UCUZ" dedi + hisse %5+ düştü → MISS
+  - "PAHALI" dedi + hisse %5+ düştü → HIT
+  - "PAHALI" dedi + hisse %5+ yükseldi → MISS
+  - "ADİL" → sinyal yok (NO_SIGNAL)
+  - Aradaki bölge (±5% içinde) → NEUTRAL
+
+(Eşikler HIT_THRESHOLD_PCT ve MISS_THRESHOLD_PCT ile ayarlanabilir.)
 
 Archetype bazında, confidence bazında, karar bazında kırılım üretir.
 """

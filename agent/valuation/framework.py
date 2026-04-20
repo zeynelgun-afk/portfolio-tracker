@@ -167,6 +167,8 @@ def valuate(ticker: str, verbose: bool = False, apply_regime: bool = True,
                       (BOGA: ×1.12, AYI: ×0.87)
         use_cache: True ise 5 dakikalık in-memory cache kullanılır (varsayılan)
     """
+    ticker = ticker.upper().strip()  # tutarlı cache + FMP case-insensitive
+
     # ── Cache hit? ────────────────────────────────────────────────
     if use_cache:
         cached = _cache_get(ticker, apply_regime)
