@@ -134,6 +134,7 @@ TUNING = {
     "utility_regulated": {
         "wacc": 0.06, "terminal_growth": 0.025,
         "fwd_pe_fair": 17.0, "fwd_pe_ny2": 16.5,
+        "ev_ebitda_fair": 11.0, "ev_ebitda_fwd": 10.5,  # regulated utility premium
         "coe": 0.07, "long_growth": 0.05,
         "pb_fair": 1.8, "div_yield_target": 0.04,
     },

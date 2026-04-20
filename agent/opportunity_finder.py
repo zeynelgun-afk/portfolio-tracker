@@ -232,7 +232,10 @@ def find_candidates(
 
     for tema in tema_listesi:
         tema_adi  = tema.get("tema_adi", "")
-        tema_skor = float(tema.get("güç_skoru", 5))
+        try:
+            tema_skor = float(tema.get("güç_skoru", 5))
+        except (ValueError, TypeError):
+            tema_skor = 5.0  # Geçersiz skor → orta varsayılan
         _pf_alias = {"agresif":"aggressive","aggressive":"aggressive","büyüme":"aggressive",
                       "temettü":"dividend","temettu":"dividend","gelir":"dividend","dengeli":"balanced"}
         portföy = tema.get("portföy", "aggressive").lower()
