@@ -302,9 +302,14 @@ def build_weekly_learning_context() -> str:
     lines.append("")
 
     lines.append("--- K-KURALI TETİKLENME GEÇMİŞİ ---")
-    for rule, data in k_stats.items():
-        if rule != "son_guncelleme":
-            lines.append(f"  {rule}: {data.get('toplam_tetik', 0)} kez")
+    # Not: k_stats üst seviyesinde meta alanlar da var (son_guncelleme, analiz_donemi,
+    # toplam_trade vb.). Gerçek K-kural verileri "k_kural_istatistikleri" alt dict'inde.
+    k_rule_istatistikleri = k_stats.get("k_kural_istatistikleri", {})
+    if isinstance(k_rule_istatistikleri, dict):
+        for rule, data in k_rule_istatistikleri.items():
+            if isinstance(data, dict):
+                tetik = data.get("tetiklenme", data.get("toplam_tetik", 0))
+                lines.append(f"  {rule}: {tetik} kez")
     lines.append("")
 
     lines.append("--- BEKLEYEN ÖNERİLER ---")
