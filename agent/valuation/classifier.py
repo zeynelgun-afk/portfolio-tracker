@@ -167,7 +167,7 @@ def classify(ticker: str, verbose: bool = False) -> dict:
         signals["trigger"] = f"REIT (equity) — industry: {industry}"
         return _result(ticker, "reit_equity", 0.90, signals, fmp_raw)
 
-    if "bank" in industry_lc or sector_lc in ("financial services",) and "bank" in industry_lc:
+    if "bank" in industry_lc:
         # Büyüklük ile money-center vs regional
         if total_assets > 500_000_000_000:
             signals["trigger"] = f"Bank + total assets >$500B ({total_assets/1e9:.0f}B)"

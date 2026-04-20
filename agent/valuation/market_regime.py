@@ -44,7 +44,9 @@ BOGA_REJIM_MULT = 1.12  # Boğa: çarpan genişlemesi (+%12 premi)
 AYI_REJIM_MULT  = 0.87  # Ayı: çarpan sıkışması (%13 iskonto)
 NOTR_REJIM_MULT = 1.00  # Nötr
 
-_CACHE = None  # Oturum boyunca bir kez çekilir
+_CACHE = None  # (rejim, spy_p, sma21, detay)
+_CACHE_TS: float = 0  # Son fetch zamanı
+_CACHE_TTL_SECONDS = 3600  # 1 saat — SPY/SMA21 bu süre içinde anlamlı değişmez
 
 
 def _safe(v, default=None):
@@ -59,13 +61,17 @@ def get_market_regime() -> tuple[str, float | None, float | None, str]:
     SPY SMA21 bazlı boğa/ayı piyasası rejim tespiti.
 
     BOGA: SPY fiyatı > 21 günlük hareketli ortalama
-    AYI:  SPY fiyatı < 21 günlük hareketli ortalama
+    AYI:  SPY fiyatı < 21 günlık hareketli ortalama
 
-    Sonuç oturum boyunca önbelleklenir (tek API çağrısı).
+    1-saat TTL cache (önceden process-lifetime cache vardı — bu
+    Railway 7/24 bot'ta günler sonra stale veri sorunu yaratıyordu).
     Returns: (rejim: 'BOGA'|'AYI', spy_price, sma21, detay_str)
     """
-    global _CACHE
-    if _CACHE is not None:
+    global _CACHE, _CACHE_TS
+    import time as _t
+
+    # Cache hit?
+    if _CACHE is not None and (_t.time() - _CACHE_TS) < _CACHE_TTL_SECONDS:
         return _CACHE
 
     try:
@@ -88,9 +94,11 @@ def get_market_regime() -> tuple[str, float | None, float | None, str]:
             spy_p = sma21 = None
 
         _CACHE = (rejim, spy_p, sma21, detay)
+        _CACHE_TS = _t.time()
 
     except Exception as e:
         _CACHE = ("BOGA", None, None, f"🐂 BOGA (hata: {e} — varsayılan)")
+        _CACHE_TS = _t.time()
 
     return _CACHE
 
@@ -107,8 +115,9 @@ def get_regime_multiplier() -> float:
 
 def reset_cache():
     """Test/force-refresh için cache temizle."""
-    global _CACHE
+    global _CACHE, _CACHE_TS
     _CACHE = None
+    _CACHE_TS = 0
 
 
 if __name__ == "__main__":

@@ -200,6 +200,18 @@ def get_full_data(symbol, delay=0.05, with_valuation=False):
 # SKOR HESAPLAMA
 # ============================================================
 
+def _half_toward_zero(n: int) -> int:
+    """
+    Python floor division negatif sayılar için yanıltıcı:
+    -3 // 2 = -2 (floor, sıfırdan uzaklaşır) ← NE İSTEDİĞİMİZ DEĞİL
+    _half_toward_zero(-3) = -1 (truncate, sıfıra yaklaşır) ← DOĞRU
+    
+    Sinyal yarıya indirme için: -3 → -1, -2 → -1, -1 → 0 (yine -1 değil, 0).
+    Yani gücü azaltma mantığı.
+    """
+    return int(n / 2)  # Python'da / float döner, int() truncate eder
+
+
 def apply_valuation_signal(score, detail, data):
     """
     v5 framework fair value sonucunu skora eklenen bonus/penalty'ye çevirir.
@@ -222,7 +234,7 @@ def apply_valuation_signal(score, detail, data):
     
     fark = data["val_fark_pct"]
     guven = data["val_guven"]
-    analyst_gap = abs(data.get("val_analyst_gap", 0))
+    analyst_gap = abs(data.get("val_analyst_gap") or 0)
     
     # Base puan
     if fark > 20:   base = 3
@@ -236,16 +248,16 @@ def apply_valuation_signal(score, detail, data):
     if base == 0:
         return score, detail
     
-    # Analyst consensus çok farklıysa gücü yarıya indir
+    # Analyst consensus çok farklıysa gücü yarıya indir (truncate toward zero)
     if analyst_gap > 30:
-        base = base // 2
+        base = _half_toward_zero(base)
         if base == 0:
             detail.append(f"Valuation: {fark:+.0f}% (analyst gap büyük, görmezden geliniyor)")
             return score, detail
     
-    # Güven düşükse puanı yarıya indir
+    # Güven düşükse puanı yarıya indir (truncate toward zero)
     if guven < 70:
-        base = base // 2
+        base = _half_toward_zero(base)
         if base == 0:
             return score, detail
     

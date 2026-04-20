@@ -170,7 +170,8 @@ def _score_valuation(symbol: str) -> tuple[float, dict]:
     fark = fv["upside_pct"]
     karar = fv["karar"]
     ac = r.get("analyst_consensus") or {}
-    analyst_gap = abs(ac.get("framework_gap_pct", 0))
+    has_analyst = bool(ac.get("consensus", 0) > 0)
+    analyst_gap = abs(ac.get("framework_gap_pct") or 0)
 
     # Temel skor
     if fark > 25:      base = 9.5
@@ -189,11 +190,16 @@ def _score_valuation(symbol: str) -> tuple[float, dict]:
     elif conf < 70:
         base = 5.0 + (base - 5.0) * 0.6
 
-    # Analyst gap büyükse neutral'a doğru çek (framework consensus ile çelişiyor)
-    if analyst_gap > 40:
-        base = 5.0 + (base - 5.0) * 0.3
-    elif analyst_gap > 25:
-        base = 5.0 + (base - 5.0) * 0.6
+    # Analyst verisi varsa gap büyükse neutral'a doğru çek
+    if has_analyst:
+        if analyst_gap > 40:
+            base = 5.0 + (base - 5.0) * 0.3
+        elif analyst_gap > 25:
+            base = 5.0 + (base - 5.0) * 0.6
+    else:
+        # Analyst consensus yok → daha az iddialı
+        # Framework tek başına, backup doğrulama yok → neutral'a %20 çek
+        base = 5.0 + (base - 5.0) * 0.8
 
     skor = round(max(0, min(10, base)), 1)
     archetype = r["classification"]["archetype"]

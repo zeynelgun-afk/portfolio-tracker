@@ -130,22 +130,24 @@ def analyze(min_age_days: int = 14, verbose: bool = False) -> dict:
             "total_predictions": len(all_preds),
         }
 
-    # Ticker bazında en eski kayıtları al (tekrarlar için)
-    first_by_ticker = {}
-    for p in eligible:
-        t = p.get("ticker")
-        if t not in first_by_ticker:
-            first_by_ticker[t] = p
-        else:
-            old_ts = datetime.fromisoformat(first_by_ticker[t]["timestamp"])
-            new_ts = datetime.fromisoformat(p["timestamp"])
-            if new_ts < old_ts:
-                first_by_ticker[t] = p
+    # Her kayıt ayrı bir test case (daha çok veri noktası).
+    # Aynı ticker için 20 gün önce UCUZ, 10 gün önce UCUZ 2 ayrı sample.
+    # Eğer sadece ticker başına 1 kayıt istenirse aşağıdaki "first_by_ticker"
+    # yaklaşımı kullanılabilir — şu an her kayıt değerlendiriliyor.
 
-    # Her ticker için güncel fiyat + realized getiri
+    # Güncel fiyatları batch'le (ticker bazında dedup)
+    unique_tickers = list({p.get("ticker") for p in eligible if p.get("ticker")})
+    current_prices = {}
+    for t in unique_tickers:
+        current_prices[t] = _get_current_price(t)
+
+    # Her kayıt için realized getiri
     samples = []
-    for ticker, pred in first_by_ticker.items():
-        current = _get_current_price(ticker)
+    for pred in eligible:
+        ticker = pred.get("ticker")
+        if not ticker:
+            continue
+        current = current_prices.get(ticker, 0)
         if current <= 0:
             if verbose:
                 print(f"  [skip] {ticker}: fiyat alınamadı")
@@ -158,9 +160,17 @@ def analyze(min_age_days: int = 14, verbose: bool = False) -> dict:
         realized_pct = ((current / start_price) - 1.0) * 100
         outcome = _classify_outcome(pred.get("karar", ""), realized_pct)
 
+        # Kayıt yaşını da ekle (analiz için faydalı)
+        try:
+            pred_ts = datetime.fromisoformat(pred.get("timestamp", ""))
+            age_days = (datetime.now() - pred_ts).days
+        except Exception:
+            age_days = None
+
         samples.append({
             "ticker":         ticker,
             "pred_date":      pred.get("timestamp"),
+            "age_days":       age_days,
             "archetype":      pred.get("archetype"),
             "karar":          pred.get("karar"),
             "upside_pred":    pred.get("upside_pct"),
@@ -207,7 +217,8 @@ def analyze(min_age_days: int = 14, verbose: bool = False) -> dict:
         "analyzed":           datetime.now().isoformat(timespec="seconds"),
         "total_predictions":  len(all_preds),
         "eligible":           len(eligible),
-        "unique_tickers":     len(samples),
+        "unique_tickers":     len({s["ticker"] for s in samples}),
+        "total_samples":      len(samples),
         "overall":            {**totals, "hit_rate_pct": round(hit_rate, 1)},
         "by_archetype":       _add_hit_rate(dict(by_archetype)),
         "by_confidence":      _add_hit_rate(dict(by_confidence)),
@@ -226,7 +237,7 @@ def format_report(result: dict) -> str:
         f"  VALUATION BACKTEST — ≥{result['min_age_days']}-gün eski tahminler",
         "=" * 70,
         f"  Toplam log kaydı:    {result['total_predictions']}",
-        f"  Değerlendirilebilir: {result['eligible']} ({result['unique_tickers']} ticker)",
+        f"  Değerlendirilebilir: {result['eligible']} kayıt → {result.get('total_samples', result.get('unique_tickers', 0))} sample ({result['unique_tickers']} ticker)",
         "",
         "  GENEL:",
     ]

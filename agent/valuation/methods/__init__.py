@@ -186,7 +186,9 @@ def fetch_all_data(ticker: str) -> dict:
     today_s = datetime.now().strftime("%Y-%m-%d")
     tr_from = (datetime.now() - timedelta(days=14)).strftime("%Y-%m-%d")
     tr = fmp_get("treasury-rates", {"from": tr_from, "to": today_s}) or []
-    d["bond_y"] = _safe(tr[0].get("year10")) if tr else 4.5
+    bond_y = _safe(tr[0].get("year10")) if tr else 0
+    # Fallback 4.5% — treasury API fail olursa veya 0 dönerse
+    d["bond_y"] = bond_y if bond_y > 0 else 4.5
 
     # 9. Türetilmiş alanlar
     d["ev_ebitda"]   = (d["ev"] / d["ttm_ebitda"]) if d["ttm_ebitda"] > 0 else 0

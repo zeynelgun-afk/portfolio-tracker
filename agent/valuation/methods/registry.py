@@ -60,26 +60,28 @@ def forward_pe_ny1(d: dict, archetype: str = "generic_equity") -> dict | None:
 
 
 def forward_pe_ny2(d: dict, archetype: str = "generic_equity") -> dict | None:
-    """Forward P/E NY2 × fwd EPS — archetype-specific."""
+    """Forward P/E NY2 × fwd EPS — archetype-specific multiplier + WACC discount."""
     eps = d.get("fwd_eps_ny2", 0)
     if eps <= 0:
         return None
     fair_pe = get_param(archetype, "fwd_pe_ny2", 17.0)
-    discount = 1.0 / (1.0 + 0.10)  # 1 yıl bugüne indirgeme
+    wacc = get_param(archetype, "wacc", 0.10)
+    discount = 1.0 / (1.0 + wacc)  # NY2 = 2. yıl EPS, 1 yıl iskonto (NY1→NY2 arası)
     return _ok(fair_pe * eps * discount,
-               f"fwd P/E NY2 {fair_pe:.1f}×${eps:.2f}×disc [{archetype}]",
+               f"fwd P/E NY2 {fair_pe:.1f}×${eps:.2f}×disc(wacc={wacc:.0%}) [{archetype}]",
                "forward_pe_ny2")
 
 
 def forward_pe_ny3(d: dict, archetype: str = "generic_equity") -> dict | None:
-    """NY3 — hyper-growth için kritik."""
+    """NY3 — hyper-growth için kritik. WACC^2 iskonto."""
     eps = d.get("fwd_eps_ny3", 0)
     if eps <= 0:
         return None
     fair_pe = get_param(archetype, "fwd_pe_ny3", 16.0)
-    discount = 1.0 / (1.08 ** 2)  # 2 yıl bugüne indirgeme
+    wacc = get_param(archetype, "wacc", 0.10)
+    discount = 1.0 / ((1.0 + wacc) ** 2)  # NY3 = 3. yıl EPS, 2 yıl iskonto
     return _ok(fair_pe * eps * discount,
-               f"fwd P/E NY3 {fair_pe:.1f}×${eps:.2f}×disc² [{archetype}]",
+               f"fwd P/E NY3 {fair_pe:.1f}×${eps:.2f}×disc²(wacc={wacc:.0%}) [{archetype}]",
                "forward_pe_ny3")
 
 
