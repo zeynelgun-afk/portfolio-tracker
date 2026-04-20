@@ -108,19 +108,21 @@ def build_portfolio_state(portfolios: dict, market: dict) -> dict:
             }
 
             # v5 valuation — Claude'a fair value bağlamı (cache'li, max 5dk eski)
-            try:
-                import sys as _s
-                _agent_dir = str(REPO_ROOT / "agent")
-                if _agent_dir not in _s.path:
-                    _s.path.insert(0, _agent_dir)
-                from valuation.framework import valuate as _valuate
-                _v = _valuate(sym, verbose=False)
-                if _v and not _v.get("error"):
-                    pos_data["val_fark"]  = _v["fair_value"]["upside_pct"]
-                    pos_data["val_karar"] = _v["fair_value"]["karar"]
-                    pos_data["val_guven"] = _v["confidence"]["score"]
-            except Exception:
-                pass  # valuation kritik değil, atla
+            # Sembol bilinmiyorsa atla (FMP'ye geçersiz istek gitmesin)
+            if sym and sym != "?" and len(sym) <= 6:
+                try:
+                    import sys as _s
+                    _agent_dir = str(REPO_ROOT / "agent")
+                    if _agent_dir not in _s.path:
+                        _s.path.insert(0, _agent_dir)
+                    from valuation.framework import valuate as _valuate
+                    _v = _valuate(sym, verbose=False)
+                    if _v and not _v.get("error"):
+                        pos_data["val_fark"]  = _v["fair_value"]["upside_pct"]
+                        pos_data["val_karar"] = _v["fair_value"]["karar"]
+                        pos_data["val_guven"] = _v["confidence"]["score"]
+                except Exception:
+                    pass  # valuation kritik değil, atla
 
             pf_state["pozisyonlar"].append(pos_data)
 
