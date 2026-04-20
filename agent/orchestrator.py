@@ -283,6 +283,19 @@ def run_morning(ctx: dict):
     """
     print("[Orkestratör] Sabah modu çalışıyor...")
 
+    # Duplicate-guard: ayni gun icin SABAH raporu zaten yazildiysa cik.
+    # (Yedek cron ':12' ayni gun icinde ikinci kez tetiklenirse tekrar Claude
+    # cagrisi yapmayi onler — sadece ana tetik kacirildiysa yedek devreye girer.)
+    try:
+        _bugun_tr = datetime.now(TR_TZ).strftime("%Y-%m-%d")
+        _bugunku_rapor = REPO_ROOT / "reports" / "daily" / f"DAILY_SABAH_{_bugun_tr}.md"
+        _force = os.environ.get("FORCE_MORNING", "").strip().lower() in ("1", "true", "yes")
+        if _bugunku_rapor.exists() and not _force:
+            print(f"[Sabah] {_bugunku_rapor.name} zaten mevcut — atlaniyor (FORCE_MORNING=1 ile zorlayabilirsin).")
+            return
+    except Exception as _dg:
+        print(f"[Sabah] Duplicate guard uyarisi: {_dg} (devam ediliyor)")
+
     # ── MAKRO ZİYASAL ZEKA ──────────────────────────────────────────────────
     macro_ctx = {}
     buy_candidates = []

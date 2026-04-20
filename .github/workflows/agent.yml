@@ -2,9 +2,18 @@ name: Finzora Agent
 
 on:
   schedule:
+    # Sabah: 13:00 UTC ana tetik + 13:12 yedek. GitHub Actions ':00' dakikasini
+    # yogun repolarda bazen atliyor. Yedek tetikte orchestrator duplicate-guard
+    # ile (bugunku SABAH raporu varsa skip) tekrar calismaz — boylece ana tetik
+    # kacirilirsa yedek devreye girer, kacirilmazsa yedek no-op.
     - cron: '0 13 * * 1-5'
+    - cron: '12 13 * * 1-5'
+    # Kapanis: 21:30 UTC (yedek yok — duplicate-guard kapanista zor: rapor
+    # tarihi bir onceki gun oluyor. Tek tetik + manuel dispatch fallback).
     - cron: '30 21 * * 1-5'
+    # Monitor (seans ici, her yarim saat)
     - cron: '0,30 14-20 * * 1-5'
+    # Haftalik (Pazar) — weekly raporda duplicate-guard olmadigi icin yedeksiz.
     - cron: '0 9 * * 0'
   workflow_dispatch:
     inputs:
