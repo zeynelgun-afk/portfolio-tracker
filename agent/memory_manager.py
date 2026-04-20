@@ -98,14 +98,31 @@ def build_portfolio_state(portfolios: dict, market: dict) -> dict:
 
             if "pozisyonlar" not in pf_state:
                 pf_state["pozisyonlar"] = []
-            pf_state["pozisyonlar"].append({
+            pos_data = {
                 "sym":       sym,
                 "fiyat":     cur_price,
                 "gunluk":    pos.get("gunluk_degisim"),
                 "pnl_pct":   pnl_pct,
                 "stop_pct":  stop_pct,   # stop'a uzaklık — negatifse geçilmiş
                 "hedef":     hedef,
-            })
+            }
+
+            # v5 valuation — Claude'a fair value bağlamı (cache'li, max 5dk eski)
+            try:
+                import sys as _s
+                _agent_dir = str(REPO_ROOT / "agent")
+                if _agent_dir not in _s.path:
+                    _s.path.insert(0, _agent_dir)
+                from valuation.framework import valuate as _valuate
+                _v = _valuate(sym, verbose=False)
+                if _v and not _v.get("error"):
+                    pos_data["val_fark"]  = _v["fair_value"]["upside_pct"]
+                    pos_data["val_karar"] = _v["fair_value"]["karar"]
+                    pos_data["val_guven"] = _v["confidence"]["score"]
+            except Exception:
+                pass  # valuation kritik değil, atla
+
+            pf_state["pozisyonlar"].append(pos_data)
 
         state["portfolios"][pf_name] = pf_state
 
@@ -418,8 +435,8 @@ def build_context_for_claude(mode: str) -> str:
         deg_str    = f"${float(deg):,.0f}" if deg else "—"
         getiri_str = f"{float(getiri):+.1f}%" if getiri is not None else "—"
         pf_lines.append(f"\n[{label}] {deg_str} ({getiri_str})")
-        pf_lines.append(f"  {'Sembol':<6} {'Fiyat':>8} {'Bugün':>7} {'P/L':>7} {'Stop%':>6} {'Hedef':>8}")
-        pf_lines.append(f"  {'-'*50}")
+        pf_lines.append(f"  {'Sembol':<6} {'Fiyat':>8} {'Bugün':>7} {'P/L':>7} {'Stop%':>6} {'Hedef':>8} {'v5 Fair':>14}")
+        pf_lines.append(f"  {'-'*64}")
         for pos in pf_data.get("pozisyonlar", []):
             sym      = str(pos.get("sym","?"))
             fiyat    = pos.get("fiyat")
@@ -432,9 +449,20 @@ def build_context_for_claude(mode: str) -> str:
             p_str = f"{float(pnl_pct):+.1f}%" if pnl_pct is not None else "—"
             s_str = f"%{float(stop_pct):.1f}" if stop_pct is not None else "—"
             h_str = f"${float(hedef):,.0f}" if hedef else "—"
+            # v5 fair value sütunu: "+15% UCUZ(82)" veya "—"
+            val_fark  = pos.get("val_fark")
+            val_karar = pos.get("val_karar")
+            val_guven = pos.get("val_guven")
+            if val_fark is not None and val_karar:
+                # UCUZ → U, PAHALI → P, ADİL → =, düşük güven → lc
+                k_short = val_karar.replace("ADİL-", "").replace(" (düşük güven)", "?")
+                k_short = k_short.replace("UCUZ", "UCUZ").replace("PAHALI", "PAH")
+                v_str = f"{val_fark:+.0f}% {k_short}({val_guven})"
+            else:
+                v_str = "—"
             # Stop yakınsa uyarı
             uyari = " ⚠️" if stop_pct is not None and float(stop_pct) < 4 else ""
-            pf_lines.append(f"  {sym:<6} {f_str:>8} {g_str:>7} {p_str:>7} {s_str:>6} {h_str:>8}{uyari}")
+            pf_lines.append(f"  {sym:<6} {f_str:>8} {g_str:>7} {p_str:>7} {s_str:>6} {h_str:>8} {v_str:>14}{uyari}")
 
     # Swing tablosu
     sw_lines = []
