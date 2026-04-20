@@ -80,12 +80,9 @@ finzora-ai/
 │   ├── k17_correlation_check.py    # Korelasyon + tema çakışma
 │   ├── k19_xlp_filter.py           # XLP swing girişi yasağı
 │   ├── k20_rs_filter.py            # RS dead cat bounce filtresi
-│   ├── alpha_screener.py           # FMP hisse tarayıcı (aggressive/dividend/swing)
 │   ├── consistency_check.py        # Veri tutarlılık kontrolü
 │   ├── premarket_gap_scanner.py    # Pre-market gap fırsatları
-│   ├── auto_trade_review.py        # Trade sonrası otomatik analiz
-│   ├── walk_forward_backtest.py    # Walk-forward backtest
-│   └── consolidate_portfolios.py   # DEVRE DIŞI — ghost portföy oluşturur
+│   └── macro_intelligence_notify.py # Gunluk makro ozeti Telegram DM
 │
 ├── data/                           # Canlı veri
 │   ├── portfolios/
@@ -101,7 +98,7 @@ finzora-ai/
 │   ├── watchlist.json              # Portföy izleme listesi
 │   ├── daily_full_scan.json        # ~1100 hisse tarama sonuçları
 │   ├── daily_scan_{aggressive,balanced,dividend}.json
-│   ├── alpha_scan_aggressive.json
+│   ├── macro_intelligence.json     # Günlük dominant tema + kriz tipi
 │   ├── summary.json
 │   └── episodic_memory/            # Agent uzun dönem hafıza
 │

@@ -11,9 +11,10 @@ otomatik olarak sunuyor.
 | Dosya | Açıklama |
 |-------|----------|
 | `scripts/trade_memory.py` | Ana bellek motoru (indeksleme, sorgulama, TF-IDF) |
-| `scripts/memory_update.py` | Güncelleme kontrolü ve prompt enjeksiyonu |
 | `data/episodic_memory/trade_index.json` | Trade metadatası ve metin indeksi |
 | `data/episodic_memory/tfidf_vectors.json` | TF-IDF vektörleri ve IDF ağırlıkları |
+
+*Not: Eski `scripts/memory_update.py` 20 Nisan 2026'da kaldırıldı. İşlev `trade_memory.py --rebuild` ile doğrudan yapılıyor; prompt enjeksiyonu orchestrator'un memory_manager modülü üzerinden otomatik.*
 
 ## Kullanım
 
@@ -35,18 +36,6 @@ python3 scripts/trade_memory.py --query-trade SWING-020  # Belirli trade'e benze
 
 ```bash
 python3 scripts/trade_memory.py --stats
-```
-
-### Sabah brifing bağlamı (PART 1 SABAH promptuna ekle)
-
-```bash
-python3 scripts/memory_update.py --morning
-```
-
-### Yeni trade adayı için bağlam
-
-```bash
-python3 scripts/memory_update.py --setup "NVDA breakout RSI 68 AI sektör güçlü"
 ```
 
 ## Python Entegrasyonu
@@ -81,11 +70,11 @@ memory_context = get_memory_for_prompt(
 
 ## Otomasyon
 
-`closed.json` her güncellendiğinde indeks otomatik yenilenir:
+Trade kapanışında otomatik re-index:
 
 ```bash
-# Crontab veya post-commit hook'a ekle:
-python3 scripts/memory_update.py  # Gerekirse günceller, yoksa atlar
+# Closed.json güncellendiğinde manuel veya post-commit hook:
+python3 scripts/trade_memory.py --rebuild
 ```
 
 ## Gelecek Geliştirmeler

@@ -153,53 +153,6 @@ def get_run_mode() -> str:
     else:
         return "morning"  # default
 
-# ── Alpha Scan Bağlamı ────────────────────────────────────────────────────────
-
-def _load_alpha_scan_context() -> str:
-    """
-    Alpha screener sonuçlarını okur ve Claude için özet hazırlar.
-    data/alpha_scan_growth.json → sabah analizine girer.
-    """
-    import json
-    from pathlib import Path
-
-    scan_path = Path(__file__).parent.parent / "data" / "alpha_scan_aggressive.json"
-    if not scan_path.exists():
-        return ""
-
-    try:
-        with open(scan_path, encoding="utf-8") as f:
-            scan = json.load(f)
-
-        tarih  = scan.get("tarih", "")[:10]
-        ekle   = scan.get("ekle", [])
-        izle   = scan.get("izle", [])[:5]
-
-        lines = [f"=== ALPHA SCREENER ({tarih}) ==="]
-
-        if ekle:
-            lines.append(f"EKLE ({len(ekle)}):")
-            for h in ekle[:5]:
-                sym    = h.get("symbol", "")
-                sc     = h.get("score", 0)
-                ins    = h.get("insider_alpha_score", 0) or h.get("insider_score", 0)
-                sektor = h.get("sector", "")[:18]
-                ins_tag = " 🔑INS" if ins > 0 else ""
-                lines.append(f"  {sym:6} skor:{sc:3} {sektor}{ins_tag}")
-
-        if izle:
-            lines.append(f"İZLE ({len(izle)}):")
-            for h in izle[:5]:
-                sym    = h.get("symbol", "")
-                sc     = h.get("score", 0)
-                sektor = h.get("sector", "")[:18]
-                lines.append(f"  {sym:6} skor:{sc:3} {sektor}")
-
-        return "\n".join(lines)
-    except Exception:
-        return ""
-
-
 # ── Veri toplama ─────────────────────────────────────────────────────────────
 
 def collect_context(mode: str) -> dict:
@@ -387,9 +340,6 @@ def run_morning(ctx: dict):
     tahmin_ctx  = get_prediction_context()
     agirlik_ctx = get_weighted_genome_context(load_genome())
 
-    # Alpha screener sonuçları (dünkü tarama)
-    alpha_ctx = _load_alpha_scan_context()
-
     # Swing sabah kontrolü
     swing_check = run_swing_morning_check()
     swing_ctx   = swing_check["rapor"]
@@ -473,8 +423,6 @@ def run_morning(ctx: dict):
 {agirlik_ctx}
 
 {tahmin_ctx}
-
-{alpha_ctx}
 
 {premarket_ctx}
 

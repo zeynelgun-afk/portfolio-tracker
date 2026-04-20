@@ -297,17 +297,11 @@ v2.1 → v2.3 geçişinde kaldırılan/değişen kurallar:
 
 ---
 
-## Katman 4: Piyasa Rejimi (market_regime.py)
+## Katman 4: Piyasa Rejimi (agent/regime_detector.py)
 
-### Her sabah seans başında çalıştır:
-```bash
-# 1. Web'den VIX al (search: "VIX today")
-# 2. Rejim tespit et:
-python3 scripts/market_regime.py --vix [VIX_DEGERI] --full
+*Eski `scripts/market_regime.py` 20 Nisan 2026'da kaldırıldı, mantık `agent/regime_detector.py`'ye taşındı ve orchestrator sabah modunda otomatik çağırıyor.*
 
-# 3. Prompt enjeksiyonu için:
-python3 scripts/market_regime.py --inject
-```
+Rejim tespiti agent.yml sabah modunda (`collect_context` → `run_regime_detection`) otomatik çalışır, ayrıca çağırma gerekmez.
 
 ### Rejim → Aksiyon tablosu:
 | Rejim | Pos. çarpanı | Tarama | Öne çıkan |
@@ -319,10 +313,5 @@ python3 scripts/market_regime.py --inject
 | BEAR | ×0.5 | DEFANS | XLP, XLU, GLD |
 | KRİZ | ×0.0 | KAPALI | Yeni giriş yok, K-14 protokolü |
 
-### Güncel rejim (otomatik güncellenir):
-`data/market_regime.json` → `guncel_rejim.rejim`
-
-### Geçmiş sorgu:
-```bash
-python3 scripts/market_regime.py --history
-```
+### Güncel rejim:
+`agent/memory/market_regime.json` → `rejim.aktif_rejim`

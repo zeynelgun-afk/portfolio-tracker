@@ -132,7 +132,8 @@ SAVUNMA İÇİN DOLAYLU FAYDALANANLAR:
 8. Skor hesapla → top 10 aday listesi
 ```
 
-**Çıktı:** `data/theme_stock_candidates.json`
+**Çıktı (tasarım aşaması, bu dosya henüz üretilmiyor):** `data/theme_stock_candidates.json`
+*Not: Bu doküman bir tasarım spesifikasyonu. Pratikte bu rolü portfolio_scan_aggressive/balanced/dividend.py + swing_full_universe.py birleşimi görüyor. İleride ayrı bir STOCK_SCREENER ajanı kurulursa çıktı formatı bu şemaya benzer olacak.*
 ```json
 {
   "tema": "SAVUNMA",

@@ -395,8 +395,7 @@ Günlük seans sırasında otomatik update scripti tarafından yazılır.
 | `watchlist_manager.py` | Watchlist CRUD + cooldown yönetimi |
 | `risk_panel_generator.py` | Günlük risk paneli PNG (1080×1920) |
 | `telegram_notify.py` | Telegram bildirim gönderimi |
-| `session_watchlist_scan.py` | Seans sırasında watchlist kontrol |
-| `weekly_health_check.py` | Haftalık portföy sağlık kontrolü |
+| `macro_intelligence_notify.py` | Günlük dominant tema + kriz özeti DM |
 | `k09_proximity_check.py` | Stop yakınlık kontrolü |
 | `k14_drawdown_track.py` | Drawdown takibi |
 | `k15b_dilution_check.py` | Hisse seyreltme kontrolü |
