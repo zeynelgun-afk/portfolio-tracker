@@ -264,11 +264,19 @@ def classify(ticker: str, verbose: bool = False) -> dict:
         "electronic equipment", "contract manufact"
     ])
     if is_hardware and not ("semiconductor" in industry_lc or "semi" in industry_lc):
-        # Yüksek marjlı + büyüme → consumer_cyclical
-        if rev_growth > 0.15 and op_margin > 0.15:
-            signals["trigger"] = f"Tech hardware growth (gr={rev_growth:.0%}) — cyclical"
-            return _result(ticker, "industrial_cyclical", 0.70, signals, fmp_raw)
-        signals["trigger"] = f"Tech hardware cyclical (low margin, EMS/storage): {industry}"
+        # Tech hardware ayrimi: R&D yogunlugu
+        # - Yuksek R&D (%8+) + buyume → optical/networking tech (COHR, ANET, GLW)
+        #   Bunlar profitable_growth_software tuning'ine yakin (IP-intensive).
+        # - Dusuk R&D (<%8) veya buyume yok → EMS/storage (FLEX, JBL, WDC, STX)
+        #   Industrial_cyclical dogru.
+        if rd_intensity > 0.08 and rev_growth > 0.10:
+            signals["trigger"] = f"Tech hardware R&D-intensive (rd={rd_intensity:.0%}, gr={rev_growth:.0%}) — tech"
+            return _result(ticker, "profitable_growth_software", 0.75, signals, fmp_raw)
+        # Yuksek marjli + buyume (ama R&D dusuk) — mature tech hardware
+        if rev_growth > 0.15 and op_margin > 0.20:
+            signals["trigger"] = f"Tech hardware mature (gr={rev_growth:.0%}, op_m={op_margin:.0%})"
+            return _result(ticker, "profitable_growth_software", 0.70, signals, fmp_raw)
+        signals["trigger"] = f"Tech hardware cyclical (low margin/R&D, EMS/storage): {industry}"
         return _result(ticker, "industrial_cyclical", 0.75, signals, fmp_raw)
 
     if is_software:
