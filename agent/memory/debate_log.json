@@ -233,6 +233,48 @@
         }
       },
       "karar_degisti_mi": true
+    },
+    {
+      "symbol": "MO",
+      "tarih": "2026-04-20T14:07:20.082122",
+      "ilk_karar": {
+        "karar": "ACIL_CIK",
+        "hedef_sembol": "MO",
+        "gerekce": "Risk Analisti (HIGH güven) MO'nun stop seviyesine %0.9 mesafede olduğunu ve açılışta tetiklenebileceğini bildiriyor — K-09 gereği proaktif kapatma zorunlu. Ek olarak Tech konsantrasyonu %55.5 ile K-17 limitini aşmış; VIX +%8 yükselişi (Makro NEUTRAL teyit) yeni tech girişini K-02 ile yasaklıyor. Sektör Analisti semis rotasyonu önerse de Risk önceliği (Risk > Makro > Sektör > Teknik) gereği önce savunma: MO'yu kapat, ardından CAMT/MU'da kademeli kâr realizasyonu (K-11) ile tech ağırlığını düşür. Teknik sinyal parse hatası verdiği için ağırlığı zaten düşük, karara dahil edilmedi. Jeopolitik kriz rejimi de savunmacı duruşu destekliyor.",
+        "uyari": "MO açılışta stop tetikleyebilir (-$704 kayıp riski). MRK/NEE/VZ de %4-5 stop mesafesinde, gap riskine karşı stop seviyeleri doğrulanmalı. VIX 20 üstüne çıkarsa savunmacı rotasyon hızlandırılmalı.",
+        "guven": "HIGH",
+        "analist_uzlasma": "ORTA",
+        "tahmin": {
+          "yon": "DOWN",
+          "buyukluk": "LOW",
+          "sembol": "SPY"
+        },
+        "_agent": "CIO_AGENT",
+        "_timestamp": "2026-04-20T14:06:31.440374"
+      },
+      "boğa": {
+        "_raw": "```json\n{\n  \"argümanlar\": [\n    \"MO temettü portföyünde tutuluyor ve dividend portföyü +%42.1 ile muazzam performans gösteriyor — MO bu tezin parçası. Acil çıkış tezi bozuyor.\",\n    \"Mevcut zarar -%4.",
+        "_parse_hata": true
+      },
+      "ayı": {
+        "_raw": "{\n  \"argümanlar\": [\n    \"MO pozisyonu şu anda -%4.43 zararda ve daha önce 11 Nisan'da satış sinyali vermişti — 6 gündür bekletildi, her gün gecikme ek kayıp yaratıyor (geçmiş kayıt: 2026-04-17 trade l",
+        "_parse_hata": true
+      },
+      "nihai": {
+        "nihai_karar": "SAT",
+        "kazan_taraf": "AYI",
+        "karar_gerekce": "İlk CIO kararı ACIL_CIK ve güven HIGH. MO pozisyonu 17 Nisan'da zaten kısmen satıldı (-%4.43 K/Z) ve RAG kayıtlarında 'bekleyen aksiyon gecikmesi' dersi var. Pazartesi açılışında kalan MO pozisyonunun tasfiyesi disiplin gereği — VIX +%8 yükselirken temettü portföyünde savunmacı koruma beklentisi zayıflıyor.",
+        "boğa_haklı_çünkü": "MO temettü getirisi ve defansif karakter uzun vadede portföy stabilizasyonu sağlar; temettü portföyü zaten +%42.1 güçlü durumda.",
+        "ayı_haklı_çünkü": "Stop mesafesi kritik seviyede, VIX yükseliyor, önceki SELL sinyali 6 gün geciktirildi ve bu ders kayıt altında. Acil_çık kararının güveni HIGH — sorgulanmamalı.",
+        "göz_ardı_edilen": "Tartışmacılar argüman üretmedi (5/10 skor, boş listeler). MO'nun güncel fiyatı, stop seviyesi ve temettü ex-date takvimi tartışılmadı. Teknoloji konsantrasyonu %55.5 riskine karşı MO'nun denge rolü değerlendirilmedi.",
+        "güven": "MEDIUM",
+        "tahmin": {
+          "yon": "DOWN",
+          "buyukluk": "LOW",
+          "sembol": "SPY"
+        }
+      },
+      "karar_degisti_mi": true
     }
   ]
 }

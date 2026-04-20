@@ -1,63 +1,63 @@
 {
   "rejim": {
-    "aktif_rejim": "ai_boom",
-    "skor": 3,
-    "guven": "ORTA",
+    "aktif_rejim": "jeopolitik_kriz",
+    "skor": 0,
+    "guven": "DÜŞÜK",
     "tum_skorlar": {
-      "jeopolitik_kriz": 2,
-      "ai_boom": 3,
+      "jeopolitik_kriz": 0,
+      "ai_boom": 0,
       "faiz_dusus": 0,
       "tarife_gerilimi": 0,
-      "risk_on_genel": 2,
-      "risk_off": 1
+      "risk_on_genel": 0,
+      "risk_off": 0
     },
-    "growth_aksiyon": "Mevcut AI pozisyonlar (COHR, VRT, ANET, MU, CAMT) tutulmaya devam. Yeni AI fırsatları ara.",
-    "tespit_zamani": "2026-04-18T01:05:25.623809+03:00"
+    "growth_aksiyon": "Savunma (ITA, LMT, RTX) + Enerji (XLE, CVX) ağırlığını artır. AI tezini koru ama yeni giriş yapma.",
+    "tespit_zamani": "2026-04-20T17:03:54.664597+03:00"
   },
   "sektor_data": {
     "XLE": {
-      "price": 55.02,
-      "gunluk_chg": -2.76
+      "price": 55.37,
+      "gunluk_chg": 0.64
     },
     "XLK": {
-      "price": 154.35,
-      "gunluk_chg": 1.53
+      "price": 154.39,
+      "gunluk_chg": 0.03
     },
     "XLI": {
-      "price": 173.51,
-      "gunluk_chg": 1.87
+      "price": 173.48,
+      "gunluk_chg": -0.02
     },
     "XLF": {
-      "price": 52.43,
-      "gunluk_chg": 0.77
+      "price": 52.685,
+      "gunluk_chg": 0.49
     },
     "XLV": {
-      "price": 148.8,
-      "gunluk_chg": 1.49
+      "price": 148.445,
+      "gunluk_chg": -0.24
     },
     "XLU": {
-      "price": 46.16,
-      "gunluk_chg": -0.41
+      "price": 46.17,
+      "gunluk_chg": 0.02
     },
     "XLP": {
-      "price": 82.46,
-      "gunluk_chg": 1.26
+      "price": 82.75,
+      "gunluk_chg": 0.35
     },
     "XLY": {
-      "price": 120.41,
-      "gunluk_chg": 2.37
+      "price": 119.47,
+      "gunluk_chg": -0.78
     },
     "XLB": {
-      "price": 51.88,
-      "gunluk_chg": 0.25
+      "price": 52.07,
+      "gunluk_chg": 0.37
     },
     "GLD": {
-      "price": 445.93,
-      "gunluk_chg": 1.33
+      "price": 442.06,
+      "gunluk_chg": -0.87
     },
     "ITA": {
-      "price": 231.94,
-      "gunluk_chg": 1.27
+      "price": 232.2,
+      "gunluk_chg": 0.11
     }
   }
 }

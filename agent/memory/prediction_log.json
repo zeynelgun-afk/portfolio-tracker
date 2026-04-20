@@ -34,8 +34,12 @@
       "gerekce": "VIX'te %7.18'lik ani yükseliş ve yaklaşan enflasyon verisi risk-off senaryosunu destekliyor",
       "kaynak_kural": "MACRO_AGENT",
       "durum": "BEKLIYOR",
-      "skorlar": {},
-      "gercek_fiyatlar": {},
+      "skorlar": {
+        "5": -1.0
+      },
+      "gercek_fiyatlar": {
+        "5": 709.62
+      },
       "son_skor": null
     },
     {
@@ -51,8 +55,12 @@
       "gerekce": "",
       "kaynak_kural": "SECTOR_AGENT",
       "durum": "BEKLIYOR",
-      "skorlar": {},
-      "gercek_fiyatlar": {},
+      "skorlar": {
+        "5": 1.0
+      },
+      "gercek_fiyatlar": {
+        "5": 442.20999
+      },
       "son_skor": null
     },
     {
@@ -68,8 +76,12 @@
       "gerekce": "Risk yöneticisi (ağırlık 0.67, güven HIGH) ve sektör analisti (ağırlık 1.53) teknoloji konsantrasyonunu azaltma konusunda mutabık. Aggressive portföy %65.7 tech ağırlığı ile K-17 ihlal sınırında, K-14",
       "kaynak_kural": "CIO_AGENT",
       "durum": "BEKLIYOR",
-      "skorlar": {},
-      "gercek_fiyatlar": {},
+      "skorlar": {
+        "5": -1.0
+      },
+      "gercek_fiyatlar": {
+        "5": 709.62
+      },
       "son_skor": null
     },
     {
@@ -85,8 +97,12 @@
       "gerekce": "Teknoloji konsantrasyonu %65.7 ile kritik seviyede ve aggressive portföy -9.5% drawdown'da. Memory sektörü döngüsel zirve sinyalleri verirken, MU eklemek hem sektör riskini hem de timing riskini artır",
       "kaynak_kural": "adversarial_debate",
       "durum": "BEKLIYOR",
-      "skorlar": {},
-      "gercek_fiyatlar": {},
+      "skorlar": {
+        "5": -2.0
+      },
+      "gercek_fiyatlar": {
+        "5": 450.7391
+      },
       "son_skor": null
     },
     {
@@ -102,8 +118,12 @@
       "gerekce": "VIX normalleşmesi ve Fed konuşmaları öncesi temkinli iyimserlik hakim",
       "kaynak_kural": "MACRO_AGENT",
       "durum": "BEKLIYOR",
-      "skorlar": {},
-      "gercek_fiyatlar": {},
+      "skorlar": {
+        "5": 2.0
+      },
+      "gercek_fiyatlar": {
+        "5": 709.62
+      },
       "son_skor": null
     },
     {
@@ -119,8 +139,12 @@
       "gerekce": "",
       "kaynak_kural": "SECTOR_AGENT",
       "durum": "BEKLIYOR",
-      "skorlar": {},
-      "gercek_fiyatlar": {},
+      "skorlar": {
+        "5": 1.0
+      },
+      "gercek_fiyatlar": {
+        "5": 154.17
+      },
       "son_skor": null
     },
     {
@@ -136,8 +160,12 @@
       "gerekce": "Risk yöneticisi HIGH güvenle kritik uyarılar veriyor: Technology sektörü %66.9 konsantrasyon K-17 ihlali sınırında, dividend portföyünde VZ/MO/DUK stoplara %2-3 mesafede tehlikeli yakın. Makro ve sekt",
       "kaynak_kural": "CIO_AGENT",
       "durum": "BEKLIYOR",
-      "skorlar": {},
-      "gercek_fiyatlar": {},
+      "skorlar": {
+        "5": -0.5
+      },
+      "gercek_fiyatlar": {
+        "5": 709.62
+      },
       "son_skor": null
     },
     {
@@ -153,8 +181,12 @@
       "gerekce": "VRT pozisyonunun %24.4 stop mesafesi kabul edilemez risk seviyesinde. Aggressive portföyün -%9.5 drawdown'ı ve %66.9 teknoloji konsantrasyonu, piyasa iyimserliğine rağmen acil risk azaltma gerektiriyo",
       "kaynak_kural": "adversarial_debate",
       "durum": "BEKLIYOR",
-      "skorlar": {},
-      "gercek_fiyatlar": {},
+      "skorlar": {
+        "5": -0.5
+      },
+      "gercek_fiyatlar": {
+        "5": 709.62
+      },
       "son_skor": null
     },
     {
@@ -170,8 +202,12 @@
       "gerekce": "İran ateşkes iyimserliği ve düşen VIX ile risk iştahı artıyor, ancak hafta ortasındaki BoC kararı ve CPI verileri belirsizlik yaratabilir",
       "kaynak_kural": "MACRO_AGENT",
       "durum": "BEKLIYOR",
-      "skorlar": {},
-      "gercek_fiyatlar": {},
+      "skorlar": {
+        "5": 2.0
+      },
+      "gercek_fiyatlar": {
+        "5": 709.62
+      },
       "son_skor": null
     },
     {
@@ -187,8 +223,12 @@
       "gerekce": "",
       "kaynak_kural": "SECTOR_AGENT",
       "durum": "BEKLIYOR",
-      "skorlar": {},
-      "gercek_fiyatlar": {},
+      "skorlar": {
+        "5": 2.0
+      },
+      "gercek_fiyatlar": {
+        "5": 154.17
+      },
       "son_skor": null
     },
     {
@@ -204,8 +244,12 @@
       "gerekce": "K-05 kuralı gereği VRT earnings öncesi BUGÜN kapatılmalı. Risk Yöneticisi (0.67 ağırlık) bunu zorunlu olarak işaretlemiş, %26 stop mesafesi earnings volatilitesini yansıtmıyor. Ayrıca Technology sektö",
       "kaynak_kural": "CIO_AGENT",
       "durum": "BEKLIYOR",
-      "skorlar": {},
-      "gercek_fiyatlar": {},
+      "skorlar": {
+        "5": 2.0
+      },
+      "gercek_fiyatlar": {
+        "5": 709.62
+      },
       "son_skor": null
     },
     {
@@ -221,8 +265,12 @@
       "gerekce": "Matematik acımasız: %6.3 yukarı potansiyel vs %26.2 aşağı risk, 1:4 olumsuz oran hiçbir risk yönetim kitabında kabul edilemez. Pozisyon zaten derin zarardan ancak sınırlı toparlanmış, şimdi çıkmak ser",
       "kaynak_kural": "adversarial_debate",
       "durum": "BEKLIYOR",
-      "skorlar": {},
-      "gercek_fiyatlar": {},
+      "skorlar": {
+        "5": -0.5
+      },
+      "gercek_fiyatlar": {
+        "5": 709.62
+      },
       "son_skor": null
     },
     {
@@ -287,6 +335,74 @@
       "guven": "HIGH",
       "giris_fiyat": 709.69,
       "gerekce": "MO şu an portföyde görünmüyor — daha önce 17 Nisan'da -%4.43 K/Z ile satılmış. Zaten pozisyon yok, dolayısıyla ACIL_CIK uygulanacak bir şey kalmamış. Boğa ve ayı tarafları argüman sunmamış, tartışma b",
+      "kaynak_kural": "adversarial_debate",
+      "durum": "BEKLIYOR",
+      "skorlar": {},
+      "gercek_fiyatlar": {},
+      "son_skor": null
+    },
+    {
+      "id": "pred_20260420_170631",
+      "tarih": "2026-04-20T17:06:31.637219+03:00",
+      "agent": "MACRO_AGENT",
+      "tip": "ANALIZ",
+      "sembol": "SPY",
+      "yon": "NEUTRAL",
+      "buyukluk": "LOW",
+      "guven": "MEDIUM",
+      "giris_fiyat": 709.54999,
+      "gerekce": "VIX normal seviyede ama yükselişte, earnings haftası ve Retail Sales verisi öncesi temkinli konsolidasyon",
+      "kaynak_kural": "MACRO_AGENT",
+      "durum": "BEKLIYOR",
+      "skorlar": {},
+      "gercek_fiyatlar": {},
+      "son_skor": null
+    },
+    {
+      "id": "pred_20260420_170631",
+      "tarih": "2026-04-20T17:06:31.786115+03:00",
+      "agent": "SECTOR_AGENT",
+      "tip": "ANALIZ",
+      "sembol": "SMH",
+      "yon": "UP",
+      "buyukluk": "MEDIUM",
+      "guven": "MEDIUM",
+      "giris_fiyat": 462.19,
+      "gerekce": "",
+      "kaynak_kural": "SECTOR_AGENT",
+      "durum": "BEKLIYOR",
+      "skorlar": {},
+      "gercek_fiyatlar": {},
+      "son_skor": null
+    },
+    {
+      "id": "pred_20260420_170631",
+      "tarih": "2026-04-20T17:06:31.985568+03:00",
+      "agent": "CIO_AGENT",
+      "tip": "ANALIZ",
+      "sembol": "SPY",
+      "yon": "DOWN",
+      "buyukluk": "LOW",
+      "guven": "HIGH",
+      "giris_fiyat": 709.54999,
+      "gerekce": "Risk Analisti (HIGH güven) MO'nun stop seviyesine %0.9 mesafede olduğunu ve açılışta tetiklenebileceğini bildiriyor — K-09 gereği proaktif kapatma zorunlu. Ek olarak Tech konsantrasyonu %55.5 ile K-17",
+      "kaynak_kural": "CIO_AGENT",
+      "durum": "BEKLIYOR",
+      "skorlar": {},
+      "gercek_fiyatlar": {},
+      "son_skor": null
+    },
+    {
+      "id": "pred_20260420_170720",
+      "tarih": "2026-04-20T17:07:20.264478+03:00",
+      "agent": "DEBATE_CIO",
+      "tip": "DEBATE_KARAR",
+      "sembol": "SPY",
+      "yon": "DOWN",
+      "buyukluk": "LOW",
+      "guven": "MEDIUM",
+      "giris_fiyat": 709.47,
+      "gerekce": "İlk CIO kararı ACIL_CIK ve güven HIGH. MO pozisyonu 17 Nisan'da zaten kısmen satıldı (-%4.43 K/Z) ve RAG kayıtlarında 'bekleyen aksiyon gecikmesi' dersi var. Pazartesi açılışında kalan MO pozisyonunun",
       "kaynak_kural": "adversarial_debate",
       "durum": "BEKLIYOR",
       "skorlar": {},

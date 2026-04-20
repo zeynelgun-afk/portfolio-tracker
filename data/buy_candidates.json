@@ -1,134 +1,81 @@
 {
-  "tarih": "2026-04-17T19:30:04.683076",
-  "vix": 17.8,
+  "tarih": "2026-04-20T14:05:33.350062",
+  "vix": 18.88,
   "adaylar": [
+    {
+      "symbol": "ETN",
+      "tema": "AI_altyapı",
+      "portföy": "aggressive",
+      "price": 407.61,
+      "stop": 382.67,
+      "target": 457.49,
+      "rr": 2.0,
+      "score": 4.96,
+      "teknik": 5,
+      "fundamental": 5,
+      "tema_güç": 6.0,
+      "valuation": 3.8,
+      "atr": 12.47,
+      "k_checks": {
+        "K-19": {
+          "passed": true,
+          "reason": "K-19: portföy alımı (aggressive) — atlandı"
+        },
+        "K-05": {
+          "passed": true,
+          "reason": "K-05: earnings uzak"
+        },
+        "K-18": {
+          "passed": true,
+          "reason": "K-18: insider temiz"
+        },
+        "K-20": {
+          "passed": true,
+          "reason": "K-20: RS temiz (1M: +4.9%)"
+        },
+        "K-17": {
+          "passed": true,
+          "reason": "K-17: korelasyon temiz (industrials, aynı sektör: 1)"
+        },
+        "K-13": {
+          "passed": true,
+          "reason": "VIX 18.9<22 tam pozisyon [jeopolitik]",
+          "size": 5000
+        }
+      },
+      "reason": "AI_altyapı teması — teknik:5/10 fundamental:5/10 valuation:3.8/10",
+      "detay": {
+        "sma200": "✅",
+        "sma50": "✅",
+        "rsi": "⚠️ aşırı alım 84",
+        "mom_1m": "✅ +13.2%",
+        "mom_3m": "✅ +18.6%",
+        "skor": 5,
+        "roic": "✅ 13.1%",
+        "büyüme": "✅ ROE 21.7%",
+        "val_karar": "PAHALI",
+        "val_fark": "-50.3%",
+        "val_guven": 77,
+        "val_archetype": "industrial_cyclical",
+        "val_gap": "-52%",
+        "val_skor": 3.8
+      }
+    },
     {
       "symbol": "GNRC",
       "tema": "AI_altyapı",
       "portföy": "aggressive",
-      "price": 212.22,
-      "stop": 195.14,
-      "target": 246.38,
+      "price": 214.88,
+      "stop": 199.17,
+      "target": 246.3,
       "rr": 2.0,
-      "score": 5.45,
-      "teknik": 8,
+      "score": 4.16,
+      "teknik": 6,
       "fundamental": 0,
-      "tema_güç": 9.0,
-      "atr": 8.54,
-      "k_checks": {
-        "K-14": {
-          "passed": true,
-          "reason": "K-14: normal"
-        },
-        "K-19": {
-          "passed": true,
-          "reason": "K-19: portföy alımı (aggressive) — atlandı"
-        },
-        "K-05": {
-          "passed": true,
-          "reason": "K-05: earnings uzak"
-        },
-        "K-18": {
-          "passed": true,
-          "reason": "K-18: insider temiz"
-        },
-        "K-20": {
-          "passed": true,
-          "reason": "K-20: RS temiz (1M: -2.3%)"
-        },
-        "K-17": {
-          "passed": true,
-          "reason": "K-17: korelasyon temiz (Industrials, aynı sektör: 1)"
-        },
-        "K-13": {
-          "passed": true,
-          "reason": "VIX 17.8<22 tam pozisyon",
-          "size": 5000
-        }
-      },
-      "reason": "AI_altyapı teması — teknik:8/10 fundamental:0/10",
-      "detay": {
-        "sma200": "✅",
-        "sma50": "✅",
-        "rsi": "✅ 62",
-        "mom_1m": "✅ +6.0%",
-        "mom_3m": "✅ +31.5%",
-        "skor": 0,
-        "pe": "⚠️ 77.5"
-      }
-    },
-    {
-      "symbol": "LMT",
-      "tema": "savunma_uzay",
-      "portföy": "aggressive",
-      "price": 592.54,
-      "stop": 562.86,
-      "target": 651.9,
-      "rr": 2.0,
-      "score": 5.05,
-      "teknik": 3,
-      "fundamental": 6,
-      "tema_güç": 7.0,
-      "atr": 14.84,
-      "k_checks": {
-        "K-14": {
-          "passed": true,
-          "reason": "K-14: normal"
-        },
-        "K-19": {
-          "passed": true,
-          "reason": "K-19: portföy alımı (aggressive) — atlandı"
-        },
-        "K-05": {
-          "passed": true,
-          "reason": "K-05: earnings uzak"
-        },
-        "K-18": {
-          "passed": true,
-          "reason": "K-18: insider temiz"
-        },
-        "K-20": {
-          "passed": true,
-          "reason": "K-20: RS temiz (1M: -12.6%)"
-        },
-        "K-17": {
-          "passed": true,
-          "reason": "K-17: korelasyon temiz (Industrials, aynı sektör: 1)"
-        },
-        "K-13": {
-          "passed": true,
-          "reason": "VIX 17.8<22 tam pozisyon",
-          "size": 5000
-        }
-      },
-      "reason": "savunma_uzay teması — teknik:3/10 fundamental:6/10",
-      "detay": {
-        "sma200": "✅",
-        "rsi": "⚠️ 40",
-        "skor": 6,
-        "roic": "✅ 17.4%",
-        "fcf": "✅ 5.1%",
-        "büyüme": "✅ ROE 80.5%"
-      }
-    },
-    {
-      "symbol": "MS",
-      "tema": "finansal_döngüsel",
-      "portföy": "aggressive",
-      "price": 189.15,
-      "stop": 177.6,
-      "target": 212.25,
-      "rr": 2.0,
-      "score": 3.8,
-      "teknik": 4,
-      "fundamental": 2,
       "tema_güç": 6.0,
-      "atr": 5.78,
+      "valuation": 4.3,
+      "atr": 7.86,
       "k_checks": {
-        "K-14": {
-          "passed": true,
-          "reason": "K-14: normal"
-        },
         "K-19": {
           "passed": true,
           "reason": "K-19: portföy alımı (aggressive) — atlandı"
@@ -143,46 +90,49 @@
         },
         "K-20": {
           "passed": true,
-          "reason": "K-20: RS temiz (1M: +14.1%)"
+          "reason": "K-20: RS temiz (1M: -1.6%)"
         },
         "K-17": {
           "passed": true,
-          "reason": "K-17: korelasyon temiz (Financial Services, aynı sektör: 1)"
+          "reason": "K-17: korelasyon temiz (industrials, aynı sektör: 1)"
         },
         "K-13": {
           "passed": true,
-          "reason": "VIX 17.8<22 tam pozisyon",
+          "reason": "VIX 18.9<22 tam pozisyon [jeopolitik]",
           "size": 5000
         }
       },
-      "reason": "finansal_döngüsel teması — teknik:4/10 fundamental:2/10",
+      "reason": "AI_altyapı teması — teknik:6/10 fundamental:0/10 valuation:4.3/10",
       "detay": {
         "sma200": "✅",
         "sma50": "✅",
-        "rsi": "⚠️ aşırı alım 87",
-        "mom_1m": "✅ +19.0%",
-        "skor": 2,
-        "pe": "→ 16.3"
+        "mom_1m": "✅ +6.4%",
+        "mom_3m": "✅ +32.8%",
+        "skor": 0,
+        "pe": "⚠️ 78.5",
+        "val_karar": "PAHALI (düşük güven)",
+        "val_fark": "-47.2%",
+        "val_guven": 57,
+        "val_archetype": "industrial_cyclical",
+        "val_gap": "-59%",
+        "val_skor": 4.3
       }
     },
     {
-      "symbol": "RKLB",
-      "tema": "savunma_uzay",
+      "symbol": "NRG",
+      "tema": "enerji_geçiş",
       "portföy": "aggressive",
-      "price": 85.27,
-      "stop": 78.45,
-      "target": 106.77,
-      "rr": 3.15,
-      "score": 3.35,
-      "teknik": 4,
-      "fundamental": 0,
+      "price": 165.36,
+      "stop": 153.9,
+      "target": 188.28,
+      "rr": 2.0,
+      "score": 4.06,
+      "teknik": 3,
+      "fundamental": 3,
       "tema_güç": 7.0,
-      "atr": 5.37,
+      "valuation": 4.3,
+      "atr": 5.73,
       "k_checks": {
-        "K-14": {
-          "passed": true,
-          "reason": "K-14: normal"
-        },
         "K-19": {
           "passed": true,
           "reason": "K-19: portföy alımı (aggressive) — atlandı"
@@ -197,27 +147,88 @@
         },
         "K-20": {
           "passed": true,
-          "reason": "K-20: RS temiz (1M: +2.8%)"
+          "reason": "K-20: RS temiz (1M: +4.1%)"
         },
         "K-17": {
           "passed": true,
-          "reason": "K-17: korelasyon temiz (Industrials, aynı sektör: 1)"
+          "reason": "K-17: korelasyon temiz (utilities, aynı sektör: 1)"
         },
         "K-13": {
           "passed": true,
-          "reason": "VIX 17.8<22 tam pozisyon",
+          "reason": "VIX 18.9<22 tam pozisyon [jeopolitik]",
           "size": 5000
         }
       },
-      "reason": "savunma_uzay teması — teknik:4/10 fundamental:0/10",
+      "reason": "enerji_geçiş teması — teknik:3/10 fundamental:3/10 valuation:4.3/10",
       "detay": {
         "sma200": "✅",
         "sma50": "✅",
-        "rsi": "⚠️ aşırı alım 81",
-        "mom_1m": "✅ +22.6%",
+        "rsi": "⚠️ aşırı alım 80",
+        "skor": 3,
+        "büyüme": "✅ ROE 39.7%",
+        "val_karar": "PAHALI (düşük güven)",
+        "val_fark": "-47.4%",
+        "val_guven": 65,
+        "val_archetype": "utility_regulated",
+        "val_gap": "-60%",
+        "val_skor": 4.3
+      }
+    },
+    {
+      "symbol": "CCJ",
+      "tema": "enerji_geçiş",
+      "portföy": "aggressive",
+      "price": 120.96,
+      "stop": 110.57,
+      "target": 141.74,
+      "rr": 2.0,
+      "score": 3.66,
+      "teknik": 4,
+      "fundamental": 0,
+      "tema_güç": 7.0,
+      "valuation": 4.3,
+      "atr": 5.19,
+      "k_checks": {
+        "K-19": {
+          "passed": true,
+          "reason": "K-19: portföy alımı (aggressive) — atlandı"
+        },
+        "K-05": {
+          "passed": true,
+          "reason": "K-05: earnings uzak"
+        },
+        "K-18": {
+          "passed": true,
+          "reason": "insider veri yok"
+        },
+        "K-20": {
+          "passed": true,
+          "reason": "K-20: RS temiz (1M: +9.7%)"
+        },
+        "K-17": {
+          "passed": true,
+          "reason": "K-17: korelasyon temiz (energy, aynı sektör: 1)"
+        },
+        "K-13": {
+          "passed": true,
+          "reason": "VIX 18.9<22 tam pozisyon [jeopolitik]",
+          "size": 5000
+        }
+      },
+      "reason": "enerji_geçiş teması — teknik:4/10 fundamental:0/10 valuation:4.3/10",
+      "detay": {
+        "sma200": "✅",
+        "sma50": "✅",
+        "rsi": "⚠️ aşırı alım 86",
+        "mom_1m": "✅ +13.3%",
         "skor": 0,
-        "roic": "❌ -10.1%",
-        "pe": "⚠️ -246.3"
+        "pe": "⚠️ 122.1",
+        "val_karar": "PAHALI (düşük güven)",
+        "val_fark": "-85.3%",
+        "val_guven": 66,
+        "val_archetype": "energy_integrated",
+        "val_gap": "-87%",
+        "val_skor": 4.3
       }
     }
   ],
