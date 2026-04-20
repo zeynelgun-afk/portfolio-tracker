@@ -327,6 +327,18 @@ def classify(ticker: str, verbose: bool = False) -> dict:
         return _result(ticker, "consumer_cyclical", 0.80, signals, fmp_raw)
 
     if "industrial" in sector_lc:
+        # Aerospace & Defense (LMT, NOC, RTX, GD) — DoD kontratlari, recession-proof
+        # Cyclical degil, 18-20x P/E defense premium. industrial_cyclical multiple
+        # (14x) cok dusuk fair value uretir. mature_megacap_tech tuning'e yakin.
+        if "aerospace" in industry_lc or "defense" in industry_lc:
+            # Eger BA gibi cyclical (air travel), degil DoD pure-play
+            # BA/TXT gibi cyclical kalir, LMT/NOC/GD stable contractors
+            if op_margin > 0.10 and rev_growth > -0.05:
+                signals["trigger"] = f"Defense contractor (stable, op_m={op_margin:.0%})"
+                return _result(ticker, "consumer_staples_aristocrat", 0.75, signals, fmp_raw)
+            signals["trigger"] = f"Aerospace cyclical (BA-like)"
+            return _result(ticker, "industrial_cyclical", 0.75, signals, fmp_raw)
+
         # Data center / AI beneficiaries (VRT, POWL, ETN power/cooling) —
         # FMP "Industrial" kategorisine koyar ama gerçek hayatta growth profile
         # hyper-growth tech'e yakın. Cyclical multiple uygulamak aşırı düşük
@@ -354,6 +366,11 @@ def classify(ticker: str, verbose: bool = False) -> dict:
         return _result(ticker, "telecom", 0.85, signals, fmp_raw)
 
     if "media" in industry_lc or "entertainment" in industry_lc:
+        # Streaming growth (NFLX) — rev_gr >%10 + mcap büyük + op margin yüksek
+        # media_traditional multiple'ı bu profile için aşırı düşük.
+        if rev_growth > 0.10 and op_margin > 0.15 and mcap > 50_000_000_000:
+            signals["trigger"] = f"Streaming growth (NFLX-style, gr={rev_growth:.0%}, op_m={op_margin:.0%})"
+            return _result(ticker, "profitable_growth_software", 0.75, signals, fmp_raw)
         signals["trigger"] = "Media traditional"
         return _result(ticker, "media_traditional", 0.75, signals, fmp_raw)
 
