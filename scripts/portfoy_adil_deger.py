@@ -105,18 +105,12 @@ def hesapla_sembol(sym):
                 "_version":    "v5",
             }
     except Exception as ex:
-        print(f"  [{sym}] v5 exception: {ex} — v2 fallback")
+        print(f"  [{sym}] v5 exception: {ex}")
 
-    # ── v2 legacy fallback ───────────────────────────────────────────
-    try:
-        from adil_deger_calculator import hesapla
-        r = hesapla(sym, sessiz=True)
-        if r:
-            r["_version"] = "v2"
-        return r
-    except Exception as ex:
-        print(f"  [{sym}] hata: {ex}")
-        return None
+    # v5 fail → None döner, çağrıyan taraf pozisyonu atlar
+    # (Önceden adil_deger_calculator fallback vardı ama o artık shim → v5'e
+    # yönlenirdi, yani etkili bir fallback değildi.)
+    return None
 
 
 # ═══════════════════════════════════════════════════════════════
@@ -436,9 +430,14 @@ def rapor_olustur(portfoyler, portfoy_syms, wl_syms, sonuclar, cycle, cycle_deta
     if cycle == "RISK_OFF":
         satirlar.append("> ⚠️ **UYARI:** RISK_OFF — UCUZ sinyalleri susturuldu. Sadece PAHALI uyarıları aktif.\n")
 
-    # Adil değer rejimi (adil_deger_calculator'dan)
+    # Adil değer rejimi (v5 market_regime modülünden)
     try:
-        from adil_deger_calculator import get_market_regime, AYI_REJIM_MULT, BOGA_REJIM_MULT
+        import sys as _s
+        from pathlib import Path as _P
+        agent_dir = str(_P(__file__).parent.parent / "agent")
+        if agent_dir not in _s.path:
+            _s.path.insert(0, agent_dir)
+        from valuation.market_regime import get_market_regime, AYI_REJIM_MULT, BOGA_REJIM_MULT
         _rejim, _spy, _sma21, _rejim_detay = get_market_regime()
         _mult = BOGA_REJIM_MULT if _rejim == "BOGA" else AYI_REJIM_MULT
         satirlar.append(f"**Değerleme Rejimi:** {_rejim_detay} | Çarpan: ×{_mult:.2f}\n")

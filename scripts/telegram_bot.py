@@ -148,38 +148,28 @@ def get_analyst_data(symbol: str) -> dict:
 
 def adil_deger_hesapla(symbol: str, use_v5: bool = True) -> dict | None:
     """
-    Adil değer hesapla. Öncelik: v5 framework (archetype-routed).
-    Fallback: eski v2 (adil_deger_calculator).
+    Adil değer hesapla — v5 framework (archetype-routed).
+    v5 fail olursa None döner (eskiden v2 fallback vardı ama
+    adil_deger_calculator shim zaten v5'e yönlendiriyor — sahte fallback).
     """
     symbol = symbol.upper()
 
-    # ── v5 framework ──────────────────────────────────────────────────
-    if use_v5:
-        try:
-            agent_dir = str(REPO_ROOT / "agent")
-            if agent_dir not in sys.path:
-                sys.path.insert(0, agent_dir)
-            from valuation.framework import valuate
-            res = valuate(symbol, verbose=False)
-            if res and not res.get("error"):
-                res["_version"] = "v5"
-                return res
-            print(f"[Bot] v5 fail {symbol}: {res.get('error') if res else 'None'} — v2'ye düşüyor")
-        except Exception as e:
-            print(f"[Bot] v5 exception {symbol}: {e} — v2'ye düşüyor")
+    if not use_v5:
+        return None
 
-    # ── v2 fallback ──────────────────────────────────────────────────
     try:
-        scripts_dir = str(REPO_ROOT / "scripts")
-        if scripts_dir not in sys.path:
-            sys.path.insert(0, scripts_dir)
-        from adil_deger_calculator import hesapla
-        r = hesapla(symbol, sessiz=True)
-        if r:
-            r["_version"] = "v2"
-        return r
+        agent_dir = str(REPO_ROOT / "agent")
+        if agent_dir not in sys.path:
+            sys.path.insert(0, agent_dir)
+        from valuation.framework import valuate
+        res = valuate(symbol, verbose=False)
+        if res and not res.get("error"):
+            res["_version"] = "v5"
+            return res
+        print(f"[Bot] v5 fail {symbol}: {res.get('error') if res else 'None'}")
+        return None
     except Exception as e:
-        print(f"[Bot] Hesaplama hatası {symbol}: {e}")
+        print(f"[Bot] v5 exception {symbol}: {e}")
         return None
 
 
@@ -236,7 +226,11 @@ def format_adil_deger(symbol: str, res: dict, analyst: dict) -> str:
             # Formatter fail → v5 ham çıktısını elle formatla
             return _format_v5_fallback(symbol, res)
 
-    # ── v2 legacy format (aşağıdaki orijinal kod) ────────────────────
+    # ── v2 legacy format (ÖLÜ KOD — adil_deger_hesapla artık sadece v5 döner) ───
+    # Bu blok, v5 shim'inden önceki adil_deger_calculator doğrudan çağrıldığında
+    # kullanılırdı. Artık shim her çağrıda v5 döndürür, bu blok gerçek trafik
+    # almayacak. Defensive olarak korunuyor — manuel v2 res dict gelirse
+    # çalışır.
     price = res.get("price", 0)
     adil  = res.get("adil_deger", 0) or 0
     fark  = res.get("fark_pct", 0) or 0
