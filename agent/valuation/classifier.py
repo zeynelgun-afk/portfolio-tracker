@@ -244,6 +244,21 @@ def classify(ticker: str, verbose: bool = False) -> dict:
     is_software = any(x in industry_lc for x in ["software", "internet", "cloud"]) or \
                   "technology" in sector_lc
 
+    # Hardware ayrım: "Computer Hardware" (WDC, STX, STOR), "Hardware Equipment" (FLEX, JBL)
+    # Bunlar yazılım değil — storage üreticileri veya contract electronics (EMS).
+    # Storage cyclical, EMS çok düşük marjlı. Tech-growth multiple uygulamak yanlış.
+    is_hardware = any(x in industry_lc for x in [
+        "computer hardware", "hardware, equipment", "hardware equipment",
+        "electronic equipment", "contract manufact"
+    ])
+    if is_hardware and not ("semiconductor" in industry_lc or "semi" in industry_lc):
+        # Yüksek marjlı + büyüme → consumer_cyclical
+        if rev_growth > 0.15 and op_margin > 0.15:
+            signals["trigger"] = f"Tech hardware growth (gr={rev_growth:.0%}) — cyclical"
+            return _result(ticker, "industrial_cyclical", 0.70, signals, fmp_raw)
+        signals["trigger"] = f"Tech hardware cyclical (low margin, EMS/storage): {industry}"
+        return _result(ticker, "industrial_cyclical", 0.75, signals, fmp_raw)
+
     if is_software:
         # Dual-channel: PLTR gibi gov+commercial karışımı — yüksek SBC + yüksek büyüme
         if sbc_intensity > 0.15 and rev_growth > 0.30:
