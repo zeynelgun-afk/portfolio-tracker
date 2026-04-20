@@ -526,6 +526,24 @@ def run_closing(ctx: dict):
     """Kapanış yorumu — piyasa kapandıktan sonra."""
     print("[Orkestratör] Kapanış modu çalışıyor...")
 
+    # Duplicate-guard: ayni seansin KAPANIS raporu zaten yazildiysa cik.
+    # Kapanis cron 21:30 UTC = TR 00:30 (ertesi gun gece). TR < 06:00 ise
+    # rapor bir onceki gunun tarihiyle yazilir (_save_report ile ayni mantik).
+    try:
+        from datetime import timedelta
+        _simdi_tr = datetime.now(TR_TZ)
+        if _simdi_tr.hour < 6:
+            _rapor_tarih = (_simdi_tr - timedelta(days=1)).strftime("%Y-%m-%d")
+        else:
+            _rapor_tarih = _simdi_tr.strftime("%Y-%m-%d")
+        _bugunku_rapor = REPO_ROOT / "reports" / "daily" / f"DAILY_KAPANIS_{_rapor_tarih}.md"
+        _force = os.environ.get("FORCE_CLOSING", "").strip().lower() in ("1", "true", "yes")
+        if _bugunku_rapor.exists() and not _force:
+            print(f"[Kapanis] {_bugunku_rapor.name} zaten mevcut — atlaniyor (FORCE_CLOSING=1 ile zorlanir).")
+            return
+    except Exception as _dg:
+        print(f"[Kapanis] Duplicate guard uyarisi: {_dg} (devam ediliyor)")
+
     # Fiyat + ATR stop güncellemesi — daily_update.py mekanik hesabı
     # daily_update.yml silindi, bu görevi orchestrator closing üstlendi
     import subprocess as _sp
@@ -1541,6 +1559,18 @@ def _flag_for_commit():
 def run_weekly(ctx: dict):
     """Pazar günü haftalık derin analiz + öğrenme + Darwin evrimi."""
     print("[Orkestratör] Haftalık mod çalışıyor...")
+
+    # Duplicate-guard: bugunku haftalik rapor zaten yazildiysa cik.
+    # Dosya formati: reports/weekly/WEEKLY_YYYY_MM_DD.md (underscore)
+    try:
+        _tarih = datetime.now(TR_TZ).strftime("%Y_%m_%d")
+        _bugunku_hrapor = REPO_ROOT / "reports" / "weekly" / f"WEEKLY_{_tarih}.md"
+        _force = os.environ.get("FORCE_WEEKLY", "").strip().lower() in ("1", "true", "yes")
+        if _bugunku_hrapor.exists() and not _force:
+            print(f"[Weekly] {_bugunku_hrapor.name} zaten mevcut — atlaniyor (FORCE_WEEKLY=1 ile zorlanir).")
+            return
+    except Exception as _dg:
+        print(f"[Weekly] Duplicate guard uyarisi: {_dg} (devam ediliyor)")
 
     learning_ctx  = build_weekly_learning_context()
     trade_stats   = analyze_closed_trades(days_back=7)
