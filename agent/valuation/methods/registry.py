@@ -246,6 +246,10 @@ def dcf_2stage(d: dict, archetype: str = "generic_equity") -> dict | None:
     wacc = get_param(archetype, "wacc", 0.09)
     terminal_growth = get_param(archetype, "terminal_growth", 0.03)
     terminal_growth = min(terminal_growth, d.get("bond_y", 4.5) / 100)
+    # Gordon growth model: WACC > terminal_growth zorunlu (pozitif discount)
+    # Eğer tuning hatası ile yakınsa, minimum 1% fark garantile
+    if wacc <= terminal_growth + 0.005:
+        terminal_growth = wacc - 0.02  # mecburen düşür
 
     pv = 0
     cur_fcf = adj_fcf
@@ -277,6 +281,9 @@ def dcf_multi_stage(d: dict, archetype: str = "generic_equity") -> dict | None:
     stage2_gr = 0.08
     wacc = get_param(archetype, "wacc", 0.09)
     terminal_gr = get_param(archetype, "terminal_growth", 0.025)
+    # Gordon guard: wacc > terminal_gr zorunlu
+    if wacc <= terminal_gr + 0.005:
+        terminal_gr = wacc - 0.02
 
     pv = 0
     cur = fcf
@@ -312,6 +319,9 @@ def dcf_multi_stage_aggressive(d: dict, archetype: str = "generic_equity") -> di
     stages = [(0.50, 3), (0.30, 3), (0.15, 4)]
     wacc = get_param(archetype, "wacc", 0.10)
     terminal_gr = get_param(archetype, "terminal_growth", 0.03)
+    # Gordon guard
+    if wacc <= terminal_gr + 0.005:
+        terminal_gr = wacc - 0.02
 
     pv = 0
     cur = fcf
