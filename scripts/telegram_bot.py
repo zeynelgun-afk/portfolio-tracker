@@ -513,20 +513,59 @@ def format_stats() -> str:
 def format_watchlist() -> str:
     """Günlük tarama watchlist."""
     try:
+        import html as _html
         p = REPO_ROOT / "data" / "watchlist.json"
         if not p.exists():
             return "📋 Watchlist henüz oluşturulmamış."
         d = json.load(open(p))
-        adaylar = d.get("adaylar", d.get("izlenenler", []))[:10]
+        # v3 şeması: izleme_listesi. Eski: adaylar/izlenenler (backward compat)
+        adaylar = d.get("izleme_listesi", d.get("adaylar", d.get("izlenenler", [])))
+        toplam = len(adaylar)
         if not adaylar:
             return "📋 Watchlist boş."
-        lines = [f"<b>📋 Watchlist ({len(adaylar)})</b>", ""]
+
+        # urgency + skor sıralaması: high/medium/low önce, sonra yüksek skor
+        urg_rank = {"high": 0, "medium": 1, "low": 2}
+        adaylar = sorted(
+            adaylar,
+            key=lambda x: (
+                urg_rank.get(str(x.get("urgency", "")).lower(), 3),
+                -float(x.get("skor", x.get("score", 0)) or 0),
+            ),
+        )[:10]
+
+        lines = [f"<b>📋 Watchlist (top {len(adaylar)}/{toplam})</b>", ""]
         for a in adaylar:
-            sym = a.get("sembol", a.get("symbol", "?"))
-            skor = a.get("skor", a.get("score", "?"))
-            port = a.get("portfoy", a.get("portföy", "-"))
-            neden = (a.get("neden", a.get("reason", "")) or "")[:60]
-            lines.append(f"• <b>{sym}</b> ({port}) skor {skor}\n  {neden}")
+            sym   = a.get("sembol", a.get("symbol", "?"))
+            skor  = a.get("skor", a.get("score", "?"))
+            port  = a.get("hedef_portfoy", a.get("portfoy", a.get("portföy", "-")))
+            urg   = str(a.get("urgency", "")).lower()
+            karar = a.get("karar", "")
+            tez   = (a.get("tez", a.get("neden", a.get("reason", ""))) or "")[:90]
+            hgir  = a.get("hedef_giris", "")
+            rr    = a.get("r_r_orani", a.get("r_r", ""))
+
+            ico = {"high": "🔥", "medium": "⚡", "low": "·"}.get(urg, "•")
+            head = f"{ico} <b>{_html.escape(str(sym))}</b> ({_html.escape(str(port))}) skor {skor}"
+            if karar:
+                head += f" [{_html.escape(str(karar))}]"
+            if hgir:
+                head += f" · giriş {_html.escape(str(hgir))}"
+            if rr:
+                head += f" · R:R {rr}"
+            lines.append(head)
+            if tez:
+                lines.append(f"   {_html.escape(tez)}")
+
+        # Mekanik karar özeti (varsa)
+        mk = d.get("mekanik_kararlar", {})
+        if mk:
+            ekle = len(mk.get("EKLE", []))
+            izle = len(mk.get("IZLE", []))
+            gec  = len(mk.get("GEC", []))
+            lines.append("")
+            lines.append(f"<i>Mekanik: EKLE {ekle} · İZLE {izle} · GEÇ {gec}</i>")
+
         return "\n".join(lines)
     except Exception as e:
         return f"Watchlist okunamadı: {e}"
