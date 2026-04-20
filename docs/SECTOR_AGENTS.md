@@ -33,23 +33,19 @@ ORCHESTRATOR (Claude)
 - Tema ETF'leri: BOTZ, ARKQ, CIBR, ITA, GDX, IBB
 - VIX seviyesi (web_search)
 
-**Çıktı:** `data/theme_scores.json`
+**Çıktı:** `agent/memory/theme_scores.json` (theme_manager.py tarafından yazılır, haftalık)
 ```json
 {
-  "tarih": "2026-04-11",
-  "aktif_tema": "SAVUNMA",
-  "tema_puanlari": {
-    "AI_ALTYAPI": 38,
-    "SAVUNMA": 61,
-    "ENERJI": 45,
-    "SAGLIK": 32,
-    "FINANS": 28,
-    "INSAAT": 41,
-    "TUKETICI": 25
+  "tarih": "2026-04-13",
+  "temalar": {
+    "AI_ALTYAPI": {"skor": 6.7, "kumulatif_pct": 13.92, "aktif": true, "trend": "yukselis"},
+    "SAVUNMA_JEOPOLITIK": {"skor": 6.4, "aktif": true, "trend": "yukselis"},
+    "ENERJI_HAMMADDE": {"skor": 7.8, "aktif": true, "trend": "yukselis"},
+    "SAGLIK_BIOTEK": {"skor": 5.0, "aktif": false, "trend": "yatay"},
+    "FINANS_BANKALAR": {"skor": 5.0}
   },
-  "rotasyon_alarmi": false,
-  "onceki_tema": "AI_ALTYAPI",
-  "gecis_gunu": null
+  "sim_donemi": "2026-01-02 → 2026-04-11",
+  "guncelleme": "2026-04-13T10:21:21"
 }
 ```
 

@@ -95,21 +95,9 @@ TIER_WEIGHTS = {"tier_0": 25, "tier_1": 22, "tier_2": 15, "tier_3": 8}
 def score_tema_uyumu(symbol: str, tema_puani: float, tier: str = "tier_1") -> tuple[float, dict]:
     """
     Tema puanı (0-70) × katman ağırlığı → normalize edilmiş 0-25 puan.
-    Tema puanı ≤ 0 ise theme_scores.json'dan ORTALAMA puan kullanılır
-    (eskiden max alınıyordu → her sembol aynı skoru alıyordu → sıralama bozuluyordu).
+    Tema puanı ≤ 0 ise skor 0 olur (tema atanmamış hisse tema kredisi almaz).
+    Not: Eski sentiment_engine fallback'i kaldırıldı (20 Nisan 2026).
     """
-    # Güncel tema puanı
-    scores_path = REPO_ROOT / "data" / "theme_scores.json"
-    if tema_puani <= 0 and scores_path.exists():
-        try:
-            with open(scores_path, encoding="utf-8") as f:
-                data = json.load(f)
-            puanlar = list(data.get("tema_puanlari", {}).values() or [])
-            # Max yerine ortalama — her sembole sabit max atanmasını önler
-            tema_puani = sum(puanlar) / len(puanlar) if puanlar else 0
-        except Exception:
-            tema_puani = 0
-
     # Normalize: 70 puan → max puan
     tema_normalized = min(tema_puani / 70, 1.0) if tema_puani > 0 else 0
     tier_weight     = TIER_WEIGHTS.get(tier, 15)

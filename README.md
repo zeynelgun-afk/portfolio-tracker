@@ -83,7 +83,6 @@ finzora-ai/
 │   ├── k20_rs_filter.py            # RS dead cat bounce filtresi
 │   ├── alpha_screener.py           # FMP hisse tarayıcı (aggressive/dividend/swing)
 │   ├── consistency_check.py        # Veri tutarlılık kontrolü
-│   ├── sentiment_engine.py         # Haber duygu analizi
 │   ├── premarket_gap_scanner.py    # Pre-market gap fırsatları
 │   ├── auto_trade_review.py        # Trade sonrası otomatik analiz
 │   ├── walk_forward_backtest.py    # Walk-forward backtest

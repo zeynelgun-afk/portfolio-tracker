@@ -174,7 +174,7 @@ debate_tetik = (
 | Bileşen | Max | FMP Endpoint |
 |---------|-----|---|
 | Teknik güç | 25 | historical-price-eod + RSI hesabı |
-| Tema uyumu | 25 | data/theme_scores.json × katman ağırlığı |
+| Tema uyumu | 25 | agent/memory/theme_scores.json × katman ağırlığı |
 | Momentum | 20 | stock-price-change + analyst-estimates |
 | Temel kalite | 15 | key-metrics-ttm + ratios-ttm |
 | Risk faktörü | 15 | cash-flow-statement + earnings-calendar |
