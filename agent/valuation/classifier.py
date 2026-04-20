@@ -197,6 +197,18 @@ def classify(ticker: str, verbose: bool = False) -> dict:
         signals["trigger"] = f"Asset mgmt / capital markets: {industry}"
         return _result(ticker, "asset_manager", 0.85, signals, fmp_raw)
 
+    # Payment networks (V, MA, AXP) — Credit Services industry ama operasyonel
+    # profile tech network (%40+ op margin, scale advantage). Classifier'da
+    # asset_manager'a yakın değil, profitable_growth_software tuning en yakın.
+    # PYPL/SQ gibi daha düşük marjlı fintech ise ayrı.
+    if "credit services" in industry_lc or "consumer finance" in industry_lc:
+        if op_margin > 0.25 and mcap > 50_000_000_000:
+            signals["trigger"] = f"Payment network (V/MA/AXP style, op_m={op_margin:.0%})"
+            return _result(ticker, "profitable_growth_software", 0.80, signals, fmp_raw)
+        # Daha dar margin → consumer finance / fintech
+        signals["trigger"] = f"Consumer finance / fintech: {industry}"
+        return _result(ticker, "consumer_cyclical", 0.70, signals, fmp_raw)
+
     # ── PRIORITY 2: Utility / Energy / Pharma (sektör-zorunlu) ──────
 
     if "utilit" in sector_lc or "utilit" in industry_lc:
