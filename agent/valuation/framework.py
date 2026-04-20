@@ -110,7 +110,53 @@ def _compute_confidence(
     return score, factors, red_flags
 
 
-def valuate(ticker: str, verbose: bool = False, apply_regime: bool = True) -> dict:
+# ─────────────────────────────────────────────────────────────────────────────
+# IN-MEMORY TTL CACHE
+# ─────────────────────────────────────────────────────────────────────────────
+# Aynı ticker 5 dakika içinde tekrar valuate edilirse cache'den döner.
+# Bot batch, portfolio_scan ve opportunity_finder paralel çağrılarda
+# gereksiz ~11 FMP call'u engeller.
+
+_VALUATION_CACHE: dict = {}
+_CACHE_TTL_SECONDS = 300  # 5 dakika
+
+
+def _cache_key(ticker: str, apply_regime: bool) -> str:
+    return f"{ticker.upper()}:{int(apply_regime)}"
+
+
+def _cache_get(ticker: str, apply_regime: bool) -> dict | None:
+    key = _cache_key(ticker, apply_regime)
+    if key not in _VALUATION_CACHE:
+        return None
+    entry = _VALUATION_CACHE[key]
+    import time as _t
+    if _t.time() - entry["t"] > _CACHE_TTL_SECONDS:
+        del _VALUATION_CACHE[key]
+        return None
+    return entry["result"]
+
+
+def _cache_set(ticker: str, apply_regime: bool, result: dict) -> None:
+    import time as _t
+    _VALUATION_CACHE[_cache_key(ticker, apply_regime)] = {
+        "t": _t.time(),
+        "result": result,
+    }
+    # Cache overflow koruması (max 200 ticker)
+    if len(_VALUATION_CACHE) > 200:
+        oldest = min(_VALUATION_CACHE.items(), key=lambda x: x[1]["t"])
+        del _VALUATION_CACHE[oldest[0]]
+
+
+def clear_cache() -> None:
+    """Test / force-refresh için."""
+    global _VALUATION_CACHE
+    _VALUATION_CACHE = {}
+
+
+def valuate(ticker: str, verbose: bool = False, apply_regime: bool = True,
+            use_cache: bool = True) -> dict:
     """
     Ana giriş noktası — ticker → full valuation report.
 
@@ -119,7 +165,16 @@ def valuate(ticker: str, verbose: bool = False, apply_regime: bool = True) -> di
         verbose: stdout log
         apply_regime: True ise fair value SPY SMA21 rejimine göre çarpanla düzeltilir
                       (BOGA: ×1.12, AYI: ×0.87)
+        use_cache: True ise 5 dakikalık in-memory cache kullanılır (varsayılan)
     """
+    # ── Cache hit? ────────────────────────────────────────────────
+    if use_cache:
+        cached = _cache_get(ticker, apply_regime)
+        if cached is not None:
+            if verbose:
+                print(f"[Valuation v5] {ticker} → cache hit ({int((__import__('time').time() - _VALUATION_CACHE[_cache_key(ticker, apply_regime)]['t']))}s önce)")
+            return cached
+
     # 1. Classify
     cls = classify(ticker)
     archetype_key = cls["archetype"]
@@ -377,6 +432,10 @@ def valuate(ticker: str, verbose: bool = False, apply_regime: bool = True) -> di
         log_valuation(output)
     except Exception:
         pass  # log hatası kritik değil
+
+    # Cache kaydı (sonraki 5 dk için)
+    if use_cache:
+        _cache_set(ticker, apply_regime, output)
 
     return output
 
