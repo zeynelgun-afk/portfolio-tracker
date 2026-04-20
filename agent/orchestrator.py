@@ -500,6 +500,19 @@ KESİN / MUHTEMEL / SPEKÜLATİF etiket kullan. Küçük harf Türkçe.
     # Tam raporu reports/daily/'e kaydet
     _save_report(response, "SABAH")
 
+    # SABAH raporundan DAILY_SWING_*.md ve DAILY_PORTFOY_*.md dosyalarini
+    # ayristir (ek Claude cagrisi yok, markdown parse; memory'deki v3.0 uclu
+    # yapinin maliyetsiz esdegeri).
+    try:
+        from split_sabah_report import split as _split_sabah
+        _split_result = _split_sabah()
+        if not _split_result.get("skipped"):
+            print(f"[Orkestratör] SWING + PORTFOY dosyalari ayristirildi.")
+        else:
+            print(f"[Orkestratör] Split atlandi: {_split_result.get('reason')}")
+    except Exception as _spe:
+        print(f"[Orkestratör] Split hatasi (tolere): {_spe}")
+
     # Claude kararlarını execute et (piyasa açıksa)
     _now_tr2 = datetime.now(TR_TZ)
     piyasa_acik = _now_tr2.weekday() < 5 and (
