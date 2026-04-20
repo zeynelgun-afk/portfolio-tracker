@@ -45,8 +45,12 @@ def score_technical(symbol: str, price: float) -> tuple[float, dict]:
     if not hist or not isinstance(hist, list) or len(hist) < 50:
         return 0, {}
 
-    closes  = [float(h["close"]) for h in hist]
-    volumes = [float(h.get("volume",0)) for h in hist[:20]]
+    closes  = [float(h.get("close") or 0) for h in hist]
+    volumes = [float(h.get("volume") or 0) for h in hist[:20]]
+    
+    # Tüm close'lar 0 ise bozuk veri → skip
+    if not any(c > 0 for c in closes[:50]):
+        return 0, {}
 
     sma50  = sum(closes[:50]) / 50
     sma200 = sum(closes[:200]) / 200 if len(closes) >= 200 else sma50
@@ -57,9 +61,9 @@ def score_technical(symbol: str, price: float) -> tuple[float, dict]:
     ag, al = sum(gains)/14, sum(losses)/14
     rsi    = 100-(100/(1+ag/al)) if al else 100
 
-    # Momentum (1M, 3M)
-    mom_1m = (closes[0]-closes[21])/closes[21]*100 if len(closes)>21 else 0
-    mom_3m = (closes[0]-closes[63])/closes[63]*100 if len(closes)>63 else 0
+    # Momentum (1M, 3M) — bozuk veriden kaçınmak için 0-check
+    mom_1m = ((closes[0]-closes[21])/closes[21]*100) if len(closes)>21 and closes[21]>0 else 0
+    mom_3m = ((closes[0]-closes[63])/closes[63]*100) if len(closes)>63 and closes[63]>0 else 0
 
     # Hacim
     avg_vol = sum(volumes[5:])/max(len(volumes[5:]),1)
