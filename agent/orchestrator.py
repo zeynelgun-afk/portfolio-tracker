@@ -478,6 +478,8 @@ def run_morning(ctx: dict):
 
 {premarket_ctx}
 
+{ctx['thematic']}
+
 {swing_ctx}
 {swing_uyari}
 
@@ -504,6 +506,12 @@ Rapor başlığında tarih ve gün bilgisini YUKARIDAN al — kendi tahminini ku
 Zorunlu bölümler (hepsini yaz):
 0. piyasa istihbaratı (aktif temalar, haber etki zinciri)
 0.5. dün seans sonu notları (session_state flag'leri)
+0.7. tematik katalist durumu (yukarıdaki "Tematik Durum" bloğu DOLUYSA doldur, boşsa ATLA):
+     - Status: PRE-EVENT / EVENT DAY / POST-EVENT
+     - Etkinlik adı, tema, birincil + ekosistem tickerlar
+     - Aksiyon: PRE → izleme listesine ekle + RSI<65/50SMA üstü/son 10g <%20 filtresi | EVENT DAY → KOVALAMA YASAK + canlı takip + ertesi gün planı | POST → giriş penceresi kuralları (1.gün yasak, 2.gün RSI<75 yarım, 3-5.gün volume+RSI kontrolü, 5+ geç giriş)
+     - Saf oyuncular (speculative) için: YARIM pozisyon (sermayenin max %3'ü), sabit %5 stop
+     - Detaylı kurallar: docs/THEMATIC_CATALYST_CALENDAR.md + docs/THEMATIC_INTEGRATION_GUIDE.md
 1. piyasa görünümü (endeks tablosu, ön piyasa, sektörler, VIX/K-13)
 2. haber ve analiz (portföyü etkileyen gelişmeler, analist notları)
 3. portföy sağlık durumu (3 portföy tablo, uyarılar, earnings takvimi)
@@ -603,6 +611,8 @@ def run_closing(ctx: dict):
 
 {ctx['portfolio_news']}
 
+{ctx['thematic']}
+
 {genome_ctx}
 
 === GÖREV: KAPANIS RAPORU ===
@@ -617,6 +627,10 @@ Zorunlu bölümler:
 2. portföy takibi (3 portföy tablo, uyarılar, aksiyonlar)
 3. swing trade durumu (chandelier stop kontrolü)
 4. kazanç açıklamaları (portföy/watchlist kesişimi)
+4.5. tematik katalist yansıması (yukarıdaki "Tematik Durum" bloğu DOLUYSA doldur, boşsa ATLA):
+     - Bugün event day ise: keynote özeti, gün içi piyasa tepkisi (birincil + ekosistem ticker hareketleri), yarın için planlanan giriş seviyeleri
+     - Post-event ise: pencere günü numarası, yakalanan/kaçırılan hareket, güncel RSI/volume durumu, devam eden pozisyonlar için izleme notları
+     - Pre-event ise: yarın için hazırlık (izleme listesi oluşturuldu mu, teknik seviyeler belirlendi mi)
 5. günün değerlendirmesi (sabah planı vs gerçekleşme, dersler)
 6. yarın aksiyonları (hemen / izle / pasif)
 
@@ -1611,6 +1625,8 @@ def run_weekly(ctx: dict):
 
 {ctx['risk']}
 
+{ctx['thematic']}
+
 {learning_ctx}
 
 {backtest_ctx}
@@ -1636,6 +1652,10 @@ Dry-run değerlendirmesi:
 4. JANUS: Yeni rejim mi tarihi rejim mi? Bu stratejiyi nasıl etkiler?
 5. Darwin evrim sonuçları: Hangi kural güçlendi, hangisi zayıfladı?
 6. Blind spot: Sistemin neyi görmediğini bulduk mu? Yeni agent gerekiyor mu?
+6.5. Tematik katalist review (yukarıdaki "Tematik Durum" bloğu DOLUYSA veya bu hafta yaşandıysa):
+     - Hafta içi tetiklenen etkinlikler ve piyasa tepkileri
+     - Finzora tarafından yakalanan fırsatlar ve kaçırılanlar
+     - Sıradaki 2 hafta için tematik takvim öngörüsü
 7. Gelecek hafta için 3 kritik izleme noktası
 8. Bu haftadan 2 somut ders
 
