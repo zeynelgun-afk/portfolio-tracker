@@ -1,261 +1,309 @@
 {
-  "tarih": "2026-04-11 20:35",
+  "tarih": "2026-04-20 12:17",
   "sektor": {
     "skorlar": {
-      "Teknoloji": 6.4,
-      "Enerji": 7.5,
-      "Savunma": 6.9,
-      "Altın/Emtia": 6.4,
-      "Finans": 6.4,
-      "Sanayi": 6.4,
-      "Sağlık": 6.6,
-      "TüketicD": 7.4,
-      "TüketicS": 7.1,
-      "Gayrimenkul": 5.7
+      "Teknoloji": 5.7,
+      "Enerji": 6.2,
+      "Savunma": 5.4,
+      "Altın/Emtia": 5.7,
+      "Finans": 5.7,
+      "Sanayi": 5.3,
+      "Sağlık": 6.5,
+      "TüketicD": 6.3,
+      "TüketicS": 5.9,
+      "Gayrimenkul": 8.3
     },
     "haber_sayisi": {
       "Teknoloji": 30,
-      "Enerji": 30,
-      "Savunma": 22,
-      "Altın/Emtia": 22,
-      "Finans": 30,
-      "Sanayi": 18,
-      "Sağlık": 23,
+      "Enerji": 5,
+      "Savunma": 20,
+      "Altın/Emtia": 17,
+      "Finans": 17,
+      "Sanayi": 11,
+      "Sağlık": 19,
       "TüketicD": 30,
-      "TüketicS": 17,
-      "Gayrimenkul": 6
+      "TüketicS": 21,
+      "Gayrimenkul": 15
     },
     "onemli_haberler": {
       "Teknoloji": [
         {
-          "baslik": "Is Nvidia the Best Buy in the Entire Stock Market?",
+          "baslik": "Breakfast News: Tesla Headlines Q1 Earnings Season",
           "skor": 1.0,
           "sembol": "NVDA",
-          "tarih": "2026-04-11 14:07"
+          "tarih": "2026-04-20 07:30"
         },
         {
-          "baslik": "Prediction: Nvidia Stock Is a Buy Before May 20",
+          "baslik": "Marvell shares gain on report of deal talks with Google to develop two AI chips",
           "skor": 1.0,
-          "sembol": "NVDA",
-          "tarih": "2026-04-11 13:30"
+          "sembol": "GOOGL",
+          "tarih": "2026-04-20 06:52"
         },
         {
-          "baslik": "The Smartest Growth Stocks to Invest $1,000 in As Investors Rotate Out of Tech",
-          "skor": 1.0,
-          "sembol": "NVDA",
-          "tarih": "2026-04-11 12:25"
+          "baslik": "Emissary Wealth LLC Takes Position in Advanced Micro Devices, Inc. $AMD",
+          "skor": -1.0,
+          "sembol": "AMD",
+          "tarih": "2026-04-20 06:10"
         }
       ],
       "Enerji": [
         {
-          "baslik": "The Only Dividend Strategy I'd Trust In A 3.5% Fed Funds World",
+          "baslik": "Moran Wealth Management LLC Purchases 14,424 Shares of Occidental Petroleum Corporation $OXY",
           "skor": 1.0,
-          "sembol": "CVX",
-          "tarih": "2026-04-11 13:05"
+          "sembol": "OXY",
+          "tarih": "2026-04-20 06:18"
         },
         {
-          "baslik": "Gelion is advancing its battery tech closer to commercialisation - ICYMI",
-          "skor": 1.0,
+          "baslik": "Davidson Trust Co. Lowers Stock Holdings in Chevron Corporation $CVX",
+          "skor": -1.0,
           "sembol": "CVX",
-          "tarih": "2026-04-11 07:46"
+          "tarih": "2026-04-20 05:07"
         },
         {
-          "baslik": "BioVie CEO explains Bezisterim Parkinson’s trial results - ICYMI",
+          "baslik": "Wall Street Week Ahead",
           "skor": 1.0,
-          "sembol": "CVX",
-          "tarih": "2026-04-11 07:27"
+          "sembol": "HAL",
+          "tarih": "2026-04-19 07:32"
         }
       ],
       "Savunma": [
         {
-          "baslik": "The Final Frontier Is Becoming Big Business. Here Are 3 Space Stocks to Buy Now.",
-          "skor": 1.0,
-          "sembol": "LMT",
-          "tarih": "2026-04-11 09:38"
-        },
-        {
-          "baslik": "The Final Frontier Is Becoming Big Business. Here Are 3 Space Stocks to Buy Now.",
+          "baslik": "SpaceX IPO Frenzy: 3 Space Stocks That Could Benefit Most",
           "skor": 1.0,
           "sembol": "RKLB",
-          "tarih": "2026-04-11 09:38"
+          "tarih": "2026-04-20 07:51"
         },
         {
-          "baslik": "Carnegie Investment Counsel Buys 7,507 Shares of Northrop Grumman Corporation $NOC",
-          "skor": 1.0,
-          "sembol": "NOC",
-          "tarih": "2026-04-11 04:17"
+          "baslik": "Saronic Could Build Us a Robot Navy",
+          "skor": -1.0,
+          "sembol": "GD",
+          "tarih": "2026-04-20 06:06"
+        },
+        {
+          "baslik": "Focused Investors LLC Sells 20,750 Shares of RTX Corporation $RTX",
+          "skor": -1.0,
+          "sembol": "RTX",
+          "tarih": "2026-04-20 06:04"
         }
       ],
       "Altın/Emtia": [
         {
-          "baslik": "The Only Dividend Strategy I'd Trust In A 3.5% Fed Funds World",
-          "skor": 1.0,
-          "sembol": "NEM",
-          "tarih": "2026-04-11 13:05"
+          "baslik": "RUA GOLD Submits Fast-Track Referral Application for Auld Creek Project in the Reefton Goldfield, Ne",
+          "skor": -1.0,
+          "sembol": "GOLD",
+          "tarih": "2026-04-20 07:30"
         },
         {
-          "baslik": "The Only Dividend Strategy I'd Trust In A 3.5% Fed Funds World",
-          "skor": 1.0,
-          "sembol": "GLD",
-          "tarih": "2026-04-11 13:05"
-        },
-        {
-          "baslik": "The Only Dividend Strategy I'd Trust In A 3.5% Fed Funds World",
+          "baslik": "Rupert Resources to Be Acquired by Agnico Eagle",
           "skor": 1.0,
           "sembol": "AEM",
-          "tarih": "2026-04-11 13:05"
+          "tarih": "2026-04-20 06:30"
+        },
+        {
+          "baslik": "Merit Financial Group LLC Buys 23,501 Shares of Freeport-McMoRan Inc. $FCX",
+          "skor": 1.0,
+          "sembol": "FCX",
+          "tarih": "2026-04-20 06:00"
         }
       ],
       "Finans": [
         {
-          "baslik": "JPMorgan Chase CEO Jamie Dimon Just Issued a Warning to Wall Street. The Famed Banker Sees 3 Big Ris",
-          "skor": -1.0,
-          "sembol": "JPM",
-          "tarih": "2026-04-11 12:47"
-        },
-        {
-          "baslik": "These 3 stocks reporting next week have a history of gaining after earnings",
+          "baslik": "JPMorgan Chase & Co. $JPM is KG&L Capital Management LLC’s 3rd Largest Position",
           "skor": 1.0,
-          "sembol": "MS",
-          "tarih": "2026-04-11 06:30"
+          "sembol": "JPM",
+          "tarih": "2026-04-20 06:18"
         },
         {
-          "baslik": "JPMorgan CEO Jamie Dimon Just Echoed Warren Buffett's Warning From 26 Years Ago",
-          "skor": -1.0,
-          "sembol": "JPM",
-          "tarih": "2026-04-11 02:35"
+          "baslik": "Bank of America Corporation $BAC Shares Bought by Exane Asset Management",
+          "skor": 1.0,
+          "sembol": "BAC",
+          "tarih": "2026-04-20 05:20"
+        },
+        {
+          "baslik": "The Goldman Sachs Group, Inc. $GS is Focused Investors LLC’s Largest Position",
+          "skor": 1.0,
+          "sembol": "GS",
+          "tarih": "2026-04-20 04:28"
         }
       ],
       "Sanayi": [
         {
-          "baslik": "Carnegie Investment Counsel Boosts Stock Position in Deere & Company $DE",
+          "baslik": "Honeywell to Sell Productivity Unit for $1.4 Billion",
           "skor": -1.0,
-          "sembol": "DE",
-          "tarih": "2026-04-11 05:22"
+          "sembol": "HON",
+          "tarih": "2026-04-20 07:53"
         },
         {
-          "baslik": "Apollon Wealth Management LLC Has $13.28 Million Position in Caterpillar Inc. $CAT",
-          "skor": -1.0,
-          "sembol": "CAT",
-          "tarih": "2026-04-11 04:19"
-        },
-        {
-          "baslik": "Don't Panic Over UPS: These 2 Mega-Cap Stocks Are the Real Opportunity",
+          "baslik": "Caterpillar Inc. $CAT Stake Lifted by Earned Wealth Advisors LLC",
           "skor": 1.0,
           "sembol": "CAT",
-          "tarih": "2026-04-10 21:05"
+          "tarih": "2026-04-20 06:12"
+        },
+        {
+          "baslik": "Honeywell International Inc. $HON Shares Sold by Davidson Investment Advisors",
+          "skor": -1.0,
+          "sembol": "HON",
+          "tarih": "2026-04-20 04:29"
         }
       ],
       "Sağlık": [
         {
-          "baslik": "Carnegie Investment Counsel Acquires 2,259 Shares of UnitedHealth Group Incorporated $UNH",
-          "skor": 1.0,
-          "sembol": "UNH",
-          "tarih": "2026-04-11 05:20"
-        },
-        {
-          "baslik": "Carnegie Investment Counsel Grows Stake in AbbVie Inc. $ABBV",
+          "baslik": "Eli Lilly Stock Falls as It Closes in on a $2 Billion Deal. Here's Why.",
           "skor": -1.0,
-          "sembol": "ABBV",
-          "tarih": "2026-04-11 05:20"
+          "sembol": "LLY",
+          "tarih": "2026-04-20 07:41"
         },
         {
-          "baslik": "UnitedHealth Group Incorporated $UNH Stock Holdings Lessened by City Holding Co.",
+          "baslik": "Earned Wealth Advisors LLC Boosts Stock Position in UnitedHealth Group Incorporated $UNH",
           "skor": 1.0,
           "sembol": "UNH",
-          "tarih": "2026-04-11 04:40"
+          "tarih": "2026-04-20 06:12"
+        },
+        {
+          "baslik": "Nations Financial Group Inc. IA ADV Acquires 3,604 Shares of Johnson & Johnson $JNJ",
+          "skor": 1.0,
+          "sembol": "JNJ",
+          "tarih": "2026-04-20 06:10"
         }
       ],
       "TüketicD": [
         {
-          "baslik": "Andy Jassy Just Announced Wonderful News for Amazon Stock Investors",
+          "baslik": "Breakfast News: Tesla Headlines Q1 Earnings Season",
+          "skor": 1.0,
+          "sembol": "TSLA",
+          "tarih": "2026-04-20 07:30"
+        },
+        {
+          "baslik": "Newbridge Financial Services Group Inc. Boosts Holdings in Amazon.com, Inc. $AMZN",
           "skor": 1.0,
           "sembol": "AMZN",
-          "tarih": "2026-04-11 16:00"
+          "tarih": "2026-04-20 06:50"
         },
         {
-          "baslik": "Prediction: A Cheaper EV Could Be a Game Changer for Tesla's Business",
-          "skor": 1.0,
-          "sembol": "TSLA",
-          "tarih": "2026-04-11 15:00"
-        },
-        {
-          "baslik": "These 2 EV Stocks Are Getting No Love Right Now, and That's a Buying Opportunity",
-          "skor": 1.0,
-          "sembol": "TSLA",
-          "tarih": "2026-04-11 10:55"
+          "baslik": "Amazon.com, Inc. $AMZN Shares Acquired by Country Trust Bank",
+          "skor": -1.0,
+          "sembol": "AMZN",
+          "tarih": "2026-04-20 06:50"
         }
       ],
       "TüketicS": [
         {
-          "baslik": "How Much You Really Need Invested to Replace a $100,000 Salary With Dividends",
+          "baslik": "2 Consumer-Staples Dividend Stocks to Buy for High-Yield Dividend Growth",
+          "skor": 1.0,
+          "sembol": "PG",
+          "tarih": "2026-04-20 05:15"
+        },
+        {
+          "baslik": "Insider Selling: Walmart (NASDAQ:WMT) EVP Sells $166,381.05 in Stock",
           "skor": -1.0,
-          "sembol": "MO",
-          "tarih": "2026-04-11 08:06"
+          "sembol": "WMT",
+          "tarih": "2026-04-20 04:26"
         },
         {
-          "baslik": "Carnegie Investment Counsel Raises Stock Holdings in CocaCola Company (The) $KO",
-          "skor": 1.0,
-          "sembol": "KO",
-          "tarih": "2026-04-11 04:19"
-        },
-        {
-          "baslik": "Is Coca-Cola Stock an Undervalued Dividend Stock to Buy?",
-          "skor": 1.0,
-          "sembol": "KO",
-          "tarih": "2026-04-10 19:55"
+          "baslik": "Walmart Eyes Stores as Warehouse Space for Same-Day Delivery",
+          "skor": -1.0,
+          "sembol": "WMT",
+          "tarih": "2026-04-19 20:43"
         }
       ],
       "Gayrimenkul": [
         {
-          "baslik": "The Only Dividend Strategy I'd Trust In A 3.5% Fed Funds World",
+          "baslik": "6-7% Yields From High-Quality REITs Look Too Cheap",
           "skor": 1.0,
           "sembol": "O",
-          "tarih": "2026-04-11 13:05"
+          "tarih": "2026-04-20 07:15"
         },
         {
-          "baslik": "How Much You Really Need Invested to Replace a $100,000 Salary With Dividends",
-          "skor": -1.0,
-          "sembol": "O",
-          "tarih": "2026-04-11 08:06"
-        },
-        {
-          "baslik": "High-Yield REITs I Would Trust For Retirement Income",
+          "baslik": "Prologis: Solid Results And Outlook, But No Bargain",
           "skor": 1.0,
-          "sembol": "O",
-          "tarih": "2026-04-11 07:15"
+          "sembol": "PLD",
+          "tarih": "2026-04-20 06:14"
+        },
+        {
+          "baslik": "Prologis, Inc. $PLD Stock Position Increased by Merit Financial Group LLC",
+          "skor": 1.0,
+          "sembol": "PLD",
+          "tarih": "2026-04-20 06:00"
         }
       ]
     }
   },
   "portfoy": {
-    "SM": {
-      "skor_110": 5.0,
-      "haber_sayisi": 0
+    "HIG": {
+      "skor_110": 10.0,
+      "ham_skor": 1.0,
+      "haber_sayisi": 1,
+      "son_baslik": "Mirae Asset Global Investments Co. Ltd. Boosts Stock Position in The Hartford In"
     },
-    "KOS": {
+    "ANET": {
+      "skor_110": 5.5,
+      "ham_skor": 0.0,
+      "haber_sayisi": 1,
+      "son_baslik": "Fortis Capital Advisors LLC Increases Stake in Arista Networks, Inc. $ANET"
+    },
+    "MU": {
+      "skor_110": 5.5,
+      "ham_skor": 0.0,
+      "haber_sayisi": 3,
+      "son_baslik": "Belpointe Asset Management LLC Sells 2,447 Shares of Micron Technology, Inc. $MU"
+    },
+    "MRK": {
+      "skor_110": 5.5,
+      "ham_skor": 0.0,
+      "haber_sayisi": 1,
+      "son_baslik": "FDA Grants Priority Review for KEYTRUDA® (pembrolizumab) and KEYTRUDA QLEX™ (pem"
+    },
+    "OKE": {
       "skor_110": 5.0,
       "haber_sayisi": 0
     },
     "MO": {
-      "skor_110": 5.5,
-      "ham_skor": 0.0,
-      "haber_sayisi": 2,
-      "son_baslik": "A $1 Million Portfolio That Quietly Pays You $67,500 a Year, No Job Required"
+      "skor_110": 10.0,
+      "ham_skor": 1.0,
+      "haber_sayisi": 1,
+      "son_baslik": "Altria Group, Inc. $MO Shares Purchased by Busey Bank"
     },
-    "XLE": {
-      "skor_110": 5.0,
-      "haber_sayisi": 0
-    },
-    "RGLD": {
-      "skor_110": 5.0,
-      "haber_sayisi": 0
-    },
-    "FCX": {
+    "NEE": {
       "skor_110": 5.5,
       "ham_skor": 0.0,
       "haber_sayisi": 1,
-      "son_baslik": "Freeport-McMoRan Inc. $FCX Shares Sold by Eagle Strategies LLC"
+      "son_baslik": "Fortis Capital Advisors LLC Invests $1.29 Million in NextEra Energy, Inc. $NEE"
+    },
+    "CAMT": {
+      "skor_110": 5.0,
+      "haber_sayisi": 0
+    },
+    "T": {
+      "skor_110": 5.5,
+      "ham_skor": 0.0,
+      "haber_sayisi": 2,
+      "son_baslik": "AT&T and Citi Enhance the AT&T Points Plus Card"
+    },
+    "CPRX": {
+      "skor_110": 5.0,
+      "haber_sayisi": 0
+    },
+    "VRT": {
+      "skor_110": 10.0,
+      "ham_skor": 1.0,
+      "haber_sayisi": 1,
+      "son_baslik": "Alger Capital Appreciation Fund Q1 2026 Portfolio Update"
+    },
+    "COHR": {
+      "skor_110": 5.0,
+      "haber_sayisi": 0
+    },
+    "VZ": {
+      "skor_110": 5.0,
+      "ham_skor": -0.1,
+      "haber_sayisi": 2,
+      "son_baslik": "Verizon Communications (VZ) Projected to Post Earnings on Monday"
+    },
+    "CI": {
+      "skor_110": 10.0,
+      "ham_skor": 1.0,
+      "haber_sayisi": 1,
+      "son_baslik": "Davidson Investment Advisors Trims Holdings in Cigna Group $CI"
     }
   }
 }

@@ -1,49 +1,49 @@
 {
-  "tarih": "2026-04-11 20:35",
-  "aktif_tema": "Enerji",
+  "tarih": "2026-04-20 12:17",
+  "aktif_tema": "Gayrimenkul",
   "tema_puanlari": {
     "Teknoloji": {
-      "sentiment": 6.4,
+      "sentiment": 5.7,
       "kaynak": "fmp_news"
     },
     "Enerji": {
-      "sentiment": 7.5,
+      "sentiment": 6.2,
       "kaynak": "fmp_news"
     },
     "Savunma": {
-      "sentiment": 6.9,
+      "sentiment": 5.4,
       "kaynak": "fmp_news"
     },
     "Altın/Emtia": {
-      "sentiment": 6.4,
+      "sentiment": 5.7,
       "kaynak": "fmp_news"
     },
     "Finans": {
-      "sentiment": 6.4,
+      "sentiment": 5.7,
       "kaynak": "fmp_news"
     },
     "Sanayi": {
-      "sentiment": 6.4,
+      "sentiment": 5.3,
       "kaynak": "fmp_news"
     },
     "Sağlık": {
-      "sentiment": 6.6,
+      "sentiment": 6.5,
       "kaynak": "fmp_news"
     },
     "TüketicD": {
-      "sentiment": 7.4,
+      "sentiment": 6.3,
       "kaynak": "fmp_news"
     },
     "TüketicS": {
-      "sentiment": 7.1,
+      "sentiment": 5.9,
       "kaynak": "fmp_news"
     },
     "Gayrimenkul": {
-      "sentiment": 5.7,
+      "sentiment": 8.3,
       "kaynak": "fmp_news"
     }
   },
   "rotasyon_alarmi": false,
   "dusuk_sektorler": [],
-  "not": "Sentiment motoru v1.0 | 2026-04-11 20:35"
+  "not": "Sentiment motoru v1.0 | 2026-04-20 12:17"
 }

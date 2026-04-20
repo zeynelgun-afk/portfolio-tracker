@@ -95,6 +95,15 @@ jobs:
           VOYAGE_API_KEY: ${{ secrets.VOYAGE_API_KEY }}
         continue-on-error: true
 
+      - name: Sentiment engine (sabah)
+        if: steps.mode.outputs.mode == 'morning'
+        run: |
+          python3 scripts/sentiment_engine.py 2>&1 | tail -15 || echo "Sentiment atlandi (toleransli hata)"
+        env:
+          FMP_API_KEY:  ${{ secrets.FMP_API_KEY }}
+          RAPIDAPI_KEY: ${{ secrets.RAPIDAPI_KEY }}
+        continue-on-error: true
+
       - name: Agent calistir
         run: python agent/orchestrator.py
         env:
