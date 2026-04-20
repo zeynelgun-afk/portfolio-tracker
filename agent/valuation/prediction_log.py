@@ -47,8 +47,16 @@ def log_valuation(result: dict) -> None:
     """
     v5 valuate() sonucunu JSONL'e ekle.
     Hata durumunda sessizce geçer (log sistemi ana akışı bloklamasın).
+    
+    Railway ortamında (ephemeral filesystem) log yazılmaz — dosya
+    restart'ta kaybolur ve git'e commit edilemez. Sadece GitHub
+    Actions workflow'lari ve yerel kullanim icin anlamli.
     """
     if not result or result.get("error"):
+        return
+
+    # Railway ephemeral fs — log yazma (restart'ta kaybolur)
+    if os.environ.get("RAILWAY") or os.environ.get("RAILWAY_ENVIRONMENT"):
         return
 
     try:
