@@ -119,6 +119,13 @@ except ImportError as _ie2:
     tag_trade_with_theme = None
     run_tema_matrix = None
 
+# Tematik Katalist Takvimi — NVIDIA Ising (14 Nis 2026) sonrası eklendi
+try:
+    from thematic_calendar import build_thematic_context, check_thematic_event
+except ImportError:
+    build_thematic_context = lambda *a, **kw: ""
+    check_thematic_event = lambda *a, **kw: (None, None)
+
 REPO_ROOT = Path(__file__).parent.parent
 TR_TZ     = pytz.timezone("Europe/Istanbul")
 
@@ -254,6 +261,13 @@ def collect_context(mode: str) -> dict:
         except Exception as e:
             portfolio_news = ""
 
+    # Tematik katalist takvim kontrolü (ucuz, her modda çalışır)
+    try:
+        thematic = build_thematic_context()
+    except Exception as e:
+        print(f"[Thematic] Hata: {e}")
+        thematic = ""
+
     return {
         "mode":           mode,
         "timestamp":      datetime.now(TR_TZ).isoformat(),
@@ -262,6 +276,7 @@ def collect_context(mode: str) -> dict:
         "twitter":        twitter,
         "risk":           risk,
         "portfolio_news": portfolio_news,
+        "thematic":       thematic,
         "raw": {
             "portfolios": portfolios,
             "market":     market,
