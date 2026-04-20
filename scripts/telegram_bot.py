@@ -340,6 +340,10 @@ def format_yardim() -> str:
   → Adil değer, değerleme metotları, analist görüşü
   <code>/beklenti AAPL</code> — Analist + EPS beklentileri
 
+<b>Valuation v5 (archetype-routed):</b>
+  <code>/vstats</code> — Son 30 gün kaydedilen değerleme özeti
+  <code>/backtest</code> (<code>/bt</code>) — ≥14 gün eski tahminlerin hit rate'i
+
 <b>AI (Claude):</b>
   <code>/sor &lt;soru&gt;</code> — Serbest soru (portföy bağlamında)
   <code>/analiz AAPL</code> — Tam tez + risk + portföy uygunluğu
@@ -800,6 +804,74 @@ def isle_mesaj(msg: dict):
     # ── /watchlist ────────────────────────────────────────────────
     if text_lower in ("/watchlist", "/izleme", "/iz"):
         tg_send(chat_id, format_watchlist(), reply_to=msg_id)
+        return
+
+    # ── /vstats — v5 valuation log özeti ──────────────────────────
+    if text_lower in ("/vstats", "/valstats"):
+        try:
+            import sys as _s
+            from pathlib import Path as _P
+            agent_dir = str(_P(__file__).parent.parent / "agent")
+            if agent_dir not in _s.path:
+                _s.path.insert(0, agent_dir)
+            from valuation.prediction_log import summary_stats
+            s = summary_stats(days_back=30)
+            if s.get("total", 0) == 0:
+                tg_send(chat_id, "<b>v5 Valuation Log</b>\n\nHenüz kayıt yok. Bot /deger veya sabah tarama sonrası birikir.", reply_to=msg_id)
+                return
+            lines = [f"<b>v5 Valuation Log — son 30 gün</b>", ""]
+            lines.append(f"Toplam: <b>{s['total']}</b> kayıt, <b>{s['unique_tickers']}</b> eşsiz ticker")
+            lines.append(f"Ortalama güven: <b>{s.get('avg_confidence','?')}/100</b>")
+            lines.append(f"Tarih aralığı: {s.get('date_range','?')}")
+            lines.append("")
+            lines.append("<b>Archetype dağılımı:</b>")
+            for k, v in sorted(s.get("archetypes", {}).items(), key=lambda x: -x[1]):
+                lines.append(f"  {k}: {v}")
+            lines.append("")
+            lines.append("<b>Karar dağılımı:</b>")
+            for k, v in sorted(s.get("kararlar", {}).items(), key=lambda x: -x[1]):
+                lines.append(f"  {k}: {v}")
+            tg_send(chat_id, "\n".join(lines), reply_to=msg_id)
+        except Exception as e:
+            tg_send(chat_id, f"vstats hatası: {e}", reply_to=msg_id)
+        return
+
+    # ── /backtest — v5 backtest analizi (14+ gün eski) ────────────
+    if text_lower in ("/backtest", "/bt"):
+        try:
+            import sys as _s
+            from pathlib import Path as _P
+            agent_dir = str(_P(__file__).parent.parent / "agent")
+            if agent_dir not in _s.path:
+                _s.path.insert(0, agent_dir)
+            from valuation.backtest import analyze
+            r = analyze(min_age_days=14)
+            if r.get("error"):
+                tg_send(chat_id, f"<b>Backtest</b>\n\n{r['error']}\n\n<i>Toplam kayıt: {r.get('total_predictions',0)}</i>", reply_to=msg_id)
+                return
+            o = r["overall"]
+            lines = [
+                f"<b>v5 Backtest — ≥14 gün eski tahminler</b>", "",
+                f"Değerlendirilen: <b>{r['unique_tickers']}</b> ticker ({r['eligible']} kayıt / toplam {r['total_predictions']})",
+                f"HIT RATE: <b>{o['hit_rate_pct']}%</b>",
+                "",
+                f"  HIT: {o['HIT']} | MISS: {o['MISS']} | NEUTRAL: {o['NEUTRAL']} | NO_SIGNAL: {o['NO_SIGNAL']}",
+                "",
+                "<b>Archetype hit rate:</b>",
+            ]
+            for a, v in sorted(r["by_archetype"].items(), key=lambda x: -(x[1].get("hit_rate") or 0)):
+                hr = v["hit_rate"] if v["hit_rate"] is not None else "—"
+                lines.append(f"  {a}: {hr}% ({v['HIT']}/{v['HIT']+v['MISS']})")
+            lines.append("")
+            lines.append("<b>Güven bazında:</b>")
+            for c in ["high (≥75)", "med (50-74)", "low (<50)"]:
+                if c not in r["by_confidence"]: continue
+                v = r["by_confidence"][c]
+                hr = v["hit_rate"] if v["hit_rate"] is not None else "—"
+                lines.append(f"  {c}: {hr}% ({v['HIT']}/{v['HIT']+v['MISS']})")
+            tg_send(chat_id, "\n".join(lines), reply_to=msg_id)
+        except Exception as e:
+            tg_send(chat_id, f"backtest hatası: {e}", reply_to=msg_id)
         return
 
     # ── /kapanan ──────────────────────────────────────────────────
