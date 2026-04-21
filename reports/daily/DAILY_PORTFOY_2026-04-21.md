@@ -50,8 +50,6 @@ Tümü kâr, stoplar uzak. VRT bugün kapanışta K-05 ÇIKIŞ. v5 fair value ç
 ### Temettü $141,864 (+41.9%) 🏆
 ⚠️ **MO stop %1.3 uzak** — senaryo testinde %5 piyasa düşüşünde tetiklenecek. Override yasak, tetik gelirse otomatik çık (K-06). T yarın earnings, K-05 mevcut pozisyonu etkilemez.
 
-
-
 ### Konsantrasyon
 🔴 **Tech %54.6** — K-17 üst sınıra yakın. Yeni tech girişi yasak.
 

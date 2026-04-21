@@ -1,0 +1,13 @@
+{
+  "_schema_version": 1,
+  "_aciklama": "Kapanis -> sabah handoff. Kapanis raporu sonunda _update_session_state() ile guncellenir. 21 Nisan 2026'da gitignore'dan cikarilip git-tracked yapildi.",
+  "son_guncelleme": "2026-04-21T20:00:00+03:00",
+  "son_kapanis_notlari": [
+    "20 Nisan kapanisi: VRT earnings 22 Nisan, K-05 geregi kapanisa dogru cikis hazirligi",
+    "MO stop %1.3 uzak — kritik bolgede, override yasak",
+    "DUK stop %3.3 uzak — izleme listesinde"
+  ],
+  "faz": "FAZ_0",
+  "buy_list": [],
+  "zorunlu_aksiyonlar": []
+}

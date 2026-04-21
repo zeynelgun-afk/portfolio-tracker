@@ -124,10 +124,15 @@ def _parse_sections(md_text: str) -> dict:
 
 
 def _strip_swing_from_bolum3(bolum_3: str, swing_subsection: str) -> str:
-    """Bolum 3'ten swing alt basligini cikarip temiz portfoy halini dondurur."""
+    """Bolum 3'ten swing alt basligini cikarip temiz portfoy halini dondurur.
+    Ardarda gelen bos satirlari da tek bos satira indirir."""
     if not swing_subsection or swing_subsection not in bolum_3:
         return bolum_3
-    return bolum_3.replace(swing_subsection, "").rstrip()
+    clean = bolum_3.replace(swing_subsection, "")
+    # Ucus 3+ satir boslugu 1'e indir
+    while "\n\n\n" in clean:
+        clean = clean.replace("\n\n\n", "\n\n")
+    return clean.rstrip()
 
 
 def _build_swing_rapor(parsed: dict, tarih: str) -> str:
@@ -161,7 +166,22 @@ def _build_swing_rapor(parsed: dict, tarih: str) -> str:
     if parsed["swing_subsection"]:
         parts.append("## 3. SWING DURUMU")
         parts.append("")
-        parts.append(parsed["swing_subsection"])
+        # Alt basligin "### Swing ..." formatini tek seviye yukselt
+        # (cift basligi onler: "## 3. SWING DURUMU" + altinda "### Swing 5/5..."
+        # yerine tek "## 3. SWING DURUMU — 5/5 dolu" + govde)
+        swing_lines = parsed["swing_subsection"].split("\n", 1)
+        if swing_lines and swing_lines[0].startswith("### "):
+            alt_baslik = swing_lines[0].replace("### ", "").strip()
+            # "Swing — 5/5 dolu" gibi → sadece detay kismini al
+            if alt_baslik.lower().startswith("swing"):
+                # "Swing — 5/5 dolu" → "5/5 dolu" (bolum basligina sonek olarak ekle)
+                detay = alt_baslik[len("swing"):].lstrip(" —-:").strip()
+                if detay:
+                    parts[-2] = f"## 3. SWING DURUMU — {detay}"
+            govde = swing_lines[1] if len(swing_lines) > 1 else ""
+            parts.append(govde.rstrip())
+        else:
+            parts.append(parsed["swing_subsection"])
         parts.append("")
 
     # Gunun plani (swing giris sinyalleri burada)

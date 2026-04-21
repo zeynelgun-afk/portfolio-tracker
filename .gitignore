@@ -21,8 +21,11 @@ build/
 agent/memory/portfolio_state.json
 agent/memory/daily_brief.json
 
-# Seans durumu — geçici
-data/session_state.json
+# Seans durumu — KALDIRILDI: 21 Nisan 2026 teshis. data/session_state.json
+# git-tracked olmali, yoksa kapanis -> sabah handoff'u calismiyor, sabah
+# raporu "flag yok" diyor. GitHub Actions runner her run'da fresh, yerel
+# "gecici" dosya paradigmasi bu mimaride ise yaramiyor.
+# data/session_state.json
 
 # Cache dosyaları
 data/vix_cache.json

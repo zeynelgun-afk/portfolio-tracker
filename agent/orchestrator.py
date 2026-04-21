@@ -488,6 +488,17 @@ TABLO YORUMLAMA KURALLARI (Kesin olarak uygula):
 - Bugün sütunu = o günkü hareket. P/L sütunu = giriş fiyatından toplam getiri. İKİSİNİ KARIŞTIRAMA.
 - K-05 earnings uyarısı: YENI GİRİŞ yasağı. Mevcut açık pozisyon K-05'ten ETKİLENMEZ, tutulabilir.
 - K-17: Aynı GÜNDE aynı sektörden YENI GİRİŞ yasağı. Portföyde mevcut tech pozisyonu K-17 tetiklemez.
+
+EKSIK VERI KURALLARI (21 Nisan 2026 teshisi — ZORUNLU UYGULA):
+- Endeks tablosunda HIÇ BİR hücre "—" veya boş birakilmaz. Değişim hesaplanamiyorsa:
+  * Önce veri bloğundaki previousClose + current price'tan MANUEL hesapla: (price - prevClose) / prevClose * 100
+  * Hala yoksa "N/A (kaynak: X)" yaz ve NEDEN eksik olduğunu parantezde belirt
+  * FMP changesPercentage seans dışı 0 döner — bu durumu bil, manuel hesapla
+- Ön piyasa BLOGUNUN tablo formatinda YAZILMASI ZORUNLU (prose yetmez):
+  | ticker | kapanış | ön piyasa | fark% | not |
+  Veri bloğundaki premarket_gaps dolu ise TÜMÜNÜ tabloda listele (12 taneyse 12'si de).
+- 0.5 Dün seans sonu notları: session_state veri bloğunda görünüyorsa oradan al, YOKSA bir önceki günün KAPANIS raporunun son 5 satırından özetle. "İlk çalışma — flag yok" cevabı kabul EDİLMEZ.
+- Herhangi bir bölümde hesaplama yapamiyorsan [KAYNAK_YOK] etiketi ile nedeni söyle — sessizce atlama.
 - Senaryo testinde listelenen semboller stop tetiklenenlerdir — fiyat ve stop seviyesi verilmiştir, kullan.
 
 KESİN / MUHTEMEL / SPEKÜLATİF etiket kullan. Küçük harf Türkçe.

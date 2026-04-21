@@ -36,9 +36,8 @@
 
 ---
 
-## 3. SWING DURUMU
+## 3. SWING DURUMU — 5/5 dolu
 
-### Swing 5/5 dolu
 CAT +%1.6, KLAC +%3.1, RPRX +%1.8 pozitif. AMAT -%1.3, GEV -%0.7 hafif zarar. Stoplar sağlıklı, slot yok — yeni giriş imkansız.
 
 ## 4. Günün Planı
