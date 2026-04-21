@@ -733,12 +733,11 @@ KESİN / MUHTEMEL / SPEKÜLATİF etiket kullan. Küçük harf Türkçe.
                     sym    = sp.get("sembol", "")
                     pnl    = sp.get("pnl_pct", 0)
                     gun_f  = sp.get("guncel_fiyat", 0)
-                    stop   = sp.get("stop_loss", 0)
-                    hedef  = sp.get("hedef_fiyat", 0)
-                    stop_uzak = (gun_f - stop) / gun_f * 100 if gun_f and stop else 0
                     sp_icon = "🟢" if pnl >= 0 else "🔴"
+                    # 21 Nisan 2026 politika: gruba stop uzaklik bilgisi
+                    # gitmesin (stopa yakin uyari turu). Sadece sembol + P/L.
                     ozet_lines.append(
-                        f"  {sp_icon} {sym:5} {pnl:+.1f}%  stop %{stop_uzak:.1f} uzak"
+                        f"  {sp_icon} {sym:5} {pnl:+.1f}%"
                     )
                 ozet_lines.append("")
         except Exception:
@@ -1112,12 +1111,17 @@ def run_monitor(ctx: dict):
 
         print(f"[Orkestratör] {len(aksiyonlar)} aksiyon alındı.")
 
-    # Uyarılar (acil bildirimler) → sadece private
+    # Uyarılar (stop yakını, trailing güncelle, kritik haber, VIX yüksek vb)
+    # 21 Nisan 2026 politika degisikligi: Zeynel "stopa yakin uyari bile
+    # gondermene gerek yok" dedi. Uyarilar artik sadece log'a gider,
+    # Telegram'a hic gitmez. STOP TETIKLENDI mesajlari _execute_claude_decisions
+    # ve _check_portfolio_exits icinde satis aksiyonu olarak zaten
+    # DM + Grup'a gidiyor — uyari olarak tekrar gondermeye gerek yok.
     if uyarilar:
-        msg = f"🔔 *Finzora Agent — Uyarı* ({saat})\n\n"
-        msg += "\n\n".join(uyarilar)
-        send_private_telegram(msg)
-        print(f"[Orkestratör] {len(uyarilar)} uyarı gönderildi.")
+        print(f"[Orkestratör] {len(uyarilar)} uyari (log'da, Telegram gonderilmedi):")
+        for u in uyarilar:
+            # Cok uzun uyarilari kisaltarak log'a yaz
+            print(f"  - {u.splitlines()[0][:120]}")
 
     if not aksiyonlar and not uyarilar:
         print("[Orkestratör] İzleme tamamlandı, aksiyon yok.")
