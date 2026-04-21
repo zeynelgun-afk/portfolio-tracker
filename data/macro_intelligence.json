@@ -1,84 +1,29 @@
 {
-  "tarih": "2026-04-20T17:04:22.108666+03:00",
-  "vix": 18.88,
+  "tarih": "2026-04-21T19:59:03.208446+03:00",
+  "vix": 20.08,
   "sektor_performans": {
-    "Basic Materials": -0.5018399154611886,
-    "Communication Services": 1.2528140890928796,
-    "Consumer Cyclical": -0.122147296306363,
-    "Consumer Defensive": 1.4057659216234253,
-    "Energy": 0.7697712661186795,
-    "Financial Services": 0.6498125549912803,
-    "Healthcare": 0.2630830346620705,
-    "Industrials": 0.4912060461457646,
-    "Real Estate": 1.1425219829770406,
-    "Technology": 0.3585453437184416,
-    "Utilities": -1.2389282932687151
+    "Basic Materials": -0.267301688070154,
+    "Communication Services": -0.2613543659207407,
+    "Consumer Cyclical": -0.7046559310141864,
+    "Consumer Defensive": 0.4061145925951859,
+    "Energy": 0.006925445418159981,
+    "Financial Services": -0.4832729052573925,
+    "Healthcare": -1.0536782564522618,
+    "Industrials": -0.8084968671715487,
+    "Real Estate": -0.7432228261887608,
+    "Technology": -0.18281154363258834,
+    "Utilities": -1.9871608470748314
   },
   "dominant_temalar": [
     {
-      "tema_adi": "enerji_geçiş",
-      "güç_skoru": 7,
-      "neden": "İran/Hürmüz Boğazı gerilimi enerji güvenliğini ön plana çıkardı; Energy sektörü +0.8% ve petrol volatilitesi yüksek. AI güç talebi ile birleşince nükleer/altyapı temaları destekleniyor.",
-      "öncelikli_alt_dal": "enerji_altyapı_nükleer",
-      "önerilen_hisseler": [
-        "VST",
-        "CEG",
-        "NRG"
-      ],
-      "portföy": "aggressive",
-      "aciliyet": "orta",
-      "hisse_evreni": [
-        "VST",
-        "OKE",
-        "CCJ",
-        "ENPH",
-        "CEG",
-        "RUN",
-        "ET",
-        "NRG",
-        "KMI",
-        "FSLR",
-        "WMB",
-        "NEE"
-      ]
-    },
-    {
-      "tema_adi": "savunma_uzay",
-      "güç_skoru": 7,
-      "neden": "İran savaşı haberleri aktif ('The War Is Not Over'), Hürmüz tansiyonu sürüyor. Jeopolitik risk primi savunma harcamalarını destekliyor.",
-      "öncelikli_alt_dal": "savunma_ana_yükleniciler",
-      "önerilen_hisseler": [
-        "LMT",
-        "RTX",
-        "NOC"
-      ],
-      "portföy": "aggressive",
-      "aciliyet": "yüksek",
-      "hisse_evreni": [
-        "LHX",
-        "PANW",
-        "RDW",
-        "ZS",
-        "S",
-        "GD",
-        "NOC",
-        "CRWD",
-        "AJRD",
-        "KTOS",
-        "RTX",
-        "RKLB",
-        "LMT"
-      ]
-    },
-    {
       "tema_adi": "AI_altyapı",
-      "güç_skoru": 6,
-      "neden": "Technology +0.4% ile sektörün hafif pozitif kalması, jeopolitik gürültüye rağmen AI capex temasının devam ettiğini gösteriyor. Güç/soğutma alt dalı hem AI hem enerji güvenliği ile çift destekli.",
+      "güç_skoru": 7,
+      "neden": "AI CapEx döngüsü haberlerde ön planda, Technology görece dayanıklı (-0.2%), güç/soğutma altyapısı talebi sürüyor",
       "öncelikli_alt_dal": "güç_soğutma",
       "önerilen_hisseler": [
         "VRT",
         "ETN",
-        "POWL"
+        "PWR"
       ],
       "portföy": "aggressive",
       "aciliyet": "orta",
@@ -89,58 +34,111 @@
         "GNRC",
         "HUBB"
       ]
+    },
+    {
+      "tema_adi": "enerji_geçiş",
+      "güç_skoru": 6,
+      "neden": "Energy sektörü flat (+0.0%) ancak AI güç talebi ve enerji güvenliği teması destekleyici; defansif karakter ön planda",
+      "öncelikli_alt_dal": "nükleer_güç",
+      "önerilen_hisseler": [
+        "CEG",
+        "VST",
+        "NEE"
+      ],
+      "portföy": "balanced",
+      "aciliyet": "orta",
+      "hisse_evreni": [
+        "NRG",
+        "FSLR",
+        "VST",
+        "KMI",
+        "ENPH",
+        "CCJ",
+        "RUN",
+        "OKE",
+        "ET",
+        "WMB",
+        "NEE",
+        "CEG"
+      ]
+    },
+    {
+      "tema_adi": "savunma_uzay",
+      "güç_skoru": 6,
+      "neden": "Trump'ın 'uzun savaş' sinyali ve jeopolitik gerilim haberleri savunma temasını destekliyor",
+      "öncelikli_alt_dal": "savunma_ana",
+      "önerilen_hisseler": [
+        "LMT",
+        "NOC",
+        "RTX"
+      ],
+      "portföy": "balanced",
+      "aciliyet": "orta",
+      "hisse_evreni": [
+        "LHX",
+        "RKLB",
+        "LMT",
+        "ZS",
+        "KTOS",
+        "PANW",
+        "AJRD",
+        "S",
+        "RTX",
+        "GD",
+        "RDW",
+        "NOC",
+        "CRWD"
+      ]
     }
   ],
   "kacınılacak": [
     "Consumer Cyclical",
-    "Healthcare"
+    "Real Estate",
+    "Financial Services"
   ],
-  "piyasa_modu": "risk-off-light",
+  "piyasa_modu": "nötr",
   "aktif_kriz": {
     "tip": "jeopolitik",
-    "guven": 7,
-    "kanit": "İran savaşı manşetleri çoklu kaynakta aktif ('War Is Not Over', Hürmüz Boğazı volatilitesi, Dow flat/S&P-Nasdaq gerileme). Defansif sektörler (Consumer Defensive +1.4%, Communication Services +1.3%, Real Estate +1.1%) öncülük ediyor; Energy +0.8% ile petrol risk primi devam ediyor. Tech görece zayıf — klasik jeopolitik rotasyon paterni.",
+    "guven": 5,
+    "kanit": "Trump 'uzun savaş' sinyali ve piyasaların etkileri hafife aldığına dair haber manşette. Ancak VIX 20.1 ile ılımlı, altın/savunma belirgin sıçrama göstermiyor — kanıt güçlü değil, erken evre sinyal.",
     "beneficiary_sectors": [
       "Energy",
       "Defense",
       "Gold",
-      "Consumer Defensive",
-      "Real Estate"
+      "Consumer Defensive"
     ],
     "sensitive_sectors": [
-      "Technology",
       "Consumer Cyclical",
-      "Communication Services",
       "Financial Services",
-      "Industrials"
+      "Real Estate"
     ]
   },
-  "genel_yorum": "VIX 18.9 ile henüz panik yok ama defansif rotasyon + enerji primi klasik jeopolitik stres sinyali. Hürmüz yeniden açılsa da 'savaş bitmedi' manşetleri volatiliteyi canlı tutuyor. Savunma + enerji altyapısı öncelikli, yeni agresif tech girişlerinde temkinli olunmalı.",
+  "genel_yorum": "Piyasa hafif risk-off eğiliminde: döngüsel sektörler (Consumer Cyclical, Real Estate, Financials) satış altında, Consumer Defensive pozitif. Jeopolitik haberler ve Fed politika hatası söylemi risk iştahını baskılıyor ancak VIX henüz panik eşiğinde değil. Güven düşük olduğu için agresif rotasyon yerine temkinli pozisyon korunmalı.",
   "haberler": [
     {
-      "baslik": "Dow Jones flat as Iran tensions rise; S&P 500, Nasdaq slip",
-      "kaynak": "invezz.com",
-      "tarih": "2026-04-20 09:40"
+      "baslik": "The Dow Jones Transportation Average is on a historic tear. Here are 6 charts you need to see.",
+      "kaynak": "marketwatch.com",
+      "tarih": "2026-04-21 12:45"
     },
     {
-      "baslik": "Investors are misreading news about the Iran war, analysts say as markets whipsaw",
-      "kaynak": "cnbc.com",
-      "tarih": "2026-04-20 09:29"
-    },
-    {
-      "baslik": "The War Is Not Over",
+      "baslik": "This Market Rally Has An Elephant In The Room: The AI CapEx Cycle",
       "kaynak": "seekingalpha.com",
-      "tarih": "2026-04-20 09:19"
+      "tarih": "2026-04-21 12:33"
     },
     {
-      "baslik": "Oil prices tank and stocks climb after Iran reopens the Strait of Hormuz",
-      "kaynak": "fastcompany.com",
-      "tarih": "2026-04-20 09:01"
-    },
-    {
-      "baslik": "Krakauer: \"Think Globally\" for Equities Amid Strait of Hormuz Volatility",
+      "baslik": "\"Respect the Trend\" Higher in Tech, Just Mind Selling Risk",
       "kaynak": "youtube.com",
-      "tarih": "2026-04-20 09:00"
+      "tarih": "2026-04-21 12:31"
+    },
+    {
+      "baslik": "Kevin Warsh says Fed is dealing with 'fatal policy error'",
+      "kaynak": "youtube.com",
+      "tarih": "2026-04-21 12:30"
+    },
+    {
+      "baslik": "Fed chair nominee Kevin Warsh: The economy's potential is growing quite quickly",
+      "kaynak": "youtube.com",
+      "tarih": "2026-04-21 12:25"
     }
   ]
 }

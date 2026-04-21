@@ -32,7 +32,11 @@
     "ETN": "industrials",
     "PWR": "industrials",
     "GNRC": "industrials",
-    "HUBB": "industrials"
+    "HUBB": "industrials",
+    "WMB": "energy",
+    "RKLB": "industrials",
+    "ZS": "technology",
+    "RTX": "industrials"
   },
   "updated": {
     "COHR": 1776693839,
@@ -67,6 +71,10 @@
     "ETN": 1776693913,
     "PWR": 1776693919,
     "GNRC": 1776693924,
-    "HUBB": 1776693929
+    "HUBB": 1776693929,
+    "WMB": 1776790824,
+    "RKLB": 1776790835,
+    "ZS": 1776790846,
+    "RTX": 1776790876
   }
 }

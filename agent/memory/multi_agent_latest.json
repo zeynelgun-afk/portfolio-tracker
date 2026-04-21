@@ -2,70 +2,53 @@
   "macro": {
     "sinyal": "NEUTRAL",
     "guven": "MEDIUM",
-    "ana_tema": "VIX normal seviyede ama yükselişte, earnings haftası ve Retail Sales verisi öncesi temkinli konsolidasyon",
+    "ana_tema": "VIX 20 seviyesinde hafif yükselişle risk iştahı zayıflıyor, earnings sezonu ve Retail Sales verisi öncesi temkinli bekleyiş hakim.",
     "beklentiler": [
-      "Bu hafta yoğun earnings (T, VRT, HIG, NEE) sektörel volatiliteyi artıracak",
-      "24 Nisan Retail Sales verisi tüketici gücünü test edecek, zayıf gelirse risk-off tetikleyebilir",
-      "VIX 18.88 seviyesinde yukarı eğilimli, 20 üstüne çıkarsa savunmacı rotasyon güçlenir"
+      "Bu hafta yoğun earnings trafiği (VRT, T, NEE, HIG) volatiliteyi artıracak",
+      "24 Nisan Retail Sales verisi tüketici gücü ve Fed beklentileri için kritik",
+      "VIX 20 üstünde kalıcılaşırsa K-10 savunmacı allokasyon tetiklenebilir"
     ],
-    "risk_faktoru": "VIX +%8 yükseliş sinyal veriyor; earnings kaynaklı tek isim şoklarının endekse yayılması ve Retail Sales sürprizi en kritik riskler",
+    "risk_faktoru": "VIX'in +6.41% sıçraması ve SPY/QQQ zayıflığı kombinasyonu; earnings kaynaklı idiosyncratic şoklar ve makro veri sürprizleri risk-off'a dönüşü hızlandırabilir.",
     "tahmin": {
       "yon": "NEUTRAL",
       "buyukluk": "LOW",
       "sembol": "SPY"
     },
     "_agent": "MACRO_AGENT",
-    "_timestamp": "2026-04-20T14:05:47.196174"
+    "_timestamp": "2026-04-21T17:01:42.576731"
   },
   "sector": {
     "aktif_rejim": "ai_boom",
-    "lider_sektor": "Teknoloji/Yarı İletken (XLK, SMH)",
-    "zayif_sektor": "Utilities (XLU)",
-    "rotasyon_onerisi": "Utilities ve defansif telekom'dan semi-cap equipment (KLAC, AMAT) ve AI altyapı (VRT, COHR, ANET) tarafına kısmi rotasyon; ancak VIX 18.88'e yükseldiği için yeni momentum girişinde K-02 dikkate alınmalı",
-    "guven": "MEDIUM",
+    "lider_sektor": "Teknoloji/AI Altyapı (XLK, SMH)",
+    "zayif_sektor": "Utilities (XLU) ve Consumer Staples (XLP)",
+    "rotasyon_onerisi": "Utilities ve defansif sektörlerden AI altyapı (semis, power, networking) ve Industrials'a (XLI) rotasyon sürüyor",
+    "guven": "HIGH",
     "tahmin": {
       "yon": "UP",
       "buyukluk": "MEDIUM",
       "sembol": "SMH"
     },
     "_agent": "SECTOR_AGENT",
-    "_timestamp": "2026-04-20T14:05:54.605276"
+    "_timestamp": "2026-04-21T17:01:48.063472"
   },
   "signal": {
     "_agent": "SIGNAL_AGENT",
-    "_raw": "{\n  \"portfoy_sinyalleri\": [\n    {\n      \"sembol\": \"COHR\",\n      \"sinyal\": \"HOLD\",\n      \"rsi_yorumu\": \"overbought\",\n      \"sma_durumu\": \"ustunde\",\n      \"aciklama\": \"Güçlü momentum, stop uzak; trailing stop ile koru.\"\n    },\n    {\n      \"sembol\": \"VRT\",\n      \"sinyal\": \"SELL\",\n      \"rsi_yorumu\": \"n",
+    "_raw": "{\n  \"portfoy_sinyalleri\": [\n    {\n      \"sembol\": \"COHR\",\n      \"sinyal\": \"HOLD\",\n      \"rsi_yorumu\": \"overbought\",\n      \"sma_durumu\": \"ustunde\",\n      \"aciklama\": \"Güçlü momentum ama +21.4% kârda, trailing stop yaklaşıyor\"\n    },\n    {\n      \"sembol\": \"VRT\",\n      \"sinyal\": \"WATCH\",\n      \"rsi_yor",
     "_parse_hata": true,
     "guven": "LOW"
   },
   "risk": {
-    "risk_seviyesi": "HIGH",
-    "stop_yakini": [
-      "MO - %0.9 uzakta (KRİTİK)",
-      "MRK - %4.2 uzakta",
-      "NEE - %4.5 uzakta",
-      "VZ - %5.1 uzakta",
-      "CPRX - %5.7 uzakta",
-      "OKE - %5.8 uzakta",
-      "RPRX - %6.2 uzakta"
-    ],
-    "konsantrasyon_uyarisi": "Technology sektörü %55.5 — K-17 limit aşımı. Agresif portföyde COHR+VRT+ANET+MU+CAMT tamamı tech/semis, yüksek korelasyon riski. Semis sub-sektörü (MU+CAMT+AMAT+KLAC) ayrıca birikmiş durumda. VIX +%8 artışı tech için erken uyarı.",
-    "senaryo_5pct_dusus": "Toplam tahmini kayıp: -$18,557 (-%5.9). MO stop tetiklenir (-$704). Agresif portföy drawdown %10+ seviyesine iner. Tech ağırlığı nedeniyle portföy betası piyasa üstü.",
-    "onerileri": [
-      "MO pozisyonunu bugün proaktif kapat veya stop'u trailing'e çevir (K-09) — %0.9 mesafe açılışta tetiklenebilir",
-      "Agresif portföyde tech konsantrasyonunu azalt: CAMT (-75% PAH, güven 68) veya MU (%7.3 stop, kâr realizasyonu K-11) için kademeli çıkış değerlendir",
-      "VIX +%8 yükseldi — K-02 gereği yeni tech girişi yapma, K-10 savunmacı allokasyon izle",
-      "MRK/NEE %4-4.5 stop mesafesinde — stop seviyelerini doğrula, gap riski için uyanık ol"
-    ],
-    "guven": "HIGH",
     "_agent": "RISK_AGENT",
-    "_timestamp": "2026-04-20T14:06:19.613411"
+    "_raw": "{\n  \"risk_seviyesi\": \"HIGH\",\n  \"stop_yakini\": [\n    \"MO - %1.1 uzakta (KRİTİK)\",\n    \"NEE - %3.3 uzakta\",\n    \"CPRX - %4.2 uzakta\",\n    \"VZ - %4.9 uzakta\",\n    \"RPRX - %5.0 uzakta\"\n  ],\n  \"konsantrasyon_uyarisi\": \"Teknoloji sektörü %54.6 — K-17 limitini aşıyor (40% eşik). Agresif portföyde 6 pozisyo",
+    "_parse_hata": true,
+    "guven": "LOW"
   },
   "cio": {
     "karar": "ACIL_CIK",
     "hedef_sembol": "MO",
-    "gerekce": "Risk Analisti (HIGH güven) MO'nun stop seviyesine %0.9 mesafede olduğunu ve açılışta tetiklenebileceğini bildiriyor — K-09 gereği proaktif kapatma zorunlu. Ek olarak Tech konsantrasyonu %55.5 ile K-17 limitini aşmış; VIX +%8 yükselişi (Makro NEUTRAL teyit) yeni tech girişini K-02 ile yasaklıyor. Sektör Analisti semis rotasyonu önerse de Risk önceliği (Risk > Makro > Sektör > Teknik) gereği önce savunma: MO'yu kapat, ardından CAMT/MU'da kademeli kâr realizasyonu (K-11) ile tech ağırlığını düşür. Teknik sinyal parse hatası verdiği için ağırlığı zaten düşük, karara dahil edilmedi. Jeopolitik kriz rejimi de savunmacı duruşu destekliyor.",
-    "uyari": "MO açılışta stop tetikleyebilir (-$704 kayıp riski). MRK/NEE/VZ de %4-5 stop mesafesinde, gap riskine karşı stop seviyeleri doğrulanmalı. VIX 20 üstüne çıkarsa savunmacı rotasyon hızlandırılmalı.",
-    "guven": "HIGH",
+    "gerekce": "Risk yöneticisi HIGH risk seviyesi bildiriyor ve MO stop-loss'a sadece %1.1 uzaklıkta (KRİTİK). K-17 ihlali var: teknoloji konsantrasyonu %54.6 ile %40 limitini aşıyor. Jeopolitik kriz rejimi aktif ve VIX +6.41% sıçradı. Öncelik sırasına göre (Risk > Makro > Sektör > Teknik) risk sinyali baskın. MO stop'a en yakın pozisyon olduğu için preemptif çıkış yapılmalı; aynı zamanda teknoloji fazlalığı kademeli olarak azaltılıp savunma/enerji (ITA, XLE) rotasyonu başlatılmalı. Sektör analistinin AI boom tezi (ağırlık 1.53) güçlü olsa da aktif rejim jeopolitik kriz olduğu için yeni giriş yapılmamalı, mevcut AI pozisyonları korunmalı.",
+    "uyari": "MO stop %1.1 uzakta — anlık tetiklenebilir. Teknoloji %54.6 konsantrasyon K-17 ihlali, kademeli trim gerekli. Signal ve Risk agent parse hatası verdi, çıktılar kısmi okundu; tam veri için re-run önerilir.",
+    "guven": "MEDIUM",
     "analist_uzlasma": "ORTA",
     "tahmin": {
       "yon": "DOWN",
@@ -73,7 +56,7 @@
       "sembol": "SPY"
     },
     "_agent": "CIO_AGENT",
-    "_timestamp": "2026-04-20T14:06:31.440374"
+    "_timestamp": "2026-04-21T17:02:25.404304"
   },
   "weights": {
     "MACRO_AGENT": 0.8925,

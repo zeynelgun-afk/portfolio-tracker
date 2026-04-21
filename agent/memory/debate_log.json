@@ -275,6 +275,48 @@
         }
       },
       "karar_degisti_mi": true
+    },
+    {
+      "symbol": "MO",
+      "tarih": "2026-04-21T17:03:14.814221",
+      "ilk_karar": {
+        "karar": "ACIL_CIK",
+        "hedef_sembol": "MO",
+        "gerekce": "Risk yöneticisi HIGH risk seviyesi bildiriyor ve MO stop-loss'a sadece %1.1 uzaklıkta (KRİTİK). K-17 ihlali var: teknoloji konsantrasyonu %54.6 ile %40 limitini aşıyor. Jeopolitik kriz rejimi aktif ve VIX +6.41% sıçradı. Öncelik sırasına göre (Risk > Makro > Sektör > Teknik) risk sinyali baskın. MO stop'a en yakın pozisyon olduğu için preemptif çıkış yapılmalı; aynı zamanda teknoloji fazlalığı kademeli olarak azaltılıp savunma/enerji (ITA, XLE) rotasyonu başlatılmalı. Sektör analistinin AI boom tezi (ağırlık 1.53) güçlü olsa da aktif rejim jeopolitik kriz olduğu için yeni giriş yapılmamalı, mevcut AI pozisyonları korunmalı.",
+        "uyari": "MO stop %1.1 uzakta — anlık tetiklenebilir. Teknoloji %54.6 konsantrasyon K-17 ihlali, kademeli trim gerekli. Signal ve Risk agent parse hatası verdi, çıktılar kısmi okundu; tam veri için re-run önerilir.",
+        "guven": "MEDIUM",
+        "analist_uzlasma": "ORTA",
+        "tahmin": {
+          "yon": "DOWN",
+          "buyukluk": "LOW",
+          "sembol": "SPY"
+        },
+        "_agent": "CIO_AGENT",
+        "_timestamp": "2026-04-21T17:02:25.404304"
+      },
+      "boğa": {
+        "_raw": "{\n  \"argümanlar\": [\n    \"MO zaten temettü portföyünde +41.9% toplam getiriyle güçlü bir performans sergiliyor — pozisyon çıkarıldığında bu kâr üreten varlık kaybedilir. 17 Nisan'daki SELL işleminde -%",
+        "_parse_hata": true
+      },
+      "ayı": {
+        "_raw": "```json\n{\n  \"argümanlar\": [\n    \"MO önceki satışta -%4.43 zarar yazıldı (2026-04-17), stop %2.19 mesafede tetiklenmişti — benzer pattern tekrarlıyor, bu sefer stop sadece %0.9 uzakta (daha da yakın)\",",
+        "_parse_hata": true
+      },
+      "nihai": {
+        "nihai_karar": "SAT",
+        "kazan_taraf": "AYI",
+        "karar_gerekce": "17 Nisan'da MO 267 adet -%4.43 zararla satıldı ve ders çıkarıldı: 'bekleyen aksiyon açılış sabahı otomatik işlenmeli'. 20 Nisan'da 'İZLE MO' kararı verildi, stop %0.9 uzakta ve senaryoda tetikleniyor. Bugün VIX +%6.41 ile 20'ye sıçradı, SPY -%0.41 — volatilite artışı ve dividend portföyündeki +%41.9 kârı korumak için kalan MO pozisyonu da kapatılmalı. İlk CIO kararı ACIL_CIK yönünde ve tarihsel pattern (T, SOFI stop öncesi proaktif çıkış) bu kararı destekliyor.",
+        "boğa_haklı_çünkü": "Dividend portföy +%41.9 ile güçlü performansta ve MO savunmacı temettü hissesi olarak çekirdek pozisyon sayılabilir; panik satış gereksiz olabilir.",
+        "ayı_haklı_çünkü": "Stop %0.9 mesafede — kırılma an meselesi. VIX +%6.41 sıçrayışı ve SPY zayıflığı ortamında proaktif çıkış, stop'a yakalanıp slipaj yemekten iyidir. T ve SOFI dersleri tam olarak bu senaryoda proaktif çıkışın işe yaradığını gösteriyor.",
+        "göz_ardı_edilen": "Boğa ve ayı argümanları boş geldi — gerçek tartışma yapılmadı. MO'nun dividend yield'i, ex-dividend tarihi ve sektör rotasyon dinamiği hiç değerlendirilmedi. Ayrıca kısmi çıkış (yarısını sat, yarısını tut) seçeneği de ele alınmadı.",
+        "güven": "MEDIUM",
+        "tahmin": {
+          "yon": "DOWN",
+          "buyukluk": "MEDIUM",
+          "sembol": "SPY"
+        }
+      },
+      "karar_degisti_mi": true
     }
   ]
 }
