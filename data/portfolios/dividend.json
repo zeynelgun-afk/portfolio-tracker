@@ -2,7 +2,7 @@
   "portfoy_adi": "Değer + Temettü",
   "baslangic_sermaye": 100000,
   "nakit": {
-    "miktar": 88924.98,
+    "miktar": 94552.98,
     "para_birimi": "USD",
     "agirlik_yuzde": 62.68
   },
@@ -89,33 +89,6 @@
       "durum": "⚠️ Stop yakın (0.9%)"
     },
     {
-      "sembol": "MRK",
-      "isim": "Merck & Co",
-      "sektor": "Saglik",
-      "adet": 50,
-      "maliyet_baz": 120.0,
-      "yatirim": 6000.0,
-      "guncel_fiyat": 117.125,
-      "guncel_deger": 5856.25,
-      "kar_zarar": -143.75,
-      "kar_zarar_yuzde": -2.4,
-      "gunluk_degisim_yuzde": -1.63,
-      "agirlik_yuzde": 4.13,
-      "son_guncelleme": "2026-04-20T21:11:36.151292",
-      "giris_tarihi": "2026-04-08",
-      "giris_fiyati": 120.0,
-      "giris_nedeni": "Temettu portfoyune saglik sektoru girisi - defansif rotasyon, SMA50 $117.95 ustu, SMA200 $97 guclu uzun vade, RSI 55 notr, gap-up rallysinden minimal etki plan araliginda",
-      "cb_kaynak": "back-calc-karyuzde",
-      "hedef_fiyat": 134.4,
-      "stop_loss": 113.28,
-      "zirve_fiyat": 121.42,
-      "stop_faz": 1,
-      "stop_mesafe_pct": 3.28,
-      "stop_aciklama": "",
-      "stop_guncelleme": "",
-      "durum": "✅ Normal"
-    },
-    {
       "sembol": "OKE",
       "isim": "ONEOK Inc",
       "sektor": "Enerji / Doğalgaz Pipeline",
@@ -143,7 +116,7 @@
       "durum": "✅ Normal"
     }
   ],
-  "son_guncelleme": "2026-04-20T21:11:36.151292",
+  "son_guncelleme": "2026-04-21T17:49:45.826914+03:00",
   "toplam_deger": 141863.97,
   "toplam_getiri_yuzde": 41.86,
   "toplam_getiri": 41863.97,

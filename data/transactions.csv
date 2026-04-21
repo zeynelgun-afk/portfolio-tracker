@@ -165,3 +165,4 @@ date,action,symbol,shares,price,total,reason
 2026-04-17,SELL,EOG,106,126.19,13376.14,"Stop tetiklendi: açılış gap-down -%5.57 ile $126.60, intraday low $124.31. Stop $127.37 altı kapanış $126.03. Mekanik K-06 stop. Aynı gün alınıp aynı gün satılan 3. pozisyon (CF, PARR sonrası). Sistem dünkü kapanış fiyatıyla kayıt oluşturmuş, gerçek açılış çok daha düşüktü. Ders: daily_scan_balanced gap-down filtresi yok."
 2026-04-17,SELL,MO,267,64.45,17208.15,"Pazartesi satılacak işareti 11 Nisan'dan beri bekliyordu, 6 gün gecikme. Hafta sonu gap riski + stop mesafesi %2.19 çok yakın. Dengeli'de çift MO tutma sorunu çözülüyor. K/Z -%4.43. Ders: bekleyen_aksiyon alanı açılış sabahı otomatik işlenmeli, manuel takibe bırakılmamalı."
 2026-04-20,BUY,ETN,36,406.39,14629.86,AI_altyapı teması — teknik:5/10 fundamental:5/10 valuation:3.8/10
+2026-04-21,SELL,MRK,50,112.56,5628.0,K-06 stop tetiklendi $112.56≤$113.28
