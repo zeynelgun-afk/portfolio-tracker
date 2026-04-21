@@ -1,7 +1,12 @@
-# portföy raporu — 2026-04-21
+# sabah raporu — 2026-04-21
 
-> finzora ai | sabah raporundan otomatik ayristirildi
-> kaynak: DAILY_SABAH_2026-04-21.md — 3-rapor gorsel ayristirma, token maliyeti yok
+> finzora ai | otomatik oluşturuldu
+
+# 📊 SABAH RAPORU — 21 Nisan 2026 Salı
+
+**Mod:** MORNING | **Saat:** 20:32 TR | **NYSE:** SEANS İÇİ (FAZ 2 — giriş penceresi açık)
+
+---
 
 ## 0. Piyasa İstihbaratı
 
@@ -21,6 +26,24 @@
 ## 0.5. Dün Seans Sonu Notları
 
 İlk çalışma — session_state flag yok. Dünkü brief ("VRT K-05 çıkış, MO/DUK stop yakın") bugün operasyonel plan.
+
+---
+
+## 1. Piyasa Görünümü
+
+| Endeks | Fiyat | Değişim | Not |
+|--------|-------|---------|-----|
+| SPY | $704.76 | -0.56% | Satış baskısı hafif |
+| QQQ | $644.39 | -0.37% | Tech zayıf |
+| GLD | $431.51 | — | Savunma talebi sürüyor |
+| TLT | $86.67 | — | Tahvil nötr |
+| VIX | 20.44 | +8.32% | NORMAL üst bant |
+
+**VIX 20.44 / K-13:** NORMAL bölgede ama +%8 sıçrama dikkat — 25 eşiği yakınsa savunmacı allokasyon artar. Şimdilik mevcut konum korunur. [KESİN]
+
+**Sektör liderleri:** XLE +1.2% (enerji lider), XLK +0.05% (tech yatay), XLF/XLY/XLP kırmızı → rejime uyumlu defensive rotasyon.
+
+**Pre-market gap özeti:** ALAB +%7.7 (olası giriş ama K-05 earnings yoğun haftada yeni agresif giriş yapılmaz). OKLO/NNE/BWXT/CCJ nükleer kıyım — portföyde etkilenen yok.
 
 ---
 
@@ -50,7 +73,8 @@ Tümü kâr, stoplar uzak. VRT bugün kapanışta K-05 ÇIKIŞ. v5 fair value ç
 ### Temettü $141,864 (+41.9%) 🏆
 ⚠️ **MO stop %1.3 uzak** — senaryo testinde %5 piyasa düşüşünde tetiklenecek. Override yasak, tetik gelirse otomatik çık (K-06). T yarın earnings, K-05 mevcut pozisyonu etkilemez.
 
-
+### Swing 5/5 dolu
+CAT +%1.6, KLAC +%3.1, RPRX +%1.8 pozitif. AMAT -%1.3, GEV -%0.7 hafif zarar. Stoplar sağlıklı, slot yok — yeni giriş imkansız.
 
 ### Konsantrasyon
 🔴 **Tech %54.6** — K-17 üst sınıra yakın. Yeni tech girişi yasak.

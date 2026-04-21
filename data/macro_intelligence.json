@@ -1,29 +1,30 @@
 {
-  "tarih": "2026-04-21T19:59:03.208446+03:00",
-  "vix": 20.08,
+  "tarih": "2026-04-21T20:30:55.343026+03:00",
+  "vix": 20.44,
   "sektor_performans": {
-    "Basic Materials": -0.267301688070154,
-    "Communication Services": -0.2613543659207407,
-    "Consumer Cyclical": -0.7046559310141864,
-    "Consumer Defensive": 0.4061145925951859,
-    "Energy": 0.006925445418159981,
-    "Financial Services": -0.4832729052573925,
-    "Healthcare": -1.0536782564522618,
-    "Industrials": -0.8084968671715487,
-    "Real Estate": -0.7432228261887608,
-    "Technology": -0.18281154363258834,
-    "Utilities": -1.9871608470748314
+    "Basic Materials": -0.22214429193717633,
+    "Communication Services": -0.739184257198966,
+    "Consumer Cyclical": -1.2217012280087536,
+    "Consumer Defensive": 0.3914535946799358,
+    "Energy": 0.10442540563602165,
+    "Financial Services": -0.6240344892647132,
+    "Healthcare": -1.1657125181639638,
+    "Industrials": -0.8755409636127531,
+    "Real Estate": -0.4491943753992311,
+    "Technology": -0.4762467479384136,
+    "Utilities": -2.0578938136860736
   },
   "dominant_temalar": [
     {
       "tema_adi": "AI_altyapı",
-      "güç_skoru": 7,
-      "neden": "AI CapEx döngüsü haberlerde ön planda, Technology görece dayanıklı (-0.2%), güç/soğutma altyapısı talebi sürüyor",
+      "güç_skoru": 6,
+      "neden": "AI CapEx döngüsü haberlerde öne çıkıyor ancak Technology sektörü bugün -0.5% — tema yapısal güçlü, kısa vadede kâr realizasyonu var",
       "öncelikli_alt_dal": "güç_soğutma",
       "önerilen_hisseler": [
         "VRT",
         "ETN",
-        "PWR"
+        "PWR",
+        "POWL"
       ],
       "portföy": "aggressive",
       "aciliyet": "orta",
@@ -37,84 +38,52 @@
     },
     {
       "tema_adi": "enerji_geçiş",
-      "güç_skoru": 6,
-      "neden": "Energy sektörü flat (+0.0%) ancak AI güç talebi ve enerji güvenliği teması destekleyici; defansif karakter ön planda",
+      "güç_skoru": 5,
+      "neden": "Energy sektörü +0.1% ile pozitif ayrışıyor, AI güç talebi teması haberlerde destekleniyor",
       "öncelikli_alt_dal": "nükleer_güç",
       "önerilen_hisseler": [
+        "NEE",
+        "CEG",
+        "VST"
+      ],
+      "portföy": "balanced",
+      "aciliyet": "orta",
+      "hisse_evreni": [
+        "ENPH",
+        "NEE",
+        "ET",
+        "KMI",
+        "NRG",
+        "RUN",
         "CEG",
         "VST",
-        "NEE"
-      ],
-      "portföy": "balanced",
-      "aciliyet": "orta",
-      "hisse_evreni": [
-        "NRG",
-        "FSLR",
-        "VST",
-        "KMI",
-        "ENPH",
-        "CCJ",
-        "RUN",
-        "OKE",
-        "ET",
         "WMB",
-        "NEE",
-        "CEG"
-      ]
-    },
-    {
-      "tema_adi": "savunma_uzay",
-      "güç_skoru": 6,
-      "neden": "Trump'ın 'uzun savaş' sinyali ve jeopolitik gerilim haberleri savunma temasını destekliyor",
-      "öncelikli_alt_dal": "savunma_ana",
-      "önerilen_hisseler": [
-        "LMT",
-        "NOC",
-        "RTX"
-      ],
-      "portföy": "balanced",
-      "aciliyet": "orta",
-      "hisse_evreni": [
-        "LHX",
-        "RKLB",
-        "LMT",
-        "ZS",
-        "KTOS",
-        "PANW",
-        "AJRD",
-        "S",
-        "RTX",
-        "GD",
-        "RDW",
-        "NOC",
-        "CRWD"
+        "FSLR",
+        "CCJ",
+        "OKE"
       ]
     }
   ],
   "kacınılacak": [
-    "Consumer Cyclical",
-    "Real Estate",
+    "Industrials",
+    "Communication Services",
     "Financial Services"
   ],
   "piyasa_modu": "nötr",
   "aktif_kriz": {
-    "tip": "jeopolitik",
-    "guven": 5,
-    "kanit": "Trump 'uzun savaş' sinyali ve piyasaların etkileri hafife aldığına dair haber manşette. Ancak VIX 20.1 ile ılımlı, altın/savunma belirgin sıçrama göstermiyor — kanıt güçlü değil, erken evre sinyal.",
-    "beneficiary_sectors": [
-      "Energy",
-      "Defense",
-      "Gold",
-      "Consumer Defensive"
-    ],
-    "sensitive_sectors": [
-      "Consumer Cyclical",
-      "Financial Services",
-      "Real Estate"
-    ]
+    "tip": "yok",
+    "guven": 6,
+    "kanit": "VIX 20.4 sınırda ama panik seviyesi değil. Sektörler karışık (Consumer Defensive+0.4, Industrials-0.9) belirgin kriz rotasyonu yok. Haberler Fed politikası odaklı — 'fatal policy error' söylemi dikkat çekici ancak henüz piyasayı tek yöne itmedi.",
+    "beneficiary_sectors": [],
+    "sensitive_sectors": []
   },
-  "genel_yorum": "Piyasa hafif risk-off eğiliminde: döngüsel sektörler (Consumer Cyclical, Real Estate, Financials) satış altında, Consumer Defensive pozitif. Jeopolitik haberler ve Fed politika hatası söylemi risk iştahını baskılıyor ancak VIX henüz panik eşiğinde değil. Güven düşük olduğu için agresif rotasyon yerine temkinli pozisyon korunmalı.",
+  "genel_yorum": "Piyasa risk-off eğiliminde hafif stres gösteriyor ama aktif kriz yok. Fed başkan adayı Warsh söylemleri ve AI CapEx sorgulaması sektör genelinde temkinli hava yarattı. VIX 20.4 eşikte — yakın takip, agresif yeni giriş yerine mevcut pozisyonları korumak önceliklidir.",
   "haberler": [
+    {
+      "baslik": "Warsh Says He'd Be an Independent Actor as Fed Chair",
+      "kaynak": "youtube.com",
+      "tarih": "2026-04-21 12:51"
+    },
     {
       "baslik": "The Dow Jones Transportation Average is on a historic tear. Here are 6 charts you need to see.",
       "kaynak": "marketwatch.com",
@@ -134,11 +103,6 @@
       "baslik": "Kevin Warsh says Fed is dealing with 'fatal policy error'",
       "kaynak": "youtube.com",
       "tarih": "2026-04-21 12:30"
-    },
-    {
-      "baslik": "Fed chair nominee Kevin Warsh: The economy's potential is growing quite quickly",
-      "kaynak": "youtube.com",
-      "tarih": "2026-04-21 12:25"
     }
   ]
 }

@@ -6,74 +6,63 @@
 ## 0. Piyasa İstihbaratı
 
 **Aktif temalar:**
-- **Jeopolitik gerilim + enerji rotasyonu**: XLE +0.92% tek pozitif sektör, risk-off tonu sürüyor [KESİN]
-- **AI altyapı**: Amazon-Anthropic $25B yatırımı (AMZN haberi), COHR "Ultimate AI Bottleneck" Seeking Alpha başlığı [KESİN]
-- **Telecom earnings kick-off**: T bugün/yarın, VZ 27 Nisan — Investors.com "business as usual değil" uyarısı [KESİN]
-- **Nükleer hisselerde sert satış**: OKLO -5.6%, CCJ -4.2%, BWXT -4.1% pre-market [KESİN]
+- **Earnings sezonu başladı:** T ve VRT yarın açıklıyor, NEE/HIG perşembe. K-05 yoğun hafta.
+- **AI altyapı momentumu:** COHR ("Ultimate AI Bottleneck Play"), MU ("Nasdaq rally pick"), ANET ("Momentum Stock") medyada öne çıkıyor. [MUHTEMEL]
+- **Nükleer enerji satışı:** OKLO -%7.1, NNE -%4.9, BWXT -%4.9, CCJ -%4.8 gap aşağı. Sektör bazlı risk-off. Portföyde doğrudan etkilenen yok. [KESİN]
+- **Jeopolitik rejim aktif:** XLE +%1.2 lider, XLF/XLY/XLP kırmızı. Savunmacı rotasyon sürüyor.
 
 **Haber etki zinciri:**
-- AMZN-Anthropic $25B → AI capex tezi korunuyor → COHR/VRT/ANET/MU destekleyici [MUHTEMEL]
-- T teknik analiz "alarming pattern" + analistler iyimser değil → yarın earnings öncesi gerginlik [MUHTEMEL]
-- VIX 20.08 +6.4% → volatilite yukarı, opsiyon piyasasında SPX put alımları ($36.5M çift put, $49.7M put) → kurumsal hedge artışı [SPEKÜLATİF]
+- T: "alarming pattern ahead of earnings" (invezz) + yarın earnings → T üzerinde baskı riski [MUHTEMEL]
+- COHR: seekingalpha "ultimate AI play, +%88 YTD" → momentum destekli ama pahalı (v5: -%40 PAH)
+- MO: "dividend stock transforms $500k into $3,100/month" → retail ilgi, ama stop %1.3 uzak ⚠️
 
 ---
 
 ## 1. Piyasa Görünümü
 
-| Endeks | Fiyat | Değişim |
-|--------|-------|---------|
-| SPY | $705.83 | -0.41% |
-| QQQ | $645.35 | -0.22% |
-| GLD | $432.50 | — |
-| TLT | $86.76 | — |
-| VIX | 20.08 | **+6.41%** |
+| Endeks | Fiyat | Değişim | Not |
+|--------|-------|---------|-----|
+| SPY | $704.76 | -0.56% | Satış baskısı hafif |
+| QQQ | $644.39 | -0.37% | Tech zayıf |
+| GLD | $431.51 | — | Savunma talebi sürüyor |
+| TLT | $86.67 | — | Tahvil nötr |
+| VIX | 20.44 | +8.32% | NORMAL üst bant |
 
-**VIX/K-13:** 20.08 → NORMAL bant üstü. K-13 defensive trigger değil ama dikkat. Yeni agresif giriş iştahı düşük.
+**VIX 20.44 / K-13:** NORMAL bölgede ama +%8 sıçrama dikkat — 25 eşiği yakınsa savunmacı allokasyon artar. Şimdilik mevcut konum korunur. [KESİN]
 
-**Sektörler:**
-- 🟢 XLE +0.92% (tek kazanan — enerji lider)
-- 🟢 XLK +0.22% (AI haberi destek)
-- 🔴 XLY -0.23%, XLF -0.31%, XLP -0.48%
+**Sektör liderleri:** XLE +1.2% (enerji lider), XLK +0.05% (tech yatay), XLF/XLY/XLP kırmızı → rejime uyumlu defensive rotasyon.
 
-**Pre-market gap uyarıları:** MRK -4.1% (portföyde yok), OKLO/CCJ/BWXT nükleer satışı (portföyde yok). Portföy doğrudan gap etkisinde değil. [KESİN]
+**Pre-market gap özeti:** ALAB +%7.7 (olası giriş ama K-05 earnings yoğun haftada yeni agresif giriş yapılmaz). OKLO/NNE/BWXT/CCJ nükleer kıyım — portföyde etkilenen yok.
 
 ---
 
 ## 3. SWING DURUMU
 
-### Swing (5/5 dolu)
-Tümü güvenli bölgede (stop% > 5), yeni slot yok. RPRX en yakın (%5.1).
-
-**Konsantrasyon:** Tech %54.6 🔴 — K-17 aktif, bugün yeni tech girişi YASAK.
-
-**Earnings takvimi (kritik):**
-- 22 Nis: **VRT, T** (yarın)
-- 23 Nis: **NEE, HIG**
-- 27 Nis: VZ
-- 28 Nis: OKE
-
----
+### Swing 5/5 dolu
+CAT +%1.6, KLAC +%3.1, RPRX +%1.8 pozitif. AMAT -%1.3, GEV -%0.7 hafif zarar. Stoplar sağlıklı, slot yok — yeni giriş imkansız.
 
 ## 4. Günün Planı
 
-### HEMEN (bugün seans içi)
-1. **MO ÇIK %100** — stop %1.1 uzakta, +%13.0 kârda, K-09 + K-11 (SOFI/GE dersi kârı koru). Dün alınan karar bugün uygulanıyor. [KESİN]
+### HEMEN (bugün kapanışa doğru)
+1. **VRT ÇIK %100** — K-05 zorunlu çıkış, +%9.1 kârda. Kapanışa yakın uygula.
 
-### KAPANIŞ (bugün 22:45-23:00 TR)
-2. **VRT ÇIK %100** — K-05, yarın earnings. +%9.5 kârda, stop %8.7. Koru. [KESİN]
-3. **T ÇIK %100** — K-05, yarın earnings. -%0.1 nötr, teknik uyarı var. [KESİN]
-
-### İZLE (yarın kapanış için hazırlık)
-- **NEE**: stop %3.3 ⚠️ + 23 Nis earnings → yarın kapanış çıkışı hazırla
-- **HIG**: 23 Nis earnings → yarın kapanış çıkışı hazırla
-- **CPRX**: stop %4.2 sınırda, -%1.5 bugün zayıf
+### İZLE (otomatik tetik)
+2. **MO** — stop %1.3 uzak. Tetiklenirse override yasak, K-06 otomatik çıkış.
+3. **NEE** — yarın kapanış K-05 çıkış hazırlığı.
+4. **HIG** — yarın kapanış K-05 çıkış hazırlığı.
 
 ### PASİF
-- COHR, ANET, MU, CAMT, ETN, CI, VZ, OKE, tüm swing → normal takip
-- Yeni giriş YOK (VIX yukarı + tech %54.6 + jeopolitik rejim)
+- COHR/ANET/MU/CAMT/ETN: trailing stoplar aktif, müdahale yok.
+- T: yarın earnings ama temettü teması, K-05 mevcut pozisyonu etkilemez, tutulur.
+- Swing 5/5 dolu, yeni giriş imkansız.
 
-**Swing:** 5/5 dolu, yeni slot yok.
+### YASAKLAR
+- K-17: tech %54.6, yeni tech girişi yasak.
+- K-05: earnings haftası yoğun, yeni agresif giriş yok.
+- K-02: jeopolitik kriz rejimi, momentum sektör yeni giriş yasak.
 
 ---
 
 *Rapor sonu. Tüm aksiyonlar K-kurallarına uygun, onay beklenmeden uygulanacak.*
+
+---

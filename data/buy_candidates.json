@@ -1,19 +1,19 @@
 {
-  "tarih": "2026-04-21T17:01:25.790428",
-  "vix": 20.08,
+  "tarih": "2026-04-21T17:31:12.274706",
+  "vix": 20.44,
   "adaylar": [
     {
       "symbol": "HUBB",
       "tema": "AI_altyapı",
       "portföy": "aggressive",
-      "price": 551.65,
-      "stop": 521.47,
-      "target": 612.0,
+      "price": 548.5,
+      "stop": 518.32,
+      "target": 608.85,
       "rr": 2.0,
-      "score": 5.16,
-      "teknik": 5,
+      "score": 5.31,
+      "teknik": 6,
       "fundamental": 5,
-      "tema_güç": 7.0,
+      "tema_güç": 6.0,
       "valuation": 3.8,
       "atr": 15.09,
       "k_checks": {
@@ -31,7 +31,7 @@
         },
         "K-20": {
           "passed": true,
-          "reason": "K-20: RS temiz (1M: +7.2%)"
+          "reason": "K-20: RS temiz (1M: +6.6%)"
         },
         "K-17": {
           "passed": true,
@@ -39,22 +39,21 @@
         },
         "K-13": {
           "passed": true,
-          "reason": "VIX 20.1<22 tam pozisyon [jeopolitik]",
+          "reason": "VIX 20.4<22 tam pozisyon [jeopolitik]",
           "size": 5000
         }
       },
-      "reason": "AI_altyapı teması — teknik:5/10 fundamental:5/10 valuation:3.8/10",
+      "reason": "AI_altyapı teması — teknik:6/10 fundamental:5/10 valuation:3.8/10",
       "detay": {
         "sma200": "✅",
         "sma50": "✅",
-        "rsi": "⚠️ aşırı alım 75",
-        "mom_1m": "✅ +16.2%",
-        "mom_3m": "✅ +17.0%",
+        "mom_1m": "✅ +14.9%",
+        "mom_3m": "✅ +15.7%",
         "skor": 5,
         "roic": "✅ 13.8%",
         "büyüme": "✅ ROE 25.0%",
         "val_karar": "PAHALI",
-        "val_fark": "-42.6%",
+        "val_fark": "-42.3%",
         "val_guven": 82,
         "val_archetype": "industrial_cyclical",
         "val_gap": "-47%",
@@ -65,16 +64,16 @@
       "symbol": "GNRC",
       "tema": "AI_altyapı",
       "portföy": "aggressive",
-      "price": 215.51,
-      "stop": 200.03,
-      "target": 246.47,
+      "price": 214.53,
+      "stop": 199.11,
+      "target": 245.37,
       "rr": 2.0,
-      "score": 4.36,
+      "score": 4.16,
       "teknik": 6,
       "fundamental": 0,
-      "tema_güç": 7.0,
+      "tema_güç": 6.0,
       "valuation": 4.3,
-      "atr": 7.74,
+      "atr": 7.71,
       "k_checks": {
         "K-19": {
           "passed": true,
@@ -90,7 +89,7 @@
         },
         "K-20": {
           "passed": true,
-          "reason": "K-20: RS temiz (1M: -0.7%)"
+          "reason": "K-20: RS temiz (1M: -1.1%)"
         },
         "K-17": {
           "passed": true,
@@ -98,7 +97,7 @@
         },
         "K-13": {
           "passed": true,
-          "reason": "VIX 20.1<22 tam pozisyon [jeopolitik]",
+          "reason": "VIX 20.4<22 tam pozisyon [jeopolitik]",
           "size": 5000
         }
       },
@@ -106,12 +105,12 @@
       "detay": {
         "sma200": "✅",
         "sma50": "✅",
-        "mom_1m": "✅ +8.4%",
-        "mom_3m": "✅ +33.4%",
+        "mom_1m": "✅ +7.5%",
+        "mom_3m": "✅ +32.2%",
         "skor": 0,
-        "pe": "⚠️ 78.7",
+        "pe": "⚠️ 78.4",
         "val_karar": "PAHALI (düşük güven)",
-        "val_fark": "-47.3%",
+        "val_fark": "-47.1%",
         "val_guven": 57,
         "val_archetype": "industrial_cyclical",
         "val_gap": "-59%",
@@ -122,14 +121,14 @@
       "symbol": "PWR",
       "tema": "AI_altyapı",
       "portföy": "aggressive",
-      "price": 606.32,
-      "stop": 574.99,
-      "target": 668.98,
+      "price": 604.92,
+      "stop": 573.59,
+      "target": 667.58,
       "rr": 2.0,
-      "score": 3.91,
+      "score": 3.71,
       "teknik": 5,
       "fundamental": 0,
-      "tema_güç": 7.0,
+      "tema_güç": 6.0,
       "valuation": 3.8,
       "atr": 15.66,
       "k_checks": {
@@ -147,7 +146,7 @@
         },
         "K-20": {
           "passed": true,
-          "reason": "K-20: RS temiz (1M: +0.4%)"
+          "reason": "K-20: RS temiz (1M: +0.2%)"
         },
         "K-17": {
           "passed": true,
@@ -155,7 +154,7 @@
         },
         "K-13": {
           "passed": true,
-          "reason": "VIX 20.1<22 tam pozisyon [jeopolitik]",
+          "reason": "VIX 20.4<22 tam pozisyon [jeopolitik]",
           "size": 5000
         }
       },
@@ -163,13 +162,13 @@
       "detay": {
         "sma200": "✅",
         "sma50": "✅",
-        "rsi": "⚠️ aşırı alım 83",
-        "mom_1m": "✅ +9.3%",
-        "mom_3m": "✅ +30.9%",
+        "rsi": "⚠️ aşırı alım 82",
+        "mom_1m": "✅ +8.7%",
+        "mom_3m": "✅ +30.3%",
         "skor": 0,
-        "pe": "⚠️ 89.4",
+        "pe": "⚠️ 89.2",
         "val_karar": "PAHALI",
-        "val_fark": "-64.0%",
+        "val_fark": "-63.9%",
         "val_guven": 71,
         "val_archetype": "industrial_cyclical",
         "val_gap": "-67%",
@@ -180,14 +179,14 @@
       "symbol": "NRG",
       "tema": "enerji_geçiş",
       "portföy": "balanced",
-      "price": 150.81,
+      "price": 150.8,
       "stop": 137.66,
-      "target": 177.11,
+      "target": 177.07,
       "rr": 2.0,
-      "score": 3.86,
+      "score": 3.66,
       "teknik": 3,
       "fundamental": 3,
-      "tema_güç": 6.0,
+      "tema_güç": 5.0,
       "valuation": 4.3,
       "atr": 6.57,
       "k_checks": {
@@ -205,7 +204,7 @@
         },
         "K-20": {
           "passed": true,
-          "reason": "K-20: RS temiz (1M: -5.4%)"
+          "reason": "K-20: RS temiz (1M: -5.3%)"
         },
         "K-17": {
           "passed": true,
@@ -213,17 +212,17 @@
         },
         "K-13": {
           "passed": true,
-          "reason": "VIX 20.1<22 tam pozisyon [jeopolitik]",
+          "reason": "VIX 20.4<22 tam pozisyon [jeopolitik]",
           "size": 5000
         }
       },
       "reason": "enerji_geçiş teması — teknik:3/10 fundamental:3/10 valuation:4.3/10",
       "detay": {
-        "rsi": "✅ 55",
+        "rsi": "✅ 54",
         "skor": 3,
         "büyüme": "✅ ROE 39.7%",
         "val_karar": "PAHALI (düşük güven)",
-        "val_fark": "-42.0%",
+        "val_fark": "-42.1%",
         "val_guven": 65,
         "val_archetype": "utility_regulated",
         "val_gap": "-60%",
@@ -231,131 +230,17 @@
       }
     },
     {
-      "symbol": "CCJ",
-      "tema": "enerji_geçiş",
-      "portföy": "balanced",
-      "price": 118.31,
-      "stop": 107.6,
-      "target": 139.72,
-      "rr": 2.0,
-      "score": 3.81,
-      "teknik": 5,
-      "fundamental": 0,
-      "tema_güç": 6.0,
-      "valuation": 4.3,
-      "atr": 5.35,
-      "k_checks": {
-        "K-19": {
-          "passed": true,
-          "reason": "K-19: portföy alımı (balanced) — atlandı"
-        },
-        "K-05": {
-          "passed": true,
-          "reason": "K-05: earnings uzak"
-        },
-        "K-18": {
-          "passed": true,
-          "reason": "insider veri yok"
-        },
-        "K-20": {
-          "passed": true,
-          "reason": "K-20: RS temiz (1M: +7.7%)"
-        },
-        "K-17": {
-          "passed": true,
-          "reason": "K-17: korelasyon temiz (energy, aynı sektör: 1)"
-        },
-        "K-13": {
-          "passed": true,
-          "reason": "VIX 20.1<22 tam pozisyon [jeopolitik]",
-          "size": 5000
-        }
-      },
-      "reason": "enerji_geçiş teması — teknik:5/10 fundamental:0/10 valuation:4.3/10",
-      "detay": {
-        "sma200": "✅",
-        "sma50": "✅",
-        "mom_1m": "✅ +17.0%",
-        "skor": 0,
-        "pe": "⚠️ 119.4",
-        "val_karar": "PAHALI (düşük güven)",
-        "val_fark": "-85.0%",
-        "val_guven": 66,
-        "val_archetype": "energy_integrated",
-        "val_gap": "-87%",
-        "val_skor": 4.3
-      }
-    },
-    {
-      "symbol": "RKLB",
-      "tema": "savunma_uzay",
-      "portföy": "balanced",
-      "price": 88.36,
-      "stop": 81.29,
-      "target": 109.35,
-      "rr": 2.97,
-      "score": 3.52,
-      "teknik": 4,
-      "fundamental": 0,
-      "tema_güç": 6.0,
-      "valuation": 4.6,
-      "atr": 5.25,
-      "k_checks": {
-        "K-19": {
-          "passed": true,
-          "reason": "K-19: portföy alımı (balanced) — atlandı"
-        },
-        "K-05": {
-          "passed": true,
-          "reason": "K-05: earnings uzak"
-        },
-        "K-18": {
-          "passed": true,
-          "reason": "K-18: insider temiz"
-        },
-        "K-20": {
-          "passed": true,
-          "reason": "K-20: RS temiz (1M: +22.7%)"
-        },
-        "K-17": {
-          "passed": true,
-          "reason": "K-17: korelasyon temiz (industrials, aynı sektör: 2)"
-        },
-        "K-13": {
-          "passed": true,
-          "reason": "VIX 20.1<22 tam pozisyon [jeopolitik]",
-          "size": 5000
-        }
-      },
-      "reason": "savunma_uzay teması — teknik:4/10 fundamental:0/10 valuation:4.6/10",
-      "detay": {
-        "sma200": "✅",
-        "sma50": "✅",
-        "rsi": "⚠️ aşırı alım 88",
-        "mom_1m": "✅ +32.6%",
-        "skor": 0,
-        "roic": "❌ -10.1%",
-        "pe": "⚠️ -255.3",
-        "val_karar": "YETERSİZ GÜVEN",
-        "val_fark": "-99.2%",
-        "val_guven": 48,
-        "val_archetype": "industrial_cyclical",
-        "val_gap": "-99%",
-        "val_skor": 4.6
-      }
-    },
-    {
       "symbol": "VST",
       "tema": "enerji_geçiş",
       "portföy": "balanced",
-      "price": 155.94,
-      "stop": 144.03,
-      "target": 179.76,
+      "price": 155.26,
+      "stop": 143.35,
+      "target": 179.08,
       "rr": 2.0,
-      "score": 3.46,
+      "score": 3.26,
       "teknik": 4,
       "fundamental": 0,
-      "tema_güç": 6.0,
+      "tema_güç": 5.0,
       "valuation": 4.3,
       "atr": 5.96,
       "k_checks": {
@@ -373,7 +258,7 @@
         },
         "K-20": {
           "passed": true,
-          "reason": "K-20: RS temiz (1M: -2.0%)"
+          "reason": "K-20: RS temiz (1M: -2.4%)"
         },
         "K-17": {
           "passed": true,
@@ -381,30 +266,30 @@
         },
         "K-13": {
           "passed": true,
-          "reason": "VIX 20.1<22 tam pozisyon [jeopolitik]",
+          "reason": "VIX 20.4<22 tam pozisyon [jeopolitik]",
           "size": 5000
         }
       },
       "reason": "enerji_geçiş teması — teknik:4/10 fundamental:0/10 valuation:4.3/10",
       "detay": {
-        "rsi": "✅ 58",
-        "mom_1m": "✅ +7.2%",
+        "rsi": "✅ 56",
+        "mom_1m": "✅ +6.3%",
         "skor": 0,
-        "pe": "⚠️ 56.1",
+        "pe": "⚠️ 55.9",
         "val_karar": "PAHALI (düşük güven)",
-        "val_fark": "-46.4%",
-        "val_guven": 56,
+        "val_fark": "-61.1%",
+        "val_guven": 66,
         "val_archetype": "utility_regulated",
-        "val_gap": "-68%",
+        "val_gap": "-76%",
         "val_skor": 4.3
       }
     }
   ],
   "özet": {
-    "toplam": 7,
+    "toplam": 5,
     "portföy_dağılım": {
       "aggressive": 3,
-      "balanced": 4
+      "balanced": 2
     }
   }
 }

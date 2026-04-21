@@ -317,6 +317,48 @@
         }
       },
       "karar_degisti_mi": true
+    },
+    {
+      "symbol": "XLK -> ITA/XLE",
+      "tarih": "2026-04-21T17:32:50.676947",
+      "ilk_karar": {
+        "karar": "DONDUR",
+        "hedef_sembol": "XLK -> ITA/XLE",
+        "gerekce": "Sektör Analisti (ağırlık 1.53) AI altyapısına rotasyon öneriyor ancak aktif piyasa rejimi JEOPOLITIK_KRIZ ve Risk Yöneticisi teknoloji konsantrasyonunun %54.6 ile K-17 eşiğini aştığını raporluyor — bu çelişkide Risk > Sektör önceliği geçerli. Makro Analist VIX>20 ve earnings haftası nedeniyle RISK_OFF sinyali veriyor, SPY için aşağı yön öngörüyor. Altı pozisyon stop-loss'a %1.3-5.9 yakınlıkta (özellikle MO kritik), bu nedenle yeni AL yerine mevcut tech ağırlığını kısmen savunma (ITA, LMT, RTX) ve enerji (XLE +1.21% lider) tarafına döndürmek K-17 konsantrasyon kuralına uyumu sağlar. VRT'de SELL sinyali earnings öncesi riski azaltmak için değerlendirilmeli.",
+        "uyari": "MO stop-loss'a %1.3 mesafede — tetiklenirse K-kuralı gereği override yapmadan çık. Teknoloji %54.6 konsantrasyon K-17 ihlali, rotasyon ertelenmemeli.",
+        "guven": "MEDIUM",
+        "analist_uzlasma": "DUSUK",
+        "tahmin": {
+          "yon": "DOWN",
+          "buyukluk": "MEDIUM",
+          "sembol": "SPY"
+        },
+        "_agent": "CIO_AGENT",
+        "_timestamp": "2026-04-21T17:32:06.305808"
+      },
+      "boğa": {
+        "_raw": "```json\n{\n  \"argümanlar\": [\n    \"XLE momentum kanıtlanmış: 2026-02-19 tarihli XLE alımımız (+22% momentum gerekçesiyle) portföy tezini doğrulamış durumda. Enerji sektörü rotasyonu hala devam ediyor ve",
+        "_parse_hata": true
+      },
+      "ayı": {
+        "_raw": "{\n  \"argümanlar\": [\n    \"Agresif portföy zaten -4.8% zararda ve Tech konsantrasyonu %54.6 (K-17 kırmızı bölge) — XLK'dan ITA/XLE'ye rotasyon tam da bu konsantrasyonu düşürecek hamle; DONDUR kararı ris",
+        "_parse_hata": true
+      },
+      "nihai": {
+        "nihai_karar": "BEKLE",
+        "kazan_taraf": "BAĞLANTI",
+        "karar_gerekce": "Boğa ve ayı tarafı somut argüman sunmadı; bu durumda mevcut pozisyonları değiştirmek için yeterli kanıt yok. Teknoloji konsantrasyonu %54.6 ile yüksek ama XLK pozisyonlarının P/L'si pozitif (+9% ile +21%) ve stop'lar yeterince uzakta. ITA/XLE rotasyonu için güçlü bir tetikleyici görülmüyor, VIX 20.44 ile normal seviyelerde.",
+        "boğa_haklı_çünkü": "XLK pozisyonları (COHR +21%, ANET +16%, VRT +9%) kârda ve stop mesafeleri güvenli — panik satışa gerek yok, trend bozulmadı.",
+        "ayı_haklı_çünkü": "Teknoloji konsantrasyonu %54.6 gerçek bir K-17 riski; agresif portföy -4.8% ve SPY -0.56% ile tepe sinyalleri birikiyor — kademeli rotasyon makul.",
+        "göz_ardı_edilen": "ITA ve XLE'nin kendi teknik kurulumu tartışılmadı — rotasyon hedefinin momentumu/değerlemesi bilinmeden karar verilemez. Ayrıca v5 fair value sinyalleri (-40% PAH) ciddi ama yorumlanmadı.",
+        "güven": "LOW",
+        "tahmin": {
+          "yon": "NEUTRAL",
+          "buyukluk": "LOW",
+          "sembol": "SPY"
+        }
+      },
+      "karar_degisti_mi": true
     }
   ]
 }

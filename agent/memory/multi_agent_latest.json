@@ -1,62 +1,62 @@
 {
   "macro": {
-    "sinyal": "NEUTRAL",
+    "sinyal": "RISK_OFF",
     "guven": "MEDIUM",
-    "ana_tema": "VIX 20 seviyesinde hafif yükselişle risk iştahı zayıflıyor, earnings sezonu ve Retail Sales verisi öncesi temkinli bekleyiş hakim.",
+    "ana_tema": "VIX %8 sıçrayarak 20 üzerine çıktı, SPY/QQQ satış baskısı altında; earnings haftası ve Retail Sales öncesi tedirginlik hakim",
     "beklentiler": [
-      "Bu hafta yoğun earnings trafiği (VRT, T, NEE, HIG) volatiliteyi artıracak",
-      "24 Nisan Retail Sales verisi tüketici gücü ve Fed beklentileri için kritik",
-      "VIX 20 üstünde kalıcılaşırsa K-10 savunmacı allokasyon tetiklenebilir"
+      "Bu hafta ağır earnings akışı (VRT, T, NEE, HIG) volatiliteyi yüksek tutacak",
+      "24 Nisan Retail Sales verisi tüketici gücü için kritik; zayıf veri Fed faiz indirim beklentisini artırır ama büyüme endişesini derinleştirir",
+      "VIX 20 üstünde kalıcı olursa K-10 gereği savunmacı allokasyon devreye girer"
     ],
-    "risk_faktoru": "VIX'in +6.41% sıçraması ve SPY/QQQ zayıflığı kombinasyonu; earnings kaynaklı idiosyncratic şoklar ve makro veri sürprizleri risk-off'a dönüşü hızlandırabilir.",
+    "risk_faktoru": "VIX'in 20 eşiğini kırması ve tech/momentum liderliğinin zayıflaması — agresif sepet zaten -4.8% ve yeni momentum girişi K-02 ile kısıtlı",
     "tahmin": {
-      "yon": "NEUTRAL",
-      "buyukluk": "LOW",
+      "yon": "DOWN",
+      "buyukluk": "MEDIUM",
       "sembol": "SPY"
     },
     "_agent": "MACRO_AGENT",
-    "_timestamp": "2026-04-21T17:01:42.576731"
+    "_timestamp": "2026-04-21T17:31:23.083138"
   },
   "sector": {
     "aktif_rejim": "ai_boom",
     "lider_sektor": "Teknoloji/AI Altyapı (XLK, SMH)",
-    "zayif_sektor": "Utilities (XLU) ve Consumer Staples (XLP)",
-    "rotasyon_onerisi": "Utilities ve defansif sektörlerden AI altyapı (semis, power, networking) ve Industrials'a (XLI) rotasyon sürüyor",
-    "guven": "HIGH",
+    "zayif_sektor": "Utilities (XLU)",
+    "rotasyon_onerisi": "Utilities (NEE baskı altında) ve defansif telecom'dan AI altyapı (SMH, XLK) ve Industrials (XLI - GEV, CAT güçlü) tarafına kademeli rotasyon",
+    "guven": "MEDIUM",
     "tahmin": {
       "yon": "UP",
       "buyukluk": "MEDIUM",
       "sembol": "SMH"
     },
     "_agent": "SECTOR_AGENT",
-    "_timestamp": "2026-04-21T17:01:48.063472"
+    "_timestamp": "2026-04-21T17:31:28.489380"
   },
   "signal": {
     "_agent": "SIGNAL_AGENT",
-    "_raw": "{\n  \"portfoy_sinyalleri\": [\n    {\n      \"sembol\": \"COHR\",\n      \"sinyal\": \"HOLD\",\n      \"rsi_yorumu\": \"overbought\",\n      \"sma_durumu\": \"ustunde\",\n      \"aciklama\": \"Güçlü momentum ama +21.4% kârda, trailing stop yaklaşıyor\"\n    },\n    {\n      \"sembol\": \"VRT\",\n      \"sinyal\": \"WATCH\",\n      \"rsi_yor",
+    "_raw": "{\n  \"portfoy_sinyalleri\": [\n    {\n      \"sembol\": \"COHR\",\n      \"sinyal\": \"HOLD\",\n      \"rsi_yorumu\": \"overbought\",\n      \"sma_durumu\": \"ustunde\",\n      \"aciklama\": \"+21% kârda, stop uzak, trailing stop sıkılaştırılmalı.\"\n    },\n    {\n      \"sembol\": \"VRT\",\n      \"sinyal\": \"SELL\",\n      \"rsi_yorumu\"",
     "_parse_hata": true,
     "guven": "LOW"
   },
   "risk": {
     "_agent": "RISK_AGENT",
-    "_raw": "{\n  \"risk_seviyesi\": \"HIGH\",\n  \"stop_yakini\": [\n    \"MO - %1.1 uzakta (KRİTİK)\",\n    \"NEE - %3.3 uzakta\",\n    \"CPRX - %4.2 uzakta\",\n    \"VZ - %4.9 uzakta\",\n    \"RPRX - %5.0 uzakta\"\n  ],\n  \"konsantrasyon_uyarisi\": \"Teknoloji sektörü %54.6 — K-17 limitini aşıyor (40% eşik). Agresif portföyde 6 pozisyo",
+    "_raw": "{\n  \"risk_seviyesi\": \"HIGH\",\n  \"stop_yakini\": [\n    \"MO - %1.3 uzakta (KRİTİK)\",\n    \"NEE - %3.3 uzakta\",\n    \"CPRX - %4.3 uzakta\",\n    \"RPRX - %5.1 uzakta\",\n    \"VZ - %5.2 uzakta\",\n    \"HIG - %5.9 uzakta\"\n  ],\n  \"konsantrasyon_uyarisi\": \"Teknoloji sektörü %54.6 — K-17 eşiği aşıldı. Agresif portföyd",
     "_parse_hata": true,
     "guven": "LOW"
   },
   "cio": {
-    "karar": "ACIL_CIK",
-    "hedef_sembol": "MO",
-    "gerekce": "Risk yöneticisi HIGH risk seviyesi bildiriyor ve MO stop-loss'a sadece %1.1 uzaklıkta (KRİTİK). K-17 ihlali var: teknoloji konsantrasyonu %54.6 ile %40 limitini aşıyor. Jeopolitik kriz rejimi aktif ve VIX +6.41% sıçradı. Öncelik sırasına göre (Risk > Makro > Sektör > Teknik) risk sinyali baskın. MO stop'a en yakın pozisyon olduğu için preemptif çıkış yapılmalı; aynı zamanda teknoloji fazlalığı kademeli olarak azaltılıp savunma/enerji (ITA, XLE) rotasyonu başlatılmalı. Sektör analistinin AI boom tezi (ağırlık 1.53) güçlü olsa da aktif rejim jeopolitik kriz olduğu için yeni giriş yapılmamalı, mevcut AI pozisyonları korunmalı.",
-    "uyari": "MO stop %1.1 uzakta — anlık tetiklenebilir. Teknoloji %54.6 konsantrasyon K-17 ihlali, kademeli trim gerekli. Signal ve Risk agent parse hatası verdi, çıktılar kısmi okundu; tam veri için re-run önerilir.",
+    "karar": "DONDUR",
+    "hedef_sembol": "XLK -> ITA/XLE",
+    "gerekce": "Sektör Analisti (ağırlık 1.53) AI altyapısına rotasyon öneriyor ancak aktif piyasa rejimi JEOPOLITIK_KRIZ ve Risk Yöneticisi teknoloji konsantrasyonunun %54.6 ile K-17 eşiğini aştığını raporluyor — bu çelişkide Risk > Sektör önceliği geçerli. Makro Analist VIX>20 ve earnings haftası nedeniyle RISK_OFF sinyali veriyor, SPY için aşağı yön öngörüyor. Altı pozisyon stop-loss'a %1.3-5.9 yakınlıkta (özellikle MO kritik), bu nedenle yeni AL yerine mevcut tech ağırlığını kısmen savunma (ITA, LMT, RTX) ve enerji (XLE +1.21% lider) tarafına döndürmek K-17 konsantrasyon kuralına uyumu sağlar. VRT'de SELL sinyali earnings öncesi riski azaltmak için değerlendirilmeli.",
+    "uyari": "MO stop-loss'a %1.3 mesafede — tetiklenirse K-kuralı gereği override yapmadan çık. Teknoloji %54.6 konsantrasyon K-17 ihlali, rotasyon ertelenmemeli.",
     "guven": "MEDIUM",
-    "analist_uzlasma": "ORTA",
+    "analist_uzlasma": "DUSUK",
     "tahmin": {
       "yon": "DOWN",
-      "buyukluk": "LOW",
+      "buyukluk": "MEDIUM",
       "sembol": "SPY"
     },
     "_agent": "CIO_AGENT",
-    "_timestamp": "2026-04-21T17:02:25.404304"
+    "_timestamp": "2026-04-21T17:32:06.305808"
   },
   "weights": {
     "MACRO_AGENT": 0.8925,
