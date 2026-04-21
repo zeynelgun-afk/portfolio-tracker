@@ -159,7 +159,7 @@ jobs:
 
       - name: Degisiklikleri kaydet
         run: |
-          mkdir -p /tmp/ab/data/portfolios /tmp/ab/data/swing /tmp/ab/agent/memory /tmp/ab/logs
+          mkdir -p /tmp/ab/data/portfolios /tmp/ab/data/swing /tmp/ab/agent/memory /tmp/ab/logs /tmp/ab/reports/daily /tmp/ab/reports/weekly
           cp data/portfolios/*.json /tmp/ab/data/portfolios/ 2>/dev/null || true
           cp data/swing/*.json      /tmp/ab/data/swing/      2>/dev/null || true
           cp data/*.json            /tmp/ab/data/            2>/dev/null || true
@@ -167,6 +167,13 @@ jobs:
           cp agent/memory/*.json    /tmp/ab/agent/memory/    2>/dev/null || true
           cp logs/events.jsonl      /tmp/ab/logs/            2>/dev/null || true
           cp logs/valuation_predictions.jsonl /tmp/ab/logs/  2>/dev/null || true
+          # Raporlari da yedekle — 21 Nisan 2026 bug: git reset --hard
+          # origin/main sirasinda orchestrator'un yazdigi DAILY_SABAH
+          # dosyasi siliniyor, cunku _save_report'un kendi commit+push'u
+          # sessizce basarisiz olabiliyor. reports/ yedegi + restore ile
+          # savunmaci olarak koruyoruz.
+          cp reports/daily/*.md     /tmp/ab/reports/daily/   2>/dev/null || true
+          cp reports/weekly/*.md    /tmp/ab/reports/weekly/  2>/dev/null || true
           git fetch origin main
           git rebase --abort 2>/dev/null || true
           git reset --hard origin/main
@@ -175,6 +182,10 @@ jobs:
           cp /tmp/ab/data/*.json            data/            2>/dev/null || true
           cp /tmp/ab/data/*.csv             data/            2>/dev/null || true
           cp /tmp/ab/agent/memory/*.json    agent/memory/    2>/dev/null || true
+          # Raporlari geri yaz — reset --hard tracked raporlari silmis olabilir.
+          mkdir -p reports/daily reports/weekly
+          cp /tmp/ab/reports/daily/*.md     reports/daily/   2>/dev/null || true
+          cp /tmp/ab/reports/weekly/*.md    reports/weekly/  2>/dev/null || true
           # Observability JSONL merge (id bazlı dedup) — ayrı script, YAML temiz kalsın
           if [ -f /tmp/ab/logs/events.jsonl ] && [ -f logs/events.jsonl ]; then
             python3 scripts/_merge_events_jsonl.py logs/events.jsonl /tmp/ab/logs/events.jsonl > logs/events.jsonl.new
@@ -196,5 +207,5 @@ jobs:
             echo "Degisiklik yok"
           else
             git commit -m "[Agent/$MODE] Otomatik guncelleme — $ZAMAN"
-            git push origin main || (sleep 10 && git fetch origin main && git reset --hard origin/main && cp /tmp/ab/data/portfolios/*.json data/portfolios/ 2>/dev/null && cp /tmp/ab/data/*.json data/ 2>/dev/null && cp /tmp/ab/data/*.csv data/ 2>/dev/null && cp /tmp/ab/logs/events.jsonl logs/ 2>/dev/null && cp /tmp/ab/logs/valuation_predictions.jsonl logs/ 2>/dev/null && git add -A && git commit -m "[Agent/$MODE] Retry — $ZAMAN" && git push origin main)
+            git push origin main || (sleep 10 && git fetch origin main && git reset --hard origin/main && cp /tmp/ab/data/portfolios/*.json data/portfolios/ 2>/dev/null && cp /tmp/ab/data/*.json data/ 2>/dev/null && cp /tmp/ab/data/*.csv data/ 2>/dev/null && cp /tmp/ab/logs/events.jsonl logs/ 2>/dev/null && cp /tmp/ab/logs/valuation_predictions.jsonl logs/ 2>/dev/null && mkdir -p reports/daily reports/weekly && cp /tmp/ab/reports/daily/*.md reports/daily/ 2>/dev/null && cp /tmp/ab/reports/weekly/*.md reports/weekly/ 2>/dev/null && git add -A && git commit -m "[Agent/$MODE] Retry — $ZAMAN" && git push origin main)
           fi

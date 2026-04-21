@@ -1548,21 +1548,16 @@ def _save_report(content: str, rapor_tipi: str):
     baslik = f"# {rapor_tipi.lower()} raporu — {tarih}\n\n> finzora ai | otomatik oluşturuldu\n\n"
     dosya.write_text(baslik + content, encoding="utf-8")
     print(f"[Rapor] {dosya.name} kaydedildi")
-    
-    # Git commit
-    try:
-        os.chdir(REPO_ROOT)
-        subprocess.run(["git", "config", "user.name", "Finzora AI"], capture_output=True)
-        subprocess.run(["git", "config", "user.email", "zeynelgun@users.noreply.github.com"], capture_output=True)
-        subprocess.run(["git", "pull", "--rebase", "origin", "main"], capture_output=True)
-        subprocess.run(["git", "add", str(dosya)], capture_output=True)
-        msg = f"[{rapor_tipi} RAPORU] {tarih}"
-        result = subprocess.run(["git", "commit", "-m", msg], capture_output=True)
-        if result.returncode == 0:
-            subprocess.run(["git", "push"], capture_output=True)
-            print(f"[Rapor] Git push başarılı: {dosya.name}")
-    except Exception as e:
-        print(f"[Rapor] Git hatası: {e}")
+
+    # NOT: Burada commit/push YAPILMAZ.
+    # 21 Nisan 2026 bug: _save_report kendi commit+push'unu deniyordu ama
+    # subprocess.run(..., capture_output=True) returncode kontrol edilmedigi
+    # icin push sessizce basarisiz olabiliyordu. Sonra workflow'un
+    # "Degisiklikleri kaydet" adimi `git reset --hard origin/main` ile
+    # commit'i silip DAILY_SABAH dosyasini diskten kaldiriyordu.
+    # Cozum: Raporu sadece diske yaz, commit/push'u workflow'un sonundaki
+    # toplu "Degisiklikleri kaydet" adimina birak (reports/ klasoru zaten
+    # `git add reports/` ile yakalaniyor).
 
 def _flag_for_commit():
     """Swing değişikliği oldu — kapanışta commit edilecek."""
@@ -1679,17 +1674,10 @@ Detaylı Türkçe analiz. Spekülatif önerilere BACKTEST GEREKLİ işareti koy.
         baslik = f"# haftalık rapor — {tarih}\n\n> finzora ai | otomatik oluşturuldu\n\n"
         haftalik_dosya.write_text(baslik + response, encoding="utf-8")
         print(f"[Rapor] {haftalik_dosya.name} kaydedildi")
-        os.chdir(REPO_ROOT)
-        subprocess.run(["git", "config", "user.name", "Finzora AI"], capture_output=True)
-        subprocess.run(["git", "config", "user.email", "zeynelgun@users.noreply.github.com"], capture_output=True)
-        subprocess.run(["git", "pull", "--rebase", "origin", "main"], capture_output=True)
-        subprocess.run(["git", "add", str(haftalik_dosya)], capture_output=True)
-        result = subprocess.run(["git", "commit", "-m", f"[HAFTALIK RAPOR] {tarih}"], capture_output=True)
-        if result.returncode == 0:
-            subprocess.run(["git", "push", "origin", "main"], capture_output=True)
-            print(f"[Rapor] Git push başarılı: {haftalik_dosya.name}")
-        else:
-            print(f"[Rapor] Commit atlandı (değişiklik yok veya hata)")
+        # NOT: Commit/push buradan kaldirildi (21 Nisan 2026 bug).
+        # Workflow'un "Degisiklikleri kaydet" adimi `git add reports/`
+        # ile zaten toplu commit ediyor. Burada extra commit + push
+        # capture_output=True nedeniyle sessizce basarisiz olabiliyor.
     except Exception as e:
         print(f"[Rapor] Haftalık kayıt hatası: {e}")
 
