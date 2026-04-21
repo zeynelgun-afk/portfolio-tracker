@@ -90,12 +90,21 @@ jobs:
             HOUR=$(TZ=Europe/Istanbul date +%H)
             MIN=$(TZ=Europe/Istanbul date +%M)
             WDAY=$(date +%u)
+            TODAY=$(TZ=Europe/Istanbul date +%Y-%m-%d)
+            SABAH_FILE="reports/daily/DAILY_SABAH_${TODAY}.md"
             if [ "$WDAY" -eq 7 ]; then
               echo "mode=weekly" >> $GITHUB_OUTPUT
             elif [ "$HOUR" -eq 16 ] || ([ "$HOUR" -eq 15 ] && [ "$MIN" -ge 45 ]); then
               echo "mode=morning" >> $GITHUB_OUTPUT
             elif [ "$HOUR" -eq 0 ] || [ "$HOUR" -eq 1 ]; then
               echo "mode=closing" >> $GITHUB_OUTPUT
+            # Rescue: TR saat 17:00-20:59 arasi (monitor penceresi) ve bugunku
+            # SABAH raporu henuz yazilmamis — sabah cron (13:00/13:12 UTC)
+            # atlandigi icin monitor'u morning'e yukselt. run_morning'deki
+            # duplicate-guard zaten cift yazmayi engeller.
+            elif [ "$HOUR" -ge 17 ] && [ "$HOUR" -le 20 ] && [ "$WDAY" -le 5 ] && [ ! -f "$SABAH_FILE" ]; then
+              echo "[rescue] $SABAH_FILE yok, monitor -> morning'e yukseltiliyor"
+              echo "mode=morning" >> $GITHUB_OUTPUT
             else
               echo "mode=monitor" >> $GITHUB_OUTPUT
             fi
