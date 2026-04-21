@@ -9,5 +9,76 @@
   ],
   "faz": "FAZ_0",
   "buy_list": [],
-  "zorunlu_aksiyonlar": []
+  "zorunlu_aksiyonlar": [],
+  "claude_kararlar": {
+    "tarih": "2026-04-22T00:14:41.404647+03:00",
+    "kararlar": [
+      {
+        "tip": "ÇIK",
+        "portfoy": "aggressive",
+        "sembol": "VRT",
+        "pct": 100,
+        "neden": "K-05: yarın earnings, zorunlu çıkış, +%7.6 kârda",
+        "hedef_fiyat": 312.44,
+        "stop": 0.0,
+        "tutar": 0,
+        "aciliyet": "hemen",
+        "dondur_al": null,
+        "_decision_id": "c9d449945ab0"
+      },
+      {
+        "tip": "ÇIK",
+        "portfoy": "balanced",
+        "sembol": "NEE",
+        "pct": 100,
+        "neden": "K-05: yarın earnings + stop %2.6 uzak, çift gerekçe",
+        "hedef_fiyat": 90.6,
+        "stop": 0.0,
+        "tutar": 0,
+        "aciliyet": "hemen",
+        "dondur_al": null,
+        "_decision_id": "0e80ecb08b15"
+      },
+      {
+        "tip": "ÇIK",
+        "portfoy": "balanced",
+        "sembol": "HIG",
+        "pct": 100,
+        "neden": "K-05: yarın earnings, zorunlu çıkış, +%0.6",
+        "hedef_fiyat": 139.15,
+        "stop": 0.0,
+        "tutar": 0,
+        "aciliyet": "hemen",
+        "dondur_al": null,
+        "_decision_id": "9c0d13e11de9"
+      },
+      {
+        "tip": "ÇIK",
+        "portfoy": "dividend",
+        "sembol": "T",
+        "pct": 100,
+        "neden": "K-05: yarın earnings, teknik zayıf, -%1.1",
+        "hedef_fiyat": 25.88,
+        "stop": 0.0,
+        "tutar": 0,
+        "aciliyet": "hemen",
+        "dondur_al": null,
+        "_decision_id": "1a9f9da12e5b"
+      },
+      {
+        "tip": "İZLE",
+        "portfoy": "dividend",
+        "sembol": "MO",
+        "pct": 0,
+        "neden": "Stop %1 uzak, -%1 hareket tetikler, 4 earnings çıkışıyla aynı gün yığılma yaratma",
+        "hedef_fiyat": 0.0,
+        "stop": 64.0,
+        "tutar": 0,
+        "aciliyet": "bugün",
+        "dondur_al": null,
+        "_decision_id": "998a29d535be"
+      }
+    ],
+    "kaynak": "closing"
+  }
 }

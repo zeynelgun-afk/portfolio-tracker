@@ -1196,6 +1196,11 @@
       "date": "2026-04-21",
       "source": "closing_analysis",
       "insight": "*Rapor sonu. Tüm aksiyonlar K-kurallarına uygun, onay beklenmeden uygulanacak.*"
+    },
+    {
+      "date": "2026-04-22",
+      "source": "closing_analysis",
+      "insight": "---"
     }
   ]
 }
