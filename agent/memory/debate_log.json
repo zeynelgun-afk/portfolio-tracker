@@ -359,6 +359,48 @@
         }
       },
       "karar_degisti_mi": true
+    },
+    {
+      "symbol": "T, VZ, MO → SMH/MU/KLAC",
+      "tarih": "2026-04-22T14:50:58.264270",
+      "ilk_karar": {
+        "karar": "DONDUR",
+        "hedef_sembol": "T, VZ, MO → SMH/MU/KLAC",
+        "gerekce": "Sektör analisti (ağırlık 1.53, HIGH güven) telekom temettü hisselerinden (T, VZ) yarı iletken/AI altyapısına (MU, KLAC, AMAT, COHR) rotasyon sinyali veriyor ve bu Risk analisti ile örtüşüyor: T %1.7, VZ %2.1, MO %1.4 stop mesafesinde KRİTİK bölgede. Makro analist (0.89) RISK_ON teyidi veriyor, XLK günlük +1.51% lider. Rotasyon mantıklı: zayıflayan pozisyonları stop tetiklenmeden kontrollü kapat, güçlü sektöre kaydır. Ancak aktif rejim JEOPOLITIK_KRIZ olduğundan AI'a agresif giriş yerine mevcut güçlü pozisyonları (COHR trailing stop ile) koru, yeni giriş savunma (ITA, LMT) + enerji ağırlıklı yapılmalı.",
+        "uyari": "T, VZ, MO stop seviyelerine çok yakın — piyasa açılışında ani düşüşte stop-loss otomatik tetiklenebilir; rotasyon bugün uygulanmazsa pozisyonlar zaten zorla kapanır. 27 Nisan Fed kararı öncesi sell-the-news riski momentum hisselerinde yüksek.",
+        "guven": "MEDIUM",
+        "analist_uzlasma": "ORTA",
+        "tahmin": {
+          "yon": "UP",
+          "buyukluk": "LOW",
+          "sembol": "SPY"
+        },
+        "_agent": "CIO_AGENT",
+        "_timestamp": "2026-04-22T14:50:06.357895"
+      },
+      "boğa": {
+        "_raw": "```json\n{\n  \"argümanlar\": [\n    \"Telekom tezinin yapısal sonu: T ve MO'da zaten stop-loss tecrübesi yaşandı (T -%5.54 Mart'ta stopladı, MO 3 gündür 'İZLE' listesinde stop %1 mesafede) — bu isimler mom",
+        "_parse_hata": true
+      },
+      "ayı": {
+        "_raw": "```json\n{\n  \"argümanlar\": [\n    \"Teknoloji konsantrasyonu zaten %55.3 (K-17 kırmızı bant) — T/VZ/MO satıp SMH/MU/KLAC eklemek bu oranı %60+ seviyesine çıkarır; tek bir sektör şokunda portföyün beşte ü",
+        "_parse_hata": true
+      },
+      "nihai": {
+        "nihai_karar": "BEKLE",
+        "kazan_taraf": "BAĞLANTI",
+        "karar_gerekce": "Boğa ve ayı tarafı net argüman sunmadı; bu durumda mevcut DONDUR pozisyonunu sürdürmek en rasyonel seçim. Teknoloji konsantrasyonu %55.3 ile K-17 kırmızı bölgesinde — T/VZ/MO (dividend) satıp SMH/MU/KLAC (tech) almak konsantrasyon riskini artırır ve agresif portföyün zaten -%4.4 olduğu bir ortamda mantıksız.",
+        "boğa_haklı_çünkü": "QQQ +%1.27 ve VIX 19 seviyesinde — yarı iletken momentum pozitif, MU/KLAC kısa vadede üstün getiri sağlayabilir.",
+        "ayı_haklı_çünkü": "Teknoloji %55.3 konsantrasyon K-17 ihlali; dividend sepeti +%41.5 kazanç veren yegane segment, bunu bozmak kanıtlanmış kazananı terk edip riskli sepete girmek demektir.",
+        "göz_ardı_edilen": "Vergi etkisi ve temettü gelir kaybı hesaplanmadı; ayrıca T/VZ/MO'nun stop seviyelerine yakınlık durumu tartışılmadı — MO zaten izleme listesinde.",
+        "güven": "MEDIUM",
+        "tahmin": {
+          "yon": "NEUTRAL",
+          "buyukluk": "LOW",
+          "sembol": "SPY"
+        }
+      },
+      "karar_degisti_mi": true
     }
   ]
 }

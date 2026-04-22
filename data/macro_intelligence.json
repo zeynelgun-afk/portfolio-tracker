@@ -1,108 +1,138 @@
 {
-  "tarih": "2026-04-21T20:30:55.343026+03:00",
-  "vix": 20.44,
+  "tarih": "2026-04-22T17:48:32.905374+03:00",
+  "vix": 19.09,
   "sektor_performans": {
-    "Basic Materials": -0.22214429193717633,
-    "Communication Services": -0.739184257198966,
-    "Consumer Cyclical": -1.2217012280087536,
-    "Consumer Defensive": 0.3914535946799358,
-    "Energy": 0.10442540563602165,
-    "Financial Services": -0.6240344892647132,
-    "Healthcare": -1.1657125181639638,
-    "Industrials": -0.8755409636127531,
-    "Real Estate": -0.4491943753992311,
-    "Technology": -0.4762467479384136,
-    "Utilities": -2.0578938136860736
+    "Basic Materials": 0.7273686787637512,
+    "Communication Services": 0.26279798338286753,
+    "Consumer Cyclical": 0.023052726989658545,
+    "Consumer Defensive": 0.3154118071725831,
+    "Energy": 0.807289035074632,
+    "Financial Services": 0.5269521601969362,
+    "Healthcare": 0.7960455017912871,
+    "Industrials": 0.7210106370915792,
+    "Real Estate": -0.28194611673351133,
+    "Technology": 0.10582704691415312,
+    "Utilities": -0.47263901996194013
   },
   "dominant_temalar": [
     {
-      "tema_adi": "AI_altyapı",
-      "güç_skoru": 6,
-      "neden": "AI CapEx döngüsü haberlerde öne çıkıyor ancak Technology sektörü bugün -0.5% — tema yapısal güçlü, kısa vadede kâr realizasyonu var",
-      "öncelikli_alt_dal": "güç_soğutma",
+      "tema_adi": "enerji_geçiş",
+      "güç_skoru": 8,
+      "neden": "Energy sektörü günün lideri (+0.8%), AI güç talebi devam ediyor, temiz enerji + nükleer altyapı ilgi görüyor",
+      "öncelikli_alt_dal": "güç_altyapı_nükleer",
       "önerilen_hisseler": [
-        "VRT",
-        "ETN",
-        "PWR",
-        "POWL"
+        "VST",
+        "CEG",
+        "NEE"
       ],
       "portföy": "aggressive",
       "aciliyet": "orta",
       "hisse_evreni": [
-        "VRT",
-        "ETN",
-        "PWR",
-        "GNRC",
-        "HUBB"
+        "CCJ",
+        "CEG",
+        "VST",
+        "FSLR",
+        "ET",
+        "ENPH",
+        "NRG",
+        "WMB",
+        "KMI",
+        "RUN",
+        "NEE",
+        "OKE"
       ]
     },
     {
-      "tema_adi": "enerji_geçiş",
-      "güç_skoru": 5,
-      "neden": "Energy sektörü +0.1% ile pozitif ayrışıyor, AI güç talebi teması haberlerde destekleniyor",
-      "öncelikli_alt_dal": "nükleer_güç",
+      "tema_adi": "sağlık_yenilik",
+      "güç_skoru": 7,
+      "neden": "Healthcare +0.8% ile liderlerde, HCSG günün güçlüleri arasında (+23.3%), GLP-1 ve onkoloji momentumu sürüyor",
+      "öncelikli_alt_dal": "GLP1_onkoloji",
       "önerilen_hisseler": [
-        "NEE",
-        "CEG",
-        "VST"
+        "LLY",
+        "NVO",
+        "ISRG"
       ],
       "portföy": "balanced",
       "aciliyet": "orta",
       "hisse_evreni": [
-        "ENPH",
-        "NEE",
-        "ET",
-        "KMI",
-        "NRG",
-        "RUN",
-        "CEG",
-        "VST",
-        "WMB",
-        "FSLR",
-        "CCJ",
-        "OKE"
+        "MRNA",
+        "ALT",
+        "VKTX",
+        "REGN",
+        "GILD",
+        "LLY",
+        "ISRG",
+        "SYK",
+        "BMY",
+        "MDT",
+        "NVO",
+        "EW"
+      ]
+    },
+    {
+      "tema_adi": "emtia_kaynak",
+      "güç_skoru": 7,
+      "neden": "Basic Materials +0.7%, Industrials +0.7% — AI altyapı + yeşil geçiş hammadde talebini destekliyor",
+      "öncelikli_alt_dal": "bakır_nadir_toprak",
+      "önerilen_hisseler": [
+        "FCX",
+        "MP",
+        "NUE"
+      ],
+      "portföy": "balanced",
+      "aciliyet": "orta",
+      "hisse_evreni": [
+        "GOLD",
+        "AEM",
+        "HBM",
+        "NOVN",
+        "NEM",
+        "SCCO",
+        "FCX",
+        "MP",
+        "USA",
+        "TECK",
+        "PAAS"
       ]
     }
   ],
   "kacınılacak": [
-    "Industrials",
-    "Communication Services",
-    "Financial Services"
+    "Technology"
   ],
-  "piyasa_modu": "nötr",
+  "piyasa_modu": "risk-on",
   "aktif_kriz": {
     "tip": "yok",
-    "guven": 6,
-    "kanit": "VIX 20.4 sınırda ama panik seviyesi değil. Sektörler karışık (Consumer Defensive+0.4, Industrials-0.9) belirgin kriz rotasyonu yok. Haberler Fed politikası odaklı — 'fatal policy error' söylemi dikkat çekici ancak henüz piyasayı tek yöne itmedi.",
+    "guven": 8,
+    "kanit": "VIX 19.1 (<20 eşik), tüm sektörler pozitif ve geniş katılım var, haber akışı bullish (bull run, AI, IPO iştahı). Stres/panik sinyali yok, normal risk-on ortam.",
     "beneficiary_sectors": [],
     "sensitive_sectors": []
   },
-  "genel_yorum": "Piyasa risk-off eğiliminde hafif stres gösteriyor ama aktif kriz yok. Fed başkan adayı Warsh söylemleri ve AI CapEx sorgulaması sektör genelinde temkinli hava yarattı. VIX 20.4 eşikte — yakın takip, agresif yeni giriş yerine mevcut pozisyonları korumak önceliklidir.",
+  "genel_yorum": "Piyasa sağlıklı risk-on modunda; sektör rotasyonu defansiflerden (Energy, Healthcare, Materials) yana ama Technology zayıf kalıyor. Kriz sinyali yok, K-13 standart VIX bazlı çalışmalı. Tematik odak: enerji altyapı + sağlık yenilik + hammadde üçlüsü.",
   "haberler": [
     {
-      "baslik": "Warsh Says He'd Be an Independent Actor as Fed Chair",
-      "kaynak": "youtube.com",
-      "tarih": "2026-04-21 12:51"
-    },
-    {
-      "baslik": "The Dow Jones Transportation Average is on a historic tear. Here are 6 charts you need to see.",
-      "kaynak": "marketwatch.com",
-      "tarih": "2026-04-21 12:45"
-    },
-    {
-      "baslik": "This Market Rally Has An Elephant In The Room: The AI CapEx Cycle",
+      "baslik": "Repo Market Stress Signals Bitcoin Is Positioned For Its Next Major Bull Cycle",
       "kaynak": "seekingalpha.com",
-      "tarih": "2026-04-21 12:33"
+      "tarih": "2026-04-22 10:36"
     },
     {
-      "baslik": "\"Respect the Trend\" Higher in Tech, Just Mind Selling Risk",
-      "kaynak": "youtube.com",
-      "tarih": "2026-04-21 12:31"
+      "baslik": "Stocks Still Overvalued Based On CAPE Ratio, But Broader Context Allows For Debate",
+      "kaynak": "seekingalpha.com",
+      "tarih": "2026-04-22 10:30"
     },
     {
-      "baslik": "Kevin Warsh says Fed is dealing with 'fatal policy error'",
+      "baslik": "Mega-IPOs And Index Fund Mechanics: Much Ado About Nothing?",
+      "kaynak": "seekingalpha.com",
+      "tarih": "2026-04-22 10:26"
+    },
+    {
+      "baslik": "Investors Are Piling Into an Obscure New Fund for Memory Stocks",
+      "kaynak": "wsj.com",
+      "tarih": "2026-04-22 10:00"
+    },
+    {
+      "baslik": "It's a great time for buying across private equity and private credit, says Steve Klinsky",
       "kaynak": "youtube.com",
-      "tarih": "2026-04-21 12:30"
+      "tarih": "2026-04-22 09:52"
     }
   ]
 }

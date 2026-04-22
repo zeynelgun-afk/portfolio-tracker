@@ -288,8 +288,12 @@
       "gerekce": "VIX 17.80 ile düşük volatilite ortamında SPY ve QQQ %1+ yükselişle risk iştahı devam ediyor; İran ateşkes iyimserliği ve tech liderliği piyasayı destekliyor",
       "kaynak_kural": "MACRO_AGENT",
       "durum": "BEKLIYOR",
-      "skorlar": {},
-      "gercek_fiyatlar": {},
+      "skorlar": {
+        "5": -1.0
+      },
+      "gercek_fiyatlar": {
+        "5": 710.475
+      },
       "son_skor": null
     },
     {
@@ -305,8 +309,12 @@
       "gerekce": "",
       "kaynak_kural": "SECTOR_AGENT",
       "durum": "BEKLIYOR",
-      "skorlar": {},
-      "gercek_fiyatlar": {},
+      "skorlar": {
+        "5": 2.0
+      },
+      "gercek_fiyatlar": {
+        "5": 472.125
+      },
       "son_skor": null
     },
     {
@@ -322,8 +330,12 @@
       "gerekce": "MO stop-loss seviyesine sadece %0.6 mesafede — $0.38'lik bir düşüşle tetiklenir. Risk-on ortamında defansif/tütün sektöründen para çıkışı belirgin; Sektör Analisti (ağırlık 1.53, en yüksek) defansif z",
       "kaynak_kural": "CIO_AGENT",
       "durum": "BEKLIYOR",
-      "skorlar": {},
-      "gercek_fiyatlar": {},
+      "skorlar": {
+        "5": -1.0
+      },
+      "gercek_fiyatlar": {
+        "5": 710.475
+      },
       "son_skor": null
     },
     {
@@ -339,8 +351,12 @@
       "gerekce": "MO şu an portföyde görünmüyor — daha önce 17 Nisan'da -%4.43 K/Z ile satılmış. Zaten pozisyon yok, dolayısıyla ACIL_CIK uygulanacak bir şey kalmamış. Boğa ve ayı tarafları argüman sunmamış, tartışma b",
       "kaynak_kural": "adversarial_debate",
       "durum": "BEKLIYOR",
-      "skorlar": {},
-      "gercek_fiyatlar": {},
+      "skorlar": {
+        "5": 0.5
+      },
+      "gercek_fiyatlar": {
+        "5": 710.475
+      },
       "son_skor": null
     },
     {
@@ -541,6 +557,74 @@
       "guven": "LOW",
       "giris_fiyat": 705.07,
       "gerekce": "Boğa ve ayı tarafı somut argüman sunmadı; bu durumda mevcut pozisyonları değiştirmek için yeterli kanıt yok. Teknoloji konsantrasyonu %54.6 ile yüksek ama XLK pozisyonlarının P/L'si pozitif (+9% ile +",
+      "kaynak_kural": "adversarial_debate",
+      "durum": "BEKLIYOR",
+      "skorlar": {},
+      "gercek_fiyatlar": {},
+      "son_skor": null
+    },
+    {
+      "id": "pred_20260422_175006",
+      "tarih": "2026-04-22T17:50:06.408754+03:00",
+      "agent": "MACRO_AGENT",
+      "tip": "ANALIZ",
+      "sembol": "SPY",
+      "yon": "UP",
+      "buyukluk": "LOW",
+      "guven": "MEDIUM",
+      "giris_fiyat": 710.11,
+      "gerekce": "VIX normalleşirken teknoloji liderliğinde risk iştahı artıyor; Fed faiz kararı öncesi pozitif momentum",
+      "kaynak_kural": "MACRO_AGENT",
+      "durum": "BEKLIYOR",
+      "skorlar": {},
+      "gercek_fiyatlar": {},
+      "son_skor": null
+    },
+    {
+      "id": "pred_20260422_175006",
+      "tarih": "2026-04-22T17:50:06.454078+03:00",
+      "agent": "SECTOR_AGENT",
+      "tip": "ANALIZ",
+      "sembol": "SMH",
+      "yon": "UP",
+      "buyukluk": "HIGH",
+      "guven": "HIGH",
+      "giris_fiyat": 471.69,
+      "gerekce": "",
+      "kaynak_kural": "SECTOR_AGENT",
+      "durum": "BEKLIYOR",
+      "skorlar": {},
+      "gercek_fiyatlar": {},
+      "son_skor": null
+    },
+    {
+      "id": "pred_20260422_175006",
+      "tarih": "2026-04-22T17:50:06.501630+03:00",
+      "agent": "CIO_AGENT",
+      "tip": "ANALIZ",
+      "sembol": "SPY",
+      "yon": "UP",
+      "buyukluk": "LOW",
+      "guven": "MEDIUM",
+      "giris_fiyat": 710.11,
+      "gerekce": "Sektör analisti (ağırlık 1.53, HIGH güven) telekom temettü hisselerinden (T, VZ) yarı iletken/AI altyapısına (MU, KLAC, AMAT, COHR) rotasyon sinyali veriyor ve bu Risk analisti ile örtüşüyor: T %1.7, ",
+      "kaynak_kural": "CIO_AGENT",
+      "durum": "BEKLIYOR",
+      "skorlar": {},
+      "gercek_fiyatlar": {},
+      "son_skor": null
+    },
+    {
+      "id": "pred_20260422_175058",
+      "tarih": "2026-04-22T17:50:58.313179+03:00",
+      "agent": "DEBATE_CIO",
+      "tip": "DEBATE_KARAR",
+      "sembol": "SPY",
+      "yon": "NEUTRAL",
+      "buyukluk": "LOW",
+      "guven": "MEDIUM",
+      "giris_fiyat": 710.27,
+      "gerekce": "Boğa ve ayı tarafı net argüman sunmadı; bu durumda mevcut DONDUR pozisyonunu sürdürmek en rasyonel seçim. Teknoloji konsantrasyonu %55.3 ile K-17 kırmızı bölgesinde — T/VZ/MO (dividend) satıp SMH/MU/K",
       "kaynak_kural": "adversarial_debate",
       "durum": "BEKLIYOR",
       "skorlar": {},

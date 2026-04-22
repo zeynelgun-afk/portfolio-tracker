@@ -36,7 +36,21 @@
     "WMB": "energy",
     "RKLB": "industrials",
     "ZS": "technology",
-    "RTX": "industrials"
+    "RTX": "industrials",
+    "KMI": "energy",
+    "MRNA": "healthcare",
+    "ALT": "healthcare",
+    "VKTX": "healthcare",
+    "REGN": "healthcare",
+    "LLY": "healthcare",
+    "ISRG": "healthcare",
+    "SYK": "healthcare",
+    "BMY": "healthcare",
+    "MDT": "healthcare",
+    "GOLD": "financial_services",
+    "AEM": "basic_materials",
+    "HBM": "basic_materials",
+    "USA": "financial_services"
   },
   "updated": {
     "COHR": 1776693839,
@@ -75,6 +89,20 @@
     "WMB": 1776790824,
     "RKLB": 1776790835,
     "ZS": 1776790846,
-    "RTX": 1776790876
+    "RTX": 1776790876,
+    "KMI": 1776869323,
+    "MRNA": 1776869325,
+    "ALT": 1776869326,
+    "VKTX": 1776869327,
+    "REGN": 1776869329,
+    "LLY": 1776869331,
+    "ISRG": 1776869333,
+    "SYK": 1776869335,
+    "BMY": 1776869337,
+    "MDT": 1776869339,
+    "GOLD": 1776869339,
+    "AEM": 1776869342,
+    "HBM": 1776869344,
+    "USA": 1776869347
   }
 }

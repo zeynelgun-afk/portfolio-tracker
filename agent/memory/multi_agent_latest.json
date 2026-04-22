@@ -1,62 +1,63 @@
 {
   "macro": {
-    "sinyal": "RISK_OFF",
+    "sinyal": "RISK_ON",
     "guven": "MEDIUM",
-    "ana_tema": "VIX %8 sıçrayarak 20 üzerine çıktı, SPY/QQQ satış baskısı altında; earnings haftası ve Retail Sales öncesi tedirginlik hakim",
+    "ana_tema": "VIX normalleşirken teknoloji liderliğinde risk iştahı artıyor; Fed faiz kararı öncesi pozitif momentum",
     "beklentiler": [
-      "Bu hafta ağır earnings akışı (VRT, T, NEE, HIG) volatiliteyi yüksek tutacak",
-      "24 Nisan Retail Sales verisi tüketici gücü için kritik; zayıf veri Fed faiz indirim beklentisini artırır ama büyüme endişesini derinleştirir",
-      "VIX 20 üstünde kalıcı olursa K-10 gereği savunmacı allokasyon devreye girer"
+      "QQQ +1.27% ile tech güçlü, MU +6.3% semi momentum canlı",
+      "VIX 19.09 NORMAL bölgede, -2.1% düşüş risk iştahını destekliyor",
+      "27 Nisan Fed kararı öncesi pozisyonlanma, faiz 4.5% sabit bekleniyor",
+      "Earnings sezonu karışık: PM/AT&T beat, TE/BSX guidance zayıf"
     ],
-    "risk_faktoru": "VIX'in 20 eşiğini kırması ve tech/momentum liderliğinin zayıflaması — agresif sepet zaten -4.8% ve yeni momentum girişi K-02 ile kısıtlı",
+    "risk_faktoru": "27 Nisan Fed toplantısı ve yoğun earnings haftası (VRT/T/HIG/NEE/VZ) — sell-the-news riski yüksek; momentum hisselerde (COHR/ANET/MU) PAH değerlemeler düzeltme riski taşıyor",
     "tahmin": {
-      "yon": "DOWN",
-      "buyukluk": "MEDIUM",
+      "yon": "UP",
+      "buyukluk": "LOW",
       "sembol": "SPY"
     },
     "_agent": "MACRO_AGENT",
-    "_timestamp": "2026-04-21T17:31:23.083138"
+    "_timestamp": "2026-04-22T14:49:21.430187"
   },
   "sector": {
     "aktif_rejim": "ai_boom",
-    "lider_sektor": "Teknoloji/AI Altyapı (XLK, SMH)",
-    "zayif_sektor": "Utilities (XLU)",
-    "rotasyon_onerisi": "Utilities (NEE baskı altında) ve defansif telecom'dan AI altyapı (SMH, XLK) ve Industrials (XLI - GEV, CAT güçlü) tarafına kademeli rotasyon",
-    "guven": "MEDIUM",
+    "lider_sektor": "Yarı iletken / AI altyapı (SMH, XLK)",
+    "zayif_sektor": "Telekom / Temettü savunma (XLC, T-VZ)",
+    "rotasyon_onerisi": "Telekom temettü (T, VZ) kâr realizasyonundan yarı iletken & AI altyapı (MU, KLAC, AMAT, COHR) liderliğine para akışı devam ediyor",
+    "guven": "HIGH",
     "tahmin": {
       "yon": "UP",
-      "buyukluk": "MEDIUM",
+      "buyukluk": "HIGH",
       "sembol": "SMH"
     },
     "_agent": "SECTOR_AGENT",
-    "_timestamp": "2026-04-21T17:31:28.489380"
+    "_timestamp": "2026-04-22T14:49:27.504039"
   },
   "signal": {
     "_agent": "SIGNAL_AGENT",
-    "_raw": "{\n  \"portfoy_sinyalleri\": [\n    {\n      \"sembol\": \"COHR\",\n      \"sinyal\": \"HOLD\",\n      \"rsi_yorumu\": \"overbought\",\n      \"sma_durumu\": \"ustunde\",\n      \"aciklama\": \"+21% kârda, stop uzak, trailing stop sıkılaştırılmalı.\"\n    },\n    {\n      \"sembol\": \"VRT\",\n      \"sinyal\": \"SELL\",\n      \"rsi_yorumu\"",
+    "_raw": "{\n  \"portfoy_sinyalleri\": [\n    {\n      \"sembol\": \"COHR\",\n      \"sinyal\": \"HOLD\",\n      \"rsi_yorumu\": \"overbought\",\n      \"sma_durumu\": \"ustunde\",\n      \"aciklama\": \"Güçlü momentum ama hedef üstü, trailing stop ile koru.\"\n    },\n    {\n      \"sembol\": \"VRT\",\n      \"sinyal\": \"WATCH\",\n      \"rsi_yorumu",
     "_parse_hata": true,
     "guven": "LOW"
   },
   "risk": {
     "_agent": "RISK_AGENT",
-    "_raw": "{\n  \"risk_seviyesi\": \"HIGH\",\n  \"stop_yakini\": [\n    \"MO - %1.3 uzakta (KRİTİK)\",\n    \"NEE - %3.3 uzakta\",\n    \"CPRX - %4.3 uzakta\",\n    \"RPRX - %5.1 uzakta\",\n    \"VZ - %5.2 uzakta\",\n    \"HIG - %5.9 uzakta\"\n  ],\n  \"konsantrasyon_uyarisi\": \"Teknoloji sektörü %54.6 — K-17 eşiği aşıldı. Agresif portföyd",
+    "_raw": "{\n  \"risk_seviyesi\": \"HIGH\",\n  \"stop_yakini\": [\n    \"MO - %1.4 uzakta (KRİTİK)\",\n    \"T - %1.7 uzakta (KRİTİK)\",\n    \"VZ - %2.1 uzakta (KRİTİK)\",\n    \"NEE - %3.7 uzakta\",\n    \"HIG - %4.5 uzakta\",\n    \"CPRX - %4.7 uzakta\",\n    \"VRT - %5.2 uzakta\",\n    \"RPRX - %5.2 uzakta\"\n  ],\n  \"konsantrasyon_uyaris",
     "_parse_hata": true,
     "guven": "LOW"
   },
   "cio": {
     "karar": "DONDUR",
-    "hedef_sembol": "XLK -> ITA/XLE",
-    "gerekce": "Sektör Analisti (ağırlık 1.53) AI altyapısına rotasyon öneriyor ancak aktif piyasa rejimi JEOPOLITIK_KRIZ ve Risk Yöneticisi teknoloji konsantrasyonunun %54.6 ile K-17 eşiğini aştığını raporluyor — bu çelişkide Risk > Sektör önceliği geçerli. Makro Analist VIX>20 ve earnings haftası nedeniyle RISK_OFF sinyali veriyor, SPY için aşağı yön öngörüyor. Altı pozisyon stop-loss'a %1.3-5.9 yakınlıkta (özellikle MO kritik), bu nedenle yeni AL yerine mevcut tech ağırlığını kısmen savunma (ITA, LMT, RTX) ve enerji (XLE +1.21% lider) tarafına döndürmek K-17 konsantrasyon kuralına uyumu sağlar. VRT'de SELL sinyali earnings öncesi riski azaltmak için değerlendirilmeli.",
-    "uyari": "MO stop-loss'a %1.3 mesafede — tetiklenirse K-kuralı gereği override yapmadan çık. Teknoloji %54.6 konsantrasyon K-17 ihlali, rotasyon ertelenmemeli.",
+    "hedef_sembol": "T, VZ, MO → SMH/MU/KLAC",
+    "gerekce": "Sektör analisti (ağırlık 1.53, HIGH güven) telekom temettü hisselerinden (T, VZ) yarı iletken/AI altyapısına (MU, KLAC, AMAT, COHR) rotasyon sinyali veriyor ve bu Risk analisti ile örtüşüyor: T %1.7, VZ %2.1, MO %1.4 stop mesafesinde KRİTİK bölgede. Makro analist (0.89) RISK_ON teyidi veriyor, XLK günlük +1.51% lider. Rotasyon mantıklı: zayıflayan pozisyonları stop tetiklenmeden kontrollü kapat, güçlü sektöre kaydır. Ancak aktif rejim JEOPOLITIK_KRIZ olduğundan AI'a agresif giriş yerine mevcut güçlü pozisyonları (COHR trailing stop ile) koru, yeni giriş savunma (ITA, LMT) + enerji ağırlıklı yapılmalı.",
+    "uyari": "T, VZ, MO stop seviyelerine çok yakın — piyasa açılışında ani düşüşte stop-loss otomatik tetiklenebilir; rotasyon bugün uygulanmazsa pozisyonlar zaten zorla kapanır. 27 Nisan Fed kararı öncesi sell-the-news riski momentum hisselerinde yüksek.",
     "guven": "MEDIUM",
-    "analist_uzlasma": "DUSUK",
+    "analist_uzlasma": "ORTA",
     "tahmin": {
-      "yon": "DOWN",
-      "buyukluk": "MEDIUM",
+      "yon": "UP",
+      "buyukluk": "LOW",
       "sembol": "SPY"
     },
     "_agent": "CIO_AGENT",
-    "_timestamp": "2026-04-21T17:32:06.305808"
+    "_timestamp": "2026-04-22T14:50:06.357895"
   },
   "weights": {
     "MACRO_AGENT": 0.8925,
