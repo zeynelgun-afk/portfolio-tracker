@@ -2,38 +2,11 @@
   "portfoy_adi": "Değer + Temettü",
   "baslangic_sermaye": 100000,
   "nakit": {
-    "miktar": 94552.98,
+    "miktar": 114558.22,
     "para_birimi": "USD",
     "agirlik_yuzde": 66.83
   },
   "pozisyonlar": [
-    {
-      "sembol": "T",
-      "isim": "AT&T Inc",
-      "sektor": "Telekomünikasyon",
-      "adet": 773,
-      "maliyet_baz": 26.17,
-      "yatirim": 20229.41,
-      "guncel_fiyat": 25.88,
-      "guncel_deger": 20005.24,
-      "kar_zarar": -224.17,
-      "kar_zarar_yuzde": -1.11,
-      "gunluk_degisim_yuzde": -1.15,
-      "agirlik_yuzde": 14.14,
-      "son_guncelleme": "2026-04-21T21:13:44.477470",
-      "giris_tarihi": "2026-01-02",
-      "giris_fiyati": 24.28,
-      "giris_nedeni": "Başlangıç pozisyonu - Temettü + değer portföyü - Telekomünikasyon",
-      "cb_kaynak": "back-calc-karyuzde",
-      "hedef_fiyat": 27.19,
-      "stop_loss": 24.62,
-      "zirve_fiyat": 26.51,
-      "stop_faz": 1,
-      "stop_mesafe_pct": 4.87,
-      "stop_aciklama": "",
-      "stop_guncelleme": "",
-      "durum": "✅ Normal"
-    },
     {
       "sembol": "VZ",
       "isim": "Verizon Communications",
@@ -116,7 +89,7 @@
       "durum": "✅ Normal"
     }
   ],
-  "son_guncelleme": "2026-04-21T21:13:44.477470",
+  "son_guncelleme": "2026-04-22T18:17:57.534495+03:00",
   "toplam_deger": 141478.98,
   "toplam_getiri_yuzde": 41.48,
   "toplam_getiri": 41478.98,

@@ -524,7 +524,7 @@ KESİN / MUHTEMEL / SPEKÜLATİF etiket kullan. Küçük harf Türkçe.
     except Exception as _spe:
         print(f"[Orkestratör] Split hatasi (tolere): {_spe}")
 
-    # Claude kararlarını execute et (piyasa açıksa)
+    # Claude kararlarını execute et (piyasa açıksa) veya session_state'e kaydet
     _now_tr2 = datetime.now(TR_TZ)
     piyasa_acik = _now_tr2.weekday() < 5 and (
         (_now_tr2.hour == 16 and _now_tr2.minute >= 30)
@@ -539,6 +539,28 @@ KESİN / MUHTEMEL / SPEKÜLATİF etiket kullan. Küçük harf Türkçe.
                 send_group_telegram(msg_k)
         except Exception as _ce:
             print(f"[Orkestratör] Claude karar execute hatası: {_ce}")
+    elif claude_kararlar and not piyasa_acik:
+        # Piyasa kapalı: kararları session_state'e kaydet, FAZ_2'de execute edilecek
+        try:
+            import json as _json_sm
+            _ss_path_sm = REPO_ROOT / "data" / "session_state.json"
+            _ss_sm = _json_sm.load(open(_ss_path_sm)) if _ss_path_sm.exists() else {}
+            _mevcut_ck = _ss_sm.get("claude_kararlar", {})
+            # Zaten execute edilmemiş kararlar varsa üzerine yazma
+            if not _mevcut_ck.get("executed") and _mevcut_ck.get("kararlar"):
+                print(f"[Orkestratör] session_state'te execute bekleyen kararlar var, sabah kararları eklenmedi.")
+            else:
+                _ss_sm["claude_kararlar"] = {
+                    "tarih":   datetime.now(TR_TZ).isoformat(),
+                    "kararlar": claude_kararlar,
+                    "kaynak":  "sabah_raporu",
+                    "executed": False,
+                }
+                with open(_ss_path_sm, "w") as _ff_sm:
+                    _json_sm.dump(_ss_sm, _ff_sm, ensure_ascii=False, indent=2)
+                print(f"[Orkestratör] {len(claude_kararlar)} sabah kararı session_state'e kaydedildi (FAZ_2'de execute edilecek).")
+        except Exception as _ce_sm:
+            print(f"[Orkestratör] Sabah kararı session_state kayıt hatası: {_ce_sm}")
 
     # Telegram'a 3 mesaj: multi-agent + debate (varsa) + genel analiz
     send_private_telegram(multi_summary + debate_msg)
@@ -1004,16 +1026,24 @@ def run_monitor(ctx: dict):
                     if _karar_tarih in (_bugun_str, _dun_str):
                         if not _ck.get("executed"):
                             print(f"[Monitor] {len(_ck['kararlar'])} Claude kararı execute ediliyor...")
-                            karar_aks = _execute_claude_decisions(_ck["kararlar"], market)
-                            for _msg in karar_aks:
-                                send_private_telegram(_msg)
-                                send_group_telegram(_msg)
-                                aksiyonlar.append(_msg)
-                            # Execute edildi olarak işaretle
+                            try:
+                                karar_aks = _execute_claude_decisions(_ck["kararlar"], market)
+                                for _msg in karar_aks:
+                                    send_private_telegram(_msg)
+                                    send_group_telegram(_msg)
+                                    aksiyonlar.append(_msg)
+                            except Exception as _exec_err:
+                                print(f"[Monitor] _execute_claude_decisions hatası: {_exec_err}")
+                                karar_aks = []
+                            # Execute edildi olarak işaretle — kısmi başarı olsa da
+                            # bir sonraki çalışmada çift işlem yapılmasın
                             _ck["executed"] = True
+                            _ck["executed_at"] = datetime.now(TR_TZ).isoformat()
+                            _ck["executed_count"] = len(karar_aks)
                             _ss2["claude_kararlar"] = _ck
                             with open(_ss_path2, "w") as _ff:
                                 _json3.dump(_ss2, _ff, ensure_ascii=False, indent=2)
+                            print(f"[Monitor] {len(karar_aks)} karar execute edildi, session_state güncellendi.")
         except Exception as _ce2:
             print(f"[Monitor] Claude karar execute hatası: {_ce2}")
 
@@ -1815,7 +1845,7 @@ def _execute_claude_decisions(kararlar: list, market: dict) -> list:
             _mark(k, False, "eksik_sembol_veya_portfoy")
             continue
 
-        # Güncel fiyat — canlı fiyat zorunlu, previousClose fallback yasak
+        # Güncel fiyat — canlı fiyat öncelikli, DNS sorunu durumunda portföy fiyatı son çare
         price = 0.0
         if fetch_live_price:
             _p, _ = fetch_live_price(sembol)
@@ -1826,10 +1856,27 @@ def _execute_claude_decisions(kararlar: list, market: dict) -> list:
             q = market.get(sembol, {})
             if q.get("price"):
                 price = float(q["price"])
+        if not price and tip == "ÇIK":
+            # ÇIK kararı için son çare: portföy dosyasındaki guncel_fiyat
+            # (DNS/503 durumunda satışın tamamen engellenmesini önler)
+            try:
+                _pf_alias = {"agresif":"aggressive","büyüme":"aggressive",
+                             "temettü":"dividend","temettu":"dividend","gelir":"dividend",
+                             "dengeli":"balanced"}
+                _pf_key = _pf_alias.get(portfoy.lower(), portfoy.lower())
+                _pf_path = REPO_ROOT / "data" / "portfolios" / f"{_pf_key}.json"
+                _pf_data = json.load(open(_pf_path))
+                _poz = next((p for p in _pf_data.get("pozisyonlar",[]) if p["sembol"]==sembol), None)
+                if _poz and _poz.get("guncel_fiyat"):
+                    price = float(_poz["guncel_fiyat"])
+                    print(f"[Decisions] {sembol} portföy fiyatı kullanıldı: ${price:.2f} (FMP ulaşılamıyor)")
+            except Exception as _pf_e:
+                print(f"[Decisions] {sembol} portföy fiyat fallback hatası: {_pf_e}")
         if not price:
             print(f"[Decisions] {sembol} canlı fiyat alınamadı, atlandı.")
             _mark(k, False, "canli_fiyat_alinamadi")
             continue
+
 
         try:
             if tip == "ÇIK":

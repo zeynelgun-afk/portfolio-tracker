@@ -28,7 +28,7 @@
   },
   "baslangic_sermaye": 400000,
   "nakit": {
-    "miktar": 145016.8,
+    "miktar": 186719.6,
     "para_birimi": "USD",
     "agirlik_yuzde": 37.93
   },
@@ -59,33 +59,6 @@
       "stop_aciklama": "break-even stop — yüksek ATR (22.92), SMA20 çok uzak, maliyet koruması",
       "stop_guncelleme": "2026-04-10T18:47:48",
       "durum": "🚀 Güçlü (+20.3%)"
-    },
-    {
-      "sembol": "VRT",
-      "isim": "Vertiv Holdings",
-      "sektor": "AI Güç / Soğutma Altyapısı",
-      "adet": 137,
-      "maliyet_baz": 290.3723,
-      "yatirim": 39781.01,
-      "guncel_fiyat": 312.44,
-      "guncel_deger": 42804.28,
-      "kar_zarar": 3023.27,
-      "kar_zarar_yuzde": 7.6,
-      "gunluk_degisim_yuzde": -0.63,
-      "agirlik_yuzde": 11.2,
-      "son_guncelleme": "2026-04-21T21:13:43.770490",
-      "giris_tarihi": "2026-04-10",
-      "giris_fiyati": 290.0,
-      "giris_nedeni": "Agresif v2 AI güç/soğutma altyapısı. Ichimoku 3/4, RSI 65, SMA200 +80%. Gün içi limit 290 doldu (gün dibi 289.30). Stop 275, hedef 330.",
-      "cb_kaynak": "kayit-yok",
-      "hedef_fiyat": 330.0,
-      "stop_loss": 290.37,
-      "zirve_fiyat": 314.41,
-      "stop_faz": 3,
-      "stop_mesafe_pct": 7.06,
-      "stop_aciklama": "dünkü low (289.3) altı — break-even (290.37) yerine daha anlamlı teknik seviye",
-      "stop_guncelleme": "2026-04-10T19:50:55",
-      "durum": "✅ Normal"
     },
     {
       "sembol": "ANET",
@@ -195,7 +168,7 @@
       "durum": "✅ Normal"
     }
   ],
-  "son_guncelleme": "2026-04-21T21:13:43.770490",
+  "son_guncelleme": "2026-04-22T18:17:57.534495+03:00",
   "toplam_deger": 382315.71,
   "toplam_getiri_yuzde": -4.42,
   "toplam_getiri": -17684.29,

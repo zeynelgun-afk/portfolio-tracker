@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-04-21",
+  "son_guncelleme": "2026-04-22T18:19:33.729162+03:00",
   "toplam_sermaye": 600000,
   "toplam_deger": 630405.48,
   "toplam_kar_zarar": 30405.48,
@@ -49,6 +49,26 @@
       "pozisyon_sayisi": 5,
       "bos_slot": 0,
       "durum": "5/5 pozisyon aktif"
+    }
+  },
+  "portfoy_ozet": {
+    "aggressive": {
+      "nakit": 186719.6,
+      "pozisyon_degeri": 194494.63,
+      "toplam": 381214.23,
+      "poz_sayisi": 5
+    },
+    "balanced": {
+      "nakit": 58503.0,
+      "pozisyon_degeri": 48048.85,
+      "toplam": 106551.85,
+      "poz_sayisi": 4
+    },
+    "dividend": {
+      "nakit": 114558.22,
+      "pozisyon_degeri": 26920.76,
+      "toplam": 141478.98,
+      "poz_sayisi": 3
     }
   }
 }

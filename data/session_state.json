@@ -534,7 +534,10 @@
         "_decision_id": "998a29d535be"
       }
     ],
-    "kaynak": "closing"
+    "kaynak": "closing",
+    "executed": true,
+    "executed_at": "2026-04-22T18:18:06.534609+03:00",
+    "executed_note": "Manuel execute — fetch_live_price DNS sorunu nedeniyle otonom sistem atladi"
   },
   "timestamp": "2026-04-22T17:49:09.130159+03:00"
 }
