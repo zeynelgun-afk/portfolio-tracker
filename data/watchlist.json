@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-04-21T21:13:44.887733",
+  "son_guncelleme": "2026-04-22T18:35:50.713446+03:00",
   "not": "3 portföy merkezi aday havuzu. PART 1C 15:38 TR güncelleme: DUK/NEE/GEV yeni EKLE (K-04+K-18 temiz), POWL K-18 ELENDİ ($27.3M insider satış), ön piyasa gap-up sonrası kovalama yasağı 4 aday için aktif. | 11 Nisan: Nükleer tema adayları eklendi (CCJ, OKLO, NNE, UEC, VST) — tematik araştırma, K-14 aktif olduğu için hepsi İZLE statüsünde. | 11 Nisan ek: BWXT (savunma tekel+NRC katalizör), LEU (HALEU tekeli), DNN (Wheeler River) İZLE. SMR (class action lawsuit) ve UUUU (%6 upside) GEÇ. | 2026-04-14: ALAB+PLAB+COHU eklendi — optik/bağlantı/test ekipmanı tematik araştırması. Hepsi IZLE statüsünde, geri çekilme bekleniyor.",
   "sistem_referans": "docs/PORTFOLIO_OPPORTUNITY_SYSTEM.md",
   "script": "scripts/portfolio_scan_common.py",
@@ -1001,6 +1001,42 @@
       "neden": "Analist hedefi yalnızca %6 upside. Risk/ödül oranı nükleer tema içinde en zayıf. CCJ ve DNN daha iyi alternatif.",
       "tarih": "2026-04-11",
       "yeniden_degerlendirme": "2026-06-11"
+    }
+  ],
+  "adaylar": [
+    {
+      "sembol": "MRVL",
+      "tarih": "2026-04-22",
+      "fiyat": 155.23,
+      "hedef_portfoy": "aggressive",
+      "neden": "AI networking chip, data center teması, RS50 +89.3%. RSI 97.3 — soğuma bekle. Giriş: RSI<65 ve 1-2 gün konsolidasyon.",
+      "urgency": "low",
+      "rsi": 97.3,
+      "sma50": 98.39,
+      "rsi_hedef": 65.0
+    },
+    {
+      "sembol": "ONTO",
+      "tarih": "2026-04-22",
+      "fiyat": 292.88,
+      "hedef_portfoy": "aggressive",
+      "neden": "Semiconductor equipment, process control. RS20 +33.5%. RSI 87.0 — soğuma bekle.",
+      "urgency": "low",
+      "rsi": 87.0,
+      "sma50": 221.83,
+      "rsi_hedef": 65.0
+    },
+    {
+      "sembol": "ABBV",
+      "tarih": "2026-04-22",
+      "fiyat": 203.37,
+      "hedef_portfoy": "dividend",
+      "neden": "FCF yield %5.2, pharma pipeline güçlü, yield ~%3.8. RSI 33.7 oversold ama SMA50 altında. Bekleme.",
+      "urgency": "medium",
+      "rsi": 33.7,
+      "sma50": 218.03,
+      "rsi_hedef": 45.0,
+      "koşul": "SMA50 üzerine çıkması bekleniyor"
     }
   ]
 }
