@@ -12,63 +12,6 @@
     "tarih": "2026-04-22T17:49:09.129923+03:00",
     "adaylar": [
       {
-        "symbol": "AEM",
-        "tema": "emtia_kaynak",
-        "portföy": "balanced",
-        "price": 205.41,
-        "stop": 190.7,
-        "target": 234.84,
-        "rr": 2.0,
-        "score": 5.51,
-        "teknik": 6,
-        "fundamental": 5,
-        "tema_güç": 7.0,
-        "valuation": 3.8,
-        "atr": 7.36,
-        "k_checks": {
-          "K-19": {
-            "passed": true,
-            "reason": "K-19: portföy alımı (balanced) — atlandı"
-          },
-          "K-05": {
-            "passed": true,
-            "reason": "K-05: earnings uzak"
-          },
-          "K-18": {
-            "passed": true,
-            "reason": "insider veri yok"
-          },
-          "K-20": {
-            "passed": true,
-            "reason": "K-20: RS temiz (1M: +5.2%)"
-          },
-          "K-17": {
-            "passed": true,
-            "reason": "K-17: korelasyon temiz (basic_materials, aynı sektör: 0)"
-          },
-          "K-13": {
-            "passed": true,
-            "reason": "VIX 19.1<22 tam pozisyon [jeopolitik]",
-            "size": 5000
-          }
-        },
-        "reason": "emtia_kaynak teması — teknik:6/10 fundamental:5/10 valuation:3.8/10",
-        "detay": {
-          "sma200": "✅",
-          "rsi": "✅ 45",
-          "mom_1m": "✅ +11.4%",
-          "skor": 5,
-          "roic": "✅ 13.1%",
-          "pe": "→ 23.1",
-          "val_karar": "PAHALI",
-          "val_fark": "-58.9%",
-          "val_guven": 86,
-          "val_archetype": "mining_commodity",
-          "val_gap": "-68%",
-          "val_skor": 3.8
-        }
-      },
-      {
         "symbol": "FSLR",
         "tema": "enerji_geçiş",
         "portföy": "aggressive",
@@ -122,63 +65,6 @@
           "val_archetype": "energy_integrated",
           "val_gap": "-51%",
           "val_skor": 4.1
-        }
-      },
-      {
-        "symbol": "HBM",
-        "tema": "emtia_kaynak",
-        "portföy": "balanced",
-        "price": 24.3,
-        "stop": 21.9,
-        "target": 29.11,
-        "rr": 2.0,
-        "score": 5.05,
-        "teknik": 7,
-        "fundamental": 4,
-        "tema_güç": 7.0,
-        "valuation": 1.0,
-        "atr": 1.2,
-        "k_checks": {
-          "K-19": {
-            "passed": true,
-            "reason": "K-19: portföy alımı (balanced) — atlandı"
-          },
-          "K-05": {
-            "passed": true,
-            "reason": "K-05: earnings uzak"
-          },
-          "K-18": {
-            "passed": true,
-            "reason": "insider veri yok"
-          },
-          "K-20": {
-            "passed": true,
-            "reason": "K-20: RS temiz (1M: +24.9%)"
-          },
-          "K-17": {
-            "passed": true,
-            "reason": "K-17: korelasyon temiz (basic_materials, aynı sektör: 0)"
-          },
-          "K-13": {
-            "passed": true,
-            "reason": "VIX 19.1<22 tam pozisyon [jeopolitik]",
-            "size": 5000
-          }
-        },
-        "reason": "emtia_kaynak teması — teknik:7/10 fundamental:4/10 valuation:1.0/10",
-        "detay": {
-          "sma200": "✅",
-          "sma50": "✅",
-          "rsi": "✅ 64",
-          "mom_1m": "✅ +29.1%",
-          "skor": 4,
-          "pe": "→ 16.9",
-          "val_karar": "PAHALI",
-          "val_fark": "-42.1%",
-          "val_guven": 84,
-          "val_archetype": "mining_commodity",
-          "val_gap": "+22%",
-          "val_skor": 1.0
         }
       },
       {

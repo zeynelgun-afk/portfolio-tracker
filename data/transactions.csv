@@ -166,3 +166,5 @@ date,action,symbol,shares,price,total,reason
 2026-04-17,SELL,MO,267,64.45,17208.15,"Pazartesi satılacak işareti 11 Nisan'dan beri bekliyordu, 6 gün gecikme. Hafta sonu gap riski + stop mesafesi %2.19 çok yakın. Dengeli'de çift MO tutma sorunu çözülüyor. K/Z -%4.43. Ders: bekleyen_aksiyon alanı açılış sabahı otomatik işlenmeli, manuel takibe bırakılmamalı."
 2026-04-20,BUY,ETN,36,406.39,14629.86,AI_altyapı teması — teknik:5/10 fundamental:5/10 valuation:3.8/10
 2026-04-21,SELL,MRK,50,112.56,5628.0,K-06 stop tetiklendi $112.56≤$113.28
+2026-04-22,BUY,AEM,73,204.69,14942.37,emtia_kaynak teması — teknik:6/10 fundamental:5/10 valuation:3.8/10
+2026-04-22,BUY,HBM,494,24.14,11922.69,emtia_kaynak teması — teknik:7/10 fundamental:4/10 valuation:1.0/10
