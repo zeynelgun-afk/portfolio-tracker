@@ -562,6 +562,31 @@ KESİN / MUHTEMEL / SPEKÜLATİF etiket kullan. Küçük harf Türkçe.
         except Exception as _ce_sm:
             print(f"[Orkestratör] Sabah kararı session_state kayıt hatası: {_ce_sm}")
 
+    # ── TEMA BAZLI DİNAMİK TARAMA (sabah raporu sonrası) ──────────────────────
+    # Her sabah tüm portföyler için FMP screener + tema filtresiyle taze evren
+    # oluşturulur. Sonuçlar buy_candidates.json'a yazılır, FAZ_2'de execute edilir.
+    try:
+        from opportunity_finder import run_theme_scan as _rts
+        from vix_fetcher import get_vix as _gv_morning
+        _vix_m, _ = _gv_morning()
+        _vix_m = _vix_m or 20.0
+        print("[Orkestratör] Tema taraması başlıyor...")
+        for _pf_m in ["aggressive", "balanced", "dividend"]:
+            try:
+                from execution_engine import get_portfolio_status as _gps_m
+                _st_m = _gps_m(_pf_m)
+                if _st_m.get("slot", 0) <= 0:
+                    print(f"[Orkestratör] {_pf_m} dolu, tarama atlandı")
+                    continue
+                _mev_m = _st_m.get("semboller", [])
+                _res_m = _rts(_pf_m, vix=_vix_m, mevcut_pozlar=_mev_m,
+                               min_skor=5.5, max_aday=10)
+                print(f"[Orkestratör] {_pf_m}: {len(_res_m)} aday buy_candidates'a eklendi")
+            except Exception as _pfe:
+                print(f"[Orkestratör] {_pf_m} tema tarama hatası: {_pfe}")
+    except Exception as _tse:
+        print(f"[Orkestratör] Tema taraması genel hata (tolere): {_tse}")
+
     # Telegram'a 3 mesaj: multi-agent + debate (varsa) + genel analiz
     send_private_telegram(multi_summary + debate_msg)
     msg    = f"Finzora Agent — Sabah Analizi\n{ctx['timestamp'][:16]}\n\n{response}"
@@ -690,6 +715,24 @@ KESİN / MUHTEMEL / SPEKÜLATİF etiket kullan. Küçük harf Türkçe.
         with open(_ss_path, "w") as _f:
             _json2.dump(_ss, _f, ensure_ascii=False, indent=2)
         print(f"[Orkestratör] {len(claude_kararlar)} karar session_state'e kaydedildi.")
+
+    # ── KAPANIS SONRASI TEMA TARAMASI (yarın için aday listesi hazırla) ──────
+    try:
+        from opportunity_finder import run_theme_scan as _rts_c
+        from vix_fetcher import get_vix as _gv_c
+        _vix_c, _ = _gv_c()
+        _vix_c = _vix_c or 20.0
+        print("[Kapanış] Ertesi gün için tema taraması başlıyor...")
+        from execution_engine import get_portfolio_status as _gps_c
+        for _pf_c in ["aggressive", "balanced", "dividend"]:
+            _st_c = _gps_c(_pf_c)
+            if _st_c.get("slot", 0) <= 0:
+                continue
+            _mev_c = _st_c.get("semboller", [])
+            _res_c = _rts_c(_pf_c, vix=_vix_c, mevcut_pozlar=_mev_c, min_skor=5.5, max_aday=8)
+            print(f"[Kapanış] {_pf_c}: {len(_res_c)} aday hazırlandı")
+    except Exception as _tsc:
+        print(f"[Kapanış] Tema taraması hatası (tolere): {_tsc}")
 
     msg = f"Finzora Agent — Kapanış\n{ctx['timestamp'][:16]}\n\n{response}"
     send_private_telegram(msg)
@@ -1275,7 +1318,27 @@ def _execute_portfolio_opportunities(faz: str, market: dict) -> list:
             print(f"[Execution] daily_scan fallback: {len(buy_list)} aday yüklendi")
 
     if not buy_list:
-        return []
+        # Buy list ve daily_scan boşsa → tema bazlı dinamik tarama başlat
+        try:
+            from opportunity_finder import run_theme_scan
+            from vix_fetcher import get_vix as _gv
+            _vix_ts, _ = _gv()
+            _vix_ts = _vix_ts or 20.0
+            print(f"[Execution] buy_list boş — tema taraması başlatılıyor (VIX:{_vix_ts:.1f})")
+            for _pf in ["aggressive", "balanced", "dividend"]:
+                _status_ts = get_portfolio_status(_pf) if get_portfolio_status else {}
+                if _status_ts.get("slot", 0) <= 0:
+                    continue
+                _mevcut_ts = _status_ts.get("semboller", [])
+                _scan_res  = run_theme_scan(_pf, vix=_vix_ts, mevcut_pozlar=_mevcut_ts,
+                                             min_skor=5.5, max_aday=10)
+                buy_list.extend(_scan_res)
+                if _scan_res:
+                    print(f"[Execution] {_pf}: {len(_scan_res)} yeni aday bulundu")
+        except Exception as _tse:
+            print(f"[Execution] Tema taraması hatası: {_tse}")
+
+    if not buy_list:
 
     aksiyonlar = []
 
@@ -1423,6 +1486,15 @@ def _execute_portfolio_opportunities(faz: str, market: dict) -> list:
                     json.dump(state, open(state_path,"w"), ensure_ascii=False, indent=2)
                 except Exception:
                     pass
+            # buy_candidates.json'dan da çıkar (tema taraması adayı olabilir)
+            try:
+                _bc_path = REPO_ROOT / "data" / "buy_candidates.json"
+                if _bc_path.exists():
+                    _bc = json.load(open(_bc_path))
+                    _bc["adaylar"] = [a for a in _bc.get("adaylar",[]) if a.get("symbol") != sym]
+                    json.dump(_bc, open(_bc_path,"w"), ensure_ascii=False, indent=2)
+            except Exception:
+                pass
 
     return aksiyonlar
 

@@ -350,3 +350,233 @@ def find_candidates(
 
     print(f"\n[Finder] {len(sonuç)} aday bulundu → data/buy_candidates.json")
     return sonuç
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# TEMA BAZLI DİNAMİK TARAMA
+# ─────────────────────────────────────────────────────────────────────────────
+
+# Her portföy + tema için screener parametreleri ve fallback evreni
+TEMA_TARAMA_CONFIG = {
+    "aggressive": {
+        "AI_tedarik_zinciri": {
+            "screener": {"sector": "Technology", "marketCapMoreThan": 2_000_000_000,
+                         "volumeMoreThan": 500_000, "priceMoreThan": 10},
+            "fallback": ["NVDA","AMD","AVGO","MRVL","ONTO","KEYS","COHU","RMBS",
+                         "AEHR","LRCX","KLAC","MPWR","ENPH","WOLF","AMBA","FORM"],
+        },
+        "savunma_elektronik": {
+            "screener": {"sector": "Industrials", "marketCapMoreThan": 3_000_000_000,
+                         "volumeMoreThan": 300_000, "priceMoreThan": 20},
+            "fallback": ["LHX","HEI","KTOS","TDG","AXON","LDOS","SAIC","BAH","CACI"],
+        },
+    },
+    "balanced": {
+        "finansal_hizmetler": {
+            "screener": {"sector": "Financial Services", "marketCapMoreThan": 5_000_000_000,
+                         "volumeMoreThan": 300_000, "priceMoreThan": 20},
+            "fallback": ["PGR","TRV","CINF","CB","MMC","AON","MKL","ACGL","RLI","WRB"],
+        },
+        "savunma_sanayi": {
+            "screener": {"sector": "Industrials", "marketCapMoreThan": 5_000_000_000,
+                         "volumeMoreThan": 200_000, "priceMoreThan": 30},
+            "fallback": ["LMT","RTX","NOC","GD","HII","TXT","SPR","CW","DRS","VSEC"],
+        },
+        "emtia_hammadde": {
+            "screener": {"sector": "Basic Materials", "marketCapMoreThan": 2_000_000_000,
+                         "volumeMoreThan": 300_000, "priceMoreThan": 10},
+            "fallback": ["FCX","NEM","AEM","GOLD","WPM","RGLD","HBM","AG","HL","EXK"],
+        },
+    },
+    "dividend": {
+        "healthcare_temettü": {
+            "screener": {"sector": "Healthcare", "marketCapMoreThan": 10_000_000_000,
+                         "volumeMoreThan": 500_000, "priceMoreThan": 20},
+            "fallback": ["JNJ","ABBV","MDT","ABT","BMY","PFE","MRK","AMGN","GILD","CVS"],
+        },
+        "reit_temettü": {
+            "screener": {"sector": "Real Estate", "marketCapMoreThan": 3_000_000_000,
+                         "volumeMoreThan": 300_000, "priceMoreThan": 10},
+            "fallback": ["O","WPC","VICI","NNN","ADC","STAG","EPRT","LTC","GOOD","GTY"],
+        },
+        "utility_temettü": {
+            "screener": {"sector": "Utilities", "marketCapMoreThan": 5_000_000_000,
+                         "volumeMoreThan": 200_000, "priceMoreThan": 15},
+            "fallback": ["SO","DUK","AEP","XEL","WEC","ES","AWK","CMS","NI","ATO"],
+        },
+        "tüketici_temettü": {
+            "screener": {"sector": "Consumer Defensive", "marketCapMoreThan": 10_000_000_000,
+                         "volumeMoreThan": 500_000, "priceMoreThan": 20},
+            "fallback": ["PG","KO","PEP","CL","MKC","CHD","SJM","HRL","CAG","GIS"],
+        },
+    },
+}
+
+
+def _screener_fetch(params: dict, limit: int = 30) -> list:
+    """
+    FMP screener/stock endpoint'inden hisse listesi çeker.
+    Başarısız olursa boş liste döner (fallback devreye girer).
+    """
+    p = dict(params)
+    p["limit"] = limit
+    p["apikey"] = FMP_KEY
+    try:
+        r = requests.get(f"{FMP_BASE}/screener/stock", params=p, timeout=12)
+        if r.status_code == 200 and r.text.strip():
+            d = r.json()
+            if isinstance(d, list):
+                return [s["symbol"] for s in d if s.get("symbol")]
+    except Exception as _e:
+        print(f"[Screener] FMP hatası: {_e}")
+    return []
+
+
+def run_theme_scan(
+    portfoy: str,
+    vix: float = 20.0,
+    mevcut_pozlar: list = None,
+    min_skor: float = 5.5,
+    max_aday: int = 20,
+) -> list:
+    """
+    Portföy temasına göre FMP screener + fallback evreniyle dinamik tarama yapar.
+    İzleme listesine bağımlı değil — her çalışmada taze evren oluşturur.
+
+    Parametre:
+        portfoy   : "aggressive" | "balanced" | "dividend"
+        vix       : güncel VIX (K-engine için)
+        mevcut_pozlar : portföyde zaten olan semboller (çakışma önleme)
+        min_skor  : bu skorun altındaki adaylar listeye alınmaz
+        max_aday  : sonuç listesi üst sınırı
+
+    Döndürür: find_candidates ile aynı formatta sıralı aday listesi
+    """
+    _ALIAS = {
+        "agresif": "aggressive", "büyüme": "aggressive",
+        "temettü": "dividend",   "temettu": "dividend", "gelir": "dividend",
+        "dengeli": "balanced",
+    }
+    portfoy = _ALIAS.get(portfoy.lower(), portfoy.lower())
+    if portfoy not in TEMA_TARAMA_CONFIG:
+        print(f"[ThemeScan] Bilinmeyen portföy: {portfoy}")
+        return []
+
+    mevcut = set(mevcut_pozlar or [])
+    temalar = TEMA_TARAMA_CONFIG[portfoy]
+    tum_adaylar = {}
+
+    print(f"\n[ThemeScan] {portfoy.upper()} — {len(temalar)} tema taranıyor (VIX:{vix:.1f})")
+
+    for tema_adi, cfg in temalar.items():
+        # 1. FMP screener ile dinamik evren
+        evren = _screener_fetch(cfg["screener"], limit=25)
+        if evren:
+            print(f"  [{tema_adi}] Screener: {len(evren)} hisse bulundu")
+        else:
+            # Screener başarısız → fallback sabit listesi
+            evren = cfg["fallback"]
+            print(f"  [{tema_adi}] Screener başarısız → {len(evren)} fallback hisse")
+
+        # Zaten portföyde olanları çıkar
+        evren = [s for s in evren if s not in mevcut]
+
+        # Tema başına max 15 hisse değerlendir
+        for sym in evren[:15]:
+            if sym in tum_adaylar:
+                continue
+
+            # Fiyat
+            time.sleep(0.15)
+            q = _fmp("quote", {"symbol": sym})
+            if not q:
+                continue
+            q = q[0] if isinstance(q, list) else q
+            price = float(q.get("price") or 0)
+            if not price:
+                continue
+
+            # K-engine
+            try:
+                from k_engine import run_entry_checks
+                k_res = run_entry_checks(sym, vix=vix, sector=tema_adi,
+                                         base_size=5000, portfolio=portfoy)
+                if not k_res["go"]:
+                    continue
+            except Exception:
+                k_res = {"go": True, "checks": {}, "position_size": 5000}
+
+            # Teknik skor
+            time.sleep(0.15)
+            t_skor, t_det = score_technical(sym, price)
+            if t_skor < 3:
+                continue
+
+            # Fundamental skor
+            time.sleep(0.10)
+            f_skor, f_det = score_fundamental(sym)
+
+            # ATR14 stop/hedef
+            try:
+                from execution_engine import compute_atr_stop as _cas
+                stop, target, atr = _cas(sym, price)
+            except Exception:
+                stop   = round(price * 0.92, 2)
+                target = round(price * 1.12, 2)
+                atr    = None
+
+            rr = round((target - price) / (price - stop), 2) if price > stop else 0
+            if rr < 1.8:  # Min R:R (dividend için temettü etkisini sayarak biraz daha gevşek)
+                continue
+
+            # Final skor (teknik ağırlıklı)
+            final = round(t_skor * 0.40 + f_skor * 0.35 + 5.0 * 0.25, 2)
+            if final < min_skor:
+                continue
+
+            tum_adaylar[sym] = {
+                "symbol":      sym,
+                "tema":        tema_adi,
+                "portföy":     portfoy,
+                "price":       round(price, 2),
+                "stop":        stop,
+                "target":      target,
+                "rr":          rr,
+                "score":       final,
+                "teknik":      t_skor,
+                "fundamental": f_skor,
+                "atr":         round(atr, 2) if atr else None,
+                "reason":      f"{tema_adi} tema taraması — teknik:{t_skor}/10 fundamental:{f_skor}/10",
+                "detay":       {**t_det, **f_det},
+            }
+            print(f"    ✅ {sym}: skor {final:.1f} (T:{t_skor} F:{f_skor} R:R:{rr}:1)")
+
+    # Skora göre sırala, üst sınır uygula
+    sonuc = sorted(tum_adaylar.values(), key=lambda x: -x["score"])[:max_aday]
+
+    # buy_candidates.json'a yaz (mevcut portföy adaylarıyla birleştir)
+    try:
+        bc_path = REPO_ROOT / "data" / "buy_candidates.json"
+        mevcut_bc = {}
+        if bc_path.exists():
+            try:
+                mevcut_data = json.load(open(bc_path))
+                for a in mevcut_data.get("adaylar", []):
+                    if a.get("portföy") != portfoy:  # Diğer portföy adaylarını koru
+                        mevcut_bc[a["symbol"]] = a
+            except Exception:
+                pass
+        for a in sonuc:
+            mevcut_bc[a["symbol"]] = a
+        tum_liste = sorted(mevcut_bc.values(), key=lambda x: -x["score"])
+        out = {
+            "tarih":   datetime.now().isoformat(),
+            "adaylar": tum_liste,
+            "ozet":    {"toplam": len(tum_liste)},
+        }
+        json.dump(out, open(bc_path, "w"), ensure_ascii=False, indent=2)
+    except Exception as _e:
+        print(f"[ThemeScan] buy_candidates yazma hatası: {_e}")
+
+    print(f"[ThemeScan] {portfoy.upper()} tamamlandı: {len(sonuc)} aday")
+    return sonuc
