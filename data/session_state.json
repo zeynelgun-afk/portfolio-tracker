@@ -9,67 +9,10 @@
   ],
   "faz": "FAZ_0",
   "buy_list": {
-    "tarih": "2026-04-22T19:21:51.754569+03:00",
+    "tarih": "2026-04-22T19:45:26.374432+03:00",
+    "adaylar": [],
     "piyasa_mod": "risk-on",
-    "vix": 19.26,
-    "aciklama": "22 Nisan 2026 — kalite filtreli, RSI soğuma bekleyen adaylar",
-    "adaylar": [
-      {
-        "symbol": "MRVL",
-        "portföy": "aggressive",
-        "price": 155.23,
-        "stop": 142.0,
-        "target": 181.0,
-        "score": 7.5,
-        "reason": "AI networking chip, RS50 +89% ama RSI 97 — giriş: RSI<65",
-        "tema": "AI_tedarik",
-        "koşul": "RSI<65"
-      },
-      {
-        "symbol": "ONTO",
-        "portföy": "aggressive",
-        "price": 292.88,
-        "stop": 264.0,
-        "target": 350.0,
-        "score": 6.8,
-        "reason": "Semiconductor equipment, process control, RSI 87 — giriş: RSI<65",
-        "tema": "AI_tedarik",
-        "koşul": "RSI<65"
-      },
-      {
-        "symbol": "PGR",
-        "portföy": "balanced",
-        "price": 204.7,
-        "stop": 190.32,
-        "target": 222.78,
-        "score": 6.2,
-        "reason": "Progressive — FCF %14.4, SMA50 üzeri, otomobil sigortası büyüme",
-        "tema": "finansal_hizmetler",
-        "koşul": "RSI<60 veya pullback"
-      },
-      {
-        "symbol": "CINF",
-        "portföy": "balanced",
-        "price": 164.79,
-        "stop": 153.25,
-        "target": 176.32,
-        "score": 5.8,
-        "reason": "Cincinnati Financial — FCF %12.1, SMA50 üzeri, sigorta sektörü",
-        "tema": "finansal_hizmetler",
-        "koşul": "RSI<65"
-      },
-      {
-        "symbol": "JNJ",
-        "portföy": "dividend",
-        "price": 224.43,
-        "stop": 214.47,
-        "target": 244.25,
-        "score": 5.5,
-        "reason": "JNJ — RSI 17 çok oversold, yield %3, FCF %3.6. SMA50 altında, bekle",
-        "tema": "healthcare_temettü",
-        "koşul": "SMA50 üzeri dönüş"
-      }
-    ]
+    "aciklama": "Manuel sıfırlama — tema taraması tetiklenecek"
   },
   "zorunlu_aksiyonlar": [],
   "claude_kararlar": {
