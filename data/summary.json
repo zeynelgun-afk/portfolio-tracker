@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-04-22T18:19:33.729162+03:00",
+  "son_guncelleme": "2026-04-22T19:22:04.990267+03:00",
   "toplam_sermaye": 600000,
   "toplam_deger": 630405.48,
   "toplam_kar_zarar": 30405.48,
@@ -65,10 +65,10 @@
       "poz_sayisi": 4
     },
     "dividend": {
-      "nakit": 114558.22,
-      "pozisyon_degeri": 26920.76,
+      "nakit": 69632.22,
+      "pozisyon_degeri": 71846.76,
       "toplam": 141478.98,
-      "poz_sayisi": 3
+      "poz_sayisi": 5
     }
   }
 }

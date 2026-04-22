@@ -1347,10 +1347,18 @@ def _execute_portfolio_opportunities(faz: str, market: dict) -> list:
             print(f"[Execution] {sym}: {tema} sektöründe bugün stop var, pozisyon boyutu yarıya iniyor")
             sektor_penalty = True
 
-        # Fiyat sabah önerilen seviyeye yakın mı? (%3 tolerans)
+        # Fiyat sabah önerilen seviyeye yakın mı? (%5 tolerans)
+        # Not: %3 çok katıydı — seans içi normal dalgalanmalarda tüm adayları kesiyordu.
         sabah_fiyat = float(aday.get("price", price))
-        if sabah_fiyat and abs(price - sabah_fiyat) / sabah_fiyat > 0.03:
-            print(f"[Execution] {sym}: fiyat çok kaydı (sabah ${sabah_fiyat:.2f} → şimdi ${price:.2f})")
+        if sabah_fiyat and abs(price - sabah_fiyat) / sabah_fiyat > 0.05:
+            print(f"[Execution] {sym}: fiyat cok kaydi (sabah ${sabah_fiyat:.2f} -> simdi ${price:.2f}, >5% sapma)")
+            continue
+
+        # Skor kalite kapisi — dusuk kaliteli adaylari skor uzerinden ele
+        # Skor < 4.0 olan adaylar teknik VEYA fundamental cok zayif demektir.
+        aday_skor = float(aday.get("score", 99))  # skor yoksa gecir (99 = N/A)
+        if aday_skor < 4.0:
+            print(f"[Execution] {sym}: skor {aday_skor:.2f} < 4.0 kalite esigi, atlandi")
             continue
 
         # K-5: ATR14 tabanlı stop — ortak compute_atr_stop helper'ı kullanılır
