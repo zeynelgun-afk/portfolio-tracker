@@ -172,6 +172,5 @@ date,action,symbol,shares,price,total,reason
 2026-04-22,SELL,NEE,133,91.5,12169.5,K-05: Earnings öncesi çıkış + stop %2.6 uzakta
 2026-04-22,SELL,HIG,77,136.83,10535.91,K-05: Earnings öncesi zorunlu çıkış
 2026-04-22,SELL,T,773,25.88,20005.24,K-05: Earnings öncesi çıkış — portfolio fiyatı (FMP 503)
-2026-04-22,BUY,FSLR,79,189.07,14936.92,Test alımı — simülasyon
 2026-04-22,BUY,ABBV,123,202.84,24949.32,"Dividend: RSI 33 oversold, FCF yield %5.2, temettü ~%3.8, Skyrizi/Rinvoq pipeline"
 2026-04-22,BUY,O,314,63.62,19976.68,"Dividend: Realty Income REIT, aylık temettü ~%5.7, 30yr art arda artış, diversified commercial"
