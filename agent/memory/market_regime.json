@@ -12,16 +12,16 @@
       "risk_off": 1
     },
     "growth_aksiyon": "Mevcut AI pozisyonlar (COHR, VRT, ANET, MU, CAMT) tutulmaya devam. Yeni AI fırsatları ara.",
-    "tespit_zamani": "2026-04-22T23:31:22.067511+03:00"
+    "tespit_zamani": "2026-04-23T01:10:18.138290+03:00"
   },
   "sektor_data": {
     "XLE": {
-      "price": 56.53,
-      "gunluk_chg": 1.18
+      "price": 56.54,
+      "gunluk_chg": 1.2
     },
     "XLK": {
-      "price": 158.11,
-      "gunluk_chg": 2.21
+      "price": 158.09,
+      "gunluk_chg": 2.2
     },
     "XLI": {
       "price": 171.04,

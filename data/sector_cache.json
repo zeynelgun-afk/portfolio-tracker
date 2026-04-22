@@ -50,7 +50,9 @@
     "GOLD": "financial_services",
     "AEM": "basic_materials",
     "HBM": "basic_materials",
-    "USA": "financial_services"
+    "USA": "financial_services",
+    "ABBV": "healthcare",
+    "O": "real_estate"
   },
   "updated": {
     "COHR": 1776693839,
@@ -103,6 +105,8 @@
     "GOLD": 1776869339,
     "AEM": 1776869342,
     "HBM": 1776869344,
-    "USA": 1776869347
+    "USA": 1776869347,
+    "ABBV": 1776895821,
+    "O": 1776895821
   }
 }

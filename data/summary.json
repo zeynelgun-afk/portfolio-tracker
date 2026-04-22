@@ -1,47 +1,47 @@
 {
-  "son_guncelleme": "2026-04-22T19:45:26.375858+03:00",
+  "son_guncelleme": "2026-04-22",
   "toplam_sermaye": 600000,
-  "toplam_deger": 630405.48,
-  "toplam_kar_zarar": 30405.48,
-  "toplam_kar_zarar_yuzde": 5.07,
+  "toplam_deger": 635040.88,
+  "toplam_kar_zarar": 35040.88,
+  "toplam_kar_zarar_yuzde": 5.84,
   "portfolyolar": {
     "dengeli": {
       "isim": "Dengeli Portföy",
-      "deger": 106610.79,
+      "deger": 106908.39,
       "maliyet": 100000,
-      "kar_zarar": 6610.789999999994,
-      "kar_zarar_yuzde": 6.61,
+      "kar_zarar": 6908.389999999999,
+      "kar_zarar_yuzde": 6.91,
       "pozisyon_sayisi": 4,
       "nakit": {
-        "miktar": 62662.65,
+        "miktar": 58503.0,
         "para_birimi": "USD",
-        "agirlik_yuzde": 58.78
+        "agirlik_yuzde": 54.72
       }
     },
     "agresif": {
       "isim": "Agresif Büyüme Portföyü",
-      "deger": 382315.71,
+      "deger": 386818.56,
       "maliyet": 400000,
-      "kar_zarar": -17684.28999999998,
-      "kar_zarar_yuzde": -4.42,
-      "pozisyon_sayisi": 6,
+      "kar_zarar": -13181.440000000002,
+      "kar_zarar_yuzde": -3.3,
+      "pozisyon_sayisi": 5,
       "nakit": {
-        "miktar": 145016.8,
+        "miktar": 186719.6,
         "para_birimi": "USD",
-        "agirlik_yuzde": 37.93
+        "agirlik_yuzde": 48.27
       }
     },
     "temettü": {
       "isim": "Değer + Temettü Portföyü",
-      "deger": 141478.98,
+      "deger": 141313.93,
       "maliyet": 100000,
-      "kar_zarar": 41478.98000000001,
-      "kar_zarar_yuzde": 41.48,
-      "pozisyon_sayisi": 4,
+      "kar_zarar": 41313.92999999999,
+      "kar_zarar_yuzde": 41.31,
+      "pozisyon_sayisi": 5,
       "nakit": {
-        "miktar": 94552.98,
+        "miktar": 69632.22,
         "para_birimi": "USD",
-        "agirlik_yuzde": 66.83
+        "agirlik_yuzde": 49.27
       }
     },
     "swing_trade": {
@@ -49,26 +49,6 @@
       "pozisyon_sayisi": 5,
       "bos_slot": 0,
       "durum": "5/5 pozisyon aktif"
-    }
-  },
-  "portfoy_ozet": {
-    "aggressive": {
-      "nakit": 186719.6,
-      "pozisyon_degeri": 194494.63,
-      "toplam": 381214.23,
-      "poz_sayisi": 5
-    },
-    "balanced": {
-      "nakit": 58503.0,
-      "pozisyon_degeri": 48048.85,
-      "toplam": 106551.85,
-      "poz_sayisi": 4
-    },
-    "dividend": {
-      "nakit": 69632.22,
-      "pozisyon_degeri": 71846.76,
-      "toplam": 141478.98,
-      "poz_sayisi": 5
     }
   }
 }
