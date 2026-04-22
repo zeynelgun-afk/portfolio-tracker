@@ -39,8 +39,10 @@ def _fmp(endpoint, params=None):
         return None
 
 
-def score_technical(symbol: str, price: float) -> tuple[float, dict]:
-    """Teknik skor 0-10. Döndürür: (skor, detay)"""
+def score_technical(symbol: str, price: float, portfoy: str = "aggressive") -> tuple[float, dict]:
+    """Teknik skor 0-10. Döndürür: (skor, detay)
+    portfoy: 'dividend' için RSI oversold da pozitif sayılır (30-55 giriş bölgesi)
+    """
     hist = _fmp(f"historical-price-eod/full", {"symbol": symbol, "limit": 210})
     if not hist or not isinstance(hist, list) or len(hist) < 50:
         return 0, {}
@@ -78,13 +80,25 @@ def score_technical(symbol: str, price: float) -> tuple[float, dict]:
     if price > sma50:
         skor += 1; detay["sma50"] = "✅"
 
-    # RSI: 40-65 ideal giriş bölgesi
-    if 40 <= rsi <= 65:
-        skor += 2; detay["rsi"] = f"✅ {rsi:.0f}"
-    elif 35 <= rsi < 40:
-        skor += 1; detay["rsi"] = f"⚠️ {rsi:.0f}"
-    elif rsi > 75:
-        skor -= 1; detay["rsi"] = f"⚠️ aşırı alım {rsi:.0f}"
+    # RSI — portföy tipine göre farklı bölgeler
+    if portfoy == "dividend":
+        # Temettü: uzun vadeli, oversold iyi giriş noktası
+        if 30 <= rsi <= 55:
+            skor += 2; detay["rsi"] = f"✅ {rsi:.0f} (temettü giriş)"
+        elif rsi < 30:
+            skor += 1; detay["rsi"] = f"⚠️ {rsi:.0f} (çok oversold)"
+        elif 55 < rsi <= 65:
+            skor += 1; detay["rsi"] = f"→ {rsi:.0f}"
+        elif rsi > 75:
+            skor -= 1; detay["rsi"] = f"⚠️ aşırı alım {rsi:.0f}"
+    else:
+        # Aggressive/balanced: momentum odaklı, 40-65 ideal
+        if 40 <= rsi <= 65:
+            skor += 2; detay["rsi"] = f"✅ {rsi:.0f}"
+        elif 35 <= rsi < 40:
+            skor += 1; detay["rsi"] = f"⚠️ {rsi:.0f}"
+        elif rsi > 75:
+            skor -= 1; detay["rsi"] = f"⚠️ aşırı alım {rsi:.0f}"
 
     # Momentum
     if mom_1m > 5:  skor += 2; detay["mom_1m"] = f"✅ +{mom_1m:.1f}%"
@@ -274,7 +288,7 @@ def find_candidates(
                 k_res = {"go": True, "checks": {}, "position_size": 5000}
 
             # Teknik skor
-            t_skor, t_det = score_technical(sym, price)
+            t_skor, t_det = score_technical(sym, price, portfoy=portfoy)
             if t_skor < 3:  # Minimum teknik eşik
                 print(f"  ↓ {sym}: teknik zayıf ({t_skor}/10)")
                 continue
@@ -508,7 +522,7 @@ def run_theme_scan(
 
             # Teknik skor
             time.sleep(0.15)
-            t_skor, t_det = score_technical(sym, price)
+            t_skor, t_det = score_technical(sym, price, portfoy=portfoy)
             if t_skor < 3:
                 continue
 
@@ -526,7 +540,9 @@ def run_theme_scan(
                 atr    = None
 
             rr = round((target - price) / (price - stop), 2) if price > stop else 0
-            if rr < 1.8:  # Min R:R (dividend için temettü etkisini sayarak biraz daha gevşek)
+            # Dividend: uzun vadeli, temettü yield R:R'ı artırır → eşik daha düşük
+            _min_rr = 1.5 if portfoy == "dividend" else 1.8
+            if rr < _min_rr:
                 continue
 
             # Final skor (teknik ağırlıklı)

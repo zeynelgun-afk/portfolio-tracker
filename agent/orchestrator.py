@@ -1339,6 +1339,7 @@ def _execute_portfolio_opportunities(faz: str, market: dict) -> list:
             print(f"[Execution] Tema taraması hatası: {_tse}")
 
     if not buy_list:
+        return []
 
     aksiyonlar = []
 
