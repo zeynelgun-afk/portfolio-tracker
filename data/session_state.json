@@ -16,78 +16,75 @@
   },
   "zorunlu_aksiyonlar": [],
   "claude_kararlar": {
-    "tarih": "2026-04-22T00:14:41.404647+03:00",
+    "tarih": "2026-04-23T01:11:19.846929+03:00",
     "kararlar": [
       {
-        "tip": "ÇIK",
-        "portfoy": "aggressive",
-        "sembol": "VRT",
-        "pct": 100,
-        "neden": "K-05: yarın earnings, zorunlu çıkış, +%7.6 kârda",
-        "hedef_fiyat": 312.44,
-        "stop": 0.0,
-        "tutar": 0,
-        "aciliyet": "hemen",
-        "dondur_al": null,
-        "_decision_id": "c9d449945ab0"
-      },
-      {
-        "tip": "ÇIK",
-        "portfoy": "balanced",
-        "sembol": "NEE",
-        "pct": 100,
-        "neden": "K-05: yarın earnings + stop %2.6 uzak, çift gerekçe",
-        "hedef_fiyat": 90.6,
-        "stop": 0.0,
-        "tutar": 0,
-        "aciliyet": "hemen",
-        "dondur_al": null,
-        "_decision_id": "0e80ecb08b15"
-      },
-      {
-        "tip": "ÇIK",
-        "portfoy": "balanced",
-        "sembol": "HIG",
-        "pct": 100,
-        "neden": "K-05: yarın earnings, zorunlu çıkış, +%0.6",
-        "hedef_fiyat": 139.15,
-        "stop": 0.0,
-        "tutar": 0,
-        "aciliyet": "hemen",
-        "dondur_al": null,
-        "_decision_id": "9c0d13e11de9"
-      },
-      {
-        "tip": "ÇIK",
+        "tip": "İZLE",
         "portfoy": "dividend",
-        "sembol": "T",
-        "pct": 100,
-        "neden": "K-05: yarın earnings, teknik zayıf, -%1.1",
-        "hedef_fiyat": 25.88,
-        "stop": 0.0,
+        "sembol": "VZ",
+        "pct": 0,
+        "neden": "K-05 earnings 27 Nisan, Cuma kapanışta çıkılacak, bugün işlem yok",
+        "hedef_fiyat": 45.0,
+        "stop": 44.37,
         "tutar": 0,
-        "aciliyet": "hemen",
+        "aciliyet": "bu_hafta",
         "dondur_al": null,
-        "_decision_id": "1a9f9da12e5b"
+        "_decision_id": "70db23b8bb82"
       },
       {
         "tip": "İZLE",
         "portfoy": "dividend",
         "sembol": "MO",
         "pct": 0,
-        "neden": "Stop %1 uzak, -%1 hareket tetikler, 4 earnings çıkışıyla aynı gün yığılma yaratma",
-        "hedef_fiyat": 0.0,
-        "stop": 64.0,
+        "neden": "Stop %1.8 K-09 eşiği aşıldı, earnings 30 Nisan K-05 çıkışı Çar kapanış",
+        "hedef_fiyat": 64.0,
+        "stop": 64.01,
+        "tutar": 0,
+        "aciliyet": "bu_hafta",
+        "dondur_al": null,
+        "_decision_id": "570c663dda10"
+      },
+      {
+        "tip": "İZLE",
+        "portfoy": "dividend",
+        "sembol": "O",
+        "pct": 0,
+        "neden": "Stop %2.3 uzak, K-09 yaklaşıyor proaktif izleme",
+        "hedef_fiyat": 67.0,
+        "stop": 61.88,
         "tutar": 0,
         "aciliyet": "bugün",
         "dondur_al": null,
-        "_decision_id": "998a29d535be"
+        "_decision_id": "a72002e9a249"
+      },
+      {
+        "tip": "İZLE",
+        "portfoy": "aggressive",
+        "sembol": "CAMT",
+        "pct": 0,
+        "neden": "Fair value -76% PAH?, stop %5.9, pozisyon tezi sorgulanmalı",
+        "hedef_fiyat": 210.0,
+        "stop": 174.91,
+        "tutar": 0,
+        "aciliyet": "bu_hafta",
+        "dondur_al": null,
+        "_decision_id": "2c686649e7d1"
+      },
+      {
+        "tip": "İZLE",
+        "portfoy": "swing",
+        "sembol": "GEV",
+        "pct": 0,
+        "neden": "+11.3% K-11 kademe 1 eşiği, momentum sürüyor kısmi kâr opsiyonel",
+        "hedef_fiyat": 1270.0,
+        "stop": 1006.71,
+        "tutar": 0,
+        "aciliyet": "bu_hafta",
+        "dondur_al": null,
+        "_decision_id": "a965e7f6e800"
       }
     ],
-    "kaynak": "closing",
-    "executed": true,
-    "executed_at": "2026-04-22T18:18:06.534609+03:00",
-    "executed_note": "Manuel execute — fetch_live_price DNS sorunu nedeniyle otonom sistem atladi"
+    "kaynak": "closing"
   },
   "timestamp": "2026-04-22T17:49:09.130159+03:00"
 }
