@@ -126,7 +126,11 @@
     "SJM": "consumer_defensive",
     "HRL": "consumer_defensive",
     "CAG": "consumer_defensive",
-    "GIS": "consumer_defensive"
+    "GIS": "consumer_defensive",
+    "LMT": "industrials",
+    "FCX": "basic_materials",
+    "NEM": "basic_materials",
+    "GILD": "healthcare"
   },
   "updated": {
     "COHR": 1776693839,
@@ -255,6 +259,10 @@
     "SJM": 1776895951,
     "HRL": 1776895952,
     "CAG": 1776895953,
-    "GIS": 1776895953
+    "GIS": 1776895953,
+    "LMT": 1776952605,
+    "FCX": 1776952636,
+    "NEM": 1776952640,
+    "GILD": 1776952681
   }
 }

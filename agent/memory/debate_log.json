@@ -401,6 +401,48 @@
         }
       },
       "karar_degisti_mi": true
+    },
+    {
+      "symbol": "MO, O (kısmi) + MU veya CAMT (kar realizasyonu)",
+      "tarih": "2026-04-23T13:53:28.121593",
+      "ilk_karar": {
+        "karar": "SAT",
+        "hedef_sembol": "MO, O (kısmi) + MU veya CAMT (kar realizasyonu)",
+        "gerekce": "Risk Analisti (HIGH güven) portföyde kritik uyarılar veriyor: Tech konsantrasyonu %57.7 ile K-12/K-17 ihlali, MO %3.1 ve O %2.8 stop'a kritik mesafede, %5 düşüşte ~$19,118 kayıp senaryosu var. Sektör Analisti (ağırlık 1.53, HIGH güven) yarıiletken momentum zayıflığına dikkat çekerek AI güç altyapısına (GEV, ETN) rotasyon öneriyor — MU -%2.0 zayıflığı bunu doğruluyor. Makro Analist NEUTRAL ama earnings haftası gap riski vurguluyor (VZ, MO, ABBV, CI bu hafta). Rejim RISK_OFF ve savunma/enerji/altın lehine olduğu için tech aşırı ağırlığını azaltmak K-11 (kar realizasyonu) ve K-12 (konsantrasyon) ile tam uyumlu. Teknik Analist parse hatası verdiği için düşük ağırlıkla dikkate alınmadı.",
+        "uyari": "MO ve O stop mesafesi %3'ten yakın — trailing stop'a çek veya hemen kısmi satış yap, override YASAK. Yeni tech girişi kapalı (K-02/K-20). Swing slotları 5/5 dolu.",
+        "guven": "HIGH",
+        "analist_uzlasma": "ORTA",
+        "tahmin": {
+          "yon": "DOWN",
+          "buyukluk": "MEDIUM",
+          "sembol": "SMH"
+        },
+        "_agent": "CIO_AGENT",
+        "_timestamp": "2026-04-23T13:52:39.886171"
+      },
+      "boğa": {
+        "_raw": "```json\n{\n  \"argümanlar\": [\n    \"CAMT +%8.8 kâr (195→190 civarı, giriş $175) — AI chip inspection darboğazı tezi hala geçerli, fair value hedefi $210 (+%10 yukarı potansiyel), R:R tezi henüz tamamlanm",
+        "_parse_hata": true
+      },
+      "ayı": {
+        "_raw": "{\n  \"argümanlar\": [\n    \"Teknoloji konsantrasyonu %57.7 — K-17 ihlali; MU/CAMT/ANET/COHR hepsi korelasyon içinde, tek sektör şoku portföyü yıkar\",\n    \"CAMT fair value -76% PAH(?) sinyali veriyor — ge",
+        "_parse_hata": true
+      },
+      "nihai": {
+        "nihai_karar": "KISMI_CIK",
+        "kazan_taraf": "AYI",
+        "karar_gerekce": "Teknoloji konsantrasyonu %57.7 ile K-17 kırmızı bölgede; MU +15.1% ve CAMT +%8.7 kârda iken kısmi realizasyon disiplin gereği. MO/O temettü tarafı +41.3% ile güçlü, dokunmaya gerek yok. İlk SAT kararı doğru yönde ama 'tam satış' yerine ölçülü kâr realizasyonu daha gerçekçi.",
+        "boğa_haklı_çünkü": "MU ve CAMT tezleri (AI chip, yarı iletken ekipman) hâlâ geçerli, fair value modeli PAH yüksek skorla (72-76) destekliyor; tam çıkış fırsat maliyeti yaratır.",
+        "ayı_haklı_çünkü": "Agresif portföy -3.3% altta, teknoloji %57.7 konsantrasyon K-17 ihlali, VIX yükselişte (+2.11%), CAMT daha önce stop-loss yemiş geçmişi var — risk yönetimi kâr realizasyonunu zorunlu kılıyor.",
+        "göz_ardı_edilen": "MU'nun stop %8.5 uzak olması acil tehlike değil; kısmi çıkış boyutu (%30-50) ve hangi isimden (MU mu CAMT mı) net tartışılmadı. CAMT'ın geçmiş stop ihlali geçmişi ağır basıyor.",
+        "güven": "MEDIUM",
+        "tahmin": {
+          "yon": "DOWN",
+          "buyukluk": "LOW",
+          "sembol": "SPY"
+        }
+      },
+      "karar_degisti_mi": true
     }
   ]
 }

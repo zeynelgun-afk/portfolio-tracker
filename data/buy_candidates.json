@@ -1,7 +1,32 @@
 {
-  "tarih": "2026-04-22T22:12:34.048655",
-  "adaylar": [],
+  "tarih": "2026-04-23T13:59:36.860150",
+  "adaylar": [
+    {
+      "symbol": "NEM",
+      "tema": "emtia_hammadde",
+      "portföy": "balanced",
+      "price": 110.1,
+      "stop": 102.15,
+      "target": 126.01,
+      "rr": 2.0,
+      "score": 6.1,
+      "teknik": 6,
+      "fundamental": 7,
+      "atr": 3.98,
+      "reason": "emtia_hammadde tema taraması — teknik:6/10 fundamental:7/10",
+      "detay": {
+        "sma200": "✅",
+        "rsi": "✅ 45",
+        "mom_1m": "✅ +11.3%",
+        "skor": 7,
+        "roic": "✅ 15.5%",
+        "pe": "→ 17.2",
+        "fcf": "✅ 8.6%",
+        "büyüme": "✅ ROE 21.7%"
+      }
+    }
+  ],
   "ozet": {
-    "toplam": 0
+    "toplam": 1
   }
 }

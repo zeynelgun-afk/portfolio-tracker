@@ -1,63 +1,81 @@
 {
   "macro": {
-    "sinyal": "RISK_ON",
+    "sinyal": "NEUTRAL",
     "guven": "MEDIUM",
-    "ana_tema": "VIX normalleşirken teknoloji liderliğinde risk iştahı artıyor; Fed faiz kararı öncesi pozitif momentum",
+    "ana_tema": "Earnings sezonu genelde güçlü beatlerle geçerken VIX 19 seviyesinde hafif yükseliş ve Fed faiz kararı öncesi temkinli bekleyiş hakim",
     "beklentiler": [
-      "QQQ +1.27% ile tech güçlü, MU +6.3% semi momentum canlı",
-      "VIX 19.09 NORMAL bölgede, -2.1% düşüş risk iştahını destekliyor",
-      "27 Nisan Fed kararı öncesi pozisyonlanma, faiz 4.5% sabit bekleniyor",
-      "Earnings sezonu karışık: PM/AT&T beat, TE/BSX guidance zayıf"
+      "28 Nisan Fed faiz kararı (4.5% beklenti, değişim yok) öncesi yatay hareket",
+      "Earnings momentumu teknoloji ve tüketici sektörlerinde risk iştahını desteklemeye devam edecek",
+      "VIX 19-21 bandında konsolidasyon, ani spike riski sınırlı"
     ],
-    "risk_faktoru": "27 Nisan Fed toplantısı ve yoğun earnings haftası (VRT/T/HIG/NEE/VZ) — sell-the-news riski yüksek; momentum hisselerde (COHR/ANET/MU) PAH değerlemeler düzeltme riski taşıyor",
+    "risk_faktoru": "Fed toplantısı ve istihdam verileri öncesi VIX'in 20 üzerine kalıcı geçmesi; portföyde yoğun earnings haftası (VZ, OKE, ABBV, CI, MO) gap riski yaratıyor",
     "tahmin": {
-      "yon": "UP",
+      "yon": "NEUTRAL",
       "buyukluk": "LOW",
       "sembol": "SPY"
     },
     "_agent": "MACRO_AGENT",
-    "_timestamp": "2026-04-22T14:49:21.430187"
+    "_timestamp": "2026-04-23T13:51:57.060166"
   },
   "sector": {
     "aktif_rejim": "ai_boom",
-    "lider_sektor": "Yarı iletken / AI altyapı (SMH, XLK)",
-    "zayif_sektor": "Telekom / Temettü savunma (XLC, T-VZ)",
-    "rotasyon_onerisi": "Telekom temettü (T, VZ) kâr realizasyonundan yarı iletken & AI altyapı (MU, KLAC, AMAT, COHR) liderliğine para akışı devam ediyor",
+    "lider_sektor": "Sanayi/Güç Altyapısı (XLI) - GEV +12.8%, ETN +3.5%, CAT +2.3%",
+    "zayif_sektor": "Yarıiletken momentum zayıflığı (SMH) - MU -2.0%",
+    "rotasyon_onerisi": "Saf yarıiletken momentumdan (MU, CAMT) AI güç altyapısına (GEV, ETN, CAT) rotasyon; temettü/savunmacıda (VZ, MO, O) kâr realizasyonu güçlü",
     "guven": "HIGH",
     "tahmin": {
       "yon": "UP",
-      "buyukluk": "HIGH",
-      "sembol": "SMH"
+      "buyukluk": "MEDIUM",
+      "sembol": "XLI"
     },
     "_agent": "SECTOR_AGENT",
-    "_timestamp": "2026-04-22T14:49:27.504039"
+    "_timestamp": "2026-04-23T13:52:05.331373"
   },
   "signal": {
     "_agent": "SIGNAL_AGENT",
-    "_raw": "{\n  \"portfoy_sinyalleri\": [\n    {\n      \"sembol\": \"COHR\",\n      \"sinyal\": \"HOLD\",\n      \"rsi_yorumu\": \"overbought\",\n      \"sma_durumu\": \"ustunde\",\n      \"aciklama\": \"Güçlü momentum ama hedef üstü, trailing stop ile koru.\"\n    },\n    {\n      \"sembol\": \"VRT\",\n      \"sinyal\": \"WATCH\",\n      \"rsi_yorumu",
+    "_raw": "{\n  \"portfoy_sinyalleri\": [\n    {\n      \"sembol\": \"COHR\",\n      \"sinyal\": \"HOLD\",\n      \"rsi_yorumu\": \"overbought\",\n      \"sma_durumu\": \"ustunde\",\n      \"aciklama\": \"Güçlü momentum, trailing stop ile kar koruması uygun.\"\n    },\n    {\n      \"sembol\": \"ANET\",\n      \"sinyal\": \"HOLD\",\n      \"rsi_yorumu\"",
     "_parse_hata": true,
     "guven": "LOW"
   },
   "risk": {
+    "risk_seviyesi": "HIGH",
+    "stop_yakini": [
+      "O - %2.8 uzakta (KRİTİK)",
+      "MO - %3.1 uzakta (KRİTİK)",
+      "ABBV - %4.7 uzakta",
+      "VZ - %5.6 uzakta",
+      "AEM - %5.7 uzakta",
+      "CPRX - %5.8 uzakta",
+      "RPRX - %5.7 uzakta",
+      "CI - %6.8 uzakta",
+      "ANET - %7.3 uzakta"
+    ],
+    "konsantrasyon_uyarisi": "Technology %57.7 — K-12/K-17 ihlali. Agresif portföyde COHR+ANET+MU+CAMT hepsi yarı iletken/tech, yüksek korelasyon. Swing'de de CAT+KLAC+AMAT+GEV tech/endüstri ağırlıklı — çapraz sepet korelasyonu kritik.",
+    "senaryo_5pct_dusus": "Toplam ~$19,118 kayıp (-%5.9). MO ve O stop tetiklenir (-$1,720). Tech konsantrasyonu nedeniyle gerçek kayıp simülasyonun üzerinde olabilir (beta>1).",
+    "onerileri": [
+      "Tech ağırlığını %40 altına indir — K-12 gereği agresif sepette MU veya CAMT'ta kademeli kar realizasyonu (K-11)",
+      "MO ve O için stop'ları trailing'e çek veya kısmi satış — %3'ten yakın stop dayanıksız",
+      "VIX 19.32 NORMAL ama +%2.11 yükseliyor; yeni tech girişi YOK (K-02/K-20 uyumlu)",
+      "Swing slotları 5/5 dolu + tech ağırlıklı — yeni swing girişi kapalı, mevcutlarda trailing stop sıkılaştır (K-07)"
+    ],
+    "guven": "HIGH",
     "_agent": "RISK_AGENT",
-    "_raw": "{\n  \"risk_seviyesi\": \"HIGH\",\n  \"stop_yakini\": [\n    \"MO - %1.4 uzakta (KRİTİK)\",\n    \"T - %1.7 uzakta (KRİTİK)\",\n    \"VZ - %2.1 uzakta (KRİTİK)\",\n    \"NEE - %3.7 uzakta\",\n    \"HIG - %4.5 uzakta\",\n    \"CPRX - %4.7 uzakta\",\n    \"VRT - %5.2 uzakta\",\n    \"RPRX - %5.2 uzakta\"\n  ],\n  \"konsantrasyon_uyaris",
-    "_parse_hata": true,
-    "guven": "LOW"
+    "_timestamp": "2026-04-23T13:52:29.693677"
   },
   "cio": {
-    "karar": "DONDUR",
-    "hedef_sembol": "T, VZ, MO → SMH/MU/KLAC",
-    "gerekce": "Sektör analisti (ağırlık 1.53, HIGH güven) telekom temettü hisselerinden (T, VZ) yarı iletken/AI altyapısına (MU, KLAC, AMAT, COHR) rotasyon sinyali veriyor ve bu Risk analisti ile örtüşüyor: T %1.7, VZ %2.1, MO %1.4 stop mesafesinde KRİTİK bölgede. Makro analist (0.89) RISK_ON teyidi veriyor, XLK günlük +1.51% lider. Rotasyon mantıklı: zayıflayan pozisyonları stop tetiklenmeden kontrollü kapat, güçlü sektöre kaydır. Ancak aktif rejim JEOPOLITIK_KRIZ olduğundan AI'a agresif giriş yerine mevcut güçlü pozisyonları (COHR trailing stop ile) koru, yeni giriş savunma (ITA, LMT) + enerji ağırlıklı yapılmalı.",
-    "uyari": "T, VZ, MO stop seviyelerine çok yakın — piyasa açılışında ani düşüşte stop-loss otomatik tetiklenebilir; rotasyon bugün uygulanmazsa pozisyonlar zaten zorla kapanır. 27 Nisan Fed kararı öncesi sell-the-news riski momentum hisselerinde yüksek.",
-    "guven": "MEDIUM",
+    "karar": "SAT",
+    "hedef_sembol": "MO, O (kısmi) + MU veya CAMT (kar realizasyonu)",
+    "gerekce": "Risk Analisti (HIGH güven) portföyde kritik uyarılar veriyor: Tech konsantrasyonu %57.7 ile K-12/K-17 ihlali, MO %3.1 ve O %2.8 stop'a kritik mesafede, %5 düşüşte ~$19,118 kayıp senaryosu var. Sektör Analisti (ağırlık 1.53, HIGH güven) yarıiletken momentum zayıflığına dikkat çekerek AI güç altyapısına (GEV, ETN) rotasyon öneriyor — MU -%2.0 zayıflığı bunu doğruluyor. Makro Analist NEUTRAL ama earnings haftası gap riski vurguluyor (VZ, MO, ABBV, CI bu hafta). Rejim RISK_OFF ve savunma/enerji/altın lehine olduğu için tech aşırı ağırlığını azaltmak K-11 (kar realizasyonu) ve K-12 (konsantrasyon) ile tam uyumlu. Teknik Analist parse hatası verdiği için düşük ağırlıkla dikkate alınmadı.",
+    "uyari": "MO ve O stop mesafesi %3'ten yakın — trailing stop'a çek veya hemen kısmi satış yap, override YASAK. Yeni tech girişi kapalı (K-02/K-20). Swing slotları 5/5 dolu.",
+    "guven": "HIGH",
     "analist_uzlasma": "ORTA",
     "tahmin": {
-      "yon": "UP",
-      "buyukluk": "LOW",
-      "sembol": "SPY"
+      "yon": "DOWN",
+      "buyukluk": "MEDIUM",
+      "sembol": "SMH"
     },
     "_agent": "CIO_AGENT",
-    "_timestamp": "2026-04-22T14:50:06.357895"
+    "_timestamp": "2026-04-23T13:52:39.886171"
   },
   "weights": {
     "MACRO_AGENT": 0.8925,

@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-04-13T09:55:22.451983",
+  "son_guncelleme": "2026-04-23",
   "analiz_donemi": "2026-02-17 → 2026-04-13",
   "toplam_trade": 62,
   "k_kural_istatistikleri": {
@@ -204,5 +204,11 @@
     "kazanan": "RSI≤40 + SMA200 üstü",
     "sma200_kritik": "SMA200 filtresi MaxDD'yi -%43'ten -%21'e düşürüyor",
     "rsi40_50_kural": "RSI 40-50 arası sinyal = yarım pozisyon al"
+  },
+  "stop_loss": {
+    "toplam_tetik": 1,
+    "tarihler": [
+      "2026-04-23"
+    ]
   }
 }

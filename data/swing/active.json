@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-04-22T22:10:22.324813",
+  "son_guncelleme": "2026-04-23T13:51:41.365570",
   "not": "SWING TRADE SADECE SİMÜLASYON - Sadece % kazanç/kayıp takibi (MAX: 8 pozisyon)",
   "aktif_pozisyonlar": [
     {
@@ -15,13 +15,13 @@
       "katalizor": "",
       "max_sure_gun": 15,
       "durum": "✅ Normal aralıkta",
-      "guncel_fiyat": 808.87,
-      "son_fiyat": 808.87,
-      "zirve_fiyat": 814.34,
-      "chandelier_stop": 736.7,
+      "guncel_fiyat": 832.76,
+      "son_fiyat": 832.76,
+      "zirve_fiyat": 832.76,
+      "chandelier_stop": 755.12,
       "k11_aktif": false,
       "k11_profit_lock": null,
-      "son_guncelleme": "2026-04-22T22:10:22.324813",
+      "son_guncelleme": "2026-04-23",
       "notlar": [
         "Tarih düzeltmesi: 11 Nisan Cumartesi piyasa kapalı — 10 Nisan Cuma kapanış fiyatına göre düzeltildi"
       ],
@@ -30,8 +30,8 @@
       "maliyet_baz": 790.66,
       "tutulan_gun": 12,
       "giris_fiyati": 790.66,
-      "kar_zarar_yuzde": 2.64,
-      "pnl_pct": 2.3
+      "kar_zarar_yuzde": 5.32,
+      "pnl_pct": 5.32
     },
     {
       "id": "SWING-202604101410-KLAC",
@@ -46,13 +46,13 @@
       "katalizor": "",
       "max_sure_gun": 15,
       "durum": "✅ Normal aralıkta",
-      "guncel_fiyat": 1812.06,
-      "son_fiyat": 1812.06,
-      "zirve_fiyat": 1812.06,
-      "chandelier_stop": 1605.51,
+      "guncel_fiyat": 1833.83,
+      "son_fiyat": 1833.83,
+      "zirve_fiyat": 1833.83,
+      "chandelier_stop": 1627.28,
       "k11_aktif": false,
       "k11_profit_lock": null,
-      "son_guncelleme": "2026-04-22T22:10:22.324813",
+      "son_guncelleme": "2026-04-23",
       "notlar": [
         "Tarih düzeltmesi: 11 Nisan Cumartesi piyasa kapalı — 10 Nisan Cuma kapanış fiyatına göre düzeltildi"
       ],
@@ -61,8 +61,8 @@
       "maliyet_baz": 1737.28,
       "tutulan_gun": 12,
       "giris_fiyati": 1737.28,
-      "kar_zarar_yuzde": 4.2,
-      "pnl_pct": 4.3
+      "kar_zarar_yuzde": 5.56,
+      "pnl_pct": 5.56
     },
     {
       "id": "SWING-202604101410-AMAT",
@@ -77,13 +77,13 @@
       "katalizor": "",
       "max_sure_gun": 15,
       "durum": "✅ Normal aralıkta",
-      "guncel_fiyat": 403.48,
-      "son_fiyat": 403.48,
-      "zirve_fiyat": 403.48,
-      "chandelier_stop": 353.41,
+      "guncel_fiyat": 411.9,
+      "son_fiyat": 411.9,
+      "zirve_fiyat": 411.9,
+      "chandelier_stop": 361.83,
       "k11_aktif": false,
       "k11_profit_lock": null,
-      "son_guncelleme": "2026-04-22T22:10:22.324813",
+      "son_guncelleme": "2026-04-23",
       "notlar": [
         "Tarih düzeltmesi: 11 Nisan Cumartesi piyasa kapalı — 10 Nisan Cuma kapanış fiyatına göre düzeltildi"
       ],
@@ -92,8 +92,8 @@
       "maliyet_baz": 399.49,
       "tutulan_gun": 12,
       "giris_fiyati": 399.49,
-      "kar_zarar_yuzde": 0.91,
-      "pnl_pct": 1.0
+      "kar_zarar_yuzde": 3.11,
+      "pnl_pct": 3.11
     },
     {
       "id": "SWING-202604141454-GEV",
@@ -108,13 +108,13 @@
       "katalizor": "",
       "max_sure_gun": 15,
       "durum": "✅ Normal aralıkta",
-      "guncel_fiyat": 1127.56,
-      "son_fiyat": 1127.56,
-      "zirve_fiyat": 1127.56,
-      "chandelier_stop": 1013.74,
-      "k11_aktif": false,
-      "k11_profit_lock": null,
-      "son_guncelleme": "2026-04-22T22:10:22.324813",
+      "guncel_fiyat": 1162.0,
+      "son_fiyat": 1162.0,
+      "zirve_fiyat": 1162.0,
+      "chandelier_stop": 1048.18,
+      "k11_aktif": true,
+      "k11_profit_lock": 1127.14,
+      "son_guncelleme": "2026-04-23",
       "notlar": [
         "chandelier_stop düzeltildi: 678.39 → 893.55 (ATR14=37.94, zirve=1007.38)"
       ],
@@ -122,8 +122,8 @@
       "atr14": 37.94,
       "maliyet_baz": 1000.0,
       "giris_fiyati": 1000,
-      "kar_zarar_yuzde": 11.31,
-      "pnl_pct": 12.76,
+      "kar_zarar_yuzde": 16.2,
+      "pnl_pct": 16.2,
       "chandelier_guncelleme": "2026-04-22"
     },
     {
@@ -139,19 +139,19 @@
       "katalizor": "",
       "max_sure_gun": 15,
       "durum": "✅ Normal aralıkta",
-      "guncel_fiyat": 49.72,
-      "son_fiyat": 49.72,
+      "guncel_fiyat": 49.51,
+      "son_fiyat": 49.51,
       "zirve_fiyat": 50,
       "chandelier_stop": 45.11,
       "k11_aktif": false,
       "k11_profit_lock": null,
-      "son_guncelleme": "2026-04-22T22:10:22.324813",
+      "son_guncelleme": "2026-04-23",
       "notlar": [],
       "tutulan_gun": 8,
       "maliyet_baz": 48.52,
       "giris_fiyati": 48.52,
       "kar_zarar_yuzde": 2.04,
-      "pnl_pct": 2.47
+      "pnl_pct": 2.04
     }
   ],
   "ozet": {

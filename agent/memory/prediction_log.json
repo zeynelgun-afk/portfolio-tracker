@@ -37,10 +37,12 @@
       "kaynak_kural": "MACRO_AGENT",
       "durum": "BEKLIYOR",
       "skorlar": {
-        "5": -1.0
+        "5": -1.0,
+        "10": -1.0
       },
       "gercek_fiyatlar": {
-        "5": 709.62
+        "5": 709.62,
+        "10": 710.25
       },
       "son_skor": null
     },
@@ -58,10 +60,12 @@
       "kaynak_kural": "SECTOR_AGENT",
       "durum": "BEKLIYOR",
       "skorlar": {
-        "5": 1.0
+        "5": 1.0,
+        "10": -1.0
       },
       "gercek_fiyatlar": {
-        "5": 442.20999
+        "5": 442.20999,
+        "10": 434.945
       },
       "son_skor": null
     },
@@ -79,10 +83,12 @@
       "kaynak_kural": "CIO_AGENT",
       "durum": "BEKLIYOR",
       "skorlar": {
-        "5": -1.0
+        "5": -1.0,
+        "10": -1.0
       },
       "gercek_fiyatlar": {
-        "5": 709.62
+        "5": 709.62,
+        "10": 710.25
       },
       "son_skor": null
     },
@@ -100,10 +106,12 @@
       "kaynak_kural": "adversarial_debate",
       "durum": "BEKLIYOR",
       "skorlar": {
-        "5": -2.0
+        "5": -2.0,
+        "10": -2.0
       },
       "gercek_fiyatlar": {
-        "5": 450.7391
+        "5": 450.7391,
+        "10": 476.21
       },
       "son_skor": null
     },
@@ -625,6 +633,74 @@
       "guven": "MEDIUM",
       "giris_fiyat": 710.27,
       "gerekce": "Boğa ve ayı tarafı net argüman sunmadı; bu durumda mevcut DONDUR pozisyonunu sürdürmek en rasyonel seçim. Teknoloji konsantrasyonu %55.3 ile K-17 kırmızı bölgesinde — T/VZ/MO (dividend) satıp SMH/MU/K",
+      "kaynak_kural": "adversarial_debate",
+      "durum": "BEKLIYOR",
+      "skorlar": {},
+      "gercek_fiyatlar": {},
+      "son_skor": null
+    },
+    {
+      "id": "pred_20260423_165239",
+      "tarih": "2026-04-23T16:52:40.214149+03:00",
+      "agent": "MACRO_AGENT",
+      "tip": "ANALIZ",
+      "sembol": "SPY",
+      "yon": "NEUTRAL",
+      "buyukluk": "LOW",
+      "guven": "MEDIUM",
+      "giris_fiyat": 710.76,
+      "gerekce": "Earnings sezonu genelde güçlü beatlerle geçerken VIX 19 seviyesinde hafif yükseliş ve Fed faiz kararı öncesi temkinli bekleyiş hakim",
+      "kaynak_kural": "MACRO_AGENT",
+      "durum": "BEKLIYOR",
+      "skorlar": {},
+      "gercek_fiyatlar": {},
+      "son_skor": null
+    },
+    {
+      "id": "pred_20260423_165240",
+      "tarih": "2026-04-23T16:52:40.517519+03:00",
+      "agent": "SECTOR_AGENT",
+      "tip": "ANALIZ",
+      "sembol": "XLI",
+      "yon": "UP",
+      "buyukluk": "MEDIUM",
+      "guven": "HIGH",
+      "giris_fiyat": 173.25,
+      "gerekce": "",
+      "kaynak_kural": "SECTOR_AGENT",
+      "durum": "BEKLIYOR",
+      "skorlar": {},
+      "gercek_fiyatlar": {},
+      "son_skor": null
+    },
+    {
+      "id": "pred_20260423_165240",
+      "tarih": "2026-04-23T16:52:40.835906+03:00",
+      "agent": "CIO_AGENT",
+      "tip": "ANALIZ",
+      "sembol": "SMH",
+      "yon": "DOWN",
+      "buyukluk": "MEDIUM",
+      "guven": "HIGH",
+      "giris_fiyat": 486.67999,
+      "gerekce": "Risk Analisti (HIGH güven) portföyde kritik uyarılar veriyor: Tech konsantrasyonu %57.7 ile K-12/K-17 ihlali, MO %3.1 ve O %2.8 stop'a kritik mesafede, %5 düşüşte ~$19,118 kayıp senaryosu var. Sektör ",
+      "kaynak_kural": "CIO_AGENT",
+      "durum": "BEKLIYOR",
+      "skorlar": {},
+      "gercek_fiyatlar": {},
+      "son_skor": null
+    },
+    {
+      "id": "pred_20260423_165328",
+      "tarih": "2026-04-23T16:53:28.492217+03:00",
+      "agent": "DEBATE_CIO",
+      "tip": "DEBATE_KARAR",
+      "sembol": "SPY",
+      "yon": "DOWN",
+      "buyukluk": "LOW",
+      "guven": "MEDIUM",
+      "giris_fiyat": 710.63,
+      "gerekce": "Teknoloji konsantrasyonu %57.7 ile K-17 kırmızı bölgede; MU +15.1% ve CAMT +%8.7 kârda iken kısmi realizasyon disiplin gereği. MO/O temettü tarafı +41.3% ile güçlü, dokunmaya gerek yok. İlk SAT kararı",
       "kaynak_kural": "adversarial_debate",
       "durum": "BEKLIYOR",
       "skorlar": {},

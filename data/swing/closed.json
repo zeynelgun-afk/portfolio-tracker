@@ -444,7 +444,7 @@
       "tutulan_gun": 22,
       "cikis_nedeni": "Stop-loss tetiklendi: İran savaşı volatilitesinde savunmacı tez beklenen güvenli liman korumasını sağlayamadı. $27.25 stop kırıldı.",
       "sonuc": "ZARAR",
-      "ders": "T telekom kriz döneminde beklenen korumayı sağlamadı. Telekom swing evreninden çıkarılmalı. 15 gün kuralı kesinkes uygulanmalı.",
+      "ders": "## Post-Trade Analiz: T (AT&T)\n\n**1. Hangi K-kuralı?**\nKESİN: K-06 (stop disiplini) tetiklendi — $27.25 kırılınca $27.09'da otomatik çıkış. K-10 (VIX savunmacı allokasyon) giriş gerekçesi muhtemelen bu pozisyonu haklı gösteriyordu.\n\n**2. Giriş tezi doğru muydu?**\nMUHTEMEL: Tez \"İran/jeopolitik gerilimde savunmacı telekom + temettü = güvenli liman\" idi. SPEKÜLATİF: Tez teorik olarak mantıklıydı ancak T'nin defansif karakteri yüksek VIX rejiminde çalışmadı — yüksek borçlu telekomlar risk-off ortam",
       "auto_analiz": {
         "tez_dogru": false,
         "tez_degerlendirme": "T defensif telekom tezi yanlıştı. İran krizi volatilitesinde koruma sağlamadı. 22 gün tutulması hem kural ihlali hem tez bozulması.",
@@ -463,7 +463,9 @@
         "puan": 1,
         "analiz_tarihi": "2026-04-11 20:10",
         "model": "claude-sonnet-4-6"
-      }
+      },
+      "dersler": "## Post-Trade Analiz: T (AT&T)\n\n**1. Hangi K-kuralı?**\nKESİN: K-06 (stop disiplini) tetiklendi — $27.25 kırılınca $27.09'da otomatik çıkış. K-10 (VIX savunmacı allokasyon) giriş gerekçesi muhtemelen bu pozisyonu haklı gösteriyordu.\n\n**2. Giriş tezi doğru muydu?**\nMUHTEMEL: Tez \"İran/jeopolitik gerilimde savunmacı telekom + temettü = güvenli liman\" idi. SPEKÜLATİF: Tez teorik olarak mantıklıydı ancak T'nin defansif karakteri yüksek VIX rejiminde çalışmadı — yüksek borçlu telekomlar risk-off ortam",
+      "agent_analiz_tarihi": "2026-04-23"
     },
     {
       "id": "SWING-019",

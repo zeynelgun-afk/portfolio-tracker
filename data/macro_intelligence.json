@@ -1,138 +1,141 @@
 {
-  "tarih": "2026-04-22T17:48:32.905374+03:00",
-  "vix": 19.09,
+  "tarih": "2026-04-23T16:51:18.980656+03:00",
+  "vix": 19.32,
   "sektor_performans": {
-    "Basic Materials": 0.7273686787637512,
-    "Communication Services": 0.26279798338286753,
-    "Consumer Cyclical": 0.023052726989658545,
-    "Consumer Defensive": 0.3154118071725831,
-    "Energy": 0.807289035074632,
-    "Financial Services": 0.5269521601969362,
-    "Healthcare": 0.7960455017912871,
-    "Industrials": 0.7210106370915792,
-    "Real Estate": -0.28194611673351133,
-    "Technology": 0.10582704691415312,
-    "Utilities": -0.47263901996194013
+    "Basic Materials": -0.3097626121695507,
+    "Communication Services": 0.33506825759808123,
+    "Consumer Cyclical": 0.22212124560250235,
+    "Consumer Defensive": -0.14180299929473783,
+    "Energy": 1.2927743876569364,
+    "Financial Services": 0.11982372594183666,
+    "Healthcare": 0.4739801096920404,
+    "Industrials": -3.523454571707374,
+    "Real Estate": 0.3027157237776912,
+    "Technology": 1.3274663523662023,
+    "Utilities": 0.42582787308012016
   },
   "dominant_temalar": [
     {
       "tema_adi": "enerji_geçiş",
       "güç_skoru": 8,
-      "neden": "Energy sektörü günün lideri (+0.8%), AI güç talebi devam ediyor, temiz enerji + nükleer altyapı ilgi görüyor",
-      "öncelikli_alt_dal": "güç_altyapı_nükleer",
+      "neden": "Global Energy Shock haberi + Energy sektörü +1.3% lider, enflasyon ve FED sıkılaşma ortamında enerji güvenliği öne çıkıyor",
+      "öncelikli_alt_dal": "enerji_altyapı_nükleer",
       "önerilen_hisseler": [
-        "VST",
+        "XOM",
+        "CVX",
+        "NEE",
+        "VST"
+      ],
+      "portföy": "balanced",
+      "aciliyet": "yüksek",
+      "hisse_evreni": [
+        "OKE",
+        "WMB",
+        "ET",
+        "FSLR",
         "CEG",
-        "NEE"
+        "ENPH",
+        "NRG",
+        "CCJ",
+        "RUN",
+        "KMI",
+        "NEE",
+        "VST"
+      ]
+    },
+    {
+      "tema_adi": "AI_altyapı",
+      "güç_skoru": 7,
+      "neden": "Technology +1.3% lider sektör, AI güç talebi enerji hikayesiyle örtüşüyor, capex devam ediyor",
+      "öncelikli_alt_dal": "güç_soğutma",
+      "önerilen_hisseler": [
+        "VRT",
+        "ETN",
+        "PWR"
       ],
       "portföy": "aggressive",
       "aciliyet": "orta",
       "hisse_evreni": [
-        "CCJ",
-        "CEG",
-        "VST",
-        "FSLR",
-        "ET",
-        "ENPH",
-        "NRG",
-        "WMB",
-        "KMI",
-        "RUN",
-        "NEE",
-        "OKE"
-      ]
-    },
-    {
-      "tema_adi": "sağlık_yenilik",
-      "güç_skoru": 7,
-      "neden": "Healthcare +0.8% ile liderlerde, HCSG günün güçlüleri arasında (+23.3%), GLP-1 ve onkoloji momentumu sürüyor",
-      "öncelikli_alt_dal": "GLP1_onkoloji",
-      "önerilen_hisseler": [
-        "LLY",
-        "NVO",
-        "ISRG"
-      ],
-      "portföy": "balanced",
-      "aciliyet": "orta",
-      "hisse_evreni": [
-        "MRNA",
-        "ALT",
-        "VKTX",
-        "REGN",
-        "GILD",
-        "LLY",
-        "ISRG",
-        "SYK",
-        "BMY",
-        "MDT",
-        "NVO",
-        "EW"
+        "VRT",
+        "ETN",
+        "PWR",
+        "GNRC",
+        "HUBB"
       ]
     },
     {
       "tema_adi": "emtia_kaynak",
-      "güç_skoru": 7,
-      "neden": "Basic Materials +0.7%, Industrials +0.7% — AI altyapı + yeşil geçiş hammadde talebini destekliyor",
+      "güç_skoru": 6,
+      "neden": "Enerji şoku + kalıcı enflasyon beklentisi hammadde talebini destekliyor, FED sıkı duruş emtia hedge'i güçlendiriyor",
       "öncelikli_alt_dal": "bakır_nadir_toprak",
       "önerilen_hisseler": [
         "FCX",
         "MP",
-        "NUE"
+        "NEM"
       ],
       "portföy": "balanced",
       "aciliyet": "orta",
       "hisse_evreni": [
-        "GOLD",
-        "AEM",
-        "HBM",
-        "NOVN",
         "NEM",
+        "AEM",
+        "GOLD",
+        "HBM",
         "SCCO",
         "FCX",
+        "PAAS",
+        "NOVN",
         "MP",
         "USA",
-        "TECK",
-        "PAAS"
+        "TECK"
       ]
     }
   ],
   "kacınılacak": [
-    "Technology"
+    "Consumer Cyclical",
+    "Real Estate"
   ],
-  "piyasa_modu": "risk-on",
+  "piyasa_modu": "risk-on-kırılgan",
   "aktif_kriz": {
-    "tip": "yok",
-    "guven": 8,
-    "kanit": "VIX 19.1 (<20 eşik), tüm sektörler pozitif ve geniş katılım var, haber akışı bullish (bull run, AI, IPO iştahı). Stres/panik sinyali yok, normal risk-on ortam.",
-    "beneficiary_sectors": [],
-    "sensitive_sectors": []
+    "tip": "enflasyon",
+    "guven": 7,
+    "kanit": "Manşet haberler: 'Global Energy Shock', 'Brace For Hikes Inflation Is Likely Persistent', 'Fed Rate Raise Pause Or Cut'. Energy sektörü +1.3% lider, jobless claims yükseldi ama FED sıkı söylem sürüyor — klasik stagflasyonist enflasyon sinyali.",
+    "beneficiary_sectors": [
+      "Energy",
+      "Basic Materials",
+      "Consumer Defensive"
+    ],
+    "sensitive_sectors": [
+      "Consumer Cyclical",
+      "Real Estate",
+      "Communication Services"
+    ]
   },
-  "genel_yorum": "Piyasa sağlıklı risk-on modunda; sektör rotasyonu defansiflerden (Energy, Healthcare, Materials) yana ama Technology zayıf kalıyor. Kriz sinyali yok, K-13 standart VIX bazlı çalışmalı. Tematik odak: enerji altyapı + sağlık yenilik + hammadde üçlüsü.",
+  "genel_yorum": "Piyasa yüzeyde risk-on (VIX 19.3, tüm sektörler yeşil) ama altında enflasyon + FED sıkılaşma + enerji şoku üçlüsü kırılganlık yaratıyor. Enerji ve Tech liderliği paralel sürüyor — AI güç talebi köprü. Faiz hassas sektörler (Real Estate, Consumer Cyclical) kalıcı enflasyon senaryosunda baskı altında kalır.",
   "haberler": [
     {
-      "baslik": "Repo Market Stress Signals Bitcoin Is Positioned For Its Next Major Bull Cycle",
+      "baslik": "Global Energy Shock Sends Stock Markets On Divergent Paths",
       "kaynak": "seekingalpha.com",
-      "tarih": "2026-04-22 10:36"
+      "tarih": "2026-04-23 09:30"
     },
     {
-      "baslik": "Stocks Still Overvalued Based On CAPE Ratio, But Broader Context Allows For Debate",
+      "baslik": "The Fed Preview - Brace For Hikes, Inflation Is Likely Persistent",
       "kaynak": "seekingalpha.com",
-      "tarih": "2026-04-22 10:30"
+      "tarih": "2026-04-23 09:15"
     },
     {
-      "baslik": "Mega-IPOs And Index Fund Mechanics: Much Ado About Nothing?",
+      "baslik": "New Investors Have Been Taught To Buy The Dip",
       "kaynak": "seekingalpha.com",
-      "tarih": "2026-04-22 10:26"
+      "tarih": "2026-04-23 09:01"
     },
     {
-      "baslik": "Investors Are Piling Into an Obscure New Fund for Memory Stocks",
+      "baslik": "U.S. Jobless Claims Rose Last Week",
       "kaynak": "wsj.com",
-      "tarih": "2026-04-22 10:00"
+      "tarih": "2026-04-23 08:52"
     },
     {
-      "baslik": "It's a great time for buying across private equity and private credit, says Steve Klinsky",
-      "kaynak": "youtube.com",
-      "tarih": "2026-04-22 09:52"
+      "baslik": "Why it's the luckiest U.S. stock market in history, according to one strategist",
+      "kaynak": "marketwatch.com",
+      "tarih": "2026-04-23 08:23"
     }
   ]
 }
