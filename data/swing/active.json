@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-04-23T15:23:17.601287",
+  "son_guncelleme": "2026-04-23T15:54:57.500698",
   "not": "SWING TRADE SADECE SİMÜLASYON - Sadece % kazanç/kayıp takibi (MAX: 8 pozisyon)",
   "aktif_pozisyonlar": [
     {
@@ -15,10 +15,10 @@
       "katalizor": "",
       "max_sure_gun": 15,
       "durum": "✅ Normal aralıkta",
-      "guncel_fiyat": 836.28,
-      "son_fiyat": 836.28,
-      "zirve_fiyat": 836.58,
-      "chandelier_stop": 758.94,
+      "guncel_fiyat": 839.76,
+      "son_fiyat": 839.76,
+      "zirve_fiyat": 839.76,
+      "chandelier_stop": 762.12,
       "k11_aktif": false,
       "k11_profit_lock": null,
       "son_guncelleme": "2026-04-23",
@@ -30,8 +30,8 @@
       "maliyet_baz": 790.66,
       "tutulan_gun": 12,
       "giris_fiyati": 790.66,
-      "kar_zarar_yuzde": 5.77,
-      "pnl_pct": 5.77
+      "kar_zarar_yuzde": 6.21,
+      "pnl_pct": 6.21
     },
     {
       "id": "SWING-202604101410-KLAC",
@@ -46,8 +46,8 @@
       "katalizor": "",
       "max_sure_gun": 15,
       "durum": "✅ Normal aralıkta",
-      "guncel_fiyat": 1838.25,
-      "son_fiyat": 1838.25,
+      "guncel_fiyat": 1837.42,
+      "son_fiyat": 1837.42,
       "zirve_fiyat": 1840.82,
       "chandelier_stop": 1634.27,
       "k11_aktif": false,
@@ -61,8 +61,8 @@
       "maliyet_baz": 1737.28,
       "tutulan_gun": 12,
       "giris_fiyati": 1737.28,
-      "kar_zarar_yuzde": 5.81,
-      "pnl_pct": 5.81
+      "kar_zarar_yuzde": 5.76,
+      "pnl_pct": 5.76
     },
     {
       "id": "SWING-202604101410-AMAT",
@@ -77,8 +77,8 @@
       "katalizor": "",
       "max_sure_gun": 15,
       "durum": "✅ Normal aralıkta",
-      "guncel_fiyat": 409.79,
-      "son_fiyat": 409.79,
+      "guncel_fiyat": 406.74,
+      "son_fiyat": 406.74,
       "zirve_fiyat": 411.9,
       "chandelier_stop": 361.83,
       "k11_aktif": false,
@@ -92,8 +92,8 @@
       "maliyet_baz": 399.49,
       "tutulan_gun": 12,
       "giris_fiyati": 399.49,
-      "kar_zarar_yuzde": 2.58,
-      "pnl_pct": 2.58
+      "kar_zarar_yuzde": 1.81,
+      "pnl_pct": 1.81
     },
     {
       "id": "SWING-202604141454-GEV",
@@ -108,10 +108,10 @@
       "katalizor": "",
       "max_sure_gun": 15,
       "durum": "✅ Normal aralıkta",
-      "guncel_fiyat": 1157.32,
-      "son_fiyat": 1157.32,
-      "zirve_fiyat": 1162.0,
-      "chandelier_stop": 1048.18,
+      "guncel_fiyat": 1163.39,
+      "son_fiyat": 1163.39,
+      "zirve_fiyat": 1163.39,
+      "chandelier_stop": 1049.57,
       "k11_aktif": true,
       "k11_profit_lock": 1127.14,
       "son_guncelleme": "2026-04-23",
@@ -122,8 +122,8 @@
       "atr14": 37.94,
       "maliyet_baz": 1000.0,
       "giris_fiyati": 1000,
-      "kar_zarar_yuzde": 15.73,
-      "pnl_pct": 15.73,
+      "kar_zarar_yuzde": 16.34,
+      "pnl_pct": 16.34,
       "chandelier_guncelleme": "2026-04-22"
     },
     {
@@ -139,8 +139,8 @@
       "katalizor": "",
       "max_sure_gun": 15,
       "durum": "✅ Normal aralıkta",
-      "guncel_fiyat": 49.26,
-      "son_fiyat": 49.26,
+      "guncel_fiyat": 49.38,
+      "son_fiyat": 49.38,
       "zirve_fiyat": 50,
       "chandelier_stop": 45.11,
       "k11_aktif": false,
@@ -150,8 +150,8 @@
       "tutulan_gun": 8,
       "maliyet_baz": 48.52,
       "giris_fiyati": 48.52,
-      "kar_zarar_yuzde": 1.51,
-      "pnl_pct": 1.51
+      "kar_zarar_yuzde": 1.78,
+      "pnl_pct": 1.78
     }
   ],
   "ozet": {
