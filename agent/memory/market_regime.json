@@ -12,52 +12,52 @@
       "risk_off": 2
     },
     "growth_aksiyon": "YÖN DEĞİŞTİR: Savunma (ITA, LMT) + Altın (GLD, RGLD) + Enerji (XLE). Gerekirse inverse ETF (SH, PSQ). Para hep bir yere akıyor — o yeri bul.",
-    "tespit_zamani": "2026-04-23T18:54:52.585017+03:00"
+    "tespit_zamani": "2026-04-23T20:21:50.033199+03:00"
   },
   "sektor_data": {
     "XLE": {
-      "price": 56.65,
-      "gunluk_chg": 0.19
+      "price": 56.92,
+      "gunluk_chg": 0.67
     },
     "XLK": {
-      "price": 156.83501,
-      "gunluk_chg": -0.79
+      "price": 155.5,
+      "gunluk_chg": -1.64
     },
     "XLI": {
-      "price": 174.34,
-      "gunluk_chg": 1.93
+      "price": 173.4,
+      "gunluk_chg": 1.38
     },
     "XLF": {
-      "price": 51.955,
-      "gunluk_chg": -0.49
+      "price": 51.525,
+      "gunluk_chg": -1.31
     },
     "XLV": {
-      "price": 145.965,
-      "gunluk_chg": -0.28
+      "price": 145.435,
+      "gunluk_chg": -0.64
     },
     "XLU": {
-      "price": 45.945,
-      "gunluk_chg": 2.4
+      "price": 45.88,
+      "gunluk_chg": 2.25
     },
     "XLP": {
       "price": 83.25,
       "gunluk_chg": 1.39
     },
     "XLY": {
-      "price": 118.415,
-      "gunluk_chg": -0.43
+      "price": 117.53,
+      "gunluk_chg": -1.18
     },
     "XLB": {
-      "price": 51.705,
-      "gunluk_chg": -0.24
+      "price": 51.49,
+      "gunluk_chg": -0.66
     },
     "GLD": {
-      "price": 433.23,
-      "gunluk_chg": -0.47
+      "price": 432.25009,
+      "gunluk_chg": -0.69
     },
     "ITA": {
-      "price": 219.96,
-      "gunluk_chg": 0.37
+      "price": 217.13,
+      "gunluk_chg": -0.92
     }
   }
 }
