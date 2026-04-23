@@ -84,7 +84,10 @@
         "_decision_id": "a965e7f6e800"
       }
     ],
-    "kaynak": "closing"
+    "kaynak": "closing",
+    "executed": true,
+    "executed_at": "2026-04-23T18:14:57.255731+03:00",
+    "executed_count": 0
   },
   "timestamp": "2026-04-23T16:51:22.651292+03:00"
 }

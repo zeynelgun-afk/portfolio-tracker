@@ -174,3 +174,4 @@ date,action,symbol,shares,price,total,reason
 2026-04-22,SELL,T,773,25.88,20005.24,K-05: Earnings öncesi çıkış — portfolio fiyatı (FMP 503)
 2026-04-22,BUY,ABBV,123,202.84,24949.32,"Dividend: RSI 33 oversold, FCF yield %5.2, temettü ~%3.8, Skyrizi/Rinvoq pipeline"
 2026-04-22,BUY,O,314,63.62,19976.68,"Dividend: Realty Income REIT, aylık temettü ~%5.7, 30yr art arda artış, diversified commercial"
+2026-04-23,BUY,NEM,133,109.57,14573.09,emtia_hammadde tema taraması — teknik:6/10 fundamental:7/10
