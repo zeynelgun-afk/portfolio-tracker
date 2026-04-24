@@ -1,6 +1,6 @@
 {
-  "tarih": "2026-04-24T17:49:35.715784+03:00",
-  "vix": 18.73,
+  "tarih": "2026-04-24T17:49:08.802519+03:00",
+  "vix": 18.67,
   "sektor_performans": {
     "Basic Materials": -0.41413458300150197,
     "Communication Services": 0.39949641594407836,
@@ -18,76 +18,67 @@
     {
       "tema_adi": "enerji_geçiş",
       "güç_skoru": 7,
-      "neden": "Utilities +0.3% pozitif, Haziran faiz indirimi beklentisi (Warsh/Powell haberleri) rate-sensitive enerji altyapısını destekliyor, AI güç talebi devam",
-      "öncelikli_alt_dal": "nükleer_güç_altyapı",
+      "neden": "Utilities +0.3% ve Real Estate +0.7% pozitif; June rate cut söylemi faiz duyarlı altyapı/nükleer/güç temasını destekliyor",
+      "öncelikli_alt_dal": "nükleer_güç",
       "önerilen_hisseler": [
-        "NEE",
         "VST",
-        "CEG"
-      ],
-      "portföy": "aggressive",
-      "aciliyet": "orta",
-      "hisse_evreni": [
-        "FSLR",
-        "KMI",
-        "RUN",
-        "NEE",
-        "VST",
-        "NRG",
-        "ET",
-        "OKE",
-        "ENPH",
         "CEG",
-        "WMB",
-        "CCJ"
-      ]
-    },
-    {
-      "tema_adi": "AI_altyapı",
-      "güç_skoru": 6,
-      "neden": "Technology flat ama Communication Services +0.4%, faiz indirimi beklentisi uzun vadeli capex temalarını destekler; güç+soğutma altyapısı capex'ten direkt besleniyor",
-      "öncelikli_alt_dal": "güç_soğutma",
-      "önerilen_hisseler": [
-        "VRT",
-        "ETN",
-        "PWR"
+        "NEE"
       ],
       "portföy": "aggressive",
       "aciliyet": "orta",
       "hisse_evreni": [
-        "VRT",
-        "ETN",
-        "PWR",
-        "GNRC",
-        "HUBB"
+        "NRG",
+        "KMI",
+        "FSLR",
+        "ENPH",
+        "OKE",
+        "VST",
+        "CCJ",
+        "RUN",
+        "ET",
+        "WMB",
+        "CEG",
+        "NEE"
       ]
     },
     {
       "tema_adi": "finansal_döngüsel",
-      "güç_skoru": 4,
-      "neden": "Financial Services -0.4% zayıf; Haziran kesinti beklentisi net faiz marjını baskılayacak, bugün için tema zayıf",
-      "öncelikli_alt_dal": "fintech",
-      "önerilen_hisseler": [],
-      "portföy": "aggressive",
-      "aciliyet": "düşük",
+      "güç_skoru": 5,
+      "neden": "Powell soruşturması düşürüldü, Warsh FED yolu açıldı, June rate cut beklentisi; ancak Financial Services -0.4% bugün zayıf, faiz kesim beklentisi net marjı baskılıyor",
+      "öncelikli_alt_dal": "faiz_duyarlı_REIT",
+      "önerilen_hisseler": [
+        "O",
+        "AMT",
+        "PLD"
+      ],
+      "portföy": "dividend",
+      "aciliyet": "orta",
       "hisse_evreni": [
+        "AFRM",
+        "GS",
+        "CB",
+        "MS",
+        "MET",
         "V",
-        "MA",
         "PYPL",
-        "AFRM"
+        "MA",
+        "PRU",
+        "BAC",
+        "AIG",
+        "JPM"
       ]
     }
   ],
   "kacınılacak": [
     "Consumer Cyclical",
-    "Consumer Defensive",
-    "Financial Services"
+    "Consumer Defensive"
   ],
   "piyasa_modu": "risk-on",
   "aktif_kriz": {
     "tip": "enflasyon",
-    "guven": 5,
-    "kanit": "Nisan tüketici güveni TÜM ZAMANLARIN EN DÜŞÜĞÜ, manşetler açıkça 'Inflation Fears Drive Consumer Sentiment to Record Low' diyor. Consumer Cyclical -0.2% ve Consumer Defensive -0.2% baskıda. Ancak VIX 18.7 hâlâ düşük ve piyasa Haziran kesintisini fiyatlıyor — bu tam enflasyon krizi değil, stagflasyon endişesi. Güven orta seviyede.",
+    "guven": 6,
+    "kanit": "Nisan tüketici güveni rekor düşükte, haber başlıkları açıkça 'Inflation Fears Drive Consumer Sentiment to Record Low' diyor. Consumer Cyclical -0.2% ve Consumer Defensive -0.2% birlikte düşüyor — tüketici baskı altında. Ancak VIX 18.7 hâlâ sakin, bu yüzden guven orta düzeyde.",
     "beneficiary_sectors": [
       "Energy",
       "Basic Materials",
@@ -100,7 +91,7 @@
       "Financial Services"
     ]
   },
-  "genel_yorum": "Piyasa çelişkili sinyaller veriyor: tüketici güveni rekor dip (stagflasyon kokusu) ama VIX 18.7 ve Haziran faiz indirimi beklentisi risk-on modunu koruyor. Real Estate ve Utilities liderliği klasik rate-cut pozisyonlanması. Tüketici sektörlerinden uzak durulmalı; reel varlık ve faiz-duyarlı defansif büyüme (Utilities, Real Estate) öne çıkıyor.",
+  "genel_yorum": "Piyasa karışık ama risk-on eğilimde: June rate cut beklentisi faiz duyarlı varlıkları (REIT, Utilities) destekliyor. Ancak tüketici güveninin rekor düşüğü ciddi bir enflasyon/stagflasyon uyarısı — tüketici sektörlerinden uzak durulmalı. VIX sakin olduğu için panik yok, ama tematik seçicilik şart.",
   "haberler": [
     {
       "baslik": "April's Consumer Sentiment Is the Lowest on Record",

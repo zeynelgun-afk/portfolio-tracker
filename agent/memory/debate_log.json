@@ -443,6 +443,48 @@
         }
       },
       "karar_degisti_mi": true
+    },
+    {
+      "symbol": "CAMT→XLI/GLD ve O/ABBV kısmi çıkış",
+      "tarih": "2026-04-24T14:51:26.333907",
+      "ilk_karar": {
+        "karar": "DONDUR",
+        "hedef_sembol": "CAMT→XLI/GLD ve O/ABBV kısmi çıkış",
+        "gerekce": "Sektör analisti (ağırlık 1.53) AI_BOOM rejiminde XLK/SMH liderliğini doğruluyor ancak Risk Yöneticisi (HIGH güven) tech konsantrasyonunun %57.4'e ulaştığını ve K-17 limitini ciddi aştığını raporluyor — bu çelişkide Risk > Sektör önceliği geçerli. 5 pozisyon stop'a kritik mesafede (CPRX %2.9, O %3.1, ABBV %3.4) ve %5 piyasa düşüşünde ~$19.6K kayıp + zincirleme stop riski var. Makro (ağırlık 0.89) RISK_ON ama Fed (29 Nisan) öncesi MEDIUM güven ve şahin ton riski mevcut. Bu nedenle yeni tech alımı YOK, onun yerine: (1) CAMT'de kısmi kâr al ve pozisyonu küçült, (2) O ve ABBV'de %25-50 kısmi çıkış ile dividend bucket zincirleme stop riskini düşür, (3) kurtarılan sermaye XLI (GEV/CAT/ETN) ve GLD'ye rotasyon. NEM'de +%7.2 sıçrama sonrası kısmi kâr al + stop yukarı çek. Swing slot 5/5 dolu olduğu için K-02 gereği yeni giriş zaten kapalı.",
+        "uyari": "CPRX %2.9 uzaklıkta + günlük -%3.7 hareket → K-09 erken çıkış tetiklenebilir, Fed basın toplantısında şahin ton tech liderliğini 24 saatte bozabilir. Teknik sinyal agent parse hatası verdi (LOW güven) — bu karar onsuz alındı.",
+        "guven": "MEDIUM",
+        "analist_uzlasma": "ORTA",
+        "tahmin": {
+          "yon": "UP",
+          "buyukluk": "LOW",
+          "sembol": "SPY"
+        },
+        "_agent": "CIO_AGENT",
+        "_timestamp": "2026-04-24T14:50:36.778326"
+      },
+      "boğa": {
+        "_raw": "```json\n{\n  \"argümanlar\": [\n    \"CAMT momentum dönüşü net: Bugün +%2 ile $200.49'a çıktı, stop seviyesinden (+%13.2 ile MU benzeri stopuzak yapısı), girişten toparlanma başladı. QQQ +%1.32 ve VIX 18.6",
+        "_parse_hata": true
+      },
+      "ayı": {
+        "_raw": "```json\n{\n  \"argümanlar\": [\n    \"Teknoloji konsantrasyonu %57.4 🔴 — K-17 ihlali seviyesinde. CAMT→XLI rotasyonu sadece %5 azaltır, hala %52 teknoloji kalır. DONDUR kararı yapısal riski yok saymak deme",
+        "_parse_hata": true
+      },
+      "nihai": {
+        "nihai_karar": "BEKLE",
+        "kazan_taraf": "BAĞLANTI",
+        "karar_gerekce": "Boğa ve ayı tarafları boş argüman sundu, yapay tartışma sonucu çıkarılamaz. İlk CIO kararı DONDUR idi ve mevcut bağlam (VIX 18.67 normal, QQQ +1.32%, CAMT +2%) ani aksiyon gerektirmiyor. Ancak agresif portföyde %57.4 teknoloji konsantrasyonu K-17 riski taşıyor — bu yapısal sorun izlemeyi zorunlu kılıyor.",
+        "boğa_haklı_çünkü": "VIX düşüşte (-3.31%), QQQ güçlü (+1.32%), CAMT bugün +%2 toparlanıyor, MU +%4.6 ve ANET +%3.1 ile teknoloji momentumu canlı — panik satış için zemin yok.",
+        "ayı_haklı_çünkü": "Teknoloji %57.4 konsantrasyon kritik eşikte, agresif portföy -%3.6 zararda, CAMT fair value -%76 PAH ile tez sorgulanır durumda, %5 piyasa düşüşü $19.6K kayıp üretir.",
+        "göz_ardı_edilen": "CAMT'ın 12 Mayıs earnings katalizörüne kadar bekleme mantığı ve XLI/GLD rotasyonunun timing'i tartışılmadı. Ayrıca O/ABBV dividend portföyü +%42.4 ile kısmi kar realizasyonu fırsatı değerlendirilmedi.",
+        "güven": "MEDIUM",
+        "tahmin": {
+          "yon": "NEUTRAL",
+          "buyukluk": "LOW",
+          "sembol": "SPY"
+        }
+      },
+      "karar_degisti_mi": true
     }
   ]
 }

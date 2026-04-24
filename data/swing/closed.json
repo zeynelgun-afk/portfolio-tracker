@@ -124,7 +124,7 @@
       "tutulan_gun": 15,
       "cikis_nedeni": "Zaman çerçevesi aşıldı (15 gün, hedef 10 gündü), kar reali edildi",
       "sonuc": "KAZANÇ",
-      "ders": "# Post-Trade Analiz: VZ\n\n**1. Yönetim Kuralı**\nMUHTEMEL: K-11 (kademeli kâr alma) ve zaman-bazlı çıkış disiplini. Giriş tezi boş olduğu için kesin eşleştirme yapılamıyor, ancak çıkış nedeni \"zaman çerçevesi aşıldı\" ifadesi swing playbook'unun süre limitini işaret ediyor.\n\n**2. Giriş Tezi**\nKESİN: Giriş tezi kaydedilmemiş — bu başlı başına bir zafiyet. Trade $46.25 → $48.05 ile +%3.89 getirdi (P/L alanı %0 görünüyor, sistem hatası; gerçek getiri RAG kaydından +%3.89).\nSPEKÜLATİF: Tez muhtemelen k",
+      "ders": "## Post-Trade Analiz: VZ\n\n**1. Hangi kural?**\n[KESİN] K-11 (kademeli kâr alma) ve zaman stop disiplini uygulandı. Swing hedefi 10 gündü, 15. günde kapatıldı — zaman çerçevesi aşımı nedeniyle realizasyon.\n\n**2. Giriş tezi değerlendirmesi**\n[SPEKÜLATİF] Giriş tezi kayıtlı değil, net değerlendirme yapılamıyor. [KESİN] Sonuç olarak %3.89 kârla kapandı — yön doğruydu, ancak momentum beklenenden yavaş geldi.\n\n**3. Çıkış zamanlaması**\n[MUHTEMEL] Geç kalındı. 10 günlük hedef aşıldığında (gün 11) çıkılma",
       "auto_analiz": {
         "tez_dogru": true,
         "tez_degerlendirme": "VZ defensif tezi işe yaradı ama telekom swing sistemi için verimli değil. Düşük volatilite hisse, %10 hedefe ulaşamaz.",
@@ -144,7 +144,7 @@
         "analiz_tarihi": "2026-04-11 20:10",
         "model": "claude-sonnet-4-6"
       },
-      "dersler": "# Post-Trade Analiz: VZ\n\n**1. Yönetim Kuralı**\nMUHTEMEL: K-11 (kademeli kâr alma) ve zaman-bazlı çıkış disiplini. Giriş tezi boş olduğu için kesin eşleştirme yapılamıyor, ancak çıkış nedeni \"zaman çerçevesi aşıldı\" ifadesi swing playbook'unun süre limitini işaret ediyor.\n\n**2. Giriş Tezi**\nKESİN: Giriş tezi kaydedilmemiş — bu başlı başına bir zafiyet. Trade $46.25 → $48.05 ile +%3.89 getirdi (P/L alanı %0 görünüyor, sistem hatası; gerçek getiri RAG kaydından +%3.89).\nSPEKÜLATİF: Tez muhtemelen k",
+      "dersler": "## Post-Trade Analiz: VZ\n\n**1. Hangi kural?**\n[KESİN] K-11 (kademeli kâr alma) ve zaman stop disiplini uygulandı. Swing hedefi 10 gündü, 15. günde kapatıldı — zaman çerçevesi aşımı nedeniyle realizasyon.\n\n**2. Giriş tezi değerlendirmesi**\n[SPEKÜLATİF] Giriş tezi kayıtlı değil, net değerlendirme yapılamıyor. [KESİN] Sonuç olarak %3.89 kârla kapandı — yön doğruydu, ancak momentum beklenenden yavaş geldi.\n\n**3. Çıkış zamanlaması**\n[MUHTEMEL] Geç kalındı. 10 günlük hedef aşıldığında (gün 11) çıkılma",
       "agent_analiz_tarihi": "2026-04-24"
     },
     {
