@@ -124,7 +124,7 @@
       "tutulan_gun": 15,
       "cikis_nedeni": "Zaman çerçevesi aşıldı (15 gün, hedef 10 gündü), kar reali edildi",
       "sonuc": "KAZANÇ",
-      "ders": "Zaman çerçevesi aşıldı ama karlıydı. Asıl ders: Telekom hisseleri (VZ, T) swing için uygun değil — temettü portföyüne yönlendir.",
+      "ders": "# Post-Trade Analiz: VZ\n\n**1. Yönetim Kuralı**\nMUHTEMEL: K-11 (kademeli kâr alma) ve zaman-bazlı çıkış disiplini. Giriş tezi boş olduğu için kesin eşleştirme yapılamıyor, ancak çıkış nedeni \"zaman çerçevesi aşıldı\" ifadesi swing playbook'unun süre limitini işaret ediyor.\n\n**2. Giriş Tezi**\nKESİN: Giriş tezi kaydedilmemiş — bu başlı başına bir zafiyet. Trade $46.25 → $48.05 ile +%3.89 getirdi (P/L alanı %0 görünüyor, sistem hatası; gerçek getiri RAG kaydından +%3.89).\nSPEKÜLATİF: Tez muhtemelen k",
       "auto_analiz": {
         "tez_dogru": true,
         "tez_degerlendirme": "VZ defensif tezi işe yaradı ama telekom swing sistemi için verimli değil. Düşük volatilite hisse, %10 hedefe ulaşamaz.",
@@ -143,7 +143,9 @@
         "puan": 4,
         "analiz_tarihi": "2026-04-11 20:10",
         "model": "claude-sonnet-4-6"
-      }
+      },
+      "dersler": "# Post-Trade Analiz: VZ\n\n**1. Yönetim Kuralı**\nMUHTEMEL: K-11 (kademeli kâr alma) ve zaman-bazlı çıkış disiplini. Giriş tezi boş olduğu için kesin eşleştirme yapılamıyor, ancak çıkış nedeni \"zaman çerçevesi aşıldı\" ifadesi swing playbook'unun süre limitini işaret ediyor.\n\n**2. Giriş Tezi**\nKESİN: Giriş tezi kaydedilmemiş — bu başlı başına bir zafiyet. Trade $46.25 → $48.05 ile +%3.89 getirdi (P/L alanı %0 görünüyor, sistem hatası; gerçek getiri RAG kaydından +%3.89).\nSPEKÜLATİF: Tez muhtemelen k",
+      "agent_analiz_tarihi": "2026-04-24"
     },
     {
       "id": "SWING-004",

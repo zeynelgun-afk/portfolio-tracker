@@ -129,10 +129,12 @@
       "kaynak_kural": "MACRO_AGENT",
       "durum": "BEKLIYOR",
       "skorlar": {
-        "5": 2.0
+        "5": 2.0,
+        "10": 2.0
       },
       "gercek_fiyatlar": {
-        "5": 709.62
+        "5": 709.62,
+        "10": 710.72998
       },
       "son_skor": null
     },
@@ -150,10 +152,12 @@
       "kaynak_kural": "SECTOR_AGENT",
       "durum": "BEKLIYOR",
       "skorlar": {
-        "5": 1.0
+        "5": 1.0,
+        "10": 1.0
       },
       "gercek_fiyatlar": {
-        "5": 154.17
+        "5": 154.17,
+        "10": 158.87
       },
       "son_skor": null
     },
@@ -171,10 +175,12 @@
       "kaynak_kural": "CIO_AGENT",
       "durum": "BEKLIYOR",
       "skorlar": {
-        "5": -0.5
+        "5": -0.5,
+        "10": -0.5
       },
       "gercek_fiyatlar": {
-        "5": 709.62
+        "5": 709.62,
+        "10": 710.72998
       },
       "son_skor": null
     },
@@ -192,10 +198,12 @@
       "kaynak_kural": "adversarial_debate",
       "durum": "BEKLIYOR",
       "skorlar": {
-        "5": -0.5
+        "5": -0.5,
+        "10": -0.5
       },
       "gercek_fiyatlar": {
-        "5": 709.62
+        "5": 709.62,
+        "10": 710.72998
       },
       "son_skor": null
     },
@@ -702,6 +710,57 @@
       "giris_fiyat": 710.63,
       "gerekce": "Teknoloji konsantrasyonu %57.7 ile K-17 kırmızı bölgede; MU +15.1% ve CAMT +%8.7 kârda iken kısmi realizasyon disiplin gereği. MO/O temettü tarafı +41.3% ile güçlü, dokunmaya gerek yok. İlk SAT kararı",
       "kaynak_kural": "adversarial_debate",
+      "durum": "BEKLIYOR",
+      "skorlar": {},
+      "gercek_fiyatlar": {},
+      "son_skor": null
+    },
+    {
+      "id": "pred_20260424_175052",
+      "tarih": "2026-04-24T17:50:52.392193+03:00",
+      "agent": "MACRO_AGENT",
+      "tip": "ANALIZ",
+      "sembol": "SPY",
+      "yon": "UP",
+      "buyukluk": "LOW",
+      "guven": "MEDIUM",
+      "giris_fiyat": 711.2,
+      "gerekce": "VIX normal seviyede, tech liderliğinde risk iştahı güçlü; Fed haftası öncesi temkinli iyimserlik",
+      "kaynak_kural": "MACRO_AGENT",
+      "durum": "BEKLIYOR",
+      "skorlar": {},
+      "gercek_fiyatlar": {},
+      "son_skor": null
+    },
+    {
+      "id": "pred_20260424_175052",
+      "tarih": "2026-04-24T17:50:52.519185+03:00",
+      "agent": "SECTOR_AGENT",
+      "tip": "ANALIZ",
+      "sembol": "SMH",
+      "yon": "UP",
+      "buyukluk": "MEDIUM",
+      "guven": "HIGH",
+      "giris_fiyat": 502.345,
+      "gerekce": "",
+      "kaynak_kural": "SECTOR_AGENT",
+      "durum": "BEKLIYOR",
+      "skorlar": {},
+      "gercek_fiyatlar": {},
+      "son_skor": null
+    },
+    {
+      "id": "pred_20260424_175052",
+      "tarih": "2026-04-24T17:50:52.578290+03:00",
+      "agent": "CIO_AGENT",
+      "tip": "ANALIZ",
+      "sembol": "SPY",
+      "yon": "NEUTRAL",
+      "buyukluk": "LOW",
+      "guven": "HIGH",
+      "giris_fiyat": 711.2,
+      "gerekce": "Risk analisti (HIGH güven) kritik uyarı veriyor: teknoloji konsantrasyonu %57.4 ile K-12/K-17 ihlal eşiğinde ve 5 pozisyon stop'a yakın (CPRX %2.7 KRİTİK). Sektör analisti (ağırlık 1.53, HIGH güven) A",
+      "kaynak_kural": "CIO_AGENT",
       "durum": "BEKLIYOR",
       "skorlar": {},
       "gercek_fiyatlar": {},

@@ -130,7 +130,9 @@
     "LMT": "industrials",
     "FCX": "basic_materials",
     "NEM": "basic_materials",
-    "GILD": "healthcare"
+    "GILD": "healthcare",
+    "AVGO": "technology",
+    "PG": "consumer_defensive"
   },
   "updated": {
     "COHR": 1776693839,
@@ -263,6 +265,8 @@
     "LMT": 1776952605,
     "FCX": 1776952636,
     "NEM": 1776952640,
-    "GILD": 1776952681
+    "GILD": 1776952681,
+    "AVGO": 1777042325,
+    "PG": 1777042399
   }
 }

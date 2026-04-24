@@ -1,52 +1,51 @@
 {
-  "tarih": "2026-04-23T16:51:18.980656+03:00",
-  "vix": 19.32,
+  "tarih": "2026-04-24T17:49:35.715784+03:00",
+  "vix": 18.73,
   "sektor_performans": {
-    "Basic Materials": -0.3097626121695507,
-    "Communication Services": 0.33506825759808123,
-    "Consumer Cyclical": 0.22212124560250235,
-    "Consumer Defensive": -0.14180299929473783,
-    "Energy": 1.2927743876569364,
-    "Financial Services": 0.11982372594183666,
-    "Healthcare": 0.4739801096920404,
-    "Industrials": -3.523454571707374,
-    "Real Estate": 0.3027157237776912,
-    "Technology": 1.3274663523662023,
-    "Utilities": 0.42582787308012016
+    "Basic Materials": -0.41413458300150197,
+    "Communication Services": 0.39949641594407836,
+    "Consumer Cyclical": -0.2251497430556304,
+    "Consumer Defensive": -0.16075091819128806,
+    "Energy": -0.5816430144724882,
+    "Financial Services": -0.4315065650488892,
+    "Healthcare": -0.7454779195932404,
+    "Industrials": -0.9867163236408683,
+    "Real Estate": 0.7272194987797409,
+    "Technology": -0.008591773790067592,
+    "Utilities": 0.3347725534752488
   },
   "dominant_temalar": [
     {
       "tema_adi": "enerji_geçiş",
-      "güç_skoru": 8,
-      "neden": "Global Energy Shock haberi + Energy sektörü +1.3% lider, enflasyon ve FED sıkılaşma ortamında enerji güvenliği öne çıkıyor",
-      "öncelikli_alt_dal": "enerji_altyapı_nükleer",
+      "güç_skoru": 7,
+      "neden": "Utilities +0.3% pozitif, Haziran faiz indirimi beklentisi (Warsh/Powell haberleri) rate-sensitive enerji altyapısını destekliyor, AI güç talebi devam",
+      "öncelikli_alt_dal": "nükleer_güç_altyapı",
       "önerilen_hisseler": [
-        "XOM",
-        "CVX",
         "NEE",
-        "VST"
+        "VST",
+        "CEG"
       ],
-      "portföy": "balanced",
-      "aciliyet": "yüksek",
+      "portföy": "aggressive",
+      "aciliyet": "orta",
       "hisse_evreni": [
-        "OKE",
-        "WMB",
-        "ET",
         "FSLR",
-        "CEG",
-        "ENPH",
-        "NRG",
-        "CCJ",
-        "RUN",
         "KMI",
+        "RUN",
         "NEE",
-        "VST"
+        "VST",
+        "NRG",
+        "ET",
+        "OKE",
+        "ENPH",
+        "CEG",
+        "WMB",
+        "CCJ"
       ]
     },
     {
       "tema_adi": "AI_altyapı",
-      "güç_skoru": 7,
-      "neden": "Technology +1.3% lider sektör, AI güç talebi enerji hikayesiyle örtüşüyor, capex devam ediyor",
+      "güç_skoru": 6,
+      "neden": "Technology flat ama Communication Services +0.4%, faiz indirimi beklentisi uzun vadeli capex temalarını destekler; güç+soğutma altyapısı capex'ten direkt besleniyor",
       "öncelikli_alt_dal": "güç_soğutma",
       "önerilen_hisseler": [
         "VRT",
@@ -64,78 +63,69 @@
       ]
     },
     {
-      "tema_adi": "emtia_kaynak",
-      "güç_skoru": 6,
-      "neden": "Enerji şoku + kalıcı enflasyon beklentisi hammadde talebini destekliyor, FED sıkı duruş emtia hedge'i güçlendiriyor",
-      "öncelikli_alt_dal": "bakır_nadir_toprak",
-      "önerilen_hisseler": [
-        "FCX",
-        "MP",
-        "NEM"
-      ],
-      "portföy": "balanced",
-      "aciliyet": "orta",
+      "tema_adi": "finansal_döngüsel",
+      "güç_skoru": 4,
+      "neden": "Financial Services -0.4% zayıf; Haziran kesinti beklentisi net faiz marjını baskılayacak, bugün için tema zayıf",
+      "öncelikli_alt_dal": "fintech",
+      "önerilen_hisseler": [],
+      "portföy": "aggressive",
+      "aciliyet": "düşük",
       "hisse_evreni": [
-        "NEM",
-        "AEM",
-        "GOLD",
-        "HBM",
-        "SCCO",
-        "FCX",
-        "PAAS",
-        "NOVN",
-        "MP",
-        "USA",
-        "TECK"
+        "V",
+        "MA",
+        "PYPL",
+        "AFRM"
       ]
     }
   ],
   "kacınılacak": [
     "Consumer Cyclical",
-    "Real Estate"
+    "Consumer Defensive",
+    "Financial Services"
   ],
-  "piyasa_modu": "risk-on-kırılgan",
+  "piyasa_modu": "risk-on",
   "aktif_kriz": {
     "tip": "enflasyon",
-    "guven": 7,
-    "kanit": "Manşet haberler: 'Global Energy Shock', 'Brace For Hikes Inflation Is Likely Persistent', 'Fed Rate Raise Pause Or Cut'. Energy sektörü +1.3% lider, jobless claims yükseldi ama FED sıkı söylem sürüyor — klasik stagflasyonist enflasyon sinyali.",
+    "guven": 5,
+    "kanit": "Nisan tüketici güveni TÜM ZAMANLARIN EN DÜŞÜĞÜ, manşetler açıkça 'Inflation Fears Drive Consumer Sentiment to Record Low' diyor. Consumer Cyclical -0.2% ve Consumer Defensive -0.2% baskıda. Ancak VIX 18.7 hâlâ düşük ve piyasa Haziran kesintisini fiyatlıyor — bu tam enflasyon krizi değil, stagflasyon endişesi. Güven orta seviyede.",
     "beneficiary_sectors": [
       "Energy",
       "Basic Materials",
-      "Consumer Defensive"
+      "Real Estate",
+      "Utilities"
     ],
     "sensitive_sectors": [
       "Consumer Cyclical",
-      "Real Estate",
-      "Communication Services"
+      "Consumer Defensive",
+      "Financial Services"
     ]
   },
-  "genel_yorum": "Piyasa yüzeyde risk-on (VIX 19.3, tüm sektörler yeşil) ama altında enflasyon + FED sıkılaşma + enerji şoku üçlüsü kırılganlık yaratıyor. Enerji ve Tech liderliği paralel sürüyor — AI güç talebi köprü. Faiz hassas sektörler (Real Estate, Consumer Cyclical) kalıcı enflasyon senaryosunda baskı altında kalır.",
+  "genel_yorum": "Piyasa çelişkili sinyaller veriyor: tüketici güveni rekor dip (stagflasyon kokusu) ama VIX 18.7 ve Haziran faiz indirimi beklentisi risk-on modunu koruyor. Real Estate ve Utilities liderliği klasik rate-cut pozisyonlanması. Tüketici sektörlerinden uzak durulmalı; reel varlık ve faiz-duyarlı defansif büyüme (Utilities, Real Estate) öne çıkıyor.",
   "haberler": [
     {
-      "baslik": "Global Energy Shock Sends Stock Markets On Divergent Paths",
-      "kaynak": "seekingalpha.com",
-      "tarih": "2026-04-23 09:30"
-    },
-    {
-      "baslik": "The Fed Preview - Brace For Hikes, Inflation Is Likely Persistent",
-      "kaynak": "seekingalpha.com",
-      "tarih": "2026-04-23 09:15"
-    },
-    {
-      "baslik": "New Investors Have Been Taught To Buy The Dip",
-      "kaynak": "seekingalpha.com",
-      "tarih": "2026-04-23 09:01"
-    },
-    {
-      "baslik": "U.S. Jobless Claims Rose Last Week",
+      "baslik": "April's Consumer Sentiment Is the Lowest on Record",
       "kaynak": "wsj.com",
-      "tarih": "2026-04-23 08:52"
+      "tarih": "2026-04-24 10:26"
     },
     {
-      "baslik": "Why it's the luckiest U.S. stock market in history, according to one strategist",
+      "baslik": "Pirro drops probe into Fed's Powell, paving way for Warsh confirmation",
       "kaynak": "marketwatch.com",
-      "tarih": "2026-04-23 08:23"
+      "tarih": "2026-04-24 10:26"
+    },
+    {
+      "baslik": "Warsh, Oil, And The April FOMC: The Case For June Rate Cuts",
+      "kaynak": "seekingalpha.com",
+      "tarih": "2026-04-24 10:24"
+    },
+    {
+      "baslik": "The DOJ said it would end its criminal investigation of Federal Reserve Chair Jerome Powell, clearing the obstacle that has stalled Kevin Warsh's confirmation as his successor",
+      "kaynak": "wsj.com",
+      "tarih": "2026-04-24 10:24"
+    },
+    {
+      "baslik": "DOJ drops criminal probe of Fed Chair Powell",
+      "kaynak": "cnbc.com",
+      "tarih": "2026-04-24 10:22"
     }
   ]
 }
