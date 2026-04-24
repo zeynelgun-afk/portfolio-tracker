@@ -176,3 +176,6 @@ date,action,symbol,shares,price,total,reason
 2026-04-22,BUY,O,314,63.62,19976.68,"Dividend: Realty Income REIT, aylık temettü ~%5.7, 30yr art arda artış, diversified commercial"
 2026-04-23,BUY,NEM,133,109.57,14573.09,emtia_hammadde tema taraması — teknik:6/10 fundamental:7/10
 2026-04-23,BUY,GTY,446,33.56,14967.76,reit_temettü tema taraması — teknik:6/10 fundamental:6/10
+2026-04-24,SELL,VZ,107,47.22,5052.54,"K-05: VZ earnings 27 Nisan — T-2 zorunlu çıkış. Kâr: +%18.55. Mekanik kural, override yasak."
+2026-04-24,SELL,CPRX,289,27.68,7999.52,"K-11: CPRX hedef $28 vuruldu, %50 kâr alma. 52 haftalık zirve. Kalan: 289 adet tutulacak."
+2026-04-24,SELL,AEM,73,198.96,14524.08,"K-09+K-05 çift tetik: stop %4.5 uzakta + earnings 30 Nisan. Risk/ödül bozulmuş. Zarar: -%2.8."
