@@ -103,9 +103,9 @@ def send_k_alert(rule, symbol, message, severity="info", force=False):
 
     text = f"{icon} <b>{rule}</b> | {symbol}\n\n{message}"
     try:
-        from telegram_notify import send_message
-        send_message(text)
-        print(f"[TELEGRAM] {rule} {symbol} → gönderildi")
+        from telegram_notify import send_message, TELEGRAM_PRIVATE_ID
+        send_message(text, chat_id=TELEGRAM_PRIVATE_ID)
+        print(f"[TELEGRAM] {rule} {symbol} → DM gönderildi")
         return True
     except Exception as e:
         print(f"[TELEGRAM HATA] {rule} {symbol} → {e}", file=sys.stderr)

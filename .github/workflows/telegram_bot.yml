@@ -36,7 +36,7 @@ jobs:
         run: python scripts/telegram_bot.py
         env:
           TELEGRAM_TOKEN:        ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_PRIVATE_CHAT: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TELEGRAM_PRIVATE_CHAT: "1403072107"
           FMP_API_KEY:           ${{ secrets.FMP_API_KEY }}
           PYTHONUNBUFFERED: '1'
 

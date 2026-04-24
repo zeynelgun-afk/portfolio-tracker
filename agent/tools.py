@@ -35,7 +35,11 @@ except ImportError:
     FMP_KEY = os.environ.get("FMP_API_KEY", "")
     FMP_BASE = "https://financialmodelingprep.com/stable"
     BOT_TOKEN = os.environ.get("TELEGRAM_TOKEN", "")
-    PRIVATE_CHAT = os.environ.get("TELEGRAM_PRIVATE_CHAT", "")
+    PRIVATE_CHAT = (
+        os.environ.get("TELEGRAM_PRIVATE_CHAT", "")
+        or os.environ.get("TELEGRAM_PRIVATE_ID", "")
+        or "1403072107"
+    )
 
 REPO_ROOT = Path(__file__).parent.parent
 

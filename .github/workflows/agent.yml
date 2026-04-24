@@ -123,7 +123,7 @@ jobs:
           ANTHROPIC_API_KEY:     ${{ secrets.ANTHROPIC_API_KEY }}
           FMP_API_KEY:           ${{ secrets.FMP_API_KEY }}
           TELEGRAM_TOKEN:        ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_PRIVATE_CHAT: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TELEGRAM_PRIVATE_CHAT: "1403072107"
           RAPIDAPI_KEY:          ${{ secrets.RAPIDAPI_KEY }}
           VOYAGE_API_KEY:        ${{ secrets.VOYAGE_API_KEY }}
           AGENT_MODE:            ${{ steps.mode.outputs.mode }}
@@ -134,7 +134,7 @@ jobs:
         run: python3 scripts/macro_intelligence_notify.py
         env:
           TELEGRAM_BOT_TOKEN:  ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_PRIVATE_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TELEGRAM_PRIVATE_ID: "1403072107"
         continue-on-error: true
 
       - name: Kapanis ozeti
@@ -142,7 +142,7 @@ jobs:
         run: python scripts/heartbeat.py --mode ozet
         env:
           TELEGRAM_BOT_TOKEN:  ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_PRIVATE_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TELEGRAM_PRIVATE_ID: "1403072107"
 
       - name: Hata bildirimi
         if: failure()
@@ -155,7 +155,7 @@ jobs:
             --kaynak "github_actions" || true
         env:
           TELEGRAM_BOT_TOKEN:  ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_PRIVATE_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TELEGRAM_PRIVATE_ID: "1403072107"
 
       - name: Degisiklikleri kaydet
         run: |
