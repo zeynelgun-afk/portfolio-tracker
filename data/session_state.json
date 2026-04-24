@@ -16,104 +16,88 @@
   },
   "zorunlu_aksiyonlar": [],
   "claude_kararlar": {
-    "tarih": "2026-04-24T00:14:42.151096+03:00",
+    "tarih": "2026-04-25T01:08:25.399693+03:00",
     "kararlar": [
       {
         "tip": "ÇIK",
         "portfoy": "dividend",
-        "sembol": "VZ",
-        "pct": 100,
-        "neden": "K-05: earnings 27 Nis T-2, +18.6% kâr zorunlu korunacak",
-        "hedef_fiyat": 47.22,
-        "stop": 0.0,
-        "tutar": 0,
-        "aciliyet": "hemen",
-        "dondur_al": null,
-        "_decision_id": "6a00808a018d"
-      },
-      {
-        "tip": "ÇIK",
-        "portfoy": "balanced",
-        "sembol": "CPRX",
+        "sembol": "OKE",
         "pct": 50,
-        "neden": "K-11 kademeli kâr: hedef $28'e ulaştı, yarı pozisyon kilitle",
-        "hedef_fiyat": 27.68,
-        "stop": 0.0,
+        "neden": "K-05: earnings 2 gün sonra, +2.4% kâr küçük, yarı pozisyon koruma",
+        "hedef_fiyat": 93.0,
+        "stop": 78.6,
         "tutar": 0,
         "aciliyet": "hemen",
         "dondur_al": null,
-        "_decision_id": "38039302fa29"
+        "_decision_id": "f98f233ae4ba"
       },
       {
-        "tip": "ÇIK",
-        "portfoy": "balanced",
-        "sembol": "AEM",
-        "pct": 100,
-        "neden": "K-09 stop %4.5 + K-05 earnings 30 Nis çift tetik",
-        "hedef_fiyat": 198.96,
-        "stop": 0.0,
+        "tip": "STOP_GÜNCELLE",
+        "portfoy": "swing",
+        "sembol": "KLAC",
+        "pct": 0,
+        "neden": "K-07: +11% kârda, trailing stop $1727 → $1780 (hala %7.7 uzak)",
+        "hedef_fiyat": 2229.0,
+        "stop": 1780.0,
         "tutar": 0,
         "aciliyet": "hemen",
         "dondur_al": null,
-        "_decision_id": "1a98f7fe260c"
-      },
-      {
-        "tip": "İZLE",
-        "portfoy": "aggressive",
-        "sembol": "ANET",
-        "pct": 0,
-        "neden": "stop %4.7 — K-09 eşiğine yaklaşıyor, gün içi takip",
-        "hedef_fiyat": 165.0,
-        "stop": 164.74,
-        "tutar": 0,
-        "aciliyet": "bugün",
-        "dondur_al": null,
-        "_decision_id": "531e0cce2d86"
-      },
-      {
-        "tip": "İZLE",
-        "portfoy": "dividend",
-        "sembol": "O",
-        "pct": 0,
-        "neden": "stop %3.4 — K-09 erken çıkış eşiğinde",
-        "hedef_fiyat": 67.0,
-        "stop": 61.9,
-        "tutar": 0,
-        "aciliyet": "bugün",
-        "dondur_al": null,
-        "_decision_id": "84da07fbea51"
+        "_decision_id": "06b998338081"
       },
       {
         "tip": "İZLE",
         "portfoy": "dividend",
         "sembol": "ABBV",
         "pct": 0,
-        "neden": "FDA CRL + earnings 29 Nis, kapanış çıkışı adayı",
+        "neden": "FDA CRL + earnings 3 gün + stop %3.2 uzak — kırılımda K-06 tam çıkış",
         "hedef_fiyat": 224.0,
-        "stop": 192.54,
+        "stop": 192.35,
         "tutar": 0,
         "aciliyet": "bugün",
         "dondur_al": null,
-        "_decision_id": "608b75ec36d9"
+        "_decision_id": "30686393b213"
       },
       {
-        "tip": "STOP_GÜNCELLE",
+        "tip": "İZLE",
+        "portfoy": "dividend",
+        "sembol": "O",
+        "pct": 0,
+        "neden": "Stop %2.3 uzak, kırılım çok yakın — K-06 hazır",
+        "hedef_fiyat": 67.0,
+        "stop": 61.87,
+        "tutar": 0,
+        "aciliyet": "hemen",
+        "dondur_al": null,
+        "_decision_id": "fc81d9c63196"
+      },
+      {
+        "tip": "İZLE",
+        "portfoy": "swing",
+        "sembol": "RPRX",
+        "pct": 0,
+        "neden": "K-09: stop %4.8 uzak, erken çıkış sinyali takibi",
+        "hedef_fiyat": 53.0,
+        "stop": 46.89,
+        "tutar": 0,
+        "aciliyet": "bugün",
+        "dondur_al": null,
+        "_decision_id": "5643e7dcad8a"
+      },
+      {
+        "tip": "İZLE",
         "portfoy": "swing",
         "sembol": "GEV",
         "pct": 0,
-        "neden": "K-07 trailing: +%16 kâr, stop $1,052 → $1,080 çek",
+        "neden": "K-11: +14.2% — %15 1. kâr hedefi tetiğine yakın",
         "hedef_fiyat": 1270.0,
-        "stop": 1080.0,
+        "stop": 1052.81,
         "tutar": 0,
         "aciliyet": "bu_hafta",
         "dondur_al": null,
-        "_decision_id": "de10a6b72021"
+        "_decision_id": "ed349a189ece"
       }
     ],
-    "kaynak": "closing",
-    "executed": true,
-    "executed_at": "2026-04-24T18:11:44.387303+03:00",
-    "executed_count": 0
+    "kaynak": "closing"
   },
   "timestamp": "2026-04-24T17:49:11.447533+03:00"
 }

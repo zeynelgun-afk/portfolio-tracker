@@ -1216,6 +1216,11 @@
       "date": "2026-04-24",
       "source": "post_trade",
       "insight": "VZ: DERS: Düşük volatiliteli"
+    },
+    {
+      "date": "2026-04-25",
+      "source": "closing_analysis",
+      "insight": "---"
     }
   ]
 }
