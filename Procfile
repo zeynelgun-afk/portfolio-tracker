@@ -1,1 +1,1 @@
-worker: python scripts/telegram_bot.py
+worker: python -u scripts/telegram_bot.py
