@@ -1021,6 +1021,22 @@ def main():
     - RAILWAY=1 → Sürekli polling (7/24)
     - Aksi halde → GitHub Actions modu (tek çalışma)
     """
+    # ── Environment sağlık kontrolü (v6 ai_consultant için kritik) ──
+    env_status = {
+        "TELEGRAM_TOKEN": "SET" if os.environ.get("TELEGRAM_TOKEN") else "MISSING",
+        "TELEGRAM_PRIVATE_CHAT": "SET" if os.environ.get("TELEGRAM_PRIVATE_CHAT") else "MISSING",
+        "FMP_API_KEY": "SET" if os.environ.get("FMP_API_KEY") else "MISSING",
+        "ANTHROPIC_API_KEY": "SET" if os.environ.get("ANTHROPIC_API_KEY") else "MISSING",
+        "CLAUDE_MODEL": os.environ.get("CLAUDE_MODEL", "claude-opus-4-7 (default)"),
+    }
+    print(f"[Bot] === Environment kontrolü ===")
+    for k, v in env_status.items():
+        print(f"[Bot]   {k}: {v}")
+    print(f"[Bot] ============================")
+
+    if env_status["ANTHROPIC_API_KEY"] == "MISSING":
+        print(f"[Bot] ⚠️  ANTHROPIC_API_KEY yok — /sor, /analiz, v6 AI consultation çalışmayacak")
+
     railway_mode = os.environ.get("RAILWAY") or os.environ.get("RAILWAY_ENVIRONMENT")
 
     if railway_mode:
