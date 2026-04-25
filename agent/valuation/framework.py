@@ -1,14 +1,26 @@
 """
-Finzora Valuation Framework v5 — Aggregator
-=============================================
+Finzora Valuation Framework v6 — Aggregator + AI Consultation
+================================================================
 Pipeline:
   1. classify ticker → archetype
   2. fetch data once
-  3. run each applicable method
-  4. outlier detection (3× MAD)
-  5. weighted aggregation
-  6. classification-fit-adjusted confidence
-  7. structured output (JSON schema)
+  3. detect cycle phase (siklik sektörler için)
+  4. run each applicable method
+  5. cycle-phase weight adjustment (mid-cycle vs growth metodları)
+  6. outlier detection (3× MAD)
+  7. weighted aggregation
+  8. konsensüs sapma cezası → confidence düşürme + manuel review
+  9. AI consultation tetikleyici kontrolü → Claude'a danış
+ 10. final fair value blend (framework × (1-w) + claude × w)
+ 11. senaryolu çıktı (bear/base/bull)
+ 12. structured output (JSON schema v6)
+
+v6 değişiklikler (2026-04-25):
+  - cycle_detector.py entegrasyonu
+  - ai_consultant.py entegrasyonu
+  - konsensüs sapması artık karar etkiliyor (sadece red flag değil)
+  - bear/base/bull senaryolar
+  - MANUEL_REVIEW karar etiketi
 """
 
 from __future__ import annotations
@@ -23,6 +35,23 @@ from valuation.archetypes import get_archetype, ARCHETYPES
 from valuation.classifier import classify
 from valuation.methods import fetch_all_data
 from valuation.methods.registry import get_method
+
+# v6: cycle phase + AI consultation (opsiyonel — modül yoksa sessizce geç)
+try:
+    from valuation.cycle_detector import detect_cycle_phase, adjust_method_weights
+    _CYCLE_AVAILABLE = True
+except ImportError:
+    detect_cycle_phase = None
+    adjust_method_weights = None
+    _CYCLE_AVAILABLE = False
+
+try:
+    from valuation.ai_consultant import consult_claude, should_consult
+    _AI_CONSULT_AVAILABLE = True
+except ImportError:
+    consult_claude = None
+    should_consult = None
+    _AI_CONSULT_AVAILABLE = False
 
 
 def _outlier_filter(method_values: list, threshold_factor: float = 3.0) -> tuple[list, list]:
@@ -156,7 +185,7 @@ def clear_cache() -> None:
 
 
 def valuate(ticker: str, verbose: bool = False, apply_regime: bool = True,
-            use_cache: bool = True) -> dict:
+            use_cache: bool = True, consult_ai: str = "auto") -> dict:
     """
     Ana giriş noktası — ticker → full valuation report.
 
@@ -166,15 +195,24 @@ def valuate(ticker: str, verbose: bool = False, apply_regime: bool = True,
         apply_regime: True ise fair value SPY SMA21 rejimine göre çarpanla düzeltilir
                       (BOGA: ×1.12, AYI: ×0.87)
         use_cache: True ise 5 dakikalık in-memory cache kullanılır (varsayılan)
+        consult_ai: "auto" (default) — büyük sapma/düşük güven/yüksek dispersion'da
+                                       otomatik Claude'a danış
+                    "always" — her değerlemede Claude'a danış (yavaş, ANTHROPIC_KEY harcar)
+                    "never"  — Claude consultation kapalı
     """
     ticker = ticker.upper().strip()  # tutarlı cache + FMP case-insensitive
+
+    # Cache key'e consult_ai dahil — farklı modlar farklı cache
+    cache_extra_key = f"{apply_regime}:{consult_ai}"
 
     # ── Cache hit? ────────────────────────────────────────────────
     if use_cache:
         cached = _cache_get(ticker, apply_regime)
-        if cached is not None:
+        # consult_ai "auto" ise cache normal çalışır
+        # "always" → cache atla (her seferinde fresh AI consult)
+        if cached is not None and consult_ai != "always":
             if verbose:
-                print(f"[Valuation v5] {ticker} → cache hit ({int((__import__('time').time() - _VALUATION_CACHE[_cache_key(ticker, apply_regime)]['t']))}s önce)")
+                print(f"[Valuation v6] {ticker} → cache hit")
             return cached
 
     # 1. Classify
@@ -195,6 +233,22 @@ def valuate(ticker: str, verbose: bool = False, apply_regime: bool = True,
             "error": "price_not_available",
             "archetype": archetype_key,
         }
+
+    # 2b. v6: Cycle phase detection (siklik sektörler için)
+    cycle_info = None
+    if _CYCLE_AVAILABLE and detect_cycle_phase is not None:
+        try:
+            cycle_info = detect_cycle_phase(data, archetype=archetype_key)
+            if verbose:
+                print(f"[Valuation v6] cycle phase: {cycle_info['phase']} "
+                      f"(confidence {cycle_info['confidence']:.0%})")
+                if cycle_info.get("structural_regime_suspect"):
+                    print(f"[Valuation v6] ⚠ Yapısal rejim şüphesi: "
+                          f"{cycle_info.get('structural_regime_type')}")
+        except Exception as e:
+            if verbose:
+                print(f"[Valuation v6] cycle detection atlandı: {e}")
+            cycle_info = None
 
     # 3. Run each method
     methods_used = []
@@ -266,6 +320,19 @@ def valuate(ticker: str, verbose: bool = False, apply_regime: bool = True,
 
     # 4. Outlier detection
     kept, outliers = _outlier_filter(methods_used, threshold_factor=3.0)
+
+    # 4b. v6: Cycle-based metod ağırlık ayarlaması
+    cycle_adjustment_log = None
+    if cycle_info and _CYCLE_AVAILABLE and adjust_method_weights is not None:
+        try:
+            kept, cycle_adjustment_log = adjust_method_weights(kept, cycle_info)
+            if verbose and cycle_adjustment_log.get("applied"):
+                print(f"[Valuation v6] Metod ağırlık ayarlaması uygulandı "
+                      f"(phase={cycle_adjustment_log['phase']}, "
+                      f"{len(cycle_adjustment_log['changes'])} metod etkilendi)")
+        except Exception as e:
+            if verbose:
+                print(f"[Valuation v6] weight adjustment atlandı: {e}")
 
     # Ağırlıkları yeniden normalize et (outlier'lar çıkarıldıktan sonra)
     kept_weight_sum = sum(m["weight"] for m in kept)
@@ -343,20 +410,63 @@ def valuate(ticker: str, verbose: bool = False, apply_regime: bool = True,
     if data.get("sbc_intensity", 0) > 0.10:
         red_flags.append(f"high_sbc_{data['sbc_intensity']:.0%}_rev")
 
-    # Analyst alignment — hem red flag hem confidence bonus
+    # Analyst alignment — v6: artık sadece red flag değil, KONFIDANS ETKİLİYOR
+    manuel_review_required = False
+    consensus_penalty = 0
     if framework_vs_analyst is not None:
-        if abs(framework_vs_analyst) < 15:
+        gap_abs = abs(framework_vs_analyst)
+        if gap_abs < 15:
             conf_factors.append(f"analyst_consensus_aligned (gap={framework_vs_analyst:+.0f}%)")
-            # Eğer analystlerle aynı yönde ve yakınsak confidence boost
             confidence = min(100, confidence + 5)
-        elif framework_vs_analyst > 30:
-            red_flags.append(f"framework_bullish_vs_analysts ({framework_vs_analyst:+.0f}% above consensus ${analyst_target:.0f})")
-        elif framework_vs_analyst < -30:
-            red_flags.append(f"framework_bearish_vs_analysts ({framework_vs_analyst:+.0f}% below consensus ${analyst_target:.0f})")
+        elif gap_abs < 30:
+            # Hafif sapma — sadece flag, ceza yok
+            if framework_vs_analyst > 0:
+                red_flags.append(f"framework_bullish_vs_analysts ({framework_vs_analyst:+.0f}% above consensus ${analyst_target:.0f})")
+            else:
+                red_flags.append(f"framework_bearish_vs_analysts ({framework_vs_analyst:+.0f}% below consensus ${analyst_target:.0f})")
+        elif gap_abs < 50:
+            # Orta sapma — confidence -10
+            consensus_penalty = 10
+            confidence = max(0, confidence - 10)
+            direction = "bullish" if framework_vs_analyst > 0 else "bearish"
+            red_flags.append(f"konsensüs_orta_sapma_{direction} ({framework_vs_analyst:+.0f}% vs ${analyst_target:.0f}, conf -10)")
+        elif gap_abs < 70:
+            # Büyük sapma — confidence -25, manuel review uyarısı
+            consensus_penalty = 25
+            confidence = max(0, confidence - 25)
+            manuel_review_required = True
+            direction = "bullish" if framework_vs_analyst > 0 else "bearish"
+            red_flags.append(f"konsensüs_büyük_sapma_{direction} ({framework_vs_analyst:+.0f}% vs ${analyst_target:.0f}, conf -25)")
+        else:
+            # Aşırı sapma — confidence -40, manuel review zorunlu
+            consensus_penalty = 40
+            confidence = max(0, confidence - 40)
+            manuel_review_required = True
+            direction = "bullish" if framework_vs_analyst > 0 else "bearish"
+            red_flags.append(f"konsensüs_aşırı_sapma_{direction} ({framework_vs_analyst:+.0f}% vs ${analyst_target:.0f}, conf -40)")
 
-    # 7. Output
+    # v6: Cycle phase penalty/bonus
+    if cycle_info:
+        if cycle_info.get("structural_regime_suspect"):
+            red_flags.append(f"yapısal_rejim_şüphesi ({cycle_info.get('structural_regime_type')})")
+            # Yapısal rejim şüphesi → güven -10 (mid-cycle metodları belirsiz)
+            confidence = max(0, confidence - 10)
+        if cycle_info.get("phase") == "reset":
+            red_flags.append("cycle_reset_yapısal_değişim")
+        elif cycle_info.get("phase") == "peak":
+            conf_factors.append(f"cycle_peak (mean reversion bekleniyor)")
+
+    # 7. Karar etiketi — v6: manuel review öncelikli
     karar_etiket = "YETERSİZ VERİ"
-    if confidence >= 70:
+    if manuel_review_required:
+        # Konsensüsten çok büyük sapma → otomatik karar verilemez
+        if upside_pct > 15:
+            karar_etiket = "MANUEL_REVIEW (framework UCUZ, konsensüs ≠)"
+        elif upside_pct < -15:
+            karar_etiket = "MANUEL_REVIEW (framework PAHALI, konsensüs ≠)"
+        else:
+            karar_etiket = "MANUEL_REVIEW"
+    elif confidence >= 70:
         if upside_pct > 15:
             karar_etiket = "UCUZ"
         elif upside_pct > 5:
@@ -379,7 +489,7 @@ def valuate(ticker: str, verbose: bool = False, apply_regime: bool = True,
 
     output = {
         "ticker": ticker,
-        "framework_version": "v5.0",
+        "framework_version": "v6.0",
         "timestamp": __import__("datetime").datetime.now().isoformat(),
 
         "classification": {
@@ -403,6 +513,8 @@ def valuate(ticker: str, verbose: bool = False, apply_regime: bool = True,
             "score":     confidence,
             "factors":   conf_factors,
             "red_flags": red_flags,
+            "consensus_penalty": consensus_penalty,
+            "manuel_review_required": manuel_review_required,
         },
 
         "methods_used": kept,
@@ -413,12 +525,19 @@ def valuate(ticker: str, verbose: bool = False, apply_regime: bool = True,
         "market_regime": regime_info,
         "analyst_consensus": analyst_info,
 
+        # v6: cycle phase bilgisi
+        "cycle_phase": cycle_info,
+        "cycle_weight_adjustment": cycle_adjustment_log,
+
         "data_snapshot": {
             "sector":       data.get("sector"),
             "industry":     data.get("industry"),
             "mcap":         data.get("mcap"),
             "pe_ttm":       data.get("pe_ttm"),
+            "fwd_pe":       data.get("fwd_pe_ny1"),
+            "peg_fmp":      data.get("peg_fmp"),
             "rev_growth":   data.get("rev_growth_ttm"),
+            "eps_growth":   data.get("eps_growth_ttm"),
             "op_margin":    data.get("op_margin"),
             "fcf_margin":   data.get("fcf_margin"),
             "sbc_intensity": data.get("sbc_intensity"),
@@ -427,6 +546,100 @@ def valuate(ticker: str, verbose: bool = False, apply_regime: bool = True,
             "analyst_count": data.get("analyst_count"),
         },
     }
+
+    # v6: AI consultation tetikleyici kontrolü
+    ai_result = None
+    consult_decision = {"consulted": False, "reason": "", "severity": 0.0}
+
+    if consult_ai != "never" and _AI_CONSULT_AVAILABLE and consult_claude is not None:
+        if consult_ai == "always":
+            should = True
+            severity = 0.50
+            consult_reason = "force_always"
+        else:  # "auto"
+            should, severity, consult_reason = should_consult(output)
+
+        consult_decision = {
+            "consulted": False,
+            "should_consult": should,
+            "severity": round(severity, 2),
+            "reason": consult_reason,
+        }
+
+        if should:
+            if verbose:
+                print(f"[Valuation v6] AI consultation tetiklendi: "
+                      f"severity={severity:.2f}, reason={consult_reason}")
+            try:
+                ai_result = consult_claude(output, severity=severity, verbose=verbose)
+                if ai_result:
+                    consult_decision["consulted"] = True
+                    consult_decision["model"] = ai_result.get("model")
+                    consult_decision["duration_ms"] = ai_result.get("duration_ms")
+
+                    # Final fair value: framework × (1-w) + claude × w
+                    blended = ai_result.get("blended_fair_value")
+                    blend_w = ai_result.get("blend_weight", 0.30)
+
+                    if blended:
+                        # Karar etiketini Claude tavsiyesiyle revize et
+                        claude_tavsiye = ai_result.get("tavsiye_etiket", "").upper()
+                        new_upside = ((blended / price) - 1.0) * 100
+
+                        # Claude MANUEL_REVIEW dediyse veya framework manuel review'daysa → manuel
+                        if claude_tavsiye == "MANUEL_REVIEW" or manuel_review_required:
+                            new_karar = f"MANUEL_REVIEW (framework + AI blend ${blended:.2f})"
+                        elif new_upside > 15:
+                            new_karar = "UCUZ" if claude_tavsiye in ("UCUZ", "ADIL", "") else f"UCUZ (AI: {claude_tavsiye})"
+                        elif new_upside > 5:
+                            new_karar = "ADİL-UCUZ"
+                        elif new_upside > -5:
+                            new_karar = "ADİL"
+                        elif new_upside > -15:
+                            new_karar = "ADİL-PAHALI"
+                        else:
+                            new_karar = "PAHALI" if claude_tavsiye in ("PAHALI", "ADIL", "") else f"PAHALI (AI: {claude_tavsiye})"
+
+                        output["fair_value_v6_blended"] = {
+                            "point": round(blended, 2),
+                            "framework_fv": round(fair_value, 2),
+                            "claude_fv": round(ai_result.get("claude_fair_value", 0), 2),
+                            "blend_weight": blend_w,
+                            "upside_pct_blended": round(new_upside, 1),
+                            "karar_blended": new_karar,
+                        }
+
+                    output["ai_consultation"] = {
+                        "scenarios": ai_result.get("scenarios"),
+                        "rejim_degisikligi": ai_result.get("rejim_degisikligi"),
+                        "cycle_phase": ai_result.get("cycle_phase"),
+                        "framework_kritik": ai_result.get("framework_kritik"),
+                        "konsensus_aciklama": ai_result.get("konsensus_aciklama"),
+                        "tavsiye": ai_result.get("tavsiye"),
+                        "tavsiye_etiket": ai_result.get("tavsiye_etiket"),
+                        "claude_confidence": ai_result.get("confidence"),
+                        "model": ai_result.get("model"),
+                    }
+            except Exception as e:
+                if verbose:
+                    print(f"[Valuation v6] AI consultation hatası: {e}")
+                consult_decision["error"] = str(e)
+
+    output["consultation"] = consult_decision
+
+    # v6: Senaryolu çıktı (bear/base/bull) — Claude varsa onunkini, yoksa framework'tan üret
+    if ai_result and ai_result.get("scenarios"):
+        output["scenarios"] = ai_result["scenarios"]
+    else:
+        # Framework-only senaryolar: range_low (bear), point (base), analyst_high veya range_high × 1.2 (bull)
+        bull_price = analyst_info.get("high") if analyst_info else (range_high * 1.20)
+        if not bull_price or bull_price < fair_value:
+            bull_price = fair_value * 1.30
+        output["scenarios"] = {
+            "bear": {"price": round(range_low, 2), "thesis": "Mid-cycle mean reversion, multiple sıkışması"},
+            "base": {"price": round(fair_value, 2), "thesis": "Framework ağırlıklı ortalama"},
+            "bull": {"price": round(bull_price, 2), "thesis": "Analist high target / yapısal rejim devam"},
+        }
 
     # Prediction log — her valuate() çağrısı kayda geçer (backtest altyapısı)
     try:
@@ -459,8 +672,11 @@ def format_report(result: dict, style: str = "terminal") -> str:
     if style == "telegram":
         # HTML format
         ico = "🟢" if fv["upside_pct"] > 5 else "🔴" if fv["upside_pct"] < -5 else "🟡"
+        # v6: manuel review için özel ikon
+        if "MANUEL_REVIEW" in fv.get("karar", ""):
+            ico = "🟠"
         out = [
-            f"<b>{t} — v5 Adil Değer</b>",
+            f"<b>{t} — v6 Adil Değer</b>",
             f"<i>{cls['archetype_label']} (güven %{cls['confidence']*100:.0f})</i>",
             "",
             f"{ico} <b>${fv['current_price']:.2f}</b> → hedef <b>${fv['point']:.2f}</b> ({fv['upside_pct']:+.1f}%)",
@@ -468,9 +684,28 @@ def format_report(result: dict, style: str = "terminal") -> str:
             f"Karar: <b>{fv['karar']}</b>",
             f"Güven skoru: <b>{conf['score']}/100</b>",
         ]
+
+        # v6: Blended fair value (AI consultation sonrası)
+        blended = result.get("fair_value_v6_blended")
+        if blended:
+            out.append("")
+            out.append(f"🤖 <b>AI Blend:</b> ${blended['point']:.2f} "
+                       f"(framework ${blended['framework_fv']:.2f} × {1-blended['blend_weight']:.0%} + "
+                       f"Claude ${blended['claude_fv']:.2f} × {blended['blend_weight']:.0%})")
+            out.append(f"Blend upside: {blended['upside_pct_blended']:+.1f}% → <b>{blended['karar_blended']}</b>")
+
         regime = result.get("market_regime")
         if regime:
             out.append(f"{regime['detay']} (×{regime['multiplier']:.2f})")
+
+        # v6: Cycle phase
+        cycle = result.get("cycle_phase")
+        if cycle and cycle.get("is_cyclical"):
+            phase_ico = {"bottom": "⬇️", "early": "↗️", "mid": "▶️",
+                         "late": "⚠️", "peak": "🔺", "reset": "🔄"}.get(cycle["phase"], "")
+            out.append(f"{phase_ico} Cycle: <b>{cycle['phase']}</b> (güven %{cycle['confidence']*100:.0f})")
+            if cycle.get("structural_regime_suspect"):
+                out.append(f"⚠ Yapısal rejim şüphesi: {cycle.get('structural_regime_type')}")
 
         ac = result.get("analyst_consensus")
         if ac:
@@ -478,11 +713,36 @@ def format_report(result: dict, style: str = "terminal") -> str:
             gap_ico = "≈" if abs(gap) < 10 else ("↑" if gap > 0 else "↓")
             out.append(f"📊 Analist hedef: ${ac['consensus']:.0f} (range ${ac['low']:.0f}-${ac['high']:.0f}), framework vs {gap_ico}{gap:+.0f}%")
 
+        # v6: Senaryolar
+        scen = result.get("scenarios")
+        if scen:
+            out.append("")
+            out.append(f"<b>Senaryolar:</b>")
+            out.append(f"  🐻 Bear: ${scen['bear']['price']:.2f} — {scen['bear']['thesis'][:60]}")
+            out.append(f"  ➖ Base: ${scen['base']['price']:.2f} — {scen['base']['thesis'][:60]}")
+            out.append(f"  🐂 Bull: ${scen['bull']['price']:.2f} — {scen['bull']['thesis'][:60]}")
+
+        # v6: AI consultation özeti
+        ai = result.get("ai_consultation")
+        if ai:
+            out.append("")
+            out.append(f"<b>🤖 Claude görüşü ({ai.get('model', '?')}):</b>")
+            if ai.get("rejim_degisikligi", {}).get("var_mi"):
+                out.append(f"  Rejim değişimi: <b>{ai['rejim_degisikligi'].get('tip')}</b>")
+                out.append(f"  → {ai['rejim_degisikligi'].get('aciklama', '')[:120]}")
+            if ai.get("framework_kritik"):
+                out.append(f"  Framework kritiği: {ai['framework_kritik'][:150]}")
+            if ai.get("tavsiye"):
+                out.append(f"  Tavsiye: {ai['tavsiye'][:150]}")
+
         out.append("")
         out.append(f"<b>Kullanılan metodlar:</b>")
         for m in result["methods_used"]:
             ic = "⭐" if m["tier"] == "primary" else "◽"
-            out.append(f"  {ic} {m['name']:28} ${m['fair_value']:.2f}  (w={m['weight']:.0%})")
+            w_str = f"w={m['weight']:.0%}"
+            if m.get("original_weight") and abs(m["original_weight"] - m["weight"]) > 0.001:
+                w_str = f"w={m['weight']:.0%} (was {m['original_weight']:.0%})"
+            out.append(f"  {ic} {m['name']:28} ${m['fair_value']:.2f}  ({w_str})")
 
         if result.get("methods_outliers"):
             out.append("")
@@ -504,7 +764,7 @@ def format_report(result: dict, style: str = "terminal") -> str:
     # Terminal format
     out = [
         "=" * 62,
-        f"  ADİL DEĞER v5 — {t}",
+        f"  ADİL DEĞER v6 — {t}",
         f"  {cls['archetype_label']}",
         f"  Archetype confidence: %{cls['confidence']*100:.0f}",
         "=" * 62,
@@ -519,16 +779,71 @@ def format_report(result: dict, style: str = "terminal") -> str:
         "",
     ]
 
+    # v6: blended fair value
+    blended = result.get("fair_value_v6_blended")
+    if blended:
+        out.append(f"  🤖 AI BLEND:    ${blended['point']:.2f} ({blended['upside_pct_blended']:+.1f}%)")
+        out.append(f"     framework ${blended['framework_fv']:.2f} × {1-blended['blend_weight']:.0%} + "
+                   f"Claude ${blended['claude_fv']:.2f} × {blended['blend_weight']:.0%}")
+        out.append(f"     Blend kararı: {blended['karar_blended']}")
+        out.append("")
+
+    # v6: cycle phase
+    cycle = result.get("cycle_phase")
+    if cycle and cycle.get("is_cyclical"):
+        out.append(f"  🔄 Cycle phase: {cycle['phase']} (güven {cycle['confidence']:.0%})")
+        if cycle.get("structural_regime_suspect"):
+            out.append(f"     ⚠ Yapısal rejim şüphesi: {cycle.get('structural_regime_type')}")
+        adj = result.get("cycle_weight_adjustment")
+        if adj and adj.get("applied"):
+            out.append(f"     Metod ağırlık ayarlaması: {len(adj['changes'])} metod etkilendi")
+        out.append("")
+
     ac = result.get("analyst_consensus")
     if ac:
         gap = ac["framework_gap_pct"]
         out.append(f"  📊 Analist konsensüsü: ${ac['consensus']:.2f} (${ac['low']:.0f}–${ac['high']:.0f}), framework vs {gap:+.1f}%")
+        if conf.get("consensus_penalty"):
+            out.append(f"     ⚠ Konsensüs sapma cezası: -{conf['consensus_penalty']} confidence")
         out.append("")
+
+    # v6: senaryolar
+    scen = result.get("scenarios")
+    if scen:
+        out.append(f"  Senaryolar:")
+        out.append(f"    🐻 Bear: ${scen['bear']['price']:.2f} — {scen['bear']['thesis']}")
+        out.append(f"    ➖ Base: ${scen['base']['price']:.2f} — {scen['base']['thesis']}")
+        out.append(f"    🐂 Bull: ${scen['bull']['price']:.2f} — {scen['bull']['thesis']}")
+        out.append("")
+
+    # v6: AI consultation
+    ai = result.get("ai_consultation")
+    if ai:
+        out.append(f"  🤖 Claude görüşü ({ai.get('model', '?')}):")
+        if ai.get("rejim_degisikligi", {}).get("var_mi"):
+            out.append(f"     Rejim değişimi: {ai['rejim_degisikligi'].get('tip')}")
+            out.append(f"     → {ai['rejim_degisikligi'].get('aciklama', '')}")
+        if ai.get("framework_kritik"):
+            out.append(f"     Framework kritiği: {ai['framework_kritik']}")
+        if ai.get("tavsiye"):
+            out.append(f"     Tavsiye: {ai['tavsiye']}")
+        out.append("")
+    else:
+        consult = result.get("consultation", {})
+        if consult.get("should_consult") and not consult.get("consulted"):
+            out.append(f"  🤖 AI consultation tetiklenmesi gerekti ama yapılmadı: "
+                       f"{consult.get('reason', '?')}")
+            if consult.get("error"):
+                out.append(f"     Hata: {consult['error']}")
+            out.append("")
 
     out.append("  Kullanılan Metotlar (ağırlıklı):")
     for m in result["methods_used"]:
         star = "⭐" if m["tier"] == "primary" else " "
-        out.append(f"    {star} {m['name']:28} ${m['fair_value']:8.2f}  w={m['weight']:.0%}  — {m['notes'][:40]}")
+        w_disp = f"w={m['weight']:.0%}"
+        if m.get("original_weight") and abs(m["original_weight"] - m["weight"]) > 0.001:
+            w_disp = f"w={m['weight']:.0%}(orig {m['original_weight']:.0%})"
+        out.append(f"    {star} {m['name']:30} ${m['fair_value']:8.2f}  {w_disp}  — {m['notes'][:40]}")
 
     if result.get("methods_outliers"):
         out.append("")
