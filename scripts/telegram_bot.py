@@ -919,6 +919,40 @@ def isle_mesaj(msg: dict):
             tg_send(chat_id, format_fiyat(parts[1].upper()), reply_to=msg_id)
             return
 
+    # ── /env (sistem env teşhis - debug) ──────────────────────────
+    if text_lower in ("/env", "/durum", "/health"):
+        import sys as _sys
+        env_check = []
+        env_check.append("<b>🔧 Sistem Env Durumu</b>")
+        env_check.append("")
+        for var in ["TELEGRAM_TOKEN", "TELEGRAM_PRIVATE_CHAT", "FMP_API_KEY",
+                    "ANTHROPIC_API_KEY", "CLAUDE_MODEL", "RAILWAY",
+                    "RAILWAY_ENVIRONMENT", "RAILWAY_PROJECT_NAME",
+                    "RAILWAY_SERVICE_NAME"]:
+            v = os.environ.get(var, "")
+            if not v:
+                status = "❌ MISSING"
+            elif var in ("ANTHROPIC_API_KEY", "FMP_API_KEY", "TELEGRAM_TOKEN"):
+                # Maskeli göster (güvenlik)
+                status = f"✅ SET ({v[:8]}...{v[-4:]}, len={len(v)})"
+            else:
+                status = f"✅ SET ({v[:50]})"
+            env_check.append(f"<code>{var}</code>: {status}")
+        env_check.append("")
+        env_check.append(f"<b>Python:</b> {_sys.version.split()[0]}")
+        env_check.append(f"<b>CWD:</b> <code>{os.getcwd()}</code>")
+        env_check.append(f"<b>Bot zamanı:</b> {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+
+        # anthropic paketi yüklü mü
+        try:
+            import anthropic as _an
+            env_check.append(f"<b>anthropic pkg:</b> ✅ v{_an.__version__}")
+        except ImportError:
+            env_check.append(f"<b>anthropic pkg:</b> ❌ KURULU DEĞİL")
+
+        tg_send(chat_id, "\n".join(env_check), reply_to=msg_id)
+        return
+
     # ── /sor <soru> (Claude serbest) ──────────────────────────────
     if text_lower.startswith("/sor ") or text_lower.startswith("/ask "):
         soru = text[5:].strip()
