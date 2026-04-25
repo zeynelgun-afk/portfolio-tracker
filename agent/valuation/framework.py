@@ -459,13 +459,7 @@ def valuate(ticker: str, verbose: bool = False, apply_regime: bool = True,
     # 7. Karar etiketi — v6: manuel review öncelikli
     karar_etiket = "YETERSİZ VERİ"
     if manuel_review_required:
-        # Konsensüsten çok büyük sapma → otomatik karar verilemez
-        if upside_pct > 15:
-            karar_etiket = "MANUEL_REVIEW (framework UCUZ, konsensüs ≠)"
-        elif upside_pct < -15:
-            karar_etiket = "MANUEL_REVIEW (framework PAHALI, konsensüs ≠)"
-        else:
-            karar_etiket = "MANUEL_REVIEW"
+        karar_etiket = "MANUEL_REVIEW"
     elif confidence >= 70:
         if upside_pct > 15:
             karar_etiket = "UCUZ"
@@ -572,7 +566,16 @@ def valuate(ticker: str, verbose: bool = False, apply_regime: bool = True,
                       f"severity={severity:.2f}, reason={consult_reason}")
             try:
                 ai_result = consult_claude(output, severity=severity, verbose=verbose)
-                if ai_result:
+                # v6 fix: consult_claude artık error dict de döndürebilir
+                if ai_result and "_error" in ai_result:
+                    consult_decision["consulted"] = False
+                    consult_decision["error"] = ai_result["_error"]
+                    if "model_attempted" in ai_result:
+                        consult_decision["model_attempted"] = ai_result["model_attempted"]
+                    if "raw_response_preview" in ai_result:
+                        consult_decision["raw_preview"] = ai_result["raw_response_preview"][:200]
+                    ai_result = None  # Blend yapma
+                elif ai_result:
                     consult_decision["consulted"] = True
                     consult_decision["model"] = ai_result.get("model")
                     consult_decision["duration_ms"] = ai_result.get("duration_ms")
@@ -588,7 +591,7 @@ def valuate(ticker: str, verbose: bool = False, apply_regime: bool = True,
 
                         # Claude MANUEL_REVIEW dediyse veya framework manuel review'daysa → manuel
                         if claude_tavsiye == "MANUEL_REVIEW" or manuel_review_required:
-                            new_karar = f"MANUEL_REVIEW (framework + AI blend ${blended:.2f})"
+                            new_karar = "MANUEL_REVIEW"
                         elif new_upside > 15:
                             new_karar = "UCUZ" if claude_tavsiye in ("UCUZ", "ADIL", "") else f"UCUZ (AI: {claude_tavsiye})"
                         elif new_upside > 5:
@@ -670,6 +673,83 @@ def format_report(result: dict, style: str = "terminal") -> str:
     conf = result["confidence"]
 
     if style == "telegram":
+        # ─── KISA versiyon (default) — başlık + 1 cümle sebep + 1 satır senaryo ───
+        blended = result.get("fair_value_v6_blended")
+        if blended:
+            target = blended["point"]
+            upside = blended["upside_pct_blended"]
+            karar = blended["karar_blended"]
+        else:
+            target = fv["point"]
+            upside = fv["upside_pct"]
+            karar = fv["karar"]
+
+        # İkon: turuncu = manuel review
+        if "MANUEL_REVIEW" in karar:
+            ico = "🟠"
+        elif upside > 5:
+            ico = "🟢"
+        elif upside < -5:
+            ico = "🔴"
+        else:
+            ico = "🟡"
+
+        # 1 cümle sebep
+        sebep = ""
+        ai = result.get("ai_consultation") or {}
+        if blended and ai:
+            # AI varsa: framework vs Claude özet
+            fw_fv = blended["framework_fv"]
+            cl_fv = blended["claude_fv"]
+            kritik = (ai.get("framework_kritik") or "").strip()
+            if kritik:
+                # Kritik cümlesini 100 karakterle kes
+                if len(kritik) > 100:
+                    kritik = kritik[:97].rstrip() + "..."
+                sebep = f"Framework ${fw_fv:.0f} (mid-cycle) vs Claude ${cl_fv:.0f}: {kritik}"
+            else:
+                rejim = ai.get("rejim_degisikligi", {}).get("tip") or "?"
+                sebep = f"Framework ${fw_fv:.0f} vs Claude ${cl_fv:.0f} (rejim: {rejim})"
+        else:
+            # AI yoksa: en kritik flag veya cycle
+            flags = conf.get("red_flags", [])
+            cycle = result.get("cycle_phase") or {}
+            if cycle.get("structural_regime_suspect"):
+                sebep = f"Yapısal rejim şüphesi: {cycle.get('structural_regime_type')}, framework lowball edebilir"
+            elif flags:
+                sebep = flags[0]
+            else:
+                sebep = f"{cls['archetype_label']}, cycle {cycle.get('phase', 'normal')}"
+
+        out = [
+            f"{ico} <b>{t}</b> ${fv['current_price']:.2f} → <b>${target:.0f}</b> ({upside:+.1f}%) <b>{karar}</b>",
+            "",
+            sebep,
+        ]
+
+        # Senaryolar tek satır (sadece anlamlı farklılarsa)
+        scen = result.get("scenarios")
+        if scen:
+            out.append(f"Bear ${scen['bear']['price']:.0f} · Base ${scen['base']['price']:.0f} · Bull ${scen['bull']['price']:.0f}")
+
+        # Footer mini bilgi
+        cycle = result.get("cycle_phase")
+        ac = result.get("analyst_consensus")
+        footer_parts = []
+        if cycle and cycle.get("phase") and cycle["phase"] != "n/a":
+            footer_parts.append(f"cycle {cycle['phase']}")
+        if ac:
+            footer_parts.append(f"konsensüs ${ac['consensus']:.0f}")
+        footer_parts.append(f"güven {conf['score']}")
+        out.append("· ".join(footer_parts))
+
+        out.append("")
+        out.append(f"<i>Detay için: /detay {t}</i>")
+
+        return "\n".join(out)
+
+    if style == "telegram_full":
+        # ─── UZUN versiyon — eski v6 detaylı çıktı, /detay için ───
         # HTML format
         ico = "🟢" if fv["upside_pct"] > 5 else "🔴" if fv["upside_pct"] < -5 else "🟡"
         # v6: manuel review için özel ikon
@@ -734,6 +814,22 @@ def format_report(result: dict, style: str = "terminal") -> str:
                 out.append(f"  Framework kritiği: {ai['framework_kritik'][:150]}")
             if ai.get("tavsiye"):
                 out.append(f"  Tavsiye: {ai['tavsiye'][:150]}")
+        else:
+            # v6: AI consultation yapılmadıysa nedenini göster (debug için kritik)
+            consult = result.get("consultation", {})
+            if consult.get("should_consult"):
+                out.append("")
+                if consult.get("error"):
+                    out.append(f"<b>⚠ AI consultation BAŞARISIZ:</b>")
+                    out.append(f"  Sebep: {consult['error'][:200]}")
+                    if consult.get("model_attempted"):
+                        out.append(f"  Model: {consult['model_attempted']}")
+                    if consult.get("raw_preview"):
+                        out.append(f"  Cevap önizleme: <code>{consult['raw_preview'][:150]}</code>")
+                else:
+                    out.append(f"<b>⚠ AI consultation tetiklenmesi gerekti</b> "
+                               f"(severity={consult.get('severity', 0):.2f}, "
+                               f"reason={consult.get('reason', '?')[:60]}) ama yapılmadı")
 
         out.append("")
         out.append(f"<b>Kullanılan metodlar:</b>")

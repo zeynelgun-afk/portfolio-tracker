@@ -211,8 +211,9 @@ def _format_v5_fallback(symbol: str, res: dict) -> str:
     return "\n".join(lines)
 
 
-def format_adil_deger(symbol: str, res: dict, analyst: dict) -> str:
-    """Adil değer sonucu formatla. v5 ve v2 result'ları farklı şemaya sahip."""
+def format_adil_deger(symbol: str, res: dict, analyst: dict, detay: bool = False) -> str:
+    """Adil değer sonucu formatla. v5 ve v2 result'ları farklı şemaya sahip.
+    detay=True → uzun versiyon (telegram_full), False → kısa (telegram)."""
 
     # ── v5 result ise framework'ün kendi formatter'ını kullan ────────
     if res.get("_version") == "v5":
@@ -221,9 +222,9 @@ def format_adil_deger(symbol: str, res: dict, analyst: dict) -> str:
             if agent_dir not in sys.path:
                 sys.path.insert(0, agent_dir)
             from valuation.framework import format_report
-            return format_report(res, style="telegram")
+            style = "telegram_full" if detay else "telegram"
+            return format_report(res, style=style)
         except Exception as e:
-            # Formatter fail → v5 ham çıktısını elle formatla
             return _format_v5_fallback(symbol, res)
 
     # ── v2 legacy format (ÖLÜ KOD — adil_deger_hesapla artık sadece v5 döner) ───
@@ -974,9 +975,17 @@ def isle_mesaj(msg: dict):
 
     # ── Ticker tespiti ────────────────────────────────────────────
     ticker = None
+    detay_modu = False  # /detay ise telegram_full style kullan
 
-    # "/deger AAPL" veya "/beklenti AAPL"
-    if text.upper().startswith("/DEGER ") or text.upper().startswith("/BEKLENTI "):
+    # "/detay AAPL" — uzun versiyon
+    if text.upper().startswith("/DETAY ") or text.upper().startswith("/DETAIL "):
+        parts = text.split()
+        if len(parts) >= 2:
+            ticker = parts[1].upper()
+            detay_modu = True
+
+    # "/deger AAPL" veya "/beklenti AAPL" — kısa versiyon
+    elif text.upper().startswith("/DEGER ") or text.upper().startswith("/BEKLENTI "):
         parts = text.split()
         if len(parts) >= 2:
             ticker = parts[1].upper()
@@ -1023,7 +1032,7 @@ def isle_mesaj(msg: dict):
         return
 
     analyst = get_analyst_data(ticker)
-    mesaj   = format_adil_deger(ticker, res, analyst)
+    mesaj   = format_adil_deger(ticker, res, analyst, detay=detay_modu)
     tg_send(chat_id, mesaj, reply_to=msg_id)
     print(f"[Bot] {ticker} yanıtı gönderildi → {chat_id}")
 

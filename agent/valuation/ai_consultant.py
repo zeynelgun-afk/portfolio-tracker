@@ -220,14 +220,14 @@ def consult_claude(
     if not ANTHROPIC_KEY:
         if verbose:
             print("[ai_consultant] ANTHROPIC_API_KEY tanımsız, atlandı")
-        return None
+        return {"_error": "ANTHROPIC_API_KEY env var tanımsız"}
 
     try:
         import anthropic
-    except ImportError:
+    except ImportError as e:
         if verbose:
-            print("[ai_consultant] anthropic paketi yok, atlandı")
-        return None
+            print(f"[ai_consultant] anthropic paketi yok: {e}")
+        return {"_error": f"anthropic paketi import edilemedi: {e}"}
 
     user_prompt = _build_user_prompt(framework_result)
 
@@ -258,14 +258,23 @@ def consult_claude(
 
     except Exception as e:
         if verbose:
-            print(f"[ai_consultant] Claude API hatası: {e}")
-        return None
+            print(f"[ai_consultant] Claude API hatası: {type(e).__name__}: {e}")
+        return {
+            "_error": f"Claude API çağrısı başarısız: {type(e).__name__}: {e}",
+            "model_attempted": CLAUDE_MODEL,
+            "duration_ms": int((time.time() - t0) * 1000),
+        }
 
     parsed = _parse_json_response(raw)
     if not parsed:
         if verbose:
             print(f"[ai_consultant] JSON parse başarısız:\n{raw[:300]}")
-        return None
+        return {
+            "_error": "Claude cevabı JSON formatında değil veya parse edilemedi",
+            "raw_response_preview": raw[:500],
+            "model": CLAUDE_MODEL,
+            "duration_ms": duration_ms,
+        }
 
     # Blend ağırlığı: severity'ye göre 0.30-0.50 arası
     blend = max(0.30, min(0.50, 0.30 + severity * 0.40))
