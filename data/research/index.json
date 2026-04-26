@@ -1,9 +1,10 @@
 {
   "son_guncelleme": "2026-04-26",
-  "toplam_analiz": 1,
+  "toplam_analiz": 2,
   "beat_tahmin": 0,
   "miss_tahmin": 0,
   "beklemede": 1,
+  "aktif_izleme": 1,
   "dogru_tahmin_orani": null,
   "analizler": [
     {
@@ -40,6 +41,56 @@
         "ders": null
       },
       "etiketler": ["industrial", "ai_infrastructure", "cable", "data_center", "earnings_play"]
+    },
+    {
+      "id": "CLF_DPA_2026-04-26",
+      "ticker": "CLF",
+      "sirket": "Cleveland-Cliffs Inc.",
+      "sektor": "Steel / Materials",
+      "analiz_tarihi": "2026-04-26",
+      "bilanco_tarihi": null,
+      "analiz_turu": "tematik_arastirma",
+      "durum": "aktif_izleme",
+      "dosya": "reports/research/CLF_DPA_2026-04-26.md",
+      "kataliz": {
+        "olay": "Savunma Üretim Yasası — DPA Section 303",
+        "tarih": "2026-04-20",
+        "aciklama": "Trafo ve şebeke altyapısı ulusal savunma için kritik ilan edildi. CLF ABD'nin tek grain-oriented electrical steel üreticisi."
+      },
+      "on_beklenti": {
+        "senaryo_boga": { "kosul": "DPA sözleşme + çelik fiyat toparlanma", "fiyat_hedef": 13.0, "getiri_pct": 33 },
+        "senaryo_baz":  { "kosul": "Sıralı EBITDA iyileşmesi devam", "fiyat_hedef": 10.5, "getiri_pct": 8 },
+        "senaryo_ayi":  { "kosul": "Çelik fiyatı düşüşü + yüksek faiz", "fiyat_hedef": 7.5, "getiri_pct": -23 }
+      },
+      "analiz_fiyati": 9.76,
+      "temel_metrikler": {
+        "fiyat_defter": 0.95,
+        "fiyat_satis": 0.29,
+        "borclanma_ozkaynak": 1.33,
+        "gross_margin_ttm_pct": -2.8,
+        "q1_2026_ebitda_m": 95,
+        "q1_2026_net_zarar_m": -229,
+        "likidite_m": 3100
+      },
+      "portfoy_onerisi": {
+        "dengeli": "dikkatli",
+        "agresif": "uygun",
+        "temettü": "uygun_degil"
+      },
+      "izleme_tetikleyicileri": [
+        "DPA kapsamında somut sözleşme/sipariş haberi",
+        "Çelik fiyatı HRC $700+ kalıcı geçiş",
+        "Q2 2026 pozitif FCF teyidi",
+        "Butler Works DOE fon onayı güncelleme",
+        "Posco ortaklık açıklaması"
+      ],
+      "gerceklesen": {
+        "dpa_sozlesme": null,
+        "celik_fiyat_gelisimi": null,
+        "fiyat_tepkisi_pct": null,
+        "ders": null
+      },
+      "etiketler": ["steel", "dpa", "electrical_steel", "grid_infrastructure", "national_security", "materials", "turnaround"]
     }
   ]
 }
