@@ -1,0 +1,30 @@
+name: Sonuç Takip Sistemi
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '30 20 * * 1-5'   # Hafta içi 23:30 TR (kapanış sonrası)
+
+jobs:
+  tracker:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Repo çek
+        uses: actions/checkout@v4
+
+      - name: Python kur
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Bağımlılıklar
+        run: pip install requests
+
+      - name: Sonuç Takip çalıştır
+        run: python3 scripts/result_tracker.py
+        env:
+          FMP_API_KEY:          ${{ secrets.FMP_API_KEY }}
+          GH_TOKEN:             ${{ secrets.GH_TOKEN }}
+          TELEGRAM_BOT_TOKEN:   ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_PRIVATE_ID:  ${{ secrets.TELEGRAM_PRIVATE_ID }}
