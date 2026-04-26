@@ -1,13 +1,47 @@
 {
-  "test_tarihi": "2026-04-10",
-  "toplam_trade": 0,
+  "test_tarihi": "2026-04-26",
+  "toplam_trade": 22,
   "kural_performansi": {
-    "hata": "Kapanmış trade yok"
+    "toplam_trade": 22,
+    "kural_performansi": {
+      "stop_loss": {
+        "tetiklenme": 11,
+        "win_rate": 36.4,
+        "ort_pnl": -2.36,
+        "toplam_pnl": -25.97
+      },
+      "manuel": {
+        "tetiklenme": 10,
+        "win_rate": 80.0,
+        "ort_pnl": 2.88,
+        "toplam_pnl": 28.83
+      },
+      "K-05": {
+        "tetiklenme": 1,
+        "win_rate": 100.0,
+        "ort_pnl": 2.88,
+        "toplam_pnl": 2.88
+      }
+    },
+    "test_tarihi": "2026-04-26"
   },
   "rsi_testi": {
-    "hata": "Trade verisi yok"
+    "mevcut_esik": 70,
+    "yeni_esik": 75,
+    "k11_trade_sayisi": 2,
+    "mevcut_ort_pnl": -1.08,
+    "tahmini_yeni_pnl": -0.33,
+    "tahmini_fark": 0.75,
+    "guven": "DÜŞÜK — N=2, sezgisel tahmin",
+    "backtest_notu": "Gerçek backtest için FMP historical data ile doğrula"
   },
   "stop_testi": {
-    "hata": "Trade verisi yok"
+    "mevcut_stop": "%8.0",
+    "yeni_stop": "%6.0",
+    "stop_trade_sayisi": 11,
+    "mevcut_ort_kayip": -2.36,
+    "tahmini_yeni_kayip": -1.77,
+    "guven": "ORTA — gerçek stop seviyelerine bakılamadı",
+    "backtest_notu": "ATR bazlı dinamik stop daha anlamlı olabilir"
   }
 }

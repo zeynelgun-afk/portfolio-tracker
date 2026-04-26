@@ -104,20 +104,5 @@
     "current_prompt": "Swing Giriş RSI:\nRSI 40-65 arası giriş bölgesi\nRSI<40: oversold bounce için çeyrek pozisyon\nRSI>65: momentum trade sadece güçlü trend varlığında",
     "fitness": null,
     "last_modified": "2026-04-13T09:22:42.430394"
-  },
-  "_meta": {
-    "nesil": 1,
-    "son_guncelleme": "2026-04-13T09:55:22.452771",
-    "toplam_backtest": 10172,
-    "bootstrap": {
-      "tarih": "2026-04-13",
-      "kaynak": "62 trade, 17 Şub - 13 Nis 2026"
-    },
-    "parametreler": {
-      "sistem_wr": 0.5,
-      "profit_factor": 2.26,
-      "avg_win_pct": 13.0,
-      "avg_loss_pct": -5.8
-    }
   }
 }

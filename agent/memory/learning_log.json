@@ -1221,6 +1221,21 @@
       "date": "2026-04-25",
       "source": "closing_analysis",
       "insight": "---"
+    },
+    {
+      "date": "2026-04-26",
+      "source": "auto_weekly",
+      "insight": "**En Kötü Pozisyon:** ABBV -%2.0 — earnings 2 gün uzakta, stop sadece %3.2 uzakta. ⚠️ K-05 + K-06 çift tetikçi."
+    },
+    {
+      "date": "2026-04-26",
+      "source": "auto_weekly",
+      "insight": "**Dikkat:** Temettü bucket %41.7 görünse de bu büyük ölçüde MO'nun +%16.7 + diğerlerinin başlangıç atış dönemi katkısı; mevcut pozisyonların çoğu küçük zararda. Bucket P/L yanıltıcı olabilir [SPEKÜLAT"
+    },
+    {
+      "date": "2026-04-26",
+      "source": "auto_weekly",
+      "insight": "- **Technology %57.4** 🔴 — K-17 ihlali ortak (eşik %40)"
     }
   ]
 }

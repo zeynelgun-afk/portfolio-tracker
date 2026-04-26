@@ -1,0 +1,28 @@
+{
+  "guncelleme": "2026-04-26 09:46",
+  "matris": {
+    "enerji_geçiş": {
+      "swing": {
+        "trade_sayisi": 22,
+        "toplam_pnl": 0.0,
+        "ortalama_pnl": 0.0,
+        "win_rate": 0.0,
+        "en_iyi": 0.0,
+        "en_kotu": 0.0
+      }
+    }
+  },
+  "ozet": {
+    "en_karli_tema": "enerji_geçiş",
+    "en_kotu_tema": "enerji_geçiş",
+    "tema_pnl_sirali": {
+      "enerji_geçiş": 0.0
+    },
+    "portfoy_en_iyi_tema": {
+      "agresif": null,
+      "dengeli": null,
+      "temettü": null,
+      "swing": "enerji_geçiş"
+    }
+  }
+}
