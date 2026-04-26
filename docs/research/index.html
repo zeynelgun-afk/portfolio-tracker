@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Finzora AI — Araştırma Arşivi</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500;1,400&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #0b0f1a;
+      --surface:  #111827;
+      --border:   #1e2d40;
+      --teal:     #14b8a6;
+      --teal-dim: rgba(20,184,166,0.12);
+      --gold:     #f59e0b;
+      --red:      #ef4444;
+      --muted:    #64748b;
+      --text:     #e2e8f0;
+      --subtext:  #94a3b8;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Syne', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── Noise overlay ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── Header ── */
+    header {
+      position: relative;
+      z-index: 1;
+      padding: 2.5rem 2rem 2rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .logo-mark {
+      width: 36px; height: 36px;
+      background: var(--teal);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; font-weight: 800; color: #0b0f1a;
+      flex-shrink: 0;
+    }
+
+    .logo-text { font-size: 1.15rem; font-weight: 700; letter-spacing: -0.02em; }
+    .logo-text span { color: var(--teal); }
+
+    .header-meta {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--muted);
+      text-align: right;
+      line-height: 1.6;
+    }
+
+    /* ── Stats bar ── */
+    .stats-bar {
+      position: relative; z-index: 1;
+      display: flex; gap: 1px;
+      background: var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .stat-cell {
+      flex: 1; background: var(--surface);
+      padding: 1rem 1.25rem;
+      display: flex; flex-direction: column; gap: 0.25rem;
+    }
+
+    .stat-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--muted);
+    }
+
+    .stat-value {
+      font-size: 1.6rem; font-weight: 800;
+      letter-spacing: -0.03em; color: var(--teal);
+    }
+
+    /* ── Main layout ── */
+    main {
+      position: relative; z-index: 1;
+      max-width: 1100px; margin: 0 auto;
+      padding: 2.5rem 2rem;
+    }
+
+    /* ── Section heading ── */
+    .section-title {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--muted);
+      margin-bottom: 1.25rem;
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .section-title::after {
+      content: ''; flex: 1; height: 1px; background: var(--border);
+    }
+
+    /* ── Card grid ── */
+    #cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1rem;
+    }
+
+    /* ── Research card ── */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      display: flex; flex-direction: column; gap: 1rem;
+      transition: border-color 0.2s, transform 0.2s;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .card:hover {
+      border-color: var(--teal);
+      transform: translateY(-2px);
+    }
+
+    .card-top {
+      display: flex; align-items: flex-start;
+      justify-content: space-between; gap: 0.75rem;
+    }
+
+    .ticker-badge {
+      background: var(--teal-dim);
+      border: 1px solid rgba(20,184,166,0.3);
+      color: var(--teal);
+      font-family: 'DM Mono', monospace;
+      font-size: 0.85rem; font-weight: 500;
+      padding: 0.3rem 0.7rem;
+      border-radius: 6px;
+      letter-spacing: 0.04em;
+    }
+
+    .status-badge {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem; font-weight: 500;
+      padding: 0.25rem 0.6rem;
+      border-radius: 20px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      flex-shrink: 0;
+    }
+
+    .status-beklemede { background: rgba(245,158,11,0.12); color: var(--gold); border: 1px solid rgba(245,158,11,0.25); }
+    .status-beat      { background: rgba(20,184,166,0.12); color: var(--teal); border: 1px solid rgba(20,184,166,0.25); }
+    .status-miss      { background: rgba(239,68,68,0.12);  color: var(--red);  border: 1px solid rgba(239,68,68,0.25); }
+
+    .card-company {
+      font-size: 1rem; font-weight: 700;
+      letter-spacing: -0.01em; line-height: 1.3;
+    }
+
+    .card-sector {
+      font-size: 0.72rem; color: var(--subtext); margin-top: 0.1rem;
+    }
+
+    .card-meta {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 0.5rem;
+    }
+
+    .meta-item { display: flex; flex-direction: column; gap: 0.15rem; }
+    .meta-key  { font-family: 'DM Mono', monospace; font-size: 0.6rem;
+                 text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
+    .meta-val  { font-size: 0.85rem; font-weight: 600; }
+
+    .card-scenarios {
+      display: flex; gap: 0.4rem;
+    }
+
+    .scenario {
+      flex: 1; padding: 0.5rem;
+      border-radius: 6px; text-align: center;
+      font-family: 'DM Mono', monospace;
+    }
+
+    .s-a { background: rgba(20,184,166,0.08); border: 1px solid rgba(20,184,166,0.15); }
+    .s-b { background: rgba(245,158,11,0.08); border: 1px solid rgba(245,158,11,0.15); }
+    .s-c { background: rgba(239,68,68,0.08);  border: 1px solid rgba(239,68,68,0.15); }
+
+    .scenario-label { font-size: 0.55rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
+    .scenario-pct   { font-size: 0.8rem; font-weight: 500; margin-top: 0.1rem; }
+    .s-a .scenario-pct { color: var(--teal); }
+    .s-b .scenario-pct { color: var(--gold); }
+    .s-c .scenario-pct { color: var(--red);  }
+
+    .card-tags {
+      display: flex; flex-wrap: wrap; gap: 0.4rem;
+    }
+
+    .tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.6rem; padding: 0.2rem 0.5rem;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 4px; color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+
+    .card-link {
+      display: flex; align-items: center; justify-content: space-between;
+      border-top: 1px solid var(--border); padding-top: 0.75rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem; color: var(--teal);
+      text-decoration: none;
+    }
+
+    /* ── Gerçekleşen panel (beat/miss) ── */
+    .result-panel {
+      background: rgba(20,184,166,0.05);
+      border: 1px solid rgba(20,184,166,0.15);
+      border-radius: 8px; padding: 0.75rem;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;
+    }
+
+    /* ── Empty state ── */
+    .empty {
+      grid-column: 1/-1;
+      text-align: center; padding: 4rem 2rem;
+      color: var(--muted); font-family: 'DM Mono', monospace;
+      font-size: 0.8rem;
+    }
+
+    /* ── Filters ── */
+    .filters {
+      display: flex; gap: 0.5rem; margin-bottom: 1.5rem; flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem; letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.4rem 0.9rem;
+      border-radius: 6px; border: 1px solid var(--border);
+      background: transparent; color: var(--subtext);
+      cursor: pointer; transition: all 0.15s;
+    }
+
+    .filter-btn:hover, .filter-btn.active {
+      border-color: var(--teal);
+      color: var(--teal);
+      background: var(--teal-dim);
+    }
+
+    /* ── Loading ── */
+    .loader {
+      display: flex; justify-content: center;
+      padding: 3rem; color: var(--muted);
+      font-family: 'DM Mono', monospace; font-size: 0.75rem;
+      animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+    /* ── Footer ── */
+    footer {
+      position: relative; z-index: 1;
+      border-top: 1px solid var(--border);
+      padding: 1.5rem 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 0.5rem;
+    }
+
+    footer p {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem; color: var(--muted);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 600px) {
+      .stats-bar { flex-wrap: wrap; }
+      .stat-cell { min-width: 50%; }
+      header { flex-direction: column; align-items: flex-start; }
+      .header-meta { text-align: left; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="logo">
+      <div class="logo-mark">F</div>
+      <div>
+        <div class="logo-text"><span>Finzora</span> AI</div>
+        <div style="font-family:'DM Mono',monospace;font-size:0.62rem;color:var(--muted);margin-top:2px;">Araştırma Arşivi</div>
+      </div>
+    </div>
+    <div class="header-meta">
+      <div id="last-updated">—</div>
+      <div>ABD Piyasaları · Türk Yatırımcılar İçin</div>
+    </div>
+  </header>
+
+  <!-- Stats bar -->
+  <div class="stats-bar">
+    <div class="stat-cell">
+      <div class="stat-label">Toplam Analiz</div>
+      <div class="stat-value" id="stat-total">—</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-label">Beklemede</div>
+      <div class="stat-value" style="color:var(--gold)" id="stat-pending">—</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-label">Beat Tahmini</div>
+      <div class="stat-value" id="stat-beat">—</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-label">Doğru Tahmin</div>
+      <div class="stat-value" id="stat-accuracy">—</div>
+    </div>
+  </div>
+
+  <!-- Main -->
+  <main>
+    <div class="filters">
+      <button class="filter-btn active" data-filter="all">Tümü</button>
+      <button class="filter-btn" data-filter="beklemede">Beklemede</button>
+      <button class="filter-btn" data-filter="beat">Beat</button>
+      <button class="filter-btn" data-filter="miss">Miss</button>
+    </div>
+
+    <div class="section-title">Analizler</div>
+
+    <div id="cards-grid">
+      <div class="loader">Yükleniyor...</div>
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2026 Finzora AI · Yatırım tavsiyesi değildir</p>
+    <p id="footer-count"></p>
+  </footer>
+
+  <script>
+    const REPO   = 'zeynelgun-afk/portfolio-tracker';
+    const BRANCH = 'main';
+    const RAW    = `https://raw.githubusercontent.com/${REPO}/${BRANCH}`;
+
+    let allData = [];
+    let activeFilter = 'all';
+
+    async function fetchIndex() {
+      const res = await fetch(`${RAW}/data/research/index.json?t=${Date.now()}`);
+      return res.json();
+    }
+
+    function statusClass(s) {
+      if (s === 'beat')      return 'status-beat';
+      if (s === 'miss')      return 'status-miss';
+      return 'status-beklemede';
+    }
+
+    function statusLabel(s) {
+      if (s === 'beat')      return '✓ Beat';
+      if (s === 'miss')      return '✗ Miss';
+      return '⏳ Beklemede';
+    }
+
+    function formatDate(d) {
+      if (!d) return '—';
+      const [y, m, day] = d.split('-');
+      const months = ['Oca','Şub','Mar','Nis','May','Haz','Tem','Ağu','Eyl','Eki','Kas','Ara'];
+      return `${parseInt(day)} ${months[parseInt(m)-1]} ${y}`;
+    }
+
+    function buildCard(a) {
+      const mdUrl = `${RAW}/${a.dosya}`;
+      const g = a.gerceklesen || {};
+      const on = a.on_beklenti || {};
+
+      const hasResult = g.eps !== null && g.eps !== undefined;
+
+      const tagsHtml = (a.etiketler || [])
+        .map(t => `<span class="tag">${t}</span>`).join('');
+
+      const resultHtml = hasResult ? `
+        <div class="result-panel">
+          <div class="meta-item">
+            <span class="meta-key">Gerçekleşen EPS</span>
+            <span class="meta-val">$${g.eps}</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-key">Sürpriz</span>
+            <span class="meta-val" style="color:${g.surpriz_pct > 0 ? 'var(--teal)' : 'var(--red)'}">
+              ${g.surpriz_pct > 0 ? '+' : ''}${g.surpriz_pct}%
+            </span>
+          </div>
+          <div class="meta-item" style="grid-column:1/-1">
+            <span class="meta-key">Fiyat Tepkisi</span>
+            <span class="meta-val" style="color:${g.fiyat_tepkisi_pct > 0 ? 'var(--teal)' : 'var(--red)'}">
+              ${g.fiyat_tepkisi_pct > 0 ? '+' : ''}${g.fiyat_tepkisi_pct}%
+            </span>
+          </div>
+        </div>` : '';
+
+      return `
+        <a class="card" href="${mdUrl}" target="_blank" data-status="${a.durum}">
+          <div class="card-top">
+            <span class="ticker-badge">${a.ticker}</span>
+            <span class="status-badge ${statusClass(a.durum)}">${statusLabel(a.durum)}</span>
+          </div>
+
+          <div>
+            <div class="card-company">${a.sirket}</div>
+            <div class="card-sector">${a.sektor}</div>
+          </div>
+
+          <div class="card-meta">
+            <div class="meta-item">
+              <span class="meta-key">Analiz Tarihi</span>
+              <span class="meta-val">${formatDate(a.analiz_tarihi)}</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-key">Bilanço Tarihi</span>
+              <span class="meta-val" style="color:var(--gold)">${formatDate(a.bilanco_tarihi || a['bülançö_tarihi'])}</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-key">Fiyat (Analiz)</span>
+              <span class="meta-val">$${a.analiz_fiyati}</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-key">Beklenti EPS</span>
+              <span class="meta-val">$${on.eps_konsensus || '—'}</span>
+            </div>
+          </div>
+
+          <div class="card-scenarios">
+            <div class="scenario s-a">
+              <div class="scenario-label">Beat&Raise</div>
+              <div class="scenario-pct">%${Math.round((on.senaryo_a_olasilik || 0) * 100)}</div>
+            </div>
+            <div class="scenario s-b">
+              <div class="scenario-label">In-Line</div>
+              <div class="scenario-pct">%${Math.round((on.senaryo_b_olasilik || 0) * 100)}</div>
+            </div>
+            <div class="scenario s-c">
+              <div class="scenario-label">Miss</div>
+              <div class="scenario-pct">%${Math.round((on.senaryo_c_olasilik || 0) * 100)}</div>
+            </div>
+          </div>
+
+          ${resultHtml}
+
+          ${tagsHtml ? `<div class="card-tags">${tagsHtml}</div>` : ''}
+
+          <div class="card-link">
+            <span>Tam raporu görüntüle →</span>
+          </div>
+        </a>`;
+    }
+
+    function render(filter) {
+      const grid = document.getElementById('cards-grid');
+      const filtered = filter === 'all'
+        ? allData
+        : allData.filter(a => a.durum === filter);
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `<div class="empty">Bu kategoride analiz bulunamadı.</div>`;
+        return;
+      }
+
+      grid.innerHTML = filtered.map(buildCard).join('');
+      document.getElementById('footer-count').textContent =
+        `${filtered.length} / ${allData.length} analiz gösteriliyor`;
+    }
+
+    async function init() {
+      try {
+        const data = await fetchIndex();
+        allData = (data.analizler || []).sort(
+          (a, b) => new Date(b.analiz_tarihi) - new Date(a.analiz_tarihi)
+        );
+
+        // Stats
+        document.getElementById('stat-total').textContent   = data.toplam_analiz || 0;
+        document.getElementById('stat-pending').textContent = data.beklemede || 0;
+        document.getElementById('stat-beat').textContent    = data.beat_tahmin || 0;
+        document.getElementById('stat-accuracy').textContent =
+          data.dogru_tahmin_orani !== null && data.dogru_tahmin_orani !== undefined
+            ? `%${Math.round(data.dogru_tahmin_orani * 100)}`
+            : '—';
+
+        document.getElementById('last-updated').textContent =
+          `Son güncelleme: ${formatDate(data.son_guncelleme)}`;
+
+        render(activeFilter);
+
+        // Filters
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            activeFilter = btn.dataset.filter;
+            render(activeFilter);
+          });
+        });
+
+      } catch (e) {
+        document.getElementById('cards-grid').innerHTML =
+          `<div class="empty">Veri yüklenemedi. Lütfen sayfayı yenileyin.<br><br>${e.message}</div>`;
+      }
+    }
+
+    init();
+  </script>
+</body>
+</html>

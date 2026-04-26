@@ -1,0 +1,45 @@
+{
+  "son_guncelleme": "2026-04-26",
+  "toplam_analiz": 1,
+  "beat_tahmin": 0,
+  "miss_tahmin": 0,
+  "beklemede": 1,
+  "dogru_tahmin_orani": null,
+  "analizler": [
+    {
+      "id": "BDC_2026-04-26",
+      "ticker": "BDC",
+      "sirket": "Belden Inc.",
+      "sektor": "Industrial Technology",
+      "analiz_tarihi": "2026-04-26",
+      "bülançö_tarihi": "2026-04-30",
+      "analiz_turu": "bilanço_oncesi",
+      "durum": "beklemede",
+      "dosya": "reports/research/BDC_2026-04-26.md",
+      "on_beklenti": {
+        "eps_konsensus": 1.70,
+        "gelir_konsensus_m": 678.1,
+        "senaryo_a_olasilik": 0.40,
+        "senaryo_b_olasilik": 0.35,
+        "senaryo_c_olasilik": 0.25,
+        "beklenen_deger_pct": 3.5
+      },
+      "analiz_fiyati": 134.37,
+      "portfoy_onerisi": {
+        "dengeli": "uygun",
+        "agresif": "dikkatli",
+        "temettü": "uygun_degil"
+      },
+      "gerceklesen": {
+        "eps": null,
+        "gelir_m": null,
+        "surpriz_pct": null,
+        "senaryo": null,
+        "fiyat_tepkisi_pct": null,
+        "dogru_tahmin": null,
+        "ders": null
+      },
+      "etiketler": ["industrial", "ai_infrastructure", "cable", "data_center", "earnings_play"]
+    }
+  ]
+}
