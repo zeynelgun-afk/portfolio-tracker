@@ -23,10 +23,13 @@ FMP_KEY          = os.environ.get("FMP_API_KEY", "g1GFJZtV5rCP49UCir4WuP56VjhmA6
 ANTHROPIC_KEY    = os.environ.get("ANTHROPIC_API_KEY", "")
 BOT_TOKEN        = os.environ.get("TELEGRAM_BOT_TOKEN", "")
 PRIVATE_CHAT_ID  = os.environ.get("TELEGRAM_PRIVATE_ID", "1403072107")
+GH_TOKEN         = os.environ.get("GH_TOKEN", "")
+GH_REPO          = "zeynelgun-afk/portfolio-tracker"
 
 FMP_BASE         = "https://financialmodelingprep.com/stable"
 ANTHROPIC_URL    = "https://api.anthropic.com/v1/messages"
 TELEGRAM_API     = f"https://api.telegram.org/bot{BOT_TOKEN}"
+GH_API           = "https://api.github.com"
 
 REPO_ROOT        = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 LOG_FILE         = os.path.join(REPO_ROOT, "data", "news_radar_log.json")
@@ -290,6 +293,196 @@ def send_telegram(message, dry_run=False):
         log(f"Telegram bağlantı hatası: {e}")
         return False
 
+# ── GitHub Kayıt ────────────────────────────────────────────────────────────
+def gh_get_file_sha(path):
+    """GitHub'daki dosyanın SHA'sını al (güncelleme için gerekli)."""
+    if not GH_TOKEN:
+        return None
+    r = requests.get(
+        f"{GH_API}/repos/{GH_REPO}/contents/{path}",
+        headers={"Authorization": f"token {GH_TOKEN}", "Accept": "application/vnd.github+json"},
+        timeout=10,
+    )
+    if r.status_code == 200:
+        return r.json().get("sha")
+    return None
+
+def gh_put_file(path, content, message, sha=None):
+    """GitHub'a dosya yaz (oluştur veya güncelle)."""
+    if not GH_TOKEN:
+        log("GH_TOKEN eksik — GitHub kaydı atlanıyor.")
+        return False
+    import base64
+    payload = {
+        "message": message,
+        "content": base64.b64encode(content.encode()).decode(),
+        "committer": {"name": "Finzora AI", "email": "zeynelgun@users.noreply.github.com"},
+    }
+    if sha:
+        payload["sha"] = sha
+    r = requests.put(
+        f"{GH_API}/repos/{GH_REPO}/contents/{path}",
+        headers={"Authorization": f"token {GH_TOKEN}", "Accept": "application/vnd.github+json"},
+        json=payload,
+        timeout=15,
+    )
+    return r.status_code in [200, 201]
+
+def build_research_md(result, tarih):
+    """Tek bir haber için Markdown araştırma dosyası oluştur."""
+    hisseler = result.get("etkilenen_hisseler", [])
+    hisse_str = " / ".join([f"${t}" for t in hisseler]) if hisseler else "—"
+    yon   = result.get("yon", "bullish").capitalize()
+    sure  = result.get("sure", "kısa vade")
+    acil  = result.get("aciliyet", "orta").capitalize()
+    url   = result.get("kaynak_url", "")
+
+    return f"""# {result.get('baslik', 'Haber Analizi')}
+
+**Tarih:** {tarih}  
+**Analist:** Finzora AI — Haber Radarı  
+**Tür:** Otomatik Haber Tespiti  
+**Durum:** Aktif İzlemede 👁️
+
+---
+
+## Haber Özeti
+
+**Neden Önemli:** {result.get('neden_onemli', '')}
+
+**Yön:** {yon}  
+**Süre:** {sure}  
+**Aciliyet:** {acil}  
+
+---
+
+## Etkilenen Hisseler
+
+{hisse_str}
+
+---
+
+## Kaynak
+
+{f'[Habere Git]({url})' if url else '—'}
+
+---
+
+## İzleme Notu
+
+> *Fiyat tepkisi ve gelişmeler buraya eklenecek*
+
+| Alan | Değer |
+|---|---|
+| Tespit Fiyatı | — |
+| Fiyat Tepkisi | — |
+| Tez Tuttu mu | — |
+| Ders | — |
+
+---
+
+*Finzora AI Haber Radarı tarafından otomatik üretilmiştir. Yatırım tavsiyesi değildir.*
+"""
+
+def save_to_github(results, dry_run=False):
+    """Bulunan haberleri reports/research/ ve index.json'a kaydet."""
+    if not results:
+        return
+
+    tarih      = datetime.now().strftime("%Y-%m-%d")
+    saat       = datetime.now().strftime("%H:%M")
+    kaydedilenler = 0
+
+    # ── index.json oku ──
+    idx_path = "data/research/index.json"
+    idx_sha  = gh_get_file_sha(idx_path)
+
+    if idx_sha:
+        r = requests.get(
+            f"{GH_API}/repos/{GH_REPO}/contents/{idx_path}",
+            headers={"Authorization": f"token {GH_TOKEN}", "Accept": "application/vnd.github+json"},
+            timeout=10,
+        )
+        import base64
+        raw = base64.b64decode(r.json()["content"]).decode()
+        index = json.loads(raw)
+    else:
+        index = {"son_guncelleme": tarih, "toplam_analiz": 0, "beklemede": 0,
+                 "aktif_izleme": 0, "dogru_tahmin_orani": None, "analizler": []}
+
+    mevcut_idler = {a["id"] for a in index.get("analizler", [])}
+
+    for result in results:
+        hisseler = result.get("etkilenen_hisseler", [])
+        # ID: ilk ticker + tarih
+        ticker_id = hisseler[0] if hisseler else "RADAR"
+        analiz_id = f"{ticker_id}_RADAR_{tarih}"
+
+        # Aynı gün aynı haber tekrar eklenmesin
+        if analiz_id in mevcut_idler:
+            continue
+
+        # ── Markdown dosyası ──
+        md_path    = f"reports/research/{analiz_id}.md"
+        md_content = build_research_md(result, f"{tarih} {saat}")
+
+        if dry_run:
+            log(f"  [DRY RUN] {md_path} oluşturulacaktı")
+        else:
+            ok = gh_put_file(
+                md_path, md_content,
+                f"[RADAR] {result.get('baslik', analiz_id)[:60]} — {tarih}"
+            )
+            if ok:
+                log(f"  GitHub MD kaydedildi: {md_path}")
+                kaydedilenler += 1
+            else:
+                log(f"  GitHub MD HATA: {md_path}")
+                continue
+
+        # ── index.json güncelle ──
+        index["analizler"].append({
+            "id":           analiz_id,
+            "ticker":       ticker_id,
+            "sirket":       ticker_id,
+            "sektor":       "Haber Radarı",
+            "analiz_tarihi": tarih,
+            "bilanco_tarihi": None,
+            "analiz_turu":  "haber_radar",
+            "durum":        "aktif_izleme",
+            "dosya":        md_path,
+            "kataliz": {
+                "olay":     result.get("baslik", ""),
+                "tarih":    tarih,
+                "aciklama": result.get("neden_onemli", ""),
+            },
+            "portfoy_onerisi": {"dengeli": "izle", "agresif": "izle", "temettü": "izle"},
+            "gerceklesen": {"fiyat_tepkisi_pct": None, "tez_tuttu": None, "ders": None},
+            "etiketler": ["haber_radar", result.get("yon", "bullish"),
+                          result.get("sure", "kısa").replace(" ", "_")],
+        })
+        mevcut_idler.add(analiz_id)
+
+    if kaydedilenler == 0 and not dry_run:
+        return
+
+    # ── index.json geri yaz ──
+    index["son_guncelleme"] = tarih
+    index["toplam_analiz"]  = len(index["analizler"])
+    index["aktif_izleme"]   = sum(1 for a in index["analizler"] if a["durum"] == "aktif_izleme")
+
+    if dry_run:
+        log(f"  [DRY RUN] index.json güncellenecekti ({len(index['analizler'])} kayıt)")
+        return
+
+    ok = gh_put_file(
+        idx_path,
+        json.dumps(index, ensure_ascii=False, indent=2),
+        f"[RADAR] index.json güncellendi — {tarih} {saat}",
+        sha=idx_sha,
+    )
+    log(f"  index.json: {'OK' if ok else 'HATA'}")
+
 # ── Ana Akış ────────────────────────────────────────────────────────────────
 def main():
     parser = argparse.ArgumentParser()
@@ -332,7 +525,12 @@ def main():
     message = build_telegram_message(results)
     success = send_telegram(message, dry_run=args.dry_run)
 
-    # 5. Log güncelle
+    # 5. GitHub'a kaydet
+    if success or args.dry_run:
+        log("GitHub'a kaydediliyor...")
+        save_to_github(results, dry_run=args.dry_run)
+
+    # 6. Log güncelle
     if success or args.dry_run:
         new_urls = [n["url"] for n in news_items]
         radar_log["gonderilen_url"] = list(prev_sent | set(new_urls))[-500:]  # son 500 tut
