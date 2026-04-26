@@ -4,6 +4,71 @@
 > detaylar için → `docs/TRADING_PLAYBOOK.md` ilgili bölüm.
 > amaç: prompt'larda K-kural tekrarını önlemek ve tek kaynak tutmak.
 
+---
+
+## ⚠️ RAPOR YAZARKEN KIRMIZI ÇİZGİLER (26 nisan 2026 post-mortem)
+
+> bu bölüm haftalık/günlük rapor yazan AI için zorunlu okuma.
+> her madde geçmişte gerçekleşmiş hataya dayanır.
+
+### 1. K-05 ile K-16'yı karıştırma
+
+| Pozisyon türü | Earnings yaklaşınca hangi kural? |
+|--------------|----------------------------------|
+| **Swing trade** | **K-05** — 2+ iş günü önce TAM çıkış, exception yok |
+| **Portföy pozisyonu** | **K-16** — 7 gün önce skor hesapla, skora göre %0/%25/%50 |
+
+**K-05'i portföy pozisyonuna ASLA uygulama.**  
+**K-16'yı swing pozisyonuna ASLA uygulama.**  
+K-05 "%30 azalt" demez — FULL EXIT demektir.
+
+### 2. stop_loss ile hedef_fiyat'ı karıştırma
+
+JSON'daki alan isimleri:
+
+```
+"stop_loss":    ← her zaman güncel fiyatın ALTINDA olmalı
+"hedef_fiyat":  ← her zaman güncel fiyatın ÜSTÜNDE olmalı (long pozisyon)
+```
+
+"MU stop $470 → $478" gibi bir ifade yazacaksan önce JSON'u oku:
+- `stop_loss` = mevcut stop
+- `hedef_fiyat` = hedef — stop ile aynı değil!
+
+**Rapora yazmadan önce:** `stop < güncel_fiyat < hedef` kontrolünü her pozisyon için yap.
+
+### 3. K-11 atlama
+
+Kazanç ≥%15 olan her pozisyon için:
+1. RSI(14) canlı çek
+2. RSI ≥ 70 → Tier1 tetiklendi → **aksiyon listesine ekle**
+3. RSI ≥ 80 → Tier2 tetiklendi → daha agresif
+
+"Hedef aşıldı" notu yazmak yetmez — **aksiyon listesine eklemek zorunlu.**
+
+### 4. Makro verileri hallüsine yapma
+
+**Yasak:** İşsizlik oranını, CPI rakamını, NFP tahminini hafızadan yazmak.
+
+**Zorunlu:** Rapordan önce `scripts/weekly_pre_check.py` çalıştır.  
+Çıktıdaki `macro` bölümünü oku, oradan yaz.
+
+Makro takvim kuralları (değişmez):
+- **NFP:** O ayın **ilk Cuması** (Mayıs 2026 = 1 Mayıs)
+- **CPI:** Ayın **~10-15'i** arası (BLS takvimi — hallüsine yapma)
+- **PCE:** Ayın **son iş günü** civarı (~30-31)
+
+### 5. Haftalık rapor yazma sırası (zorunlu)
+
+```
+1. scripts/weekly_pre_check.py çalıştır
+2. data/weekly_pre_check.json dosyasını oku
+3. Sadece o dosyadaki sayıları rapora yaz
+4. Hallüsine rakam = sıfır tolerans
+```
+
+---
+
 ## kaldırılanlar
 - **K-01**: kaldırıldı (7 nisan 2026) — K-05 ile çakışma
 - **K-03**: kaldırıldı — içerik K-13 v4.1'e taşındı
