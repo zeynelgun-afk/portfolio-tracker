@@ -1,0 +1,51 @@
+name: 📅 Takvim Bildirimi
+
+on:
+  schedule:
+    # Her gün 06:00 UTC = 09:00 Türkiye saati
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+    inputs:
+      test_modu:
+        description: 'Test modu (bugünkü etkinlikleri göster)'
+        required: false
+        default: 'false'
+        type: boolean
+
+jobs:
+  takvim-bildirimi:
+    name: Yarınki Etkinlikleri Bildir
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: 📥 Repo İndir
+        uses: actions/checkout@v4
+
+      - name: 🐍 Python 3.11 Kur
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: 📦 Bağımlılıkları Yükle
+        run: |
+          pip install --quiet requests icalendar pytz
+
+      - name: 📅 Takvim Bildirimi Gönder (Normal)
+        if: ${{ github.event_name == 'schedule' || inputs.test_modu == 'false' }}
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_PRIVATE_ID: ${{ secrets.TELEGRAM_PRIVATE_ID }}
+          GCAL_ICAL_URLS:  ${{ secrets.GCAL_ICAL_URLS }}
+          GCAL_ICAL_NAMES: ${{ secrets.GCAL_ICAL_NAMES }}
+        run: python scripts/calendar_notifier.py
+
+      - name: 🧪 Takvim Bildirimi Gönder (Test)
+        if: ${{ inputs.test_modu == 'true' }}
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_PRIVATE_ID: ${{ secrets.TELEGRAM_PRIVATE_ID }}
+          GCAL_ICAL_URLS:  ${{ secrets.GCAL_ICAL_URLS }}
+          GCAL_ICAL_NAMES: ${{ secrets.GCAL_ICAL_NAMES }}
+        run: python scripts/calendar_notifier.py --test
