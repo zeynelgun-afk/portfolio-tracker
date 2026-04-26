@@ -2,12 +2,12 @@ name: 📅 Takvim Bildirimi
 
 on:
   schedule:
-    # Her gün 06:00 UTC = 09:00 Türkiye saati
-    - cron: '0 6 * * *'
+    # Her gün 05:30 UTC = 08:30 Türkiye saati
+    - cron: '30 5 * * *'
   workflow_dispatch:
     inputs:
       test_modu:
-        description: 'Test modu (bugünkü etkinlikleri göster)'
+        description: 'Test modu (yarın yerine bugünü göster)'
         required: false
         default: 'false'
         type: boolean
@@ -29,23 +29,20 @@ jobs:
           cache: 'pip'
 
       - name: 📦 Bağımlılıkları Yükle
+        run: pip install --quiet requests icalendar pytz
+
+      - name: 📅 Takvim Bildirimi Gönder
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_PRIVATE_ID: ${{ secrets.TELEGRAM_PRIVATE_ID }}
+          GCAL_ICAL_URLS:  ${{ secrets.GCAL_ICAL_URLS }}
+          GCAL_ICAL_NAMES: ${{ secrets.GCAL_ICAL_NAMES }}
+        # Shell if ile kontrol — GitHub Actions boolean karşılaştırması güvenilmez
         run: |
-          pip install --quiet requests icalendar pytz
-
-      - name: 📅 Takvim Bildirimi Gönder (Normal)
-        if: ${{ github.event_name == 'schedule' || inputs.test_modu == 'false' }}
-        env:
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_PRIVATE_ID: ${{ secrets.TELEGRAM_PRIVATE_ID }}
-          GCAL_ICAL_URLS:  ${{ secrets.GCAL_ICAL_URLS }}
-          GCAL_ICAL_NAMES: ${{ secrets.GCAL_ICAL_NAMES }}
-        run: python scripts/calendar_notifier.py
-
-      - name: 🧪 Takvim Bildirimi Gönder (Test)
-        if: ${{ inputs.test_modu == 'true' }}
-        env:
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_PRIVATE_ID: ${{ secrets.TELEGRAM_PRIVATE_ID }}
-          GCAL_ICAL_URLS:  ${{ secrets.GCAL_ICAL_URLS }}
-          GCAL_ICAL_NAMES: ${{ secrets.GCAL_ICAL_NAMES }}
-        run: python scripts/calendar_notifier.py --test
+          if [[ "${{ inputs.test_modu }}" == "true" ]]; then
+            echo "TEST MODU: Bugünkü etkinlikler gösterilecek"
+            python scripts/calendar_notifier.py --test
+          else
+            echo "NORMAL MOD: Yarınki etkinlikler gösterilecek"
+            python scripts/calendar_notifier.py
+          fi

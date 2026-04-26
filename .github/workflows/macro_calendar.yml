@@ -40,28 +40,27 @@ jobs:
         run: |
           pip install --quiet requests icalendar python-dateutil pytz
 
-      - name: 📅 Makro Takvimi Güncelle (Normal)
-        if: ${{ github.event_name == 'schedule' || inputs.test_modu == 'false' }}
+      - name: 📅 Makro Takvimi Güncelle
         env:
           FMP_API_KEY: ${{ secrets.FMP_API_KEY }}
+        # Shell if ile kontrol — GitHub Actions boolean karşılaştırması güvenilmez
         run: |
           AYLAR="${{ inputs.aylar || '2' }}"
           AY_ARG=""
           if [ -n "${{ inputs.ay }}" ]; then
             AY_ARG="--ay ${{ inputs.ay }}"
           fi
-          python scripts/macro_calendar_updater.py $AY_ARG --aylar $AYLAR
 
-      - name: 🧪 Test Modu
-        if: ${{ inputs.test_modu == 'true' }}
-        env:
-          FMP_API_KEY: ${{ secrets.FMP_API_KEY }}
-        run: |
-          AYLAR="${{ inputs.aylar || '2' }}"
-          python scripts/macro_calendar_updater.py --aylar $AYLAR --test
+          if [[ "${{ inputs.test_modu }}" == "true" ]]; then
+            echo "TEST MODU"
+            python scripts/macro_calendar_updater.py $AY_ARG --aylar $AYLAR --test
+          else
+            echo "NORMAL MOD: ICS üretilecek ve commit edilecek"
+            python scripts/macro_calendar_updater.py $AY_ARG --aylar $AYLAR
+          fi
 
       - name: 📤 ICS Dosyasını Commit Et
-        if: ${{ inputs.test_modu != 'true' }}
+        if: ${{ inputs.test_modu != 'true' && github.event_name != 'workflow_dispatch' || (github.event_name == 'workflow_dispatch' && inputs.test_modu != 'true') }}
         run: |
           git config user.name  "Finzora AI"
           git config user.email "zeynelgun@users.noreply.github.com"
