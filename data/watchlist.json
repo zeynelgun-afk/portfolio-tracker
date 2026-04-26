@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-04-24T22:07:24.165310",
+  "son_guncelleme": "2026-04-26T19:34:49.853491",
   "not": "3 portföy merkezi aday havuzu. PART 1C 15:38 TR güncelleme: DUK/NEE/GEV yeni EKLE (K-04+K-18 temiz), POWL K-18 ELENDİ ($27.3M insider satış), ön piyasa gap-up sonrası kovalama yasağı 4 aday için aktif. | 11 Nisan: Nükleer tema adayları eklendi (CCJ, OKLO, NNE, UEC, VST) — tematik araştırma, K-14 aktif olduğu için hepsi İZLE statüsünde. | 11 Nisan ek: BWXT (savunma tekel+NRC katalizör), LEU (HALEU tekeli), DNN (Wheeler River) İZLE. SMR (class action lawsuit) ve UUUU (%6 upside) GEÇ. | 2026-04-14: ALAB+PLAB+COHU eklendi — optik/bağlantı/test ekipmanı tematik araştırması. Hepsi IZLE statüsünde, geri çekilme bekleniyor.",
   "sistem_referans": "docs/PORTFOLIO_OPPORTUNITY_SYSTEM.md",
   "script": "scripts/portfolio_scan_common.py",
@@ -946,6 +946,34 @@
       "kataliz": "Karlılığa geçiş — ilk pozitif op kar çeyregi tetikleyici olacak",
       "not": "Şu an en zayıf üç adaydan biri. $28-32 bandına kadar beklemeyi tercih ederiz. Kazanç açıklaması tarihi takip et.",
       "momentum_5gun": 2.98
+    },
+    {
+      "sembol": "CRDO",
+      "hedef_portfoy": "agresif",
+      "guncel_fiyat": 195.04,
+      "rsi": 77.6,
+      "skor": 7,
+      "skor_detay": "Q3 gelir +%201 YoY, marj genişlemesi +1 | 8 çeyrek üst üste kazanç beat: +1 | Borçsuz bilanço (D/E 0.007): +1 | Konsensüs 17 analist, 16 Buy/SB: +1 | Forward PEG 0.71 (FY27): +1 | Sektör momentum güçlü (AVGO/AMD/NVDA): +1 | RSI 77.6 aşırı alım: -1 | Insider $21M sat 0 alım: -1 | P/E TTM 101x: caydırıcı ama forward makul: +1",
+      "sektor": "Teknoloji",
+      "tema": "AI veri merkezi connectivity (AEC, optical DSP, SerDes IP)",
+      "urgency": "medium",
+      "ekleme_tarihi": "2026-04-26",
+      "son_kontrol": "2026-04-26",
+      "hedef_giris": "168-175",
+      "hedef_fiyat_1": 220,
+      "hedef_fiyat_2": 260,
+      "stop_loss": 145,
+      "r_r_orani": 2.0,
+      "tez": "AI veri merkezi bağlantı altyapısının lider oyuncusu. Q3 FY26 gelir +%201 YoY (135M->407M), marjlar genişliyor (brüt %63->%68, net %22->%39). 8 çeyrek üst üste analist beat. Borçsuz bilanço, $1.2B nakit. Forward PEG 0.71 cazip. AVGO/MRVL/ANET/NVDA sektör momentumu lehine.",
+      "karsit_argumani": "RSI 77.6 derin aşırı alım, 8 gündür 70+ kalıcı. ATR %8.3 aşırı volatil. P/E TTM 101x. Son 50 insider işleminde $21M satış, $0 alım — CTO yoğun satıyor (16M). Müşteri konsantrasyon riski (AWS ~%40+). Beta 2.72 piyasa düzeltmesinde -%30/-%40 olası. Hyperscaler ASIC in-house trendi AEC'yi tehdit edebilir.",
+      "k_04_gecis": false,
+      "k_05_gecis": true,
+      "k_17_gecis": false,
+      "bekleme_gun": 0,
+      "karar": "İZLE",
+      "momentum_5gun": 12.0,
+      "tetikleyici_olay": "1 Haz 2026 Q4 FY26 kazanç",
+      "alim_kosulu": "RSI<60 + 50MA mesafe daralması, ideal 168-175 zonu"
     }
   ],
   "haric_tutulanlar": [
