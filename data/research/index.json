@@ -1,10 +1,10 @@
 {
   "son_guncelleme": "2026-04-26",
-  "toplam_analiz": 2,
+  "toplam_analiz": 6,
   "beat_tahmin": 0,
   "miss_tahmin": 0,
   "beklemede": 1,
-  "aktif_izleme": 1,
+  "aktif_izleme": 5,
   "dogru_tahmin_orani": null,
   "analizler": [
     {
@@ -18,9 +18,9 @@
       "durum": "beklemede",
       "dosya": "reports/research/BDC_2026-04-26.md",
       "on_beklenti": {
-        "eps_konsensus": 1.70,
+        "eps_konsensus": 1.7,
         "gelir_konsensus_m": 678.1,
-        "senaryo_a_olasilik": 0.40,
+        "senaryo_a_olasilik": 0.4,
         "senaryo_b_olasilik": 0.35,
         "senaryo_c_olasilik": 0.25,
         "beklenen_deger_pct": 3.5
@@ -40,7 +40,13 @@
         "dogru_tahmin": null,
         "ders": null
       },
-      "etiketler": ["industrial", "ai_infrastructure", "cable", "data_center", "earnings_play"]
+      "etiketler": [
+        "industrial",
+        "ai_infrastructure",
+        "cable",
+        "data_center",
+        "earnings_play"
+      ]
     },
     {
       "id": "CLF_DPA_2026-04-26",
@@ -58,9 +64,21 @@
         "aciklama": "Trafo ve şebeke altyapısı ulusal savunma için kritik ilan edildi. CLF ABD'nin tek grain-oriented electrical steel üreticisi."
       },
       "on_beklenti": {
-        "senaryo_boga": { "kosul": "DPA sözleşme + çelik fiyat toparlanma", "fiyat_hedef": 13.0, "getiri_pct": 33 },
-        "senaryo_baz":  { "kosul": "Sıralı EBITDA iyileşmesi devam", "fiyat_hedef": 10.5, "getiri_pct": 8 },
-        "senaryo_ayi":  { "kosul": "Çelik fiyatı düşüşü + yüksek faiz", "fiyat_hedef": 7.5, "getiri_pct": -23 }
+        "senaryo_boga": {
+          "kosul": "DPA sözleşme + çelik fiyat toparlanma",
+          "fiyat_hedef": 13.0,
+          "getiri_pct": 33
+        },
+        "senaryo_baz": {
+          "kosul": "Sıralı EBITDA iyileşmesi devam",
+          "fiyat_hedef": 10.5,
+          "getiri_pct": 8
+        },
+        "senaryo_ayi": {
+          "kosul": "Çelik fiyatı düşüşü + yüksek faiz",
+          "fiyat_hedef": 7.5,
+          "getiri_pct": -23
+        }
       },
       "analiz_fiyati": 9.76,
       "temel_metrikler": {
@@ -90,7 +108,139 @@
         "fiyat_tepkisi_pct": null,
         "ders": null
       },
-      "etiketler": ["steel", "dpa", "electrical_steel", "grid_infrastructure", "national_security", "materials", "turnaround"]
+      "etiketler": [
+        "steel",
+        "dpa",
+        "electrical_steel",
+        "grid_infrastructure",
+        "national_security",
+        "materials",
+        "turnaround"
+      ]
+    },
+    {
+      "id": "RTX_RADAR_2026-04-26",
+      "ticker": "RTX",
+      "sirket": "RTX",
+      "sektor": "Haber Radarı",
+      "analiz_tarihi": "2026-04-26",
+      "bilanco_tarihi": null,
+      "analiz_turu": "haber_radar",
+      "durum": "aktif_izleme",
+      "dosya": "reports/research/RTX_RADAR_2026-04-26.md",
+      "kataliz": {
+        "olay": "FAA 12.5 milyar dolarlık hava trafik kontrol modernizasyonu açıkladı",
+        "tarih": "2026-04-26",
+        "aciklama": "Analog sistemlerden dijitale geçiş planı henüz havacılık teknoloji hisselerine tam yansımadı"
+      },
+      "portfoy_onerisi": {
+        "dengeli": "izle",
+        "agresif": "izle",
+        "temettü": "izle"
+      },
+      "gerceklesen": {
+        "fiyat_tepkisi_pct": null,
+        "tez_tuttu": null,
+        "ders": null
+      },
+      "etiketler": [
+        "haber_radar",
+        "bullish",
+        "uzun_vadeli"
+      ]
+    },
+    {
+      "id": "MP_RADAR_2026-04-26",
+      "ticker": "MP",
+      "sirket": "MP",
+      "sektor": "Haber Radarı",
+      "analiz_tarihi": "2026-04-26",
+      "bilanco_tarihi": null,
+      "analiz_turu": "haber_radar",
+      "durum": "aktif_izleme",
+      "dosya": "reports/research/MP_RADAR_2026-04-26.md",
+      "kataliz": {
+        "olay": "Pentagon nadir toprak elementleri için Malezya tedarikçisi buldu",
+        "tarih": "2026-04-26",
+        "aciklama": "Çin'in tekelini kırma stratejisi belirli nadir toprak şirketlerine fayda sağlayacak"
+      },
+      "portfoy_onerisi": {
+        "dengeli": "izle",
+        "agresif": "izle",
+        "temettü": "izle"
+      },
+      "gerceklesen": {
+        "fiyat_tepkisi_pct": null,
+        "tez_tuttu": null,
+        "ders": null
+      },
+      "etiketler": [
+        "haber_radar",
+        "bullish",
+        "orta_vadeli"
+      ]
+    },
+    {
+      "id": "BAC_RADAR_2026-04-26",
+      "ticker": "BAC",
+      "sirket": "BAC",
+      "sektor": "Haber Radarı",
+      "analiz_tarihi": "2026-04-26",
+      "bilanco_tarihi": null,
+      "analiz_turu": "haber_radar",
+      "durum": "aktif_izleme",
+      "dosya": "reports/research/BAC_RADAR_2026-04-26.md",
+      "kataliz": {
+        "olay": "Sen. Tillis Kevin Warsh'ın Fed başkanlığı önündeki engeli kaldıracak",
+        "tarih": "2026-04-26",
+        "aciklama": "Fed politika değişimi beklentisi henüz tam olarak finansal hisselere yansımadı"
+      },
+      "portfoy_onerisi": {
+        "dengeli": "izle",
+        "agresif": "izle",
+        "temettü": "izle"
+      },
+      "gerceklesen": {
+        "fiyat_tepkisi_pct": null,
+        "tez_tuttu": null,
+        "ders": null
+      },
+      "etiketler": [
+        "haber_radar",
+        "bullish",
+        "kısa_vadeli"
+      ]
+    },
+    {
+      "id": "NVDA_RADAR_2026-04-26",
+      "ticker": "NVDA",
+      "sirket": "NVDA",
+      "sektor": "Haber Radarı",
+      "analiz_tarihi": "2026-04-26",
+      "bilanco_tarihi": null,
+      "analiz_turu": "haber_radar",
+      "durum": "aktif_izleme",
+      "dosya": "reports/research/NVDA_RADAR_2026-04-26.md",
+      "kataliz": {
+        "olay": "Aramco Ventures yapay zeka ve sürdürülebilirlik için 7.5 milyar dolar yatırım",
+        "tarih": "2026-04-26",
+        "aciklama": "Stratejik teknoloji yatırımları henüz hedef şirketlerde tam fiyatlanmadı"
+      },
+      "portfoy_onerisi": {
+        "dengeli": "izle",
+        "agresif": "izle",
+        "temettü": "izle"
+      },
+      "gerceklesen": {
+        "fiyat_tepkisi_pct": null,
+        "tez_tuttu": null,
+        "ders": null
+      },
+      "etiketler": [
+        "haber_radar",
+        "bullish",
+        "uzun_vadeli"
+      ]
     }
   ]
 }
