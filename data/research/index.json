@@ -1,10 +1,10 @@
 {
   "son_guncelleme": "2026-04-26",
-  "toplam_analiz": 6,
+  "toplam_analiz": 7,
   "beat_tahmin": 0,
   "miss_tahmin": 0,
   "beklemede": 1,
-  "aktif_izleme": 5,
+  "aktif_izleme": 6,
   "dogru_tahmin_orani": null,
   "analizler": [
     {
@@ -240,6 +240,106 @@
         "haber_radar",
         "bullish",
         "uzun_vadeli"
+      ]
+    },
+    {
+      "id": "CRDO_RADAR_2026-04-26",
+      "ticker": "CRDO",
+      "sirket": "Credo Technology Group Holding Ltd",
+      "sektor": "Technology / Communication Equipment",
+      "analiz_tarihi": "2026-04-26",
+      "bilanco_tarihi": "2026-06-01",
+      "analiz_turu": "tematik_arastirma",
+      "durum": "aktif_izleme",
+      "dosya": "reports/research/CRDO_RADAR_2026-04-26.md",
+      "kataliz": {
+        "olay": "AI veri merkezi connectivity ivmelenmesi — AEC ve optical DSP talebi",
+        "tarih": "2026-04-26",
+        "aciklama": "Q3 FY26 gelir +%201 YoY (135M->407M dolar), 8 çeyrek üst üste analist beat. Hyperscaler AEC adopsyonu hızlanıyor. Ancak RSI 77.6 aşırı alım, insider 21M dolar net satış kırmızı bayrak."
+      },
+      "on_beklenti": {
+        "senaryo_boga": {
+          "kosul": "1 Haz Q4 beat + sektör momentum süreklilik",
+          "fiyat_hedef": 260.0,
+          "getiri_pct": 33
+        },
+        "senaryo_baz": {
+          "kosul": "Pullback 168-175 zonuna, sonra konsensüs hedefe",
+          "fiyat_hedef": 220.0,
+          "getiri_pct": 13
+        },
+        "senaryo_ayi": {
+          "kosul": "Müşteri konsantrasyon riski + büyüme yavaşlama",
+          "fiyat_hedef": 145.0,
+          "getiri_pct": -26
+        }
+      },
+      "analiz_fiyati": 195.04,
+      "temel_metrikler": {
+        "pe_ttm": 101.3,
+        "forward_pe_fy27": 38.2,
+        "forward_peg_fy27": 0.71,
+        "fiyat_satis_ttm": 33.7,
+        "fiyat_defter": 18.6,
+        "borclanma_ozkaynak": 0.007,
+        "roe_ttm_pct": 29.6,
+        "roic_ttm_pct": 17.0,
+        "brut_marj_q3_pct": 68.5,
+        "net_marj_q3_pct": 38.6,
+        "gelir_yoy_q3_pct": 201,
+        "rsi_14": 77.6,
+        "atr_14_pct": 8.3,
+        "sma50": 122.56,
+        "sma200": 134.99,
+        "beta": 2.72,
+        "nakit_m": 1230,
+        "fcf_ttm_m": 269,
+        "konsensus_hedef": 218.33,
+        "analist_buy_strongbuy": 16,
+        "analist_hold": 1,
+        "analist_sell": 0
+      },
+      "portfoy_onerisi": {
+        "dengeli": "uygun_degil",
+        "agresif": "uygun_kosullu",
+        "temettü": "uygun_degil"
+      },
+      "giris_plani": {
+        "ideal_zon": "168-175",
+        "stop_loss": 145,
+        "hedef_1": 220,
+        "hedef_2": 260,
+        "r_r_orani": 2.0,
+        "pozisyon_boyut_dolar": 30000,
+        "kosul": "RSI<60 + 50MA mesafe daralması ya da 1 Haz earnings sonrası reaksiyon"
+      },
+      "izleme_tetikleyicileri": [
+        "1 Haz 2026 Q4 FY26 kazanç açıklaması",
+        "RSI 60 altına geri çekilme",
+        "168-175 dolar limit alım zonu",
+        "Hyperscaler capex sezonu (1-15 Mayıs MSFT/META/GOOGL Q1)",
+        "Insider satış davranışında değişim (alım sinyali)",
+        "ANET ile sektör konsantrasyon yönetimi"
+      ],
+      "gerceklesen": {
+        "earnings_q4_eps": null,
+        "earnings_q4_revenue_m": null,
+        "fiyat_tepkisi_pct": null,
+        "alim_tetiklendi_mi": null,
+        "ders": null
+      },
+      "etiketler": [
+        "ai_infrastructure",
+        "data_center",
+        "connectivity",
+        "active_electrical_cable",
+        "optical_dsp",
+        "serdes",
+        "semiconductor",
+        "earnings_play",
+        "high_growth",
+        "high_valuation",
+        "insider_red_flag"
       ]
     }
   ]
