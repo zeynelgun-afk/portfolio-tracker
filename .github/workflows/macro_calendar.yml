@@ -1,0 +1,91 @@
+name: 📈 Makro Takvim Güncelle
+
+on:
+  schedule:
+    # Her ayın 1'i, 06:00 UTC = 09:00 TR
+    - cron: '0 6 1 * *'
+  workflow_dispatch:
+    inputs:
+      ay:
+        description: 'Belirli ay (YYYY-MM, boş = otomatik)'
+        required: false
+        default: ''
+      aylar:
+        description: 'Kaç ay kapsansın (varsayılan: 2)'
+        required: false
+        default: '2'
+      test_modu:
+        description: 'Test modu (ICS yazma, sadece önizle)'
+        required: false
+        default: 'false'
+        type: boolean
+
+jobs:
+  makro-takvim:
+    name: Makro Takvimi Güncelle
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: 📥 Repo İndir
+        uses: actions/checkout@v4
+
+      - name: 🐍 Python 3.11 Kur
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: 📦 Bağımlılıkları Yükle
+        run: |
+          pip install --quiet requests icalendar python-dateutil pytz
+
+      - name: 📅 Makro Takvimi Güncelle (Normal)
+        if: ${{ github.event_name == 'schedule' || inputs.test_modu == 'false' }}
+        env:
+          FMP_API_KEY: ${{ secrets.FMP_API_KEY }}
+        run: |
+          AYLAR="${{ inputs.aylar || '2' }}"
+          AY_ARG=""
+          if [ -n "${{ inputs.ay }}" ]; then
+            AY_ARG="--ay ${{ inputs.ay }}"
+          fi
+          python scripts/macro_calendar_updater.py $AY_ARG --aylar $AYLAR
+
+      - name: 🧪 Test Modu
+        if: ${{ inputs.test_modu == 'true' }}
+        env:
+          FMP_API_KEY: ${{ secrets.FMP_API_KEY }}
+        run: |
+          AYLAR="${{ inputs.aylar || '2' }}"
+          python scripts/macro_calendar_updater.py --aylar $AYLAR --test
+
+      - name: 📤 ICS Dosyasını Commit Et
+        if: ${{ inputs.test_modu != 'true' }}
+        run: |
+          git config user.name  "Finzora AI"
+          git config user.email "zeynelgun@users.noreply.github.com"
+          git add data/calendars/macro_events.ics
+          if git diff --staged --quiet; then
+            echo "Değişiklik yok, commit atlanıyor."
+          else
+            TARIH=$(date +'%Y-%m')
+            git commit -m "[DATA] Makro takvim güncellendi — $TARIH"
+            git push
+            echo "✅ ICS dosyası commit edildi."
+          fi
+
+      - name: 📨 Telegram Bildirimi
+        if: ${{ inputs.test_modu != 'true' }}
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_PRIVATE_ID: ${{ secrets.TELEGRAM_PRIVATE_ID }}
+        run: |
+          TARIH=$(date +'%B %Y')
+          MESAJ="📈 <b>Makro Takvim Güncellendi</b>%0A<i>$TARIH</i>%0A%0AEarnings + FOMC + CPI/NFP/PCE tarihleri yenilendi.%0AGoogle Calendar otomatik senkronize olacak.%0A%0A<i>finzora ai • makro takvim</i>"
+          curl -s -X POST \
+            "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+            -d "chat_id=${TELEGRAM_PRIVATE_ID}" \
+            -d "text=${MESAJ}" \
+            -d "parse_mode=HTML" > /dev/null
+          echo "Telegram bildirimi gönderildi."
