@@ -1,0 +1,38 @@
+name: Haber Radarı
+
+on:
+  workflow_dispatch:          # manuel test için
+  schedule:
+    - cron: '0 6 * * 1-5'    # Hafta içi 09:00 TR (06:00 UTC)
+
+jobs:
+  radar:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Repo çek
+        uses: actions/checkout@v4
+
+      - name: Python kur
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Bağımlılıklar
+        run: pip install requests
+
+      - name: Haber Radarı çalıştır
+        run: python3 scripts/news_radar.py
+        env:
+          FMP_API_KEY:          ${{ secrets.FMP_API_KEY }}
+          ANTHROPIC_API_KEY:    ${{ secrets.ANTHROPIC_API_KEY }}
+          TELEGRAM_BOT_TOKEN:   ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_PRIVATE_ID:  ${{ secrets.TELEGRAM_PRIVATE_ID }}
+
+      - name: Log commit et
+        run: |
+          git config user.name  "Finzora AI"
+          git config user.email "zeynelgun@users.noreply.github.com"
+          git add data/news_radar_log.json || true
+          git diff --staged --quiet || git commit -m "[RADAR] Haber radarı log güncellendi $(date +'%Y-%m-%d %H:%M')"
+          git push || true
