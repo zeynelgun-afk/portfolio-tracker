@@ -12,7 +12,7 @@
       "risk_off": 0
     },
     "growth_aksiyon": "Savunma (ITA, LMT, RTX) + Enerji (XLE, CVX) ağırlığını artır. AI tezini koru ama yeni giriş yapma.",
-    "tespit_zamani": "2026-04-27T23:03:02.189827+03:00"
+    "tespit_zamani": "2026-04-27T23:33:15.912879+03:00"
   },
   "sektor_data": {
     "XLE": {
@@ -36,15 +36,15 @@
       "gunluk_chg": -0.5
     },
     "XLU": {
-      "price": 46.175,
-      "gunluk_chg": -0.01
+      "price": 46.19,
+      "gunluk_chg": 0.02
     },
     "XLP": {
-      "price": 82.33,
-      "gunluk_chg": -1.08
+      "price": 82.34,
+      "gunluk_chg": -1.07
     },
     "XLY": {
-      "price": 117.8422,
+      "price": 117.842,
       "gunluk_chg": -0.71
     },
     "XLB": {
@@ -56,8 +56,8 @@
       "gunluk_chg": -0.79
     },
     "ITA": {
-      "price": 216,
-      "gunluk_chg": 0.09
+      "price": 216.04,
+      "gunluk_chg": 0.11
     }
   }
 }
