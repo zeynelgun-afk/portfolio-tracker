@@ -1262,22 +1262,14 @@ def _check_swing_exits(market: dict) -> list[str]:
                 f"💰 {u['mesaj']}\n→ K-11: %25-30 kısmi satış düşün"
             )
 
-    # Kapatılan pozisyonlar (swing_manager kapattı, biz bildirelim)
-    closed_path = REPO_ROOT / "data" / "swing" / "closed.json"
-    if closed_path.exists():
-        closed = json.load(open(closed_path))
-        kapalilar = closed.get("kapatilan_pozisyonlar", closed.get("kapali_pozisyonlar", []))  # CANONICAL, fallback eski
-        # Bugün kapananları bul
-        bugun = datetime.now().strftime("%Y-%m-%d")
-        bugun_kapali = [k for k in kapalilar if k.get("cikis_tarihi") == bugun]
-        for k in bugun_kapali[-3:]:  # Son 3
-            pnl  = k.get("kar_zarar_yuzde", k.get("pnl_pct", 0))   # canonical, fallback
-            icon = "✅" if pnl > 0 else "❌"
-            aksiyonlar.append(
-                f"{icon} *SWING KAPANDI*: {k['sembol']}\n"
-                f"Neden: {k.get('cikis_nedeni','?')} | P/L: {pnl:+.1f}%\n"
-                f"→ {k.get('adet','?')} adet SATIN"
-            )
+    # 27 Nis 2026 fix: duplicate "SWING KAPANDI" spam'ı kaldırıldı.
+    # Eski kod: closed.json'daki "bugün kapanan son 3" pozisyonu okuyup her
+    # monitor run'unda (30 dk'da bir) tekrar tekrar bildirim üretiyordu —
+    # CAT/KLAC/AMAT 14:20'de kapandığı halde 20:33 ve 21:03'te tekrar mesaj
+    # geldi (kullanıcı şikayeti, screenshot kanıtlı).
+    # Yeni mantık: bildirim TEK noktadan, swing_manager._swing_notify_group
+    # içinden, kapanış ANINDA üretilir (commit 50acfac). Burada tekrar
+    # üretilmesine gerek yok.
 
     return aksiyonlar
 
