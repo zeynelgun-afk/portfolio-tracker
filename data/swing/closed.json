@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-04-11",
+  "son_guncelleme": "2026-04-27T14:20:21.858251",
   "kapatilan_pozisyonlar": [
     {
       "id": "SWING-020",
@@ -724,6 +724,69 @@
         "analiz_tarihi": "2026-04-11 20:10",
         "model": "claude-sonnet-4-6"
       }
+    },
+    {
+      "id": "SWING-202604101410-CAT",
+      "sembol": "CAT",
+      "adet": 4,
+      "giris_fiyati": 790.66,
+      "cikis_fiyati": 824.37,
+      "giris_tarihi": "2026-04-10",
+      "cikis_tarihi": "2026-04-27",
+      "cikis_nedeni": "SURE",
+      "kar_zarar_yuzde": 4.26,
+      "tutulan_gun": 17,
+      "sonuc": "KAZANC",
+      "ders": "Süre doldu (15g). Momentum beklediğimiz kadar güçlü değildi.",
+      "giris_nedeni": "Seans içi otomatik giriş — tenkan_bounce, sma50_bounce, kijun_bounce_v2, nr7_sikisma",
+      "tarama_yontemi": "tenkan_bounce, sma50_bounce, kijun_bounce_v2, nr7_sikisma",
+      "katalizor": "",
+      "stop_loss": 730.35,
+      "hedef_fiyat": 941.43,
+      "zirve_fiyat": 839.76,
+      "partial_exits": []
+    },
+    {
+      "id": "SWING-202604101410-KLAC",
+      "sembol": "KLAC",
+      "adet": 1,
+      "giris_fiyati": 1737.28,
+      "cikis_fiyati": 1891.04,
+      "giris_tarihi": "2026-04-10",
+      "cikis_tarihi": "2026-04-27",
+      "cikis_nedeni": "SURE",
+      "kar_zarar_yuzde": 8.85,
+      "tutulan_gun": 17,
+      "sonuc": "KAZANC",
+      "ders": "Süre doldu (15g). Momentum beklediğimiz kadar güçlü değildi.",
+      "giris_nedeni": "Seans içi otomatik giriş — tenkan_bounce, kijun_bounce_v2",
+      "tarama_yontemi": "tenkan_bounce, kijun_bounce_v2",
+      "katalizor": "",
+      "stop_loss": 1540.49,
+      "hedef_fiyat": 2229.26,
+      "zirve_fiyat": 1935,
+      "partial_exits": []
+    },
+    {
+      "id": "SWING-202604101410-AMAT",
+      "sembol": "AMAT",
+      "adet": 6,
+      "giris_fiyati": 399.49,
+      "cikis_fiyati": 404.93,
+      "giris_tarihi": "2026-04-10",
+      "cikis_tarihi": "2026-04-27",
+      "cikis_nedeni": "SURE",
+      "kar_zarar_yuzde": 1.36,
+      "tutulan_gun": 17,
+      "sonuc": "KAZANC",
+      "ders": "Süre doldu (15g). Momentum beklediğimiz kadar güçlü değildi.",
+      "giris_nedeni": "Seans içi otomatik giriş — sma50_bounce",
+      "tarama_yontemi": "sma50_bounce",
+      "katalizor": "",
+      "stop_loss": 361.98,
+      "hedef_fiyat": 493.26,
+      "zirve_fiyat": 419.96,
+      "partial_exits": []
     }
   ],
   "istatistikler": {

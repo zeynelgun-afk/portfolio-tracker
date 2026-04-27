@@ -9,10 +9,10 @@
   ],
   "faz": "FAZ_0",
   "buy_list": {
-    "tarih": "2026-04-24T17:49:11.447347+03:00",
+    "tarih": "2026-04-27T17:20:19.296732+03:00",
     "adaylar": [],
-    "vix": 18.67,
-    "piyasa_mod": "risk-on"
+    "vix": 18.86,
+    "piyasa_mod": "risk-on-temkinli"
   },
   "zorunlu_aksiyonlar": [],
   "claude_kararlar": {
@@ -99,5 +99,5 @@
     ],
     "kaynak": "closing"
   },
-  "timestamp": "2026-04-24T17:49:11.447533+03:00"
+  "timestamp": "2026-04-27T17:20:19.296968+03:00"
 }

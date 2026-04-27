@@ -485,6 +485,48 @@
         }
       },
       "karar_degisti_mi": true
+    },
+    {
+      "symbol": "COHR",
+      "tarih": "2026-04-27T14:22:10.894864",
+      "ilk_karar": {
+        "karar": "SAT",
+        "hedef_sembol": "COHR",
+        "gerekce": "Risk Yöneticisi (HIGH güven) iki kritik stop yakınlığı işaret ediyor: CAMT %0.6, COHR %1.2. Teknik analist parse hatasına rağmen COHR için SELL sinyali net okunuyor (kâr koruma, -4.5% sert düşüş). Sektör analisti optical/networking zayıflığını ve COHR'dan ana semi'ye rotasyon önerisini destekliyor — üç analist COHR çıkışında hemfikir. Makro NEUTRAL ama earnings haftası volatilitesi ve VIX yükselişi riski artırıyor. K-17 ihlali (Tech %56.9) zaten yeni alımı yasaklıyor, mevcut zayıf halkayı temizlemek öncelik. CAMT da çıkış adayı (MANUEL_REVIEW 28 + stop %0.6) ancak COHR daha acil çünkü teknik SELL + sektör zayıflığı + stop yakınlığı üçlüsü kesişiyor. Jeopolitik kriz rejimi de optical/networking gibi yüksek beta temalardan defansife rotasyonu destekliyor.",
+        "uyari": "CAMT %0.6 stop mesafesinde — COHR satışı sonrası CAMT için de aynı gün karar verilmeli. ABBV earnings 2 gün, stop %3.7: K-05 gereği yarıya indirme kararı bugün alınmalı.",
+        "guven": "HIGH",
+        "analist_uzlasma": "YUKSEK",
+        "tahmin": {
+          "yon": "DOWN",
+          "buyukluk": "MEDIUM",
+          "sembol": "COHR"
+        },
+        "_agent": "CIO_AGENT",
+        "_timestamp": "2026-04-27T14:21:24.144416"
+      },
+      "boğa": {
+        "_raw": "{\n  \"argümanlar\": [\n    \"COHR pozisyonu zaten +%12.3 kârda ve giriş maliyeti $285.75 — mevcut $320.98 seviyesinde stop $317'de (sadece %1.2 uzak), yani downside maksimum ~%1 ama upside hedef $330 (%2.",
+        "_parse_hata": true
+      },
+      "ayı": {
+        "_raw": "{\n  \"argümanlar\": [\n    \"COHR teknik olarak bozuldu: -4.5% günlük düşüş ile $320.98'e geri çekildi, stop seviyesi $330'un ALTINA düştü — yani stop zaten tetiklenmiş durumda (Stop% +1.2% yukarıda). Bu ",
+        "_parse_hata": true
+      },
+      "nihai": {
+        "nihai_karar": "SAT",
+        "kazan_taraf": "AYI",
+        "karar_gerekce": "COHR stop seviyesine sadece %1.2 uzaklıkta ve bugün -%4.5 sert düşüş yaşadı. Pozisyon hala +%12.3 kârda iken kazancı korumak rasyonel; ayrıca portföyde teknoloji konsantrasyonu %56.9 ile kritik seviyede ve agresif portföy zaten -%2.6 zararda. v5 fair value -34% PAH sinyali de aşağı yönlü risk teyit ediyor.",
+        "boğa_haklı_çünkü": "Pozisyon hala +%12.3 kârda ve hedef $330'a yakın; AI/optik talep yapısal olarak güçlü, aşırı satım sonrası kısa vadeli teknik tepki ihtimali var.",
+        "ayı_haklı_çünkü": "Stop'a %1.2 uzaklık + bugün -%4.5 düşüş + v5 fair value -%34 PAH sinyali çoklu kırmızı bayrak; teknoloji konsantrasyonu %56.9 ile K-17 riski taşıyor.",
+        "göz_ardı_edilen": "Sektör genelinde optik/AI altyapı hisselerinde rotasyon olup olmadığı (ANET de -%3.1) ve kazanç takvimi etkisi tartışılmadı.",
+        "güven": "HIGH",
+        "tahmin": {
+          "yon": "DOWN",
+          "buyukluk": "MEDIUM",
+          "sembol": "SPY"
+        }
+      },
+      "karar_degisti_mi": false
     }
   ]
 }

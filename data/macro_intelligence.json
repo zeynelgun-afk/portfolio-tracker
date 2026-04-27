@@ -1,122 +1,140 @@
 {
-  "tarih": "2026-04-24T17:49:08.802519+03:00",
-  "vix": 18.67,
+  "tarih": "2026-04-27T17:20:10.927215+03:00",
+  "vix": 18.86,
   "sektor_performans": {
-    "Basic Materials": -0.41413458300150197,
-    "Communication Services": 0.39949641594407836,
-    "Consumer Cyclical": -0.2251497430556304,
-    "Consumer Defensive": -0.16075091819128806,
-    "Energy": -0.5816430144724882,
-    "Financial Services": -0.4315065650488892,
-    "Healthcare": -0.7454779195932404,
-    "Industrials": -0.9867163236408683,
-    "Real Estate": 0.7272194987797409,
-    "Technology": -0.008591773790067592,
-    "Utilities": 0.3347725534752488
+    "Basic Materials": -0.025781926295787017,
+    "Communication Services": 0.639429241402234,
+    "Consumer Cyclical": -0.7361235582687642,
+    "Consumer Defensive": 0.2839313241019603,
+    "Energy": 0.055109025707600345,
+    "Financial Services": 0.3309514140124037,
+    "Healthcare": 0.9425662291523862,
+    "Industrials": -0.04496626753346389,
+    "Real Estate": -0.5950067401036541,
+    "Technology": -0.36058820536315483,
+    "Utilities": -1.4872106239916305
   },
   "dominant_temalar": [
     {
-      "tema_adi": "enerji_geçiş",
-      "güç_skoru": 7,
-      "neden": "Utilities +0.3% ve Real Estate +0.7% pozitif; June rate cut söylemi faiz duyarlı altyapı/nükleer/güç temasını destekliyor",
-      "öncelikli_alt_dal": "nükleer_güç",
+      "tema_adi": "sağlık_yenilik",
+      "güç_skoru": 8,
+      "neden": "Healthcare sektörü +0.9% ile günün lideri, SGMT(+45.9%), CUE(+44.1%), ONCO(+26.6%) gibi biyotek/onkoloji isimleri momentum gösteriyor",
+      "öncelikli_alt_dal": "onkoloji_biyotek",
       "önerilen_hisseler": [
-        "VST",
-        "CEG",
-        "NEE"
+        "LLY",
+        "VRTX",
+        "REGN"
       ],
-      "portföy": "aggressive",
+      "portföy": "balanced",
       "aciliyet": "orta",
       "hisse_evreni": [
-        "NRG",
-        "KMI",
-        "FSLR",
-        "ENPH",
-        "OKE",
-        "VST",
-        "CCJ",
-        "RUN",
-        "ET",
-        "WMB",
-        "CEG",
-        "NEE"
+        "LLY",
+        "ALT",
+        "ISRG",
+        "MDT",
+        "GILD",
+        "BMY",
+        "SYK",
+        "NVO",
+        "EW",
+        "REGN",
+        "VKTX",
+        "MRNA"
+      ]
+    },
+    {
+      "tema_adi": "savunma_uzay",
+      "güç_skoru": 6,
+      "neden": "Iran gerilimi haberleri Wall Street'i temkinli tutuyor, jeopolitik risk fiyatlanıyor ancak sektör reaksiyonu henüz sınırlı",
+      "öncelikli_alt_dal": "savunma_ana_yüklenici",
+      "önerilen_hisseler": [
+        "LMT",
+        "RTX",
+        "NOC"
+      ],
+      "portföy": "balanced",
+      "aciliyet": "orta",
+      "hisse_evreni": [
+        "GD",
+        "CRWD",
+        "RKLB",
+        "NOC",
+        "AJRD",
+        "LHX",
+        "S",
+        "RTX",
+        "LMT",
+        "RDW",
+        "PANW",
+        "ZS",
+        "KTOS"
       ]
     },
     {
       "tema_adi": "finansal_döngüsel",
       "güç_skoru": 5,
-      "neden": "Powell soruşturması düşürüldü, Warsh FED yolu açıldı, June rate cut beklentisi; ancak Financial Services -0.4% bugün zayıf, faiz kesim beklentisi net marjı baskılıyor",
-      "öncelikli_alt_dal": "faiz_duyarlı_REIT",
+      "neden": "Financial Services +0.3% pozitif, ancak hayat sigortası hisselerinde short pozisyonlar artıyor (private credit endişesi) — seçici olunmalı",
+      "öncelikli_alt_dal": "büyük_bankalar",
       "önerilen_hisseler": [
-        "O",
-        "AMT",
-        "PLD"
+        "JPM",
+        "GS"
       ],
-      "portföy": "dividend",
-      "aciliyet": "orta",
+      "portföy": "balanced",
+      "aciliyet": "düşük",
       "hisse_evreni": [
-        "AFRM",
-        "GS",
-        "CB",
-        "MS",
-        "MET",
-        "V",
-        "PYPL",
         "MA",
         "PRU",
+        "PYPL",
+        "V",
+        "JPM",
+        "AFRM",
         "BAC",
+        "GS",
+        "MET",
         "AIG",
-        "JPM"
+        "MS",
+        "CB"
       ]
     }
   ],
   "kacınılacak": [
-    "Consumer Cyclical",
-    "Consumer Defensive"
+    "Technology",
+    "Basic Materials"
   ],
-  "piyasa_modu": "risk-on",
+  "piyasa_modu": "risk-on-temkinli",
   "aktif_kriz": {
-    "tip": "enflasyon",
-    "guven": 6,
-    "kanit": "Nisan tüketici güveni rekor düşükte, haber başlıkları açıkça 'Inflation Fears Drive Consumer Sentiment to Record Low' diyor. Consumer Cyclical -0.2% ve Consumer Defensive -0.2% birlikte düşüyor — tüketici baskı altında. Ancak VIX 18.7 hâlâ sakin, bu yüzden guven orta düzeyde.",
-    "beneficiary_sectors": [
-      "Energy",
-      "Basic Materials",
-      "Real Estate",
-      "Utilities"
-    ],
-    "sensitive_sectors": [
-      "Consumer Cyclical",
-      "Consumer Defensive",
-      "Financial Services"
-    ]
+    "tip": "yok",
+    "guven": 4,
+    "kanit": "VIX 18.9 (eşik altı), S&P 500 yeni rekor seviyede. 'Recession Trigger Active' ve Iran gerilimi başlıkları endişe yaratsa da sektörler mixed-pozitif, panik satışı yok. Healthcare lider, Tech hafif zayıf — bu rotasyon kriz değil normal risk dengelemesi.",
+    "beneficiary_sectors": [],
+    "sensitive_sectors": []
   },
-  "genel_yorum": "Piyasa karışık ama risk-on eğilimde: June rate cut beklentisi faiz duyarlı varlıkları (REIT, Utilities) destekliyor. Ancak tüketici güveninin rekor düşüğü ciddi bir enflasyon/stagflasyon uyarısı — tüketici sektörlerinden uzak durulmalı. VIX sakin olduğu için panik yok, ama tematik seçicilik şart.",
+  "genel_yorum": "Piyasa rekor seviyede ancak yüzey altında temkin var: resesyon başlıkları, Iran gerilimi ve sigorta short'ları izlenmeli. Healthcare bugünün net lideri — biyotek momentum'u dikkat çekici. SPEKÜLATİF: Tech zayıflığı kalıcı rotasyon mu yoksa kâr realizasyonu mu belirsiz, K-13 kriz tetiklenmedi standart VIX bazlı yönetim devam.",
   "haberler": [
     {
-      "baslik": "April's Consumer Sentiment Is the Lowest on Record",
-      "kaynak": "wsj.com",
-      "tarih": "2026-04-24 10:26"
-    },
-    {
-      "baslik": "Pirro drops probe into Fed's Powell, paving way for Warsh confirmation",
-      "kaynak": "marketwatch.com",
-      "tarih": "2026-04-24 10:26"
-    },
-    {
-      "baslik": "Warsh, Oil, And The April FOMC: The Case For June Rate Cuts",
+      "baslik": "The Recession Trigger Is Active",
       "kaynak": "seekingalpha.com",
-      "tarih": "2026-04-24 10:24"
+      "tarih": "2026-04-27 10:06"
     },
     {
-      "baslik": "The DOJ said it would end its criminal investigation of Federal Reserve Chair Jerome Powell, clearing the obstacle that has stalled Kevin Warsh's confirmation as his successor",
+      "baslik": "Short sellers' bets on life insurance stocks soar as private credit concerns grow",
+      "kaynak": "reuters.com",
+      "tarih": "2026-04-27 10:04"
+    },
+    {
+      "baslik": "Hungary's MOL says talks on NIS acquisition 'ongoing'",
+      "kaynak": "reuters.com",
+      "tarih": "2026-04-27 10:00"
+    },
+    {
+      "baslik": "See the Corporate Layoffs So Far in 2026",
       "kaynak": "wsj.com",
-      "tarih": "2026-04-24 10:24"
+      "tarih": "2026-04-27 09:50"
     },
     {
-      "baslik": "DOJ drops criminal probe of Fed Chair Powell",
-      "kaynak": "cnbc.com",
-      "tarih": "2026-04-24 10:22"
+      "baslik": "Dow Jones rises 96 points as Iran tensions keep Wall Street cautious",
+      "kaynak": "invezz.com",
+      "tarih": "2026-04-27 09:40"
     }
   ]
 }

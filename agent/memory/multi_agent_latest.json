@@ -1,77 +1,80 @@
 {
   "macro": {
-    "sinyal": "RISK_ON",
+    "sinyal": "NEUTRAL",
     "guven": "MEDIUM",
-    "ana_tema": "VIX normalleşirken güçlü earnings (Intel +27%, P&G) ve Fed öncesi risk iştahı destekli tech liderliği",
+    "ana_tema": "Earnings haftası başlıyor; VIX 18.86 normal seviyede ama hafif yükselişte, piyasa kazanç sonuçlarını bekliyor.",
     "beklentiler": [
-      "29 Nisan Fed toplantısı ve basın konferansı haftanın ana katalizörü; faiz sabit ama ton kritik",
-      "Tech momentum devam edebilir (QQQ +1.32%, MU/ANET/CAMT güçlü), ancak Fed öncesi alım iştahı ölçülü kalacak"
+      "Bu hafta yoğun earnings akışı (ABBV, MO, CI, OKE, HBM) volatiliteyi artırabilir",
+      "1 Mayıs CPI ve istihdam verileri Fed beklentilerini şekillendirecek",
+      "İşsizlik %7.5'ten %7.4'e gerilemesi bekleniyor — hafif olumlu"
     ],
-    "risk_faktoru": "Fed basın konferansında şahin ton veya 2026 kesinti beklentilerinin geri çekilmesi — mevcut tech liderliğini hızla bozabilir",
+    "risk_faktoru": "Yüksek işsizlik seviyesi (%7.5) resesyon endişesini canlı tutuyor; earnings hayal kırıklığı sell-the-news tetikleyebilir.",
     "tahmin": {
-      "yon": "UP",
+      "yon": "NEUTRAL",
       "buyukluk": "LOW",
       "sembol": "SPY"
     },
     "_agent": "MACRO_AGENT",
-    "_timestamp": "2026-04-24T14:49:47.860739"
+    "_timestamp": "2026-04-27T14:20:32.667559"
   },
   "sector": {
     "aktif_rejim": "ai_boom",
-    "lider_sektor": "Yarı İletken / Teknoloji (XLK, SMH)",
-    "zayif_sektor": "Defansif Tüketim (XLP)",
-    "rotasyon_onerisi": "XLP/defansiflerden XLK/SMH (semis) ve XLI (industrials - GEV/CAT/ETN) tarafına rotasyon; altın (GLD/NEM) jeopolitik hedge olarak korunmalı",
-    "guven": "HIGH",
+    "lider_sektor": "Semiconductors (SOXX/SMH) - MU +5.2%, AMAT, KLAC güçlü",
+    "zayif_sektor": "Optical/Networking momentum (COHR -4.5%, ANET -3.1%, CAMT -4.4%)",
+    "rotasyon_onerisi": "Optical/networking alt-temasından (COHR/CAMT) ana semi (MU/AMAT/KLAC) ve industrial AI (GEV/ETN) tarafına rotasyon; tech konsantrasyonu %57 K-17 ihlali nedeniyle defansif (XLV/XLU) ve altın (GLD) ekleme",
+    "guven": "MEDIUM",
     "tahmin": {
       "yon": "UP",
       "buyukluk": "MEDIUM",
       "sembol": "SMH"
     },
     "_agent": "SECTOR_AGENT",
-    "_timestamp": "2026-04-24T14:49:55.745479"
+    "_timestamp": "2026-04-27T14:20:44.701512"
   },
   "signal": {
     "_agent": "SIGNAL_AGENT",
-    "_raw": "{\n  \"portfoy_sinyalleri\": [\n    {\n      \"sembol\": \"COHR\",\n      \"sinyal\": \"HOLD\",\n      \"rsi_yorumu\": \"overbought\",\n      \"sma_durumu\": \"ustunde\",\n      \"aciklama\": \"Güçlü P/L+18%, stop yakın (%6.1) trailing sıkılaştır.\"\n    },\n    {\n      \"sembol\": \"ANET\",\n      \"sinyal\": \"HOLD\",\n      \"rsi_yorumu\"",
+    "_raw": "{\n  \"portfoy_sinyalleri\": [\n    {\n      \"sembol\": \"COHR\",\n      \"sinyal\": \"SELL\",\n      \"rsi_yorumu\": \"normal\",\n      \"sma_durumu\": \"ustunde\",\n      \"aciklama\": \"Stop %1.2 uzakta, -4.5% sert düşüş, kâr koruma için çıkış.\"\n    },\n    {\n      \"sembol\": \"ANET\",\n      \"sinyal\": \"HOLD\",\n      \"rsi_yorumu",
     "_parse_hata": true,
     "guven": "LOW"
   },
   "risk": {
     "risk_seviyesi": "HIGH",
     "stop_yakini": [
-      "CPRX - %2.9 uzakta (KRİTİK)",
-      "O - %3.1 uzakta (KRİTİK)",
-      "ABBV - %3.4 uzakta",
-      "MO - %4.6 uzakta",
-      "COHR - %6.1 uzakta"
+      "CAMT - %0.6 uzakta (KRİTİK)",
+      "COHR - %1.2 uzakta (KRİTİK)",
+      "O - %2.7 uzakta",
+      "ABBV - %3.7 uzakta (earnings 2 gün)",
+      "MO - %3.9 uzakta",
+      "ANET - %4.1 uzakta",
+      "GTY - %4.9 uzakta"
     ],
-    "konsantrasyon_uyarisi": "Technology sektörü %57.4 — K-17 limitini ciddi şekilde aşıyor (COHR, ANET, MU, CAMT, KLAC, AMAT yüksek korelasyonlu). Agresif portföy -%3.6 drawdown'da teknoloji ağır. Tek bir tech şoku tüm portföyü vurabilir.",
-    "senaryo_5pct_dusus": "Toplam ~$19,630 kayıp (-%6.0). 5 pozisyon stop tetikler: CPRX, O, ABBV, MO, COHR. Zincirleme stop riski: dividend bucket'ta 3 pozisyon aynı anda vurulur, gerçekleşen kayıp ~$6,147.",
+    "konsantrasyon_uyarisi": "Technology %56.9 - K-17 ihlali (eşik %40). Aggressive bucket'ta COHR+ANET+MU+CAMT yığılması, tek sektör şokunda zincirleme stop riski. Temettü bucket P/L yanıltıcı (MO ağırlıklı).",
+    "senaryo_5pct_dusus": "~$19,358 kayıp (-%6.0). 6 pozisyon stop tetikler: COHR, ANET, CAMT (aggressive üçlüsü = -$9,445) + MO, O, GTY (dividend = -$2,472). Aggressive bucket başlangıç altına daha da iner.",
     "onerileri": [
-      "Tech konsantrasyonunu acil %40 altına çek: CAMT (Stop%12.7, zayıf v5 PAH?) veya ETN kısmi kâr al",
-      "Dividend bucket'ta 3 pozisyon aynı anda stop yakın — O ve ABBV için trailing stop sıkılaştır veya %25-50 kısmi çıkış düşün (K-11)",
-      "CPRX %2.9 uzaklıkta + -%3.7 günlük hareket → K-09 erken çıkış değerlendir",
-      "Swing slot 5/5 dolu + tech ağırlık yüksek → yeni tech girişi YOK (K-02/K-17)",
-      "NEM %7.2 günlük sıçrama + %14.7 stop uzaklığı → kısmi kâr al, stop yukarı çek"
+      "CAMT (%0.6) ve COHR (%1.2) için bugün manuel takip — preemptive trim veya stop sıkılaştırma değerlendir",
+      "ABBV K-05 tetikçisi: earnings 2 gün, stop %3.7 — kazanç öncesi pozisyon yarıya indirme veya stop genişletme kararı acil",
+      "Technology %56.9 → K-17 ihlali: yeni teknoloji girişi YASAK, MU (+%26 P/L) veya KLAC (+%11.4) üzerinden kademeli kâr alma (K-11) ile konsantrasyon düşürülmeli",
+      "Aggressive bucket -%2.6: yeni risk ekleme; CAMT MANUEL_REVIEW(28) düşük skor + stop yakın → çıkış adayı",
+      "Swing 5/5 dolu: yeni swing girişi yok, mevcut pozisyonlarda trailing stop disiplini (K-07)"
     ],
     "guven": "HIGH",
     "_agent": "RISK_AGENT",
-    "_timestamp": "2026-04-24T14:50:21.106107"
+    "_timestamp": "2026-04-27T14:21:10.758276"
   },
   "cio": {
-    "karar": "DONDUR",
-    "hedef_sembol": "CAMT→XLI/GLD ve O/ABBV kısmi çıkış",
-    "gerekce": "Sektör analisti (ağırlık 1.53) AI_BOOM rejiminde XLK/SMH liderliğini doğruluyor ancak Risk Yöneticisi (HIGH güven) tech konsantrasyonunun %57.4'e ulaştığını ve K-17 limitini ciddi aştığını raporluyor — bu çelişkide Risk > Sektör önceliği geçerli. 5 pozisyon stop'a kritik mesafede (CPRX %2.9, O %3.1, ABBV %3.4) ve %5 piyasa düşüşünde ~$19.6K kayıp + zincirleme stop riski var. Makro (ağırlık 0.89) RISK_ON ama Fed (29 Nisan) öncesi MEDIUM güven ve şahin ton riski mevcut. Bu nedenle yeni tech alımı YOK, onun yerine: (1) CAMT'de kısmi kâr al ve pozisyonu küçült, (2) O ve ABBV'de %25-50 kısmi çıkış ile dividend bucket zincirleme stop riskini düşür, (3) kurtarılan sermaye XLI (GEV/CAT/ETN) ve GLD'ye rotasyon. NEM'de +%7.2 sıçrama sonrası kısmi kâr al + stop yukarı çek. Swing slot 5/5 dolu olduğu için K-02 gereği yeni giriş zaten kapalı.",
-    "uyari": "CPRX %2.9 uzaklıkta + günlük -%3.7 hareket → K-09 erken çıkış tetiklenebilir, Fed basın toplantısında şahin ton tech liderliğini 24 saatte bozabilir. Teknik sinyal agent parse hatası verdi (LOW güven) — bu karar onsuz alındı.",
-    "guven": "MEDIUM",
-    "analist_uzlasma": "ORTA",
+    "karar": "SAT",
+    "hedef_sembol": "COHR",
+    "gerekce": "Risk Yöneticisi (HIGH güven) iki kritik stop yakınlığı işaret ediyor: CAMT %0.6, COHR %1.2. Teknik analist parse hatasına rağmen COHR için SELL sinyali net okunuyor (kâr koruma, -4.5% sert düşüş). Sektör analisti optical/networking zayıflığını ve COHR'dan ana semi'ye rotasyon önerisini destekliyor — üç analist COHR çıkışında hemfikir. Makro NEUTRAL ama earnings haftası volatilitesi ve VIX yükselişi riski artırıyor. K-17 ihlali (Tech %56.9) zaten yeni alımı yasaklıyor, mevcut zayıf halkayı temizlemek öncelik. CAMT da çıkış adayı (MANUEL_REVIEW 28 + stop %0.6) ancak COHR daha acil çünkü teknik SELL + sektör zayıflığı + stop yakınlığı üçlüsü kesişiyor. Jeopolitik kriz rejimi de optical/networking gibi yüksek beta temalardan defansife rotasyonu destekliyor.",
+    "uyari": "CAMT %0.6 stop mesafesinde — COHR satışı sonrası CAMT için de aynı gün karar verilmeli. ABBV earnings 2 gün, stop %3.7: K-05 gereği yarıya indirme kararı bugün alınmalı.",
+    "guven": "HIGH",
+    "analist_uzlasma": "YUKSEK",
     "tahmin": {
-      "yon": "UP",
-      "buyukluk": "LOW",
-      "sembol": "SPY"
+      "yon": "DOWN",
+      "buyukluk": "MEDIUM",
+      "sembol": "COHR"
     },
     "_agent": "CIO_AGENT",
-    "_timestamp": "2026-04-24T14:50:36.778326"
+    "_timestamp": "2026-04-27T14:21:24.144416"
   },
   "weights": {
     "MACRO_AGENT": 0.8925,

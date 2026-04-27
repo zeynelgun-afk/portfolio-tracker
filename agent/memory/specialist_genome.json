@@ -1,8 +1,8 @@
 {
   "MACRO_AGENT": {
-    "weight": 0.8925,
-    "n": 67,
-    "avg_score": -0.0717,
+    "weight": 0.8479,
+    "n": 68,
+    "avg_score": -1.5,
     "history": [
       {
         "date": "2026-04-13",
@@ -11,13 +11,19 @@
         "wr_pct": 14.9,
         "n_samples": 67,
         "kaynak": "simülasyon_2026-01-02_2026-04-11"
+      },
+      {
+        "date": "2026-04-27",
+        "weight": 0.8478749999999999,
+        "avg_score": -1.5,
+        "n_samples": 1
       }
     ]
   },
   "SECTOR_AGENT": {
-    "weight": 1.5307,
-    "n": 67,
-    "avg_score": 0.3538,
+    "weight": 1.4542,
+    "n": 68,
+    "avg_score": -0.6,
     "history": [
       {
         "date": "2026-04-13",
@@ -26,6 +32,12 @@
         "wr_pct": 49.3,
         "n_samples": 67,
         "kaynak": "simülasyon_2026-01-02_2026-04-11"
+      },
+      {
+        "date": "2026-04-27",
+        "weight": 1.454165,
+        "avg_score": -0.6,
+        "n_samples": 1
       }
     ]
   },
@@ -60,9 +72,9 @@
     ]
   },
   "CIO_AGENT": {
-    "weight": 0.8231,
-    "n": 67,
-    "avg_score": -0.118,
+    "weight": 0.7819,
+    "n": 68,
+    "avg_score": -1.5,
     "history": [
       {
         "date": "2026-04-13",
@@ -71,6 +83,12 @@
         "wr_pct": 14.9,
         "n_samples": 67,
         "kaynak": "simülasyon_2026-01-02_2026-04-11"
+      },
+      {
+        "date": "2026-04-27",
+        "weight": 0.781945,
+        "avg_score": -1.5,
+        "n_samples": 1
       }
     ]
   }

@@ -1,7 +1,30 @@
 {
-  "tarih": "2026-04-24T22:09:34.598774",
-  "adaylar": [],
+  "tarih": "2026-04-27T14:24:54.332414",
+  "adaylar": [
+    {
+      "symbol": "CL",
+      "tema": "tüketici_temettü",
+      "portföy": "dividend",
+      "price": 84.55,
+      "stop": 80.32,
+      "target": 91.66,
+      "rr": 1.68,
+      "score": 5.7,
+      "teknik": 5,
+      "fundamental": 7,
+      "atr": 1.78,
+      "reason": "tüketici_temettü tema taraması — teknik:5/10 fundamental:7/10",
+      "detay": {
+        "sma200": "✅",
+        "rsi": "✅ 55 (temettü giriş)",
+        "skor": 7,
+        "roic": "✅ 30.3%",
+        "fcf": "✅ 5.4%",
+        "büyüme": "✅ ROE 431.6%"
+      }
+    }
+  ],
   "ozet": {
-    "toplam": 0
+    "toplam": 1
   }
 }
