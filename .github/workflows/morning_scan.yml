@@ -64,9 +64,12 @@ jobs:
           python3 scripts/full_universe_screener.py --mode "$MODE" --workers 8
         env:
           PYTHONUNBUFFERED: '1'
+          FMP_API_KEY:      ${{ secrets.FMP_API_KEY }}
 
       - name: Ozet
         run: python3 scripts/scan_summary.py || echo "Ozet alinamadi"
+        env:
+          FMP_API_KEY: ${{ secrets.FMP_API_KEY }}
 
       - name: Sonuclari kaydet
         run: |
@@ -126,6 +129,9 @@ jobs:
           git rebase --abort 2>/dev/null || true
           git reset --hard origin/main
           python scripts/swing_entry_engine.py --watchlist 2>&1 | tee /tmp/swing_entry.txt
+        env:
+          FMP_API_KEY:      ${{ secrets.FMP_API_KEY }}
+          PYTHONUNBUFFERED: '1'
 
       - name: Sonuc kaydet
         run: |
