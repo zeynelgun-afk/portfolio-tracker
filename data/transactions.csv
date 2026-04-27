@@ -187,3 +187,4 @@ date,action,symbol,shares,price,total,reason
 2026-04-27,SELL,CAMT,226,192.59,43526.47,K-06 stop tetiklendi $192.59≤$192.85
 2026-04-27,BUY,TFC,71,51.18,3633.78,"Swing giriş — tenkan_bounce. Stop: $47.67, Hedef: $59.95"
 2026-04-27,BUY,NNE,125,25.62,3202.5,"Swing giriş — kijun_bounce_v2. Stop: $23.63, Hedef: $30.60"
+2026-04-27,BUY,CAT,3,831.57,2494.71,"Swing giriş — tenkan_bounce. Stop: $754.92, Hedef: $1023.20"
