@@ -503,6 +503,19 @@ TABLO YORUMLAMA KURALLARI (Kesin olarak uygula):
 - K-05 earnings uyarısı: YENI GİRİŞ yasağı. Mevcut açık pozisyon K-05'ten ETKİLENMEZ, tutulabilir.
 - K-17: Aynı GÜNDE aynı sektörden YENI GİRİŞ yasağı. Portföyde mevcut tech pozisyonu K-17 tetiklemez.
 
+NAKİT KULLANIM KURALI (27 Nis 2026 — ZORUNLU):
+- 3 portföyde nakit oranı %10'u GEÇMEMELİ. Risk bağlamındaki "NAKİT KULLANIMI" bloğuna BAK.
+- 🔴 AŞIM gören portföyler için günün planında SOMUT konuşlandırma kararı üret:
+  * Yükseliş bekleniyorsa → fırsat sektörlerinden EKLE/BÜYÜT (sektör+tema K-12 %40 limiti içinde).
+  * Geri çekilme bekleniyorsa → defansif rotasyon (XLP/XLV/GLD/TLT) veya inverse ETF (SH/SQQQ/SDOW).
+  * Hedge/inverse kuralları portföye göre değişir:
+     - AGRESİF: inverse ETF + put serbest.
+     - DENGELİ: önce defansif rotasyon, inverse max %10 ve sadece düşük kaldıraçlı (SH/SDOW); 3x kaldıraçlı (SQQQ) YASAK.
+     - TEMETTÜ: hedge ve inverse ETF YASAK; sadece defansif temettü hisseleri.
+- "Yeni giriş yasak" karar verme — nakit aşımı varsa K-02/K-17 dışında en az BİR EKLE veya BÜYÜT kararı zorunludur.
+- Risk/ödül min 2:1, K-12 sektör+tema %40 limiti geçerli.
+- "Nakit fazla ama bekleyelim" gerekçesi kabul EDİLMEZ — somut sektör + symbol + tutar öner.
+
 EKSIK VERI KURALLARI (21 Nisan 2026 teshisi — ZORUNLU UYGULA):
 - Endeks tablosunda HIÇ BİR hücre "—" veya boş birakilmaz. Değişim hesaplanamiyorsa:
   * Önce veri bloğundaki previousClose + current price'tan MANUEL hesapla: (price - prevClose) / prevClose * 100
@@ -700,6 +713,15 @@ Zorunlu bölümler:
 
 JSON güncellemeleri (fiyat/k-z) zaten yapılıyor, rapor bölümlerine yansıt.
 Kapanan trade varsa post-trade review ekle.
+
+NAKİT KULLANIM KURALI (27 Nis 2026 — ZORUNLU):
+- Risk bağlamındaki "NAKİT KULLANIMI" bloğunda 🔴 AŞIM görüyorsan, "yarın aksiyonları"
+  bölümünde SOMUT konuşlandırma planı üret (sektör + sembol + tutar).
+- "Bekle / pasif" yerine: yükseliş bekleniyorsa fırsat sektörü EKLE/BÜYÜT, geri çekilme
+  bekleniyorsa defansif rotasyon (XLP/XLV/GLD/TLT) veya inverse ETF.
+- Portföy hedge kuralları: AGRESİF inverse+put serbest; DENGELİ inverse max %10 sadece
+  düşük kaldıraçlı (3x YASAK); TEMETTÜ inverse YASAK.
+
 KESİN / MUHTEMEL / SPEKÜLATİF etiket kullan. Küçük harf Türkçe.
 """
 

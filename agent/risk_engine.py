@@ -354,6 +354,30 @@ def build_risk_context(portfolios: dict) -> str:
         )
     lines.append("")
 
+    # ── NAKİT KULLANIMI (27 Nis 2026 eklendi) ─────────────────────────────
+    # Kural: 3 portföyde nakit oranı %10'u GEÇMESİN. Aşımlar Claude'un
+    # gözünden kaçmasın diye AYRI bir blokta gösteriliyor.
+    lines.append("--- NAKİT KULLANIMI (kural: ≤%10) ---")
+    nakit_asim_var = False
+    for pf_name, pf_data in portfolios.items():
+        nakit_obj = pf_data.get("nakit", 0)
+        if isinstance(nakit_obj, dict):
+            nakit_amt = nakit_obj.get("miktar", 0)
+            nakit_pct = nakit_obj.get("agirlik_yuzde", 0)
+        else:
+            nakit_amt = float(nakit_obj or 0)
+            toplam = pf_data.get("toplam_deger") or pf_data.get("baslangic_sermaye") or 1
+            nakit_pct = (nakit_amt / toplam * 100) if toplam else 0
+        bayrak = "🔴 AŞIM" if nakit_pct > 10 else ("🟡 sınırda" if nakit_pct > 7 else "✅ normal")
+        if nakit_pct > 10:
+            nakit_asim_var = True
+        lines.append(f"  {pf_name:12} ${nakit_amt:>10,.0f} = %{nakit_pct:>5.1f}  {bayrak}")
+    if nakit_asim_var:
+        lines.append("  ⚠️ %10 üstü nakit → fırsat sektörlerine konuşlandırma ZORUNLU "
+                     "(yükseliş bekleniyorsa) veya defansif rotasyon/ters yönlü pozisyon "
+                     "(geri çekilme bekleniyorsa). Detay: memory.")
+    lines.append("")
+
     # Korelasyon uyarıları
     if corr["uyarilar"]:
         lines.append("--- KONSANTRASYON UYARILARI ---")
