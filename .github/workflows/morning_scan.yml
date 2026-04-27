@@ -2,11 +2,6 @@ name: Sabah Evren Taramasi
 
 on:
   workflow_dispatch:
-  push:
-    paths:
-      - '.github/workflows/morning_scan.yml'
-      - 'scripts/full_universe_screener.py'
-
     inputs:
       mode:
         description: 'balanced/dividend/aggressive/all'

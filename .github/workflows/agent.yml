@@ -2,11 +2,6 @@ name: Finzora Agent
 
 on:
   workflow_dispatch:
-  push:
-    paths:
-      - 'agent/*.py'
-      - '.github/workflows/agent.yml'
-
     inputs:
       mode:
         description: 'Calisma modu'
