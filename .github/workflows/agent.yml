@@ -1,25 +1,12 @@
 name: Finzora Agent
 
 on:
-  schedule:
-    # Sabah: 13:00 UTC ana tetik + 13:12 yedek. GitHub Actions ':00' dakikasini
-    # yogun repolarda bazen atliyor. Yedek tetikte orchestrator duplicate-guard
-    # ile (bugunku SABAH raporu varsa skip) tekrar calismaz — boylece ana tetik
-    # kacirilirsa yedek devreye girer, kacirilmazsa yedek no-op.
-    - cron: '0 13 * * 1-5'
-    - cron: '12 13 * * 1-5'
-    # Kapanis: 21:30 UTC ana + 21:42 yedek. run_closing icinde
-    # DAILY_KAPANIS_YYYY-MM-DD.md varligina gore guard aktif.
-    - cron: '30 21 * * 1-5'
-    - cron: '42 21 * * 1-5'
-    # Monitor (seans ici, her yarim saat) — guard yok ama monitor idempotent:
-    # pozisyon kontrolu + fiyat yenileme, ayri dosya yazmaz.
-    - cron: '0,30 14-20 * * 1-5'
-    # Haftalik (Pazar) ana + yedek. run_weekly icinde WEEKLY_YYYY_MM_DD.md
-    # guard'i aktif.
-    - cron: '0 9 * * 0'
-    - cron: '12 9 * * 0'
   workflow_dispatch:
+  push:
+    paths:
+      - 'agent/*.py'
+      - '.github/workflows/agent.yml'
+
     inputs:
       mode:
         description: 'Calisma modu'

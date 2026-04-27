@@ -1,11 +1,12 @@
 name: Sabah Evren Taramasi
 
 on:
-  schedule:
-    # TR 14:00 (UTC 11:00) — pre-market öncesi, market açılışından 2.5 saat önce.
-    # Eski 06:15 UTC = TR 09:15 idi (7 saat erken, pre-market verisi yok).
-    - cron: '0 11 * * 1-5'
   workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/morning_scan.yml'
+      - 'scripts/full_universe_screener.py'
+
     inputs:
       mode:
         description: 'balanced/dividend/aggressive/all'

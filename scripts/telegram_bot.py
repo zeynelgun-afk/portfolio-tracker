@@ -1483,33 +1483,72 @@ def main():
                 print(f"[GH] ❌ {workflow_file} hata: {e}")
                 return False
 
-        # Tetiklenecek zamanlamalar: (saat, dakika, workflow_file, hafta_ici_mi, aciklama)
+        # ── Zamanlama tablosu ─────────────────────────────────────
+        # (saat, dakika, workflow_file, inputs, hafta_ici, pazar_mu, aciklama)
+        # hafta_ici=True  → sadece Pzt-Cum
+        # pazar_mu=True   → sadece Pazar
+        # Her ikisi False → her gün
         _GH_ZAMANLAMALAR = [
-            (9,  0,  "news_radar.yml",        True,  "Haber Radarı"),
-            (12, 30, "adil_deger_panel.yml",   True,  "Adil Değer Paneli"),
-            (23, 30, "result_tracker.yml",     True,  "Sonuç Takip"),
+            # Hafta içi sabit
+            (9,   0, "news_radar.yml",       {},                    True,  False, "Haber Radarı"),
+            (12, 30, "adil_deger_panel.yml", {},                    True,  False, "Adil Değer Paneli"),
+            (14,  0, "morning_scan.yml",     {"mode":"all"},        True,  False, "Sabah Evren Taraması"),
+            (16,  0, "agent.yml",            {"mode":"morning"},    True,  False, "Agent Sabah"),
+            (23, 30, "result_tracker.yml",   {},                    True,  False, "Sonuç Takip"),
+            # Kapanış: gece yarısı 00:30 TR (yeni güne geçmiş ama hafta içinde)
+            # Pzt gecesi 00:30 = Salı sabahı, Cum gecesi 00:30 = Cmt sabahı
+            # weekday(): Sal=1…Cmt=5 → 1-5 arası = gece öncesi hafta içiydi
+            (0,  30, "agent.yml",            {"mode":"closing"},    False, False, "Agent Kapanış"),
+            # Haftalık — Pazar
+            (12,  0, "agent.yml",            {"mode":"weekly"},     False, True,  "Agent Haftalık"),
         ]
-        _gh_tetiklendi = {}  # "workflow_file:YYYY-MM-DD" → tetiklendi mi
+
+        # Monitor: seans saatlerinde her 30 dakika ayrı liste
+        # 17:00-23:30 TR arası (14:00-20:30 UTC) Pzt-Cum
+        _MONITOR_SAATLER = set()
+        for _h in range(17, 24):
+            _MONITOR_SAATLER.add((_h, 0))
+            _MONITOR_SAATLER.add((_h, 30))
+
+        _gh_tetiklendi = {}  # "key:YYYY-MM-DD:HH:MM" → True
 
         def _workflow_zamanlayici():
-            """Her dakika kontrol — doğru saatte GitHub Actions tetikle."""
+            """Her dakika kontrol — doğru saatte GitHub Actions workflow tetikle."""
             while True:
                 try:
-                    simdi = datetime.now(_TR_TZ)
-                    bugun_str = simdi.strftime("%Y-%m-%d")
-                    is_hafta_ici = simdi.weekday() < 5  # Pzt-Cum
+                    simdi      = datetime.now(_TR_TZ)
+                    is_hft     = simdi.weekday() < 5   # Pzt(0)…Cum(4)
+                    is_pazar   = simdi.weekday() == 6
+                    is_gece_hft = 1 <= simdi.weekday() <= 5  # Sal-Cmt (gece öncesi hft)
+                    saat, dakika = simdi.hour, simdi.minute
+                    gun_str    = simdi.strftime("%Y-%m-%d")
 
-                    for saat, dakika, wf, hafta_ici, aciklama in _GH_ZAMANLAMALAR:
-                        key = f"{wf}:{bugun_str}"
-                        if (simdi.hour == saat and simdi.minute == dakika
-                                and (not hafta_ici or is_hafta_ici)
-                                and key not in _gh_tetiklendi):
+                    # Sabit zamanlamalar
+                    for s, d, wf, inputs, hft, pazar, aciklama in _GH_ZAMANLAMALAR:
+                        if saat != s or dakika != d:
+                            continue
+                        if hft   and not is_hft:   continue
+                        if pazar and not is_pazar:  continue
+                        # Kapanış özel kontrolü (00:30 TR, önceki gün hft olmalı)
+                        if wf == "agent.yml" and inputs.get("mode") == "closing":
+                            if not is_gece_hft: continue
+
+                        key = f"{wf}:{inputs.get('mode','')}:{gun_str}:{s:02d}{d:02d}"
+                        if key not in _gh_tetiklendi:
                             _gh_tetiklendi[key] = True
-                            print(f"[GH] {simdi.strftime('%H:%M')} → {aciklama} tetikleniyor")
-                            _gh_dispatch(wf)
+                            print(f"[GH] {simdi.strftime('%H:%M')} → {aciklama}")
+                            _gh_dispatch(wf, inputs or None)
 
-                    # Eski anahtarları temizle (7 günden eski)
-                    if len(_gh_tetiklendi) > 50:
+                    # Monitor: seans içi her 30 dk
+                    if is_hft and (saat, dakika) in _MONITOR_SAATLER:
+                        key = f"agent_monitor:{gun_str}:{saat:02d}{dakika:02d}"
+                        if key not in _gh_tetiklendi:
+                            _gh_tetiklendi[key] = True
+                            print(f"[GH] {simdi.strftime('%H:%M')} → Agent Monitor")
+                            _gh_dispatch("agent.yml", {"mode": "monitor"})
+
+                    # Bellek temizliği
+                    if len(_gh_tetiklendi) > 200:
                         _gh_tetiklendi.clear()
 
                 except Exception as e:
@@ -1518,10 +1557,15 @@ def main():
 
         _tw = threading.Thread(target=_workflow_zamanlayici, daemon=True, name="WorkflowZamanlayici")
         _tw.start()
-        print(f"[Bot] Workflow zamanlayıcı başlatıldı:")
-        print(f"[Bot]   09:00 TR (Hft içi) → news_radar.yml")
-        print(f"[Bot]   12:30 TR (Hft içi) → adil_deger_panel.yml")
-        print(f"[Bot]   23:30 TR (Hft içi) → result_tracker.yml")
+        print(f"[Bot] Workflow zamanlayıcı başlatıldı (tüm cron'lar Railway'de):")
+        print(f"[Bot]   09:00 TR (Hft) → Haber Radarı")
+        print(f"[Bot]   12:30 TR (Hft) → Adil Değer Paneli")
+        print(f"[Bot]   14:00 TR (Hft) → Sabah Evren Taraması")
+        print(f"[Bot]   16:00 TR (Hft) → Agent Sabah")
+        print(f"[Bot]   17:00-23:30 TR (Hft/30dk) → Agent Monitor")
+        print(f"[Bot]   23:30 TR (Hft) → Sonuç Takip")
+        print(f"[Bot]   00:30 TR (Hft) → Agent Kapanış")
+        print(f"[Bot]   12:00 TR (Pzr) → Agent Haftalık")
         # ─────────────────────────────────────────────────────────
 
         offset = load_offset()
