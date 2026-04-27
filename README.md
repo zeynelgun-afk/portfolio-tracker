@@ -107,11 +107,19 @@ finzora-ai/
 │   ├── TRADING_PLAYBOOK.md         # ⭐ Tam strateji kitabı
 │   ├── SWING_SYSTEM_V2.md          # Swing sistem v2.3
 │   ├── AGGRESSIVE_V2_THESIS.md     # AI tedarik zinciri tezi
+│   ├── SEKTOR_DEEP_DIVE_SKILL.md   # ⭐ Sektör/tema zinciri raporu skill
 │   └── prompts/                    # Seans prompt şablonları
+│
+├── templates/                      # Rapor şablonları
+│   └── sektor_deep_dive/           # Sektör/tema zinciri rapor şablonu
+│       ├── template.html           # Boş şablon (placeholder'lı)
+│       ├── SCHEMA.md               # Veri yapısı detayı
+│       └── ornek_*.html            # Tam örnek raporlar (referans)
 │
 ├── reports/
 │   ├── daily/                      # SABAH / SWING / PORTFOY / KAPANIS
-│   └── weekly/                     # WEEKLY_YYYY-MM-DD
+│   ├── weekly/                     # WEEKLY_YYYY-MM-DD
+│   └── research/                   # Sektör/tema deep dive raporları (HTML)
 │
 ├── outputs/risk_panel/             # Günlük risk paneli PNG
 │

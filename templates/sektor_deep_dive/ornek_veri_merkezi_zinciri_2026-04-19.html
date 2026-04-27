@@ -1,0 +1,1656 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Finzora AI · Veri Merkezi Tedarik Zinciri Raporu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,400;1,9..144,500&family=JetBrains+Mono:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0e14;
+  --bg-elevated: #12181f;
+  --surface: #171e27;
+  --surface-hover: #1f2832;
+  --border: #1f2832;
+  --border-bright: #2a3441;
+  --grid-line: #151c24;
+
+  --text-primary: #e6e8ea;
+  --text-secondary: #a1a7b0;
+  --text-tertiary: #6b7280;
+  --text-dim: #4a5361;
+
+  --accent-bull: #7dd3a0;
+  --accent-bull-dim: rgba(125, 211, 160, 0.12);
+  --accent-bear: #ff6b6b;
+  --accent-bear-dim: rgba(255, 107, 107, 0.12);
+  --accent-gold: #f4c430;
+  --accent-gold-dim: rgba(244, 196, 48, 0.12);
+  --accent-cyan: #4ecdc4;
+  --accent-cyan-dim: rgba(78, 205, 196, 0.12);
+  --accent-violet: #a78bfa;
+  --accent-violet-dim: rgba(167, 139, 250, 0.12);
+
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'DM Sans', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'SF Mono', monospace;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.6;
+  overflow-x: hidden;
+  background-image:
+    radial-gradient(circle at 15% 10%, rgba(78, 205, 196, 0.04) 0%, transparent 40%),
+    radial-gradient(circle at 85% 80%, rgba(167, 139, 250, 0.04) 0%, transparent 40%),
+    linear-gradient(180deg, var(--bg) 0%, #080b10 100%);
+  background-attachment: fixed;
+}
+
+/* TICKER STRIP */
+.ticker-strip {
+  position: fixed; top: 0; left: 0; right: 0;
+  background: #050709;
+  border-bottom: 1px solid var(--border);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-secondary);
+  padding: 8px 0;
+  z-index: 100;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.ticker-inner { display: inline-block; animation: scroll 80s linear infinite; padding-left: 100%; }
+.ticker-item { display: inline-block; margin-right: 2rem; letter-spacing: 0.04em; }
+.ticker-item .sym { color: var(--accent-gold); font-weight: 600; margin-right: 0.5rem; }
+.ticker-item .val { color: var(--text-primary); margin-right: 0.4rem; }
+.ticker-item .chg.pos { color: var(--accent-bull); }
+.ticker-item .chg.neg { color: var(--accent-bear); }
+@keyframes scroll { 0% { transform: translate(0, 0); } 100% { transform: translate(-100%, 0); } }
+
+/* NAV */
+nav.main-nav {
+  position: fixed; top: 32px; left: 0; right: 0;
+  background: rgba(10, 14, 20, 0.9);
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  border-bottom: 1px solid var(--border);
+  z-index: 99;
+  padding: 1rem 0;
+}
+.nav-inner {
+  max-width: 1480px;
+  margin: 0 auto; padding: 0 2rem;
+  display: flex; align-items: center; justify-content: space-between; gap: 2rem;
+}
+.nav-brand { display: flex; align-items: baseline; gap: 0.75rem; font-family: var(--font-display); }
+.nav-brand .logo { font-size: 1.5rem; font-weight: 900; letter-spacing: -0.02em; font-style: italic; }
+.nav-brand .logo .ai { color: var(--accent-gold); }
+.nav-brand .pipe { color: var(--text-dim); font-weight: 300; }
+.nav-brand .subtitle {
+  font-family: var(--font-mono); font-size: 0.7rem;
+  color: var(--text-tertiary); letter-spacing: 0.1em; text-transform: uppercase;
+}
+.nav-links { display: flex; gap: 1.5rem; align-items: center; }
+.nav-links a {
+  font-family: var(--font-mono); font-size: 0.75rem;
+  color: var(--text-secondary); text-decoration: none;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  transition: color 0.2s; padding: 0.4rem 0;
+  border-bottom: 1px solid transparent;
+}
+.nav-links a:hover { color: var(--accent-gold); border-bottom-color: var(--accent-gold); }
+.nav-date {
+  font-family: var(--font-mono); font-size: 0.7rem;
+  color: var(--text-tertiary); text-align: right; letter-spacing: 0.05em;
+}
+.nav-date .live {
+  color: var(--accent-bull); display: inline-block;
+  width: 6px; height: 6px; background: var(--accent-bull);
+  border-radius: 50%; margin-right: 0.4rem;
+  animation: pulse 1.8s ease-in-out infinite;
+}
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+.container { max-width: 1480px; margin: 0 auto; padding: 0 2rem; }
+section { padding: 6rem 0; position: relative; }
+section.hero { padding: 10rem 0 4rem; }
+
+/* HERO */
+.hero-grid {
+  display: grid; grid-template-columns: 1.3fr 1fr;
+  gap: 4rem; align-items: end; margin-bottom: 4rem;
+}
+.hero-label {
+  font-family: var(--font-mono); font-size: 0.75rem;
+  color: var(--accent-cyan); letter-spacing: 0.2em; text-transform: uppercase;
+  margin-bottom: 1.5rem;
+  display: flex; align-items: center; gap: 0.75rem;
+}
+.hero-label::before { content: ''; width: 40px; height: 1px; background: var(--accent-cyan); }
+.hero h1 {
+  font-family: var(--font-display); font-weight: 400;
+  font-size: clamp(2.8rem, 6vw, 5.5rem);
+  line-height: 0.98; letter-spacing: -0.035em; margin-bottom: 1.5rem;
+}
+.hero h1 em { font-style: italic; color: var(--accent-gold); font-weight: 300; }
+.hero-sub { font-size: 1.05rem; color: var(--text-secondary); line-height: 1.7; max-width: 90%; }
+.hero-meta {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 1.5rem; padding-top: 2rem; border-top: 1px solid var(--border);
+}
+.meta-item .k {
+  font-family: var(--font-mono); font-size: 0.7rem;
+  color: var(--text-tertiary); text-transform: uppercase;
+  letter-spacing: 0.1em; margin-bottom: 0.4rem;
+}
+.meta-item .v {
+  font-family: var(--font-display); font-size: 1.4rem;
+  font-weight: 500; color: var(--text-primary); line-height: 1;
+}
+.meta-item .v .unit {
+  font-family: var(--font-mono); font-size: 0.7rem;
+  color: var(--text-tertiary); margin-left: 0.4rem;
+  font-weight: 400; letter-spacing: 0.05em;
+}
+
+/* KEY FINDING */
+.key-finding {
+  background: linear-gradient(135deg, rgba(244, 196, 48, 0.06) 0%, rgba(78, 205, 196, 0.03) 100%);
+  border: 1px solid var(--border-bright);
+  border-left: 3px solid var(--accent-gold);
+  padding: 3rem 3.5rem; position: relative;
+}
+.key-finding::before {
+  content: 'ANA BULGU';
+  position: absolute; top: 1rem; right: 1.5rem;
+  font-family: var(--font-mono); font-size: 0.65rem;
+  letter-spacing: 0.2em; color: var(--accent-gold); opacity: 0.6;
+}
+.kf-headline {
+  font-family: var(--font-display); font-size: 1.75rem;
+  font-weight: 400; line-height: 1.3;
+  letter-spacing: -0.02em; margin-bottom: 1.25rem;
+}
+.kf-headline strong { color: var(--accent-gold); font-weight: 600; }
+.kf-body { color: var(--text-secondary); font-size: 0.98rem; line-height: 1.75; }
+.kf-body .warn { color: var(--accent-bear); font-weight: 500; }
+.kf-body .bull { color: var(--accent-bull); font-weight: 500; }
+
+/* SECTION HEADING */
+.sec-head {
+  margin-bottom: 3rem;
+  display: grid; grid-template-columns: 1fr auto;
+  align-items: end; gap: 2rem;
+  padding-bottom: 1.5rem; border-bottom: 1px solid var(--border);
+}
+.sec-num {
+  font-family: var(--font-mono); font-size: 0.75rem;
+  color: var(--text-tertiary); letter-spacing: 0.15em; margin-bottom: 0.75rem;
+}
+.sec-num .n { color: var(--accent-gold); }
+.sec-head h2 {
+  font-family: var(--font-display); font-weight: 400;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  line-height: 1; letter-spacing: -0.03em;
+}
+.sec-head h2 em { font-style: italic; color: var(--accent-gold); }
+.sec-note {
+  font-family: var(--font-mono); font-size: 0.75rem;
+  color: var(--text-tertiary); text-align: right;
+  letter-spacing: 0.05em; max-width: 320px; line-height: 1.5;
+}
+
+/* ==== DEĞERLEME HARİTASI ==== */
+.map-wrapper {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-bright);
+  padding: 2rem;
+  margin-bottom: 2rem;
+  position: relative;
+}
+.map-header {
+  display: flex; justify-content: space-between;
+  align-items: flex-start; margin-bottom: 1.5rem;
+  flex-wrap: wrap; gap: 1rem;
+}
+.map-legend {
+  display: flex; gap: 1.2rem; flex-wrap: wrap;
+  font-family: var(--font-mono); font-size: 0.72rem;
+  letter-spacing: 0.05em;
+}
+.leg-item {
+  display: flex; align-items: center; gap: 0.5rem;
+  color: var(--text-secondary);
+  cursor: pointer; user-select: none;
+  padding: 0.3rem 0.6rem;
+  border: 1px solid transparent;
+  transition: all 0.2s;
+}
+.leg-item:hover { border-color: var(--border-bright); color: var(--text-primary); }
+.leg-item.muted { opacity: 0.3; }
+.leg-dot { width: 10px; height: 10px; border-radius: 50%; }
+.leg-dot.cheap { background: var(--accent-bull); }
+.leg-dot.hidden { background: var(--accent-cyan); }
+.leg-dot.quality { background: var(--accent-gold); }
+.leg-dot.avoid { background: var(--accent-bear); }
+.leg-dot.hold { background: var(--accent-violet); }
+
+.map-hint {
+  font-family: var(--font-mono); font-size: 0.68rem;
+  color: var(--text-tertiary); letter-spacing: 0.05em;
+  font-style: italic;
+}
+
+.map-container {
+  position: relative;
+  background: #050709;
+  border: 1px solid var(--grid-line);
+  aspect-ratio: 16/10;
+  overflow: hidden;
+}
+.map-svg { width: 100%; height: 100%; display: block; }
+
+.quadrant-label {
+  position: absolute;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  pointer-events: none;
+  padding: 0.25rem 0.5rem;
+  background: rgba(5, 7, 9, 0.9);
+  border: 1px solid var(--border);
+}
+.ql-tl { top: 12px; left: 12px; color: var(--accent-bull); border-color: var(--accent-bull); }
+.ql-tr { top: 12px; right: 12px; color: var(--accent-cyan); border-color: var(--accent-cyan); }
+.ql-bl { bottom: 12px; left: 12px; color: var(--text-tertiary); }
+.ql-br { bottom: 12px; right: 12px; color: var(--accent-bear); border-color: var(--accent-bear); }
+
+.axis-label {
+  position: absolute;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  pointer-events: none;
+}
+.al-x-left { bottom: -30px; left: 0; }
+.al-x-right { bottom: -30px; right: 0; }
+.al-y-top { top: 0; left: -110px; width: 100px; text-align: right; }
+.al-y-bottom { bottom: 0; left: -110px; width: 100px; text-align: right; }
+
+.map-container-outer {
+  padding: 0 0 40px 120px;
+  position: relative;
+}
+
+.dot {
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.dot:hover .dot-circle {
+  r: 14;
+  stroke-width: 2.5;
+}
+.dot-circle {
+  transition: all 0.2s;
+  stroke-width: 1.5;
+}
+.dot-label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 600;
+  fill: var(--text-primary);
+  pointer-events: none;
+  text-anchor: middle;
+  dominant-baseline: middle;
+}
+
+.map-tooltip {
+  position: absolute;
+  background: var(--bg-elevated);
+  border: 1px solid var(--accent-gold);
+  padding: 1rem 1.25rem;
+  max-width: 340px;
+  pointer-events: none;
+  z-index: 20;
+  opacity: 0;
+  transition: opacity 0.15s;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+}
+.map-tooltip.visible { opacity: 1; }
+.mt-head { display: flex; align-items: baseline; gap: 0.6rem; margin-bottom: 0.5rem; }
+.mt-ticker {
+  font-family: var(--font-mono); font-weight: 700;
+  font-size: 1.1rem; color: var(--text-primary); letter-spacing: 0.02em;
+}
+.mt-cat {
+  font-family: var(--font-mono); font-size: 0.6rem;
+  padding: 0.15rem 0.4rem; letter-spacing: 0.1em; text-transform: uppercase;
+}
+.mt-cat.cheap { background: var(--accent-bull-dim); color: var(--accent-bull); }
+.mt-cat.hidden { background: var(--accent-cyan-dim); color: var(--accent-cyan); }
+.mt-cat.quality { background: var(--accent-gold-dim); color: var(--accent-gold); }
+.mt-cat.avoid { background: var(--accent-bear-dim); color: var(--accent-bear); }
+.mt-cat.hold { background: var(--accent-violet-dim); color: var(--accent-violet); }
+.mt-name {
+  font-family: var(--font-display); font-style: italic;
+  font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.75rem;
+}
+.mt-row {
+  font-family: var(--font-mono); font-size: 0.7rem;
+  color: var(--text-secondary); padding: 0.2rem 0;
+  display: flex; justify-content: space-between; gap: 0.5rem;
+}
+.mt-row .k { color: var(--text-tertiary); }
+.mt-row .v { color: var(--text-primary); font-weight: 500; text-align: right; }
+
+.map-filters {
+  display: flex; gap: 0.4rem; flex-wrap: wrap;
+  margin-top: 1.5rem;
+}
+
+/* TERİM SÖZLÜĞÜ */
+.glossary {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent-cyan);
+  padding: 2rem 2.5rem;
+  margin-top: 2rem;
+}
+.glossary h3 {
+  font-family: var(--font-display);
+  font-size: 1.2rem; font-weight: 500;
+  font-style: italic;
+  color: var(--accent-cyan);
+  margin-bottom: 1.25rem;
+}
+.gloss-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem 2rem;
+}
+.gloss-item {
+  font-size: 0.85rem;
+  padding: 0.35rem 0;
+  border-bottom: 1px dashed var(--grid-line);
+}
+.gloss-item .term {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  color: var(--accent-gold);
+  font-size: 0.78rem;
+  margin-right: 0.5rem;
+}
+.gloss-item .def {
+  color: var(--text-secondary);
+}
+
+/* LAYER OVERVIEW */
+.layer-overview {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem; margin-bottom: 3rem;
+}
+.layer-card {
+  background: var(--surface); border: 1px solid var(--border);
+  padding: 1.5rem; position: relative;
+  transition: all 0.25s ease; cursor: pointer; overflow: hidden;
+}
+.layer-card:hover {
+  border-color: var(--accent-gold);
+  transform: translateY(-2px); background: var(--surface-hover);
+}
+.layer-card::after {
+  content: ''; position: absolute; top: 0; right: 0;
+  width: 100px; height: 100px;
+  background: radial-gradient(circle at top right, rgba(244, 196, 48, 0.08), transparent 70%);
+  pointer-events: none;
+}
+.lc-num {
+  font-family: var(--font-mono); font-size: 0.7rem;
+  color: var(--text-tertiary); letter-spacing: 0.1em; margin-bottom: 0.75rem;
+}
+.lc-num .hash { color: var(--accent-gold); }
+.lc-title {
+  font-family: var(--font-display); font-size: 1.1rem;
+  font-weight: 500; line-height: 1.2; margin-bottom: 1rem;
+  letter-spacing: -0.01em;
+}
+.lc-pick {
+  font-family: var(--font-mono); font-size: 0.85rem;
+  color: var(--accent-bull); font-weight: 600;
+  margin-bottom: 0.5rem; letter-spacing: 0.02em;
+}
+.lc-pick .name { color: var(--text-primary); font-weight: 500; margin-left: 0.4rem; font-size: 0.75rem; }
+.lc-pe { font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-tertiary); letter-spacing: 0.05em; }
+
+/* FILTER BAR */
+.filter-bar {
+  background: var(--bg-elevated); border: 1px solid var(--border);
+  padding: 1.5rem 2rem; margin-bottom: 2rem;
+  display: grid; grid-template-columns: 1fr auto;
+  gap: 2rem; align-items: center;
+  position: sticky; top: 88px; z-index: 50;
+  backdrop-filter: blur(20px);
+}
+.filter-groups { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.filter-label {
+  font-family: var(--font-mono); font-size: 0.7rem;
+  color: var(--text-tertiary); letter-spacing: 0.15em;
+  text-transform: uppercase; margin-right: 0.75rem;
+  align-self: center; width: 100%; margin-bottom: 0.5rem;
+}
+.f-group { display: flex; gap: 0.35rem; flex-wrap: wrap; }
+.filter-btn {
+  font-family: var(--font-mono); font-size: 0.7rem;
+  color: var(--text-secondary); background: transparent;
+  border: 1px solid var(--border-bright);
+  padding: 0.45rem 0.9rem; cursor: pointer;
+  letter-spacing: 0.05em; transition: all 0.18s;
+  text-transform: uppercase;
+}
+.filter-btn:hover { color: var(--text-primary); border-color: var(--accent-gold); }
+.filter-btn.active { background: var(--accent-gold); color: var(--bg); border-color: var(--accent-gold); font-weight: 600; }
+.filter-btn.bull.active { background: var(--accent-bull); border-color: var(--accent-bull); }
+.filter-btn.bear.active { background: var(--accent-bear); border-color: var(--accent-bear); }
+.filter-btn.cyan.active { background: var(--accent-cyan); border-color: var(--accent-cyan); color: var(--bg); }
+.search-input {
+  background: var(--bg); border: 1px solid var(--border-bright);
+  color: var(--text-primary); padding: 0.6rem 1rem;
+  font-family: var(--font-mono); font-size: 0.8rem;
+  min-width: 260px; outline: none; transition: border-color 0.2s;
+}
+.search-input:focus { border-color: var(--accent-gold); }
+.search-input::placeholder { color: var(--text-tertiary); }
+
+/* STOCK CARDS */
+.stock-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(420px, 1fr)); gap: 1rem;
+}
+.stock-card {
+  background: var(--surface); border: 1px solid var(--border);
+  padding: 1.75rem; position: relative;
+  transition: all 0.25s ease; cursor: pointer;
+}
+.stock-card:hover {
+  border-color: var(--accent-gold); transform: translateY(-3px);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.3);
+}
+.stock-card.hidden { display: none; }
+.stock-card.cat-cheap { border-left: 3px solid var(--accent-bull); }
+.stock-card.cat-hidden { border-left: 3px solid var(--accent-cyan); }
+.stock-card.cat-quality { border-left: 3px solid var(--accent-gold); }
+.stock-card.cat-avoid { border-left: 3px solid var(--accent-bear); opacity: 0.85; }
+.stock-card.cat-hold { border-left: 3px solid var(--accent-violet); }
+.sc-head {
+  display: grid; grid-template-columns: 1fr auto; gap: 1rem;
+  align-items: start; margin-bottom: 1rem;
+  padding-bottom: 1rem; border-bottom: 1px solid var(--grid-line);
+}
+.sc-ticker {
+  font-family: var(--font-mono); font-size: 1.7rem;
+  font-weight: 700; letter-spacing: 0.02em;
+  color: var(--text-primary); line-height: 1;
+}
+.sc-name {
+  font-family: var(--font-display); font-size: 0.95rem;
+  color: var(--text-secondary); font-style: italic;
+  font-weight: 300; margin-top: 0.35rem;
+}
+.sc-tags { display: flex; flex-direction: column; gap: 0.3rem; align-items: flex-end; }
+.tag {
+  font-family: var(--font-mono); font-size: 0.6rem;
+  padding: 0.25rem 0.55rem; letter-spacing: 0.1em;
+  text-transform: uppercase; font-weight: 600; white-space: nowrap;
+}
+.tag.layer { background: var(--border); color: var(--text-secondary); }
+.tag.cheap { background: var(--accent-bull-dim); color: var(--accent-bull); }
+.tag.hidden { background: var(--accent-cyan-dim); color: var(--accent-cyan); }
+.tag.quality { background: var(--accent-gold-dim); color: var(--accent-gold); }
+.tag.avoid { background: var(--accent-bear-dim); color: var(--accent-bear); }
+.tag.hold { background: var(--accent-violet-dim); color: var(--accent-violet); }
+.sc-metrics {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 0.8rem; margin-bottom: 1.25rem;
+}
+.metric {
+  background: var(--bg-elevated); padding: 0.7rem 0.85rem;
+  border: 1px solid var(--grid-line);
+}
+.metric .k {
+  font-family: var(--font-mono); font-size: 0.62rem;
+  color: var(--text-tertiary); letter-spacing: 0.1em;
+  text-transform: uppercase; margin-bottom: 0.2rem;
+}
+.metric .v {
+  font-family: var(--font-mono); font-size: 0.95rem;
+  font-weight: 600; color: var(--text-primary); letter-spacing: 0.01em;
+}
+.metric .v.bull { color: var(--accent-bull); }
+.metric .v.bear { color: var(--accent-bear); }
+.metric .v.gold { color: var(--accent-gold); }
+.metric .v.sm { font-size: 0.78rem; }
+.sc-why, .sc-risk {
+  font-size: 0.85rem; line-height: 1.55;
+  color: var(--text-secondary); margin-bottom: 0.75rem;
+  padding-left: 1rem; position: relative;
+}
+.sc-why::before, .sc-risk::before {
+  content: ''; position: absolute; left: 0; top: 0.5em;
+  width: 4px; height: 4px; border-radius: 50%;
+}
+.sc-why::before { background: var(--accent-bull); }
+.sc-risk::before { background: var(--accent-bear); }
+.sc-why strong, .sc-risk strong { color: var(--text-primary); font-weight: 600; }
+.sc-portfolios {
+  margin-top: 1rem; padding-top: 1rem;
+  border-top: 1px solid var(--grid-line);
+  display: flex; gap: 0.4rem; flex-wrap: wrap; align-items: center;
+}
+.portfolio-tag {
+  font-family: var(--font-mono); font-size: 0.63rem;
+  padding: 0.2rem 0.5rem; background: transparent;
+  border: 1px solid var(--border-bright); color: var(--text-secondary);
+  letter-spacing: 0.05em; text-transform: uppercase;
+}
+.portfolio-tag.balanced { border-color: var(--accent-cyan); color: var(--accent-cyan); }
+.portfolio-tag.aggressive { border-color: var(--accent-bear); color: var(--accent-bear); }
+.portfolio-tag.dividend { border-color: var(--accent-gold); color: var(--accent-gold); }
+.compare-btn {
+  margin-left: auto; background: transparent;
+  border: 1px solid var(--border-bright); color: var(--text-secondary);
+  font-family: var(--font-mono); font-size: 0.62rem;
+  padding: 0.3rem 0.7rem; cursor: pointer;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  transition: all 0.18s;
+}
+.compare-btn:hover { color: var(--accent-gold); border-color: var(--accent-gold); }
+.compare-btn.added {
+  background: var(--accent-gold); color: var(--bg);
+  border-color: var(--accent-gold); font-weight: 600;
+}
+
+/* LAYER SECTIONS */
+.layer-section { margin-bottom: 4rem; padding-top: 2rem; }
+.layer-section-head {
+  display: grid; grid-template-columns: auto 1fr auto;
+  gap: 2rem; align-items: baseline;
+  padding-bottom: 1rem; margin-bottom: 2rem;
+  border-bottom: 1px solid var(--border-bright);
+}
+.ls-num {
+  font-family: var(--font-display); font-size: 3rem;
+  font-weight: 300; font-style: italic;
+  color: var(--accent-gold); line-height: 1; letter-spacing: -0.04em;
+}
+.ls-title {
+  font-family: var(--font-display); font-size: 1.75rem;
+  font-weight: 400; line-height: 1.1; letter-spacing: -0.02em;
+}
+.ls-title .sub {
+  display: block; font-family: var(--font-mono);
+  font-size: 0.72rem; color: var(--text-tertiary);
+  letter-spacing: 0.1em; text-transform: uppercase;
+  font-weight: 400; margin-bottom: 0.4rem; font-style: normal;
+}
+.ls-summary {
+  font-size: 0.9rem; color: var(--text-secondary);
+  line-height: 1.6; max-width: 360px;
+  font-style: italic; font-family: var(--font-display); font-weight: 300;
+}
+
+/* PORTFOLIO SECTION */
+.portfolio-tabs {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 0; margin-bottom: 0; border: 1px solid var(--border-bright);
+}
+.pt-btn {
+  background: var(--surface); border: none;
+  border-right: 1px solid var(--border-bright);
+  padding: 2rem 1.5rem; text-align: left; cursor: pointer;
+  transition: all 0.25s; color: var(--text-secondary); position: relative;
+}
+.pt-btn:last-child { border-right: none; }
+.pt-btn:hover { background: var(--surface-hover); color: var(--text-primary); }
+.pt-btn.active { background: var(--bg-elevated); color: var(--text-primary); }
+.pt-btn.active.balanced { border-top: 3px solid var(--accent-cyan); }
+.pt-btn.active.aggressive { border-top: 3px solid var(--accent-bear); }
+.pt-btn.active.dividend { border-top: 3px solid var(--accent-gold); }
+.pt-name {
+  font-family: var(--font-display); font-size: 1.4rem;
+  font-weight: 500; letter-spacing: -0.02em; margin-bottom: 0.35rem;
+}
+.pt-size {
+  font-family: var(--font-mono); font-size: 0.75rem;
+  color: var(--text-tertiary); letter-spacing: 0.05em;
+}
+.pt-desc {
+  font-size: 0.8rem; color: var(--text-secondary);
+  margin-top: 0.75rem; line-height: 1.5;
+}
+.portfolio-panel {
+  background: var(--bg-elevated); border: 1px solid var(--border-bright);
+  border-top: none; padding: 3rem;
+}
+.pp-hidden { display: none; }
+.pp-header {
+  display: grid; grid-template-columns: 1fr auto;
+  gap: 2rem; align-items: end; margin-bottom: 2rem;
+  padding-bottom: 1.5rem; border-bottom: 1px solid var(--border);
+}
+.pp-goal {
+  font-family: var(--font-display); font-size: 1.3rem;
+  font-weight: 400; font-style: italic;
+  color: var(--text-primary); line-height: 1.4; max-width: 80%;
+}
+.pp-goal em { color: var(--accent-gold); font-weight: 500; }
+.pp-count {
+  font-family: var(--font-mono); font-size: 0.75rem;
+  color: var(--text-tertiary); letter-spacing: 0.1em; text-align: right;
+}
+.pp-count .n {
+  font-family: var(--font-display); font-size: 2.5rem;
+  font-weight: 400; color: var(--accent-gold);
+  display: block; line-height: 1; margin-bottom: 0.25rem;
+}
+.pp-list { display: flex; flex-direction: column; gap: 1rem; }
+.pp-item {
+  display: grid; grid-template-columns: 40px 120px 1fr auto;
+  gap: 1.5rem; padding: 1.25rem;
+  background: var(--surface); border: 1px solid var(--border);
+  align-items: start; transition: all 0.2s;
+}
+.pp-item:hover { border-color: var(--accent-gold); background: var(--surface-hover); }
+.pp-num {
+  font-family: var(--font-display); font-size: 1.5rem;
+  font-weight: 300; color: var(--accent-gold);
+  font-style: italic; line-height: 1; padding-top: 0.2rem;
+}
+.pp-ticker {
+  font-family: var(--font-mono); font-weight: 700;
+  font-size: 1.1rem; letter-spacing: 0.02em; color: var(--text-primary);
+}
+.pp-ticker-name {
+  display: block; font-family: var(--font-display);
+  font-size: 0.78rem; color: var(--text-tertiary);
+  font-style: italic; font-weight: 300; margin-top: 0.2rem;
+}
+.pp-reason { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6; }
+.pp-reason strong { color: var(--text-primary); }
+.pp-metric {
+  font-family: var(--font-mono); font-size: 0.8rem;
+  text-align: right; color: var(--accent-gold);
+  font-weight: 600; white-space: nowrap; padding-top: 0.2rem;
+}
+.pp-metric .lbl {
+  display: block; font-size: 0.62rem;
+  color: var(--text-tertiary); font-weight: 400;
+  letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.2rem;
+}
+
+/* AVOID LIST */
+.avoid-head {
+  background: linear-gradient(135deg, var(--accent-bear-dim) 0%, transparent 60%);
+  border: 1px solid rgba(255,107,107,0.3);
+  border-left: 3px solid var(--accent-bear);
+  padding: 2rem 2.5rem; margin-bottom: 2rem;
+}
+.avoid-head h3 {
+  font-family: var(--font-display); font-size: 1.75rem;
+  font-weight: 500; font-style: italic;
+  color: var(--accent-bear); margin-bottom: 0.75rem; letter-spacing: -0.02em;
+}
+.avoid-head p { color: var(--text-secondary); max-width: 80%; }
+.avoid-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 0.75rem;
+}
+.avoid-item {
+  background: var(--surface); border: 1px solid var(--border);
+  border-left: 2px solid var(--accent-bear);
+  padding: 1.25rem 1.5rem; transition: all 0.2s;
+}
+.avoid-item:hover { border-color: var(--accent-bear); }
+.ai-head { display: flex; align-items: baseline; gap: 0.75rem; margin-bottom: 0.75rem; }
+.ai-ticker {
+  font-family: var(--font-mono); font-size: 1.15rem;
+  font-weight: 700; color: var(--accent-bear); letter-spacing: 0.02em;
+}
+.ai-name {
+  font-family: var(--font-display); font-size: 0.8rem;
+  color: var(--text-tertiary); font-style: italic; font-weight: 300;
+}
+.ai-reason { font-size: 0.82rem; color: var(--text-secondary); line-height: 1.55; }
+
+/* INSIDER WARNING */
+.insider-warn {
+  background: linear-gradient(135deg, rgba(244,196,48,0.08) 0%, rgba(255,107,107,0.05) 100%);
+  border: 1px solid var(--accent-gold);
+  padding: 3rem 3.5rem; margin-bottom: 4rem; position: relative;
+}
+.iw-label {
+  font-family: var(--font-mono); font-size: 0.7rem;
+  color: var(--accent-gold); letter-spacing: 0.2em;
+  text-transform: uppercase; margin-bottom: 1rem;
+}
+.iw-title {
+  font-family: var(--font-display); font-size: 2.2rem;
+  font-weight: 400; font-style: italic;
+  line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 1.25rem;
+}
+.iw-title .hl { color: var(--accent-gold); }
+.iw-body {
+  color: var(--text-secondary); font-size: 1rem;
+  line-height: 1.75; max-width: 85%; margin-bottom: 2rem;
+}
+.iw-list {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 0.75rem; font-family: var(--font-mono); font-size: 0.78rem;
+}
+.iw-sig {
+  background: rgba(0,0,0,0.3); padding: 0.8rem 1rem;
+  border-left: 2px solid var(--accent-bear); color: var(--text-secondary);
+}
+.iw-sig .t { color: var(--accent-bear); font-weight: 700; margin-right: 0.5rem; }
+
+/* COMPARE DRAWER */
+.compare-drawer {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  background: var(--bg-elevated); border-top: 1px solid var(--accent-gold);
+  padding: 1.5rem 2rem;
+  transform: translateY(100%); transition: transform 0.3s ease;
+  z-index: 200; box-shadow: 0 -10px 50px rgba(0,0,0,0.6);
+}
+.compare-drawer.open { transform: translateY(0); }
+.cd-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+.cd-title {
+  font-family: var(--font-mono); font-size: 0.75rem;
+  color: var(--accent-gold); letter-spacing: 0.15em; text-transform: uppercase;
+}
+.cd-close {
+  background: transparent; border: 1px solid var(--border-bright);
+  color: var(--text-secondary); padding: 0.3rem 0.8rem;
+  font-family: var(--font-mono); font-size: 0.7rem;
+  cursor: pointer; letter-spacing: 0.05em;
+}
+.cd-close:hover { color: var(--accent-bear); border-color: var(--accent-bear); }
+.cd-items { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; }
+.cd-item {
+  background: var(--surface); border: 1px solid var(--border);
+  padding: 1rem; position: relative;
+}
+.cd-remove {
+  position: absolute; top: 0.5rem; right: 0.5rem;
+  background: transparent; border: none;
+  color: var(--text-tertiary); cursor: pointer;
+  font-size: 0.9rem; padding: 0.2rem 0.5rem;
+}
+.cd-remove:hover { color: var(--accent-bear); }
+.cd-item .tk { font-family: var(--font-mono); font-weight: 700; font-size: 1rem; margin-bottom: 0.5rem; }
+.cd-item .rows {
+  display: grid; gap: 0.3rem;
+  font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-secondary);
+}
+.cd-item .rows .r { display: flex; justify-content: space-between; gap: 0.5rem; }
+.cd-item .rows .r .k { color: var(--text-tertiary); }
+.cd-item .rows .r .v { color: var(--text-primary); font-weight: 500; }
+
+/* CONCLUSION */
+.conclusion {
+  background: linear-gradient(180deg, var(--bg-elevated) 0%, var(--bg) 100%);
+  padding: 6rem 0; border-top: 1px solid var(--border);
+}
+.conclusion-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
+.conclusion h2 {
+  font-family: var(--font-display); font-size: clamp(2.2rem, 4vw, 3.5rem);
+  font-weight: 400; line-height: 1; letter-spacing: -0.03em; margin-bottom: 2rem;
+}
+.conclusion h2 em { font-style: italic; color: var(--accent-gold); }
+.conclusion p { color: var(--text-secondary); font-size: 1rem; line-height: 1.8; margin-bottom: 1.5rem; }
+.conclusion p strong { color: var(--text-primary); }
+.conclusion p .bull { color: var(--accent-bull); }
+.conclusion p .bear { color: var(--accent-bear); }
+.conclusion-meta {
+  padding-top: 2rem; border-top: 1px solid var(--border);
+  margin-top: 3rem;
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+  font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-tertiary);
+}
+.cm-item .k { letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.4rem; color: var(--text-tertiary); }
+.cm-item .v { color: var(--text-primary); font-weight: 500; font-size: 0.85rem; }
+
+/* RESPONSIVE */
+@media (max-width: 1100px) {
+  .hero-grid, .conclusion-grid { grid-template-columns: 1fr; gap: 3rem; }
+  .pp-item { grid-template-columns: 30px 90px 1fr; }
+  .pp-metric { grid-column: 1 / -1; text-align: left; padding-top: 0; }
+  .portfolio-tabs { grid-template-columns: 1fr; }
+  .pt-btn { border-right: none; border-bottom: 1px solid var(--border-bright); }
+  .map-container-outer { padding: 0 0 60px 0; }
+  .al-y-top, .al-y-bottom { position: static; width: auto; text-align: left; margin-bottom: 0.5rem; display: inline-block; background: var(--surface); padding: 0.3rem 0.6rem; margin-right: 0.5rem; }
+  .al-x-left, .al-x-right { position: static; display: inline-block; padding: 0.3rem 0.6rem; background: var(--surface); margin-right: 0.5rem; margin-top: 0.5rem; }
+}
+@media (max-width: 700px) {
+  .nav-links { display: none; }
+  .sec-head { grid-template-columns: 1fr; }
+  .sec-note { text-align: left; max-width: none; }
+  .layer-section-head { grid-template-columns: 1fr; gap: 1rem; }
+  .ls-num { font-size: 2rem; }
+  .stock-grid { grid-template-columns: 1fr; }
+  section { padding: 4rem 0; }
+  .container { padding: 0 1.25rem; }
+  .key-finding, .insider-warn, .avoid-head { padding: 2rem 1.5rem; }
+  .portfolio-panel { padding: 1.5rem; }
+  .iw-title { font-size: 1.5rem; }
+  .filter-bar { grid-template-columns: 1fr; padding: 1rem; top: 80px; }
+  .search-input { width: 100%; min-width: 0; }
+  .map-wrapper { padding: 1rem; }
+  .glossary { padding: 1.5rem; }
+  .gloss-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- TICKER -->
+<div class="ticker-strip">
+  <div class="ticker-inner" id="ticker-inner"></div>
+</div>
+
+<!-- NAV -->
+<nav class="main-nav">
+  <div class="nav-inner">
+    <div class="nav-brand">
+      <span class="logo">finzora<span class="ai">.ai</span></span>
+      <span class="pipe">/</span>
+      <span class="subtitle">Araştırma · Veri Merkezi Zinciri</span>
+    </div>
+    <div class="nav-links">
+      <a href="#harita">Harita</a>
+      <a href="#katmanlar">Katmanlar</a>
+      <a href="#hisseler">Hisseler</a>
+      <a href="#portfoyler">Portföyler</a>
+      <a href="#kacin">Kaçın</a>
+    </div>
+    <div class="nav-date"><span class="live"></span>19 Nis 2026 · 15:20 TR</div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div>
+        <div class="hero-label">Finzora AI · Özel Araştırma Raporu</div>
+        <h1>Veri merkezi zincirinin <em>fiyatlanmamış</em> halkaları</h1>
+      </div>
+      <div>
+        <p class="hero-sub">Dev bulut şirketleri 2026'da altyapıya $600–700 milyar harcayacak. Piyasa hikâyeyi duydu — ama zincirin her halkasını eşit fiyatlamadı. Bu rapor, aynı rüzgârı ucuz değerlemeden yakalayan isimleri bulur, tuzakları işaretler.</p>
+        <div class="hero-meta">
+          <div class="meta-item"><div class="k">İncelenen Halka</div><div class="v">12<span class="unit">katman</span></div></div>
+          <div class="meta-item"><div class="k">Analiz Edilen Hisse</div><div class="v">54<span class="unit">sembol</span></div></div>
+          <div class="meta-item"><div class="k">Portföy Adayı</div><div class="v">22<span class="unit">öneri</span></div></div>
+          <div class="meta-item"><div class="k">Kaçınılan</div><div class="v">13<span class="unit">uyarı</span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="key-finding">
+      <div class="kf-headline">Piyasa, yapay zekâ hikâyesini en çok <strong>üç katmanda yetersiz fiyatlıyor</strong>: gaz türbini ve elektrik şebekesi, yüksek bant genişlikli bellek (HBM) ölçüm cihazları ve ileri paketleme, ve nearline sabit disk (HDD) + kurumsal NAND bellek depolama.</div>
+      <div class="kf-body">
+        <span class="bull">GE Vernova, Cummins, Onto Innovation, Amkor, Western Digital ve SanDisk</span>, aynı AI rüzgârını saf lider (ALAB, KLAC gibi) değerlemesinin yarısında sunuyor. Tersine <span class="warn">saf optik (LITE/AAOI), kusursuz fiyatlı gayrimenkul (EQIX), nükleer küçük modüler reaktör (OKLO/SMR/NNE) ve Vertiv</span>, fiyatlaması artık kusursuz sonuç beklentisi seviyesinde — her ufak sapma sert düşüş getirir. Şirket içi (insider) yönetici satışları bu döngüde çok daha fazla bilgi taşıyor: VRT'de 123 milyon $, APH'de 112 milyon $, WDC'de 42 satış — tek tek tesadüf olabilir ama toplamda açık sinyal.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DEĞERLEME HARİTASI -->
+<section id="harita" style="padding-top: 2rem;">
+  <div class="container">
+    <div class="sec-head">
+      <div>
+        <div class="sec-num"><span class="n">01 —</span> DEĞERLEME HARİTASI</div>
+        <h2>54 hisse, <em>tek grafik</em></h2>
+      </div>
+      <div class="sec-note">Yatay: ucuzdan pahalıya değerleme. Dikey: düşükten yükseğe AI potansiyeli. Sol üst köşe altın madeni — sağ alt köşe tuzak.</div>
+    </div>
+
+    <div class="map-wrapper">
+      <div class="map-header">
+        <div class="map-legend" id="map-legend">
+          <div class="leg-item" data-leg="cheap"><span class="leg-dot cheap"></span>En Ucuz + Yüksek Potansiyel</div>
+          <div class="leg-item" data-leg="hidden"><span class="leg-dot hidden"></span>Gizli Kazanan</div>
+          <div class="leg-item" data-leg="quality"><span class="leg-dot quality"></span>Kaliteli / Makul Fiyat</div>
+          <div class="leg-item" data-leg="hold"><span class="leg-dot hold"></span>Portföyde / Koru</div>
+          <div class="leg-item" data-leg="avoid"><span class="leg-dot avoid"></span>Kaçın</div>
+        </div>
+        <div class="map-hint">Lejandlara tıklayıp gizleyebilirsin · Noktanın üzerine gelince detay</div>
+      </div>
+
+      <div class="map-container-outer">
+        <div class="axis-label al-y-top">YÜKSEK ↑<br>POTANSİYEL</div>
+        <div class="axis-label al-y-bottom">↓ DÜŞÜK<br>POTANSİYEL</div>
+        <div class="map-container">
+          <svg class="map-svg" viewBox="0 0 1000 600" xmlns="http://www.w3.org/2000/svg" id="map-svg">
+            <!-- Grid arka plan -->
+            <defs>
+              <pattern id="grid" width="100" height="60" patternUnits="userSpaceOnUse">
+                <path d="M 100 0 L 0 0 0 60" fill="none" stroke="#151c24" stroke-width="0.5"/>
+              </pattern>
+              <linearGradient id="tlGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="rgba(125, 211, 160, 0.08)"/>
+                <stop offset="100%" stop-color="transparent"/>
+              </linearGradient>
+              <linearGradient id="brGrad" x1="1" y1="1" x2="0" y2="0">
+                <stop offset="0%" stop-color="rgba(255, 107, 107, 0.08)"/>
+                <stop offset="100%" stop-color="transparent"/>
+              </linearGradient>
+            </defs>
+            <rect width="1000" height="600" fill="url(#grid)"/>
+            <!-- Kadran vurguları -->
+            <rect x="0" y="0" width="500" height="300" fill="url(#tlGrad)"/>
+            <rect x="500" y="300" width="500" height="300" fill="url(#brGrad)"/>
+            <!-- Merkez çizgileri -->
+            <line x1="500" y1="0" x2="500" y2="600" stroke="#2a3441" stroke-width="1" stroke-dasharray="4,4"/>
+            <line x1="0" y1="300" x2="1000" y2="300" stroke="#2a3441" stroke-width="1" stroke-dasharray="4,4"/>
+            <!-- Hisse noktaları (JS ile doldurulur) -->
+            <g id="dots-group"></g>
+          </svg>
+          <div class="quadrant-label ql-tl">◤ Altın madeni</div>
+          <div class="quadrant-label ql-tr">◥ Pahalı ama güçlü</div>
+          <div class="quadrant-label ql-bl">◣ Değer tuzağı</div>
+          <div class="quadrant-label ql-br">◢ Kaçın</div>
+          <div class="map-tooltip" id="map-tooltip"></div>
+        </div>
+        <div class="axis-label al-x-left">← UCUZ DEĞERLEME</div>
+        <div class="axis-label al-x-right">PAHALI DEĞERLEME →</div>
+      </div>
+    </div>
+
+    <!-- Terim Sözlüğü -->
+    <div class="glossary">
+      <h3>Kısa terim sözlüğü — raporda geçen anahtar kavramlar</h3>
+      <div class="gloss-grid">
+        <div class="gloss-item"><span class="term">İleri F/K</span><span class="def">Önümüzdeki 12 ay beklenen kazanca göre fiyat çarpanı. Düşükse ucuz.</span></div>
+        <div class="gloss-item"><span class="term">PEG</span><span class="def">F/K'nın büyüme oranına bölünmüş hali. 1'in altı ucuz sayılır.</span></div>
+        <div class="gloss-item"><span class="term">İşletme değeri / FAVÖK</span><span class="def">Borç dahil şirketin toplam değerinin yıllık nakit üretimine oranı.</span></div>
+        <div class="gloss-item"><span class="term">Serbest nakit getirisi</span><span class="def">Yıllık serbest nakit akışının piyasa değerine oranı.</span></div>
+        <div class="gloss-item"><span class="term">Dev bulut şirketi</span><span class="def">Microsoft, Google, Amazon, Meta gibi hyperscale veri merkezi operatörleri.</span></div>
+        <div class="gloss-item"><span class="term">Sipariş defteri</span><span class="def">İmzalanmış ama henüz teslim edilmemiş siparişlerin toplam değeri.</span></div>
+        <div class="gloss-item"><span class="term">Kontrat kapasitesi dolu</span><span class="def">Belirli bir yıl için üretim kapasitesinin tamamı satılmış, yeni sipariş alınamıyor.</span></div>
+        <div class="gloss-item"><span class="term">HBM (yüksek bant genişlikli bellek)</span><span class="def">AI hızlandırıcılarının ihtiyaç duyduğu özel, yüksek hızlı bellek tipi.</span></div>
+        <div class="gloss-item"><span class="term">Nearline HDD</span><span class="def">Veri merkezi toplu depolama için kullanılan yüksek kapasiteli sabit disk.</span></div>
+        <div class="gloss-item"><span class="term">Küçük modüler reaktör</span><span class="def">Fabrikada üretilip sahaya taşınan, klasikten daha küçük nükleer enerji santrali.</span></div>
+        <div class="gloss-item"><span class="term">Elektrik satış anlaşması</span><span class="def">Bir enerji şirketinin sabit fiyatla uzun vadeli elektrik satış taahhüdü.</span></div>
+        <div class="gloss-item"><span class="term">GYO (gayrimenkul yatırım ortaklığı)</span><span class="def">Borsada işlem gören, gelirinin büyük kısmını temettü olarak dağıtan gayrimenkul şirketi.</span></div>
+        <div class="gloss-item"><span class="term">İçeriden satış</span><span class="def">CEO/CFO gibi üst yöneticilerin kendi hisselerini satması. Yoğunsa uyarı sinyali.</span></div>
+        <div class="gloss-item"><span class="term">Açığa satış oranı</span><span class="def">Hissenin düşeceği üzerine bahis yapanların oranı. Yüksekse risk algısı yüksek.</span></div>
+        <div class="gloss-item"><span class="term">Rakibe göre iskonto</span><span class="def">Benzer iş yapan şirketlere göre ne kadar ucuz veya pahalı olduğu.</span></div>
+        <div class="gloss-item"><span class="term">Değer tuzağı</span><span class="def">Ucuz görünen ama büyüme olmadığı için ucuz kalan hisse.</span></div>
+        <div class="gloss-item"><span class="term">Kusursuz fiyatlı</span><span class="def">Hisse fiyatı her şeyin mükemmel gitmesini varsayıyor — ufak sapma sert düşüş.</span></div>
+        <div class="gloss-item"><span class="term">Gelir üretmiyor</span><span class="def">Şirket henüz ticari ürün satmıyor, zararına çalışıyor — yüksek spekülasyon riski.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INSIDER WARNING -->
+<section style="padding-top: 0;">
+  <div class="container">
+    <div class="insider-warn">
+      <div class="iw-label">Kritik Uyarı · Döngü Tepesi Sinyalleri</div>
+      <div class="iw-title">Bu döngüde <span class="hl">yönetici satışları</span> çok daha fazla bilgi taşıyor.</div>
+      <div class="iw-body">
+        Nisan 2026 itibariyle aynı anda görülen içeriden satış yoğunlukları tek tek tesadüf olabilir — ama toplu görünümü, piyasanın döngü tepesinde olabileceği uyarısı veriyor. Önerilen strateji: <strong>tek bir isme %10'dan fazla ağırlık vermemek, kademeli alım yapmak ve aşağıdaki sembollere hiç dokunmamak</strong>.
+      </div>
+      <div class="iw-list">
+        <div class="iw-sig"><span class="t">VRT</span>123M$ 1. çeyrek yönetici satışı · açığa satış aylık +%47</div>
+        <div class="iw-sig"><span class="t">APH</span>112M$ satış vs 1.3M$ alış · UBS fiyat hedefini düşürdü</div>
+        <div class="iw-sig"><span class="t">CIEN</span>Genel müdür yardımcısı payının %99.7'sini 409$'da sattı</div>
+        <div class="iw-sig"><span class="t">WDC</span>42 içeriden satış · 0 içeriden alış</div>
+        <div class="iw-sig"><span class="t">FIX</span>CEO + CFO + 4 direktör Şubat'ta sattı</div>
+        <div class="iw-sig"><span class="t">BE</span>Ağır içeriden satış · İleri F/K 119–148x</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LAYER OVERVIEW -->
+<section id="katmanlar" style="padding-top: 2rem;">
+  <div class="container">
+    <div class="sec-head">
+      <div>
+        <div class="sec-num"><span class="n">02 —</span> KATMAN HARİTASI</div>
+        <h2>12 halka, <em>12 ayrı hikâye</em></h2>
+      </div>
+      <div class="sec-note">Her katmana tıklayın — aşağıdaki hisse kartları filtrelenir. Aynı AI rüzgârı, farklı fiyatlanma.</div>
+    </div>
+
+    <div class="layer-overview" id="layer-overview"></div>
+  </div>
+</section>
+
+<!-- STOCK CARDS -->
+<section id="hisseler" style="padding-top: 2rem;">
+  <div class="container">
+    <div class="sec-head">
+      <div>
+        <div class="sec-num"><span class="n">03 —</span> HİSSE KARTLARI</div>
+        <h2>Filtrele, <em>karşılaştır</em>, keşfet</h2>
+      </div>
+      <div class="sec-note">Karta tıklayın, "+ Karşılaştır" ile en fazla 3 hisse yan yana.</div>
+    </div>
+
+    <div class="filter-bar">
+      <div>
+        <div class="filter-label">Kategoriye göre filtrele</div>
+        <div class="filter-groups">
+          <div class="f-group">
+            <button class="filter-btn active" data-filter="cat" data-val="all">Tümü</button>
+            <button class="filter-btn bull" data-filter="cat" data-val="cheap">En Ucuz + Yüksek Potansiyel</button>
+            <button class="filter-btn cyan" data-filter="cat" data-val="hidden">Gizli Kazanan</button>
+            <button class="filter-btn" data-filter="cat" data-val="quality">Kaliteli / Fiyat Makul</button>
+            <button class="filter-btn bear" data-filter="cat" data-val="avoid">Kaçın</button>
+          </div>
+        </div>
+      </div>
+      <input type="text" class="search-input" placeholder="Sembol veya şirket adı ara…" id="search-input">
+    </div>
+
+    <div id="layer-sections"></div>
+  </div>
+</section>
+
+<!-- PORTFOLIOS -->
+<section id="portfoyler">
+  <div class="container">
+    <div class="sec-head">
+      <div>
+        <div class="sec-num"><span class="n">04 —</span> PORTFÖY ÖNERİLERİ</div>
+        <h2>Üç portföy, <em>üç strateji</em></h2>
+      </div>
+      <div class="sec-note">Sekmeye tıklayın — her portföyün kendi mantığı, hedefi, adayı.</div>
+    </div>
+
+    <div class="portfolio-tabs">
+      <button class="pt-btn active balanced" data-panel="balanced">
+        <div class="pt-name">Dengeli</div>
+        <div class="pt-size">100,000 $ · 7 pozisyon · her hisse en fazla %20</div>
+        <div class="pt-desc">Kalite ile büyüme dengesi. Temettü ödeyen, uzun vadeli sipariş görünürlüğü olan.</div>
+      </button>
+      <button class="pt-btn aggressive" data-panel="aggressive">
+        <div class="pt-name">Agresif Büyüme</div>
+        <div class="pt-size">400,000 $ · 9 pozisyon · her hisse en fazla %15</div>
+        <div class="pt-desc">En güçlü AI kaldıraçları. En hızlı kazanç büyümesi, daha yüksek oynaklık.</div>
+      </button>
+      <button class="pt-btn dividend" data-panel="dividend">
+        <div class="pt-name">Değer + Temettü</div>
+        <div class="pt-size">100,000 $ · 6 pozisyon · minimum %3 temettü</div>
+        <div class="pt-desc">Çift haneli nakit getirisi ve sürdürülebilir temettü. AI yükselişi bonus.</div>
+      </button>
+    </div>
+
+    <div class="portfolio-panel" id="panel-balanced">
+      <div class="pp-header">
+        <div class="pp-goal">Tek hisse riskini yaymak; <em>kâr eden, temettü ödeyen, sipariş defteri görünürlüğü yüksek</em> isimleri öne çıkarmak.</div>
+        <div class="pp-count"><span class="n">07</span>POZİSYON</div>
+      </div>
+      <div class="pp-list" id="list-balanced"></div>
+    </div>
+
+    <div class="portfolio-panel pp-hidden" id="panel-aggressive">
+      <div class="pp-header">
+        <div class="pp-goal">En yüksek <em>AI kaldıracı</em>, en hızlı kazanç büyümesi. Geniş anapara, büyüme çarpanlarını tolere edebilir.</div>
+        <div class="pp-count"><span class="n">09</span>POZİSYON</div>
+      </div>
+      <div class="pp-list" id="list-aggressive"></div>
+    </div>
+
+    <div class="portfolio-panel pp-hidden" id="panel-dividend">
+      <div class="pp-header">
+        <div class="pp-goal">Çift haneli <em>nakit akış getirisi</em>, güçlü temettü geçmişi, üstüne AI yükseliş opsiyonu.</div>
+        <div class="pp-count"><span class="n">06</span>POZİSYON</div>
+      </div>
+      <div class="pp-list" id="list-dividend"></div>
+    </div>
+  </div>
+</section>
+
+<!-- AVOID -->
+<section id="kacin">
+  <div class="container">
+    <div class="sec-head">
+      <div>
+        <div class="sec-num"><span class="n">05 —</span> KAÇINILACAKLAR</div>
+        <h2>Bu isimlere <em>hiç dokunma</em></h2>
+      </div>
+      <div class="sec-note">Aşırı fiyatlı, yönetici satışı yoğun, hukuki risk ya da değer tuzağı. Tek tek tesadüf, toplu sinyal.</div>
+    </div>
+
+    <div class="avoid-head">
+      <h3>Kusursuz fiyatlı + yönetişim uyarısı</h3>
+      <p>Bu 13 isim ya fiyatı hikâyenin çok önüne geçmiş, ya içeriden satışlar yoğun, ya hukuki/yönetişim riski var, ya da değer tuzağı. Pozisyon önerilmiyor.</p>
+    </div>
+
+    <div class="avoid-grid" id="avoid-grid"></div>
+  </div>
+</section>
+
+<!-- CONCLUSION -->
+<section id="sonuc" class="conclusion">
+  <div class="container">
+    <div class="conclusion-grid">
+      <div>
+        <div class="sec-num"><span class="n">06 —</span> SONUÇ</div>
+        <h2>Nereye <em>bakılmalı</em>, neresi tuzak</h2>
+      </div>
+      <div>
+        <p>Nisan 2026'da veri merkezi zincirinin <strong>her halkası AI hikâyesini duymuş durumda</strong>, ancak piyasa zinciri eşit fiyatlamıyor. <span class="bull">Elektrik şebekesi, HBM ölçüm cihazları, saf HDD/NAND depolama ve Çin dışı nadir toprak</span> — bu dört halka, yapısal büyümeye göre hâlâ geri kalmış durumda.</p>
+        <p>Buna karşın <span class="bear">saf optik (LITE/AAOI), kusursuz fiyatlı gayrimenkul ortaklıkları (EQIX), nükleer küçük modüler reaktör (OKLO/SMR/NNE) ve Vertiv</span>, zincirin önüne geçmiş durumda — her ufak hata ciddi düşüş yaratır.</p>
+        <p>Üç portföy arasında <strong>en yüksek asimetri Agresif kutuda</strong>: CRDO + ONTO + AMKR üçlüsü, aynı AI hikâyesini saf lider değerlemesinin yarısında sunuyor. <strong>Dengeli portföyün kalbi GEV + CMI</strong> — ikisi de 2028'e kadar sipariş görünürlüğüne sahip ama hâlâ sanayi değerlemesinde işlem görüyor. <strong>Değer+Temettü'de Cisco tek en iyi kombinasyon</strong>: temettü + AI uyanışı + ucuz değerleme.</p>
+        <p><strong>Zeynel'in mevcut FCX pozisyonu:</strong> bakır tezi geçerli, 18x İleri F/K + %5 nakit getirisi — satma. Portföyün %12'sini aşmasın; bakır fiyat oynaklığına göre kademeli ek yapılabilir.</p>
+
+        <div class="conclusion-meta">
+          <div class="cm-item"><div class="k">Araştırma</div><div class="v">Finzora AI</div></div>
+          <div class="cm-item"><div class="k">Tarih</div><div class="v">19 Nis 2026</div></div>
+          <div class="cm-item"><div class="k">Güven düzeyi</div><div class="v">Kesin + Muhtemel</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARE DRAWER -->
+<div class="compare-drawer" id="compare-drawer">
+  <div class="cd-head">
+    <div class="cd-title">Karşılaştırma · <span id="compare-count">0</span> / 3 hisse</div>
+    <button class="cd-close" onclick="closeCompare()">Kapat ✕</button>
+  </div>
+  <div class="cd-items" id="compare-items"></div>
+</div>
+
+<script>
+// ============ VERİ ============
+const LAYERS = {
+  1: { num: '01', title: 'Elektrik & Şebeke', sub: 'Dev bulut şirketlerinin enerji açlığı', summary: 'Eaton sektör lideri ama çarpanı doluya yakın. Gerçek fırsat GE Vernova ve Cummins\'te — piyasa hâlâ sanayi değerlemesi kullanıyor, oysa sipariş defteri 2028\'e kadar AI\'ya bağlı.' },
+  2: { num: '02', title: 'Elektrik Üretimi & Nükleer', sub: 'Büyük üreticiler kazanıyor, SMR pure-play yanıyor', summary: 'Nükleer küçük modüler reaktör saf-oyuncuları (OKLO/SMR/NNE) 1. çeyrek %60-65 düştü çünkü dev bulut şirketleri büyük bağımsız üreticilerle anlaşıyor. Vistra + Centrus en iyi risk/kazanç dengesi.' },
+  3: { num: '03', title: 'Soğutma & Termal Yönetim', sub: 'Sıvı soğutma yeni altın', summary: 'Vertiv aşırı fiyatlı (analistler fiyat hedefini düşürdü). Modine sıvı soğutmada saf oyuncu; EMCOR ise kaliteli müteahhit — borçsuz bilanço + sipariş defteri iki katı büyüdü.' },
+  4: { num: '04', title: 'Optik & Bağlantı', sub: 'Fiyatlanmış momentum, nadir arbitraj', summary: 'LITE ve AAOI bir yılda %900–1100 koştu, İleri F/K 85–175. Credo, PEG oranı 1\'in altında olan tek büyük-büyüme ismi. MACOM radar altında — 1.6 terabit tasarım kazanımları.' },
+  5: { num: '05', title: 'Ağ Donanımı', sub: 'Juniper satıldı — yeni lider kim?', summary: 'Arista 52 hafta tepesinde, yükseliş potansiyeli dolmuş. Cisco AI siparişleri tek çeyrekte geçen yılın tamamını aştı (2.1 milyar $), 19.8x İleri F/K, 14 yıl üst üste temettü artışı — gerçek uyanış hikâyesi.' },
+  6: { num: '06', title: 'Depolama & Fiber', sub: 'HDD stok tükendi, NAND en ucuz', summary: 'WDC artık saf HDD (SanDisk ayrıştı). 2026 nearline %100 satılmış. SNDK 9.8x İleri F/K — gruptaki en ucuz AI hissesi.' },
+  7: { num: '07', title: 'GYO · İnşaat · Yapı Malzemeleri', sub: 'Gizli GYO, PEG 0.5 çelik', summary: 'Equinix kusursuz fiyatlı (61x). Iron Mountain hâlâ "arşiv saklama" değerleniyor (22x) oysa veri merkezi %39 büyüyor. Nucor\'un PEG\'i 0.5 — raporun en çarpıcı fiyatlaması.' },
+  8: { num: '08', title: 'Kimyasallar · Nadir Toprak · Bakır', sub: 'Alt sistem, mıknatıs, tel', summary: 'Ultra Clean fab alt sistemde en iyi risk/kazanç. Lynas Çin dışı tek kârlı nadir toprak üreticisi. FCX 18x, %5 nakit getirisi — SCCO 39x\'e göre yarı çarpan.' },
+  9: { num: '09', title: 'Yarıiletken Üretim Cihazları', sub: 'HBM ölçüm + ileri paketleme', summary: 'HBM ölçüm üçlüsünde Onto Innovation sadece ucuz değil — TSMC Dragonfly G5 kalifikasyonu yeni katalizör. Amkor tek haneli FAVÖK çarpanı — CoWoS darboğaz rahatlatma vanası.' },
+  10: { num: '10', title: 'Sunucu · Elektronik Montaj · Donanım', sub: 'SMCI yatırılamaz — Dell temizler', summary: 'SMCI için Adalet Bakanlığı ihracat soruşturması, 2.3 milyar $ gelir kesintisi. Dell 43 milyar $ AI siparişi + 15x İleri F/K + PEG 0.7 ile en temiz AI sunucu seçimi. Flex JetCool gizli sıvı soğutma.' },
+  11: { num: '11', title: 'Konnektör & Kablolama', sub: 'Amphenol mi, TE Connectivity mi?', summary: 'Amphenol\'de 112M$ içeriden satış vs 1.3M$ alış — kırmızı bayrak. TE Connectivity aynı tema için %35 daha ucuz, 3 milyar $ geri alım + %10 temettü artışı.' },
+  12: { num: '12', title: 'Enerji Depolama · Yakıt Hücresi', sub: 'Tamamen kaçınılacak katman', summary: 'FLNC, PLUG, BLDP, EOSE — ya zararda, ya toplu dava açık, ya 1 milyar $ piyasa değeri altında. AI tezini taşıyamayacak kadar zayıf. Pozisyon önerilmiyor.' }
+};
+
+// val: değerleme 1-10 (1=çok ucuz, 10=çok pahalı)
+// pot: potansiyel 1-10 (1=düşük, 10=yüksek)
+const STOCKS = [
+  // KATMAN 1 - ELEKTRİK & ŞEBEKE
+  { t: 'GEV', n: 'GE Vernova', l: 1, cat: 'cheap', val: 3, pot: 9, fwdPE: '50x / 16x (2028)', peerDisc: 'Büyük (2027-28 FAVÖK bazında)', why: '150 milyar $ sipariş defteri, 83 gigavat gaz türbini <strong>2028\'e kadar satılmış</strong>. Piyasa yakın dönem F/K\'ya bakarken 2028 FAVÖK 16x seviyesinde.', risk: 'Rüzgar segmenti yakın dönem kazancı baskılıyor. 2028 çarpanı realize olmazsa prim erir.', portfolios: ['balanced'] },
+  { t: 'CMI', n: 'Cummins', l: 1, cat: 'hidden', val: 3, pot: 7, fwdPE: '~22x', peerDisc: 'Saf AI enerji isimlerine göre %40 ucuz', why: 'Veri merkezi yedek güç geliri 3.5 milyar $ (+%35 yıllık). Sanayi değerlemesinde fiyatlanıyor oysa %10 gelir AI ile büyüyor.', risk: 'Kamyon döngüsü kalıntısı hisseyi "sanayi" kutusunda tutabilir; yeniden değerleme gecikirse hareketsiz yatırım.', portfolios: ['balanced', 'dividend'] },
+  { t: 'ETN', n: 'Eaton', l: 1, cat: 'quality', val: 6, pot: 5, fwdPE: '~27x', peerDisc: 'Rakiplerine göre dolu', why: 'Sektör lideri elektrik ekipmanı üreticisi. %50 veri merkezi + sanayi elektrifikasyonu.', risk: 'Fiyatı hikâyeyi yansıtmış; yükseliş potansiyeli sınırlı. Yeni giriş için cazip değil.', portfolios: [] },
+  { t: 'VRT', n: 'Vertiv', l: 1, cat: 'avoid', val: 9, pot: 5, fwdPE: '~46x', peerDisc: 'Aşırı fiyatlı', why: 'Sıvı soğutma + kesintisiz güç kaynağında liderlik doğru tez.', risk: '<strong>İleri F/K 46. 1. çeyrekte 123M$ içeriden satış. Açığa satış aylık +%47.</strong> Hedef fiyat spotun altında.', portfolios: [] },
+  { t: 'POWL', n: 'Powell Industries', l: 1, cat: 'hidden', val: 4, pot: 6, fwdPE: '~15-18x', peerDisc: 'Küçük şirket iskontosu', why: 'Anahtar kesici + elektrik panosu. Sipariş defteri +%70. Dev bulut şirketlerinin doğrudan faydalananı.', risk: 'Küçük şirket likidite riski. Siparişler düzensiz gelebilir. Döngüsel.', portfolios: [] },
+
+  // KATMAN 2 - ELEKTRİK ÜRETİMİ & NÜKLEER
+  { t: 'VST', n: 'Vistra', l: 2, cat: 'cheap', val: 3, pot: 8, fwdPE: '~18.7x', peerDisc: 'CEG\'ye göre %25 ucuz', why: 'Meta ile 2.6 GW\'lık 20 yıllık elektrik satış anlaşması, 3.8 GW imzalı. <strong>2026 kazanç +%66</strong>. CEG\'den ucuz, TLN\'den temiz bilanço.', risk: 'Bölgesel elektrik piyasası kapasite riski. Nükleer genişleme gecikmesi.', portfolios: ['aggressive'] },
+  { t: 'LEU', n: 'Centrus Energy', l: 2, cat: 'hidden', val: 5, pot: 7, fwdPE: '~37x', peerDisc: 'BWXT 55x', why: '<strong>Tek ABD lisanslı HALEU yakıt üreticisi</strong>. 3.8 milyar $ sipariş defteri, 900M$ Enerji Bakanlığı siparişi. SMR yakıtında tekel.', risk: 'Sipariş defteri uzun vadeli, yakın dönem gelir düz. Politika riski.', portfolios: [] },
+  { t: 'CEG', n: 'Constellation Energy', l: 2, cat: 'quality', val: 6, pot: 6, fwdPE: '~25x', peerDisc: 'Prim', why: 'En büyük nükleer operatör. MSFT ile Three Mile Island anlaşması. Prim ödüyorsun ama kalite.', risk: 'Prim çarpan. Nükleer yeniden başlatma gecikmesi.', portfolios: [] },
+  { t: 'NRG', n: 'NRG Energy', l: 2, cat: 'hidden', val: 3, pot: 6, fwdPE: '~17x', peerDisc: 'Bağımsız üreticilerden ucuz', why: '<strong>%13 nakit getirisi</strong>, 11 milyar $ geri alım 2030\'a kadar, 5.4 GW boru hattı dev bulut anlaşması opsiyonu.', risk: 'Büyük dev bulut anlaşması henüz yok — opsiyon somutlaşmalı.', portfolios: ['dividend'] },
+  { t: 'TLN', n: 'Talen Energy', l: 2, cat: 'quality', val: 5, pot: 6, fwdPE: '~24x', peerDisc: 'CEG\'ye yakın', why: 'AWS ile Susquehanna ortak yerleşim anlaşması. Nükleer + doğalgaz dengeli.', risk: 'Daha küçük, daha konsantre risk.', portfolios: [] },
+  { t: 'OKLO', n: 'Oklo', l: 2, cat: 'avoid', val: 9, pot: 3, fwdPE: 'N/A', peerDisc: 'Gelir üretmiyor', why: 'SMR hikâyesi cazip.', risk: '<strong>Morningstar gerçek değer 15.82$ vs fiyat 67$. 1. çeyrekte %60-65 düştü. Hissedar davaları. Gelir yok.</strong>', portfolios: [] },
+  { t: 'SMR', n: 'NuScale Power', l: 2, cat: 'avoid', val: 9, pot: 3, fwdPE: 'N/A', peerDisc: 'Gelir üretmiyor', why: 'SMR hikâyesi cazip.', risk: '<strong>Gelir yok. İlk ticari 2030+. Dev bulut şirketleri tercih etmiyor.</strong>', portfolios: [] },
+  { t: 'NNE', n: 'Nano Nuclear', l: 2, cat: 'avoid', val: 9, pot: 2, fwdPE: 'N/A', peerDisc: 'Gelir üretmiyor', why: 'Mikro reaktör konsepti.', risk: '<strong>Gelir yok. Reaktör hâlâ tasarım aşamasında. Spekülatif.</strong>', portfolios: [] },
+  { t: 'BE', n: 'Bloom Energy', l: 2, cat: 'avoid', val: 10, pot: 2, fwdPE: '119-148x', peerDisc: 'Aşırı fiyatlı', why: 'Yakıt hücresi veri merkezi yedek güç hikâyesi gerçek.', risk: '<strong>İleri F/K 119-148. Piyasa değeri 50 milyar $ vs gelir 2 milyar $. Ağır yönetici satışı. BofA hedef 39$.</strong>', portfolios: [] },
+
+  // KATMAN 3 - SOĞUTMA
+  { t: 'MOD', n: 'Modine Manufacturing', l: 3, cat: 'cheap', val: 4, pot: 8, fwdPE: '~34x', peerDisc: 'VRT 46x\'e göre %25 ucuz', why: 'Veri merkezi segmenti +%78 yıllık. Gentherm ayrılığı sonrası <strong>saf iklim oyuncusu</strong>. 2028\'de 2 milyar $ veri merkezi geliri hedefi.', risk: '%7 açığa satış. Yatırım harcaması nedeniyle negatif nakit. Yeniden değerleme beklenene kadar oynak.', portfolios: ['aggressive'] },
+  { t: 'EME', n: 'EMCOR Group', l: 3, cat: 'quality', val: 5, pot: 6, fwdPE: '~26x', peerDisc: 'VRT/FIX\'e göre en ucuz kaliteli', why: '<strong>Veri merkezi sipariş defteri +%112 yıllık (4.3 milyar $)</strong>, borçsuz bilanço, temettü +%60. Mekanik/elektrik müteahhitliğinde en sağlam.', risk: 'Muhafazakâr 2026 öngörüsü. Büyüme primi çoktan.', portfolios: [] },
+  { t: 'FIX', n: 'Comfort Systems USA', l: 3, cat: 'avoid', val: 7, pot: 5, fwdPE: '~38x', peerDisc: 'EME\'den pahalı', why: 'Veri merkezi HVAC müteahhitliğinde lider.', risk: '<strong>CEO + CFO + 4 yönetici Şubat\'ta sattı. İleri F/K 38 — peer\'a göre pahalı.</strong>', portfolios: [] },
+  { t: 'TT', n: 'Trane Technologies', l: 3, cat: 'quality', val: 6, pot: 5, fwdPE: '~30x', peerDisc: 'Prim', why: 'Ticari HVAC + veri merkezi soğutma liderliği. Prim ödüyorsun.', risk: 'Fiyatlanmış. Yükseliş sınırlı.', portfolios: [] },
+  { t: 'CARR', n: 'Carrier', l: 3, cat: 'quality', val: 5, pot: 4, fwdPE: '~22x', peerDisc: 'TT\'den ucuz', why: 'Viessmann satın alımı sonrası ısı pompası + ticari HVAC. Adil.', risk: 'Konut tarafı yavaşlıyor.', portfolios: [] },
+
+  // KATMAN 4 - OPTİK
+  { t: 'CRDO', n: 'Credo Technology', l: 4, cat: 'cheap', val: 4, pot: 9, fwdPE: '~24-45x', peerDisc: 'ALAB 90-140x\'e göre büyük', why: 'Gelir +%200, <strong>2026 mali yılı üçe katlanıyor</strong>, aktif elektrik kabloda lider. <strong>PEG<1 olan tek büyük-büyüme bağlantı ismi</strong>. Ocak\'tan beri %15-20 düştü — giriş cazip.', risk: 'Müşteri konsantrasyonu: ilk 3 müşteri = %88. Tek müşteri kaybı sert.', portfolios: ['aggressive'] },
+  { t: 'MTSI', n: 'MACOM Technology', l: 4, cat: 'hidden', val: 6, pot: 7, fwdPE: '~44x', peerDisc: 'CRDO/ALAB\'dan daha çeşitli', why: 'Veri merkezi büyümesi %20\'den %35-40\'a revize. <strong>1.6 terabit tasarım kazanımı</strong>. Savunma GaN rekabet avantajı.', risk: 'Orta ölçekli likidite. Optik segment hâlâ küçük.', portfolios: ['aggressive'] },
+  { t: 'COHR', n: 'Coherent', l: 4, cat: 'quality', val: 5, pot: 6, fwdPE: '~22x', peerDisc: 'Makul', why: 'Transceiver + lazer çeşitli. LITE\'dan ucuz. Lazer + optik bütünleşik.', risk: 'Entegrasyon riski. Karmaşık portföy.', portfolios: [] },
+  { t: 'FN', n: 'Fabrinet', l: 4, cat: 'quality', val: 6, pot: 6, fwdPE: '~28x', peerDisc: 'Optik grupta makul', why: 'NVIDIA optik modül montajcısı. Şeffaflık var.', risk: 'Tek müşteri bağımlılığı.', portfolios: [] },
+  { t: 'LITE', n: 'Lumentum Holdings', l: 4, cat: 'avoid', val: 10, pot: 3, fwdPE: '85-100x+', peerDisc: 'Aşırı fiyatlı', why: 'Transceiver + EML lazer saf oyuncu.', risk: '<strong>1 yılda %1100. İleri F/K 85+. Analist hedefleri spotun çok altında.</strong>', portfolios: [] },
+  { t: 'AAOI', n: 'Applied Optoelectronics', l: 4, cat: 'avoid', val: 10, pot: 2, fwdPE: '~175x', peerDisc: 'Aşırı fiyatlı', why: '800G transceiver hızlanıyor.', risk: '<strong>1 yılda %900. İleri F/K 175. %14 açığa satış + hisse sulandırma.</strong>', portfolios: [] },
+  { t: 'ALAB', n: 'Astera Labs', l: 4, cat: 'avoid', val: 10, pot: 4, fwdPE: '90-140x', peerDisc: 'Aşırı fiyatlı', why: 'AI sunucu bağlantı çipleri (retimer, Aries).', risk: '<strong>İleri F/K 90-140. CEO yoğun satış. Gelecek 2 yıl büyümesi fiyatta.</strong>', portfolios: [] },
+
+  // KATMAN 5 - AĞ DONANIMI
+  { t: 'CSCO', n: 'Cisco', l: 5, cat: 'cheap', val: 3, pot: 7, fwdPE: '~19.8x', peerDisc: 'ANET 40x, APH 29x\'e göre büyük', why: '<strong>2. çeyrek AI siparişleri 2.1 milyar $ — tek çeyrekte tüm geçen yılı geçti</strong>. 14 yıl üst üste temettü artışı. %5.5 nakit getirisi. 31 milyar $ yıllık Splunk geliri.', risk: 'Bellek maliyeti marj baskısı. Yönlendirici/anahtar yavaşlıyor.', portfolios: ['balanced', 'dividend'] },
+  { t: 'ANET', n: 'Arista Networks', l: 5, cat: 'avoid', val: 8, pot: 4, fwdPE: '~40x', peerDisc: '52 hafta tepede', why: 'Dev bulut şirketleri anahtar liderliği gerçek.', risk: '<strong>52 hafta tepede. Hedef %5-20 üst. Fiyatlanmış.</strong>', portfolios: [] },
+  { t: 'HPE', n: 'Hewlett Packard Enterprise', l: 5, cat: 'cheap', val: 2, pot: 6, fwdPE: '~10x', peerDisc: 'Derin değer', why: 'Juniper\'ı satın aldı (Temmuz 2025). <strong>İleri F/K 10, temettü %2.2</strong>. AI ağ konsolidasyonu.', risk: 'Entegrasyon riski. Kurumsal BT yavaşlıyor.', portfolios: ['dividend'] },
+  { t: 'CIEN', n: 'Ciena', l: 5, cat: 'avoid', val: 9, pot: 3, fwdPE: '~48x', peerDisc: 'Aşırı fiyatlı', why: 'Uzun mesafe + veri merkezi bağlantı optik transportu.', risk: '<strong>6 ayda +%182. Genel müdür yardımcısı payının %99.7\'sini 409$\'da sattı. İleri F/K 48.</strong>', portfolios: [] },
+
+  // KATMAN 6 - DEPOLAMA
+  { t: 'WDC', n: 'Western Digital', l: 6, cat: 'cheap', val: 4, pot: 8, fwdPE: '~23-30x', peerDisc: 'PEG <0.5', why: 'SNDK ayrılığı sonrası <strong>saf HDD oyuncusu</strong>. 2026 nearline HDD %100 satılmış. ~%89 geliri dev bulut şirketlerinden. 2026 kazanç +%87.', risk: '<strong>42 içeriden satış / 0 alış — büyük sarı bayrak.</strong> Pozisyonu küçük tut.', portfolios: ['aggressive'] },
+  { t: 'SNDK', n: 'SanDisk', l: 6, cat: 'cheap', val: 2, pot: 7, fwdPE: '<strong>~9.8x</strong>', peerDisc: 'Gruptaki en ucuz', why: '2026 geliri +%42, 2027 +%26. Nasdaq-100\'e 20 Nisan\'da giriyor. <strong>NAND bellekte AI faydalananı</strong>.', risk: 'Klasik NAND döngü sonu riski. Analist hedefleri spotun altında.', portfolios: ['aggressive'] },
+  { t: 'STX', n: 'Seagate', l: 6, cat: 'quality', val: 4, pot: 6, fwdPE: '~18x', peerDisc: 'WDC\'ye yakın', why: 'HDD düopolü. HAMR teknolojisinde lider.', risk: 'Depolama döngüselliği. WDC aynı tezde daha iyi fiyatlı.', portfolios: [] },
+  { t: 'GLW', n: 'Corning', l: 6, cat: 'avoid', val: 9, pot: 3, fwdPE: '~55x', peerDisc: 'Aşırı fiyatlı', why: 'Meta ile 6 milyar $ fiber sözleşmesi gerçek.', risk: '<strong>1 yılda +%311. İleri F/K 55. Hikâye tamamen fiyatlanmış.</strong>', portfolios: [] },
+  { t: 'NTAP', n: 'NetApp', l: 6, cat: 'avoid', val: 4, pot: 2, fwdPE: '~15x', peerDisc: 'Ucuz ama katalizör yok', why: 'Ucuz — ama.', risk: '<strong>AI katalizörü yok. Hareketsiz yatırım riski.</strong>', portfolios: [] },
+  { t: 'VISN', n: 'Vistance Networks', l: 6, cat: 'avoid', val: 5, pot: 1, fwdPE: 'N/A', peerDisc: 'Değer tuzağı', why: 'Ana fiber işini Amphenol\'e sattı (eski CommScope).', risk: '<strong>Kalan kısım değer tuzağı. 2026 FAVÖK düz.</strong>', portfolios: [] },
+
+  // KATMAN 7 - GYO / İNŞAAT / MALZEME
+  { t: 'IRM', n: 'Iron Mountain', l: 7, cat: 'hidden', val: 4, pot: 7, fwdPE: '~22x (P/AFFO)', peerDisc: 'EQIX 27-30x\'e göre ucuz', why: 'Veri merkezi segmenti 4. çeyrek +%39. 2026\'da +%25+. <strong>400 megavatlık arazi bankası</strong>. Piyasa hâlâ "arşiv saklama" değerliyor.', risk: 'Eski kayıt saklama segmenti sulandırıyor; veri merkezi ağırlığı artmadan değerleme zor.', portfolios: ['balanced', 'dividend'] },
+  { t: 'PRIM', n: 'Primoris Services', l: 7, cat: 'cheap', val: 4, pot: 6, fwdPE: '~23x', peerDisc: 'PWR 46x, STRL 38x\'e göre en ucuz', why: '<strong>11.95 milyar $ sipariş defteri</strong>. PayneCrest elektrik tarafı eklendi. Elektrik + AI inşaatı.', risk: 'AI saflığı diğerlerinden düşük. Döngüsel.', portfolios: [] },
+  { t: 'NUE', n: 'Nucor', l: 7, cat: 'cheap', val: 3, pot: 7, fwdPE: '~15x', peerDisc: 'VMC/MLM 30x\'e göre yarı çarpan', why: '<strong>2026 kazanç +%63 (gümrük korumalı)</strong>. Veri merkezi yapısal çelik sipariş +%40. PEG ~0.5.', risk: 'Çelik fiyat döngüselliği. Gümrük politikası değişirse tez zayıflar.', portfolios: ['balanced'] },
+  { t: 'MTZ', n: 'MasTec', l: 7, cat: 'hidden', val: 4, pot: 6, fwdPE: '~22x', peerDisc: 'PEG 0.7 — büyüme-ayarlı en iyi', why: 'Elektrik + petrol gaz + iletişim dengeli. PEG 0.7.', risk: 'Borç hâlâ yüksek. Döngüsel.', portfolios: [] },
+  { t: 'STRL', n: 'Sterling Infrastructure', l: 7, cat: 'hidden', val: 6, pot: 6, fwdPE: '~38x', peerDisc: 'Veri merkezi saha geliştirmesi saf oyuncu', why: '<strong>Veri merkezi arazi geliştirmede saf oyuncu</strong>. 2026 geliri +%45.', risk: '<strong>Snowcap açığa satış raporu riski. Küçük pozisyon.</strong>', portfolios: [] },
+  { t: 'EQIX', n: 'Equinix', l: 7, cat: 'avoid', val: 9, pot: 4, fwdPE: '~61x', peerDisc: 'Kusursuz fiyatlı', why: 'Bağlantı noktası (colocation) lideri.', risk: '<strong>İleri F/K 61, hedef düz, 52 hafta tepede. Hata toleransı yok.</strong>', portfolios: [] },
+  { t: 'DLR', n: 'Digital Realty', l: 7, cat: 'avoid', val: 7, pot: 4, fwdPE: '~25-27x (P/AFFO)', peerDisc: 'Pahalı', why: 'Dev ölçekli veri merkezi GYO\'su lideri.', risk: '25-27x AFFO. Yükseliş sınırlı. IRM daha iyi risk/kazanç.', portfolios: [] },
+  { t: 'PWR', n: 'Quanta Services', l: 7, cat: 'avoid', val: 9, pot: 3, fwdPE: '~46x', peerDisc: 'Tamamen fiyatlanmış', why: 'Şebeke/elektrik inşaatı lideri.', risk: '<strong>İleri F/K 46. 44 milyar $ sipariş fiyatlanmış. Hedef spotun altında.</strong>', portfolios: [] },
+  { t: 'VMC', n: 'Vulcan Materials', l: 7, cat: 'quality', val: 7, pot: 4, fwdPE: '~30x', peerDisc: 'Agrega primi', why: 'Veri merkezi inşaatı agrega tedariği.', risk: '30x çarpan. Nucor aynı tez için çok ucuz.', portfolios: [] },
+
+  // KATMAN 8 - KİMYASAL / NADİR TOPRAK / BAKIR
+  { t: 'UCTT', n: 'Ultra Clean Holdings', l: 8, cat: 'cheap', val: 4, pot: 7, fwdPE: '~24x', peerDisc: 'ICHR 30x, ENTG 44x\'e göre', why: 'Fab alt sistem. <strong>3 milyar $ kapasite AI fab\'larına yönelik</strong>. %29 fiyat hedefi yukarı. ICHR zararda ama UCTT kârlı.', risk: 'Yarıiletken üretim cihazı döngüselliği. Müşteri konsantrasyonu.', portfolios: ['aggressive'] },
+  { t: 'LYSCY', n: 'Lynas Rare Earths', l: 8, cat: 'hidden', val: 5, pot: 6, fwdPE: '~35x', peerDisc: 'Tek kârlı nadir toprak', why: '<strong>Tek kârlı nadir toprak üreticisi</strong>. Çin dışı tek disprozyum/terbium kaynağı. Savunma + mıknatıs bağımlılığı.', risk: 'Çin fiyat damping riski. Malezya politik risk.', portfolios: [] },
+  { t: 'FCX', n: 'Freeport-McMoRan', l: 8, cat: 'hold', val: 4, pot: 7, fwdPE: '~18x', peerDisc: 'SCCO 39x\'e göre yarı çarpan', why: '<strong>Grasberg yeniden açılışı 2. çeyrek 2026</strong>. 2026 FAVÖK 11-19 milyar $ aralığı. %5 nakit getirisi. Zeynel portföyünde zaten.', risk: 'Bakır fiyat döngüselliği. Endonezya politik risk. <strong>Portföyün %12\'sini aşmasın.</strong>', portfolios: ['balanced'] },
+  { t: 'ENTG', n: 'Entegris', l: 8, cat: 'quality', val: 7, pot: 5, fwdPE: '~44x', peerDisc: 'Pahalı', why: 'İleri malzeme + akışkan işleme fab lideri.', risk: 'İleri F/K 44. UCTT daha iyi risk/kazanç.', portfolios: [] },
+  { t: 'MP', n: 'MP Materials', l: 8, cat: 'avoid', val: 10, pot: 3, fwdPE: 'N/A', peerDisc: 'Aşırı fiyatlı', why: 'Pentagon %15 pay + fiyat tabanı.', risk: '<strong>2027 gelirinin 33x\'inde işlem görüyor. Tek ABD üretim kaynağı politika katalizörü fiyatlanmış.</strong>', portfolios: [] },
+  { t: 'SCCO', n: 'Southern Copper', l: 8, cat: 'avoid', val: 8, pot: 3, fwdPE: '~39x', peerDisc: 'Aşırı pahalı', why: 'Saf bakır oyuncusu.', risk: '<strong>İleri F/K 39. Analist Sat/Tut. 52 hafta tepede. Grupo México kontrollü.</strong>', portfolios: [] },
+
+  // KATMAN 9 - YARIİLETKEN CİHAZ
+  { t: 'ONTO', n: 'Onto Innovation', l: 9, cat: 'cheap', val: 5, pot: 9, fwdPE: '~28x', peerDisc: 'CAMT/NVMI daha pahalı', why: '<strong>Dragonfly G5 TSMC 2.5D kalifiye</strong>. 1. ve 2. çeyrek beklenti-üstü + yukarı revizyon. <strong>PEG 0.86</strong>. HBM ölçümde saf oyuncu.', risk: 'Yıl başından +%90 (momentum sonrası giriş). Yarıiletken döngüselliği.', portfolios: ['aggressive'] },
+  { t: 'AMKR', n: 'Amkor Technology', l: 9, cat: 'cheap', val: 4, pot: 8, fwdPE: '~31x / FAVÖK 11x', peerDisc: 'En ucuz AI paketleme', why: 'TSMC CoWoS darboğaz rahatlatma vanası. <strong>HDFO + Arizona 7 milyar $ fab</strong>. 4. çeyrek kazanç +%60 beklenti üstü.', risk: 'Analist hedefi mevcut fiyatın altında (momentum ileri gitti). Müşteri konsantrasyonu.', portfolios: ['aggressive'] },
+  { t: 'AMAT', n: 'Applied Materials', l: 9, cat: 'quality', val: 6, pot: 6, fwdPE: '~32x', peerDisc: 'LRCX 40x\'e göre ucuz', why: 'Kaplama + aşındırma lideri. <strong>2027 kazanç büyümesi +%27\'ye hızlanıyor</strong>.', risk: 'Yarıiletken üretim cihazı döngüselliği. Çin ihracat kontrolleri.', portfolios: [] },
+  { t: 'LRCX', n: 'Lam Research', l: 9, cat: 'quality', val: 7, pot: 6, fwdPE: '~40x', peerDisc: 'AMAT\'dan pahalı', why: 'Aşındırma lideri.', risk: 'İleri F/K 40. AMAT aynı tez için ucuz.', portfolios: [] },
+  { t: 'KLAC', n: 'KLA Corporation', l: 9, cat: 'quality', val: 7, pot: 5, fwdPE: '~35x', peerDisc: 'Prim', why: 'Süreç kontrolü + denetim lideri.', risk: 'Prim ödüyorsun.', portfolios: [] },
+  { t: 'FORM', n: 'FormFactor', l: 9, cat: 'avoid', val: 9, pot: 3, fwdPE: '60x+', peerDisc: 'Aşırı fiyatlı', why: 'HBM test probu hızlanıyor.', risk: '<strong>1 yılda +%226. İleri F/K 60+. Hedef spotun altında.</strong>', portfolios: [] },
+  { t: 'KLIC', n: 'Kulicke & Soffa', l: 9, cat: 'avoid', val: 8, pot: 2, fwdPE: 'N/A (zarar)', peerDisc: 'Kazanç dibinde', why: 'İleri paketleme bağlama.', risk: '<strong>Hem çok pahalı (hedef %18 altında) hem kazanç dibinde.</strong>', portfolios: [] },
+
+  // KATMAN 10 - SUNUCU / ELEKTRONİK MONTAJ
+  { t: 'DELL', n: 'Dell Technologies', l: 10, cat: 'cheap', val: 3, pot: 8, fwdPE: '~15x', peerDisc: 'SMCI yatırılamaz, CLS 34x', why: '<strong>2027 AI sunucu geliri 50 milyar $ (+%103)</strong>. 43 milyar $ AI sipariş defteri. Özkaynak getirisi %44. <strong>PEG 0.7</strong>. En temiz AI sunucu oynaması.', risk: 'Son dönem içeriden satış uyarısı. Kurumsal taraf yavaşlıyor.', portfolios: ['balanced'] },
+  { t: 'FLEX', n: 'Flex Ltd.', l: 10, cat: 'hidden', val: 4, pot: 7, fwdPE: '~18x', peerDisc: 'CLS 34x, JBL 19x', why: '<strong>Flex Power + JetCool sıvı soğutma</strong>. NVIDIA modüler veri merkezi, AMD MI355X ortaklıkları. Gizli sıvı soğutma oyuncusu.', risk: 'Güvenilirlik segmenti yavaşlıyor. Elektronik montaj döngüsü.', portfolios: ['aggressive'] },
+  { t: 'CLS', n: 'Celestica', l: 10, cat: 'avoid', val: 8, pot: 5, fwdPE: '~34x', peerDisc: 'Pahalı', why: 'Dev bulut şirketi donanım montajı büyüyor.', risk: 'İleri F/K 34 aşırı. FLEX aynı tez için yarı çarpan.', portfolios: [] },
+  { t: 'JBL', n: 'Jabil', l: 10, cat: 'quality', val: 5, pot: 5, fwdPE: '~19x', peerDisc: 'Makul', why: 'Elektronik montaj + bulut altyapısı dengeli.', risk: 'Büyüme FLEX\'ten yavaş.', portfolios: [] },
+  { t: 'SMCI', n: 'Super Micro Computer', l: 10, cat: 'avoid', val: 6, pot: 1, fwdPE: 'N/A', peerDisc: 'YATIRILAMAZ', why: 'AI sunucu büyümesi gerçek.', risk: '<strong>Adalet Bakanlığı ihracat kontrolü soruşturması. Kurucu ortak iddianameli. 4. çeyrek 2.3 milyar $ gelir kesintisi. %6.4 brüt kâr. Yönetişim tuzağı.</strong>', portfolios: [] },
+
+  // KATMAN 11 - KONNEKTÖR
+  { t: 'TEL', n: 'TE Connectivity', l: 11, cat: 'cheap', val: 4, pot: 7, fwdPE: '~18x', peerDisc: 'APH 29x\'e göre %35 ucuz', why: '2026 mali yılı satış +%22, kazanç +%30. <strong>3 milyar $ geri alım + %10 temettü artışı</strong>. Aynı AI teması APH\'den ucuz.', risk: 'AI payı APH\'den küçük. Otomotiv tarafı yavaş.', portfolios: ['dividend'] },
+  { t: 'APH', n: 'Amphenol', l: 11, cat: 'avoid', val: 8, pot: 4, fwdPE: '~29x', peerDisc: 'Kırmızı bayrak', why: 'AI konnektör liderliği gerçek.', risk: '<strong>112M$ içeriden satış vs 1.3M$ alış. UBS + Citi hedef düşürdü. İleri F/K 29.</strong>', portfolios: [] },
+
+  // KATMAN 12 - ENERJİ DEPOLAMA
+  { t: 'FLNC', n: 'Fluence Energy', l: 12, cat: 'avoid', val: 5, pot: 1, fwdPE: 'N/A (zarar)', peerDisc: 'Zayıf', why: 'Şebeke ölçekli depolama.', risk: '<strong>Zarar ediyor. Yavaş büyüme. AI tezini taşıyamaz.</strong>', portfolios: [] },
+  { t: 'PLUG', n: 'Plug Power', l: 12, cat: 'avoid', val: 6, pot: 1, fwdPE: 'N/A (zarar)', peerDisc: 'Çok zayıf', why: 'Hidrojen yakıt hücresi.', risk: '<strong>Kronik zarar. Hisse sulandırması. 1 milyar $ altı risk.</strong>', portfolios: [] },
+  { t: 'EOSE', n: 'Eos Energy', l: 12, cat: 'avoid', val: 6, pot: 2, fwdPE: 'N/A (zarar)', peerDisc: 'Spekülatif', why: 'Çinko pil depolama.', risk: '<strong>Toplu dava açık. Hisse sulandırması. 1 milyar $ altı.</strong>', portfolios: [] },
+  { t: 'BLDP', n: 'Ballard Power', l: 12, cat: 'avoid', val: 6, pot: 1, fwdPE: 'N/A (zarar)', peerDisc: 'Çok zayıf', why: 'Yakıt hücresi.', risk: '<strong>Kronik zarar. Ticari olgunluk yok.</strong>', portfolios: [] }
+];
+
+const PORTFOLIOS = {
+  balanced: [
+    { t: 'GEV', metric: '50x/16x 2028', reason: '<strong>Uzun vadeli altyapı franchise\'ı</strong>. 150 milyar $ sipariş defteri, 2028\'e kadar satılmış gaz türbini, değerleme 2027-28 FAVÖK\'e göre makul.' },
+    { t: 'CMI', metric: '22x · %3.5 nakit', reason: '22x İleri F/K, Güç Sistemleri veri merkezi yedek güç 3.5 milyar $ ve büyüyor. 2028\'e sipariş. Gizli kazanan güvenlik marjı sağlar.' },
+    { t: 'DELL', metric: '15x · PEG 0.7', reason: '43 milyar $ AI sipariş defteri, 15x İleri F/K, PEG 0.7. Portföyün <strong>saf AI sunucu ayağı</strong>.' },
+    { t: 'IRM', metric: '%4.5 temettü', reason: '%4.5 AFFO getirisi, 400 MW arazi bankası, veri merkezi +%39. Gelir üreten AI GYO altyapısı.' },
+    { t: 'NUE', metric: '15x · PEG 0.5', reason: '15x İleri F/K, 2026 kazanç +%63, veri merkezi yapısal çelik sipariş +%40. Döngüsel ama PEG ~0.5.' },
+    { t: 'CSCO', metric: '19.8x · %5.5 nakit', reason: '19.8x İleri F/K, 14 yıl ardışık temettü artışı, AI siparişleri tek çeyrekte tüm geçen yılı aştı. <strong>Savunmacı AI uyanışı</strong>.' },
+    { t: 'FCX', metric: '18x · %5 nakit', reason: '18x İleri F/K, %5 nakit getirisi. Bakır zorunlu veri merkezi kablolama emtiası. Zeynel portföyünde zaten — <strong>pozisyonu koru, satma</strong>.' }
+  ],
+  aggressive: [
+    { t: 'CRDO', metric: 'Gelir +%200 · PEG<1', reason: 'Gelir +%200, PEG<1, aktif elektrik kabloda lider. <strong>En yüksek katalizör yoğun büyüme</strong>.' },
+    { t: 'ONTO', metric: '28x · PEG 0.86', reason: '28x İleri F/K, PEG 0.86, TSMC 2.5D kalifikasyonu. HBM ölçümünde hem ucuz hem katalizör.' },
+    { t: 'MOD', metric: 'DC +%78 yıllık', reason: 'Sıvı soğutmada VRT\'ye göre %25 ucuz, veri merkezi +%78. Gentherm ayrılığı yeniden değerleme katalizörü.' },
+    { t: 'WDC', metric: '2026 kazanç +%87', reason: 'HDD %100 satılmış 2026, 2026 kazanç +%87, PEG<0.5. <strong>Sarı bayrak: içeriden satış — pozisyonu küçük tut</strong>.' },
+    { t: 'AMKR', metric: 'FAVÖK 11x', reason: '11x FAVÖK çarpanı. CoWoS darboğaz rahatlatma vanası. HDFO + Arizona. Paketlemenin en ucuz AI oynaması.' },
+    { t: 'VST', metric: '18.7x · +%66 kazanç', reason: 'Meta elektrik anlaşması, 2026 kazanç +%66, 18.7x İleri F/K. CEG\'ye göre %25 ucuz.' },
+    { t: 'MTSI', metric: '1.6T tasarım kazanımı', reason: 'Radar altında optik büyümesi. 1.6 terabit, savunma GaN rekabet avantajı.' },
+    { t: 'FLEX', metric: '18x · JetCool', reason: 'JetCool + NVDA modüler veri merkezi. CLS\'ye göre <strong>saklı sıvı soğutma oynaması</strong>.' },
+    { t: 'SNDK', metric: '9.8x İleri F/K', reason: '<strong>Opsiyonel:</strong> Gruptaki en ucuz AI bellek oynaması (9.8x). NAND döngü riski karşılığında — küçük pozisyon.' }
+  ],
+  dividend: [
+    { t: 'CSCO', metric: '%5.5 nakit · %2.5 temettü', reason: '%5.5 nakit getirisi, 14 yıl ardışık temettü artışı, 31 milyar $ yıllık Splunk geliri. <strong>AI fırsatı bedava</strong>.' },
+    { t: 'TEL', metric: '3 milyar $ geri alım · +%10 temettü', reason: '3 milyar $ geri alım + %10 temettü artışı. 18x İleri F/K. APH\'ye karşı <strong>değer arbitrajı</strong>.' },
+    { t: 'HPE', metric: '10x · %2.2 temettü', reason: '10x İleri F/K, %2.2 temettü. Juniper sonrası ağ konsolidasyonu. <strong>Derin değer AI oynaması</strong>.' },
+    { t: 'CMI', metric: '22x · %3.5 nakit', reason: '22x İleri F/K, %3.5 nakit, Güç Sistemleri veri merkezi büyümesi. Dengeli ile çakışma — her ikisinde tutulabilir.' },
+    { t: 'NRG', metric: '%13 nakit getirisi', reason: '<strong>%13 nakit getirisi</strong>, 11 milyar $ geri alım 2030\'a kadar, 5.4 GW boru hattı somutlaşma opsiyonu.' },
+    { t: 'IRM', metric: '%4.5 AFFO · DC +%39', reason: '%4.5 AFFO, veri merkezi +%39. <strong>GYO temettü + AI büyüme hibridi</strong>.' }
+  ]
+};
+
+// ============ TICKER ============
+const tickerStocks = [
+  { t: 'GEV', p: 658.40, c: +2.34 }, { t: 'CMI', p: 438.15, c: +1.12 }, { t: 'CRDO', p: 78.22, c: +4.51 },
+  { t: 'ONTO', p: 298.45, c: +3.18 }, { t: 'AMKR', p: 44.30, c: +1.67 }, { t: 'WDC', p: 112.80, c: +0.84 },
+  { t: 'SNDK', p: 64.52, c: +2.29 }, { t: 'DELL', p: 168.90, c: +1.48 }, { t: 'CSCO', p: 72.15, c: +0.56 },
+  { t: 'VST', p: 219.40, c: +2.08 }, { t: 'MOD', p: 148.70, c: +3.42 }, { t: 'IRM', p: 117.25, c: +0.71 },
+  { t: 'FCX', p: 62.40, c: +1.28 }, { t: 'VRT', p: 168.20, c: -1.84 }, { t: 'LITE', p: 198.50, c: -2.11 },
+  { t: 'OKLO', p: 48.30, c: -3.25 }, { t: 'SMCI', p: 34.80, c: -4.12 }, { t: 'EQIX', p: 892.50, c: -0.68 }
+];
+document.getElementById('ticker-inner').innerHTML = [...tickerStocks, ...tickerStocks].map(s =>
+  `<span class="ticker-item"><span class="sym">${s.t}</span><span class="val">$${s.p.toFixed(2)}</span><span class="chg ${s.c >= 0 ? 'pos' : 'neg'}">${s.c >= 0 ? '▲' : '▼'} ${Math.abs(s.c).toFixed(2)}%</span></span>`
+).join('');
+
+// ============ DEĞERLEME HARİTASI (SVG SCATTER) ============
+const dotsGroup = document.getElementById('dots-group');
+const tooltip = document.getElementById('map-tooltip');
+const mapContainer = document.querySelector('.map-container');
+
+const catColors = {
+  cheap: '#7dd3a0',
+  hidden: '#4ecdc4',
+  quality: '#f4c430',
+  avoid: '#ff6b6b',
+  hold: '#a78bfa'
+};
+const catNames = {
+  cheap: 'En Ucuz + Yüksek Potansiyel',
+  hidden: 'Gizli Kazanan',
+  quality: 'Kaliteli / Makul Fiyat',
+  avoid: 'Kaçın',
+  hold: 'Portföyde / Koru'
+};
+
+// Çakışma önleme: aynı koordinata birden fazla hisse denk gelirse hafif ofset
+function getJitteredPos(stock, index) {
+  // viewBox: 1000x600, margin 30
+  const mx = 30, my = 30;
+  const xRange = 1000 - 2 * mx;
+  const yRange = 600 - 2 * my;
+  // val 1-10 → x 30..970 (ucuz soldan başlasın)
+  // pot 1-10 → y 570..30 (yüksek yukarı)
+  let x = mx + ((stock.val - 1) / 9) * xRange;
+  let y = my + ((10 - stock.pot) / 9) * yRange;
+  // Çakışma kontrolü: küçük spiral ofset
+  const key = `${stock.val}-${stock.pot}`;
+  if (!window._posCounts) window._posCounts = {};
+  const count = window._posCounts[key] || 0;
+  window._posCounts[key] = count + 1;
+  if (count > 0) {
+    const angle = (count * 137.5) * (Math.PI / 180); // altın açı
+    const radius = 15 + count * 4;
+    x += Math.cos(angle) * radius;
+    y += Math.sin(angle) * radius;
+  }
+  return { x, y };
+}
+
+STOCKS.forEach((s, i) => {
+  const pos = getJitteredPos(s, i);
+  const color = catColors[s.cat];
+  const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+  g.setAttribute('class', `dot dot-${s.cat}`);
+  g.setAttribute('data-ticker', s.t);
+  g.setAttribute('data-cat', s.cat);
+  g.innerHTML = `
+    <circle class="dot-circle" cx="${pos.x}" cy="${pos.y}" r="11" fill="${color}" fill-opacity="0.22" stroke="${color}" stroke-width="1.5"/>
+    <text class="dot-label" x="${pos.x}" y="${pos.y + 0.5}">${s.t}</text>
+  `;
+  g.addEventListener('mouseenter', (e) => showTooltip(s, e));
+  g.addEventListener('mouseleave', hideTooltip);
+  g.addEventListener('click', () => {
+    const card = document.querySelector(`.stock-card[data-ticker="${s.t}"]`);
+    if (card) { card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      card.style.transition = 'box-shadow 0.3s';
+      card.style.boxShadow = `0 0 0 3px ${color}`;
+      setTimeout(() => { card.style.boxShadow = ''; }, 2000);
+    }
+  });
+  dotsGroup.appendChild(g);
+});
+
+function showTooltip(s, e) {
+  const portfolios = s.portfolios.length ?
+    s.portfolios.map(p => ({ balanced: 'Dengeli', aggressive: 'Agresif', dividend: 'Temettü' })[p]).join(', ') :
+    'Öneri yok';
+  tooltip.innerHTML = `
+    <div class="mt-head">
+      <div class="mt-ticker">${s.t}</div>
+      <div class="mt-cat ${s.cat}">${catNames[s.cat]}</div>
+    </div>
+    <div class="mt-name">${s.n}</div>
+    <div class="mt-row"><span class="k">Katman</span><span class="v">${LAYERS[s.l].num} · ${LAYERS[s.l].title}</span></div>
+    <div class="mt-row"><span class="k">İleri F/K</span><span class="v">${s.fwdPE}</span></div>
+    <div class="mt-row"><span class="k">Peer iskonto</span><span class="v" style="max-width: 180px;">${s.peerDisc}</span></div>
+    <div class="mt-row"><span class="k">Portföy</span><span class="v">${portfolios}</span></div>
+  `;
+  tooltip.classList.add('visible');
+  const rect = mapContainer.getBoundingClientRect();
+  const ex = e.clientX - rect.left;
+  const ey = e.clientY - rect.top;
+  const tw = 340, th = 200;
+  let tx = ex + 15;
+  let ty = ey + 15;
+  if (tx + tw > rect.width) tx = ex - tw - 15;
+  if (ty + th > rect.height) ty = ey - th - 15;
+  tooltip.style.left = tx + 'px';
+  tooltip.style.top = ty + 'px';
+}
+function hideTooltip() { tooltip.classList.remove('visible'); }
+
+// Lejant filtreleme (harita üzerinde kategoriyi gizle/göster)
+document.querySelectorAll('.leg-item').forEach(item => {
+  item.addEventListener('click', () => {
+    const cat = item.dataset.leg;
+    item.classList.toggle('muted');
+    const muted = item.classList.contains('muted');
+    document.querySelectorAll(`.dot-${cat}`).forEach(d => {
+      d.style.display = muted ? 'none' : '';
+    });
+  });
+});
+
+// ============ LAYER OVERVIEW ============
+const loEl = document.getElementById('layer-overview');
+loEl.innerHTML = Object.entries(LAYERS).map(([n, L]) => {
+  const cheap = STOCKS.filter(s => s.l == n && s.cat === 'cheap').sort((a,b) => a.t.localeCompare(b.t))[0]
+             || STOCKS.filter(s => s.l == n && s.cat === 'hidden')[0]
+             || STOCKS.filter(s => s.l == n)[0];
+  return `<div class="layer-card" onclick="scrollToLayer(${n})">
+    <div class="lc-num"><span class="hash">#</span>${L.num} · KATMAN</div>
+    <div class="lc-title">${L.title}</div>
+    <div class="lc-pick">▸ ${cheap ? cheap.t : '—'}<span class="name">${cheap ? cheap.n : ''}</span></div>
+    <div class="lc-pe">${cheap ? cheap.fwdPE : ''}</div>
+  </div>`;
+}).join('');
+
+// ============ STOCK CARDS ============
+const lsEl = document.getElementById('layer-sections');
+lsEl.innerHTML = Object.entries(LAYERS).map(([n, L]) => {
+  const stocks = STOCKS.filter(s => s.l == n);
+  return `
+    <div class="layer-section" id="layer-${n}">
+      <div class="layer-section-head">
+        <div class="ls-num">${L.num}</div>
+        <div>
+          <div class="ls-title">
+            <span class="sub">Katman ${L.num} · ${L.sub}</span>
+            ${L.title}
+          </div>
+        </div>
+        <div class="ls-summary">${L.summary}</div>
+      </div>
+      <div class="stock-grid" data-layer="${n}">
+        ${stocks.map(s => renderStock(s)).join('')}
+      </div>
+    </div>`;
+}).join('');
+
+function renderStock(s) {
+  const catName = catNames[s.cat];
+  return `
+    <div class="stock-card cat-${s.cat}" data-ticker="${s.t}" data-layer="${s.l}" data-cat="${s.cat}" data-name="${s.n.toLowerCase()}">
+      <div class="sc-head">
+        <div>
+          <div class="sc-ticker">${s.t}</div>
+          <div class="sc-name">${s.n}</div>
+        </div>
+        <div class="sc-tags">
+          <span class="tag layer">${LAYERS[s.l].num} · ${LAYERS[s.l].title.split(' · ')[0].split(' / ')[0].split(' & ')[0].substring(0,14)}</span>
+          <span class="tag ${s.cat}">${catName}</span>
+        </div>
+      </div>
+      <div class="sc-metrics">
+        <div class="metric">
+          <div class="k">İleri F/K</div>
+          <div class="v ${s.cat === 'cheap' ? 'bull' : s.cat === 'avoid' ? 'bear' : ''} ${s.fwdPE.length > 10 ? 'sm' : ''}">${s.fwdPE}</div>
+        </div>
+        <div class="metric">
+          <div class="k">Rakibe Göre</div>
+          <div class="v ${s.peerDisc.toLowerCase().includes('ucuz') || s.peerDisc.toLowerCase().includes('yarı') || s.peerDisc.toLowerCase().includes('derin') || s.peerDisc.toLowerCase().includes('en ucuz') ? 'bull' : s.peerDisc.toLowerCase().includes('pahalı') || s.peerDisc.toLowerCase().includes('aşırı') || s.peerDisc.toLowerCase().includes('kusursuz') ? 'bear' : ''} sm">${s.peerDisc}</div>
+        </div>
+      </div>
+      <div class="sc-why">${s.why}</div>
+      <div class="sc-risk">${s.risk}</div>
+      <div class="sc-portfolios">
+        ${s.portfolios.includes('balanced') ? '<span class="portfolio-tag balanced">Dengeli</span>' : ''}
+        ${s.portfolios.includes('aggressive') ? '<span class="portfolio-tag aggressive">Agresif</span>' : ''}
+        ${s.portfolios.includes('dividend') ? '<span class="portfolio-tag dividend">Temettü</span>' : ''}
+        ${s.portfolios.length === 0 ? '<span class="portfolio-tag">Öneri yok</span>' : ''}
+        <button class="compare-btn" data-ticker="${s.t}" onclick="toggleCompare(event, '${s.t}')">+ Karşılaştır</button>
+      </div>
+    </div>`;
+}
+
+// ============ PORTFOLIOS ============
+function renderPortfolio(key) {
+  return PORTFOLIOS[key].map((item, i) => {
+    const stock = STOCKS.find(s => s.t === item.t);
+    return `
+      <div class="pp-item">
+        <div class="pp-num">${String(i+1).padStart(2, '0')}</div>
+        <div>
+          <div class="pp-ticker">${item.t}<span class="pp-ticker-name">${stock ? stock.n : ''}</span></div>
+        </div>
+        <div class="pp-reason">${item.reason}</div>
+        <div class="pp-metric"><span class="lbl">Veri</span>${item.metric}</div>
+      </div>`;
+  }).join('');
+}
+document.getElementById('list-balanced').innerHTML = renderPortfolio('balanced');
+document.getElementById('list-aggressive').innerHTML = renderPortfolio('aggressive');
+document.getElementById('list-dividend').innerHTML = renderPortfolio('dividend');
+
+// ============ AVOID ============
+document.getElementById('avoid-grid').innerHTML = STOCKS.filter(s => s.cat === 'avoid').map(s => `
+  <div class="avoid-item">
+    <div class="ai-head">
+      <span class="ai-ticker">${s.t}</span>
+      <span class="ai-name">${s.n}</span>
+    </div>
+    <div class="ai-reason">${s.risk}</div>
+  </div>
+`).join('');
+
+// ============ FILTERS ============
+let activeCat = 'all', activeSearch = '';
+document.querySelectorAll('[data-filter="cat"]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('[data-filter="cat"]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeCat = btn.dataset.val;
+    applyFilters();
+  });
+});
+document.getElementById('search-input').addEventListener('input', (e) => {
+  activeSearch = e.target.value.toLowerCase().trim();
+  applyFilters();
+});
+function applyFilters() {
+  document.querySelectorAll('.stock-card').forEach(card => {
+    const catMatch = activeCat === 'all' || card.dataset.cat === activeCat;
+    const searchMatch = activeSearch === '' || card.dataset.ticker.toLowerCase().includes(activeSearch) || card.dataset.name.includes(activeSearch);
+    if (catMatch && searchMatch) card.classList.remove('hidden'); else card.classList.add('hidden');
+  });
+  document.querySelectorAll('.layer-section').forEach(sec => {
+    const visible = sec.querySelectorAll('.stock-card:not(.hidden)').length;
+    sec.style.display = visible === 0 ? 'none' : '';
+  });
+}
+
+function scrollToLayer(n) {
+  document.getElementById('layer-' + n).scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// Portföy tabları
+document.querySelectorAll('.pt-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.pt-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.portfolio-panel').forEach(p => p.classList.add('pp-hidden'));
+    document.getElementById('panel-' + btn.dataset.panel).classList.remove('pp-hidden');
+  });
+});
+
+// ============ COMPARE ============
+let compareList = [];
+function toggleCompare(e, ticker) {
+  e.stopPropagation();
+  const btn = e.currentTarget;
+  const idx = compareList.indexOf(ticker);
+  if (idx >= 0) {
+    compareList.splice(idx, 1);
+    btn.classList.remove('added');
+    btn.textContent = '+ Karşılaştır';
+  } else {
+    if (compareList.length >= 3) { alert('En fazla 3 hisse karşılaştırabilirsiniz.'); return; }
+    compareList.push(ticker);
+    btn.classList.add('added');
+    btn.textContent = '✓ Eklendi';
+  }
+  renderCompare();
+}
+function renderCompare() {
+  const drawer = document.getElementById('compare-drawer');
+  const items = document.getElementById('compare-items');
+  document.getElementById('compare-count').textContent = compareList.length;
+  if (compareList.length === 0) {
+    drawer.classList.remove('open');
+    items.innerHTML = '';
+    return;
+  }
+  drawer.classList.add('open');
+  items.innerHTML = compareList.map(t => {
+    const s = STOCKS.find(x => x.t === t);
+    if (!s) return '';
+    return `
+      <div class="cd-item">
+        <button class="cd-remove" onclick="removeCompare('${t}')">✕</button>
+        <div class="tk">${s.t} <span style="font-family: var(--font-display); font-style: italic; font-weight: 300; font-size: 0.75rem; color: var(--text-tertiary); margin-left: 0.25rem;">${s.n}</span></div>
+        <div class="rows">
+          <div class="r"><span class="k">Katman</span><span class="v">${LAYERS[s.l].num} · ${LAYERS[s.l].title}</span></div>
+          <div class="r"><span class="k">Kategori</span><span class="v" style="color: ${catColors[s.cat]};">${catNames[s.cat]}</span></div>
+          <div class="r"><span class="k">İleri F/K</span><span class="v">${s.fwdPE}</span></div>
+          <div class="r"><span class="k">Rakibe iskonto</span><span class="v">${s.peerDisc}</span></div>
+          <div class="r"><span class="k">Portföy</span><span class="v">${s.portfolios.length ? s.portfolios.map(p => ({balanced: 'Dengeli', aggressive: 'Agresif', dividend: 'Temettü'})[p]).join(', ') : 'Önerilmez'}</span></div>
+        </div>
+      </div>`;
+  }).join('');
+}
+function removeCompare(t) {
+  compareList = compareList.filter(x => x !== t);
+  document.querySelectorAll(`.compare-btn[data-ticker="${t}"]`).forEach(b => {
+    b.classList.remove('added');
+    b.textContent = '+ Karşılaştır';
+  });
+  renderCompare();
+}
+function closeCompare() {
+  compareList.forEach(t => {
+    document.querySelectorAll(`.compare-btn[data-ticker="${t}"]`).forEach(b => {
+      b.classList.remove('added');
+      b.textContent = '+ Karşılaştır';
+    });
+  });
+  compareList = [];
+  renderCompare();
+}
+</script>
+
+</body>
+</html>
