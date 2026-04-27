@@ -42,16 +42,39 @@ def log(msg):
     ts = datetime.now().strftime("%H:%M:%S")
     print(f"[{ts}] {msg}", flush=True)
 
-def fmp_get(endpoint, params=None):
-    """FMP API çağrısı — rate limit için 2sn bekle."""
+def fmp_get(endpoint, params=None, retries=3):
+    """FMP API çağrısı — 503/429/timeout için exponential backoff ile yeniden dene."""
     p = params or {}
     p["apikey"] = FMP_KEY
-    try:
-        r = requests.get(f"{FMP_BASE}/{endpoint}", params=p, timeout=15)
-        if r.status_code == 200 and r.text.strip():
-            return r.json()
-    except Exception as e:
-        log(f"FMP hata ({endpoint}): {e}")
+    last_error = None
+    for attempt in range(retries):
+        try:
+            r = requests.get(f"{FMP_BASE}/{endpoint}", params=p, timeout=15)
+            if r.status_code == 200 and r.text.strip():
+                return r.json()
+            elif r.status_code == 503 or "DNS cache overflow" in r.text:
+                wait = 2 ** attempt * 5  # 5s, 10s, 20s
+                log(f"FMP 503 ({endpoint}) — {wait}s bekleniyor (deneme {attempt+1}/{retries})")
+                time.sleep(wait)
+                continue
+            elif r.status_code == 429:
+                wait = 2 ** attempt * 10  # 10s, 20s, 40s
+                log(f"FMP 429 rate limit ({endpoint}) — {wait}s bekleniyor (deneme {attempt+1}/{retries})")
+                time.sleep(wait)
+                continue
+            else:
+                last_error = f"HTTP {r.status_code}: {r.text[:100]}"
+                break
+        except requests.exceptions.Timeout:
+            last_error = "timeout"
+            wait = 2 ** attempt * 3
+            log(f"FMP timeout ({endpoint}) — {wait}s bekleniyor (deneme {attempt+1}/{retries})")
+            time.sleep(wait)
+            continue
+        except Exception as e:
+            last_error = str(e)
+            break
+    log(f"FMP başarısız ({endpoint}): {last_error}")
     return []
 
 def load_log():
@@ -64,6 +87,26 @@ def save_log(data):
     os.makedirs(os.path.dirname(LOG_FILE), exist_ok=True)
     with open(LOG_FILE, "w") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
+
+def load_portfolio_tickers():
+    """3 portföy JSON'ından mevcut pozisyon ticker'larını dinamik çek."""
+    portfolio_files = ["balanced.json", "aggressive.json", "dividend.json"]
+    tickers = set()
+    for fname in portfolio_files:
+        path = os.path.join(REPO_ROOT, "data", "portfolios", fname)
+        if not os.path.exists(path):
+            log(f"Portföy dosyası yok: {path}")
+            continue
+        try:
+            with open(path) as f:
+                data = json.load(f)
+            for pos in data.get("pozisyonlar", []):
+                sym = pos.get("sembol")
+                if sym and isinstance(sym, str):
+                    tickers.add(sym.upper().strip())
+        except Exception as e:
+            log(f"Portföy okuma hatası ({fname}): {e}")
+    return sorted(tickers)
 
 # ── Haber Çekimi ────────────────────────────────────────────────────────────
 def fetch_recent_news(lookback_hours=NEWS_LOOKBACK_HOURS):
@@ -79,23 +122,32 @@ def fetch_recent_news(lookback_hours=NEWS_LOOKBACK_HOURS):
     if isinstance(news, list):
         items.extend(news)
 
-    # Sektör odaklı tickers - enerji, sanayi, savunma, çelik, malzeme
+    # Sektör odaklı statik ticker'lar — enerji, sanayi, savunma, çelik, malzeme
     sector_tickers = ["GEV","ETN","PWR","HUBB","CLF","NUE","STLD","X","VMC",
                       "MLM","LIN","DOW","FCX","ALB","MP","UUUU","DRS","KTOS",
                       "HII","LMT","GD","NOC","RTX","BA","CAT","DE","EMR","ROK"]
 
-    time.sleep(2)
-    ticker_str = ",".join(sector_tickers[:15])
-    stock_news = fmp_get("news/stock", {"symbols": ticker_str, "limit": 30})
-    if isinstance(stock_news, list):
-        items.extend(stock_news)
+    # Portföydeki aktif pozisyonlar — dinamik çek
+    portfolio_tickers = load_portfolio_tickers()
+    if portfolio_tickers:
+        log(f"Portföy pozisyonları takibe ekleniyor: {portfolio_tickers}")
+    else:
+        log("Portföy ticker'ları bulunamadı — sadece sektör listesi kullanılacak.")
 
-    # Tekrar çek - ikinci grup
-    time.sleep(2)
-    ticker_str2 = ",".join(sector_tickers[15:])
-    stock_news2 = fmp_get("news/stock", {"symbols": ticker_str2, "limit": 20})
-    if isinstance(stock_news2, list):
-        items.extend(stock_news2)
+    # Birleştir + dedupe
+    all_tickers = sorted(set(sector_tickers + portfolio_tickers))
+    log(f"Toplam takip edilen ticker sayısı: {len(all_tickers)}")
+
+    # 15'erli gruplar halinde FMP'ye sor (URL uzunluk limiti için)
+    batch_size = 15
+    for i in range(0, len(all_tickers), batch_size):
+        batch = all_tickers[i:i + batch_size]
+        time.sleep(2)
+        ticker_str = ",".join(batch)
+        stock_news = fmp_get("news/stock", {"symbols": ticker_str, "limit": 30})
+        if isinstance(stock_news, list):
+            items.extend(stock_news)
+            log(f"  Batch {i//batch_size + 1}: {len(stock_news)} haber ({len(batch)} ticker)")
 
     # Filtre: son N saat + URL bazlı deduplicate
     seen_urls = set()
@@ -143,6 +195,7 @@ ALACAĞIN HABERLER:
 - Son 12 saatte yayımlanan ve piyasada henüz tam fiyatlanmamış (hisse %5'ten az tepki vermiş)
 - Düzenleyici kararname / hükümet kararı → belirli şirketlere doğrudan fayda
 - Beklenmedik M&A (birleşme/satın alma), kritik sözleşme, DOE/DOD finansmanı
+  (DOE = ABD Enerji Bakanlığı, DOD = ABD Savunma Bakanlığı)
 - Hammadde/emtia kararı → belirli sektöre doğrudan etki
 - Kritik teknoloji ortaklığı → şirket değeri değişecek
 
@@ -155,11 +208,42 @@ ALMAYACAĞIN HABERLER:
 - Genel ekonomi yorumları
 - Eski haberler (12h+ önce)
 
+DİL KURALLARI (KRİTİK — UYULMASI ZORUNLU):
+Sade, anlaşılır Türkçe yaz. Lise mezunu bir okuyucunun zorlanmadan anlayacağı seviyede ol.
+İngilizce finans/teknoloji terimlerini OLDUĞU GİBİ KULLANMA. Aşağıdaki çeviri tablosunu uygula:
+
+  YANLIŞ (kullanma) → DOĞRU (kullan)
+  • overhang → "fiyat üzerindeki baskı" / "tedirginlik"
+  • narrative → "anlatı" / "piyasa hikayesi"
+  • thematic → "temaya dayalı"
+  • momentum → "yükseliş ivmesi" / "düşüş ivmesi"
+  • sentiment → "piyasa havası" / "yatırımcı ruh hali"
+  • capex → "yatırım harcaması"
+  • headwind → "olumsuz rüzgar" / "engel"
+  • tailwind → "destekleyici rüzgar" / "olumlu etki"
+  • catalyst → "tetikleyici"
+  • consensus → "piyasa beklentisi"
+  • bullish (anlatımda) → "yükseliş yönlü"
+  • bearish (anlatımda) → "düşüş yönlü"
+  • AI → "yapay zeka"
+  • chip → "yarı iletken" veya "çip" (Türkçe yazımı)
+  • rally → "yükseliş hareketi"
+  • sell-off → "satış dalgası"
+  • exposure → "maruziyet" / "etkilenme"
+  • upside / downside → "yukarı potansiyel" / "aşağı risk"
+  • disrupt → "alt üst etmek" / "sarsmak"
+
+Sadece şu İngilizce kalabilir:
+- Şirket isimleri ve hisse kodları (NVDA, AAPL, vs.)
+- Bilanço kalemleri kısaltmaları (FCF, EPS, P/E, ROE)
+- Kurum/yer isimleri (Reuters, Wall Street, Hong Kong)
+- "yon" alanındaki teknik kod (bullish/bearish — bunlar JSON için, değiştirme)
+
 ÇIKTI FORMAT (JSON dizisi):
 [
   {
-    "baslik": "kısa başlık Türkçe",
-    "neden_onemli": "1 cümle - neden fiyatlanmadı",
+    "baslik": "kısa başlık (sade Türkçe, en fazla 70 karakter)",
+    "neden_onemli": "1-2 cümle Türkçe — bu haber neden henüz fiyatlanmadı, kim doğrudan etkilenir, neden önemli",
     "etkilenen_hisseler": ["TICK1", "TICK2"],
     "yon": "bullish veya bearish",
     "sure": "kısa / orta / uzun vadeli",
@@ -167,6 +251,10 @@ ALMAYACAĞIN HABERLER:
     "kaynak_url": "url"
   }
 ]
+
+ÖRNEK:
+İYİ: "ABD Enerji Bakanlığı küçük modüler reaktörlere 2 milyar dolar fon açıkladı, henüz hiçbir şirket adı duyurulmadı"
+KÖTÜ: "DOE SMR sektörüne fund commitment, bullish catalyst, sektörde tailwind oluşuyor"
 
 Eğer kriterlerini karşılayan haber yoksa boş dizi döndür: []
 SADECE JSON döndür, başka hiçbir şey yazma."""
