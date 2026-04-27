@@ -108,8 +108,13 @@ def get_upcoming_earnings(symbols: list[str]) -> list[dict]:
                 days_left     = None
                 if earnings_date:
                     try:
-                        ed        = datetime.strptime(earnings_date, "%Y-%m-%d")
-                        days_left = (ed - datetime.now(TR_TZ).replace(tzinfo=None)).days
+                        # 27 Nis 2026 fix: date - date kullan, datetime - datetime DEĞİL.
+                        # Eski: (datetime - datetime).days, saat farkına göre off-by-one.
+                        # Bugün 27 Nis 17:46 + ABBV 29 Nis 00:00 → fark 1g 6sa → .days=1
+                        # ama gerçek tarih farkı 2 gün. (29-27=2)
+                        ed_date    = datetime.strptime(earnings_date, "%Y-%m-%d").date()
+                        today_date = datetime.now(TR_TZ).date()
+                        days_left  = (ed_date - today_date).days
                     except ValueError:
                         pass
 
