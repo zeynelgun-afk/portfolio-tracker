@@ -69,6 +69,29 @@ def fmp_get(endpoint: str, params: dict = None) -> list | dict:
 
 # ── Portföy Okuma ─────────────────────────────────────────────────────────────
 
+def _calc_chg_pct(quote: dict) -> float | None:
+    """FMP quote'dan günlük değişim yüzdesini güvenli hesapla.
+
+    27 Nis 2026 trap fix: FMP `changePercentage` live session'da 0 dönebilir
+    (tüm hisse hareket etmemiş gibi). Manuel hesap her zaman tercih edilir,
+    FMP alanı sadece price/prev eksikse kullanılır.
+    """
+    price = quote.get("price")
+    prev  = quote.get("previousClose")
+    try:
+        if price is not None and prev is not None and float(prev) != 0:
+            return round((float(price) - float(prev)) / float(prev) * 100, 2)
+    except (ValueError, TypeError):
+        pass
+    fmp_chg = quote.get("changePercentage")
+    if fmp_chg is not None:
+        try:
+            return round(float(fmp_chg), 2)
+        except (ValueError, TypeError):
+            pass
+    return None
+
+
 def get_portfolio_snapshot() -> dict:
     """
     3 portföyü okur, canlı fiyatları FMP'den çeker.
@@ -101,7 +124,7 @@ def get_portfolio_snapshot() -> dict:
                 if sym and sym in price_map:
                     q = price_map[sym]
                     pos["guncel_fiyat"]   = q.get("price")
-                    pos["gunluk_degisim"] = q.get("changePercentage")
+                    pos["gunluk_degisim"] = _calc_chg_pct(q)
                     pos["hacim"]          = q.get("volume")
 
     return portfolios
@@ -277,9 +300,9 @@ def get_market_context() -> dict:
             price = q.get("price")
             prev  = q.get("previousClose")
 
-            chg = q.get("changePercentage")
-            if chg is None and price and prev and float(prev) != 0:
-                chg = round((float(price) - float(prev)) / float(prev) * 100, 2)
+            # 27 Nis 2026 fix: FMP changePercentage live session 0 trap.
+            # _calc_chg_pct manuel hesabı tercih ediyor.
+            chg = _calc_chg_pct(q)
 
             result[sym] = {
                 "price":         price,
