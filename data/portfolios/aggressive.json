@@ -28,7 +28,7 @@
   },
   "baslangic_sermaye": 400000,
   "nakit": {
-    "miktar": 230770.09,
+    "miktar": 274296.56,
     "para_birimi": "USD",
     "agirlik_yuzde": 47.91
   },
@@ -88,33 +88,6 @@
       "durum": "✅ Normal"
     },
     {
-      "sembol": "CAMT",
-      "isim": "Camtek Ltd",
-      "sektor": "Yarı İletken Ekipman / Inspection",
-      "adet": 226,
-      "maliyet_baz": 175.0,
-      "yatirim": 39550.0,
-      "guncel_fiyat": 203,
-      "guncel_deger": 45878,
-      "kar_zarar": 6328.0,
-      "kar_zarar_yuzde": 16.0,
-      "gunluk_degisim_yuzde": 3.63,
-      "agirlik_yuzde": 11.77,
-      "son_guncelleme": "2026-04-24T22:07:23.742966",
-      "giris_tarihi": "2026-04-10",
-      "giris_fiyati": 175.0,
-      "giris_nedeni": "Agresif v2 yarı iletken ekipman teması. RSI 60, SMA20/50 üstü, +17% aylık RS. AI chip üretimi inspection kritik darboğaz. Limit 175 doldu (gün dibi 174.12). Stop 163, hedef 210.",
-      "cb_kaynak": "kayit-yok",
-      "hedef_fiyat": 210.0,
-      "stop_loss": 192.85,
-      "zirve_fiyat": 203,
-      "stop_faz": 3,
-      "stop_mesafe_pct": 5.0,
-      "stop_aciklama": "K-07 trailing sıkılaştırma: 175.0 → 192.85 (ATR-bazlı %5 cap)",
-      "stop_guncelleme": "2026-04-26",
-      "durum": "✅ Normal"
-    },
-    {
       "sembol": "ETN",
       "isim": "Eaton Corporation plc",
       "sektor": "Industrials",
@@ -141,7 +114,7 @@
       "durum": "✅ Normal"
     }
   ],
-  "son_guncelleme": "2026-04-27T18:04:16.693992+03:00",
+  "son_guncelleme": "2026-04-27T18:34:06.406994+03:00",
   "toplam_deger": 389706.24,
   "toplam_getiri_yuzde": -2.57,
   "toplam_getiri": -10293.76,
