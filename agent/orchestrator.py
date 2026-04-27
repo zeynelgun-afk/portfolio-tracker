@@ -1597,13 +1597,18 @@ def _check_swing_entries() -> list[str]:
     """
     import sys as _sys
     _sys.path.insert(0, str(REPO_ROOT / "scripts"))
+    _sys.path.insert(0, str(REPO_ROOT / "agent"))
+    try:
+        from swing_manager import SWING_MAX_POSITIONS as _SWING_MAX
+    except ImportError:
+        _SWING_MAX = 5  # Fallback
 
     aksiyonlar = []
 
     # Kapasite kontrol
     active = json.load(open(REPO_ROOT / "data" / "swing" / "active.json"))
     mevcut_poz = len(active.get("aktif_pozisyonlar", []))
-    if mevcut_poz >= 5:
+    if mevcut_poz >= _SWING_MAX:
         return []  # Dolu
 
     # Dün kaydedilen entry sinyallerini yükle
@@ -1624,13 +1629,21 @@ def _check_swing_entries() -> list[str]:
     except ImportError:
         return []
 
-    # Zaten açık olanları listeden çıkar, kalan 3'ü kontrol et
+    # Zaten açık olanları listeden çıkar
+    # 27 Nis 2026 fix: Eski kod '[:3]' ile sabit ilk-3-kontrol limiti vardı.
+    # 7 sinyal geldi (CAT/RPRX/TFC/NNE/UEC/LEU/DNN), aktif RPRX hariç 6 sinyal,
+    # [:3] sadece CAT/TFC/NNE'yi kontrol etti. UEC/LEU/DNN hiç bakılmadı.
+    # CAT bugün kapanmış (analiz reddetti), TFC+NNE açıldı (4/5). 1 slot
+    # boş kaldığı halde DNN sonraki monitor'larda da hep [:3]'ün dışında
+    # kalıp atlandı.
+    # Yeni mantık: tüm sinyalleri sırayla kontrol et, içerideki
+    # 'mevcut_poz >= 5' break'i zaten kapasiteyi koruyor.
     aktif_semboller = {p.get("sembol") for p in active.get("aktif_pozisyonlar", [])}
-    kontrol_listesi = [s for s in giris_syms if s not in aktif_semboller][:3]
+    kontrol_listesi = [s for s in giris_syms if s not in aktif_semboller]
 
     for sym in kontrol_listesi:
         # Kapasite yeterliyse devam
-        if mevcut_poz >= 5:
+        if mevcut_poz >= _SWING_MAX:
             break
 
         # Canlı analiz

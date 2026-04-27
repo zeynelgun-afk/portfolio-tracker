@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-04-27T18:33:17.218315",
+  "son_guncelleme": "2026-04-27T22:01:53.540683+03:00",
   "not": "SWING TRADE SADECE SİMÜLASYON - Sadece % kazanç/kayıp takibi (MAX: 8 pozisyon)",
   "aktif_pozisyonlar": [
     {
@@ -116,10 +116,10 @@
     }
   ],
   "ozet": {
-    "toplam_pozisyon": 3,
-    "bos_slot": 5,
-    "maksimum_pozisyon": 8,
-    "ortalama_kar_zarar_yuzde": 0.0
+    "toplam_pozisyon": 4,
+    "bos_slot": 1,
+    "maksimum_pozisyon": 5,
+    "ortalama_kar_zarar_yuzde": 3.39
   },
   "_schema_version": 2
 }
