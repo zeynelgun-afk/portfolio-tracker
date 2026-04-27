@@ -18,9 +18,13 @@ Komutlar:
   /yardim      → Komut listesi
 """
 
-import os, sys, json, re, requests, time
+import os, sys, json, re, requests, time, threading
 from datetime import datetime
 from pathlib import Path
+try:
+    import pytz
+except ImportError:
+    pytz = None
 
 # ── Config ────────────────────────────────────────────────────────────────────
 BOT_TOKEN    = os.environ.get("TELEGRAM_TOKEN", "")
@@ -1343,6 +1347,47 @@ def main():
         # ── Railway: Sürekli polling ──────────────────────────────
         print(f"[Bot] Railway modu — sürekli polling başlıyor")
         print(f"[Bot] {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+
+        # ── Dahili Günlük Zamanlayıcı ─────────────────────────────
+        # GitHub Actions schedule güvenilmez — Railway 7/24 çalıştığı için
+        # takvim bildirimini buradan gönderiyoruz. Hedef: 08:30 TR
+        # pytz & threading üstte import edildi
+
+        _TR_TZ = pytz.timezone("Europe/Istanbul")
+        _zamanlayi_durum = {"son_tarih": None}  # aynı gün iki kez göndermesin
+
+        def _gunluk_bildirim():
+            """Her 60sn bir zamanı kontrol et, 08:30 TR olunca takvim bildirimini gönder."""
+            while True:
+                try:
+                    simdi_tr = datetime.now(_TR_TZ)
+                    bugun    = simdi_tr.date()
+                    saat     = simdi_tr.hour
+                    dakika   = simdi_tr.minute
+
+                    # 08:30 - 08:34 arasında, bugün henüz gönderilmemişse
+                    if (saat == 8 and 30 <= dakika <= 34
+                            and _zamanlayi_durum["son_tarih"] != bugun):
+
+                        _zamanlayi_durum["son_tarih"] = bugun
+                        print(f"[Zamanlayıcı] Takvim bildirimi gönderiliyor — {simdi_tr.strftime('%H:%M TR')}")
+
+                        try:
+                            mesaj = format_takvim("yarın")
+                            tg_send(PRIVATE_CHAT, mesaj)
+                            print(f"[Zamanlayıcı] ✅ Gönderildi.")
+                        except Exception as e:
+                            print(f"[Zamanlayıcı] ❌ Hata: {e}")
+
+                except Exception as e:
+                    print(f"[Zamanlayıcı] Döngü hatası: {e}")
+
+                time.sleep(60)  # Her dakika kontrol et
+
+        _t = threading.Thread(target=_gunluk_bildirim, daemon=True, name="GunlukZamanlayici")
+        _t.start()
+        print(f"[Bot] Günlük zamanlayıcı başlatıldı — hedef 08:30 TR")
+        # ─────────────────────────────────────────────────────────
 
         offset = load_offset()
         hata_sayisi = 0
