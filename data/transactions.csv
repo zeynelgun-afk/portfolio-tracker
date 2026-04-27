@@ -185,3 +185,5 @@ date,action,symbol,shares,price,total,reason
 2026-04-27,SELL,COHR,139,316.91,44050.49,K-06 stop tetiklendi $316.91≤$317.16
 2026-04-27,BUY,CL,176,84.48,14868.48,tüketici_temettü tema taraması — teknik:5/10 fundamental:7/10
 2026-04-27,SELL,CAMT,226,192.59,43526.47,K-06 stop tetiklendi $192.59≤$192.85
+2026-04-27,BUY,TFC,71,51.18,3633.78,"Swing giriş — tenkan_bounce. Stop: $47.67, Hedef: $59.95"
+2026-04-27,BUY,NNE,125,25.62,3202.5,"Swing giriş — kijun_bounce_v2. Stop: $23.63, Hedef: $30.60"
