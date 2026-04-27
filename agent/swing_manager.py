@@ -38,6 +38,28 @@ SWING_MAX_POSITIONS = 5
 sys.path.insert(0, str(REPO_ROOT / "scripts"))
 
 
+# ── Telegram Bildirim Yardımcısı (27 Nis 2026 eklendi) ───────────────────────
+# Memory kuralı: GROUP (-1003827034395) ONLY buy/sell actions + open/close
+# reports + daily summary. Swing alım-satımları ANA grubun gönderilmesi gereken
+# ZORUNLU içerikler. Eskiden hiç bildirim gitmiyordu, sadece JSON+CSV
+# güncelleniyordu.
+def _swing_notify_group(action_type: str, symbol: str, price: float, details: str):
+    """Swing aksiyon → Finzora grubuna gönder. Hata olursa sessiz geç.
+
+    NOT: telegram_notify.send_message env eksikse sys.exit(1) çağırır
+    (BaseException). Swing akışını kırmasın diye BaseException de yakalanır.
+    """
+    try:
+        from telegram_notify import format_action, send_message
+        msg = format_action(action_type, symbol, price, details)
+        send_message(msg)  # default chat_id = GROUP
+        print(f"[Swing→TG] {action_type} {symbol} grubuna gönderildi")
+    except SystemExit as e:
+        print(f"[Swing→TG] Bildirim atlandı (env eksik, SystemExit {e.code})")
+    except Exception as e:
+        print(f"[Swing→TG] Bildirim atlandı: {e}")
+
+
 # ── Pozisyon Açma ─────────────────────────────────────────────────────────────
 
 def open_swing_position(
@@ -146,6 +168,21 @@ def open_swing_position(
         writer.writerow(tx_row)
 
     print(f"[Swing] ✅ {symbol} açıldı: {shares} adet @ ${price:.2f} | stop: ${stop:.2f} | hedef: ${target:.2f}")
+
+    # 27 Nis 2026: Gruba alış bildirimi (memory kuralı: alım/satım gruba gider)
+    yontemler = ", ".join(s.get("tip","") for s in sinyaller) or "swing"
+    detay = (
+        f"<b>SWING GİRİŞ</b>\n"
+        f"Adet: {shares}\n"
+        f"Tutar: ${shares * price:,.0f}\n"
+        f"Stop: ${stop:.2f} ({(stop-price)/price*100:+.1f}%)\n"
+        f"Hedef: ${target:.2f} ({(target-price)/price*100:+.1f}%)\n"
+        f"R:R: 1:{((target-price)/(price-stop)):.1f}\n"
+        f"Yöntem: {yontemler}\n"
+        f"Gerekçe: {(reasoning or yontemler)[:140]}"
+    )
+    _swing_notify_group("ALIŞ", symbol, price, detay)
+
     return yeni_poz
 
 
@@ -348,6 +385,25 @@ def _close_position(poz: dict, neden: str, cikis_fiyat: float, active: dict):
 
     icon = "✅" if pnl > 0 else "❌"
     print(f"[Swing] {icon} {sym} kapatıldı: {neden} | P/L: {pnl:+.1f}% | {tutulan_gun}g")
+
+    # 27 Nis 2026: Gruba satış bildirimi (memory kuralı: alım/satım gruba gider)
+    neden_aciklama = {
+        "STOP": "Stop-loss tetiklendi",
+        "HEDEF": "Hedef fiyat ulaşıldı",
+        "SURE": f"Maksimum süre doldu ({tutulan_gun} gün)",
+    }.get(neden, neden)
+    pnl_isaret = "+" if pnl >= 0 else ""
+    detay = (
+        f"<b>SWING ÇIKIŞ</b>\n"
+        f"Adet: {adet}\n"
+        f"Giriş: ${giris:.2f} → Çıkış: ${cikis_fiyat:.2f}\n"
+        f"P/L: <b>{pnl_isaret}{pnl:.2f}%</b> ({sonuc})\n"
+        f"Tutulan: {tutulan_gun} gün\n"
+        f"Sebep: {neden_aciklama}\n"
+        f"Tahsil: ${adet * cikis_fiyat:,.0f}"
+    )
+    action_type = "STOP" if neden == "STOP" else ("KAR_AL" if neden == "HEDEF" else "SATIŞ")
+    _swing_notify_group(action_type, sym, cikis_fiyat, detay)
 
 
 def _auto_lesson(poz: dict, neden: str, pnl: float) -> str:
