@@ -136,7 +136,8 @@ def get_claude_decision(user_prompt, mode="monitor", system_override=None, rag_e
     if not ANTHROPIC_KEY:
         return "⚠️ ANTHROPIC_API_KEY bulunamadı."
 
-    max_tokens = {"morning": 4000, "closing": 4000, "monitor": 800, "weekly": 4000}.get(mode, 1000)
+    # 27 Nis 2026 fix: morning/closing/weekly token limiti yetersizdi.
+    max_tokens = {"morning": 8000, "closing": 8000, "monitor": 1500, "weekly": 8000}.get(mode, 1500)
     base_system = system_override or SYSTEM_PROMPT
 
     # RAG context inject (fail-safe: hata olursa RAG'sız devam)
@@ -162,6 +163,11 @@ def get_claude_decision(user_prompt, mode="monitor", system_override=None, rag_e
         _in_tokens = getattr(resp.usage, "input_tokens", 0) if hasattr(resp, "usage") else 0
         _out_tokens = getattr(resp.usage, "output_tokens", 0) if hasattr(resp, "usage") else 0
         _result = resp.content[0].text
+        # stop_reason kontrolü — kesilmeyi log'la
+        stop_reason = getattr(resp, "stop_reason", "unknown")
+        if stop_reason == "max_tokens":
+            print(f"[ClaudeAgent/legacy] ⚠️ max_tokens={max_tokens} doldu, "
+                  f"yanıt kesik. output_tokens={_out_tokens}")
         _success = True
         return _result
     except anthropic.APIError as e:
@@ -193,7 +199,12 @@ def get_claude_decision_with_actions(user_prompt, mode="morning", system_overrid
         return "⚠️ ANTHROPIC_API_KEY bulunamadı.", []
 
     enhanced = user_prompt + DECISION_SCHEMA
-    max_tokens = {"morning": 5000, "closing": 5000, "monitor": 1500, "weekly": 5000}.get(mode, 2000)
+    # 27 Nis 2026 fix: morning/closing/weekly raporları 5000 token sınırını aşıyordu.
+    # Rapor metni Türkçe ~2 char/token; 9000 char rapor ~4500 token + DECISION_SCHEMA
+    # şeması → 5000 yetersiz. JSON karar bloğu kesik kalıyordu (27 Nis sabah raporu
+    # `"hedef_fiyat": 550.0` ile bitti, kararlar parse edilemedi).
+    # Yeni sınır: 8000 (rapor için ~3x baş parmak güvenliği).
+    max_tokens = {"morning": 8000, "closing": 8000, "monitor": 1500, "weekly": 8000}.get(mode, 2000)
     base_system = system_override or SYSTEM_PROMPT
 
     # RAG context inject (fail-safe: hata olursa RAG'sız devam)
@@ -221,7 +232,25 @@ def get_claude_decision_with_actions(user_prompt, mode="morning", system_overrid
         _out_tokens = getattr(resp.usage, "output_tokens", 0) if hasattr(resp, "usage") else 0
         full_text = resp.content[0].text
 
+        # 27 Nis 2026 fix: stop_reason kontrolü.
+        # max_tokens kesilmesi sessizce geçiyordu, JSON karar bloğu kayboluyordu.
+        stop_reason = getattr(resp, "stop_reason", "unknown")
+        if stop_reason == "max_tokens":
+            print(f"[ClaudeAgent] ⚠️ UYARI: max_tokens={max_tokens} sınırı dolmuş! "
+                  f"Rapor kesilmiş olabilir, JSON karar bloğu kayıp olabilir. "
+                  f"output_tokens={_out_tokens}")
+            try:
+                from event_logger import kaydet as _le
+                _le(seviye="uyari",
+                    baslik=f"Claude max_tokens sınırı doldu ({mode})",
+                    detay=f"max_tokens={max_tokens}, output={_out_tokens}, "
+                          f"rapor son 200 karakter: …{full_text[-200:]}",
+                    kaynak="claude_agent")
+            except Exception:
+                pass
+
         rapor = full_text
+        # Önce kapalı JSON bloğu ara
         match = re.search(r"```json\s*(\{.*?\})\s*```", full_text, re.DOTALL)
         if match:
             try:
@@ -231,7 +260,44 @@ def get_claude_decision_with_actions(user_prompt, mode="morning", system_overrid
             except json.JSONDecodeError as e:
                 print(f"[ClaudeAgent] JSON parse hatası: {e}")
         else:
-            print("[ClaudeAgent] JSON bloğu bulunamadı.")
+            # Kapalı JSON yok — kesik JSON kurtarmayı dene (max_tokens senaryosu)
+            # 27 Nis 2026: rapor `"hedef_fiyat": 550.0` ile bitti, kapama yok.
+            open_match = re.search(r"```json\s*(\{.*)", full_text, re.DOTALL)
+            if open_match:
+                kismi = open_match.group(1).rstrip().rstrip("`").rstrip()
+                # Naive close: en son tamamlanmış karar nesnesini bul
+                # `}, {` aralarında parse et, tam olanları topla
+                try:
+                    # Karar dizisini regex ile çek
+                    karar_match = re.search(r'"kararlar"\s*:\s*\[(.*)', kismi, re.DOTALL)
+                    if karar_match:
+                        ic = karar_match.group(1)
+                        # En son geçerli `}` kapamasına kadar kes
+                        # Her `{ ... }` bloğunu ayrı ayrı parse etmeyi dene
+                        depth = 0
+                        son_kapali = -1
+                        for i, ch in enumerate(ic):
+                            if ch == "{":
+                                depth += 1
+                            elif ch == "}":
+                                depth -= 1
+                                if depth == 0:
+                                    son_kapali = i
+                        if son_kapali > 0:
+                            blok = "[" + ic[:son_kapali+1] + "]"
+                            try:
+                                arr = json.loads(blok)
+                                kararlar = arr if isinstance(arr, list) else []
+                                print(f"[ClaudeAgent] ⚠️ Kesik JSON kurtarıldı: "
+                                      f"{len(kararlar)} karar geri alındı")
+                                # Rapor metnini JSON başlangıcına kadar kırp
+                                rapor = full_text[:open_match.start()].rstrip()
+                            except json.JSONDecodeError as e2:
+                                print(f"[ClaudeAgent] Kesik JSON onarım da başarısız: {e2}")
+                except Exception as ex:
+                    print(f"[ClaudeAgent] Kesik JSON onarım hatası: {ex}")
+            else:
+                print("[ClaudeAgent] JSON bloğu bulunamadı.")
 
         print(f"[ClaudeAgent] {len(kararlar)} karar üretildi.")
         for k in kararlar:
