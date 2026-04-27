@@ -12,52 +12,52 @@
       "risk_off": 0
     },
     "growth_aksiyon": "Savunma (ITA, LMT, RTX) + Enerji (XLE, CVX) ağırlığını artır. AI tezini koru ama yeni giriş yapma.",
-    "tespit_zamani": "2026-04-27T19:03:31.983480+03:00"
+    "tespit_zamani": "2026-04-27T19:32:53.467028+03:00"
   },
   "sektor_data": {
     "XLE": {
-      "price": 56.76,
-      "gunluk_chg": -0.19
+      "price": 56.695,
+      "gunluk_chg": -0.31
     },
     "XLK": {
-      "price": 159.32,
-      "gunluk_chg": -0.56
+      "price": 159.575,
+      "gunluk_chg": -0.4
     },
     "XLI": {
-      "price": 172.2,
-      "gunluk_chg": -0.16
+      "price": 172.18,
+      "gunluk_chg": -0.17
     },
     "XLF": {
-      "price": 51.8089,
-      "gunluk_chg": 0.76
+      "price": 51.825,
+      "gunluk_chg": 0.79
     },
     "XLV": {
-      "price": 144.275,
-      "gunluk_chg": 0.07
+      "price": 144.19,
+      "gunluk_chg": 0.01
     },
     "XLU": {
-      "price": 46.295,
-      "gunluk_chg": 0.25
+      "price": 46.34,
+      "gunluk_chg": 0.35
     },
     "XLP": {
-      "price": 82.835,
-      "gunluk_chg": -0.47
+      "price": 82.76,
+      "gunluk_chg": -0.56
     },
     "XLY": {
-      "price": 117.725,
-      "gunluk_chg": -0.81
+      "price": 118,
+      "gunluk_chg": -0.58
     },
     "XLB": {
-      "price": 51.68,
-      "gunluk_chg": -0.46
+      "price": 51.795,
+      "gunluk_chg": -0.24
     },
     "GLD": {
-      "price": 428.84,
-      "gunluk_chg": -1.02
+      "price": 429.52,
+      "gunluk_chg": -0.86
     },
     "ITA": {
-      "price": 215.51,
-      "gunluk_chg": -0.13
+      "price": 215.37,
+      "gunluk_chg": -0.2
     }
   }
 }
