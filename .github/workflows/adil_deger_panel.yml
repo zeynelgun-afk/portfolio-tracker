@@ -2,8 +2,6 @@ name: Adil Değer Paneli
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '30 9 * * 1-5'   # Hafta içi 12:30 TR (09:30 UTC)
 
 jobs:
   panel:

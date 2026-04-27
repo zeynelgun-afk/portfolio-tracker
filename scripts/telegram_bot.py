@@ -1454,6 +1454,74 @@ def main():
         _tm = threading.Thread(target=_aylik_makro, daemon=True, name="AylikMakro")
         _tm.start()
         print(f"[Bot] Aylık makro zamanlayıcı başlatıldı — her ayın 1'i 09:00 TR")
+
+        # ── GitHub Actions Workflow Tetikleyici ───────────────────
+        # Railway zamanı takip eder, GitHub Actions işi yapar
+        GH_PAT = os.environ.get("GH_TOKEN") or os.environ.get("PAT_TOKEN","")
+        GH_REPO = "zeynelgun-afk/portfolio-tracker"
+        GH_API  = "https://api.github.com"
+
+        def _gh_dispatch(workflow_file: str, inputs: dict = None):
+            """GitHub Actions workflow_dispatch tetikle."""
+            if not GH_PAT:
+                print(f"[GH] ⚠️ GH_TOKEN eksik — {workflow_file} tetiklenemiyor")
+                return False
+            url = f"{GH_API}/repos/{GH_REPO}/actions/workflows/{workflow_file}/dispatches"
+            payload = {"ref": "main"}
+            if inputs:
+                payload["inputs"] = inputs
+            try:
+                r = requests.post(url, json=payload, timeout=10, headers={
+                    "Authorization": f"Bearer {GH_PAT}",
+                    "Accept": "application/vnd.github+json",
+                    "X-GitHub-Api-Version": "2022-11-28"
+                })
+                ok = r.status_code == 204
+                print(f"[GH] {'✅' if ok else '❌'} {workflow_file} → HTTP {r.status_code}")
+                return ok
+            except Exception as e:
+                print(f"[GH] ❌ {workflow_file} hata: {e}")
+                return False
+
+        # Tetiklenecek zamanlamalar: (saat, dakika, workflow_file, hafta_ici_mi, aciklama)
+        _GH_ZAMANLAMALAR = [
+            (9,  0,  "news_radar.yml",        True,  "Haber Radarı"),
+            (12, 30, "adil_deger_panel.yml",   True,  "Adil Değer Paneli"),
+            (23, 30, "result_tracker.yml",     True,  "Sonuç Takip"),
+        ]
+        _gh_tetiklendi = {}  # "workflow_file:YYYY-MM-DD" → tetiklendi mi
+
+        def _workflow_zamanlayici():
+            """Her dakika kontrol — doğru saatte GitHub Actions tetikle."""
+            while True:
+                try:
+                    simdi = datetime.now(_TR_TZ)
+                    bugun_str = simdi.strftime("%Y-%m-%d")
+                    is_hafta_ici = simdi.weekday() < 5  # Pzt-Cum
+
+                    for saat, dakika, wf, hafta_ici, aciklama in _GH_ZAMANLAMALAR:
+                        key = f"{wf}:{bugun_str}"
+                        if (simdi.hour == saat and simdi.minute == dakika
+                                and (not hafta_ici or is_hafta_ici)
+                                and key not in _gh_tetiklendi):
+                            _gh_tetiklendi[key] = True
+                            print(f"[GH] {simdi.strftime('%H:%M')} → {aciklama} tetikleniyor")
+                            _gh_dispatch(wf)
+
+                    # Eski anahtarları temizle (7 günden eski)
+                    if len(_gh_tetiklendi) > 50:
+                        _gh_tetiklendi.clear()
+
+                except Exception as e:
+                    print(f"[GH-Zamanlayici] Hata: {e}")
+                time.sleep(60)
+
+        _tw = threading.Thread(target=_workflow_zamanlayici, daemon=True, name="WorkflowZamanlayici")
+        _tw.start()
+        print(f"[Bot] Workflow zamanlayıcı başlatıldı:")
+        print(f"[Bot]   09:00 TR (Hft içi) → news_radar.yml")
+        print(f"[Bot]   12:30 TR (Hft içi) → adil_deger_panel.yml")
+        print(f"[Bot]   23:30 TR (Hft içi) → result_tracker.yml")
         # ─────────────────────────────────────────────────────────
 
         offset = load_offset()

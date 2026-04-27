@@ -2,8 +2,6 @@ name: Haber Radarı
 
 on:
   workflow_dispatch:          # manuel test için
-  schedule:
-    - cron: '0 6 * * 1-5'    # Hafta içi 09:00 TR (06:00 UTC)
 
 jobs:
   radar:
