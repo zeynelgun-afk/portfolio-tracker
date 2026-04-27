@@ -28,38 +28,11 @@
   },
   "baslangic_sermaye": 400000,
   "nakit": {
-    "miktar": 186719.6,
+    "miktar": 230770.09,
     "para_birimi": "USD",
     "agirlik_yuzde": 47.91
   },
   "pozisyonlar": [
-    {
-      "sembol": "COHR",
-      "isim": "Coherent Corp",
-      "sektor": "AI Optik / Yarı İletken",
-      "adet": 139,
-      "maliyet_baz": 285.7482,
-      "yatirim": 39719.0,
-      "guncel_fiyat": 336.09,
-      "guncel_deger": 46716.51,
-      "kar_zarar": 6997.51,
-      "kar_zarar_yuzde": 17.62,
-      "gunluk_degisim_yuzde": -0.47,
-      "agirlik_yuzde": 11.99,
-      "son_guncelleme": "2026-04-24T22:07:23.742966",
-      "giris_tarihi": "2026-04-10",
-      "giris_fiyati": 285.0,
-      "giris_nedeni": "Agresif v2 AI optical supply chain. Ichimoku 3/4, RSI 62.8, SMA200 +72%. Gün içi limit 285 doldu (gün dibi 275.69). Stop 265, hedef 330.",
-      "cb_kaynak": "kayit-yok",
-      "hedef_fiyat": 330.0,
-      "stop_loss": 317.16,
-      "zirve_fiyat": 350.47,
-      "stop_faz": 3,
-      "stop_mesafe_pct": 5.63,
-      "stop_aciklama": "break-even stop — yüksek ATR (22.92), SMA20 çok uzak, maliyet koruması",
-      "stop_guncelleme": "2026-04-10T18:47:48",
-      "durum": "✅ Normal"
-    },
     {
       "sembol": "ANET",
       "isim": "Arista Networks",
@@ -168,7 +141,7 @@
       "durum": "✅ Normal"
     }
   ],
-  "son_guncelleme": "2026-04-24T22:07:23.742966",
+  "son_guncelleme": "2026-04-27T18:04:16.693992+03:00",
   "toplam_deger": 389706.24,
   "toplam_getiri_yuzde": -2.57,
   "toplam_getiri": -10293.76,

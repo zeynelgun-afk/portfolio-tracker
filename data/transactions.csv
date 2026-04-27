@@ -182,3 +182,5 @@ date,action,symbol,shares,price,total,reason
 2026-04-27,SELL,CAT,4,824.37,3297.48,Swing çıkış — SURE. P/L: +4.3% (17 gün)
 2026-04-27,SELL,KLAC,1,1891.04,1891.04,Swing çıkış — SURE. P/L: +8.9% (17 gün)
 2026-04-27,SELL,AMAT,6,404.93,2429.58,Swing çıkış — SURE. P/L: +1.4% (17 gün)
+2026-04-27,SELL,COHR,139,316.91,44050.49,K-06 stop tetiklendi $316.91≤$317.16
+2026-04-27,BUY,CL,176,84.48,14868.48,tüketici_temettü tema taraması — teknik:5/10 fundamental:7/10

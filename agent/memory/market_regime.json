@@ -1,10 +1,10 @@
 {
   "rejim": {
     "aktif_rejim": "jeopolitik_kriz",
-    "skor": 1,
+    "skor": 0,
     "guven": "DÜŞÜK",
     "tum_skorlar": {
-      "jeopolitik_kriz": 1,
+      "jeopolitik_kriz": 0,
       "ai_boom": 0,
       "faiz_dusus": 0,
       "tarife_gerilimi": 0,
@@ -12,52 +12,52 @@
       "risk_off": 0
     },
     "growth_aksiyon": "Savunma (ITA, LMT, RTX) + Enerji (XLE, CVX) ağırlığını artır. AI tezini koru ama yeni giriş yapma.",
-    "tespit_zamani": "2026-04-27T17:19:38.661464+03:00"
+    "tespit_zamani": "2026-04-27T18:04:07.630665+03:00"
   },
   "sektor_data": {
     "XLE": {
-      "price": 57.505,
-      "gunluk_chg": 1.12
+      "price": 57.0902,
+      "gunluk_chg": 0.39
     },
     "XLK": {
-      "price": 159.63,
-      "gunluk_chg": -0.37
+      "price": 159.13499,
+      "gunluk_chg": -0.68
     },
     "XLI": {
-      "price": 172.14,
-      "gunluk_chg": -0.19
+      "price": 172.02,
+      "gunluk_chg": -0.26
     },
     "XLF": {
-      "price": 51.795,
-      "gunluk_chg": 0.73
+      "price": 51.7601,
+      "gunluk_chg": 0.66
     },
     "XLV": {
-      "price": 144.54,
-      "gunluk_chg": 0.25
+      "price": 144.405,
+      "gunluk_chg": 0.16
     },
     "XLU": {
-      "price": 46.3115,
-      "gunluk_chg": 0.28
+      "price": 46.32,
+      "gunluk_chg": 0.3
     },
     "XLP": {
-      "price": 83.045,
-      "gunluk_chg": -0.22
+      "price": 82.965,
+      "gunluk_chg": -0.32
     },
     "XLY": {
-      "price": 117.49,
-      "gunluk_chg": -1.01
+      "price": 117.595,
+      "gunluk_chg": -0.92
     },
     "XLB": {
-      "price": 51.73,
-      "gunluk_chg": -0.37
+      "price": 51.7051,
+      "gunluk_chg": -0.41
     },
     "GLD": {
-      "price": 431.12,
-      "gunluk_chg": -0.49
+      "price": 428.88,
+      "gunluk_chg": -1.01
     },
     "ITA": {
-      "price": 215.92,
-      "gunluk_chg": 0.06
+      "price": 215.24,
+      "gunluk_chg": -0.26
     }
   }
 }
