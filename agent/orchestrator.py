@@ -159,9 +159,23 @@ def collect_context(mode: str) -> dict:
     """
     Veri topla, memory'yi güncelle, sıkıştırılmış bağlam hazırla.
     Sabah/kapanış: web + twitter da eklenir.
-    İzleme: sadece portföy + piyasa (hızlı, ucuz).
+    İzleme: sadece portföy + swing + piyasa (hızlı, ucuz).
     """
     print(f"[Orkestratör] Veri toplanıyor... (mod: {mode})")
+
+    # ── PRE-SNAPSHOT: Otomatik swing kapatmaları işle ─────────────────────
+    # 27 Nis 2026 bug fix: collect_context snapshot ALMADAN ÖNCE SURE/STOP/HEDEF
+    # tetikli kapanışları işle. Aksi halde compressed bağlam eski state ile
+    # gelir, Claude raporda zaten kapatılmış pozisyonları "açık" listeler
+    # (CAT/KLAC/AMAT 27 Nis sabah raporunda hayalet pozisyon olarak göründü).
+    # update_swing_positions idempotent — ikinci çağrı sadece price update yapar.
+    if mode in ("morning", "closing", "monitor", "weekly"):
+        try:
+            from swing_manager import update_swing_positions
+            uyarilar = update_swing_positions()
+            print(f"[Orkestratör] Pre-snapshot swing kontrol — {len(uyarilar)} uyarı")
+        except Exception as e:
+            print(f"[Orkestratör] Pre-snapshot swing kontrol hatası: {e} (devam)")
 
     portfolios = get_portfolio_snapshot()
     market     = get_market_context()
