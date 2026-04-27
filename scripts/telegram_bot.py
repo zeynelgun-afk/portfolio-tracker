@@ -642,73 +642,74 @@ _MAKRO_DISI = ["CFTC","Baker Hughes","Mortgage","MBA ","API Crude",
                "EIA Crude","Natural Gas","Redbook","Challenger","speculative"]
 
 
-def _parse_ical_date(value: str):
-    from datetime import timezone as _tz, timedelta as _td
-    value = value.strip()
-    try:
-        if len(value) == 8:
-            return datetime(int(value[:4]),int(value[4:6]),int(value[6:8])).date()
-        if value.endswith("Z"):
-            dt = datetime.strptime(value,"%Y%m%dT%H%M%SZ")
-            dt = dt.replace(tzinfo=_tz.utc)
-            tr = dt + _td(hours=3)
-            return tr
-        if "T" in value:
-            return datetime.strptime(value,"%Y%m%dT%H%M%S")
-    except Exception:
-        pass
-    return None
-
-
 def format_takvim(hedef: str = "yarın") -> str:
-    """Google Calendar iCal -> yarın/bugün etkinlikleri."""
-    import re as _re
+    """Google Calendar iCal -> yarın/bugün etkinlikleri. RRULE (tekrarlayan) destekler."""
     from datetime import date as _d, timedelta as _td
     ical_urls_raw  = os.environ.get("GCAL_ICAL_URLS","")
     ical_names_raw = os.environ.get("GCAL_ICAL_NAMES","Ana Takvim")
     if not ical_urls_raw:
         return "⚠️ GCAL_ICAL_URLS tanımlanmamış. Railway env değişkenlerine ekle."
+    try:
+        from icalendar import Calendar as _Cal
+        import recurring_ical_events as _rie
+    except ImportError:
+        return "⚠️ Eksik kütüphane: pip install icalendar recurring-ical-events"
+
     urls  = [u.strip() for u in ical_urls_raw.split(",") if u.strip()]
     names = [n.strip() for n in ical_names_raw.split(",") if n.strip()]
     while len(names) < len(urls):
         names.append(f"Takvim {len(names)+1}")
+
     bugun = _d.today()
     if hedef.lower().strip() in ("bugün","bugun","today"):
         hedef_tarih, etiket = bugun, "BUGÜN"
     else:
         hedef_tarih, etiket = bugun + _td(days=1), "YARIN"
+
+    # recurring_ical_events naive datetime ister
+    sorgu_bas = datetime(hedef_tarih.year, hedef_tarih.month, hedef_tarih.day, 0, 0, 0)
+    sorgu_bit = datetime(hedef_tarih.year, hedef_tarih.month, hedef_tarih.day, 23, 59, 59)
+
     etkinlikler = []
     for takvim_adi, url in zip(names, urls):
         try:
             resp = requests.get(url, timeout=15, headers={"User-Agent":"FinzoraBot/1.0"})
             resp.raise_for_status()
-            for block in resp.text.split("BEGIN:VEVENT")[1:]:
-                end_idx = block.find("END:VEVENT")
-                if end_idx > 0: block = block[:end_idx]
-                m = _re.search(r"SUMMARY[^:]*:(.+)", block)
-                summary = m.group(1).strip().replace("\\n"," ").replace("\\,",",") if m else "İsimsiz"
-                m = _re.search(r"DTSTART(?:;[^:]*)?:(\S+)", block)
-                if not m: continue
-                dt_val = _parse_ical_date(m.group(1))
-                if dt_val is None: continue
-                if isinstance(dt_val, _d) and not isinstance(dt_val, datetime):
-                    event_date, event_time = dt_val, "Tüm gün"
-                elif isinstance(dt_val, datetime):
-                    event_date, event_time = dt_val.date(), dt_val.strftime("%H:%M")
-                else: continue
-                if event_date != hedef_tarih: continue
-                etkinlikler.append({"baslik":summary,"saat":event_time,"takvim":takvim_adi})
+            cal = _Cal.from_ical(resp.content)
+            events = _rie.of(cal).between(sorgu_bas, sorgu_bit)
+            for ev in events:
+                summary = str(ev.get("SUMMARY","İsimsiz"))
+                dtstart = ev.get("DTSTART")
+                if dtstart is None: continue
+                dt = dtstart.dt
+                if hasattr(dt, "date"):
+                    # datetime — timezone'u TR'ye çevir
+                    try:
+                        from datetime import timezone as _tz
+                        if dt.tzinfo:
+                            import pytz as _pytz2
+                            tr = dt.astimezone(_pytz2.timezone("Europe/Istanbul"))
+                            event_time = tr.strftime("%H:%M")
+                        else:
+                            event_time = dt.strftime("%H:%M")
+                    except Exception:
+                        event_time = "?"
+                else:
+                    event_time = "Tüm gün"
+                etkinlikler.append({"baslik": summary, "saat": event_time, "takvim": takvim_adi})
         except Exception as e:
-            etkinlikler.append({"baslik":f"⚠️ {takvim_adi}: {e}","saat":"","takvim":""})
+            etkinlikler.append({"baslik": f"⚠️ {takvim_adi}: {e}", "saat":"", "takvim":""})
+
     etkinlikler.sort(key=lambda x: x["saat"] if x["saat"] not in ("","Tüm gün") else "00:00")
     gun_adlari = ["Pazartesi","Salı","Çarşamba","Perşembe","Cuma","Cumartesi","Pazar"]
     aylar = ["Oca","Şub","Mar","Nis","May","Haz","Tem","Ağu","Eyl","Eki","Kas","Ara"]
     tarih_str = f"{gun_adlari[hedef_tarih.weekday()]} {hedef_tarih.day} {aylar[hedef_tarih.month-1]}"
     if not etkinlikler:
         return f"📅 <b>TAKVİM — {etiket}</b>\n<i>{tarih_str}</i>\n\n✅ Etkinlik yok."
-    lines = [f"📅 <b>TAKVİM — {etiket}</b>",f"<i>{tarih_str} • {len(etkinlikler)} etkinlik</i>",""]
+    lines = [f"📅 <b>TAKVİM — {etiket}</b>",
+             f"<i>{tarih_str} • {len(etkinlikler)} etkinlik</i>",""]
     for i, ev in enumerate(etkinlikler, 1):
-        saat_str = f" {ev['saat']}" if ev["saat"] and ev["saat"] != "Tüm gün" else " 📆"
+        saat_str = f" {ev['saat']}" if ev["saat"] and ev["saat"] not in ("","Tüm gün") else " 📆"
         lines.append(f"<b>{i}. {ev['baslik']}</b>{saat_str}")
         if ev["takvim"]: lines.append(f"   📂 {ev['takvim']}")
     lines.append("\n<i>finzora ai • takvim</i>")
@@ -1387,6 +1388,72 @@ def main():
         _t = threading.Thread(target=_gunluk_bildirim, daemon=True, name="GunlukZamanlayici")
         _t.start()
         print(f"[Bot] Günlük zamanlayıcı başlatıldı — hedef 08:30 TR")
+
+        # ── Aylık Makro Takvim Güncelleyici ───────────────────────
+        def _aylik_makro():
+            """Her ayın 1'inde 09:00 TR'de makro takvim ICS günceller."""
+            import subprocess as _sp
+            while True:
+                try:
+                    simdi_tr = datetime.now(_TR_TZ)
+                    if (simdi_tr.day == 1 and simdi_tr.hour == 9
+                            and 0 <= simdi_tr.minute <= 4
+                            and _zamanlayi_durum.get("son_makro_ay") != simdi_tr.month):
+
+                        _zamanlayi_durum["son_makro_ay"] = simdi_tr.month
+                        print(f"[Makro] Aylık güncelleme başlıyor — {simdi_tr.strftime('%d.%m.%Y %H:%M')}")
+
+                        # macro_calendar_updater.py'yi çalıştır
+                        script = str(REPO_ROOT / "scripts" / "macro_calendar_updater.py")
+                        env = {**__import__("os").environ, "FMP_API_KEY": FMP_KEY}
+                        result = _sp.run(
+                            ["python3", script, "--aylar", "3"],
+                            capture_output=True, text=True, env=env, timeout=120
+                        )
+                        if result.returncode == 0:
+                            print(f"[Makro] ✅ ICS üretildi")
+                            # GitHub'a commit et (PAT token gerekli)
+                            pat = __import__("os").environ.get("GH_TOKEN") or __import__("os").environ.get("PAT_TOKEN","")
+                            if pat:
+                                import base64 as _b64
+                                ics_path = REPO_ROOT / "data" / "calendars" / "macro_events.ics"
+                                if ics_path.exists():
+                                    ics_content = ics_path.read_bytes()
+                                    b64_content = _b64.b64encode(ics_content).decode()
+                                    ay_str = simdi_tr.strftime("%Y-%m")
+                                    # GitHub API ile dosyayı güncelle
+                                    api_url = "https://api.github.com/repos/zeynelgun-afk/portfolio-tracker/contents/data/calendars/macro_events.ics"
+                                    headers = {"Authorization": f"Bearer {pat}", "Accept": "application/vnd.github+json"}
+                                    # Mevcut SHA'yı al
+                                    import requests as _rq2
+                                    r_get = _rq2.get(api_url, headers=headers, timeout=10)
+                                    sha = r_get.json().get("sha","")
+                                    payload = {
+                                        "message": f"[DATA] Makro takvim güncellendi — {ay_str}",
+                                        "content": b64_content,
+                                        "sha": sha
+                                    }
+                                    r_put = _rq2.put(api_url, headers=headers, json=payload, timeout=15)
+                                    if r_put.status_code in (200, 201):
+                                        print("[Makro] ✅ GitHub'a commit edildi")
+                                    else:
+                                        print(f"[Makro] ⚠️ Commit hatası: {r_put.status_code}")
+                            # Telegram bildirimi
+                            tg_send(PRIVATE_CHAT,
+                                f"📈 <b>Makro Takvim Güncellendi</b>\n"
+                                f"<i>{simdi_tr.strftime('%B %Y')}</i>\n\n"
+                                f"FOMC + CPI + NFP + PCE + Earnings tarihleri yenilendi.\n"
+                                f"Google Calendar otomatik senkronize olacak.\n\n"
+                                f"<i>finzora ai • makro takvim</i>")
+                        else:
+                            print(f"[Makro] ❌ Script hatası: {result.stderr[:200]}")
+                except Exception as e:
+                    print(f"[Makro] Döngü hatası: {e}")
+                time.sleep(60)
+
+        _tm = threading.Thread(target=_aylik_makro, daemon=True, name="AylikMakro")
+        _tm.start()
+        print(f"[Bot] Aylık makro zamanlayıcı başlatıldı — her ayın 1'i 09:00 TR")
         # ─────────────────────────────────────────────────────────
 
         offset = load_offset()

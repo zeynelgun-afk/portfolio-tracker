@@ -22,3 +22,6 @@ chromadb>=0.4.0            # Local vector database
 # ── Not: Aşağıdakiler standart kütüphane, pip ile kurulmaz ───────────────────
 # json, csv, pathlib, datetime, concurrent.futures, urllib, subprocess,
 # argparse, re, math, collections, itertools, typing, os, sys, time
+
+icalendar>=5.0.0              # iCal parsing (takvim bildirimi)
+recurring-ical-events>=3.0.0  # RRULE tekrarlayan etkinlik desteği

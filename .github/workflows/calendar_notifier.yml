@@ -1,9 +1,8 @@
-name: 📅 Takvim Bildirimi
+name: 📅 Takvim Bildirimi (Manuel)
 
 on:
-  schedule:
-    # Her gün 05:30 UTC = 08:30 Türkiye saati
-    - cron: '30 5 * * *'
+  # Schedule kaldırıldı — Railway bot 08:30 TR'de gönderir
+  # Sadece test/acil için manuel tetikleme bırakıldı
   workflow_dispatch:
     inputs:
       test_modu:
@@ -29,7 +28,7 @@ jobs:
           cache: 'pip'
 
       - name: 📦 Bağımlılıkları Yükle
-        run: pip install --quiet requests icalendar pytz
+        run: pip install --quiet requests icalendar recurring-ical-events pytz
 
       - name: 📅 Takvim Bildirimi Gönder
         env:
@@ -37,12 +36,9 @@ jobs:
           TELEGRAM_PRIVATE_ID: ${{ secrets.TELEGRAM_PRIVATE_ID }}
           GCAL_ICAL_URLS:  ${{ secrets.GCAL_ICAL_URLS }}
           GCAL_ICAL_NAMES: ${{ secrets.GCAL_ICAL_NAMES }}
-        # Shell if ile kontrol — GitHub Actions boolean karşılaştırması güvenilmez
         run: |
           if [[ "${{ inputs.test_modu }}" == "true" ]]; then
-            echo "TEST MODU: Bugünkü etkinlikler gösterilecek"
             python scripts/calendar_notifier.py --test
           else
-            echo "NORMAL MOD: Yarınki etkinlikler gösterilecek"
             python scripts/calendar_notifier.py
           fi
