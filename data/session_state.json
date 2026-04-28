@@ -89,5 +89,94 @@
     ],
     "kaynak": "closing"
   },
-  "timestamp": "2026-04-27T17:20:19.296968+03:00"
+  "timestamp": "2026-04-27T17:20:19.296968+03:00",
+  "k22_nakit_dagitim": {
+    "tarih": "2026-04-28T11:56:33.707928+03:00",
+    "vix": 18.22,
+    "portfoyler": {
+      "balanced": {
+        "nakit_pct": 61.01743050578161,
+        "kullanilacak_usd": 61008.0,
+        "oneriler": [
+          {
+            "sembol": "SPY",
+            "tip": "AL (GENIS PIYASA)",
+            "kaynak": "tema-bos-fallback",
+            "tutar": 27227.265,
+            "neden": "K-22 — VIX 18.2 normal, tema aday yok, geniş piyasa ETF beta=1",
+            "oncelik": "dusuk"
+          },
+          {
+            "sembol": "QQQ",
+            "tip": "AL (GENIS PIYASA)",
+            "kaynak": "tema-bos-fallback",
+            "tutar": 27227.265,
+            "neden": "K-22 — VIX 18.2 normal, tema aday yok, geniş piyasa ETF beta=1",
+            "oncelik": "dusuk"
+          }
+        ]
+      },
+      "aggressive": {
+        "nakit_pct": 71.08470056911234,
+        "kullanilacak_usd": 255003.0,
+        "oneriler": [
+          {
+            "sembol": "UEC",
+            "tip": "AL",
+            "kaynak": "swing-sinyal",
+            "fiyat": 15.24,
+            "adet": 5063,
+            "tutar": 77160.12,
+            "stop": 13.93,
+            "hedef": 18.5,
+            "rsi": 65,
+            "neden": "K-22 nakit kullanim — swing sinyal (RSI 65), backtest +%8 sinyal turu",
+            "oncelik": "yuksek"
+          },
+          {
+            "sembol": "LEU",
+            "tip": "AL",
+            "kaynak": "swing-sinyal",
+            "fiyat": 221.69,
+            "adet": 348,
+            "tutar": 77148.12,
+            "stop": 197.88,
+            "hedef": 281.22,
+            "rsi": 70,
+            "neden": "K-22 nakit kullanim — swing sinyal (RSI 70), backtest +%8 sinyal turu",
+            "oncelik": "yuksek"
+          },
+          {
+            "sembol": "DNN",
+            "tip": "AL",
+            "kaynak": "swing-sinyal",
+            "fiyat": 3.85,
+            "adet": 20045,
+            "tutar": 77173.25,
+            "stop": 3.71,
+            "hedef": 4.22,
+            "rsi": 64,
+            "neden": "K-22 nakit kullanim — swing sinyal (RSI 64), backtest +%8 sinyal turu",
+            "oncelik": "yuksek"
+          }
+        ]
+      },
+      "dividend": {
+        "nakit_pct": 31.79748650476521,
+        "kullanilacak_usd": 37796.0,
+        "oneriler": [
+          {
+            "sembol": "OKE",
+            "tip": "BUYUT",
+            "kaynak": "best-performer",
+            "fiyat": 87.75,
+            "adet": 148,
+            "tutar": 12987.0,
+            "neden": "K-22 — slot dolu, en iyi performansli pozisyon büyütüldü (+2.6% K/Z)",
+            "oncelik": "orta"
+          }
+        ]
+      }
+    }
+  }
 }
