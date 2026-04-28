@@ -213,17 +213,19 @@ def check_market_regime() -> dict:
 
 
 def calculate_kalite_skoru(signals: list, position: dict, volume: dict, 
-                            sektor: dict, regime: dict, atr: float, price: float) -> dict:
+                            sektor: dict, regime: dict, atr: float, price: float,
+                            fundamental: dict = None) -> dict:
     """
     Composite kalite skoru (0-100): Bir sinyalin ne kadar kuvvetli oldugunu
     tek bir sayida toplar.
     
     Bilesenler:
-    - Sinyal sayisi ve turu (40 puan)
-    - Ichimoku konum (4/4 → 20 puan)
-    - Hacim teyidi (15 puan)
-    - Sektor gucu (15 puan)
-    - Piyasa rejimi (10 puan)
+    - Sinyal sayisi ve turu (35 puan)  [eski 40, fundamental icin yer acildi]
+    - Ichimoku konum (4/4 → 18 puan)    [eski 20]
+    - Hacim teyidi (12 puan)            [eski 15]
+    - Sektor gucu (12 puan)             [eski 15]
+    - Piyasa rejimi (8 puan)            [eski 10]
+    - Fundamental kalite (15 puan)      [YENI - PEG/ROE/FCF/Debt]
     
     Skor 70+ → guclu giris (2.0x convicted bet)
     Skor 55-70 → orta (1.5x)
@@ -233,82 +235,91 @@ def calculate_kalite_skoru(signals: list, position: dict, volume: dict,
     skor = 0
     detay = {}
     
-    # 1. Sinyal sayisi + turu (40 puan)
+    # 1. Sinyal sayisi + turu (35 puan)
     if signals:
         sinyal_tipleri = [s.get("tip", "") for s in signals]
         # En guclu sinyal tipine göre
         if any(t in ("tenkan_bounce", "ichimoku", "kumo_kirilim") for t in sinyal_tipleri):
-            sinyal_skor = 25  # Backtest +%8 sinyaller
+            sinyal_skor = 22  # Backtest +%8 sinyaller
         elif any(t == "consolidation_breakout" for t in sinyal_tipleri):
-            sinyal_skor = 20
+            sinyal_skor = 17
         elif any(t in ("sma50_bounce", "kijun_bounce_v2", "nr7_sikisma") for t in sinyal_tipleri):
-            sinyal_skor = 15
+            sinyal_skor = 13
         elif "oversold_bounce" in sinyal_tipleri:
-            sinyal_skor = 8  # Backtest -%6, dusuk skor
+            sinyal_skor = 6  # Backtest -%6, dusuk skor
         else:
-            sinyal_skor = 10
+            sinyal_skor = 9
         # Multi-sinyal bonus
         if len(sinyal_tipleri) >= 3:
-            sinyal_skor += 15
+            sinyal_skor += 13
         elif len(sinyal_tipleri) == 2:
-            sinyal_skor += 8
-        skor += min(sinyal_skor, 40)
-        detay["sinyal"] = min(sinyal_skor, 40)
+            sinyal_skor += 7
+        skor += min(sinyal_skor, 35)
+        detay["sinyal"] = min(sinyal_skor, 35)
     else:
         detay["sinyal"] = 0
     
-    # 2. Ichimoku konum (20 puan)
+    # 2. Ichimoku konum (18 puan)
     pos_str = position.get("genel", "") if isinstance(position, dict) else ""
-    if "4/4" in pos_str:
-        skor += 20
-        detay["ichimoku"] = 20
-    elif "3/4" in pos_str:
-        skor += 12
-        detay["ichimoku"] = 12
-    elif "2/4" in pos_str:
+    pos_lower = pos_str.lower()
+    if "4/4" in pos_str or "guclu_yukselis" in pos_lower or "guclu yukselis" in pos_lower:
+        skor += 18
+        detay["ichimoku"] = 18
+    elif "3/4" in pos_str or "yukselis" in pos_lower:
+        skor += 11
+        detay["ichimoku"] = 11
+    elif "2/4" in pos_str or "notr" in pos_lower:
         skor += 5
         detay["ichimoku"] = 5
     else:
         detay["ichimoku"] = 0
     
-    # 3. Hacim teyidi (15 puan)
+    # 3. Hacim teyidi (12 puan)
     rasyo = volume.get("rasyo", 0)
     if rasyo >= 1.5:
-        h_skor = 15
+        h_skor = 12
     elif rasyo >= 1.0:
-        h_skor = 10
+        h_skor = 8
     elif rasyo >= 0.7:
-        h_skor = 5
+        h_skor = 4
     else:
         h_skor = 0
     skor += h_skor
     detay["hacim"] = h_skor
     
-    # 4. Sektor gucu (15 puan)
+    # 4. Sektor gucu (12 puan)
     sektor_diff = sektor.get("fark", 0) or 0
     if sektor_diff > 2:
-        s_skor = 15
+        s_skor = 12
     elif sektor_diff > 0:
-        s_skor = 10
+        s_skor = 8
     elif sektor_diff > -2:
-        s_skor = 5
+        s_skor = 4
     else:
         s_skor = 0
     skor += s_skor
     detay["sektor"] = s_skor
     
-    # 5. Piyasa rejimi (10 puan)
+    # 5. Piyasa rejimi (8 puan)
     rejim = regime.get("rejim", "bilinmiyor")
     if rejim == "risk-on":
-        r_skor = 10
+        r_skor = 8
     elif rejim == "risk-on-zayif":
-        r_skor = 7
+        r_skor = 6
     elif rejim == "risk-off-toparlanma":
-        r_skor = 4
+        r_skor = 3
     else:
         r_skor = 0
     skor += r_skor
     detay["rejim"] = r_skor
+    
+    # 6. Fundamental kalite (15 puan) — YENI
+    if fundamental:
+        f_skor = min(fundamental.get("skor", 0), 15)  # max 15
+        skor += f_skor
+        detay["fundamental"] = f_skor
+    else:
+        detay["fundamental"] = 0
     
     # Karar
     if skor >= 70:
@@ -330,6 +341,107 @@ def calculate_kalite_skoru(signals: list, position: dict, volume: dict,
         "carpan_oneri": carpan_oneri,
         "detay": detay,
     }
+
+
+def check_fundamental_quality(symbol: str) -> dict:
+    """
+    Fundamental kalite kontrolu. Memory'deki FMP alan tuzaklarina dikkat:
+    - ratios-ttm: priceToEarningsRatioTTM, debtToEquityRatioTTM
+    - key-metrics-ttm: returnOnEquityTTM, freeCashFlowYieldTTM
+    
+    Skor (0-15 puan):
+    - PEG <1.5 ve >0: 5 puan (büyüme×F/K dengeli)
+    - ROE >15%: 5 puan (sermaye verimliliği)
+    - FCF Yield >5% veya Net debt/equity <1: 5 puan (finansal saglik)
+    """
+    try:
+        ratios = fmp_get("ratios-ttm", {"symbol": symbol})
+        keymetrics = fmp_get("key-metrics-ttm", {"symbol": symbol})
+        
+        if not (isinstance(ratios, list) and ratios):
+            return {"skor": 0, "puanlar": {}, "veri_yok": True}
+        if not (isinstance(keymetrics, list) and keymetrics):
+            return {"skor": 0, "puanlar": {}, "veri_yok": True}
+        
+        r = ratios[0]
+        k = keymetrics[0]
+        
+        skor = 0
+        puanlar = {}
+        veriler = {}
+        
+        # 1. PEG kontrolu (FMP'de 'priceToEarningsToGrowthRatioTTM' veya farkli)
+        # Daha guvenilir: full_universe_screener'in hesapladigi peg degerini kullan
+        peg = r.get("priceToEarningsToGrowthRatioTTM")
+        if peg is None:
+            peg = r.get("priceEarningsToGrowthRatioTTM")
+        # Fallback: daily_full_scan.json'dan oku
+        if peg is None:
+            try:
+                scan_path = REPO_ROOT / "data" / "daily_full_scan.json"
+                if scan_path.exists():
+                    sd = json.load(open(scan_path))
+                    for s in sd.get("sonuclar", []):
+                        if s.get("symbol") == symbol:
+                            peg = s.get("peg")
+                            break
+            except Exception:
+                pass
+        if peg and 0 < peg < 1.5:
+            skor += 5
+            puanlar["peg"] = 5
+        elif peg and peg < 2.5:
+            skor += 2
+            puanlar["peg"] = 2
+        else:
+            puanlar["peg"] = 0
+        veriler["peg"] = peg
+        
+        # 2. ROE
+        roe = k.get("returnOnEquityTTM")
+        if roe is not None:
+            roe_pct = roe * 100 if abs(roe) < 5 else roe  # Bazen 0.18 bazen 18 dönebilir
+            if roe_pct > 15:
+                skor += 5
+                puanlar["roe"] = 5
+            elif roe_pct > 8:
+                skor += 2
+                puanlar["roe"] = 2
+            else:
+                puanlar["roe"] = 0
+            veriler["roe_pct"] = round(roe_pct, 1)
+        
+        # 3. FCF Yield
+        fcfy = k.get("freeCashFlowYieldTTM")
+        if fcfy is not None:
+            fcfy_pct = fcfy * 100 if abs(fcfy) < 1 else fcfy
+            if fcfy_pct > 5:
+                skor += 3
+                puanlar["fcf_yield"] = 3
+            elif fcfy_pct > 2:
+                skor += 1
+                puanlar["fcf_yield"] = 1
+            else:
+                puanlar["fcf_yield"] = 0
+            veriler["fcfy_pct"] = round(fcfy_pct, 1)
+        
+        # 4. Debt/Equity (saglik check)
+        de = r.get("debtToEquityRatioTTM")
+        if de is not None and de < 1.0:
+            skor += 2
+            puanlar["debt_eq"] = 2
+            veriler["debt_eq"] = round(de, 2)
+        elif de is not None:
+            puanlar["debt_eq"] = 0
+            veriler["debt_eq"] = round(de, 2)
+        
+        return {
+            "skor": skor,  # max 15
+            "puanlar": puanlar,
+            "veriler": veriler,
+        }
+    except Exception as e:
+        return {"skor": 0, "puanlar": {}, "hata": str(e)[:50]}
 
 
 def detect_tenkan_bounce(prices: list, ichi: dict) -> dict | None:
@@ -634,12 +746,14 @@ def enhanced_entry_analysis(symbol: str) -> dict:
             signals.append(sig)
 
     # ── KALITE FILTRELERI (28 Nis 2026 reform) ─────────────────────────────
-    # Volume + Sektor gucu + Piyasa rejimi
+    # Volume + Sektor gucu + Piyasa rejimi + Fundamental
     volume_check = check_volume_strength(prices)
     sektor_check = check_sector_strength(symbol)
     regime_check = check_market_regime()
+    fundamental_check = check_fundamental_quality(symbol)  # YENI
     kalite = calculate_kalite_skoru(signals, position, volume_check, 
-                                      sektor_check, regime_check, 0, price)
+                                      sektor_check, regime_check, 0, price,
+                                      fundamental=fundamental_check)
 
     # Stop ve hedef
     kijun     = ichi.get("kijun", 0)
@@ -773,6 +887,8 @@ def enhanced_entry_analysis(symbol: str) -> dict:
         "volume_rasyo": volume_check.get("rasyo"),
         "sektor_fark": sektor_check.get("fark"),
         "rejim": regime_check.get("rejim"),
+        "fundamental_skor": fundamental_check.get("skor", 0),
+        "fundamental_veriler": fundamental_check.get("veriler", {}),
     }
 
 
