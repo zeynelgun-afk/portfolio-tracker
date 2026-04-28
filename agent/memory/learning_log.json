@@ -1246,6 +1246,21 @@
       "date": "2026-04-28",
       "source": "closing_analysis",
       "insight": "---"
+    },
+    {
+      "date": "2026-04-28",
+      "source": "post_trade",
+      "insight": "CAT: DERS: NR7+Ichimoku bounce setup'ı trend takibinde çalışıyor ama swing sürelerinde patlayıcı momentum üretmiyor — %4 bandında kısmi kâr alma kuralı düşünülmeli."
+    },
+    {
+      "date": "2026-04-28",
+      "source": "post_trade",
+      "insight": "KLAC: DERS: Tez tutan trade'lerde SURE çıkışı yerine trailing'e devretmek ve P/L loglama bug'ını acil düzeltmek gerekiyor."
+    },
+    {
+      "date": "2026-04-28",
+      "source": "post_trade",
+      "insight": "AMAT: DERS: sma50_bounce tezi fiyatta doğrulansa bile çok kısa süreli çıkışlar masrafları karşılayamaz; entry kalitesi ve tutma süresi yeniden ayarlanmalı."
     }
   ]
 }

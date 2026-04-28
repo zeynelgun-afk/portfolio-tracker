@@ -1,7 +1,52 @@
 {
-  "tarih": "2026-04-28T07:20:30.575153",
-  "adaylar": [],
+  "tarih": "2026-04-28T13:14:59.747619",
+  "adaylar": [
+    {
+      "symbol": "SCCO",
+      "tema": "emtia_hammadde",
+      "portföy": "balanced",
+      "price": 178.12,
+      "stop": 162.13,
+      "target": 210.1,
+      "rr": 2.0,
+      "score": 5.75,
+      "teknik": 6,
+      "fundamental": 6,
+      "atr": 7.99,
+      "reason": "emtia_hammadde tema taraması — teknik:6/10 fundamental:6/10",
+      "detay": {
+        "sma200": "✅",
+        "rsi": "✅ 53",
+        "mom_1m": "✅ +11.5%",
+        "skor": 6,
+        "roic": "✅ 23.2%",
+        "büyüme": "✅ ROE 42.2%"
+      }
+    },
+    {
+      "symbol": "PPG",
+      "tema": "emtia_hammadde",
+      "portföy": "balanced",
+      "price": 110.3,
+      "stop": 102.83,
+      "target": 125.24,
+      "rr": 2.0,
+      "score": 5.7,
+      "teknik": 5,
+      "fundamental": 7,
+      "atr": 3.73,
+      "reason": "emtia_hammadde tema taraması — teknik:5/10 fundamental:7/10",
+      "detay": {
+        "sma200": "✅",
+        "rsi": "✅ 65",
+        "skor": 7,
+        "roic": "✅ 40.1%",
+        "pe": "→ 15.7",
+        "büyüme": "✅ ROE 33.6%"
+      }
+    }
+  ],
   "ozet": {
-    "toplam": 0
+    "toplam": 2
   }
 }

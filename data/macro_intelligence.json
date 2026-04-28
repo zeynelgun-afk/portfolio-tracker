@@ -1,140 +1,151 @@
 {
-  "tarih": "2026-04-27T17:20:10.927215+03:00",
-  "vix": 18.86,
+  "tarih": "2026-04-28T16:05:46.135097+03:00",
+  "vix": 19.25,
   "sektor_performans": {
-    "Basic Materials": -0.025781926295787017,
-    "Communication Services": 0.639429241402234,
-    "Consumer Cyclical": -0.7361235582687642,
-    "Consumer Defensive": 0.2839313241019603,
-    "Energy": 0.055109025707600345,
-    "Financial Services": 0.3309514140124037,
-    "Healthcare": 0.9425662291523862,
-    "Industrials": -0.04496626753346389,
-    "Real Estate": -0.5950067401036541,
-    "Technology": -0.36058820536315483,
-    "Utilities": -1.4872106239916305
+    "Basic Materials": 0.0015536969706131387,
+    "Communication Services": 1.1027806186166167,
+    "Consumer Cyclical": 0.13710935869706287,
+    "Consumer Defensive": -1.150892668088721,
+    "Energy": -0.1987380904432401,
+    "Financial Services": 0.5058692165492262,
+    "Healthcare": -0.4083406064546491,
+    "Industrials": 0.048356915276004386,
+    "Real Estate": -1.196934901012492,
+    "Technology": 0.3079043423315442,
+    "Utilities": -0.48794869509336536
   },
   "dominant_temalar": [
     {
-      "tema_adi": "sağlık_yenilik",
-      "güç_skoru": 8,
-      "neden": "Healthcare sektörü +0.9% ile günün lideri, SGMT(+45.9%), CUE(+44.1%), ONCO(+26.6%) gibi biyotek/onkoloji isimleri momentum gösteriyor",
-      "öncelikli_alt_dal": "onkoloji_biyotek",
+      "tema_adi": "AI_altyapı",
+      "güç_skoru": 7,
+      "neden": "Communication Services +1.1% ve Technology +0.3% lider sektörler arasında; Ace Hardware AI entegrasyonu haberi AI yayılımının devam ettiğini gösteriyor",
+      "öncelikli_alt_dal": "güç_soğutma_ve_çip",
       "önerilen_hisseler": [
-        "LLY",
-        "VRTX",
-        "REGN"
+        "VRT",
+        "ETN",
+        "NVDA"
       ],
-      "portföy": "balanced",
+      "portföy": "aggressive",
       "aciliyet": "orta",
       "hisse_evreni": [
-        "LLY",
-        "ALT",
-        "ISRG",
-        "MDT",
-        "GILD",
-        "BMY",
-        "SYK",
-        "NVO",
-        "EW",
-        "REGN",
-        "VKTX",
-        "MRNA"
-      ]
-    },
-    {
-      "tema_adi": "savunma_uzay",
-      "güç_skoru": 6,
-      "neden": "Iran gerilimi haberleri Wall Street'i temkinli tutuyor, jeopolitik risk fiyatlanıyor ancak sektör reaksiyonu henüz sınırlı",
-      "öncelikli_alt_dal": "savunma_ana_yüklenici",
-      "önerilen_hisseler": [
-        "LMT",
-        "RTX",
-        "NOC"
-      ],
-      "portföy": "balanced",
-      "aciliyet": "orta",
-      "hisse_evreni": [
-        "GD",
-        "CRWD",
-        "RKLB",
-        "NOC",
-        "AJRD",
-        "LHX",
-        "S",
-        "RTX",
-        "LMT",
-        "RDW",
-        "PANW",
-        "ZS",
-        "KTOS"
+        "ANET",
+        "STX",
+        "COHR",
+        "HUBB",
+        "ASML",
+        "CAMT",
+        "LRCX",
+        "DLR",
+        "PWR",
+        "AMAT",
+        "WDC",
+        "AAOI",
+        "EQIX",
+        "ONTO",
+        "IREN",
+        "MU",
+        "VRT",
+        "ETN",
+        "GNRC",
+        "FN",
+        "TER",
+        "LITE",
+        "KLAC"
       ]
     },
     {
       "tema_adi": "finansal_döngüsel",
-      "güç_skoru": 5,
-      "neden": "Financial Services +0.3% pozitif, ancak hayat sigortası hisselerinde short pozisyonlar artıyor (private credit endişesi) — seçici olunmalı",
-      "öncelikli_alt_dal": "büyük_bankalar",
+      "güç_skoru": 7,
+      "neden": "Financial Services +0.5% ile ikinci en güçlü sektör; Warsh'ın faiz indirimi söylemi ve enflasyon tartışmaları finansal sektör için pozitif faiz eğrisi beklentisi yaratıyor",
+      "öncelikli_alt_dal": "büyük_bankalar_fintech",
       "önerilen_hisseler": [
         "JPM",
-        "GS"
+        "GS",
+        "V"
+      ],
+      "portföy": "balanced",
+      "aciliyet": "orta",
+      "hisse_evreni": [
+        "MS",
+        "AFRM",
+        "PRU",
+        "MET",
+        "AIG",
+        "MA",
+        "JPM",
+        "GS",
+        "BAC",
+        "V",
+        "PYPL",
+        "CB"
+      ]
+    },
+    {
+      "tema_adi": "enerji_geçiş",
+      "güç_skoru": 6,
+      "neden": "BAE'nin OPEC'ten ayrılma haberi petrol arz dengelerinde belirsizlik yaratıyor; Energy sektörü -0.2% ile baskıda ama orta vadede arz şoku riski nükleer/temiz enerji alternatiflerini öne çıkarabilir",
+      "öncelikli_alt_dal": "nükleer_altyapı",
+      "önerilen_hisseler": [
+        "CEG",
+        "VST",
+        "NRG"
       ],
       "portföy": "balanced",
       "aciliyet": "düşük",
       "hisse_evreni": [
-        "MA",
-        "PRU",
-        "PYPL",
-        "V",
-        "JPM",
-        "AFRM",
-        "BAC",
-        "GS",
-        "MET",
-        "AIG",
-        "MS",
-        "CB"
+        "ET",
+        "WMB",
+        "NRG",
+        "FSLR",
+        "RUN",
+        "KMI",
+        "CCJ",
+        "OKE",
+        "ENPH",
+        "CEG",
+        "VST",
+        "NEE"
       ]
     }
   ],
   "kacınılacak": [
-    "Technology",
-    "Basic Materials"
+    "Healthcare",
+    "Energy"
   ],
-  "piyasa_modu": "risk-on-temkinli",
+  "piyasa_modu": "risk-on",
   "aktif_kriz": {
     "tip": "yok",
-    "guven": 4,
-    "kanit": "VIX 18.9 (eşik altı), S&P 500 yeni rekor seviyede. 'Recession Trigger Active' ve Iran gerilimi başlıkları endişe yaratsa da sektörler mixed-pozitif, panik satışı yok. Healthcare lider, Tech hafif zayıf — bu rotasyon kriz değil normal risk dengelemesi.",
+    "guven": 7,
+    "kanit": "VIX 19.2 (eşik altı), sektörler mixed ama pozitif eğilimli (Communication +1.1%, Financials +0.5%), haberler stabil. BAE-OPEC ayrılığı izlenmeli ancak henüz piyasa stresi yaratmamış. Healthcare -0.4% ve Energy -0.2% sınırlı düşüşler, sistemik baskı yok.",
     "beneficiary_sectors": [],
     "sensitive_sectors": []
   },
-  "genel_yorum": "Piyasa rekor seviyede ancak yüzey altında temkin var: resesyon başlıkları, Iran gerilimi ve sigorta short'ları izlenmeli. Healthcare bugünün net lideri — biyotek momentum'u dikkat çekici. SPEKÜLATİF: Tech zayıflığı kalıcı rotasyon mu yoksa kâr realizasyonu mu belirsiz, K-13 kriz tetiklenmedi standart VIX bazlı yönetim devam.",
+  "genel_yorum": "Piyasa normal risk-on modunda; VIX 19.2 ile rahat seviyede. AI_altyapı ve finansal_döngüsel temaları öne çıkıyor. BAE'nin OPEC'ten ayrılması orta vadede enerji jeopolitiği için izlenmesi gereken SPEKÜLATİF bir gelişme — şu an aksiyon gerektirmiyor.",
   "haberler": [
     {
-      "baslik": "The Recession Trigger Is Active",
+      "baslik": "UAE to leave OPEC and OPEC+ oil producer groups",
+      "kaynak": "reuters.com",
+      "tarih": "2026-04-28 08:37"
+    },
+    {
+      "baslik": "United Arab Emirates leaving OPEC, effective May 1",
+      "kaynak": "cnbc.com",
+      "tarih": "2026-04-28 08:36"
+    },
+    {
+      "baslik": "Inflation could get in the way of Warsh's desire to cut interest rates, CNBC survey finds",
+      "kaynak": "cnbc.com",
+      "tarih": "2026-04-28 08:30"
+    },
+    {
+      "baslik": "Kevin Warsh At The Fed: More Likely To Be Bernanke Than Volcker",
       "kaynak": "seekingalpha.com",
-      "tarih": "2026-04-27 10:06"
+      "tarih": "2026-04-28 08:30"
     },
     {
-      "baslik": "Short sellers' bets on life insurance stocks soar as private credit concerns grow",
-      "kaynak": "reuters.com",
-      "tarih": "2026-04-27 10:04"
-    },
-    {
-      "baslik": "Hungary's MOL says talks on NIS acquisition 'ongoing'",
-      "kaynak": "reuters.com",
-      "tarih": "2026-04-27 10:00"
-    },
-    {
-      "baslik": "See the Corporate Layoffs So Far in 2026",
-      "kaynak": "wsj.com",
-      "tarih": "2026-04-27 09:50"
-    },
-    {
-      "baslik": "Dow Jones rises 96 points as Iran tensions keep Wall Street cautious",
-      "kaynak": "invezz.com",
-      "tarih": "2026-04-27 09:40"
+      "baslik": "Why consumers are skipping new releases and what that means for tech stocks",
+      "kaynak": "proactiveinvestors.co.uk",
+      "tarih": "2026-04-28 08:29"
     }
   ]
 }

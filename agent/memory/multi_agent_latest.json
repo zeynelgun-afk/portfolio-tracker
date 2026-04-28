@@ -2,26 +2,26 @@
   "macro": {
     "sinyal": "NEUTRAL",
     "guven": "MEDIUM",
-    "ana_tema": "Earnings haftası başlıyor; VIX 18.86 normal seviyede ama hafif yükselişte, piyasa kazanç sonuçlarını bekliyor.",
+    "ana_tema": "VIX 19.25'te normal seviyede ancak %6.83 yükselişle artan tedirginlik, yoğun earnings haftası ve enflasyon verisi öncesi temkinli bekleyiş hakim.",
     "beklentiler": [
-      "Bu hafta yoğun earnings akışı (ABBV, MO, CI, OKE, HBM) volatiliteyi artırabilir",
-      "1 Mayıs CPI ve istihdam verileri Fed beklentilerini şekillendirecek",
-      "İşsizlik %7.5'ten %7.4'e gerilemesi bekleniyor — hafif olumlu"
+      "Bu hafta ABBV/CI/MO/OKE/CL earnings'leri portföy için kritik volatilite kaynağı olacak",
+      "1 Mayıs CPI verisi Fed faiz beklentilerini yeniden şekillendirebilir; önceki %4.65 YoY hala yüksek",
+      "VIX'in 20 üzerine çıkması durumunda K-10 savunmacı allokasyon devreye girebilir"
     ],
-    "risk_faktoru": "Yüksek işsizlik seviyesi (%7.5) resesyon endişesini canlı tutuyor; earnings hayal kırıklığı sell-the-news tetikleyebilir.",
+    "risk_faktoru": "Yüksek enflasyon (CPI YoY 4.65%) ortamında Fed'in şahin kalma riski + yoğun earnings haftasında sell-the-news baskısı (özellikle Tech %57 konsantrasyonu nedeniyle)",
     "tahmin": {
       "yon": "NEUTRAL",
       "buyukluk": "LOW",
       "sembol": "SPY"
     },
     "_agent": "MACRO_AGENT",
-    "_timestamp": "2026-04-27T14:20:32.667559"
+    "_timestamp": "2026-04-28T13:07:10.695857"
   },
   "sector": {
     "aktif_rejim": "ai_boom",
-    "lider_sektor": "Semiconductors (SOXX/SMH) - MU +5.2%, AMAT, KLAC güçlü",
-    "zayif_sektor": "Optical/Networking momentum (COHR -4.5%, ANET -3.1%, CAMT -4.4%)",
-    "rotasyon_onerisi": "Optical/networking alt-temasından (COHR/CAMT) ana semi (MU/AMAT/KLAC) ve industrial AI (GEV/ETN) tarafına rotasyon; tech konsantrasyonu %57 K-17 ihlali nedeniyle defansif (XLV/XLU) ve altın (GLD) ekleme",
+    "lider_sektor": "Teknoloji/Yarı İletken (XLK, SMH)",
+    "zayif_sektor": "Tüketici Temel İhtiyaç (XLP)",
+    "rotasyon_onerisi": "XLP/defansiften AI altyapı (SMH, XLK) ve sanayi/güç altyapısına (XLI, GEV teması) rotasyon; ancak K-02 gereği yeni momentum girişlerinde temkinli ol",
     "guven": "MEDIUM",
     "tahmin": {
       "yon": "UP",
@@ -29,58 +29,61 @@
       "sembol": "SMH"
     },
     "_agent": "SECTOR_AGENT",
-    "_timestamp": "2026-04-27T14:20:44.701512"
+    "_timestamp": "2026-04-28T13:07:17.648109"
   },
   "signal": {
     "_agent": "SIGNAL_AGENT",
-    "_raw": "{\n  \"portfoy_sinyalleri\": [\n    {\n      \"sembol\": \"COHR\",\n      \"sinyal\": \"SELL\",\n      \"rsi_yorumu\": \"normal\",\n      \"sma_durumu\": \"ustunde\",\n      \"aciklama\": \"Stop %1.2 uzakta, -4.5% sert düşüş, kâr koruma için çıkış.\"\n    },\n    {\n      \"sembol\": \"ANET\",\n      \"sinyal\": \"HOLD\",\n      \"rsi_yorumu",
+    "_raw": "{\n  \"portfoy_sinyalleri\": [\n    {\n      \"sembol\": \"ANET\",\n      \"sinyal\": \"HOLD\",\n      \"rsi_yorumu\": \"normal\",\n      \"sma_durumu\": \"ustunde\",\n      \"aciklama\": \"Bugün -2.5% düşüş ama P/L +17.7%, trailing stop %4.7 uzakta — kâr koruma modunda.\"\n    },\n    {\n      \"sembol\": \"MU\",\n      \"sinyal\": \"HOL",
     "_parse_hata": true,
     "guven": "LOW"
   },
   "risk": {
     "risk_seviyesi": "HIGH",
     "stop_yakini": [
-      "CAMT - %0.6 uzakta (KRİTİK)",
-      "COHR - %1.2 uzakta (KRİTİK)",
-      "O - %2.7 uzakta",
-      "ABBV - %3.7 uzakta (earnings 2 gün)",
-      "MO - %3.9 uzakta",
-      "ANET - %4.1 uzakta",
-      "GTY - %4.9 uzakta"
+      "O - %1.4 uzakta (KRİTİK)",
+      "ABBV - %2.5 uzakta (earnings + tez bozuldu)",
+      "GEV - %2.6 uzakta (swing)",
+      "MO - %3.0 uzakta",
+      "NEM - %3.1 uzakta",
+      "GTY - %4.3 uzakta",
+      "ANET - %4.7 uzakta",
+      "CL - %4.6 uzakta (tez bozuldu)"
     ],
-    "konsantrasyon_uyarisi": "Technology %56.9 - K-17 ihlali (eşik %40). Aggressive bucket'ta COHR+ANET+MU+CAMT yığılması, tek sektör şokunda zincirleme stop riski. Temettü bucket P/L yanıltıcı (MO ağırlıklı).",
-    "senaryo_5pct_dusus": "~$19,358 kayıp (-%6.0). 6 pozisyon stop tetikler: COHR, ANET, CAMT (aggressive üçlüsü = -$9,445) + MO, O, GTY (dividend = -$2,472). Aggressive bucket başlangıç altına daha da iner.",
+    "konsantrasyon_uyarisi": "Technology %38.6 (K-17 eşik %40'a çok yakın), Dividend bucket'ta 4 pozisyon stop'a %5 altında — sektör kümelenme riski (Consumer Defensive + Healthcare zayıf RS). Nakit kullanımı 3 bucket'ta da %10 üstü — sermaye verimsiz konuşlanmış.",
+    "senaryo_5pct_dusus": "Toplam tahmini kayıp: -$13,895 (-%5.6). 7 pozisyonda stop tetiklenir: ANET, NEM, MO, ABBV, O, GTY, CL — özellikle dividend bucket'ta 5 stop birden = bucket çöküşü riski. Toplam DD %2.17 → %7-8 sıçrar.",
     "onerileri": [
-      "CAMT (%0.6) ve COHR (%1.2) için bugün manuel takip — preemptive trim veya stop sıkılaştırma değerlendir",
-      "ABBV K-05 tetikçisi: earnings 2 gün, stop %3.7 — kazanç öncesi pozisyon yarıya indirme veya stop genişletme kararı acil",
-      "Technology %56.9 → K-17 ihlali: yeni teknoloji girişi YASAK, MU (+%26 P/L) veya KLAC (+%11.4) üzerinden kademeli kâr alma (K-11) ile konsantrasyon düşürülmeli",
-      "Aggressive bucket -%2.6: yeni risk ekleme; CAMT MANUEL_REVIEW(28) düşük skor + stop yakın → çıkış adayı",
-      "Swing 5/5 dolu: yeni swing girişi yok, mevcut pozisyonlarda trailing stop disiplini (K-07)"
+      "ABBV ve CL'yi DERHAL kapat — tez tamamen bozuldu (skor 75/70), %5 düşüşte zaten stop tetiklenecek",
+      "MO pozisyonunu %50 azalt — kâr koruma + tez ağır hasar",
+      "O için stop'u sıkılaştır veya kapat — %1.4 uzaklık + tez hasarlı",
+      "ABBV earnings yakın → K-05 koruması zorunlu (kapat veya hedge)",
+      "Dividend bucket'ta korelasyon riski yüksek; aynı anda 4-5 stop tetiklenmesi muhtemel — peyderpey azalt",
+      "Tech %38.6 → yeni tech alımı YOK, K-17 eşiğine yakın",
+      "GEV swing'de stop %2.6 → trailing sıkılaştır veya kısmi kâr al"
     ],
     "guven": "HIGH",
     "_agent": "RISK_AGENT",
-    "_timestamp": "2026-04-27T14:21:10.758276"
+    "_timestamp": "2026-04-28T13:07:56.669844"
   },
   "cio": {
-    "karar": "SAT",
-    "hedef_sembol": "COHR",
-    "gerekce": "Risk Yöneticisi (HIGH güven) iki kritik stop yakınlığı işaret ediyor: CAMT %0.6, COHR %1.2. Teknik analist parse hatasına rağmen COHR için SELL sinyali net okunuyor (kâr koruma, -4.5% sert düşüş). Sektör analisti optical/networking zayıflığını ve COHR'dan ana semi'ye rotasyon önerisini destekliyor — üç analist COHR çıkışında hemfikir. Makro NEUTRAL ama earnings haftası volatilitesi ve VIX yükselişi riski artırıyor. K-17 ihlali (Tech %56.9) zaten yeni alımı yasaklıyor, mevcut zayıf halkayı temizlemek öncelik. CAMT da çıkış adayı (MANUEL_REVIEW 28 + stop %0.6) ancak COHR daha acil çünkü teknik SELL + sektör zayıflığı + stop yakınlığı üçlüsü kesişiyor. Jeopolitik kriz rejimi de optical/networking gibi yüksek beta temalardan defansife rotasyonu destekliyor.",
-    "uyari": "CAMT %0.6 stop mesafesinde — COHR satışı sonrası CAMT için de aynı gün karar verilmeli. ABBV earnings 2 gün, stop %3.7: K-05 gereği yarıya indirme kararı bugün alınmalı.",
+    "karar": "ACIL_CIK",
+    "hedef_sembol": "ABBV, CL, O",
+    "gerekce": "Risk Yöneticisi (HIGH güven) net biçimde tezi bozulmuş ve stop'a kritik mesafede 3 pozisyon tespit etti: ABBV (tez bozuk + earnings yakın, K-05 koruması zorunlu), CL (tez bozuk), O (%1.4 stop uzaklığı KRİTİK seviyede). Makro analist (NEUTRAL) yoğun earnings haftası ve CPI riskini doğruluyor, sektör analisti dividend bucket'ın zaten zayıf RS'de olduğunu teyit ediyor. Aktif rejim JEOPOLITIK_KRIZ + dividend bucket'ta korelasyon riski (5 stop birden tetiklenebilir bucket çöküşü) bekleme lüksü tanımıyor. K-05 (earnings koruması) ve stop disiplini gereği ABBV ve CL derhal kapatılmalı, O için stop sıkılaştırılmalı veya kapatılmalı. MO %50 azaltılmalı. Tech %38.6 → K-17 eşiğine yakın, yeni tech alımı yok.",
+    "uyari": "KESİN: ABBV earnings bu hafta - K-05 koruması zorunlu, gecikme = kural ihlali. Dividend bucket'ta 4-5 stop eş zamanlı tetiklenirse bucket çöküşü = portföy DD %2.17 → %7-8 sıçrar. Teknik sinyal analisti parse hatası verdi, o input dışlandı.",
     "guven": "HIGH",
-    "analist_uzlasma": "YUKSEK",
+    "analist_uzlasma": "ORTA",
     "tahmin": {
       "yon": "DOWN",
       "buyukluk": "MEDIUM",
-      "sembol": "COHR"
+      "sembol": "SPY"
     },
     "_agent": "CIO_AGENT",
-    "_timestamp": "2026-04-27T14:21:24.144416"
+    "_timestamp": "2026-04-28T13:08:07.530189"
   },
   "weights": {
-    "MACRO_AGENT": 0.8925,
-    "SECTOR_AGENT": 1.5307,
+    "MACRO_AGENT": 0.8479,
+    "SECTOR_AGENT": 1.4542,
     "SIGNAL_AGENT": 0.738,
     "RISK_AGENT": 0.6663,
-    "CIO_AGENT": 0.8231
+    "CIO_AGENT": 0.7819
   }
 }

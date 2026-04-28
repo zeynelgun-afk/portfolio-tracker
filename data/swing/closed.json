@@ -737,14 +737,16 @@
       "kar_zarar_yuzde": 4.26,
       "tutulan_gun": 17,
       "sonuc": "KAZANC",
-      "ders": "Süre doldu (15g). Momentum beklediğimiz kadar güçlü değildi.",
+      "ders": "## Post-Trade Analiz: CAT (Swing)\n\n**1. Hangi K-kuralı?**\nKESİN: Çıkış nedeni \"SURE\" → swing portföyünün **15 gün maksimum tutma süresi** kuralı tetiklendi. K-07 (trailing stop) veya K-11 (kademeli kâr) devreye girmedi çünkü hareket bunları tetikleyecek güçte değildi.\n\n**2. Giriş tezi doğru muydu?**\nMUHTEMEL: Tez kısmen çalıştı. 4 sinyal birleşimi (tenkan_bounce + sma50_bounce + kijun_bounce_v2 + nr7_sikisma) net bir long setup'tı ve fiyat $790.66 → $824.37 ile **+%4.26 (gerçek)** geldi. Ancak b",
       "giris_nedeni": "Seans içi otomatik giriş — tenkan_bounce, sma50_bounce, kijun_bounce_v2, nr7_sikisma",
       "tarama_yontemi": "tenkan_bounce, sma50_bounce, kijun_bounce_v2, nr7_sikisma",
       "katalizor": "",
       "stop_loss": 730.35,
       "hedef_fiyat": 941.43,
       "zirve_fiyat": 839.76,
-      "partial_exits": []
+      "partial_exits": [],
+      "dersler": "## Post-Trade Analiz: CAT (Swing)\n\n**1. Hangi K-kuralı?**\nKESİN: Çıkış nedeni \"SURE\" → swing portföyünün **15 gün maksimum tutma süresi** kuralı tetiklendi. K-07 (trailing stop) veya K-11 (kademeli kâr) devreye girmedi çünkü hareket bunları tetikleyecek güçte değildi.\n\n**2. Giriş tezi doğru muydu?**\nMUHTEMEL: Tez kısmen çalıştı. 4 sinyal birleşimi (tenkan_bounce + sma50_bounce + kijun_bounce_v2 + nr7_sikisma) net bir long setup'tı ve fiyat $790.66 → $824.37 ile **+%4.26 (gerçek)** geldi. Ancak b",
+      "agent_analiz_tarihi": "2026-04-28"
     },
     {
       "id": "SWING-202604101410-KLAC",
@@ -758,14 +760,16 @@
       "kar_zarar_yuzde": 8.85,
       "tutulan_gun": 17,
       "sonuc": "KAZANC",
-      "ders": "Süre doldu (15g). Momentum beklediğimiz kadar güçlü değildi.",
+      "ders": "## KLAC Post-Trade Analizi\n\n**1. Yönetim kuralı**\n- KESİN: Çıkış nedeni \"SURE\" → swing portföyünde maksimum tutma süresi limiti. K-07 (trailing stop disiplini) ve K-11 (kademeli kâr alma) devreye girmeden süre dolmuş.\n- MUHTEMEL: Pozisyon swing playbook'taki zaman penceresi sınırına takıldı; trend devam ediyor olabilirdi.\n\n**2. Giriş tezi**\n- KESİN: Giriş tezi (tenkan_bounce + kijun_bounce_v2) **doğrulandı**. Fiyat 1737.28 → 1891.04, yani +%8.85 hareket etti.\n- KESİN: P/L raporda %0 görünüyor — ",
       "giris_nedeni": "Seans içi otomatik giriş — tenkan_bounce, kijun_bounce_v2",
       "tarama_yontemi": "tenkan_bounce, kijun_bounce_v2",
       "katalizor": "",
       "stop_loss": 1540.49,
       "hedef_fiyat": 2229.26,
       "zirve_fiyat": 1935,
-      "partial_exits": []
+      "partial_exits": [],
+      "dersler": "## KLAC Post-Trade Analizi\n\n**1. Yönetim kuralı**\n- KESİN: Çıkış nedeni \"SURE\" → swing portföyünde maksimum tutma süresi limiti. K-07 (trailing stop disiplini) ve K-11 (kademeli kâr alma) devreye girmeden süre dolmuş.\n- MUHTEMEL: Pozisyon swing playbook'taki zaman penceresi sınırına takıldı; trend devam ediyor olabilirdi.\n\n**2. Giriş tezi**\n- KESİN: Giriş tezi (tenkan_bounce + kijun_bounce_v2) **doğrulandı**. Fiyat 1737.28 → 1891.04, yani +%8.85 hareket etti.\n- KESİN: P/L raporda %0 görünüyor — ",
+      "agent_analiz_tarihi": "2026-04-28"
     },
     {
       "id": "SWING-202604101410-AMAT",
@@ -779,14 +783,16 @@
       "kar_zarar_yuzde": 1.36,
       "tutulan_gun": 17,
       "sonuc": "KAZANC",
-      "ders": "Süre doldu (15g). Momentum beklediğimiz kadar güçlü değildi.",
+      "ders": "## AMAT Post-Trade Analizi\n\n**1. Yönetim kuralı**\n- KESİN: Çıkış nedeni \"SURE\" → swing portföy süre limiti dolmuş. K-07 (trailing stop) tetiklenmedi, K-06 (stop) tetiklenmedi. Süre bazlı zorunlu çıkış uygulandı.\n\n**2. Giriş tezi değerlendirmesi**\n- KESİN: Tez = `sma50_bounce`. Giriş 399.49, çıkış 404.93 → fiyat tezini doğruladı (+%1.36 ham hareket).\n- MUHTEMEL: Sıçrama gerçekleşti ama momentum yetersizdi; süre dolana kadar anlamlı ivme gelmedi.\n- KESİN: Sistem P/L'yi %0 olarak raporlamış — komis",
       "giris_nedeni": "Seans içi otomatik giriş — sma50_bounce",
       "tarama_yontemi": "sma50_bounce",
       "katalizor": "",
       "stop_loss": 361.98,
       "hedef_fiyat": 493.26,
       "zirve_fiyat": 419.96,
-      "partial_exits": []
+      "partial_exits": [],
+      "dersler": "## AMAT Post-Trade Analizi\n\n**1. Yönetim kuralı**\n- KESİN: Çıkış nedeni \"SURE\" → swing portföy süre limiti dolmuş. K-07 (trailing stop) tetiklenmedi, K-06 (stop) tetiklenmedi. Süre bazlı zorunlu çıkış uygulandı.\n\n**2. Giriş tezi değerlendirmesi**\n- KESİN: Tez = `sma50_bounce`. Giriş 399.49, çıkış 404.93 → fiyat tezini doğruladı (+%1.36 ham hareket).\n- MUHTEMEL: Sıçrama gerçekleşti ama momentum yetersizdi; süre dolana kadar anlamlı ivme gelmedi.\n- KESİN: Sistem P/L'yi %0 olarak raporlamış — komis",
+      "agent_analiz_tarihi": "2026-04-28"
     }
   ],
   "istatistikler": {
