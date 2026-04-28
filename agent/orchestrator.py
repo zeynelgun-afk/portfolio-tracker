@@ -1748,6 +1748,20 @@ def _check_swing_entries() -> list[str]:
 
     aksiyonlar = []
 
+    # K-23 DRAWDOWN GUARD KONTROLU (28 Nis 2026)
+    # Eger toplam veya aggressive drawdown >=%10 ise YENI SWING GIRISI YOK
+    try:
+        from portfolio_drawdown_guard import analiz_yap as _k23_analiz
+        _k23_s = _k23_analiz()
+        _agg_kod = _k23_s["portfoyler"].get("aggressive", {}).get("k23", {}).get("kod", 0)
+        _toplam_kod = _k23_s["toplam"]["k23"]["kod"]
+        _max_kod = max(_agg_kod, _toplam_kod)
+        if _max_kod >= 2:  # DEFANSIF veya daha yuksek
+            seviye = _k23_s["toplam"]["k23"]["seviye"]
+            return [f"⚠️ *K-23 SWING GIRIS DURDURULDU*: {seviye} seviyesi — yeni swing girisi yok"]
+    except Exception as _k23e:
+        print(f"[K-23 swing check] {_k23e}")
+
     # Kapasite kontrol
     active = json.load(open(REPO_ROOT / "data" / "swing" / "active.json"))
     mevcut_poz = len(active.get("aktif_pozisyonlar", []))

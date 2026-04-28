@@ -140,13 +140,78 @@ def aggressive_strateji(durum: dict, vix: float) -> dict:
     """
     Memory: AGGRESSIVE — inverse ETF + put serbest, swing sinyalleri uygun.
     Backtest: tenkan_bounce/ichimoku +%8 (10g) — bu sinyaller tercih edilmeli.
+    
+    K-23 entegrasyon (28 Nis 2026): drawdown DEFANSIF/HEDGE/STOP ise saldiri yok.
     """
     kullanilacak = hedef_nakit_kullanim(durum)
     if kullanilacak <= 0:
         return {"oneriler": [], "kullanilacak_nakit": 0}
     
+    # K-23 drawdown guard (yeni)
+    k23_kod = 0
+    k23_seviye = "NORMAL"
+    try:
+        from portfolio_drawdown_guard import analiz_yap as _k23_a
+        s = _k23_a()
+        agg = s["portfoyler"].get("aggressive", {}).get("k23", {})
+        toplam = s["toplam"]["k23"]
+        k23_kod = max(agg.get("kod", 0), toplam.get("kod", 0))
+        k23_seviye = max([(agg.get("kod",0), agg.get("seviye","NORMAL")), 
+                          (toplam.get("kod",0), toplam.get("seviye","NORMAL"))], 
+                         key=lambda x: x[0])[1]
+    except Exception:
+        pass
+    
     # Bekleyen ÇIKIŞ kararları olan semboller → öneri YASAK
     cikis_bekleyen = _bekleyen_cikis_semboller()
+    
+    # K-23 STOP_TRADING ise hicbir aksiyon yok
+    if k23_kod >= 4:
+        return {
+            "oneriler": [],
+            "kullanilacak_nakit": kullanilacak,
+            "vix": vix,
+            "k23_durdurma": f"K-23/{k23_kod}: {k23_seviye} — saldiri YOK",
+        }
+    
+    # K-23 HEDGE seviyesi: hedge ETF zorunlu, swing yok
+    if k23_kod >= 3:
+        return {
+            "oneriler": [{
+                "sembol": "SQQQ",
+                "tip": "AL (HEDGE-K23)",
+                "kaynak": "k23-hedge",
+                "tutar": kullanilacak * 0.5,
+                "neden": f"K-23/{k23_kod}: {k23_seviye} — inverse ETF zorunlu",
+                "oncelik": "yuksek",
+            }],
+            "kullanilacak_nakit": kullanilacak,
+            "vix": vix,
+            "k23_durdurma": k23_seviye,
+        }
+    
+    # K-23 DEFANSIF: swing/saldiri yok, defansif ETF
+    if k23_kod >= 2:
+        defansif_oneriler = []
+        for etf in DEFANSIF_ETF[:3]:
+            if etf in durum["aktif_semboller"]:
+                continue
+            defansif_oneriler.append({
+                "sembol": etf,
+                "tip": "AL (DEFANSIF-K23)",
+                "kaynak": "k23-defansif-rotasyon",
+                "tutar": kullanilacak / 3,
+                "neden": f"K-23/{k23_kod}: {k23_seviye} — defansif ETF (saldiri yasak)",
+                "oncelik": "yuksek",
+            })
+        return {
+            "oneriler": defansif_oneriler,
+            "kullanilacak_nakit": kullanilacak,
+            "vix": vix,
+            "k23_seviye": k23_seviye,
+        }
+    
+    # K-23 NORMAL/UYARI: standart akış (swing sinyalleri + tema)
     
     # Mevcut swing sinyallerini oku
     sig_path = REPO_ROOT / "data" / "swing_entry_signals.json"

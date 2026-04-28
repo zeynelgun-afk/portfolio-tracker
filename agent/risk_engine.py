@@ -13,6 +13,7 @@ Tüm hesaplamalar sadece okuma — veri dosyalarına yazmaz.
 """
 
 import os
+import sys
 import json
 import requests
 from pathlib import Path
@@ -476,6 +477,28 @@ def build_risk_context(portfolios: dict) -> str:
             lines.append("")
     except Exception as _be:
         print(f"[Risk] Backtest blogu hatasi: {_be}")
+
+    # K-23 Drawdown Guard (28 Nis 2026) — sermaye koruma sistemi
+    try:
+        from pathlib import Path as _P_k23
+        sys.path.insert(0, str(_P_k23(__file__).parent.parent / "scripts"))
+        from portfolio_drawdown_guard import analiz_yap as _k23_a
+        k23 = _k23_a()
+        en_kotu_kod = max(k23["toplam"]["k23"]["kod"],
+                          *[d["k23"]["kod"] for d in k23["portfoyler"].values()])
+        # Her zaman göster (NORMAL bile olsa peak/drawdown bilgi)
+        lines.append("--- K-23 DRAWDOWN GUARD ---")
+        for pf, data in k23["portfoyler"].items():
+            dd = data["drawdown"]
+            ks = data["k23"]
+            lines.append(f"  {pf:11} dd:{dd['drawdown_pct']:>5.2f}% peak:${dd['peak']:>8,.0f} mevcut:${dd['mevcut']:>8,.0f} {ks['renk']} {ks['seviye']}")
+        t = k23["toplam"]
+        lines.append(f"  TOPLAM      dd:{t['drawdown_pct']:>5.2f}% peak:${t['peak']:>8,.0f} mevcut:${t['mevcut']:>8,.0f} {t['k23']['renk']} {t['k23']['seviye']}")
+        if en_kotu_kod >= 1:
+            lines.append(f"  ⚠️ AKSIYON: {k23['toplam']['k23']['aksiyon']}")
+        lines.append("")
+    except Exception as _k23e:
+        print(f"[Risk] K-23 blogu hatasi: {_k23e}")
 
     # Discovery sonuclari (28 Nis 2026) — kaliteli yeni adaylar
     try:
