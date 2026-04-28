@@ -184,6 +184,10 @@ def closed_swings_as_lesson_chunks() -> list[tuple[str, dict]]:
         # Canonical alan: 'ders' (tekil). Fallback: 'dersler' (eski), 'lessons' (İngilizce).
         dersler = p.get("ders") or p.get("dersler") or p.get("lessons", "")
         scan_method = p.get("scan_method", "") or p.get("tarama_yontemi", "")
+        # auto_analiz: Claude'un derin post-trade analizi (dict)
+        # 27 Nis 2026: 22/25 kapatılan pozisyonda çok zengin veri var ama
+        # önceki RAG indexer bunu okumuyordu — kayıp önemliydi.
+        auto_analiz = p.get("auto_analiz")
 
         parts = [
             f"[SWING DERS] {sembol}",
@@ -198,6 +202,37 @@ def closed_swings_as_lesson_chunks() -> list[tuple[str, dict]]:
             if isinstance(dersler, list):
                 dersler = " | ".join(str(d) for d in dersler)
             parts.append(f"Ders: {dersler}")
+
+        # Claude'un derin analizi — RAG için kritik bilgi kaynağı
+        if isinstance(auto_analiz, dict):
+            tez_dogru = auto_analiz.get("tez_dogru")
+            timing_hata = auto_analiz.get("timing_hatasi")
+            tez_deg = auto_analiz.get("tez_degerlendirme", "")
+            kural_uyumu = auto_analiz.get("kural_uyumu", "")
+            sistem_oneri = auto_analiz.get("sistem_onerisi", "")
+            ders_guncel = auto_analiz.get("ders_guncel", "")
+            puan = auto_analiz.get("puan")
+            tekrar = auto_analiz.get("tekrar_yapilir_mi")
+            zayif = auto_analiz.get("zayif_yanlar", "")
+
+            if tez_deg:
+                parts.append(f"Tez değerlendirmesi: {tez_deg}")
+            if puan is not None:
+                parts.append(f"İşlem puanı: {puan}/10")
+            if tez_dogru is False:
+                parts.append("⚠️ Tez yanlıştı")
+            if timing_hata is True:
+                parts.append("⚠️ Timing hatası vardı")
+            if zayif:
+                parts.append(f"Zayıf yanlar: {zayif}")
+            if kural_uyumu:
+                parts.append(f"Kural uyumu: {kural_uyumu}")
+            if ders_guncel:
+                parts.append(f"Güncel ders: {ders_guncel}")
+            if sistem_oneri:
+                parts.append(f"Sistem önerisi: {sistem_oneri}")
+            if tekrar is False:
+                parts.append("Tekrar yapılmamalı bu işlem")
 
         text = ". ".join(p for p in parts if p)
         meta = {
