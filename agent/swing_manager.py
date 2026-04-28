@@ -268,11 +268,31 @@ def update_swing_positions() -> list[dict]:
         # Backward compat: eski pnl_pct alanı da güncel tutulsun (diğer scriptler geçene kadar)
         poz["pnl_pct"]          = round(pnl_pct, 2)
 
-        # Chandelier stop güncelle (3×ATR trailing)
-        new_chandelier = round(zirve - 3 * atr, 2)
+        # Chandelier stop güncelle (akilli trailing — 28 Nis 2026 reform)
+        # Eski: sabit 3×ATR
+        # Yeni: dinamik — pozisyon yasiyla daralan trailing
+        #   <5g    → 3.0×ATR (esnek, whipsaw onlemek icin)
+        #   5-10g  → 2.5×ATR (pik penceresi, daha sik)
+        #   10-15g → 2.0×ATR (siklasitiriyoruz, momentum kontrol)
+        #   15g+   → 1.5×ATR (k-15c'ye yakin, sik takip)
+        giris_dt_for_trailing = datetime.strptime(poz["giris_tarihi"], "%Y-%m-%d")
+        gun_for_trailing = (datetime.now() - giris_dt_for_trailing).days
+        if gun_for_trailing < 5:
+            atr_carpan = 3.0
+        elif gun_for_trailing < 10:
+            atr_carpan = 2.5
+        elif gun_for_trailing < 15:
+            atr_carpan = 2.0
+        else:
+            atr_carpan = 1.5
+        new_chandelier = round(zirve - atr_carpan * atr, 2)
+        # Maliyet floor (kar varsa stop maliyetin altina inmesin)
+        if pnl_pct > 5:
+            new_chandelier = max(new_chandelier, round(giris * 1.0, 2))  # break-even floor
         old_chandelier = poz.get("chandelier_stop", stop)
         if new_chandelier > old_chandelier:
             poz["chandelier_stop"] = new_chandelier
+            poz["chandelier_atr_carpan"] = atr_carpan
 
         eff_stop = max(stop, poz.get("chandelier_stop", stop))
 
@@ -283,6 +303,18 @@ def update_swing_positions() -> list[dict]:
             uyarilar.append({
                 "sembol": sym, "tip": "K11_AKTIF",
                 "mesaj":  f"{sym} K-11 aktif: +{pnl_pct:.1f}% kâr kilidi devreye girdi",
+            })
+
+        # K-ZST 10. gün momentum kontrolu (28 Nis 2026 — backtest dersi)
+        # Backtest: tema alis 10g sonra +%6.39 (zirve), 20g -%0.86 (duzeltme)
+        # Swing alimlari da benzer pattern. 10. gunde kar varsa kismi al.
+        giris_dt_for_zst = datetime.strptime(poz["giris_tarihi"], "%Y-%m-%d")
+        gun_zst = (datetime.now() - giris_dt_for_zst).days
+        if gun_zst >= 10 and gun_zst < 12 and pnl_pct >= 5 and not poz.get("kzst_aktif"):
+            poz["kzst_aktif"] = True
+            uyarilar.append({
+                "sembol": sym, "tip": "KZST_PIK_PENCERESI",
+                "mesaj":  f"{sym} K-ZST tetik: 10g+ ve +%{pnl_pct:.1f} kar — pik penceresi, kismi cikis adayi",
             })
 
         # Stop tetiklendi mi?

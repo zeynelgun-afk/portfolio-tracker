@@ -66,6 +66,272 @@ def get_price_history(symbol: str, limit: int = 60) -> list:
 
 # ── ENTRY SİNYALLERİ ─────────────────────────────────────────────────────────
 
+# ── KALITE FILTRELERI (28 Nis 2026 reform) ───────────────────────────────────
+def check_volume_strength(prices: list) -> dict:
+    """
+    Hacim doğrulaması: Bugünkü hacim son 20 gun ortalamasinin uzerinde mi?
+    Kuvvetli sinyal icin hacim teyidi sart.
+    
+    Backtest dersi: Zayif hacimli oversold_bounce sinyalleri 20g sonra -%6.
+    Hacim teyidi olmadan sinyal yarim guclu.
+    """
+    if len(prices) < 21:
+        return {"gucu": 1.0, "ortalama_uzeri": False, "rasyo": 0.0}
+    
+    bugun_hacim = prices[-1].get("volume", 0) or 0
+    son20 = prices[-21:-1]
+    ort20 = sum(p.get("volume", 0) or 0 for p in son20) / 20 if son20 else 0
+    
+    if not ort20:
+        return {"gucu": 1.0, "ortalama_uzeri": False, "rasyo": 0.0}
+    
+    rasyo = bugun_hacim / ort20
+    
+    # Hacim çarpani: <0.7 zayif, 0.7-1.0 orta, 1.0-1.5 iyi, >1.5 mukemmel
+    if rasyo >= 1.5:
+        gucu = 1.5  # Bonus
+    elif rasyo >= 1.0:
+        gucu = 1.2
+    elif rasyo >= 0.7:
+        gucu = 1.0
+    else:
+        gucu = 0.7  # Zayif hacim ceza
+    
+    return {
+        "gucu": gucu,
+        "ortalama_uzeri": rasyo >= 1.0,
+        "rasyo": round(rasyo, 2),
+    }
+
+
+def check_sector_strength(symbol: str) -> dict:
+    """
+    Sektörün SPY'a karşı gücü — symbol'ün sektör ETF'si SPY'ı geçiyor mu?
+    Backtest dersi: Zayif sektörlerden swing alımları 20g sonra -%11.
+    
+    FMP profile'dan sektör al, sonra ETF map ile SPY karşılaştır (10g performance).
+    """
+    SEKTOR_ETF_MAP = {
+        "Technology": "XLK", "Healthcare": "XLV", "Financial Services": "XLF",
+        "Consumer Cyclical": "XLY", "Consumer Defensive": "XLP",
+        "Industrials": "XLI", "Energy": "XLE", "Communication Services": "XLC",
+        "Utilities": "XLU", "Real Estate": "XLRE", "Basic Materials": "XLB",
+    }
+    
+    try:
+        # Profile'dan sektör
+        prof = fmp_get("profile", {"symbol": symbol})
+        if not isinstance(prof, list) or not prof:
+            return {"gucu": 1.0, "outperform": None}
+        sektor = prof[0].get("sector", "")
+        etf = SEKTOR_ETF_MAP.get(sektor)
+        if not etf:
+            return {"gucu": 1.0, "outperform": None}
+        
+        # Hem sektör ETF hem SPY için son 10 gün performans
+        etf_h = fmp_get("historical-price-eod/full", {"symbol": etf, "limit": 12})
+        spy_h = fmp_get("historical-price-eod/full", {"symbol": "SPY", "limit": 12})
+        
+        if not (isinstance(etf_h, list) and isinstance(spy_h, list)):
+            return {"gucu": 1.0, "outperform": None}
+        if len(etf_h) < 11 or len(spy_h) < 11:
+            return {"gucu": 1.0, "outperform": None}
+        
+        # FMP yeni→eski sıralı, son 10g getiri
+        etf_perf = (etf_h[0]["close"] - etf_h[10]["close"]) / etf_h[10]["close"] * 100
+        spy_perf = (spy_h[0]["close"] - spy_h[10]["close"]) / spy_h[10]["close"] * 100
+        
+        diff = etf_perf - spy_perf
+        outperform = diff > 0
+        
+        # Çarpan: outperform varsa bonus, underperform ceza
+        if diff > 2:
+            gucu = 1.3
+        elif diff > 0:
+            gucu = 1.1
+        elif diff > -2:
+            gucu = 0.9
+        else:
+            gucu = 0.7
+        
+        return {
+            "gucu": gucu,
+            "outperform": outperform,
+            "sektor_perf": round(etf_perf, 2),
+            "spy_perf": round(spy_perf, 2),
+            "fark": round(diff, 2),
+            "etf": etf,
+            "sektor": sektor,
+        }
+    except Exception:
+        return {"gucu": 1.0, "outperform": None}
+
+
+def check_market_regime() -> dict:
+    """
+    Piyasa rejimi: SPY 21EMA üstünde + yükseliş eğiminde mi?
+    Memory: 'SPY above 21EMA + upward slope' swing kuralı.
+    """
+    try:
+        h = fmp_get("historical-price-eod/full", {"symbol": "SPY", "limit": 30})
+        if not isinstance(h, list) or len(h) < 22:
+            return {"gucu": 1.0, "rejim": "bilinmiyor"}
+        
+        # 21EMA hesapla (FMP yeni→eski)
+        h_asc = list(reversed(h[:25]))
+        closes = [c["close"] for c in h_asc]
+        # EMA(21) approximation: SMA(21)
+        sma21 = sum(closes[-21:]) / 21
+        bugun = closes[-1]
+        dun = closes[-2]
+        
+        ustunde = bugun > sma21
+        yukseliyor = bugun > dun
+        
+        if ustunde and yukseliyor:
+            rejim = "risk-on"
+            gucu = 1.2
+        elif ustunde and not yukseliyor:
+            rejim = "risk-on-zayif"
+            gucu = 1.0
+        elif not ustunde and yukseliyor:
+            rejim = "risk-off-toparlanma"
+            gucu = 0.8
+        else:
+            rejim = "risk-off"
+            gucu = 0.6
+        
+        return {
+            "gucu": gucu,
+            "rejim": rejim,
+            "spy_fiyat": round(bugun, 2),
+            "spy_sma21": round(sma21, 2),
+            "ustunde": ustunde,
+        }
+    except Exception:
+        return {"gucu": 1.0, "rejim": "bilinmiyor"}
+
+
+def calculate_kalite_skoru(signals: list, position: dict, volume: dict, 
+                            sektor: dict, regime: dict, atr: float, price: float) -> dict:
+    """
+    Composite kalite skoru (0-100): Bir sinyalin ne kadar kuvvetli oldugunu
+    tek bir sayida toplar.
+    
+    Bilesenler:
+    - Sinyal sayisi ve turu (40 puan)
+    - Ichimoku konum (4/4 → 20 puan)
+    - Hacim teyidi (15 puan)
+    - Sektor gucu (15 puan)
+    - Piyasa rejimi (10 puan)
+    
+    Skor 70+ → guclu giris (2.0x convicted bet)
+    Skor 55-70 → orta (1.5x)
+    Skor 40-55 → zayif (1.0x)
+    Skor <40 → giris yapma (0x)
+    """
+    skor = 0
+    detay = {}
+    
+    # 1. Sinyal sayisi + turu (40 puan)
+    if signals:
+        sinyal_tipleri = [s.get("tip", "") for s in signals]
+        # En guclu sinyal tipine göre
+        if any(t in ("tenkan_bounce", "ichimoku", "kumo_kirilim") for t in sinyal_tipleri):
+            sinyal_skor = 25  # Backtest +%8 sinyaller
+        elif any(t == "consolidation_breakout" for t in sinyal_tipleri):
+            sinyal_skor = 20
+        elif any(t in ("sma50_bounce", "kijun_bounce_v2", "nr7_sikisma") for t in sinyal_tipleri):
+            sinyal_skor = 15
+        elif "oversold_bounce" in sinyal_tipleri:
+            sinyal_skor = 8  # Backtest -%6, dusuk skor
+        else:
+            sinyal_skor = 10
+        # Multi-sinyal bonus
+        if len(sinyal_tipleri) >= 3:
+            sinyal_skor += 15
+        elif len(sinyal_tipleri) == 2:
+            sinyal_skor += 8
+        skor += min(sinyal_skor, 40)
+        detay["sinyal"] = min(sinyal_skor, 40)
+    else:
+        detay["sinyal"] = 0
+    
+    # 2. Ichimoku konum (20 puan)
+    pos_str = position.get("genel", "") if isinstance(position, dict) else ""
+    if "4/4" in pos_str:
+        skor += 20
+        detay["ichimoku"] = 20
+    elif "3/4" in pos_str:
+        skor += 12
+        detay["ichimoku"] = 12
+    elif "2/4" in pos_str:
+        skor += 5
+        detay["ichimoku"] = 5
+    else:
+        detay["ichimoku"] = 0
+    
+    # 3. Hacim teyidi (15 puan)
+    rasyo = volume.get("rasyo", 0)
+    if rasyo >= 1.5:
+        h_skor = 15
+    elif rasyo >= 1.0:
+        h_skor = 10
+    elif rasyo >= 0.7:
+        h_skor = 5
+    else:
+        h_skor = 0
+    skor += h_skor
+    detay["hacim"] = h_skor
+    
+    # 4. Sektor gucu (15 puan)
+    sektor_diff = sektor.get("fark", 0) or 0
+    if sektor_diff > 2:
+        s_skor = 15
+    elif sektor_diff > 0:
+        s_skor = 10
+    elif sektor_diff > -2:
+        s_skor = 5
+    else:
+        s_skor = 0
+    skor += s_skor
+    detay["sektor"] = s_skor
+    
+    # 5. Piyasa rejimi (10 puan)
+    rejim = regime.get("rejim", "bilinmiyor")
+    if rejim == "risk-on":
+        r_skor = 10
+    elif rejim == "risk-on-zayif":
+        r_skor = 7
+    elif rejim == "risk-off-toparlanma":
+        r_skor = 4
+    else:
+        r_skor = 0
+    skor += r_skor
+    detay["rejim"] = r_skor
+    
+    # Karar
+    if skor >= 70:
+        karar = "GUCLU"
+        carpan_oneri = 2.0
+    elif skor >= 55:
+        karar = "ORTA"
+        carpan_oneri = 1.5
+    elif skor >= 40:
+        karar = "ZAYIF"
+        carpan_oneri = 1.0
+    else:
+        karar = "GECERSIZ"
+        carpan_oneri = 0  # Giris yapma
+    
+    return {
+        "skor": skor,
+        "karar": karar,
+        "carpan_oneri": carpan_oneri,
+        "detay": detay,
+    }
+
+
 def detect_tenkan_bounce(prices: list, ichi: dict) -> dict | None:
     """
     Tenkan Bounce — güçlü trend içinde en sık karşılaşılan giriş.
@@ -367,6 +633,14 @@ def enhanced_entry_analysis(symbol: str) -> dict:
         if sig:
             signals.append(sig)
 
+    # ── KALITE FILTRELERI (28 Nis 2026 reform) ─────────────────────────────
+    # Volume + Sektor gucu + Piyasa rejimi
+    volume_check = check_volume_strength(prices)
+    sektor_check = check_sector_strength(symbol)
+    regime_check = check_market_regime()
+    kalite = calculate_kalite_skoru(signals, position, volume_check, 
+                                      sektor_check, regime_check, 0, price)
+
     # Stop ve hedef
     kijun     = ichi.get("kijun", 0)
     tenkan    = ichi.get("tenkan", 0)
@@ -409,6 +683,21 @@ def enhanced_entry_analysis(symbol: str) -> dict:
     pos_str_for_bonus = position.get("genel", "") if isinstance(position, dict) else ""
     if "4/4" in pos_str_for_bonus:
         carpan = min(2.5, carpan + 0.25)
+    
+    # ── KALITE FILTRESI: composite skoru carpana entegre et
+    # Skor 70+ (GUCLU) → 2x carpan onerilir → mevcut carpan korunur veya artar
+    # Skor 55-70 (ORTA) → 1.5x onerilir → mevcut carpan max 1.5'a sinirlanir
+    # Skor 40-55 (ZAYIF) → 1.0x onerilir → mevcut carpan max 1.0'e sinirlanir
+    # Skor <40 (GECERSIZ) → carpan = 0, GIRIS YAPMA
+    kalite_skor = kalite.get("skor", 0)
+    kalite_karar = kalite.get("karar", "GECERSIZ")
+    if kalite_karar == "GECERSIZ":
+        carpan = 0
+    elif kalite_karar == "ZAYIF":
+        carpan = min(carpan, 1.0)
+    elif kalite_karar == "ORTA":
+        carpan = min(carpan, 1.7)
+    # GUCLU ise mevcut carpan korunur (zaten 2x'e yaklasik)
 
     # Pozisyon boyutu — convicted bet
     base_account = 5000  # baz
@@ -437,9 +726,19 @@ def enhanced_entry_analysis(symbol: str) -> dict:
     elif stop_dist > 12:
         karar = "BEKLE — stop çok uzak (risk yüksek)"
         sinyal_str = f"{len(signals)} sinyal, stop:%{stop_dist:.1f} geniş"
+    elif kalite_karar == "GECERSIZ":
+        # Yeni filtre (28 Nis 2026): Düşük kalite skoru = giriş yok
+        karar = f"BEKLE — kalite skoru düşük ({kalite_skor}/100)"
+        sinyal_str = f"{len(signals)} sinyal var ama kalite filtresi geçemedi"
     else:
         en_guclu = max(signals, key=lambda s: {"cok_yuksek": 4, "yuksek": 3, "orta": 2}.get(s["guc"], 1))
-        karar    = f"GİRİŞ ✅ ({en_guclu['tip']})"
+        # Kalite kararına göre etiket güncelle
+        kalite_etiket = ""
+        if kalite_karar == "GUCLU":
+            kalite_etiket = " ⭐"
+        elif kalite_karar == "ZAYIF":
+            kalite_etiket = " ⚠️"
+        karar    = f"GİRİŞ ✅ ({en_guclu['tip']}){kalite_etiket} skor:{kalite_skor}"
         sinyal_str = " | ".join(s["tip"] for s in signals)
 
     # Güçlü sinyal varsa logla
@@ -468,6 +767,12 @@ def enhanced_entry_analysis(symbol: str) -> dict:
         "position":    pos_str,
         "carpan":      round(carpan, 2),       # Druckenmiller convicted bet
         "account_size": account,                # base*carpan
+        "kalite_skor": kalite_skor,             # Composite 0-100
+        "kalite_karar": kalite_karar,           # GUCLU/ORTA/ZAYIF/GECERSIZ
+        "kalite_detay": kalite.get("detay", {}),
+        "volume_rasyo": volume_check.get("rasyo"),
+        "sektor_fark": sektor_check.get("fark"),
+        "rejim": regime_check.get("rejim"),
     }
 
 
