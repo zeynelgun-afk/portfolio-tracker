@@ -137,7 +137,7 @@ def get_claude_decision(user_prompt, mode="monitor", system_override=None, rag_e
         return "⚠️ ANTHROPIC_API_KEY bulunamadı."
 
     # 27 Nis 2026 fix: morning/closing/weekly token limiti yetersizdi.
-    max_tokens = {"morning": 8000, "closing": 8000, "monitor": 1500, "weekly": 8000}.get(mode, 1500)
+    max_tokens = {"morning": 8000, "closing": 8000, "monitor": 1500, "weekly": 8000, "exit_judgement": 800}.get(mode, 1500)
     base_system = system_override or SYSTEM_PROMPT
 
     # RAG context inject (fail-safe: hata olursa RAG'sız devam)
@@ -204,7 +204,7 @@ def get_claude_decision_with_actions(user_prompt, mode="morning", system_overrid
     # şeması → 5000 yetersiz. JSON karar bloğu kesik kalıyordu (27 Nis sabah raporu
     # `"hedef_fiyat": 550.0` ile bitti, kararlar parse edilemedi).
     # Yeni sınır: 8000 (rapor için ~3x baş parmak güvenliği).
-    max_tokens = {"morning": 8000, "closing": 8000, "monitor": 1500, "weekly": 8000}.get(mode, 2000)
+    max_tokens = {"morning": 8000, "closing": 8000, "monitor": 1500, "weekly": 8000, "exit_judgement": 800}.get(mode, 2000)
     base_system = system_override or SYSTEM_PROMPT
 
     # RAG context inject (fail-safe: hata olursa RAG'sız devam)

@@ -52,8 +52,6 @@
 
 **SWING SİSTEM REFORMU v2 (28 Nis 2026 — devreye alındı):**
 
-Backtest dersi: 17 swing girişi 5g -%0.76, 20g -%11.03 — ZAYIF.
-
 Yeni filtreler (`scripts/swing_entry_engine.py`):
 1. **Volume strength**: Bugünkü hacim son 20g ortalamasıyla — rasyo <0.7 ceza
 2. **Sector strength**: Sektör ETF vs SPY 10g — underperform <-%2 ceza
@@ -92,6 +90,44 @@ Karar:
 | oversold_bounce | 0.5x | -%6.28 (20g) 🔴 |
 
 Multi-sinyal +0.25x bonus (max 2.5x) | 4/4 ichimoku +0.25x bonus
+
+---
+
+## 🤖 EXIT JUDGEMENT LAYER (28 Nis 2026 — devreye alındı)
+
+Mevcut k_engine kural-tabanlı, **bağlamı görmez**. Çelişkili durumlarda LLM'e sorar.
+
+**3 katmanlı sistem (`agent/exit_judgement.py`):**
+
+1. **KURAL** — `k_engine.run_exit_checks()` — hızlı, deterministik
+2. **CONTEXT** — pozisyon için zengin bağlam:
+   - Tema gücü (`theme_scores.json`)
+   - Sektör RS vs SPY
+   - Earnings 14g içinde mi?
+   - K-23 drawdown durumu
+   - Pozisyon yaşı + kar/zarar
+3. **CONFLICT DETECTOR** — kural ↔ context çelişiyor mu?
+4. **LLM JUDGEMENT** — sadece çelişki varsa Anthropic API çağrısı
+
+**Çelişki senaryoları:**
+- K-09/K-11 EXIT/PARTIAL ama **tema GUCLU + earnings yok** → LLM sor
+- K-ZST WARN ama tema 8+ + sektor outperform + kar artıyor → LLM sor
+- K-15c PARTIAL ama momentum güçlü → LLM sor
+- HOLD ama drawdown HEDGE+ → LLM sor (ters çelişki)
+
+**LLM cevap formatı:**
+```
+ACTION: HOLD / EXIT_NOW / PARTIAL_25 / PARTIAL_50 / TIGHTEN
+CONFIDENCE: yuksek / orta / dusuk
+REASONING: 3-5 cümle gerekçe (KESİN/MUHTEMEL/SPEKÜLATİF)
+RISK: bear case
+```
+
+**K-06 stop kesin tetikse LLM'e gitmiyoruz** — direkt EXIT (maliyet kontrolü).
+
+**Log:** her judgement `logs/exit_judgement.jsonl`'a kaydedilir, post-mortem analiz için `python scripts/judgement_review.py`.
+
+**Beklenen etki:** Kural sistemi tek başına yanlış zamanlama yapan durumları (örn MU tema 9 GUCLU iken erken kar al) LLM'in reasoning'i ile düzeltir.
 
 ---
 

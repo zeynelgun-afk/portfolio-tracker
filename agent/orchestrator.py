@@ -1154,18 +1154,46 @@ def run_monitor(ctx: dict):
                             entry_date=entry_date_p,
                             is_tema_alimi=is_tema,
                         )
-                        if exit_r["action"] in ("EXIT_NOW", "PARTIAL"):
+                        
+                        # JUDGEMENT LAYER (28 Nis 2026 reform)
+                        # K-06 stop kesin tetikse atla, sadece celisik durumlarda
+                        # Claude'a baglam analizi sor.
+                        final_action = exit_r["action"]
+                        final_reason = exit_r["reason"]
+                        layer_used = "kural"
+                        if exit_r["action"] in ("EXIT_NOW", "PARTIAL", "WARN") and "K-06" not in exit_r.get("reason", ""):
+                            try:
+                                from exit_judgement import judge_exit
+                                # Pozisyona portfoy bilgisi ekle
+                                pos_with_pf = {**pos, "_pf": "swing"}
+                                judgement = judge_exit(pos_with_pf, exit_r, "swing")
+                                if judgement.get("layer_used") == "llm":
+                                    final_action = judgement["action"]
+                                    final_reason = f"[LLM-judgement {judgement['confidence']}] {judgement['reasoning'][:200]}"
+                                    layer_used = "llm"
+                                    print(f"[Judgement] {sym}: kural={exit_r['action']} → llm={judgement['action']}")
+                            except Exception as _je:
+                                print(f"[Judgement] {sym} hata: {_je}")
+                        
+                        # Final action'a göre yaz
+                        if final_action in ("EXIT_NOW", "PARTIAL"):
                             aksiyonlar.append(
-                                f"{'🔴' if exit_r['action']=='EXIT_NOW' else '💰'} "
-                                f"*{exit_r['action']}* {sym}: {exit_r['reason']}"
+                                f"{'🔴' if final_action=='EXIT_NOW' else '💰'} "
+                                f"*{final_action}* {sym}: {final_reason}"
+                                + (f" [{layer_used}]" if layer_used == "llm" else "")
                             )
-                        elif exit_r["action"] == "TIGHTEN":
+                        elif final_action == "TIGHTEN":
                             uyarilar.append(
-                                f"⚡ *TRAILING GÜNCELLE* {sym}: {exit_r['reason']}"
+                                f"⚡ *TRAILING GÜNCELLE* {sym}: {final_reason}"
                             )
-                        elif exit_r["action"] == "WARN":
+                        elif final_action == "WARN":
                             uyarilar.append(
-                                f"🟡 *UYARI* {sym}: {exit_r['reason']}"
+                                f"🟡 *UYARI* {sym}: {final_reason}"
+                            )
+                        elif final_action == "HOLD" and layer_used == "llm":
+                            # LLM "tut" dedi — bilgi olarak goster
+                            uyarilar.append(
+                                f"🤔 *LLM-TUT* {sym}: kural {exit_r['action']} ama context destegi → tut"
                             )
             except Exception as _e:
                 print(f"[K-Engine exit] {_e}")
@@ -1675,14 +1703,56 @@ def _check_portfolio_exits(market: dict, rsi_map: dict = None) -> list:
                             tutus_gun = (simdi - gd).days
                             # 15+ gün ve kar zaten +%5 üstünde — kar realize et
                             if tutus_gun >= 15 and pnl >= 5:
+                                # JUDGEMENT LAYER (28 Nis 2026) — LLM'e sor
+                                # K-15c tetik ama tema GUCLU + sektor outperform varsa
+                                # erken kar alma yapma, momentum binme firsatini kacima
+                                k15c_result = {
+                                    "action": "PARTIAL",
+                                    "pct": 50,
+                                    "reason": f"K-15c tema 15g+ kar — %50 cik (gun:{tutus_gun} pnl:+{pnl:.1f}%)"
+                                }
+                                pf_dec = "PARTIAL"  # default: kurali uygula
+                                pf_reason_extra = ""
+                                try:
+                                    sys.path.insert(0, str(REPO_ROOT / "agent"))
+                                    from exit_judgement import judge_exit
+                                    pos_with_pf = {**pos, "guncel_fiyat": price}
+                                    judgement = judge_exit(pos_with_pf, k15c_result, pf_name)
+                                    if judgement.get("layer_used") == "llm":
+                                        pf_dec = judgement["action"]
+                                        pf_reason_extra = f" [LLM-{judgement['confidence']}: {judgement['reasoning'][:120]}]"
+                                        print(f"[Judgement] {pf_name}/{sym} K-15c: kural=PARTIAL → llm={pf_dec}")
+                                except Exception as _je:
+                                    print(f"[Judgement] {pf_name}/{sym} hata: {_je}")
+                                
+                                # LLM 'HOLD' dediyse satış yapma, sadece bilgi
+                                if pf_dec == "HOLD":
+                                    aksiyonlar.append(
+                                        f"🤔 *K-15c LLM-TUT* [{pf_name.upper()}]\n"
+                                        f"{sym} @${price:.2f} | tutus {tutus_gun}g | P/L: {pnl:+.1f}%\n"
+                                        f"→ Kural %50 satis dedi ama LLM tema/momentum desteği görüp tutmayı önerdi"
+                                        f"{pf_reason_extra}"
+                                    )
+                                    continue
+                                
+                                # Yüksekli partial önerirse pct değiş
+                                if pf_dec == "PARTIAL_25":
+                                    pct = 25
+                                elif pf_dec == "PARTIAL_50":
+                                    pct = 50
+                                elif pf_dec == "EXIT_NOW":
+                                    pct = 100
+                                else:
+                                    pct = 50  # K-15c default
+                                
                                 result = sell_position(sym, pf_name,
-                                       f"K-15c tema 15g zorunlu cikis: tutus {tutus_gun}g, kar +%{pnl:.1f}",
-                                       pct=50, price=price)
+                                       f"K-15c tema 15g zorunlu cikis: tutus {tutus_gun}g, kar +%{pnl:.1f}{pf_reason_extra[:80]}",
+                                       pct=pct, price=price)
                                 if result.get("ok"):
                                     aksiyonlar.append(
                                         f"🟡 *K-15c TEMA 15G+ CIKIS* [{pf_name.upper()}]\n"
                                         f"{sym} @${price:.2f} | tutus {tutus_gun}g | P/L: {pnl:+.1f}%\n"
-                                        f"→ *%50 SATIS — backtest 20g sonra negatife dönüyor*"
+                                        f"→ *%{pct} SATIS{pf_reason_extra[:100]}*"
                                     )
                                     continue
                             # 20+ gün ve kar negatif — komple cik (zaten beklemenin anlami yok)
