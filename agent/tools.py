@@ -123,9 +123,9 @@ def get_portfolio_snapshot() -> dict:
                 sym = pos.get("sembol") or pos.get("symbol")
                 if sym and sym in price_map:
                     q = price_map[sym]
-                    pos["guncel_fiyat"]   = q.get("price")
-                    pos["gunluk_degisim"] = _calc_chg_pct(q)
-                    pos["hacim"]          = q.get("volume")
+                    pos["guncel_fiyat"]         = q.get("price")
+                    pos["gunluk_degisim_yuzde"] = _calc_chg_pct(q)
+                    pos["hacim"]                = q.get("volume")
 
     return portfolios
 

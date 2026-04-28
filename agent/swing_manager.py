@@ -35,6 +35,31 @@ FMP_KEY   = os.environ.get("FMP_API_KEY", "")
 # daily_update.py, memory_manager, swing_manager hepsi buradan okur.
 SWING_MAX_POSITIONS = 5
 
+
+def _recompute_ozet(active: dict) -> None:
+    """active.json içindeki 'ozet' bloğunu pozisyonlara göre yeniden hesapla.
+
+    27 Nis 2026 — bug fix: open_swing_position ve _close_position ozet'i
+    elle güncellemiyordu, sonuç olarak ozet bloğu eski state'te kalıyordu
+    (toplam_pozisyon=3 görünüyor ama gerçek 5, maksimum_pozisyon=8 ama
+    gerçek 5). Bu fonksiyon her yazımdan önce çağrılır, tek doğruluk
+    kaynağı = 'aktif_pozisyonlar' listesi.
+    """
+    pozlar = active.get("aktif_pozisyonlar", [])
+    n = len(pozlar)
+    avg_pnl = round(sum(p.get("kar_zarar_yuzde", 0) for p in pozlar) / n, 2) if n else 0.0
+    active["ozet"] = {
+        "toplam_pozisyon":           n,
+        "bos_slot":                  max(SWING_MAX_POSITIONS - n, 0),
+        "maksimum_pozisyon":         SWING_MAX_POSITIONS,
+        "ortalama_kar_zarar_yuzde":  avg_pnl,
+    }
+    # Not alanını da SWING_MAX'a göre tutarlı tut
+    active["not"] = (
+        f"SWING TRADE SADECE SİMÜLASYON - Sadece % kazanç/kayıp takibi "
+        f"(MAX: {SWING_MAX_POSITIONS} pozisyon)"
+    )
+
 sys.path.insert(0, str(REPO_ROOT / "scripts"))
 
 
@@ -147,6 +172,7 @@ def open_swing_position(
     mevcut.append(yeni_poz)
     active["aktif_pozisyonlar"] = mevcut
     active["son_guncelleme"]    = datetime.now().isoformat()
+    _recompute_ozet(active)
 
     with open(active_path, "w", encoding="utf-8") as f:
         json.dump(active, f, ensure_ascii=False, indent=2)
@@ -288,6 +314,7 @@ def update_swing_positions() -> list[dict]:
         _close_position(item["poz"], item["neden"], item["fiyat"], active)
 
     active["son_guncelleme"] = datetime.now().isoformat()
+    _recompute_ozet(active)
     with open(active_path, "w", encoding="utf-8") as f:
         json.dump(active, f, ensure_ascii=False, indent=2)
 

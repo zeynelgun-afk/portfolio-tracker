@@ -1,6 +1,6 @@
 {
   "son_guncelleme": "2026-04-28T07:17:04.004444",
-  "not": "SWING TRADE SADECE SİMÜLASYON - Sadece % kazanç/kayıp takibi (MAX: 8 pozisyon)",
+  "not": "SWING TRADE SADECE SİMÜLASYON - Sadece % kazanç/kayıp takibi (MAX: 5 pozisyon)",
   "aktif_pozisyonlar": [
     {
       "id": "SWING-202604141454-GEV",
@@ -146,10 +146,10 @@
     }
   ],
   "ozet": {
-    "toplam_pozisyon": 3,
-    "bos_slot": 5,
-    "maksimum_pozisyon": 8,
-    "ortalama_kar_zarar_yuzde": 0.0
+    "toplam_pozisyon": 5,
+    "bos_slot": 0,
+    "maksimum_pozisyon": 5,
+    "ortalama_kar_zarar_yuzde": 2.93
   },
   "_schema_version": 2
 }

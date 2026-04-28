@@ -613,9 +613,18 @@ def update_swing_trades(quote_dict):
         updated_count += 1
     
     swing['son_guncelleme'] = now
-    
+
+    # Ozet'i tek doğruluk kaynağıyla güncelle (swing_manager._recompute_ozet)
+    try:
+        import sys as _sys
+        _sys.path.insert(0, str(REPO_ROOT / "agent"))
+        from swing_manager import _recompute_ozet
+        _recompute_ozet(swing)
+    except Exception as _e:
+        log(f"  ⚠️  ozet güncellenemedi: {_e}")
+
     log(f"  📊 {updated_count}/{len(swing.get('aktif_pozisyonlar', []))} swing pozisyon güncellendi")
-    
+
     return save_json(SWING_ACTIVE_JSON, swing)
 
 

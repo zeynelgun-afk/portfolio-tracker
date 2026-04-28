@@ -101,7 +101,7 @@ def build_portfolio_state(portfolios: dict, market: dict) -> dict:
             pos_data = {
                 "sym":       sym,
                 "fiyat":     cur_price,
-                "gunluk":    pos.get("gunluk_degisim"),
+                "gunluk":    pos.get("gunluk_degisim_yuzde"),
                 "pnl_pct":   pnl_pct,
                 "stop_pct":  stop_pct,   # stop'a uzaklık — negatifse geçilmiş
                 "hedef":     hedef,
