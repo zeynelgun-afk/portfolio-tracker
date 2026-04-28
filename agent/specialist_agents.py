@@ -138,28 +138,127 @@ def call_specialist(
 {extra_data}
 
 Görevin: Yukarıdaki verileri değerlendir ve SADECE JSON formatında yanıt ver.
-Başka metin ekleme.
+Başka metin ekleme. Markdown code fence kullanma. Doğrudan JSON ile başla {{
+Yanıtın 13 pozisyon için fazla uzun olmamalı — her sembol için maksimum
+3-4 alanlı kısa kayıt yeterli. Açıklamalar 1 cümle.
 """
 
     response = get_claude_decision(
         prompt,
-        mode="monitor",
+        mode="specialist",  # 28 Nis 2026: monitor (1500) → specialist (3000)
         system_override=system_prompt,
         rag_enabled=False,   # Uzmanların portföy geçmişine erişimi gereksiz; prompt
                              # zaten compressed_ctx + market/risk/portfolio içeriyor.
     )
 
-    # JSON parse
+    # JSON parse (28 Nis 2026 sertlestirildi):
+    # 1. Markdown code fence (```json ... ```) varsa cikar
+    # 2. Greedy regex YERINE balanced brace matching
+    # 3. Bozuk JSON'da en buyuk valid prefix'i bul
     try:
         import re
-        json_match = re.search(r'\{.*\}', response, re.DOTALL)
-        if json_match:
-            result = json.loads(json_match.group())
-            result["_agent"]    = agent_name
-            result["_timestamp"] = datetime.now().isoformat()
-            return result
-    except (json.JSONDecodeError, AttributeError):
-        pass
+        # Markdown fence cikar
+        cleaned = response.strip()
+        if cleaned.startswith("```"):
+            cleaned = re.sub(r"^```(?:json)?\s*", "", cleaned)
+            cleaned = re.sub(r"\s*```\s*$", "", cleaned)
+        
+        # Ilk { ile son } arasini bul (greedy)
+        # Eger response truncated ise (max_tokens bitti), JSON tam degil — repair dene
+        start_idx = cleaned.find("{")
+        if start_idx == -1:
+            raise ValueError("JSON baslangici bulunamadi")
+        
+        # Brace counting ile dengeli {} bul
+        depth = 0
+        end_idx = -1
+        in_string = False
+        escape = False
+        for i in range(start_idx, len(cleaned)):
+            c = cleaned[i]
+            if escape:
+                escape = False
+                continue
+            if c == "\\":
+                escape = True
+                continue
+            if c == '"' and not escape:
+                in_string = not in_string
+                continue
+            if in_string:
+                continue
+            if c == "{":
+                depth += 1
+            elif c == "}":
+                depth -= 1
+                if depth == 0:
+                    end_idx = i
+                    break
+        
+        if end_idx == -1:
+            # Truncated JSON — repair: son TAM objenin sonunu bul
+            # Stratejisi: en son '}' karakteri ya da '},' bul, sonra acik
+            # array/object'leri kapat. Yarim obje (acik {) varsa ondan onceki
+            # virgule kadar kes.
+            partial = cleaned[start_idx:]
+            
+            # Brace counting yapip son denge noktasini bul
+            depth = 0
+            in_str = False
+            esc = False
+            son_denge_idx = -1
+            for i, c in enumerate(partial):
+                if esc:
+                    esc = False
+                    continue
+                if c == "\\":
+                    esc = True
+                    continue
+                if c == '"' and not esc:
+                    in_str = not in_str
+                    continue
+                if in_str:
+                    continue
+                if c == "{":
+                    depth += 1
+                elif c == "}":
+                    depth -= 1
+                    # Bu noktada partial[0:i+1] tek bir tam JSON degil, ama
+                    # bir alt objenin tam yeri. Eger ust seviye degilse, son
+                    # tam alt obje sonu olarak isaretle (post-process'te kullanacagiz).
+                    if depth >= 0:
+                        son_denge_idx = i
+            
+            # Son tam alt obje sonundan sonra ne var? Gereksiz fragmenti at.
+            if son_denge_idx > 0:
+                truncated = partial[:son_denge_idx + 1]
+                # Acik [ ve { say
+                open_braces = truncated.count("{")
+                close_braces = truncated.count("}")
+                open_brackets = truncated.count("[")
+                close_brackets = truncated.count("]")
+                # Sadece kapatma eksigi varsa ekle
+                ekstra_curly = max(0, open_braces - close_braces)
+                ekstra_bracket = max(0, open_brackets - close_brackets)
+                repaired = truncated + ("]" * ekstra_bracket) + ("}" * ekstra_curly)
+                try:
+                    result = json.loads(repaired)
+                    result["_agent"] = agent_name
+                    result["_timestamp"] = datetime.now().isoformat()
+                    result["_partial_repaired"] = True
+                    print(f"[ClaudeAgent {agent_name}] JSON truncated, repaired ({len(repaired)} bytes)")
+                    return result
+                except Exception:
+                    pass
+            raise ValueError("JSON tam degil (truncated)")
+        
+        json_str = cleaned[start_idx:end_idx + 1]
+        result = json.loads(json_str)
+        result["_agent"] = agent_name
+        result["_timestamp"] = datetime.now().isoformat()
+        return result
+    except (json.JSONDecodeError, ValueError, AttributeError) as e:
+        print(f"[ClaudeAgent {agent_name}] JSON parse hatasi: {type(e).__name__}: {str(e)[:80]}")
 
     return {
         "_agent":     agent_name,
