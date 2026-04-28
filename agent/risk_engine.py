@@ -332,6 +332,62 @@ def check_drawdown_status(portfolios: dict) -> dict:
 
 # ── 5. Risk Özeti ─────────────────────────────────────────────────────────────
 
+def _backtest_dersler_blogu() -> str:
+    """
+    K-Kurallari backtest dersleri ozeti — Claude her sabah okusun.
+    28 Nis 2026: 189 islemlik veri uzerinden K-kurallari analiz edildi.
+    Sonuclari her morning'de Claude'a hatirlatiyoruz ki kurallari unutmasin.
+
+    backtest_summary.json'dan dinamik okuma — gelecek run'larda guncellenir.
+    """
+    import json
+    from pathlib import Path
+    summary_path = Path(__file__).parent.parent / "data" / "backtest_summary.json"
+    if not summary_path.exists():
+        return ""
+    try:
+        s = json.load(open(summary_path))
+    except Exception:
+        return ""
+
+    raporlar = s.get("raporlar", [])
+    if not raporlar:
+        return ""
+
+    lines = ["--- K-KURALLARI BACKTEST DERSLERI (189 islem) ---"]
+    for r in raporlar:
+        if r.get("sayi", 0) == 0:
+            continue
+        kategori = r["kategori"]
+        sayi = r["sayi"]
+        g5 = r.get("g5_avg_pct")
+        g20 = r.get("g20_avg_pct")
+        if g5 is None:
+            continue
+        # Yorum sektorel
+        if r.get("action") == "SELL":
+            if g5 < -2:
+                yorum = "GUCLU: cikis dogru"
+            elif g5 < 5:
+                yorum = "MARJINAL: kontrol et"
+            else:
+                yorum = "AGRESIF: gevsetilebilir"
+        else:
+            if g5 > 5:
+                yorum = "MUKEMMEL: gir"
+            elif g5 > 0:
+                yorum = "IYI"
+            else:
+                yorum = "ZAYIF: filtre sikilastir"
+        g5_str = f"{g5:+.1f}%"
+        g20_str = f"{g20:+.1f}%" if g20 is not None else "—"
+        lines.append(f"  {kategori:14} ({sayi:>2}): 5g {g5_str:>6} | 20g {g20_str:>6} → {yorum}")
+
+    lines.append("")
+    lines.append("KURAL: Tema alimlari 5-10g'de pik, sonra duzeltme. K-21 kriz rallisi yasagi aktif.")
+    return "\n".join(lines)
+
+
 def build_risk_context(portfolios: dict) -> str:
     """
     Tüm risk metriklerini Claude context'i için formatlar.
@@ -410,6 +466,16 @@ def build_risk_context(portfolios: dict) -> str:
     if stop_tetik_sayisi == 0:
         lines.append("  ✅ Hiçbir stop tetiklenmez")
     lines.append("")
+
+    # Backtest dersleri (28 Nis 2026 eklendi) — Claude her sabah okusun
+    # K-kurallarinin gercek getirileri data/backtest_summary.json'da
+    try:
+        backtest_blok = _backtest_dersler_blogu()
+        if backtest_blok:
+            lines.append(backtest_blok)
+            lines.append("")
+    except Exception as _be:
+        print(f"[Risk] Backtest blogu hatasi: {_be}")
 
     print("[Risk] Analiz tamamlandı.")
     return "\n".join(lines)
