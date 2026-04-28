@@ -294,7 +294,35 @@ def risk_panosu_blogu(portfolios: dict, seans_tarihi: str) -> str:
     top3_pct = (top3_deger / toplam * 100) if toplam else 0
     top3_isim = ", ".join(s for s, _, _ in pozisyonlar[:3])
 
-    # Sektör konsantrasyon
+    # Sektör konsantrasyon (yatırılı sermaye üzerinden, standart kategori)
+    # 27 Nis 2026: Önceki versiyonda sektör adı 'AI Bellek / DRAM',
+    # 'Saglik Sigortasi', 'Tütün' gibi özel/Türkçe etiketler kullanıyordu,
+    # rapor okurken birden fazla "alt sektör" görünüyordu. Şimdi standart
+    # 11 GICS sektörüne mapping yapılıyor, raporun anlaşılırlığı artar.
+    # Özel alt-tema bilgisi 'sektor' alanında kalır (gelecekte ayrı 'tema'
+    # alanı taşınabilir).
+    SEKTOR_STANDART = {
+        "AI Bellek / DRAM":            "Teknoloji",
+        "AI Networking / Switching":   "Teknoloji",
+        "Technology":                  "Teknoloji",
+        "Tech":                        "Teknoloji",
+        "Communication Services":      "İletişim",
+        "Healthcare":                  "Sağlık",
+        "Saglik Sigortasi":            "Sağlık",
+        "Sağlık":                      "Sağlık",
+        "Consumer Defensive":          "Tüketici (Defansif)",
+        "Tütün":                       "Tüketici (Defansif)",
+        "Consumer Cyclical":           "Tüketici (Lüks)",
+        "Industrials":                 "Sanayi",
+        "Energy":                      "Enerji",
+        "Enerji / Doğalgaz Pipeline":  "Enerji",
+        "Basic Materials":             "Hammadde",
+        "Materials":                   "Hammadde",
+        "Real Estate":                 "Gayrimenkul",
+        "Financial Services":          "Finans",
+        "Banks":                       "Finans",
+        "Utilities":                   "Kamu Hizmeti",
+    }
     sektor_dagilim = {}
     for pf in portfolios.values():
         for poz in pf.get("pozisyonlar", []):
@@ -306,10 +334,12 @@ def risk_panosu_blogu(portfolios: dict, seans_tarihi: str) -> str:
             deger = adet * cf
             if deger <= 0:
                 continue
-            sek = poz.get("sektor", "Bilinmiyor")
+            ham_sek = poz.get("sektor", "Bilinmiyor")
+            sek = SEKTOR_STANDART.get(ham_sek, ham_sek)
             sektor_dagilim[sek] = sektor_dagilim.get(sek, 0) + deger
     en_buyuk_sektor = max(sektor_dagilim.items(), key=lambda x: x[1]) if sektor_dagilim else ("yok", 0)
-    en_buyuk_sektor_pct = (en_buyuk_sektor[1] / toplam * 100) if toplam else 0
+    yatirili_top = sum(sektor_dagilim.values())
+    en_buyuk_sektor_pct = (en_buyuk_sektor[1] / yatirili_top * 100) if yatirili_top else 0
 
     # Drawdown — tarihsel zirveye göre
     if history:
