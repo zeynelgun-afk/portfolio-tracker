@@ -463,13 +463,28 @@ def run_exit_checks(
     entry_price: float,
     rsi: float = 50,
     highest_high: float = None,
-    atr: float = None
+    atr: float = None,
+    entry_date: str = None,
+    is_tema_alimi: bool = False,
 ) -> dict:
     """
-    K-06, K-07, K-09, K-11 çıkış kontrolü.
-    Döndürür: {action: "EXIT_NOW"/"PARTIAL"/"TIGHTEN"/"HOLD", reason: str}
+    K-06, K-07, K-09, K-11, K-15c, K-ZST çıkış kontrolü.
+    Döndürür: {action: "EXIT_NOW"/"PARTIAL"/"TIGHTEN"/"HOLD"/"WARN", reason: str}
+    
+    entry_date: 'YYYY-MM-DD' formatinda — K-15c ve K-ZST icin gun sayisi hesabi
+    is_tema_alimi: tema/taram alimi mi (K-15c sadece bu turlere uygulanir)
     """
     pnl_pct = (current_price - entry_price) / entry_price * 100
+
+    # Gun sayisi hesabi (K-15c ve K-ZST icin)
+    gun_sayisi = None
+    if entry_date:
+        try:
+            from datetime import datetime as _dt_e
+            gd = _dt_e.strptime(entry_date[:10], "%Y-%m-%d")
+            gun_sayisi = (_dt_e.now() - gd).days
+        except Exception:
+            pass
 
     # K-06: Stop tetiklendi
     if current_price <= stop_loss:
@@ -493,6 +508,20 @@ def run_exit_checks(
             kaynak="k_engine"
         )
         return {"action": "EXIT_NOW", "reason": f"K-09: stop %{stop_dist:.1f} yakın — çık"}
+
+    # K-15c: Tema alimi 15g+ zorunlu cikis (28 Nis 2026 backtest dersi)
+    if is_tema_alimi and gun_sayisi is not None:
+        if gun_sayisi >= 20 and pnl_pct < 0:
+            return {"action": "EXIT_NOW",
+                    "reason": f"K-15c: tema 20g+ negatif (gun:{gun_sayisi} pnl:{pnl_pct:+.1f}%)"}
+        if gun_sayisi >= 15 and pnl_pct >= 5:
+            return {"action": "PARTIAL", "pct": 50,
+                    "reason": f"K-15c: tema 15g+ kar — %50 cik (gun:{gun_sayisi} pnl:{pnl_pct:+.1f}%)"}
+
+    # K-ZST: 10. gün momentum kontrolu (28 Nis 2026 backtest dersi)
+    if gun_sayisi is not None and 10 <= gun_sayisi < 12 and pnl_pct >= 5:
+        return {"action": "WARN",
+                "reason": f"K-ZST: 10g+ pik penceresi (gun:{gun_sayisi} pnl:{pnl_pct:+.1f}%) — kismi cikis adayi"}
 
     # K-11: Kısmi kâr alma
     if rsi >= 80 and pnl_pct >= 15:  # K-11: orchestrator ile tutarlı eşik

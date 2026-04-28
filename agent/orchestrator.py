@@ -1141,11 +1141,18 @@ def run_monitor(ctx: dict):
                     stop   = pos.get("stop_loss")
                     entry  = pos.get("giris_fiyat") or pos.get("giris_fiyati")
                     if sym and cur_p and stop and entry:
+                        # K-15c ve K-ZST icin gerekli parametreler
+                        entry_date_p = pos.get("giris_tarihi", "")
+                        # is_tema_alimi: swing'de gen olmayacak ama portfoy icin geliyor
+                        # Burada zaten swing'le calisiyoruz, K-15c portfoy tarafinda
+                        is_tema = False
                         exit_r = run_exit_checks(
                             sym, float(cur_p), float(stop), float(entry),
                             rsi=rsi_map.get(sym) or pos.get("rsi", 50),
                             highest_high=pos.get("highest_high"),
-                            atr=pos.get("atr_14")
+                            atr=pos.get("atr_14"),
+                            entry_date=entry_date_p,
+                            is_tema_alimi=is_tema,
                         )
                         if exit_r["action"] in ("EXIT_NOW", "PARTIAL"):
                             aksiyonlar.append(
@@ -1155,6 +1162,10 @@ def run_monitor(ctx: dict):
                         elif exit_r["action"] == "TIGHTEN":
                             uyarilar.append(
                                 f"⚡ *TRAILING GÜNCELLE* {sym}: {exit_r['reason']}"
+                            )
+                        elif exit_r["action"] == "WARN":
+                            uyarilar.append(
+                                f"🟡 *UYARI* {sym}: {exit_r['reason']}"
                             )
             except Exception as _e:
                 print(f"[K-Engine exit] {_e}")
