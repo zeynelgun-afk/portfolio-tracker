@@ -528,6 +528,15 @@ EKSIK VERI KURALLARI (21 Nisan 2026 teshisi — ZORUNLU UYGULA):
 - Herhangi bir bölümde hesaplama yapamiyorsan [KAYNAK_YOK] etiketi ile nedeni söyle — sessizce atlama.
 - Senaryo testinde listelenen semboller stop tetiklenenlerdir — fiyat ve stop seviyesi verilmiştir, kullan.
 
+ANLAŞILIRLIK KURALLARI: Sade Türkçe yaz. İngilizce terim kullanmaktan kaçın:
+- "stop-loss" yerine "zarar kes seviyesi"
+- "trailing stop" yerine "takip eden zarar kes"
+- "earnings" yerine "bilanço açıklaması"
+- "drawdown" yerine "zirveden geri çekilme"
+- "exposure" yerine "pozisyon ağırlığı"
+K-XX kural kodları zorunlu, ama anlamını parantezde Türkçe açıkla (örn: "K-05 (bilanço öncesi 48 saat çıkış)").
+Sayıları binlik ayraçla yaz: $135,832.
+
 KESİN / MUHTEMEL / SPEKÜLATİF etiket kullan. Küçük harf Türkçe.
 """
 
@@ -677,10 +686,23 @@ def run_closing(ctx: dict):
         else "KAPANDI"
     )
 
+    # 5 yön zenginleştirme: işlem akışı + plan vs gerçekleşme + risk panosu
+    # + erken uyarı + sektör rotasyon. closing_enrichment modülü tüm bu
+    # blokları tek string olarak döndürür, prompt'a doğrudan inject edilir.
+    try:
+        from closing_enrichment import kapanis_zenginlestirici
+        _seans_str = _seans_gun.strftime("%Y-%m-%d")
+        zenginlestirici = kapanis_zenginlestirici(portfolios, _seans_str)
+    except Exception as _ze:
+        print(f"[Kapanış] Zenginleştirici uyarısı: {_ze}")
+        zenginlestirici = ""
+
     prompt = f"""
 {ctx['compressed']}
 
 {ctx['risk']}
+
+{zenginlestirici}
 
 {swing_ozet}
 
@@ -701,28 +723,53 @@ BUGÜNÜN GÜNÜ: {_bugun_gun}
 Yukarıdaki verilerle docs/prompts/DAILY_PART2_CLOSING.md formatında kapanış raporu üret.
 Rapor başlığında tarih ve gün bilgisini YUKARIDAN al.
 
+ÖNEMLİ — RAPOR ZENGİNLEŞTİRME BLOKLARI:
+Yukarıda hazır tablolarla 5 ek bölüm var, bunları RAPORA AYNEN DAHİL ET (yeniden hesaplama):
+- "0. PORTFÖY ÖZETİ (PANO)" → en başta, portföy takibinden ÖNCE
+- "1.2 SEKTÖR ROTASYON" → günün özeti içine, endeks tablosundan SONRA
+- "1.5 GÜN İÇİ İŞLEM AKIŞI" → portföy takibinden ÖNCE
+- "5.1 SABAH PLANI vs GERÇEKLEŞME" → günün değerlendirmesi içine
+- "6.5 ERKEN UYARI RADARI" → yarın aksiyonlarından SONRA
+
+Bu bloklarda zaten gerçek sayılar ve veri var — sen sadece üzerine yorum/analiz EKLE.
+Tabloyu silmeden, altına "Yorum:" satırı ekleyerek ne anlama geldiğini açıkla.
+
 Zorunlu bölümler:
-1. günün özeti (endeks tablosu, sektörler, trend)
+0. portföy özeti panosu (yukarıdaki tabloyu aynen al + 1-2 cümle yorum)
+1. günün özeti (endeks tablosu, sektör rotasyon, trend)
+1.5. gün içi işlem akışı (yukarıdaki tabloyu aynen al + net etki yorumu)
 2. portföy takibi (3 portföy tablo, uyarılar, aksiyonlar)
 3. swing trade durumu (chandelier stop kontrolü)
 4. kazanç açıklamaları (portföy/watchlist kesişimi)
-4.5. tematik katalist yansıması (yukarıdaki "Tematik Durum" bloğu DOLUYSA doldur, boşsa ATLA):
-     - Bugün event day ise: keynote özeti, gün içi piyasa tepkisi (birincil + ekosistem ticker hareketleri), yarın için planlanan giriş seviyeleri
-     - Post-event ise: pencere günü numarası, yakalanan/kaçırılan hareket, güncel RSI/volume durumu, devam eden pozisyonlar için izleme notları
-     - Pre-event ise: yarın için hazırlık (izleme listesi oluşturuldu mu, teknik seviyeler belirlendi mi)
-5. günün değerlendirmesi (sabah planı vs gerçekleşme, dersler)
+4.5. tematik katalist yansıması (yukarıdaki "Tematik Durum" bloğu DOLUYSA doldur, boşsa ATLA)
+5. günün değerlendirmesi (sabah planı vs gerçekleşme bloğunu ekle, dersler çıkar)
 6. yarın aksiyonları (hemen / izle / pasif)
+6.5. erken uyarı radarı (yukarıdaki tabloyu aynen al + öncelikli pozisyon yorumu)
+
+ANLAŞILIRLIK KURALLARI (27 Nis 2026):
+- Sade Türkçe yaz. İngilizce terim kullanmaktan kaçın. ZORUNLU karşılıklar:
+  * "stop-loss" yerine "zarar kes seviyesi"
+  * "trailing stop" yerine "takip eden zarar kes"
+  * "earnings" yerine "bilanço açıklaması" veya "kazanç raporu"
+  * "drawdown" yerine "zirveden geri çekilme"
+  * "concentration" yerine "yoğunlaşma"
+  * "exposure" yerine "maruziyet" veya "pozisyon ağırlığı"
+  * "long/short" yerine "alış/satış pozisyonu"
+  * "P/E ratio" yerine "fiyat-kazanç oranı"
+- K-XX gibi kural kodları ZORUNLU yazılır (sistem referansı), ama kuralın anlamını parantezde Türkçe açıkla:
+  örn: "K-05 (bilanço öncesi 48 saat çıkış kuralı)"
+- Sayıları binlik ayraçla yaz: $135,832 (135832 değil)
 
 JSON güncellemeleri (fiyat/k-z) zaten yapılıyor, rapor bölümlerine yansıt.
-Kapanan trade varsa post-trade review ekle.
+Kapanan işlem varsa işlem sonrası analiz ekle.
 
-NAKİT KULLANIM KURALI (27 Nis 2026 — ZORUNLU):
+NAKİT KULLANIM KURALI (ZORUNLU):
 - Risk bağlamındaki "NAKİT KULLANIMI" bloğunda 🔴 AŞIM görüyorsan, "yarın aksiyonları"
   bölümünde SOMUT konuşlandırma planı üret (sektör + sembol + tutar).
 - "Bekle / pasif" yerine: yükseliş bekleniyorsa fırsat sektörü EKLE/BÜYÜT, geri çekilme
-  bekleniyorsa defansif rotasyon (XLP/XLV/GLD/TLT) veya inverse ETF.
-- Portföy hedge kuralları: AGRESİF inverse+put serbest; DENGELİ inverse max %10 sadece
-  düşük kaldıraçlı (3x YASAK); TEMETTÜ inverse YASAK.
+  bekleniyorsa defansif rotasyon (XLP/XLV/GLD/TLT) veya ters yönlü pozisyon (inverse ETF).
+- Portföy hedge kuralları: AGRESİF ters pozisyon+put serbest; DENGELİ ters pozisyon max %10
+  sadece düşük kaldıraçlı (3x kaldıraçlı YASAK); TEMETTÜ ters pozisyon YASAK.
 
 KESİN / MUHTEMEL / SPEKÜLATİF etiket kullan. Küçük harf Türkçe.
 """
