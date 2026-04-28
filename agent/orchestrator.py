@@ -2349,11 +2349,11 @@ def _execute_claude_decisions(kararlar: list, market: dict) -> list:
 
         try:
             if tip == "ÇIK":
-                result = sell_position(sembol, portfoy, f"Claude: {neden}", pct=pct, price=price)
+                result = sell_position(sembol, portfoy, f"Finzora: {neden}", pct=pct, price=price)
                 if result["ok"]:
                     _mark(k, True)
                     aksiyonlar.append(
-                        f"🔴 *CLAUDE ÇIKİŞ* [{portfoy.upper()}]\n"
+                        f"🔴 *FINZORA SAT* [{portfoy.upper()}]\n"
                         f"{sembol} %{pct:.0f} @${price:.2f} | P/L: {result.get('pnl_pct',0):+.1f}%\n"
                         f"Neden: {neden}"
                     )
@@ -2401,11 +2401,11 @@ def _execute_claude_decisions(kararlar: list, market: dict) -> list:
 
                 result = buy_position(sembol, portfoy, miktar, price,
                                       stop, hedef,
-                                      f"Claude: {neden}", "")
+                                      f"Finzora: {neden}", "")
                 if result["ok"]:
                     _mark(k, True)
                     aksiyonlar.append(
-                        f"🟢 *CLAUDE ALIŞ* [{portfoy.upper()}]\n"
+                        f"🟢 *FINZORA AL* [{portfoy.upper()}]\n"
                         f"{sembol} {result['adet']} adet @${price:.2f}\n"
                         f"Stop: ${stop:.2f} | Hedef: ${hedef:.2f}\n"
                         f"Neden: {neden}"
