@@ -133,7 +133,46 @@ Bu reform **AI tema 9 iken aggressive'in %50-60'ı AI/uranyum** olabilir, ama te
 
 ---
 
-## 🤖 EXIT JUDGEMENT LAYER (28 Nis 2026 — devreye alındı)
+## 🩺 TEZ BOZULMA ALARMI (28 Nis 2026 — devreye alındı)
+
+Memory: "tez bozulması olunca pozisyon kapat" — manuel kuraldı, otomatikleşti.
+
+Her pozisyona tez sağlamlık skoru (0-100):
+
+| Sinyal | Etki |
+|--------|------|
+| Tema skoru ZAYIF (<5) | +30 |
+| Tema ORTA (5-6) | +15 |
+| Tema güç düşüşü (5+ puan) | +25 |
+| Sektör RS underperform (<-5%) | +25 |
+| Sektör RS underperform (<-3%) | +20 |
+| Fiyat 50SMA altı (>%5) | +20 |
+| Fiyat 50SMA altı | +15 |
+| VIX > 30 (CRISIS) | +15 |
+| VIX > 25 (risk-off) | +10 |
+| Earnings MISS son 60g | +20 |
+| Earnings BEAT son 60g | -5 |
+
+**Karar matrisi:**
+- ≥70: 🔴 **TEZ_TAMAMEN_BOZULDU** → kapat
+- 50-69: 🟠 **TEZ_AGIR_HASAR** → %50 azalt
+- 30-49: 🟡 **TEZ_HAFIF_HASAR** → izle, sıkı stop
+- <30: ✅ **TEZ_SAGLAM** → tut
+
+**Entegrasyon:**
+- `agent/risk_engine.build_risk_context` → morning prompt'a "TEZ BOZULMA ALARMI" bloğu (Discovery'den önce)
+- `agent/orchestrator.run_morning` sonu → skor ≥50 pozisyonlar **DM uyarı**
+- `data/session_state.json:thesis_erosion` her sabah güncel
+
+**İlk üretim sonucu (28 Nis):**
+- ABBV skor 75 🔴 → KAPAT (Iran tezi çürüdü, Healthcare RS -%7.3)
+- CL skor 70 🔴 → KAPAT (XLP tema 2 ZAYIF)
+- MO skor 65 🟠 → %50 AZALT (zaten K-05 earnings öncesi çıkış)
+- NEM skor 50 🟠 → %50 AZALT (altın tema 1)
+
+---
+
+
 
 Mevcut k_engine kural-tabanlı, **bağlamı görmez**. Çelişkili durumlarda LLM'e sorar.
 

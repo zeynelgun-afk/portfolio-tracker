@@ -628,6 +628,26 @@ KESİN / MUHTEMEL / SPEKÜLATİF etiket kullan. Küçük harf Türkçe.
     msg    = f"Finzora Agent — Sabah Analizi\n{ctx['timestamp'][:16]}\n\n{response}"
     result = send_private_telegram(msg)
     print(f"[Orkestratör] Telegram sonucu: {result}")
+    
+    # TEZ BOZULMA UYARI (28 Nis 2026): skor >=50 pozisyonlar DM'ye
+    try:
+        from thesis_erosion import tum_portfoyler as _te_tum
+        te_s = _te_tum()
+        kritik = [p for p in te_s.get("pozisyonlar", []) if p["skor"] >= 50]
+        if kritik:
+            te_msg = f"🚨 TEZ BOZULMA — {len(kritik)} pozisyon kritik\n\n"
+            for p in sorted(kritik, key=lambda x: -x["skor"]):
+                te_msg += f"{p['seviye']} *{p['sembol']}* ({p['portfoy']}) skor:{p['skor']}\n"
+                te_msg += f"   {p['karar']}\n   → {p['aksiyon']}\n"
+                for s_str in p["sebepler"][:2]:
+                    te_msg += f"   • {s_str}\n"
+                te_msg += "\n"
+            send_private_telegram(te_msg)
+            print(f"[Tez] DM uyari gonderildi: {len(kritik)} pozisyon")
+        else:
+            print("[Tez] Kritik pozisyon yok, uyari yok")
+    except Exception as _tee:
+        print(f"[Tez] Hata (tolere): {_tee}")
 
 def run_closing(ctx: dict):
     """Kapanış yorumu — piyasa kapandıktan sonra."""

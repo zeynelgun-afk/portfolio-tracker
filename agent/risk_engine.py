@@ -542,6 +542,26 @@ def build_risk_context(portfolios: dict) -> str:
     except Exception as _the:
         print(f"[Risk] Tema blogu hatasi: {_the}")
 
+    # TEZ BOZULMA ALARMI (28 Nis 2026): pozisyon tezi hala gecerli mi?
+    try:
+        from thesis_erosion import tum_portfoyler as _te_tum
+        te_s = _te_tum()
+        riskli = [p for p in te_s.get("pozisyonlar", []) if p["skor"] >= 30]
+        if riskli:
+            lines.append(f"--- TEZ BOZULMA ALARMI ({len(riskli)} pozisyon riskli) ---")
+            for p in sorted(riskli, key=lambda x: -x["skor"])[:10]:
+                lines.append(
+                    f"  {p['seviye']} [{p['portfoy']:10}] {p['sembol']:6} "
+                    f"skor:{p['skor']:>3} | {p['karar']:25} | "
+                    f"P/L:{p['pnl_pct']:+.1f}% yas:{p['yas_gun']}g"
+                )
+                for s_str in p["sebepler"][:2]:
+                    lines.append(f"     • {s_str}")
+                lines.append(f"     → {p['aksiyon']}")
+            lines.append("")
+    except Exception as _tee:
+        print(f"[Risk] Tez bozulma blogu hatasi: {_tee}")
+
     # Discovery sonuclari (28 Nis 2026) — kaliteli yeni adaylar
     try:
         from pathlib import Path as _P_dis
