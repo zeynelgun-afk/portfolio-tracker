@@ -42,7 +42,7 @@
   },
   "zorunlu_aksiyonlar": [],
   "claude_kararlar": {
-    "tarih": "2026-04-28T13:22:22.387506+03:00",
+    "tarih": "2026-04-28T15:54:30.018121+03:00",
     "kararlar": [
       {
         "tip": "ÇIK",
@@ -123,10 +123,8 @@
         "_decision_id": "morning_28_gev"
       }
     ],
-    "kaynak": "sabah_raporu_28_apr_manuel_duzeltme",
-    "executed": true,
-    "executed_at": "2026-04-28T17:35:22.029851+03:00",
-    "executed_count": 0
+    "kaynak": "sabah_raporu_28_apr_yeniden_aktif",
+    "executed": false
   },
   "timestamp": "2026-04-28T16:05:56.356065+03:00",
   "k22_nakit_dagitim": {
