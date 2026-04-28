@@ -520,6 +520,88 @@ SEKTOR_ETF = {
 }
 
 
+def tema_alim_izleme_blogu(portfolios: dict, seans_tarihi: str) -> str:
+    """
+    Tema-tarama bazli alimlar icin pik penceresi izleme.
+
+    28 Nis 2026 backtest dersi (data/backtest_summary.json):
+    - 8 tema alimda 5g sonra ortalama +%7.45, 10g sonra +%6.39, 20g sonra -%0.86
+    - Yani pik 5-10. gun arasi, sonra duzeltme
+    - Sistem onerisi: 10g'de aktif izleme, 15g zorunlu cikis incelemesi
+
+    Bu blok her tema-bazli pozisyon icin:
+    - Kacinci gunde olduğunu gosterir (5-10-15 markarli)
+    - Mevcut kar/zarar
+    - Onerilen aksiyon (BEKLE/KAR_KILIDI/CIK)
+    """
+    from datetime import datetime, timedelta, timezone
+
+    TR = timezone(timedelta(hours=3))
+    seans_dt = datetime.strptime(seans_tarihi, "%Y-%m-%d").replace(tzinfo=TR)
+
+    # Tema alımı: giriş_nedeni'nde 'tema' veya 'taram' geçenler
+    tema_pozlar = []
+    for pf_ad, pf in portfolios.items():
+        for poz in pf.get("pozisyonlar", []):
+            sym = poz.get("sembol")
+            if sym in (None, "_template"):
+                continue
+            neden = (poz.get("giris_nedeni") or "").lower()
+            if "tema" not in neden and "taram" not in neden:
+                continue
+            giris_t = poz.get("giris_tarihi", "")
+            if not giris_t:
+                continue
+            try:
+                gd = datetime.strptime(giris_t[:10], "%Y-%m-%d").replace(tzinfo=TR)
+            except Exception:
+                continue
+            gun_sayisi = (seans_dt - gd).days
+            if gun_sayisi < 0:
+                continue
+            tema_pozlar.append({
+                "portfoy": pf_ad,
+                "sembol": sym,
+                "giris": giris_t[:10],
+                "gun": gun_sayisi,
+                "kar_pct": poz.get("kar_zarar_yuzde", 0) or 0,
+                "guncel_fiyat": poz.get("guncel_fiyat", 0) or 0,
+                "tema": poz.get("tema") or neden[:40],
+            })
+
+    if not tema_pozlar:
+        return ""
+
+    lines = [
+        "## 6. TEMA-ALIMI PIK PENCERESI IZLEMESI\n",
+        "Backtest verisi (8 islem): 5g +%7.45, 10g +%6.39, 20g -%0.86. Pik 5-10. gun arasi.\n",
+        "| Sembol | Portfoy | Giris | Gun | Kar/Zarar | Aksiyon |",
+        "|--------|---------|-------|-----|-----------|---------|",
+    ]
+    for tp in sorted(tema_pozlar, key=lambda x: -x["gun"]):
+        kar = tp["kar_pct"]
+        gun = tp["gun"]
+        # Aksiyon mantigi (backtest dersine gore):
+        if gun >= 15:
+            aksiyon = "🔴 ZORUNLU CIKIS INCELEMESI (>15g, pik gecmis)"
+        elif gun >= 10 and kar >= 5:
+            aksiyon = "🟡 KAR KILIDI ONERILIR (10g+, +%5+)"
+        elif gun >= 10:
+            aksiyon = "🟡 IZLE — pik gecti, momentum kontrol"
+        elif gun >= 5 and kar >= 5:
+            aksiyon = "🟢 PIK PENCERESI — kismi kar al adayi"
+        elif gun >= 5:
+            aksiyon = "🟢 PIK PENCERESI — momentum kontrol"
+        else:
+            aksiyon = "⚪ ERKEN — bekle"
+        lines.append(
+            f"| {tp['sembol']:6} | {tp['portfoy']:10} | {tp['giris']} | {gun}g | "
+            f"{kar:+.1f}% | {aksiyon} |"
+        )
+
+    return "\n".join(lines) + "\n"
+
+
 def sektor_rotasyon_blogu(portfolios: dict) -> str:
     """Sektör ETF performansı vs portföy ağırlığı."""
     import requests
@@ -687,6 +769,14 @@ def kapanis_zenginlestirici(portfolios: dict, seans_tarihi: str | None = None) -
             bloklar.append(b)
     except Exception as e:
         print(f"[ClosingEnrichment] erken_uyari hata: {e}")
+
+    # 6 — Tema alimi pik penceresi izleme (28 Nis 2026 backtest dersi)
+    try:
+        b = tema_alim_izleme_blogu(portfolios, seans_tarihi)
+        if b:
+            bloklar.append(b)
+    except Exception as e:
+        print(f"[ClosingEnrichment] tema_alim_izleme hata: {e}")
 
     if not bloklar:
         return ""
