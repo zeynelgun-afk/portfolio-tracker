@@ -450,10 +450,63 @@ def _calc_rsi(closes: list, period: int = 14) -> float | None:
 
 # ── TOPLU TARAMA ─────────────────────────────────────────────────────────────
 
+def _detect_crisis_rally(verbose: bool = False) -> tuple[bool, str]:
+    """
+    K-21 Kriz Rallisi Yasağı (28 Nis 2026 backtest dersi)
+    ====================================================
+    Backtest 17 swing girişten 4'ünün 'kriz rallisi' kategorisinde olduğunu
+    gösterdi (HAL/KTOS/CEG, 2 Mart 2026 Iran krizi). Bu 4 alımın 20 gün
+    sonraki ortalama getirisi -%4.87, KTOS tek başına -%32.3.
+
+    Kural: Son 5 işgününde VIX %20'den fazla sıçradıysa o gün swing
+    girişi yapma. T+1 ve sonrası RSI<35 + ichimoku 3/4 ile devam.
+
+    Dön: (yasak_mı, açıklama)
+    """
+    try:
+        # VIX son 5 günü çek
+        d = fmp_get("historical-price-eod/full",
+                    {"symbol": "^VIX", "limit": 6})
+        if not isinstance(d, list) or len(d) < 5:
+            return False, "VIX verisi yok, kontrol atlandı"
+
+        # FMP yeni→eski sıralı
+        d_asc = sorted(d, key=lambda x: x.get("date", ""))
+        son5 = d_asc[-6:-1]  # son 5 işgünü (bugün hariç)
+        if len(son5) < 5:
+            return False, "Yetersiz VIX verisi"
+
+        vix_5g_min = min(p.get("low") or p.get("close", 999) for p in son5)
+        vix_bugun = d_asc[-1].get("close", 0)
+        if vix_5g_min and vix_bugun:
+            sicrama_pct = (vix_bugun - vix_5g_min) / vix_5g_min * 100
+            if verbose:
+                print(f"  VIX 5g min: {vix_5g_min:.2f} | bugün: {vix_bugun:.2f} | sıçrama: {sicrama_pct:+.1f}%")
+            if sicrama_pct >= 20:
+                return True, f"VIX 5g'de %{sicrama_pct:.0f} sıçradı ({vix_5g_min:.1f}→{vix_bugun:.1f})"
+        return False, "VIX normal"
+    except Exception as e:
+        return False, f"Kontrol hatası: {e}"
+
+
 def scan_for_entries(symbols: list[str], verbose: bool = False) -> list[dict]:
     """
     Sembol listesini tarar, giriş sinyali olanları döner.
     """
+    # K-21 Kriz Rallisi kontrolü (28 Nis 2026)
+    kriz_var, kriz_aciklama = _detect_crisis_rally(verbose)
+    if kriz_var:
+        print(f"\n[SwingEntry] ⛔ K-21 KRİZ RALLİSİ TESPİT EDİLDİ")
+        print(f"  {kriz_aciklama}")
+        print(f"  Bugün swing girişi YAPILMAZ. Yarın RSI<35 + ichimoku 3/4 ile tekrar dene.")
+        try:
+            _log.olay("k21_crisis_rally_blok",
+                      {"aciklama": kriz_aciklama, "blok_edildi": True},
+                      severity="warning")
+        except Exception:
+            pass
+        return [], []
+
     print(f"\n[SwingEntry] {len(symbols)} hisse taranıyor...")
     results   = []
     giris_var = []

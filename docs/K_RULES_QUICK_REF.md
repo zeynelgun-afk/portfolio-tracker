@@ -286,6 +286,13 @@ Bu kritik bir düzeltmedir — API kullanımını gereksiz kısıtlamak zorunda 
 
 **K-06 GİRİŞ STOP güçlendirildi:** min. stop mesafesi = `max(2×ATR(14), %5)` — %1.7 gibi dar mesafelerde pozisyon yarıya indir veya girme.
 
+**K-21 KRİZ RALLİSİ YASAĞI** (28 Nis 2026 backtest dersi — devreye alındı):
+- Tetik: Son 5 işgününde VIX %20'den fazla sıçradıysa
+- Etki: O gün swing girişi YOK
+- T+1: Sadece RSI<35 + ichimoku 3/4 ile devam
+- Kanıt: 2 Mart 2026 Iran krizi günü açılan HAL/KTOS/CEG, 20 gün sonra ortalama -%4.87. KTOS tek başına -%32.3.
+- Uygulama: `scripts/swing_entry_engine.py:_detect_crisis_rally()`
+
 ### zeynel onayı bekleyen kural adayları
 
 | kod | açıklama | kanıt |
