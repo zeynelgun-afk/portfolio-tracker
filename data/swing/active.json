@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-04-27T21:33:13.622956",
+  "son_guncelleme": "2026-04-28T07:17:04.004444",
   "not": "SWING TRADE SADECE SİMÜLASYON - Sadece % kazanç/kayıp takibi (MAX: 8 pozisyon)",
   "aktif_pozisyonlar": [
     {
@@ -21,11 +21,11 @@
       "chandelier_stop": 1052.81,
       "k11_aktif": true,
       "k11_profit_lock": 1127.14,
-      "son_guncelleme": "2026-04-27T21:33:13.622956",
+      "son_guncelleme": "2026-04-28T07:17:04.004444",
       "notlar": [
         "chandelier_stop düzeltildi: 678.39 → 893.55 (ATR14=37.94, zirve=1007.38)"
       ],
-      "tutulan_gun": 13,
+      "tutulan_gun": 14,
       "atr14": 37.94,
       "maliyet_baz": 1000.0,
       "giris_fiyati": 1000,
@@ -52,9 +52,9 @@
       "chandelier_stop": 45.11,
       "k11_aktif": false,
       "k11_profit_lock": null,
-      "son_guncelleme": "2026-04-27T21:33:13.622956",
+      "son_guncelleme": "2026-04-28T07:17:04.004444",
       "notlar": [],
-      "tutulan_gun": 13,
+      "tutulan_gun": 14,
       "maliyet_baz": 48.52,
       "giris_fiyati": 48.52,
       "kar_zarar_yuzde": 2.33,
@@ -81,10 +81,10 @@
       "chandelier_stop": 48.03,
       "k11_aktif": false,
       "k11_profit_lock": null,
-      "son_guncelleme": "2026-04-27T21:33:13.622956",
+      "son_guncelleme": "2026-04-28T07:17:04.004444",
       "notlar": [],
       "kar_zarar_yuzde": 0.1,
-      "tutulan_gun": 0,
+      "tutulan_gun": 1,
       "atr14": 1.18,
       "pnl_pct": 0.1
     },
@@ -109,10 +109,10 @@
       "chandelier_stop": 19.18,
       "k11_aktif": false,
       "k11_profit_lock": null,
-      "son_guncelleme": "2026-04-27T21:33:13.622956",
+      "son_guncelleme": "2026-04-28T07:17:04.004444",
       "notlar": [],
       "kar_zarar_yuzde": 0.55,
-      "tutulan_gun": 0,
+      "tutulan_gun": 1,
       "atr14": 2.26,
       "pnl_pct": 0.55
     },
@@ -137,10 +137,10 @@
       "chandelier_stop": 762.88,
       "k11_aktif": false,
       "k11_profit_lock": null,
-      "son_guncelleme": "2026-04-27T21:33:13.622956",
+      "son_guncelleme": "2026-04-28T07:17:04.004444",
       "notlar": [],
       "kar_zarar_yuzde": -0.33,
-      "tutulan_gun": 0,
+      "tutulan_gun": 1,
       "atr14": 22.92,
       "pnl_pct": -0.33
     }
