@@ -6,6 +6,95 @@
 
 ---
 
+## 🎯 AKTİF K-KURALLARI — MASTER TABLO (28 Nis 2026)
+
+| Kod | Tetik | Aksiyon | Otomatik mi? | Backtest |
+|-----|-------|---------|--------------|----------|
+| **K-02** | kriz/şok başlangıcı | momentum sektörlerine 3 iş günü yeni giriş yok | manuel | — |
+| **K-04** | SMA50+SMA200 altı | giriş yok (RSI<30 istisnası hariç) | manuel | — |
+| **K-05** | swing pozisyonu earnings ≤2 iş günü | TAM çıkış, exception yok | otomatik | ✅ 5g -%5.12, 20g -%8.68 — GÜÇLÜ |
+| **K-06** | stop tetiklendi | %100 çık, override YASAK | otomatik | ⚠️ 5g -%1.79, 20g +%5.86 — marjinal |
+| **K-06 giriş stop** | ilk giriş | `max(2×ATR(14), %5)` mesafe | otomatik | — |
+| **K-07** | chandelier trailing tetik | %100 çık | otomatik | — |
+| **K-07 kâr kilidi** | pozisyon kârda | kâr <%7→3×ATR, %7-15→2×ATR, %15+→1.5×ATR | otomatik | — |
+| **K-09** | fiyat stop'a <%2 | 4 kontrol (RSI/hacim/SPY+VIX/sektör) | otomatik | ⚠️ 5g +%3.25 (az veri) |
+| **K-10** | VIX bandı | min savunmacı + nakit eşiği | otomatik | — |
+| **K-11 katman 1** | RSI 70+ VE kâr %15+ | kâr kilidi aktif | otomatik | ✅ 5g +%2.30, 20g -%3.52 — kısmi çıkış doğru |
+| **K-11 katman 2** | RSI 80+ veya (75+ + negatif div) | %25-30 kısmi sat | otomatik | ✅ |
+| **K-11 katman 3** | 50SMA altı veya chandelier | tam çık | otomatik | ✅ |
+| **K-12 Dengeli** | tek hisse >%25 | küçült | otomatik | — |
+| **K-12 Agresif** | tek hisse >%20 (max 6 poz) | küçült | otomatik | — |
+| **K-12 Temettü** | tek hisse >%15 (max 6 poz) | küçült | otomatik | — |
+| **K-12 sektör/tema** | toplam >%40 | en zayıfı kes | otomatik | — |
+| **K-13 v4.1** | VIX bantları × sektör | 4×2 matrisi (faydalanıcı/duyarlı) | otomatik | — |
+| **K-13b** | VIX 28+ duyarlı sektör | ichimoku 4/4 şartı, çeyrek pozisyon | otomatik | — |
+| **K-15a** | RSI<35 oversold | 1 gün teyit bekle | manuel | — |
+| **K-15b** | momentum + P/E neg/>50 | `k15b_dilution_check.py` zorunlu | otomatik | — |
+| **K-15c** ⭐ | tema alımı 15+ gün | kâr +%5+ → %50 çıkış, 20g+ negatif → tam çıkış | otomatik | ✅ Tema 5g +%7.45, 20g -%0.86 |
+| **K-16** | portföy earnings 7g öncesi | skor 2-3 → %25, 4-5 → %50 | otomatik | — |
+| **K-17** | korelasyon + tema çakışma | 3 soru testi, tema %40 limit | otomatik | — |
+| **K-19** | XLP swing girişi | YASAK | otomatik | — |
+| **K-20** | sektör RS dead cat bounce | son 3g negatif → bounce yanıltıcı | otomatik | — |
+| **K-21** ⭐ | VIX 5g'de %20+ sıçradı | swing girişi YOK (1 gün) | otomatik | ✅ Crisis rally KTOS -%32 ders |
+| **K-22** ⭐ | nakit oranı >%10 | portföy tipine göre dağıtım önerisi | otomatik | — |
+| **K-ZST** ⭐ | swing 10. gün | kâr +%5+ → pik penceresi uyarısı | otomatik | ✅ Tema 10g +%6.39 |
+| **K-EVR** | swing aday tarama | beta(1Y)<0.7 elendi | otomatik | — |
+| **K-ATR** | giriş stop kurulumu | <2×ATR(14) ise yarım poz veya yasak | otomatik | — |
+
+⭐ = 28 Nisan 2026'da backtest verisinden eklenen yeni kurallar.
+
+**Kaldırılan kurallar:**
+- K-01 (7 nisan 2026 — K-05 ile çakışma)
+- K-03 (içerik K-13 v4.1'e taşındı)
+- K-08 (K-07 chandelier zaten kapsıyor)
+- K-14 (11 nisan 2026 — psikoloji testi ile değiştirildi)
+- K-18 (11 nisan 2026 — geriye dönük test başarısız, ters çalışıyor)
+
+**SWING SİSTEM REFORMU v2 (28 Nis 2026 — devreye alındı):**
+
+Backtest dersi: 17 swing girişi 5g -%0.76, 20g -%11.03 — ZAYIF.
+
+Yeni filtreler (`scripts/swing_entry_engine.py`):
+1. **Volume strength**: Bugünkü hacim son 20g ortalamasıyla — rasyo <0.7 ceza
+2. **Sector strength**: Sektör ETF vs SPY 10g — underperform <-%2 ceza
+3. **Market regime**: SPY 21SMA durumu — risk-off ceza
+
+**Kompozit kalite skoru** (0-100):
+- Sinyal türü/sayısı: 40p (tenkan/ichimoku 25, oversold 8)
+- Ichimoku konum: 20p (4/4=20)
+- Hacim teyidi: 15p
+- Sektör gücü: 15p  
+- Piyasa rejimi: 10p
+
+Karar:
+- **Skor ≥70**: GÜÇLÜ → 2x convicted bet
+- **Skor 55-70**: ORTA → 1.5x
+- **Skor 40-55**: ZAYIF → 1.0x
+- **Skor <40**: GEÇERSİZ → giriş YOK
+
+**Akıllı trailing** (yaş bazlı ATR çarpanı, `agent/swing_manager.py`):
+- <5g: 3.0×ATR (whipsaw önle)
+- 5-10g: 2.5×ATR (pik penceresi)
+- 10-15g: 2.0×ATR (sıkılaşma)
+- 15g+: 1.5×ATR (K-15c'ye yakın)
+- Break-even floor: kar >%5 → stop maliyetin altına inmez
+
+**Druckenmiller convicted bet** çarpanları:
+| Sinyal | Çarpan | Backtest |
+|--------|--------|----------|
+| tenkan_bounce | 1.5x | +%8.23 (10g) ✅ |
+| ichimoku | 1.5x | +%7.90 (10g) ✅ |
+| kumo_kirilim | 1.5x | klasik güç |
+| consolidation_breakout | 1.2x | — |
+| sma50_bounce | 1.0x | — |
+| nr7_sikisma | 1.0x | volatilite |
+| kijun_bounce_v2 | 1.0x | orta |
+| oversold_bounce | 0.5x | -%6.28 (20g) 🔴 |
+
+Multi-sinyal +0.25x bonus (max 2.5x) | 4/4 ichimoku +0.25x bonus
+
+---
+
 ## ⚠️ RAPOR YAZARKEN KIRMIZI ÇİZGİLER (26 nisan 2026 post-mortem)
 
 > bu bölüm haftalık/günlük rapor yazan AI için zorunlu okuma.
