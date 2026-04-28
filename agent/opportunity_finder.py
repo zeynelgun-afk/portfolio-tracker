@@ -429,18 +429,49 @@ TEMA_TARAMA_CONFIG = {
 
 def _screener_fetch(params: dict, limit: int = 30) -> list:
     """
-    FMP screener/stock endpoint'inden hisse listesi çeker.
+    FMP company-screener endpoint'inden hisse listesi çeker.
     Başarısız olursa boş liste döner (fallback devreye girer).
+
+    27 Nis 2026 fix: Endpoint '/screener/stock' yanlıştı (HTTP 404).
+    FMP stable'da doğru ad '/company-screener'. 4 günlük tema taraması
+    sessizce başarısız olup hep fallback'e düşüyordu, fallback evreni
+    küçük (10 hisse) ve filtreyi geçemediği için 0 aday üretiyordu.
+
+    27 Nis 2026 ek: country=US ve isActivelyTrading=true otomatik
+    eklendi. Önceki versiyonda ABX.TO (Toronto), 1810.HK (Hong Kong)
+    gibi non-US semboller aday çıkıyordu. Sistem sadece US borsalarında
+    işlem yapıyor — bu sembollerle alış denemesi FMP quote başarısızlığı
+    veya transaction.csv'de döviz kafa karışıklığı yaratıyordu.
     """
     p = dict(params)
     p["limit"] = limit
     p["apikey"] = FMP_KEY
+    # US-borsa zorunlu filtresi (config'lerde override değilse)
+    p.setdefault("country", "US")
+    p.setdefault("isActivelyTrading", "true")
     try:
-        r = requests.get(f"{FMP_BASE}/screener/stock", params=p, timeout=12)
+        r = requests.get(f"{FMP_BASE}/company-screener", params=p, timeout=12)
         if r.status_code == 200 and r.text.strip():
             d = r.json()
             if isinstance(d, list):
-                return [s["symbol"] for s in d if s.get("symbol")]
+                # Çift kontrol: sadece NYSE/NASDAQ/AMEX/ARCA listed semboller
+                US_EXCH = {"NYSE", "NASDAQ", "NMS", "NGM", "NCM", "AMEX", "ARCA",
+                           "New York Stock Exchange", "Nasdaq Global Select",
+                           "Nasdaq Global Market", "Nasdaq Capital Market",
+                           "American Stock Exchange", "NYSE Arca", "NYSE American"}
+                out = []
+                for s in d:
+                    sym = s.get("symbol")
+                    if not sym:
+                        continue
+                    # Sembol içinde nokta varsa (ABX.TO) US dışıdır
+                    if "." in sym:
+                        continue
+                    exch = s.get("exchangeShortName") or s.get("exchange") or ""
+                    if exch and not any(u in exch for u in US_EXCH):
+                        continue
+                    out.append(sym)
+                return out
     except Exception as _e:
         print(f"[Screener] FMP hatası: {_e}")
     return []
