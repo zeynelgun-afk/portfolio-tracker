@@ -374,8 +374,45 @@ def enhanced_entry_analysis(symbol: str) -> dict:
     stop_dist = (price - stop_lvl) / price * 100
     target    = price + (price - stop_lvl) * 2.5  # R:R 2.5:1
 
-    # Pozisyon boyutu ($5K standart — K-14 kaldırıldı, restart konsepti yok)
-    account   = 5000
+    # ── DRUCKENMILLER CONVICTED BET (28 Nis 2026 — backtest dersine dayali)
+    # Sinyal turune gore pozisyon boyutu carpani:
+    #   tenkan_bounce  → 1.5x (backtest +%8.23 / 10g — kuvvetli)
+    #   ichimoku       → 1.5x (backtest +%7.90 / 10g — kuvvetli)
+    #   sma50_bounce   → 1.0x (tek ornek, daha fazla veri lazim)
+    #   nr7_sikisma    → 1.0x (volatilite kirilim)
+    #   kijun_bounce_v2 → 1.0x (orta)
+    #   oversold_bounce → 0.5x (backtest -%6.28 / 20g — zayif)
+    #
+    # Ayrica multi-sinyal varsa carpan toplaniyor (max 2.5x):
+    #   2 kuvvetli sinyal (orn tenkan + ichimoku) = 2.0x
+    #   3+ sinyal = max 2.5x
+    KUVVET_KATSAYI = {
+        "tenkan_bounce":   1.5,
+        "ichimoku":        1.5,
+        "kumo_kirilim":    1.5,
+        "sma50_bounce":    1.0,
+        "nr7_sikisma":     1.0,
+        "kijun_bounce_v2": 1.0,
+        "oversold_bounce": 0.5,
+        "consolidation_breakout": 1.2,
+    }
+    sinyal_tipleri = [s.get("tip", "") for s in signals] if signals else []
+    if not sinyal_tipleri:
+        carpan = 1.0
+    else:
+        # En yuksek skorlu sinyali al + ek sinyal varsa bonus
+        max_carpan = max((KUVVET_KATSAYI.get(t, 1.0) for t in sinyal_tipleri), default=1.0)
+        ek_sinyal = max(0, len(sinyal_tipleri) - 1)
+        carpan = min(2.5, max_carpan + (ek_sinyal * 0.25))
+    
+    # 4/4 ichimoku konumu varsa +0.25 bonus (memory: ichimoku 4/4 mandatory)
+    pos_str_for_bonus = position.get("genel", "") if isinstance(position, dict) else ""
+    if "4/4" in pos_str_for_bonus:
+        carpan = min(2.5, carpan + 0.25)
+
+    # Pozisyon boyutu — convicted bet
+    base_account = 5000  # baz
+    account = int(base_account * carpan)
     risk_per  = account * 0.05  # %5 risk
     shares    = int(risk_per / (price - stop_lvl)) if price > stop_lvl else 0
 
@@ -429,6 +466,8 @@ def enhanced_entry_analysis(symbol: str) -> dict:
         "shares":      shares,
         "rsi":         round(rsi, 1) if rsi else None,
         "position":    pos_str,
+        "carpan":      round(carpan, 2),       # Druckenmiller convicted bet
+        "account_size": account,                # base*carpan
     }
 
 
