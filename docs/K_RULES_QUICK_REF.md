@@ -293,6 +293,22 @@ Bu kritik bir düzeltmedir — API kullanımını gereksiz kısıtlamak zorunda 
 - Kanıt: 2 Mart 2026 Iran krizi günü açılan HAL/KTOS/CEG, 20 gün sonra ortalama -%4.87. KTOS tek başına -%32.3.
 - Uygulama: `scripts/swing_entry_engine.py:_detect_crisis_rally()`
 
+**K-15c TEMA 15G ZORUNLU ÇIKIŞ** (28 Nis 2026 backtest dersi — devreye alındı):
+- Tetik: Tema-bazlı alım pozisyonu (giriş_nedeni'nde "tema" veya "taram") 15+ gün tutuldu ve kâr +%5+
+- Etki: %50 kısmi çıkış (kâr realize)
+- 20+ gün ve negatif kâr ise: %100 tam çıkış
+- Kanıt: 8 tema alımda 5g +%7.45, 10g +%6.39, **20g -%0.86** — 15. günden sonra getiri negatife dönüyor
+- Uygulama: `agent/orchestrator.py:_check_portfolio_exits()` — her FAZ'da tetiklenir
+
+**K-22 NAKİT KULLANIM** (28 Nis 2026 — devreye alındı):
+- Tetik: Portföy nakit oranı %10'u aşıyorsa
+- Hedef: Nakit %5'e indirilmeli
+- AGGRESSIVE: Önce swing sinyalleri (backtest +%8 olanlar), sonra tema, VIX>22 ise inverse ETF
+- BALANCED: Önce tema, VIX>22 ise defansif rotasyon, VIX<22 + tema yok ise SPY/QQQ
+- DIVIDEND: Önce tema, slot dolu ise en iyi pozisyonu büyüt (HEDGE YASAK)
+- Filtre: Bekleyen ÇIKIŞ kararları olan semboller exclude
+- Uygulama: `scripts/cash_deployment_engine.py` — her morning session_state'e yazılır
+
 ### zeynel onayı bekleyen kural adayları
 
 | kod | açıklama | kanıt |

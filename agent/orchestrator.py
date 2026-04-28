@@ -1647,6 +1647,50 @@ def _check_portfolio_exits(market: dict, rsi_map: dict = None) -> list:
 
             pnl = (price - mal) / mal * 100 if mal else 0
 
+            # K-15c: Tema alimi 15g sonrasi zorunlu cikis incelemesi
+            # 28 Nis 2026 backtest: tema alis 5g +%7.45, 10g +%6.39, 20g -%0.86
+            # 15. gunden sonra getiri negatife dönüyor.
+            try:
+                neden_lower = (pos.get("giris_nedeni") or "").lower()
+                is_tema = "tema" in neden_lower or "taram" in neden_lower
+                if is_tema:
+                    giris_t = pos.get("giris_tarihi", "")
+                    if giris_t:
+                        try:
+                            from datetime import datetime as _dt15, timezone as _tz15, timedelta as _td15
+                            _tr15 = _tz15(_td15(hours=3))
+                            gd = _dt15.strptime(giris_t[:10], "%Y-%m-%d").replace(tzinfo=_tr15)
+                            simdi = _dt15.now(_tr15)
+                            tutus_gun = (simdi - gd).days
+                            # 15+ gün ve kar zaten +%5 üstünde — kar realize et
+                            if tutus_gun >= 15 and pnl >= 5:
+                                result = sell_position(sym, pf_name,
+                                       f"K-15c tema 15g zorunlu cikis: tutus {tutus_gun}g, kar +%{pnl:.1f}",
+                                       pct=50, price=price)
+                                if result.get("ok"):
+                                    aksiyonlar.append(
+                                        f"🟡 *K-15c TEMA 15G+ CIKIS* [{pf_name.upper()}]\n"
+                                        f"{sym} @${price:.2f} | tutus {tutus_gun}g | P/L: {pnl:+.1f}%\n"
+                                        f"→ *%50 SATIS — backtest 20g sonra negatife dönüyor*"
+                                    )
+                                    continue
+                            # 20+ gün ve kar negatif — komple cik (zaten beklemenin anlami yok)
+                            elif tutus_gun >= 20 and pnl < 0:
+                                result = sell_position(sym, pf_name,
+                                       f"K-15c tema 20g+ negatif: tutus {tutus_gun}g, K/Z %{pnl:.1f}",
+                                       pct=100, price=price)
+                                if result.get("ok"):
+                                    aksiyonlar.append(
+                                        f"🔴 *K-15c TEMA 20G+ TAM CIKIS* [{pf_name.upper()}]\n"
+                                        f"{sym} @${price:.2f} | tutus {tutus_gun}g | P/L: {pnl:+.1f}%\n"
+                                        f"→ *TAM SATIS {result.get('adet','?')} adet*"
+                                    )
+                                    continue
+                        except Exception as _k15e:
+                            pass
+            except Exception as _k15ee:
+                pass
+
             # K-06: Stop tetiklendi
             if price <= stop:
                 result = sell_position(sym, pf_name,
