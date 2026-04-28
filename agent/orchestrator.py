@@ -1843,6 +1843,42 @@ def run_weekly(ctx: dict):
     applied_log   = get_applied_changes_summary()
     screener_rpt  = run_screener_optimization()
 
+    # K-Kurallari Backtest (28 Nis 2026 — haftalik otomatik update)
+    # transactions.csv'yi kategoriye gore analiz eder, her K-kuralin
+    # gercek getirisini olcer. Sonuc data/backtest_summary.json ve
+    # reports/backtest/k_rules_YYYY-MM-DD.md'ye yazilir.
+    # Morning prompt'u her sabah bunu okur (risk_engine'de).
+    try:
+        import subprocess
+        _bt_cmd = ["python3", str(REPO_ROOT / "scripts" / "k_rules_backtest.py"), "--save"]
+        _bt_proc = subprocess.run(_bt_cmd, capture_output=True, text=True, timeout=300)
+        if _bt_proc.returncode == 0:
+            print("[Weekly] K-kurallari backtest yenilendi")
+            # Telegram'a ozet (DM, info severity)
+            try:
+                import json as _j_bt
+                _bt_path = REPO_ROOT / "data" / "backtest_summary.json"
+                if _bt_path.exists():
+                    _bts = _j_bt.load(open(_bt_path))
+                    _bt_lines = ["📊 K-KURALLARI HAFTALIK BACKTEST"]
+                    for _r in _bts.get("raporlar", []):
+                        if _r.get("sayi", 0) == 0:
+                            continue
+                        _g5 = _r.get("g5_avg_pct")
+                        _g20 = _r.get("g20_avg_pct")
+                        if _g5 is None:
+                            continue
+                        _g5s = f"{_g5:+.1f}%"
+                        _g20s = f"{_g20:+.1f}%" if _g20 is not None else "—"
+                        _bt_lines.append(f"  {_r['kategori']:14} ({_r['sayi']:>2}): 5g {_g5s} | 20g {_g20s}")
+                    print("\n".join(_bt_lines))
+            except Exception as _bts_e:
+                print(f"[Weekly] Backtest ozet uyarisi: {_bts_e}")
+        else:
+            print(f"[Weekly] K-kurallari backtest hata: {_bt_proc.stderr[:200]}")
+    except Exception as _bte:
+        print(f"[Weekly] K-kurallari backtest exception: {_bte}")
+
     # Tema × Portföy Matris Güncellemesi (11 Nisan 2026)
     tema_matrix_rpt = ""
     if run_tema_matrix:
