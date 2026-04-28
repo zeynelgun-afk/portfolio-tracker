@@ -16,85 +16,72 @@
   },
   "zorunlu_aksiyonlar": [],
   "claude_kararlar": {
-    "tarih": "2026-04-25T01:08:25.399693+03:00",
+    "tarih": "2026-04-28T10:18:04.056186+03:00",
     "kararlar": [
       {
         "tip": "ÇIK",
         "portfoy": "dividend",
-        "sembol": "OKE",
-        "pct": 50,
-        "neden": "K-05: earnings 2 gün sonra, +2.4% kâr küçük, yarı pozisyon koruma",
-        "hedef_fiyat": 93.0,
-        "stop": 78.6,
-        "tutar": 0,
-        "aciliyet": "hemen",
-        "dondur_al": null,
-        "_decision_id": "f98f233ae4ba"
-      },
-      {
-        "tip": "STOP_GÜNCELLE",
-        "portfoy": "swing",
-        "sembol": "KLAC",
-        "pct": 0,
-        "neden": "K-07: +11% kârda, trailing stop $1727 → $1780 (hala %7.7 uzak)",
-        "hedef_fiyat": 2229.0,
-        "stop": 1780.0,
-        "tutar": 0,
-        "aciliyet": "hemen",
-        "dondur_al": null,
-        "_decision_id": "06b998338081"
-      },
-      {
-        "tip": "İZLE",
-        "portfoy": "dividend",
         "sembol": "ABBV",
-        "pct": 0,
-        "neden": "FDA CRL + earnings 3 gün + stop %3.2 uzak — kırılımda K-06 tam çıkış",
-        "hedef_fiyat": 224.0,
-        "stop": 192.35,
+        "pct": 50,
+        "neden": "K-05 ihlali — 1 gün earnings + stop %2.5 + zararda, risk/ödül kötü",
+        "hedef_fiyat": 0.0,
+        "stop": 0.0,
         "tutar": 0,
-        "aciliyet": "bugün",
+        "aciliyet": "hemen",
         "dondur_al": null,
-        "_decision_id": "30686393b213"
+        "_decision_id": "66fee17e6557"
       },
       {
         "tip": "İZLE",
         "portfoy": "dividend",
         "sembol": "O",
         "pct": 0,
-        "neden": "Stop %2.3 uzak, kırılım çok yakın — K-06 hazır",
+        "neden": "Stop %1.4 — K-09 sınırında, yarın açılışta tetiklenirse otomatik çık",
         "hedef_fiyat": 67.0,
-        "stop": 61.87,
+        "stop": 61.85,
         "tutar": 0,
         "aciliyet": "hemen",
         "dondur_al": null,
-        "_decision_id": "fc81d9c63196"
+        "_decision_id": "475826310297"
+      },
+      {
+        "tip": "ÇIK",
+        "portfoy": "dividend",
+        "sembol": "MO",
+        "pct": 100,
+        "neden": "K-05 — earnings 30 Nis öncesi tam çıkış, +%15 kârı koru",
+        "hedef_fiyat": 0.0,
+        "stop": 0.0,
+        "tutar": 0,
+        "aciliyet": "bu_hafta",
+        "dondur_al": null,
+        "_decision_id": "a04d633b5d56"
       },
       {
         "tip": "İZLE",
-        "portfoy": "swing",
-        "sembol": "RPRX",
+        "portfoy": "balanced",
+        "sembol": "NEM",
         "pct": 0,
-        "neden": "K-09: stop %4.8 uzak, erken çıkış sinyali takibi",
-        "hedef_fiyat": 53.0,
-        "stop": 46.89,
+        "neden": "Stop %3.1, gold zayıflığı — K-06 tetik riski yüksek",
+        "hedef_fiyat": 126.0,
+        "stop": 112.5,
         "tutar": 0,
         "aciliyet": "bugün",
         "dondur_al": null,
-        "_decision_id": "5643e7dcad8a"
+        "_decision_id": "c4f5d4f7a8a4"
       },
       {
         "tip": "İZLE",
         "portfoy": "swing",
         "sembol": "GEV",
         "pct": 0,
-        "neden": "K-11: +14.2% — %15 1. kâr hedefi tetiğine yakın",
+        "neden": "+%12 K-11 partial adayı, hedef $1270'e %13 var — henüz erken",
         "hedef_fiyat": 1270.0,
         "stop": 1052.81,
         "tutar": 0,
         "aciliyet": "bu_hafta",
         "dondur_al": null,
-        "_decision_id": "ed349a189ece"
+        "_decision_id": "5af81d89b5f2"
       }
     ],
     "kaynak": "closing"
