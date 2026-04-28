@@ -1,11 +1,14 @@
 {
   "_schema_version": 1,
   "_aciklama": "Kapanis -> sabah handoff. Kapanis raporu sonunda _update_session_state() ile guncellenir. 21 Nisan 2026'da gitignore'dan cikarilip git-tracked yapildi.",
-  "son_guncelleme": "2026-04-21T20:00:00+03:00",
+  "son_guncelleme": "2026-04-28T11:47:20.251819+03:00",
   "son_kapanis_notlari": [
-    "20 Nisan kapanisi: VRT earnings 22 Nisan, K-05 geregi kapanisa dogru cikis hazirligi",
-    "MO stop %1.3 uzak — kritik bolgede, override yasak",
-    "DUK stop %3.3 uzak — izleme listesinde"
+    "28 Nis kapanis: ABBV %50 cikis + MO bu hafta cikis kararlari bekliyor (executed=None, FAZ_2'de uygulanacak)",
+    "K-21 KRIZ RALLISI YASAGI sisteme eklendi (VIX 5g sicrama %20+ → swing girisi YOK)",
+    "Backtest dersleri: Tema alimlari 5-10g pik, sonra duzeltme. K-05 earnings cikis +%5-9 kayip onler",
+    "Aggressive portfoyde %71 nakit ($274K) — boyle yuksek nakit kural ihlali, agresif giris/hedge planla",
+    "Yarın 7 swing sinyali bekliyor: CAT/RPRX/TFC/NNE/UEC/LEU/DNN — uranyum cluster (NNE+UEC+LEU+DNN) agresif portfoye uygun",
+    "5 aktif swing pozisyonu (max 5/5) — yeni swing girisi icin once cikis lazim"
   ],
   "faz": "FAZ_0",
   "buy_list": {
