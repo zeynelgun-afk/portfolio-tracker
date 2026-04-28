@@ -47,9 +47,23 @@ TICKER_PATTERN = re.compile(r'^[A-Z]{1,6}[0-9]?$')
 # ── Telegram API ──────────────────────────────────────────────────────────────
 
 def tg_get(endpoint, params=None):
+    """
+    Telegram GET. getUpdates long-poll (timeout=30) icin requests timeout 40s.
+    Diğer endpointler icin 15s.
+    """
+    params = params or {}
+    # Long-poll timeout > Telegram timeout
+    poll_timeout = params.get("timeout", 0)
+    req_timeout = max(15, poll_timeout + 10)
     try:
-        r = requests.get(f"{API_BASE}/{endpoint}", params=params or {}, timeout=15)
+        r = requests.get(f"{API_BASE}/{endpoint}", params=params, timeout=req_timeout)
         return r.json()
+    except requests.exceptions.ReadTimeout:
+        # Long-poll'da read timeout normal — sessiz tut, scheduler'i bozmasin
+        if poll_timeout > 0:
+            return None
+        print(f"[TG] GET {endpoint} timeout (req:{req_timeout}s)")
+        return None
     except Exception as e:
         print(f"[TG] GET {endpoint} hatası: {e}")
         return None
