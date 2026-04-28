@@ -1,54 +1,54 @@
 {
   "son_guncelleme": "2026-04-28",
   "toplam_sermaye": 600000,
-  "toplam_deger": 635826.14,
-  "toplam_kar_zarar": 35826.14,
-  "toplam_kar_zarar_yuzde": 5.97,
+  "toplam_deger": 631324.59,
+  "toplam_kar_zarar": 31324.59,
+  "toplam_kar_zarar_yuzde": 5.22,
   "portfolyolar": {
     "dengeli": {
       "isim": "Dengeli Portföy",
-      "deger": 108909.06,
+      "deger": 107735.08,
       "maliyet": 100000,
-      "kar_zarar": 8909.059999999998,
-      "kar_zarar_yuzde": 8.91,
+      "kar_zarar": 7735.080000000002,
+      "kar_zarar_yuzde": 7.74,
       "pozisyon_sayisi": 4,
       "nakit": {
-        "miktar": 66453.51,
+        "miktar": 66355.51,
         "para_birimi": "USD",
-        "agirlik_yuzde": 61.02
+        "agirlik_yuzde": 61.59
       }
     },
     "agresif": {
       "isim": "Agresif Büyüme Portföyü",
-      "deger": 385872.85,
+      "deger": 381295.3,
       "maliyet": 400000,
-      "kar_zarar": -14127.150000000023,
-      "kar_zarar_yuzde": -3.53,
-      "pozisyon_sayisi": 3,
+      "kar_zarar": -18704.70000000001,
+      "kar_zarar_yuzde": -4.68,
+      "pozisyon_sayisi": 2,
       "nakit": {
-        "miktar": 274296.56,
+        "miktar": 363399.04,
         "para_birimi": "USD",
-        "agirlik_yuzde": 71.08
+        "agirlik_yuzde": 95.31
       }
     },
     "temettü": {
       "isim": "Değer + Temettü Portföyü",
-      "deger": 141044.23,
+      "deger": 142294.21,
       "maliyet": 100000,
-      "kar_zarar": 41044.23000000001,
-      "kar_zarar_yuzde": 41.04,
-      "pozisyon_sayisi": 6,
+      "kar_zarar": 42294.20999999999,
+      "kar_zarar_yuzde": 42.29,
+      "pozisyon_sayisi": 4,
       "nakit": {
-        "miktar": 44848.52,
+        "miktar": 91818.4,
         "para_birimi": "USD",
-        "agirlik_yuzde": 31.8
+        "agirlik_yuzde": 64.53
       }
     },
     "swing_trade": {
       "isim": "Swing Trade",
-      "pozisyon_sayisi": 5,
-      "bos_slot": 0,
-      "durum": "5/5 pozisyon aktif"
+      "pozisyon_sayisi": 4,
+      "bos_slot": 1,
+      "durum": "4/5 pozisyon aktif"
     }
   }
 }
