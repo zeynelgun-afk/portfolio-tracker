@@ -477,5 +477,28 @@ def build_risk_context(portfolios: dict) -> str:
     except Exception as _be:
         print(f"[Risk] Backtest blogu hatasi: {_be}")
 
+    # Discovery sonuclari (28 Nis 2026) — kaliteli yeni adaylar
+    try:
+        from pathlib import Path as _P_dis
+        import json as _j_dis
+        disc_path = _P_dis(__file__).parent.parent / "data" / "discovery_signals.json"
+        if disc_path.exists():
+            disc = _j_dis.load(open(disc_path))
+            adaylar = disc.get("adaylar", [])
+            if adaylar:
+                lines.append("--- DISCOVERY ENGINE — KALITELI YENI ADAYLAR (TOP 10) ---")
+                lines.append("Kaynak: 1240-hisse PEG-filtreli evrenin swing kalite skorlu sonuclari")
+                lines.append(f"{'Sembol':6} {'Skor':>5} {'Kar':6} {'Cpn':>5} {'Sektor':16} {'PEG':>5}")
+                for a in adaylar[:10]:
+                    sek = (a.get("sector") or "?")[:16]
+                    peg = a.get("peg")
+                    peg_str = f"{peg:.2f}" if isinstance(peg, (int, float)) else "—"
+                    lines.append(f"  {a.get('sembol','?'):6} {a.get('kalite_skor', 0):>5} "
+                                 f"{a.get('kalite_karar','?'):6} {a.get('carpan', 1.0):>4.2f}x "
+                                 f"{sek:16} {peg_str:>5}")
+                lines.append("")
+    except Exception as _de:
+        print(f"[Risk] Discovery blogu hatasi: {_de}")
+
     print("[Risk] Analiz tamamlandı.")
     return "\n".join(lines)

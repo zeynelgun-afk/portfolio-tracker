@@ -1923,6 +1923,28 @@ def run_weekly(ctx: dict):
     except Exception as _bte:
         print(f"[Weekly] K-kurallari backtest exception: {_bte}")
 
+    # Discovery Engine — kaliteli yeni adaylar (28 Nis 2026)
+    # daily_full_scan'den 1240 hisseyi swing kalite filtresinden gecirir.
+    # Pazar 12:00'de calisir, sonuclari data/discovery_signals.json'a yazar
+    # ve Telegram DM'e en iyi 10'u gonderir.
+    try:
+        import subprocess
+        _disc_cmd = ["python3", str(REPO_ROOT / "scripts" / "discovery_engine.py"),
+                     "--save", "--telegram", "--limit", "200"]
+        # 200 hisse limit (10-15 dk surer), tum 476 icin --limit kaldir
+        _disc_proc = subprocess.run(_disc_cmd, capture_output=True, text=True, 
+                                     timeout=1800, env=os.environ)
+        if _disc_proc.returncode == 0:
+            print("[Weekly] Discovery engine tamamlandi")
+            # Stdout'tan ozet
+            for line in _disc_proc.stdout.split("\n")[-15:]:
+                if line.strip():
+                    print(f"  {line}")
+        else:
+            print(f"[Weekly] Discovery hata: {_disc_proc.stderr[:200]}")
+    except Exception as _disce:
+        print(f"[Weekly] Discovery exception: {_disce}")
+
     # Tema × Portföy Matris Güncellemesi (11 Nisan 2026)
     tema_matrix_rpt = ""
     if run_tema_matrix:
