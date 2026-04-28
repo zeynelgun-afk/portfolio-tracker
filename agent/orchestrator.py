@@ -2260,22 +2260,6 @@ def main():
 
     print("[Finzora Agent] Tamamlandı.")
 
-if __name__ == "__main__":
-    try:
-        main()
-        _log.calistirma(
-            "Agent tamamlandı",
-            f"Süre: {datetime.now(TR_TZ).strftime('%H:%M TR')}",
-            kaynak="orchestrator"
-        )
-    except Exception as e:
-        _log.hata(
-            "Agent çöktü",
-            f"Hata: {str(e)[:300]}",
-            kaynak="orchestrator"
-        )
-        raise
-
 
 # ═══════════════════════════════════════════════════════════════════════════
 # CLAUDE KARAR EXECUTOR — Seçenek A: Yapısal Claude → Execution bağlantısı
@@ -2571,3 +2555,28 @@ def _execute_claude_decisions(kararlar: list, market: dict) -> list:
             _mark(k, False, f"exception: {str(exc)[:100]}")
 
     return aksiyonlar
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+# MAIN ENTRY POINT — TÜM FONKSİYONLAR TANIMLANDIKTAN SONRA
+# ═══════════════════════════════════════════════════════════════════════════
+# 28 Nis 2026 düzeltme: Önceden 'if __name__ == "__main__"' bloğu modulün
+# ortasındaydı (2263. satır). _execute_claude_decisions 2284'te tanımlı
+# olduğu için main() çağrıldığında o fonksiyon henüz tanımlanmamış oluyordu.
+# Hata: "name '_execute_claude_decisions' is not defined".
+# Çözüm: main entry point'i dosyanın EN SONUNA taşı.
+if __name__ == "__main__":
+    try:
+        main()
+        _log.calistirma(
+            "Agent tamamlandı",
+            f"Süre: {datetime.now(TR_TZ).strftime('%H:%M TR')}",
+            kaynak="orchestrator"
+        )
+    except Exception as e:
+        _log.hata(
+            "Agent çöktü",
+            f"Hata: {str(e)[:300]}",
+            kaynak="orchestrator"
+        )
+        raise
