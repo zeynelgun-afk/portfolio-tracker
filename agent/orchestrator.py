@@ -1831,7 +1831,7 @@ def _check_portfolio_exits(market: dict, rsi_map: dict = None) -> list:
                     aksiyonlar.append(
                         f"🔴 *K-06 STOP* [{pf_name.upper()}]\n"
                         f"{sym} @${price:.2f} | P/L: {pnl:+.1f}%\n"
-                        f"→ *SAT {result["adet"]} ADET*"
+                        f"→ *SAT {result['adet']} ADET*"
                     )
                 continue
 
@@ -1847,7 +1847,7 @@ def _check_portfolio_exits(market: dict, rsi_map: dict = None) -> list:
                     aksiyonlar.append(
                         f"💰 *K-11 KISMİ KÂR* [{pf_name.upper()}]\n"
                         f"{sym} %25 @${price:.2f} | kâr %{pnl:.1f}%\n"
-                        f"→ *SAT {result["adet"]} ADET*"
+                        f"→ *SAT {result['adet']} ADET*"
                     )
 
     return aksiyonlar
