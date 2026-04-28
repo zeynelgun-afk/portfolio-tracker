@@ -680,6 +680,8 @@ def run_closing(ctx: dict):
     prompt = f"""
 {ctx['compressed']}
 
+{ctx['risk']}
+
 {swing_ozet}
 
 {ctx['research']}
