@@ -1205,7 +1205,10 @@ def run_monitor(ctx: dict):
                                 judgement = judge_exit(pos_with_pf, exit_r, "swing")
                                 if judgement.get("layer_used") == "llm":
                                     final_action = judgement["action"]
-                                    final_reason = f"[LLM-judgement {judgement['confidence']}] {judgement['reasoning'][:200]}"
+                                    # Reasoning'i markdown-safe yap
+                                    _raw = judgement.get("reasoning", "")[:200]
+                                    _clean = _raw.replace("*", "").replace("_", "").replace("[", "(").replace("]", ")")
+                                    final_reason = f"LLM-{judgement['confidence']}: {_clean}"
                                     layer_used = "llm"
                                     print(f"[Judgement] {sym}: kural={exit_r['action']} → llm={judgement['action']}")
                             except Exception as _je:
@@ -1756,19 +1759,24 @@ def _check_portfolio_exits(market: dict, rsi_map: dict = None) -> list:
                                     judgement = judge_exit(pos_with_pf, k15c_result, pf_name)
                                     if judgement.get("layer_used") == "llm":
                                         pf_dec = judgement["action"]
-                                        pf_reason_extra = f" [LLM-{judgement['confidence']}: {judgement['reasoning'][:120]}]"
+                                        # Reasoning'i temizle (markdown bozucularini kaldir)
+                                        _raw_reason = judgement.get("reasoning", "")[:200]
+                                        _clean = _raw_reason.replace("*", "").replace("_", "").replace("[", "(").replace("]", ")")
+                                        pf_reason_extra = f"LLM-{judgement['confidence']}: {_clean}"
                                         print(f"[Judgement] {pf_name}/{sym} K-15c: kural=PARTIAL → llm={pf_dec}")
                                 except Exception as _je:
                                     print(f"[Judgement] {pf_name}/{sym} hata: {_je}")
                                 
                                 # LLM 'HOLD' dediyse satış yapma, sadece bilgi
                                 if pf_dec == "HOLD":
-                                    aksiyonlar.append(
+                                    msg = (
                                         f"🤔 *K-15c LLM-TUT* [{pf_name.upper()}]\n"
                                         f"{sym} @${price:.2f} | tutus {tutus_gun}g | P/L: {pnl:+.1f}%\n"
-                                        f"→ Kural %50 satis dedi ama LLM tema/momentum desteği görüp tutmayı önerdi"
-                                        f"{pf_reason_extra}"
+                                        f"→ Kural %50 satis dedi ama LLM tema/momentum destegi gordu, tut\n"
                                     )
+                                    if pf_reason_extra:
+                                        msg += f"_{pf_reason_extra}_"
+                                    aksiyonlar.append(msg)
                                     continue
                                 
                                 # Yüksekli partial önerirse pct değiş
@@ -1781,15 +1789,21 @@ def _check_portfolio_exits(market: dict, rsi_map: dict = None) -> list:
                                 else:
                                     pct = 50  # K-15c default
                                 
-                                result = sell_position(sym, pf_name,
-                                       f"K-15c tema 15g zorunlu cikis: tutus {tutus_gun}g, kar +%{pnl:.1f}{pf_reason_extra[:80]}",
+                                # sell_position reason'da kisa ozet
+                                _sat_reason = f"K-15c tema 15g cikis: tutus {tutus_gun}g, kar +%{pnl:.1f}"
+                                if pf_reason_extra:
+                                    _sat_reason += f" ({pf_reason_extra[:80]})"
+                                result = sell_position(sym, pf_name, _sat_reason,
                                        pct=pct, price=price)
                                 if result.get("ok"):
-                                    aksiyonlar.append(
+                                    msg = (
                                         f"🟡 *K-15c TEMA 15G+ CIKIS* [{pf_name.upper()}]\n"
                                         f"{sym} @${price:.2f} | tutus {tutus_gun}g | P/L: {pnl:+.1f}%\n"
-                                        f"→ *%{pct} SATIS{pf_reason_extra[:100]}*"
+                                        f"→ *%{pct} SAT*"
                                     )
+                                    if pf_reason_extra:
+                                        msg += f"\n_{pf_reason_extra}_"
+                                    aksiyonlar.append(msg)
                                     continue
                             # 20+ gün ve kar negatif — komple cik (zaten beklemenin anlami yok)
                             elif tutus_gun >= 20 and pnl < 0:
@@ -1817,7 +1831,7 @@ def _check_portfolio_exits(market: dict, rsi_map: dict = None) -> list:
                     aksiyonlar.append(
                         f"🔴 *K-06 STOP* [{pf_name.upper()}]\n"
                         f"{sym} @${price:.2f} | P/L: {pnl:+.1f}%\n"
-                        f"→ *SATIN {result['adet']} ADET*"
+                        f"→ *SAT {result["adet"]} ADET*"
                     )
                 continue
 
@@ -1833,7 +1847,7 @@ def _check_portfolio_exits(market: dict, rsi_map: dict = None) -> list:
                     aksiyonlar.append(
                         f"💰 *K-11 KISMİ KÂR* [{pf_name.upper()}]\n"
                         f"{sym} %25 @${price:.2f} | kâr %{pnl:.1f}%\n"
-                        f"→ *SATIN {result['adet']} ADET*"
+                        f"→ *SAT {result["adet"]} ADET*"
                     )
 
     return aksiyonlar
