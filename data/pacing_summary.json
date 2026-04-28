@@ -1,0 +1,52 @@
+{
+  "tarih": "2026-04-28",
+  "baslangic_tarihi": "2026-02-17",
+  "gun_sayisi": 70,
+  "yil_oran": 0.1917808219178082,
+  "toplam_baslangic": 600000,
+  "toplam_mevcut": 635826.1399999999,
+  "toplam_getiri_pct": 5.971023333333316,
+  "toplam_yillik_proj": 31.13462166666658,
+  "hedef_dusuk": 50,
+  "hedef_yuksek": 80,
+  "portfoyler": {
+    "balanced": {
+      "baslangic": 100000,
+      "mevcut": 108909.06,
+      "pozisyon_deger": 42455.55,
+      "nakit": 66453.51,
+      "nakit_pct": 61.01743050578161,
+      "pozisyon_sayi": 4,
+      "getiri_pct": 8.909059999999998,
+      "yillik_proj": 46.45438428571428
+    },
+    "aggressive": {
+      "baslangic": 400000,
+      "mevcut": 385872.85,
+      "pozisyon_deger": 111576.29000000001,
+      "nakit": 274296.56,
+      "nakit_pct": 71.08470056911234,
+      "pozisyon_sayi": 3,
+      "getiri_pct": -3.5317875000000063,
+      "yillik_proj": -18.41574910714289
+    },
+    "dividend": {
+      "baslangic": 100000,
+      "mevcut": 141044.22999999998,
+      "pozisyon_deger": 96195.70999999999,
+      "nakit": 44848.52,
+      "nakit_pct": 31.79748650476521,
+      "pozisyon_sayi": 6,
+      "getiri_pct": 41.044229999999985,
+      "yillik_proj": 214.01634214285707
+    }
+  },
+  "oneriler": [
+    "🔴 balanced: %61 nakit — kural ihlali (>%10). $66,454 nakit kullanilmali",
+    "🟡 balanced: Yillik proj %46.5 — alt hedef altinda (%50)",
+    "🔴 aggressive: %71 nakit — kural ihlali (>%10). $274,297 nakit kullanilmali",
+    "🔴 aggressive: Negatif yillik proj (%-18.4) — strateji gozden gecirilmeli",
+    "🔴 dividend: %32 nakit — kural ihlali (>%10). $44,849 nakit kullanilmali",
+    "⚠️ Toplam yillik proj %31.1 — alt hedef %50'in 18.9 puan altinda"
+  ]
+}

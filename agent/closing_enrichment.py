@@ -715,6 +715,56 @@ def sektor_rotasyon_blogu(portfolios: dict) -> str:
 
 # ── ANA FONKSİYON: tüm zenginleştirme ───────────────────────────────────────
 
+def pacing_ozet_blogu() -> str:
+    """
+    Yıllık hedefe gore gerceklesme oranı.
+    28 Nis 2026: Tüm 3 portfoyde nakit kuralı ihlali tespit edildi
+    (balanced 61%, aggressive 71%, dividend 32%). Bu blok her closing'de
+    Claude'a hatirlatilir.
+    """
+    try:
+        import subprocess
+        cmd = ["python3", str(REPO_ROOT / "scripts" / "portfolio_pacing.py"), "--json"]
+        proc = subprocess.run(cmd, capture_output=True, text=True, timeout=60)
+        if proc.returncode != 0:
+            return ""
+    except Exception:
+        return ""
+
+    try:
+        pacing_path = REPO_ROOT / "data" / "pacing_summary.json"
+        if not pacing_path.exists():
+            return ""
+        a = json.load(open(pacing_path))
+    except Exception:
+        return ""
+
+    lines = ["## 7. YILLIK HEDEFE GORE PACING\n"]
+    lines.append(f"**Sistem yasi:** {a['gun_sayisi']} gun ({a['yil_oran']*100:.0f}% yıl) | "
+                 f"**Hedef:** Yıllık +%{a['hedef_dusuk']}-{a['hedef_yuksek']} | "
+                 f"**Gercek:** Yıllık +%{a['toplam_yillik_proj']:.1f}\n")
+    lines.append("| Portfoy | Baslangic | Mevcut | Getiri | Yıllık | Nakit% |")
+    lines.append("|---------|-----------|--------|--------|--------|---|")
+    for p, h in a["portfoyler"].items():
+        nakit_bayrak = " 🔴" if h["nakit_pct"] > 10 else ""
+        lines.append(
+            f"| {p:10} | ${h['baslangic']:,.0f} | ${h['mevcut']:,.0f} | "
+            f"{h['getiri_pct']:+.1f}% | {h['yillik_proj']:+.1f}% | "
+            f"%{h['nakit_pct']:.0f}{nakit_bayrak} |"
+        )
+    lines.append(
+        f"| **TOPLAM** | **${a['toplam_baslangic']:,.0f}** | **${a['toplam_mevcut']:,.0f}** | "
+        f"**{a['toplam_getiri_pct']:+.1f}%** | **{a['toplam_yillik_proj']:+.1f}%** | — |"
+    )
+
+    if a.get("oneriler"):
+        lines.append("\n**Oneriler:**")
+        for o in a["oneriler"]:
+            lines.append(f"- {o}")
+
+    return "\n".join(lines) + "\n"
+
+
 def kapanis_zenginlestirici(portfolios: dict, seans_tarihi: str | None = None) -> str:
     """Tüm 5 ek bağlamı tek metinde birleştir.
 
@@ -777,6 +827,14 @@ def kapanis_zenginlestirici(portfolios: dict, seans_tarihi: str | None = None) -
             bloklar.append(b)
     except Exception as e:
         print(f"[ClosingEnrichment] tema_alim_izleme hata: {e}")
+
+    # 7 — Pacing ozeti (yillik hedefe gore durum)
+    try:
+        b = pacing_ozet_blogu()
+        if b:
+            bloklar.append(b)
+    except Exception as e:
+        print(f"[ClosingEnrichment] pacing hata: {e}")
 
     if not bloklar:
         return ""
