@@ -33,8 +33,8 @@
       "stop_aciklama": "",
       "stop_guncelleme": "",
       "durum": "✅ Normal",
-      "rsi": 59.93,
-      "rsi_son_guncelleme": "2026-04-28T20:32:59.522105+03:00"
+      "rsi": 59.2,
+      "rsi_son_guncelleme": "2026-04-28T21:03:00.439765+03:00"
     },
     {
       "sembol": "OKE",
@@ -62,8 +62,8 @@
       "stop_aciklama": "",
       "stop_guncelleme": "",
       "durum": "✅ Normal",
-      "rsi": 61.43,
-      "rsi_son_guncelleme": "2026-04-28T20:32:59.522105+03:00"
+      "rsi": 60.58,
+      "rsi_son_guncelleme": "2026-04-28T21:03:00.439765+03:00"
     },
     {
       "sembol": "O",
@@ -89,8 +89,8 @@
       "zirve_fiyat": 64.08,
       "stop_mesafe_pct": 1.35,
       "durum": "⚠️ Stop yakın (1.4%)",
-      "rsi": 48.98,
-      "rsi_son_guncelleme": "2026-04-28T20:32:59.522105+03:00"
+      "rsi": 49.83,
+      "rsi_son_guncelleme": "2026-04-28T21:03:00.439765+03:00"
     },
     {
       "sembol": "GTY",
@@ -117,8 +117,8 @@
       "zirve_fiyat": 33.76,
       "stop_mesafe_pct": 4.26,
       "durum": "✅ Normal",
-      "rsi": 50.8,
-      "rsi_son_guncelleme": "2026-04-28T20:32:59.522105+03:00"
+      "rsi": 50.91,
+      "rsi_son_guncelleme": "2026-04-28T21:03:00.439765+03:00"
     }
   ],
   "son_guncelleme": "2026-04-28T19:04:13.476483+03:00",

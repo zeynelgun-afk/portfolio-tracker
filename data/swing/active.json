@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-04-28T17:32:59.767887",
+  "son_guncelleme": "2026-04-28T18:03:00.547524",
   "not": "SWING TRADE SADECE SİMÜLASYON - Sadece % kazanç/kayıp takibi (MAX: 5 pozisyon)",
   "aktif_pozisyonlar": [
     {
@@ -15,8 +15,8 @@
       "katalizor": "",
       "max_sure_gun": 15,
       "durum": "✅ Normal aralıkta",
-      "guncel_fiyat": 49.65,
-      "son_fiyat": 49.65,
+      "guncel_fiyat": 49.7,
+      "son_fiyat": 49.7,
       "zirve_fiyat": 50,
       "chandelier_stop": 46.74,
       "k11_aktif": false,
@@ -26,11 +26,11 @@
       "tutulan_gun": 14,
       "maliyet_baz": 48.52,
       "giris_fiyati": 48.52,
-      "kar_zarar_yuzde": 2.33,
-      "pnl_pct": 2.33,
+      "kar_zarar_yuzde": 2.42,
+      "pnl_pct": 2.42,
       "chandelier_atr_carpan": 2.0,
-      "rsi": 63.13,
-      "rsi_son_guncelleme": "2026-04-28T20:32:59.522105+03:00"
+      "rsi": 63.06,
+      "rsi_son_guncelleme": "2026-04-28T21:03:00.439765+03:00"
     },
     {
       "id": "SWING-202604271833-TFC",
@@ -47,20 +47,20 @@
       "katalizor": "",
       "max_sure_gun": 15,
       "durum": "✅ Normal aralıkta",
-      "guncel_fiyat": 51.37,
-      "son_fiyat": 51.37,
+      "guncel_fiyat": 51.38,
+      "son_fiyat": 51.38,
       "zirve_fiyat": 51.57,
       "chandelier_stop": 48.03,
       "k11_aktif": false,
       "k11_profit_lock": null,
       "son_guncelleme": "2026-04-28",
       "notlar": [],
-      "kar_zarar_yuzde": 0.37,
+      "kar_zarar_yuzde": 0.4,
       "tutulan_gun": 1,
       "atr14": 1.18,
-      "pnl_pct": 0.37,
-      "rsi": 65.5,
-      "rsi_son_guncelleme": "2026-04-28T20:32:59.522105+03:00"
+      "pnl_pct": 0.4,
+      "rsi": 65.62,
+      "rsi_son_guncelleme": "2026-04-28T21:03:00.439765+03:00"
     },
     {
       "id": "SWING-202604271903-CAT",
@@ -77,20 +77,20 @@
       "katalizor": "",
       "max_sure_gun": 15,
       "durum": "✅ Normal aralıkta",
-      "guncel_fiyat": 815.42,
-      "son_fiyat": 815.42,
+      "guncel_fiyat": 817.01,
+      "son_fiyat": 817.01,
       "zirve_fiyat": 831.64,
       "chandelier_stop": 762.88,
       "k11_aktif": false,
       "k11_profit_lock": null,
       "son_guncelleme": "2026-04-28",
       "notlar": [],
-      "kar_zarar_yuzde": -1.94,
+      "kar_zarar_yuzde": -1.75,
       "tutulan_gun": 1,
       "atr14": 22.92,
-      "pnl_pct": -1.94,
-      "rsi": 63.26,
-      "rsi_son_guncelleme": "2026-04-28T20:32:59.522105+03:00"
+      "pnl_pct": -1.75,
+      "rsi": 64.22,
+      "rsi_son_guncelleme": "2026-04-28T21:03:00.439765+03:00"
     },
     {
       "id": "SWING-202604281435-UEC",
@@ -107,27 +107,27 @@
       "katalizor": "",
       "max_sure_gun": 15,
       "durum": "AKTIF",
-      "guncel_fiyat": 14.59,
-      "son_fiyat": 14.59,
+      "guncel_fiyat": 14.69,
+      "son_fiyat": 14.69,
       "zirve_fiyat": 14.86,
       "chandelier_stop": 12.01,
       "k11_aktif": false,
       "k11_profit_lock": null,
       "son_guncelleme": "2026-04-28",
       "notlar": [],
-      "kar_zarar_yuzde": -1.85,
+      "kar_zarar_yuzde": -1.18,
       "tutulan_gun": 0,
       "atr14": 0.95,
-      "pnl_pct": -1.85,
-      "rsi": 51.54,
-      "rsi_son_guncelleme": "2026-04-28T20:32:59.522105+03:00"
+      "pnl_pct": -1.18,
+      "rsi": 52.34,
+      "rsi_son_guncelleme": "2026-04-28T21:03:00.439765+03:00"
     }
   ],
   "ozet": {
     "toplam_pozisyon": 4,
     "bos_slot": 1,
     "maksimum_pozisyon": 5,
-    "ortalama_kar_zarar_yuzde": -0.27
+    "ortalama_kar_zarar_yuzde": -0.03
   },
   "_schema_version": 2
 }
