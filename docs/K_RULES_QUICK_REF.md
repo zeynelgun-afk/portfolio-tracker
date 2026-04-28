@@ -23,9 +23,10 @@
 | **K-11 katman 2** | RSI 80+ veya (75+ + negatif div) | %25-30 kısmi sat | otomatik | ✅ |
 | **K-11 katman 3** | 50SMA altı veya chandelier | tam çık | otomatik | ✅ |
 | **K-12 Dengeli** | tek hisse >%25 | küçült | otomatik | — |
-| **K-12 Agresif** | tek hisse >%20 (max 6 poz) | küçült | otomatik | — |
+| **K-12 Agresif** | tek hisse >%20 (max 6 poz, tema 9'da %25) | küçült | otomatik | — |
 | **K-12 Temettü** | tek hisse >%15 (max 6 poz) | küçült | otomatik | — |
-| **K-12 sektör/tema** | toplam >%40 | en zayıfı kes | otomatik | — |
+| **K-12 sektör/tema** | toplam >%40 (tema 9 + RS+%5'te %60) | en zayıfı kes | otomatik | — |
+| **K-12 v2** ⭐ | tema güç değişimi 9→6/4/2 | %25/%50/%100 azalt | otomatik | — |
 | **K-13 v4.1** | VIX bantları × sektör | 4×2 matrisi (faydalanıcı/duyarlı) | otomatik | — |
 | **K-13b** | VIX 28+ duyarlı sektör | ichimoku 4/4 şartı, çeyrek pozisyon | otomatik | — |
 | **K-15a** | RSI<35 oversold | 1 gün teyit bekle | manuel | — |
@@ -90,6 +91,45 @@ Karar:
 | oversold_bounce | 0.5x | -%6.28 (20g) 🔴 |
 
 Multi-sinyal +0.25x bonus (max 2.5x) | 4/4 ichimoku +0.25x bonus
+
+---
+
+## 💪 K-12 v2 DİNAMİK SEKTÖR LİMİTİ (28 Nis 2026 — devreye alındı)
+
+Mevcut K-12 sabit %40 — **çok güçlü temalarda fırsat kaybı**. Druckenmiller felsefesi: "convicted bet, when conviction is high, bet big."
+
+**Dinamik yumuşama (`scripts/k12_dynamic_limits.py`):**
+
+| Tema Skor | RS vs SPY | Sektör Toplam Limit | Tek Pozisyon Limit |
+|-----------|-----------|---------------------|--------------------|
+| 9-10 | >+%5 | %40 → **%60** | Aggressive %20 → **%25** |
+| 8 | >+%2 | %40 → **%50** | Standart |
+| 7 | >0 | %40 → **%45** | Standart |
+| ≤6 | — | **%40** standart | Standart |
+
+**İptal koşulları (yumuşama uygulanmaz):**
+- VIX > 28 → standart %40
+- K-23 drawdown ≥ DEFANSIF → standart %40 (yada azalt)
+- Tema skoru ardışık 2 hafta düşüyorsa → standart %40
+
+**Otomatik AZALT trigger (tema güç değişimi):**
+
+| Tema skor düşüşü | Aksiyon |
+|------------------|---------|
+| 9 → 6 (-3) | %25 azalt |
+| 9 → 4 (-5) | %50 azalt |
+| 9 → 2 (-7) | tam çıkış |
+
+**Convicted bet bonus (`cash_deployment_engine.py`):**
+- Tema 9 GUCLU + RS +%5+ → carpan +0.3 (max 2.5x)
+- UEC örnek: 1.7x → **2.0x** (uranyum tema 9), pozisyon $77K → $96K
+
+**Test sonuç (28 Nis 2026):**
+- AI/Yari-iletken aggressive'de %12.9 / **%60** limit (+%47 alan)
+- Uranyum nukleer aggressive'de **0%** / %60 (yeni $173K alabilir)
+- Defansif temalar (savunma, sağlık, altın) yumuşama yok — standart %40
+
+Bu reform **AI tema 9 iken aggressive'in %50-60'ı AI/uranyum** olabilir, ama tema 9'dan 6'ya düşerse sistem **otomatik %25 azalt**. Druckenmiller mantığı + risk koruma.
 
 ---
 

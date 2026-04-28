@@ -499,6 +499,28 @@ def build_risk_context(portfolios: dict) -> str:
     except Exception as _k23e:
         print(f"[Risk] K-23 blogu hatasi: {_k23e}")
 
+    # K-12 v2 Dinamik Sektor Limiti (28 Nis 2026)
+    # Tema skor 9-10 GUCLU + RS +%5+ ise %40 → %60 yumusama
+    try:
+        from pathlib import Path as _P_k12
+        sys.path.insert(0, str(_P_k12(__file__).parent.parent / "scripts"))
+        from k12_dynamic_limits import tum_portfoyler as _k12_tum
+        k12 = _k12_tum()
+        lines.append(f"--- K-12 v2 DINAMIK SEKTOR LIMITI (VIX {k12.get('vix', 0):.1f}) ---")
+        for pf, data in k12.get("portfoyler", {}).items():
+            if not data.get("tema_durum"):
+                continue
+            for t in data["tema_durum"]:
+                yumusama = t.get("yumusama", 0)
+                durum_icon = {"NORMAL": "✅", "YAKIN": "🟡", "ASILDI": "🔴"}.get(t.get("durum", "?"), "?")
+                limit_str = f"%{t['dinamik_limit_pct']}"
+                if yumusama:
+                    limit_str += f"(+%{yumusama})"
+                lines.append(f"  {durum_icon} [{pf:10}] {t['ad']:25} %{t['mevcut_pct']:>5.1f}/{limit_str:10} skor:{t.get('tema_skor','?')}")
+        lines.append("")
+    except Exception as _k12e:
+        print(f"[Risk] K-12 v2 blogu hatasi: {_k12e}")
+
     # Tema skor (28 Nis 2026) — haftalik guncelleme
     try:
         from pathlib import Path as _P_th

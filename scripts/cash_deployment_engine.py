@@ -213,6 +213,17 @@ def aggressive_strateji(durum: dict, vix: float) -> dict:
     
     # K-23 NORMAL/UYARI: standart akış (swing sinyalleri + tema)
     
+    # K-12 v2 dinamik limit (28 Nis 2026): tema skorlu sektör için yumuşama
+    # AI tema 9 GUCLU + RS +%7.5 → aggressive sektör limiti %40 → %60
+    try:
+        from k12_dynamic_limits import k12_v2_analiz
+        # Aggressive icin
+        path = REPO_ROOT / "data" / "portfolios" / "aggressive.json"
+        d_pf = json.load(open(path))
+        k12_durum = k12_v2_analiz("aggressive", d_pf, vix, 0)  # K-23 NORMAL bu blokta
+    except Exception:
+        k12_durum = {}
+    
     # Mevcut swing sinyallerini oku
     sig_path = REPO_ROOT / "data" / "swing_entry_signals.json"
     sinyaller = []
@@ -248,9 +259,24 @@ def aggressive_strateji(durum: dict, vix: float) -> dict:
     
     bos_slot = durum["bos_slot"]
     pozisyon_basina = kullanilacak / max(bos_slot, 1)
-    # K-12 sınırı
+    # K-12 sınırı (tek pozisyon)
     k12_max = (K12_TEK_POZISYON_MAX["aggressive"] / 100) * durum["mevcut_deger"]
     pozisyon_basina = min(pozisyon_basina, k12_max)
+    
+    # K-12 v2 — sembol → tema haritasi, tema bazli mevcut yüzdeler
+    try:
+        from k12_dynamic_limits import _tema_haritasi
+        tema_map = _tema_haritasi()
+    except Exception:
+        tema_map = {}
+    
+    # Mevcut tema yuzdeleri (K-12 v2 durum)
+    mevcut_tema_pct = {}
+    dinamik_limit_pct = {}
+    if k12_durum and k12_durum.get("tema_durum"):
+        for t in k12_durum["tema_durum"]:
+            mevcut_tema_pct[t["tema"]] = t["mevcut_pct"]
+            dinamik_limit_pct[t["tema"]] = t["dinamik_limit_pct"]
     
     for s in iyi_sinyaller[:bos_slot]:
         sym = s.get("sembol")
@@ -261,14 +287,55 @@ def aggressive_strateji(durum: dict, vix: float) -> dict:
             continue
         # Carpan varsa onu kullan (yeni system), yoksa standart hesap
         carpan = s.get("carpan", 1.0) or 1.0
+        
+        # K-12 v2 CONVICTED BET BONUS (28 Nis 2026):
+        # Tema 9+ GUCLU + sektor RS +%5+ ise carpan +0.3 ek (max 2.5x)
+        # Memory: 'Druckenmiller convicted bet — when conviction is high, bet big'
+        sym_tema = tema_map.get(sym)
+        sym_tema_skor = 5
+        sym_tema_rs = 0
+        if sym_tema:
+            from k12_dynamic_limits import _tema_skoru
+            ts_data = _tema_skoru(sym_tema)
+            sym_tema_skor = ts_data.get("skor", 5)
+            sym_tema_rs = ts_data.get("rs_vs_spy", 0)
+            if sym_tema_skor >= 9 and sym_tema_rs > 5:
+                old_carpan = carpan
+                carpan = min(carpan + 0.3, 2.5)
+                if carpan > old_carpan:
+                    print(f"[K-12 v2] {sym} convicted bet bonus: carpan {old_carpan:.2f}x → {carpan:.2f}x (tema {sym_tema} skor {sym_tema_skor})")
+        
         # Carpan'a göre pozisyon büyüt
         ayarlanmis_tutar = pozisyon_basina * carpan
-        ayarlanmis_tutar = min(ayarlanmis_tutar, k12_max)  # K-12 sınırı
+        
+        # K-12 v2: tek pozisyon limit yumusamasi (tema 9 + RS +%5)
+        # Aggressive: %20 → %25 (tema skor 9'da)
+        tek_poz_max_pct = K12_TEK_POZISYON_MAX["aggressive"]
+        if sym_tema_skor >= 9 and sym_tema_rs > 5:
+            tek_poz_max_pct = 25  # %20 → %25 yumusama
+        k12_max_dyn = (tek_poz_max_pct / 100) * durum["mevcut_deger"]
+        ayarlanmis_tutar = min(ayarlanmis_tutar, k12_max_dyn)
+        
+        # K-12 v2: tema toplam limit kontrolü
+        sym_tema = tema_map.get(sym)
+        if sym_tema and sym_tema in mevcut_tema_pct:
+            mevcut = mevcut_tema_pct[sym_tema]
+            limit = dinamik_limit_pct.get(sym_tema, 40)
+            yeni_pct = (ayarlanmis_tutar / durum["mevcut_deger"]) * 100
+            toplam = mevcut + yeni_pct
+            if toplam > limit:
+                # Limit asilacak — tutarı kıs
+                kalan_alan = max(0, limit - mevcut)
+                ayarlanmis_tutar = (kalan_alan / 100) * durum["mevcut_deger"]
+                if ayarlanmis_tutar < 1000:
+                    continue  # Kalan alan az, atla
+        
         adet = int(ayarlanmis_tutar / fiyat)
         if adet < 1:
             continue
         skor_str = f" skor:{skor}" if skor else ""
         carpan_str = f" carpan:{carpan:.2f}x" if carpan != 1.0 else ""
+        tema_str = f" tema:{sym_tema}" if sym_tema else ""
         oneriler.append({
             "sembol": sym,
             "tip": "AL",
@@ -281,7 +348,7 @@ def aggressive_strateji(durum: dict, vix: float) -> dict:
             "rsi": rsi,
             "kalite_skor": skor,
             "carpan": carpan,
-            "neden": f"K-22 kaliteli swing sinyal (RSI {rsi}{skor_str}{carpan_str})",
+            "neden": f"K-22 kaliteli swing sinyal (RSI {rsi}{skor_str}{carpan_str}{tema_str})",
             "oncelik": "yuksek",
         })
     
