@@ -2,7 +2,7 @@
   "portfoy_adi": "Dengeli Portföy",
   "baslangic_sermaye": 100000,
   "nakit": {
-    "miktar": 66453.51,
+    "miktar": 81320.25,
     "para_birimi": "USD",
     "agirlik_yuzde": 61.02
   },
@@ -32,7 +32,9 @@
       "stop_mesafe_pct": 8.69,
       "stop_aciklama": "",
       "stop_guncelleme": "",
-      "durum": "✅ Normal"
+      "durum": "✅ Normal",
+      "rsi": 60.75,
+      "rsi_son_guncelleme": "2026-04-28T17:03:51.232162+03:00"
     },
     {
       "sembol": "CPRX",
@@ -59,7 +61,9 @@
       "stop_mesafe_pct": 11.55,
       "stop_aciklama": "",
       "stop_guncelleme": "",
-      "durum": "✅ Normal"
+      "durum": "✅ Normal",
+      "rsi": 71.17,
+      "rsi_son_guncelleme": "2026-04-28T17:03:51.232162+03:00"
     },
     {
       "sembol": "HBM",
@@ -85,36 +89,12 @@
       "stop_faz": 1,
       "zirve_fiyat": 24.69,
       "stop_mesafe_pct": 10.49,
-      "durum": "✅ Normal"
-    },
-    {
-      "sembol": "NEM",
-      "isim": "Newmont Corporation",
-      "sektor": "Basic Materials",
-      "adet": 133,
-      "maliyet_baz": 109.5721,
-      "giris_fiyati": 109.5721,
-      "guncel_fiyat": 116.08,
-      "yatirim": 14573.09,
-      "guncel_deger": 15438.64,
-      "kar_zarar": 865.55,
-      "kar_zarar_yuzde": 5.94,
-      "gunluk_degisim_yuzde": -3.83,
-      "agirlik_yuzde": 14.18,
-      "giris_tarihi": "2026-04-23",
-      "stop_loss": 112.43,
-      "hedef_fiyat": 126.01,
-      "tema": "emtia_hammadde",
-      "giris_nedeni": "emtia_hammadde tema taraması — teknik:6/10 fundamental:7/10",
-      "son_guncelleme": "2026-04-28T07:17:01.659362",
-      "cb_kaynak": "transactions-2026-04-23",
-      "stop_faz": 3,
-      "zirve_fiyat": 120.7,
-      "stop_mesafe_pct": 3.14,
-      "durum": "✅ Normal"
+      "durum": "✅ Normal",
+      "rsi": 50.23,
+      "rsi_son_guncelleme": "2026-04-28T17:03:51.232162+03:00"
     }
   ],
-  "son_guncelleme": "2026-04-28T07:17:01.659362",
+  "son_guncelleme": "2026-04-28T17:04:02.213989+03:00",
   "toplam_deger": 108909.06,
   "toplam_getiri_yuzde": 8.91,
   "toplam_getiri": 8909.06,

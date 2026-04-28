@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-04-27T14:20:21.858251",
+  "son_guncelleme": "2026-04-28T14:00:54.458017",
   "kapatilan_pozisyonlar": [
     {
       "id": "SWING-020",
@@ -793,6 +793,27 @@
       "partial_exits": [],
       "dersler": "## AMAT Post-Trade Analizi\n\n**1. Yönetim kuralı**\n- KESİN: Çıkış nedeni \"SURE\" → swing portföy süre limiti dolmuş. K-07 (trailing stop) tetiklenmedi, K-06 (stop) tetiklenmedi. Süre bazlı zorunlu çıkış uygulandı.\n\n**2. Giriş tezi değerlendirmesi**\n- KESİN: Tez = `sma50_bounce`. Giriş 399.49, çıkış 404.93 → fiyat tezini doğruladı (+%1.36 ham hareket).\n- MUHTEMEL: Sıçrama gerçekleşti ama momentum yetersizdi; süre dolana kadar anlamlı ivme gelmedi.\n- KESİN: Sistem P/L'yi %0 olarak raporlamış — komis",
       "agent_analiz_tarihi": "2026-04-28"
+    },
+    {
+      "id": "SWING-202604141454-GEV",
+      "sembol": "GEV",
+      "adet": 2,
+      "giris_fiyati": 1000.0,
+      "cikis_fiyati": 1077,
+      "giris_tarihi": "2026-04-14",
+      "cikis_tarihi": "2026-04-28",
+      "cikis_nedeni": "STOP",
+      "kar_zarar_yuzde": 7.7,
+      "tutulan_gun": 14,
+      "sonuc": "KAZANC",
+      "ders": "İyi çıkış. tenkan_bounce sinyali momentum sağladı.",
+      "giris_nedeni": "Seans içi otomatik giriş — tenkan_bounce",
+      "tarama_yontemi": "tenkan_bounce",
+      "katalizor": "",
+      "stop_loss": 892.19,
+      "hedef_fiyat": 1269.52,
+      "zirve_fiyat": 1166.62,
+      "partial_exits": []
     }
   ],
   "istatistikler": {
