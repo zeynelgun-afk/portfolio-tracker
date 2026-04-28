@@ -205,3 +205,4 @@ date,action,symbol,shares,price,total,reason
 2026-04-28,SELL,MU,6,497.63,2985.78,"K-15c tema 15g cikis: tutus 18g, kar +%19.9 (LLM-orta: Kural %50 satış öneriyor ancak bağlam güçlü: "
 2026-04-28,SELL,MU,4,500.0,2000.0,"K-15c tema 15g cikis: tutus 18g, kar +%20.5 (LLM-orta: 18 günde +%20.5 swing kuralı PARTIAL50 öneriy"
 2026-04-28,SELL,MU,3,506.7,1520.1,"K-15c tema 15g cikis: tutus 18g, kar +%22.1 (LLM-orta: Kural %50 çıkış öneriyor ancak bağlam güçlü: "
+2026-04-28,SELL,MU,2,509.01,1018.02,"K-15c tema 15g cikis: tutus 18g, kar +%22.7 (LLM-orta: Kural %50 satış öneriyor ancak bağlam güçlü: "
