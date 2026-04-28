@@ -91,8 +91,8 @@
   },
   "timestamp": "2026-04-27T17:20:19.296968+03:00",
   "k22_nakit_dagitim": {
-    "tarih": "2026-04-28T11:56:33.707928+03:00",
-    "vix": 18.22,
+    "tarih": "2026-04-28T12:07:57.806450+03:00",
+    "vix": 18.23,
     "portfoyler": {
       "balanced": {
         "nakit_pct": 61.01743050578161,
@@ -123,40 +123,31 @@
           {
             "sembol": "UEC",
             "tip": "AL",
-            "kaynak": "swing-sinyal",
-            "fiyat": 15.24,
-            "adet": 5063,
-            "tutar": 77160.12,
+            "kaynak": "swing-sinyal-kaliteli",
+            "fiyat": 15.41,
+            "adet": 5008,
+            "tutar": 77173.28,
             "stop": 13.93,
-            "hedef": 18.5,
-            "rsi": 65,
-            "neden": "K-22 nakit kullanim — swing sinyal (RSI 65), backtest +%8 sinyal turu",
+            "hedef": 19.11,
+            "rsi": 66,
+            "kalite_skor": 65,
+            "carpan": 1.7,
+            "neden": "K-22 kaliteli swing sinyal (RSI 66 skor:65 carpan:1.70x)",
             "oncelik": "yuksek"
           },
           {
             "sembol": "LEU",
             "tip": "AL",
-            "kaynak": "swing-sinyal",
-            "fiyat": 221.69,
-            "adet": 348,
-            "tutar": 77148.12,
+            "kaynak": "swing-sinyal-kaliteli",
+            "fiyat": 221.98,
+            "adet": 347,
+            "tutar": 77027.06,
             "stop": 197.88,
-            "hedef": 281.22,
+            "hedef": 282.23,
             "rsi": 70,
-            "neden": "K-22 nakit kullanim — swing sinyal (RSI 70), backtest +%8 sinyal turu",
-            "oncelik": "yuksek"
-          },
-          {
-            "sembol": "DNN",
-            "tip": "AL",
-            "kaynak": "swing-sinyal",
-            "fiyat": 3.85,
-            "adet": 20045,
-            "tutar": 77173.25,
-            "stop": 3.71,
-            "hedef": 4.22,
-            "rsi": 64,
-            "neden": "K-22 nakit kullanim — swing sinyal (RSI 64), backtest +%8 sinyal turu",
+            "kalite_skor": 60,
+            "carpan": 1.7,
+            "neden": "K-22 kaliteli swing sinyal (RSI 70 skor:60 carpan:1.70x)",
             "oncelik": "yuksek"
           }
         ]
