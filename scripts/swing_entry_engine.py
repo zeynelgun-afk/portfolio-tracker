@@ -885,7 +885,7 @@ def print_entry_report(giris_var: list[dict]):
     print(f"{'SYM':6} {'Fiyat':>7} {'Stop':>7} {'Stop%':>6} {'Hedef':>7} {'RSI':>4} Sinyal")
     print("-" * 70)
 
-    for r in sorted(giris_var, key=lambda x: -len(x.get("sinyaller", []))):
+    for r in sorted(giris_var, key=lambda x: -x.get("kalite_skor", 0)):
         sym   = r["symbol"]
         price = r["price"]
         stop  = r["stop"]
@@ -893,8 +893,11 @@ def print_entry_report(giris_var: list[dict]):
         tgt   = r["target"]
         rsi   = r.get("rsi") or 0
         sigs  = ", ".join(s["tip"] for s in r.get("sinyaller", []))
+        skor  = r.get("kalite_skor", 0)
+        karar_kalite = r.get("kalite_karar", "?")
+        carpan = r.get("carpan", 1.0)
         print(f"{sym:6} ${price:7.2f} ${stop:7.2f} {sdist:5.1f}% ${tgt:7.2f} {rsi:4.0f} {sigs}")
-        print(f"       Adet: {r['shares']} | ATR: ${r['atr']:.2f} | {r.get('karar','')}")
+        print(f"       Adet: {r['shares']} | ATR: ${r['atr']:.2f} | KALITE: {skor}/100 ({karar_kalite}) | CARPAN: {carpan:.2f}x | {r.get('karar','')}")
         print()
 
 

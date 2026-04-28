@@ -165,9 +165,21 @@ def aggressive_strateji(durum: dict, vix: float) -> dict:
     oneriler = []
     
     # 1. Önce swing sinyallerinden tenkan_bounce / ichimoku olanlar (backtest +%8)
-    iyi_sinyaller = [s for s in sinyaller 
-                      if s.get("sembol") not in durum["aktif_semboller"]
-                      and s.get("sembol") not in cikis_bekleyen]
+    # 28 Nis 2026: Sadece kalite skoru >=55 (ORTA+) sinyalleri kullan
+    # ZAYIF (40-55) ve GECERSIZ (<40) sinyalleri gec — K-22'nin amacı
+    # sermayeyi kaliteli pozisyonlara kanalize etmek
+    iyi_sinyaller = []
+    for s in sinyaller:
+        sym = s.get("sembol")
+        if sym in durum["aktif_semboller"] or sym in cikis_bekleyen:
+            continue
+        # Yeni alanlar (parse_swing_entry'den geliyor)
+        skor = s.get("kalite_skor")
+        karar = s.get("kalite_karar")
+        # Eski formatla uyumluluk: skor yoksa default geçir (eskiden hep geçiyordu)
+        if skor is not None and skor < 55:
+            continue  # ZAYIF/GECERSIZ — K-22'ye dahil etme
+        iyi_sinyaller.append(s)
     
     bos_slot = durum["bos_slot"]
     pozisyon_basina = kullanilacak / max(bos_slot, 1)
@@ -179,22 +191,32 @@ def aggressive_strateji(durum: dict, vix: float) -> dict:
         sym = s.get("sembol")
         fiyat = s.get("fiyat", 0)
         rsi = s.get("rsi", 0)
+        skor = s.get("kalite_skor")
         if not fiyat:
             continue
-        adet = int(pozisyon_basina / fiyat)
+        # Carpan varsa onu kullan (yeni system), yoksa standart hesap
+        carpan = s.get("carpan", 1.0) or 1.0
+        # Carpan'a göre pozisyon büyüt
+        ayarlanmis_tutar = pozisyon_basina * carpan
+        ayarlanmis_tutar = min(ayarlanmis_tutar, k12_max)  # K-12 sınırı
+        adet = int(ayarlanmis_tutar / fiyat)
         if adet < 1:
             continue
+        skor_str = f" skor:{skor}" if skor else ""
+        carpan_str = f" carpan:{carpan:.2f}x" if carpan != 1.0 else ""
         oneriler.append({
             "sembol": sym,
             "tip": "AL",
-            "kaynak": "swing-sinyal",
+            "kaynak": "swing-sinyal-kaliteli",
             "fiyat": fiyat,
             "adet": adet,
             "tutar": adet * fiyat,
             "stop": s.get("stop"),
             "hedef": s.get("hedef"),
             "rsi": rsi,
-            "neden": f"K-22 nakit kullanim — swing sinyal (RSI {rsi}), backtest +%8 sinyal turu",
+            "kalite_skor": skor,
+            "carpan": carpan,
+            "neden": f"K-22 kaliteli swing sinyal (RSI {rsi}{skor_str}{carpan_str})",
             "oncelik": "yuksek",
         })
     

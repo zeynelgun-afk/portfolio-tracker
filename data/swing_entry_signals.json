@@ -1,80 +1,101 @@
 {
-  "tarih": "2026-04-27T18:30:02.867388",
+  "tarih": "2026-04-28T09:07:50.398947",
   "toplam_taranan": 38,
   "giris_sayisi": 7,
   "giris_sinyalleri": [
-    "CAT",
+    "UPS",
+    "ATMU",
     "RPRX",
     "TFC",
     "NNE",
     "UEC",
-    "LEU",
-    "DNN"
+    "LEU"
   ],
   "detaylar": [
     {
       "sembol": "UEC",
-      "fiyat": 15.24,
+      "fiyat": 15.41,
       "stop": 13.93,
-      "stop_pct": 8.6,
-      "hedef": 18.5,
-      "rsi": 65,
-      "adet": 191
+      "stop_pct": 9.6,
+      "hedef": 19.11,
+      "rsi": 66,
+      "adet": 287,
+      "kalite_skor": 65,
+      "kalite_karar": "ORTA",
+      "carpan": 1.7
     },
     {
       "sembol": "LEU",
-      "fiyat": 221.69,
+      "fiyat": 221.98,
       "stop": 197.88,
-      "stop_pct": 10.7,
-      "hedef": 281.22,
+      "stop_pct": 10.9,
+      "hedef": 282.23,
       "rsi": 70,
-      "adet": 10
+      "adet": 17,
+      "kalite_skor": 60,
+      "kalite_karar": "ORTA",
+      "carpan": 1.7
     },
     {
-      "sembol": "DNN",
-      "fiyat": 3.85,
-      "stop": 3.71,
-      "stop_pct": 3.8,
-      "hedef": 4.22,
-      "rsi": 64,
-      "adet": 1724
-    },
-    {
-      "sembol": "CAT",
-      "fiyat": 830.8,
-      "stop": 754.92,
-      "stop_pct": 9.1,
-      "hedef": 1020.5,
-      "rsi": 82,
-      "adet": 3
+      "sembol": "ATMU",
+      "fiyat": 62.6,
+      "stop": 59.32,
+      "stop_pct": 5.2,
+      "hedef": 70.8,
+      "rsi": 57,
+      "adet": 76,
+      "kalite_skor": 50,
+      "kalite_karar": "ZAYIF",
+      "carpan": 1.0
     },
     {
       "sembol": "RPRX",
-      "fiyat": 49.53,
+      "fiyat": 49.65,
       "stop": 47.41,
-      "stop_pct": 4.3,
-      "hedef": 54.83,
-      "rsi": 71,
-      "adet": 117
-    },
-    {
-      "sembol": "TFC",
-      "fiyat": 51.2,
-      "stop": 47.67,
-      "stop_pct": 6.9,
-      "hedef": 60.04,
-      "rsi": 71,
-      "adet": 70
+      "stop_pct": 4.5,
+      "hedef": 55.25,
+      "rsi": 72,
+      "adet": 111,
+      "kalite_skor": 50,
+      "kalite_karar": "ZAYIF",
+      "carpan": 1.0
     },
     {
       "sembol": "NNE",
-      "fiyat": 25.62,
+      "fiyat": 25.76,
       "stop": 23.63,
-      "stop_pct": 7.8,
-      "hedef": 30.6,
+      "stop_pct": 8.3,
+      "hedef": 31.09,
       "rsi": 65,
-      "adet": 125
+      "adet": 117,
+      "kalite_skor": 48,
+      "kalite_karar": "ZAYIF",
+      "carpan": 1.0
+    },
+    {
+      "sembol": "UPS",
+      "fiyat": 108.24,
+      "stop": 101.29,
+      "stop_pct": 6.4,
+      "hedef": 125.61,
+      "rsi": 84,
+      "adet": 35,
+      "kalite_skor": 45,
+      "kalite_karar": "ZAYIF",
+      "carpan": 1.0
+    },
+    {
+      "sembol": "TFC",
+      "fiyat": 51.23,
+      "stop": 47.67,
+      "stop_pct": 6.9,
+      "hedef": 60.13,
+      "rsi": 71,
+      "adet": 70,
+      "kalite_skor": 40,
+      "kalite_karar": "ZAYIF",
+      "carpan": 1.0
     }
   ],
-  "ham_cikti": "\n[Kapasite] 2/8 pozisyon aktif — 6 boş slot\n\n[SwingEntry] 38 hisse taranıyor...\n  [ 1/38] CAT... ✅ GİRİŞ ✅ (tenkan_bounce)\n  [ 2/38] WDC... —\n  [ 3/38] KLAC... —\n  [ 4/38] AMAT... —\n  [ 5/38] MRK... —\n  [ 6/38] UPS... —\n  [ 7/38] DUK... —\n  [ 8/38] NEE... —\n  [ 9/38] GEV... —\n  [10/38] ATMU... —\n  [11/38] MU... —\n  [12/38] LMT... —\n  [13/38] VRT... —\n  [14/38] ANET... —\n  [15/38] KMB... —\n  [16/38] OKE... —\n  [17/38] LLY... —\n  [18/38] REGN... —\n  [19/38] RPRX... ✅ GİRİŞ ✅ (tenkan_bounce)\n  [20/38] ABBV... —\n  [21/38] KEY... —\n  [22/38] AR... —\n  [23/38] TFC... ✅ GİRİŞ ✅ (tenkan_bounce)\n  [24/38] LAUR... —\n  [25/38] PYPL... —\n  [26/38] LRCX... —\n  [27/38] CCJ... —\n  [28/38] OKLO... —\n  [29/38] NNE... ✅ GİRİŞ ✅ (kijun_bounce_v2)\n  [30/38] UEC... ✅ GİRİŞ ✅ (tenkan_bounce)\n  [31/38] VST... —\n  [32/38] BWXT... —\n  [33/38] LEU... ✅ GİRİŞ ✅ (tenkan_bounce)\n  [34/38] DNN... ✅ GİRİŞ ✅ (sma50_bounce)\n  [35/38] ALAB... —\n  [36/38] PLAB... —\n  [37/38] COHU... —\n  [38/38] CRDO... —\n\n[SwingEntry] Sonuç: 7/38 giriş sinyali\n\n======================================================================\nGİRİŞ SİNYALLERİ (7 hisse)\n======================================================================\nSYM      Fiyat    Stop  Stop%   Hedef  RSI Sinyal\n----------------------------------------------------------------------\nUEC    $  15.24 $  13.93   8.6% $  18.50   65 tenkan_bounce, sma50_bounce, kijun_bounce_v2\n       Adet: 191 | ATR: $1.00 | GİRİŞ ✅ (tenkan_bounce)\n\nLEU    $ 221.69 $ 197.88  10.7% $ 281.22   70 tenkan_bounce, sma50_bounce, kijun_bounce_v2\n       Adet: 10 | ATR: $15.25 | GİRİŞ ✅ (tenkan_bounce)\n\nDNN    $   3.85 $   3.71   3.8% $   4.22   64 sma50_bounce, kijun_bounce_v2\n       Adet: 1724 | ATR: $0.22 | GİRİŞ ✅ (sma50_bounce)\n\nCAT    $ 830.80 $ 754.92   9.1% $1020.50   82 tenkan_bounce\n       Adet: 3 | ATR: $22.92 | GİRİŞ ✅ (tenkan_bounce)\n\nRPRX   $  49.53 $  47.41   4.3% $  54.83   71 tenkan_bounce\n       Adet: 117 | ATR: $0.90 | GİRİŞ ✅ (tenkan_bounce)\n\nTFC    $  51.20 $  47.67   6.9% $  60.04   71 tenkan_bounce\n       Adet: 70 | ATR: $1.18 | GİRİŞ ✅ (tenkan_bounce)\n\nNNE    $  25.62 $  23.63   7.8% $  30.60   65 kijun_bounce_v2\n       Adet: 125 | ATR: $2.26 | GİRİŞ ✅ (kijun_bounce_v2)\n\n"
+  "ham_cikti": "\n[Kapasite] 5/8 pozisyon aktif — 3 boş slot\n\n[SwingEntry] 38 hisse taranıyor...\n  [ 1/38] CAT... —\n  [ 2/38] WDC... —\n  [ 3/38] KLAC... —\n  [ 4/38] AMAT... —\n  [ 5/38] MRK... —\n  [ 6/38] UPS... ✅ GİRİŞ ✅ (tenkan_bounce) ⚠️ skor:45\n  [ 7/38] DUK... —\n  [ 8/38] NEE... —\n  [ 9/38] GEV... —\n  [10/38] ATMU... ✅ GİRİŞ ✅ (sma50_bounce) ⚠️ skor:50\n  [11/38] MU... —\n  [12/38] LMT... —\n  [13/38] VRT... —\n  [14/38] ANET... —\n  [15/38] KMB... —\n  [16/38] OKE... —\n  [17/38] LLY... —\n  [18/38] REGN... —\n  [19/38] RPRX... ✅ GİRİŞ ✅ (tenkan_bounce) ⚠️ skor:50\n  [20/38] ABBV... —\n  [21/38] KEY... —\n  [22/38] AR... —\n  [23/38] TFC... ✅ GİRİŞ ✅ (tenkan_bounce) ⚠️ skor:40\n  [24/38] LAUR... —\n  [25/38] PYPL... —\n  [26/38] LRCX... —\n  [27/38] CCJ... —\n  [28/38] OKLO... —\n  [29/38] NNE... ✅ GİRİŞ ✅ (tenkan_bounce) ⚠️ skor:48\n  [30/38] UEC... ✅ GİRİŞ ✅ (tenkan_bounce) skor:65\n  [31/38] VST... —\n  [32/38] BWXT... —\n  [33/38] LEU... ✅ GİRİŞ ✅ (tenkan_bounce) skor:60\n  [34/38] DNN... —\n  [35/38] ALAB... —\n  [36/38] PLAB... —\n  [37/38] COHU... —\n  [38/38] CRDO... —\n\n[SwingEntry] Sonuç: 7/38 giriş sinyali\n\n======================================================================\nGİRİŞ SİNYALLERİ (7 hisse)\n======================================================================\nSYM      Fiyat    Stop  Stop%   Hedef  RSI Sinyal\n----------------------------------------------------------------------\nUEC    $  15.41 $  13.93   9.6% $  19.11   66 tenkan_bounce, sma50_bounce, kijun_bounce_v2\n       Adet: 287 | ATR: $1.01 | KALITE: 65/100 (ORTA) | CARPAN: 1.70x | GİRİŞ ✅ (tenkan_bounce) skor:65\n\nLEU    $ 221.98 $ 197.88  10.9% $ 282.23   70 tenkan_bounce, sma50_bounce, kijun_bounce_v2\n       Adet: 17 | ATR: $15.25 | KALITE: 60/100 (ORTA) | CARPAN: 1.70x | GİRİŞ ✅ (tenkan_bounce) skor:60\n\nATMU   $  62.60 $  59.32   5.2% $  70.80   57 tenkan_bounce, sma50_bounce, kijun_bounce_v2\n       Adet: 76 | ATR: $2.10 | KALITE: 50/100 (ZAYIF) | CARPAN: 1.00x | GİRİŞ ✅ (sma50_bounce) ⚠️ skor:50\n\nRPRX   $  49.65 $  47.41   4.5% $  55.25   72 tenkan_bounce\n       Adet: 111 | ATR: $0.90 | KALITE: 50/100 (ZAYIF) | CARPAN: 1.00x | GİRİŞ ✅ (tenkan_bounce) ⚠️ skor:50\n\nNNE    $  25.76 $  23.63   8.3% $  31.09   65 tenkan_bounce, kijun_bounce_v2\n       Adet: 117 | ATR: $2.27 | KALITE: 48/100 (ZAYIF) | CARPAN: 1.00x | GİRİŞ ✅ (tenkan_bounce) ⚠️ skor:48\n\nUPS    $ 108.24 $ 101.29   6.4% $ 125.61   84 tenkan_bounce\n       Adet: 35 | ATR: $2.17 | KALITE: 45/100 (ZAYIF) | CARPAN: 1.00x | GİRİŞ ✅ (tenkan_bounce) ⚠️ skor:45\n\nTFC    $  51.23 $  47.67   6.9% $  60.13   71 tenkan_bounce\n       Adet: 70 | ATR: $1.18 | KALITE: 40/100 (ZAYIF) | CARPAN: 1.00x | GİRİŞ ✅ (tenkan_bounce) ⚠️ skor:40\n\n"
 }

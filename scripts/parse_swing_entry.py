@@ -41,10 +41,16 @@ while i < len(detail_lines):
     if m:
         sym = m.group(1)
         if sym in giris_sinyalleri:
-            # Sonraki satırda Adet bilgisi var
+            # Sonraki satırda Adet bilgisi var (yeni format: KALITE + CARPAN dahil)
             adet_line = detail_lines[i+1] if i+1 < len(detail_lines) else ''
             adet_m = re.search(r'Adet:\s*(\d+)', adet_line)
             adet = int(adet_m.group(1)) if adet_m else None
+            # Kalite skoru ve carpan (28 Nis 2026 reform)
+            skor_m = re.search(r'KALITE:\s*(\d+)/100\s*\(([\w]+)\)', adet_line)
+            kalite_skor = int(skor_m.group(1)) if skor_m else None
+            kalite_karar = skor_m.group(2) if skor_m else None
+            carpan_m = re.search(r'CARPAN:\s*([\d.]+)x', adet_line)
+            carpan = float(carpan_m.group(1)) if carpan_m else None
             detaylar.append({
                 'sembol':  sym,
                 'fiyat':   float(m.group(2)),
@@ -53,6 +59,9 @@ while i < len(detail_lines):
                 'hedef':   float(m.group(5)),
                 'rsi':     int(m.group(6)),
                 'adet':    adet,
+                'kalite_skor': kalite_skor,
+                'kalite_karar': kalite_karar,
+                'carpan':  carpan,
             })
     i += 1
 
