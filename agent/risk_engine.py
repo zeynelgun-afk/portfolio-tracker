@@ -486,7 +486,6 @@ def build_risk_context(portfolios: dict) -> str:
         k23 = _k23_a()
         en_kotu_kod = max(k23["toplam"]["k23"]["kod"],
                           *[d["k23"]["kod"] for d in k23["portfoyler"].values()])
-        # Her zaman göster (NORMAL bile olsa peak/drawdown bilgi)
         lines.append("--- K-23 DRAWDOWN GUARD ---")
         for pf, data in k23["portfoyler"].items():
             dd = data["drawdown"]
@@ -499,6 +498,27 @@ def build_risk_context(portfolios: dict) -> str:
         lines.append("")
     except Exception as _k23e:
         print(f"[Risk] K-23 blogu hatasi: {_k23e}")
+
+    # Tema skor (28 Nis 2026) — haftalik guncelleme
+    try:
+        from pathlib import Path as _P_th
+        th_path = _P_th(__file__).parent.parent / "data" / "theme_scores.json"
+        if th_path.exists():
+            th = json.load(open(th_path))
+            spy_perf = th.get("spy_10g_perf", 0)
+            lines.append(f"--- TEMA SKORLARI (10g, SPY {spy_perf:+.1f}%) ---")
+            sorted_t = sorted(th.get("temalar", {}).items(), 
+                              key=lambda x: -x[1]["skor"])
+            for k_t, t_t in sorted_t:
+                ad = t_t.get("ad", k_t)[:25]
+                skor = t_t.get("skor", 0)
+                rs = t_t.get("rs_vs_spy", 0)
+                seviye = t_t.get("seviye", "?")
+                emoji = {"GUCLU": "🟢", "ORTA": "🟡", "ZAYIF": "🟠", "TEHLIKELI": "🔴"}.get(seviye, "⚪")
+                lines.append(f"  {emoji} {skor:>2}/10 {ad:25} RS:{rs:+5.1f}%")
+            lines.append("")
+    except Exception as _the:
+        print(f"[Risk] Tema blogu hatasi: {_the}")
 
     # Discovery sonuclari (28 Nis 2026) — kaliteli yeni adaylar
     try:

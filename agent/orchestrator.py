@@ -1970,6 +1970,34 @@ def run_weekly(ctx: dict):
     except Exception as _disce:
         print(f"[Weekly] Discovery exception: {_disce}")
 
+    # Theme Tracker — haftalik tema skorları (28 Nis 2026)
+    try:
+        import subprocess
+        _th_proc = subprocess.run(
+            ["python3", str(REPO_ROOT / "scripts" / "theme_tracker.py"), "--update"],
+            capture_output=True, text=True, timeout=300, env=os.environ
+        )
+        if _th_proc.returncode == 0:
+            print("[Weekly] Tema skorları guncellendi")
+            # Telegram DM'e ozet
+            try:
+                _th_path = REPO_ROOT / "data" / "theme_scores.json"
+                if _th_path.exists():
+                    _th = json.load(open(_th_path))
+                    _msg_lines = ["📊 *TEMA SKORLARI HAFTALIK*"]
+                    _sorted_t = sorted(_th.get("temalar", {}).values(),
+                                       key=lambda x: -x["skor"])
+                    for _t in _sorted_t:
+                        _emoji = {"GUCLU":"🟢","ORTA":"🟡","ZAYIF":"🟠","TEHLIKELI":"🔴"}.get(_t["seviye"], "⚪")
+                        _msg_lines.append(f"{_emoji} {_t['skor']:>2}/10 {_t['ad']:25} RS:{_t.get('rs_vs_spy',0):+.1f}%")
+                    print("\n".join(_msg_lines))
+            except Exception as _the2:
+                print(f"[Weekly] Tema ozet hatasi: {_the2}")
+        else:
+            print(f"[Weekly] Theme tracker hata: {_th_proc.stderr[:200]}")
+    except Exception as _the3:
+        print(f"[Weekly] Theme tracker exception: {_the3}")
+
     # Tema × Portföy Matris Güncellemesi (11 Nisan 2026)
     tema_matrix_rpt = ""
     if run_tema_matrix:

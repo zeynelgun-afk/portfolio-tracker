@@ -1,0 +1,96 @@
+{
+  "tarih": "2026-04-28T12:26:16.961782+03:00",
+  "spy_10g_perf": 4.24,
+  "temalar": {
+    "ai_yari_iletken": {
+      "ad": "AI / Yari-iletken",
+      "kategori": "buyume",
+      "skor": 9,
+      "seviye": "GUCLU",
+      "perf_10g": 11.76,
+      "rs_vs_spy": 7.53,
+      "sembol_sayisi": 9
+    },
+    "ai_yazilim": {
+      "ad": "AI Yazilim / Bulut",
+      "kategori": "buyume",
+      "skor": 9,
+      "seviye": "GUCLU",
+      "perf_10g": 10.84,
+      "rs_vs_spy": 6.61,
+      "sembol_sayisi": 8
+    },
+    "elektrik_altyapi": {
+      "ad": "Elektrik / Sebeke / DC",
+      "kategori": "buyume",
+      "skor": 8,
+      "seviye": "GUCLU",
+      "perf_10g": 6.6,
+      "rs_vs_spy": 2.36,
+      "sembol_sayisi": 8
+    },
+    "uranyum_nukleer": {
+      "ad": "Uranyum / Nukleer",
+      "kategori": "agresif",
+      "skor": 9,
+      "seviye": "GUCLU",
+      "perf_10g": 11.85,
+      "rs_vs_spy": 7.62,
+      "sembol_sayisi": 8
+    },
+    "savunma": {
+      "ad": "Savunma / Defansif",
+      "kategori": "defansif_buyume",
+      "skor": 1,
+      "seviye": "TEHLIKELI",
+      "perf_10g": -11.07,
+      "rs_vs_spy": -15.31,
+      "sembol_sayisi": 7
+    },
+    "saglik": {
+      "ad": "Saglik (XLV)",
+      "kategori": "defansif",
+      "skor": 1,
+      "seviye": "TEHLIKELI",
+      "perf_10g": -3.18,
+      "rs_vs_spy": -7.41,
+      "sembol_sayisi": 7
+    },
+    "tuketici_temel": {
+      "ad": "Tuketici Temel (XLP)",
+      "kategori": "defansif",
+      "skor": 2,
+      "seviye": "TEHLIKELI",
+      "perf_10g": 0.37,
+      "rs_vs_spy": -3.86,
+      "sembol_sayisi": 8
+    },
+    "altin": {
+      "ad": "Altin / Kıymetli Maden",
+      "kategori": "guvenli_liman",
+      "skor": 1,
+      "seviye": "TEHLIKELI",
+      "perf_10g": -2.78,
+      "rs_vs_spy": -7.01,
+      "sembol_sayisi": 6
+    },
+    "kripto": {
+      "ad": "Kripto / Ethereum",
+      "kategori": "yuksek_risk",
+      "skor": 9,
+      "seviye": "GUCLU",
+      "perf_10g": 9.91,
+      "rs_vs_spy": 5.67,
+      "sembol_sayisi": 6
+    },
+    "petrol_enerji": {
+      "ad": "Petrol / Enerji",
+      "kategori": "siklus",
+      "skor": 2,
+      "seviye": "TEHLIKELI",
+      "perf_10g": -0.65,
+      "rs_vs_spy": -4.88,
+      "sembol_sayisi": 6
+    }
+  }
+}
