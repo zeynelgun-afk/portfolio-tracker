@@ -124,7 +124,9 @@
       }
     ],
     "kaynak": "sabah_raporu_28_apr_yeniden_aktif",
-    "executed": false
+    "executed": true,
+    "executed_at": "2026-04-28T19:04:18.867087+03:00",
+    "executed_count": 5
   },
   "timestamp": "2026-04-28T16:05:56.356065+03:00",
   "k22_nakit_dagitim": {

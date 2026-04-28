@@ -197,3 +197,7 @@ date,action,symbol,shares,price,total,reason
 2026-04-28,BUY,PPG,139,107.66,14964.74,emtia_hammadde tema taraması — teknik:5/10 fundamental:7/10
 2026-04-28,SELL,ANET,271,164.08,44465.68,K-06 stop tetiklendi $164.08≤$164.42
 2026-04-28,SELL,MU,13,495.13,6436.76,"K-15c tema 15g zorunlu cikis: tutus 18g, kar +%19.3 [LLM-orta: Kural 15+ gün swing'de %19.3 karı kor"
+2026-04-28,SELL,MU,10,495.15,4951.55,"K-15c tema 15g cikis: tutus 18g, kar +%19.3 (LLM-orta: Kural %50 çıkış öneriyor ama bağlam güçlü: AI"
+2026-04-28,SELL,ABBV,123,198.34,24395.82,Claude: Tez bozulma skor 75 + bilanço yarın K-05 + Healthcare RS -7.3% + 50SMA -8.8% — TAM ÇIKIŞ
+2026-04-28,SELL,CL,176,86.21,15172.96,"Claude: Tez bozulma skor 70 — FMCG devleri çöküşte, XLP tema 2 ZAYIF, P/L sadece -0.4% bedeli düşükk"
+2026-04-28,SELL,MO,109,67.9,7401.1,"Claude: Tez bozulma skor 65 + bilanço 30 Nis K-05 — kâr kilitle (P/L +15.2%), kalan yarı bilanço son"

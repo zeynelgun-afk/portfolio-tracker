@@ -2,7 +2,7 @@
   "portfoy_adi": "Değer + Temettü",
   "baslangic_sermaye": 100000,
   "nakit": {
-    "miktar": 44848.52,
+    "miktar": 91818.4,
     "para_birimi": "USD",
     "agirlik_yuzde": 31.8
   },
@@ -11,7 +11,7 @@
       "sembol": "MO",
       "isim": "Altria Group",
       "sektor": "Tütün",
-      "adet": 218,
+      "adet": 109,
       "maliyet_baz": 57.31,
       "yatirim": 12493.58,
       "guncel_fiyat": 66,
@@ -33,8 +33,8 @@
       "stop_aciklama": "",
       "stop_guncelleme": "",
       "durum": "✅ Normal",
-      "rsi": 58.88,
-      "rsi_son_guncelleme": "2026-04-28T18:03:24.933501+03:00"
+      "rsi": 59.6,
+      "rsi_son_guncelleme": "2026-04-28T19:03:48.905547+03:00"
     },
     {
       "sembol": "OKE",
@@ -62,35 +62,8 @@
       "stop_aciklama": "",
       "stop_guncelleme": "",
       "durum": "✅ Normal",
-      "rsi": 58.0,
-      "rsi_son_guncelleme": "2026-04-28T18:03:24.933501+03:00"
-    },
-    {
-      "sembol": "ABBV",
-      "isim": "AbbVie Inc.",
-      "sektor": "Healthcare",
-      "adet": 123,
-      "maliyet_baz": 202.84,
-      "giris_fiyati": 202.84,
-      "guncel_fiyat": 197.38,
-      "yatirim": 24949.32,
-      "guncel_deger": 24277.74,
-      "kar_zarar": -671.58,
-      "kar_zarar_yuzde": -2.69,
-      "gunluk_degisim_yuzde": -0.67,
-      "agirlik_yuzde": 17.21,
-      "giris_tarihi": "2026-04-22",
-      "stop_loss": 192.45,
-      "hedef_fiyat": 223.63,
-      "tema": "healthcare_farma",
-      "giris_nedeni": "Dividend: RSI 33 oversold, FCF yield %5.2, temettü ~%3.8, Skyrizi/Rinvoq pipeline",
-      "son_guncelleme": "2026-04-28T07:17:03.540688",
-      "stop_faz": 1,
-      "zirve_fiyat": 202.84,
-      "stop_mesafe_pct": 2.5,
-      "durum": "⚠️ Stop yakın (2.5%)",
-      "rsi": 35.68,
-      "rsi_son_guncelleme": "2026-04-28T18:03:24.933501+03:00"
+      "rsi": 61.56,
+      "rsi_son_guncelleme": "2026-04-28T19:03:48.905547+03:00"
     },
     {
       "sembol": "O",
@@ -116,8 +89,8 @@
       "zirve_fiyat": 64.08,
       "stop_mesafe_pct": 1.35,
       "durum": "⚠️ Stop yakın (1.4%)",
-      "rsi": 48.73,
-      "rsi_son_guncelleme": "2026-04-28T18:03:24.933501+03:00"
+      "rsi": 49.22,
+      "rsi_son_guncelleme": "2026-04-28T19:03:48.905547+03:00"
     },
     {
       "sembol": "GTY",
@@ -144,39 +117,11 @@
       "zirve_fiyat": 33.76,
       "stop_mesafe_pct": 4.26,
       "durum": "✅ Normal",
-      "rsi": 51.66,
-      "rsi_son_guncelleme": "2026-04-28T18:03:24.933501+03:00"
-    },
-    {
-      "sembol": "CL",
-      "isim": "Colgate-Palmolive Company",
-      "sektor": "Consumer Defensive",
-      "adet": 176,
-      "maliyet_baz": 84.48,
-      "giris_fiyati": 84.48,
-      "guncel_fiyat": 84.17,
-      "yatirim": 14868.48,
-      "guncel_deger": 14813.92,
-      "kar_zarar": -54.56,
-      "kar_zarar_yuzde": -0.37,
-      "gunluk_degisim_yuzde": -0.57,
-      "agirlik_yuzde": 10.5,
-      "giris_tarihi": "2026-04-27",
-      "stop_loss": 80.26,
-      "hedef_fiyat": 91.66,
-      "tema": "tüketici_temettü",
-      "giris_nedeni": "tüketici_temettü tema taraması — teknik:5/10 fundamental:7/10",
-      "son_guncelleme": "2026-04-28T07:17:03.540688",
-      "cb_kaynak": "transactions-2026-04-27",
-      "stop_faz": 1,
-      "zirve_fiyat": 84.48,
-      "stop_mesafe_pct": 4.65,
-      "durum": "✅ Normal",
-      "rsi": 50.67,
-      "rsi_son_guncelleme": "2026-04-28T18:03:24.933501+03:00"
+      "rsi": 51.77,
+      "rsi_son_guncelleme": "2026-04-28T19:03:48.905547+03:00"
     }
   ],
-  "son_guncelleme": "2026-04-28T07:17:03.540688",
+  "son_guncelleme": "2026-04-28T19:04:13.476483+03:00",
   "toplam_deger": 141044.23,
   "toplam_getiri_yuzde": 41.04,
   "toplam_getiri": 41044.23,

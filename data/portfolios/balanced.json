@@ -33,8 +33,8 @@
       "stop_aciklama": "",
       "stop_guncelleme": "",
       "durum": "✅ Normal",
-      "rsi": 61.62,
-      "rsi_son_guncelleme": "2026-04-28T18:03:24.933501+03:00"
+      "rsi": 61.65,
+      "rsi_son_guncelleme": "2026-04-28T19:03:48.905547+03:00"
     },
     {
       "sembol": "CPRX",
@@ -49,21 +49,21 @@
       "kar_zarar_yuzde": 13.06,
       "gunluk_degisim_yuzde": 6.94,
       "agirlik_yuzde": 7.77,
-      "son_guncelleme": "2026-04-28T07:17:01.659362",
+      "son_guncelleme": "2026-04-28",
       "giris_tarihi": "2026-04-17",
       "giris_fiyati": 25.89,
       "giris_nedeni": "Sağlık sektörü diversifikasyonu. Catalyst Pharma Firdapse (LEMS nadir hastalık) orphan drug monopol pozisyonu, FDA münhasırlığı 2030 sonrasına. FCF yield güçlü, balance sheet temiz, borç minimal. CI ile sağlık alt-sektör farkı (sigorta vs spesiyalte ilaç). Katalizör: orphan drug büyümesi + pipeline genişleme. BEAR: Tek ürün konsantrasyonu, patent cliff 2030+ risk, FDA/ödeme değişiklikleri, M&A beklentisi gerçekleşmezse değerleme sıkışması. Stop $24.60 (5%), hedef $28.48 (+10%).",
       "cb_kaynak": "transactions-2026-04-17",
       "hedef_fiyat": 28.48,
-      "stop_loss": 25.89,
+      "stop_loss": 27.5,
       "zirve_fiyat": 29.27,
       "stop_faz": 3,
-      "stop_mesafe_pct": 11.55,
+      "stop_mesafe_pct": 6.05,
       "stop_aciklama": "",
       "stop_guncelleme": "",
       "durum": "✅ Normal",
-      "rsi": 70.08,
-      "rsi_son_guncelleme": "2026-04-28T18:03:24.933501+03:00"
+      "rsi": 70.86,
+      "rsi_son_guncelleme": "2026-04-28T19:03:48.905547+03:00"
     },
     {
       "sembol": "HBM",
@@ -90,8 +90,8 @@
       "zirve_fiyat": 24.69,
       "stop_mesafe_pct": 10.49,
       "durum": "✅ Normal",
-      "rsi": 47.77,
-      "rsi_son_guncelleme": "2026-04-28T18:03:24.933501+03:00"
+      "rsi": 46.34,
+      "rsi_son_guncelleme": "2026-04-28T19:03:48.905547+03:00"
     },
     {
       "sembol": "PPG",
@@ -118,8 +118,8 @@
       "zirve_fiyat": 107.66,
       "stop_mesafe_pct": 6.26,
       "durum": "✅ Normal",
-      "rsi": 46.77,
-      "rsi_son_guncelleme": "2026-04-28T18:03:24.933501+03:00"
+      "rsi": 46.46,
+      "rsi_son_guncelleme": "2026-04-28T19:03:48.905547+03:00"
     }
   ],
   "son_guncelleme": "2026-04-28T17:35:21.403417+03:00",
