@@ -582,19 +582,35 @@ KESİN / MUHTEMEL / SPEKÜLATİF etiket kullan. Küçük harf Türkçe.
             _ss_path_sm = REPO_ROOT / "data" / "session_state.json"
             _ss_sm = _json_sm.load(open(_ss_path_sm)) if _ss_path_sm.exists() else {}
             _mevcut_ck = _ss_sm.get("claude_kararlar", {})
-            # Zaten execute edilmemiş kararlar varsa üzerine yazma
-            if not _mevcut_ck.get("executed") and _mevcut_ck.get("kararlar"):
-                print(f"[Orkestratör] session_state'te execute bekleyen kararlar var, sabah kararları eklenmedi.")
-            else:
-                _ss_sm["claude_kararlar"] = {
-                    "tarih":   datetime.now(TR_TZ).isoformat(),
-                    "kararlar": claude_kararlar,
-                    "kaynak":  "sabah_raporu",
-                    "executed": False,
-                }
-                with open(_ss_path_sm, "w") as _ff_sm:
-                    _json_sm.dump(_ss_sm, _ff_sm, ensure_ascii=False, indent=2)
-                print(f"[Orkestratör] {len(claude_kararlar)} sabah kararı session_state'e kaydedildi (FAZ_2'de execute edilecek).")
+            
+            # 28 Nis 2026 düzeltme: sabah kararları ÖNCEKİ kapanış
+            # kararlarının üzerine yazılır (en güncel olan, daha kaliteli context).
+            # Önceki kontrol "executed bekleyen var" sabah kararlarını engelliyor,
+            # CL gibi yeni tespitlerin uygulanmamasına neden oluyor.
+            _eski_kaynak = _mevcut_ck.get("kaynak", "")
+            _eski_executed = _mevcut_ck.get("executed", False)
+            _arsiv_str = ""
+            
+            # Önceki kararlar execute edilmediyse ARŞIVLE (kayıt için)
+            if _mevcut_ck.get("kararlar") and not _eski_executed:
+                _ss_sm.setdefault("claude_kararlar_arsiv", []).append({
+                    "arsivlendi_zaman": datetime.now(TR_TZ).isoformat(),
+                    "uzeri_yazildi_neden": "Sabah agent yeni kararlari geldi",
+                    **_mevcut_ck,
+                })
+                # Son 10 arşivi tut
+                _ss_sm["claude_kararlar_arsiv"] = _ss_sm["claude_kararlar_arsiv"][-10:]
+                _arsiv_str = f" (onceki {len(_mevcut_ck.get('kararlar', []))} karar [{_eski_kaynak}] arsivlendi)"
+            
+            _ss_sm["claude_kararlar"] = {
+                "tarih":   datetime.now(TR_TZ).isoformat(),
+                "kararlar": claude_kararlar,
+                "kaynak":  "sabah_raporu",
+                "executed": False,
+            }
+            with open(_ss_path_sm, "w") as _ff_sm:
+                _json_sm.dump(_ss_sm, _ff_sm, ensure_ascii=False, indent=2)
+            print(f"[Orkestratör] {len(claude_kararlar)} sabah kararı session_state'e kaydedildi{_arsiv_str}.")
         except Exception as _ce_sm:
             print(f"[Orkestratör] Sabah kararı session_state kayıt hatası: {_ce_sm}")
 

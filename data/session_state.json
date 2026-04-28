@@ -19,75 +19,89 @@
   },
   "zorunlu_aksiyonlar": [],
   "claude_kararlar": {
-    "tarih": "2026-04-28T10:18:04.056186+03:00",
+    "tarih": "2026-04-28T13:22:22.387506+03:00",
     "kararlar": [
       {
         "tip": "ÇIK",
         "portfoy": "dividend",
         "sembol": "ABBV",
-        "pct": 50,
-        "neden": "K-05 ihlali — 1 gün earnings + stop %2.5 + zararda, risk/ödül kötü",
+        "pct": 100,
+        "neden": "Tez bozulma skor 75 + bilanço yarın K-05 + Healthcare RS -7.3% + 50SMA -8.8% — TAM ÇIKIŞ",
         "hedef_fiyat": 0.0,
         "stop": 0.0,
         "tutar": 0,
         "aciliyet": "hemen",
         "dondur_al": null,
-        "_decision_id": "66fee17e6557"
+        "_decision_id": "morning_28_abbv"
       },
       {
-        "tip": "İZLE",
+        "tip": "ÇIK",
         "portfoy": "dividend",
-        "sembol": "O",
-        "pct": 0,
-        "neden": "Stop %1.4 — K-09 sınırında, yarın açılışta tetiklenirse otomatik çık",
-        "hedef_fiyat": 67.0,
-        "stop": 61.85,
+        "sembol": "CL",
+        "pct": 100,
+        "neden": "Tez bozulma skor 70 — FMCG devleri çöküşte, XLP tema 2 ZAYIF, P/L sadece -0.4% bedeli düşükken çık",
+        "hedef_fiyat": 0.0,
+        "stop": 0.0,
         "tutar": 0,
         "aciliyet": "hemen",
         "dondur_al": null,
-        "_decision_id": "475826310297"
+        "_decision_id": "morning_28_cl"
       },
       {
         "tip": "ÇIK",
         "portfoy": "dividend",
         "sembol": "MO",
-        "pct": 100,
-        "neden": "K-05 — earnings 30 Nis öncesi tam çıkış, +%15 kârı koru",
+        "pct": 50,
+        "neden": "Tez bozulma skor 65 + bilanço 30 Nis K-05 — kâr kilitle (P/L +15.2%), kalan yarı bilanço sonrası karar",
         "hedef_fiyat": 0.0,
         "stop": 0.0,
         "tutar": 0,
-        "aciliyet": "bu_hafta",
+        "aciliyet": "hemen",
         "dondur_al": null,
-        "_decision_id": "a04d633b5d56"
+        "_decision_id": "morning_28_mo"
       },
       {
-        "tip": "İZLE",
-        "portfoy": "balanced",
-        "sembol": "NEM",
+        "tip": "STOP_GÜNCELLE",
+        "portfoy": "aggressive",
+        "sembol": "MU",
         "pct": 0,
-        "neden": "Stop %3.1, gold zayıflığı — K-06 tetik riski yüksek",
-        "hedef_fiyat": 126.0,
-        "stop": 112.5,
+        "neden": "Pozisyon +%26.4, hedef $470 zaten geçildi — kâr kilidi, takip eden zarar kes $470 → $485",
+        "hedef_fiyat": 0.0,
+        "stop": 485.0,
         "tutar": 0,
         "aciliyet": "bugün",
         "dondur_al": null,
-        "_decision_id": "c4f5d4f7a8a4"
+        "_decision_id": "morning_28_mu_stop"
+      },
+      {
+        "tip": "STOP_GÜNCELLE",
+        "portfoy": "balanced",
+        "sembol": "CPRX",
+        "pct": 0,
+        "neden": "Ön piyasa +%6.9, hedef $28 zaten geçildi ($29.27) — takip eden zarar kes $25.90 → $27.50",
+        "hedef_fiyat": 0.0,
+        "stop": 27.5,
+        "tutar": 0,
+        "aciliyet": "bugün",
+        "dondur_al": null,
+        "_decision_id": "morning_28_cprx_stop"
       },
       {
         "tip": "İZLE",
         "portfoy": "swing",
         "sembol": "GEV",
         "pct": 0,
-        "neden": "+%12 K-11 partial adayı, hedef $1270'e %13 var — henüz erken",
+        "neden": "Stop %2.6 yakın, P/L +12% kâr koruma — takip eden zarar kes $1090.74 → $1100 sıkılaştır",
         "hedef_fiyat": 1270.0,
-        "stop": 1052.81,
+        "stop": 1100.0,
         "tutar": 0,
-        "aciliyet": "bu_hafta",
+        "aciliyet": "bugün",
         "dondur_al": null,
-        "_decision_id": "5af81d89b5f2"
+        "_decision_id": "morning_28_gev"
       }
     ],
-    "kaynak": "closing"
+    "kaynak": "sabah_raporu_28_apr_manuel_duzeltme",
+    "executed": false
   },
   "timestamp": "2026-04-28T16:05:56.356065+03:00",
   "k22_nakit_dagitim": {
