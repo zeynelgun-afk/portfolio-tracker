@@ -1087,6 +1087,45 @@ def run_monitor(ctx: dict):
     except Exception as _e:
         print(f"[RSI] Batch fetch başarısız: {_e}")
         rsi_map = {}
+
+    # RSI değerlerini JSON'lara cache et (kapanış raporu okuyabilsin)
+    # 27 Nis 2026 fix: Önceki kod RSI'ı sadece anlık dict'te kullanıyordu,
+    # pozisyon JSON'una yazmıyordu. Closing prompt'unda 'rsi=None' görünüyordu.
+    if rsi_map:
+        try:
+            from datetime import datetime as _dt
+            _now_iso = _dt.now(TR_TZ).isoformat()
+            for _pf_n in ["balanced","aggressive","dividend"]:
+                _pf_path = REPO_ROOT / "data" / "portfolios" / f"{_pf_n}.json"
+                if not _pf_path.exists():
+                    continue
+                _pfd = json.load(open(_pf_path))
+                _changed = False
+                for _pos in _pfd.get("pozisyonrar" if False else "pozisyonlar", []):
+                    _s = _pos.get("sembol")
+                    if _s and _s != "_template" and _s in rsi_map:
+                        _pos["rsi"] = rsi_map[_s]
+                        _pos["rsi_son_guncelleme"] = _now_iso
+                        _changed = True
+                if _changed:
+                    with open(_pf_path, "w", encoding="utf-8") as _f:
+                        json.dump(_pfd, _f, ensure_ascii=False, indent=2)
+            # Swing'i de güncelle
+            _sw_path = REPO_ROOT / "data" / "swing" / "active.json"
+            if _sw_path.exists():
+                _sw = json.load(open(_sw_path))
+                _swc = False
+                for _pos in _sw.get("aktif_pozisyonlar", []):
+                    _s = _pos.get("sembol")
+                    if _s and _s in rsi_map:
+                        _pos["rsi"] = rsi_map[_s]
+                        _pos["rsi_son_guncelleme"] = _now_iso
+                        _swc = True
+                if _swc:
+                    with open(_sw_path, "w", encoding="utf-8") as _f:
+                        json.dump(_sw, _f, ensure_ascii=False, indent=2)
+        except Exception as _rcache:
+            print(f"[RSI cache] uyarısı: {_rcache}")
     # ─────────────────────────────────────────────────────────────────────────
 
     # ── 1. SWING ÇIKIŞ KONTROL — her FAZ'da ─────────────────────────────────

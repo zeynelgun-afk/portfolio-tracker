@@ -455,6 +455,17 @@ def update_portfolio(filepath, quote_dict):
             pos['gunluk_degisim_yuzde'] = round(((new_price - prev_close) / prev_close) * 100, 2)
         else:
             pos['gunluk_degisim_yuzde'] = quote.get('changePercentage', 0)
+
+        # ATR(14) günlük güncelle — JSON cache (closing'de tek seferlik)
+        # 27 Nis 2026 fix: ATR pozisyona kaydedilmiyordu, sadece stop hesabı
+        # için anlık çekiliyordu. risk_panosu, chandelier, swing_manager hep
+        # 0 ATR ile çalışıyordu (yanlış stop seviyeleri).
+        try:
+            atr_yeni = calculate_atr21(symbol, period=14)
+            if atr_yeni and atr_yeni > 0:
+                pos['atr14'] = round(atr_yeni, 4)
+        except Exception as _ae:
+            pass  # ATR hatası kritik değil, eski değerle devam
         
         # Hesaplamaları güncelle
         pos['guncel_deger'] = round(pos['adet'] * new_price, 2)
