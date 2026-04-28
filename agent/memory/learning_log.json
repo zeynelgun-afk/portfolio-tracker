@@ -1261,6 +1261,11 @@
       "date": "2026-04-28",
       "source": "post_trade",
       "insight": "AMAT: DERS: sma50_bounce tezi fiyatta doğrulansa bile çok kısa süreli çıkışlar masrafları karşılayamaz; entry kalitesi ve tutma süresi yeniden ayarlanmalı."
+    },
+    {
+      "date": "2026-04-29",
+      "source": "closing_analysis",
+      "insight": "---"
     }
   ]
 }
