@@ -191,3 +191,7 @@ date,action,symbol,shares,price,total,reason
 2026-04-28,SELL,GEV,2,1077,2154,Swing çıkış — STOP. P/L: +7.7% (14 gün)
 2026-04-28,SELL,MU,23,510.48,11740.93,"K-15c tema 15g zorunlu cikis: tutus 18g, kar +%23.0 [LLM-orta: Kural %50 satış öneriyor ancak tema s"
 2026-04-28,SELL,NEM,133,111.78,14866.74,K-06 stop tetiklendi $111.78≤$112.43
+2026-04-28,SELL,NNE,125,23.62,2952.57,Swing çıkış — STOP. P/L: -7.8% (1 gün)
+2026-04-28,SELL,MU,18,500.73,9013.14,"K-15c tema 15g zorunlu cikis: tutus 18g, kar +%20.7 [LLM-orta: Kural %50 çıkış öneriyor ama tema bağ"
+2026-04-28,BUY,UEC,307,14.86,4562.02,"Swing giriş — nr7_sikisma. Stop: $14.05, Hedef: $16.89"
+2026-04-28,BUY,PPG,139,107.66,14964.74,emtia_hammadde tema taraması — teknik:5/10 fundamental:7/10

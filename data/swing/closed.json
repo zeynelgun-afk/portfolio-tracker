@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-04-28T14:00:54.458017",
+  "son_guncelleme": "2026-04-28T14:31:48.069351",
   "kapatilan_pozisyonlar": [
     {
       "id": "SWING-020",
@@ -813,6 +813,27 @@
       "stop_loss": 892.19,
       "hedef_fiyat": 1269.52,
       "zirve_fiyat": 1166.62,
+      "partial_exits": []
+    },
+    {
+      "id": "SWING-202604271833-NNE",
+      "sembol": "NNE",
+      "adet": 125,
+      "giris_fiyati": 25.62,
+      "cikis_fiyati": 23.62,
+      "giris_tarihi": "2026-04-27",
+      "cikis_tarihi": "2026-04-28",
+      "cikis_nedeni": "STOP",
+      "kar_zarar_yuzde": -7.8,
+      "tutulan_gun": 1,
+      "sonuc": "ZARAR",
+      "ders": "Stop tetiklendi. Giriş tezi bozuldu. kijun_bounce_v2 sinyali bu piyasada yetersiz kaldı.",
+      "giris_nedeni": "Seans içi otomatik giriş — kijun_bounce_v2",
+      "tarama_yontemi": "kijun_bounce_v2",
+      "katalizor": "",
+      "stop_loss": 23.63,
+      "hedef_fiyat": 30.6,
+      "zirve_fiyat": 25.96,
       "partial_exits": []
     }
   ],

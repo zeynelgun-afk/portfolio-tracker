@@ -13,7 +13,30 @@
   "faz": "FAZ_0",
   "buy_list": {
     "tarih": "2026-04-28T16:05:56.355801+03:00",
-    "adaylar": [],
+    "adaylar": [
+      {
+        "symbol": "SCCO",
+        "tema": "emtia_hammadde",
+        "portföy": "balanced",
+        "price": 178.12,
+        "stop": 162.13,
+        "target": 210.1,
+        "rr": 2.0,
+        "score": 5.75,
+        "teknik": 6,
+        "fundamental": 6,
+        "atr": 7.99,
+        "reason": "emtia_hammadde tema taraması — teknik:6/10 fundamental:6/10",
+        "detay": {
+          "sma200": "✅",
+          "rsi": "✅ 53",
+          "mom_1m": "✅ +11.5%",
+          "skor": 6,
+          "roic": "✅ 23.2%",
+          "büyüme": "✅ ROE 42.2%"
+        }
+      }
+    ],
     "vix": 19.25,
     "piyasa_mod": "risk-on"
   },
@@ -101,7 +124,9 @@
       }
     ],
     "kaynak": "sabah_raporu_28_apr_manuel_duzeltme",
-    "executed": false
+    "executed": true,
+    "executed_at": "2026-04-28T17:35:22.029851+03:00",
+    "executed_count": 0
   },
   "timestamp": "2026-04-28T16:05:56.356065+03:00",
   "k22_nakit_dagitim": {
