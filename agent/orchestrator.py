@@ -1741,6 +1741,14 @@ def _check_portfolio_exits(market: dict, rsi_map: dict = None) -> list:
                             simdi = _dt15.now(_tr15)
                             tutus_gun = (simdi - gd).days
                             # 15+ gün ve kar zaten +%5 üstünde — kar realize et
+                            # K-15c THROTTLE (29 Nis 2026): MU'da bugun 11+ kez tetiklendi
+                            # cunku her monitor'de 18g+kar%20 hala sagliyor. Bir kez
+                            # satildiysa ayni gun bir daha satma.
+                            son_k15c = pos.get("son_k15c_tarihi", "")
+                            bugun_str = datetime.now(TR_TZ).strftime("%Y-%m-%d")
+                            if son_k15c == bugun_str:
+                                # Bugun zaten K-15c uygulandi, atla
+                                continue
                             if tutus_gun >= 15 and pnl >= 5:
                                 # JUDGEMENT LAYER (28 Nis 2026) — LLM'e sor
                                 # K-15c tetik ama tema GUCLU + sektor outperform varsa
@@ -1796,6 +1804,21 @@ def _check_portfolio_exits(market: dict, rsi_map: dict = None) -> list:
                                 result = sell_position(sym, pf_name, _sat_reason,
                                        pct=pct, price=price)
                                 if result.get("ok"):
+                                    # K-15c throttle: kalan pozisyona bugun tarihi yaz
+                                    # (bir sonraki monitor ayni gun tekrar tetiklemesin)
+                                    try:
+                                        import json as _jk15
+                                        _pf_path = REPO_ROOT / "data" / "portfolios" / f"{pf_name}.json"
+                                        if _pf_path.exists():
+                                            _pf_d = _jk15.load(open(_pf_path))
+                                            for _p in _pf_d.get("pozisyonlar", []):
+                                                if _p.get("sembol") == sym:
+                                                    _p["son_k15c_tarihi"] = datetime.now(TR_TZ).strftime("%Y-%m-%d")
+                                                    break
+                                            with open(_pf_path, "w") as _ff:
+                                                _jk15.dump(_pf_d, _ff, ensure_ascii=False, indent=2)
+                                    except Exception as _k15e:
+                                        print(f"[K-15c] Throttle yazimi hatasi: {_k15e}")
                                     msg = (
                                         f"🟡 *K-15c TEMA 15G+ CIKIS* [{pf_name.upper()}]\n"
                                         f"{sym} @${price:.2f} | tutus {tutus_gun}g | P/L: {pnl:+.1f}%\n"
