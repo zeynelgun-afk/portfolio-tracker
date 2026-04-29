@@ -231,7 +231,8 @@
     "KHC": "consumer_defensive",
     "EOG": "energy",
     "COLB": "financial_services",
-    "TSM": "technology"
+    "TSM": "technology",
+    "APA": "energy"
   },
   "updated": {
     "COHR": 1777299593,
@@ -242,7 +243,7 @@
     "CI": 1777299593,
     "NEE": 1777412257,
     "CPRX": 1777299593,
-    "HIG": 1776693840,
+    "HIG": 1777484020,
     "T": 1776693840,
     "VZ": 1776693841,
     "MO": 1777299593,
@@ -465,6 +466,7 @@
     "KHC": 1777474906,
     "EOG": 1777480542,
     "COLB": 1777480546,
-    "TSM": 1777480548
+    "TSM": 1777480548,
+    "APA": 1777484021
   }
 }
