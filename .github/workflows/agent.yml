@@ -21,6 +21,13 @@ on:
 permissions:
   contents: write
 
+# 29 Nis 2026 ekleme: Race condition onleme.
+# Manuel morning + scheduled monitor ayni anda calisirsa swing/portfolio
+# JSON'larini bozar. Concurrency ile en eski olan iptal edilir.
+concurrency:
+  group: finzora-agent-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   validate:
     runs-on: ubuntu-latest
