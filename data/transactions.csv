@@ -226,3 +226,8 @@ date,action,symbol,shares,price,total,reason
 2026-04-29,BUY,UPS,128,105.67,13525.76,savunma_sanayi tema taraması — teknik:7/10 fundamental:5/10
 2026-04-29,BUY,MNST,195,76.73,14961.39,tüketici_temettü tema taraması — teknik:6/10 fundamental:6/10
 2026-04-29,BUY,NEM,94,107.74,10127.56,emtia_hammadde tema taraması — teknik:4/10 fundamental:8/10
+2026-04-29,SELL,TGT,117,127.06,14866.02,MANUEL: Tüketici Temel tema 2/10 TEHLİKELİ — agent yanlış aldı
+2026-04-29,SELL,MNST,195,76.98,15011.1,MANUEL: Tüketici Temel tema 2/10 TEHLİKELİ — agent yanlış aldı
+2026-04-29,SELL,VRT,49,300.35,14717.15,MANUEL: Savunma tema 1/10 TEHLİKELİ — agent yanlış aldı
+2026-04-29,SELL,UPS,128,105.33,13482.24,MANUEL: Savunma tema 1/10 TEHLİKELİ — agent yanlış aldı
+2026-04-29,SELL,NEM,94,107.28,10084.32,MANUEL: Altın tema 1/10 TEHLİKELİ — agent yanlış aldı
