@@ -55,6 +55,8 @@ def build_portfolio_state(portfolios: dict, market: dict) -> dict:
             "TLT":        market.get("TLT", {}).get("price"),
             "spy_chg":    market.get("SPY", {}).get("chg"),
             "qqq_chg":    market.get("QQQ", {}).get("chg"),
+            "gld_chg":    market.get("GLD", {}).get("chg"),
+            "tlt_chg":    market.get("TLT", {}).get("chg"),
             "VIX":        market.get("VIX", {}).get("price"),
             "VIX_chg":    market.get("VIX", {}).get("chg"),
             "VIX_seviye": market.get("VIX", {}).get("seviye"),

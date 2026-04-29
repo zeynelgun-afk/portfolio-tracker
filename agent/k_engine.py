@@ -301,10 +301,20 @@ def k17_correlation_check(symbol: str, portfolio: str = "all") -> dict:
     """Mevcut portföyle sektör/tema çakışması kontrolü.
 
     Sektör lookup sector_cache üzerinden yapılır — her çağrıda N×FMP profile
-    çağrısı yerine 7 gün TTL'li cache. Rate limit koruması + hızlı."""
-    # Tüm portföylerdeki sembolleri topla
+    çağrısı yerine 7 gün TTL'li cache. Rate limit koruması + hızlı.
+
+    29 Nis 2026 düzeltme: 'symbol zaten portföyde' kontrolü artık SADECE
+    aktif portföyü tarar. Aynı sembolün farklı portföylerde (aggressive +
+    dividend gibi) olması mantıkli — örn. CRM hem agresifte (momentum)
+    hem dengelide (value) olabilir. Portfolio='all' ise eski davranış."""
+    # Sadece ilgili portföyü tara (cross-portfolio dublasyona izin ver)
+    if portfolio in ("aggressive", "balanced", "dividend"):
+        pf_list = [portfolio]
+    else:
+        pf_list = ["aggressive", "balanced", "dividend"]
+
     pf_symbols = []
-    for pf in ["aggressive", "balanced", "dividend"]:
+    for pf in pf_list:
         p = REPO_ROOT / "data" / "portfolios" / f"{pf}.json"
         if p.exists():
             try:
@@ -315,7 +325,7 @@ def k17_correlation_check(symbol: str, portfolio: str = "all") -> dict:
                 pass
 
     if symbol in pf_symbols:
-        return {"passed": False, "reason": f"K-17: {symbol} zaten portföyde"}
+        return {"passed": False, "reason": f"K-17: {symbol} zaten {portfolio} portföyünde"}
 
     # Sektör lookup (merkezi cache — FMP profile sadece ilk çağrıda)
     try:

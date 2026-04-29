@@ -253,6 +253,99 @@ def collect_context(mode: str) -> dict:
 
 # ── Mod çalıştırıcıları ───────────────────────────────────────────────────────
 
+# ── K-05 Bilanço Filtresi (29 Nis 2026 reform) ────────────────────────────────
+# Kapanış agent EKLE/BÜYÜT kararı verirken bilanço tarihi ≤7 gün ise
+# o kararı GERİ ÇEKER. Bu sayede 'bugün al, bugün sat' (FLS örnegi) yaşanmaz.
+
+def _filtre_k05_bilanco(kararlar: list, mode: str = "closing") -> list:
+    """K-05 (bilanço öncesi 48 saat penceresi) — EKLE/BÜYÜT kararlarını filtrele.
+
+    Bilanço ≤2 gün uzakta olan sembollere yeni giriş YASAK. Filtrelenen
+    kararlar '_k05_filtered' flag'i ile işaretlenir, log basılır.
+
+    closing mode için sıkı (≤2 gün), morning için daha esnek (≤1 gün)
+    çünkü morning aynı gün execute eder, closing 12+ saat sonra.
+    """
+    if not kararlar:
+        return kararlar
+
+    try:
+        import os as _os
+        api_key = _os.environ.get("FMP_API_KEY", "")
+        if not api_key:
+            print("[K-05 Filtre] FMP_API_KEY yok, filtre atlandı")
+            return kararlar
+    except Exception:
+        return kararlar
+
+    # closing icin esik 2 gun (overnight + 1 seans), morning icin 1 gun
+    esik_gun = 2 if mode == "closing" else 1
+
+    filtreli = []
+    bugun_tr = datetime.now(TR_TZ).date()
+
+    for k in kararlar:
+        tip = (k.get("tip") or "").upper()
+        sembol = (k.get("sembol") or "").upper()
+
+        # Sadece yeni giris kararlarini filtrele
+        if tip not in ("EKLE", "BÜYÜT"):
+            filtreli.append(k)
+            continue
+
+        if not sembol:
+            filtreli.append(k)
+            continue
+
+        # FMP earnings cek
+        try:
+            import urllib.request as _ur, json as _j
+            url = f"https://financialmodelingprep.com/stable/earnings?symbol={sembol}&apikey={api_key}"
+            with _ur.urlopen(url, timeout=10) as r:
+                data = _j.loads(r.read().decode())
+            if not data:
+                # Bilanço bilgisi yok, geç
+                filtreli.append(k)
+                continue
+
+            # Yarınki/yakın bilancoyu bul
+            yakin_bilanco = None
+            for e in data:
+                e_tarih_str = e.get("date", "")
+                if not e_tarih_str:
+                    continue
+                try:
+                    e_tarih = datetime.strptime(e_tarih_str[:10], "%Y-%m-%d").date()
+                except Exception:
+                    continue
+                if e_tarih >= bugun_tr:
+                    yakin_bilanco = e_tarih
+                    break
+
+            if not yakin_bilanco:
+                filtreli.append(k)
+                continue
+
+            gun_kalan = (yakin_bilanco - bugun_tr).days
+            if gun_kalan <= esik_gun:
+                # FILTRELE
+                k["_k05_filtered"] = True
+                k["_k05_reason"] = f"Bilanço {yakin_bilanco} ({gun_kalan}g kaldı, eşik {esik_gun}g)"
+                print(f"[K-05 Filtre] {tip} {sembol} ELENDI — bilanço {yakin_bilanco} ({gun_kalan}g kaldı)")
+                continue
+
+            filtreli.append(k)
+        except Exception as _e:
+            print(f"[K-05 Filtre] {sembol} kontrol hatası: {_e} (geçirildi)")
+            filtreli.append(k)
+
+    elenen = len(kararlar) - len(filtreli)
+    if elenen > 0:
+        print(f"[K-05 Filtre] {elenen}/{len(kararlar)} karar bilanço penceresinde elendi")
+
+    return filtreli
+
+
 # ── Session State Yardımcısı ───────────────────────────────────────────────────
 
 def _update_session_state(key: str, value) -> None:
@@ -567,6 +660,11 @@ KESİN / MUHTEMEL / SPEKÜLATİF etiket kullan. Küçük harf Türkçe.
         or (17 <= _now_tr2.hour < 23)
     )
     if claude_kararlar and piyasa_acik:
+        # K-05 filtre (morning mode): aynı gün al-sat olmasın
+        try:
+            claude_kararlar = _filtre_k05_bilanco(claude_kararlar, mode="morning")
+        except Exception as _k05e:
+            print(f"[Orkestratör] K-05 filtre hatası (morning): {_k05e} (devam)")
         try:
             market_ctx = get_market_context()
             karar_aksiyonlar = _execute_claude_decisions(claude_kararlar, market_ctx)
@@ -576,6 +674,11 @@ KESİN / MUHTEMEL / SPEKÜLATİF etiket kullan. Küçük harf Türkçe.
         except Exception as _ce:
             print(f"[Orkestratör] Claude karar execute hatası: {_ce}")
     elif claude_kararlar and not piyasa_acik:
+        # K-05 filtre — piyasa kapali olsa da
+        try:
+            claude_kararlar = _filtre_k05_bilanco(claude_kararlar, mode="morning")
+        except Exception as _k05e:
+            print(f"[Orkestratör] K-05 filtre hatası: {_k05e} (devam)")
         # Piyasa kapalı: kararları session_state'e kaydet, FAZ_2'de execute edilecek
         try:
             import json as _json_sm
@@ -822,6 +925,14 @@ KESİN / MUHTEMEL / SPEKÜLATİF etiket kullan. Küçük harf Türkçe.
 
     # Claude kapanış kararlarını kaydet (yarın FAZ_2'de execute edilecek)
     if claude_kararlar:
+        # K-05 BILANCO FILTRESI (29 Nis 2026 — FLS bug fix)
+        # Closing agent yarinki bilancosu olan sembolleri eklememeli.
+        # Aksi halde sabah agent K-05 ile satar = aynı gün al-sat.
+        try:
+            claude_kararlar = _filtre_k05_bilanco(claude_kararlar, mode="closing")
+        except Exception as _k05e:
+            print(f"[Orkestratör] K-05 filtre hatası: {_k05e} (devam)")
+
         import json as _json2
         _ss_path = REPO_ROOT / "data" / "session_state.json"
         try:
