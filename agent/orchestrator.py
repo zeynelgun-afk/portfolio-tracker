@@ -2394,6 +2394,8 @@ def _execute_claude_decisions(kararlar: list, market: dict) -> list:
                     continue
 
                 # K-engine kontrolü
+                # BÜYÜT için K-17 atlanir (zaten portföyde olmasi normal,
+                # büyütme aslen ekleme degil adet artirma).
                 if run_entry_checks:
                     try:
                         from vix_fetcher import get_vix
@@ -2401,7 +2403,11 @@ def _execute_claude_decisions(kararlar: list, market: dict) -> list:
                     except Exception:
                         vix = 20.0
                     k_res = run_entry_checks(sembol, vix=vix, base_size=5000, portfolio=portfoy)
-                    if not k_res["go"]:
+                    # BÜYÜT'te K-17 veto'sunu gormezden gel (zaten portföyde olmasi gereken durum)
+                    if not k_res["go"] and tip == "BÜYÜT" and "K-17:" in k_res.get("fail_reason", "") and "zaten portföyde" in k_res.get("fail_reason", ""):
+                        print(f"[Decisions] BÜYÜT için K-17 veto görmezden gelindi: {sembol}")
+                        # Devam et
+                    elif not k_res["go"]:
                         print(f"[Decisions] {sembol} K-engine veto: {k_res['fail_reason']}")
                         _mark(k, False, f"k_engine_veto: {k_res['fail_reason'][:80]}")
                         continue
