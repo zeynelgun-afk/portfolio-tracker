@@ -220,3 +220,8 @@ date,action,symbol,shares,price,total,reason
 2026-04-29,BUY,FLS,177,84.59,14972.43,"Finzora: Discovery skor 65 ORTA kalite, PEG 1.33, dengeli nakit %61 aşım"
 2026-04-29,SELL,FLS,177,84.04,14875.08,Finzora: K-05 bilanço bugün — kural gereği çıkış zorunlu
 2026-04-29,BUY,CRM,166,180.11,29898.26,"Finzora: AI Yazılım tema skor 9/10 + nakit %95 aşım, K-12 limit içinde"
+2026-04-29,BUY,CF,120,124.46,14935.2,emtia_hammadde tema taraması — teknik:6/10 fundamental:8/10
+2026-04-29,BUY,TGT,117,127.24,14887.08,tüketici_temettü tema taraması — teknik:7/10 fundamental:6/10
+2026-04-29,BUY,VRT,49,303.25,14859.49,savunma_sanayi tema taraması — teknik:8/10 fundamental:4/10
+2026-04-29,BUY,UPS,128,105.67,13525.76,savunma_sanayi tema taraması — teknik:7/10 fundamental:5/10
+2026-04-29,BUY,MNST,195,76.73,14961.39,tüketici_temettü tema taraması — teknik:6/10 fundamental:6/10
