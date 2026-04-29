@@ -206,7 +206,8 @@
     "KR": "consumer_defensive",
     "KDP": "consumer_defensive",
     "SYY": "consumer_defensive",
-    "ADM": "consumer_defensive"
+    "ADM": "consumer_defensive",
+    "FLS": "industrials"
   },
   "updated": {
     "COHR": 1777299593,
@@ -224,7 +225,7 @@
     "MRK": 1776693841,
     "OKE": 1777299593,
     "VST": 1777412266,
-    "CCJ": 1776693865,
+    "CCJ": 1777473159,
     "ENPH": 1777360720,
     "CEG": 1776693872,
     "RUN": 1776693874,
@@ -415,6 +416,7 @@
     "KR": 1777412291,
     "KDP": 1777412292,
     "SYY": 1777412295,
-    "ADM": 1777412296
+    "ADM": 1777412296,
+    "FLS": 1777473161
   }
 }

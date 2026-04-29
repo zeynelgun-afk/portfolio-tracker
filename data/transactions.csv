@@ -211,3 +211,12 @@ date,action,symbol,shares,price,total,reason
 2026-04-29,SELL,RPRX,152,49.81,7571.73,Swing çıkış — SURE. P/L: +2.7% (15 gün)
 2026-04-29,SELL,UEC,307,13.52,4149.11,Swing çıkış — STOP. P/L: -9.1% (1 gün)
 2026-04-29,SELL,MU,1,524.28,524.28,"K-15c tema 15g cikis: tutus 19g, kar +%26.3 (LLM-orta: 19 günde +26.3% kazanç KESİN ve aggressive pr"
+2026-04-29,SELL,RPRX,152,49.88,7581.76,Swing çıkış — SURE. P/L: +2.8% (15 gün)
+2026-04-29,SELL,UEC,307,13.48,4139.89,Swing çıkış — STOP. P/L: -9.3% (1 gün)
+2026-04-29,SELL,MO,109,67.9,7401.1,"Finzora: K-05 bilanço 1g öncesi çıkış, +%18.3 kâr kilitlenecek, XLP teması 2/10"
+2026-04-29,SELL,CI,23,288.6,6637.8,"Finzora: K-05 bilanço 1g öncesi çıkış, backtest 5g -%5.1 doğrulandı"
+2026-04-29,SELL,HBM,494,22.54,11132.29,"Finzora: K-05 bilanço 2g öncesi, tez hasarlı, bugün -%5.9"
+2026-04-29,SELL,MU,2,524.19,1048.37,"Finzora: K-11 kısmi kâr alma, +%21.5 kârın yarısı kilitlensin, stop yakın"
+2026-04-29,BUY,CCJ,263,113.7,29903.1,"Finzora: Uranyum tema 9/10, swing sinyali aktif, agresif nakit %71 aşım"
+2026-04-29,BUY,AMAT,104,383.54,39888.52,"Finzora: AI/yarı-iletken tema 9/10 momentum güçlü, nakit konuşlandırma"
+2026-04-29,BUY,FLS,177,84.59,14972.43,"Finzora: Discovery skor 65 ORTA kalite, PEG 1.33, dengeli nakit %61 aşım"

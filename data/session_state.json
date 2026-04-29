@@ -175,7 +175,10 @@
         "_decision_id": "14bc3fad1350"
       }
     ],
-    "kaynak": "closing"
+    "kaynak": "closing",
+    "executed": true,
+    "executed_at": "2026-04-29T17:32:49.615698+03:00",
+    "executed_count": 7
   },
   "timestamp": "2026-04-28T16:05:56.356065+03:00",
   "k22_nakit_dagitim": {

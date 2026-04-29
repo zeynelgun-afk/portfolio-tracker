@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-04-28T14:31:48.069351",
+  "son_guncelleme": "2026-04-29T14:31:07.479057",
   "kapatilan_pozisyonlar": [
     {
       "id": "SWING-020",
@@ -834,6 +834,48 @@
       "stop_loss": 23.63,
       "hedef_fiyat": 30.6,
       "zirve_fiyat": 25.96,
+      "partial_exits": []
+    },
+    {
+      "id": "SWING-202604141454-RPRX",
+      "sembol": "RPRX",
+      "adet": 152,
+      "giris_fiyati": 48.52,
+      "cikis_fiyati": 49.88,
+      "giris_tarihi": "2026-04-14",
+      "cikis_tarihi": "2026-04-29",
+      "cikis_nedeni": "SURE",
+      "kar_zarar_yuzde": 2.8,
+      "tutulan_gun": 15,
+      "sonuc": "KAZANC",
+      "ders": "Süre doldu (15g). Momentum beklediğimiz kadar güçlü değildi.",
+      "giris_nedeni": "Seans içi otomatik giriş — tenkan_bounce, kijun_bounce_v2, nr7_sikisma",
+      "tarama_yontemi": "tenkan_bounce, kijun_bounce_v2, nr7_sikisma",
+      "katalizor": "",
+      "stop_loss": 46.89,
+      "hedef_fiyat": 52.61,
+      "zirve_fiyat": 50,
+      "partial_exits": []
+    },
+    {
+      "id": "SWING-202604281435-UEC",
+      "sembol": "UEC",
+      "adet": 307,
+      "giris_fiyati": 14.86,
+      "cikis_fiyati": 13.48,
+      "giris_tarihi": "2026-04-28",
+      "cikis_tarihi": "2026-04-29",
+      "cikis_nedeni": "STOP",
+      "kar_zarar_yuzde": -9.25,
+      "tutulan_gun": 1,
+      "sonuc": "ZARAR",
+      "ders": "Stop tetiklendi. Giriş tezi bozuldu. nr7_sikisma sinyali bu piyasada yetersiz kaldı.",
+      "giris_nedeni": "Seans içi otomatik giriş — nr7_sikisma",
+      "tarama_yontemi": "nr7_sikisma",
+      "katalizor": "",
+      "stop_loss": 14.05,
+      "hedef_fiyat": 16.89,
+      "zirve_fiyat": 14.86,
       "partial_exits": []
     }
   ],

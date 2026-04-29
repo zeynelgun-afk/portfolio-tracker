@@ -2,41 +2,11 @@
   "portfoy_adi": "Değer + Temettü",
   "baslangic_sermaye": 100000,
   "nakit": {
-    "miktar": 91818.4,
+    "miktar": 99219.5,
     "para_birimi": "USD",
     "agirlik_yuzde": 64.53
   },
   "pozisyonlar": [
-    {
-      "sembol": "MO",
-      "isim": "Altria Group",
-      "sektor": "Tütün",
-      "adet": 109,
-      "maliyet_baz": 57.31,
-      "yatirim": 6246.79,
-      "guncel_fiyat": 67.8,
-      "guncel_deger": 7390.2,
-      "kar_zarar": 1143.41,
-      "kar_zarar_yuzde": 18.3,
-      "gunluk_degisim_yuzde": 2.73,
-      "agirlik_yuzde": 5.19,
-      "son_guncelleme": "2026-04-28T21:33:31.230390",
-      "giris_tarihi": "2026-01-02",
-      "giris_fiyati": 57.31,
-      "giris_nedeni": "Initial position - Dividend defensive",
-      "cb_kaynak": "back-calc-karyuzde",
-      "hedef_fiyat": 64.19,
-      "stop_loss": 64.01,
-      "zirve_fiyat": 67.8,
-      "stop_faz": 3,
-      "stop_mesafe_pct": 5.59,
-      "stop_aciklama": "",
-      "stop_guncelleme": "",
-      "durum": "✅ Normal",
-      "rsi": 59.32,
-      "rsi_son_guncelleme": "2026-04-29T17:02:41.052877+03:00",
-      "atr14": 1.3529
-    },
     {
       "sembol": "OKE",
       "isim": "ONEOK Inc",
@@ -63,8 +33,8 @@
       "stop_aciklama": "",
       "stop_guncelleme": "",
       "durum": "✅ Normal",
-      "rsi": 62.47,
-      "rsi_son_guncelleme": "2026-04-29T17:02:41.052877+03:00",
+      "rsi": 61.94,
+      "rsi_son_guncelleme": "2026-04-29T17:32:37.285847+03:00",
       "atr14": 2.025
     },
     {
@@ -91,8 +61,8 @@
       "zirve_fiyat": 64.08,
       "stop_mesafe_pct": 2.6,
       "durum": "⚠️ Stop yakın (2.6%)",
-      "rsi": 50.68,
-      "rsi_son_guncelleme": "2026-04-29T17:02:41.052877+03:00",
+      "rsi": 49.36,
+      "rsi_son_guncelleme": "2026-04-29T17:32:37.285847+03:00",
       "atr14": 0.9236
     },
     {
@@ -120,12 +90,12 @@
       "zirve_fiyat": 33.76,
       "stop_mesafe_pct": 3.8,
       "durum": "✅ Normal",
-      "rsi": 47.17,
-      "rsi_son_guncelleme": "2026-04-29T17:02:41.052877+03:00",
+      "rsi": 46.39,
+      "rsi_son_guncelleme": "2026-04-29T17:32:37.285847+03:00",
       "atr14": 0.7207
     }
   ],
-  "son_guncelleme": "2026-04-28T21:33:31.230390",
+  "son_guncelleme": "2026-04-29T17:32:38.309355+03:00",
   "toplam_deger": 142294.21,
   "toplam_getiri_yuzde": 42.29,
   "toplam_getiri": 42294.21,
