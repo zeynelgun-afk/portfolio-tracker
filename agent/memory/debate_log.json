@@ -600,6 +600,77 @@
         }
       },
       "karar_degisti_mi": true
+    },
+    {
+      "symbol": "CPRX",
+      "tarih": "2026-04-29T14:56:19.511120",
+      "ilk_karar": {
+        "karar": "SAT",
+        "hedef_sembol": "CPRX",
+        "gerekce": "Risk Yöneticisi (HIGH güven) ve Sinyal Analisti'nin SELL sinyali örtüşüyor: CPRX stop'a %3.5 ve hedefe çok yakın, kısmi kâr alma kuralı (K) devrede. Ayrıca O ve GTY stop'a %2.2 ve %3.2 mesafede — VIX 18 ortamında bu mesafe yetersiz, trailing sıkılaştırma şart. Makro RISK_ON ve sektör AI/yarı-iletken momentumu pozitif olsa da, aktif rejim JEOPOLITIK_KRIZ (DÜŞÜK güven) ve K-12 nakit limit aşımı var — yeni giriş yapılmıyor, mevcut kazançlar korunuyor. Risk önceliği (Risk > Makro > Sektör > Teknik) gereği önce kırılgan pozisyonları temizle: CPRX'te kısmi kâr al, O ve GTY'de trailing stop'u sıkılaştır. MU +%26 kârda ama RSI overbought — trailing ile koru, satma.",
+        "uyari": "Dividend sepetinde 3 pozisyon (O, GTY, CPRX benzeri) stop yakınında — %5 piyasa düşüşünde 5 stop tetiklenir, ~$9,238 kayıp senaryosu. Sektör korelasyonu yüksek, en az birini küçült.",
+        "guven": "MEDIUM",
+        "analist_uzlasma": "ORTA",
+        "tahmin": {
+          "yon": "NEUTRAL",
+          "buyukluk": "LOW",
+          "sembol": "SPY"
+        },
+        "_agent": "CIO_AGENT",
+        "_timestamp": "2026-04-29T14:55:21.932920"
+      },
+      "boğa": {
+        "argümanlar": [
+          "CPRX (Catalyst Pharmaceuticals) FIRDAPSE franchise'ı ile LEMS (Lambert-Eaton Myasthenic Syndrome) tedavisinde monopol pozisyonda — ABD'de pazar büyümesi sürüyor ve ortalama %20+ YoY revenue artışı söz konusu",
+          "Bilanço gücü olağanüstü: Net nakit pozisyonu, sıfıra yakın borç, pozitif serbest nakit akışı. Biotech sektöründe bu nadir kombinasyon downside riskini sınırlıyor — SAT kararı bu bilanço gücünü göz ardı ediyor olabilir",
+          "AGAMREE (vamorolone) DMD endikasyonu için Santhera ile lisans anlaşması — yeni büyüme katalizörü ve revenue diversifikasyonu sağlıyor, tek-ürün riskini azaltıyor",
+          "VIX 17.99 (Risk-On ortamı) ve QQQ +0.46% — small/mid-cap biotech için pozitif tape. Risk-on rejimde CPRX gibi karlı biotech'ler outperform ediyor",
+          "Forward P/E ~12-14x seviyesinde — büyüyen, karlı, nakit zengini bir biotech için ucuz çarpan. Sektör ortalaması 20x+. Mean reversion potansiyeli güçlü"
+        ],
+        "katalizörler": [
+          "Q2 2026 earnings beklentisi — FIRDAPSE script büyümesi ve AGAMREE launch momentumu",
+          "Pipeline genişlemesi: BD/M&A optionality (nakit pozisyonu sayesinde küçük biotech akuizisyonları)",
+          "AGAMREE prescription ramp — DMD pazarında ilk tam yıl satışları",
+          "Potansiyel yeni endikasyon onayları FIRDAPSE için (label expansion)"
+        ],
+        "hedef_fiyat_gerekce": "FIRDAPSE %15-20 büyüme + AGAMREE rampası ile FY26 EPS $2.50+ tahmini. Tarihsel 18x P/E çarpanıyla $45+ hedef ulaşılabilir. Downside bilanço korumalı, upside katalizör yüklü asimetrik R/R.",
+        "boğa_skoru": 7,
+        "en_güçlü_nokta": "Karlı, nakit zengini, monopol pozisyonlu bir biotech'in tek ürün riski AGAMREE ile çözülürken hala ucuz çarpanda işlem görmesi — SAT kararı için yeterli gerekçe değil; HOLD/BUY daha mantıklı."
+      },
+      "ayı": {
+        "argümanlar": [
+          "CPRX biyotek/spesiyalite ilaç şirketi olarak tek-ürün bağımlılığı riski taşıyor (Firdapse/LEMS) — patent ekspirasyonu ve jenerik rekabeti gelir tabanını hızla erozyona uğratabilir, biyoteklerde bu senaryolarda %30-50 düşüşler görülüyor",
+          "Küçük-orta kap biyotekler VIX 18 seviyesinde bile yüksek beta sergiliyor; agresif portföyde -4.7% drawdown varken ek volatilite riski almak risk bütçesini bozar",
+          "Agresif portföyde nakit %95.3 ile zaten aşım durumunda — CPRX gibi spekülatif pozisyonu kapatmak nakit disiplinini bozmadan fırsat maliyetini düşürür",
+          "Biyotek sektöründe FDA aksiyonları, klinik veri okumaları ve formülasyon davaları öngörülemez gap risk yaratıyor — stop-loss bu tür haber bazlı düşüşlerde koruyamaz",
+          "Tarihsel olarak CPRX gibi dar tedavi alanına sahip şirketler büyük farma satın alma dedikoduları söndüğünde sert satış görüyor; momentum yokluğu = aşağı yönlü asimetri",
+          "Agresif sleeve -4.7% ile başlangıç altında — kazananları (MU +26.3%) korumak, belirsiz pozisyonları (CPRX) temizlemek portföy hijyeni gerektirir"
+        ],
+        "katalizörler": [
+          "Yaklaşan Q1/Q2 2026 kazanç açıklamasında Firdapse satış yavaşlaması",
+          "Jenerik üreticilerin patent itirazları (IPR/Paragraph IV)",
+          "FDA'nın rakip LEMS tedavilerini onaylama olasılığı",
+          "Sektör genelinde biyotek rotasyonu — XBI zayıflığı sürerse küçük kaplar ilk düşer"
+        ],
+        "stop_gerekce": "Tek-ürün gelir konsantrasyonu nedeniyle herhangi bir negatif klinik/regülatör/rekabet haberi %15-25 gap-down yaratabilir; stop teknik seviyeden önce haber-bazlı boşlukla aşılır",
+        "ayı_skoru": 7,
+        "en_güçlü_nokta": "Tek-ürün bağımlılığı + patent/jenerik kuyruk riski + agresif portföyün zaten drawdown'da olması — risk/getiri asimetrik olarak aşağı yönlü"
+      },
+      "nihai": {
+        "nihai_karar": "BEKLE",
+        "kazan_taraf": "BAĞLANTI",
+        "karar_gerekce": "Boğa tarafının bilanço gücü ve AGAMREE diversifikasyon argümanları SAT kararını zayıflatıyor; ancak ayının tek-ürün riski ve agresif portföyün -4.7% drawdown'da olması da BUY için yeterli gerekçe vermiyor. Net katalizör yokken pozisyon değiştirmek yerine BEKLE ve fiyat aksiyonu ile katalizör takvimini izlemek en disiplinli yol.",
+        "boğa_haklı_çünkü": "CPRX karlı, net nakit pozisyonlu ve forward P/E 12-14x ile sektör ortalamasının altında — SAT için fundamental temel zayıf, AGAMREE lisansı tek-ürün riskini kısmen çözüyor",
+        "ayı_haklı_çünkü": "FIRDAPSE patent/jenerik kuyruk riski ve biyotek gap riski gerçek; agresif sleeve zaten drawdown'da iken belirsiz pozisyonu büyütmek risk bütçesini bozar",
+        "göz_ardı_edilen": "FIRDAPSE patent ekspirasyon takvimi ve yaklaşan klinik/FDA katalizör tarihleri tartışılmadı — bu zamanlama kararın merkezinde olmalıydı",
+        "güven": "MEDIUM",
+        "tahmin": {
+          "yon": "NEUTRAL",
+          "buyukluk": "LOW",
+          "sembol": "SPY"
+        }
+      },
+      "karar_degisti_mi": true
     }
   ]
 }

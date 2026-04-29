@@ -1,89 +1,172 @@
 {
   "macro": {
-    "sinyal": "NEUTRAL",
+    "sinyal": "RISK_ON",
     "guven": "MEDIUM",
-    "ana_tema": "VIX 19.25'te normal seviyede ancak %6.83 yükselişle artan tedirginlik, yoğun earnings haftası ve enflasyon verisi öncesi temkinli bekleyiş hakim.",
+    "ana_tema": "VIX 18 altında düşük volatilite ortamında QQQ liderliğinde tech momentumu sürerken makro takvim sakin",
     "beklentiler": [
-      "Bu hafta ABBV/CI/MO/OKE/CL earnings'leri portföy için kritik volatilite kaynağı olacak",
-      "1 Mayıs CPI verisi Fed faiz beklentilerini yeniden şekillendirebilir; önceki %4.65 YoY hala yüksek",
-      "VIX'in 20 üzerine çıkması durumunda K-10 savunmacı allokasyon devreye girebilir"
+      "Önümüzdeki hafta düşük etkili enflasyon/perakende verileri piyasayı sarsmayacak",
+      "Earnings sezonu odakta — FLS bugün, ETN/CCJ/O/CPRX gelecek hafta",
+      "VIX 17-19 bandında risk iştahı korunuyor"
     ],
-    "risk_faktoru": "Yüksek enflasyon (CPI YoY 4.65%) ortamında Fed'in şahin kalma riski + yoğun earnings haftasında sell-the-news baskısı (özellikle Tech %57 konsantrasyonu nedeniyle)",
+    "risk_faktoru": "FLS bugün earnings (K-05 ihlali riski) ve genel earnings yoğunluğu kısa vadede tek isim volatilitesi yaratabilir",
+    "tahmin": {
+      "yon": "UP",
+      "buyukluk": "LOW",
+      "sembol": "SPY"
+    },
+    "_agent": "MACRO_AGENT",
+    "_timestamp": "2026-04-29T14:54:28.914256"
+  },
+  "sector": {
+    "aktif_rejim": "ai_boom",
+    "lider_sektor": "Yarı iletkenler (SMH/SOXX) - QQQ +0.46% liderliğinde MU +%4 momentum",
+    "zayif_sektor": "Defansif/REIT (XLU, VNQ) - O ve GTY zayıf, TLT durağan",
+    "rotasyon_onerisi": "Defansif temettü ve materials'tan (PPG, FLS) yarı iletken/AI capex (MU, AMAT, ETN) tarafına kademeli rotasyon",
+    "guven": "MEDIUM",
+    "tahmin": {
+      "yon": "UP",
+      "buyukluk": "MEDIUM",
+      "sembol": "MU"
+    },
+    "_agent": "SECTOR_AGENT",
+    "_timestamp": "2026-04-29T14:54:37.100941"
+  },
+  "signal": {
+    "portfoy_sinyalleri": [
+      {
+        "sembol": "MU",
+        "sinyal": "HOLD",
+        "rsi_yorumu": "overbought",
+        "sma_durumu": "ustunde",
+        "aciklama": "+26% kârda, +4% günlük momentum güçlü ama RSI aşırı alım bölgesinde, trailing stop ile koru."
+      },
+      {
+        "sembol": "ETN",
+        "sinyal": "HOLD",
+        "rsi_yorumu": "normal",
+        "sma_durumu": "ustunde",
+        "aciklama": "Yatay konsolidasyon, hedef $457 uzak ama trend bozulmadı."
+      },
+      {
+        "sembol": "CCJ",
+        "sinyal": "WATCH",
+        "rsi_yorumu": "normal",
+        "sma_durumu": "ustunde",
+        "aciklama": "-2.6% düşüş ile breakeven seviyesinde, $113 destek kritik."
+      },
+      {
+        "sembol": "AMAT",
+        "sinyal": "HOLD",
+        "rsi_yorumu": "normal",
+        "sma_durumu": "ustunde",
+        "aciklama": "SMA50 bounce tezi yavaş çalışıyor, sabırlı tutma gerek."
+      },
+      {
+        "sembol": "CPRX",
+        "sinyal": "SELL",
+        "rsi_yorumu": "normal",
+        "sma_durumu": "ustunde",
+        "aciklama": "Stop %3.5 mesafede ⚠️ ve hedefe çok yakın, kısmi kâr al."
+      },
+      {
+        "sembol": "PPG",
+        "sinyal": "HOLD",
+        "rsi_yorumu": "normal",
+        "sma_durumu": "altinda",
+        "aciklama": "XLB sektör zayıf, momentum yok ama stop güvende."
+      },
+      {
+        "sembol": "FLS",
+        "sinyal": "HOLD",
+        "rsi_yorumu": "normal",
+        "sma_durumu": "ustunde",
+        "aciklama": "Yatay seyir, stop %7.4 uzak güvenli bölge."
+      },
+      {
+        "sembol": "OKE",
+        "sinyal": "HOLD",
+        "rsi_yorumu": "normal",
+        "sma_durumu": "ustunde",
+        "aciklama": "XLE liderliği destekliyor, hedefe yakın trailing devreye al."
+      },
+      {
+        "sembol": "O",
+        "sinyal": "WATCH",
+        "rsi_yorumu": "normal",
+        "sma_durumu": "altinda",
+        "aciklama": "Stop %2.2 ⚠️ çok yakın, faiz baskısı altında savunmacı izle."
+      },
+      {
+        "sembol": "GTY",
+        "sinyal": "WATCH",
+        "rsi_yorumu": "oversold",
+        "sma_durumu": "altinda",
+        "aciklama": "Stop %3.2 ⚠️ kritik, oversold bounce şansı var ama disiplin önce."
+      },
+      {
+        "sembol": "TFC",
+        "sinyal": "HOLD",
+        "rsi_yorumu": "normal",
+        "sma_durumu": "ustunde",
+        "aciklama": "XLF pozitif, swing girişi sağlıklı seyirde."
+      },
+      {
+        "sembol": "CAT",
+        "sinyal": "WATCH",
+        "rsi_yorumu": "normal",
+        "sma_durumu": "ustunde",
+        "aciklama": "-1.8% pullback, NR7 setup momentum üretmedi, %4 kâr al kuralı düşünülmeli."
+      }
+    ],
+    "en_guclu_setup": "MU",
+    "en_zayif_setup": "O",
+    "guven": "MEDIUM",
+    "_agent": "SIGNAL_AGENT",
+    "_timestamp": "2026-04-29T14:54:55.319871"
+  },
+  "risk": {
+    "risk_seviyesi": "MEDIUM",
+    "stop_yakini": [
+      "O - %2.2 uzakta (kritik)",
+      "GTY - %3.2 uzakta",
+      "CPRX - %3.5 uzakta",
+      "OKE - %5.4 uzakta",
+      "TFC - %5.8 uzakta",
+      "AMAT - %6.3 uzakta",
+      "CAT - %6.6 uzakta"
+    ],
+    "konsantrasyon_uyarisi": "Agresif portföyde 4 pozisyon yarı-iletken/momentum ağırlıklı (MU+AMAT korelasyonu yüksek); tüm sepetlerde nakit %60-95 → K-12 nakit limiti aşımı, ancak temalar yeşil olduğundan kademeli konuşlandırma gerekli.",
+    "senaryo_5pct_dusus": "Toplam ~$9,238 kayıp (-%5.5); 5 stop tetiklenir (AMAT, CPRX, OKE, O, GTY) — özellikle Dividend sepeti 3 stop ile en kırılgan.",
+    "onerileri": [
+      "O ve GTY için stop'ları trailing'e çevir veya kısmi kâr al; %2-3 stop mesafesi VIX 18'de yetersiz",
+      "Dividend sepetinde 3 pozisyon stop yakınında — sektör korelasyonu yüksek, en az birinde pozisyon küçült",
+      "Agresif sepette %95 nakit + 4 momentum pozisyonu riskli denge; yeni giriş yerine mevcutlarda trailing sıkılaştır",
+      "CAT ve KLAC dersleri ışığında swing pozisyonlarda %4 bandında kısmi kâr alma uygula"
+    ],
+    "guven": "HIGH",
+    "_agent": "RISK_AGENT",
+    "_timestamp": "2026-04-29T14:55:10.453961"
+  },
+  "cio": {
+    "karar": "SAT",
+    "hedef_sembol": "CPRX",
+    "gerekce": "Risk Yöneticisi (HIGH güven) ve Sinyal Analisti'nin SELL sinyali örtüşüyor: CPRX stop'a %3.5 ve hedefe çok yakın, kısmi kâr alma kuralı (K) devrede. Ayrıca O ve GTY stop'a %2.2 ve %3.2 mesafede — VIX 18 ortamında bu mesafe yetersiz, trailing sıkılaştırma şart. Makro RISK_ON ve sektör AI/yarı-iletken momentumu pozitif olsa da, aktif rejim JEOPOLITIK_KRIZ (DÜŞÜK güven) ve K-12 nakit limit aşımı var — yeni giriş yapılmıyor, mevcut kazançlar korunuyor. Risk önceliği (Risk > Makro > Sektör > Teknik) gereği önce kırılgan pozisyonları temizle: CPRX'te kısmi kâr al, O ve GTY'de trailing stop'u sıkılaştır. MU +%26 kârda ama RSI overbought — trailing ile koru, satma.",
+    "uyari": "Dividend sepetinde 3 pozisyon (O, GTY, CPRX benzeri) stop yakınında — %5 piyasa düşüşünde 5 stop tetiklenir, ~$9,238 kayıp senaryosu. Sektör korelasyonu yüksek, en az birini küçült.",
+    "guven": "MEDIUM",
+    "analist_uzlasma": "ORTA",
     "tahmin": {
       "yon": "NEUTRAL",
       "buyukluk": "LOW",
       "sembol": "SPY"
     },
-    "_agent": "MACRO_AGENT",
-    "_timestamp": "2026-04-28T13:07:10.695857"
-  },
-  "sector": {
-    "aktif_rejim": "ai_boom",
-    "lider_sektor": "Teknoloji/Yarı İletken (XLK, SMH)",
-    "zayif_sektor": "Tüketici Temel İhtiyaç (XLP)",
-    "rotasyon_onerisi": "XLP/defansiften AI altyapı (SMH, XLK) ve sanayi/güç altyapısına (XLI, GEV teması) rotasyon; ancak K-02 gereği yeni momentum girişlerinde temkinli ol",
-    "guven": "MEDIUM",
-    "tahmin": {
-      "yon": "UP",
-      "buyukluk": "MEDIUM",
-      "sembol": "SMH"
-    },
-    "_agent": "SECTOR_AGENT",
-    "_timestamp": "2026-04-28T13:07:17.648109"
-  },
-  "signal": {
-    "_agent": "SIGNAL_AGENT",
-    "_raw": "{\n  \"portfoy_sinyalleri\": [\n    {\n      \"sembol\": \"ANET\",\n      \"sinyal\": \"HOLD\",\n      \"rsi_yorumu\": \"normal\",\n      \"sma_durumu\": \"ustunde\",\n      \"aciklama\": \"Bugün -2.5% düşüş ama P/L +17.7%, trailing stop %4.7 uzakta — kâr koruma modunda.\"\n    },\n    {\n      \"sembol\": \"MU\",\n      \"sinyal\": \"HOL",
-    "_parse_hata": true,
-    "guven": "LOW"
-  },
-  "risk": {
-    "risk_seviyesi": "HIGH",
-    "stop_yakini": [
-      "O - %1.4 uzakta (KRİTİK)",
-      "ABBV - %2.5 uzakta (earnings + tez bozuldu)",
-      "GEV - %2.6 uzakta (swing)",
-      "MO - %3.0 uzakta",
-      "NEM - %3.1 uzakta",
-      "GTY - %4.3 uzakta",
-      "ANET - %4.7 uzakta",
-      "CL - %4.6 uzakta (tez bozuldu)"
-    ],
-    "konsantrasyon_uyarisi": "Technology %38.6 (K-17 eşik %40'a çok yakın), Dividend bucket'ta 4 pozisyon stop'a %5 altında — sektör kümelenme riski (Consumer Defensive + Healthcare zayıf RS). Nakit kullanımı 3 bucket'ta da %10 üstü — sermaye verimsiz konuşlanmış.",
-    "senaryo_5pct_dusus": "Toplam tahmini kayıp: -$13,895 (-%5.6). 7 pozisyonda stop tetiklenir: ANET, NEM, MO, ABBV, O, GTY, CL — özellikle dividend bucket'ta 5 stop birden = bucket çöküşü riski. Toplam DD %2.17 → %7-8 sıçrar.",
-    "onerileri": [
-      "ABBV ve CL'yi DERHAL kapat — tez tamamen bozuldu (skor 75/70), %5 düşüşte zaten stop tetiklenecek",
-      "MO pozisyonunu %50 azalt — kâr koruma + tez ağır hasar",
-      "O için stop'u sıkılaştır veya kapat — %1.4 uzaklık + tez hasarlı",
-      "ABBV earnings yakın → K-05 koruması zorunlu (kapat veya hedge)",
-      "Dividend bucket'ta korelasyon riski yüksek; aynı anda 4-5 stop tetiklenmesi muhtemel — peyderpey azalt",
-      "Tech %38.6 → yeni tech alımı YOK, K-17 eşiğine yakın",
-      "GEV swing'de stop %2.6 → trailing sıkılaştır veya kısmi kâr al"
-    ],
-    "guven": "HIGH",
-    "_agent": "RISK_AGENT",
-    "_timestamp": "2026-04-28T13:07:56.669844"
-  },
-  "cio": {
-    "karar": "ACIL_CIK",
-    "hedef_sembol": "ABBV, CL, O",
-    "gerekce": "Risk Yöneticisi (HIGH güven) net biçimde tezi bozulmuş ve stop'a kritik mesafede 3 pozisyon tespit etti: ABBV (tez bozuk + earnings yakın, K-05 koruması zorunlu), CL (tez bozuk), O (%1.4 stop uzaklığı KRİTİK seviyede). Makro analist (NEUTRAL) yoğun earnings haftası ve CPI riskini doğruluyor, sektör analisti dividend bucket'ın zaten zayıf RS'de olduğunu teyit ediyor. Aktif rejim JEOPOLITIK_KRIZ + dividend bucket'ta korelasyon riski (5 stop birden tetiklenebilir bucket çöküşü) bekleme lüksü tanımıyor. K-05 (earnings koruması) ve stop disiplini gereği ABBV ve CL derhal kapatılmalı, O için stop sıkılaştırılmalı veya kapatılmalı. MO %50 azaltılmalı. Tech %38.6 → K-17 eşiğine yakın, yeni tech alımı yok.",
-    "uyari": "KESİN: ABBV earnings bu hafta - K-05 koruması zorunlu, gecikme = kural ihlali. Dividend bucket'ta 4-5 stop eş zamanlı tetiklenirse bucket çöküşü = portföy DD %2.17 → %7-8 sıçrar. Teknik sinyal analisti parse hatası verdi, o input dışlandı.",
-    "guven": "HIGH",
-    "analist_uzlasma": "ORTA",
-    "tahmin": {
-      "yon": "DOWN",
-      "buyukluk": "MEDIUM",
-      "sembol": "SPY"
-    },
     "_agent": "CIO_AGENT",
-    "_timestamp": "2026-04-28T13:08:07.530189"
+    "_timestamp": "2026-04-29T14:55:21.932920"
   },
   "weights": {
-    "MACRO_AGENT": 0.8479,
-    "SECTOR_AGENT": 1.4542,
+    "MACRO_AGENT": 0.8055,
+    "SECTOR_AGENT": 1.3815,
     "SIGNAL_AGENT": 0.738,
     "RISK_AGENT": 0.6663,
-    "CIO_AGENT": 0.7819
+    "CIO_AGENT": 0.7428
   }
 }

@@ -1,151 +1,150 @@
 {
-  "tarih": "2026-04-28T16:05:46.135097+03:00",
-  "vix": 19.25,
+  "tarih": "2026-04-29T17:52:46.627555+03:00",
+  "vix": 17.99,
   "sektor_performans": {
-    "Basic Materials": 0.0015536969706131387,
-    "Communication Services": 1.1027806186166167,
-    "Consumer Cyclical": 0.13710935869706287,
-    "Consumer Defensive": -1.150892668088721,
-    "Energy": -0.1987380904432401,
-    "Financial Services": 0.5058692165492262,
-    "Healthcare": -0.4083406064546491,
-    "Industrials": 0.048356915276004386,
-    "Real Estate": -1.196934901012492,
-    "Technology": 0.3079043423315442,
-    "Utilities": -0.48794869509336536
+    "Basic Materials": -0.49269600087801235,
+    "Communication Services": 0.6055593012700422,
+    "Consumer Cyclical": 0.5912807599741887,
+    "Consumer Defensive": -0.042115756828586814,
+    "Energy": -0.3037898947143347,
+    "Financial Services": -0.49847150085643444,
+    "Healthcare": -0.7322095722924193,
+    "Industrials": -1.0832476874067853,
+    "Real Estate": 0.7145818324710174,
+    "Technology": -0.2496963644844863,
+    "Utilities": -0.8847510826838989
   },
   "dominant_temalar": [
     {
-      "tema_adi": "AI_altyapı",
-      "güç_skoru": 7,
-      "neden": "Communication Services +1.1% ve Technology +0.3% lider sektörler arasında; Ace Hardware AI entegrasyonu haberi AI yayılımının devam ettiğini gösteriyor",
-      "öncelikli_alt_dal": "güç_soğutma_ve_çip",
-      "önerilen_hisseler": [
-        "VRT",
-        "ETN",
-        "NVDA"
-      ],
-      "portföy": "aggressive",
-      "aciliyet": "orta",
-      "hisse_evreni": [
-        "ANET",
-        "STX",
-        "COHR",
-        "HUBB",
-        "ASML",
-        "CAMT",
-        "LRCX",
-        "DLR",
-        "PWR",
-        "AMAT",
-        "WDC",
-        "AAOI",
-        "EQIX",
-        "ONTO",
-        "IREN",
-        "MU",
-        "VRT",
-        "ETN",
-        "GNRC",
-        "FN",
-        "TER",
-        "LITE",
-        "KLAC"
-      ]
-    },
-    {
       "tema_adi": "finansal_döngüsel",
       "güç_skoru": 7,
-      "neden": "Financial Services +0.5% ile ikinci en güçlü sektör; Warsh'ın faiz indirimi söylemi ve enflasyon tartışmaları finansal sektör için pozitif faiz eğrisi beklentisi yaratıyor",
-      "öncelikli_alt_dal": "büyük_bankalar_fintech",
+      "neden": "Fed başkanlık geçişi (Warsh) + Powell'ın son toplantısı + faiz sabit beklentisi piyasayı faiz duyarlı varlıklara yönlendiriyor; Real Estate +0.7% lider",
+      "öncelikli_alt_dal": "faiz_duyarlı_REIT",
       "önerilen_hisseler": [
-        "JPM",
-        "GS",
-        "V"
+        "O",
+        "SPG",
+        "PLD"
       ],
-      "portföy": "balanced",
+      "portföy": "dividend",
       "aciliyet": "orta",
       "hisse_evreni": [
-        "MS",
-        "AFRM",
         "PRU",
-        "MET",
-        "AIG",
-        "MA",
-        "JPM",
-        "GS",
-        "BAC",
+        "AFRM",
         "V",
+        "BAC",
+        "GS",
+        "AIG",
+        "JPM",
+        "MA",
+        "MET",
         "PYPL",
+        "MS",
         "CB"
       ]
     },
     {
-      "tema_adi": "enerji_geçiş",
+      "tema_adi": "savunma_uzay",
       "güç_skoru": 6,
-      "neden": "BAE'nin OPEC'ten ayrılma haberi petrol arz dengelerinde belirsizlik yaratıyor; Energy sektörü -0.2% ile baskıda ama orta vadede arz şoku riski nükleer/temiz enerji alternatiflerini öne çıkarabilir",
-      "öncelikli_alt_dal": "nükleer_altyapı",
+      "neden": "İran savaşı haberi tahvil satışını besliyor, jeopolitik prim mevcut; ancak savunma sektörü bugün lider değil (Industrials/Defense ayrı raporlanmamış)",
+      "öncelikli_alt_dal": "ana_yükleniciler",
       "önerilen_hisseler": [
-        "CEG",
-        "VST",
-        "NRG"
+        "LMT",
+        "NOC",
+        "RTX"
       ],
       "portföy": "balanced",
+      "aciliyet": "orta",
+      "hisse_evreni": [
+        "RKLB",
+        "RDW",
+        "KTOS",
+        "S",
+        "AJRD",
+        "LMT",
+        "LHX",
+        "NOC",
+        "ZS",
+        "RTX",
+        "CRWD",
+        "PANW",
+        "GD"
+      ]
+    },
+    {
+      "tema_adi": "sağlık_yenilik",
+      "güç_skoru": 5,
+      "neden": "Günün güçlü hisseleri içinde KALV (+38.9%) gibi biyotek isimleri öne çıkıyor; Communication Services + Consumer Cyclical liderliği risk iştahını destekliyor",
+      "öncelikli_alt_dal": "biyotek_katalist",
+      "önerilen_hisseler": [
+        "CPRX",
+        "VRTX",
+        "REGN"
+      ],
+      "portföy": "aggressive",
       "aciliyet": "düşük",
       "hisse_evreni": [
-        "ET",
-        "WMB",
-        "NRG",
-        "FSLR",
-        "RUN",
-        "KMI",
-        "CCJ",
-        "OKE",
-        "ENPH",
-        "CEG",
-        "VST",
-        "NEE"
+        "SYK",
+        "GILD",
+        "MDT",
+        "MRNA",
+        "ALT",
+        "BMY",
+        "REGN",
+        "ISRG",
+        "EW",
+        "LLY",
+        "NVO",
+        "VKTX"
       ]
     }
   ],
   "kacınılacak": [
-    "Healthcare",
-    "Energy"
+    "Basic Materials",
+    "Financial Services"
   ],
   "piyasa_modu": "risk-on",
   "aktif_kriz": {
-    "tip": "yok",
-    "guven": 7,
-    "kanit": "VIX 19.2 (eşik altı), sektörler mixed ama pozitif eğilimli (Communication +1.1%, Financials +0.5%), haberler stabil. BAE-OPEC ayrılığı izlenmeli ancak henüz piyasa stresi yaratmamış. Healthcare -0.4% ve Energy -0.2% sınırlı düşüşler, sistemik baskı yok.",
-    "beneficiary_sectors": [],
-    "sensitive_sectors": []
+    "tip": "jeopolitik",
+    "guven": 5,
+    "kanit": "İran savaşı manşeti tahvil satışını tetikliyor (Iran war is fueling a bond selloff). Ancak VIX=18 sakin, sektörler mixed ama panik yok, Energy -0.3% (savaş primi yok), Gold sinyali raporlanmamış. Kanıt güçlü değil — manşet seviyesinde jeopolitik gerilim mevcut ama piyasa fiyatlamasına tam yansımamış.",
+    "beneficiary_sectors": [
+      "Energy",
+      "Defense",
+      "Gold",
+      "Consumer Defensive"
+    ],
+    "sensitive_sectors": [
+      "Consumer Cyclical",
+      "Technology",
+      "Financial Services"
+    ]
   },
-  "genel_yorum": "Piyasa normal risk-on modunda; VIX 19.2 ile rahat seviyede. AI_altyapı ve finansal_döngüsel temaları öne çıkıyor. BAE'nin OPEC'ten ayrılması orta vadede enerji jeopolitiği için izlenmesi gereken SPEKÜLATİF bir gelişme — şu an aksiyon gerektirmiyor.",
+  "genel_yorum": "Piyasa risk-on modunda; VIX 18 ve Real Estate/Communication Services liderliği faiz sabit beklentisinin fiyatlandığını gösteriyor. İran haberi arkaplanda jeopolitik prim oluşturuyor ama güven düşük (5/10) — K-13 büyük rotasyon tetiklemez, standart VIX bazlı çalışsın. Fed geçiş süreci (Warsh) önümüzdeki haftalarda volatilite kaynağı olabilir.",
   "haberler": [
     {
-      "baslik": "UAE to leave OPEC and OPEC+ oil producer groups",
-      "kaynak": "reuters.com",
-      "tarih": "2026-04-28 08:37"
+      "baslik": "Kevin Warsh moves one step closer to becoming next Fed chair",
+      "kaynak": "foxbusiness.com",
+      "tarih": "2026-04-29 10:36"
     },
     {
-      "baslik": "United Arab Emirates leaving OPEC, effective May 1",
+      "baslik": "Iran war is fueling a bond selloff ahead of Fed Chair Jerome Powell's final press conference",
+      "kaynak": "marketwatch.com",
+      "tarih": "2026-04-29 10:35"
+    },
+    {
+      "baslik": "David Rubenstein: I would give Fed Chair Powell pretty high marks",
+      "kaynak": "youtube.com",
+      "tarih": "2026-04-29 10:30"
+    },
+    {
+      "baslik": "Trump Fed pick Kevin Warsh clears key Senate hurdle, teeing up final vote",
       "kaynak": "cnbc.com",
-      "tarih": "2026-04-28 08:36"
+      "tarih": "2026-04-29 10:19"
     },
     {
-      "baslik": "Inflation could get in the way of Warsh's desire to cut interest rates, CNBC survey finds",
-      "kaynak": "cnbc.com",
-      "tarih": "2026-04-28 08:30"
-    },
-    {
-      "baslik": "Kevin Warsh At The Fed: More Likely To Be Bernanke Than Volcker",
-      "kaynak": "seekingalpha.com",
-      "tarih": "2026-04-28 08:30"
-    },
-    {
-      "baslik": "Why consumers are skipping new releases and what that means for tech stocks",
-      "kaynak": "proactiveinvestors.co.uk",
-      "tarih": "2026-04-28 08:29"
+      "baslik": "Warsh Clears an Early Hurdle on Path to Fed Chair",
+      "kaynak": "nytimes.com",
+      "tarih": "2026-04-29 10:15"
     }
   ]
 }

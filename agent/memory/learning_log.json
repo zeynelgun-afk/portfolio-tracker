@@ -1266,6 +1266,26 @@
       "date": "2026-04-29",
       "source": "closing_analysis",
       "insight": "---"
+    },
+    {
+      "date": "2026-04-29",
+      "source": "post_trade",
+      "insight": "GEV: DERS: Tenkan_bounce tek başına yetersiz; trend + volatilite filtresi olmadan seans içi otomatik girişler stop yağmuruna açık."
+    },
+    {
+      "date": "2026-04-29",
+      "source": "post_trade",
+      "insight": "NEM: DERS: Disiplinli çıkış kârı korudu; ancak her girişte yazılı tez ve invalidation seviyesi olmadan trade kalitesi ölçülemez."
+    },
+    {
+      "date": "2026-04-29",
+      "source": "post_trade",
+      "insight": "RPRX: DERS: Katalistsiz teknik sıkışma sinyalleri swing'de zaman aşımına uğrayıp marjinal getiri veriyor — sinyal + katalist filtresi şart."
+    },
+    {
+      "date": "2026-04-29",
+      "source": "post_trade",
+      "insight": "UEC: DERS: Tek başına sıkışma sinyali (NR7) yön teyidi olmadan swing girişi için yetersiz — trend filtresi + hacim teyidi zorunlu olmalı."
     }
   ]
 }

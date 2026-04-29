@@ -672,7 +672,7 @@
       "tutulan_gun": 1,
       "cikis_nedeni": "ichimoku çıkış: kumo altı 0/4, kijun altı %9.5 fark. kârdayken disiplinli çıkış",
       "sonuc": "KAZANÇ",
-      "ders": "Ichimoku çıkış disiplini mükemmel. Kumo altı 0/4 + kijun altı = hemen çık. Referans örnek.",
+      "ders": "## NEM Post-Trade Analiz\n\n**1. Hangi K-kuralı?** [KESİN]\n- **K-07 (trailing stop disiplini)** ve **K-11 (kademeli kâr alma)** çerçevesinde yönetildi. Ichimoku kumo altı + kijun %9.5 uzaklık → trend bozulma sinyali, kârdayken disiplinli çıkış.\n\n**2. Giriş tezi doğru muydu?** [MUHTEMEL]\n- Giriş tezi kayıtta yok, ancak fiyat $98.47 → $102.59 hareketi (%4.18) tezin kısa vadede çalıştığını gösteriyor. Momentum yakalanmış.\n\n**3. Çıkış zamanlaması?** [KESİN]\n- Doğru zamanda. Kumo altı 0/4 + kijun uzakl",
       "auto_analiz": {
         "tez_dogru": true,
         "tez_degerlendirme": "NEM altın tezi doğruydu. Ichimoku çıkış sinyalinde +4.2% karla 1 günde çıkış mükemmel disiplin.",
@@ -691,7 +691,9 @@
         "puan": 10,
         "analiz_tarihi": "2026-04-11 20:10",
         "model": "claude-sonnet-4-6"
-      }
+      },
+      "dersler": "## NEM Post-Trade Analiz\n\n**1. Hangi K-kuralı?** [KESİN]\n- **K-07 (trailing stop disiplini)** ve **K-11 (kademeli kâr alma)** çerçevesinde yönetildi. Ichimoku kumo altı + kijun %9.5 uzaklık → trend bozulma sinyali, kârdayken disiplinli çıkış.\n\n**2. Giriş tezi doğru muydu?** [MUHTEMEL]\n- Giriş tezi kayıtta yok, ancak fiyat $98.47 → $102.59 hareketi (%4.18) tezin kısa vadede çalıştığını gösteriyor. Momentum yakalanmış.\n\n**3. Çıkış zamanlaması?** [KESİN]\n- Doğru zamanda. Kumo altı 0/4 + kijun uzakl",
+      "agent_analiz_tarihi": "2026-04-29"
     },
     {
       "id": "SWING-027",
@@ -806,14 +808,16 @@
       "kar_zarar_yuzde": 7.7,
       "tutulan_gun": 14,
       "sonuc": "KAZANC",
-      "ders": "İyi çıkış. tenkan_bounce sinyali momentum sağladı.",
+      "ders": "## Post-Trade Analiz: GEV (Swing)\n\n**Veri Tutarsızlığı Uyarısı (KESİN):** Giriş 1000, çıkış 1077 olarak görünüyor — bu +%7.7 kâr demek. Ancak P/L %0 ve çıkış nedeni STOP olarak işaretlenmiş. Ya veri hatalı ya da \"1077\" stop seviyesi (giriş üstü trailing stop). Analizi STOP senaryosu üzerinden yapıyorum.\n\n### 1. Hangi K-kuralı?\n**KESİN:** K-06 (stop disiplini) tetiklendi. Tutma süresi 0 gün → seans içi giriş, seans içi stop. K-07 (trailing) devreye girmemiş çünkü süre yok.\n\n### 2. Giriş tezi doğr",
       "giris_nedeni": "Seans içi otomatik giriş — tenkan_bounce",
       "tarama_yontemi": "tenkan_bounce",
       "katalizor": "",
       "stop_loss": 892.19,
       "hedef_fiyat": 1269.52,
       "zirve_fiyat": 1166.62,
-      "partial_exits": []
+      "partial_exits": [],
+      "dersler": "## Post-Trade Analiz: GEV (Swing)\n\n**Veri Tutarsızlığı Uyarısı (KESİN):** Giriş 1000, çıkış 1077 olarak görünüyor — bu +%7.7 kâr demek. Ancak P/L %0 ve çıkış nedeni STOP olarak işaretlenmiş. Ya veri hatalı ya da \"1077\" stop seviyesi (giriş üstü trailing stop). Analizi STOP senaryosu üzerinden yapıyorum.\n\n### 1. Hangi K-kuralı?\n**KESİN:** K-06 (stop disiplini) tetiklendi. Tutma süresi 0 gün → seans içi giriş, seans içi stop. K-07 (trailing) devreye girmemiş çünkü süre yok.\n\n### 2. Giriş tezi doğr",
+      "agent_analiz_tarihi": "2026-04-29"
     },
     {
       "id": "SWING-202604271833-NNE",
@@ -827,14 +831,16 @@
       "kar_zarar_yuzde": -7.8,
       "tutulan_gun": 1,
       "sonuc": "ZARAR",
-      "ders": "Stop tetiklendi. Giriş tezi bozuldu. kijun_bounce_v2 sinyali bu piyasada yetersiz kaldı.",
+      "ders": "## Post-Trade Analiz: NNE (Swing)\n\n**1. Yönetim kuralı**\nKESİN: K-06 (stop disiplini) tetiklendi — 25.62 → 23.62, ~%7.8 stop. K-07 trailing devreye girmedi (0 gün tutma).\n\n**2. Giriş tezi değerlendirmesi**\n- Tez: kijun_bounce_v2 (Ichimoku Kijun-sen sıçraması)\n- KESİN: Sıçrama gerçekleşmedi, fiyat doğrudan stop'a gitti.\n- MUHTEMEL: Kijun seviyesi destek olarak çalışmadı — ya seviye yanlış hesaplandı ya da genel piyasa zayıflığı setup'ı geçersiz kıldı.\n- SPEKÜLATİF: Seans içi otomatik giriş, bağla",
       "giris_nedeni": "Seans içi otomatik giriş — kijun_bounce_v2",
       "tarama_yontemi": "kijun_bounce_v2",
       "katalizor": "",
       "stop_loss": 23.63,
       "hedef_fiyat": 30.6,
       "zirve_fiyat": 25.96,
-      "partial_exits": []
+      "partial_exits": [],
+      "dersler": "## Post-Trade Analiz: NNE (Swing)\n\n**1. Yönetim kuralı**\nKESİN: K-06 (stop disiplini) tetiklendi — 25.62 → 23.62, ~%7.8 stop. K-07 trailing devreye girmedi (0 gün tutma).\n\n**2. Giriş tezi değerlendirmesi**\n- Tez: kijun_bounce_v2 (Ichimoku Kijun-sen sıçraması)\n- KESİN: Sıçrama gerçekleşmedi, fiyat doğrudan stop'a gitti.\n- MUHTEMEL: Kijun seviyesi destek olarak çalışmadı — ya seviye yanlış hesaplandı ya da genel piyasa zayıflığı setup'ı geçersiz kıldı.\n- SPEKÜLATİF: Seans içi otomatik giriş, bağla",
+      "agent_analiz_tarihi": "2026-04-29"
     },
     {
       "id": "SWING-202604141454-RPRX",
@@ -848,14 +854,16 @@
       "kar_zarar_yuzde": 2.8,
       "tutulan_gun": 15,
       "sonuc": "KAZANC",
-      "ders": "Süre doldu (15g). Momentum beklediğimiz kadar güçlü değildi.",
+      "ders": "# POST-TRADE ANALİZ — RPRX\n\n**1. Yönetim Kuralı**\nKESİN: Çıkış nedeni SURE → 15 günlük swing süre limiti devreye girdi. K-07 (trailing) ve K-11 (kademeli kâr) tetiklenmeden zaman aşımı çıkışı yapıldı.\n\n**2. Giriş Tezi Değerlendirmesi**\nKESİN: Üç sinyal birlikte geldi (tenkan_bounce + kijun_bounce_v2 + nr7_sikisma) — tarama açısından güçlü kombinasyon.\nMUHTEMEL: Tez teknik olarak geçerliydi ama momentum çıkışı zayıf kaldı; +%2.8 ile süre dolduğuna göre fiyat geniş bir bantta sıkıştı.\nSPEKÜLATİF: ",
       "giris_nedeni": "Seans içi otomatik giriş — tenkan_bounce, kijun_bounce_v2, nr7_sikisma",
       "tarama_yontemi": "tenkan_bounce, kijun_bounce_v2, nr7_sikisma",
       "katalizor": "",
       "stop_loss": 46.89,
       "hedef_fiyat": 52.61,
       "zirve_fiyat": 50,
-      "partial_exits": []
+      "partial_exits": [],
+      "dersler": "# POST-TRADE ANALİZ — RPRX\n\n**1. Yönetim Kuralı**\nKESİN: Çıkış nedeni SURE → 15 günlük swing süre limiti devreye girdi. K-07 (trailing) ve K-11 (kademeli kâr) tetiklenmeden zaman aşımı çıkışı yapıldı.\n\n**2. Giriş Tezi Değerlendirmesi**\nKESİN: Üç sinyal birlikte geldi (tenkan_bounce + kijun_bounce_v2 + nr7_sikisma) — tarama açısından güçlü kombinasyon.\nMUHTEMEL: Tez teknik olarak geçerliydi ama momentum çıkışı zayıf kaldı; +%2.8 ile süre dolduğuna göre fiyat geniş bir bantta sıkıştı.\nSPEKÜLATİF: ",
+      "agent_analiz_tarihi": "2026-04-29"
     },
     {
       "id": "SWING-202604281435-UEC",
@@ -869,14 +877,16 @@
       "kar_zarar_yuzde": -9.25,
       "tutulan_gun": 1,
       "sonuc": "ZARAR",
-      "ders": "Stop tetiklendi. Giriş tezi bozuldu. nr7_sikisma sinyali bu piyasada yetersiz kaldı.",
+      "ders": "## UEC Post-Trade Analiz\n\n**1. Yönetim Kuralı**\nKESİN: K-06 (stop disiplini) tetiklendi — giriş $14.86, çıkış $13.48, kayıp ~%9.3. K-07 trailing devreye giremedi çünkü pozisyon kâra geçmedi.\n\n**2. Giriş Tezi**\nKESİN: Tez \"nr7_sikisma\" — dar volatilite sonrası kırılma beklentisi. Aynı gün stop yedi, kırılma yukarı değil aşağı oldu. Tez bozuldu.\nMUHTEMEL: NR7 sinyali yön bilgisi vermez; tek başına giriş için zayıf bir tetik.\n\n**3. Çıkış Zamanlaması**\nKESİN: Stop tetiklendiğinde çıkıldı, override y",
       "giris_nedeni": "Seans içi otomatik giriş — nr7_sikisma",
       "tarama_yontemi": "nr7_sikisma",
       "katalizor": "",
       "stop_loss": 14.05,
       "hedef_fiyat": 16.89,
       "zirve_fiyat": 14.86,
-      "partial_exits": []
+      "partial_exits": [],
+      "dersler": "## UEC Post-Trade Analiz\n\n**1. Yönetim Kuralı**\nKESİN: K-06 (stop disiplini) tetiklendi — giriş $14.86, çıkış $13.48, kayıp ~%9.3. K-07 trailing devreye giremedi çünkü pozisyon kâra geçmedi.\n\n**2. Giriş Tezi**\nKESİN: Tez \"nr7_sikisma\" — dar volatilite sonrası kırılma beklentisi. Aynı gün stop yedi, kırılma yukarı değil aşağı oldu. Tez bozuldu.\nMUHTEMEL: NR7 sinyali yön bilgisi vermez; tek başına giriş için zayıf bir tetik.\n\n**3. Çıkış Zamanlaması**\nKESİN: Stop tetiklendiğinde çıkıldı, override y",
+      "agent_analiz_tarihi": "2026-04-29"
     }
   ],
   "istatistikler": {
