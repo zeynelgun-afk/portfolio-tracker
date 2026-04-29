@@ -511,13 +511,61 @@ def run_theme_scan(
     temalar = TEMA_TARAMA_CONFIG[portfoy]
     tum_adaylar = {}
 
+    # 29 Nis 2026: TEHLİKELİ tema filtresi — skor ≤2 olan kategorilerden alım yapma.
+    # Sebep: Bugün TGT/MNST/VRT/UPS/NEM tehlikeli temalardan alındı.
+    # tema_scores.json'daki kategori isimleri ile config'teki tema_adi farklı:
+    _TEMA_SCORE_MAP = {
+        # config_adi -> tema_scores.json key
+        "savunma_sanayi":     "savunma",
+        "savunma_elektronik": "savunma",
+        "emtia_hammadde":     "altin",       # Altın madenciliği baskın
+        "tuketici_temettu":   "tuketici_temel",
+        "tüketici_temettu":   "tuketici_temel",
+        "tüketici_temettü":   "tuketici_temel",
+        "saglik_temettu":     "saglik",
+        "sağlik_temettu":     "saglik",
+        "saglik":             "saglik",
+        "petrol_enerji":      "petrol_enerji",
+        "AI_tedarik_zinciri": "ai_yari_iletken",
+        "AI_yazilim":         "ai_yazilim",
+        "uranyum_nukleer":    "uranyum_nukleer",
+        "kripto":             "kripto",
+        "elektrik_altyapi":   "elektrik_altyapi",
+    }
+
+    # Tema skor cek
+    _theme_scores = {}
+    try:
+        import json as _jts
+        from pathlib import Path as _Pts
+        _ts_path = _Pts(__file__).parent.parent / "data" / "theme_scores.json"
+        if _ts_path.exists():
+            _ts_data = _jts.load(open(_ts_path))
+            _theme_scores = _ts_data.get("temalar", {})
+    except Exception as _ets:
+        print(f"[ThemeScan] tema skor okunamadı: {_ets}")
+
+    def _tema_tehlikeli(tema_adi: str) -> tuple[bool, int]:
+        """Tema TEHLİKELİ mi (skor ≤2) — (tehlikeli_mi, skor) döndürür."""
+        ts_key = _TEMA_SCORE_MAP.get(tema_adi, tema_adi.lower())
+        if ts_key in _theme_scores:
+            skor = _theme_scores[ts_key].get("skor", 5)
+            return (skor <= 2, skor)
+        return (False, 5)  # Bilinmiyorsa geç
+
     print(f"\n[ThemeScan] {portfoy.upper()} — {len(temalar)} tema taranıyor (VIX:{vix:.1f})")
 
     for tema_adi, cfg in temalar.items():
+        # 29 Nis 2026: TEHLİKELİ tema filtresi
+        _tehlikeli, _tema_skor = _tema_tehlikeli(tema_adi)
+        if _tehlikeli:
+            print(f"  [{tema_adi}] ATLANDI — TEHLİKELİ tema (skor {_tema_skor}/10, RS negatif)")
+            continue
+
         # 1. FMP screener ile dinamik evren
         evren = _screener_fetch(cfg["screener"], limit=25)
         if evren:
-            print(f"  [{tema_adi}] Screener: {len(evren)} hisse bulundu")
+            print(f"  [{tema_adi}] Screener: {len(evren)} hisse bulundu (tema skoru {_tema_skor}/10)")
         else:
             # Screener başarısız → fallback sabit listesi
             evren = cfg["fallback"]
