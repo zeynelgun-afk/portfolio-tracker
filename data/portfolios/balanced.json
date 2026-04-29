@@ -33,8 +33,8 @@
       "stop_aciklama": "",
       "stop_guncelleme": "",
       "durum": "✅ Normal",
-      "rsi": 63.81,
-      "rsi_son_guncelleme": "2026-04-29T21:34:29.202866+03:00",
+      "rsi": 64.32,
+      "rsi_son_guncelleme": "2026-04-29T22:05:11.729159+03:00",
       "atr14": 1.2
     },
     {
@@ -62,8 +62,8 @@
       "zirve_fiyat": 107.67,
       "stop_mesafe_pct": 6.27,
       "durum": "✅ Normal",
-      "rsi": 41.53,
-      "rsi_son_guncelleme": "2026-04-29T21:34:29.202866+03:00",
+      "rsi": 42.19,
+      "rsi_son_guncelleme": "2026-04-29T22:05:11.729159+03:00",
       "atr14": 3.3743
     },
     {
@@ -91,8 +91,8 @@
       "zirve_fiyat": 124.46,
       "stop_mesafe_pct": 8.32,
       "durum": "✅ Normal",
-      "rsi": 54.77,
-      "rsi_son_guncelleme": "2026-04-29T21:34:29.202866+03:00"
+      "rsi": 54.47,
+      "rsi_son_guncelleme": "2026-04-29T22:05:11.729159+03:00"
     },
     {
       "sembol": "EOG",
@@ -120,7 +120,7 @@
       "stop_mesafe_pct": 5.0,
       "durum": "✅ Normal",
       "rsi": 56.13,
-      "rsi_son_guncelleme": "2026-04-29T21:34:29.202866+03:00"
+      "rsi_son_guncelleme": "2026-04-29T22:05:11.729159+03:00"
     },
     {
       "sembol": "COLB",
@@ -147,8 +147,8 @@
       "zirve_fiyat": 29.1,
       "stop_mesafe_pct": 5.02,
       "durum": "✅ Normal",
-      "rsi": 52.27,
-      "rsi_son_guncelleme": "2026-04-29T21:34:29.202866+03:00"
+      "rsi": 52.04,
+      "rsi_son_guncelleme": "2026-04-29T22:05:11.729159+03:00"
     },
     {
       "sembol": "TSM",
@@ -175,8 +175,8 @@
       "zirve_fiyat": 392.35,
       "stop_mesafe_pct": 6.58,
       "durum": "✅ Normal",
-      "rsi": 61.2,
-      "rsi_son_guncelleme": "2026-04-29T21:34:29.202866+03:00"
+      "rsi": 62.11,
+      "rsi_son_guncelleme": "2026-04-29T22:05:11.729159+03:00"
     }
   ],
   "son_guncelleme": "2026-04-29T20:04:51.520249+03:00",
