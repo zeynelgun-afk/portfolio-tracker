@@ -66,14 +66,22 @@ jobs:
       - name: Modu belirle
         id: mode
         run: |
-          if [ -n "${{ github.event.inputs.mode }}" ]; then
-            echo "mode=${{ github.event.inputs.mode }}" >> $GITHUB_OUTPUT
+          INPUT_MODE="${{ github.event.inputs.mode }}"
+          HOUR=$(TZ=Europe/Istanbul date +%H)
+          MIN=$(TZ=Europe/Istanbul date +%M)
+          WDAY=$(date +%u)
+          TODAY=$(TZ=Europe/Istanbul date +%Y-%m-%d)
+          SABAH_FILE="reports/daily/DAILY_SABAH_${TODAY}.md"
+
+          # RESCUE 1: Input monitor olsa bile, 17:00-20:59 TR arasi ve bugun
+          # icin sabah raporu yoksa morning'e yukselt. Bu, 16:00 sabah agent
+          # cancelled/failed oldugunda olusan boslugu kapatir.
+          if [ "$INPUT_MODE" = "monitor" ] && [ "$HOUR" -ge 17 ] && [ "$HOUR" -le 20 ] && [ "$WDAY" -le 5 ] && [ ! -f "$SABAH_FILE" ]; then
+            echo "[RESCUE] Input=monitor ama sabah raporu yok ($SABAH_FILE) → morning'e yukseltiliyor"
+            echo "mode=morning" >> $GITHUB_OUTPUT
+          elif [ -n "$INPUT_MODE" ]; then
+            echo "mode=$INPUT_MODE" >> $GITHUB_OUTPUT
           else
-            HOUR=$(TZ=Europe/Istanbul date +%H)
-            MIN=$(TZ=Europe/Istanbul date +%M)
-            WDAY=$(date +%u)
-            TODAY=$(TZ=Europe/Istanbul date +%Y-%m-%d)
-            SABAH_FILE="reports/daily/DAILY_SABAH_${TODAY}.md"
             if [ "$WDAY" -eq 7 ]; then
               echo "mode=weekly" >> $GITHUB_OUTPUT
             elif [ "$HOUR" -eq 16 ] || ([ "$HOUR" -eq 15 ] && [ "$MIN" -ge 45 ]); then
