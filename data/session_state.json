@@ -13,31 +13,7 @@
   "faz": "FAZ_0",
   "buy_list": {
     "tarih": "2026-04-29T17:52:47.566922+03:00",
-    "adaylar": [
-      {
-        "symbol": "NEM",
-        "tema": "emtia_hammadde",
-        "portföy": "balanced",
-        "price": 107.56,
-        "stop": 98.12,
-        "target": 126.42,
-        "rr": 2.0,
-        "score": 5.65,
-        "teknik": 4,
-        "fundamental": 8,
-        "atr": 4.72,
-        "reason": "emtia_hammadde tema taraması — teknik:4/10 fundamental:8/10",
-        "detay": {
-          "sma200": "✅",
-          "rsi": "⚠️ 39",
-          "skor": 8,
-          "roic": "✅ 15.1%",
-          "pe": "✅ 13.8",
-          "fcf": "✅ 10.7%",
-          "büyüme": "✅ ROE 25.2%"
-        }
-      }
-    ],
+    "adaylar": [],
     "vix": 17.99,
     "piyasa_mod": "risk-on"
   },
