@@ -73,8 +73,19 @@ def generate_post_trade_analysis(trade: dict, portfolio: str) -> str:
     symbol      = trade.get("sembol") or trade.get("symbol", "?")
     entry_price = trade.get("giris_fiyati") or trade.get("entry_price") or trade.get("price", 0)
     exit_price  = trade.get("cikis_fiyati") or trade.get("exit_price", 0)
-    pnl_pct     = trade.get("pnl_yuzde") or trade.get("pnl_pct", 0)
-    hold_days   = trade.get("tutma_suresi") or trade.get("hold_days", 0)
+    # 29 Nis 2026: closed.json canonical 'kar_zarar_yuzde' ve 'tutulan_gun'.
+    pnl_pct     = (
+        trade.get("kar_zarar_yuzde")  # canonical
+        or trade.get("pnl_yuzde")
+        or trade.get("pnl_pct")
+        or 0
+    )
+    hold_days   = (
+        trade.get("tutulan_gun")      # canonical
+        or trade.get("tutma_suresi")
+        or trade.get("hold_days")
+        or 0
+    )
     exit_reason = trade.get("cikis_nedeni") or trade.get("exit_reason", "Bilinmiyor")
     entry_reason = trade.get("giris_nedeni") or trade.get("entry_reason", "")
 
@@ -223,8 +234,20 @@ def process_trade_feedback(symbol: str, portfolio: str) -> bool:
         print(f"[TradeFeedback] {symbol} için kapanmış trade bulunamadı.")
         return False
 
-    pnl_pct  = trade.get("pnl_yuzde") or trade.get("pnl_pct", 0)
-    sonuc    = "✅ KAR" if float(pnl_pct) > 0 else "❌ ZARAR"
+    # 29 Nis 2026 fix: closed.json canonical alan adi 'kar_zarar_yuzde'.
+    # Eskiden 'pnl_yuzde' / 'pnl_pct' aranirdi ama bu alanlar yok →
+    # 0 donerdi → 'GEV ❌ ZARAR %0' gibi yanlis mesajlar.
+    pnl_pct  = (
+        trade.get("kar_zarar_yuzde")  # canonical
+        or trade.get("pnl_yuzde")
+        or trade.get("pnl_pct")
+        or 0
+    )
+    try:
+        pnl_pct = float(pnl_pct)
+    except (TypeError, ValueError):
+        pnl_pct = 0.0
+    sonuc    = "✅ KAR" if pnl_pct > 0 else ("⚪ NÖTR" if abs(pnl_pct) < 0.1 else "❌ ZARAR")
 
     # Claude analizi
     analysis = generate_post_trade_analysis(trade, portfolio)
