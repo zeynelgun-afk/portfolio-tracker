@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-04-29T19:34:15.702031",
+  "son_guncelleme": "2026-04-29T20:01:26.834432",
   "not": "SWING TRADE SADECE SİMÜLASYON - Sadece % kazanç/kayıp takibi (MAX: 5 pozisyon)",
   "aktif_pozisyonlar": [
     {
@@ -17,18 +17,18 @@
       "katalizor": "",
       "max_sure_gun": 15,
       "durum": "✅ Normal aralıkta",
-      "guncel_fiyat": 50.59,
-      "son_fiyat": 50.59,
+      "guncel_fiyat": 50.67,
+      "son_fiyat": 50.67,
       "zirve_fiyat": 51.57,
       "chandelier_stop": 48.03,
       "k11_aktif": false,
       "k11_profit_lock": null,
       "son_guncelleme": "2026-04-29",
       "notlar": [],
-      "kar_zarar_yuzde": -1.14,
+      "kar_zarar_yuzde": -1.0,
       "tutulan_gun": 1,
       "atr14": 1.18,
-      "pnl_pct": -1.14,
+      "pnl_pct": -1.0,
       "rsi": 59.58,
       "rsi_son_guncelleme": "2026-04-29T22:34:15.572427+03:00"
     },
@@ -47,18 +47,18 @@
       "katalizor": "",
       "max_sure_gun": 15,
       "durum": "✅ Normal aralıkta",
-      "guncel_fiyat": 810.14,
-      "son_fiyat": 810.14,
+      "guncel_fiyat": 810.25,
+      "son_fiyat": 810.25,
       "zirve_fiyat": 831.64,
       "chandelier_stop": 762.88,
       "k11_aktif": false,
       "k11_profit_lock": null,
       "son_guncelleme": "2026-04-29",
       "notlar": [],
-      "kar_zarar_yuzde": -2.58,
+      "kar_zarar_yuzde": -2.56,
       "tutulan_gun": 1,
       "atr14": 22.92,
-      "pnl_pct": -2.58,
+      "pnl_pct": -2.56,
       "rsi": 62.1,
       "rsi_son_guncelleme": "2026-04-29T22:34:15.572427+03:00"
     }
@@ -67,7 +67,7 @@
     "toplam_pozisyon": 2,
     "bos_slot": 3,
     "maksimum_pozisyon": 5,
-    "ortalama_kar_zarar_yuzde": -1.86
+    "ortalama_kar_zarar_yuzde": -1.78
   },
   "_schema_version": 2
 }
