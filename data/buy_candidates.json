@@ -1,7 +1,56 @@
 {
-  "tarih": "2026-04-29T15:01:47.104680",
-  "adaylar": [],
+  "tarih": "2026-04-29T21:35:43.350166",
+  "adaylar": [
+    {
+      "symbol": "PSA",
+      "tema": "reit_temettü",
+      "portföy": "dividend",
+      "price": 294.09,
+      "stop": 279.39,
+      "target": 322.86,
+      "rr": 1.96,
+      "score": 6.15,
+      "teknik": 7,
+      "fundamental": 6,
+      "atr": 7.19,
+      "reason": "reit_temettü tema taraması — teknik:7/10 fundamental:6/10",
+      "detay": {
+        "sma200": "✅",
+        "sma50": "✅",
+        "rsi": "✅ 51 (temettü giriş)",
+        "mom_1m": "✅ +10.9%",
+        "skor": 6,
+        "roic": "✅ 12.9%",
+        "fcf": "✅ 5.9%",
+        "büyüme": "✅ ROE 20.5%"
+      }
+    },
+    {
+      "symbol": "GEV",
+      "tema": "utility_temettü",
+      "portföy": "dividend",
+      "price": 1063.11,
+      "stop": 969.73,
+      "target": 1249.87,
+      "rr": 2.0,
+      "score": 5.85,
+      "teknik": 8,
+      "fundamental": 4,
+      "atr": 46.69,
+      "reason": "utility_temettü tema taraması — teknik:8/10 fundamental:4/10",
+      "detay": {
+        "sma200": "✅",
+        "sma50": "✅",
+        "rsi": "→ 65",
+        "mom_1m": "✅ +30.1%",
+        "mom_3m": "✅ +49.4%",
+        "hacim": "✅ 1.8x",
+        "skor": 4,
+        "büyüme": "✅ ROE 88.0%"
+      }
+    }
+  ],
   "ozet": {
-    "toplam": 6
+    "toplam": 2
   }
 }

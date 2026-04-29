@@ -232,7 +232,8 @@
     "EOG": "energy",
     "COLB": "financial_services",
     "TSM": "technology",
-    "APA": "energy"
+    "APA": "energy",
+    "EQIX": "real_estate"
   },
   "updated": {
     "COHR": 1777299593,
@@ -278,7 +279,7 @@
     "VKTX": 1776869327,
     "REGN": 1776869329,
     "LLY": 1776869331,
-    "ISRG": 1776869333,
+    "ISRG": 1777498513,
     "SYK": 1776869335,
     "BMY": 1776869337,
     "MDT": 1776869339,
@@ -467,6 +468,7 @@
     "EOG": 1777480542,
     "COLB": 1777480546,
     "TSM": 1777480548,
-    "APA": 1777484021
+    "APA": 1777484021,
+    "EQIX": 1777498521
   }
 }

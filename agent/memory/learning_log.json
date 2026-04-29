@@ -1286,6 +1286,11 @@
       "date": "2026-04-29",
       "source": "post_trade",
       "insight": "UEC: DERS: Tek başına sıkışma sinyali (NR7) yön teyidi olmadan swing girişi için yetersiz — trend filtresi + hacim teyidi zorunlu olmalı."
+    },
+    {
+      "date": "2026-04-30",
+      "source": "closing_analysis",
+      "insight": "---"
     }
   ]
 }
