@@ -13,7 +13,494 @@
   "faz": "FAZ_0",
   "buy_list": {
     "tarih": "2026-04-29T17:52:47.566922+03:00",
-    "adaylar": [],
+    "adaylar": [
+      {
+        "symbol": "CF",
+        "portföy": "balanced",
+        "price": 122.31,
+        "stop": 0,
+        "target": 0,
+        "reason": "daily_scan_balanced skor:15 | Basic Materials",
+        "tema": "Basic Materials"
+      },
+      {
+        "symbol": "PARR",
+        "portföy": "balanced",
+        "price": 62.61,
+        "stop": 0,
+        "target": 0,
+        "reason": "daily_scan_balanced skor:15 | Energy",
+        "tema": "Energy"
+      },
+      {
+        "symbol": "MU",
+        "portföy": "balanced",
+        "price": 504.29,
+        "stop": 0,
+        "target": 0,
+        "reason": "daily_scan_balanced skor:14 | Technology",
+        "tema": "Technology"
+      },
+      {
+        "symbol": "HIG",
+        "portföy": "balanced",
+        "price": 138.79,
+        "stop": 0,
+        "target": 0,
+        "reason": "daily_scan_balanced skor:14 | Financial Services",
+        "tema": "Financial Services"
+      },
+      {
+        "symbol": "APA",
+        "portföy": "balanced",
+        "price": 38.65,
+        "stop": 0,
+        "target": 0,
+        "reason": "daily_scan_balanced skor:14 | Energy",
+        "tema": "Energy"
+      },
+      {
+        "symbol": "EXEL",
+        "portföy": "balanced",
+        "price": 44.93,
+        "stop": 0,
+        "target": 0,
+        "reason": "daily_scan_balanced skor:14 | Healthcare",
+        "tema": "Healthcare"
+      },
+      {
+        "symbol": "ONB",
+        "portföy": "balanced",
+        "price": 23.98,
+        "stop": 0,
+        "target": 0,
+        "reason": "daily_scan_balanced skor:14 | Financial Services",
+        "tema": "Financial Services"
+      },
+      {
+        "symbol": "MGY",
+        "portföy": "balanced",
+        "price": 29.33,
+        "stop": 0,
+        "target": 0,
+        "reason": "daily_scan_balanced skor:14 | Energy",
+        "tema": "Energy"
+      },
+      {
+        "symbol": "EBC",
+        "portföy": "balanced",
+        "price": 20.14,
+        "stop": 0,
+        "target": 0,
+        "reason": "daily_scan_balanced skor:14 | Financial Services",
+        "tema": "Financial Services"
+      },
+      {
+        "symbol": "SLDE",
+        "portföy": "balanced",
+        "price": 18.87,
+        "stop": 0,
+        "target": 0,
+        "reason": "daily_scan_balanced skor:14 | Financial Services",
+        "tema": "Financial Services"
+      },
+      {
+        "symbol": "NEM",
+        "portföy": "balanced",
+        "price": 109.9,
+        "stop": 0,
+        "target": 0,
+        "reason": "daily_scan_balanced skor:13 | Basic Materials",
+        "tema": "Basic Materials"
+      },
+      {
+        "symbol": "TRV",
+        "portföy": "balanced",
+        "price": 310.02,
+        "stop": 0,
+        "target": 0,
+        "reason": "daily_scan_balanced skor:13 | Financial Services",
+        "tema": "Financial Services"
+      },
+      {
+        "symbol": "DVN",
+        "portföy": "balanced",
+        "price": 49.48,
+        "stop": 0,
+        "target": 0,
+        "reason": "daily_scan_balanced skor:13 | Energy",
+        "tema": "Energy"
+      },
+      {
+        "symbol": "RPRX",
+        "portföy": "balanced",
+        "price": 49.54,
+        "stop": 0,
+        "target": 0,
+        "reason": "daily_scan_balanced skor:13 | Healthcare",
+        "tema": "Healthcare"
+      },
+      {
+        "symbol": "INCY",
+        "portföy": "balanced",
+        "price": 97.74,
+        "stop": 0,
+        "target": 0,
+        "reason": "daily_scan_balanced skor:13 | Healthcare",
+        "tema": "Healthcare"
+      },
+      {
+        "symbol": "OVV",
+        "portföy": "balanced",
+        "price": 58.46,
+        "stop": 0,
+        "target": 0,
+        "reason": "daily_scan_balanced skor:13 | Energy",
+        "tema": "Energy"
+      },
+      {
+        "symbol": "HAS",
+        "portföy": "balanced",
+        "price": 95.54,
+        "stop": 0,
+        "target": 0,
+        "reason": "daily_scan_balanced skor:13 | Consumer Cyclical",
+        "tema": "Consumer Cyclical"
+      },
+      {
+        "symbol": "HRB",
+        "portföy": "dividend",
+        "price": 31.51,
+        "stop": 0,
+        "target": 0,
+        "reason": "daily_scan_dividend skor:16 | Consumer Cyclical",
+        "tema": "Consumer Cyclical"
+      },
+      {
+        "symbol": "PGR",
+        "portföy": "dividend",
+        "price": 203.03,
+        "stop": 0,
+        "target": 0,
+        "reason": "daily_scan_dividend skor:14 | Financial Services",
+        "tema": "Financial Services"
+      },
+      {
+        "symbol": "TROW",
+        "portföy": "dividend",
+        "price": 100.77,
+        "stop": 0,
+        "target": 0,
+        "reason": "daily_scan_dividend skor:14 | Financial Services",
+        "tema": "Financial Services"
+      },
+      {
+        "symbol": "SFD",
+        "portföy": "dividend",
+        "price": 26.88,
+        "stop": 0,
+        "target": 0,
+        "reason": "daily_scan_dividend skor:14 | Consumer Defensive",
+        "tema": "Consumer Defensive"
+      },
+      {
+        "symbol": "BBWI",
+        "portföy": "dividend",
+        "price": 19.26,
+        "stop": 0,
+        "target": 0,
+        "reason": "daily_scan_dividend skor:14 | Consumer Cyclical",
+        "tema": "Consumer Cyclical"
+      },
+      {
+        "symbol": "PFG",
+        "portföy": "dividend",
+        "price": 100.06,
+        "stop": 0,
+        "target": 0,
+        "reason": "daily_scan_dividend skor:13 | Financial Services",
+        "tema": "Financial Services"
+      },
+      {
+        "symbol": "HPQ",
+        "portföy": "dividend",
+        "price": 19.73,
+        "stop": 0,
+        "target": 0,
+        "reason": "daily_scan_dividend skor:13 | Technology",
+        "tema": "Technology"
+      },
+      {
+        "symbol": "FAF",
+        "portföy": "dividend",
+        "price": 70.51,
+        "stop": 0,
+        "target": 0,
+        "reason": "daily_scan_dividend skor:13 | Financial Services",
+        "tema": "Financial Services"
+      },
+      {
+        "symbol": "EBC",
+        "portföy": "dividend",
+        "price": 20.14,
+        "stop": 0,
+        "target": 0,
+        "reason": "daily_scan_dividend skor:13 | Financial Services",
+        "tema": "Financial Services"
+      },
+      {
+        "symbol": "FULT",
+        "portföy": "dividend",
+        "price": 21.73,
+        "stop": 0,
+        "target": 0,
+        "reason": "daily_scan_dividend skor:13 | Financial Services",
+        "tema": "Financial Services"
+      },
+      {
+        "symbol": "FBP",
+        "portföy": "dividend",
+        "price": 24.18,
+        "stop": 0,
+        "target": 0,
+        "reason": "daily_scan_dividend skor:13 | Financial Services",
+        "tema": "Financial Services"
+      },
+      {
+        "symbol": "FFBC",
+        "portföy": "dividend",
+        "price": 30.82,
+        "stop": 0,
+        "target": 0,
+        "reason": "daily_scan_dividend skor:13 | Financial Services",
+        "tema": "Financial Services"
+      },
+      {
+        "symbol": "ZION",
+        "portföy": "dividend",
+        "price": 63.18,
+        "stop": 0,
+        "target": 0,
+        "reason": "daily_scan_dividend skor:12 | Financial Services",
+        "tema": "Financial Services"
+      },
+      {
+        "symbol": "SIRI",
+        "portföy": "dividend",
+        "price": 26.26,
+        "stop": 0,
+        "target": 0,
+        "reason": "daily_scan_dividend skor:12 | Communication Services",
+        "tema": "Communication Services"
+      },
+      {
+        "symbol": "DOX",
+        "portföy": "dividend",
+        "price": 64.27,
+        "stop": 0,
+        "target": 0,
+        "reason": "daily_scan_dividend skor:12 | Technology",
+        "tema": "Technology"
+      },
+      {
+        "symbol": "HWC",
+        "portföy": "dividend",
+        "price": 67.41,
+        "stop": 0,
+        "target": 0,
+        "reason": "daily_scan_dividend skor:12 | Financial Services",
+        "tema": "Financial Services"
+      },
+      {
+        "symbol": "SON",
+        "portföy": "dividend",
+        "price": 49.91,
+        "stop": 0,
+        "target": 0,
+        "reason": "daily_scan_dividend skor:12 | Consumer Cyclical",
+        "tema": "Consumer Cyclical"
+      },
+      {
+        "symbol": "ASB",
+        "portföy": "dividend",
+        "price": 28.15,
+        "stop": 0,
+        "target": 0,
+        "reason": "daily_scan_dividend skor:12 | Financial Services",
+        "tema": "Financial Services"
+      },
+      {
+        "symbol": "MU",
+        "portföy": "aggressive",
+        "price": 504.29,
+        "stop": 0,
+        "target": 0,
+        "reason": "daily_scan_aggressive skor:23 | Technology",
+        "tema": "Technology"
+      },
+      {
+        "symbol": "WDC",
+        "portföy": "aggressive",
+        "price": 390.99,
+        "stop": 0,
+        "target": 0,
+        "reason": "daily_scan_aggressive skor:22 | Technology",
+        "tema": "Technology"
+      },
+      {
+        "symbol": "STX",
+        "portföy": "aggressive",
+        "price": 579.03,
+        "stop": 0,
+        "target": 0,
+        "reason": "daily_scan_aggressive skor:22 | ",
+        "tema": ""
+      },
+      {
+        "symbol": "LRCX",
+        "portföy": "aggressive",
+        "price": 251.23,
+        "stop": 0,
+        "target": 0,
+        "reason": "daily_scan_aggressive skor:20 | Technology",
+        "tema": "Technology"
+      },
+      {
+        "symbol": "KLAC",
+        "portföy": "aggressive",
+        "price": 1808.97,
+        "stop": 0,
+        "target": 0,
+        "reason": "daily_scan_aggressive skor:20 | Technology",
+        "tema": "Technology"
+      },
+      {
+        "symbol": "VRT",
+        "portföy": "aggressive",
+        "price": 305.03,
+        "stop": 0,
+        "target": 0,
+        "reason": "daily_scan_aggressive skor:20 | Industrials",
+        "tema": "Industrials"
+      },
+      {
+        "symbol": "TER",
+        "portföy": "aggressive",
+        "price": 380.13,
+        "stop": 0,
+        "target": 0,
+        "reason": "daily_scan_aggressive skor:20 | Technology",
+        "tema": "Technology"
+      },
+      {
+        "symbol": "AVGO",
+        "portföy": "aggressive",
+        "price": 399.83,
+        "stop": 0,
+        "target": 0,
+        "reason": "daily_scan_aggressive skor:19 | Technology",
+        "tema": "Technology"
+      },
+      {
+        "symbol": "FN",
+        "portföy": "aggressive",
+        "price": 637.74,
+        "stop": 0,
+        "target": 0,
+        "reason": "daily_scan_aggressive skor:19 | ",
+        "tema": ""
+      },
+      {
+        "symbol": "TXN",
+        "portföy": "aggressive",
+        "price": 265.0,
+        "stop": 0,
+        "target": 0,
+        "reason": "daily_scan_aggressive skor:18 | Technology",
+        "tema": "Technology"
+      },
+      {
+        "symbol": "YOU",
+        "portföy": "aggressive",
+        "price": 53.77,
+        "stop": 0,
+        "target": 0,
+        "reason": "daily_scan_aggressive skor:18 | Technology",
+        "tema": "Technology"
+      },
+      {
+        "symbol": "CNK",
+        "portföy": "aggressive",
+        "price": 29.25,
+        "stop": 0,
+        "target": 0,
+        "reason": "daily_scan_aggressive skor:18 | Communication Services",
+        "tema": "Communication Services"
+      },
+      {
+        "symbol": "FIX",
+        "portföy": "aggressive",
+        "price": 1719.58,
+        "stop": 0,
+        "target": 0,
+        "reason": "daily_scan_aggressive skor:18 | Industrials",
+        "tema": "Industrials"
+      },
+      {
+        "symbol": "PLAB",
+        "portföy": "aggressive",
+        "price": 48.13,
+        "stop": 0,
+        "target": 0,
+        "reason": "daily_scan_aggressive skor:18 | ",
+        "tema": ""
+      },
+      {
+        "symbol": "NVDA",
+        "portföy": "aggressive",
+        "price": 213.17,
+        "stop": 0,
+        "target": 0,
+        "reason": "daily_scan_aggressive skor:17 | Technology",
+        "tema": "Technology"
+      },
+      {
+        "symbol": "AMAT",
+        "portföy": "aggressive",
+        "price": 381.11,
+        "stop": 0,
+        "target": 0,
+        "reason": "daily_scan_aggressive skor:17 | Technology",
+        "tema": "Technology"
+      },
+      {
+        "symbol": "DELL",
+        "portföy": "aggressive",
+        "price": 205.93,
+        "stop": 0,
+        "target": 0,
+        "reason": "daily_scan_aggressive skor:17 | Technology",
+        "tema": "Technology"
+      },
+      {
+        "symbol": "COHR",
+        "portföy": "aggressive",
+        "price": 303.97,
+        "stop": 0,
+        "target": 0,
+        "reason": "daily_scan_aggressive skor:17 | Technology",
+        "tema": "Technology"
+      },
+      {
+        "symbol": "JBL",
+        "portföy": "aggressive",
+        "price": 330.83,
+        "stop": 0,
+        "target": 0,
+        "reason": "daily_scan_aggressive skor:17 | Technology",
+        "tema": "Technology"
+      }
+    ],
     "vix": 17.99,
     "piyasa_mod": "risk-on"
   },
