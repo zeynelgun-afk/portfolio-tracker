@@ -33,15 +33,6 @@
         "tema": ""
       },
       {
-        "symbol": "MU",
-        "portföy": "balanced",
-        "price": 518.46,
-        "stop": 0,
-        "target": 0,
-        "reason": "daily_scan_balanced skor:14 | Technology",
-        "tema": "Technology"
-      },
-      {
         "symbol": "TRV",
         "portföy": "balanced",
         "price": 302.25,
@@ -274,15 +265,6 @@
         "target": 0,
         "reason": "daily_scan_dividend skor:12 | Financial Services",
         "tema": "Financial Services"
-      },
-      {
-        "symbol": "MU",
-        "portföy": "aggressive",
-        "price": 518.46,
-        "stop": 0,
-        "target": 0,
-        "reason": "daily_scan_aggressive skor:23 | Technology",
-        "tema": "Technology"
       },
       {
         "symbol": "TSM",

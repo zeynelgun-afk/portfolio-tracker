@@ -237,7 +237,8 @@
     "AAPL": "technology",
     "MA": "financial_services",
     "IRM": "real_estate",
-    "VIRT": "financial_services"
+    "VIRT": "financial_services",
+    "ONB": "financial_services"
   },
   "updated": {
     "COHR": 1777299593,
@@ -477,6 +478,7 @@
     "AAPL": 1777554455,
     "MA": 1777554471,
     "IRM": 1777554507,
-    "VIRT": 1777561306
+    "VIRT": 1777561306,
+    "ONB": 1777563195
   }
 }
