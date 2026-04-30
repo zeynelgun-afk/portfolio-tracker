@@ -1,54 +1,54 @@
 {
-  "son_guncelleme": "2026-04-29",
+  "son_guncelleme": "2026-04-30",
   "toplam_sermaye": 600000,
-  "toplam_deger": 630498.91,
-  "toplam_kar_zarar": 30498.91,
-  "toplam_kar_zarar_yuzde": 5.08,
+  "toplam_deger": 635342.06,
+  "toplam_kar_zarar": 35342.06,
+  "toplam_kar_zarar_yuzde": 5.89,
   "portfolyolar": {
     "dengeli": {
       "isim": "Dengeli Portföy",
-      "deger": 106887.08,
+      "deger": 107282.56,
       "maliyet": 100000,
-      "kar_zarar": 6887.080000000002,
-      "kar_zarar_yuzde": 6.89,
+      "kar_zarar": 7282.559999999998,
+      "kar_zarar_yuzde": 7.28,
       "pozisyon_sayisi": 6,
       "nakit": {
-        "miktar": 35024.08,
+        "miktar": 29269.82,
         "para_birimi": "USD",
-        "agirlik_yuzde": 32.77
+        "agirlik_yuzde": 27.28
       }
     },
     "agresif": {
       "isim": "Agresif Büyüme Portföyü",
-      "deger": 381555.06,
+      "deger": 385113.41,
       "maliyet": 400000,
-      "kar_zarar": -18444.940000000002,
-      "kar_zarar_yuzde": -4.61,
+      "kar_zarar": -14886.590000000026,
+      "kar_zarar_yuzde": -3.72,
       "pozisyon_sayisi": 5,
       "nakit": {
-        "miktar": 265281.81,
+        "miktar": 265800.27,
         "para_birimi": "USD",
-        "agirlik_yuzde": 69.53
+        "agirlik_yuzde": 69.02
       }
     },
     "temettü": {
       "isim": "Değer + Temettü Portföyü",
-      "deger": 142056.77,
+      "deger": 142946.09,
       "maliyet": 100000,
-      "kar_zarar": 42056.76999999999,
-      "kar_zarar_yuzde": 42.06,
-      "pozisyon_sayisi": 3,
+      "kar_zarar": 42946.09,
+      "kar_zarar_yuzde": 42.95,
+      "pozisyon_sayisi": 6,
       "nakit": {
-        "miktar": 99248.15,
+        "miktar": 50207.35,
         "para_birimi": "USD",
-        "agirlik_yuzde": 69.87
+        "agirlik_yuzde": 35.12
       }
     },
     "swing_trade": {
       "isim": "Swing Trade",
-      "pozisyon_sayisi": 2,
-      "bos_slot": 3,
-      "durum": "2/5 pozisyon aktif"
+      "pozisyon_sayisi": 3,
+      "bos_slot": 2,
+      "durum": "3/5 pozisyon aktif"
     }
   }
 }
