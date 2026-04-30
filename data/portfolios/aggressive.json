@@ -28,7 +28,7 @@
   },
   "baslangic_sermaye": 400000,
   "nakit": {
-    "miktar": 265281.81,
+    "miktar": 265800.27,
     "para_birimi": "USD",
     "agirlik_yuzde": 69.53
   },
@@ -37,7 +37,7 @@
       "sembol": "MU",
       "isim": "Micron Technology",
       "sektor": "AI Bellek / DRAM",
-      "adet": 3,
+      "adet": 2,
       "maliyet_baz": 415.0,
       "yatirim": 1245.0,
       "guncel_fiyat": 518.46,
@@ -59,10 +59,10 @@
       "stop_aciklama": "K-07 trailing sıkılaştırma: 437.17 → 471.88 (ATR-bazlı %5 cap)",
       "stop_guncelleme": "2026-04-26",
       "durum": "🚀 Güçlü (+24.9%)",
-      "rsi": 64.97,
-      "rsi_son_guncelleme": "2026-04-30T19:01:53.019934+03:00",
+      "rsi": 65.9,
+      "rsi_son_guncelleme": "2026-04-30T19:35:26.070125+03:00",
       "atr14": 26.3393,
-      "son_k15c_tarihi": "2026-04-29"
+      "son_k15c_tarihi": "2026-04-30"
     },
     {
       "sembol": "ETN",
@@ -181,7 +181,7 @@
       "atr14": 7.5429
     }
   ],
-  "son_guncelleme": "2026-04-29T21:33:15.764211",
+  "son_guncelleme": "2026-04-30T19:35:26.542049+03:00",
   "toplam_deger": 381555.06,
   "toplam_getiri_yuzde": -4.61,
   "toplam_getiri": -18444.94,

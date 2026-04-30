@@ -119,8 +119,8 @@
       "zirve_fiyat": 299.15,
       "stop_mesafe_pct": 5.0,
       "durum": "✅ Normal",
-      "rsi": 53.48,
-      "rsi_son_guncelleme": "2026-04-30T19:01:53.019934+03:00"
+      "rsi": 53.16,
+      "rsi_son_guncelleme": "2026-04-30T19:35:26.070125+03:00"
     },
     {
       "sembol": "GEV",
@@ -147,8 +147,8 @@
       "zirve_fiyat": 1084.5,
       "stop_mesafe_pct": 8.57,
       "durum": "✅ Normal",
-      "rsi": 64.61,
-      "rsi_son_guncelleme": "2026-04-30T19:01:53.019934+03:00"
+      "rsi": 64.63,
+      "rsi_son_guncelleme": "2026-04-30T19:35:26.070125+03:00"
     },
     {
       "sembol": "CVS",
@@ -175,8 +175,8 @@
       "zirve_fiyat": 83.27,
       "stop_mesafe_pct": 21.94,
       "durum": "✅ Normal",
-      "rsi": 66.09,
-      "rsi_son_guncelleme": "2026-04-30T19:01:53.019934+03:00"
+      "rsi": 66.94,
+      "rsi_son_guncelleme": "2026-04-30T19:35:26.070125+03:00"
     }
   ],
   "son_guncelleme": "2026-04-30T17:33:07.454512+03:00",

@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-04-30T16:01:53.066135",
+  "son_guncelleme": "2026-04-30T16:35:26.242218",
   "not": "SWING TRADE SADECE SİMÜLASYON - Sadece % kazanç/kayıp takibi (MAX: 5 pozisyon)",
   "aktif_pozisyonlar": [
     {
@@ -25,10 +25,10 @@
       "k11_profit_lock": null,
       "son_guncelleme": "2026-04-30",
       "notlar": [],
-      "kar_zarar_yuzde": 0.42,
+      "kar_zarar_yuzde": 0.43,
       "tutulan_gun": 2,
       "atr14": 1.18,
-      "pnl_pct": 0.42,
+      "pnl_pct": 0.43,
       "rsi": 63.69,
       "rsi_son_guncelleme": "2026-04-30T19:01:53.019934+03:00"
     },
@@ -91,15 +91,15 @@
       "atr14": 14.54,
       "pnl_pct": 2.1,
       "chandelier_atr_carpan": 3.0,
-      "rsi": 63.16,
-      "rsi_son_guncelleme": "2026-04-30T19:01:53.019934+03:00"
+      "rsi": 64.25,
+      "rsi_son_guncelleme": "2026-04-30T19:35:26.070125+03:00"
     }
   ],
   "ozet": {
     "toplam_pozisyon": 3,
     "bos_slot": 2,
     "maksimum_pozisyon": 5,
-    "ortalama_kar_zarar_yuzde": 3.24
+    "ortalama_kar_zarar_yuzde": 3.25
   },
   "_schema_version": 2
 }
