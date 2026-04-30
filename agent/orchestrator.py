@@ -1589,6 +1589,27 @@ def _execute_portfolio_opportunities(faz: str, market: dict) -> list:
             print(f"[Execution] buy_candidates fallback hatası: {_e}")
 
     # Fallback 2: daily_scan dosyalarından oku (buy_candidates da boşsa)
+    # 30 Nis 2026: TEHLIKELI tema filtresi eklendi (EOG petrol 2/10 alındı sorunu)
+    _SEKTOR_TEMA_MAP = {
+        "Energy":             "petrol_enerji",
+        "Defense":            "savunma",
+        "Industrials":        None,  # icinde savunma var ama hep degil
+        "Healthcare":         "saglik",
+        "Consumer Defensive": "tuketici_temel",
+        "Basic Materials":    "altin",  # genelde altin/madencilik
+        "Technology":         "ai_yari_iletken",  # bask. AI
+        "Utilities":          "elektrik_altyapi",
+    }
+    _theme_scores_ds = {}
+    try:
+        import json as _jds
+        _ts_path_ds = REPO_ROOT / "data" / "theme_scores.json"
+        if _ts_path_ds.exists():
+            _ts_data_ds = _jds.load(open(_ts_path_ds))
+            _theme_scores_ds = _ts_data_ds.get("temalar", {})
+    except Exception:
+        pass
+
     if not buy_list:
         _EKLE_ESIK = {"balanced": 9, "dividend": 9, "aggressive": 14}
         for _pf in ["balanced", "dividend", "aggressive"]:
@@ -1606,6 +1627,14 @@ def _execute_portfolio_opportunities(faz: str, market: dict) -> list:
                         _fiyat = float(_s.get("price", 0))
                         if not _fiyat:
                             continue
+                        # TEHLIKELI TEMA FILTRESI
+                        _sektor = _s.get("sector", "")
+                        _tema_key = _SEKTOR_TEMA_MAP.get(_sektor)
+                        if _tema_key and _tema_key in _theme_scores_ds:
+                            _ts_skor = _theme_scores_ds[_tema_key].get("skor", 5)
+                            if _ts_skor <= 2:
+                                print(f"[Execution] daily_scan {_s['symbol']} ATLANDI — {_tema_key} TEHLIKELI (skor {_ts_skor}/10)")
+                                continue
                         # stop/target boş bırakılıyor — execution buy loop canlı fiyat
                         # üzerinden compute_atr_stop ile yeniden hesaplayacak.
                         buy_list.append({

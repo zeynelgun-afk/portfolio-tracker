@@ -234,3 +234,4 @@ date,action,symbol,shares,price,total,reason
 2026-04-29,BUY,EOG,54,138.43,7475.22,daily_scan_balanced skor:15 | Energy
 2026-04-29,BUY,COLB,515,29.1,14986.5,daily_scan_balanced skor:15 | Financial Services
 2026-04-29,BUY,TSM,29,392.35,11378.15,daily_scan_balanced skor:15 | 
+2026-04-30,SELL,EOG,54,139.12,7512.48,MANUEL: Petrol/Enerji tema 2/10 TEHLİKELİ — daily_scan filtre eksikti
