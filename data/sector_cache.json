@@ -236,7 +236,8 @@
     "EQIX": "real_estate",
     "AAPL": "technology",
     "MA": "financial_services",
-    "IRM": "real_estate"
+    "IRM": "real_estate",
+    "VIRT": "financial_services"
   },
   "updated": {
     "COHR": 1777299593,
@@ -312,7 +313,7 @@
     "BAH": 1776895897,
     "CACI": 1776895898,
     "PGR": 1776895899,
-    "TRV": 1776895900,
+    "TRV": 1777561308,
     "CINF": 1776895902,
     "CB": 1776895903,
     "MMC": 1776895904,
@@ -475,6 +476,7 @@
     "EQIX": 1777498521,
     "AAPL": 1777554455,
     "MA": 1777554471,
-    "IRM": 1777554507
+    "IRM": 1777554507,
+    "VIRT": 1777561306
   }
 }

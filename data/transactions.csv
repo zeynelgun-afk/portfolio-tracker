@@ -240,3 +240,4 @@ date,action,symbol,shares,price,total,reason
 2026-04-30,BUY,GEV,13,1084.5,14098.5,utility_temettü tema taraması — teknik:8/10 fundamental:4/10
 2026-04-30,SELL,CPRX,144,28.04,4037.76,"Finzora: Stop %1.6 yakın + bilanço 6 gün, K-09 erken çıkış kârı koru"
 2026-04-30,BUY,CVS,240,83.27,19984.8,"Finzora: Defansif temettü, healthcare, nakit aşımı %69.9 konuşlandırma"
+2026-04-30,BUY,VIRT,231,50.23,11601.98,daily_scan_balanced skor:15 | Financial Services
