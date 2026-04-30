@@ -2,7 +2,7 @@
   "portfoy_adi": "Dengeli Portföy",
   "baslangic_sermaye": 100000,
   "nakit": {
-    "miktar": 42536.56,
+    "miktar": 46574.32,
     "para_birimi": "USD",
     "agirlik_yuzde": 32.77
   },
@@ -11,7 +11,7 @@
       "sembol": "CPRX",
       "isim": "Catalyst Pharmaceuticals, Inc.",
       "sektor": "Healthcare",
-      "adet": 289,
+      "adet": 145,
       "maliyet_baz": 25.89,
       "yatirim": 7482.21,
       "guncel_fiyat": 28.26,
@@ -33,8 +33,8 @@
       "stop_aciklama": "",
       "stop_guncelleme": "",
       "durum": "⚠️ Stop yakın (1.6%)",
-      "rsi": 62.71,
-      "rsi_son_guncelleme": "2026-04-30T17:02:55.897894+03:00",
+      "rsi": 63.44,
+      "rsi_son_guncelleme": "2026-04-30T17:32:47.639951+03:00",
       "atr14": 1.235
     },
     {
@@ -62,8 +62,8 @@
       "zirve_fiyat": 107.67,
       "stop_mesafe_pct": 3.6,
       "durum": "✅ Normal",
-      "rsi": 46.12,
-      "rsi_son_guncelleme": "2026-04-30T17:02:55.897894+03:00",
+      "rsi": 47.95,
+      "rsi_son_guncelleme": "2026-04-30T17:32:47.639951+03:00",
       "atr14": 3.4157
     },
     {
@@ -91,8 +91,8 @@
       "zirve_fiyat": 126.78,
       "stop_mesafe_pct": 9.99,
       "durum": "✅ Normal",
-      "rsi": 53.83,
-      "rsi_son_guncelleme": "2026-04-30T17:02:55.897894+03:00",
+      "rsi": 52.84,
+      "rsi_son_guncelleme": "2026-04-30T17:32:47.639951+03:00",
       "atr14": 5.3414
     },
     {
@@ -120,8 +120,8 @@
       "zirve_fiyat": 29.12,
       "stop_mesafe_pct": 5.08,
       "durum": "✅ Normal",
-      "rsi": 54.66,
-      "rsi_son_guncelleme": "2026-04-30T17:02:55.897894+03:00",
+      "rsi": 56.81,
+      "rsi_son_guncelleme": "2026-04-30T17:32:47.639951+03:00",
       "atr14": 0.685
     },
     {
@@ -149,12 +149,12 @@
       "zirve_fiyat": 393.83,
       "stop_mesafe_pct": 6.93,
       "durum": "✅ Normal",
-      "rsi": 61.93,
-      "rsi_son_guncelleme": "2026-04-30T17:02:55.897894+03:00",
+      "rsi": 57.76,
+      "rsi_son_guncelleme": "2026-04-30T17:32:47.639951+03:00",
       "atr14": 12.9007
     }
   ],
-  "son_guncelleme": "2026-04-29T21:33:15.195462",
+  "son_guncelleme": "2026-04-30T17:33:02.658987+03:00",
   "toplam_deger": 106887.08,
   "toplam_getiri_yuzde": 6.89,
   "toplam_getiri": 6887.08,
