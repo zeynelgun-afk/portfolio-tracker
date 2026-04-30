@@ -2,34 +2,35 @@
   "macro": {
     "sinyal": "RISK_ON",
     "guven": "MEDIUM",
-    "ana_tema": "VIX 18 altında düşük volatilite ortamında QQQ liderliğinde tech momentumu sürerken makro takvim sakin",
+    "ana_tema": "VIX 17.89'a gerileyerek risk iştahını destekliyor; QQQ liderliğinde teknoloji momentumu sürerken altın ve tahviller satış baskısında.",
     "beklentiler": [
-      "Önümüzdeki hafta düşük etkili enflasyon/perakende verileri piyasayı sarsmayacak",
-      "Earnings sezonu odakta — FLS bugün, ETN/CCJ/O/CPRX gelecek hafta",
-      "VIX 17-19 bandında risk iştahı korunuyor"
+      "5 Mayıs CPI/Enflasyon verisi (tahmin 2.6 YoY) Fed faiz patikası için kritik olacak",
+      "5-6 Mayıs yoğun earnings haftası (ETN, CCJ, CPRX, O, CF) portföyde idiyosenkratik volatilite yaratabilir",
+      "Q1 GDP %2 ve çekirdek enflasyon %3.2 ile stagflasyon endişesi hafif arka planda",
+      "Dolar zayıflığı ve tahvil satışı reflasyon temasını destekliyor"
     ],
-    "risk_faktoru": "FLS bugün earnings (K-05 ihlali riski) ve genel earnings yoğunluğu kısa vadede tek isim volatilitesi yaratabilir",
+    "risk_faktoru": "5 Mayıs enflasyon verisinin beklenti üstü gelmesi (çekirdek %3.2 trendi) Fed kesinti beklentilerini bozabilir ve momentum hisselerinde sert düzeltme getirir.",
     "tahmin": {
       "yon": "UP",
       "buyukluk": "LOW",
       "sembol": "SPY"
     },
     "_agent": "MACRO_AGENT",
-    "_timestamp": "2026-04-29T14:54:28.914256"
+    "_timestamp": "2026-04-30T13:04:09.639296"
   },
   "sector": {
     "aktif_rejim": "ai_boom",
-    "lider_sektor": "Yarı iletkenler (SMH/SOXX) - QQQ +0.46% liderliğinde MU +%4 momentum",
-    "zayif_sektor": "Defansif/REIT (XLU, VNQ) - O ve GTY zayıf, TLT durağan",
-    "rotasyon_onerisi": "Defansif temettü ve materials'tan (PPG, FLS) yarı iletken/AI capex (MU, AMAT, ETN) tarafına kademeli rotasyon",
+    "lider_sektor": "Teknoloji/Yarı İletken (XLK, SMH)",
+    "zayif_sektor": "Altın & Tahvil (GLD, TLT)",
+    "rotasyon_onerisi": "GLD/TLT savunmacılarından XLK/SMH ve sanayi (XLI) liderlerine kademeli rotasyon",
     "guven": "MEDIUM",
     "tahmin": {
       "yon": "UP",
       "buyukluk": "MEDIUM",
-      "sembol": "MU"
+      "sembol": "SMH"
     },
     "_agent": "SECTOR_AGENT",
-    "_timestamp": "2026-04-29T14:54:37.100941"
+    "_timestamp": "2026-04-30T13:04:16.099691"
   },
   "signal": {
     "portfoy_sinyalleri": [
@@ -38,121 +39,141 @@
         "sinyal": "HOLD",
         "rsi_yorumu": "overbought",
         "sma_durumu": "ustunde",
-        "aciklama": "+26% kârda, +4% günlük momentum güçlü ama RSI aşırı alım bölgesinde, trailing stop ile koru."
+        "aciklama": "+24.9% kar momentum güçlü, kademeli kar al."
       },
       {
         "sembol": "ETN",
         "sinyal": "HOLD",
         "rsi_yorumu": "normal",
         "sma_durumu": "ustunde",
-        "aciklama": "Yatay konsolidasyon, hedef $457 uzak ama trend bozulmadı."
+        "aciklama": "Konsolidasyon, hedefe doğru sabırlı tutuş."
       },
       {
         "sembol": "CCJ",
-        "sinyal": "WATCH",
+        "sinyal": "HOLD",
         "rsi_yorumu": "normal",
         "sma_durumu": "ustunde",
-        "aciklama": "-2.6% düşüş ile breakeven seviyesinde, $113 destek kritik."
+        "aciklama": "Stop uzak, uranyum teması korunuyor."
       },
       {
         "sembol": "AMAT",
         "sinyal": "HOLD",
         "rsi_yorumu": "normal",
         "sma_durumu": "ustunde",
-        "aciklama": "SMA50 bounce tezi yavaş çalışıyor, sabırlı tutma gerek."
+        "aciklama": "Yatay seyir, semi gücüyle uyumlu."
+      },
+      {
+        "sembol": "CRM",
+        "sinyal": "WATCH",
+        "rsi_yorumu": "normal",
+        "sma_durumu": "ustunde",
+        "aciklama": "Fair value sinyali UCUZ, momentum bekleniyor."
       },
       {
         "sembol": "CPRX",
-        "sinyal": "SELL",
-        "rsi_yorumu": "normal",
-        "sma_durumu": "ustunde",
-        "aciklama": "Stop %3.5 mesafede ⚠️ ve hedefe çok yakın, kısmi kâr al."
+        "sinyal": "WATCH",
+        "rsi_yorumu": "oversold",
+        "sma_durumu": "altinda",
+        "aciklama": "Stop %1.6 kritik yakın, gün içi takip şart."
       },
       {
         "sembol": "PPG",
-        "sinyal": "HOLD",
-        "rsi_yorumu": "normal",
+        "sinyal": "WATCH",
+        "rsi_yorumu": "oversold",
         "sma_durumu": "altinda",
-        "aciklama": "XLB sektör zayıf, momentum yok ama stop güvende."
+        "aciklama": "Stop %3.6 yakın, satış baskısı sürüyor."
       },
       {
-        "sembol": "FLS",
+        "sembol": "CF",
+        "sinyal": "BUY",
+        "rsi_yorumu": "normal",
+        "sma_durumu": "ustunde",
+        "aciklama": "+3.6% güçlü hareket, gübre momentumu pozitif."
+      },
+      {
+        "sembol": "COLB",
         "sinyal": "HOLD",
         "rsi_yorumu": "normal",
         "sma_durumu": "ustunde",
-        "aciklama": "Yatay seyir, stop %7.4 uzak güvenli bölge."
+        "aciklama": "Adil değer, XLF gücüyle stabil."
+      },
+      {
+        "sembol": "TSM",
+        "sinyal": "HOLD",
+        "rsi_yorumu": "normal",
+        "sma_durumu": "ustunde",
+        "aciklama": "Semi liderliği, hedefe ilerleme."
       },
       {
         "sembol": "OKE",
-        "sinyal": "HOLD",
+        "sinyal": "WATCH",
         "rsi_yorumu": "normal",
         "sma_durumu": "ustunde",
-        "aciklama": "XLE liderliği destekliyor, hedefe yakın trailing devreye al."
+        "aciklama": "Stop %2 yakın, enerji gücüne rağmen zayıf."
       },
       {
         "sembol": "O",
         "sinyal": "WATCH",
-        "rsi_yorumu": "normal",
+        "rsi_yorumu": "oversold",
         "sma_durumu": "altinda",
-        "aciklama": "Stop %2.2 ⚠️ çok yakın, faiz baskısı altında savunmacı izle."
+        "aciklama": "Stop %2.2 yakın, faiz baskısı sürüyor."
       },
       {
         "sembol": "GTY",
         "sinyal": "WATCH",
         "rsi_yorumu": "oversold",
         "sma_durumu": "altinda",
-        "aciklama": "Stop %3.2 ⚠️ kritik, oversold bounce şansı var ama disiplin önce."
+        "aciklama": "Stop %2.8 yakın, REIT zayıflığı."
       },
       {
         "sembol": "TFC",
         "sinyal": "HOLD",
         "rsi_yorumu": "normal",
         "sma_durumu": "ustunde",
-        "aciklama": "XLF pozitif, swing girişi sağlıklı seyirde."
+        "aciklama": "Stop güvende, banka teması destekli."
       },
       {
         "sembol": "CAT",
         "sinyal": "WATCH",
         "rsi_yorumu": "normal",
-        "sma_durumu": "ustunde",
-        "aciklama": "-1.8% pullback, NR7 setup momentum üretmedi, %4 kâr al kuralı düşünülmeli."
+        "sma_durumu": "altinda",
+        "aciklama": "-2.6% düşüş, momentum zayıflıyor."
       }
     ],
-    "en_guclu_setup": "MU",
-    "en_zayif_setup": "O",
+    "en_guclu_setup": "CF",
+    "en_zayif_setup": "CPRX",
     "guven": "MEDIUM",
     "_agent": "SIGNAL_AGENT",
-    "_timestamp": "2026-04-29T14:54:55.319871"
+    "_timestamp": "2026-04-30T13:04:32.446404"
   },
   "risk": {
-    "risk_seviyesi": "MEDIUM",
+    "risk_seviyesi": "HIGH",
     "stop_yakini": [
-      "O - %2.2 uzakta (kritik)",
-      "GTY - %3.2 uzakta",
-      "CPRX - %3.5 uzakta",
-      "OKE - %5.4 uzakta",
-      "TFC - %5.8 uzakta",
-      "AMAT - %6.3 uzakta",
-      "CAT - %6.6 uzakta"
+      "CPRX - %1.6 uzakta (KRİTİK)",
+      "OKE - %2.0 uzakta",
+      "O - %2.2 uzakta",
+      "GTY - %2.8 uzakta",
+      "PPG - %3.6 uzakta"
     ],
-    "konsantrasyon_uyarisi": "Agresif portföyde 4 pozisyon yarı-iletken/momentum ağırlıklı (MU+AMAT korelasyonu yüksek); tüm sepetlerde nakit %60-95 → K-12 nakit limiti aşımı, ancak temalar yeşil olduğundan kademeli konuşlandırma gerekli.",
-    "senaryo_5pct_dusus": "Toplam ~$9,238 kayıp (-%5.5); 5 stop tetiklenir (AMAT, CPRX, OKE, O, GTY) — özellikle Dividend sepeti 3 stop ile en kırılgan.",
+    "konsantrasyon_uyarisi": "Technology %37.1 (orta-yüksek); MU+AMAT+TSM AI/yarı-iletken kümesi tek tema riski (K-17). Temettü sepetinde 3/3 pozisyon stop %3 altında — REIT/midstream faiz duyarlı kümelenme.",
+    "senaryo_5pct_dusus": "Toplam ~$12,898 kayıp (-%5.8); 8 pozisyon stop tetikler, en ağır darbe AMAT (-$2,785) ve agresif sepet. Temettü sepeti tamamen tasfiye olur (3/3 stop).",
     "onerileri": [
-      "O ve GTY için stop'ları trailing'e çevir veya kısmi kâr al; %2-3 stop mesafesi VIX 18'de yetersiz",
-      "Dividend sepetinde 3 pozisyon stop yakınında — sektör korelasyonu yüksek, en az birinde pozisyon küçült",
-      "Agresif sepette %95 nakit + 4 momentum pozisyonu riskli denge; yeni giriş yerine mevcutlarda trailing sıkılaştır",
-      "CAT ve KLAC dersleri ışığında swing pozisyonlarda %4 bandında kısmi kâr alma uygula"
+      "Temettü sepetinde stopları sıkılaştır veya kısmi kâr al — 3/3 pozisyon %3 altında, küme riski yüksek",
+      "CPRX %1.6 uzaklıkta acil; bugün stop tetik veya manuel çıkış kararı ver",
+      "Tech konsantrasyonu %37 — MU +%24.9 P/L'de K-11 kademeli kâr alma uygula",
+      "Yüksek nakit (%32-70) + düşük VIX ortamında defansif rotasyon yerine kaliteli tema (AI/uranyum) eklemeyi değerlendir",
+      "Swing'de Backtest -%11/20g uyarısı — yeni swing girişlerinde trend+hacim filtresi zorunlu"
     ],
     "guven": "HIGH",
     "_agent": "RISK_AGENT",
-    "_timestamp": "2026-04-29T14:55:10.453961"
+    "_timestamp": "2026-04-30T13:04:47.197300"
   },
   "cio": {
     "karar": "SAT",
     "hedef_sembol": "CPRX",
-    "gerekce": "Risk Yöneticisi (HIGH güven) ve Sinyal Analisti'nin SELL sinyali örtüşüyor: CPRX stop'a %3.5 ve hedefe çok yakın, kısmi kâr alma kuralı (K) devrede. Ayrıca O ve GTY stop'a %2.2 ve %3.2 mesafede — VIX 18 ortamında bu mesafe yetersiz, trailing sıkılaştırma şart. Makro RISK_ON ve sektör AI/yarı-iletken momentumu pozitif olsa da, aktif rejim JEOPOLITIK_KRIZ (DÜŞÜK güven) ve K-12 nakit limit aşımı var — yeni giriş yapılmıyor, mevcut kazançlar korunuyor. Risk önceliği (Risk > Makro > Sektör > Teknik) gereği önce kırılgan pozisyonları temizle: CPRX'te kısmi kâr al, O ve GTY'de trailing stop'u sıkılaştır. MU +%26 kârda ama RSI overbought — trailing ile koru, satma.",
-    "uyari": "Dividend sepetinde 3 pozisyon (O, GTY, CPRX benzeri) stop yakınında — %5 piyasa düşüşünde 5 stop tetiklenir, ~$9,238 kayıp senaryosu. Sektör korelasyonu yüksek, en az birini küçült.",
-    "guven": "MEDIUM",
+    "gerekce": "Risk Yöneticisi (HIGH güven) CPRX'i %1.6 stop mesafesiyle KRİTİK olarak işaretledi; Teknik sinyal de oversold + SMA altı teyit ediyor. Bu pozisyonda K-1 stop disiplini uygulanmalı, override yasak. Aynı zamanda temettü sepetinde 3/3 pozisyon (O, GTY, OKE) stop %3 altında kümelenmiş — faiz duyarlı küme riski K-17 ihlali; bu sepette kademeli tasfiye veya stop sıkılaştırma şart. MU +%24.9 P/L'de K-11 gereği kademeli kâr alınmalı. Makro RISK_ON ve Sektör AI_BOOM olumlu olsa da aktif rejim JEOPOLITIK_KRIZ (yeni giriş kısıtı) ve Risk Yöneticisi'nin önceliği var (Risk > Makro > Sektör > Teknik).",
+    "uyari": "CPRX bugün stop tetik veya manuel çıkış; 5 Mayıs CPI öncesi temettü sepeti pozisyonlarında konsantre faiz riski — %5 düşüş senaryosunda 8 pozisyon stop tetikliyor (-$12,898).",
+    "guven": "HIGH",
     "analist_uzlasma": "ORTA",
     "tahmin": {
       "yon": "NEUTRAL",
@@ -160,11 +181,11 @@
       "sembol": "SPY"
     },
     "_agent": "CIO_AGENT",
-    "_timestamp": "2026-04-29T14:55:21.932920"
+    "_timestamp": "2026-04-30T13:04:57.128613"
   },
   "weights": {
-    "MACRO_AGENT": 0.8055,
-    "SECTOR_AGENT": 1.3815,
+    "MACRO_AGENT": 0.8458,
+    "SECTOR_AGENT": 1.4506,
     "SIGNAL_AGENT": 0.738,
     "RISK_AGENT": 0.6663,
     "CIO_AGENT": 0.7428

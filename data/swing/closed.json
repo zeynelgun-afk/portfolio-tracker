@@ -672,7 +672,7 @@
       "tutulan_gun": 1,
       "cikis_nedeni": "ichimoku çıkış: kumo altı 0/4, kijun altı %9.5 fark. kârdayken disiplinli çıkış",
       "sonuc": "KAZANÇ",
-      "ders": "## NEM Post-Trade Analiz\n\n**1. Hangi K-kuralı?** [KESİN]\n- **K-07 (trailing stop disiplini)** ve **K-11 (kademeli kâr alma)** çerçevesinde yönetildi. Ichimoku kumo altı + kijun %9.5 uzaklık → trend bozulma sinyali, kârdayken disiplinli çıkış.\n\n**2. Giriş tezi doğru muydu?** [MUHTEMEL]\n- Giriş tezi kayıtta yok, ancak fiyat $98.47 → $102.59 hareketi (%4.18) tezin kısa vadede çalıştığını gösteriyor. Momentum yakalanmış.\n\n**3. Çıkış zamanlaması?** [KESİN]\n- Doğru zamanda. Kumo altı 0/4 + kijun uzakl",
+      "ders": "## NEM Post-Trade Analiz\n\n**1. Yönetim Kuralı**\nKESİN: Çıkış K-07 (trailing/ichimoku tabanlı disiplin) ve K-06 (stop disiplini) çerçevesinde yapıldı. Kâr varken kumo altı + kijun kırılımı ile sistematik çıkış uygulandı.\n\n**2. Giriş Tezi**\nTez kaydı boş — bu bir prosedür ihlali. MUHTEMEL: NEM girişi altın momentumu / swing kurulumuna dayanıyordu. Tez yazılmadığı için doğruluğu objektif olarak ölçülemiyor.\n\n**3. Çıkış Zamanlaması**\nKESİN: 1 günde %4.18 kâr ile ichimoku 0/4 sinyali geldi → çıkış do",
       "auto_analiz": {
         "tez_dogru": true,
         "tez_degerlendirme": "NEM altın tezi doğruydu. Ichimoku çıkış sinyalinde +4.2% karla 1 günde çıkış mükemmel disiplin.",
@@ -692,8 +692,8 @@
         "analiz_tarihi": "2026-04-11 20:10",
         "model": "claude-sonnet-4-6"
       },
-      "dersler": "## NEM Post-Trade Analiz\n\n**1. Hangi K-kuralı?** [KESİN]\n- **K-07 (trailing stop disiplini)** ve **K-11 (kademeli kâr alma)** çerçevesinde yönetildi. Ichimoku kumo altı + kijun %9.5 uzaklık → trend bozulma sinyali, kârdayken disiplinli çıkış.\n\n**2. Giriş tezi doğru muydu?** [MUHTEMEL]\n- Giriş tezi kayıtta yok, ancak fiyat $98.47 → $102.59 hareketi (%4.18) tezin kısa vadede çalıştığını gösteriyor. Momentum yakalanmış.\n\n**3. Çıkış zamanlaması?** [KESİN]\n- Doğru zamanda. Kumo altı 0/4 + kijun uzakl",
-      "agent_analiz_tarihi": "2026-04-29"
+      "dersler": "## NEM Post-Trade Analiz\n\n**1. Yönetim Kuralı**\nKESİN: Çıkış K-07 (trailing/ichimoku tabanlı disiplin) ve K-06 (stop disiplini) çerçevesinde yapıldı. Kâr varken kumo altı + kijun kırılımı ile sistematik çıkış uygulandı.\n\n**2. Giriş Tezi**\nTez kaydı boş — bu bir prosedür ihlali. MUHTEMEL: NEM girişi altın momentumu / swing kurulumuna dayanıyordu. Tez yazılmadığı için doğruluğu objektif olarak ölçülemiyor.\n\n**3. Çıkış Zamanlaması**\nKESİN: 1 günde %4.18 kâr ile ichimoku 0/4 sinyali geldi → çıkış do",
+      "agent_analiz_tarihi": "2026-04-30"
     },
     {
       "id": "SWING-027",

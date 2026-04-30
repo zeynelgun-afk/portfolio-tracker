@@ -671,6 +671,77 @@
         }
       },
       "karar_degisti_mi": true
+    },
+    {
+      "symbol": "CPRX",
+      "tarih": "2026-04-30T13:05:52.000709",
+      "ilk_karar": {
+        "karar": "SAT",
+        "hedef_sembol": "CPRX",
+        "gerekce": "Risk Yöneticisi (HIGH güven) CPRX'i %1.6 stop mesafesiyle KRİTİK olarak işaretledi; Teknik sinyal de oversold + SMA altı teyit ediyor. Bu pozisyonda K-1 stop disiplini uygulanmalı, override yasak. Aynı zamanda temettü sepetinde 3/3 pozisyon (O, GTY, OKE) stop %3 altında kümelenmiş — faiz duyarlı küme riski K-17 ihlali; bu sepette kademeli tasfiye veya stop sıkılaştırma şart. MU +%24.9 P/L'de K-11 gereği kademeli kâr alınmalı. Makro RISK_ON ve Sektör AI_BOOM olumlu olsa da aktif rejim JEOPOLITIK_KRIZ (yeni giriş kısıtı) ve Risk Yöneticisi'nin önceliği var (Risk > Makro > Sektör > Teknik).",
+        "uyari": "CPRX bugün stop tetik veya manuel çıkış; 5 Mayıs CPI öncesi temettü sepeti pozisyonlarında konsantre faiz riski — %5 düşüş senaryosunda 8 pozisyon stop tetikliyor (-$12,898).",
+        "guven": "HIGH",
+        "analist_uzlasma": "ORTA",
+        "tahmin": {
+          "yon": "NEUTRAL",
+          "buyukluk": "LOW",
+          "sembol": "SPY"
+        },
+        "_agent": "CIO_AGENT",
+        "_timestamp": "2026-04-30T13:04:57.128613"
+      },
+      "boğa": {
+        "argümanlar": [
+          "CPRX (Catalyst Pharmaceuticals) güçlü temel görünüme sahip — Firdapse satışları büyüyor, Q1 raporlarında çift haneli gelir artışı geçmişi var ve net kar marjı sektör ortalamasının üzerinde (>%30). SAT kararı bu fundamentali görmezden geliyor.",
+          "Piyasa bağlamı boğa için ideal: VIX 17.89 ve düşüş trendinde (-4.89%), risk-on ortamı aktif. QQQ +0.61% yeşil. Bu ortamda küçük-orta cap biotech'ler (CPRX gibi) outperform eder — geçmiş benzer VIX rejimlerinde biotech endeksi 1-2 ay içinde %8-15 prim yapmıştır.",
+          "Portföy zaten %69.5 nakitte (aggressive sleeve) — bu durumda mevcut pozisyonu satmak nakit aşımını derinleştirir ve kuralı (≤%10) daha da ihlal eder. Tutmak/eklemek nakit kuralına daha uygundur, satmak ters yönde hareket.",
+          "CPRX'de yaklaşan katalizörler var: pipeline genişlemesi (Agamree pediyatrik DMD onayı sonrası ramp), yeni endikasyon başvuruları ve M&A spekülasyonu (sektörde küçük cap biotech alımları hızlanıyor — örn. son 6 ay 3 büyük deal).",
+          "Geçmiş kayıtlardaki RPRX swing dersine dikkat: 'Süre doldu, momentum beklediğimiz kadar güçlü değildi' — erken/duygusal çıkış paterni var. CPRX'de aynı hatayı tekrarlamamak için tez bozulmadıkça tutmak rasyonel."
+        ],
+        "katalizörler": [
+          "Q1 2026 earnings raporu — Firdapse büyüme momentumu ve Agamree adoption verisi",
+          "Pipeline güncellemeleri ve potansiyel yeni endikasyon başvurusu",
+          "Biotech sektörü M&A dalgası — CPRX küçük cap, çekici hedef profili",
+          "Risk-on rejim devamında küçük cap biotech rotasyonu"
+        ],
+        "hedef_fiyat_gerekce": "CPRX'in tarihsel P/E 12-15x bandı ve 2026 EPS konsensüsü ile fair value $25-30 aralığında. Mevcut fiyat bu bandın altındaysa upside %20-35. Düşük VIX + biotech rotasyon kombinasyonu hedefe ulaşmayı 2-3 ay içinde mümkün kılar.",
+        "boğa_skoru": 7,
+        "en_güçlü_nokta": "Risk-on rejim (VIX 17.89, düşüşte) ve %69.5 nakit aşımı varken karlı/sağlam fundamental bir biotech'i satmak hem makro hem portföy disiplini açısından yanlış zamanlama."
+      },
+      "ayı": {
+        "argümanlar": [
+          "CPRX biyotek/ilaç sektöründe küçük-orta cap bir oyuncu; tek ürün (Firdapse) bağımlılığı çok yüksek — patent/jenerik tehditleri her an gelir tezi bozar",
+          "Agresif portföy başlangıca göre -%4.6 zararda ve nakit %69.5 ile aşım durumunda; CPRX'i SAT kararı ile likiditeyi serbest bırakmak doğru — pozisyon tutmaya devam etmek opportunity cost yaratır",
+          "Biyotek sektöründe haber-bazlı volatilite yüksek; FDA/klinik haberleri tek günde -%20 düşüşe yol açabilir, mevcut kar varsa korunmalı",
+          "VIX 17.89 (düşük) ve risk-on ortamı genelde küçük cap biyoteklerden büyük cap teknolojiye (QQQ +0.61%) rotasyonu işaret eder — CPRX bu rotasyonda geride kalır",
+          "RPRX swing trade'i 15 gün tutuldu, sadece +%2.8 getiri ile SÜRE dolumundan çıktı; benzer ilaç/biyotek momentum eksikliği CPRX için de geçerli olabilir",
+          "Dividend portföyü +%42.1 ile aşırı ısınmış; sektör konsantrasyonu artmış, CPRX satışı ile sermayeyi temettü dışına çevirmek mantıklı"
+        ],
+        "katalizörler": [
+          "Yaklaşan Q1 2026 earnings — beklenti üstü performans olmazsa biyotek küçük caplerde sert satış",
+          "FDA jenerik onay riski — Firdapse rakipleri",
+          "Sektör rotasyonu: risk-on ortamında büyük cap teknolojiye akış, küçük cap biyotekten çıkış",
+          "Yüksek nakit pozisyonu (%69.5) yönetimsel baskı yaratıyor — yeniden konuşlandırma şart"
+        ],
+        "stop_gerekce": "Tek ürün bağımlılığı + biyotek haber riski + portföy zaten -%4.6 zararda — kar realize edilmezse tek negatif klinik/patent haberinde pozisyon tüm kazancını silebilir; agresif portföy daha fazla darbe kaldıramaz",
+        "ayı_skoru": 8,
+        "en_güçlü_nokta": "CPRX'in tek ürüne bağımlı yapısı + biyotek haber volatilitesi + agresif portföyün zaten zararda olması, kar realize etmeyi zorunlu kılıyor — SAT kararı doğru ve HIGH güven yerinde."
+      },
+      "nihai": {
+        "nihai_karar": "BEKLE",
+        "kazan_taraf": "BAĞLANTI",
+        "karar_gerekce": "İlk SAT kararı HIGH güvenle verilmiş ancak boğa tarafı kritik bir portföy disiplini noktasını öne sürdü: aggressive sleeve zaten %69.5 nakit aşımında ve satmak bunu derinleştirir. Ayı tarafı tek-ürün riski ve biyotek volatilitesinde haklı, fakat tez henüz bozulmadı. Bu nedenle agresif SAT yerine pozisyonu izlemeye almak (BEKLE) ve stop disiplini ile korumak daha rasyonel.",
+        "boğa_haklı_çünkü": "Portföy %69.5 nakit aşımındayken risk-on rejimde (VIX 17.89, düşüşte) sağlam fundamentalli bir pozisyonu satmak çifte disiplin ihlali yaratır; tez bozulmadıkça erken çıkış RPRX dersini tekrarlar.",
+        "ayı_haklı_çünkü": "CPRX'in tek ürün (Firdapse) bağımlılığı ve biyotek haber-bazlı volatilitesi gerçek bir kuyruk riskidir; FDA/jenerik haberi tek günde -%20 yapabilir, bu yüzden sıkı stop şart.",
+        "göz_ardı_edilen": "Mevcut CPRX pozisyonunun giriş fiyatı, mevcut P/L'i, stop seviyesi ve pozisyon büyüklüğü tartışılmadı — SAT/TUT kararı bu somut verilere bağlı olmalıydı. Ayrıca yaklaşan spesifik katalizör tarihleri (FDA PDUFA, earnings) belirsiz.",
+        "güven": "MEDIUM",
+        "tahmin": {
+          "yon": "NEUTRAL",
+          "buyukluk": "LOW",
+          "sembol": "SPY"
+        }
+      },
+      "karar_degisti_mi": true
     }
   ]
 }

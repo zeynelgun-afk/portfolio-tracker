@@ -1291,6 +1291,11 @@
       "date": "2026-04-30",
       "source": "closing_analysis",
       "insight": "---"
+    },
+    {
+      "date": "2026-04-30",
+      "source": "post_trade",
+      "insight": "NEM: DERS: Giriş tezi yazılmadan pozisyon açma; NEM swing pattern'ı %2-4 bandında çıkış veriyor, hedefi buna göre kalibre et."
     }
   ]
 }

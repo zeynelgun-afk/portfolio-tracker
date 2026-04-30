@@ -1,150 +1,138 @@
 {
-  "tarih": "2026-04-29T17:52:46.627555+03:00",
-  "vix": 17.99,
+  "tarih": "2026-04-30T16:03:38.728150+03:00",
+  "vix": 17.89,
   "sektor_performans": {
-    "Basic Materials": -0.49269600087801235,
-    "Communication Services": 0.6055593012700422,
-    "Consumer Cyclical": 0.5912807599741887,
-    "Consumer Defensive": -0.042115756828586814,
-    "Energy": -0.3037898947143347,
-    "Financial Services": -0.49847150085643444,
-    "Healthcare": -0.7322095722924193,
-    "Industrials": -1.0832476874067853,
-    "Real Estate": 0.7145818324710174,
-    "Technology": -0.2496963644844863,
-    "Utilities": -0.8847510826838989
+    "Basic Materials": -0.8132456798067955,
+    "Communication Services": 0.41279700674854425,
+    "Consumer Cyclical": 0.7789780791536804,
+    "Consumer Defensive": 0.9062544143529694,
+    "Energy": 0.3025923892090887,
+    "Financial Services": -0.2849571708689269,
+    "Healthcare": -0.6216889401676973,
+    "Industrials": -1.009541893714394,
+    "Real Estate": 1.1760556238320508,
+    "Technology": -0.022186737377705157,
+    "Utilities": -2.1065699508506674
   },
   "dominant_temalar": [
     {
-      "tema_adi": "finansal_döngüsel",
+      "tema_adi": "enflasyon_savunma",
       "güç_skoru": 7,
-      "neden": "Fed başkanlık geçişi (Warsh) + Powell'ın son toplantısı + faiz sabit beklentisi piyasayı faiz duyarlı varlıklara yönlendiriyor; Real Estate +0.7% lider",
-      "öncelikli_alt_dal": "faiz_duyarlı_REIT",
+      "neden": "Çekirdek enflasyon %3.2, Iran savaşı kaynaklı enerji baskısı; Real Estate ve Consumer Defensive lider, savunmacı rotasyon başlamış",
+      "öncelikli_alt_dal": "REIT_defansif",
       "önerilen_hisseler": [
         "O",
-        "SPG",
-        "PLD"
+        "VICI",
+        "PG"
       ],
       "portföy": "dividend",
+      "aciliyet": "orta"
+    },
+    {
+      "tema_adi": "enerji_geçiş",
+      "güç_skoru": 6,
+      "neden": "Iran gerilimi enerji fiyatlarını destekliyor, enerji sektörü +%0.3 pozitif; AI güç talebi yapısal destek",
+      "öncelikli_alt_dal": "petrol_gaz",
+      "önerilen_hisseler": [
+        "XOM",
+        "CVX",
+        "OXY"
+      ],
+      "portföy": "balanced",
       "aciliyet": "orta",
       "hisse_evreni": [
-        "PRU",
-        "AFRM",
-        "V",
-        "BAC",
-        "GS",
-        "AIG",
-        "JPM",
-        "MA",
-        "MET",
-        "PYPL",
-        "MS",
-        "CB"
+        "ENPH",
+        "NRG",
+        "VST",
+        "FSLR",
+        "CEG",
+        "ET",
+        "OKE",
+        "NEE",
+        "CCJ",
+        "RUN",
+        "WMB",
+        "KMI"
       ]
     },
     {
       "tema_adi": "savunma_uzay",
       "güç_skoru": 6,
-      "neden": "İran savaşı haberi tahvil satışını besliyor, jeopolitik prim mevcut; ancak savunma sektörü bugün lider değil (Industrials/Defense ayrı raporlanmamış)",
-      "öncelikli_alt_dal": "ana_yükleniciler",
+      "neden": "Iran savaşı haberi aktif; jeopolitik prim savunma hisselerinde devam ediyor",
+      "öncelikli_alt_dal": "savunma_ana",
       "önerilen_hisseler": [
         "LMT",
-        "NOC",
-        "RTX"
+        "RTX",
+        "NOC"
       ],
       "portföy": "balanced",
       "aciliyet": "orta",
       "hisse_evreni": [
-        "RKLB",
-        "RDW",
         "KTOS",
-        "S",
-        "AJRD",
-        "LMT",
-        "LHX",
         "NOC",
+        "RKLB",
         "ZS",
         "RTX",
-        "CRWD",
+        "AJRD",
+        "S",
+        "LMT",
+        "RDW",
+        "LHX",
         "PANW",
+        "CRWD",
         "GD"
-      ]
-    },
-    {
-      "tema_adi": "sağlık_yenilik",
-      "güç_skoru": 5,
-      "neden": "Günün güçlü hisseleri içinde KALV (+38.9%) gibi biyotek isimleri öne çıkıyor; Communication Services + Consumer Cyclical liderliği risk iştahını destekliyor",
-      "öncelikli_alt_dal": "biyotek_katalist",
-      "önerilen_hisseler": [
-        "CPRX",
-        "VRTX",
-        "REGN"
-      ],
-      "portföy": "aggressive",
-      "aciliyet": "düşük",
-      "hisse_evreni": [
-        "SYK",
-        "GILD",
-        "MDT",
-        "MRNA",
-        "ALT",
-        "BMY",
-        "REGN",
-        "ISRG",
-        "EW",
-        "LLY",
-        "NVO",
-        "VKTX"
       ]
     }
   ],
   "kacınılacak": [
-    "Basic Materials",
+    "Healthcare",
     "Financial Services"
   ],
-  "piyasa_modu": "risk-on",
+  "piyasa_modu": "risk-off-hafif",
   "aktif_kriz": {
-    "tip": "jeopolitik",
-    "guven": 5,
-    "kanit": "İran savaşı manşeti tahvil satışını tetikliyor (Iran war is fueling a bond selloff). Ancak VIX=18 sakin, sektörler mixed ama panik yok, Energy -0.3% (savaş primi yok), Gold sinyali raporlanmamış. Kanıt güçlü değil — manşet seviyesinde jeopolitik gerilim mevcut ama piyasa fiyatlamasına tam yansımamış.",
+    "tip": "enflasyon",
+    "guven": 7,
+    "kanit": "Çekirdek enflasyon %3.2 (3 yılın zirvesine yakın), Fed'in tercih ettiği PCE göstergesi yüksek seyirde, Iran savaşı kaynaklı enerji baskısı manşetlerde. Real Estate +%1.2 ve Consumer Defensive +%0.9 lider, Healthcare -%0.6 ve Financials -%0.3 baskıda — klasik enflasyon rotasyonu sinyali.",
     "beneficiary_sectors": [
       "Energy",
-      "Defense",
-      "Gold",
-      "Consumer Defensive"
+      "Real Estate",
+      "Consumer Defensive",
+      "Basic Materials",
+      "Gold"
     ],
     "sensitive_sectors": [
-      "Consumer Cyclical",
       "Technology",
-      "Financial Services"
+      "Consumer Cyclical",
+      "Financial Services",
+      "Healthcare"
     ]
   },
-  "genel_yorum": "Piyasa risk-on modunda; VIX 18 ve Real Estate/Communication Services liderliği faiz sabit beklentisinin fiyatlandığını gösteriyor. İran haberi arkaplanda jeopolitik prim oluşturuyor ama güven düşük (5/10) — K-13 büyük rotasyon tetiklemez, standart VIX bazlı çalışsın. Fed geçiş süreci (Warsh) önümüzdeki haftalarda volatilite kaynağı olabilir.",
+  "genel_yorum": "Enflasyon kaynaklı hafif risk-off mod aktif: VIX 17.9 ile sakin görünse de sektör rotasyonu defansif/reel varlıklara kaymış. Fed sıkılaşma riski ve Iran kaynaklı enerji baskısı kısa vadede tema belirleyici. Yeni alımlarda enflasyon faydalanıcısı sektörlere ağırlık, faiz duyarlı isimlerde temkin.",
   "haberler": [
     {
-      "baslik": "Kevin Warsh moves one step closer to becoming next Fed chair",
+      "baslik": "U.S. Jobless Claims Fell Last Week",
+      "kaynak": "wsj.com",
+      "tarih": "2026-04-30 08:49"
+    },
+    {
+      "baslik": "Fed's favored inflation gauge remained elevated in March",
       "kaynak": "foxbusiness.com",
-      "tarih": "2026-04-29 10:36"
+      "tarih": "2026-04-30 08:47"
     },
     {
-      "baslik": "Iran war is fueling a bond selloff ahead of Fed Chair Jerome Powell's final press conference",
-      "kaynak": "marketwatch.com",
-      "tarih": "2026-04-29 10:35"
-    },
-    {
-      "baslik": "David Rubenstein: I would give Fed Chair Powell pretty high marks",
-      "kaynak": "youtube.com",
-      "tarih": "2026-04-29 10:30"
-    },
-    {
-      "baslik": "Trump Fed pick Kevin Warsh clears key Senate hurdle, teeing up final vote",
+      "baslik": "Core inflation rate hit 3.2% in March, as expected; GDP grew 2% in first quarter",
       "kaynak": "cnbc.com",
-      "tarih": "2026-04-29 10:19"
+      "tarih": "2026-04-30 08:36"
     },
     {
-      "baslik": "Warsh Clears an Early Hurdle on Path to Fed Chair",
-      "kaynak": "nytimes.com",
-      "tarih": "2026-04-29 10:15"
+      "baslik": "Why Macro Investing Is Passé After The FOMC Statement",
+      "kaynak": "seekingalpha.com",
+      "tarih": "2026-04-30 08:35"
+    },
+    {
+      "baslik": "Inflation rate leaps to nearly 3-year high due to Iran war. Now the Fed's hands are tied.",
+      "kaynak": "marketwatch.com",
+      "tarih": "2026-04-30 08:35"
     }
   ]
 }

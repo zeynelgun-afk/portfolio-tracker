@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-04-29T21:33:16.582976",
+  "son_guncelleme": "2026-04-30T13:03:57.194637",
   "not": "SWING TRADE SADECE SİMÜLASYON - Sadece % kazanç/kayıp takibi (MAX: 5 pozisyon)",
   "aktif_pozisyonlar": [
     {
@@ -23,7 +23,7 @@
       "chandelier_stop": 48.03,
       "k11_aktif": false,
       "k11_profit_lock": null,
-      "son_guncelleme": "2026-04-29T21:33:16.582976",
+      "son_guncelleme": "2026-04-30",
       "notlar": [],
       "kar_zarar_yuzde": -1.04,
       "tutulan_gun": 2,
@@ -53,7 +53,7 @@
       "chandelier_stop": 762.88,
       "k11_aktif": false,
       "k11_profit_lock": null,
-      "son_guncelleme": "2026-04-29T21:33:16.582976",
+      "son_guncelleme": "2026-04-30",
       "notlar": [],
       "kar_zarar_yuzde": -2.59,
       "tutulan_gun": 2,
