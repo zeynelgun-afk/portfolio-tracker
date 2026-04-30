@@ -1,6 +1,6 @@
 {
-  "son_guncelleme": "2026-04-29T21:33:16.585549",
-  "not": "3 portföy merkezi aday havuzu. PART 1C 15:38 TR güncelleme: DUK/NEE/GEV yeni EKLE (K-04+K-18 temiz), POWL K-18 ELENDİ ($27.3M insider satış), ön piyasa gap-up sonrası kovalama yasağı 4 aday için aktif. | 11 Nisan: Nükleer tema adayları eklendi (CCJ, OKLO, NNE, UEC, VST) — tematik araştırma, K-14 aktif olduğu için hepsi İZLE statüsünde. | 11 Nisan ek: BWXT (savunma tekel+NRC katalizör), LEU (HALEU tekeli), DNN (Wheeler River) İZLE. SMR (class action lawsuit) ve UUUU (%6 upside) GEÇ. | 2026-04-14: ALAB+PLAB+COHU eklendi — optik/bağlantı/test ekipmanı tematik araştırması. Hepsi IZLE statüsünde, geri çekilme bekleniyor.",
+  "son_guncelleme": "2026-04-30T20:15:00",
+  "not": "3 portföy merkezi aday havuzu. PART 1C 15:38 TR güncelleme: DUK/NEE/GEV yeni EKLE (K-04+K-18 temiz), POWL K-18 ELENDİ ($27.3M insider satış), ön piyasa gap-up sonrası kovalama yasağı 4 aday için aktif. | 11 Nisan: Nükleer tema adayları eklendi (CCJ, OKLO, NNE, UEC, VST) — tematik araştırma, K-14 aktif olduğu için hepsi İZLE statüsünde. | 11 Nisan ek: BWXT (savunma tekel+NRC katalizör), LEU (HALEU tekeli), DNN (Wheeler River) İZLE. SMR (class action lawsuit) ve UUUU (%6 upside) GEÇ. | 2026-04-14: ALAB+PLAB+COHU eklendi — optik/bağlantı/test ekipmanı tematik araştırması. Hepsi IZLE statüsünde, geri çekilme bekleniyor. | 2026-04-30: RSI (Rush Street Interactive) eklendi — Q1 2026 kazanç patlaması (+%16.58 günlük) sonrası izleme. Aşırı alım nedeniyle ($25 + RSI<65) tetikleyicili. Hedef portföy: dengeli.",
   "sistem_referans": "docs/PORTFOLIO_OPPORTUNITY_SYSTEM.md",
   "script": "scripts/portfolio_scan_common.py",
   "kalibre_notu": "8 nisan 2026 v3: Eşikler gerçek piyasa verisine göre kalibre edildi (dengeli 12→9, temettü 13→9, agresif 14 aynı). Agresif için kalite guard rails eklendi: P/E>60 -2, P/E>80 -3, ROIC<8 -1, ROIC<0 -3. Niteliksel bonus yok (sübjektif bias önleme).",
@@ -40,7 +40,8 @@
       "WFC",
       "ALAB",
       "PLAB",
-      "COHU"
+      "COHU",
+      "RSI"
     ],
     "GEC": [
       "POWL",
@@ -974,6 +975,46 @@
       "momentum_5gun": 5.94,
       "tetikleyici_olay": "1 Haz 2026 Q4 FY26 kazanç",
       "alim_kosulu": "RSI<60 + 50MA mesafe daralması, ideal 168-175 zonu"
+    },
+    {
+      "sembol": "RSI",
+      "hedef_portfoy": "dengeli",
+      "guncel_fiyat": 27.98,
+      "rsi": 82.29,
+      "skor": null,
+      "skor_detay": "Manuel eklenen aday — Q1 2026 kazanç patlaması sonrası teknik aşırı alım nedeniyle skor hesaplanmadı, geri çekilme sonrası yeniden değerlendirilecek",
+      "sektor": "Tüketici Döngüsel (Consumer Cyclical)",
+      "tema": "Online casino + spor bahis (iGaming), Latin Amerika büyüme",
+      "urgency": "medium",
+      "ekleme_tarihi": "2026-04-30",
+      "son_kontrol": "2026-04-30",
+      "hedef_giris": "23-25",
+      "hedef_fiyat_1": 32,
+      "hedef_fiyat_2": 35,
+      "stop_loss": 22,
+      "r_r_orani": 4.0,
+      "tetikleyici_giris": "$25 üstü günlük kapanış VE RSI(14) 65 altına gevşeme",
+      "tez": "Q1 2026 mükemmel sonuçlar (gelir +%41 YoY $370M, net kar +%134, EBITDA +%81, EPS 0.14 vs 0.11 tahmin). 2026 yıllık öngörü yukarı revize: gelir $1.49-1.54B (+%31-36 YoY), EBITDA $230-250M (+%50-63). Borçsuz bilanço, $3.23 hisse başına nakit. Casino-first stratejisi sektörden yapısal ayrışma sağlıyor (DKNG -%52, FLUT -%66 zirveden, RSI zirveye yakın). LATAM MAU +%54, NA iCasino +%62. 11 analist 2 Strong Buy + 8 Buy + 1 Hold + 0 Sell. ROE %26.4, ROIC %24.8.",
+      "katalist": "13 Temmuz 2026 Alberta Kanada lansmanı, Q2 2026 sonuçları (~30 Temmuz), pazarlama verimliliği iyileşmesi (%14.8 -> %12.5)",
+      "karsit_argumani": "Aşırı alım kritik seviyede: RSI(14) 82.29, fiyat 200-SMA üstü %44, EMA20 üstü %20.6, 52H zirvesi $29 hemen üstte. Forward P/E 46.6 (2026), P/B 17.97 yüksek. Beta 1.46 - makro şok hassasiyeti yüksek. ŞU AN +%16.58 günlük hareketten sonra kovalama riski büyük; memory dersi: kazanç açıklaması otomatik yükseliş demek değil (MU/RKLB sell-the-news dersleri), kriz/momentum rallilerinin ilk gününü kovalama (KTOS/CEG/HAL/LASR 5/5 zarar). Gambling sektörü düzenleme riski. Sektör peers çöküşte: ayrışma sürdürülebilirliği belirsiz.",
+      "k_04_gecis": null,
+      "k_05_gecis": null,
+      "k_17_gecis": null,
+      "k_18_gecis": true,
+      "k_21_gecis": null,
+      "bekleme_gun": 0,
+      "karar": "IZLE",
+      "momentum_5gun": 21.4,
+      "earnings_son": {
+        "tarih": "2026-04-28",
+        "eps_actual": 0.14,
+        "eps_tahmin": 0.12,
+        "eps_surpriz_pct": 16.7,
+        "gelir_actual": 370361000,
+        "gelir_tahmin": 330825200,
+        "gelir_surpriz_pct": 12.0,
+        "fiyat_tepkisi_1g": 16.58
+      }
     }
   ],
   "haric_tutulanlar": [
