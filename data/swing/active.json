@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-04-30T13:03:57.194637",
+  "son_guncelleme": "2026-04-30T14:02:55.947059",
   "not": "SWING TRADE SADECE SİMÜLASYON - Sadece % kazanç/kayıp takibi (MAX: 5 pozisyon)",
   "aktif_pozisyonlar": [
     {
@@ -17,20 +17,20 @@
       "katalizor": "",
       "max_sure_gun": 15,
       "durum": "✅ Normal aralıkta",
-      "guncel_fiyat": 50.65,
-      "son_fiyat": 50.65,
+      "guncel_fiyat": 50.82,
+      "son_fiyat": 50.82,
       "zirve_fiyat": 51.57,
       "chandelier_stop": 48.03,
       "k11_aktif": false,
       "k11_profit_lock": null,
       "son_guncelleme": "2026-04-30",
       "notlar": [],
-      "kar_zarar_yuzde": -1.04,
+      "kar_zarar_yuzde": -0.7,
       "tutulan_gun": 2,
       "atr14": 1.18,
-      "pnl_pct": -1.04,
-      "rsi": 59.58,
-      "rsi_son_guncelleme": "2026-04-29T22:34:15.572427+03:00"
+      "pnl_pct": -0.7,
+      "rsi": 61.15,
+      "rsi_son_guncelleme": "2026-04-30T17:02:55.897894+03:00"
     },
     {
       "id": "SWING-202604271903-CAT",
@@ -47,27 +47,28 @@
       "katalizor": "",
       "max_sure_gun": 15,
       "durum": "✅ Normal aralıkta",
-      "guncel_fiyat": 810.05,
-      "son_fiyat": 810.05,
-      "zirve_fiyat": 831.64,
-      "chandelier_stop": 762.88,
+      "guncel_fiyat": 884.86,
+      "son_fiyat": 884.86,
+      "zirve_fiyat": 886.96,
+      "chandelier_stop": 831.57,
       "k11_aktif": false,
       "k11_profit_lock": null,
       "son_guncelleme": "2026-04-30",
       "notlar": [],
-      "kar_zarar_yuzde": -2.59,
+      "kar_zarar_yuzde": 6.41,
       "tutulan_gun": 2,
       "atr14": 22.92,
-      "pnl_pct": -2.59,
-      "rsi": 62.1,
-      "rsi_son_guncelleme": "2026-04-29T22:34:15.572427+03:00"
+      "pnl_pct": 6.41,
+      "rsi": 74.66,
+      "rsi_son_guncelleme": "2026-04-30T17:02:55.897894+03:00",
+      "chandelier_atr_carpan": 3.0
     }
   ],
   "ozet": {
     "toplam_pozisyon": 2,
     "bos_slot": 3,
     "maksimum_pozisyon": 5,
-    "ortalama_kar_zarar_yuzde": -1.81
+    "ortalama_kar_zarar_yuzde": 2.85
   },
   "_schema_version": 2
 }
