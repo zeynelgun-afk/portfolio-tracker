@@ -244,3 +244,5 @@ date,action,symbol,shares,price,total,reason
 2026-04-30,SELL,CPRX,145,27.72,4019.4,K-06 stop tetiklendi $27.72≤$27.80
 2026-04-30,BUY,MU,19,511.68,9721.92,daily_scan_balanced skor:14 | Technology
 2026-04-30,SELL,MU,1,518.46,518.46,"K-15c tema 15g cikis: tutus 20g, kar +%24.9"
+2026-05-01,BUY,UPS,67,109.36,7327.12,"Swing giriş — tenkan_bounce, kijun_bounce_v2, nr7_sikisma. Stop: $101.94, Hedef: $127.91"
+2026-05-01,BUY,NEE,59,98.55,5814.45,"Swing giriş — sma50_bounce. Stop: $94.32, Hedef: $109.12"
