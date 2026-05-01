@@ -35,10 +35,11 @@ $NVDA / $AMD / $TSM / $ENPH
 
 | Alan | Değer |
 |---|---|
-| Tespit Fiyatı | — |
-| Fiyat Tepkisi | — |
-| Tez Tuttu mu | — |
-| Ders | — |
+| Tespit Fiyatı | $216.61 |
+| Şimdiki Fiyat (01 May) | $198.45 |
+| Fiyat Değişimi | %-8.4 |
+| Tez Tuttu mu | ❌ Tutmadı |
+| Ders | 5 günde -8.4% |
 
 ---
 
