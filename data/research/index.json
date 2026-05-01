@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-04-26",
+  "son_guncelleme": "2026-05-01",
   "toplam_analiz": 7,
   "beat_tahmin": 0,
   "miss_tahmin": 0,
@@ -139,9 +139,11 @@
         "temettü": "izle"
       },
       "gerceklesen": {
-        "fiyat_tepkisi_pct": null,
-        "tez_tuttu": null,
-        "ders": null
+        "tespit_fiyati": 173.38,
+        "simdiki_fiyat": 173.99,
+        "fiyat_tepkisi_pct": 0.4,
+        "tez_tuttu": false,
+        "ders": "5 günde +0.4%"
       },
       "etiketler": [
         "haber_radar",
@@ -170,9 +172,11 @@
         "temettü": "izle"
       },
       "gerceklesen": {
-        "fiyat_tepkisi_pct": null,
-        "tez_tuttu": null,
-        "ders": null
+        "tespit_fiyati": 64.92,
+        "simdiki_fiyat": 66.63,
+        "fiyat_tepkisi_pct": 2.6,
+        "tez_tuttu": true,
+        "ders": "5 günde +2.6%"
       },
       "etiketler": [
         "haber_radar",
@@ -201,9 +205,11 @@
         "temettü": "izle"
       },
       "gerceklesen": {
-        "fiyat_tepkisi_pct": null,
-        "tez_tuttu": null,
-        "ders": null
+        "tespit_fiyati": 52.63,
+        "simdiki_fiyat": 53.24,
+        "fiyat_tepkisi_pct": 1.2,
+        "tez_tuttu": false,
+        "ders": "5 günde +1.2%"
       },
       "etiketler": [
         "haber_radar",
@@ -232,9 +238,11 @@
         "temettü": "izle"
       },
       "gerceklesen": {
-        "fiyat_tepkisi_pct": null,
-        "tez_tuttu": null,
-        "ders": null
+        "tespit_fiyati": 216.61,
+        "simdiki_fiyat": 198.45,
+        "fiyat_tepkisi_pct": -8.4,
+        "tez_tuttu": false,
+        "ders": "5 günde -8.4%"
       },
       "etiketler": [
         "haber_radar",
