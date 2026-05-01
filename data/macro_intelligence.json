@@ -1,138 +1,52 @@
 {
-  "tarih": "2026-04-30T16:03:38.728150+03:00",
-  "vix": 17.89,
+  "tarih": "2026-05-01T16:01:28.546193+03:00",
+  "vix": 16.88,
   "sektor_performans": {
-    "Basic Materials": -0.8132456798067955,
-    "Communication Services": 0.41279700674854425,
-    "Consumer Cyclical": 0.7789780791536804,
-    "Consumer Defensive": 0.9062544143529694,
-    "Energy": 0.3025923892090887,
-    "Financial Services": -0.2849571708689269,
-    "Healthcare": -0.6216889401676973,
-    "Industrials": -1.009541893714394,
-    "Real Estate": 1.1760556238320508,
-    "Technology": -0.022186737377705157,
-    "Utilities": -2.1065699508506674
+    "Basic Materials": 0.05029737178696703,
+    "Communication Services": 1.3807450243171537,
+    "Consumer Cyclical": -0.30954586697039543,
+    "Consumer Defensive": 1.8394657267433834,
+    "Energy": 2.8460937374469752,
+    "Financial Services": 1.2361419468294832,
+    "Healthcare": 1.1819701398726457,
+    "Industrials": 2.1907203930621177,
+    "Real Estate": 2.8658291629235055,
+    "Technology": 0.020903106173952857,
+    "Utilities": 3.0591023816146867
   },
-  "dominant_temalar": [
-    {
-      "tema_adi": "enflasyon_savunma",
-      "güç_skoru": 7,
-      "neden": "Çekirdek enflasyon %3.2, Iran savaşı kaynaklı enerji baskısı; Real Estate ve Consumer Defensive lider, savunmacı rotasyon başlamış",
-      "öncelikli_alt_dal": "REIT_defansif",
-      "önerilen_hisseler": [
-        "O",
-        "VICI",
-        "PG"
-      ],
-      "portföy": "dividend",
-      "aciliyet": "orta"
-    },
-    {
-      "tema_adi": "enerji_geçiş",
-      "güç_skoru": 6,
-      "neden": "Iran gerilimi enerji fiyatlarını destekliyor, enerji sektörü +%0.3 pozitif; AI güç talebi yapısal destek",
-      "öncelikli_alt_dal": "petrol_gaz",
-      "önerilen_hisseler": [
-        "XOM",
-        "CVX",
-        "OXY"
-      ],
-      "portföy": "balanced",
-      "aciliyet": "orta",
-      "hisse_evreni": [
-        "ENPH",
-        "NRG",
-        "VST",
-        "FSLR",
-        "CEG",
-        "ET",
-        "OKE",
-        "NEE",
-        "CCJ",
-        "RUN",
-        "WMB",
-        "KMI"
-      ]
-    },
-    {
-      "tema_adi": "savunma_uzay",
-      "güç_skoru": 6,
-      "neden": "Iran savaşı haberi aktif; jeopolitik prim savunma hisselerinde devam ediyor",
-      "öncelikli_alt_dal": "savunma_ana",
-      "önerilen_hisseler": [
-        "LMT",
-        "RTX",
-        "NOC"
-      ],
-      "portföy": "balanced",
-      "aciliyet": "orta",
-      "hisse_evreni": [
-        "KTOS",
-        "NOC",
-        "RKLB",
-        "ZS",
-        "RTX",
-        "AJRD",
-        "S",
-        "LMT",
-        "RDW",
-        "LHX",
-        "PANW",
-        "CRWD",
-        "GD"
-      ]
-    }
-  ],
-  "kacınılacak": [
-    "Healthcare",
-    "Financial Services"
-  ],
-  "piyasa_modu": "risk-off-hafif",
+  "dominant_temalar": [],
+  "kacınılacak": [],
+  "piyasa_modu": "nötr",
   "aktif_kriz": {
-    "tip": "enflasyon",
-    "guven": 7,
-    "kanit": "Çekirdek enflasyon %3.2 (3 yılın zirvesine yakın), Fed'in tercih ettiği PCE göstergesi yüksek seyirde, Iran savaşı kaynaklı enerji baskısı manşetlerde. Real Estate +%1.2 ve Consumer Defensive +%0.9 lider, Healthcare -%0.6 ve Financials -%0.3 baskıda — klasik enflasyon rotasyonu sinyali.",
-    "beneficiary_sectors": [
-      "Energy",
-      "Real Estate",
-      "Consumer Defensive",
-      "Basic Materials",
-      "Gold"
-    ],
-    "sensitive_sectors": [
-      "Technology",
-      "Consumer Cyclical",
-      "Financial Services",
-      "Healthcare"
-    ]
+    "tip": "belirsiz",
+    "guven": 0
   },
-  "genel_yorum": "Enflasyon kaynaklı hafif risk-off mod aktif: VIX 17.9 ile sakin görünse de sektör rotasyonu defansif/reel varlıklara kaymış. Fed sıkılaşma riski ve Iran kaynaklı enerji baskısı kısa vadede tema belirleyici. Yeni alımlarda enflasyon faydalanıcısı sektörlere ağırlık, faiz duyarlı isimlerde temkin.",
+  "genel_yorum": "⚠️ Claude API hatası: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billin",
   "haberler": [
     {
-      "baslik": "U.S. Jobless Claims Fell Last Week",
-      "kaynak": "wsj.com",
-      "tarih": "2026-04-30 08:49"
-    },
-    {
-      "baslik": "Fed's favored inflation gauge remained elevated in March",
-      "kaynak": "foxbusiness.com",
-      "tarih": "2026-04-30 08:47"
-    },
-    {
-      "baslik": "Core inflation rate hit 3.2% in March, as expected; GDP grew 2% in first quarter",
-      "kaynak": "cnbc.com",
-      "tarih": "2026-04-30 08:36"
-    },
-    {
-      "baslik": "Why Macro Investing Is Passé After The FOMC Statement",
+      "baslik": "This Market Is Driving In The Rearview Mirror",
       "kaynak": "seekingalpha.com",
-      "tarih": "2026-04-30 08:35"
+      "tarih": "2026-05-01 08:44"
     },
     {
-      "baslik": "Inflation rate leaps to nearly 3-year high due to Iran war. Now the Fed's hands are tied.",
-      "kaynak": "marketwatch.com",
-      "tarih": "2026-04-30 08:35"
+      "baslik": "April Market Rally Brings May Momentum?",
+      "kaynak": "youtube.com",
+      "tarih": "2026-05-01 08:30"
+    },
+    {
+      "baslik": "Morning Call Sheet: Tech and momentum drive markets higher",
+      "kaynak": "youtube.com",
+      "tarih": "2026-05-01 08:28"
+    },
+    {
+      "baslik": "Risks From Iran War Swayed Kashkari's Fed Dissent",
+      "kaynak": "wsj.com",
+      "tarih": "2026-05-01 08:10"
+    },
+    {
+      "baslik": "Fed Officials Cite Inflation Concerns in Defending Dissents",
+      "kaynak": "nytimes.com",
+      "tarih": "2026-05-01 08:05"
     }
   ]
 }

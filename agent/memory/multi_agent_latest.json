@@ -1,191 +1,38 @@
 {
   "macro": {
-    "sinyal": "RISK_ON",
-    "guven": "MEDIUM",
-    "ana_tema": "VIX 17.89'a gerileyerek risk iştahını destekliyor; QQQ liderliğinde teknoloji momentumu sürerken altın ve tahviller satış baskısında.",
-    "beklentiler": [
-      "5 Mayıs CPI/Enflasyon verisi (tahmin 2.6 YoY) Fed faiz patikası için kritik olacak",
-      "5-6 Mayıs yoğun earnings haftası (ETN, CCJ, CPRX, O, CF) portföyde idiyosenkratik volatilite yaratabilir",
-      "Q1 GDP %2 ve çekirdek enflasyon %3.2 ile stagflasyon endişesi hafif arka planda",
-      "Dolar zayıflığı ve tahvil satışı reflasyon temasını destekliyor"
-    ],
-    "risk_faktoru": "5 Mayıs enflasyon verisinin beklenti üstü gelmesi (çekirdek %3.2 trendi) Fed kesinti beklentilerini bozabilir ve momentum hisselerinde sert düzeltme getirir.",
-    "tahmin": {
-      "yon": "UP",
-      "buyukluk": "LOW",
-      "sembol": "SPY"
-    },
     "_agent": "MACRO_AGENT",
-    "_timestamp": "2026-04-30T13:04:09.639296"
+    "_raw": "⚠️ Claude API hatası: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CabtiiXKGPhAW3shjUBTq'}",
+    "_parse_hata": true,
+    "guven": "LOW"
   },
   "sector": {
-    "aktif_rejim": "ai_boom",
-    "lider_sektor": "Teknoloji/Yarı İletken (XLK, SMH)",
-    "zayif_sektor": "Altın & Tahvil (GLD, TLT)",
-    "rotasyon_onerisi": "GLD/TLT savunmacılarından XLK/SMH ve sanayi (XLI) liderlerine kademeli rotasyon",
-    "guven": "MEDIUM",
-    "tahmin": {
-      "yon": "UP",
-      "buyukluk": "MEDIUM",
-      "sembol": "SMH"
-    },
     "_agent": "SECTOR_AGENT",
-    "_timestamp": "2026-04-30T13:04:16.099691"
+    "_raw": "⚠️ Claude API hatası: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CabtijEUkZ1LLu4u7uw2P'}",
+    "_parse_hata": true,
+    "guven": "LOW"
   },
   "signal": {
-    "portfoy_sinyalleri": [
-      {
-        "sembol": "MU",
-        "sinyal": "HOLD",
-        "rsi_yorumu": "overbought",
-        "sma_durumu": "ustunde",
-        "aciklama": "+24.9% kar momentum güçlü, kademeli kar al."
-      },
-      {
-        "sembol": "ETN",
-        "sinyal": "HOLD",
-        "rsi_yorumu": "normal",
-        "sma_durumu": "ustunde",
-        "aciklama": "Konsolidasyon, hedefe doğru sabırlı tutuş."
-      },
-      {
-        "sembol": "CCJ",
-        "sinyal": "HOLD",
-        "rsi_yorumu": "normal",
-        "sma_durumu": "ustunde",
-        "aciklama": "Stop uzak, uranyum teması korunuyor."
-      },
-      {
-        "sembol": "AMAT",
-        "sinyal": "HOLD",
-        "rsi_yorumu": "normal",
-        "sma_durumu": "ustunde",
-        "aciklama": "Yatay seyir, semi gücüyle uyumlu."
-      },
-      {
-        "sembol": "CRM",
-        "sinyal": "WATCH",
-        "rsi_yorumu": "normal",
-        "sma_durumu": "ustunde",
-        "aciklama": "Fair value sinyali UCUZ, momentum bekleniyor."
-      },
-      {
-        "sembol": "CPRX",
-        "sinyal": "WATCH",
-        "rsi_yorumu": "oversold",
-        "sma_durumu": "altinda",
-        "aciklama": "Stop %1.6 kritik yakın, gün içi takip şart."
-      },
-      {
-        "sembol": "PPG",
-        "sinyal": "WATCH",
-        "rsi_yorumu": "oversold",
-        "sma_durumu": "altinda",
-        "aciklama": "Stop %3.6 yakın, satış baskısı sürüyor."
-      },
-      {
-        "sembol": "CF",
-        "sinyal": "BUY",
-        "rsi_yorumu": "normal",
-        "sma_durumu": "ustunde",
-        "aciklama": "+3.6% güçlü hareket, gübre momentumu pozitif."
-      },
-      {
-        "sembol": "COLB",
-        "sinyal": "HOLD",
-        "rsi_yorumu": "normal",
-        "sma_durumu": "ustunde",
-        "aciklama": "Adil değer, XLF gücüyle stabil."
-      },
-      {
-        "sembol": "TSM",
-        "sinyal": "HOLD",
-        "rsi_yorumu": "normal",
-        "sma_durumu": "ustunde",
-        "aciklama": "Semi liderliği, hedefe ilerleme."
-      },
-      {
-        "sembol": "OKE",
-        "sinyal": "WATCH",
-        "rsi_yorumu": "normal",
-        "sma_durumu": "ustunde",
-        "aciklama": "Stop %2 yakın, enerji gücüne rağmen zayıf."
-      },
-      {
-        "sembol": "O",
-        "sinyal": "WATCH",
-        "rsi_yorumu": "oversold",
-        "sma_durumu": "altinda",
-        "aciklama": "Stop %2.2 yakın, faiz baskısı sürüyor."
-      },
-      {
-        "sembol": "GTY",
-        "sinyal": "WATCH",
-        "rsi_yorumu": "oversold",
-        "sma_durumu": "altinda",
-        "aciklama": "Stop %2.8 yakın, REIT zayıflığı."
-      },
-      {
-        "sembol": "TFC",
-        "sinyal": "HOLD",
-        "rsi_yorumu": "normal",
-        "sma_durumu": "ustunde",
-        "aciklama": "Stop güvende, banka teması destekli."
-      },
-      {
-        "sembol": "CAT",
-        "sinyal": "WATCH",
-        "rsi_yorumu": "normal",
-        "sma_durumu": "altinda",
-        "aciklama": "-2.6% düşüş, momentum zayıflıyor."
-      }
-    ],
-    "en_guclu_setup": "CF",
-    "en_zayif_setup": "CPRX",
-    "guven": "MEDIUM",
     "_agent": "SIGNAL_AGENT",
-    "_timestamp": "2026-04-30T13:04:32.446404"
+    "_raw": "⚠️ Claude API hatası: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CabtijoTJsU5UYCcuqz98'}",
+    "_parse_hata": true,
+    "guven": "LOW"
   },
   "risk": {
-    "risk_seviyesi": "HIGH",
-    "stop_yakini": [
-      "CPRX - %1.6 uzakta (KRİTİK)",
-      "OKE - %2.0 uzakta",
-      "O - %2.2 uzakta",
-      "GTY - %2.8 uzakta",
-      "PPG - %3.6 uzakta"
-    ],
-    "konsantrasyon_uyarisi": "Technology %37.1 (orta-yüksek); MU+AMAT+TSM AI/yarı-iletken kümesi tek tema riski (K-17). Temettü sepetinde 3/3 pozisyon stop %3 altında — REIT/midstream faiz duyarlı kümelenme.",
-    "senaryo_5pct_dusus": "Toplam ~$12,898 kayıp (-%5.8); 8 pozisyon stop tetikler, en ağır darbe AMAT (-$2,785) ve agresif sepet. Temettü sepeti tamamen tasfiye olur (3/3 stop).",
-    "onerileri": [
-      "Temettü sepetinde stopları sıkılaştır veya kısmi kâr al — 3/3 pozisyon %3 altında, küme riski yüksek",
-      "CPRX %1.6 uzaklıkta acil; bugün stop tetik veya manuel çıkış kararı ver",
-      "Tech konsantrasyonu %37 — MU +%24.9 P/L'de K-11 kademeli kâr alma uygula",
-      "Yüksek nakit (%32-70) + düşük VIX ortamında defansif rotasyon yerine kaliteli tema (AI/uranyum) eklemeyi değerlendir",
-      "Swing'de Backtest -%11/20g uyarısı — yeni swing girişlerinde trend+hacim filtresi zorunlu"
-    ],
-    "guven": "HIGH",
     "_agent": "RISK_AGENT",
-    "_timestamp": "2026-04-30T13:04:47.197300"
+    "_raw": "⚠️ Claude API hatası: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CabtikLx8hQASaNzJnM1J'}",
+    "_parse_hata": true,
+    "guven": "LOW"
   },
   "cio": {
-    "karar": "SAT",
-    "hedef_sembol": "CPRX",
-    "gerekce": "Risk Yöneticisi (HIGH güven) CPRX'i %1.6 stop mesafesiyle KRİTİK olarak işaretledi; Teknik sinyal de oversold + SMA altı teyit ediyor. Bu pozisyonda K-1 stop disiplini uygulanmalı, override yasak. Aynı zamanda temettü sepetinde 3/3 pozisyon (O, GTY, OKE) stop %3 altında kümelenmiş — faiz duyarlı küme riski K-17 ihlali; bu sepette kademeli tasfiye veya stop sıkılaştırma şart. MU +%24.9 P/L'de K-11 gereği kademeli kâr alınmalı. Makro RISK_ON ve Sektör AI_BOOM olumlu olsa da aktif rejim JEOPOLITIK_KRIZ (yeni giriş kısıtı) ve Risk Yöneticisi'nin önceliği var (Risk > Makro > Sektör > Teknik).",
-    "uyari": "CPRX bugün stop tetik veya manuel çıkış; 5 Mayıs CPI öncesi temettü sepeti pozisyonlarında konsantre faiz riski — %5 düşüş senaryosunda 8 pozisyon stop tetikliyor (-$12,898).",
-    "guven": "HIGH",
-    "analist_uzlasma": "ORTA",
-    "tahmin": {
-      "yon": "NEUTRAL",
-      "buyukluk": "LOW",
-      "sembol": "SPY"
-    },
     "_agent": "CIO_AGENT",
-    "_timestamp": "2026-04-30T13:04:57.128613"
+    "_raw": "⚠️ Claude API hatası: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CabtikqxjHpH4p9cmpwLZ'}",
+    "_parse_hata": true,
+    "karar": "BEKLE",
+    "guven": "LOW"
   },
   "weights": {
-    "MACRO_AGENT": 0.8458,
-    "SECTOR_AGENT": 1.4506,
+    "MACRO_AGENT": 0.8881,
+    "SECTOR_AGENT": 1.5231,
     "SIGNAL_AGENT": 0.738,
     "RISK_AGENT": 0.6663,
     "CIO_AGENT": 0.7428

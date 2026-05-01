@@ -431,10 +431,12 @@
       "kaynak_kural": "MACRO_AGENT",
       "durum": "BEKLIYOR",
       "skorlar": {
-        "5": -0.5
+        "5": -0.5,
+        "10": -0.5
       },
       "gercek_fiyatlar": {
-        "5": 713.66
+        "5": 713.66,
+        "10": 718.66
       },
       "son_skor": null
     },
@@ -452,10 +454,12 @@
       "kaynak_kural": "SECTOR_AGENT",
       "durum": "BEKLIYOR",
       "skorlar": {
-        "5": 1.0
+        "5": 1.0,
+        "10": 1.0
       },
       "gercek_fiyatlar": {
-        "5": 502.42
+        "5": 502.42,
+        "10": 506.72
       },
       "son_skor": null
     },
@@ -473,10 +477,12 @@
       "kaynak_kural": "CIO_AGENT",
       "durum": "BEKLIYOR",
       "skorlar": {
-        "5": -1.0
+        "5": -1.0,
+        "10": -1.0
       },
       "gercek_fiyatlar": {
-        "5": 713.66
+        "5": 713.66,
+        "10": 718.66
       },
       "son_skor": null
     },
@@ -494,10 +500,12 @@
       "kaynak_kural": "adversarial_debate",
       "durum": "BEKLIYOR",
       "skorlar": {
-        "5": -1.0
+        "5": -1.0,
+        "10": -1.0
       },
       "gercek_fiyatlar": {
-        "5": 713.66
+        "5": 713.66,
+        "10": 718.66
       },
       "son_skor": null
     },

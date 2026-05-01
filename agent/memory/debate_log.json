@@ -742,6 +742,30 @@
         }
       },
       "karar_degisti_mi": true
+    },
+    {
+      "symbol": "SPY",
+      "tarih": "2026-05-01T13:01:34.516673",
+      "ilk_karar": {
+        "_agent": "CIO_AGENT",
+        "_raw": "⚠️ Claude API hatası: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CabtikqxjHpH4p9cmpwLZ'}",
+        "_parse_hata": true,
+        "karar": "BEKLE",
+        "guven": "LOW"
+      },
+      "boğa": {
+        "_raw": "⚠️ Claude API hatası: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billin",
+        "_parse_hata": true
+      },
+      "ayı": {
+        "_raw": "⚠️ Claude API hatası: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billin",
+        "_parse_hata": true
+      },
+      "nihai": {
+        "_raw": "⚠️ Claude API hatası: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billin",
+        "_parse_hata": true
+      },
+      "karar_degisti_mi": true
     }
   ]
 }
