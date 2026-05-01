@@ -59,8 +59,8 @@
       "stop_aciklama": "K-07 trailing sıkılaştırma: 437.17 → 471.88 (ATR-bazlı %5 cap)",
       "stop_guncelleme": "2026-04-26",
       "durum": "🚀 Güçlü (+24.6%)",
-      "rsi": 70.18,
-      "rsi_son_guncelleme": "2026-05-01T20:32:10.440104+03:00",
+      "rsi": 70.77,
+      "rsi_son_guncelleme": "2026-05-01T21:03:13.556734+03:00",
       "atr14": 27.7043,
       "son_k15c_tarihi": "2026-04-30"
     },
@@ -89,8 +89,8 @@
       "zirve_fiyat": 433.01,
       "stop_mesafe_pct": 11.6,
       "durum": "✅ Normal",
-      "rsi": 66.16,
-      "rsi_son_guncelleme": "2026-05-01T20:32:10.440104+03:00",
+      "rsi": 66.1,
+      "rsi_son_guncelleme": "2026-05-01T21:03:13.556734+03:00",
       "atr14": 12.3614
     },
     {
@@ -118,8 +118,8 @@
       "zirve_fiyat": 123.04,
       "stop_mesafe_pct": 7.59,
       "durum": "✅ Normal",
-      "rsi": 53.6,
-      "rsi_son_guncelleme": "2026-05-01T20:32:10.440104+03:00",
+      "rsi": 53.46,
+      "rsi_son_guncelleme": "2026-05-01T21:03:13.556734+03:00",
       "atr14": 6.2157
     },
     {
@@ -147,8 +147,8 @@
       "zirve_fiyat": 394.49,
       "stop_mesafe_pct": 9.27,
       "durum": "✅ Normal",
-      "rsi": 53.9,
-      "rsi_son_guncelleme": "2026-05-01T20:32:10.440104+03:00",
+      "rsi": 53.73,
+      "rsi_son_guncelleme": "2026-05-01T21:03:13.556734+03:00",
       "atr14": 13.3271
     },
     {
@@ -176,8 +176,8 @@
       "zirve_fiyat": 181.22,
       "stop_mesafe_pct": 6.48,
       "durum": "✅ Normal",
-      "rsi": 50.74,
-      "rsi_son_guncelleme": "2026-05-01T20:32:10.440104+03:00",
+      "rsi": 50.88,
+      "rsi_son_guncelleme": "2026-05-01T21:03:13.556734+03:00",
       "atr14": 7.5771
     }
   ],
