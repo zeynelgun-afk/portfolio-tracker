@@ -17,12 +17,13 @@ jobs:
           python-version: '3.11'
 
       - name: Bağımlılıklar
-        run: pip install requests
+        run: pip install requests 'openai>=1.40.0'
 
       - name: Haber Radarı çalıştır
         run: python3 scripts/news_radar.py
         env:
           FMP_API_KEY:          ${{ secrets.FMP_API_KEY }}
+          OPENROUTER_API_KEY:   ${{ secrets.OPENROUTER_API_KEY }}
           ANTHROPIC_API_KEY:    ${{ secrets.ANTHROPIC_API_KEY }}
           TELEGRAM_BOT_TOKEN:   ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_PRIVATE_ID:  ${{ secrets.TELEGRAM_PRIVATE_ID }}
