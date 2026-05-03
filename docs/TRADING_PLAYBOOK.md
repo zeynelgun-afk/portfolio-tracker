@@ -1,3 +1,17 @@
+---
+title: Trading Playbook
+description: Tüm trade kararları için detaylı oyun kitabı. K-rule'lar ve karar matrisi.
+tags:
+  - trading
+  - playbook
+  - k-rules
+related:
+  - "[[Index]]"
+  - "[[K_RULES_QUICK_REF]]"
+  - "[[DECISION_FRAMEWORK]]"
+  - "[[STOP_MANAGEMENT_V2]]"
+---
+
 # TRADING PLAYBOOK — KANIT BAZLI KURALLAR
 
 > **son güncelleme**: 7 nisan 2026

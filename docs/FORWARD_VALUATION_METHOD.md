@@ -1,3 +1,17 @@
+---
+title: Forward Valuation Yöntemi
+description: Forward EPS bazlı değerleme metodu. Mid-cycle ile birleştirme.
+tags:
+  - valuation
+  - forward
+  - method
+related:
+  - "[[Index]]"
+  - "[[VALUATION_SYSTEM_v6]]"
+  - "[[VALUATION_FRAMEWORK_v5]]"
+  - "[[ADIL_DEGER_KULLANIM]]"
+---
+
 # Forward Değerleme Metodolojisi — Finzora AI
 
 > Son güncelleme: 9 Nisan 2026 | KESİN (FMP stable endpoint test edildi)

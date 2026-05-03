@@ -1,3 +1,17 @@
+---
+title: Karar Mimarisi v2
+description: K-rule + LLM birleşiminin teknik mimarisi. Karar verme akışı v2.
+tags:
+  - architecture
+  - decision
+  - k-rules
+related:
+  - "[[Index]]"
+  - "[[DECISION_FRAMEWORK]]"
+  - "[[K_RULES_QUICK_REF]]"
+  - "[[SYSTEM_MAP]]"
+---
+
 # KARAR MİMARİSİ v2.0 — ÇOK KATMANLI KARAR SİSTEMİ
 > **oluşturulma**: 11 nisan 2026
 > **kaynak**: MarketDash AI Swing Trading Guide 2026, FactSet thematic research, institutional multi-agent frameworks

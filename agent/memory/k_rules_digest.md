@@ -1,3 +1,15 @@
+---
+title: K-Kuralları Özet (Memory)
+description: prompt_evolver tarafından her morning'de güncellenen K-rule özeti. Orchestrator system prompt'ına injection.
+tags:
+  - k-rules
+  - memory
+  - runtime
+related:
+  - "[[K_RULES_QUICK_REF]]"
+  - "[[TRADING_PLAYBOOK]]"
+---
+
 # K-KURALLARI ÖZET (playbook'tan üretildi)
 
 - **K-02**: kriz/şok başlangıcında momentum sektörlerine yeni giriş yapılmaz**

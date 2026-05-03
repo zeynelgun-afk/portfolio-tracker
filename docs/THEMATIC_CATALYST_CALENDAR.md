@@ -1,3 +1,16 @@
+---
+title: Tematik Katalist Takvimi
+description: Tema bazlı önemli olaylar (Fed, earnings, ürün lansmanı). thematic_calendar entegre.
+tags:
+  - thematic
+  - calendar
+  - catalyst
+related:
+  - "[[Index]]"
+  - "[[THEMATIC_SYSTEM]]"
+  - "[[MARKET_INTELLIGENCE]]"
+---
+
 # Tematik Katalist Takvimi (Thematic Catalyst Calendar)
 
 **Versiyon:** 1.0

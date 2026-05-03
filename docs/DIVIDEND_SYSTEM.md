@@ -1,3 +1,16 @@
+---
+title: Temettü Portföy Sistemi
+description: Defansif temettü portföyü kuralları, sektör tercihleri, K-rule entegrasyonu.
+tags:
+  - portfolio
+  - dividend
+  - defensive
+related:
+  - "[[Index]]"
+  - "[[K_RULES_QUICK_REF]]"
+  - "[[PORTFOLIO_DATA_SKILL]]"
+---
+
 # TEMETTÜ PORTFÖYÜ SİSTEMİ v1.0 — TEMA + KALİTE + MOMENTUM
 
 > **versiyon**: 1.0

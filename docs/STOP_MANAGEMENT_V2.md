@@ -1,3 +1,17 @@
+---
+title: Stop Yönetimi v2
+description: Stop-loss seviyeleri, ATR-bazlı trailing, K-06/07/09/11 koordinasyonu.
+tags:
+  - trading
+  - stops
+  - k-rules
+related:
+  - "[[Index]]"
+  - "[[K_RULES_QUICK_REF]]"
+  - "[[DECISION_FRAMEWORK]]"
+  - "[[SWING_SYSTEM_V2]]"
+---
+
 # STOP YÖNETİMİ v2.0 — ÇOK KATMANLI DİNAMİK SİSTEM
 > **oluşturulma**: 11 nisan 2026
 > **kaynak**: 87 stop stratejisi karşılaştırması (PaperToProfit 2025), LuxAlgo ATR analizi, TrendSpider, institutionel backtest literatürü

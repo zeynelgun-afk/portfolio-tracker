@@ -1,3 +1,17 @@
+---
+title: K-Rules Backtest Dersleri
+description: Backtest sonuçlarından çıkarılan K-rule iyileştirmeleri ve kalıcı dersler.
+tags:
+  - k-rules
+  - backtest
+  - lessons
+related:
+  - "[[Index]]"
+  - "[[K_RULES_QUICK_REF]]"
+  - "[[TRADING_PLAYBOOK]]"
+  - "[[POST_TRADE_REVIEW]]"
+---
+
 # K-Kurallari Backtest Dersleri — 28 Nis 2026
 
 189 islem, 41 farkli gun, 2 ayda toplanan veri. Her K-kuralinin gercek getirisi olculdu.

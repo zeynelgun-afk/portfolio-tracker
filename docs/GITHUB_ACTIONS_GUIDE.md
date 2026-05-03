@@ -1,3 +1,16 @@
+---
+title: GitHub Actions Rehberi
+description: Workflow dosyaları, schedule (Railway-tetikli), env değişkenleri, debug.
+tags:
+  - infrastructure
+  - ci-cd
+  - workflow
+related:
+  - "[[Index]]"
+  - "[[SYSTEM_MAP]]"
+  - "[[RAILWAY_DEPLOY]]"
+---
+
 # GITHUB ACTIONS OTOMATIK GÜNCELLEME KLAVUZU
 
 ## 🎯 NASIL ÇALIŞIR?

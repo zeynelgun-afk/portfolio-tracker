@@ -1,3 +1,18 @@
+---
+title: Market Intelligence
+description: macro_intelligence: Kimi tema tespiti, K-13 kriz matrisi, dominant temalar.
+tags:
+  - market
+  - intelligence
+  - macro
+  - kimi
+related:
+  - "[[Index]]"
+  - "[[THEMATIC_SYSTEM]]"
+  - "[[SECTOR_AGENTS]]"
+  - "[[PORTFOLIO_OPPORTUNITY_SYSTEM]]"
+---
+
 # PİYASA İSTİHBARAT VE TAHMİN SİSTEMİ
 
 > **versiyon**: 1.0 | **tarih**: 25 mart 2026

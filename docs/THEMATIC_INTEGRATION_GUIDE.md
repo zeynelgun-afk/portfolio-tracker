@@ -1,3 +1,16 @@
+---
+title: Tematik Entegrasyon Rehberi
+description: Tematik sistemin orchestrator + portföylerle nasıl entegre edildiği.
+tags:
+  - thematic
+  - integration
+  - guide
+related:
+  - "[[Index]]"
+  - "[[THEMATIC_SYSTEM]]"
+  - "[[PORTFOLIO_OPPORTUNITY_SYSTEM]]"
+---
+
 # Tematik Katalist Takvimi — Prompt Entegrasyon Rehberi
 
 **Amaç:** `agent/thematic_calendar.py` modülünü sabah/kapanış prompt'larına bağlamak.

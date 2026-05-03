@@ -1,3 +1,16 @@
+---
+title: Portföy Veri Yapısı
+description: data/portfolios/*.json şeması, transactions.csv formatı, alanların anlamı.
+tags:
+  - portfolio
+  - data
+  - schema
+related:
+  - "[[Index]]"
+  - "[[SYSTEM_MAP]]"
+  - "[[OBSERVABILITY]]"
+---
+
 # PORTFOLIO TRACKER — VERİ YAPISI VE SİSTEM REFERANSI
 
 > **Repo**: https://github.com/zeynelgun-afk/portfolio-tracker

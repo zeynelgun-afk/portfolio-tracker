@@ -1,3 +1,16 @@
+---
+title: FAZ 0/1/2/3 Seans Modeli
+description: Açılış/orta/power-hour/kapanış faz modeli. Bot ve orchestrator seans bazlı kararlar.
+tags:
+  - architecture
+  - session
+  - trading
+related:
+  - "[[Index]]"
+  - "[[SYSTEM_MAP]]"
+  - "[[TRADING_PLAYBOOK]]"
+---
+
 # SEANS PROMPT REFERANS DOKÜMANI
 
 > bu dosya seans prompt'larının "referans" ve "versiyon" içeriğini barındırır.

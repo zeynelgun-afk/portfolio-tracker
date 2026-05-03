@@ -1,3 +1,17 @@
+---
+title: Portföy Fırsat Sistemi
+description: opportunity_finder + macro_intelligence: tema → aday hisse zinciri.
+tags:
+  - portfolio
+  - opportunity
+  - candidates
+related:
+  - "[[Index]]"
+  - "[[THEMATIC_SYSTEM]]"
+  - "[[MARKET_INTELLIGENCE]]"
+  - "[[DYNAMIC_SCREENER_CRITERIA]]"
+---
+
 # PORTFÖY FIRSAT TARAMA SİSTEMİ v1.0
 
 > **amaç**: 3 portföy için sistematik, filtreli, karar matrisi tabanlı aday tarama ve watchlist yönetimi

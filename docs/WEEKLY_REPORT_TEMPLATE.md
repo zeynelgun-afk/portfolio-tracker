@@ -1,3 +1,17 @@
+---
+title: Haftalık Rapor Şablonu
+description: Pazar weekly raporunun formatı: backtest, trade analizi, rule revizyonları.
+tags:
+  - reporting
+  - template
+  - weekly
+related:
+  - "[[Index]]"
+  - "[[K_RULES_BACKTEST_DERSLER]]"
+  - "[[SELF_IMPROVEMENT_SYSTEM]]"
+  - "[[POST_TRADE_REVIEW]]"
+---
+
 # HAFTALIK RAPOR ŞABLONU — YYYY-AA-GG
 
 > **ZORUNLU İLK ADIM:** `python scripts/weekly_pre_check.py` çalıştır.

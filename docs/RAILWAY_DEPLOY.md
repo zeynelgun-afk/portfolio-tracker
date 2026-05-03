@@ -1,3 +1,16 @@
+---
+title: Railway Deploy Rehberi
+description: Railway worker (Telegram bot) konfigürasyonu, env, build & deploy.
+tags:
+  - infrastructure
+  - deployment
+  - railway
+related:
+  - "[[Index]]"
+  - "[[SYSTEM_MAP]]"
+  - "[[GITHUB_ACTIONS_GUIDE]]"
+---
+
 # Railway Deploy Rehberi — Telegram Bot
 
 Finzora Telegram Bot'u Railway'de 7/24 çalıştırma.

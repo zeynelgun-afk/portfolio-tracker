@@ -1,3 +1,16 @@
+---
+title: Tahmin Piyasaları Rehberi
+description: prediction_logger: tahminlerin loglanması, 14g+ skorlama, hit rate analizi.
+tags:
+  - prediction
+  - markets
+  - logging
+related:
+  - "[[Index]]"
+  - "[[OBSERVABILITY]]"
+  - "[[SELF_IMPROVEMENT_SYSTEM]]"
+---
+
 # 📊 PREDICTION MARKETS KULLANIM REHBERİ
 
 > **Eklenme Tarihi:** 21 Şubat 2026  

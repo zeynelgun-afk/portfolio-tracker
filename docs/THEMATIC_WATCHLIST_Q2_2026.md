@@ -1,3 +1,16 @@
+---
+title: Tematik Watchlist Q2 2026
+description: 2026 Q2 için aktif takipteki temalar ve hisse listeleri.
+tags:
+  - thematic
+  - watchlist
+  - q2-2026
+related:
+  - "[[Index]]"
+  - "[[THEMATIC_SYSTEM]]"
+  - "[[THEMATIC_CATALYST_CALENDAR]]"
+---
+
 # tematik izleme listesi — Q2-Q3 2026 (nisan-ekim)
 
 son güncelleme: 1 nisan 2026

@@ -1,3 +1,17 @@
+---
+title: Post-Trade Review
+description: Trade kapanış sonrası analiz akışı. trade_feedback otomatik ders çıkarır.
+tags:
+  - trading
+  - lessons
+  - review
+related:
+  - "[[Index]]"
+  - "[[K_RULES_BACKTEST_DERSLER]]"
+  - "[[EPISODIC_MEMORY]]"
+  - "[[SELF_IMPROVEMENT_SYSTEM]]"
+---
+
 # POST-TRADE REVIEW ÇERÇEVESİ — v1.0
 
 > **son güncelleme**: 6 nisan 2026

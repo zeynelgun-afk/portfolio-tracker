@@ -1,3 +1,16 @@
+---
+title: Dinamik Tarama Kriterleri
+description: full_universe_screener kriterleri: balanced, dividend, aggressive modlar.
+tags:
+  - screening
+  - criteria
+  - screener
+related:
+  - "[[Index]]"
+  - "[[PORTFOLIO_OPPORTUNITY_SYSTEM]]"
+  - "[[FMP_SKILL]]"
+---
+
 # dinamik hisse seçim kriterleri
 
 > versiyon: 1.0 | tarih: 12 nisan 2026

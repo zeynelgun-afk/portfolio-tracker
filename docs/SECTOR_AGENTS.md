@@ -1,3 +1,17 @@
+---
+title: Sektör Agent Sistemi
+description: Specialist agents (MACRO/SECTOR/SIGNAL/RISK/CIO) ve genome ağırlıkları.
+tags:
+  - sector
+  - agents
+  - multi-agent
+related:
+  - "[[Index]]"
+  - "[[SELF_IMPROVEMENT_SYSTEM]]"
+  - "[[MARKET_INTELLIGENCE]]"
+  - "[[DECISION_FRAMEWORK]]"
+---
+
 # SEKTÖR/TEMA ARAŞTIRMA AJANLARI v1.0
 > **oluşturulma**: 11 nisan 2026
 > **amaç**: Her tema için haberleri tarayan, hisse bulan, katalist tespit eden otonom ajan sistemi

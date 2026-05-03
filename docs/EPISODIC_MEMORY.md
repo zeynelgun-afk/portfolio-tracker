@@ -1,3 +1,17 @@
+---
+title: Episodic Memory Sistemi
+description: Kapanan trade'lerin episode olarak tutulması. trade_memory + RAG entegrasyonu.
+tags:
+  - memory
+  - episodic
+  - learning
+related:
+  - "[[Index]]"
+  - "[[RAG_SYSTEM]]"
+  - "[[POST_TRADE_REVIEW]]"
+  - "[[SELF_IMPROVEMENT_SYSTEM]]"
+---
+
 # Finzora AI — Episodik Bellek Sistemi (Katman 1)
 
 ## Nedir?

@@ -1,3 +1,16 @@
+---
+title: Değerleme Framework v5
+description: Archetype-routed multi-method framework. v5 mekanik temel — v6/v7 üzerine inşa edildi.
+tags:
+  - valuation
+  - framework
+  - archetype
+related:
+  - "[[Index]]"
+  - "[[VALUATION_SYSTEM_v6]]"
+  - "[[FORWARD_VALUATION_METHOD]]"
+---
+
 # Valuation Framework v5 — Mimari ve Kullanım Rehberi
 
 **Dosya tarihi**: 2026-04-19

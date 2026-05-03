@@ -1,3 +1,17 @@
+---
+title: Sektör Deep Dive Skill
+description: Belirli bir sektör için derin analiz prosedürü.
+tags:
+  - sector
+  - skill
+  - analysis
+related:
+  - "[[Index]]"
+  - "[[SECTOR_AGENTS]]"
+  - "[[MARKET_INTELLIGENCE]]"
+  - "[[FMP_SKILL]]"
+---
+
 # SEKTÖR DEEP DIVE RAPORU SKILL v1.0
 > **oluşturulma**: 27 nisan 2026
 > **amaç**: Bir sektör/tema için tedarik zincirini katman katman ayırıp; her katmandaki hisseleri değerleme + potansiyel matrisine yerleştiren, 3 portföy önerisine bağlayan editörel finansal araştırma raporu

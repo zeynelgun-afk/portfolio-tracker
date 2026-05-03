@@ -1,3 +1,17 @@
+---
+title: Self-Improvement Sistemi
+description: Darwin evrim: prompt mutasyonu, specialist genome, weekly fitness skoru.
+tags:
+  - learning
+  - darwin
+  - evolution
+related:
+  - "[[Index]]"
+  - "[[SECTOR_AGENTS]]"
+  - "[[K_RULES_BACKTEST_DERSLER]]"
+  - "[[POST_TRADE_REVIEW]]"
+---
+
 # SİSTEMİN KENDİNİ GELİŞTİRME MEKANİZMALARI
 > **oluşturulma**: 11 nisan 2026
 
