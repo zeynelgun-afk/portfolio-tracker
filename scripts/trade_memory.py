@@ -356,7 +356,7 @@ def query_memory(query_text: str, top_k: int = 5,
 
 def format_memory_context(results: list[dict], baslik: str = "") -> str:
     """
-    Sorgu sonuçlarını Claude için okunabilir bağlam metnine çevirir.
+    Sorgu sonuçlarını AI için okunabilir bağlam metnine çevirir.
     Bu metin doğrudan prompt'a enjekte edilebilir.
     """
     if not results:
@@ -480,7 +480,7 @@ def get_memory_for_prompt(setup_description: str, top_k: int = 4) -> str:
 
     Kullanım:
         context = get_memory_for_prompt("NVDA breakout RSI 68 AI momentum")
-        # context'i Claude promptuna ekle
+        # context'i AI promptuna ekle
     """
     try:
         results = query_memory(setup_description, top_k=top_k)

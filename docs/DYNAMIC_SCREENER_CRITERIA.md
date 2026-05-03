@@ -4,7 +4,7 @@
 > amaç: agresif portföy için piyasa rejimine göre FMP screener kriterleri
 >
 > ⚠️ TEMEL KURAL: bu dosyada hisse ismi YAZILMAZ.
-> Claude her seansta FMP company-screener ile o anki koşullara uyan
+> AI her seansta FMP company-screener ile o anki koşullara uyan
 > hisseleri bizzat bulur. Sabit liste = eski liste = kaçırılan fırsat.
 
 ---

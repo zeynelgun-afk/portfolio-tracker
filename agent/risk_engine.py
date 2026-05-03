@@ -335,9 +335,9 @@ def check_drawdown_status(portfolios: dict) -> dict:
 
 def _backtest_dersler_blogu() -> str:
     """
-    K-Kurallari backtest dersleri ozeti — Claude her sabah okusun.
+    K-Kurallari backtest dersleri ozeti — AI her sabah okusun.
     28 Nis 2026: 189 islemlik veri uzerinden K-kurallari analiz edildi.
-    Sonuclari her morning'de Claude'a hatirlatiyoruz ki kurallari unutmasin.
+    Sonuclari her morning'de AI'ye hatirlatiyoruz ki kurallari unutmasin.
 
     backtest_summary.json'dan dinamik okuma — gelecek run'larda guncellenir.
     """
@@ -391,7 +391,7 @@ def _backtest_dersler_blogu() -> str:
 
 def build_risk_context(portfolios: dict) -> str:
     """
-    Tüm risk metriklerini Claude context'i için formatlar.
+    Tüm risk metriklerini LLM context'i için formatlar.
     """
     print("[Risk] Risk analizi yapılıyor...")
 
@@ -412,7 +412,7 @@ def build_risk_context(portfolios: dict) -> str:
     lines.append("")
 
     # ── NAKİT KULLANIMI (27 Nis 2026 eklendi) ─────────────────────────────
-    # Kural: 3 portföyde nakit oranı %10'u GEÇMESİN. Aşımlar Claude'un
+    # Kural: 3 portföyde nakit oranı %10'u GEÇMESİN. Aşımlar AI'nin
     # gözünden kaçmasın diye AYRI bir blokta gösteriliyor.
     lines.append("--- NAKİT KULLANIMI (kural: ≤%10) ---")
     nakit_asim_var = False
@@ -468,7 +468,7 @@ def build_risk_context(portfolios: dict) -> str:
         lines.append("  ✅ Hiçbir stop tetiklenmez")
     lines.append("")
 
-    # Backtest dersleri (28 Nis 2026 eklendi) — Claude her sabah okusun
+    # Backtest dersleri (28 Nis 2026 eklendi) — AI her sabah okusun
     # K-kurallarinin gercek getirileri data/backtest_summary.json'da
     try:
         backtest_blok = _backtest_dersler_blogu()

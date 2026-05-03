@@ -3,7 +3,7 @@
 Finzora Agent — Web Araştırma Modülü
 ======================================
 Haber, makro takvim, earnings, insider verisi çeker.
-Claude'a tool_use yerine ham veri olarak gönderilir → ucuz.
+AI'ye tool_use yerine ham veri olarak gönderilir → ucuz.
 """
 
 import os
@@ -232,7 +232,7 @@ def get_insider_activity(symbols: list[str]) -> list[dict]:
 def build_research_context(portfolio_symbols: list[str]) -> str:
     """
     Tüm araştırma verilerini tek string'e dönüştürür.
-    Claude'un context'ine eklenir.
+    AI'nin context'ine eklenir.
     """
     print("[WebResearch] Veriler çekiliyor...")
 

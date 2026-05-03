@@ -2,8 +2,8 @@
 """
 Finzora Agent — Twitter Sinyal Modülü
 =======================================
-Takip edilen hesapların tweetlerini çeker, sinyal olarak Claude'a verir.
-Memory'de belirtildiği üzere: Bu veri sadece Claude context'ine girer,
+Takip edilen hesapların tweetlerini çeker, sinyal olarak AI'ye verir.
+Memory'de belirtildiği üzere: Bu veri sadece LLM context'ine girer,
 raporlara veya JSON'lara YAZILMAZ.
 
 RapidAPI twitter241 kullanır.

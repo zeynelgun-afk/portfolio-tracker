@@ -46,7 +46,7 @@ Agent yorumları sadece sana gelir. Finzora kanalı etkilenmez.
 ```
 agent/
 ├── orchestrator.py   → Ana döngü, mod yönetimi
-├── claude_agent.py   → Claude API bağlantısı
+├── claude_agent.py   → LLM API bağlantısı
 ├── tools.py          → FMP, Telegram, veri okuma
 └── README.md         → Bu dosya
 

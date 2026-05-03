@@ -55,13 +55,13 @@ def ask_with_context(
     max_tokens: int = 1500,
 ) -> dict:
     """
-    Query + RAG + Claude → yanıt.
+    Query + RAG + AI → yanıt.
 
     Returns: {
         "query": str,
         "hits": list,        # retrieved chunks
         "context": str,      # format_context_for_claude output
-        "response": str,     # Claude's answer
+        "response": str,     # AI's answer
         "error": str or None
     }
     """

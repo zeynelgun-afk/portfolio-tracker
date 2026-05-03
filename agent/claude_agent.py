@@ -140,7 +140,7 @@ def load_prompt_file(filename):
 # Token budgets per mode.
 # Kimi K2 thinking emits a sizable internal reasoning trace that counts toward
 # output tokens. Empirically ~50-70% of the budget is consumed by reasoning, so
-# we ~doubled the previous Claude-tuned values to keep the post-reasoning report
+# we ~doubled the previous AI-tuned values to keep the post-reasoning report
 # untruncated.
 _MAX_TOKENS = {
     "morning":         16000,  # was 8000 — large multi-section report
@@ -178,7 +178,7 @@ def get_claude_decision(user_prompt, mode="monitor", system_override=None, rag_e
         )
         _in, _out = resp.input_tokens, resp.output_tokens
         if resp.finish_reason == "length":
-            print(f"[ClaudeAgent/legacy] ⚠️ max_tokens={max_tokens} doldu, "
+            print(f"[Finzora/legacy] ⚠️ max_tokens={max_tokens} doldu, "
                   f"yanıt kesik. output_tokens={_out}")
         _success = True
         return resp.text
@@ -236,7 +236,7 @@ def get_claude_decision_with_actions(user_prompt, mode="morning", system_overrid
         full_text = resp.text
 
         if resp.finish_reason == "length":
-            print(f"[ClaudeAgent] ⚠️ UYARI: max_tokens={max_tokens} sınırı dolmuş! "
+            print(f"[Finzora] ⚠️ UYARI: max_tokens={max_tokens} sınırı dolmuş! "
                   f"Rapor kesilmiş olabilir, JSON karar bloğu kayıp olabilir. "
                   f"output_tokens={_out}")
             try:
@@ -259,7 +259,7 @@ def get_claude_decision_with_actions(user_prompt, mode="morning", system_overrid
                 kararlar = parsed.get("kararlar", [])
                 rapor = full_text[:match.start()].rstrip()
             except json.JSONDecodeError as e:
-                print(f"[ClaudeAgent] JSON parse hatası: {e}")
+                print(f"[Finzora] JSON parse hatası: {e}")
         else:
             # Truncated JSON recovery (max_tokens edge case)
             open_match = re.search(r"```json\s*(\{.*)", full_text, re.DOTALL)
@@ -283,17 +283,17 @@ def get_claude_decision_with_actions(user_prompt, mode="morning", system_overrid
                             try:
                                 arr = json.loads(blok)
                                 kararlar = arr if isinstance(arr, list) else []
-                                print(f"[ClaudeAgent] ⚠️ Kesik JSON kurtarıldı: "
+                                print(f"[Finzora] ⚠️ Kesik JSON kurtarıldı: "
                                       f"{len(kararlar)} karar geri alındı")
                                 rapor = full_text[:open_match.start()].rstrip()
                             except json.JSONDecodeError as e2:
-                                print(f"[ClaudeAgent] Kesik JSON onarım da başarısız: {e2}")
+                                print(f"[Finzora] Kesik JSON onarım da başarısız: {e2}")
                 except Exception as ex:
-                    print(f"[ClaudeAgent] Kesik JSON onarım hatası: {ex}")
+                    print(f"[Finzora] Kesik JSON onarım hatası: {ex}")
             else:
-                print("[ClaudeAgent] JSON bloğu bulunamadı.")
+                print("[Finzora] JSON bloğu bulunamadı.")
 
-        print(f"[ClaudeAgent] {len(kararlar)} karar üretildi.")
+        print(f"[Finzora] {len(kararlar)} karar üretildi.")
         for k in kararlar:
             print(f"  {k.get('tip','?'):12} {k.get('portfoy','?'):12} "
                   f"{k.get('sembol','?'):6} — {k.get('neden','')[:60]}")

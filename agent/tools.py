@@ -338,7 +338,7 @@ def get_watchlist() -> dict:
 def get_portfolio_news(saat: int = 24) -> str:
     """
     Aktif portföy hisselerinin son N saatlik haberlerini FMP'den çeker.
-    Orchestrator'ın Claude bağlamına eklenir — haber bazlı tez analizi için.
+    Orchestrator'ın AI bağlamına eklenir — haber bazlı tez analizi için.
     Döndürür: Düz metin (prompt'a doğrudan eklenebilir).
     """
     from datetime import timezone, timedelta

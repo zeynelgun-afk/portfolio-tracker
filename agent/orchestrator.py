@@ -166,7 +166,7 @@ def collect_context(mode: str) -> dict:
     # ── PRE-SNAPSHOT: Otomatik swing kapatmaları işle ─────────────────────
     # 27 Nis 2026 bug fix: collect_context snapshot ALMADAN ÖNCE SURE/STOP/HEDEF
     # tetikli kapanışları işle. Aksi halde compressed bağlam eski state ile
-    # gelir, Claude raporda zaten kapatılmış pozisyonları "açık" listeler
+    # gelir, AI raporda zaten kapatılmış pozisyonları "açık" listeler
     # (CAT/KLAC/AMAT 27 Nis sabah raporunda hayalet pozisyon olarak göründü).
     # update_swing_positions idempotent — ikinci çağrı sadece price update yapar.
     if mode in ("morning", "closing", "monitor", "weekly"):
@@ -391,7 +391,7 @@ def run_morning(ctx: dict):
     print("[Orkestratör] Sabah modu çalışıyor...")
 
     # Duplicate-guard: ayni gun icin SABAH raporu zaten yazildiysa cik.
-    # (Yedek cron ':12' ayni gun icinde ikinci kez tetiklenirse tekrar Claude
+    # (Yedek cron ':12' ayni gun icinde ikinci kez tetiklenirse tekrar AI
     # cagrisi yapmayi onler — sadece ana tetik kacirildiysa yedek devreye girer.)
     try:
         _bugun_tr = datetime.now(TR_TZ).strftime("%Y-%m-%d")
@@ -641,7 +641,7 @@ KESİN / MUHTEMEL / SPEKÜLATİF etiket kullan. Küçük harf Türkçe.
     _save_report(response, "SABAH")
 
     # SABAH raporundan DAILY_SWING_*.md ve DAILY_PORTFOY_*.md dosyalarini
-    # ayristir (ek Claude cagrisi yok, markdown parse; memory'deki v3.0 uclu
+    # ayristir (ek LLM cagrisi yok, markdown parse; memory'deki v3.0 uclu
     # yapinin maliyetsiz esdegeri).
     try:
         from split_sabah_report import split as _split_sabah
@@ -653,7 +653,7 @@ KESİN / MUHTEMEL / SPEKÜLATİF etiket kullan. Küçük harf Türkçe.
     except Exception as _spe:
         print(f"[Orkestratör] Split hatasi (tolere): {_spe}")
 
-    # Claude kararlarını execute et (piyasa açıksa) veya session_state'e kaydet
+    # AI kararlarını execute et (piyasa açıksa) veya session_state'e kaydet
     _now_tr2 = datetime.now(TR_TZ)
     piyasa_acik = _now_tr2.weekday() < 5 and (
         (_now_tr2.hour == 16 and _now_tr2.minute >= 30)
@@ -672,7 +672,7 @@ KESİN / MUHTEMEL / SPEKÜLATİF etiket kullan. Küçük harf Türkçe.
                 send_private_telegram(msg_k)
                 send_group_telegram(msg_k)
         except Exception as _ce:
-            print(f"[Orkestratör] Claude karar execute hatası: {_ce}")
+            print(f"[Orkestratör] AI karar execute hatası: {_ce}")
     elif claude_kararlar and not piyasa_acik:
         # K-05 filtre — piyasa kapali olsa da
         try:
@@ -923,7 +923,7 @@ KESİN / MUHTEMEL / SPEKÜLATİF etiket kullan. Küçük harf Türkçe.
     # Tam raporu reports/daily/'e kaydet
     _save_report(response, "KAPANIS")
 
-    # Claude kapanış kararlarını kaydet (yarın FAZ_2'de execute edilecek)
+    # AI kapanış kararlarını kaydet (yarın FAZ_2'de execute edilecek)
     if claude_kararlar:
         # K-05 BILANCO FILTRESI (29 Nis 2026 — FLS bug fix)
         # Closing agent yarinki bilancosu olan sembolleri eklememeli.
@@ -1120,7 +1120,7 @@ def _commit_swing_changes():
         print(f"[Swing] Git commit hatası: {e}")
 
 def _load_genome_context() -> str:
-    """Darwin genome'daki aktif kuralları Claude prompt'una ekler."""
+    """Darwin genome'daki aktif kuralları AI prompt'una ekler."""
     genome_path = REPO_ROOT / "agent" / "memory" / "prompt_genome.json"
     if not genome_path.exists():
         return ""
@@ -1304,7 +1304,7 @@ def run_monitor(ctx: dict):
                         
                         # JUDGEMENT LAYER (28 Nis 2026 reform)
                         # K-06 stop kesin tetikse atla, sadece celisik durumlarda
-                        # Claude'a baglam analizi sor.
+                        # AI'ye baglam analizi sor.
                         final_action = exit_r["action"]
                         final_reason = exit_r["reason"]
                         layer_used = "kural"
@@ -1381,7 +1381,7 @@ def run_monitor(ctx: dict):
                     # Bugün veya dün kapanış kararlarını bir kez execute et
                     if _karar_tarih in (_bugun_str, _dun_str):
                         if not _ck.get("executed"):
-                            print(f"[Monitor] {len(_ck['kararlar'])} Claude kararı execute ediliyor...")
+                            print(f"[Monitor] {len(_ck['kararlar'])} AI kararı execute ediliyor...")
                             try:
                                 karar_aks = _execute_claude_decisions(_ck["kararlar"], market)
                                 for _msg in karar_aks:
@@ -1401,7 +1401,7 @@ def run_monitor(ctx: dict):
                                 _json3.dump(_ss2, _ff, ensure_ascii=False, indent=2)
                             print(f"[Monitor] {len(karar_aks)} karar execute edildi, session_state güncellendi.")
         except Exception as _ce2:
-            print(f"[Monitor] Claude karar execute hatası: {_ce2}")
+            print(f"[Monitor] AI karar execute hatası: {_ce2}")
 
     # ── FAZ_1: AÇILIŞ KONTROL ────────────────────────────────────────────────
     if faz == "FAZ_1":
@@ -2135,7 +2135,7 @@ def _check_swing_entries() -> list[str]:
 
 def _save_report(content: str, rapor_tipi: str):
     """
-    Claude yanıtını reports/daily/ klasörüne .md dosyası olarak kaydeder.
+    AI yanıtını reports/daily/ klasörüne .md dosyası olarak kaydeder.
     rapor_tipi: SABAH, KAPANIS, SWING, PORTFOY
     """
     import subprocess
@@ -2425,12 +2425,12 @@ def main():
 
 
 # ═══════════════════════════════════════════════════════════════════════════
-# CLAUDE KARAR EXECUTOR — Seçenek A: Yapısal Claude → Execution bağlantısı
+# CLAUDE KARAR EXECUTOR — Seçenek A: Yapısal AI → Execution bağlantısı
 # ═══════════════════════════════════════════════════════════════════════════
 
 def _execute_claude_decisions(kararlar: list, market: dict) -> list:
     """
-    Claude'un ürettiği yapılandırılmış kararları execute eder.
+    AI'nin ürettiği yapılandırılmış kararları execute eder.
     get_claude_decision_with_actions() çıktısını alır.
 
     Desteklenen tipler: EKLE, BÜYÜT, ÇIK, DÖNDÜR, STOP_GÜNCELLE, İZLE
@@ -2466,7 +2466,7 @@ def _execute_claude_decisions(kararlar: list, market: dict) -> list:
         portfoy   = k.get("portfoy", "")
         sembol    = k.get("sembol", "")
         pct       = float(k.get("pct", 100))
-        neden     = k.get("neden", "Claude kararı")
+        neden     = k.get("neden", "AI kararı")
         stop      = float(k.get("stop") or 0)
         hedef     = float(k.get("hedef_fiyat") or 0)
         tutar     = float(k.get("tutar") or 0)

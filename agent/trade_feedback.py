@@ -3,8 +3,8 @@
 Finzora Agent — Trade Geri Bildirimi
 ======================================
 Bir pozisyon kapandığında otomatik çalışır:
-  1. Claude'a trade detaylarını gönderir
-  2. Claude lessons + post-trade analiz yazar
+  1. AI'ye trade detaylarını gönderir
+  2. AI lessons + post-trade analiz yazar
   3. closed.json'daki lessons alanını günceller
   4. K-kuralı istatistiklerini günceller
   5. Kaynak (Twitter/haber) doğruluğunu kaydeder
@@ -64,11 +64,11 @@ def find_closed_trade(symbol: str, portfolio: str) -> dict | None:
     return None
 
 
-# ── Post-Trade Claude Analizi ─────────────────────────────────────────────────
+# ── Post-Trade AI Analizi ─────────────────────────────────────────────────
 
 def generate_post_trade_analysis(trade: dict, portfolio: str) -> str:
     """
-    Claude'a trade detaylarını gönderip post-trade analiz üretir.
+    AI'ye trade detaylarını gönderip post-trade analiz üretir.
     """
     symbol      = trade.get("sembol") or trade.get("symbol", "?")
     entry_price = trade.get("giris_fiyati") or trade.get("entry_price") or trade.get("price", 0)
@@ -250,7 +250,7 @@ def process_trade_feedback(symbol: str, portfolio: str) -> bool:
         pnl_pct = 0.0
     sonuc    = "✅ KAR" if pnl_pct > 0 else ("⚪ NÖTR" if abs(pnl_pct) < 0.1 else "❌ ZARAR")
 
-    # Claude analizi
+    # AI analizi
     analysis = generate_post_trade_analysis(trade, portfolio)
 
     # DERS satırını çıkar

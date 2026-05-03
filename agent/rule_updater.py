@@ -381,11 +381,11 @@ def commit_rule_change(param: str, old_val: float, new_val: float) -> bool:
         return False
 
 
-# ── Claude Önerisini Parse Et ─────────────────────────────────────────────────
+# ── AI Önerisini Parse Et ─────────────────────────────────────────────────
 
 def parse_claude_rule_proposal(claude_response: str) -> list[dict]:
     """
-    Claude'un haftalık analizinden "BACKTEST GEREKLİ" önerilerini çıkarır.
+    AI'nin haftalık analizinden "BACKTEST GEREKLİ" önerilerini çıkarır.
     Format: "BACKTEST GEREKLİ — [param]: [eski] → [yeni] | [gerekçe]"
     """
     proposals = []

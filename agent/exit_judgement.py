@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-EXIT JUDGEMENT LAYER — Claude akilli cikis karari
+EXIT JUDGEMENT LAYER — AI akilli cikis karari
 ======================================================
 Mevcut k_engine.run_exit_checks() kural-tabanli (K-06/07/09/11/15c/ZST).
 Sorunu: bagimsiz kontrol ediyor, baglami gormez.
@@ -15,7 +15,7 @@ YENI LAYER (3 katman):
 1. KURAL (k_engine.run_exit_checks) → mevcut, hizli
 2. CONTEXT — makro/haber/tema/earnings/sektor analizi
 3. CONFLICT DETECTION → kural çelişiyor mu context ile?
-4. LLM JUDGEMENT (sadece celiski varsa) — Claude API call
+4. LLM JUDGEMENT (sadece celiski varsa) — LLM API call
 
 Kullanim:
     from exit_judgement import judge_exit
@@ -211,7 +211,7 @@ def detect_conflict(kural_sonuc: dict, ctx: dict) -> dict:
 
 def llm_judgement(pos: dict, ctx: dict, kural_sonuc: dict) -> dict:
     """
-    Claude'a celisikli durumda karari sor.
+    AI'ye celisikli durumda karari sor.
     Sadece celiski durumunda cagirilir.
     """
     sym = ctx.get("sembol", "?")

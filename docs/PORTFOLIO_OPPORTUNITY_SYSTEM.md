@@ -83,7 +83,7 @@ betaMoreThan=0.8                      (momentum karakteri)
 4. **SMA50 üstü** — trend teyidi
 5. **RSI 40-75** — ne aşırı oversold ne aşırı overbought (75+ ise K-11 katman 1 alarmı)
 6. **52W high'a yakın** — %15 mesafe içinde (FMP quote `yearHigh`)
-7. **AI tedarik zinciri + kriz faydalananları öncelikli** — sabit liste YOK. Claude her seansta `docs/DYNAMIC_SCREENER_CRITERIA.md` + piyasa rejimine göre FMP screener ile ilgili segmentin en iyi adaylarını bulur. Katman bazlı FMP screener parametreleri için `DYNAMIC_SCREENER_CRITERIA.md` referans alınır.
+7. **AI tedarik zinciri + kriz faydalananları öncelikli** — sabit liste YOK. AI her seansta `docs/DYNAMIC_SCREENER_CRITERIA.md` + piyasa rejimine göre FMP screener ile ilgili segmentin en iyi adaylarını bulur. Katman bazlı FMP screener parametreleri için `DYNAMIC_SCREENER_CRITERIA.md` referans alınır.
 
 **skor sistemi** (max ~18, kod: `scripts/portfolio_scan_common.py::score_agresif`, quality guard rails dahil):
 - 1M momentum >%20: +3, >%10: +2, >%0: +1

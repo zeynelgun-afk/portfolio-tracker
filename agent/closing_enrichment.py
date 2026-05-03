@@ -139,7 +139,7 @@ def _morning_plan_oku(seans_tarihi: str) -> list[dict] | None:
 
 
 def plan_gerceklesme_blogu(seans_tarihi: str) -> str:
-    """Sabah Claude kararlarının gerçekleşip gerçekleşmediği analizi."""
+    """Sabah AI kararlarının gerçekleşip gerçekleşmediği analizi."""
     plan = _morning_plan_oku(seans_tarihi)
     if not plan:
         return ""  # Sabah planı yok (ilk gün veya morning çalışmadı)
@@ -720,7 +720,7 @@ def pacing_ozet_blogu() -> str:
     Yıllık hedefe gore gerceklesme oranı.
     28 Nis 2026: Tüm 3 portfoyde nakit kuralı ihlali tespit edildi
     (balanced 61%, aggressive 71%, dividend 32%). Bu blok her closing'de
-    Claude'a hatirlatilir.
+    AI'ye hatirlatilir.
     """
     try:
         import subprocess

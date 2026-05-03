@@ -100,7 +100,7 @@ def retrieve(
 
 def format_context_for_claude(hits: list[dict], max_chars: int = 4000) -> str:
     """
-    Retrieved chunk'ları Claude'a inject edilebilir context string'e çevir.
+    Retrieved chunk'ları AI'ye inject edilebilir context string'e çevir.
     max_chars sınırını aşan chunk'lar atılır.
     """
     if not hits:
@@ -127,7 +127,7 @@ def main():
     ap.add_argument("--type", help="event_type filtresi (trade/decision/swing_lesson/doc)")
     ap.add_argument("--portfoy", help="portfoy filtresi")
     ap.add_argument("--claude-format", action="store_true",
-                    help="Claude context formatında bastır")
+                    help="LLM context formatında bastır")
     args = ap.parse_args()
 
     # Filtre oluştur

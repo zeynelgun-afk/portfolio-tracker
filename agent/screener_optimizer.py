@@ -243,7 +243,7 @@ def update_screener_config(new_params: dict, rationale: str) -> bool:
 def run_screener_optimization() -> str:
     """
     Haftalık screener optimizasyonunu çalıştırır.
-    Claude'a gönderilecek özet raporu döner.
+    AI'ye gönderilecek özet raporu döner.
     """
     print("[Screener] Optimizasyon çalışıyor...")
 

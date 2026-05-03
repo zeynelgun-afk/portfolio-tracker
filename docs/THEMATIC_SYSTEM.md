@@ -1,6 +1,6 @@
 # TEMATİK PORTFÖY SİSTEMİ v1.0
 > **oluşturulma**: 11 nisan 2026
-> **amaç**: 3 portföyü de aktif temaya/sektöre yönlendiren, Claude'un günlük karar verdiği dinamik rotasyon sistemi
+> **amaç**: 3 portföyü de aktif temaya/sektöre yönlendiren, AI'nin günlük karar verdiği dinamik rotasyon sistemi
 
 ---
 
@@ -19,7 +19,7 @@ Sabit sektör allokasyonu tarihini doldurdu. VettaFi thematic rotation index 202
 ### Ortak Çerçeve (3 portföy için)
 - **Max pozisyon:** 6 (tümü için)
 - **Tema uyumu:** Her portföy aktif temadan hisse seçer, ama kendi filtresiyle
-- **Günlük tema kararı:** Claude her sabah TEMA_PUANI hesaplar ve yön belirler
+- **Günlük tema kararı:** AI her sabah TEMA_PUANI hesaplar ve yön belirler
 
 ### 1. Dengeli Portföy — $100K
 - **Hedef:** Yıllık **%50+**
@@ -41,7 +41,7 @@ Sabit sektör allokasyonu tarihini doldurdu. VettaFi thematic rotation index 202
 
 ---
 
-## GÜNLÜK TEMA KARARI (Claude'un sorumluluğu)
+## GÜNLÜK TEMA KARARI (AI'nin sorumluluğu)
 
 ### TEMA_PUANI Hesaplama (her sabah, 5 dakika)
 
@@ -84,7 +84,7 @@ Sabit sektör allokasyonu tarihini doldurdu. VettaFi thematic rotation index 202
 
 ---
 
-## AKTİF TEMA LISTESI (Claude günlük değerlendirir)
+## AKTİF TEMA LISTESI (AI günlük değerlendirir)
 
 Sistem şu an **7 ana temayı** takip eder. Her biri için TEMA_PUANI hesaplanır. En yüksek puanlı tema "aktif tema" olur.
 
@@ -98,7 +98,7 @@ TEMA-6: İNŞAAT/ALTYAPI     → CAT, DE, VMC, MLM, PRIM, POWL
 TEMA-7: TÜKETİCİ/TİCARET   → AMZN, COST, HD, MCD, SBUX, NKE
 ```
 
-**Tema ekle/çıkar:** VettaFi, BlackRock ve iShares thematic ETF akışları izlenerek. Claude haftalık değerlendirme yapar.
+**Tema ekle/çıkar:** VettaFi, BlackRock ve iShares thematic ETF akışları izlenerek. AI haftalık değerlendirme yapar.
 
 ---
 
@@ -141,7 +141,7 @@ Her portföy temadan farklı katmanı seçer:
 
 ## SABAH RUTINI — TEMA KARARI
 
-Her sabah Part 1A'da (piyasa öncesi) Claude şunları yapar:
+Her sabah Part 1A'da (piyasa öncesi) AI şunları yapar:
 
 ```
 ADIM 1: VIX oku (web search), SPY EMA21 durumu

@@ -7,7 +7,7 @@
 > durum: AKTİF — nakit pozisyon AÇILMALIDIR
 >
 > ⚠️ HİSSE LİSTESİ BU DOSYADA BULUNMAZ.
-> Claude her seansta FMP company-screener ile o anki koşullara uyan hisseleri
+> AI her seansta FMP company-screener ile o anki koşullara uyan hisseleri
 > kendisi bulur. Screener kriterleri: docs/DYNAMIC_SCREENER_CRITERIA.md
 
 ---

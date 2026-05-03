@@ -60,9 +60,9 @@ Eskiden sapma sadece red flag idi. Artık güven skorunu doğrudan etkiliyor:
 
 `manuel_review_required = True` olduğunda karar etiketi otomatik olarak `MANUEL_REVIEW` olur. Sistem mekanik PAHALI/UCUZ yargıya kilitlenmek yerine "ben emin değilim, sen incele" der.
 
-### 3. Claude AI Consultation (`agent/valuation/ai_consultant.py`)
+### 3. AI AI Consultation (`agent/valuation/ai_consultant.py`)
 
-Framework tek başına karar veremediğinde Claude Opus 4.7'den ikinci görüş alır.
+Framework tek başına karar veremediğinde AI Opus 4.7'den ikinci görüş alır.
 
 **Tetikleyiciler (otomatik mod):**
 - `abs(framework_vs_analyst) >= 50%` → severity 0.70+
@@ -75,7 +75,7 @@ Framework tek başına karar veremediğinde Claude Opus 4.7'den ikinci görüş 
 - `"always"`: Her değerlemede çağır (yavaş, API maliyeti)
 - `"never"`: Hiç çağırma
 
-**Claude'a gönderilen prompt:**
+**AI'ye gönderilen prompt:**
 - Ticker, fiyat, archetype
 - Framework sonucu (fair value, range, karar, güven)
 - Kullanılan metodlar ve ağırlıkları
@@ -85,7 +85,7 @@ Framework tek başına karar veremediğinde Claude Opus 4.7'den ikinci görüş 
 - Makro rejim
 - Soru: "Yapısal rejim değişikliği var mı? Mid-cycle metodları haksız lowball yapıyor mu? Bear/Base/Bull senaryolar?"
 
-**Claude'dan beklenen JSON çıktı:**
+**AI'den beklenen JSON çıktı:**
 ```json
 {
   "claude_fair_value": 350.0,
@@ -112,14 +112,14 @@ final_fair_value = framework_fv × (1 - blend) + claude_fv × blend
 blend = max(0.30, min(0.50, 0.30 + severity × 0.40))
 ```
 
-Severity 0.80 → blend 0.50 (Claude ağırlığı maksimum). Severity 0.30 → blend 0.30 (framework ağırlığı baskın).
+Severity 0.80 → blend 0.50 (AI ağırlığı maksimum). Severity 0.30 → blend 0.30 (framework ağırlığı baskın).
 
 ### 4. Senaryolu Çıktı (Bear/Base/Bull)
 
 Her değerleme artık tek nokta tahmin yerine 3 senaryo verir:
-- **Bear**: range_low veya Claude bear (cycle peak / mean reversion)
-- **Base**: weighted avg veya Claude base
-- **Bull**: analyst high veya Claude bull (yapısal rejim devam)
+- **Bear**: range_low veya AI bear (cycle peak / mean reversion)
+- **Base**: weighted avg veya AI base
+- **Bull**: analyst high veya AI bull (yapısal rejim devam)
 
 ## Output Schema (v6)
 
@@ -260,14 +260,14 @@ CLAUDE_MODEL=claude-opus-4-7   # opsiyonel, default budur
 ```python
 from valuation.framework import valuate, format_report
 
-# Otomatik mod (default) — tetikleyici varsa Claude'a danışır
+# Otomatik mod (default) — tetikleyici varsa AI'ye danışır
 result = valuate("MU")
 print(format_report(result, style="terminal"))
 
-# Her zaman Claude'a danış (yavaş, API maliyeti)
+# Her zaman AI'ye danış (yavaş, API maliyeti)
 result = valuate("MU", consult_ai="always")
 
-# Sadece mekanik framework, Claude yok
+# Sadece mekanik framework, AI yok
 result = valuate("MU", consult_ai="never")
 ```
 
@@ -281,7 +281,7 @@ result = valuate("MU", consult_ai="never")
 ## Sonraki İyileştirmeler (v7 düşünülen)
 
 - Forward PE / PEG metodları için yeni archetype: `growth_at_reasonable_price`
-- Yapısal rejim adayları için Claude'a "var mı?" sorusu (sabit liste yerine dinamik)
+- Yapısal rejim adayları için AI'ye "var mı?" sorusu (sabit liste yerine dinamik)
 - Backtest: v5 tahminleri vs v6 tahminleri vs gerçek 90-gün fiyatları
 - Sektör peer comparison metodu (önemli — peer'lerin median F/K'sı reference)
 - Earnings revision momentum (forward EPS yukarı/aşağı revize trendi)

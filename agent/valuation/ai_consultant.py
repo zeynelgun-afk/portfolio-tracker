@@ -105,7 +105,7 @@ RULES:
 
 
 def _build_user_prompt(framework_result: dict) -> str:
-    """Framework sonucundan Claude'a giden user mesajı."""
+    """Framework sonucundan AI'ye giden user mesajı."""
     ticker = framework_result.get("ticker", "?")
     fv = framework_result.get("fair_value", {})
     cls = framework_result.get("classification", {})
@@ -173,7 +173,7 @@ Reply with JSON ONLY (free-text values in plain-ASCII Turkish)."""
 
 
 def _parse_json_response(text: str) -> Optional[dict]:
-    """Claude'un cevabından JSON çıkar."""
+    """AI'nin cevabından JSON çıkar."""
     # JSON code block varsa öncelikle dene
     block_match = re.search(r"```(?:json)?\s*(\{.*?\})\s*```", text, re.DOTALL)
     if block_match:
@@ -202,11 +202,11 @@ def consult_claude(
     verbose: bool = False
 ) -> Optional[dict]:
     """
-    Claude'dan değerleme görüşü al.
+    AI'den değerleme görüşü al.
 
     Args:
         framework_result: framework.valuate() çıktısı
-        severity: 0.0-1.0, blend ağırlığını belirler (yüksek severity → Claude'a daha çok ağırlık)
+        severity: 0.0-1.0, blend ağırlığını belirler (yüksek severity → AI'ye daha çok ağırlık)
         force: True ise tetikleyici olmasa bile çağır
         verbose: stdout log
 
@@ -276,7 +276,7 @@ def consult_claude(
         if verbose:
             print(f"[ai_consultant] JSON parse başarısız:\n{raw[:300]}")
         return {
-            "_error": "Claude cevabı JSON formatında değil veya parse edilemedi",
+            "_error": "AI cevabı JSON formatında değil veya parse edilemedi",
             "raw_response_preview": raw[:500],
             "model": CLAUDE_MODEL,
             "duration_ms": duration_ms,
@@ -298,7 +298,7 @@ def consult_claude(
     parsed["duration_ms"] = duration_ms
 
     if verbose:
-        print(f"[ai_consultant] Claude FV: ${claude_fv:.2f}, "
+        print(f"[ai_consultant] AI FV: ${claude_fv:.2f}, "
               f"Framework FV: ${framework_fv:.2f}, "
               f"Blended (w={blend:.0%}): ${blended:.2f}")
 
@@ -307,7 +307,7 @@ def consult_claude(
 
 def should_consult(framework_result: dict) -> tuple[bool, float, str]:
     """
-    Framework sonucuna bakıp Claude'a danışmak gerekli mi karar ver.
+    Framework sonucuna bakıp AI'ye danışmak gerekli mi karar ver.
 
     Returns: (should_consult, severity 0-1, reason)
     """

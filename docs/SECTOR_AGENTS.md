@@ -7,7 +7,7 @@
 ## MIMARI
 
 ```
-ORCHESTRATOR (Claude)
+ORCHESTRATOR (AI)
     │
     ├── TEMA_DETECTOR ─── Hangi tema öne çıkıyor?
     │
@@ -198,7 +198,7 @@ Seans içi (isteğe bağlı, FAZ 2):
 
 ## SEANS İÇİ TEMA TARAMASI
 
-Seans sırasında aşağıdaki durumlar oluşursa Claude **anında** tema taraması yapar:
+Seans sırasında aşağıdaki durumlar oluşursa AI **anında** tema taraması yapar:
 
 ```
 TETİKLEYİCİLER:

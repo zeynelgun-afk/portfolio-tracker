@@ -162,7 +162,7 @@ def run_regime_detection(market: dict = None, vix: float = None) -> dict:
     return rejim
 
 def get_regime_context() -> str:
-    """Claude context'i için rejim özeti."""
+    """LLM context'i için rejim özeti."""
     rejim_path = MEMORY_DIR / "market_regime.json"
     if not rejim_path.exists():
         return "Rejim tespiti henüz yapılmadı."

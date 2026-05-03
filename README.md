@@ -2,7 +2,7 @@
 
 > **Başlangıç:** 17 Şubat 2026 | **Sermaye:** $600,000 | **Yönetim:** Finzora AI (otonom)
 
-Finzora AI, ABD borsasında üç portföyü ve bir swing trade hesabını otonom olarak yöneten Claude tabanlı yapay zeka sistemidir. GitHub Actions üzerinde her 30 dakikada bir çalışır; fiyat takibi, stop-loss izleme, sinyal tarama ve işlem kararlarını insan müdahalesi olmadan gerçekleştirir.
+Finzora AI, ABD borsasında üç portföyü ve bir swing trade hesabını otonom olarak yöneten AI tabanlı yapay zeka sistemidir. GitHub Actions üzerinde her 30 dakikada bir çalışır; fiyat takibi, stop-loss izleme, sinyal tarama ve işlem kararlarını insan müdahalesi olmadan gerçekleştirir.
 
 ---
 
@@ -186,7 +186,7 @@ Kaldırılan: K-01, K-03, K-08, K-14 (psikoloji testi ile değiştirildi), K-18 
 
 | Secret | Kullanım |
 |--------|----------|
-| `ANTHROPIC_API_KEY` | Claude API — karar motoru |
+| `ANTHROPIC_API_KEY` | LLM API — karar motoru |
 | `FMP_API_KEY` | Financial Modeling Prep — fiyat ve temel veri |
 | `TELEGRAM_TOKEN` | Finzora AI bot bildirimleri |
 | `TELEGRAM_PRIVATE_CHAT` | Zeynel'e özel chat ID |

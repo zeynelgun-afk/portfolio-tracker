@@ -184,7 +184,7 @@ def closed_swings_as_lesson_chunks() -> list[tuple[str, dict]]:
         # Canonical alan: 'ders' (tekil). Fallback: 'dersler' (eski), 'lessons' (İngilizce).
         dersler = p.get("ders") or p.get("dersler") or p.get("lessons", "")
         scan_method = p.get("scan_method", "") or p.get("tarama_yontemi", "")
-        # auto_analiz: Claude'un derin post-trade analizi (dict)
+        # auto_analiz: AI'nin derin post-trade analizi (dict)
         # 27 Nis 2026: 22/25 kapatılan pozisyonda çok zengin veri var ama
         # önceki RAG indexer bunu okumuyordu — kayıp önemliydi.
         auto_analiz = p.get("auto_analiz")
@@ -203,7 +203,7 @@ def closed_swings_as_lesson_chunks() -> list[tuple[str, dict]]:
                 dersler = " | ".join(str(d) for d in dersler)
             parts.append(f"Ders: {dersler}")
 
-        # Claude'un derin analizi — RAG için kritik bilgi kaynağı
+        # AI'nin derin analizi — RAG için kritik bilgi kaynağı
         if isinstance(auto_analiz, dict):
             tez_dogru = auto_analiz.get("tez_dogru")
             timing_hata = auto_analiz.get("timing_hatasi")

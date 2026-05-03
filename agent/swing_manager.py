@@ -482,7 +482,7 @@ def _auto_lesson(poz: dict, neden: str, pnl: float) -> str:
 # ── Swing Durum Raporu ────────────────────────────────────────────────────────
 
 def get_swing_report() -> str:
-    """Telegram/Claude için swing durumu."""
+    """Telegram/AI için swing durumu."""
     active_path = REPO_ROOT / "data" / "swing" / "active.json"
     closed_path = REPO_ROOT / "data" / "swing" / "closed.json"
 

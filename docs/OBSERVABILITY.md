@@ -1,6 +1,6 @@
 # Observability — Karar ve Çağrı Kayıt Altyapısı
 
-Finzora AI sisteminin her Claude API çağrısı, FMP çağrısı, karar ve trade olayı otomatik olarak kaydedilir. Amaç: maliyet takibi, hata yakalama, pattern analizi ve ileride RAG için veri kaynağı.
+Finzora AI sisteminin her LLM API çağrısı, FMP çağrısı, karar ve trade olayı otomatik olarak kaydedilir. Amaç: maliyet takibi, hata yakalama, pattern analizi ve ileride RAG için veri kaynağı.
 
 ## İki Depo
 
@@ -14,7 +14,7 @@ SQLite dosyası her zaman JSONL den yeniden inşa edilebilir (idempotent).
 ## Event Tipleri
 
 ### 1. `claude_call`
-Her Claude API çağrısı.
+Her LLM API çağrısı.
 ```json
 {
   "id": "a1b2c3d4",
@@ -51,7 +51,7 @@ Her FMP API çağrısı.
 ```
 
 ### 3. `decision`
-Claude dan çıkan her karar.
+AI dan çıkan her karar.
 ```json
 {
   "id": "i9j0k1l2",
@@ -127,7 +127,7 @@ python scripts/finzora_stats.py --days 7 --telegram
 ```bash
 sqlite3 data/finzora.db
 
-# En pahalı Claude günleri
+# En pahalı AI günleri
 SELECT
     date(ts) as gun,
     COUNT(*) as cagri_sayisi,
@@ -162,7 +162,7 @@ GROUP BY portfoy;
 
 - **JSONL ve SQLite gitignore da**. Git repo büyümez, sürekli commit oluşmaz.
 - **Fail-safe**: Observability çökmesi asla ana sistemi etkilemez. Her log yazımı try/except içinde.
-- **Maliyet tahmini**: Claude Opus 4.6 için varsayılan \$15/M input, \$75/M output. Gerçek pricing'i [anthropic.com/pricing](https://www.anthropic.com/pricing) ile doğrula. Yanlışsa `observability.py` içinde `_CLAUDE_COST_PER_M_IN/OUT` güncelle.
+- **Maliyet tahmini**: AI Opus 4.6 için varsayılan \$15/M input, \$75/M output. Gerçek pricing'i [anthropic.com/pricing](https://www.anthropic.com/pricing) ile doğrula. Yanlışsa `observability.py` içinde `_CLAUDE_COST_PER_M_IN/OUT` güncelle.
 
 ## RAG için Kaynak
 

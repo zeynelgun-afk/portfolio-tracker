@@ -15,9 +15,9 @@ Agent sisteminin çağrı ve karar akışını kayıt altına alır.
      - Gitignore'da — JSONL'den her zaman yeniden kurulabilir
 
 EVENT TİPLERİ:
-  claude_call  — Her Claude API çağrısı
+  claude_call  — Her LLM API çağrısı
   fmp_call     — Her FMP API çağrısı
-  decision     — Claude'dan çıkan her karar (EKLE/ÇIK/DÖNDÜR vb.)
+  decision     — AI'den çıkan her karar (EKLE/ÇIK/DÖNDÜR vb.)
   trade        — Gerçekleşmiş alım/satım (transactions.csv mirror'u)
 
 KULLANIM:
@@ -346,7 +346,7 @@ def _model_tier(model: str) -> str:
 def estimate_claude_cost(in_tokens: int, out_tokens: int, model: str = "") -> float:
     """
     Approximate USD cost. Function name kept for backward compatibility — now
-    handles Kimi (default) and legacy Claude tiers.
+    handles Kimi (default) and legacy AI tiers.
     """
     tier = _model_tier(model)
     rates = _LLM_PRICING.get(tier, _LLM_PRICING[_DEFAULT_TIER])
@@ -366,7 +366,7 @@ def log_claude_call(
     decisions_count: int = 0,
     error: Optional[str] = None,
 ) -> Optional[str]:
-    """Claude API çağrısı için kullanışlı wrapper."""
+    """LLM API çağrısı için kullanışlı wrapper."""
     return log_event(
         "claude_call",
         {
@@ -421,7 +421,7 @@ def log_decision(
     executed: bool = False,
     skipped_reason: Optional[str] = None,
 ) -> Optional[str]:
-    """Claude'dan çıkan karar için."""
+    """AI'den çıkan karar için."""
     return log_event(
         "decision",
         {
@@ -517,7 +517,7 @@ def log_trade(
 # ── Sorgu yardımcıları ────────────────────────────────────────────────────────
 
 def query_claude_cost(since_days: int = 7) -> dict:
-    """Son N gündeki Claude maliyet özeti."""
+    """Son N gündeki LLM maliyet özeti."""
     try:
         conn = _get_conn()
         cur = conn.cursor()
@@ -650,7 +650,7 @@ if __name__ == "__main__":
     print(f"Test decision logged: {eid}")
 
     # Sorgu testi
-    print("\nSon 7 günlük Claude maliyet:")
+    print("\nSon 7 günlük LLM maliyet:")
     print(json.dumps(query_claude_cost(7), indent=2, ensure_ascii=False))
 
     print("\nSon 7 günlük FMP stats:")

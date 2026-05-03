@@ -2,7 +2,7 @@
 split_sabah_report.py — DAILY_SABAH_*.md raporunu parse edip
 DAILY_SWING_*.md ve DAILY_PORTFOY_*.md dosyalarina ayiran post-processor.
 
-Amac: Tek Claude cagrisi ile yazilan sabah raporunu, ek token maliyeti
+Amac: Tek LLM cagrisi ile yazilan sabah raporunu, ek token maliyeti
 olmadan gorsel olarak 3 ayri dosyaya ayirmak (memory'deki v3.0 uclu
 yapinin maliyetsiz esdegeri).
 

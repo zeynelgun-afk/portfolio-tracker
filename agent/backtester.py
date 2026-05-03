@@ -250,7 +250,7 @@ def validate_with_historical(
 def run_full_backtest() -> dict:
     """
     Tüm backtest analizini çalıştırır.
-    Sonuç Claude'a gönderilir, öneri üretir.
+    Sonuç AI'ye gönderilir, öneri üretir.
     """
     print("[Backtest] Çalıştırılıyor...")
 
@@ -281,7 +281,7 @@ def run_full_backtest() -> dict:
 
 
 def format_backtest_for_claude(results: dict) -> str:
-    """Backtest sonuçlarını Claude context'i için formatlar."""
+    """Backtest sonuçlarını LLM context'i için formatlar."""
     lines = ["=== BACKTEST SONUÇLARI ===\n"]
 
     lines.append(f"Toplam trade: {results.get('toplam_trade', 0)}")

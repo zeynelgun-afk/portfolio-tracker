@@ -10,7 +10,7 @@ Pipeline:
   6. outlier detection (3× MAD)
   7. weighted aggregation
   8. konsensüs sapma cezası → confidence düşürme + manuel review
-  9. AI consultation tetikleyici kontrolü → Claude'a danış
+  9. AI consultation tetikleyici kontrolü → AI'ye danış
  10. final fair value blend (framework × (1-w) + claude × w)
  11. senaryolu çıktı (bear/base/bull)
  12. structured output (JSON schema v6)
@@ -196,9 +196,9 @@ def valuate(ticker: str, verbose: bool = False, apply_regime: bool = True,
                       (BOGA: ×1.12, AYI: ×0.87)
         use_cache: True ise 5 dakikalık in-memory cache kullanılır (varsayılan)
         consult_ai: "auto" (default) — büyük sapma/düşük güven/yüksek dispersion'da
-                                       otomatik Claude'a danış
-                    "always" — her değerlemede Claude'a danış (yavaş, ANTHROPIC_KEY harcar)
-                    "never"  — Claude consultation kapalı
+                                       otomatik AI'ye danış
+                    "always" — her değerlemede AI'ye danış (yavaş, ANTHROPIC_KEY harcar)
+                    "never"  — AI consultation kapalı
     """
     ticker = ticker.upper().strip()  # tutarlı cache + FMP case-insensitive
 
@@ -585,11 +585,11 @@ def valuate(ticker: str, verbose: bool = False, apply_regime: bool = True,
                     blend_w = ai_result.get("blend_weight", 0.30)
 
                     if blended:
-                        # Karar etiketini Claude tavsiyesiyle revize et
+                        # Karar etiketini AI tavsiyesiyle revize et
                         claude_tavsiye = ai_result.get("tavsiye_etiket", "").upper()
                         new_upside = ((blended / price) - 1.0) * 100
 
-                        # Claude MANUEL_REVIEW dediyse veya framework manuel review'daysa → manuel
+                        # AI MANUEL_REVIEW dediyse veya framework manuel review'daysa → manuel
                         if claude_tavsiye == "MANUEL_REVIEW" or manuel_review_required:
                             new_karar = "MANUEL_REVIEW"
                         elif new_upside > 15:
@@ -630,7 +630,7 @@ def valuate(ticker: str, verbose: bool = False, apply_regime: bool = True,
 
     output["consultation"] = consult_decision
 
-    # v6: Senaryolu çıktı (bear/base/bull) — Claude varsa onunkini, yoksa framework'tan üret
+    # v6: Senaryolu çıktı (bear/base/bull) — AI varsa onunkini, yoksa framework'tan üret
     if ai_result and ai_result.get("scenarios"):
         output["scenarios"] = ai_result["scenarios"]
     else:
@@ -698,7 +698,7 @@ def format_report(result: dict, style: str = "terminal") -> str:
         sebep = ""
         ai = result.get("ai_consultation") or {}
         if blended and ai:
-            # AI varsa: framework vs Claude özet
+            # AI varsa: framework vs AI özet
             fw_fv = blended["framework_fv"]
             cl_fv = blended["claude_fv"]
             kritik = (ai.get("framework_kritik") or "").strip()
@@ -706,10 +706,10 @@ def format_report(result: dict, style: str = "terminal") -> str:
                 # Kritik cümlesini 100 karakterle kes
                 if len(kritik) > 100:
                     kritik = kritik[:97].rstrip() + "..."
-                sebep = f"Framework ${fw_fv:.0f} (mid-cycle) vs Claude ${cl_fv:.0f}: {kritik}"
+                sebep = f"Framework ${fw_fv:.0f} (mid-cycle) vs AI ${cl_fv:.0f}: {kritik}"
             else:
                 rejim = ai.get("rejim_degisikligi", {}).get("tip") or "?"
-                sebep = f"Framework ${fw_fv:.0f} vs Claude ${cl_fv:.0f} (rejim: {rejim})"
+                sebep = f"Framework ${fw_fv:.0f} vs AI ${cl_fv:.0f} (rejim: {rejim})"
         else:
             # AI yoksa: en kritik flag veya cycle
             flags = conf.get("red_flags", [])
@@ -771,7 +771,7 @@ def format_report(result: dict, style: str = "terminal") -> str:
             out.append("")
             out.append(f"🤖 <b>AI Blend:</b> ${blended['point']:.2f} "
                        f"(framework ${blended['framework_fv']:.2f} × {1-blended['blend_weight']:.0%} + "
-                       f"Claude ${blended['claude_fv']:.2f} × {blended['blend_weight']:.0%})")
+                       f"AI ${blended['claude_fv']:.2f} × {blended['blend_weight']:.0%})")
             out.append(f"Blend upside: {blended['upside_pct_blended']:+.1f}% → <b>{blended['karar_blended']}</b>")
 
         regime = result.get("market_regime")
@@ -806,7 +806,7 @@ def format_report(result: dict, style: str = "terminal") -> str:
         ai = result.get("ai_consultation")
         if ai:
             out.append("")
-            out.append(f"<b>🤖 Claude görüşü ({ai.get('model', '?')}):</b>")
+            out.append(f"<b>🤖 AI görüşü ({ai.get('model', '?')}):</b>")
             if ai.get("rejim_degisikligi", {}).get("var_mi"):
                 out.append(f"  Rejim değişimi: <b>{ai['rejim_degisikligi'].get('tip')}</b>")
                 out.append(f"  → {ai['rejim_degisikligi'].get('aciklama', '')[:120]}")
@@ -880,7 +880,7 @@ def format_report(result: dict, style: str = "terminal") -> str:
     if blended:
         out.append(f"  🤖 AI BLEND:    ${blended['point']:.2f} ({blended['upside_pct_blended']:+.1f}%)")
         out.append(f"     framework ${blended['framework_fv']:.2f} × {1-blended['blend_weight']:.0%} + "
-                   f"Claude ${blended['claude_fv']:.2f} × {blended['blend_weight']:.0%}")
+                   f"AI ${blended['claude_fv']:.2f} × {blended['blend_weight']:.0%}")
         out.append(f"     Blend kararı: {blended['karar_blended']}")
         out.append("")
 
@@ -915,7 +915,7 @@ def format_report(result: dict, style: str = "terminal") -> str:
     # v6: AI consultation
     ai = result.get("ai_consultation")
     if ai:
-        out.append(f"  🤖 Claude görüşü ({ai.get('model', '?')}):")
+        out.append(f"  🤖 AI görüşü ({ai.get('model', '?')}):")
         if ai.get("rejim_degisikligi", {}).get("var_mi"):
             out.append(f"     Rejim değişimi: {ai['rejim_degisikligi'].get('tip')}")
             out.append(f"     → {ai['rejim_degisikligi'].get('aciklama', '')}")

@@ -295,7 +295,7 @@ def get_rule_accuracy_summary() -> dict:
 
 
 def get_prediction_context() -> str:
-    """Claude context'i için tahmin özeti."""
+    """LLM context'i için tahmin özeti."""
     log      = _load_log()
     bekleyen = [p for p in log["tahminler"] if p.get("durum") == "BEKLIYOR"]
     skorlanan = [p for p in log["tahminler"] if p.get("durum") == "SKORLANDI"]

@@ -3,7 +3,7 @@
 Finzora Agent — Uzman Agent Sistemi
 =====================================
 ATLAS'tan ilham: Her agent kendi alanında uzman.
-Tek Claude yerine 4 uzman + 1 CIO.
+Tek AI yerine 4 uzman + 1 CIO.
 
 Ajanlar:
   1. MACRO_AGENT   → Fed, VIX, jeopolitik, makro takvim
@@ -246,7 +246,7 @@ Each "aciklama" / explanation must be a single Turkish sentence.
                     result["_agent"] = agent_name
                     result["_timestamp"] = datetime.now().isoformat()
                     result["_partial_repaired"] = True
-                    print(f"[ClaudeAgent {agent_name}] JSON truncated, repaired ({len(repaired)} bytes)")
+                    print(f"[Finzora {agent_name}] JSON truncated, repaired ({len(repaired)} bytes)")
                     return result
                 except Exception:
                     pass
@@ -258,7 +258,7 @@ Each "aciklama" / explanation must be a single Turkish sentence.
         result["_timestamp"] = datetime.now().isoformat()
         return result
     except (json.JSONDecodeError, ValueError, AttributeError) as e:
-        print(f"[ClaudeAgent {agent_name}] JSON parse hatasi: {type(e).__name__}: {str(e)[:80]}")
+        print(f"[Finzora {agent_name}] JSON parse hatasi: {type(e).__name__}: {str(e)[:80]}")
 
     return {
         "_agent":     agent_name,

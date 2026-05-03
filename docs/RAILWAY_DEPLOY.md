@@ -22,7 +22,7 @@ Zorunlu:
 TELEGRAM_TOKEN=<bot token — GitHub secret'tan aynısı>
 TELEGRAM_PRIVATE_CHAT=1403072107
 FMP_API_KEY=<FMP stable API key>
-ANTHROPIC_API_KEY=<Claude API key — /sor, /analiz için>
+ANTHROPIC_API_KEY=<LLM API key — /sor, /analiz için>
 RAILWAY=1
 ```
 
@@ -63,8 +63,8 @@ Bot DM'ine `/yardim` yaz → anında cevap gelmeli.
 /fiyat AAPL     — Canlı fiyat
 /deger AAPL     — Adil değer analizi
 /beklenti AAPL  — Analist + EPS beklentileri
-/sor <soru>     — Claude serbest sorgusu (Haiku)
-/analiz AAPL    — Claude tam analiz (Opus)
+/sor <soru>     — AI serbest sorgusu (Haiku)
+/analiz AAPL    — AI tam analiz (Opus)
 ```
 
 ## Maliyet Tahmini (aylık)

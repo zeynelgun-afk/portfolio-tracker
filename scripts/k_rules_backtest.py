@@ -63,7 +63,7 @@ def kategori_belirle(reason: str) -> str:
     if "tema" in r or "opportunity" in r or "agresif v2" in r:
         return "Tema"
     if "claude" in r or "manuel" in r or "tez" in r:
-        return "Claude"
+        return "AI"
     return "Diger"
 
 

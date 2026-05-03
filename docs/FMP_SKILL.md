@@ -1,6 +1,6 @@
 ---
 name: fmp-integration
-description: Comprehensive guide for integrating Financial Modeling Prep (FMP) API, covering stable endpoints, migration from legacy versions, and usage examples. Use this skill whenever Claude needs to fetch real financial data from FMP API including stock quotes, financial statements, technical indicators, earnings data, analyst estimates, screener, news, insider trading, ETF holdings, economic calendar, and more. This is the master reference for ALL FMP API calls.
+description: Comprehensive guide for integrating Financial Modeling Prep (FMP) API, covering stable endpoints, migration from legacy versions, and usage examples. Use this skill whenever AI needs to fetch real financial data from FMP API including stock quotes, financial statements, technical indicators, earnings data, analyst estimates, screener, news, insider trading, ETF holdings, economic calendar, and more. This is the master reference for ALL FMP API calls.
 ---
 
 # FMP API Integration — Premium Plan Reference

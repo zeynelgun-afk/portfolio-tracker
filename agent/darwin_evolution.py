@@ -3,7 +3,7 @@
 Finzora Agent — Darwinian Prompt Evolution v2.0
 ================================================
 Her 5 İŞ gününde en zayıf K-kuralının promptunu evrimleştirir.
-Claude API'ye yeni versiyon yazdırır, 14 gün test eder.
+LLM API'ye yeni versiyon yazdırır, 14 gün test eder.
 İyileşirse git commit, kötüleşirse git revert.
 
 Fitness fonksiyonu: Sharpe × win_rate
@@ -390,7 +390,7 @@ def get_weighted_genome_context(genome: dict) -> str:
     return "\n".join(lines)
 
 
-# ── Claude ile Evrim ──────────────────────────────────────────────────────────
+# ── AI ile Evrim ──────────────────────────────────────────────────────────
 
 def evolve_rule_with_claude(
     rule_name: str,
@@ -509,18 +509,18 @@ def run_evolution_cycle(force: bool = False) -> dict:
         print(f"[Darwin] Fitness yeterli ({fitness_val} > 5.0). Evrim gerekmez.")
         return {"skipped": True, "reason": "Fitness yeterli", "fitness": fitness_val}
 
-    # Claude ile evrim
+    # AI ile evrim
     from backtester import format_backtest_for_claude, run_full_backtest
     backtest     = run_full_backtest()
     analysis_ctx = format_backtest_for_claude(backtest)
 
-    print(f"[Darwin] Claude'a {weakest_name} için yeni prompt isteniyor...")
+    print(f"[Darwin] AI'ye {weakest_name} için yeni prompt isteniyor...")
     evolution = evolve_rule_with_claude(
         weakest_name, weakest_rule, transactions, analysis_ctx
     )
     new_prompt = evolution.get("yeni_prompt")
     if not new_prompt:
-        print("[Darwin] Claude geçerli prompt üretemedi.")
+        print("[Darwin] AI geçerli prompt üretemedi.")
         return {"error": "Prompt üretilemedi", "claude_response": evolution}
 
     old_version = genome[weakest_name]["version"]

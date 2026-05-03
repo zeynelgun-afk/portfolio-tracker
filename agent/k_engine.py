@@ -141,7 +141,7 @@ BENEFICIARY_SECTORS, SENSITIVE_SECTORS, _K13_AKTIF_KRIZ = _load_crisis_matrix()
 def k13_position_size(vix: float, sector: str, base_size: float) -> tuple[float, str]:
     """
     K-13 v4.2 sektör bazlı VIX matrisi.
-    Matrisi HER çağrıda taze okur — Claude kriz tespitini macro_intelligence run'ında
+    Matrisi HER çağrıda taze okur — AI kriz tespitini macro_intelligence run'ında
     güncelleyebiliyor, bu değişikliğin aynı gün içinde yansıması için.
     Döndürür: (pozisyon_büyüklüğü, açıklama)
     """

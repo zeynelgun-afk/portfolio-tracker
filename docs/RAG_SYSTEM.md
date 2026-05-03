@@ -1,15 +1,15 @@
 # RAG — Retrieval Augmented Generation
 
-Finzora AI nın hafıza katmanı. Geçmiş trade leri, kararları, dersler ve dokümantasyonu vektör uzayında indexler; her yeni Claude çağrısı öncesi sorgu bazlı ilgili bağlamı çeker.
+Finzora AI nın hafıza katmanı. Geçmiş trade leri, kararları, dersler ve dokümantasyonu vektör uzayında indexler; her yeni LLM çağrısı öncesi sorgu bazlı ilgili bağlamı çeker.
 
 ## Amaç
 
-Claude API her çağrıldığında sıfırdan başlar. Önceki trade ler, LASR dersi, AI tedarik zinciri tezi, K-kuralları — hiçbirini bilmez. RAG bu boşluğu doldurur:
+LLM API her çağrıldığında sıfırdan başlar. Önceki trade ler, LASR dersi, AI tedarik zinciri tezi, K-kuralları — hiçbirini bilmez. RAG bu boşluğu doldurur:
 
 1. `logs/events.jsonl` ve `data/swing/closed.json` otomatik indexlenir
-2. Claude çağrısı öncesi sorgu (örn. "POWL için stop kararı") retriever a gider
-3. En ilgili 5 chunk Claude nin system prompt una eklenir
-4. Claude artık "geçmişi bilen" bir karar verir
+2. LLM çağrısı öncesi sorgu (örn. "POWL için stop kararı") retriever a gider
+3. En ilgili 5 chunk AI nin system prompt una eklenir
+4. AI artık "geçmişi bilen" bir karar verir
 
 ## Yapı
 
@@ -62,7 +62,7 @@ python scripts/rag/retriever.py "ders" --type swing_lesson
 # Portföy filtresi
 python scripts/rag/retriever.py "AI tedarik" --portfoy aggressive
 
-# Claude context formatı
+# LLM context formatı
 python scripts/rag/retriever.py "POWL insider satışı" --claude-format --top-k 3
 ```
 
@@ -75,7 +75,7 @@ hits = retrieve("kriz rallisi erken alım", top_k=5)
 for h in hits:
     print(h["score"], h["text"][:100])
 
-# Claude'a inject için formatla
+# AI'ye inject için formatla
 context = format_context_for_claude(hits)
 # context bir string — system prompt'a veya user message'a ekle
 ```
@@ -95,7 +95,7 @@ K/Z: -10.63%
 ```
 
 ### Swing lesson (closed.json dan)
-closed.json daki her kapatılmış pozisyon AYRI chunk olarak indexlenir, çünkü `giris_nedeni + cikis_nedeni + dersler` birleşimi Claude için en değerli sinyaldir.
+closed.json daki her kapatılmış pozisyon AYRI chunk olarak indexlenir, çünkü `giris_nedeni + cikis_nedeni + dersler` birleşimi AI için en değerli sinyaldir.
 
 ### Decision event
 ```
@@ -104,7 +104,7 @@ Neden: AI supply chain, EPS beat + insider cluster buying.
 Hedef: $650. Stop: $580. Uygulandı: evet
 ```
 
-### Claude call event
+### AI call event
 Observability için minimum info (cost, duration, success) — RAG değeri düşük ama dahil.
 
 ## Metadata filtreleri
@@ -167,7 +167,7 @@ Kullanıcı sorgusu ─→ retriever.py ─→ Voyage (query embed) ─→ Chrom
                                                             ↓
                                      format_context_for_claude()
                                                             ↓
-                                   system_prompt + user_message → Claude API
+                                   system_prompt + user_message → LLM API
 ```
 
 ## Rebuild stratejisi
@@ -182,11 +182,11 @@ ChromaDB binary dosyaları `data/rag/chroma/` altında. Gitignore da. İki senar
 
 ## Sonraki adımlar
 
-- [ ] `scripts/rag/claude_with_context.py` — tam pipeline: soru → retrieve → Claude
+- [ ] `scripts/rag/claude_with_context.py` — tam pipeline: soru → retrieve → AI
 - [ ] Orchestrator entegrasyonu — morning/closing raporu öncesi otomatik context inject
 - [ ] Incremental reindex workflow — her gün yeni event leri indexle
 - [ ] Metadata zenginleştirme — sektör, tema, özellik etiketleri
-- [ ] Query expansion — Claude ye sorguyu genişlettirmek (HyDE benzeri)
+- [ ] Query expansion — AI ye sorguyu genişlettirmek (HyDE benzeri)
 
 ## Sorun giderme
 

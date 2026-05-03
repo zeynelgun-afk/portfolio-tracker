@@ -2,12 +2,12 @@
 """
 Finzora Agent — Bellek Yönetimi (Memory Layer)
 ================================================
-Claude'un çağrılar arası hafızası yok.
+AI'nin çağrılar arası hafızası yok.
 Bu modül dosya sistemiyle kalıcı bellek sağlar.
 
 Mantık:
-  - Her kapanış → Claude özet yazar → memory/daily_brief.json
-  - Her sabah → özet okunur → Claude bağlamı hatırlamış gibi davranır
+  - Her kapanış → AI özet yazar → memory/daily_brief.json
+  - Her sabah → özet okunur → AI bağlamı hatırlamış gibi davranır
   - Tam JSON/Playbook yerine sıkıştırılmış özet gider → 10x ucuz
 
 Bellek katmanları:
@@ -109,7 +109,7 @@ def build_portfolio_state(portfolios: dict, market: dict) -> dict:
                 "hedef":     hedef,
             }
 
-            # v5 valuation — Claude'a fair value bağlamı (cache'li, max 5dk eski)
+            # v5 valuation — AI'ye fair value bağlamı (cache'li, max 5dk eski)
             # Sembol bilinmiyorsa atla (FMP'ye geçersiz istek gitmesin)
             if sym and sym != "?" and len(sym) <= 6:
                 try:
@@ -130,7 +130,7 @@ def build_portfolio_state(portfolios: dict, market: dict) -> dict:
 
         state["portfolios"][pf_name] = pf_state
 
-    # Swing pozisyonları da ekle — Claude tabloda yanlış hesaplamasın
+    # Swing pozisyonları da ekle — AI tabloda yanlış hesaplamasın
     try:
         import json as _j
         sw = _j.load(open(REPO_ROOT / "data" / "swing" / "active.json"))
@@ -180,10 +180,10 @@ def load_portfolio_state() -> dict:
         return json.load(f)
 
 
-# ── L2: Günlük Brief (Claude kendisi yazar) ───────────────────────────────────
+# ── L2: Günlük Brief (AI kendisi yazar) ───────────────────────────────────
 
 def load_daily_brief() -> str:
-    """Dünkü/bugünkü Claude özetini yükler."""
+    """Dünkü/bugünkü AI özetini yükler."""
     path = MEMORY_DIR / "daily_brief.json"
     if not path.exists():
         return "Henüz brief yok — ilk çalışma."
@@ -206,7 +206,7 @@ def load_daily_brief() -> str:
 
 def save_daily_brief(claude_response: str, mode: str):
     """
-    Claude'un kapanış/sabah analizini kaydeder.
+    AI'nin kapanış/sabah analizini kaydeder.
     Bir sonraki çağrıda bağlam olarak kullanılır.
     """
     path = MEMORY_DIR / "daily_brief.json"
@@ -401,7 +401,7 @@ def append_learning(insight: str, source: str = "agent"):
 
 def build_context_for_claude(mode: str) -> str:
     """
-    Claude'a gönderilecek sıkıştırılmış bağlamı derler.
+    AI'ye gönderilecek sıkıştırılmış bağlamı derler.
     Tam JSON yerine okunabilir tablo formatı → hata riski düşük.
     """
     state   = load_portfolio_state()

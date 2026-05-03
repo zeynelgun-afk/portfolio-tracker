@@ -58,7 +58,7 @@ def sync_genome_to_kref(genome: dict):
 
 def propose_improvement(rule_name: str, failure_summary: str) -> str:
     """
-    Bir kural başarısız olduğunda Claude'dan iyileştirme iste.
+    Bir kural başarısız olduğunda AI'den iyileştirme iste.
     Learning engine tarafından çağrılır.
     """
     import sys

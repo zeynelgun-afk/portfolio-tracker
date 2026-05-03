@@ -163,7 +163,7 @@ def update_source_scores(
 ):
     """
     Twitter/web kaynağının tahmin doğruluğunu takip eder.
-    Yüksek skor → Claude daha fazla ağırlık verir.
+    Yüksek skor → AI daha fazla ağırlık verir.
     """
     path = MEMORY_DIR / "source_scores.json"
 
@@ -198,7 +198,7 @@ def update_source_scores(
 
 
 def get_source_scores_summary() -> str:
-    """Kaynak skorlarını Claude context'i için formatlar."""
+    """Kaynak skorlarını LLM context'i için formatlar."""
     path = MEMORY_DIR / "source_scores.json"
     if not path.exists():
         return "Kaynak skoru henüz yok."
@@ -276,7 +276,7 @@ def get_pending_proposals() -> list:
 def build_weekly_learning_context() -> str:
     """
     Haftalık derin analiz için öğrenme bağlamını derler.
-    Claude bu bağlamla PLAYBOOK güncelleme önerisi üretir.
+    AI bu bağlamla PLAYBOOK güncelleme önerisi üretir.
     """
     trade_stats  = analyze_closed_trades(days_back=7)
     month_stats  = analyze_closed_trades(days_back=30)
@@ -331,7 +331,7 @@ def build_weekly_learning_context() -> str:
 
 def auto_extract_lessons(claude_response: str, mode: str):
     """
-    Claude'un kapanış/haftalık analizinden otomatik ders çıkarır.
+    AI'nin kapanış/haftalık analizinden otomatik ders çıkarır.
     'ders', 'öğrendim', 'dikkat', 'hata' içeren satırları yakalar.
     """
     keywords = ["ders", "öğren", "dikkat", "hata", "fark ettim", "sonuç",

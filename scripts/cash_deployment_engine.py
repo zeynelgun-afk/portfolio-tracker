@@ -2,7 +2,7 @@
 """
 K-22 NAKIT KULLANIM ENGINE
 ============================
-Memory: '3 portföyde nakit oranı %10'u GEÇMESİN. Claude otomatik yönetiyor.'
+Memory: '3 portföyde nakit oranı %10'u GEÇMESİN. AI otomatik yönetiyor.'
 
 Bu modül:
 1. Her portföyün gerçek nakit oranını hesaplar
@@ -11,7 +11,7 @@ Bu modül:
    - AGGRESSIVE: swing sinyalleri + uranyum/AI tema + inverse ETF (volatil günler)
    - BALANCED: defansif rotasyon (XLP/XLV/GLD/TLT) veya inverse ETF max %10
    - DIVIDEND: SADECE temettü hisseleri (KO/PG/JNJ/VZ/KMB/MO/MCD/CL)
-4. session_state.json'a oneriler yazar — Claude FAZ_2'de uygular
+4. session_state.json'a oneriler yazar — AI FAZ_2'de uygular
 
 Kullanim:
   python scripts/cash_deployment_engine.py            # Konsola onerileri yaz

@@ -159,7 +159,7 @@ Araştırma: Combining multiple confirmation signals reduces false positives by 
 
 ## SEANS İÇİ KARAR KALİTESİ
 
-Her FAZ sonunda Claude şunu kendine sorar:
+Her FAZ sonunda AI şunu kendine sorar:
 
 ```
 FAZ 1 sonu: "Acil kararlar netlik ve kural uyumlu muydu?"

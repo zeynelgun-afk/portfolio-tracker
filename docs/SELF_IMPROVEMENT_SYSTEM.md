@@ -11,7 +11,7 @@
 | Kaynak skoru | `learning_engine.py` | Her Twitter taraması | @CheddarFlow gibi hesapların tahmin doğruluğunu izler |
 | Kural güncelleme | `rule_updater.py` | Haftalık | Backtest kanıtıyla parametreleri PLAYBOOK'ta değiştirir, git push |
 | Prompt evrimi | `darwin_evolution.py` | 5 işlem gününde 1 | En zayıf K-kuralını bulur, yeni prompt versiyonu dener, 14 gün test |
-| Tahmin takibi | `prediction_logger.py` | Her analizde | Claude'un tahminlerini kaydeder, gerçekleşmeyi ölçer |
+| Tahmin takibi | `prediction_logger.py` | Her analizde | AI'nin tahminlerini kaydeder, gerçekleşmeyi ölçer |
 | **Tema yönetimi** | **`macro_intelligence.py`** | **Her sabah** | **Dominant temalar + aktif kriz tespit, data/macro_intelligence.json'a yazar, Zeynel DM'e özet** |
 | Dry-run | `dry_run_manager.py` | Sürekli | Önerilen değişiklikleri gerçek para kullanmadan test eder |
 
@@ -33,7 +33,7 @@ Tema yönetimi ise artık `macro_intelligence.py` üzerinden çalışıyor (eski
 ```python
 run_macro_intelligence(vix)
 # → Sektör perf + haberler + en güçlü hisseler toplar
-# → Claude'a "dominant tema + kriz tipi" sorar
+# → AI'ye "dominant tema + kriz tipi" sorar
 # → data/macro_intelligence.json'a yazar
 # → K-13 kriz matrisini histerezisle (2 gün üst üste) günceller
 # → scripts/macro_intelligence_notify.py → Zeynel DM
@@ -60,7 +60,7 @@ Her sabah TR 16:00 (UTC 13:00) — GitHub Actions (agent.yml) tetiklenir, mornin
             │     • biggest-gainers (momentum sinyali)
             │     • VIX (vix_fetcher cache + Yahoo + FMP fallback)
             │
-            ├── ADIM 2: Claude API'ye sorulur (macro_intelligence.analyze_themes_with_claude):
+            ├── ADIM 2: LLM API'ye sorulur (macro_intelligence.analyze_themes_with_claude):
             │     "Bugün para nereye gidiyor? Hangi kriz tipi aktif?"
             │     Çıktı: dominant_temalar + aktif_kriz + kaçınılacak_sektörler
             │
@@ -93,7 +93,7 @@ Her sabah TR 16:00 (UTC 13:00) — GitHub Actions (agent.yml) tetiklenir, mornin
 
 **Uygulama akışı:**
 ```
-Haftalık analiz → Claude BACKTEST GEREKLİ önerisi üretir
+Haftalık analiz → AI BACKTEST GEREKLİ önerisi üretir
       ↓
 rule_updater.py → Güvenlik kontrolü (kilitli mı? aralıkta mı? backtest yeterli mi?)
       ↓
@@ -117,7 +117,7 @@ Kötüyse → git revert → eski değere geri dön
 Her 5 işlem gününde:
 1. Fitness skoru hesapla: `win_rate × avg_pnl`
 2. En düşük fitness'lı kuralı seç
-3. Claude API'ye "bu kuralın daha iyi versiyonunu yaz" de
+3. LLM API'ye "bu kuralın daha iyi versiyonunu yaz" de
 4. Yeni versiyonu 14 gün dene (dry-run)
 5. İyileşme var → commit | Kötüleşme → revert
 
@@ -129,10 +129,10 @@ Twitter hesapları için:
 ```python
 update_source_scores("CheddarFlow", tahmin="NVDA yükseliyor", sonuc="Yükseldi", correct=True)
 # → Skor artar
-# → Sonraki seanslarda Claude bu hesaba daha fazla ağırlık verir
+# → Sonraki seanslarda AI bu hesaba daha fazla ağırlık verir
 ```
 
-Yüksek skorlu kaynaklar (>%70 doğru) → Claude analizde öncelik verir
+Yüksek skorlu kaynaklar (>%70 doğru) → AI analizde öncelik verir
 Düşük skorlu kaynaklar (<50%) → Otomatik olarak ihmal edilir
 
 ---
@@ -140,7 +140,7 @@ Düşük skorlu kaynaklar (<50%) → Otomatik olarak ihmal edilir
 ## EKSİKLER / GELECEK GELİŞTİRMELER
 
 1. **Tema performansı → portföy sonucuna bağlama:** Hangi tema ne kadar kar getirdi? Şu an ölçülmüyor.
-2. **Multi-agent debate:** Bir Claude "bu hisseyi al" derken, başka bir Claude "neden yanlış" tartışması. `adversarial_debate.py` var ama aktif değil.
+2. **Multi-agent debate:** Bir AI "bu hisseyi al" derken, başka bir AI "neden yanlış" tartışması. `adversarial_debate.py` var ama aktif değil.
 3. **Conviction scorer otomasyonu:** Manuel hesaplanan conviction skoru FMP verisiyle otomatik hesaplanmalı.
 4. **Portfolio × tema başarı matrisi:** "AI teması açıkken Agresif portföy ne kazandı?" sorusu cevaplandırılmalı.
 
@@ -262,7 +262,7 @@ AI_ALTYAPI: SMH(%25) + GRID(%20) + BOTZ(%20) + SOXX(%15) + PAVE(%10) + FAN(%10)
 1. Gerçek trade P/L (`tema_portfolio_matrix.json`) — öncelikli, hâlâ aktif
 2. ETF sepeti composite RS — veri yoksa yedek (theme_manager.py ile kaldırıldı)
 
-Not: Artık tema puanlaması `macro_intelligence.py` tarafından Claude üzerinden günlük yapılıyor.
+Not: Artık tema puanlaması `macro_intelligence.py` tarafından AI üzerinden günlük yapılıyor.
 
 ### Hata 7 — L3 Digest Gecikmesi ✅
 `darwin_evolution.py` içinde `_update_k_rules_digest()` artık:

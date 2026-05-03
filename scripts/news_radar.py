@@ -2,7 +2,7 @@
 """
 Finzora AI — Haber Radar Sistemi
 Fiyatlanmamış veya yeni düşen piyasa hareketli haberleri tespit eder.
-Claude API ile analiz eder, sadece önemli haberleri Telegram DM'e gönderir.
+LLM API ile analiz eder, sadece önemli haberleri Telegram DM'e gönderir.
 
 Kullanım:
   python scripts/news_radar.py           # normal çalıştır
@@ -188,7 +188,7 @@ def fetch_recent_news(lookback_hours=NEWS_LOOKBACK_HOURS):
     log(f"Toplam haber: {len(items)} | Filtrelenmiş (son {lookback_hours}h): {len(filtered)}")
     return filtered
 
-# ── Claude API Analizi ───────────────────────────────────────────────────────
+# ── LLM API Analizi ───────────────────────────────────────────────────────
 CLAUDE_SYSTEM = """You are an equity research analyst writing for Turkish retail investors who follow US markets.
 
 JOB: scan the news list and tag ONLY items that meet these criteria.
@@ -599,9 +599,9 @@ def main():
         log("Tüm haberler zaten işlendi.")
         return
 
-    # 3. Claude analizi
+    # 3. AI analizi
     results = analyze_with_claude(news_items)
-    log(f"Claude önemli buldu: {len(results)} haber")
+    log(f"AI önemli buldu: {len(results)} haber")
 
     if not results:
         log("Fiyatlanmamış önemli haber bulunamadı — Telegram gönderilmiyor.")

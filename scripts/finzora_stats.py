@@ -36,11 +36,11 @@ def format_report(days: int) -> str:
     lines.append(f"# Finzora Observability Raporu — Son {days} Gün\n")
 
     if not DB_PATH.exists():
-        lines.append("⚠️ Veritabanı henüz oluşmadı. İlk Claude veya FMP çağrısından sonra dolacak.")
+        lines.append("⚠️ Veritabanı henüz oluşmadı. İlk AI veya FMP çağrısından sonra dolacak.")
         return "\n".join(lines)
 
-    # Claude maliyet
-    lines.append("## Claude API Kullanımı\n")
+    # LLM maliyet
+    lines.append("## LLM API Kullanımı\n")
     cost = query_claude_cost(days)
     if "error" in cost:
         lines.append(f"❌ {cost['error']}")

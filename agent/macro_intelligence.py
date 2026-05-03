@@ -8,7 +8,7 @@ Her sabah şu soruyu yanıtlar:
 Akış:
   1. Web araması: küresel ekonomi, sektör rotasyonu, jeopolitik
   2. FMP: sektör performansı, en güçlü hisseler, analist revizyonları
-  3. Claude analizi: 3-5 dominant tema tespit + alt dal hisseleri
+  3. AI analizi: 3-5 dominant tema tespit + alt dal hisseleri
   4. Çıktı: tema_listesi + hisse_adayları → opportunity_finder'a gider
 """
 
@@ -128,7 +128,7 @@ def analyze_themes_with_claude(
     güçlü_hisseler: list,
     vix: float
 ) -> dict:
-    """Claude ile dominant temaları tespit et ve hisse adaylarını belirle."""
+    """AI ile dominant temaları tespit et ve hisse adaylarını belirle."""
     import sys
     sys.path.insert(0, str(Path(__file__).parent))
     from claude_agent import get_claude_decision
@@ -226,7 +226,7 @@ guven: 1-10 (evidence strength; low values mean no change will be applied)."""
                 parsed["aktif_kriz"] = {"tip": "belirsiz", "guven": 0}
             return parsed
     except Exception as e:
-        print(f"[Makro] Claude JSON parse hatası: {e}")
+        print(f"[Makro] AI JSON parse hatası: {e}")
 
     # Fallback: varsayılan tema + kriz belirsiz
     return {
@@ -251,7 +251,7 @@ def run_macro_intelligence(vix: float = 20.0) -> dict:
     print("[Makro] En güçlü hisseler çekiliyor...")
     güçlü = get_biggest_gainers()
 
-    print("[Makro] Claude tema analizi yapılıyor...")
+    print("[Makro] AI tema analizi yapılıyor...")
     analiz = analyze_themes_with_claude(sektor, haberler, güçlü, vix)
 
     # Her tema için hisse evrenini ekle
@@ -294,7 +294,7 @@ def run_macro_intelligence(vix: float = 20.0) -> dict:
 
 
 def _update_k13_matrix_if_changed(kriz: dict, vix: float = 0) -> None:
-    """Claude'un tespit ettiği kriz matrisini data/k13_crisis_matrix.json'a yazar.
+    """AI'nin tespit ettiği kriz matrisini data/k13_crisis_matrix.json'a yazar.
 
     Şartlar:
     - Yeni kriz tipi mevcuttan farklı olmalı
@@ -371,7 +371,7 @@ def _update_k13_matrix_if_changed(kriz: dict, vix: float = 0) -> None:
                 "son_guven":      guven,
                 "kanit":          kriz.get("kanit", ""),
                 "vix_anlik":      vix,
-                "aciklama":       f"Claude otomatik tespit (güven {guven}/10, 2 gün üst üste)",
+                "aciklama":       f"AI otomatik tespit (güven {guven}/10, 2 gün üst üste)",
                 "beneficiary":    benef_new if new_tip != "yok" else [],
                 "sensitive":      sens_new  if new_tip != "yok" else [],
                 "matris_versiyon": "v4.2_claude_auto",

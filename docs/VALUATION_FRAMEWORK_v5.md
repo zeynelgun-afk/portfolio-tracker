@@ -211,7 +211,7 @@ v5 olgunlaştıkça v2 shim olarak kalacak.
 
 2. **MSFT/AAPL/GOOGL mature tech DCF sorunu**: Framework -30 ile -45% bearish diyor, analyst +30 ile +45% bullish. Gerçek taraf backtest ile belirlenecek. Muhtemel neden: Azure/iPhone capex normalleştirmesi yapılmıyor.
 
-3. **Reserves NAV / rNPV gerçek veri**: Oil/gas ve biotech için şu an proxy (BVPS×1.5). Claude web research entegrasyonu — clinicaltrials.gov, SEC 10-K filings.
+3. **Reserves NAV / rNPV gerçek veri**: Oil/gas ve biotech için şu an proxy (BVPS×1.5). AI web research entegrasyonu — clinicaltrials.gov, SEC 10-K filings.
 
 4. **Dinamik sektör peer median**: Tuning parametreleri hard-coded. FMP sector/industry filter ile canlı peer median → fair multiple auto-update.
 
@@ -225,7 +225,7 @@ v5 olgunlaştıkça v2 shim olarak kalacak.
 - **McKinsey/Koller Valuation 7e**: ROIC fade + WACC consistency
 - **CFA Institute Equity Asset Valuation** (Pinto/Henry/Robinson)
 - **NAREIT FFO white paper**: REIT standardization
-- **Araştırma dokümanı**: Archetype-Routed Valuation Framework (Claude Extended Research, 2026-04-19)
+- **Araştırma dokümanı**: Archetype-Routed Valuation Framework (AI Extended Research, 2026-04-19)
 
 ## İlgili kod dosyaları
 

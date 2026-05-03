@@ -50,7 +50,7 @@ memory_context = get_memory_for_prompt(
     f"{sembol} {tarama_yontemi} {sektor} {rsi_durumu}",
     top_k=4
 )
-# memory_context'i Claude promptuna ekle
+# memory_context'i AI promptuna ekle
 ```
 
 ## Nasıl Çalışır?
@@ -64,7 +64,7 @@ memory_context = get_memory_for_prompt(
 3. **Kosinüs Benzerliği**: Yeni sorgu da vektöre çevrilir, tüm geçmiş trade'lerle
    karşılaştırılır, en benzer olanlar sıralanır.
 
-4. **Prompt Enjeksiyonu**: Sonuçlar Claude'a bağlam olarak sunulur:
+4. **Prompt Enjeksiyonu**: Sonuçlar AI'ye bağlam olarak sunulur:
    - Benzer başarılı setup'lar → güven verisi
    - Benzer başarısız setup'lar → uyarı sinyali
 
