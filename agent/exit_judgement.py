@@ -216,17 +216,18 @@ def llm_judgement(pos: dict, ctx: dict, kural_sonuc: dict) -> dict:
     """
     sym = ctx.get("sembol", "?")
     
-    sistem_msg = """Sen Finzora AI portföy yöneticisi olarak swing/portföy çıkış kararı veriyorsun.
-Kural tetiklendi ama bağlam çelişiyor — derin analiz yap.
+    sistem_msg = """You are Finzora's portfolio manager deciding swing/portfolio exits.
+A rule has triggered but context conflicts with it — perform a deep analysis.
 
-Yanıt formatı (kesinlikle bu format):
+OUTPUT FORMAT (strict — exact labels, values where indicated):
 ACTION: [HOLD / EXIT_NOW / PARTIAL_25 / PARTIAL_50 / TIGHTEN]
 CONFIDENCE: [yuksek/orta/dusuk]
-REASONING: [3-5 cumlede neden]
-RISK: [bear case 1 cümle]
+REASONING: [3-5 sentences in Turkish]
+RISK: [bear case in 1 Turkish sentence]
 
-Memory: KESİN/MUHTEMEL/SPEKÜLATİF etiketleri kullan.
-Bull case kadar bear case detayli."""
+Use the evidence tags KESİN / MUHTEMEL / SPEKÜLATİF (in Turkish) inside REASONING.
+Cover the bear case as carefully as the bull case.
+Output prose (REASONING/RISK) MUST be Turkish."""
     
     user_msg = f"""POZİSYON: {sym} ({ctx.get('portfoy', '?')})
 Yaş: {ctx.get('yas_gun', '?')} gün | Kar/Zarar: {ctx.get('kar_zarar_pct', 0):+.1f}%

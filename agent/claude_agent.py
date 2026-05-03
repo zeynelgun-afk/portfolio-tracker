@@ -1,6 +1,15 @@
 #!/usr/bin/env python3
 """
-Finzora Agent — Claude Karar Motoru
+Finzora Agent — Kimi K2 Thinking Decision Engine (via OpenRouter)
+==================================================================
+File name kept as `claude_agent.py` for backward compatibility — many other
+modules import `from claude_agent import get_claude_decision` etc.
+
+Public API (stable):
+  - get_claude_decision(...)              → str
+  - get_claude_decision_with_actions(...)  → (str, list[dict])
+  - SYSTEM_PROMPT, DECISION_SCHEMA         (re-used by other modules)
+  - load_prompt_file(...)
 """
 
 import os
@@ -8,17 +17,16 @@ import sys
 import json
 import re
 import time
-import anthropic
 from pathlib import Path
 
-# Observability (opsiyonel — eksikse sessizce geç)
+# Observability (optional)
 try:
     from observability import log_claude_call, log_decision
 except ImportError:
     log_claude_call = lambda *a, **kw: None
     log_decision = lambda *a, **kw: None
 
-# RAG retrieval (opsiyonel — eksikse RAG'sız çalış)
+# RAG retrieval (optional)
 _RAG_AVAILABLE = False
 try:
     _rag_dir = Path(__file__).resolve().parent.parent / "scripts" / "rag"
@@ -26,18 +34,20 @@ try:
         sys.path.insert(0, str(_rag_dir))
     from retriever import retrieve as _rag_retrieve, format_context_for_claude as _rag_format
     _RAG_AVAILABLE = True
-except Exception as _rag_err:
+except Exception:
     _rag_retrieve = None
     _rag_format = None
 
-ANTHROPIC_KEY = os.environ.get("ANTHROPIC_API_KEY", "")
+# LLM client (OpenRouter / Kimi)
+from llm_client import chat as _llm_chat, DEFAULT_MODEL as _DEFAULT_MODEL, get_api_key as _get_api_key
+
 REPO_ROOT = Path(__file__).parent.parent
 
-# Model env'den — hardcoded değil. Default: en güncel Opus.
-# Override: export CLAUDE_MODEL="claude-opus-4-7" (veya başka versiyon)
-CLAUDE_MODEL = os.environ.get("CLAUDE_MODEL", "claude-opus-4-7")
+# Public model name — kept under CLAUDE_MODEL var name for env compatibility
+# (also accepts KIMI_MODEL via llm_client.DEFAULT_MODEL).
+CLAUDE_MODEL = os.environ.get("KIMI_MODEL") or os.environ.get("CLAUDE_MODEL") or _DEFAULT_MODEL
 
-# Mode bazlı varsayılan RAG sorguları — her Claude çağrısı öncesi retrieval için
+# Mode-keyed default RAG queries
 DEFAULT_RAG_QUERIES = {
     "morning": "portföy pozisyon durumu stop seviyesi açılış öncesi karar",
     "closing": "gün sonu trade sonuç kapanış performans ders",
@@ -47,54 +57,47 @@ DEFAULT_RAG_QUERIES = {
 
 
 def _build_rag_context(mode: str, user_prompt: str, top_k: int = 5) -> str:
-    """
-    Mode + user_prompt'a göre RAG'dan ilgili chunk'ları çek.
-    Hata olursa boş string döner (Claude RAG'sız devam eder).
-    """
     if not _RAG_AVAILABLE or _rag_retrieve is None:
         return ""
-
     try:
-        # Sorgu: mode default + user_prompt'un ilk kısmı (anahtar kelime kaynağı)
         base = DEFAULT_RAG_QUERIES.get(mode, "")
-        # User prompt'un ilk 400 karakteri → sembol/tarih/sektör sinyalleri yakalar
         query = f"{base} {user_prompt[:400]}".strip()
-
         hits = _rag_retrieve(query, top_k=top_k)
         if not hits:
             return ""
         return _rag_format(hits, max_chars=3000)
     except Exception as e:
-        print(f"[claude_agent] RAG context alınamadı (göz ardı edildi): {e}")
+        print(f"[claude_agent] RAG context unavailable (ignored): {e}")
         return ""
 
-SYSTEM_PROMPT = """Sen Finzora Agent'sın — Zeynel'in otonom portföy yönetim asistanısın.
 
-KİMLİĞİN:
-- Türk yatırımcılar için ABD piyasasını takip ediyorsun
-- Zeynel'in portföy yönetim kurallarını (K-kuralları) eksiksiz biliyorsun
-- Dürüstsün: iyi haberi olduğu kadar kötü haberi de söylersin
-- Spekülatif yorumları KESİN gibi sunmazsın
+# ── System prompt (English reasoning, Turkish output) ────────────────────────
+SYSTEM_PROMPT = """You are Finzora Agent — Zeynel's autonomous portfolio management assistant.
 
-KONUŞMA TARZI:
-- Türkçe, sade, profesyonel
-- Gereksiz süsleme yok
-- Rakamlar somut, gerekçeler net
+IDENTITY:
+- You track the US equity market on behalf of a Turkish investor.
+- You know Zeynel's portfolio rules (the "K-rules") in full.
+- You are honest: you state bad news as plainly as good news.
+- You never present speculation as if it were fact.
 
-OTONOM KARAR KURALI (SEN KARAR VER):
-- Tüm aksiyonlar onay beklemeden uygulanır
-- Stop-loss tetiklendiğinde: hemen çık, override yasak
-- Onay istemek = kural ihlali
+VOICE:
+- Output language is Turkish — plain, professional, no fluff.
+- Numbers are concrete. Rationales are explicit.
 
-ETİKETLER (zorunlu):
-- KESİN: FMP verisi, doğrulanmış rakam
-- MUHTEMEL: güçlü kanıta dayalı çıkarım
-- SPEKÜLATİF: yorum, tahmin, sezgi"""
+AUTONOMY (you decide, no approvals required):
+- All actions execute without confirmation.
+- When a stop-loss triggers: exit immediately. Overrides are forbidden.
+- Asking for approval is a rule violation.
+
+EVIDENCE TAGS (mandatory — write them in Turkish in your output):
+- KESİN: FMP-verified data, confirmed numbers.
+- MUHTEMEL: strong inferential evidence.
+- SPEKÜLATİF: opinion, guess, intuition."""
 
 DECISION_SCHEMA = """
 
 ---
-KARAR BLOĞU (zorunlu — raporun en sonuna ekle):
+DECISION BLOCK (MANDATORY — append at the very end of the report):
 
 ```json
 {
@@ -104,7 +107,7 @@ KARAR BLOĞU (zorunlu — raporun en sonuna ekle):
       "portfoy":     "balanced | aggressive | dividend | swing",
       "sembol":      "TICKER",
       "pct":         100,
-      "neden":       "tek cümle gerekçe max 120 karakter",
+      "neden":       "single-sentence rationale, max 120 chars, in Turkish",
       "hedef_fiyat": 0.0,
       "stop":        0.0,
       "tutar":       0,
@@ -115,13 +118,16 @@ KARAR BLOĞU (zorunlu — raporun en sonuna ekle):
 }
 ```
 
-Açıklamalar:
-- DÖNDÜR: mevcut pozisyonu sat + yeni al. dondur_al = alınacak sembol string.
-- ÇIK: pct=100 tam çıkış, pct=50 yarısı.
-- EKLE: nakit kullanarak yeni pozisyon. tutar=0 nakit sınırı kadar.
-- BÜYÜT: mevcut pozisyona ekle.
-- İZLE: işlem yok sadece takip.
-- Karar yoksa: "kararlar": []"""
+Field semantics:
+- DÖNDÜR: sell current position + buy a new one. dondur_al = ticker string of the new buy.
+- ÇIK: pct=100 full exit, pct=50 half exit.
+- EKLE: open a new position from cash. tutar=0 means "use available cash limit".
+- BÜYÜT: scale into an existing position.
+- İZLE: no trade, watch only.
+- If no actions: "kararlar": []
+
+CRITICAL: keep JSON keys EXACTLY as shown (Turkish), do NOT translate keys.
+The values like "tip" enum stay in Turkish too — they are matched by downstream code."""
 
 
 def load_prompt_file(filename):
@@ -131,57 +137,60 @@ def load_prompt_file(filename):
     return ""
 
 
-def get_claude_decision(user_prompt, mode="monitor", system_override=None, rag_enabled=True):
-    """Metin yanıt döner (eski API — geriye uyumluluk)."""
-    if not ANTHROPIC_KEY:
-        return "⚠️ ANTHROPIC_API_KEY bulunamadı."
+# Token budgets per mode.
+# Kimi K2 thinking emits a sizable internal reasoning trace that counts toward
+# output tokens. Empirically ~50-70% of the budget is consumed by reasoning, so
+# we ~doubled the previous Claude-tuned values to keep the post-reasoning report
+# untruncated.
+_MAX_TOKENS = {
+    "morning":         16000,  # was 8000 — large multi-section report
+    "closing":         16000,  # was 8000
+    "weekly":          16000,  # was 8000
+    "monitor":          4000,  # was 1500
+    "specialist":       6000,  # was 3000
+    "exit_judgement":   2500,  # was 800
+}
 
-    # 27 Nis 2026 fix: morning/closing/weekly token limiti yetersizdi.
-    max_tokens = {"morning": 8000, "closing": 8000, "monitor": 1500, "weekly": 8000, "exit_judgement": 800, "specialist": 3000}.get(mode, 1500)
+
+def get_claude_decision(user_prompt, mode="monitor", system_override=None, rag_enabled=True):
+    """Plain text reply (legacy API — preserved for backward compatibility)."""
+    if not _get_api_key():
+        return "⚠️ OPENROUTER_API_KEY (veya ANTHROPIC_API_KEY) bulunamadı."
+
+    max_tokens = _MAX_TOKENS.get(mode, 4000)
     base_system = system_override or SYSTEM_PROMPT
 
-    # RAG context inject (fail-safe: hata olursa RAG'sız devam)
-    rag_ctx = ""
-    if rag_enabled:
-        rag_ctx = _build_rag_context(mode, user_prompt, top_k=5)
+    rag_ctx = _build_rag_context(mode, user_prompt, top_k=5) if rag_enabled else ""
     system = base_system + ("\n\n" + rag_ctx if rag_ctx else "")
 
     _t0 = time.time()
-    _in_tokens, _out_tokens = 0, 0
+    _in, _out = 0, 0
     _success = False
     _error = None
-    _result = ""
 
     try:
-        client = anthropic.Anthropic(api_key=ANTHROPIC_KEY)
-        resp = client.messages.create(
+        resp = _llm_chat(
+            system=system,
+            user=user_prompt,
             model=CLAUDE_MODEL,
             max_tokens=max_tokens,
-            system=system,
-            messages=[{"role": "user", "content": user_prompt}],
+            temperature=0.3,
         )
-        _in_tokens = getattr(resp.usage, "input_tokens", 0) if hasattr(resp, "usage") else 0
-        _out_tokens = getattr(resp.usage, "output_tokens", 0) if hasattr(resp, "usage") else 0
-        _result = resp.content[0].text
-        # stop_reason kontrolü — kesilmeyi log'la
-        stop_reason = getattr(resp, "stop_reason", "unknown")
-        if stop_reason == "max_tokens":
+        _in, _out = resp.input_tokens, resp.output_tokens
+        if resp.finish_reason == "length":
             print(f"[ClaudeAgent/legacy] ⚠️ max_tokens={max_tokens} doldu, "
-                  f"yanıt kesik. output_tokens={_out_tokens}")
+                  f"yanıt kesik. output_tokens={_out}")
         _success = True
-        return _result
-    except anthropic.APIError as e:
-        _error = f"APIError: {str(e)[:200]}"
-        return f"⚠️ Claude API hatası: {e}"
+        return resp.text
     except Exception as e:
         _error = f"{type(e).__name__}: {str(e)[:200]}"
-        return f"⚠️ Beklenmeyen hata: {e}"
+        return f"⚠️ LLM API hatası: {e}"
     finally:
         log_claude_call(
             mode=mode,
             model=CLAUDE_MODEL,
-            input_tokens=_in_tokens,
-            output_tokens=_out_tokens,
+            input_tokens=_in,
+            output_tokens=_out,
             duration_ms=int((time.time() - _t0) * 1000),
             success=_success,
             context_chars=len(system) + len(user_prompt),
@@ -190,67 +199,59 @@ def get_claude_decision(user_prompt, mode="monitor", system_override=None, rag_e
         )
 
 
+# Alias under new name — preferred for new callers
+get_kimi_decision = get_claude_decision
+
+
 def get_claude_decision_with_actions(user_prompt, mode="morning", system_override=None, rag_enabled=True):
     """
-    Rapor metni + yapılandırılmış kararlar döner.
-    Returns: (rapor_str, kararlar_list)
+    Returns (report_text, decisions_list).
     """
-    if not ANTHROPIC_KEY:
-        return "⚠️ ANTHROPIC_API_KEY bulunamadı.", []
+    if not _get_api_key():
+        return "⚠️ OPENROUTER_API_KEY (veya ANTHROPIC_API_KEY) bulunamadı.", []
 
     enhanced = user_prompt + DECISION_SCHEMA
-    # 27 Nis 2026 fix: morning/closing/weekly raporları 5000 token sınırını aşıyordu.
-    # Rapor metni Türkçe ~2 char/token; 9000 char rapor ~4500 token + DECISION_SCHEMA
-    # şeması → 5000 yetersiz. JSON karar bloğu kesik kalıyordu (27 Nis sabah raporu
-    # `"hedef_fiyat": 550.0` ile bitti, kararlar parse edilemedi).
-    # Yeni sınır: 8000 (rapor için ~3x baş parmak güvenliği).
-    max_tokens = {"morning": 8000, "closing": 8000, "monitor": 1500, "weekly": 8000, "exit_judgement": 800, "specialist": 3000}.get(mode, 2000)
+    max_tokens = _MAX_TOKENS.get(mode, 4000)
     base_system = system_override or SYSTEM_PROMPT
 
-    # RAG context inject (fail-safe: hata olursa RAG'sız devam)
-    rag_ctx = ""
-    if rag_enabled:
-        rag_ctx = _build_rag_context(mode, user_prompt, top_k=5)
+    rag_ctx = _build_rag_context(mode, user_prompt, top_k=5) if rag_enabled else ""
     system = base_system + ("\n\n" + rag_ctx if rag_ctx else "")
 
     _t0 = time.time()
-    _in_tokens, _out_tokens = 0, 0
+    _in, _out = 0, 0
     _success = False
     _error = None
     kararlar = []
     rapor = ""
 
     try:
-        client = anthropic.Anthropic(api_key=ANTHROPIC_KEY)
-        resp = client.messages.create(
+        resp = _llm_chat(
+            system=system,
+            user=enhanced,
             model=CLAUDE_MODEL,
             max_tokens=max_tokens,
-            system=system,
-            messages=[{"role": "user", "content": enhanced}],
+            temperature=0.3,
         )
-        _in_tokens = getattr(resp.usage, "input_tokens", 0) if hasattr(resp, "usage") else 0
-        _out_tokens = getattr(resp.usage, "output_tokens", 0) if hasattr(resp, "usage") else 0
-        full_text = resp.content[0].text
+        _in, _out = resp.input_tokens, resp.output_tokens
+        full_text = resp.text
 
-        # 27 Nis 2026 fix: stop_reason kontrolü.
-        # max_tokens kesilmesi sessizce geçiyordu, JSON karar bloğu kayboluyordu.
-        stop_reason = getattr(resp, "stop_reason", "unknown")
-        if stop_reason == "max_tokens":
+        if resp.finish_reason == "length":
             print(f"[ClaudeAgent] ⚠️ UYARI: max_tokens={max_tokens} sınırı dolmuş! "
                   f"Rapor kesilmiş olabilir, JSON karar bloğu kayıp olabilir. "
-                  f"output_tokens={_out_tokens}")
+                  f"output_tokens={_out}")
             try:
                 from event_logger import kaydet as _le
                 _le(seviye="uyari",
-                    baslik=f"Claude max_tokens sınırı doldu ({mode})",
-                    detay=f"max_tokens={max_tokens}, output={_out_tokens}, "
+                    baslik=f"LLM max_tokens sınırı doldu ({mode})",
+                    detay=f"max_tokens={max_tokens}, output={_out}, "
                           f"rapor son 200 karakter: …{full_text[-200:]}",
                     kaynak="claude_agent")
             except Exception:
                 pass
 
         rapor = full_text
-        # Önce kapalı JSON bloğu ara
+
+        # Closed JSON block first
         match = re.search(r"```json\s*(\{.*?\})\s*```", full_text, re.DOTALL)
         if match:
             try:
@@ -260,20 +261,14 @@ def get_claude_decision_with_actions(user_prompt, mode="morning", system_overrid
             except json.JSONDecodeError as e:
                 print(f"[ClaudeAgent] JSON parse hatası: {e}")
         else:
-            # Kapalı JSON yok — kesik JSON kurtarmayı dene (max_tokens senaryosu)
-            # 27 Nis 2026: rapor `"hedef_fiyat": 550.0` ile bitti, kapama yok.
+            # Truncated JSON recovery (max_tokens edge case)
             open_match = re.search(r"```json\s*(\{.*)", full_text, re.DOTALL)
             if open_match:
                 kismi = open_match.group(1).rstrip().rstrip("`").rstrip()
-                # Naive close: en son tamamlanmış karar nesnesini bul
-                # `}, {` aralarında parse et, tam olanları topla
                 try:
-                    # Karar dizisini regex ile çek
                     karar_match = re.search(r'"kararlar"\s*:\s*\[(.*)', kismi, re.DOTALL)
                     if karar_match:
                         ic = karar_match.group(1)
-                        # En son geçerli `}` kapamasına kadar kes
-                        # Her `{ ... }` bloğunu ayrı ayrı parse etmeyi dene
                         depth = 0
                         son_kapali = -1
                         for i, ch in enumerate(ic):
@@ -290,7 +285,6 @@ def get_claude_decision_with_actions(user_prompt, mode="morning", system_overrid
                                 kararlar = arr if isinstance(arr, list) else []
                                 print(f"[ClaudeAgent] ⚠️ Kesik JSON kurtarıldı: "
                                       f"{len(kararlar)} karar geri alındı")
-                                # Rapor metnini JSON başlangıcına kadar kırp
                                 rapor = full_text[:open_match.start()].rstrip()
                             except json.JSONDecodeError as e2:
                                 print(f"[ClaudeAgent] Kesik JSON onarım da başarısız: {e2}")
@@ -301,31 +295,27 @@ def get_claude_decision_with_actions(user_prompt, mode="morning", system_overrid
 
         print(f"[ClaudeAgent] {len(kararlar)} karar üretildi.")
         for k in kararlar:
-            print(f"  {k.get('tip','?'):12} {k.get('portfoy','?'):12} {k.get('sembol','?'):6} — {k.get('neden','')[:60]}")
+            print(f"  {k.get('tip','?'):12} {k.get('portfoy','?'):12} "
+                  f"{k.get('sembol','?'):6} — {k.get('neden','')[:60]}")
 
         _success = True
         return rapor, kararlar
 
-    except anthropic.APIError as e:
-        _error = f"APIError: {str(e)[:200]}"
-        return f"⚠️ Claude API hatası: {e}", []
     except Exception as e:
         _error = f"{type(e).__name__}: {str(e)[:200]}"
-        return f"⚠️ Beklenmeyen hata: {e}", []
+        return f"⚠️ LLM API hatası: {e}", []
     finally:
-        # Claude çağrısını logla
         claude_call_id = log_claude_call(
             mode=mode,
             model=CLAUDE_MODEL,
-            input_tokens=_in_tokens,
-            output_tokens=_out_tokens,
+            input_tokens=_in,
+            output_tokens=_out,
             duration_ms=int((time.time() - _t0) * 1000),
             success=_success,
             context_chars=len(system) + len(enhanced),
             decisions_count=len(kararlar),
             error=_error,
         )
-        # Her kararı ayrıca logla (execution aşaması executed=True ile update edecek)
         for k in kararlar:
             decision_id = log_decision(
                 mode=mode,
@@ -340,6 +330,9 @@ def get_claude_decision_with_actions(user_prompt, mode="morning", system_overrid
                 claude_call_id=claude_call_id,
                 executed=False,
             )
-            # Karar dict'ine id ekle — orchestrator execute sonrası update edecek
             if decision_id:
                 k["_decision_id"] = decision_id
+
+
+# Alias under new name — preferred for new callers
+get_kimi_decision_with_actions = get_claude_decision_with_actions

@@ -404,35 +404,36 @@ def evolve_rule_with_claude(
 
     fitness = current_rule.get("fitness_detail", {})
     prompt = f"""
-Sen Finzora Agent'sın. ATLAS tarzı Darwinian prompt evolution yapıyorsun.
+You are Finzora Agent doing ATLAS-style Darwinian prompt evolution.
 
-MEVCUT KURAL: {rule_name}
-MEVCUT PROMPT:
+CURRENT RULE: {rule_name}
+CURRENT PROMPT:
 {current_rule['current_prompt']}
 
-PERFORMANS VERİSİ (fitness = Sharpe × win_rate):
+PERFORMANCE DATA (fitness = Sharpe × win_rate):
   Fitness: {current_rule.get('fitness', 'N/A')}
-  Trade sayısı: {fitness.get('n', 0)}
+  Trade count: {fitness.get('n', 0)}
   Win rate: %{fitness.get('win_rate', 'N/A')}
-  Ortalama P/L: %{fitness.get('avg_pnl', 'N/A')}
+  Avg P/L: %{fitness.get('avg_pnl', 'N/A')}
   Sharpe proxy: {fitness.get('sharpe', 'N/A')}
   Std dev: {fitness.get('std_dev', 'N/A')}
 
-TRADE ANALİZİ BAĞLAMI:
+TRADE ANALYSIS CONTEXT:
 {analysis_context[:1500]}
 
-GÖREV:
-1. Bu kuralın neden düşük fitness verdiğini analiz et
-2. Mevcut promptun zayıf noktalarını tespit et
-3. Yeni bir prompt versiyonu öner — Türkçe yaz
+TASK:
+1. Diagnose why this rule has low fitness.
+2. Identify weak points in the current prompt.
+3. Propose a NEW prompt version. The new prompt MUST itself be written in Turkish
+   (because the rule is consumed by Turkish-output flows).
 
-ÇIKTI FORMAT (SADECE JSON, başka hiçbir şey yazma):
+OUTPUT (JSON ONLY — keys stay exactly as shown):
 {{
-  "analiz": "Kuralın neden zayıf olduğu",
-  "degisiklik": "Ne değiştirilmeli",
-  "yeni_prompt": "Yeni kural promptu (tam metin, Türkçe)",
-  "beklenen_etki": "Beklenen win rate/P/L etkisi",
-  "risk": "Bu değişikliğin riski"
+  "analiz": "Turkish — why the rule is weak",
+  "degisiklik": "Turkish — what should change",
+  "yeni_prompt": "Turkish — full text of the new rule prompt",
+  "beklenen_etki": "Turkish — expected win-rate/P&L impact",
+  "risk": "Turkish — risk of this change"
 }}
 """
     response = get_claude_decision(prompt, mode="weekly")

@@ -1,19 +1,19 @@
 #!/usr/bin/env python3
 """
-Finzora RAG — Context'li Claude Çağrısı
-=========================================
-Kullanıcı sorgusu → RAG retrieve → Claude API → yanıt.
+Finzora RAG — Context-Augmented Kimi Call (via OpenRouter)
+============================================================
+User query → RAG retrieve → Kimi K2 thinking → response.
 
-KULLANIM:
+USAGE:
   python scripts/rag/claude_with_context.py "POWL için ne düşünüyorsun?"
   python scripts/rag/claude_with_context.py "Son kriz rallilerinde hangi dersler var?" --top-k 8
   python scripts/rag/claude_with_context.py "AI tedarik zinciri" --symbol COHR --top-k 5
 
-MANTIK:
-  1. Sorgu Voyage ile embed edilir
-  2. ChromaDB'den top-k chunk çekilir
-  3. Chunk'lar Claude'un system prompt'una "geçmiş kayıt" olarak inject edilir
-  4. Claude yanıt verir — artık POWL geçmişini, LASR dersini, aktif pozisyonları bilir
+FLOW:
+  1. Query is embedded with Voyage.
+  2. Top-k chunks fetched from ChromaDB.
+  3. Chunks injected into the system prompt as "past records".
+  4. Kimi answers — now aware of POWL history, LASR lessons, active positions.
 """
 
 import os
@@ -26,31 +26,32 @@ sys.path.insert(0, str(_REPO_ROOT / "scripts" / "rag"))
 sys.path.insert(0, str(_REPO_ROOT / "agent"))
 
 from retriever import retrieve, format_context_for_claude  # noqa: E402
+from llm_client import chat as _llm_chat, get_api_key as _get_api_key, DEFAULT_MODEL as _DEFAULT_MODEL  # noqa: E402
 
 
-SYSTEM_PROMPT_WITH_RAG = """Sen Finzora AI'ın — Zeynel'in otonom portföy yönetim asistanısın.
+SYSTEM_PROMPT_WITH_RAG = """You are Finzora AI — Zeynel's autonomous portfolio management assistant.
 
-Bu konuşmada sana "İlgili Geçmiş Kayıtlar (RAG)" bölümünde gerçek trade geçmişi,
-kapatılmış swing dersleri ve kararlar veriliyor. Bu verileri dikkate al:
+In this conversation, the section "İlgili Geçmiş Kayıtlar (RAG)" supplies real
+past trades, closed swing lessons, and prior decisions. Use that data:
 
-1. Tekrar eden pattern'lere bak: aynı sembolde birden çok kayıp varsa söyle
-2. Geçmiş derslerle çelişmediğinden emin ol (örn. "kriz rallisini kovalama" gibi)
-3. Pozitif/negatif örneklerin dengesine bak
-4. Spekülatif olma — geçmiş veride olmayan iddialarda "geçmiş veri yok" de
+1. Look for repeating patterns: if the same ticker has had multiple losses, say so.
+2. Stay consistent with prior lessons (e.g. "do not chase crisis rallies").
+3. Watch the balance of positive vs negative examples.
+4. Don't speculate — if a claim isn't supported by the RAG, say "geçmiş veri yok".
 
-Etiketler zorunlu:
-- KESİN: RAG verisi, doğrulanmış rakam
-- MUHTEMEL: güçlü kanıta dayalı çıkarım
-- SPEKÜLATİF: yorum, tahmin
+Mandatory evidence tags (write them in Turkish, verbatim):
+- KESİN: from RAG data, verified number.
+- MUHTEMEL: strong inferential evidence.
+- SPEKÜLATİF: opinion or guess.
 
-Türkçe, sade, profesyonel yanıt ver."""
+Final answer MUST be in Turkish — plain, professional, no fluff."""
 
 
 def ask_with_context(
     query: str,
     top_k: int = 5,
     filter: dict = None,
-    model: str = "claude-opus-4-7",
+    model: str = None,
     max_tokens: int = 1500,
 ) -> dict:
     """
@@ -85,41 +86,34 @@ def ask_with_context(
     else:
         result["context"] = format_context_for_claude(hits, max_chars=4000)
 
-    # 2. Claude çağrısı
-    anthropic_key = os.environ.get("ANTHROPIC_API_KEY", "")
-    if not anthropic_key:
-        result["error"] = "ANTHROPIC_API_KEY tanımsız. Sadece retrieval yapıldı."
+    # 2. LLM call (Kimi via OpenRouter)
+    if not _get_api_key():
+        result["error"] = "OPENROUTER_API_KEY (ya da ANTHROPIC_API_KEY) tanımsız. Sadece retrieval yapıldı."
         return result
 
-    try:
-        import anthropic
-    except ImportError:
-        result["error"] = "anthropic paketi yok. pip install anthropic"
-        return result
+    used_model = model or _DEFAULT_MODEL
 
-    # System prompt = ana kimlik + RAG context
+    # System prompt = main identity + RAG context
     system = SYSTEM_PROMPT_WITH_RAG + "\n\n" + result["context"]
 
     try:
-        client = anthropic.Anthropic(api_key=anthropic_key)
-        resp = client.messages.create(
-            model=model,
-            max_tokens=max_tokens,
+        resp = _llm_chat(
             system=system,
-            messages=[{"role": "user", "content": query}],
+            user=query,
+            model=used_model,
+            max_tokens=max_tokens,
+            temperature=0.3,
+            apply_language_policy=False,  # SYSTEM_PROMPT already enforces Turkish output
         )
-        result["response"] = resp.content[0].text
-        # Observability logging (opsiyonel)
+        result["response"] = resp.text
         try:
             from observability import log_claude_call  # noqa
-            in_tok = getattr(resp.usage, "input_tokens", 0) if hasattr(resp, "usage") else 0
-            out_tok = getattr(resp.usage, "output_tokens", 0) if hasattr(resp, "usage") else 0
             log_claude_call(
                 mode="rag_query",
-                model=model,
-                input_tokens=in_tok,
-                output_tokens=out_tok,
-                duration_ms=0,  # CLI'dan net ölçmedik
+                model=used_model,
+                input_tokens=resp.input_tokens,
+                output_tokens=resp.output_tokens,
+                duration_ms=0,
                 success=True,
                 context_chars=len(system) + len(query),
                 decisions_count=0,
@@ -127,7 +121,7 @@ def ask_with_context(
         except Exception:
             pass
     except Exception as e:
-        result["error"] = f"Claude hata: {e}"
+        result["error"] = f"LLM hata: {e}"
 
     return result
 
@@ -140,7 +134,7 @@ def main():
     ap.add_argument("--type", help="event_type filtresi")
     ap.add_argument("--portfoy", help="portfoy filtresi")
     ap.add_argument("--show-context", action="store_true", help="RAG context'i bastır")
-    ap.add_argument("--model", default="claude-opus-4-7")
+    ap.add_argument("--model", default=None, help="Default: KIMI_MODEL env or moonshotai/kimi-k2-thinking")
     ap.add_argument("--max-tokens", type=int, default=1500)
     args = ap.parse_args()
 
@@ -186,7 +180,7 @@ def main():
         print(f"\n⚠️ {result['error']}")
     else:
         print("\n" + "=" * 60)
-        print("CLAUDE YANITI")
+        print("LLM YANITI")
         print("=" * 60)
         print(result["response"])
 

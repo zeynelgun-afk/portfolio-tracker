@@ -20,16 +20,18 @@ from datetime import datetime, timedelta, timezone
 
 # ── Config ──────────────────────────────────────────────────────────────────
 FMP_KEY          = os.environ.get("FMP_API_KEY", "g1GFJZtV5rCP49UCir4WuP56VjhmA6F8")
-ANTHROPIC_KEY    = os.environ.get("ANTHROPIC_API_KEY", "")
 BOT_TOKEN        = os.environ.get("TELEGRAM_BOT_TOKEN", "")
 PRIVATE_CHAT_ID  = os.environ.get("TELEGRAM_PRIVATE_ID", "1403072107")
 GH_TOKEN         = os.environ.get("GH_TOKEN", "")
 GH_REPO          = "zeynelgun-afk/portfolio-tracker"
 
 FMP_BASE         = "https://financialmodelingprep.com/stable"
-ANTHROPIC_URL    = "https://api.anthropic.com/v1/messages"
 TELEGRAM_API     = f"https://api.telegram.org/bot{BOT_TOKEN}"
 GH_API           = "https://api.github.com"
+
+# LLM client (Kimi via OpenRouter) — lazy-imported when analyze_with_claude runs
+_REPO_DIR_FOR_AGENT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.join(_REPO_DIR_FOR_AGENT, "agent"))
 
 REPO_ROOT        = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 LOG_FILE         = os.path.join(REPO_ROOT, "data", "news_radar_log.json")
@@ -187,32 +189,32 @@ def fetch_recent_news(lookback_hours=NEWS_LOOKBACK_HOURS):
     return filtered
 
 # ── Claude API Analizi ───────────────────────────────────────────────────────
-CLAUDE_SYSTEM = """Sen bir hisse senedi araştırma uzmanısın. Türk yatırımcılar için ABD piyasalarını takip ediyorsun.
+CLAUDE_SYSTEM = """You are an equity research analyst writing for Turkish retail investors who follow US markets.
 
-GÖREVİN: Verilen haber listesini analiz et. SADECE aşağıdaki kriterleri karşılayan haberleri işaretle:
+JOB: scan the news list and tag ONLY items that meet these criteria.
 
-ALACAĞIN HABERLER:
-- Son 12 saatte yayımlanan ve piyasada henüz tam fiyatlanmamış (hisse %5'ten az tepki vermiş)
-- Düzenleyici kararname / hükümet kararı → belirli şirketlere doğrudan fayda
-- Beklenmedik M&A (birleşme/satın alma), kritik sözleşme, DOE/DOD finansmanı
-  (DOE = ABD Enerji Bakanlığı, DOD = ABD Savunma Bakanlığı)
-- Hammadde/emtia kararı → belirli sektöre doğrudan etki
-- Kritik teknoloji ortaklığı → şirket değeri değişecek
+INCLUDE:
+- Published in the last 12 hours, not yet fully priced in (stock has moved <5%).
+- Regulatory/government decision → direct benefit to specific companies.
+- Unexpected M&A, critical contract, DOE/DOD funding (DOE = US Department of Energy, DOD = US Department of Defense).
+- Commodity/raw-materials decision → direct sectoral impact.
+- Critical tech partnership → company value will change.
 
-ALMAYACAĞIN HABERLER:
-- Genel piyasa yorumları, makro tahminler, Fed söylemi (zaten fiyatlandı)
-- Bilançolar, kâr açıklamaları (beklenen olaylar)
-- Analist hedef fiyat güncellemeleri
-- ETF/fon alım-satım haberleri
-- Crypto/XRP/Bitcoin haberleri
-- Genel ekonomi yorumları
-- Eski haberler (12h+ önce)
+EXCLUDE:
+- General market commentary, macro forecasts, Fed speak (already priced in).
+- Earnings releases, scheduled events.
+- Analyst price-target updates.
+- ETF/fund flow stories.
+- Crypto/XRP/Bitcoin news.
+- General economic commentary.
+- Old news (12h+ ago).
 
-DİL KURALLARI (KRİTİK — UYULMASI ZORUNLU):
-Sade, anlaşılır Türkçe yaz. Lise mezunu bir okuyucunun zorlanmadan anlayacağı seviyede ol.
-İngilizce finans/teknoloji terimlerini OLDUĞU GİBİ KULLANMA. Aşağıdaki çeviri tablosunu uygula:
+LANGUAGE RULES (CRITICAL — strict):
+All free-text values in the JSON output MUST be written in plain, readable
+Turkish — at a level a high-school graduate easily understands. DO NOT use
+English finance/tech jargon raw — apply this translation map:
 
-  YANLIŞ (kullanma) → DOĞRU (kullan)
+  WRONG → RIGHT
   • overhang → "fiyat üzerindeki baskı" / "tedirginlik"
   • narrative → "anlatı" / "piyasa hikayesi"
   • thematic → "temaya dayalı"
@@ -223,49 +225,54 @@ Sade, anlaşılır Türkçe yaz. Lise mezunu bir okuyucunun zorlanmadan anlayaca
   • tailwind → "destekleyici rüzgar" / "olumlu etki"
   • catalyst → "tetikleyici"
   • consensus → "piyasa beklentisi"
-  • bullish (anlatımda) → "yükseliş yönlü"
-  • bearish (anlatımda) → "düşüş yönlü"
+  • bullish (in prose) → "yükseliş yönlü"
+  • bearish (in prose) → "düşüş yönlü"
   • AI → "yapay zeka"
-  • chip → "yarı iletken" veya "çip" (Türkçe yazımı)
+  • chip → "yarı iletken" or "çip"
   • rally → "yükseliş hareketi"
   • sell-off → "satış dalgası"
   • exposure → "maruziyet" / "etkilenme"
   • upside / downside → "yukarı potansiyel" / "aşağı risk"
   • disrupt → "alt üst etmek" / "sarsmak"
 
-Sadece şu İngilizce kalabilir:
-- Şirket isimleri ve hisse kodları (NVDA, AAPL, vs.)
-- Bilanço kalemleri kısaltmaları (FCF, EPS, P/E, ROE)
-- Kurum/yer isimleri (Reuters, Wall Street, Hong Kong)
-- "yon" alanındaki teknik kod (bullish/bearish — bunlar JSON için, değiştirme)
+These may stay in English:
+- Company names and tickers (NVDA, AAPL, etc.)
+- Statement-line abbreviations (FCF, EPS, P/E, ROE)
+- Institution/place names (Reuters, Wall Street, Hong Kong)
+- The "yon" field's enum (bullish/bearish — these are JSON values, do NOT translate).
 
-ÇIKTI FORMAT (JSON dizisi):
+OUTPUT FORMAT (JSON array — keys MUST stay exactly as shown):
 [
   {
-    "baslik": "kısa başlık (sade Türkçe, en fazla 70 karakter)",
-    "neden_onemli": "1-2 cümle Türkçe — bu haber neden henüz fiyatlanmadı, kim doğrudan etkilenir, neden önemli",
+    "baslik": "short headline in Turkish, ≤70 chars",
+    "neden_onemli": "1-2 Turkish sentences — why not yet priced, who is directly affected, why it matters",
     "etkilenen_hisseler": ["TICK1", "TICK2"],
-    "yon": "bullish veya bearish",
-    "sure": "kısa / orta / uzun vadeli",
-    "aciliyet": "yüksek / orta / düşük",
+    "yon": "bullish | bearish",
+    "sure": "kısa | orta | uzun vadeli",
+    "aciliyet": "yüksek | orta | düşük",
     "kaynak_url": "url"
   }
 ]
 
-ÖRNEK:
-İYİ: "ABD Enerji Bakanlığı küçük modüler reaktörlere 2 milyar dolar fon açıkladı, henüz hiçbir şirket adı duyurulmadı"
-KÖTÜ: "DOE SMR sektörüne fund commitment, bullish catalyst, sektörde tailwind oluşuyor"
+EXAMPLES:
+GOOD: "ABD Enerji Bakanlığı küçük modüler reaktörlere 2 milyar dolar fon açıkladı, henüz hiçbir şirket adı duyurulmadı"
+BAD : "DOE SMR sektörüne fund commitment, bullish catalyst, sektörde tailwind oluşuyor"
 
-Eğer kriterlerini karşılayan haber yoksa boş dizi döndür: []
-SADECE JSON döndür, başka hiçbir şey yazma."""
+If no items qualify, return an empty array: []
+Return ONLY the JSON array — no extra prose."""
 
 def analyze_with_claude(news_items):
-    """Claude API ile haberleri analiz et."""
-    if not ANTHROPIC_KEY:
-        log("HATA: ANTHROPIC_API_KEY eksik!")
+    """Analyze news with Kimi (via OpenRouter). Function name kept for backward compatibility."""
+    try:
+        from llm_client import chat as _llm_chat, get_api_key as _get_api_key
+    except ImportError as e:
+        log(f"HATA: llm_client import edilemedi: {e}")
         return []
 
-    # Haber listesini formatla
+    if not _get_api_key():
+        log("HATA: OPENROUTER_API_KEY (veya ANTHROPIC_API_KEY) eksik!")
+        return []
+
     news_text = ""
     for i, item in enumerate(news_items[:30], 1):
         news_text += f"\n---{i}---\n"
@@ -278,46 +285,37 @@ def analyze_with_claude(news_items):
         log("Analiz edilecek haber yok.")
         return []
 
-    user_msg = f"Bugünün haberleri (şu an: {datetime.now().strftime('%d %b %Y %H:%M')} TR saati):\n{news_text}"
+    user_msg = (f"Today's news (now: {datetime.now().strftime('%d %b %Y %H:%M')} TR time). "
+                f"Apply the criteria from the system prompt and return ONLY the JSON array.\n{news_text}")
 
-    log("Claude API'ye gönderiliyor...")
+    log("Kimi API'ye gönderiliyor (OpenRouter)...")
+    raw = ""
     try:
-        r = requests.post(
-            ANTHROPIC_URL,
-            headers={
-                "x-api-key": ANTHROPIC_KEY,
-                "anthropic-version": "2023-06-01",
-                "content-type": "application/json",
-            },
-            json={
-                "model": "claude-sonnet-4-20250514",
-                "max_tokens": 1000,
-                "system": CLAUDE_SYSTEM,
-                "messages": [{"role": "user", "content": user_msg}],
-            },
+        resp = _llm_chat(
+            system=CLAUDE_SYSTEM,
+            user=user_msg,
+            max_tokens=1500,
+            temperature=0.2,
             timeout=45,
+            apply_language_policy=False,  # CLAUDE_SYSTEM already pins language behavior
         )
-        r.raise_for_status()
-        data = r.json()
-        raw = data["content"][0]["text"].strip()
-        log(f"Claude yanıtı: {raw[:200]}")
+        raw = resp.text.strip()
+        log(f"LLM yanıtı: {raw[:200]}")
 
-        # JSON parse
         if raw.startswith("["):
             return json.loads(raw)
-        # JSON bloğu içindeyse çıkar
         if "```" in raw:
-            raw = raw.split("```")[1]
-            if raw.startswith("json"):
-                raw = raw[4:]
-            return json.loads(raw.strip())
+            inside = raw.split("```")[1]
+            if inside.startswith("json"):
+                inside = inside[4:]
+            return json.loads(inside.strip())
         return json.loads(raw)
 
     except json.JSONDecodeError as e:
         log(f"JSON parse hatası: {e} | Raw: {raw[:200]}")
         return []
     except Exception as e:
-        log(f"Claude API hatası: {e}")
+        log(f"LLM API hatası: {e}")
         return []
 
 # ── Telegram Gönderim ───────────────────────────────────────────────────────

@@ -1,8 +1,8 @@
 """
-Finzora Valuation Framework v6 — Claude AI Consultant
-======================================================
-Tek başına framework karar veremediğinde (büyük konsensüs sapması, düşük güven,
-yüksek metod uyuşmazlığı) Claude'dan ikinci görüş alır.
+Finzora Valuation Framework v6 — Kimi K2 Thinking AI Consultant (via OpenRouter)
+=================================================================================
+When the framework alone cannot decide (large consensus deviation, low confidence,
+high method dispersion), get a second opinion from Kimi via OpenRouter.
 
 Tetikleyiciler:
   1. abs(framework_vs_analyst) >= 50%
@@ -31,9 +31,16 @@ import re
 import time
 from typing import Optional
 
-ANTHROPIC_KEY = os.environ.get("ANTHROPIC_API_KEY", "")
-CLAUDE_MODEL = os.environ.get("CLAUDE_MODEL", "claude-opus-4-7")
-CLAUDE_VALUATION_TIMEOUT = 60  # saniye
+# LLM client — via OpenRouter (Kimi K2 thinking)
+import sys as _sys
+from pathlib import Path as _Path
+_agent_dir = _Path(__file__).resolve().parent.parent
+if str(_agent_dir) not in _sys.path:
+    _sys.path.insert(0, str(_agent_dir))
+from llm_client import chat as _llm_chat, get_api_key as _get_api_key, DEFAULT_MODEL as _DEFAULT_MODEL
+
+CLAUDE_MODEL = os.environ.get("KIMI_MODEL") or os.environ.get("CLAUDE_MODEL") or _DEFAULT_MODEL
+CLAUDE_VALUATION_TIMEOUT = 90  # seconds (Kimi thinking can be slower than Opus)
 
 # Observability (opsiyonel)
 try:
@@ -47,51 +54,54 @@ except ImportError:
     log_claude_call = lambda *a, **kw: None
 
 
-SYSTEM_PROMPT = """Sen Finzora değerleme uzmanısın — Zeynel'in otonom hisse değerleme asistanı.
+SYSTEM_PROMPT = """You are Finzora's valuation expert — Zeynel's autonomous equity valuation assistant.
 
-GÖREV:
-Sana bir hissenin temel verileri ve framework'un mekanik değerleme sonucu verilecek.
-Framework mid-cycle metodları (normalize edilmiş PE, EV/EBITDA mid-cycle, mean-reversion DCF)
-kullanıyor. Bu metodlar tarihsel ortalamaya geri dönüş varsayımına dayanır.
+CONTEXT:
+You will receive a stock's fundamentals plus the framework's mechanical valuation.
+The framework uses mid-cycle methods (normalized PE, EV/EBITDA mid-cycle,
+mean-reversion DCF). These rely on a return-to-historical-average assumption.
 
-SENİN GÖREVİN:
-1. Yapısal rejim değişikliği var mı? (örn: AI/HBM yarı iletkenler için, GLP-1 ilaç için, EV otomotiv için)
-2. Cycle aşaması: early/mid/late/peak/bottom?
-3. Forward looking metrikler (PEG, forward PE, growth-adjusted) ne diyor?
-4. Analist konsensüsü ile framework neden farklı?
-5. Bear/Base/Bull senaryolarda hedef fiyat?
+YOUR JOB:
+1. Is there a structural regime change? (e.g. AI/HBM for semis, GLP-1 for pharma, EV for autos)
+2. Cycle phase: early / mid / late / peak / bottom?
+3. What do forward-looking metrics say (PEG, forward PE, growth-adjusted)?
+4. Why does analyst consensus differ from the framework?
+5. Bear / Base / Bull price targets?
 
-ÇIKTI: SADECE aşağıdaki JSON formatında, başka hiçbir şey yazma.
+OUTPUT: ONLY the JSON below — no other text. JSON keys MUST stay exactly as shown.
+All free-text VALUES (thesis, aciklama, framework_kritik, konsensus_aciklama,
+tavsiye) MUST be written in TURKISH (no Turkish-special characters: write
+plain ASCII for these values to keep parsing safe — e.g. "satis" not "satış").
 
 ```json
 {
   "claude_fair_value": 350.0,
   "confidence": 75,
   "scenarios": {
-    "bear": {"price": 200.0, "thesis": "AI capex yavaşlar, memory cycle peak"},
-    "base": {"price": 350.0, "thesis": "HBM yapısal rejim devam, growth normalize"},
-    "bull": {"price": 550.0, "thesis": "AI memory supercycle, multiple expansion"}
+    "bear": {"price": 200.0, "thesis": "Turkish ASCII — bear thesis, single sentence"},
+    "base": {"price": 350.0, "thesis": "Turkish ASCII — base thesis"},
+    "bull": {"price": 550.0, "thesis": "Turkish ASCII — bull thesis"}
   },
   "rejim_degisikligi": {
     "var_mi": true,
     "tip": "ai_memory_yapisal",
-    "aciklama": "HBM marjlari historicallden yapisal yuksek, mean-reversion gecmiyor"
+    "aciklama": "Turkish ASCII — single sentence rationale"
   },
   "cycle_phase": "mid",
-  "framework_kritik": "Mid-cycle PE metodu HBM rejim degisikligini yakalamiyor, %40 lowball",
-  "konsensus_aciklama": "Analist $429 buyume normalize forward PE bazli, framework $167 mean-reversion bazli",
-  "tavsiye": "PAHALI ama satma tezi sadece cycle peak hipotezi dogruysa gecerli, MANUEL REVIEW",
+  "framework_kritik": "Turkish ASCII — single sentence",
+  "konsensus_aciklama": "Turkish ASCII — single sentence",
+  "tavsiye": "Turkish ASCII — recommendation prose",
   "tavsiye_etiket": "MANUEL_REVIEW"
 }
 ```
 
-KURALLAR:
-- claude_fair_value: tek nokta hedef (12-ay)
-- tavsiye_etiket: UCUZ / ADIL / PAHALI / MANUEL_REVIEW (Turkce karakter yok)
-- confidence: kendi guvenin (analist + framework + makro netligi)
-- thesis: kisa, tek cumle, somut katalist
-- Turkce yaz, kesme isareti kullanma, profesyonel ton
-- SADECE JSON, baska aciklama yok"""
+RULES:
+- claude_fair_value: single 12-month target.
+- tavsiye_etiket: one of UCUZ / ADIL / PAHALI / MANUEL_REVIEW (no Turkish special chars).
+- confidence: your own confidence (analyst clarity + framework + macro).
+- thesis: short, single Turkish sentence, concrete catalyst, plain ASCII.
+- No apostrophes (write Zeynelin not "Zeynel'in").
+- ONLY return the JSON — no extra prose, no markdown fence outside the JSON."""
 
 
 def _build_user_prompt(framework_result: dict) -> str:
@@ -117,49 +127,49 @@ def _build_user_prompt(framework_result: dict) -> str:
     roe = (snap.get("roe", 0) or 0) * 100
     roic = (snap.get("roic", 0) or 0) * 100
 
-    return f"""DEGERLEME ANALIZI — {ticker}
+    return f"""VALUATION ANALYSIS — {ticker}
 
-FIYAT: ${fv.get('current_price', 0):.2f}
+PRICE: ${fv.get('current_price', 0):.2f}
 ARCHETYPE: {cls.get('archetype_label', '?')} ({cls.get('archetype', '?')})
 
-═══ FRAMEWORK SONUCU (mekanik) ═══
-Adil deger: ${fv.get('point', 0):.2f}
-Aralik: ${fv.get('range_low', 0):.2f} - ${fv.get('range_high', 0):.2f}
+═══ FRAMEWORK RESULT (mechanical) ═══
+Fair value: ${fv.get('point', 0):.2f}
+Range: ${fv.get('range_low', 0):.2f} - ${fv.get('range_high', 0):.2f}
 Upside: {fv.get('upside_pct', 0):+.1f}%
-Karar: {fv.get('karar', '?')}
-Guven: {conf.get('score', 0)}/100
+Verdict: {fv.get('karar', '?')}
+Confidence: {conf.get('score', 0)}/100
 
-KULLANILAN METODLAR:
+METHODS USED:
 {method_lines}
 
-KIRMIZI BAYRAKLAR: {', '.join(conf.get('red_flags', []))}
+RED FLAGS: {', '.join(conf.get('red_flags', []))}
 
-═══ ANALIST KONSENSUSU ═══
+═══ ANALYST CONSENSUS ═══
 Median: ${analyst.get('median', 0):.2f}
 High: ${analyst.get('high', 0):.2f}
 Low: ${analyst.get('low', 0):.2f}
 Framework gap: {analyst.get('framework_gap_pct', 0):+.1f}%
 
-═══ TEMEL VERILER ═══
-Sektor: {snap.get('sector', '?')} / {snap.get('industry', '?')}
+═══ FUNDAMENTALS ═══
+Sector: {snap.get('sector', '?')} / {snap.get('industry', '?')}
 Market cap: ${(snap.get('mcap', 0) or 0)/1e9:.1f}B
-F/K (TTM): {pe:.1f}
+P/E (TTM): {pe:.1f}
 Rev growth (TTM): {rev_g:+.1f}%
 Op margin: {op_m:.1f}%
 FCF margin: {fcf_m:.1f}%
 ROE: {roe:.1f}%
 ROIC: {roic:.1f}%
 
-═══ MAKRO REJIM ═══
-{regime.get('detay', 'rejim verisi yok')}
-Regime carpani: {regime.get('multiplier', 1.0)}
+═══ MACRO REGIME ═══
+{regime.get('detay', 'no regime data')}
+Regime multiplier: {regime.get('multiplier', 1.0)}
 
-═══ SORU ═══
-Bu hissede yapisal rejim degisikligi var mi? Mid-cycle metodlari haksiz lowball
-yapiyor mu? Bear/Base/Bull senaryolarda gercek hedef fiyat ne olur?
-Framework'a katiliyor musun yoksa duzeltme gerekli mi?
+═══ QUESTION ═══
+Is there a structural regime change for this stock? Are the mid-cycle methods
+unfairly lowballing it? In Bear/Base/Bull scenarios, what is the realistic target?
+Do you agree with the framework or is a correction required?
 
-Cevabini SADECE JSON formatinda ver."""
+Reply with JSON ONLY (free-text values in plain-ASCII Turkish)."""
 
 
 def _parse_json_response(text: str) -> Optional[dict]:
@@ -217,39 +227,35 @@ def consult_claude(
         }
         veya None (API key yoksa veya hata)
     """
-    if not ANTHROPIC_KEY:
+    if not _get_api_key():
         if verbose:
-            print("[ai_consultant] ANTHROPIC_API_KEY tanımsız, atlandı")
-        return {"_error": "ANTHROPIC_API_KEY env var tanımsız"}
-
-    try:
-        import anthropic
-    except ImportError as e:
-        if verbose:
-            print(f"[ai_consultant] anthropic paketi yok: {e}")
-        return {"_error": f"anthropic paketi import edilemedi: {e}"}
+            print("[ai_consultant] OPENROUTER_API_KEY tanımsız, atlandı")
+        return {"_error": "OPENROUTER_API_KEY (veya ANTHROPIC_API_KEY) env var tanımsız"}
 
     user_prompt = _build_user_prompt(framework_result)
 
     t0 = time.time()
     try:
-        client = anthropic.Anthropic(api_key=ANTHROPIC_KEY, timeout=CLAUDE_VALUATION_TIMEOUT)
-        msg = client.messages.create(
-            model=CLAUDE_MODEL,
-            max_tokens=2000,
+        resp = _llm_chat(
             system=SYSTEM_PROMPT,
-            messages=[{"role": "user", "content": user_prompt}],
+            user=user_prompt,
+            model=CLAUDE_MODEL,
+            max_tokens=6000,  # Kimi K2 thinking spends most of the budget on reasoning;
+                              # 2000 was empirically not enough to leave room for the JSON.
+            temperature=0.3,
+            timeout=CLAUDE_VALUATION_TIMEOUT,
+            apply_language_policy=False,  # SYSTEM_PROMPT already pins output language explicitly
         )
         duration_ms = int((time.time() - t0) * 1000)
-        raw = "".join(b.text for b in msg.content if hasattr(b, "text"))
+        raw = resp.text
 
         # Observability
         try:
             log_claude_call(
                 mode="valuation_consult",
                 model=CLAUDE_MODEL,
-                input_tokens=msg.usage.input_tokens if hasattr(msg, "usage") else 0,
-                output_tokens=msg.usage.output_tokens if hasattr(msg, "usage") else 0,
+                input_tokens=resp.input_tokens,
+                output_tokens=resp.output_tokens,
                 duration_ms=duration_ms,
                 metadata={"ticker": framework_result.get("ticker"), "severity": severity},
             )
@@ -258,9 +264,9 @@ def consult_claude(
 
     except Exception as e:
         if verbose:
-            print(f"[ai_consultant] Claude API hatası: {type(e).__name__}: {e}")
+            print(f"[ai_consultant] LLM API hatası: {type(e).__name__}: {e}")
         return {
-            "_error": f"Claude API çağrısı başarısız: {type(e).__name__}: {e}",
+            "_error": f"LLM API çağrısı başarısız: {type(e).__name__}: {e}",
             "model_attempted": CLAUDE_MODEL,
             "duration_ms": int((time.time() - t0) * 1000),
         }

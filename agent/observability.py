@@ -309,22 +309,31 @@ def _index_to_sqlite(event: dict) -> None:
 
 # ── Yüksek seviye yardımcılar ────────────────────────────────────────────────
 
-# Claude model bazlı fiyat tablosu ($/M token)
-# Not: Gerçek fiyatlar https://www.anthropic.com/pricing adresinden doğrulanmalı.
-# Bu değerler SPEKÜLATİF — yaklaşık karar vermek için yeterli, faturalama için değil.
-_CLAUDE_PRICING = {
-    "opus":   {"in": 15.0,  "out": 75.0},
-    "sonnet": {"in":  3.0,  "out": 15.0},
-    "haiku":  {"in":  0.80, "out":  4.0},
+# Model bazlı fiyat tablosu ($/M token)
+# Notlar:
+#   - Kimi K2 thinking fiyatları OpenRouter listesinden alınmıştır (yaklaşık).
+#   - Anthropic Claude tier'ları geriye uyumluluk için bırakıldı (ANTHROPIC_API_KEY
+#     fallback'i kullanılırsa veya eski log kayıtları okunursa lazım).
+#   - SPEKÜLATİF — faturalandırma için değil, içsel maliyet izleme içindir.
+_LLM_PRICING = {
+    "kimi_thinking": {"in":  0.60, "out":  2.50},   # moonshotai/kimi-k2-thinking ~$/M
+    "kimi":          {"in":  0.30, "out":  1.20},   # moonshotai/kimi-k2 (non-thinking)
+    "opus":          {"in": 15.00, "out": 75.00},
+    "sonnet":        {"in":  3.00, "out": 15.00},
+    "haiku":         {"in":  0.80, "out":  4.00},
 }
-_DEFAULT_TIER = "opus"  # bilinmeyen model → en kötü durum
+_DEFAULT_TIER = "kimi_thinking"  # post-migration default
 
 
 def _model_tier(model: str) -> str:
-    """Model adından fiyat tier'ı çıkar (opus/sonnet/haiku)."""
+    """Map model id to a pricing tier."""
     if not model:
         return _DEFAULT_TIER
     m = model.lower()
+    if "kimi" in m and "thinking" in m:
+        return "kimi_thinking"
+    if "kimi" in m:
+        return "kimi"
     if "opus" in m:
         return "opus"
     if "sonnet" in m:
@@ -336,11 +345,11 @@ def _model_tier(model: str) -> str:
 
 def estimate_claude_cost(in_tokens: int, out_tokens: int, model: str = "") -> float:
     """
-    Yaklaşık USD maliyet. Model adından tier seçer (opus/sonnet/haiku).
-    SPEKÜLATİF — kesin pricing için api dokümantasyonunu kullan.
+    Approximate USD cost. Function name kept for backward compatibility — now
+    handles Kimi (default) and legacy Claude tiers.
     """
     tier = _model_tier(model)
-    rates = _CLAUDE_PRICING.get(tier, _CLAUDE_PRICING[_DEFAULT_TIER])
+    rates = _LLM_PRICING.get(tier, _LLM_PRICING[_DEFAULT_TIER])
     cost_in = (in_tokens or 0) / 1_000_000 * rates["in"]
     cost_out = (out_tokens or 0) / 1_000_000 * rates["out"]
     return round(cost_in + cost_out, 4)

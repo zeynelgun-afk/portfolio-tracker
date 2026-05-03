@@ -1220,12 +1220,12 @@ def isle_mesaj(msg: dict):
         env_check.append(f"<b>CWD:</b> <code>{os.getcwd()}</code>")
         env_check.append(f"<b>Bot zamanı:</b> {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
 
-        # anthropic paketi yüklü mü
+        # openai paketi yüklü mü (OpenRouter / Kimi için)
         try:
-            import anthropic as _an
-            env_check.append(f"<b>anthropic pkg:</b> ✅ v{_an.__version__}")
+            import openai as _oa
+            env_check.append(f"<b>openai pkg:</b> ✅ v{_oa.__version__}")
         except ImportError:
-            env_check.append(f"<b>anthropic pkg:</b> ❌ KURULU DEĞİL")
+            env_check.append(f"<b>openai pkg:</b> ❌ KURULU DEĞİL")
 
         tg_send(chat_id, "\n".join(env_check), reply_to=msg_id)
         return

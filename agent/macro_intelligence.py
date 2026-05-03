@@ -152,45 +152,46 @@ def analyze_themes_with_claude(
         f"  {k}: {v['açıklama']}" for k, v in THEME_UNIVERSE.items()
     )
 
-    prompt = f"""Sen Finzora AI trading sistemisin. Piyasa analizine dayalı tematik fırsat tespiti + aktif kriz tipi tespiti yapıyorsun.
+    prompt = f"""You are the Finzora AI trading system. Detect dominant themes
+from market data and identify the active crisis type for the K-13 crisis matrix.
 
-SEKTÖR PERFORMANSI (bugün):
+SECTOR PERFORMANCE (today):
 {sektor_ozet}
 
-SON HABERLER:
+RECENT NEWS:
 {haber_ozet}
 
-GÜNÜN EN GÜÇLÜ HİSSELERİ: {guclu_ozet}
+STRONGEST STOCKS TODAY: {guclu_ozet}
 VIX: {vix:.1f}
 
-BİLİNEN TEMA EVRENİ:
+KNOWN THEME UNIVERSE:
 {tema_listesi}
 
-GÖREV 1: Bugün için en güçlü 2-3 temayı tespit et ve her tema için alım adayları belirle.
+TASK 1: identify the 2-3 strongest themes for today and propose buy candidates.
 
-GÖREV 2 (K-13 KRİZ MATRİSİ): Piyasada bir stres/kriz sinyali var mı? Varsa kriz tipini belirle:
-- yok: VIX<20, sektörler mixed, haberler stabil → kriz yok (normal risk-on)
-- jeopolitik: savaş/gerilim haberleri, savunma sektörü güçlü, altın yükseliyor
-- pandemi: sağlık alarmları, healthcare yükselir, travel/enerji düşer
-- finansal: bankacılık stresi, tahvil getirileri oynak, altın yükselir
-- ticaret: tarife/embargo haberleri, domestic sektörler lehe, exporters baskıda
-- enflasyon: enerji+hammadde yükseliş, tüketici baskıda, FED söylemleri sıkı
+TASK 2 (K-13 CRISIS MATRIX): is there market stress/crisis? Identify type:
+- yok: VIX<20, mixed sectors, calm headlines → no crisis (normal risk-on)
+- jeopolitik: war/tension headlines, defense sector strong, gold up
+- pandemi: health alarms, healthcare up, travel/energy down
+- finansal: banking stress, volatile yields, gold up
+- ticaret: tariff/embargo headlines, domestic sectors favored, exporters under pressure
+- enflasyon: energy + materials up, consumer pressured, hawkish Fed talk
 
-Kriz tipine göre:
-- Faydalanıcı sektörler (beneficiary): bu krizden GÜÇLENEN sektörler (tam pozisyon)
-- Duyarlı sektörler (sensitive): bu krizden ZAYIFLAYAN sektörler (yarım pozisyon veya dur)
+Per crisis type:
+- beneficiary sectors: those STRENGTHENING in this crisis (full position)
+- sensitive sectors: those WEAKENING in this crisis (half position or stop)
 
-Valid sektör isimleri: Technology, Healthcare, Financial Services, Energy,
+Valid sector names: Technology, Healthcare, Financial Services, Energy,
 Consumer Cyclical, Industrials, Consumer Defensive, Basic Materials,
 Real Estate, Communication Services, Utilities, Defense, Gold
 
-ÇIKTI FORMAT (SADECE JSON):
+OUTPUT (JSON ONLY — keys MUST stay in Turkish exactly as shown, free-text values in Turkish):
 {{
   "dominant_temalar": [
     {{
       "tema_adi": "AI_altyapı",
       "güç_skoru": 8,
-      "neden": "Büyük teknoloji şirketleri capex artışı, güç altyapısı talebi",
+      "neden": "Turkish, single sentence — concrete reason",
       "öncelikli_alt_dal": "güç_soğutma",
       "önerilen_hisseler": ["VRT","ETN","PWR"],
       "portföy": "aggressive",
@@ -202,16 +203,16 @@ Real Estate, Communication Services, Utilities, Defense, Gold
   "aktif_kriz": {{
     "tip": "jeopolitik",
     "guven": 7,
-    "kanit": "2-3 cümle somut kanıt: hangi haberler, hangi sektör hareketleri",
+    "kanit": "2-3 Turkish sentences — concrete evidence: which news, which sector moves",
     "beneficiary_sectors": ["Energy","Defense","Gold","Materials","Real Estate","Consumer Defensive"],
     "sensitive_sectors": ["Technology","Consumer Cyclical","Communication Services","Healthcare","Financial Services","Industrials"]
   }},
-  "genel_yorum": "2-3 cümle"
+  "genel_yorum": "2-3 Turkish sentences"
 }}
 
-KRİTİK: aktif_kriz.tip için olası değerler: "yok", "jeopolitik", "pandemi", "finansal", "ticaret", "enflasyon".
-Kriz yoksa tip="yok", beneficiary_sectors=[], sensitive_sectors=[] (bu durumda K-13 standart VIX bazlı çalışır).
-guven: 1-10 (kanıt gücü; düşükse değişiklik yapılmayacak)."""
+CRITICAL: aktif_kriz.tip allowed values: "yok", "jeopolitik", "pandemi", "finansal", "ticaret", "enflasyon".
+If no crisis: tip="yok", beneficiary_sectors=[], sensitive_sectors=[] (K-13 then runs standard VIX-based).
+guven: 1-10 (evidence strength; low values mean no change will be applied)."""
 
     response = get_claude_decision(prompt, mode="morning")
 

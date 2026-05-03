@@ -242,17 +242,17 @@ def propose_new_specialist(blind_spot: dict) -> dict:
     konu = blind_spot.get("konu", "")
 
     prompt = f"""
-Finzora trading sisteminde şu blind spot tespit edildi:
-"{konu}" (frekans: {blind_spot.get('frekans', 0)} kez)
+A blind spot has been detected in the Finzora trading system:
+"{konu}" (frequency: {blind_spot.get('frekans', 0)} occurrences)
 
-Bu blind spot için yeni bir uzman agent tasarla:
+Design a new specialist agent that covers this blind spot.
 
-ÇIKTI FORMAT (SADECE JSON):
+OUTPUT (JSON ONLY — keys stay exactly as shown):
 {{
-  "agent_adi": "YENI_AGENT_ADI",
-  "uzmanlik_alani": "Ne konuda uzman?",
-  "sistem_promptu": "Bu agent'ın sistem promptu (Türkçe, 100-200 kelime)",
-  "fitness_metrigi": "Bu agent nasıl skorlanır?",
+  "agent_adi": "NEW_AGENT_NAME (uppercase ASCII)",
+  "uzmanlik_alani": "Turkish — area of expertise",
+  "sistem_promptu": "Turkish — the new agent's system prompt (100-200 words)",
+  "fitness_metrigi": "Turkish — how this agent gets scored",
   "ilk_agirlik": 1.0
 }}
 """

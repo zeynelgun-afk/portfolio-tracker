@@ -94,30 +94,31 @@ def generate_post_trade_analysis(trade: dict, portfolio: str) -> str:
     k_rules     = digest_path.read_text(encoding="utf-8") if digest_path.exists() else ""
 
     prompt = f"""
-Sen Finzora Agent'sın. Az önce bir pozisyon kapandı. Post-trade analiz yap.
+You are Finzora Agent. A position has just closed — produce a post-trade analysis.
 
-TRADE DETAYLARI:
-  Sembol:      {symbol}
-  Portföy:     {portfolio}
-  Giriş:       {entry_price}
-  Çıkış:       {exit_price}
-  P/L:         %{pnl_pct}
-  Tutma süresi: {hold_days} gün
-  Çıkış nedeni: {exit_reason}
-  Giriş tezi:  {entry_reason}
+TRADE DETAILS:
+  Symbol:       {symbol}
+  Portfolio:    {portfolio}
+  Entry:        {entry_price}
+  Exit:         {exit_price}
+  P/L:          %{pnl_pct}
+  Hold days:    {hold_days}
+  Exit reason:  {exit_reason}
+  Entry thesis: {entry_reason}
 
-K-KURALLARI (özet):
+K-RULES (digest):
 {k_rules[:1000]}
 
-Şunları analiz et:
-1. Bu trade hangi K-kuralına göre yönetildi?
-2. Giriş tezi doğru muydu? Ne oldu?
-3. Çıkış kararı doğru zamanda mı verildi?
-4. Bu trade'den çıkarılan 1-2 somut ders nedir?
-5. Bir sonraki benzer durumda ne farklı yapılmalı?
+Analyze:
+1. Which K-rule governed this trade?
+2. Was the entry thesis correct? What actually happened?
+3. Was the exit decision well-timed?
+4. What 1-2 concrete lessons come out of this trade?
+5. What should be done differently next time in a similar setup?
 
-Kısa ve net. KESİN / MUHTEMEL / SPEKÜLATİF etiket kullan.
-Son satır mutlaka: "DERS: [tek cümle özet]"
+Write the answer in Turkish — short and sharp.
+Use the evidence tags KESİN / MUHTEMEL / SPEKÜLATİF (Turkish, verbatim).
+The final line MUST be exactly: "DERS: [single Turkish sentence summary]"
 """
 
     return get_claude_decision(prompt, mode="monitor")

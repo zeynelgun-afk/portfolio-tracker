@@ -69,18 +69,18 @@ def propose_improvement(rule_name: str, failure_summary: str) -> str:
     genome = json.load(open(genome_path)) if genome_path.exists() else {}
     mevcut = genome.get(rule_name, {}).get("current_prompt", "Kural bulunamadı")
 
-    prompt = f"""Finzora trading sisteminde bir kural zayıf performans veriyor.
+    prompt = f"""A rule in the Finzora trading system is underperforming.
 
-KURAL: {rule_name}
-MEVCUT TANIM:
+RULE: {rule_name}
+CURRENT DEFINITION:
 {mevcut}
 
-HATA/BAŞARISIZLIK:
+FAILURE/PERFORMANCE SUMMARY:
 {failure_summary}
 
-Görev: Daha iyi çalışacak yeni kural metni öner.
-SADECE JSON döndür:
-{{"yeni_prompt": "yeni kural metni (Türkçe, 2-4 satır)", "gerekce": "neden daha iyi"}}"""
+TASK: propose a better rule definition.
+Return ONLY this JSON (keys exactly as shown):
+{{"yeni_prompt": "Turkish — new rule text, 2-4 lines", "gerekce": "Turkish — why it is better"}}"""
 
     response = get_claude_decision(prompt, mode="weekly")
     try:
