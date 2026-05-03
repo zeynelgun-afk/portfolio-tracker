@@ -353,6 +353,8 @@ def format_yardim() -> str:
 <b>Piyasa:</b>
   <code>/vix</code> — Güncel VIX + seviye
   <code>/kriz</code> — K-13 aktif kriz matrisi
+  <code>/tema</code> — Bugünün dominant temaları (AI tespiti)
+  <code>/havuz</code> — AI'nin son aday hisse havuzu + son kararlar
   <code>/fiyat AAPL</code> — Canlı fiyat + değişim
 
 <b>Hisse Analizi:</b>
@@ -618,6 +620,152 @@ def format_kapanan() -> str:
         return "\n".join(lines)
     except Exception as e:
         return f"Kapanan trade'ler okunamadı: {e}"
+
+
+def format_tema() -> str:
+    """Bugünün dominant temaları + aktif kriz tipi (Kimi tespiti)."""
+    path = REPO_ROOT / "data" / "macro_intelligence.json"
+    if not path.exists():
+        return "🌊 Henüz tema tespiti yapılmadı (sabah 16:00'da çalışır)."
+    try:
+        d = json.load(open(path, encoding="utf-8"))
+    except Exception as e:
+        return f"Tema verisi okunamadı: {e}"
+
+    tarih = (d.get("tarih", "") or "")[:16]
+    vix = d.get("vix", 0)
+    mod = d.get("piyasa_modu", "?")
+    temalar = d.get("dominant_temalar", []) or []
+    kriz = d.get("aktif_kriz", {}) or {}
+    kacin = d.get("kacınılacak", d.get("kaçınılacak", [])) or []
+    yorum = (d.get("genel_yorum", "") or "")[:300]
+
+    lines = [
+        f"<b>🌊 Tema &amp; Piyasa Havası</b>",
+        f"<i>Son güncelleme: {tarih}</i>",
+        "",
+        f"📊 Piyasa modu: <b>{mod}</b>",
+        f"📉 VIX: <b>{vix:.1f}</b>",
+        "",
+    ]
+
+    # Aktif kriz
+    kriz_tip = kriz.get("tip", "yok")
+    kriz_guven = kriz.get("guven", 0)
+    if kriz_tip and kriz_tip not in ("yok", "belirsiz"):
+        lines.append(f"⚠️ <b>Aktif kriz: {kriz_tip}</b> (güven: {kriz_guven}/10)")
+        ben = kriz.get("beneficiary_sectors", [])
+        sen = kriz.get("sensitive_sectors", [])
+        if ben:
+            lines.append(f"  ✅ Faydalanan: {', '.join(ben[:5])}")
+        if sen:
+            lines.append(f"  ❌ Zayıflayan: {', '.join(sen[:5])}")
+        lines.append("")
+    elif kriz_tip == "yok":
+        lines.append("✅ Aktif kriz yok (normal risk-on)")
+        lines.append("")
+    else:
+        lines.append(f"❓ Kriz: belirsiz (güven {kriz_guven}/10)")
+        lines.append("")
+
+    # Dominant temalar
+    if temalar:
+        lines.append("<b>🔥 Dominant temalar:</b>")
+        for t in temalar[:5]:
+            ad = t.get("tema_adi", "?")
+            skor = t.get("güç_skoru", t.get("guc_skoru", "?"))
+            neden = (t.get("neden", "") or "")[:80]
+            hisse = t.get("önerilen_hisseler", t.get("onerilen_hisseler", [])) or []
+            pf = t.get("portföy", t.get("portfoy", "?"))
+            acil = t.get("aciliyet", "?")
+            lines.append(f"  • <b>{ad}</b> ({skor}/10) [{pf}, {acil}]")
+            if neden:
+                lines.append(f"    💭 {neden}")
+            if hisse:
+                lines.append(f"    🎯 {' '.join('$'+h for h in hisse[:5])}")
+        lines.append("")
+    else:
+        lines.append("ℹ️ Bugün için tema tespit edilmedi.")
+        lines.append("")
+
+    if kacin:
+        lines.append(f"🚫 Kaçınılacak sektörler: {', '.join(kacin[:5])}")
+        lines.append("")
+
+    if yorum:
+        lines.append(f"<i>💬 {yorum}</i>")
+
+    return "\n".join(lines)
+
+
+def format_havuz() -> str:
+    """Kimi'nin son seçtiği aday havuz + aktif kararlar."""
+    ss_path = REPO_ROOT / "data" / "session_state.json"
+    if not ss_path.exists():
+        return "🎯 Henüz aday havuzu üretilmedi."
+    try:
+        d = json.load(open(ss_path, encoding="utf-8"))
+    except Exception as e:
+        return f"Aday havuz okunamadı: {e}"
+
+    lines = ["<b>🎯 AI Aday Havuzu</b>", ""]
+
+    # Buy list (sabah 16:00 morning'den)
+    buy = d.get("buy_list", {}) or {}
+    bl_tarih = (buy.get("tarih", "") or "")[:16]
+    adaylar = buy.get("adaylar", []) or []
+    bl_vix = buy.get("vix", 0)
+    bl_mod = buy.get("piyasa_mod", buy.get("piyasa_modu", "?"))
+
+    lines.append(f"<i>Sabah taraması: {bl_tarih}</i>")
+    lines.append(f"VIX: {bl_vix:.1f} • Piyasa: {bl_mod}")
+    lines.append("")
+
+    if adaylar:
+        lines.append(f"<b>📋 Aday hisseler ({len(adaylar)}):</b>")
+        for a in adaylar[:15]:
+            if isinstance(a, dict):
+                sym = a.get("sembol", a.get("symbol", "?"))
+                tema = a.get("tema", a.get("tema_adi", ""))
+                pf = a.get("portfoy", a.get("portföy", ""))
+                lines.append(f"  • ${sym}" + (f" [{tema}]" if tema else "") + (f" → {pf}" if pf else ""))
+            else:
+                lines.append(f"  • ${a}")
+        lines.append("")
+    else:
+        lines.append("ℹ️ Bugün için aday hisse listesi boş.")
+        lines.append("")
+
+    # Son AI kararları (morning'in çıktısı)
+    kararlar_blok = d.get("claude_kararlar", d.get("ai_kararlar", {})) or {}
+    k_tarih = (kararlar_blok.get("tarih", "") or "")[:16]
+    kararlar = kararlar_blok.get("kararlar", []) or []
+    if kararlar:
+        lines.append(f"<b>🤖 Son AI kararları ({k_tarih}):</b>")
+        ico = {"EKLE": "🟢", "BÜYÜT": "🟢", "ÇIK": "🔴",
+               "DÖNDÜR": "🔄", "STOP_GÜNCELLE": "⚙️", "İZLE": "👁"}
+        for k in kararlar[:10]:
+            tip = k.get("tip", "?")
+            sym = k.get("sembol", "?")
+            pf = k.get("portfoy", "?")
+            pct = k.get("pct", 0) or 0
+            neden = (k.get("neden", "") or "")[:80]
+            lines.append(f"  {ico.get(tip,'•')} <b>{tip}</b> ${sym} ({pf}, %{pct})")
+            if neden:
+                lines.append(f"    💭 {neden}")
+        lines.append("")
+
+    # Zorunlu aksiyonlar (varsa)
+    zorunlu = d.get("zorunlu_aksiyonlar", []) or []
+    if zorunlu:
+        lines.append(f"⚠️ <b>Bekleyen zorunlu aksiyon ({len(zorunlu)}):</b>")
+        for z in zorunlu[:5]:
+            if isinstance(z, dict):
+                lines.append(f"  • {z.get('sembol','?')} → {z.get('aksiyon','?')}: {(z.get('neden','') or '')[:60]}")
+            else:
+                lines.append(f"  • {z}")
+
+    return "\n".join(lines)
 
 
 # ── TAKVİM & MAKRO FONKSİYONLARI ─────────────────────────────────────────────
@@ -1116,6 +1264,16 @@ def isle_mesaj(msg: dict):
         tg_send(chat_id, format_kriz(), reply_to=msg_id)
         return
 
+    # ── /tema ─ AI'nin tespit ettiği bugünün dominant temaları ────
+    if text_lower in ("/tema", "/themes", "/temalar"):
+        tg_send(chat_id, format_tema(), reply_to=msg_id)
+        return
+
+    # ── /havuz ─ AI'nin son aday hisse havuzu + kararlar ──────────
+    if text_lower in ("/havuz", "/aday", "/adaylar", "/buylist"):
+        tg_send(chat_id, format_havuz(), reply_to=msg_id)
+        return
+
     # ── /stats ────────────────────────────────────────────────────
     if text_lower in ("/stats", "/istatistik"):
         tg_send(chat_id, format_stats(), reply_to=msg_id)
@@ -1212,20 +1370,48 @@ def isle_mesaj(msg: dict):
         env_check = []
         env_check.append("<b>🔧 Sistem Env Durumu</b>")
         env_check.append("")
+        # Optional vars: env'de yoksa "default" gösterilir, ❌ değil
+        OPTIONAL_VARS = {"KIMI_MODEL", "CLAUDE_MODEL"}
+        # GH_TOKEN/PAT_TOKEN birincil/ikincil — biri yetiyor
+        gh_primary = os.environ.get("GH_TOKEN", "")
+        gh_secondary = os.environ.get("PAT_TOKEN", "")
+        gh_present = bool(gh_primary or gh_secondary)
+
         for var in ["TELEGRAM_TOKEN", "TELEGRAM_PRIVATE_CHAT", "FMP_API_KEY",
                     "OPENROUTER_API_KEY", "ANTHROPIC_API_KEY",
+                    "GH_TOKEN", "PAT_TOKEN",
                     "KIMI_MODEL", "CLAUDE_MODEL", "RAILWAY",
                     "RAILWAY_ENVIRONMENT", "RAILWAY_PROJECT_NAME",
                     "RAILWAY_SERVICE_NAME"]:
             v = os.environ.get(var, "")
             if not v:
-                status = "❌ MISSING"
-            elif var in ("OPENROUTER_API_KEY", "ANTHROPIC_API_KEY", "FMP_API_KEY", "TELEGRAM_TOKEN"):
+                if var in OPTIONAL_VARS:
+                    # Default kullanılıyor — sorun değil
+                    if var == "KIMI_MODEL":
+                        status = "⚪ default (moonshotai/kimi-k2-thinking)"
+                    elif var == "CLAUDE_MODEL":
+                        status = "⚪ legacy (kullanılmıyor)"
+                    else:
+                        status = "⚪ default"
+                elif var in ("GH_TOKEN", "PAT_TOKEN") and gh_present:
+                    # Diğeri set ise OK
+                    status = "⚪ diğeri set (yedek)"
+                else:
+                    status = "❌ MISSING"
+            elif var in ("OPENROUTER_API_KEY", "ANTHROPIC_API_KEY", "FMP_API_KEY",
+                         "TELEGRAM_TOKEN", "GH_TOKEN", "PAT_TOKEN"):
                 # Maskeli göster (güvenlik)
                 status = f"✅ SET ({v[:8]}...{v[-4:]}, len={len(v)})"
             else:
                 status = f"✅ SET ({v[:50]})"
             env_check.append(f"<code>{var}</code>: {status}")
+        # Workflow tetikleyici özet — kullanıcı kritik bilgi
+        env_check.append("")
+        if gh_present:
+            env_check.append("🟢 <b>Workflow tetikleyici:</b> Aktif (cron'lar Railway'den GitHub'a gidiyor)")
+        else:
+            env_check.append("🔴 <b>Workflow tetikleyici:</b> KIRIK — GH_TOKEN/PAT_TOKEN yok!")
+            env_check.append("   Sabah 14:00 tarama, 16:00 morning, monitor, closing → tetiklenmiyor.")
         env_check.append("")
         env_check.append(f"<b>Python:</b> {_sys.version.split()[0]}")
         env_check.append(f"<b>CWD:</b> <code>{os.getcwd()}</code>")
