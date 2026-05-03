@@ -73,21 +73,31 @@ def _find_font(preferred_paths: list, generic_names: list) -> str:
     return ""
 
 
+# Repo'daki garantili fontlar EN ÖNCE — Railway/sistem ne olursa olsun
+# minicik default font'a düşmesin (1080x1920 panelde okunamıyor).
+_REPO_FONTS_DIR = os.path.join(REPO_ROOT, "assets", "fonts")
+_REPO_BOLD = os.path.join(_REPO_FONTS_DIR, "DejaVuSans-Bold.ttf")
+_REPO_REGULAR = os.path.join(_REPO_FONTS_DIR, "DejaVuSans.ttf")
+
 FONT_BOLD = _find_font(
-    ["/usr/share/fonts/truetype/google-fonts/Poppins-Bold.ttf",
+    [_REPO_BOLD,
+     "/usr/share/fonts/truetype/google-fonts/Poppins-Bold.ttf",
      "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
      "/usr/share/fonts/TTF/DejaVuSans-Bold.ttf",
      "/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf"],
     ["Poppins:bold", "DejaVu Sans:bold", "Liberation Sans:bold", "sans-serif:bold"],
 )
 FONT_MEDIUM = _find_font(
-    ["/usr/share/fonts/truetype/google-fonts/Poppins-Medium.ttf",
+    [_REPO_BOLD,  # medium yerine bold yedek (yaklaşık ağırlık)
+     "/usr/share/fonts/truetype/google-fonts/Poppins-Medium.ttf",
+     _REPO_REGULAR,
      "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
      "/usr/share/fonts/TTF/DejaVuSans.ttf"],
     ["Poppins:medium", "DejaVu Sans:medium", "sans-serif:medium"],
 )
 FONT_REGULAR = _find_font(
-    ["/usr/share/fonts/truetype/google-fonts/Poppins-Regular.ttf",
+    [_REPO_REGULAR,
+     "/usr/share/fonts/truetype/google-fonts/Poppins-Regular.ttf",
      "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
      "/usr/share/fonts/TTF/DejaVuSans.ttf"],
     ["Poppins", "DejaVu Sans", "sans-serif"],
