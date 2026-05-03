@@ -58,9 +58,8 @@ Thumbs.db
 .idea/
 *.sublime-*
 
-# Obsidian (ileride eklenebilir)
-.obsidian/workspace*
-.obsidian/cache
-.obsidian/appearance.json
+# Obsidian — kullanıcının kişisel vault config'i, repo'da olmasın
+.obsidian/
+**/.obsidian/
 data/swing/active.json.bak-*
 data/k13_pending_change.json
