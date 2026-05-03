@@ -1,9 +1,9 @@
 {
-  "guncelleme": "2026-04-26 09:46",
+  "guncelleme": "2026-05-03 09:05",
   "matris": {
-    "enerji_geçiş": {
+    "BILINMIYOR": {
       "swing": {
-        "trade_sayisi": 22,
+        "trade_sayisi": 29,
         "toplam_pnl": 0.0,
         "ortalama_pnl": 0.0,
         "win_rate": 0.0,
@@ -13,16 +13,16 @@
     }
   },
   "ozet": {
-    "en_karli_tema": "enerji_geçiş",
-    "en_kotu_tema": "enerji_geçiş",
+    "en_karli_tema": "BILINMIYOR",
+    "en_kotu_tema": "BILINMIYOR",
     "tema_pnl_sirali": {
-      "enerji_geçiş": 0.0
+      "BILINMIYOR": 0.0
     },
     "portfoy_en_iyi_tema": {
       "agresif": null,
       "dengeli": null,
       "temettü": null,
-      "swing": "enerji_geçiş"
+      "swing": "BILINMIYOR"
     }
   }
 }

@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-05-01T21:32:51.029836",
+  "son_guncelleme": "2026-05-03T09:01:11.461120",
   "not": "SWING TRADE SADECE SİMÜLASYON - Sadece % kazanç/kayıp takibi (MAX: 5 pozisyon)",
   "aktif_pozisyonlar": [
     {
@@ -20,17 +20,18 @@
       "guncel_fiyat": 50.93,
       "son_fiyat": 50.93,
       "zirve_fiyat": 51.57,
-      "chandelier_stop": 48.03,
+      "chandelier_stop": 48.62,
       "k11_aktif": false,
       "k11_profit_lock": null,
-      "son_guncelleme": "2026-05-01T21:32:51.029836",
+      "son_guncelleme": "2026-05-03",
       "notlar": [],
       "kar_zarar_yuzde": -0.49,
       "tutulan_gun": 4,
       "atr14": 1.18,
       "pnl_pct": -0.49,
       "rsi": 60.25,
-      "rsi_son_guncelleme": "2026-05-01T22:32:06.440140+03:00"
+      "rsi_son_guncelleme": "2026-05-01T22:32:06.440140+03:00",
+      "chandelier_atr_carpan": 2.5
     },
     {
       "id": "SWING-202604271903-CAT",
@@ -50,10 +51,10 @@
       "guncel_fiyat": 889.67,
       "son_fiyat": 889.67,
       "zirve_fiyat": 899.99,
-      "chandelier_stop": 831.57,
+      "chandelier_stop": 842.69,
       "k11_aktif": false,
       "k11_profit_lock": null,
-      "son_guncelleme": "2026-05-01T21:32:51.029836",
+      "son_guncelleme": "2026-05-03",
       "notlar": [],
       "kar_zarar_yuzde": 6.99,
       "tutulan_gun": 4,
@@ -61,7 +62,7 @@
       "pnl_pct": 6.99,
       "rsi": 75.4,
       "rsi_son_guncelleme": "2026-05-01T22:32:06.440140+03:00",
-      "chandelier_atr_carpan": 3.0
+      "chandelier_atr_carpan": 2.5
     },
     {
       "id": "SWING-202604301432-VRT",
@@ -84,7 +85,7 @@
       "chandelier_stop": 315.48,
       "k11_aktif": false,
       "k11_profit_lock": null,
-      "son_guncelleme": "2026-05-01T21:32:51.029836",
+      "son_guncelleme": "2026-05-03",
       "notlar": [],
       "kar_zarar_yuzde": 4.07,
       "tutulan_gun": 1,
@@ -115,7 +116,7 @@
       "chandelier_stop": 101.68,
       "k11_aktif": false,
       "k11_profit_lock": null,
-      "son_guncelleme": "2026-05-01T21:32:51.029836",
+      "son_guncelleme": "2026-05-03",
       "notlar": [],
       "kar_zarar_yuzde": -1.64,
       "tutulan_gun": 0,
@@ -145,7 +146,7 @@
       "chandelier_stop": 91.32,
       "k11_aktif": false,
       "k11_profit_lock": null,
-      "son_guncelleme": "2026-05-01T21:32:51.029836",
+      "son_guncelleme": "2026-05-03",
       "notlar": [],
       "kar_zarar_yuzde": -1.62,
       "tutulan_gun": 0,

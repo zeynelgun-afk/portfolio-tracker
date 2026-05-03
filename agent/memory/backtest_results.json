@@ -1,20 +1,20 @@
 {
-  "test_tarihi": "2026-04-26",
-  "toplam_trade": 22,
+  "test_tarihi": "2026-05-03",
+  "toplam_trade": 29,
   "kural_performansi": {
-    "toplam_trade": 22,
+    "toplam_trade": 29,
     "kural_performansi": {
       "stop_loss": {
-        "tetiklenme": 11,
-        "win_rate": 36.4,
-        "ort_pnl": -2.36,
-        "toplam_pnl": -25.97
+        "tetiklenme": 14,
+        "win_rate": 35.7,
+        "ort_pnl": -2.52,
+        "toplam_pnl": -35.32
       },
       "manuel": {
-        "tetiklenme": 10,
-        "win_rate": 80.0,
-        "ort_pnl": 2.88,
-        "toplam_pnl": 28.83
+        "tetiklenme": 14,
+        "win_rate": 85.7,
+        "ort_pnl": 3.29,
+        "toplam_pnl": 46.1
       },
       "K-05": {
         "tetiklenme": 1,
@@ -23,7 +23,7 @@
         "toplam_pnl": 2.88
       }
     },
-    "test_tarihi": "2026-04-26"
+    "test_tarihi": "2026-05-03"
   },
   "rsi_testi": {
     "mevcut_esik": 70,
@@ -38,9 +38,9 @@
   "stop_testi": {
     "mevcut_stop": "%8.0",
     "yeni_stop": "%6.0",
-    "stop_trade_sayisi": 11,
-    "mevcut_ort_kayip": -2.36,
-    "tahmini_yeni_kayip": -1.77,
+    "stop_trade_sayisi": 14,
+    "mevcut_ort_kayip": -2.52,
+    "tahmini_yeni_kayip": -1.89,
     "guven": "ORTA — gerçek stop seviyelerine bakılamadı",
     "backtest_notu": "ATR bazlı dinamik stop daha anlamlı olabilir"
   }

@@ -1,19 +1,19 @@
 {
-  "tarih": "2026-04-28T08:35:45.971148",
+  "tarih": "2026-05-03T09:02:22.858237",
   "raporlar": [
     {
       "kategori": "K-06",
       "action": "SELL",
-      "sayi": 16,
-      "veri": 16,
-      "g1_avg_pct": -3.86,
-      "g5_avg_pct": -1.79,
-      "g10_avg_pct": -2.16,
-      "g20_avg_pct": 5.86,
+      "sayi": 19,
+      "veri": 19,
+      "g1_avg_pct": -3.24,
+      "g5_avg_pct": -1.82,
+      "g10_avg_pct": 1.57,
+      "g20_avg_pct": 6.41,
       "g5_yukselen": 8,
-      "g5_dusen": 8,
-      "g5_toplam_kazan": -1858.51,
-      "g20_toplam_kazan": 17354.98,
+      "g5_dusen": 11,
+      "g5_toplam_kazan": -1985.01,
+      "g20_toplam_kazan": 31477.24,
       "ornek": [
         {
           "sembol": "CELH",
@@ -71,15 +71,15 @@
     {
       "kategori": "K-05",
       "action": "SELL",
-      "sayi": 7,
-      "veri": 7,
-      "g1_avg_pct": 2.19,
-      "g5_avg_pct": -5.12,
+      "sayi": 13,
+      "veri": 13,
+      "g1_avg_pct": 1.26,
+      "g5_avg_pct": -1.15,
       "g10_avg_pct": -5.03,
       "g20_avg_pct": -8.68,
-      "g5_yukselen": 0,
-      "g5_dusen": 7,
-      "g5_toplam_kazan": -9.85,
+      "g5_yukselen": 3,
+      "g5_dusen": 10,
+      "g5_toplam_kazan": -550.69,
       "g20_toplam_kazan": -16.69,
       "ornek": [
         {
@@ -105,7 +105,10 @@
           "satis": 304.4,
           "g1_pct": 5.7,
           "g1_kazan": 2376.95,
-          "g1_fiyat": 321.75
+          "g1_fiyat": 321.75,
+          "g5_pct": 0.58,
+          "g5_kazan": 243.86,
+          "g5_fiyat": 306.18
         },
         {
           "sembol": "NEE",
@@ -113,21 +116,24 @@
           "satis": 91.5,
           "g1_pct": 5.19,
           "g1_kazan": 631.75,
-          "g1_fiyat": 96.25
+          "g1_fiyat": 96.25,
+          "g5_pct": 2.92,
+          "g5_kazan": 355.11,
+          "g5_fiyat": 94.17
         }
       ]
     },
     {
       "kategori": "K-09",
       "action": "SELL",
-      "sayi": 3,
-      "veri": 3,
-      "g1_avg_pct": -2.32,
+      "sayi": 4,
+      "veri": 4,
+      "g1_avg_pct": -1.12,
       "g5_avg_pct": 3.25,
       "g10_avg_pct": -3.35,
       "g20_avg_pct": 2.22,
       "g5_yukselen": 1,
-      "g5_dusen": 2,
+      "g5_dusen": 3,
       "g5_toplam_kazan": 1253.16,
       "g20_toplam_kazan": 2418.68,
       "ornek": [
@@ -187,15 +193,15 @@
     {
       "kategori": "K-11",
       "action": "SELL",
-      "sayi": 16,
-      "veri": 16,
-      "g1_avg_pct": 0.68,
-      "g5_avg_pct": 2.3,
+      "sayi": 17,
+      "veri": 17,
+      "g1_avg_pct": 0.56,
+      "g5_avg_pct": 2.4,
       "g10_avg_pct": 1.03,
       "g20_avg_pct": -3.52,
-      "g5_yukselen": 10,
+      "g5_yukselen": 11,
       "g5_dusen": 6,
-      "g5_toplam_kazan": 1231.71,
+      "g5_toplam_kazan": 1538.05,
       "g20_toplam_kazan": 493.32,
       "ornek": [
         {
@@ -258,14 +264,14 @@
     {
       "kategori": "Swing-Giris",
       "action": "BUY",
-      "sayi": 11,
-      "veri": 11,
-      "g1_avg_pct": -1.45,
+      "sayi": 15,
+      "veri": 15,
+      "g1_avg_pct": -2.04,
       "g5_avg_pct": -0.76,
-      "g10_avg_pct": 0.16,
+      "g10_avg_pct": 1.49,
       "g20_avg_pct": -11.03,
       "g5_yukselen": 3,
-      "g5_dusen": 8,
+      "g5_dusen": 12,
       "g5_toplam_kazan": 172.24,
       "g20_toplam_kazan": -58.06,
       "ornek": [
@@ -313,15 +319,15 @@
     {
       "kategori": "Tema",
       "action": "BUY",
-      "sayi": 8,
-      "veri": 8,
-      "g1_avg_pct": 2.28,
-      "g5_avg_pct": 7.45,
+      "sayi": 20,
+      "veri": 20,
+      "g1_avg_pct": 1.96,
+      "g5_avg_pct": 0.74,
       "g10_avg_pct": 6.39,
       "g20_avg_pct": -0.86,
-      "g5_yukselen": 2,
-      "g5_dusen": 6,
-      "g5_toplam_kazan": 5592.85,
+      "g5_yukselen": 3,
+      "g5_dusen": 17,
+      "g5_toplam_kazan": 3226.36,
       "g20_toplam_kazan": -1.74,
       "ornek": [
         {
