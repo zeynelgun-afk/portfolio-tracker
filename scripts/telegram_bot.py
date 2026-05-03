@@ -925,9 +925,10 @@ Kurallar:
 - Risk tarafını atlama"""
 
         from claude_agent import get_claude_decision
-        # Haiku tier için explicit model — ucuz serbest sorular
+        # Bot serbest sorular için ucuz/hızlı bir model. KIMI_MODEL_BOT env ile
+        # override edilebilir; default Kimi K2 (thinking değil — cevap hızlı dönsün).
         import os
-        os.environ['CLAUDE_MODEL'] = os.environ.get('CLAUDE_MODEL_BOT', 'claude-haiku-4-5-20251001')
+        os.environ['KIMI_MODEL'] = os.environ.get('KIMI_MODEL_BOT', 'moonshotai/kimi-k2-0905')
 
         yanit = get_claude_decision(prompt, mode="monitor", rag_enabled=False)
         # Telegram HTML — escape
@@ -1005,7 +1006,8 @@ Kurallar: Em dash yok, cümleler büyük harfle, spekülatif/muhtemel/kesin ayr�
 
         from claude_agent import get_claude_decision
         import os
-        os.environ['CLAUDE_MODEL'] = os.environ.get('CLAUDE_MODEL_BOT_ANALIZ', 'claude-opus-4-7')
+        # /analiz için thinking modeli — derin analiz değer.
+        os.environ['KIMI_MODEL'] = os.environ.get('KIMI_MODEL_BOT_ANALIZ', 'moonshotai/kimi-k2-thinking')
 
         yanit = get_claude_decision(prompt, mode="morning", rag_enabled=True)
         yanit = yanit.replace("<", "&lt;").replace(">", "&gt;")
@@ -1203,13 +1205,14 @@ def isle_mesaj(msg: dict):
         env_check.append("<b>🔧 Sistem Env Durumu</b>")
         env_check.append("")
         for var in ["TELEGRAM_TOKEN", "TELEGRAM_PRIVATE_CHAT", "FMP_API_KEY",
-                    "ANTHROPIC_API_KEY", "CLAUDE_MODEL", "RAILWAY",
+                    "OPENROUTER_API_KEY", "ANTHROPIC_API_KEY",
+                    "KIMI_MODEL", "CLAUDE_MODEL", "RAILWAY",
                     "RAILWAY_ENVIRONMENT", "RAILWAY_PROJECT_NAME",
                     "RAILWAY_SERVICE_NAME"]:
             v = os.environ.get(var, "")
             if not v:
                 status = "❌ MISSING"
-            elif var in ("ANTHROPIC_API_KEY", "FMP_API_KEY", "TELEGRAM_TOKEN"):
+            elif var in ("OPENROUTER_API_KEY", "ANTHROPIC_API_KEY", "FMP_API_KEY", "TELEGRAM_TOKEN"):
                 # Maskeli göster (güvenlik)
                 status = f"✅ SET ({v[:8]}...{v[-4:]}, len={len(v)})"
             else:
@@ -1340,21 +1343,25 @@ def main():
     - RAILWAY=1 → Sürekli polling (7/24)
     - Aksi halde → GitHub Actions modu (tek çalışma)
     """
-    # ── Environment sağlık kontrolü (v6 ai_consultant için kritik) ──
+    # ── Environment sağlık kontrolü (LLM çağrıları için kritik) ──
     env_status = {
         "TELEGRAM_TOKEN": "SET" if os.environ.get("TELEGRAM_TOKEN") else "MISSING",
         "TELEGRAM_PRIVATE_CHAT": "SET" if os.environ.get("TELEGRAM_PRIVATE_CHAT") else "MISSING",
         "FMP_API_KEY": "SET" if os.environ.get("FMP_API_KEY") else "MISSING",
-        "ANTHROPIC_API_KEY": "SET" if os.environ.get("ANTHROPIC_API_KEY") else "MISSING",
-        "CLAUDE_MODEL": os.environ.get("CLAUDE_MODEL", "claude-opus-4-7 (default)"),
+        "OPENROUTER_API_KEY": "SET" if os.environ.get("OPENROUTER_API_KEY") else "MISSING",
+        "ANTHROPIC_API_KEY": "SET" if os.environ.get("ANTHROPIC_API_KEY") else "MISSING (legacy fallback)",
+        "KIMI_MODEL": os.environ.get("KIMI_MODEL", "moonshotai/kimi-k2-thinking (default)"),
     }
     print(f"[Bot] === Environment kontrolü ===")
     for k, v in env_status.items():
         print(f"[Bot]   {k}: {v}")
     print(f"[Bot] ============================")
 
-    if env_status["ANTHROPIC_API_KEY"] == "MISSING":
-        print(f"[Bot] ⚠️  ANTHROPIC_API_KEY yok — /sor, /analiz, v6 AI consultation çalışmayacak")
+    # LLM ulaşılabilir mi: OPENROUTER veya legacy ANTHROPIC en az biri lazım
+    if env_status["OPENROUTER_API_KEY"] == "MISSING" and \
+       env_status["ANTHROPIC_API_KEY"].startswith("MISSING"):
+        print(f"[Bot] ⚠️  OPENROUTER_API_KEY yok (ANTHROPIC fallback'i de yok) — "
+              f"/sor, /analiz, v6 AI consultation çalışmayacak")
 
     railway_mode = os.environ.get("RAILWAY") or os.environ.get("RAILWAY_ENVIRONMENT")
 
