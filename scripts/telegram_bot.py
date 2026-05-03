@@ -164,11 +164,19 @@ def get_analyst_data(symbol: str) -> dict:
 
 # ── Adil Değer Hesaplama ──────────────────────────────────────────────────────
 
-def adil_deger_hesapla(symbol: str, use_v5: bool = True) -> dict | None:
+def adil_deger_hesapla(symbol: str, use_v5: bool = True, with_kimi: bool = True) -> dict | None:
     """
-    Adil değer hesapla — v5 framework (archetype-routed).
-    v5 fail olursa None döner (eskiden v2 fallback vardı ama
-    adil_deger_calculator shim zaten v5'e yönlendiriyor — sahte fallback).
+    Adil değer hesapla — v7 Hybrid Plus (framework + Kimi).
+
+    Akış:
+      1. valuation.framework.valuate() → mekanik fair value (sanity check)
+      2. ai_consultant.consult_claude() → Kimi birincil karar (zenginleştirilmiş
+         FMP context: forward estimates, stale-aware analyst targets, peer PE,
+         earnings surprises, insider, price percentiles)
+      3. Sonuç dict'inde HEM framework HEM Kimi alanları olur. Format'çı
+         "kimi" alanı varsa zenginleştirilmiş çıktı verir.
+
+    with_kimi=False → sadece framework (hızlı, ~2sn).
     """
     symbol = symbol.upper()
 
@@ -181,11 +189,28 @@ def adil_deger_hesapla(symbol: str, use_v5: bool = True) -> dict | None:
             sys.path.insert(0, agent_dir)
         from valuation.framework import valuate
         res = valuate(symbol, verbose=False)
-        if res and not res.get("error"):
-            res["_version"] = "v5"
-            return res
-        print(f"[Bot] v5 fail {symbol}: {res.get('error') if res else 'None'}")
-        return None
+        if not res or res.get("error"):
+            print(f"[Bot] v5 fail {symbol}: {res.get('error') if res else 'None'}")
+            return None
+        res["_version"] = "v5"
+
+        # Kimi consult — Hybrid Plus
+        if with_kimi:
+            try:
+                from valuation.ai_consultant import consult_claude
+                kimi_result = consult_claude(res, verbose=False)
+                if kimi_result and not kimi_result.get("_error"):
+                    res["kimi"] = kimi_result  # alt anahtar olarak ekle
+                    res["_version"] = "v7"
+                else:
+                    err = (kimi_result or {}).get("_error", "bilinmiyor")
+                    print(f"[Bot] Kimi consult fail {symbol}: {err}")
+                    res["kimi_error"] = err
+            except Exception as e:
+                print(f"[Bot] Kimi consult exception {symbol}: {e}")
+                res["kimi_error"] = str(e)[:100]
+
+        return res
     except Exception as e:
         print(f"[Bot] v5 exception {symbol}: {e}")
         return None
@@ -229,21 +254,95 @@ def _format_v5_fallback(symbol: str, res: dict) -> str:
     return "\n".join(lines)
 
 
+def _format_kimi_block(kimi: dict) -> str:
+    """v7 Kimi-led valuation çıktısını HTML blok olarak formatlar."""
+    if not kimi or kimi.get("_error"):
+        return ""
+
+    fv = kimi.get("claude_fair_value")
+    blended = kimi.get("blended_fair_value")
+    blend_w = kimi.get("blend_weight", 0.70)
+    conf = kimi.get("confidence", 0)
+    cycle = kimi.get("cycle_phase", "?")
+    etiket = kimi.get("tavsiye_etiket", "?")
+    sanity = kimi.get("sanity_flag")
+
+    rejim = kimi.get("rejim_degisikligi") or {}
+    rejim_var = rejim.get("var_mi", False)
+    rejim_aciklama = (rejim.get("aciklama") or "")[:140]
+
+    senaryolar = kimi.get("scenarios") or {}
+
+    fwd_y = (kimi.get("forward_pe_yorumu") or "")[:160]
+    peer_y = (kimi.get("peer_yorumu") or "")[:160]
+    stale_y = (kimi.get("stale_uyarisi") or "")[:160]
+    insider_y = (kimi.get("insider_yorumu") or "")[:140]
+    tavsiye = (kimi.get("tavsiye") or "")[:200]
+
+    parts = ["", "<b>🤖 Kimi Değerlemesi (v7)</b>"]
+
+    if fv is not None:
+        parts.append(f"  Kimi FV: <b>${fv:.2f}</b> (güven {conf}/100)")
+    if blended is not None:
+        parts.append(
+            f"  Karma FV: <b>${blended:.2f}</b>"
+            f" (Kimi w={blend_w:.0%}, framework w={1-blend_w:.0%})"
+        )
+    if sanity:
+        parts.append(f"  ⚠️ Sapma bayrağı: <code>{sanity}</code>")
+    parts.append(f"  Cycle: <i>{cycle}</i> | Etiket: <b>{etiket}</b>")
+
+    if rejim_var:
+        parts.append(f"  🔄 Rejim değişikliği: {rejim.get('tip','?')} — {rejim_aciklama}")
+
+    if senaryolar:
+        parts.append("")
+        parts.append("<b>Senaryolar:</b>")
+        for k in ("bear", "base", "bull"):
+            s = senaryolar.get(k, {})
+            ic = {"bear": "🔴", "base": "🟡", "bull": "🟢"}[k]
+            price = s.get("price", "?")
+            thesis = (s.get("thesis", "") or "")[:140]
+            try:
+                price_str = f"${float(price):.2f}"
+            except Exception:
+                price_str = str(price)
+            parts.append(f"  {ic} <b>{k.title()}</b> {price_str} — {thesis}")
+
+    if fwd_y:    parts.append(f"\n📈 Forward: {fwd_y}")
+    if peer_y:   parts.append(f"⚖️ Peer: {peer_y}")
+    if stale_y:  parts.append(f"🗓 Stale: {stale_y}")
+    if insider_y: parts.append(f"👤 Insider: {insider_y}")
+    if tavsiye:  parts.append(f"\n💬 <i>{tavsiye}</i>")
+
+    return "\n".join(parts)
+
+
 def format_adil_deger(symbol: str, res: dict, analyst: dict, detay: bool = False) -> str:
-    """Adil değer sonucu formatla. v5 ve v2 result'ları farklı şemaya sahip.
+    """Adil değer sonucu formatla. v5 (framework) ve v7 (framework+Kimi) destekler.
     detay=True → uzun versiyon (telegram_full), False → kısa (telegram)."""
 
-    # ── v5 result ise framework'ün kendi formatter'ını kullan ────────
-    if res.get("_version") == "v5":
+    # ── v5/v7 framework result ise framework'ün kendi formatter'ını kullan ────
+    if res.get("_version") in ("v5", "v7"):
         try:
             agent_dir = str(REPO_ROOT / "agent")
             if agent_dir not in sys.path:
                 sys.path.insert(0, agent_dir)
             from valuation.framework import format_report
             style = "telegram_full" if detay else "telegram"
-            return format_report(res, style=style)
-        except Exception as e:
-            return _format_v5_fallback(symbol, res)
+            base_report = format_report(res, style=style)
+        except Exception:
+            base_report = _format_v5_fallback(symbol, res)
+
+        # v7 → Kimi blok'u ekle
+        kimi = res.get("kimi") or {}
+        kimi_block = _format_kimi_block(kimi) if kimi else ""
+
+        if kimi_block:
+            return base_report + "\n" + kimi_block
+        if res.get("kimi_error"):
+            return base_report + f"\n\n<i>⚠️ Kimi consult atlandı: {res['kimi_error'][:80]}</i>"
+        return base_report
 
     # ── v2 legacy format (ÖLÜ KOD — adil_deger_hesapla artık sadece v5 döner) ───
     # Bu blok, v5 shim'inden önceki adil_deger_calculator doğrudan çağrıldığında
@@ -358,8 +457,10 @@ def format_yardim() -> str:
   <code>/fiyat AAPL</code> — Canlı fiyat + değişim
 
 <b>Hisse Analizi:</b>
-  <code>AAPL</code> veya <code>/deger AAPL</code>
-  → Adil değer, değerleme metotları, analist görüşü
+  <code>AAPL</code> veya <code>/deger AAPL</code> (30-50sn)
+  → Framework + Kimi v7 (forward EPS, peer PE, stale filter, senaryolar)
+  <code>/q AAPL</code> (alias: <code>/hizli</code>) — Sadece framework, ~2sn
+  <code>/detay AAPL</code> — Uzun rapor + tüm metotlar
   <code>/beklenti AAPL</code> — Analist + EPS beklentileri
 
 <b>Valuation v5 (archetype-routed):</b>
@@ -1453,16 +1554,24 @@ def isle_mesaj(msg: dict):
 
     # ── Ticker tespiti ────────────────────────────────────────────
     ticker = None
-    detay_modu = False  # /detay ise telegram_full style kullan
+    detay_modu = False   # /detay ise telegram_full style kullan
+    hizli_modu = False   # /q veya /hizli → sadece framework, Kimi olmadan
 
-    # "/detay AAPL" — uzun versiyon
+    # "/detay AAPL" — uzun versiyon (Kimi dahil)
     if text.upper().startswith("/DETAY ") or text.upper().startswith("/DETAIL "):
         parts = text.split()
         if len(parts) >= 2:
             ticker = parts[1].upper()
             detay_modu = True
 
-    # "/deger AAPL" veya "/beklenti AAPL" — kısa versiyon
+    # "/q AAPL" veya "/hizli AAPL" — sadece framework, Kimi yok (~2sn)
+    elif text.upper().startswith("/Q ") or text.upper().startswith("/HIZLI ") or text.upper().startswith("/QUICK "):
+        parts = text.split()
+        if len(parts) >= 2:
+            ticker = parts[1].upper()
+            hizli_modu = True
+
+    # "/deger AAPL" veya "/beklenti AAPL" — Kimi-led (~30-50sn)
     elif text.upper().startswith("/DEGER ") or text.upper().startswith("/BEKLENTI "):
         parts = text.split()
         if len(parts) >= 2:
@@ -1500,9 +1609,15 @@ def isle_mesaj(msg: dict):
         return  # Tanımadık mesaj — sessiz geç
 
     # ── Analiz başlıyor ───────────────────────────────────────────
-    tg_send(chat_id, f"⏳ <b>{ticker}</b> analiz ediliyor...", reply_to=msg_id)
+    if hizli_modu:
+        tg_send(chat_id, f"⚡ <b>{ticker}</b> hızlı (sadece framework)...", reply_to=msg_id)
+    else:
+        tg_send(chat_id,
+                f"⏳ <b>{ticker}</b> Kimi derin analiz (30-50sn)...\n"
+                f"<i>Hızlı için: /q {ticker}</i>",
+                reply_to=msg_id)
 
-    res = adil_deger_hesapla(ticker)
+    res = adil_deger_hesapla(ticker, with_kimi=not hizli_modu)
     if not res:
         tg_send(chat_id,
                 f"❌ <b>{ticker}</b> için veri bulunamadı.\nTicker doğru mu? (NYSE/NASDAQ sembolü girin)",
@@ -1512,7 +1627,7 @@ def isle_mesaj(msg: dict):
     analyst = get_analyst_data(ticker)
     mesaj   = format_adil_deger(ticker, res, analyst, detay=detay_modu)
     tg_send(chat_id, mesaj, reply_to=msg_id)
-    print(f"[Bot] {ticker} yanıtı gönderildi → {chat_id}")
+    print(f"[Bot] {ticker} yanıtı gönderildi → {chat_id} (kimi={not hizli_modu})")
 
 
 # ── Ana Döngü ─────────────────────────────────────────────────────────────────
