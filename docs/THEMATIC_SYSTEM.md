@@ -1,3 +1,20 @@
+---
+title: Tematik Portföy Sistemi v1.0
+description: 3 portföyü aktif temaya/sektöre yönlendiren AI tabanlı dinamik rotasyon. Macro intelligence ile entegre.
+tags:
+  - thematic
+  - sector
+  - strategy
+  - portfolio
+related:
+  - "[[Index]]"
+  - "[[THEMATIC_INTEGRATION_GUIDE]]"
+  - "[[THEMATIC_CATALYST_CALENDAR]]"
+  - "[[THEMATIC_WATCHLIST_Q2_2026]]"
+  - "[[MARKET_INTELLIGENCE]]"
+  - "[[SECTOR_AGENTS]]"
+---
+
 # TEMATİK PORTFÖY SİSTEMİ v1.0
 > **oluşturulma**: 11 nisan 2026
 > **amaç**: 3 portföyü de aktif temaya/sektöre yönlendiren, AI'nin günlük karar verdiği dinamik rotasyon sistemi

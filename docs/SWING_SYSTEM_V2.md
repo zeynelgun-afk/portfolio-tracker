@@ -1,3 +1,19 @@
+---
+title: Swing Trade Sistemi v2.3
+description: Ichimoku 4/4 onay + Chandelier exit + 5-slot maksimum. Aggressive portföy odaklı.
+tags:
+  - swing
+  - ichimoku
+  - trading
+  - portfolio
+related:
+  - "[[Index]]"
+  - "[[K_RULES_QUICK_REF]]"
+  - "[[STOP_MANAGEMENT_V2]]"
+  - "[[AGGRESSIVE_V2_THESIS]]"
+  - "[[PORTFOLIO_OPPORTUNITY_SYSTEM]]"
+---
+
 # SWING TRADE SİSTEMİ v2.3 — ICHİMOKU + CHANDELİER EXİT + ÖN FİLTRE
 
 > **versiyon**: 2.3

@@ -1,3 +1,19 @@
+---
+title: Sistem Haritası
+description: Tüm Finzora AI bileşenlerinin tam haritası — entry point, 4 mod, akış, modüller arası bağlantı.
+tags:
+  - architecture
+  - system
+  - reference
+related:
+  - "[[Index]]"
+  - "[[DECISION_FRAMEWORK]]"
+  - "[[OBSERVABILITY]]"
+  - "[[RAILWAY_DEPLOY]]"
+  - "[[GITHUB_ACTIONS_GUIDE]]"
+updated: 2026-05-03
+---
+
 # FINZORA AI — SİSTEM HARİTASI
 
 > Oluşturulma: 20 Nisan 2026

@@ -1,3 +1,18 @@
+---
+title: Adil Değer Kullanım Kılavuzu
+description: /deger AAPL, /q AAPL, /detay AAPL komutları. v7 Hybrid Plus (framework + Kimi) çıktı yapısı.
+tags:
+  - valuation
+  - command
+  - usage
+  - bot
+related:
+  - "[[Index]]"
+  - "[[VALUATION_SYSTEM_v6]]"
+  - "[[VALUATION_FRAMEWORK_v5]]"
+  - "[[FORWARD_VALUATION_METHOD]]"
+---
+
 # Adil Değer Hesaplayıcı — Kullanım Kılavuzu
 
 Pine Script v3.5.2'nin Python uyarlaması. FMP API ile **252 günlük tarihsel

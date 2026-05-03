@@ -1,3 +1,18 @@
+---
+title: RAG Sistemi
+description: Voyage AI embeddings + ChromaDB. Geçmiş trade'ler, kararlar, dersler vektör uzayında indexlenir. Her LLM çağrısı öncesi context augmentation.
+tags:
+  - rag
+  - memory
+  - retrieval
+  - infrastructure
+related:
+  - "[[Index]]"
+  - "[[OBSERVABILITY]]"
+  - "[[EPISODIC_MEMORY]]"
+  - "[[SELF_IMPROVEMENT_SYSTEM]]"
+---
+
 # RAG — Retrieval Augmented Generation
 
 Finzora AI nın hafıza katmanı. Geçmiş trade leri, kararları, dersler ve dokümantasyonu vektör uzayında indexler; her yeni LLM çağrısı öncesi sorgu bazlı ilgili bağlamı çeker.

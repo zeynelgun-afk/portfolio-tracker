@@ -1,7 +1,22 @@
+---
+title: K-Rules Hızlı Referans
+description: Tüm K-rule'ların (K-04...K-23) kısa açıklaması. Sabah ve seans promptlarında kullanılan tek kaynak.
+tags:
+  - k-rules
+  - trading
+  - reference
+related:
+  - "[[Index]]"
+  - "[[TRADING_PLAYBOOK]]"
+  - "[[DECISION_FRAMEWORK]]"
+  - "[[K_RULES_BACKTEST_DERSLER]]"
+  - "[[STOP_MANAGEMENT_V2]]"
+---
+
 # K-RULES HIZLI REFERANS — tek kaynak özet
 
 > bu dosya tüm seans ve sabah promptlarında K-kural referansı olarak kullanılır.
-> detaylar için → `docs/TRADING_PLAYBOOK.md` ilgili bölüm.
+> detaylar için → [[TRADING_PLAYBOOK]] ilgili bölüm.
 > amaç: prompt'larda K-kural tekrarını önlemek ve tek kaynak tutmak.
 
 ---

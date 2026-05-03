@@ -1,3 +1,16 @@
+---
+title: Observability Altyapısı
+description: Her LLM API çağrısı, FMP çağrısı, karar ve trade olayının kayıt sistemi. JSONL stream + SQLite index.
+tags:
+  - observability
+  - logging
+  - infrastructure
+related:
+  - "[[Index]]"
+  - "[[SYSTEM_MAP]]"
+  - "[[RAG_SYSTEM]]"
+---
+
 # Observability — Karar ve Çağrı Kayıt Altyapısı
 
 Finzora AI sisteminin her LLM API çağrısı, FMP çağrısı, karar ve trade olayı otomatik olarak kaydedilir. Amaç: maliyet takibi, hata yakalama, pattern analizi ve ileride RAG için veri kaynağı.

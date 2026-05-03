@@ -1,7 +1,24 @@
+---
+title: Değerleme Sistemi v6 + v7 Hybrid Plus
+description: Multi-method mekanik framework + Kimi K2 thinking entegrasyonu. v7'de Kimi birincil karar verici, framework sanity check.
+tags:
+  - valuation
+  - framework
+  - kimi
+  - hybrid-plus
+related:
+  - "[[Index]]"
+  - "[[VALUATION_FRAMEWORK_v5]]"
+  - "[[FORWARD_VALUATION_METHOD]]"
+  - "[[ADIL_DEGER_KULLANIM]]"
+  - "[[K_RULES_QUICK_REF]]"
+updated: 2026-05-03
+---
+
 # Adil Değer Sistemi v6
 
-**Sürüm:** 6.0  
-**Tarih:** 25 Nisan 2026  
+**Sürüm:** 6.0 (mekanik) → **v7 Hybrid Plus** (Kimi-led, Mayıs 2026)
+**Tarih:** 25 Nisan 2026
 **Önceki sürüm:** v5.0 (geri uyumlu)
 
 ## Sorun (v5'te ne yanlıştı)

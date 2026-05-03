@@ -1,3 +1,19 @@
+---
+title: Agresif Portföy v2 Tezi
+description: AI değer zincirine odaklanan agresif portföy stratejisi. Swing + theme-driven entries.
+tags:
+  - portfolio
+  - aggressive
+  - thesis
+  - ai-tema
+related:
+  - "[[Index]]"
+  - "[[SWING_SYSTEM_V2]]"
+  - "[[THEMATIC_SYSTEM]]"
+  - "[[K_RULES_QUICK_REF]]"
+  - "[[PORTFOLIO_OPPORTUNITY_SYSTEM]]"
+---
+
 # agresif portfoy v2 — AI deger zinciri tezi
 
 > versiyon: 2.2 | tarih: 12 nisan 2026

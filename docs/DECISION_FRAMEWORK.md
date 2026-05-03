@@ -1,3 +1,18 @@
+---
+title: Karar Çerçevesi
+description: Her trade kararında tutarlı, gerekçeli düşünme süreci. K-rule + LLM birleşimi.
+tags:
+  - decision
+  - k-rules
+  - framework
+related:
+  - "[[Index]]"
+  - "[[K_RULES_QUICK_REF]]"
+  - "[[DECISION_ARCHITECTURE_V2]]"
+  - "[[TRADING_PLAYBOOK]]"
+  - "[[STOP_MANAGEMENT_V2]]"
+---
+
 # KARAR ÇERÇEVESİ — v1.0
 
 > **son güncelleme**: 6 nisan 2026
