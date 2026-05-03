@@ -371,6 +371,7 @@ def format_yardim() -> str:
   <code>/kriz</code> — K-13 aktif kriz matrisi
   <code>/tema</code> — Bugünün dominant temaları (AI tespiti)
   <code>/havuz</code> — AI'nin son aday hisse havuzu + son kararlar
+  <code>/risk</code> — Risk paneli (manuel üret + grup'a gönder)
   <code>/fiyat AAPL</code> — Canlı fiyat + değişim
 
 <b>Hisse Analizi:</b>
@@ -1393,6 +1394,41 @@ def isle_mesaj(msg: dict):
         tg_send(chat_id, format_havuz(), reply_to=msg_id)
         return
 
+    # ── /risk ─ Manuel risk panel üret + grup chat'e gönder ───────
+    if text_lower in ("/risk", "/riskpanel", "/risk_panel"):
+        tg_send(chat_id, "📊 Risk paneli üretiliyor (10-30sn)...", reply_to=msg_id)
+        try:
+            import subprocess as _sp
+            from datetime import datetime as _dt
+            gun = _dt.now().strftime("%Y-%m-%d")
+            out_dir = REPO_ROOT / "outputs" / "risk_panel"
+            out_dir.mkdir(parents=True, exist_ok=True)
+            out_path = out_dir / f"{gun}_manual.png"
+            proc = _sp.run(
+                [sys.executable, str(REPO_ROOT / "scripts" / "risk_panel_generator.py"),
+                 "--out", str(out_path)],
+                capture_output=True, text=True, timeout=120,
+                cwd=str(REPO_ROOT),
+            )
+            if proc.returncode == 0 and out_path.exists():
+                with open(out_path, "rb") as f:
+                    r = requests.post(
+                        f"{API_BASE}/sendPhoto",
+                        data={"chat_id": chat_id, "caption": f"📊 Risk Paneli (manuel) — {gun}"},
+                        files={"photo": f},
+                        timeout=60,
+                    )
+                if r.status_code != 200:
+                    tg_send(chat_id, f"❌ Telegram gönderim hatası: HTTP {r.status_code}",
+                            reply_to=msg_id)
+            else:
+                tg_send(chat_id,
+                        f"❌ Üretim hatası (rc={proc.returncode}):\n<pre>{(proc.stderr or '')[:500]}</pre>",
+                        reply_to=msg_id)
+        except Exception as e:
+            tg_send(chat_id, f"❌ Hata: {type(e).__name__}: {e}", reply_to=msg_id)
+        return
+
     # ── /sanity ─ Kimi vs framework sapma raporu (son 30 gün) ─────
     if text_lower.startswith("/sanity"):
         # /sanity 7 → son 7 gün; default 30
@@ -1932,6 +1968,73 @@ def main():
         print(f"[Bot]   23:30 TR (Hft) → Sonuç Takip")
         print(f"[Bot]   00:30 TR (Hft) → Agent Kapanış")
         print(f"[Bot]   12:00 TR (Pzr) → Agent Haftalık")
+
+        # ── Günlük Risk Panel (09:30 TR Hft, grup chat'e PNG) ─────
+        def _send_risk_panel(date_str: str) -> bool:
+            """Risk paneli üret + grup chat'e PNG olarak gönder."""
+            try:
+                import subprocess as _sp
+                out_dir = REPO_ROOT / "outputs" / "risk_panel"
+                out_dir.mkdir(parents=True, exist_ok=True)
+                out_path = out_dir / f"{date_str}.png"
+
+                # 1. Script'i çalıştır
+                proc = _sp.run(
+                    [sys.executable, str(REPO_ROOT / "scripts" / "risk_panel_generator.py"),
+                     "--out", str(out_path)],
+                    capture_output=True, text=True, timeout=180,
+                    cwd=str(REPO_ROOT),
+                )
+                if proc.returncode != 0 or not out_path.exists():
+                    print(f"[RiskPanel] ❌ Script hata (rc={proc.returncode}): "
+                          f"{proc.stderr[:300] if proc.stderr else 'no stderr'}")
+                    return False
+
+                # 2. Telegram grup chat'e gönder
+                if not BOT_TOKEN:
+                    print("[RiskPanel] ❌ BOT_TOKEN yok, gönderilemedi")
+                    return False
+                with open(out_path, "rb") as f:
+                    r = requests.post(
+                        f"{API_BASE}/sendPhoto",
+                        data={"chat_id": GROUP_CHAT,
+                              "caption": f"📊 Risk Paneli — {date_str}"},
+                        files={"photo": f},
+                        timeout=60,
+                    )
+                if r.status_code == 200:
+                    print(f"[RiskPanel] ✅ Grup'a gönderildi: {date_str}")
+                    return True
+                print(f"[RiskPanel] ❌ Telegram hata: HTTP {r.status_code} — "
+                      f"{r.text[:200]}")
+                return False
+            except Exception as e:
+                print(f"[RiskPanel] Exception: {type(e).__name__}: {e}")
+                return False
+
+        _risk_panel_gunluk = {}  # gün başına 1 kez
+
+        def _risk_panel_zamanlayici():
+            """Her dakika kontrol — Hft 09:30 TR'de risk paneli grup chat'e."""
+            while True:
+                try:
+                    simdi = datetime.now(_TR_TZ)
+                    is_hft = simdi.weekday() < 5
+                    saat, dakika = simdi.hour, simdi.minute
+                    gun_str = simdi.strftime("%Y-%m-%d")
+
+                    if is_hft and saat == 9 and dakika == 30:
+                        if gun_str not in _risk_panel_gunluk:
+                            _risk_panel_gunluk[gun_str] = True
+                            print(f"[RiskPanel] {simdi.strftime('%H:%M')} → Günlük panel üretiliyor")
+                            _send_risk_panel(gun_str)
+                except Exception as e:
+                    print(f"[RiskPanel-Zamanlayici] Hata: {e}")
+                time.sleep(60)
+
+        _trp = threading.Thread(target=_risk_panel_zamanlayici, daemon=True, name="RiskPanelZamanlayici")
+        _trp.start()
+        print(f"[Bot]   09:30 TR (Hft) → Günlük Risk Paneli (grup chat'e PNG)")
         # ─────────────────────────────────────────────────────────
 
         offset = load_offset()

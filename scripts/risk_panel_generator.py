@@ -49,10 +49,59 @@ GREEN = (16, 185, 129)       # #10b981
 AMBER = (245, 158, 11)       # #f59e0b
 RED = (239, 68, 68)          # #ef4444
 
-FONT_DIR = "/usr/share/fonts/truetype/google-fonts"
-FONT_BOLD = os.path.join(FONT_DIR, "Poppins-Bold.ttf")
-FONT_MEDIUM = os.path.join(FONT_DIR, "Poppins-Medium.ttf")
-FONT_REGULAR = os.path.join(FONT_DIR, "Poppins-Regular.ttf")
+# Font: Poppins varsa onu kullan, yoksa sistemde bulduğun ilk TTF'a düş.
+# Railway nixpacks Poppins kuruyor, ama lokal Linux sistemleri çoğunlukla
+# DejaVu veya Liberation kuruyor — ikisi de uyumlu fallback.
+def _find_font(preferred_paths: list, generic_names: list) -> str:
+    """İlk var olan font yolunu döndür; hiçbiri yoksa boş string (Pillow load_default)."""
+    for p in preferred_paths:
+        if os.path.exists(p):
+            return p
+    # fc-match ile sistemde generik isimlere göre ara (Linux)
+    try:
+        import subprocess as _sp
+        for name in generic_names:
+            try:
+                r = _sp.run(["fc-match", "-f", "%{file}", name],
+                            capture_output=True, text=True, timeout=5)
+                if r.returncode == 0 and r.stdout and os.path.exists(r.stdout.strip()):
+                    return r.stdout.strip()
+            except Exception:
+                continue
+    except Exception:
+        pass
+    return ""
+
+
+FONT_BOLD = _find_font(
+    ["/usr/share/fonts/truetype/google-fonts/Poppins-Bold.ttf",
+     "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
+     "/usr/share/fonts/TTF/DejaVuSans-Bold.ttf",
+     "/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf"],
+    ["Poppins:bold", "DejaVu Sans:bold", "Liberation Sans:bold", "sans-serif:bold"],
+)
+FONT_MEDIUM = _find_font(
+    ["/usr/share/fonts/truetype/google-fonts/Poppins-Medium.ttf",
+     "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+     "/usr/share/fonts/TTF/DejaVuSans.ttf"],
+    ["Poppins:medium", "DejaVu Sans:medium", "sans-serif:medium"],
+)
+FONT_REGULAR = _find_font(
+    ["/usr/share/fonts/truetype/google-fonts/Poppins-Regular.ttf",
+     "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+     "/usr/share/fonts/TTF/DejaVuSans.ttf"],
+    ["Poppins", "DejaVu Sans", "sans-serif"],
+)
+
+
+def _safe_truetype(path: str, size: int):
+    """Truetype yükle; path boş veya hatalıysa Pillow default'a düş."""
+    if path:
+        try:
+            return ImageFont.truetype(path, size)
+        except Exception:
+            pass
+    return ImageFont.load_default()
 
 
 def fmp(path: str):
@@ -148,15 +197,15 @@ def draw_panel(results, out_path, date_str):
     img = gradient_bg(W, H)
     d = ImageDraw.Draw(img)
 
-    f_title = ImageFont.truetype(FONT_BOLD, 64)
-    f_subtitle = ImageFont.truetype(FONT_MEDIUM, 32)
-    f_brand = ImageFont.truetype(FONT_BOLD, 28)
-    f_card_label = ImageFont.truetype(FONT_BOLD, 44)
-    f_card_name = ImageFont.truetype(FONT_MEDIUM, 30)
-    f_card_meta = ImageFont.truetype(FONT_REGULAR, 24)
-    f_status = ImageFont.truetype(FONT_BOLD, 28)
-    f_footer = ImageFont.truetype(FONT_REGULAR, 22)
-    f_footer_bold = ImageFont.truetype(FONT_BOLD, 24)
+    f_title = _safe_truetype(FONT_BOLD, 64)
+    f_subtitle = _safe_truetype(FONT_MEDIUM, 32)
+    f_brand = _safe_truetype(FONT_BOLD, 28)
+    f_card_label = _safe_truetype(FONT_BOLD, 44)
+    f_card_name = _safe_truetype(FONT_MEDIUM, 30)
+    f_card_meta = _safe_truetype(FONT_REGULAR, 24)
+    f_status = _safe_truetype(FONT_BOLD, 28)
+    f_footer = _safe_truetype(FONT_REGULAR, 22)
+    f_footer_bold = _safe_truetype(FONT_BOLD, 24)
 
     # Header
     d.text((W // 2, 90), "GÜNLÜK RİSK PANELİ", font=f_title, fill=TEXT_MAIN, anchor="mm")
