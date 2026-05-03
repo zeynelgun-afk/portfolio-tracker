@@ -67,6 +67,55 @@ try:
 except ImportError:
     log_claude_call = lambda *a, **kw: None
 
+# Kimi valuation persistent log (sanity tracking + 30g hit rate analizi için)
+_REPO_ROOT = _Path(__file__).resolve().parent.parent.parent
+_KIMI_LOG_PATH = _REPO_ROOT / "logs" / "kimi_valuations.jsonl"
+
+
+def _log_kimi_valuation(ticker: str, framework_result: dict, kimi_result: dict) -> None:
+    """
+    Her başarılı Kimi consult'unu logla — /sanity komutu, A/B karşılaştırması ve
+    30g hit-rate analizi için kaynak.
+
+    Schema:
+      timestamp, ticker, current_price, framework_fv, kimi_fv, blended_fv,
+      blend_weight, sanity_flag, cycle_phase, tavsiye_etiket, confidence,
+      rejim_var_mi, rejim_tip, stale_count, fresh_count, peer_pe, model
+    """
+    try:
+        import json as _json
+        from datetime import datetime as _dt
+        _KIMI_LOG_PATH.parent.mkdir(parents=True, exist_ok=True)
+
+        rich = kimi_result.get("_rich_context_used", {}) or {}
+        rejim = kimi_result.get("rejim_degisikligi") or {}
+        fv_blok = framework_result.get("fair_value", {}) or {}
+
+        record = {
+            "timestamp": _dt.utcnow().isoformat(timespec="seconds") + "Z",
+            "ticker": ticker,
+            "current_price": fv_blok.get("current_price"),
+            "framework_fv": kimi_result.get("framework_fair_value"),
+            "kimi_fv": kimi_result.get("claude_fair_value"),
+            "blended_fv": kimi_result.get("blended_fair_value"),
+            "blend_weight": kimi_result.get("blend_weight"),
+            "sanity_flag": kimi_result.get("sanity_flag"),
+            "cycle_phase": kimi_result.get("cycle_phase"),
+            "tavsiye_etiket": kimi_result.get("tavsiye_etiket"),
+            "confidence": kimi_result.get("confidence"),
+            "rejim_var_mi": bool(rejim.get("var_mi")),
+            "rejim_tip": rejim.get("tip"),
+            "stale_count": rich.get("stale_target_count"),
+            "fresh_count": (rich.get("price_target_count") or 0)
+                            - (rich.get("stale_target_count") or 0),
+            "peer_pe": rich.get("peer_pe"),
+            "model": kimi_result.get("model"),
+        }
+        with _KIMI_LOG_PATH.open("a", encoding="utf-8") as f:
+            f.write(_json.dumps(record, ensure_ascii=False) + "\n")
+    except Exception as e:
+        print(f"[ai_consultant] _log_kimi_valuation hatası: {e}")
+
 
 SYSTEM_PROMPT = """You are Finzora's PRIMARY valuation engine — Zeynel's autonomous equity valuation assistant.
 
@@ -141,6 +190,10 @@ RULES:
 - tavsiye_etiket: one of UCUZ / ADIL / PAHALI / MANUEL_REVIEW.
 - confidence: your own confidence (clarity of forward data + stale ratio + macro).
 - thesis: short, single Turkish sentence, concrete catalyst, plain ASCII.
+- tavsiye: MAX 200 characters, single paragraph, MUST end with a period (".").
+  Don't get cut mid-sentence — write a complete, terminated thought.
+- forward_pe_yorumu, peer_yorumu, stale_uyarisi, insider_yorumu,
+  framework_kritik, konsensus_aciklama: each ONE sentence ending with period.
 - ONLY return the JSON — no extra prose."""
 
 
@@ -582,7 +635,8 @@ def consult_claude(
             system=SYSTEM_PROMPT,
             user=user_prompt,
             model=CLAUDE_MODEL,
-            max_tokens=8000,  # zengin context + thinking + tam JSON
+            max_tokens=10000,  # zengin context + thinking + tam JSON.
+                               # Önceki 8000'de tavsiye alanı kesilebiliyordu.
             temperature=0.3,
             timeout=CLAUDE_VALUATION_TIMEOUT,
             apply_language_policy=False,
@@ -660,6 +714,13 @@ def consult_claude(
         print(f"[ai_consultant] {ticker} → AI FV: ${claude_fv:.2f}, "
               f"Framework FV: ${framework_fv:.2f}, "
               f"Blended (Kimi w={blend:.0%}): ${blended:.2f}{flag_str}")
+
+    # Kalıcı log → /sanity komutu, A/B analizi, 30g hit-rate
+    try:
+        _log_kimi_valuation(ticker, framework_result, parsed)
+    except Exception as _e:
+        if verbose:
+            print(f"[ai_consultant] log atlandı: {_e}")
 
     return parsed
 

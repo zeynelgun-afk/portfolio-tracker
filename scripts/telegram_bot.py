@@ -344,92 +344,9 @@ def format_adil_deger(symbol: str, res: dict, analyst: dict, detay: bool = False
             return base_report + f"\n\n<i>⚠️ Kimi consult atlandı: {res['kimi_error'][:80]}</i>"
         return base_report
 
-    # ── v2 legacy format (ÖLÜ KOD — adil_deger_hesapla artık sadece v5 döner) ───
-    # Bu blok, v5 shim'inden önceki adil_deger_calculator doğrudan çağrıldığında
-    # kullanılırdı. Artık shim her çağrıda v5 döndürür, bu blok gerçek trafik
-    # almayacak. Defensive olarak korunuyor — manuel v2 res dict gelirse
-    # çalışır.
-    price = res.get("price", 0)
-    adil  = res.get("adil_deger", 0) or 0
-    fark  = res.get("fark_pct", 0) or 0
-    guven = res.get("guven", 0)
-    tip   = res.get("hisse_tipi", "deger")
-    sektor= res.get("sector", "")[:30]
-
-    # Sinyal
-    if fark < -20:
-        sinyal = "🟢 <b>UCUZ</b>"
-    elif fark > 20:
-        sinyal = "🔴 <b>PAHALI</b>"
-    else:
-        sinyal = "🟡 <b>ADİL</b>"
-
-    tip_emoji = {"buyume":"🚀","temettu":"💰","dongusel":"🔄","deger":"📊"}.get(tip,"📊")
-
-    lines = [
-        f"<b>📊 {symbol} — Adil Değer Analizi</b>",
-        f"<i>{sektor} | {tip_emoji} {tip.upper()}</i>",
-        "",
-        f"💵 Güncel fiyat:   <b>${price:.2f}</b>",
-        f"🎯 Adil değer:     <b>${adil:.2f}</b>",
-        f"📏 Fark:          <b>{fark:+.1f}%</b>  →  {sinyal}",
-        f"🔍 Güven skoru:   <b>{guven}/100</b>",
-    ]
-
-    # Metot tablosu (en önemli 5)
-    metotlar = res.get("metotlar", {})
-    sirala = ["Net Kazanç P/E","Forward P/E","EV/EBITDA","DCF (3 aşama)","P/FCF","EV/Ciro"]
-    metot_satir = []
-    for m in sirala:
-        v = metotlar.get(m)
-        if v and v > 0:
-            diff = (price/v - 1)*100
-            ico  = "↑" if diff > 10 else ("↓" if diff < -10 else "≈")
-            metot_satir.append(f"  {m:<18} ${v:>7.2f} ({diff:>+.0f}%) {ico}")
-    if metot_satir:
-        lines += ["", "<b>Değerleme Metotları:</b>"] + metot_satir
-
-    # Analist bölümü
-    at = analyst.get("analist_hedef")
-    if at:
-        at_diff = (price/at - 1)*100
-        at_ico  = "↑" if at_diff < -5 else ("↓" if at_diff > 5 else "≈")
-        cons_str = ""
-        sb = analyst.get("strong_buy", 0)
-        b  = analyst.get("buy", 0)
-        h  = analyst.get("hold", 0)
-        s  = (analyst.get("sell", 0) or 0) + (analyst.get("strong_sell", 0) or 0)
-        total_an = sb + b + h + s
-        if total_an > 0:
-            al_pct = (sb + b) / total_an * 100
-            cons_str = f" | AL:%{al_pct:.0f} Tut:%{h/total_an*100:.0f}"
-        lines += [
-            "",
-            "<b>📈 Analist Görüşü:</b>",
-            f"  Hedef: ${at:.2f} ({at_diff:+.1f}%) {at_ico}{cons_str}",
-        ]
-        if analyst.get("fwd_eps_est"):
-            fwd_pe = price / analyst["fwd_eps_est"]
-            lines.append(f"  Fwd EPS ({analyst.get('est_tarih','?')}): ${analyst['fwd_eps_est']:.2f} → Fwd P/E: {fwd_pe:.1f}x")
-
-    # Key metrics
-    lines += ["", "<b>📐 Temel Metrikler:</b>"]
-    pe = analyst.get("pe_ttm"); roe = analyst.get("roe"); fcfy = analyst.get("fcf_yield")
-    evebitda = analyst.get("ev_ebitda")
-    if pe:     lines.append(f"  P/E TTM:      {pe:.1f}x")
-    if evebitda: lines.append(f"  EV/EBITDA:    {evebitda:.1f}x")
-    if roe:    lines.append(f"  ROE:          {roe*100:.1f}%")
-    if fcfy:   lines.append(f"  FCF Verimi:   {fcfy*100:.1f}%")
-
-    # Bant
-    lines += [
-        "",
-        f"📊 Bantlar: <b>${adil*0.8:.2f}</b> (-%20) ← ADİL → <b>${adil*1.2:.2f}</b> (+%20)",
-        "",
-        "<i>finzora.ai — yatırım tavsiyesi değildir</i>",
-    ]
-
-    return "\n".join(lines)
+    # adil_deger_hesapla() artık her zaman v5/v7 döndürür.
+    # Defensive: tanınmayan res şeması → kısa fallback.
+    return f"<b>{symbol}</b> — beklenmedik veri formatı."
 
 
 def format_yardim() -> str:
@@ -466,6 +383,7 @@ def format_yardim() -> str:
 <b>Valuation v5 (archetype-routed):</b>
   <code>/vstats</code> — Son 30 gün kaydedilen değerleme özeti
   <code>/backtest</code> (<code>/bt</code>) — ≥14 gün eski tahminlerin hit rate'i
+  <code>/sanity</code> [gün] — Kimi vs framework sapma raporu (default 30g)
 
 <b>AI (Finzora):</b>
   <code>/finzora_sor &lt;soru&gt;</code> (alias: <code>/sor</code>, <code>/ask</code>) — Serbest soru (portföy bağlamında)
@@ -795,6 +713,106 @@ def format_tema() -> str:
 
     if yorum:
         lines.append(f"<i>💬 {yorum}</i>")
+
+    return "\n".join(lines)
+
+
+def format_sanity(gun: int = 30) -> str:
+    """Son N gün Kimi-led valuation'lar — sanity_flag tetiklenenler.
+
+    Çıktı: framework vs Kimi sapma listesi, her satırda gap %, etiket, tarih.
+    """
+    path = REPO_ROOT / "logs" / "kimi_valuations.jsonl"
+    if not path.exists():
+        return ("🔍 <b>Sanity Log</b>\n\nHenüz Kimi valuation kaydı yok.\n"
+                "<i>İlk /deger TICKER çağrısında dolar.</i>")
+
+    from datetime import datetime as _dt, timedelta as _td
+    cutoff = _dt.utcnow() - _td(days=gun)
+
+    kayitlar = []
+    try:
+        with open(path, encoding="utf-8") as f:
+            for line in f:
+                try:
+                    r = json.loads(line)
+                except Exception:
+                    continue
+                ts = r.get("timestamp", "")
+                try:
+                    t = _dt.fromisoformat(ts.replace("Z", ""))
+                    if t < cutoff:
+                        continue
+                except Exception:
+                    continue
+                kayitlar.append(r)
+    except Exception as e:
+        return f"Sanity log okunamadı: {e}"
+
+    if not kayitlar:
+        return f"🔍 <b>Sanity Log</b>\n\nSon {gun} günde kayıt yok."
+
+    # Sapma % hesabı + sıralama (en büyük sapma üstte)
+    for r in kayitlar:
+        fw = r.get("framework_fv") or 0
+        ki = r.get("kimi_fv") or 0
+        if fw > 0:
+            r["_gap_pct"] = abs(ki - fw) / fw * 100
+        else:
+            r["_gap_pct"] = 0
+    kayitlar.sort(key=lambda x: x.get("_gap_pct", 0), reverse=True)
+
+    flag_count = sum(1 for r in kayitlar if r.get("sanity_flag"))
+    extreme = sum(1 for r in kayitlar
+                  if (r.get("sanity_flag") or "").startswith("EXTREME"))
+    large = sum(1 for r in kayitlar
+                if (r.get("sanity_flag") or "").startswith("LARGE"))
+
+    lines = [
+        f"<b>🔍 Sanity Log — Son {gun} gün</b>",
+        f"<i>Toplam Kimi consult: {len(kayitlar)}</i>",
+        f"⚠️ Sapma bayrağı: <b>{flag_count}</b>"
+        f" (🔴 EXTREME: {extreme}, 🟠 LARGE: {large})",
+        "",
+    ]
+
+    # En büyük 12 sapma
+    lines.append("<b>📊 En büyük sapmalar (framework vs Kimi):</b>")
+    for r in kayitlar[:12]:
+        sym = r.get("ticker", "?")
+        gap = r.get("_gap_pct", 0)
+        fw = r.get("framework_fv") or 0
+        ki = r.get("kimi_fv") or 0
+        bl = r.get("blended_fv") or 0
+        flag = r.get("sanity_flag") or ""
+        etiket = r.get("tavsiye_etiket", "?")
+        ts = (r.get("timestamp", "") or "")[:10]
+        rejim = "🔄" if r.get("rejim_var_mi") else "  "
+        ico = "🔴" if flag.startswith("EXTREME") else (
+            "🟠" if flag.startswith("LARGE") else "🟡")
+        lines.append(
+            f"{ico}{rejim}<b>{sym}</b> {gap:.0f}% sapma • "
+            f"FV: fw=${fw:.0f} ki=${ki:.0f} → bl=${bl:.0f} • "
+            f"<i>{etiket}</i> ({ts})"
+        )
+
+    if len(kayitlar) > 12:
+        lines.append(f"<i>...{len(kayitlar)-12} kayıt daha</i>")
+
+    # Etiket dağılımı
+    from collections import Counter
+    etiket_dag = Counter(r.get("tavsiye_etiket", "?") for r in kayitlar)
+    lines.append("")
+    lines.append("<b>🏷 Etiket dağılımı:</b>")
+    for et, cnt in etiket_dag.most_common():
+        lines.append(f"  {et}: {cnt}")
+
+    # Rejim değişikliği tespit edilen tickerlar
+    rejim_var = [r.get("ticker") for r in kayitlar if r.get("rejim_var_mi")]
+    if rejim_var:
+        lines.append("")
+        lines.append(f"<b>🔄 Rejim değişikliği tespiti ({len(set(rejim_var))} hisse):</b>")
+        lines.append("  " + ", ".join(sorted(set(rejim_var))[:15]))
 
     return "\n".join(lines)
 
@@ -1373,6 +1391,19 @@ def isle_mesaj(msg: dict):
     # ── /havuz ─ AI'nin son aday hisse havuzu + kararlar ──────────
     if text_lower in ("/havuz", "/aday", "/adaylar", "/buylist"):
         tg_send(chat_id, format_havuz(), reply_to=msg_id)
+        return
+
+    # ── /sanity ─ Kimi vs framework sapma raporu (son 30 gün) ─────
+    if text_lower.startswith("/sanity"):
+        # /sanity 7 → son 7 gün; default 30
+        parts = text.split()
+        gun = 30
+        if len(parts) >= 2:
+            try:
+                gun = max(1, min(180, int(parts[1])))
+            except ValueError:
+                pass
+        tg_send(chat_id, format_sanity(gun=gun), reply_to=msg_id)
         return
 
     # ── /stats ────────────────────────────────────────────────────
