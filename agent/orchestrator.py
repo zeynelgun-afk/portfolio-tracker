@@ -177,9 +177,19 @@ def collect_context(mode: str) -> dict:
         except Exception as e:
             print(f"[Orkestratör] Pre-snapshot swing kontrol hatası: {e} (devam)")
 
+    # DEBUG: 29dk sessizlik bölgesi teşhisi (4 mayıs 2026 timeout araştırması)
+    import time as _t_dbg
+    _t0 = _t_dbg.time()
+    print(f"[Orkestratör] Snapshot başlıyor — t=0", flush=True)
+
     portfolios = get_portfolio_snapshot()
+    print(f"[Orkestratör] get_portfolio_snapshot bitti — {_t_dbg.time()-_t0:.1f}sn", flush=True)
+
     market     = get_market_context()
+    print(f"[Orkestratör] get_market_context bitti — {_t_dbg.time()-_t0:.1f}sn (VIX={market.get('VIX',{}).get('price')})", flush=True)
+
     swing      = get_swing_status()
+    print(f"[Orkestratör] get_swing_status bitti — {_t_dbg.time()-_t0:.1f}sn", flush=True)
 
     # Portföydeki semboller
     symbols = []
@@ -192,10 +202,13 @@ def collect_context(mode: str) -> dict:
     # L1 belleği güncelle
     state = build_portfolio_state(portfolios, market)
     save_portfolio_state(state)
+    print(f"[Orkestratör] portfolio_state kaydedildi — {_t_dbg.time()-_t0:.1f}sn", flush=True)
 
     # Rejim tespiti (VIX'ten al)
     vix_price = market.get("VIX", {}).get("price")
+    print(f"[Orkestratör] run_regime_detection başlıyor — {_t_dbg.time()-_t0:.1f}sn", flush=True)
     regime    = run_regime_detection(market=market, vix=vix_price)
+    print(f"[Orkestratör] run_regime_detection bitti — {_t_dbg.time()-_t0:.1f}sn", flush=True)
 
     # Sıkıştırılmış temel bağlam
     compressed = build_context_for_claude(mode)
