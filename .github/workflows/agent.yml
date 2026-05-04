@@ -120,7 +120,13 @@ jobs:
           OPENROUTER_API_KEY:    ${{ secrets.OPENROUTER_API_KEY }}
           ANTHROPIC_API_KEY:     ${{ secrets.ANTHROPIC_API_KEY }}
           FMP_API_KEY:           ${{ secrets.FMP_API_KEY }}
+          # 4 May 2026 fix: scripts/telegram_notify.py TELEGRAM_BOT_TOKEN okuyor,
+          # eskiden TELEGRAM_TOKEN atanıyordu → token boş → "Not Found" hatası →
+          # swing alım/satım grupa düşmüyordu. Hem token hem grup chat_id atandı.
+          TELEGRAM_BOT_TOKEN:    ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_TOKEN:        ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID:      "-1003827034395"
+          TELEGRAM_PRIVATE_ID:   "1403072107"
           TELEGRAM_PRIVATE_CHAT: "1403072107"
           RAPIDAPI_KEY:          ${{ secrets.RAPIDAPI_KEY }}
           VOYAGE_API_KEY:        ${{ secrets.VOYAGE_API_KEY }}
