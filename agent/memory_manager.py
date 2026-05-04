@@ -111,6 +111,12 @@ def build_portfolio_state(portfolios: dict, market: dict) -> dict:
 
             # v5 valuation — AI'ye fair value bağlamı (cache'li, max 5dk eski)
             # Sembol bilinmiyorsa atla (FMP'ye geçersiz istek gitmesin)
+            #
+            # 4 May 2026 timeout fix: consult_ai="never" eklendi.
+            # Önceden default "auto" → her hisse için Claude API çağrısı tetiklenebiliyordu.
+            # 12-15 hisse × 2dk LLM = ~30dk → agent timeout. Pre-snapshot için kuralsal
+            # valuation yeterli; AI consultation tam değerleme akışına (Adil Değer Paneli
+            # 12:30 cron) bırakılıyor.
             if sym and sym != "?" and len(sym) <= 6:
                 try:
                     import sys as _s
@@ -118,7 +124,7 @@ def build_portfolio_state(portfolios: dict, market: dict) -> dict:
                     if _agent_dir not in _s.path:
                         _s.path.insert(0, _agent_dir)
                     from valuation.framework import valuate as _valuate
-                    _v = _valuate(sym, verbose=False)
+                    _v = _valuate(sym, verbose=False, consult_ai="never")
                     if _v and not _v.get("error"):
                         pos_data["val_fark"]  = _v["fair_value"]["upside_pct"]
                         pos_data["val_karar"] = _v["fair_value"]["karar"]
