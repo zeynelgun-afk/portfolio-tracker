@@ -12,10 +12,10 @@
   ],
   "faz": "FAZ_0",
   "buy_list": {
-    "tarih": "2026-05-01T16:01:28.546548+03:00",
+    "tarih": "2026-05-04T21:50:15.961762+03:00",
     "adaylar": [],
-    "vix": 16.88,
-    "piyasa_mod": "nötr"
+    "vix": 18.38,
+    "piyasa_mod": "risk-on"
   },
   "zorunlu_aksiyonlar": [],
   "claude_kararlar": {
@@ -131,7 +131,7 @@
     "executed_at": "2026-04-30T17:33:17.863518+03:00",
     "executed_count": 2
   },
-  "timestamp": "2026-05-01T16:01:28.546990+03:00",
+  "timestamp": "2026-05-04T21:50:15.962157+03:00",
   "k22_nakit_dagitim": {
     "tarih": "2026-04-28T12:07:57.806450+03:00",
     "vix": 18.23,

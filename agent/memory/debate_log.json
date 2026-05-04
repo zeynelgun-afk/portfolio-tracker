@@ -766,6 +766,60 @@
         "_parse_hata": true
       },
       "karar_degisti_mi": true
+    },
+    {
+      "symbol": "NEE",
+      "tarih": "2026-05-04T19:09:10.643104",
+      "ilk_karar": {
+        "karar": "ACIL_CIK",
+        "hedef_sembol": "NEE",
+        "gerekce": "Risk Yöneticisi'nin HIGH risk değerlendirmesi ve NEE'nin stop-loss seviyesine sadece %1.0 mesafede olması [KESİN], Teknik analistin NEE için SAT sinyali vermesi [KESİN] ve portföyde teknoloji sektörünün %32.6 ile konsantrasyon limitini aşması [KESİN] nedeniyle acil çıkış gerekmektedir. Sektör analistinin XLK için UP önerisi [MUHTEMEL] ile makro analistin NEUTRAL duruşu [MUHTEMEL] arasındaki çelişki, risk önceliği kuralı gereği Risk Yöneticisi lehinde çözülmüş; ancak NEE'nin kritik stop mesafesi en acil tehdit oluşturmaktadır. Fed konuşmaları ve CPI öncesi belirsizlik [MUHTEMEL] de riski artıran faktörlerdir.",
+        "uyari": "TFC %1.9, O %2.3, GTY %2.9 stop mesafesi ile ikinci dalga risk taşımakta; teknoloji konsantrasyonunun %30 altına düşürülmesi gerekmektedir.",
+        "guven": "LOW",
+        "analist_uzlasma": "DUSUK",
+        "tahmin": {
+          "yon": "NEUTRAL",
+          "buyukluk": "MEDIUM",
+          "sembol": "SPY"
+        },
+        "_agent": "CIO_AGENT",
+        "_timestamp": "2026-05-04T19:02:59.537091"
+      },
+      "boğa": {
+        "argümanlar": [
+          "NEE, ABD'nin en büyük yenilenebilir enerji üreticisi konumunda ~30 GW kurulu kapasiteyle IRA'nın 369 milyar dolarlık temiz enerji teşviklerinden maksimum fayda sağlayacak. Florida Power & Light'in 5.8 milyon müşteriye sahip düzenlenmiş faaliyetleri, yenilenebilir yatırımlar için istikrarlı nakit akımı sağlıyor ve şirket 2027'ye kadar yıllık %6-8 EPS büyümesi hedefliyor.",
+          "28 yıldan uzun süredir kesintisiz artan temettü politikasıyla NEE, son fiyat düzeltmesiyle %3.5 civarına çıkan verim ve yıllık ortalama %10 temettü büyümesi sunuyor. Bu, hem gelir hem büyüme arayan yatırımcılar için eşsiz bir fırsat oluşturuyor.",
+          "VIX 18.38 seviyesinde piyasa volatilitesi yükselirken, düzenlenmiş kamu hizmeti özelliğiyle NEE defansif bir sığınak görevi görüyor. Ayrıca Fed'in faiz artırım döngüsünün sonuna yaklaştığı beklentisiyle, yüksek beta hisselerden kaçış sermayesi NEE gibi kaliteli kamu hizmeti hisselerine akacak."
+        ],
+        "katalizörler": [
+          "Q1 2026 sonuçlarında yenilenebilir segmentin güçlü büyümesi ve yukarı yönlü guidance revizyonu",
+          "Florida PSC'nin yeni yatırım planları için onay vermesi ve ROE artışı",
+          "Fed'in Haziran toplantısında faiz indirim sinyali vermesi"
+        ],
+        "hedef_fiyat_gerekce": "Mevcut düzeltme sonrası ileriye dönük P/E oranı 18x'e gerilerken, sektör ortalamasının altında kalan değerleme ve güçlü temel göstergeler hedef fiyatı destekliyor.",
+        "boğa_skoru": 8,
+        "en_güçlü_nokta": "IRA'nın 369 milyar dolarlık temiz enerji fonundan NEE'nin öncelikli faydalanıcı olması ve Florida'nın nüfus artışıyla elektrik talebinin 2030'a kadar %15 büyüyecek olması."
+      },
+      "ayı": {
+        "argümanlar": [
+          "TLT -0.84% ve GLD -2.10% gerilemesi reel faizlerde 25-30bp sıçrama gösteriyor. NEE'nin %2.8 temettü verimi, 10Y tahvil %4.7'ye yaklaştığında sektör tarihinde ilk kez negatif spread veriyor. Her 100bp faiz artışı utilities için ortalama %18 değer kaybı demek - NEE'nin 20x FAVÖK çarpanı 15x'e gerileyebilir.",
+          "VIX %8.18 artışla 18.38'e çıktı - piyasada riskten kaçış hızlanıyor. NEE $70.50 desteğini kırdı, 200 günlük ortalama altında kapanış yaptı. Algoritmik satışlar tetiklendi, sonraki destek $62.00 (yaklaşık %12 aşağı). İşlem hacmi 20-günlük ortalamanın %45 üzerinde - distribütif satış.",
+          "Florida PSC Haziran'da FPL için ROE'yi %10.5'ten %9.8'e indirmeyi planlıyor (tarihsel ortalama 70bp kesinti). NOAA 2026 kasırga sezonu için %70 olasılıkla 'above-normal' aktivite öngörüyor - 1 Haziran'da başlıyor. NEE'nin $3.2B fırtına maliyet geri ödemesi PSC onayı bekliyor, reddedilirse FAVÖK'te $400M düşüş riski."
+        ],
+        "katalizörler": [
+          "Fed Başkanı Powell'ın Çarşamba günkü konuşması (beklentiden şahin ton)",
+          "Florida PSC Haziran ortası rate case kararı",
+          "10Y Hazine tahvili perşembe ihalesi (talep zayıflığı)"
+        ],
+        "stop_gerekce": "$68.00 altında 200 günlük ortalama kırılırsa momentum satışları hızlanır ve temettü veriminin 10Y tahvil getirisini 200bp aşağıda kalması değerleme çöküşünü tetikler.",
+        "ayı_skoru": 8,
+        "en_güçlü_nokta": "Reel faizlerdeki ani sıçrama (TLT/GLD düşüşü) NEE'nin yüksek P/E'sini sürdürülemez kılıyor ve temettü cazibesi tamamen ortadan kalkıyor."
+      },
+      "nihai": {
+        "_raw": "```json\n{\n  \"nihai_karar\": \"KISMI_CIK\",\n  \"kazan_taraf\": \"AYI\",\n  \"karar_gerekce\": \"Reel faizlerdeki ani sıçrama ve teknik kırılma kısa vadede baskı yaratıyor, ancak IRA destekleri ve Florida talep bü",
+        "_parse_hata": true
+      },
+      "karar_degisti_mi": true
     }
   ]
 }

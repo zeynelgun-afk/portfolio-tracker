@@ -1,52 +1,117 @@
 {
-  "tarih": "2026-05-01T16:01:28.546193+03:00",
-  "vix": 16.88,
+  "tarih": "2026-05-04T21:50:14.265068+03:00",
+  "vix": 18.38,
   "sektor_performans": {
-    "Basic Materials": 0.05029737178696703,
-    "Communication Services": 1.3807450243171537,
-    "Consumer Cyclical": -0.30954586697039543,
-    "Consumer Defensive": 1.8394657267433834,
-    "Energy": 2.8460937374469752,
-    "Financial Services": 1.2361419468294832,
-    "Healthcare": 1.1819701398726457,
-    "Industrials": 2.1907203930621177,
-    "Real Estate": 2.8658291629235055,
-    "Technology": 0.020903106173952857,
-    "Utilities": 3.0591023816146867
+    "Basic Materials": -1.7623859533658859,
+    "Communication Services": 0.08451175464794236,
+    "Consumer Cyclical": 0.5483136250708842,
+    "Consumer Defensive": 0.26880601469774223,
+    "Energy": 0.6454667384308443,
+    "Financial Services": 0.5135763875230515,
+    "Healthcare": 0.4748177482692295,
+    "Industrials": -0.4049809244711655,
+    "Real Estate": -0.47719560436625397,
+    "Technology": -0.25871128512663377,
+    "Utilities": 1.8379430511498596
   },
-  "dominant_temalar": [],
-  "kacınılacak": [],
-  "piyasa_modu": "nötr",
+  "dominant_temalar": [
+    {
+      "tema_adi": "AI_altyapı",
+      "güç_skoru": 8,
+      "neden": "KESİN: Utilities %1.8 ve Energy %0.6 liderliği. MUHTEMEL: AI optik darboğazı haberleri güç altyapısı talebini gösteriyor.",
+      "öncelikli_alt_dal": "güç_soğutma",
+      "önerilen_hisseler": [
+        "VRT",
+        "ETN",
+        "PWR"
+      ],
+      "portföy": "aggressive",
+      "aciliyet": "yüksek",
+      "hisse_evreni": [
+        "VRT",
+        "ETN",
+        "PWR",
+        "GNRC",
+        "HUBB"
+      ]
+    },
+    {
+      "tema_adi": "sağlık_yenilik",
+      "güç_skoru": 7,
+      "neden": "KESİN: CNSP +243.7% ve HCAI +60.1% gibi biyoteknoloji hisseleri günün en güçlü performansını sergiliyor.",
+      "öncelikli_alt_dal": "onkoloji",
+      "önerilen_hisseler": [
+        "GILD",
+        "VRTX",
+        "BIIB"
+      ],
+      "portföy": "balanced",
+      "aciliyet": "orta",
+      "hisse_evreni": [
+        "REGN",
+        "BMY",
+        "MRNA",
+        "GILD"
+      ]
+    },
+    {
+      "tema_adi": "enerji_geçiş",
+      "güç_skoru": 6,
+      "neden": "KESİN: Utilities %1.8 en güçlü sektör. MUHTEMEL: AI veri merkezleri enerji güvenliği talebini artırıyor.",
+      "öncelikli_alt_dal": "nükleer",
+      "önerilen_hisseler": [
+        "NEE",
+        "SO",
+        "CCJ"
+      ],
+      "portföy": "dividend",
+      "aciliyet": "orta",
+      "hisse_evreni": [
+        "CEG",
+        "VST",
+        "NRG",
+        "CCJ"
+      ]
+    }
+  ],
+  "kacınılacak": [
+    "Technology",
+    "Communication Services"
+  ],
+  "piyasa_modu": "risk-on",
   "aktif_kriz": {
-    "tip": "belirsiz",
-    "guven": 0
+    "tip": "yok",
+    "guven": 8,
+    "kanit": "KESİN: VIX 18.4 < 20. MUHTEMEL: Sektörler karışık ve sistemik kriz sinyali bulunmuyor.",
+    "beneficiary_sectors": [],
+    "sensitive_sectors": []
   },
-  "genel_yorum": "⚠️ Claude API hatası: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billin",
+  "genel_yorum": "MUHTEMEL: AI altyapısı ve sağlık yeniliği temaları öne çıkıyor. KESİN: Düşük VIX kriz olmadığını gösteriyor.",
   "haberler": [
     {
-      "baslik": "This Market Is Driving In The Rearview Mirror",
+      "baslik": "Optics is the next big AI bottleneck. This company could be an underrated beneficiary.",
+      "kaynak": "marketwatch.com",
+      "tarih": "2026-05-04 14:21"
+    },
+    {
+      "baslik": "Dow Jones, Nasdaq And S&P 500 Intraday Outlook - Stock Markets Stumble From Renewed Iran Tensions",
       "kaynak": "seekingalpha.com",
-      "tarih": "2026-05-01 08:44"
+      "tarih": "2026-05-04 14:15"
     },
     {
-      "baslik": "April Market Rally Brings May Momentum?",
+      "baslik": "Budget airlines seek federal aid as Spirit shuts down after failed rescue",
+      "kaynak": "foxbusiness.com",
+      "tarih": "2026-05-04 13:51"
+    },
+    {
+      "baslik": "Market expert says potential Fed rate cuts could spark ‘one of the biggest explosions' in US economy",
+      "kaynak": "foxbusiness.com",
+      "tarih": "2026-05-04 13:42"
+    },
+    {
+      "baslik": "“Momentum Is Tough to Fight” as Big Tech Drives Markets Higher",
       "kaynak": "youtube.com",
-      "tarih": "2026-05-01 08:30"
-    },
-    {
-      "baslik": "Morning Call Sheet: Tech and momentum drive markets higher",
-      "kaynak": "youtube.com",
-      "tarih": "2026-05-01 08:28"
-    },
-    {
-      "baslik": "Risks From Iran War Swayed Kashkari's Fed Dissent",
-      "kaynak": "wsj.com",
-      "tarih": "2026-05-01 08:10"
-    },
-    {
-      "baslik": "Fed Officials Cite Inflation Concerns in Defending Dissents",
-      "kaynak": "nytimes.com",
-      "tarih": "2026-05-01 08:05"
+      "tarih": "2026-05-04 13:30"
     }
   ]
 }

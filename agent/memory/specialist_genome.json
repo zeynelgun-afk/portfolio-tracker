@@ -1,8 +1,8 @@
 {
   "MACRO_AGENT": {
-    "weight": 0.9325,
-    "n": 78,
-    "avg_score": 0.833,
+    "weight": 0.9791,
+    "n": 83,
+    "avg_score": 0.68,
     "history": [
       {
         "date": "2026-04-13",
@@ -41,13 +41,19 @@
         "weight": 0.932505,
         "avg_score": 0.8333333333333334,
         "n_samples": 3
+      },
+      {
+        "date": "2026-05-04",
+        "weight": 0.979125,
+        "avg_score": 0.6799999999999999,
+        "n_samples": 5
       }
     ]
   },
   "SECTOR_AGENT": {
-    "weight": 1.5993,
-    "n": 78,
-    "avg_score": 0.533,
+    "weight": 1.6793,
+    "n": 83,
+    "avg_score": 0.76,
     "history": [
       {
         "date": "2026-04-13",
@@ -86,6 +92,12 @@
         "weight": 1.5992549999999999,
         "avg_score": 0.5333333333333333,
         "n_samples": 3
+      },
+      {
+        "date": "2026-05-04",
+        "weight": 1.679265,
+        "avg_score": 0.76,
+        "n_samples": 5
       }
     ]
   },
@@ -121,8 +133,8 @@
   },
   "CIO_AGENT": {
     "weight": 0.7428,
-    "n": 78,
-    "avg_score": 0.0,
+    "n": 83,
+    "avg_score": 0.08,
     "history": [
       {
         "date": "2026-04-13",
@@ -161,6 +173,12 @@
         "weight": 0.7428,
         "avg_score": 0.0,
         "n_samples": 3
+      },
+      {
+        "date": "2026-05-04",
+        "weight": 0.7428,
+        "avg_score": 0.07999999999999999,
+        "n_samples": 5
       }
     ]
   }
