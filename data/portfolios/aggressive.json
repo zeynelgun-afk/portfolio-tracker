@@ -58,8 +58,8 @@
       "zirve_fiyat": 433.01,
       "stop_mesafe_pct": 10.05,
       "durum": "✅ Normal",
-      "rsi": 64.24,
-      "rsi_son_guncelleme": "2026-05-04T22:13:05.241203+03:00",
+      "rsi": 63.72,
+      "rsi_son_guncelleme": "2026-05-04T22:31:44.419752+03:00",
       "atr14": 12.5771
     },
     {
@@ -87,8 +87,8 @@
       "zirve_fiyat": 123.04,
       "stop_mesafe_pct": 5.72,
       "durum": "✅ Normal",
-      "rsi": 52.18,
-      "rsi_son_guncelleme": "2026-05-04T22:13:05.241203+03:00",
+      "rsi": 51.2,
+      "rsi_son_guncelleme": "2026-05-04T22:31:44.419752+03:00",
       "atr14": 6.3579
     },
     {
@@ -116,8 +116,8 @@
       "zirve_fiyat": 394.49,
       "stop_mesafe_pct": 8.01,
       "durum": "✅ Normal",
-      "rsi": 53.28,
-      "rsi_son_guncelleme": "2026-05-04T22:13:05.241203+03:00",
+      "rsi": 52.95,
+      "rsi_son_guncelleme": "2026-05-04T22:31:44.419752+03:00",
       "atr14": 13.4364
     },
     {
@@ -146,7 +146,7 @@
       "stop_mesafe_pct": 10.19,
       "durum": "✅ Normal",
       "rsi": 52.88,
-      "rsi_son_guncelleme": "2026-05-04T22:13:05.241203+03:00",
+      "rsi_son_guncelleme": "2026-05-04T22:31:44.419752+03:00",
       "atr14": 7.6536
     }
   ],
