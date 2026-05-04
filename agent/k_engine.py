@@ -208,7 +208,18 @@ def k05_earnings_check(symbol: str) -> dict:
 # ─────────────────────────────────────────────────────────────────────────────
 
 def k18_insider_check(symbol: str) -> dict:
-    """Son 30 günde CEO/CFO/Direktör $5M+ satışı → NO-GO."""
+    """K-18 KALDIRILDI (11 nisan 2026) — geriye dönük test ters çalışıyor.
+
+    $5M+ insider satışı sonrası hisseler ortalama +2.1% kazandı, kazanma oranı %60.
+    İnsiderlar çoğunlukla rutin sebeplerle satar (10b5-1 planı, vergi, çeşitlendirme)
+    ve piyasa bunu fiyatlıyor. Ayrıntı: docs/K_RULES_QUICK_REF.md.
+
+    Geri uyumluluk için fonksiyon imzası korunuyor; her zaman pas geçiyor,
+    FMP çağrısı yapmıyor (gürültü üretmesin).
+    """
+    return {"passed": True, "reason": "K-18 kaldırıldı (11 nis 2026, backtest ters)"}
+
+    # ESKI KOD (referans için saklı, çağrılmıyor):
     data = _fmp("insider-trading/search", {"symbol": symbol, "limit": 30})
     if not data:
         return {"passed": True, "reason": "insider veri yok"}
@@ -427,11 +438,10 @@ def run_entry_checks(
         return {"go": False, "position_size": 0,
                 "checks": checks, "fail_reason": checks["K-05"]["reason"]}
 
-    # 3. K-18 Insider (kritik, geri dönüşsüz)
+    # 3. K-18 KALDIRILDI (11 nis 2026, backtest ters çalışıyor)
+    # Fonksiyon hâlâ var ama her zaman passed döner, FMP çağrısı yapmaz.
     checks["K-18"] = k18_insider_check(symbol)
-    if not checks["K-18"]["passed"]:
-        return {"go": False, "position_size": 0,
-                "checks": checks, "fail_reason": checks["K-18"]["reason"]}
+    # Karar etkisi yok; checks dict'inde geri uyumluluk için tutuluyor.
 
     # 4. K-20 Dead Cat
     checks["K-20"] = k20_dead_cat_check(symbol)

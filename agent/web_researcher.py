@@ -193,7 +193,7 @@ def get_insider_activity(symbols: list[str]) -> list[dict]:
     for sym in symbols[:8]:  # Max 8 sembol
         try:
             r = requests.get(
-                f"{FMP_BASE}/insider-trading",
+                f"{FMP_BASE}/insider-trading/search",
                 params={
                     "apikey": FMP_KEY,
                     "symbol": sym,

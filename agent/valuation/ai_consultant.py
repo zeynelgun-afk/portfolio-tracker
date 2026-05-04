@@ -309,7 +309,7 @@ def _build_rich_fmp_context(ticker: str, sector: str = "", industry: str = "",
         out["earnings_surprises"] = surprises
 
     # 4. Insider transactions (son 90 gün)
-    it = _safe_fmp("insider-trading", {"symbol": ticker, "limit": 50})
+    it = _safe_fmp("insider-trading/search", {"symbol": ticker, "limit": 50})
     if isinstance(it, list):
         cutoff = datetime.utcnow() - timedelta(days=90)
         buy_count, sell_count, buy_value, sell_value = 0, 0, 0.0, 0.0
