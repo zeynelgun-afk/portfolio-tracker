@@ -634,6 +634,47 @@
   ],
   "entries": [
     {
+      "id": "L001",
+      "tarih": "2026-04-13",
+      "kaynak": "transactions_analysis",
+      "kategori": "sinyal_performansi",
+      "ders": "Value/deep-value girişler en yüksek performansı veriyor: %78 WR, ortalama +22.1%. RSI oversold bounce da güçlü: %83 WR, +8.3%. Swing/ichimoku sinyalleri ise şu ana kadar %0 WR (-6.2% ort.) — bu sinyal türünde koşullar daha sıkı tutulmalı.",
+      "veri": {
+        "value": {
+          "n": 9,
+          "avg": 22.1,
+          "wr": 77.8
+        },
+        "rsi_oversold": {
+          "n": 6,
+          "avg": 8.33,
+          "wr": 83.3
+        },
+        "breakout_sma": {
+          "n": 4,
+          "avg": 5.65,
+          "wr": 75.0
+        },
+        "diger": {
+          "n": 39,
+          "avg": -0.58,
+          "wr": 41.0
+        },
+        "swing_ichimoku": {
+          "n": 3,
+          "avg": -6.2,
+          "wr": 0.0
+        },
+        "earnings": {
+          "n": 1,
+          "avg": -6.12,
+          "wr": 0.0
+        }
+      },
+      "aksiyon": "Swing ichimoku girişlerinde ek filtre ekle: en az 2 ichimoku sinyali + sektör momentumu pozitif olmalı",
+      "guven": "KESİN"
+    },
+    {
       "id": "L002",
       "tarih": "2026-04-13",
       "kaynak": "transactions_analysis",
@@ -1270,11 +1311,6 @@
       "date": "2026-05-03",
       "source": "auto_weekly",
       "insight": "⚠️ Claude API hatası: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billin"
-    },
-    {
-      "date": "2026-05-04",
-      "source": "post_trade",
-      "insight": "UPS: DERS: Ichimoku bounce sinyalleri tek başına giriş için yeterli değil, piyasa savunma kuralları (K-10, K-04) devreye sokulmalı."
     }
   ]
 }

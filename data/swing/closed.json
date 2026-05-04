@@ -900,16 +900,14 @@
       "kar_zarar_yuzde": -11.38,
       "tutulan_gun": 3,
       "sonuc": "ZARAR",
-      "ders": "**Kural:** K-06 stop disiplini. Stop tetiklenince çıkış otomatiktir, onay yok. (KESİN)\n\n**Giriş Tezi:** tenkan_bounce, kijun_bounce_v2, nr7_sikisma sinyalleriyle otomatik giriş. **Yanlış çıktı** — 3 günde %11.38 kayıp. Sinyaller bu piyasada tutmadı. (MUHTEMEL)\n\n**Çıkış:** $96.91'de stop tetiklendi. K-06 gereği **doğru zamanlı** çıkış; disiplin korundu. (KESİN)\n\n**Dersler:**\n1. Ichimoku bounce sinyalleri (tenkan/kijun) volatil piyasada yetersiz. NNE ve UPS'te aynı başarısızlık görüldü. (MUHTEMEL)",
+      "ders": "Stop tetiklendi. Giriş tezi bozuldu. tenkan_bounce, kijun_bounce_v2, nr7_sikisma sinyali bu piyasada yetersiz kaldı.",
       "giris_nedeni": "Seans içi otomatik giriş — tenkan_bounce, kijun_bounce_v2, nr7_sikisma",
       "tarama_yontemi": "tenkan_bounce, kijun_bounce_v2, nr7_sikisma",
       "katalizor": "",
       "stop_loss": 101.94,
       "hedef_fiyat": 127.91,
       "zirve_fiyat": 109.36,
-      "partial_exits": [],
-      "dersler": "**Kural:** K-06 stop disiplini. Stop tetiklenince çıkış otomatiktir, onay yok. (KESİN)\n\n**Giriş Tezi:** tenkan_bounce, kijun_bounce_v2, nr7_sikisma sinyalleriyle otomatik giriş. **Yanlış çıktı** — 3 günde %11.38 kayıp. Sinyaller bu piyasada tutmadı. (MUHTEMEL)\n\n**Çıkış:** $96.91'de stop tetiklendi. K-06 gereği **doğru zamanlı** çıkış; disiplin korundu. (KESİN)\n\n**Dersler:**\n1. Ichimoku bounce sinyalleri (tenkan/kijun) volatil piyasada yetersiz. NNE ve UPS'te aynı başarısızlık görüldü. (MUHTEMEL)",
-      "agent_analiz_tarihi": "2026-05-04"
+      "partial_exits": []
     }
   ],
   "istatistikler": {
