@@ -28,42 +28,11 @@
   },
   "baslangic_sermaye": 400000,
   "nakit": {
-    "miktar": 266340.14,
+    "miktar": 266915.26,
     "para_birimi": "USD",
     "agirlik_yuzde": 69.2
   },
   "pozisyonlar": [
-    {
-      "sembol": "MU",
-      "isim": "Micron Technology",
-      "sektor": "AI Bellek / DRAM",
-      "adet": 1,
-      "maliyet_baz": 415.0,
-      "yatirim": 415.0,
-      "guncel_fiyat": 542.21,
-      "guncel_deger": 542.21,
-      "kar_zarar": 127.21,
-      "kar_zarar_yuzde": 30.65,
-      "gunluk_degisim_yuzde": 4.84,
-      "agirlik_yuzde": 0.14,
-      "son_guncelleme": "2026-05-01T21:32:47.474656",
-      "giris_tarihi": "2026-04-10",
-      "giris_fiyati": 415.0,
-      "giris_nedeni": "Agresif v2 AI bellek teması. RSI 54.5 giriş zonu. SMA50/200 üstü. HBM talebi ivmeleniyor. Stop 385, hedef 470.",
-      "cb_kaynak": "kayit-yok",
-      "hedef_fiyat": 470.0,
-      "stop_loss": 485.0,
-      "zirve_fiyat": 542.21,
-      "stop_faz": 3,
-      "stop_mesafe_pct": 10.55,
-      "stop_aciklama": "K-07 trailing sıkılaştırma: 437.17 → 471.88 (ATR-bazlı %5 cap)",
-      "stop_guncelleme": "2026-04-26",
-      "durum": "🚀 Güçlü (+30.6%)",
-      "rsi": 71.73,
-      "rsi_son_guncelleme": "2026-05-01T22:32:06.440140+03:00",
-      "atr14": 28.9414,
-      "son_k15c_tarihi": "2026-05-01"
-    },
     {
       "sembol": "ETN",
       "isim": "Eaton Corporation plc",
@@ -89,8 +58,8 @@
       "zirve_fiyat": 433.01,
       "stop_mesafe_pct": 10.05,
       "durum": "✅ Normal",
-      "rsi": 65.07,
-      "rsi_son_guncelleme": "2026-05-01T22:32:06.440140+03:00",
+      "rsi": 65.36,
+      "rsi_son_guncelleme": "2026-05-04T21:34:54.086868+03:00",
       "atr14": 12.5771
     },
     {
@@ -118,8 +87,8 @@
       "zirve_fiyat": 123.04,
       "stop_mesafe_pct": 5.72,
       "durum": "✅ Normal",
-      "rsi": 53.32,
-      "rsi_son_guncelleme": "2026-05-01T22:32:06.440140+03:00",
+      "rsi": 52.9,
+      "rsi_son_guncelleme": "2026-05-04T21:34:54.086868+03:00",
       "atr14": 6.3579
     },
     {
@@ -147,8 +116,8 @@
       "zirve_fiyat": 394.49,
       "stop_mesafe_pct": 8.01,
       "durum": "✅ Normal",
-      "rsi": 53.96,
-      "rsi_son_guncelleme": "2026-05-01T22:32:06.440140+03:00",
+      "rsi": 53.41,
+      "rsi_son_guncelleme": "2026-05-04T21:34:54.086868+03:00",
       "atr14": 13.4364
     },
     {
@@ -176,12 +145,12 @@
       "zirve_fiyat": 183.82,
       "stop_mesafe_pct": 10.19,
       "durum": "✅ Normal",
-      "rsi": 51.27,
-      "rsi_son_guncelleme": "2026-05-01T22:32:06.440140+03:00",
+      "rsi": 53.33,
+      "rsi_son_guncelleme": "2026-05-04T21:34:54.086868+03:00",
       "atr14": 7.6536
     }
   ],
-  "son_guncelleme": "2026-05-01T21:32:47.474656",
+  "son_guncelleme": "2026-05-04T21:36:05.569227+03:00",
   "toplam_deger": 384898.39,
   "toplam_getiri_yuzde": -3.78,
   "toplam_getiri": -15101.61,

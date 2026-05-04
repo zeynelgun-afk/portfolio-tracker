@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-04-29T14:31:07.479057",
+  "son_guncelleme": "2026-05-04T18:34:09.933754",
   "kapatilan_pozisyonlar": [
     {
       "id": "SWING-020",
@@ -887,6 +887,27 @@
       "partial_exits": [],
       "dersler": "## UEC Post-Trade Analiz\n\n**1. Yönetim Kuralı**\nKESİN: K-06 (stop disiplini) tetiklendi — giriş $14.86, çıkış $13.48, kayıp ~%9.3. K-07 trailing devreye giremedi çünkü pozisyon kâra geçmedi.\n\n**2. Giriş Tezi**\nKESİN: Tez \"nr7_sikisma\" — dar volatilite sonrası kırılma beklentisi. Aynı gün stop yedi, kırılma yukarı değil aşağı oldu. Tez bozuldu.\nMUHTEMEL: NR7 sinyali yön bilgisi vermez; tek başına giriş için zayıf bir tetik.\n\n**3. Çıkış Zamanlaması**\nKESİN: Stop tetiklendiğinde çıkıldı, override y",
       "agent_analiz_tarihi": "2026-04-29"
+    },
+    {
+      "id": "SWING-202605011432-UPS",
+      "sembol": "UPS",
+      "adet": 67,
+      "giris_fiyati": 109.36,
+      "cikis_fiyati": 96.91,
+      "giris_tarihi": "2026-05-01",
+      "cikis_tarihi": "2026-05-04",
+      "cikis_nedeni": "STOP",
+      "kar_zarar_yuzde": -11.38,
+      "tutulan_gun": 3,
+      "sonuc": "ZARAR",
+      "ders": "Stop tetiklendi. Giriş tezi bozuldu. tenkan_bounce, kijun_bounce_v2, nr7_sikisma sinyali bu piyasada yetersiz kaldı.",
+      "giris_nedeni": "Seans içi otomatik giriş — tenkan_bounce, kijun_bounce_v2, nr7_sikisma",
+      "tarama_yontemi": "tenkan_bounce, kijun_bounce_v2, nr7_sikisma",
+      "katalizor": "",
+      "stop_loss": 101.94,
+      "hedef_fiyat": 127.91,
+      "zirve_fiyat": 109.36,
+      "partial_exits": []
     }
   ],
   "istatistikler": {

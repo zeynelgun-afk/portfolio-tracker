@@ -247,3 +247,6 @@ date,action,symbol,shares,price,total,reason
 2026-05-01,BUY,UPS,67,109.36,7327.12,"Swing giriş — tenkan_bounce, kijun_bounce_v2, nr7_sikisma. Stop: $101.94, Hedef: $127.91"
 2026-05-01,BUY,NEE,59,98.55,5814.45,"Swing giriş — sma50_bounce. Stop: $94.32, Hedef: $109.12"
 2026-05-01,SELL,MU,1,539.87,539.87,"K-15c tema 15g cikis: tutus 21g, kar +%30.1"
+2026-05-04,SELL,UPS,67,96.91,6492.97,Swing çıkış — STOP. P/L: -11.4% (3 gün)
+2026-05-04,SELL,MU,1,575.12,575.12,"K-15c tema 15g cikis: tutus 24g, kar +%38.6 (LLM-yuksek: KESİN olarak K-15c kuralı 24 günde +38.6% k"
+2026-05-04,BUY,UEC,472,15.05,7103.6,"Swing giriş — tenkan_bounce, kijun_bounce_v2. Stop: $14.13, Hedef: $17.37"
