@@ -1,7 +1,101 @@
 {
-  "tarih": "2026-05-01T21:33:14.436035",
-  "adaylar": [],
+  "tarih": "2026-05-04T21:35:20.124488",
+  "adaylar": [
+    {
+      "symbol": "KLAC",
+      "tema": "AI_tedarik_zinciri",
+      "portföy": "aggressive",
+      "price": 1713.32,
+      "stop": 1559.42,
+      "target": 2021.12,
+      "rr": 2.0,
+      "score": 6.2,
+      "teknik": 8,
+      "fundamental": 5,
+      "atr": 76.95,
+      "reason": "AI_tedarik_zinciri tema taraması — teknik:8/10 fundamental:5/10",
+      "detay": {
+        "sma200": "✅",
+        "sma50": "✅",
+        "rsi": "✅ 42",
+        "mom_1m": "✅ +13.0%",
+        "mom_3m": "✅ +21.5%",
+        "skor": 5,
+        "roic": "✅ 36.3%",
+        "büyüme": "✅ ROE 89.1%"
+      }
+    },
+    {
+      "symbol": "NVDA",
+      "tema": "AI_tedarik_zinciri",
+      "portföy": "aggressive",
+      "price": 198.48,
+      "stop": 185.45,
+      "target": 224.04,
+      "rr": 1.96,
+      "score": 6.15,
+      "teknik": 7,
+      "fundamental": 6,
+      "atr": 6.39,
+      "reason": "AI_tedarik_zinciri tema taraması — teknik:7/10 fundamental:6/10",
+      "detay": {
+        "sma200": "✅",
+        "sma50": "✅",
+        "rsi": "✅ 52",
+        "mom_1m": "✅ +11.9%",
+        "skor": 6,
+        "roic": "✅ 62.9%",
+        "büyüme": "✅ ROE 104.4%"
+      }
+    },
+    {
+      "symbol": "LRCX",
+      "tema": "AI_tedarik_zinciri",
+      "portföy": "aggressive",
+      "price": 258.57,
+      "stop": 235.03,
+      "target": 304.58,
+      "rr": 1.95,
+      "score": 5.8,
+      "teknik": 7,
+      "fundamental": 5,
+      "atr": 11.5,
+      "reason": "AI_tedarik_zinciri tema taraması — teknik:7/10 fundamental:5/10",
+      "detay": {
+        "sma200": "✅",
+        "sma50": "✅",
+        "rsi": "✅ 42",
+        "mom_1m": "✅ +18.4%",
+        "skor": 5,
+        "roic": "✅ 42.8%",
+        "büyüme": "✅ ROE 65.8%"
+      }
+    },
+    {
+      "symbol": "MSFT",
+      "tema": "AI_tedarik_zinciri",
+      "portföy": "aggressive",
+      "price": 413.62,
+      "stop": 388.95,
+      "target": 462.97,
+      "rr": 2.0,
+      "score": 5.7,
+      "teknik": 5,
+      "fundamental": 7,
+      "atr": 12.34,
+      "reason": "AI_tedarik_zinciri tema taraması — teknik:5/10 fundamental:7/10",
+      "detay": {
+        "sma50": "✅",
+        "rsi": "✅ 59",
+        "mom_1m": "✅ +10.8%",
+        "skor": 7,
+        "roic": "✅ 21.3%",
+        "pe": "→ 24.5",
+        "büyüme": "✅ ROE 33.1%"
+      }
+    }
+  ],
   "ozet": {
-    "toplam": 0
+    "toplam": 4
   }
 }
