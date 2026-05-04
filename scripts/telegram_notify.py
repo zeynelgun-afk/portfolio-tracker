@@ -82,13 +82,20 @@ def send_photo(image_path, caption=None, parse_mode="HTML", chat_id=None):
 
 
 def send_message(text, parse_mode="HTML", disable_preview=True, chat_id=None):
-    """Telegram'a mesaj gönder. Uzun mesajları otomatik böler."""
+    """Telegram'a mesaj gönder. Uzun mesajları otomatik böler.
+
+    Returns:
+        bool: Tüm chunk'lar başarılı gittiyse True, herhangi biri başarısızsa False.
+        4 May 2026: 'Not Found' / token bozuk durumunda yanıltıcı 'gönderildi'
+        log'unu önlemek için return değeri eklendi (önceden None döndürüyordu).
+    """
     target = chat_id or TELEGRAM_CHAT_ID
     if not target:
         print("HATA: TELEGRAM_CHAT_ID ayarlanmamış!")
         sys.exit(1)
 
     chunks = split_message(text, 4000)
+    all_ok = True
 
     for i, chunk in enumerate(chunks):
         payload = {
@@ -111,11 +118,16 @@ def send_message(text, parse_mode="HTML", disable_preview=True, chat_id=None):
                         print(f"Mesaj gönderildi (düz metin, {len(chunk)} karakter) [{i+1}/{len(chunks)}]")
                     else:
                         print(f"Düz metin de başarısız: {data.get('description')}")
+                        all_ok = False
+                else:
+                    all_ok = False
             else:
                 print(f"Mesaj gönderildi ({len(chunk)} karakter) [{i+1}/{len(chunks)}]")
         except Exception as e:
             print(f"Gönderim hatası: {e}")
-            sys.exit(1)
+            all_ok = False
+
+    return all_ok
 
 
 def split_message(text, max_len=4000):

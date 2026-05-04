@@ -77,8 +77,11 @@ def _swing_notify_group(action_type: str, symbol: str, price: float, details: st
     try:
         from telegram_notify import format_action, send_message
         msg = format_action(action_type, symbol, price, details)
-        send_message(msg)  # default chat_id = GROUP
-        print(f"[Swing→TG] {action_type} {symbol} grubuna gönderildi")
+        ok = send_message(msg)  # default chat_id = GROUP, returns bool
+        if ok:
+            print(f"[Swing→TG] {action_type} {symbol} grubuna gönderildi")
+        else:
+            print(f"[Swing→TG] ❌ {action_type} {symbol} GÖNDERİLEMEDİ (Telegram reddetti)")
     except SystemExit as e:
         print(f"[Swing→TG] Bildirim atlandı (env eksik, SystemExit {e.code})")
     except Exception as e:
