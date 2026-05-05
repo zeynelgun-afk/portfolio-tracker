@@ -27,7 +27,7 @@ jobs:
           echo "$NEW" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
-      - name: Send push notifications
+      - name: Send push notifications (Expo)
         if: steps.diff.outputs.NEW_LINES != ''
         env:
           EXPO_PUSH_TOKENS: ${{ secrets.EXPO_PUSH_TOKENS }}
@@ -51,7 +51,6 @@ jobs:
               line = line.strip().strip('"')
               if not line:
                   continue
-              # Split carefully - quoted fields may contain commas
               import csv, io
               reader = csv.reader(io.StringIO(line))
               for parts in reader:
@@ -104,7 +103,6 @@ jobs:
                       'channelId': 'transactions',
                   })
 
-          # Send in batches of 100 (Expo limit)
           headers = {
               'Accept': 'application/json',
               'Accept-encoding': 'gzip, deflate',
@@ -119,4 +117,108 @@ jobs:
                   timeout=30,
               )
               print(f"Batch {i//100 + 1}: {resp.status_code} — {resp.text[:200]}")
+          PYEOF
+
+      - name: Send Telegram group notification
+        if: steps.diff.outputs.NEW_LINES != ''
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          NEW_LINES: ${{ steps.diff.outputs.NEW_LINES }}
+          COMMIT_MSG: ${{ github.event.head_commit.message }}
+          COMMIT_SHA: ${{ github.sha }}
+        run: |
+          python3 - <<'PYEOF'
+          import os, requests, csv, io
+
+          token = os.environ.get('TELEGRAM_BOT_TOKEN', '')
+          chat_id = os.environ.get('TELEGRAM_CHAT_ID', '')
+          new_lines = os.environ.get('NEW_LINES', '').strip()
+          commit_msg = os.environ.get('COMMIT_MSG', '').split('\n')[0][:100]
+          commit_sha = os.environ.get('COMMIT_SHA', '')[:7]
+
+          if not token or not chat_id:
+              print("Telegram secrets eksik, atlanıyor")
+              exit(0)
+
+          if not new_lines:
+              print("Yeni satır yok")
+              exit(0)
+
+          # Parse transactions
+          transactions = []
+          for line in new_lines.split('\n'):
+              line = line.strip().strip('"')
+              if not line:
+                  continue
+              reader = csv.reader(io.StringIO(line))
+              for parts in reader:
+                  if len(parts) >= 4:
+                      transactions.append({
+                          'date': parts[0].strip(),
+                          'action': parts[1].strip(),
+                          'symbol': parts[2].strip(),
+                          'shares': parts[3].strip(),
+                          'price': parts[4].strip() if len(parts) > 4 else '?',
+                          'amount': parts[5].strip() if len(parts) > 5 else '?',
+                          'reason': parts[6].strip() if len(parts) > 6 else '',
+                      })
+
+          if not transactions:
+              print("İşlem ayrıştırılamadı")
+              exit(0)
+
+          # Mesaj kur
+          n = len(transactions)
+          if n == 1:
+              tx = transactions[0]
+              emoji = '🟢' if tx['action'] == 'BUY' else '🔴'
+              header = f"{emoji} <b>{tx['action']} — {tx['symbol']}</b>\n"
+              body = f"📅 {tx['date']}\n"
+              body += f"<b>{tx['shares']}</b> adet @ <b>${tx['price']}</b>\n"
+              try:
+                  body += f"💵 Tutar: ${float(tx['amount']):,.2f}\n"
+              except:
+                  body += f"💵 Tutar: ${tx['amount']}\n"
+              if tx['reason']:
+                  body += f"\n📝 <i>{tx['reason'][:300]}</i>\n"
+              body += f"\n🔗 Commit: <code>{commit_sha}</code>"
+              msg = header + body
+          else:
+              msg = f"📊 <b>Toplu İşlem — {n} aksiyon</b>\n"
+              msg += f"📅 {transactions[0]['date']}\n\n"
+              total_buy = 0.0
+              total_sell = 0.0
+              for tx in transactions:
+                  emoji = '🟢' if tx['action'] == 'BUY' else '🔴'
+                  msg += f"{emoji} <b>{tx['action']} {tx['symbol']}</b> {tx['shares']} @ ${tx['price']}\n"
+                  try:
+                      amt = float(tx['amount'])
+                      if tx['action'] == 'BUY':
+                          total_buy += amt
+                      else:
+                          total_sell += amt
+                  except:
+                      pass
+              msg += f"\n💵 Alım: ${total_buy:,.0f} | Satış: ${total_sell:,.0f}\n"
+              msg += f"📉 Net nakit: ${total_sell - total_buy:,.0f}\n"
+              msg += f"\n📝 <i>{commit_msg}</i>\n"
+              msg += f"🔗 <code>{commit_sha}</code>"
+
+          # Telegram limiti 4096 karakter
+          if len(msg) > 4000:
+              msg = msg[:3990] + '…'
+
+          # Gönder
+          url = f"https://api.telegram.org/bot{token}/sendMessage"
+          r = requests.post(url, data={
+              'chat_id': chat_id,
+              'text': msg,
+              'parse_mode': 'HTML',
+              'disable_web_page_preview': 'true',
+          }, timeout=30)
+          print(f"Telegram status: {r.status_code}")
+          print(r.text[:300])
+          r.raise_for_status()
+          print(f"✅ Telegram bildirimi gönderildi ({n} işlem)")
           PYEOF
