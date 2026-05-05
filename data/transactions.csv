@@ -265,3 +265,4 @@ date,action,symbol,shares,price,total,reason
 2026-05-05,BUY,AMAT,35,391.38,13698.30,"K-22 dağıtımı: AI ekipman büyütme, %11 -> %14, mevcut tez güçlü"
 2026-05-05,BUY,DINO,120,72.86,8743.21,"K-22 dağıtımı: Energy refinery büyütme, %13 -> %15, kriz rejimi enerji ağırlığı"
 2026-05-05,SELL,MU,1,633.35,633.35,K-11 katman 2: RSI 81 + kâr %23.8
+2026-05-05,SELL,MU,1,640.02,640.02,K-11 katman 2: RSI 82 + kâr %25.1
