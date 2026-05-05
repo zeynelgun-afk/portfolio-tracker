@@ -2,30 +2,6 @@
   "tarih": "2026-05-05T13:22:11.971879",
   "adaylar": [
     {
-      "symbol": "KLAC",
-      "tema": "AI_tedarik_zinciri",
-      "portföy": "aggressive",
-      "price": 1713.32,
-      "stop": 1559.42,
-      "target": 2021.12,
-      "rr": 2.0,
-      "score": 6.2,
-      "teknik": 8,
-      "fundamental": 5,
-      "atr": 76.95,
-      "reason": "AI_tedarik_zinciri tema taraması — teknik:8/10 fundamental:5/10",
-      "detay": {
-        "sma200": "✅",
-        "sma50": "✅",
-        "rsi": "✅ 42",
-        "mom_1m": "✅ +13.0%",
-        "mom_3m": "✅ +21.5%",
-        "skor": 5,
-        "roic": "✅ 36.3%",
-        "büyüme": "✅ ROE 89.1%"
-      }
-    },
-    {
       "symbol": "NVDA",
       "tema": "AI_tedarik_zinciri",
       "portföy": "aggressive",

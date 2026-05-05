@@ -251,3 +251,6 @@ date,action,symbol,shares,price,total,reason
 2026-05-04,SELL,MU,1,575.12,575.12,"K-15c tema 15g cikis: tutus 24g, kar +%38.6 (LLM-yuksek: KESİN olarak K-15c kuralı 24 günde +38.6% k"
 2026-05-04,BUY,UEC,472,15.05,7103.6,"Swing giriş — tenkan_bounce, kijun_bounce_v2. Stop: $14.13, Hedef: $17.37"
 2026-05-05,SELL,MU,4,634.01,2536.06,K-11 katman 2: RSI 81 + kâr %23.9
+2026-05-05,SELL,MU,3,644.74,1934.22,K-11 katman 2: RSI 82 + kâr %26.0
+2026-05-05,BUY,KLAC,8,1731.61,13852.88,AI_tedarik_zinciri tema taraması — teknik:8/10 fundamental:5/10
+2026-05-05,BUY,DINO,686,72.86,49982.03,"Finzora: Kriz rejiminde enerji ağırlığı artırımı, yüksek kaliteli aday (PEG 0.48, skor 91)"
