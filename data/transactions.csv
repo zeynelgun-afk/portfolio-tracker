@@ -257,3 +257,10 @@ date,action,symbol,shares,price,total,reason
 2026-05-05,SELL,MU,3,634.5,1903.5,K-11 katman 2: RSI 81 + kâr %24.0
 2026-05-05,SELL,MU,2,637.6,1275.2,K-11 katman 2: RSI 82 + kâr %24.6
 2026-05-05,SELL,MU,1,642.68,642.68,K-11 katman 2: RSI 82 + kâr %25.6
+2026-05-05,SELL,CRM,166,185.48,30789.68,"Pozisyon tasfiye: jenerik AI software tezi yerine somut EDA katman tezi (SNPS) açıldı, +%3 kâr ile çıkış"
+2026-05-05,BUY,SNPS,180,507.09,91276.20,"Agresif v2 EDA tedarik zinciri yeni katman. FY26 fwd P/E 34x cazip vs peer CDNS 42x. Geride kalmış kalite. DCF baz adil değer 520, analist konsensüs 544. Stop 461 (2xATR), hedef 540."
+2026-05-05,BUY,ETN,90,422.44,38019.60,"K-22 nakit fazlası dağıtımı: AI altyapı teması büyütme, %4 -> %14, RSI 65 momentum güçlü"
+2026-05-05,BUY,KLAC,12,1731.61,20779.32,"K-22 dağıtımı: AI ekipman büyütme, %3.6 -> %9, AMAT ile birlikte AI tedarik zinciri katmanlaması"
+2026-05-05,BUY,CCJ,160,118.26,18921.60,"K-22 dağıtımı: Uranium kriz tezi büyütme, %8 -> %13, AI veri merkezi enerji talebi yapısal"
+2026-05-05,BUY,AMAT,35,391.38,13698.30,"K-22 dağıtımı: AI ekipman büyütme, %11 -> %14, mevcut tez güçlü"
+2026-05-05,BUY,DINO,120,72.86,8743.21,"K-22 dağıtımı: Energy refinery büyütme, %13 -> %15, kriz rejimi enerji ağırlığı"
