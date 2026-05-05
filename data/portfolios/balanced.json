@@ -2,7 +2,7 @@
   "portfoy_adi": "Dengeli Portföy",
   "baslangic_sermaye": 100000,
   "nakit": {
-    "miktar": 39476.35,
+    "miktar": 40114.65,
     "para_birimi": "USD",
     "agirlik_yuzde": 27.14
   },
@@ -32,8 +32,8 @@
       "zirve_fiyat": 108.5,
       "stop_mesafe_pct": 3.04,
       "durum": "✅ Normal",
-      "rsi": 45.99,
-      "rsi_son_guncelleme": "2026-05-05T20:33:41.847752+03:00",
+      "rsi": 46.49,
+      "rsi_son_guncelleme": "2026-05-05T21:03:41.294763+03:00",
       "atr14": 3.725
     },
     {
@@ -61,8 +61,8 @@
       "zirve_fiyat": 126.78,
       "stop_mesafe_pct": 9.36,
       "durum": "✅ Normal",
-      "rsi": 55.94,
-      "rsi_son_guncelleme": "2026-05-05T20:33:41.847752+03:00",
+      "rsi": 55.33,
+      "rsi_son_guncelleme": "2026-05-05T21:03:41.294763+03:00",
       "atr14": 5.3764
     },
     {
@@ -90,8 +90,8 @@
       "zirve_fiyat": 29.6,
       "stop_mesafe_pct": 4.92,
       "durum": "✅ Normal",
-      "rsi": 56.67,
-      "rsi_son_guncelleme": "2026-05-05T20:33:41.847752+03:00",
+      "rsi": 56.25,
+      "rsi_son_guncelleme": "2026-05-05T21:03:41.294763+03:00",
       "atr14": 0.7307
     },
     {
@@ -119,8 +119,8 @@
       "zirve_fiyat": 401.61,
       "stop_mesafe_pct": 8.73,
       "durum": "✅ Normal",
-      "rsi": 61.55,
-      "rsi_son_guncelleme": "2026-05-05T20:33:41.847752+03:00",
+      "rsi": 62.23,
+      "rsi_son_guncelleme": "2026-05-05T21:03:41.294763+03:00",
       "atr14": 13.3957
     },
     {
@@ -148,15 +148,15 @@
       "zirve_fiyat": 50.23,
       "stop_mesafe_pct": 5.07,
       "durum": "✅ Normal",
-      "rsi": 58.66,
-      "rsi_son_guncelleme": "2026-05-05T20:33:41.847752+03:00",
+      "rsi": 58.63,
+      "rsi_son_guncelleme": "2026-05-05T21:03:41.294763+03:00",
       "atr14": 1.645
     },
     {
       "sembol": "MU",
       "isim": "Micron Technology, Inc.",
       "sektor": "Technology",
-      "adet": 3,
+      "adet": 2,
       "maliyet_baz": 511.68,
       "giris_fiyati": 511.68,
       "guncel_fiyat": 576.45,
@@ -177,12 +177,12 @@
       "zirve_fiyat": 576.45,
       "stop_mesafe_pct": 11.24,
       "durum": "✅ Normal",
-      "rsi": 81.94,
-      "rsi_son_guncelleme": "2026-05-05T20:33:41.847752+03:00",
+      "rsi": 81.65,
+      "rsi_son_guncelleme": "2026-05-05T21:03:41.294763+03:00",
       "atr14": 29.6321
     }
   ],
-  "son_guncelleme": "2026-05-05T20:33:44.233097+03:00",
+  "son_guncelleme": "2026-05-05T21:03:44.444317+03:00",
   "toplam_deger": 107860.08,
   "toplam_getiri_yuzde": 7.86,
   "toplam_getiri": 7860.08,
