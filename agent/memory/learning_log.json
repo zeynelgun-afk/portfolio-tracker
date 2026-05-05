@@ -634,24 +634,6 @@
   ],
   "entries": [
     {
-      "id": "L003",
-      "tarih": "2026-04-13",
-      "kaynak": "ktos_lasr_hatasi",
-      "kategori": "kriz_rallisi",
-      "ders": "2 Mart 2026: HAL/CEG/KTOS/LASR — kriz rallisi gününde 5/5 kayıp. Kriz rallyisi gün 1'de pozisyon girme yasak. Minimum 1 soğuma günü + RSI onayı bekle.",
-      "veri": {
-        "tarih": "2026-03-02",
-        "semboller": [
-          "HAL",
-          "KTOS",
-          "LASR"
-        ],
-        "sonuc": "5/5 kayıp"
-      },
-      "aksiyon": "K-kural olarak kodlandı. Monitor'da haber 'kriz/ateşkes/çözüm' içeriyorsa ve VIX ani düşüş varsa o gün giriş yok.",
-      "guven": "KESİN"
-    },
-    {
       "id": "L004",
       "tarih": "2026-04-13",
       "kaynak": "lasr_stop_override",
@@ -1266,6 +1248,11 @@
       "date": "2026-05-05",
       "source": "post_trade",
       "insight": "UPS: DERS: Ichimoku bounce sinyalleri tek başına yeterli değil, genel piyasa filtresi ve volatilite uyumu şart."
+    },
+    {
+      "date": "2026-05-06",
+      "source": "closing_analysis",
+      "insight": "DECISION BLOCK"
     }
   ]
 }

@@ -89,91 +89,36 @@
   },
   "zorunlu_aksiyonlar": [],
   "claude_kararlar": {
-    "tarih": "2026-05-05T16:21:19.261705+03:00",
+    "tarih": "2026-05-06T00:39:26.070271+03:00",
     "kararlar": [
       {
-        "tip": "EKLE",
+        "tip": "BÜYÜT",
         "portfoy": "aggressive",
         "sembol": "DINO",
-        "pct": 0,
-        "neden": "Kriz rejiminde enerji ağırlığı artırımı, yüksek kaliteli aday (PEG 0.48, skor 91)",
+        "pct": 100,
+        "neden": "NAKİT AŞIMI: Risk-on ortamda enerji sektörüne ek maruziyet ($4,000)",
         "hedef_fiyat": 135.0,
-        "stop": 112.0,
-        "tutar": 50000,
+        "stop": 67.0,
+        "tutar": 4000,
         "aciliyet": "bugün",
         "dondur_al": null,
-        "_decision_id": "0f494b3a60fa"
-      },
-      {
-        "tip": "EKLE",
-        "portfoy": "aggressive",
-        "sembol": "ITA",
-        "pct": 0,
-        "neden": "JEOPOLITIK_KRIZ rejimi savunma pozisyonu gerektirir (LMT, RTX teması)",
-        "hedef_fiyat": 440.0,
-        "stop": 380.0,
-        "tutar": 50000,
-        "aciliyet": "bugün",
-        "dondur_al": null,
-        "_decision_id": "282c9093b606"
-      },
-      {
-        "tip": "EKLE",
-        "portfoy": "balanced",
-        "sembol": "XLP",
-        "pct": 0,
-        "neden": "Nakit aşımı, defansif rotasyon (K-10/K-13) - tüketici temel sektör",
-        "hedef_fiyat": 98.0,
-        "stop": 86.5,
-        "tutar": 15000,
-        "aciliyet": "bugün",
-        "dondur_al": null,
-        "_decision_id": "286c0e0a5615"
+        "_decision_id": "0542b7442d5f"
       },
       {
         "tip": "BÜYÜT",
         "portfoy": "dividend",
         "sembol": "PSA",
-        "pct": 50,
-        "neden": "Nakit aşımı, defansif REIT'te büyütme - K-12 limiti içinde",
+        "pct": 100,
+        "neden": "NAKİT AŞIMI: Güvenli temettü ve düşük volatilite ile REIT sektörü ($35,000)",
         "hedef_fiyat": 323.0,
         "stop": 284.0,
-        "tutar": 20000,
+        "tutar": 35000,
         "aciliyet": "bugün",
         "dondur_al": null,
-        "_decision_id": "b2f388324eaa"
-      },
-      {
-        "tip": "İZLE",
-        "portfoy": "swing",
-        "sembol": "TFC",
-        "pct": 0,
-        "neden": "Stop seviyesine %1.7 mesafe - kırılım halinde çıkış tetiklenecek",
-        "hedef_fiyat": 0.0,
-        "stop": 48.62,
-        "tutar": 0,
-        "aciliyet": "hemen",
-        "dondur_al": null,
-        "_decision_id": "32c70b4e92d5"
-      },
-      {
-        "tip": "İZLE",
-        "portfoy": "swing",
-        "sembol": "NEE",
-        "pct": 0,
-        "neden": "Stop seviyesine %1.2 mesafe - kritik zarar kes takibi",
-        "hedef_fiyat": 0.0,
-        "stop": 94.32,
-        "tutar": 0,
-        "aciliyet": "hemen",
-        "dondur_al": null,
-        "_decision_id": "c75aafb79f81"
+        "_decision_id": "5586a0545c7c"
       }
     ],
-    "kaynak": "sabah_raporu",
-    "executed": true,
-    "executed_at": "2026-05-05T17:33:59.800049+03:00",
-    "executed_count": 1
+    "kaynak": "closing"
   },
   "timestamp": "2026-05-05T16:04:56.170992+03:00",
   "k22_nakit_dagitim": {
