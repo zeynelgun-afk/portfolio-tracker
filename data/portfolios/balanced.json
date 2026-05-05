@@ -2,7 +2,7 @@
   "portfoy_adi": "Dengeli Portföy",
   "baslangic_sermaye": 100000,
   "nakit": {
-    "miktar": 29269.82,
+    "miktar": 31805.88,
     "para_birimi": "USD",
     "agirlik_yuzde": 27.14
   },
@@ -32,8 +32,8 @@
       "zirve_fiyat": 108.5,
       "stop_mesafe_pct": 3.04,
       "durum": "✅ Normal",
-      "rsi": 41.14,
-      "rsi_son_guncelleme": "2026-05-04T22:31:44.419752+03:00",
+      "rsi": 43.68,
+      "rsi_son_guncelleme": "2026-05-05T17:02:47.384145+03:00",
       "atr14": 3.725
     },
     {
@@ -61,8 +61,8 @@
       "zirve_fiyat": 126.78,
       "stop_mesafe_pct": 9.36,
       "durum": "✅ Normal",
-      "rsi": 53.58,
-      "rsi_son_guncelleme": "2026-05-04T22:31:44.419752+03:00",
+      "rsi": 56.51,
+      "rsi_son_guncelleme": "2026-05-05T17:02:47.384145+03:00",
       "atr14": 5.3764
     },
     {
@@ -90,8 +90,8 @@
       "zirve_fiyat": 29.6,
       "stop_mesafe_pct": 4.92,
       "durum": "✅ Normal",
-      "rsi": 51.12,
-      "rsi_son_guncelleme": "2026-05-04T22:31:44.419752+03:00",
+      "rsi": 53.21,
+      "rsi_son_guncelleme": "2026-05-05T17:02:47.384145+03:00",
       "atr14": 0.7307
     },
     {
@@ -120,7 +120,7 @@
       "stop_mesafe_pct": 8.73,
       "durum": "✅ Normal",
       "rsi": 64.53,
-      "rsi_son_guncelleme": "2026-05-04T22:31:44.419752+03:00",
+      "rsi_son_guncelleme": "2026-05-05T17:02:47.384145+03:00",
       "atr14": 13.3957
     },
     {
@@ -148,15 +148,15 @@
       "zirve_fiyat": 50.23,
       "stop_mesafe_pct": 5.07,
       "durum": "✅ Normal",
-      "rsi": 56.74,
-      "rsi_son_guncelleme": "2026-05-04T22:31:44.419752+03:00",
+      "rsi": 57.55,
+      "rsi_son_guncelleme": "2026-05-05T17:02:47.384145+03:00",
       "atr14": 1.645
     },
     {
       "sembol": "MU",
       "isim": "Micron Technology, Inc.",
       "sektor": "Technology",
-      "adet": 19,
+      "adet": 15,
       "maliyet_baz": 511.68,
       "giris_fiyati": 511.68,
       "guncel_fiyat": 576.45,
@@ -177,12 +177,12 @@
       "zirve_fiyat": 576.45,
       "stop_mesafe_pct": 11.24,
       "durum": "✅ Normal",
-      "rsi": 76.35,
-      "rsi_son_guncelleme": "2026-05-04T22:31:44.419752+03:00",
+      "rsi": 81.43,
+      "rsi_son_guncelleme": "2026-05-05T17:02:47.384145+03:00",
       "atr14": 29.6321
     }
   ],
-  "son_guncelleme": "2026-05-04T21:32:37.219248",
+  "son_guncelleme": "2026-05-05T17:02:48.922607+03:00",
   "toplam_deger": 107860.08,
   "toplam_getiri_yuzde": 7.86,
   "toplam_getiri": 7860.08,
