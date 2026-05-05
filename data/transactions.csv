@@ -255,3 +255,4 @@ date,action,symbol,shares,price,total,reason
 2026-05-05,BUY,KLAC,8,1731.61,13852.88,AI_tedarik_zinciri tema taraması — teknik:8/10 fundamental:5/10
 2026-05-05,BUY,DINO,686,72.86,49982.03,"Finzora: Kriz rejiminde enerji ağırlığı artırımı, yüksek kaliteli aday (PEG 0.48, skor 91)"
 2026-05-05,SELL,MU,3,634.5,1903.5,K-11 katman 2: RSI 81 + kâr %24.0
+2026-05-05,SELL,MU,2,637.6,1275.2,K-11 katman 2: RSI 82 + kâr %24.6

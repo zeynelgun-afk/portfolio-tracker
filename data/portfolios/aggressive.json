@@ -58,8 +58,8 @@
       "zirve_fiyat": 433.01,
       "stop_mesafe_pct": 9.39,
       "durum": "✅ Normal",
-      "rsi": 51.01,
-      "rsi_son_guncelleme": "2026-05-05T18:03:08.414399+03:00",
+      "rsi": 55.56,
+      "rsi_son_guncelleme": "2026-05-05T18:31:34.203525+03:00",
       "atr14": 12.7543
     },
     {
@@ -87,8 +87,8 @@
       "zirve_fiyat": 123.04,
       "stop_mesafe_pct": 3.86,
       "durum": "✅ Normal",
-      "rsi": 49.87,
-      "rsi_son_guncelleme": "2026-05-05T18:03:08.414399+03:00",
+      "rsi": 49.62,
+      "rsi_son_guncelleme": "2026-05-05T18:31:34.203525+03:00",
       "atr14": 6.3221
     },
     {
@@ -116,8 +116,8 @@
       "zirve_fiyat": 394.49,
       "stop_mesafe_pct": 8.55,
       "durum": "✅ Normal",
-      "rsi": 59.62,
-      "rsi_son_guncelleme": "2026-05-05T18:03:08.414399+03:00",
+      "rsi": 60.14,
+      "rsi_son_guncelleme": "2026-05-05T18:31:34.203525+03:00",
       "atr14": 13.8157
     },
     {
@@ -145,8 +145,8 @@
       "zirve_fiyat": 185.48,
       "stop_mesafe_pct": 10.99,
       "durum": "✅ Normal",
-      "rsi": 52.81,
-      "rsi_son_guncelleme": "2026-05-05T18:03:08.414399+03:00",
+      "rsi": 52.58,
+      "rsi_son_guncelleme": "2026-05-05T18:31:34.203525+03:00",
       "atr14": 7.6171
     },
     {
@@ -174,8 +174,8 @@
       "zirve_fiyat": 1731.61,
       "stop_mesafe_pct": 8.54,
       "durum": "✅ Normal",
-      "rsi": 52.63,
-      "rsi_son_guncelleme": "2026-05-05T18:03:08.414399+03:00"
+      "rsi": 53.38,
+      "rsi_son_guncelleme": "2026-05-05T18:31:34.203525+03:00"
     },
     {
       "sembol": "DINO",
@@ -202,8 +202,8 @@
       "zirve_fiyat": 72.86,
       "stop_mesafe_pct": 7.01,
       "durum": "✅ Normal",
-      "rsi": 78.4,
-      "rsi_son_guncelleme": "2026-05-05T18:03:08.414399+03:00"
+      "rsi": 78.93,
+      "rsi_son_guncelleme": "2026-05-05T18:31:34.203525+03:00"
     }
   ],
   "son_guncelleme": "2026-05-05T17:33:50.239246+03:00",
