@@ -44,6 +44,16 @@ FMP_BASE = "https://financialmodelingprep.com/stable"
 
 REPO_ROOT = Path(__file__).parent.parent
 
+_sys.path.insert(0, str(REPO_ROOT))
+try:
+    from agent.theme_filter import load_active_theme_universe
+except ImportError:
+    def load_active_theme_universe(*_a, **_kw):
+        return {"tema_hisseleri": set(), "tema_meta": {},
+                "kaynak_durumu": {"macro_kullanildi": False,
+                                  "tracker_kullanildi": False,
+                                  "macro_yas_saat": None}}
+
 
 def fmp_get(endpoint: str, params: dict = None, timeout: int = 12):
     p = (params or {})
@@ -212,9 +222,10 @@ def check_market_regime() -> dict:
         return {"gucu": 1.0, "rejim": "bilinmiyor"}
 
 
-def calculate_kalite_skoru(signals: list, position: dict, volume: dict, 
+def calculate_kalite_skoru(signals: list, position: dict, volume: dict,
                             sektor: dict, regime: dict, atr: float, price: float,
-                            fundamental: dict = None) -> dict:
+                            fundamental: dict = None,
+                            tema_match: dict = None) -> dict:
     """
     Composite kalite skoru (0-100): Bir sinyalin ne kadar kuvvetli oldugunu
     tek bir sayida toplar.
@@ -320,8 +331,8 @@ def calculate_kalite_skoru(signals: list, position: dict, volume: dict,
         detay["fundamental"] = f_skor
     else:
         detay["fundamental"] = 0
-    
-    # Karar
+
+    # Karar (kalite_skor 0-100 esikleri korunur — tema_bonus ayri tutulur)
     if skor >= 70:
         karar = "GUCLU"
         carpan_oneri = 2.0
@@ -334,12 +345,25 @@ def calculate_kalite_skoru(signals: list, position: dict, volume: dict,
     else:
         karar = "GECERSIZ"
         carpan_oneri = 0  # Giris yapma
-    
+
+    # Tema bonusu (kalite skoruna eklenmez, ayri alan; final siralama icin)
+    tema_bonus = 0
+    tema_etiketleri: list = []
+    if tema_match:
+        tema_etiketleri = list(tema_match.get("etiketler") or [])
+        tcount = int(tema_match.get("tema_count", len(tema_etiketleri)) or 0)
+        if tcount >= 2:
+            tema_bonus = 15
+        elif tcount == 1:
+            tema_bonus = 10
+
     return {
         "skor": skor,
         "karar": karar,
         "carpan_oneri": carpan_oneri,
         "detay": detay,
+        "tema_bonus": tema_bonus,
+        "tema_etiketleri": tema_etiketleri,
     }
 
 
@@ -707,10 +731,12 @@ def detect_nr7_setup(prices: list, ichi: dict) -> dict | None:
 
 # ── TAM ANALİZ ────────────────────────────────────────────────────────────────
 
-def enhanced_entry_analysis(symbol: str) -> dict:
+def enhanced_entry_analysis(symbol: str, tema_match: dict | None = None) -> dict:
     """
     Gelişmiş swing giriş analizi.
     Mevcut swing_ichimoku'ya ek 4 sinyal.
+    tema_match: {"tema_count": int, "etiketler": list[str]} — kalite skoruna
+                tema_bonus eklemek icin (None ise bonus 0).
     """
     # Fiyat verisi
     prices = get_price_history(symbol, limit=60)
@@ -751,9 +777,10 @@ def enhanced_entry_analysis(symbol: str) -> dict:
     sektor_check = check_sector_strength(symbol)
     regime_check = check_market_regime()
     fundamental_check = check_fundamental_quality(symbol)  # YENI
-    kalite = calculate_kalite_skoru(signals, position, volume_check, 
+    kalite = calculate_kalite_skoru(signals, position, volume_check,
                                       sektor_check, regime_check, 0, price,
-                                      fundamental=fundamental_check)
+                                      fundamental=fundamental_check,
+                                      tema_match=tema_match)
 
     # Stop ve hedef
     kijun     = ichi.get("kijun", 0)
@@ -884,6 +911,9 @@ def enhanced_entry_analysis(symbol: str) -> dict:
         "kalite_skor": kalite_skor,             # Composite 0-100
         "kalite_karar": kalite_karar,           # GUCLU/ORTA/ZAYIF/GECERSIZ
         "kalite_detay": kalite.get("detay", {}),
+        "tema_bonus": kalite.get("tema_bonus", 0),
+        "tema_etiketleri": kalite.get("tema_etiketleri", []),
+        "final_skor": kalite_skor + int(kalite.get("tema_bonus", 0) or 0),
         "volume_rasyo": volume_check.get("rasyo"),
         "sektor_fark": sektor_check.get("fark"),
         "rejim": regime_check.get("rejim"),
@@ -949,9 +979,12 @@ def _detect_crisis_rally(verbose: bool = False) -> tuple[bool, str]:
         return False, f"Kontrol hatası: {e}"
 
 
-def scan_for_entries(symbols: list[str], verbose: bool = False) -> list[dict]:
+def scan_for_entries(symbols: list[str], verbose: bool = False,
+                     tema_meta: dict | None = None) -> list[dict]:
     """
     Sembol listesini tarar, giriş sinyali olanları döner.
+    tema_meta: {ticker: [tema_etiket, ...]} — her sembol icin tema_match
+               otomatik olusturulup enhanced_entry_analysis'e gecirilir.
     """
     # K-21 Kriz Rallisi kontrolü (28 Nis 2026)
     kriz_var, kriz_aciklama = _detect_crisis_rally(verbose)
@@ -973,7 +1006,9 @@ def scan_for_entries(symbols: list[str], verbose: bool = False) -> list[dict]:
 
     for i, sym in enumerate(symbols, 1):
         print(f"  [{i:2}/{len(symbols)}] {sym}...", end=" ", flush=True)
-        result = enhanced_entry_analysis(sym)
+        etiketler = (tema_meta or {}).get(sym.upper(), [])
+        tm = {"tema_count": len(etiketler), "etiketler": etiketler} if etiketler else None
+        result = enhanced_entry_analysis(sym, tema_match=tm)
 
         if "GİRİŞ" in result.get("karar", ""):
             giris_var.append(result)
@@ -995,13 +1030,16 @@ def print_entry_report(giris_var: list[dict]):
         print("\nGiriş sinyali yok.")
         return
 
-    print(f"\n{'='*70}")
+    print(f"\n{'='*78}")
     print(f"GİRİŞ SİNYALLERİ ({len(giris_var)} hisse)")
-    print(f"{'='*70}")
-    print(f"{'SYM':6} {'Fiyat':>7} {'Stop':>7} {'Stop%':>6} {'Hedef':>7} {'RSI':>4} Sinyal")
-    print("-" * 70)
+    print(f"{'='*78}")
+    print(f"{'SYM':6} {'Fiyat':>7} {'Stop':>7} {'Stop%':>6} {'Hedef':>7} {'RSI':>4} {'TEMA':<14} Sinyal")
+    print("-" * 78)
 
-    for r in sorted(giris_var, key=lambda x: -x.get("kalite_skor", 0)):
+    def _final(r: dict) -> int:
+        return int(r.get("kalite_skor", 0) or 0) + int(r.get("tema_bonus", 0) or 0)
+
+    for r in sorted(giris_var, key=lambda x: -_final(x)):
         sym   = r["symbol"]
         price = r["price"]
         stop  = r["stop"]
@@ -1012,8 +1050,17 @@ def print_entry_report(giris_var: list[dict]):
         skor  = r.get("kalite_skor", 0)
         karar_kalite = r.get("kalite_karar", "?")
         carpan = r.get("carpan", 1.0)
-        print(f"{sym:6} ${price:7.2f} ${stop:7.2f} {sdist:5.1f}% ${tgt:7.2f} {rsi:4.0f} {sigs}")
-        print(f"       Adet: {r['shares']} | ATR: ${r['atr']:.2f} | KALITE: {skor}/100 ({karar_kalite}) | CARPAN: {carpan:.2f}x | {r.get('karar','')}")
+        tema_bonus = int(r.get("tema_bonus", 0) or 0)
+        etiketler = r.get("tema_etiketleri", []) or []
+        if etiketler:
+            tema_str = etiketler[0][:12]
+            if len(etiketler) > 1:
+                tema_str = (etiketler[0][:10] + f"+{len(etiketler)-1}")
+        else:
+            tema_str = "—"
+        print(f"{sym:6} ${price:7.2f} ${stop:7.2f} {sdist:5.1f}% ${tgt:7.2f} {rsi:4.0f} {tema_str:<14} {sigs}")
+        bonus_str = f" +T{tema_bonus}" if tema_bonus else ""
+        print(f"       Adet: {r['shares']} | ATR: ${r['atr']:.2f} | KALITE: {skor}/100{bonus_str} ({karar_kalite}) | CARPAN: {carpan:.2f}x | {r.get('karar','')}")
         print()
 
 
@@ -1025,8 +1072,29 @@ if __name__ == "__main__":
                         help="Virgülle ayrılmış semboller veya --watchlist")
     parser.add_argument("--watchlist", action="store_true",
                         help="Watchlist'i tara")
+    parser.add_argument("--no-themes", action="store_true",
+                        help="Tema filtresini devre disi birak (eski davranis)")
     parser.add_argument("--verbose", "-v", action="store_true")
     args = parser.parse_args()
+
+    # Tema havuzu (her durumda yuklenir; sembol kaynagi belirli olsa bile bonus icin kullanilir)
+    if args.no_themes:
+        tema_meta: dict = {}
+        tema_hisseleri: set = set()
+        print("[Tema] Filtre devre disi (--no-themes)")
+    else:
+        tema_paket = load_active_theme_universe()
+        tema_meta = tema_paket["tema_meta"]
+        tema_hisseleri = tema_paket["tema_hisseleri"]
+        kd = tema_paket["kaynak_durumu"]
+        kaynak_etiket = []
+        if kd["macro_kullanildi"]:
+            yas = kd.get("macro_yas_saat")
+            kaynak_etiket.append(f"makro({yas:.1f}h)" if yas is not None else "makro")
+        if kd["tracker_kullanildi"]:
+            kaynak_etiket.append("tracker")
+        kaynak_str = "+".join(kaynak_etiket) if kaynak_etiket else "yok"
+        print(f"[Tema] Aktif tema havuzu: {len(tema_hisseleri)} hisse (kaynak: {kaynak_str})")
 
     if args.watchlist:
         wl   = json.load(open(REPO_ROOT / "data" / "watchlist.json"))
@@ -1034,10 +1102,18 @@ if __name__ == "__main__":
     elif args.symbols:
         syms = [s.strip().upper() for s in args.symbols.split(",")]
     else:
-        # Alpha screener EKLE listesinden al
+        # Hibrit: tema hisseleri once, alpha_scan fallback ile tamamla
         scan = json.load(open(REPO_ROOT / "data" / "alpha_scan_growth.json"))
-        syms = [h["symbol"] for h in scan.get("ekle", []) + scan.get("izle", [])][:20]
-        print(f"Alpha screener'dan {len(syms)} hisse alındı")
+        alpha_havuz = [h["symbol"] for h in scan.get("ekle", []) + scan.get("izle", [])][:20]
+        if tema_hisseleri:
+            tema_havuz = sorted(tema_hisseleri)
+            mevcut = set(tema_havuz)
+            ek = [s for s in alpha_havuz if s not in mevcut]
+            syms = tema_havuz + ek
+            print(f"[Sembol] Tema havuzu: {len(tema_havuz)} + alpha fallback: {len(ek)} = {len(syms)} hisse")
+        else:
+            syms = alpha_havuz
+            print(f"[Sembol] Tema havuzu bos — alpha screener'dan {len(syms)} hisse alindi")
 
     # ── Kapasite kontrolü (max 8 pozisyon) ──────────────────────
     try:
@@ -1052,5 +1128,5 @@ if __name__ == "__main__":
     except (FileNotFoundError, KeyError, json.JSONDecodeError):
         print("⚠️  Kapasite kontrolü atlandı (active.json okunamadı)")
 
-    all_results, giris = scan_for_entries(syms, verbose=args.verbose)
+    all_results, giris = scan_for_entries(syms, verbose=args.verbose, tema_meta=tema_meta)
     print_entry_report(giris)
