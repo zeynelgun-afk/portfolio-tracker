@@ -2,7 +2,7 @@
   "portfoy_adi": "Dengeli Portföy",
   "baslangic_sermaye": 100000,
   "nakit": {
-    "miktar": 40757.29,
+    "miktar": 41402.22,
     "para_birimi": "USD",
     "agirlik_yuzde": 27.14
   },
@@ -32,8 +32,8 @@
       "zirve_fiyat": 108.5,
       "stop_mesafe_pct": 3.04,
       "durum": "✅ Normal",
-      "rsi": 47.15,
-      "rsi_son_guncelleme": "2026-05-05T21:33:20.759002+03:00",
+      "rsi": 46.54,
+      "rsi_son_guncelleme": "2026-05-05T22:02:56.710002+03:00",
       "atr14": 3.725
     },
     {
@@ -61,8 +61,8 @@
       "zirve_fiyat": 126.78,
       "stop_mesafe_pct": 9.36,
       "durum": "✅ Normal",
-      "rsi": 55.52,
-      "rsi_son_guncelleme": "2026-05-05T21:33:20.759002+03:00",
+      "rsi": 55.79,
+      "rsi_son_guncelleme": "2026-05-05T22:02:56.710002+03:00",
       "atr14": 5.3764
     },
     {
@@ -90,8 +90,8 @@
       "zirve_fiyat": 29.6,
       "stop_mesafe_pct": 4.92,
       "durum": "✅ Normal",
-      "rsi": 57.16,
-      "rsi_son_guncelleme": "2026-05-05T21:33:20.759002+03:00",
+      "rsi": 57.24,
+      "rsi_son_guncelleme": "2026-05-05T22:02:56.710002+03:00",
       "atr14": 0.7307
     },
     {
@@ -119,8 +119,8 @@
       "zirve_fiyat": 401.61,
       "stop_mesafe_pct": 8.73,
       "durum": "✅ Normal",
-      "rsi": 61.61,
-      "rsi_son_guncelleme": "2026-05-05T21:33:20.759002+03:00",
+      "rsi": 61.32,
+      "rsi_son_guncelleme": "2026-05-05T22:02:56.710002+03:00",
       "atr14": 13.3957
     },
     {
@@ -148,41 +148,12 @@
       "zirve_fiyat": 50.23,
       "stop_mesafe_pct": 5.07,
       "durum": "✅ Normal",
-      "rsi": 59.23,
-      "rsi_son_guncelleme": "2026-05-05T21:33:20.759002+03:00",
+      "rsi": 60.04,
+      "rsi_son_guncelleme": "2026-05-05T22:02:56.710002+03:00",
       "atr14": 1.645
-    },
-    {
-      "sembol": "MU",
-      "isim": "Micron Technology, Inc.",
-      "sektor": "Technology",
-      "adet": 1,
-      "maliyet_baz": 511.68,
-      "giris_fiyati": 511.68,
-      "guncel_fiyat": 576.45,
-      "yatirim": 9721.92,
-      "guncel_deger": 10952.55,
-      "kar_zarar": 1230.63,
-      "kar_zarar_yuzde": 12.66,
-      "gunluk_degisim_yuzde": 6.31,
-      "agirlik_yuzde": 10.15,
-      "giris_tarihi": "2026-04-30",
-      "stop_loss": 511.68,
-      "hedef_fiyat": 622.5,
-      "tema": "Technology",
-      "giris_nedeni": "daily_scan_balanced skor:14 | Technology",
-      "son_guncelleme": "2026-05-04T21:32:37.219248",
-      "cb_kaynak": "transactions-2026-04-30",
-      "stop_faz": 3,
-      "zirve_fiyat": 576.45,
-      "stop_mesafe_pct": 11.24,
-      "durum": "✅ Normal",
-      "rsi": 81.91,
-      "rsi_son_guncelleme": "2026-05-05T21:33:20.759002+03:00",
-      "atr14": 29.6321
     }
   ],
-  "son_guncelleme": "2026-05-05T21:33:23.132316+03:00",
+  "son_guncelleme": "2026-05-05T22:02:58.823820+03:00",
   "toplam_deger": 107860.08,
   "toplam_getiri_yuzde": 7.86,
   "toplam_getiri": 7860.08,
