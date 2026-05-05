@@ -12,110 +12,98 @@
   ],
   "faz": "FAZ_0",
   "buy_list": {
-    "tarih": "2026-05-01T16:01:28.546548+03:00",
+    "tarih": "2026-05-05T16:04:56.170645+03:00",
     "adaylar": [],
-    "vix": 16.88,
-    "piyasa_mod": "nötr"
+    "vix": 17.62,
+    "piyasa_mod": "risk-on"
   },
   "zorunlu_aksiyonlar": [],
   "claude_kararlar": {
-    "tarih": "2026-05-05T00:35:06.520987+03:00",
+    "tarih": "2026-05-05T16:21:19.261705+03:00",
     "kararlar": [
-      {
-        "tip": "ÇIK",
-        "portfoy": "balanced",
-        "sembol": "CF",
-        "pct": 100,
-        "neden": "K-05 (bilanço öncesi 48 saat çıkış kuralı) - 1 gün kaldı",
-        "hedef_fiyat": 0.0,
-        "stop": 0.0,
-        "tutar": 0,
-        "aciliyet": "hemen",
-        "dondur_al": null,
-        "_decision_id": "ce5497dcf904"
-      },
-      {
-        "tip": "ÇIK",
-        "portfoy": "dividend",
-        "sembol": "O",
-        "pct": 100,
-        "neden": "K-05 (bilanço öncesi 48 saat çıkış kuralı) - 1 gün kaldı",
-        "hedef_fiyat": 0.0,
-        "stop": 0.0,
-        "tutar": 0,
-        "aciliyet": "hemen",
-        "dondur_al": null,
-        "_decision_id": "354ef56d03cd"
-      },
-      {
-        "tip": "ÇIK",
-        "portfoy": "dividend",
-        "sembol": "CVS",
-        "pct": 100,
-        "neden": "K-05 (bilanço öncesi 48 saat çıkış kuralı) - 1 gün kaldı",
-        "hedef_fiyat": 0.0,
-        "stop": 0.0,
-        "tutar": 0,
-        "aciliyet": "hemen",
-        "dondur_al": null,
-        "_decision_id": "5d2f794f4831"
-      },
       {
         "tip": "EKLE",
         "portfoy": "aggressive",
         "sembol": "DINO",
         "pct": 0,
-        "neden": "Enerji teması 8/10, PEG 0.48, nakit aşımı azaltma",
-        "hedef_fiyat": 0.0,
-        "stop": 0.0,
+        "neden": "Kriz rejiminde enerji ağırlığı artırımı, yüksek kaliteli aday (PEG 0.48, skor 91)",
+        "hedef_fiyat": 135.0,
+        "stop": 112.0,
         "tutar": 50000,
         "aciliyet": "bugün",
         "dondur_al": null,
-        "_decision_id": "bbfce0b49666"
+        "_decision_id": "0f494b3a60fa"
+      },
+      {
+        "tip": "EKLE",
+        "portfoy": "aggressive",
+        "sembol": "ITA",
+        "pct": 0,
+        "neden": "JEOPOLITIK_KRIZ rejimi savunma pozisyonu gerektirir (LMT, RTX teması)",
+        "hedef_fiyat": 440.0,
+        "stop": 380.0,
+        "tutar": 50000,
+        "aciliyet": "bugün",
+        "dondur_al": null,
+        "_decision_id": "282c9093b606"
       },
       {
         "tip": "EKLE",
         "portfoy": "balanced",
-        "sembol": "DINO",
+        "sembol": "XLP",
         "pct": 0,
-        "neden": "Enerji teması güçlü, dengeli portföy nakit kullanımı",
-        "hedef_fiyat": 0.0,
-        "stop": 0.0,
+        "neden": "Nakit aşımı, defansif rotasyon (K-10/K-13) - tüketici temel sektör",
+        "hedef_fiyat": 98.0,
+        "stop": 86.5,
+        "tutar": 15000,
+        "aciliyet": "bugün",
+        "dondur_al": null,
+        "_decision_id": "286c0e0a5615"
+      },
+      {
+        "tip": "BÜYÜT",
+        "portfoy": "dividend",
+        "sembol": "PSA",
+        "pct": 50,
+        "neden": "Nakit aşımı, defansif REIT'te büyütme - K-12 limiti içinde",
+        "hedef_fiyat": 323.0,
+        "stop": 284.0,
         "tutar": 20000,
         "aciliyet": "bugün",
         "dondur_al": null,
-        "_decision_id": "0eebf632a132"
+        "_decision_id": "b2f388324eaa"
       },
       {
-        "tip": "ÇIK",
+        "tip": "İZLE",
         "portfoy": "swing",
         "sembol": "TFC",
-        "pct": 100,
-        "neden": "K-09 (stop %1.7) erken çıkış - kritik risk",
+        "pct": 0,
+        "neden": "Stop seviyesine %1.7 mesafe - kırılım halinde çıkış tetiklenecek",
         "hedef_fiyat": 0.0,
-        "stop": 0.0,
+        "stop": 48.62,
         "tutar": 0,
-        "aciliyet": "bugün",
+        "aciliyet": "hemen",
         "dondur_al": null,
-        "_decision_id": "863b9171528c"
+        "_decision_id": "32c70b4e92d5"
       },
       {
-        "tip": "ÇIK",
+        "tip": "İZLE",
         "portfoy": "swing",
         "sembol": "NEE",
-        "pct": 100,
-        "neden": "K-09 (stop %1.2) erken çıkış - kritik risk",
+        "pct": 0,
+        "neden": "Stop seviyesine %1.2 mesafe - kritik zarar kes takibi",
         "hedef_fiyat": 0.0,
-        "stop": 0.0,
+        "stop": 94.32,
         "tutar": 0,
-        "aciliyet": "bugün",
+        "aciliyet": "hemen",
         "dondur_al": null,
-        "_decision_id": "18e27748bae2"
+        "_decision_id": "c75aafb79f81"
       }
     ],
-    "kaynak": "closing"
+    "kaynak": "sabah_raporu",
+    "executed": false
   },
-  "timestamp": "2026-05-01T16:01:28.546990+03:00",
+  "timestamp": "2026-05-05T16:04:56.170992+03:00",
   "k22_nakit_dagitim": {
     "tarih": "2026-04-28T12:07:57.806450+03:00",
     "vix": 18.23,
@@ -396,6 +384,105 @@
           "aciliyet": "bu_hafta",
           "dondur_al": null,
           "_decision_id": "6059a32e5a95"
+        }
+      ],
+      "kaynak": "closing"
+    },
+    {
+      "arsivlendi_zaman": "2026-05-05T16:21:19.261675+03:00",
+      "uzeri_yazildi_neden": "Sabah agent yeni kararlari geldi",
+      "tarih": "2026-05-05T00:35:06.520987+03:00",
+      "kararlar": [
+        {
+          "tip": "ÇIK",
+          "portfoy": "balanced",
+          "sembol": "CF",
+          "pct": 100,
+          "neden": "K-05 (bilanço öncesi 48 saat çıkış kuralı) - 1 gün kaldı",
+          "hedef_fiyat": 0.0,
+          "stop": 0.0,
+          "tutar": 0,
+          "aciliyet": "hemen",
+          "dondur_al": null,
+          "_decision_id": "ce5497dcf904"
+        },
+        {
+          "tip": "ÇIK",
+          "portfoy": "dividend",
+          "sembol": "O",
+          "pct": 100,
+          "neden": "K-05 (bilanço öncesi 48 saat çıkış kuralı) - 1 gün kaldı",
+          "hedef_fiyat": 0.0,
+          "stop": 0.0,
+          "tutar": 0,
+          "aciliyet": "hemen",
+          "dondur_al": null,
+          "_decision_id": "354ef56d03cd"
+        },
+        {
+          "tip": "ÇIK",
+          "portfoy": "dividend",
+          "sembol": "CVS",
+          "pct": 100,
+          "neden": "K-05 (bilanço öncesi 48 saat çıkış kuralı) - 1 gün kaldı",
+          "hedef_fiyat": 0.0,
+          "stop": 0.0,
+          "tutar": 0,
+          "aciliyet": "hemen",
+          "dondur_al": null,
+          "_decision_id": "5d2f794f4831"
+        },
+        {
+          "tip": "EKLE",
+          "portfoy": "aggressive",
+          "sembol": "DINO",
+          "pct": 0,
+          "neden": "Enerji teması 8/10, PEG 0.48, nakit aşımı azaltma",
+          "hedef_fiyat": 0.0,
+          "stop": 0.0,
+          "tutar": 50000,
+          "aciliyet": "bugün",
+          "dondur_al": null,
+          "_decision_id": "bbfce0b49666"
+        },
+        {
+          "tip": "EKLE",
+          "portfoy": "balanced",
+          "sembol": "DINO",
+          "pct": 0,
+          "neden": "Enerji teması güçlü, dengeli portföy nakit kullanımı",
+          "hedef_fiyat": 0.0,
+          "stop": 0.0,
+          "tutar": 20000,
+          "aciliyet": "bugün",
+          "dondur_al": null,
+          "_decision_id": "0eebf632a132"
+        },
+        {
+          "tip": "ÇIK",
+          "portfoy": "swing",
+          "sembol": "TFC",
+          "pct": 100,
+          "neden": "K-09 (stop %1.7) erken çıkış - kritik risk",
+          "hedef_fiyat": 0.0,
+          "stop": 0.0,
+          "tutar": 0,
+          "aciliyet": "bugün",
+          "dondur_al": null,
+          "_decision_id": "863b9171528c"
+        },
+        {
+          "tip": "ÇIK",
+          "portfoy": "swing",
+          "sembol": "NEE",
+          "pct": 100,
+          "neden": "K-09 (stop %1.2) erken çıkış - kritik risk",
+          "hedef_fiyat": 0.0,
+          "stop": 0.0,
+          "tutar": 0,
+          "aciliyet": "bugün",
+          "dondur_al": null,
+          "_decision_id": "18e27748bae2"
         }
       ],
       "kaynak": "closing"

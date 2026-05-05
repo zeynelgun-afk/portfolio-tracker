@@ -1,52 +1,148 @@
 {
-  "tarih": "2026-05-01T16:01:28.546193+03:00",
-  "vix": 16.88,
+  "tarih": "2026-05-05T16:04:54.582400+03:00",
+  "vix": 17.62,
   "sektor_performans": {
-    "Basic Materials": 0.05029737178696703,
-    "Communication Services": 1.3807450243171537,
-    "Consumer Cyclical": -0.30954586697039543,
-    "Consumer Defensive": 1.8394657267433834,
-    "Energy": 2.8460937374469752,
-    "Financial Services": 1.2361419468294832,
-    "Healthcare": 1.1819701398726457,
-    "Industrials": 2.1907203930621177,
-    "Real Estate": 2.8658291629235055,
-    "Technology": 0.020903106173952857,
-    "Utilities": 3.0591023816146867
+    "Basic Materials": -1.8660553570628569,
+    "Communication Services": -0.2471872867395697,
+    "Consumer Cyclical": 0.41586316724617767,
+    "Consumer Defensive": 0.33467823927531004,
+    "Energy": 1.0556372257178204,
+    "Financial Services": 0.3078662055289394,
+    "Healthcare": 0.8432776079603688,
+    "Industrials": -1.0023711873412666,
+    "Real Estate": -0.24183467621702315,
+    "Technology": -0.26544527453004063,
+    "Utilities": 2.140757003925442
   },
-  "dominant_temalar": [],
-  "kacınılacak": [],
-  "piyasa_modu": "nötr",
+  "dominant_temalar": [
+    {
+      "tema_adi": "AI_altyapı",
+      "güç_skoru": 8,
+      "neden": "VIX 17.6 seviyesinde risk-on ortamında AI güç talebi Utilities sektörünü +2.1% taşıdı ve HCAI %51.4 yükseldi. KESİN",
+      "öncelikli_alt_dal": "güç_soğutma",
+      "önerilen_hisseler": [
+        "VRT",
+        "ETN",
+        "PWR"
+      ],
+      "portföy": "aggressive",
+      "aciliyet": "yüksek",
+      "hisse_evreni": [
+        "VRT",
+        "ETN",
+        "PWR",
+        "GNRC",
+        "HUBB"
+      ]
+    },
+    {
+      "tema_adi": "savunma_uzay",
+      "güç_skoru": 7,
+      "neden": "İran gerilimi haberleri ve 'savaşa rağmen' ifadesi jeopolitik endişeleri artırıyor, savunma harcamaları beklentisi güçleniyor. MUHTEMEL",
+      "öncelikli_alt_dal": "hipersonik_füze",
+      "önerilen_hisseler": [
+        "RTX",
+        "LMT",
+        "NOC"
+      ],
+      "portföy": "balanced",
+      "aciliyet": "orta",
+      "hisse_evreni": [
+        "CRWD",
+        "RKLB",
+        "PANW",
+        "RDW",
+        "LHX",
+        "KTOS",
+        "ZS",
+        "S",
+        "LMT",
+        "NOC",
+        "AJRD",
+        "GD",
+        "RTX"
+      ]
+    },
+    {
+      "tema_adi": "enerji_geçiş",
+      "güç_skoru": 7,
+      "neden": "AI veri merkezlerinin güç ihtiyacı ve jeopolitik gerilimler enerji güvenliği temasını destekliyor, Energy +1.1%. MUHTEMEL",
+      "öncelikli_alt_dal": "nükleer_modüler",
+      "önerilen_hisseler": [
+        "CCJ",
+        "URA",
+        "SMR"
+      ],
+      "portföy": "balanced",
+      "aciliyet": "orta",
+      "hisse_evreni": [
+        "NRG",
+        "VST",
+        "FSLR",
+        "KMI",
+        "ET",
+        "OKE",
+        "CEG",
+        "CCJ",
+        "WMB",
+        "ENPH",
+        "RUN",
+        "NEE"
+      ]
+    }
+  ],
+  "kacınılacak": [
+    "Real Estate",
+    "Communication Services"
+  ],
+  "piyasa_modu": "risk-on",
   "aktif_kriz": {
-    "tip": "belirsiz",
-    "guven": 0
+    "tip": "jeopolitik",
+    "guven": 5,
+    "kanit": "İran gerilimi haberleri (08:38) ve 'savaşa rağmen' ifadesi (08:12) jeopolitik riskleri vurguluyor. Energy sektörü +1.1% ile bu temadan destek buluyor. MUHTEMEL",
+    "beneficiary_sectors": [
+      "Energy",
+      "Defense",
+      "Gold",
+      "Basic Materials",
+      "Real Estate",
+      "Consumer Defensive"
+    ],
+    "sensitive_sectors": [
+      "Technology",
+      "Consumer Cyclical",
+      "Communication Services",
+      "Healthcare",
+      "Financial Services",
+      "Industrials"
+    ]
   },
-  "genel_yorum": "⚠️ Claude API hatası: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billin",
+  "genel_yorum": "VIX 17.6 ile piyama sakin ancak İran gerilimi jeopolitik riskleri canlı tutuyor. Utilities liderliği ve AI teması güç koruyor. Enerji sektörü jeopolitik endişelerle destekleniyor.",
   "haberler": [
     {
-      "baslik": "This Market Is Driving In The Rearview Mirror",
+      "baslik": "First-Quarter Earnings Season Is An Opportunity To De-Risk",
       "kaynak": "seekingalpha.com",
-      "tarih": "2026-05-01 08:44"
+      "tarih": "2026-05-05 08:56"
     },
     {
-      "baslik": "April Market Rally Brings May Momentum?",
-      "kaynak": "youtube.com",
-      "tarih": "2026-05-01 08:30"
-    },
-    {
-      "baslik": "Morning Call Sheet: Tech and momentum drive markets higher",
-      "kaynak": "youtube.com",
-      "tarih": "2026-05-01 08:28"
-    },
-    {
-      "baslik": "Risks From Iran War Swayed Kashkari's Fed Dissent",
-      "kaynak": "wsj.com",
-      "tarih": "2026-05-01 08:10"
-    },
-    {
-      "baslik": "Fed Officials Cite Inflation Concerns in Defending Dissents",
+      "baslik": "U.S. Trade Deficit Grew in March",
       "kaynak": "nytimes.com",
-      "tarih": "2026-05-01 08:05"
+      "tarih": "2026-05-05 08:41"
+    },
+    {
+      "baslik": "Markets Waver as Iran Tensions Drive Uncertainty",
+      "kaynak": "youtube.com",
+      "tarih": "2026-05-05 08:38"
+    },
+    {
+      "baslik": "5 Things to Know Before the Stock Market Opens",
+      "kaynak": "investopedia.com",
+      "tarih": "2026-05-05 08:35"
+    },
+    {
+      "baslik": "AI Revolutionizing Biopharma: Faster, Better, Cheaper",
+      "kaynak": "seekingalpha.com",
+      "tarih": "2026-05-05 08:30"
     }
   ]
 }

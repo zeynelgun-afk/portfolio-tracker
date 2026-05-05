@@ -900,14 +900,16 @@
       "kar_zarar_yuzde": -11.38,
       "tutulan_gun": 3,
       "sonuc": "ZARAR",
-      "ders": "Stop tetiklendi. Giriş tezi bozuldu. tenkan_bounce, kijun_bounce_v2, nr7_sikisma sinyali bu piyasada yetersiz kaldı.",
+      "ders": "**Hangi K-kural yönetti?**\nK-06 stop disiplini. Stop tetiklendi, anında çıkış zorunluydu. (KESİN)\n\n**Giriş tezi doğru muydu?**\nHayır. Tenkan/Kijun bounce ve NR7 sikisma sinyalleri başarısız oldu. Fiyat 3 günde %11.38 düştü. (KESİN)\n\n**Çıkış zamanlaması?**\nKurala uygun, mekanik olarak doğru. Override yasak, stop çalışınca pozisyon kapandı. (KESİN)\n\n**Somut dersler?**\n1. Ichimoku bounce sinyalleri tek başına yetersiz; genel trend filtresi (K-04) ve VIX savunma (K-10) kontrolü şart. (MUHTEMEL)\n2. N",
       "giris_nedeni": "Seans içi otomatik giriş — tenkan_bounce, kijun_bounce_v2, nr7_sikisma",
       "tarama_yontemi": "tenkan_bounce, kijun_bounce_v2, nr7_sikisma",
       "katalizor": "",
       "stop_loss": 101.94,
       "hedef_fiyat": 127.91,
       "zirve_fiyat": 109.36,
-      "partial_exits": []
+      "partial_exits": [],
+      "dersler": "**Hangi K-kural yönetti?**\nK-06 stop disiplini. Stop tetiklendi, anında çıkış zorunluydu. (KESİN)\n\n**Giriş tezi doğru muydu?**\nHayır. Tenkan/Kijun bounce ve NR7 sikisma sinyalleri başarısız oldu. Fiyat 3 günde %11.38 düştü. (KESİN)\n\n**Çıkış zamanlaması?**\nKurala uygun, mekanik olarak doğru. Override yasak, stop çalışınca pozisyon kapandı. (KESİN)\n\n**Somut dersler?**\n1. Ichimoku bounce sinyalleri tek başına yetersiz; genel trend filtresi (K-04) ve VIX savunma (K-10) kontrolü şart. (MUHTEMEL)\n2. N",
+      "agent_analiz_tarihi": "2026-05-05"
     }
   ],
   "istatistikler": {

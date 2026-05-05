@@ -1,38 +1,234 @@
 {
   "macro": {
+    "sinyal": "RISK_ON",
+    "guven": "MEDIUM",
+    "ana_tema": "VIX düşük seviyelerde risk iştahı desteklerken, yarınki kazanç açıklamaları ve önümüzdeki hafta açıklanacak CPI verileri yakın vadeli belirsizlik yaratıyor.",
+    "beklentiler": [
+      "Kazanç açıklamaları (CF, O, CVS) volatilite yaratabilir",
+      "CPI verileri Fed beklentilerini yeniden şekillendirebilir",
+      "VIX'teki düşüş eğilimi risk varlıklarını desteklemeye devam edebilir"
+    ],
+    "risk_faktoru": "Yarınki kazanç açıklamaları ve Mayıs 10'daki CPI verileri volatilite riski taşıyor",
+    "tahmin": {
+      "yon": "UP",
+      "buyukluk": "MEDIUM",
+      "sembol": "SPY"
+    },
     "_agent": "MACRO_AGENT",
-    "_raw": "⚠️ Claude API hatası: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CabtiiXKGPhAW3shjUBTq'}",
-    "_parse_hata": true,
-    "guven": "LOW"
+    "_timestamp": "2026-05-05T13:07:02.013343"
   },
   "sector": {
+    "aktif_rejim": "risk_on",
+    "lider_sektor": "Teknoloji (XLK)",
+    "zayif_sektor": "Gayrimenkul (XLRE)",
+    "rotasyon_onerisi": "Gayrimenkul (XLRE) ve Kamu Hizmetleri (XLU) gibi zayıf sektörlerden, Teknoloji (XLK) ve Endüstri (XLI) gibi momentum kazanan sektörlere rotasyon önerilir.",
+    "guven": "MEDIUM",
+    "tahmin": {
+      "yon": "UP",
+      "buyukluk": "MEDIUM",
+      "sembol": "XLK"
+    },
     "_agent": "SECTOR_AGENT",
-    "_raw": "⚠️ Claude API hatası: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CabtijEUkZ1LLu4u7uw2P'}",
-    "_parse_hata": true,
-    "guven": "LOW"
+    "_timestamp": "2026-05-05T13:07:13.280961"
   },
   "signal": {
+    "portfoy_sinyalleri": [
+      {
+        "sembol": "ETN",
+        "sinyal": "HOLD",
+        "rsi_yorumu": "normal",
+        "sma_durumu": "ustunde",
+        "aciklama": "Pozitif P/L ve geniş stop mesafesi korunuyor, günlük düşüş teknik geri çekilme."
+      },
+      {
+        "sembol": "CCJ",
+        "sinyal": "WATCH",
+        "rsi_yorumu": "oversold",
+        "sma_durumu": "altinda",
+        "aciklama": "Stop mesafesi kritik seviyede ve günlük düşüş momentumu zayıflatıyor."
+      },
+      {
+        "sembol": "AMAT",
+        "sinyal": "HOLD",
+        "rsi_yorumu": "normal",
+        "sma_durumu": "ustunde",
+        "aciklama": "Günlük artış ve pozitif P/L trendi destekliyor, stop güvenli mesafede."
+      },
+      {
+        "sembol": "CRM",
+        "sinyal": "HOLD",
+        "rsi_yorumu": "normal",
+        "sma_durumu": "ustunde",
+        "aciklama": "Fiyat hedefe yaklaşıyor, geniş stop mesafesi ile pozisyon sağlam."
+      },
+      {
+        "sembol": "PPG",
+        "sinyal": "SELL",
+        "rsi_yorumu": "oversold",
+        "sma_durumu": "altinda",
+        "aciklama": "Günlük sert düşüş ve negatif P/L ile stop mesafesi tehlikeli seviyede."
+      },
+      {
+        "sembol": "CF",
+        "sinyal": "HOLD",
+        "rsi_yorumu": "normal",
+        "sma_durumu": "ustunde",
+        "aciklama": "Güçlü günlük artış ve pozitif P/L momentumu koruyor."
+      },
+      {
+        "sembol": "COLB",
+        "sinyal": "HOLD",
+        "rsi_yorumu": "normal",
+        "sma_durumu": "altinda",
+        "aciklama": "Nötr P/L ve ortalama stop mesafesi, yatay hareket devam ediyor."
+      },
+      {
+        "sembol": "TSM",
+        "sinyal": "HOLD",
+        "rsi_yorumu": "normal",
+        "sma_durumu": "ustunde",
+        "aciklama": "Günlük artış ve pozitif P/L ile trend üzerinde sağlam duruş."
+      },
+      {
+        "sembol": "VIRT",
+        "sinyal": "HOLD",
+        "rsi_yorumu": "normal",
+        "sma_durumu": "ustunde",
+        "aciklama": "Güçlü günlük toparlanma negatif P/L'ı telafi ediyor, stop korunuyor."
+      },
+      {
+        "sembol": "MU",
+        "sinyal": "HOLD",
+        "rsi_yorumu": "overbought",
+        "sma_durumu": "ustunde",
+        "aciklama": "Günlük %6.3 artış ile aşırı alım bölgesine yaklaşıyor ama stop çok geniş."
+      },
+      {
+        "sembol": "OKE",
+        "sinyal": "WATCH",
+        "rsi_yorumu": "normal",
+        "sma_durumu": "ustunde",
+        "aciklama": "Pozitif P/L'ye rağmen stop mesafesi kritik seviyeye indi."
+      },
+      {
+        "sembol": "O",
+        "sinyal": "WATCH",
+        "rsi_yorumu": "oversold",
+        "sma_durumu": "altinda",
+        "aciklama": "Stop mesafesi %2.4 ile riskli, negatif P/L ve düşüş eğilimi devam ediyor."
+      },
+      {
+        "sembol": "GTY",
+        "sinyal": "WATCH",
+        "rsi_yorumu": "oversold",
+        "sma_durumu": "altinda",
+        "aciklama": "Negatif P/L ve daralan stop mesafesi ile düşüş momentumu sürmekte."
+      },
+      {
+        "sembol": "PSA",
+        "sinyal": "WATCH",
+        "rsi_yorumu": "oversold",
+        "sma_durumu": "altinda",
+        "aciklama": "Günlük düşüş ve negatif P/L ile stop mesafesi alarm seviyesinde."
+      },
+      {
+        "sembol": "GEV",
+        "sinyal": "HOLD",
+        "rsi_yorumu": "normal",
+        "sma_durumu": "ustunde",
+        "aciklama": "Günlük artış ve geniş stop mesafesi negatif P/L riskini sınırlıyor."
+      },
+      {
+        "sembol": "CVS",
+        "sinyal": "HOLD",
+        "rsi_yorumu": "oversold",
+        "sma_durumu": "altinda",
+        "aciklama": "Negatif P/L'ye rağmen %20.7 stop mesafesi güvenlik alanı sağlıyor."
+      },
+      {
+        "sembol": "TFC",
+        "sinyal": "SELL",
+        "rsi_yorumu": "oversold",
+        "sma_durumu": "altinda",
+        "aciklama": "Stop mesafesi %1.7 ile kritik, negatif P/L ve düşüş trendi devam ediyor."
+      },
+      {
+        "sembol": "CAT",
+        "sinyal": "WATCH",
+        "rsi_yorumu": "overbought",
+        "sma_durumu": "ustunde",
+        "aciklama": "Güçlü günlük artış ve pozitif P/L ama stop mesafesi riskli seviyeye yakın."
+      },
+      {
+        "sembol": "VRT",
+        "sinyal": "WATCH",
+        "rsi_yorumu": "overbought",
+        "sma_durumu": "ustunde",
+        "aciklama": "Günlük %4.9 artış ile aşırı alım bölgesi ve stop mesafesi daralıyor."
+      },
+      {
+        "sembol": "NEE",
+        "sinyal": "SELL",
+        "rsi_yorumu": "oversold",
+        "sma_durumu": "altinda",
+        "aciklama": "Stop mesafesi %1.2 ile acil risk, negatif P/L ve düşüş momentumu güçlü."
+      },
+      {
+        "sembol": "UEC",
+        "sinyal": "WATCH",
+        "rsi_yorumu": "oversold",
+        "sma_durumu": "altinda",
+        "aciklama": "Negatif P/L ve dar stop mesafesi ile düşüş eğilimi devam ediyor."
+      }
+    ],
+    "en_guclu_setup": "MU",
+    "en_zayif_setup": "NEE",
+    "guven": "MEDIUM",
     "_agent": "SIGNAL_AGENT",
-    "_raw": "⚠️ Claude API hatası: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CabtijoTJsU5UYCcuqz98'}",
-    "_parse_hata": true,
-    "guven": "LOW"
+    "_timestamp": "2026-05-05T13:08:58.849640"
   },
   "risk": {
+    "risk_seviyesi": "HIGH",
+    "stop_yakini": [
+      "TFC - %1.7 uzakta",
+      "NEE - %1.2 uzakta",
+      "O - %2.4 uzakta",
+      "PPG - %3.0 uzakta",
+      "GTY - %3.4 uzakta",
+      "OKE - %3.5 uzakta",
+      "PSA - %3.8 uzakta",
+      "CCJ - %3.9 uzakta"
+    ],
+    "konsantrasyon_uyarisi": "Technology sektörü %32.7 ile orta konsantrasyon riski taşıyor. Real estate %17.2 ile ikinci büyük konsantrasyon.",
+    "senaryo_5pct_dusus": "Piyasanın %5 düşmesi durumunda tahmini portföy kaybı $15,829 (-%5.5). CCJ, PPG, COLB, OKE, O, GTY, PSA stop seviyelerine ulaşacak.",
+    "onerileri": [
+      "Stop mesafesi %4 altında olan 8 pozisyonda (özellikle swing trade'ler TFC, NEE) acil risk azaltma veya stop güncelleme",
+      "Technology sektör konsantrasyonu (%32.7) nedeniyle sektör riskini azaltmak için kısmi satış veya hedge düşün",
+      "Aggressive portföy -%3.8 drawdown'da - pozisyon büyüklüklerini ve tema skorlarını (Uranyum 2/10) gözden geçir",
+      "Dividend portföyde 4 pozisyon stop yakınında - koruma amaçlı kâr realizasyonu veya stop revizyonu"
+    ],
+    "guven": "LOW",
     "_agent": "RISK_AGENT",
-    "_raw": "⚠️ Claude API hatası: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CabtikLx8hQASaNzJnM1J'}",
-    "_parse_hata": true,
-    "guven": "LOW"
+    "_timestamp": "2026-05-05T13:10:24.216727"
   },
   "cio": {
+    "karar": "DONDUR",
+    "hedef_sembol": "XLK (teknoloji) ve kritik stop pozisyonları",
+    "gerekce": "Risk yöneticisinin YÜKSEK risk uyarısı ve 8 pozisyonda %4 altında stop mesafesi [KESİN] nedeniyle acil risk azaltma gerekmektedir. Sektör analistinin risk_on önerisi, JEOPOLITIK_KRIZ rejimi ve %32.7 teknoloji konsantrasyonu [KESİN] ile çelişiyor. Makro analistin volatilite uyarısı [MUHTEMEL] ve teknik analistin NEE (%1.2) gibi kritik stop seviyeleri [KESİN] dikkate alınarak portföy savunmaya dönmeli, teknoloji azaltılmalı ve riskli pozisyonlardan çıkılmalıdır.",
+    "uyari": "NEE (%1.2), TFC (%1.7), O (%2.4) ve 5 pozisyon daha stop seviyelerine 4% içinde - acil çıkış gerekebilir. Teknoloji konsantrasyonu %32.7. Piyasa %5 düşüşte portföy -%5.5 kaybeder [KESİN].",
+    "guven": "LOW",
+    "analist_uzlasma": "DUSUK",
+    "tahmin": {
+      "yon": "NEUTRAL",
+      "buyukluk": "LOW",
+      "sembol": "SPY"
+    },
     "_agent": "CIO_AGENT",
-    "_raw": "⚠️ Claude API hatası: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CabtikqxjHpH4p9cmpwLZ'}",
-    "_parse_hata": true,
-    "karar": "BEKLE",
-    "guven": "LOW"
+    "_timestamp": "2026-05-05T13:11:46.419497"
   },
   "weights": {
-    "MACRO_AGENT": 0.8881,
-    "SECTOR_AGENT": 1.5231,
+    "MACRO_AGENT": 0.9325,
+    "SECTOR_AGENT": 1.5993,
     "SIGNAL_AGENT": 0.738,
     "RISK_AGENT": 0.6663,
     "CIO_AGENT": 0.7428

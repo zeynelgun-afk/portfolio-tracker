@@ -634,20 +634,6 @@
   ],
   "entries": [
     {
-      "id": "L002",
-      "tarih": "2026-04-13",
-      "kaynak": "transactions_analysis",
-      "kategori": "profit_factor",
-      "ders": "Sistem Profit Factor: 2.26. Ortalama kazanç +12.98% / ortalama kayıp -5.75%. Win rate %50 olsa bile pozitif beklenti var. Büyük kazananlar küçük kayıpları fazlasıyla karşılıyor — bu asimetri korunmalı.",
-      "veri": {
-        "win_rate": 50.0,
-        "avg_win": 12.98,
-        "avg_loss": -5.75
-      },
-      "aksiyon": "Mevcut stop disiplinini koru. Büyük kazananlarda (KOS +54%, SM +45%) kademelı çıkış doğru çalışıyor.",
-      "guven": "KESİN"
-    },
-    {
       "id": "L003",
       "tarih": "2026-04-13",
       "kaynak": "ktos_lasr_hatasi",
@@ -1275,6 +1261,11 @@
       "date": "2026-05-05",
       "source": "closing_analysis",
       "insight": "# DECISION BLOCK"
+    },
+    {
+      "date": "2026-05-05",
+      "source": "post_trade",
+      "insight": "UPS: DERS: Ichimoku bounce sinyalleri tek başına yeterli değil, genel piyasa filtresi ve volatilite uyumu şart."
     }
   ]
 }
