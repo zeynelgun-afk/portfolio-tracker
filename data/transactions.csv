@@ -264,3 +264,4 @@ date,action,symbol,shares,price,total,reason
 2026-05-05,BUY,CCJ,160,118.26,18921.60,"K-22 dağıtımı: Uranium kriz tezi büyütme, %8 -> %13, AI veri merkezi enerji talebi yapısal"
 2026-05-05,BUY,AMAT,35,391.38,13698.30,"K-22 dağıtımı: AI ekipman büyütme, %11 -> %14, mevcut tez güçlü"
 2026-05-05,BUY,DINO,120,72.86,8743.21,"K-22 dağıtımı: Energy refinery büyütme, %13 -> %15, kriz rejimi enerji ağırlığı"
+2026-05-05,SELL,MU,1,633.35,633.35,K-11 katman 2: RSI 81 + kâr %23.8

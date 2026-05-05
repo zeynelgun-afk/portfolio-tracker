@@ -242,7 +242,8 @@
     "EBC": "financial_services",
     "DINO": "energy",
     "ITA": "financial_services",
-    "XLP": "financial_services"
+    "XLP": "financial_services",
+    "SNPS": "technology"
   },
   "updated": {
     "COHR": 1777299593,
@@ -487,6 +488,7 @@
     "EBC": 1777564915,
     "DINO": 1777991629,
     "ITA": 1777991632,
-    "XLP": 1777991635
+    "XLP": 1777991635,
+    "SNPS": 1777998736
   }
 }
