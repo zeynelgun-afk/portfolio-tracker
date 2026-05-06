@@ -2,41 +2,11 @@
   "portfoy_adi": "Değer + Temettü",
   "baslangic_sermaye": 100000,
   "nakit": {
-    "miktar": 50207.35,
+    "miktar": 58152.34,
     "para_birimi": "USD",
     "agirlik_yuzde": 35.41
   },
   "pozisyonlar": [
-    {
-      "sembol": "OKE",
-      "isim": "ONEOK Inc",
-      "sektor": "Enerji / Doğalgaz Pipeline",
-      "adet": 93,
-      "maliyet_baz": 85.5,
-      "yatirim": 7951.5,
-      "guncel_fiyat": 90.02,
-      "guncel_deger": 8371.86,
-      "kar_zarar": 420.36,
-      "kar_zarar_yuzde": 5.29,
-      "gunluk_degisim_yuzde": -0.67,
-      "agirlik_yuzde": 5.9,
-      "son_guncelleme": "2026-05-05T21:33:37.379585",
-      "giris_tarihi": "2026-04-10",
-      "giris_fiyati": 85.5,
-      "giris_nedeni": "Temettü portföyü enerji girişi. P/E 16, yield %4.8, D/E 1.5. RSI 45.3, SMA50 üstü. İran jeopolitik pipeline faydalanıcı. Stop 81, hedef 93.",
-      "cb_kaynak": "kayit-yok",
-      "hedef_fiyat": 93.0,
-      "stop_loss": 87.5,
-      "zirve_fiyat": 92.46,
-      "stop_faz": 3,
-      "stop_mesafe_pct": 2.8,
-      "stop_aciklama": "",
-      "stop_guncelleme": "",
-      "durum": "⚠️ Stop yakın (2.8%)",
-      "rsi": 59.02,
-      "rsi_son_guncelleme": "2026-05-05T22:33:34.283123+03:00",
-      "atr14": 2.23
-    },
     {
       "sembol": "O",
       "isim": "Realty Income Corporation",
@@ -61,8 +31,8 @@
       "zirve_fiyat": 64.24,
       "stop_mesafe_pct": 2.63,
       "durum": "⚠️ Stop yakın (2.6%)",
-      "rsi": 51.81,
-      "rsi_son_guncelleme": "2026-05-05T22:33:34.283123+03:00",
+      "rsi": 53.16,
+      "rsi_son_guncelleme": "2026-05-06T21:08:06.357362+03:00",
       "atr14": 0.8714
     },
     {
@@ -90,8 +60,8 @@
       "zirve_fiyat": 33.76,
       "stop_mesafe_pct": 3.31,
       "durum": "✅ Normal",
-      "rsi": 47.94,
-      "rsi_son_guncelleme": "2026-05-05T22:33:34.283123+03:00",
+      "rsi": 49.64,
+      "rsi_son_guncelleme": "2026-05-06T21:08:06.357362+03:00",
       "atr14": 0.6907
     },
     {
@@ -119,8 +89,8 @@
       "zirve_fiyat": 302.45,
       "stop_mesafe_pct": 4.9,
       "durum": "✅ Normal",
-      "rsi": 52.43,
-      "rsi_son_guncelleme": "2026-05-05T22:33:34.283123+03:00",
+      "rsi": 59.79,
+      "rsi_son_guncelleme": "2026-05-06T21:08:06.357362+03:00",
       "atr14": 6.985
     },
     {
@@ -148,8 +118,8 @@
       "zirve_fiyat": 1095.21,
       "stop_mesafe_pct": 9.47,
       "durum": "✅ Normal",
-      "rsi": 63.96,
-      "rsi_son_guncelleme": "2026-05-05T22:33:34.283123+03:00",
+      "rsi": 65.71,
+      "rsi_son_guncelleme": "2026-05-06T21:08:06.357362+03:00",
       "atr14": 48.4964
     },
     {
@@ -177,12 +147,12 @@
       "zirve_fiyat": 83.29,
       "stop_mesafe_pct": 19.44,
       "durum": "✅ Normal",
-      "rsi": 57.93,
-      "rsi_son_guncelleme": "2026-05-05T22:33:34.283123+03:00",
+      "rsi": 68.61,
+      "rsi_son_guncelleme": "2026-05-06T21:08:06.357362+03:00",
       "atr14": 1.9771
     }
   ],
-  "son_guncelleme": "2026-05-05T21:33:37.379585",
+  "son_guncelleme": "2026-05-06T21:08:07.729730+03:00",
   "toplam_deger": 141789.14,
   "toplam_getiri_yuzde": 41.79,
   "toplam_getiri": 41789.14,

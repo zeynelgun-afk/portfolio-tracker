@@ -270,3 +270,4 @@ date,action,symbol,shares,price,total,reason
 2026-05-05,SELL,MU,1,638.3,638.3,K-11 katman 2: RSI 82 + kâr %24.7
 2026-05-05,SELL,MU,1,642.64,642.64,K-11 katman 2: RSI 82 + kâr %25.6
 2026-05-05,SELL,MU,1,644.93,644.93,K-11 katman 2: RSI 82 + kâr %26.0
+2026-05-06,SELL,OKE,93,85.43,7944.99,K-06 stop tetiklendi $85.43≤$87.50
