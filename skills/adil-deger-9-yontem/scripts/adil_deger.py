@@ -97,26 +97,87 @@ def detect_sector(profile, market_cap, year_low, current_price):
 
 
 SECTOR_MULTIPLES = {
-    'tech_software':       {'pe': 28, 'fwd_pe': 24, 'ev_ebit': 22, 'ev_ebitda': 18, 'ev_rev': 6.0, 'p_fcf': 28, 'roe_target': 0.20, 'g_high': 0.12},
-    'tech_hardware':       {'pe': 22, 'fwd_pe': 20, 'ev_ebit': 17, 'ev_ebitda': 13, 'ev_rev': 3.5, 'p_fcf': 22, 'roe_target': 0.18, 'g_high': 0.08},
-    'semicon_design':      {'pe': 28, 'fwd_pe': 24, 'ev_ebit': 22, 'ev_ebitda': 18, 'ev_rev': 7.0, 'p_fcf': 30, 'roe_target': 0.25, 'g_high': 0.15},
-    'semicon_osat':        {'pe': 18, 'fwd_pe': 16, 'ev_ebit': 14, 'ev_ebitda': 11, 'ev_rev': 2.0, 'p_fcf': 22, 'roe_target': 0.15, 'g_high': 0.08},
-    'semicon_equipment':   {'pe': 26, 'fwd_pe': 22, 'ev_ebit': 20, 'ev_ebitda': 16, 'ev_rev': 6.0, 'p_fcf': 26, 'roe_target': 0.22, 'g_high': 0.12},
-    'financials_bank':     {'pe': 11, 'fwd_pe': 10, 'ev_ebit': 9, 'ev_ebitda': 8, 'ev_rev': 3.0, 'p_fcf': 12, 'roe_target': 0.12, 'g_high': 0.05},
-    'financials_insurance':{'pe': 12, 'fwd_pe': 11, 'ev_ebit': 10, 'ev_ebitda': 9, 'ev_rev': 2.0, 'p_fcf': 12, 'roe_target': 0.12, 'g_high': 0.05},
-    'financials_other':    {'pe': 14, 'fwd_pe': 13, 'ev_ebit': 12, 'ev_ebitda': 10, 'ev_rev': 3.0, 'p_fcf': 14, 'roe_target': 0.13, 'g_high': 0.06},
-    'healthcare_pharma':   {'pe': 18, 'fwd_pe': 16, 'ev_ebit': 15, 'ev_ebitda': 12, 'ev_rev': 4.0, 'p_fcf': 20, 'roe_target': 0.18, 'g_high': 0.06},
-    'healthcare_biotech':  {'pe': 25, 'fwd_pe': 22, 'ev_ebit': 20, 'ev_ebitda': 16, 'ev_rev': 6.0, 'p_fcf': 25, 'roe_target': 0.15, 'g_high': 0.12},
-    'healthcare_devices':  {'pe': 24, 'fwd_pe': 20, 'ev_ebit': 18, 'ev_ebitda': 15, 'ev_rev': 5.0, 'p_fcf': 24, 'roe_target': 0.18, 'g_high': 0.08},
-    'consumer_staples':    {'pe': 20, 'fwd_pe': 18, 'ev_ebit': 16, 'ev_ebitda': 13, 'ev_rev': 2.5, 'p_fcf': 22, 'roe_target': 0.18, 'g_high': 0.05},
-    'consumer_discretionary':{'pe':18,'fwd_pe': 16, 'ev_ebit': 14, 'ev_ebitda': 11, 'ev_rev': 2.0, 'p_fcf': 20, 'roe_target': 0.15, 'g_high': 0.07},
-    'industrials':         {'pe': 18, 'fwd_pe': 16, 'ev_ebit': 14, 'ev_ebitda': 11, 'ev_rev': 2.0, 'p_fcf': 20, 'roe_target': 0.15, 'g_high': 0.06},
-    'energy':              {'pe': 12, 'fwd_pe': 10, 'ev_ebit': 8, 'ev_ebitda': 6, 'ev_rev': 1.5, 'p_fcf': 12, 'roe_target': 0.12, 'g_high': 0.03},
-    'reits':               {'pe': 18, 'fwd_pe': 16, 'ev_ebit': 14, 'ev_ebitda': 16, 'ev_rev': 7.0, 'p_fcf': 18, 'roe_target': 0.10, 'g_high': 0.04},
-    'utilities':           {'pe': 18, 'fwd_pe': 16, 'ev_ebit': 14, 'ev_ebitda': 11, 'ev_rev': 3.0, 'p_fcf': 18, 'roe_target': 0.10, 'g_high': 0.04},
-    'communication':       {'pe': 20, 'fwd_pe': 18, 'ev_ebit': 15, 'ev_ebitda': 10, 'ev_rev': 3.0, 'p_fcf': 20, 'roe_target': 0.15, 'g_high': 0.06},
-    'generic':             {'pe': 20, 'fwd_pe': 17, 'ev_ebit': 15, 'ev_ebitda': 12, 'ev_rev': 2.5, 'p_fcf': 22, 'roe_target': 0.15, 'g_high': 0.07},
+    'tech_software':       {'pe': 28, 'fwd_pe': 24, 'ev_ebit': 22, 'ev_ebitda': 18, 'ev_rev': 6.0, 'p_fcf': 28, 'roe_target': 0.20, 'net_margin_target': 0.20, 'g_high': 0.12},
+    'tech_hardware':       {'pe': 22, 'fwd_pe': 20, 'ev_ebit': 17, 'ev_ebitda': 13, 'ev_rev': 3.5, 'p_fcf': 22, 'roe_target': 0.18, 'net_margin_target': 0.12, 'g_high': 0.08},
+    'semicon_design':      {'pe': 28, 'fwd_pe': 24, 'ev_ebit': 22, 'ev_ebitda': 18, 'ev_rev': 7.0, 'p_fcf': 30, 'roe_target': 0.25, 'net_margin_target': 0.20, 'g_high': 0.15},
+    'semicon_osat':        {'pe': 18, 'fwd_pe': 16, 'ev_ebit': 14, 'ev_ebitda': 11, 'ev_rev': 2.0, 'p_fcf': 22, 'roe_target': 0.15, 'net_margin_target': 0.08, 'g_high': 0.08},
+    'semicon_equipment':   {'pe': 26, 'fwd_pe': 22, 'ev_ebit': 20, 'ev_ebitda': 16, 'ev_rev': 6.0, 'p_fcf': 26, 'roe_target': 0.22, 'net_margin_target': 0.22, 'g_high': 0.12},
+    'financials_bank':     {'pe': 11, 'fwd_pe': 10, 'ev_ebit': 9, 'ev_ebitda': 8, 'ev_rev': 3.0, 'p_fcf': 12, 'roe_target': 0.12, 'net_margin_target': 0.22, 'g_high': 0.05},
+    'financials_insurance':{'pe': 12, 'fwd_pe': 11, 'ev_ebit': 10, 'ev_ebitda': 9, 'ev_rev': 2.0, 'p_fcf': 12, 'roe_target': 0.12, 'net_margin_target': 0.10, 'g_high': 0.05},
+    'financials_other':    {'pe': 14, 'fwd_pe': 13, 'ev_ebit': 12, 'ev_ebitda': 10, 'ev_rev': 3.0, 'p_fcf': 14, 'roe_target': 0.13, 'net_margin_target': 0.15, 'g_high': 0.06},
+    'healthcare_pharma':   {'pe': 18, 'fwd_pe': 16, 'ev_ebit': 15, 'ev_ebitda': 12, 'ev_rev': 4.0, 'p_fcf': 20, 'roe_target': 0.18, 'net_margin_target': 0.18, 'g_high': 0.06},
+    'healthcare_biotech':  {'pe': 25, 'fwd_pe': 22, 'ev_ebit': 20, 'ev_ebitda': 16, 'ev_rev': 6.0, 'p_fcf': 25, 'roe_target': 0.15, 'net_margin_target': 0.15, 'g_high': 0.12},
+    'healthcare_devices':  {'pe': 24, 'fwd_pe': 20, 'ev_ebit': 18, 'ev_ebitda': 15, 'ev_rev': 5.0, 'p_fcf': 24, 'roe_target': 0.18, 'net_margin_target': 0.16, 'g_high': 0.08},
+    'consumer_staples':    {'pe': 20, 'fwd_pe': 18, 'ev_ebit': 16, 'ev_ebitda': 13, 'ev_rev': 2.5, 'p_fcf': 22, 'roe_target': 0.18, 'net_margin_target': 0.12, 'g_high': 0.05},
+    'consumer_discretionary':{'pe':18,'fwd_pe': 16, 'ev_ebit': 14, 'ev_ebitda': 11, 'ev_rev': 2.0, 'p_fcf': 20, 'roe_target': 0.15, 'net_margin_target': 0.07, 'g_high': 0.07},
+    'industrials':         {'pe': 18, 'fwd_pe': 16, 'ev_ebit': 14, 'ev_ebitda': 11, 'ev_rev': 2.0, 'p_fcf': 20, 'roe_target': 0.15, 'net_margin_target': 0.10, 'g_high': 0.06},
+    'energy':              {'pe': 12, 'fwd_pe': 10, 'ev_ebit': 8, 'ev_ebitda': 6, 'ev_rev': 1.5, 'p_fcf': 12, 'roe_target': 0.12, 'net_margin_target': 0.10, 'g_high': 0.03},
+    'reits':               {'pe': 18, 'fwd_pe': 16, 'ev_ebit': 14, 'ev_ebitda': 16, 'ev_rev': 7.0, 'p_fcf': 18, 'roe_target': 0.10, 'net_margin_target': 0.20, 'g_high': 0.04},
+    'utilities':           {'pe': 18, 'fwd_pe': 16, 'ev_ebit': 14, 'ev_ebitda': 11, 'ev_rev': 3.0, 'p_fcf': 18, 'roe_target': 0.10, 'net_margin_target': 0.10, 'g_high': 0.04},
+    'communication':       {'pe': 20, 'fwd_pe': 18, 'ev_ebit': 15, 'ev_ebitda': 10, 'ev_rev': 3.0, 'p_fcf': 20, 'roe_target': 0.15, 'net_margin_target': 0.15, 'g_high': 0.06},
+    'generic':             {'pe': 20, 'fwd_pe': 17, 'ev_ebit': 15, 'ev_ebitda': 12, 'ev_rev': 2.5, 'p_fcf': 22, 'roe_target': 0.15, 'net_margin_target': 0.10, 'g_high': 0.07},
 }
+
+
+# =============================================================================
+# QUALITY/MOAT PREMIUM (v4 yeni)
+# =============================================================================
+
+def calculate_quality_premium(roe, net_margin, sector_mults):
+    """
+    Sektör lideri/kalite şirketleri için premium multiplier.
+    
+    İki bileşen geometrik ortalama:
+    - ROE premium: ROE / sektör hedef (1.0-1.50 cap)
+    - Margin premium: Net Margin / sektör hedef (1.0-1.30 cap)
+    
+    Final cap: 1.50x (en kaliteli şirketlerde bile %50 prim üst sınırı)
+    
+    Sadece çarpan bazlı yöntemlere uygulanır:
+    - P/E, Forward P/E, EV/EBIT, EV/EBITDA, EV/Revenue, P/FCF, EV/FWD x
+    
+    Skip edilenler (çift sayım önleme):
+    - Justified P-B (zaten ROE'yi içerir)
+    - Graham (klasik formül)
+    - DCF (büyüme bazlı)
+    - PEG (büyüme bazlı)
+    - Rule of 40 (margin'i zaten içerir)
+    """
+    if not roe or roe <= 0 or not net_margin or net_margin <= 0:
+        return 1.0, {'roe_ratio': 1.0, 'margin_ratio': 1.0, 'note': 'Veri yetersiz'}
+    
+    sector_roe = sector_mults.get('roe_target', 0.15)
+    sector_margin = sector_mults.get('net_margin_target', 0.10)
+    
+    roe_ratio = roe / sector_roe
+    margin_ratio = net_margin / sector_margin
+    
+    # Cap'ler
+    roe_premium = max(1.0, min(1.50, roe_ratio))
+    margin_premium = max(1.0, min(1.30, margin_ratio))
+    
+    # Geometrik ortalama
+    quality_mult = (roe_premium * margin_premium) ** 0.5
+    quality_mult = min(1.50, quality_mult)
+    
+    # Yorum
+    if quality_mult >= 1.30:
+        note = f"⭐ KALİTE ÖNCÜSÜ ({quality_mult:.2f}x prim)"
+    elif quality_mult >= 1.15:
+        note = f"💎 Kalite şirket ({quality_mult:.2f}x prim)"
+    elif quality_mult >= 1.05:
+        note = f"Hafif kalite primi ({quality_mult:.2f}x)"
+    else:
+        note = "Sektör ortalaması"
+    
+    return quality_mult, {
+        'roe_ratio': round(roe_ratio, 2),
+        'margin_ratio': round(margin_ratio, 2),
+        'roe_premium_capped': round(roe_premium, 2),
+        'margin_premium_capped': round(margin_premium, 2),
+        'final': round(quality_mult, 2),
+        'note': note,
+    }
 
 AI_MEGACAP_BULL_PREMIUM = {
     'pe': 1.50, 'fwd_pe': 1.45, 'ev_ebit': 1.45, 'ev_ebitda': 1.40, 'ev_rev': 1.55, 'p_fcf': 1.50,
@@ -394,10 +455,10 @@ def calc_rule_of_40(revenue_growth_pct, fcf_margin_pct, revenue_ttm, cash, debt,
 # 9 YÖNTEM (mevcut) + GROWTH yöntemler
 # =============================================================================
 
-def calculate_methods(data, regime_key, sector_key, is_ai_megacap, mode):
+def calculate_methods(data, regime_key, sector_key, is_ai_megacap, mode, quality_mult=1.0):
     """
     mode: 'GROWTH' veya 'BLENDED'
-    GROWTH'da Traditional dahil ama ayrı işaretlenir, sonuç hesaplamaya katılmaz
+    quality_mult: v4 - Sektör lideri/kalite premium çarpanı (1.0-1.50)
     """
     sector_mults = SECTOR_MULTIPLES.get(sector_key, SECTOR_MULTIPLES['generic'])
     adj = REGIME_ADJ[regime_key]
@@ -423,6 +484,10 @@ def calculate_methods(data, regime_key, sector_key, is_ai_megacap, mode):
     else:
         ai_mult = {k: 1.0 for k in ['pe', 'fwd_pe', 'ev_ebit', 'ev_ebitda', 'ev_rev', 'p_fcf']}
     
+    # v4: Quality premium hangi yöntemlere uygulanır
+    # Skip: Justified P-B (zaten ROE içerir), Graham (klasik), DCF (büyüme), PEG, Rule of 40 (margin içerir)
+    qm = quality_mult  # Kısaltma
+    
     traditional = {}
     forward = {}
     growth = {}
@@ -431,30 +496,30 @@ def calculate_methods(data, regime_key, sector_key, is_ai_megacap, mode):
     # === TRADITIONAL (TTM bazlı 7 yöntem) ===
     
     if eps_ttm and eps_ttm > 0:
-        traditional['Net P/E'] = eps_ttm * sector_mults['pe'] * adj['pe'] * ai_mult['pe']
+        traditional['Net P/E'] = eps_ttm * sector_mults['pe'] * adj['pe'] * ai_mult['pe'] * qm
     else:
         traditional['Net P/E'] = None
     
     if ebit and ebit > 0 and shares > 0:
-        ev = ebit * sector_mults['ev_ebit'] * adj['ev_ebit'] * ai_mult['ev_ebit']
+        ev = ebit * sector_mults['ev_ebit'] * adj['ev_ebit'] * ai_mult['ev_ebit'] * qm
         traditional['EV/EBIT'] = (ev + cash - debt) / shares
     else:
         traditional['EV/EBIT'] = None
     
     if ebitda and ebitda > 0 and shares > 0:
-        ev = ebitda * sector_mults['ev_ebitda'] * adj['ev_ebitda'] * ai_mult['ev_ebitda']
+        ev = ebitda * sector_mults['ev_ebitda'] * adj['ev_ebitda'] * ai_mult['ev_ebitda'] * qm
         traditional['EV/EBITDA'] = (ev + cash - debt) / shares
     else:
         traditional['EV/EBITDA'] = None
     
     if revenue and revenue > 0 and shares > 0:
-        ev = revenue * sector_mults['ev_rev'] * adj['ev_rev'] * ai_mult['ev_rev']
+        ev = revenue * sector_mults['ev_rev'] * adj['ev_rev'] * ai_mult['ev_rev'] * qm
         traditional['EV/Revenue'] = (ev + cash - debt) / shares
     else:
         traditional['EV/Revenue'] = None
     
     if fcf_norm and fcf_norm > 0 and shares > 0:
-        traditional['P/FCF'] = (fcf_norm / shares) * sector_mults['p_fcf'] * adj['p_fcf'] * ai_mult['p_fcf']
+        traditional['P/FCF'] = (fcf_norm / shares) * sector_mults['p_fcf'] * adj['p_fcf'] * ai_mult['p_fcf'] * qm
     else:
         traditional['P/FCF'] = None
     
@@ -486,7 +551,7 @@ def calculate_methods(data, regime_key, sector_key, is_ai_megacap, mode):
     # === FORWARD (klasik 2 yöntem) ===
     
     if eps_fwd and eps_fwd > 0:
-        forward['Forward P/E'] = eps_fwd * sector_mults['fwd_pe'] * adj['fwd_pe'] * ai_mult['fwd_pe']
+        forward['Forward P/E'] = eps_fwd * sector_mults['fwd_pe'] * adj['fwd_pe'] * ai_mult['fwd_pe'] * qm
     else:
         forward['Forward P/E'] = None
     
@@ -512,22 +577,22 @@ def calculate_methods(data, regime_key, sector_key, is_ai_megacap, mode):
         # 2 yıllık büyüme → yıllık geometrik
         forward_growth = (eps_fwd / eps_ttm) ** 0.5 - 1
     
-    # PEG
+    # PEG (quality mult uygulanmaz - büyüme bazlı)
     growth['PEG'] = calc_peg(eps_fwd, eps_ttm, forward_growth, adj['peg_target'])
     
-    # EV/Forward Revenue
+    # EV/Forward Revenue (quality mult uygulanır)
     growth['EV/FWD Revenue'] = calc_ev_forward_revenue(
-        rev_fwd, sector_mults['ev_rev'] * adj['ev_rev'] * ai_mult['ev_rev'],
+        rev_fwd, sector_mults['ev_rev'] * adj['ev_rev'] * ai_mult['ev_rev'] * qm,
         cash, debt, shares
     )
     
-    # EV/Forward EBITDA
+    # EV/Forward EBITDA (quality mult uygulanır)
     growth['EV/FWD EBITDA'] = calc_ev_forward_ebitda(
-        ebitda_fwd, sector_mults['ev_ebitda'] * adj['ev_ebitda'] * ai_mult['ev_ebitda'],
+        ebitda_fwd, sector_mults['ev_ebitda'] * adj['ev_ebitda'] * ai_mult['ev_ebitda'] * qm,
         cash, debt, shares
     )
     
-    # Rule of 40 (büyüme ve FCF margin lazım)
+    # Rule of 40 (quality mult uygulanmaz - margin'i zaten içeriyor)
     rev_growth = data.get('revenue_growth_yoy')
     fcf_margin = (fcf_norm / revenue) if (fcf_norm and revenue and revenue > 0) else None
     growth['Rule of 40'] = calc_rule_of_40(
@@ -782,6 +847,10 @@ def analyze(ticker):
     
     market = detect_market_regime()
     
+    # v4 YENİ: Quality/Moat Premium hesabı
+    sector_mults_for_qm = SECTOR_MULTIPLES.get(sector_key, SECTOR_MULTIPLES['generic'])
+    quality_mult, quality_detail = calculate_quality_premium(roe, net_margin, sector_mults_for_qm)
+    
     data_pack = {
         'eps_ttm': eps_ttm, 'eps_fwd_2y': eps_fwd_2y, 'bvps': bvps,
         'revenue_ttm': revenue_ttm, 'revenue_fwd_2y': rev_fwd_2y,
@@ -792,11 +861,11 @@ def analyze(ticker):
         'revenue_growth_yoy': revenue_growth_yoy,
     }
     
-    # 3 senaryoda hesapla
+    # 3 senaryoda hesapla (v4: quality_mult ile)
     results = {}
     notes_all = {}
     for regime in ['bear', 'normal', 'bull']:
-        m = calculate_methods(data_pack, regime, sector_key, is_ai_megacap, mode)
+        m = calculate_methods(data_pack, regime, sector_key, is_ai_megacap, mode, quality_mult)
         results[regime] = m
         notes_all[regime] = m.get('notes', {})
     
@@ -844,7 +913,7 @@ def analyze(ticker):
     return {
         'ticker': ticker,
         'analysis_date': datetime.now().strftime('%Y-%m-%d %H:%M'),
-        'version': '3.0',
+        'version': '4.0',
         'mode': mode,
         'mode_criteria_met': criteria_count,
         'mode_criteria_detail': criteria_detail,
@@ -856,6 +925,8 @@ def analyze(ticker):
             'sma_50': safe_get(quote, 'priceAvg50'), 'sma_200': safe_get(quote, 'priceAvg200'),
         },
         'sector_key': sector_key, 'is_ai_megacap': is_ai_megacap,
+        'quality_mult': quality_mult,
+        'quality_detail': quality_detail,
         'market_regime': market, 'pure_forward': pure_forward,
         'forward_outlier': forward_outlier,
         'forward_growth_ratio': round(forward_growth_ratio, 2) if forward_growth_ratio else None,
@@ -904,6 +975,12 @@ def format_output(result):
     
     if result['forward_outlier']:
         out.append(f"  ⚠️ Forward outlier: EPS_FWD/EPS_TTM = {result['forward_growth_ratio']}x")
+    
+    # v4: Quality premium bilgisi
+    qd = result.get('quality_detail', {})
+    if qd and qd.get('final', 1.0) > 1.05:
+        out.append(f"  {qd['note']}")
+        out.append(f"     ROE oranı: {qd['roe_ratio']}x sektör hedef | Margin oranı: {qd['margin_ratio']}x sektör hedef")
     
     out.append("=" * 75)
     

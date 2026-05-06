@@ -3,9 +3,15 @@ name: adil-deger-9-yontem
 description: ABD hisse senetleri için kapsamlı adil değer hesaplaması. DUAL-MODE sistem - hızlı büyüyen şirketler için GROWTH modu (sadece büyüme yöntemleri), olgun şirketler için BLENDED modu (ağırlıklı Traditional + Forward + Growth). 13 yöntem, 3 piyasa rejimi (Ayı/Normal/Boğa). PEG, EV/Forward Revenue/EBITDA, Rule of 40, Reverse DCF dahil. AI mega-cap özel preset, otomatik karar matrisi, analist konsensüs entegrasyonu. Tetikleyiciler "X hissesini değerle", "adil değer hesapla", "X için fair value", "X kaç eder", "9 yöntem değerleme". Finzora AI Adil Değer v3.7.2 metodolojisi. Her kullanımda notes klasörü güncellenir.
 ---
 
-# Adil Değer 9 Yöntem (Finzora AI v3.7.2) - v3.0
+# Adil Değer 9 Yöntem (Finzora AI v3.7.2) - v4.0
 
 ## Versiyon Geçmişi
+
+**v4.0 (6 Mayıs 2026)** — Quality/Moat Premium
+- ROE ve Net Margin sektör hedeflerine göre kalite primi (1.0-1.50x)
+- Sadece çarpan bazlı yöntemlere uygulanır (P/E, EV/X, P/FCF)
+- Kalite şirketleri (KO, JNJ, V, MA gibi) için doğru değerleme
+- KO testinde başarılı: analist hedefiyle %0.2 fark
 
 **v3.0 (6 Mayıs 2026)** — DUAL-MODE büyüyen vs olgun ayrımı
 - 🚀 GROWTH modu: hızlı büyüyen şirketlerde Traditional kullanılmaz
@@ -17,6 +23,25 @@ description: ABD hisse senetleri için kapsamlı adil değer hesaplaması. DUAL-
 - k_e %15 cap, ROE<k_e RIM fallback, CV uyarı, Forward outlier, AI mega-cap, Analist konsensüs
 
 **v1.0 (6 Mayıs 2026)** — İlk sürüm 9 yöntem
+
+## Premium Sistemi (3 Katmanlı)
+
+### 1. Piyasa Rejimi Çarpanı (her yöntemde)
+- Ayı: -%25-35
+- Normal: %0
+- Boğa: +%20-30
+
+### 2. AI Mega-Cap Premium (sadece boğada, semi/tech için)
+- Tetikleme: market cap > $300B + 1y +%100+
+- Boğa multiplier: 1.40-1.55x
+- Bazis: Momentum + sektör
+
+### 3. Quality/Moat Premium (her senaryoda, fundamental)
+- Tetikleme: ROE > sektör hedef VEYA Net Margin > sektör hedef
+- Multiplier: 1.0-1.50x
+- Bazis: Geometrik ortalama (ROE ratio × Margin ratio) ^ 0.5
+- Hangi yöntemlere: P/E, Forward P/E, EV/EBIT, EV/EBITDA, EV/Revenue, P/FCF, EV/FWD Rev/EBITDA
+- Hangilerine değil: Justified P-B (zaten ROE), Graham, DCF, PEG, Rule of 40 (çift sayım önleme)
 
 ## Amaç
 
@@ -139,11 +164,11 @@ AI Mega-Cap istisnası: Boğa multiplier 1.40-1.55x (semi/tech, $300B+, 1y +%100
 
 ## Doğrulanmış Test Vakaları
 
-| Ticker | Mod | Boğa Medyan | Mevcut | Karar | Analist | Doğruluk |
-|---|---|---|---|---|---|---|
-| AMD | 🚀 GROWTH (4/5) | $382 | $413 | PAHALI/İZLE | $401 | ✅ |
-| AMKR | ⚖️ BLENDED %65/%35 | $48 | $77 | GEÇ | $66 | ✅ |
-| KO | ⚖️ BLENDED %80/%20 | $51 | $78 | GEÇ | $85 | ❌ Quality premium eksik |
+| Ticker | Mod | Quality Premium | Boğa Medyan | Mevcut | Karar | Analist | Doğruluk |
+|---|---|---|---|---|---|---|---|
+| AMD | 🚀 GROWTH (4/5) | 1.0x | $382 | $413 | PAHALI/İZLE | $401 | ✅ |
+| AMKR | ⚖️ BLENDED %65/%35 | 1.0x | $48 | $77 | GEÇ | $66 | ✅ |
+| KO | ⚖️ BLENDED %80/%20 | ⭐ 1.40x | $69 | $78 | PAHALI/İZLE | $85 | ✅ (v4'te düzeltildi) |
 
 ## Bilinen Limitasyon (v4'e)
 

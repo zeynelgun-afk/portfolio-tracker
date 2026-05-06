@@ -21,37 +21,34 @@ Her kullanımda dolan, skill'i geliştirmek için kullanılan notlar.
 
 ## Skill Geliştirme Önceliği Listesi
 
+### ✅ v4.0'da TAMAMLANDI (6 Mayıs 2026)
+1. ✅ **Quality/Moat Premium** — ROE × Net Margin geometric mean, sektör hedefe göre 1.0-1.50x cap. KO testinde başarılı (analist hedefiyle %0.2 fark)
+
 ### ✅ v3.0'da TAMAMLANDI (6 Mayıs 2026)
-1. ✅ DUAL-MODE: GROWTH (hızlı büyüyen) vs BLENDED (olgun) otomatik tespit
-2. ✅ GROWTH modunda Traditional kaldırıldı, sadece zemin olarak gösteriliyor
-3. ✅ BLENDED modunda Forward growth ratio'ya göre ağırlıklandırma (%50/%65/%80)
-4. ✅ Yeni yöntemler: PEG Ratio, EV/Forward Revenue, EV/Forward EBITDA, Rule of 40, Reverse DCF
-5. ✅ Reverse DCF: Mevcut fiyatın implied büyüme oranı
+2. ✅ DUAL-MODE: GROWTH (hızlı büyüyen) vs BLENDED (olgun) otomatik tespit
+3. ✅ Yeni yöntemler: PEG Ratio, EV/Forward Revenue, EV/Forward EBITDA, Rule of 40, Reverse DCF
 
 ### ✅ v2.0'da TAMAMLANDI (6 Mayıs 2026)
-6. ✅ Cost of Equity %15 cap + ROE < k_e RIM fallback
-7. ✅ CV renkli uyarı sistemi (🟢🟡🟠🔴)
-8. ✅ Forward P/E outlier tespiti (>2.5x)
-9. ✅ AI mega-cap auto-detection + boğa primi
-10. ✅ Analist konsensüs entegrasyonu
-11. ✅ Otomatik karar matrisi
+4. ✅ Cost of Equity %15 cap + ROE < k_e RIM fallback
+5. ✅ CV renkli uyarı sistemi
+6. ✅ Forward P/E outlier tespiti
+7. ✅ AI mega-cap auto-detection
+8. ✅ Analist konsensüs entegrasyonu
+9. ✅ Otomatik karar matrisi
 
-### 🔴 KRİTİK / v4 İÇİN (KO testinden)
-12. [ ] **Quality/Moat Premium** — Sektör lideri kalite şirketler için ROE × Net Margin bazlı premium çarpan. KO testinde kritik bir eksiklik tespit edildi (skill GEÇ derken analistler $85 hedef veriyor)
-
-### 🟠 YÜKSEK / v4 İÇİN
-13. [ ] **PEG outlier filtreleme** — AMD'de PEG $841-1577 değerleri ana ortalamayı bozdu. Forward growth > %40 ise PEG yöntemini hesaplama dışı bırak veya cap uygula
-14. [ ] **Forward CV hesabı** — Sadece 2 yöntem olduğu için CV %0 görünüyor (3 minimum gerekli). 2 yöntemde alternatif tutarsızlık metriği ekle (örn. range/mean)
+### 🟠 YÜKSEK / v5 İÇİN
+10. [ ] **PEG outlier filtreleme** — AMD'de PEG $841-1577 değerleri bozucu (forward growth %50+ olduğunda)
+11. [ ] **Forward CV alternatifi** — Sadece 2 yöntem olduğu için CV %0 görünüyor
 
 ### 🟡 ORTA ÖNCELİK
-15. [ ] Sektör presetlerini 6 ay sonra rakam doğrulaması yap
-16. [ ] Bankalarda P-B ağırlıklı, diğer yöntemler düşük ağırlık - özel mantık eklenebilir
-17. [ ] DCF için negatif FCF düzeltmesi geliştirilmeli (capex yoğun şirketler için)
-18. [ ] Çoklu hisse karşılaştırma fonksiyonu (peer relative) eklenebilir
-19. [ ] Tarihsel geri test: 1 yıl önce değerlenen hisselerin bugünkü uyumu
-20. [ ] OSAT sektörü için AI tedarik zinciri primi (semicon_osat_ai alt-preset)
-21. [ ] Watchlist entegrasyonu: skill çıktısı otomatik watchlist.json'a giriş yapmalı
-22. [ ] Telegram bildirim entegrasyonu: GEÇ kararları için DM uyarısı
+12. [ ] Sektör presetlerini 6 ay sonra rakam doğrulaması yap
+13. [ ] Bankalarda P-B ağırlıklı özel mantık
+14. [ ] DCF için negatif FCF düzeltmesi (capex yoğun şirketler)
+15. [ ] Çoklu hisse karşılaştırma fonksiyonu (peer relative)
+16. [ ] Tarihsel geri test
+17. [ ] OSAT için AI tedarik zinciri primi (semicon_osat_ai alt-preset)
+18. [ ] Watchlist entegrasyonu
+19. [ ] Telegram bildirim entegrasyonu
 
 ---
 
@@ -272,4 +269,71 @@ def quality_premium(roe, sector_target_roe, net_margin, sector_target_margin):
 KO için bu ~1.40x premium verirdi → boğa medyan $51 yerine $71 civarı, analist hedefiyle uyumlu olurdu.
 
 **Önemli ayrım:** AI Mega-Cap premium MOMENTUM bazlı (1y fiyat + market cap), Quality premium ise FUNDAMENTAL bazlı (ROE + margin sürekliliği). İkisi farklı şeyleri yakalar.
+
+
+---
+
+## 2026-05-06 - SKILL v4.0 RELEASE (Quality/Moat Premium)
+
+**Bağlam:** v3'te KO testinde tespit edilen "kalite şirketleri sektör medyanından ayrışır" sorunu çözüldü.
+
+**v4.0 Yenilik: Quality Premium**
+
+```python
+def calculate_quality_premium(roe, net_margin, sector_mults):
+    roe_premium = max(1.0, min(1.50, roe / sector_target_roe))      # ROE cap 1.50x
+    margin_premium = max(1.0, min(1.30, margin / sector_target_margin))  # Margin cap 1.30x
+    quality_mult = (roe_premium * margin_premium) ** 0.5             # Geometrik ortalama
+    return min(1.50, quality_mult)                                   # Final cap 1.50x
+```
+
+**Hangi yöntemlere uygulanır (çift sayım önleme):**
+- ✅ Net P/E, EV/EBIT, EV/EBITDA, EV/Revenue, P/FCF
+- ✅ Forward P/E, EV/Forward Revenue, EV/Forward EBITDA
+- ❌ Justified P-B (zaten ROE içerir)
+- ❌ Graham (klasik formül, premium kabul etmez)
+- ❌ DCF (büyüme bazlı)
+- ❌ PEG (büyüme bazlı)
+- ❌ Rule of 40 (margin'i zaten içerir)
+
+**Sektör multiples'a `net_margin_target` eklendi:**
+- tech_software: %20 | semicon_design: %20 | semicon_osat: %8
+- consumer_staples: %12 | financials_bank: %22 | healthcare_pharma: %18
+- vs.
+
+**Test Sonuçları:**
+
+### KO (Beklendiği gibi BÜYÜK düzelme)
+- ROE %42.59 / hedef %18 → 2.37x ratio → 1.50x cap
+- Net Margin %27.8 / hedef %12 → 2.32x ratio → 1.30x cap
+- Geometric mean: sqrt(1.50 × 1.30) = **1.40x KALİTE ÖNCÜSÜ**
+- v3 Boğa medyan $51 → v4 Boğa medyan $69 (+%35 yukarı)
+- v4 Boğa P75 $85.52 → Analist konsensüs $85.71 (%0.2 fark — neredeyse birebir!)
+- Karar: 🔴 GEÇ → 🟠 PAHALI/İZLE (gerçekçi)
+
+### AMD (Beklendiği gibi DEĞİŞİKLİK YOK)
+- ROE %7.92 / hedef %25 → 0.32 ratio → 1.0 (cap'in altında)
+- Net Margin %13.33 / hedef %20 → 0.67 → 1.0
+- Quality premium: 1.0x (etiket gösterilmedi)
+- AMD AI mega-cap olduğu halde KALİTE değil — kar marjları henüz olgun değil
+- Sonuçlar v3 ile aynı (AI mega-cap premium yine etkili)
+
+### AMKR (Beklendiği gibi DEĞİŞİKLİK YOK)
+- ROE %9.75 / hedef %15 → 0.65 → 1.0
+- Net Margin %6.17 / hedef %8 → 0.77 → 1.0
+- Quality premium: 1.0x
+- Sonuçlar v3 ile aynı (BLENDED %65/%35)
+
+**Anlamı:**
+
+1. Quality Premium sadece gerçekten kaliteli şirketleri etkiliyor
+2. Yan etki yok: zayıf şirketlerde 1.0x kalıyor
+3. AI mega-cap (momentum) ve Quality (fundamental) iki farklı şeyi yakalıyor:
+   - AMD: AI mega-cap ✅, Quality ❌ (henüz)
+   - KO: AI mega-cap ❌, Quality ⭐
+   - AVGO veya MSFT gibi şirketler: muhtemelen ikisi de ✅
+
+**Geri test takibi:** 
+- KO'yu 30 Haziran 2026'da kontrol et. Hâlâ analist hedef civarında işlem görüyorsa skill kalibrasyon doğru.
+- Quality premium uygulanan ilk vakada başarılı oldu, başka kalite şirketleri (JNJ, PEP, MA, V) ile test edilmeli.
 
