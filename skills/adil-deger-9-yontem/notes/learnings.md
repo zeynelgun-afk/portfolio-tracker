@@ -21,26 +21,37 @@ Her kullanımda dolan, skill'i geliştirmek için kullanılan notlar.
 
 ## Skill Geliştirme Önceliği Listesi
 
-Kullanım arttıkça bu listeyi güncelle.
+### ✅ v3.0'da TAMAMLANDI (6 Mayıs 2026)
+1. ✅ DUAL-MODE: GROWTH (hızlı büyüyen) vs BLENDED (olgun) otomatik tespit
+2. ✅ GROWTH modunda Traditional kaldırıldı, sadece zemin olarak gösteriliyor
+3. ✅ BLENDED modunda Forward growth ratio'ya göre ağırlıklandırma (%50/%65/%80)
+4. ✅ Yeni yöntemler: PEG Ratio, EV/Forward Revenue, EV/Forward EBITDA, Rule of 40, Reverse DCF
+5. ✅ Reverse DCF: Mevcut fiyatın implied büyüme oranı
 
 ### ✅ v2.0'da TAMAMLANDI (6 Mayıs 2026)
-1. ✅ **Cost of Equity %15 cap + ROE < k_e fallback (Residual Income Model)** — AMKR ve AMD'de test edildi, çalışıyor
-2. ✅ **CV ≥ %50 kırmızı uyarı, ≥ %35 turuncu** — Renkli uyarı sistemi aktif
-3. ✅ **Forward P/E outlier filtreleme** — EPS_FWD/EPS_TTM > 2.5x tespiti çalışıyor
-4. ✅ **AI mega-cap auto-detection** — AMD'de ⭐ AI MEGA-CAP tag aktif
-5. ✅ **Analist konsensüs entegrasyonu** — FMP price-target-consensus eklendi
-6. ✅ **Dual-track raporlama** — Traditional/Forward/Full ayrı sunuluyor
-7. ✅ **Otomatik karar matrisi** — GÜÇLÜ AL / AL / İZLE / PAHALI / GEÇ
+6. ✅ Cost of Equity %15 cap + ROE < k_e RIM fallback
+7. ✅ CV renkli uyarı sistemi (🟢🟡🟠🔴)
+8. ✅ Forward P/E outlier tespiti (>2.5x)
+9. ✅ AI mega-cap auto-detection + boğa primi
+10. ✅ Analist konsensüs entegrasyonu
+11. ✅ Otomatik karar matrisi
 
-### 🟡 ORTA ÖNCELİK (Sıradaki versiyon için)
-8. [ ] Sektör presetlerini 6 ay sonra rakam doğrulaması yap
-9. [ ] Bankalarda P-B ağırlıklı, diğer yöntemler düşük ağırlık - özel mantık eklenebilir
-10. [ ] DCF için negatif FCF düzeltmesi geliştirilmeli (capex yoğun şirketler için)
-11. [ ] Çoklu hisse karşılaştırma fonksiyonu (peer relative) eklenebilir
-12. [ ] Tarihsel geri test: 1 yıl önce değerlenen hisselerin bugünkü uyumu
-13. [ ] OSAT sektörü için AI tedarik zinciri primi (semicon_osat_ai alt-preset)
-14. [ ] Watchlist entegrasyonu: skill çıktısı otomatik watchlist.json'a giriş yapmalı
-15. [ ] Telegram bildirim entegrasyonu: GEÇ kararları için DM uyarısı
+### 🔴 KRİTİK / v4 İÇİN (KO testinden)
+12. [ ] **Quality/Moat Premium** — Sektör lideri kalite şirketler için ROE × Net Margin bazlı premium çarpan. KO testinde kritik bir eksiklik tespit edildi (skill GEÇ derken analistler $85 hedef veriyor)
+
+### 🟠 YÜKSEK / v4 İÇİN
+13. [ ] **PEG outlier filtreleme** — AMD'de PEG $841-1577 değerleri ana ortalamayı bozdu. Forward growth > %40 ise PEG yöntemini hesaplama dışı bırak veya cap uygula
+14. [ ] **Forward CV hesabı** — Sadece 2 yöntem olduğu için CV %0 görünüyor (3 minimum gerekli). 2 yöntemde alternatif tutarsızlık metriği ekle (örn. range/mean)
+
+### 🟡 ORTA ÖNCELİK
+15. [ ] Sektör presetlerini 6 ay sonra rakam doğrulaması yap
+16. [ ] Bankalarda P-B ağırlıklı, diğer yöntemler düşük ağırlık - özel mantık eklenebilir
+17. [ ] DCF için negatif FCF düzeltmesi geliştirilmeli (capex yoğun şirketler için)
+18. [ ] Çoklu hisse karşılaştırma fonksiyonu (peer relative) eklenebilir
+19. [ ] Tarihsel geri test: 1 yıl önce değerlenen hisselerin bugünkü uyumu
+20. [ ] OSAT sektörü için AI tedarik zinciri primi (semicon_osat_ai alt-preset)
+21. [ ] Watchlist entegrasyonu: skill çıktısı otomatik watchlist.json'a giriş yapmalı
+22. [ ] Telegram bildirim entegrasyonu: GEÇ kararları için DM uyarısı
 
 ---
 
@@ -179,4 +190,86 @@ Bu, skill'in tarihte en yüksek CV'leri. Yöntemler arası dağılım uçurum bo
 - JPM (financials_bank) — Justified P-B'nin doğal çalıştığı vaka
 - KO (consumer_staples) — Düşük beta, stabil ROE baseline kontrolü
 - TSLA (consumer_discretionary) — Yüksek volatilite + Forward outlier kontrolü
+
+
+---
+
+## 2026-05-06 - SKILL v3.0 RELEASE (Mod Bazlı Hibrit)
+
+**Bağlam:** Kullanıcı önemli bir tespit yaptı: "Hızlı büyüyen şirketlerde Traditional yöntemler hesaba katılmamalı, ama olgun şirketlerde dengeleyici rol oynamalı."
+
+**v3.0 Tasarım: DUAL-MODE**
+
+### 🚀 GROWTH MODU
+**Tetikleme (≥3/5 kriter):**
+1. Forward growth ratio > 2.0
+2. Revenue 3y CAGR > %20
+3. Sektör Growth-friendly (semicon_design, tech_software, healthcare_biotech, communication)
+4. AI mega-cap aktif
+5. 1y fiyat performansı > %50
+
+**Yöntemler:** Forward P/E, DCF, PEG, EV/Forward Revenue, EV/Forward EBITDA, Rule of 40, Reverse DCF
+**Traditional:** Sadece "Margin of Safety Zemini" olarak gösterilir, hesaba KATILMAZ.
+
+### ⚖️ BLENDED MODU
+**Tetikleme:** GROWTH kriterlerinin <3'ü sağlanırsa.
+
+**Ağırlıklandırma (forward growth ratio bazlı):**
+- > 1.5x → %50 / %50
+- 1.2-1.5x → %65 / %35
+- < 1.2x → %80 / %20
+
+**Yöntemler:** 7 Traditional + 2 Forward + 4 Growth metrikleri (PEG, EV/FWD x2, Rule of 40)
+
+**Yeni Yöntemler (v3):**
+
+1. **PEG Ratio:** Adil P/E = PEG_target × growth_pct (PEG 1.0 fair, 1.5 boğa, 0.8 ayı)
+2. **EV/Forward Revenue:** Revenue_2y_FWD × sektör hedefi
+3. **EV/Forward EBITDA:** EBITDA_2y_FWD × sektör hedefi
+4. **Rule of 40:** Revenue Growth + FCF Margin >= 40 → premium çarpan, < 40 → indirimli
+5. **Reverse DCF:** Mevcut fiyatın implied ettiği yıllık büyüme oranı (kıyaslama için, hesaba katılmaz)
+
+## v3 Test Sonuçları
+
+### AMD (GROWTH 4/5)
+- Boğa medyan: $382.23 (önceden Traditional ile $115)
+- Mevcut $413.53 → +%8 pahalı (önceden +%258)
+- Analist hedef $401.65 → ÇOK YAKIN, %3 fark
+- Reverse DCF: %48.7 yıllık büyüme implied (10 yıl boyunca!)
+- Karar: 🟠 PAHALI / İZLE (önceden 🔴 GEÇ)
+- ✅ v3 doğru çalıştı, analist konsensüs ile uyumlu
+
+### AMKR (BLENDED 1/5, %65/%35)
+- Boğa medyan: $47.83 (Traditional+Forward+Growth ağırlıklı)
+- Mevcut $77.55 → +%62 pahalı
+- Analist konsensüs $66.75 → %16 yukarda
+- Reverse DCF: %27.2 implied growth (gerçekleşmesi zor)
+- Karar: 🔴 GEÇ
+- ✅ v3 doğru çalıştı, hem skill hem analistler "pahalı" diyor (mutabakat)
+
+### KO (BLENDED 0/5, %80/%20) - YENİ SORUN TESPİTİ
+- Boğa medyan: $51.13
+- Mevcut $78.66 → +%53 pahalı
+- Analist konsensüs $85.71 → mevcut %8 AŞAĞIDA (analistler ucuz buluyor!)
+- ❌ ÇELİŞKİ: Skill GEÇ, analist AL
+- ROE %42.59 (sektör hedefi %18 → 2.4x premium kalite)
+- Net Margin %27.8 (sektör %15 → 1.85x premium)
+
+## YENİ ÖĞRENME: Kalite/Moat Primi Eksikliği
+
+KO testinde keşfedildi. Sektör lideri/kalite şirketleri (KO, PEP, MCD, JNJ, V, MA gibi) tarihsel olarak medyan çarpanlarından **%30-50 premium** ile işlem görür. Skill bunu yakalayamıyor.
+
+**Sebep:** Sektör medyan multiplier'ları "ortalama şirket" için kalibre edilmiş. Quality outlier'lar ROE ve net margin metrikleri ile tespit edilebilir.
+
+**Çözüm önerisi (v4'e):**
+```python
+def quality_premium(roe, sector_target_roe, net_margin, sector_target_margin):
+    roe_premium = max(1.0, min(1.50, roe / sector_target_roe))
+    margin_premium = max(1.0, min(1.30, net_margin / sector_target_margin))
+    return min(1.50, (roe_premium * margin_premium) ** 0.5)
+```
+
+KO için bu ~1.40x premium verirdi → boğa medyan $51 yerine $71 civarı, analist hedefiyle uyumlu olurdu.
+
+**Önemli ayrım:** AI Mega-Cap premium MOMENTUM bazlı (1y fiyat + market cap), Quality premium ise FUNDAMENTAL bazlı (ROE + margin sürekliliği). İkisi farklı şeyleri yakalar.
 
