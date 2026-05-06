@@ -634,20 +634,6 @@
   ],
   "entries": [
     {
-      "id": "L004",
-      "tarih": "2026-04-13",
-      "kaynak": "lasr_stop_override",
-      "kategori": "stop_disiplini",
-      "ders": "LASR pozisyonunda 3 kez stop override yapıldı, her seferinde kayıp büyüdü. Stop override = kural ihlali. Gerekçe ne olursa olsun stop tetiklenirse çık.",
-      "veri": {
-        "sembol": "LASR",
-        "override_sayisi": 3,
-        "sonuc": "kayıp büyüdü"
-      },
-      "aksiyon": "K-06: Stop tetiklendiğinde override yasak. execution_engine'de hard-coded.",
-      "guven": "KESİN"
-    },
-    {
       "id": "L005",
       "tarih": "2026-04-13",
       "kaynak": "k11_analiz",
@@ -1253,6 +1239,11 @@
       "date": "2026-05-06",
       "source": "closing_analysis",
       "insight": "DECISION BLOCK"
+    },
+    {
+      "date": "2026-05-07",
+      "source": "closing_analysis",
+      "insight": "**DECISION BLOCK**"
     }
   ]
 }

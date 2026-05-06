@@ -1,5 +1,5 @@
 {
-  "tarih": "2026-05-05T21:40:11.351500",
+  "tarih": "2026-05-06T21:45:18.814300",
   "adaylar": [
     {
       "symbol": "NVDA",
@@ -22,6 +22,54 @@
         "skor": 6,
         "roic": "✅ 62.9%",
         "büyüme": "✅ ROE 104.4%"
+      }
+    },
+    {
+      "symbol": "MO",
+      "tema": "tüketici_temettü",
+      "portföy": "dividend",
+      "price": 70.17,
+      "stop": 66.43,
+      "target": 77.25,
+      "rr": 1.89,
+      "score": 6.1,
+      "teknik": 6,
+      "fundamental": 7,
+      "atr": 1.77,
+      "reason": "tüketici_temettü tema taraması — teknik:6/10 fundamental:7/10",
+      "detay": {
+        "sma200": "✅",
+        "sma50": "✅",
+        "rsi": "→ 65",
+        "mom_1m": "✅ +5.9%",
+        "skor": 7,
+        "roic": "✅ 33.5%",
+        "pe": "✅ 14.6",
+        "fcf": "✅ 7.4%"
+      }
+    },
+    {
+      "symbol": "CL",
+      "tema": "tüketici_temettü",
+      "portföy": "dividend",
+      "price": 88.16,
+      "stop": 83.75,
+      "target": 96.95,
+      "rr": 1.99,
+      "score": 6.1,
+      "teknik": 6,
+      "fundamental": 7,
+      "atr": 2.2,
+      "reason": "tüketici_temettü tema taraması — teknik:6/10 fundamental:7/10",
+      "detay": {
+        "sma200": "✅",
+        "sma50": "✅",
+        "rsi": "→ 62",
+        "mom_1m": "✅ +6.1%",
+        "skor": 7,
+        "roic": "✅ 30.4%",
+        "fcf": "✅ 5.3%",
+        "büyüme": "✅ ROE 475.1%"
       }
     },
     {
@@ -72,6 +120,6 @@
     }
   ],
   "ozet": {
-    "toplam": 3
+    "toplam": 5
   }
 }
