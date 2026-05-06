@@ -21,26 +21,26 @@ Her kullanımda dolan, skill'i geliştirmek için kullanılan notlar.
 
 ## Skill Geliştirme Önceliği Listesi
 
-Kullanım arttıkça bu listeyi güncelle:
+Kullanım arttıkça bu listeyi güncelle.
 
-### 🔴 KRİTİK / ACİL (2+ vakada görüldü)
-1. [ ] **Cost of Equity %15 cap + ROE < k_e fallback** — AMKR ve AMD'de yaşandı, sistematik bug
-2. [ ] **CV ≥ %50 kırmızı uyarı** çıktıda belirginleştirilmeli — AMD %80 verdi
+### ✅ v2.0'da TAMAMLANDI (6 Mayıs 2026)
+1. ✅ **Cost of Equity %15 cap + ROE < k_e fallback (Residual Income Model)** — AMKR ve AMD'de test edildi, çalışıyor
+2. ✅ **CV ≥ %50 kırmızı uyarı, ≥ %35 turuncu** — Renkli uyarı sistemi aktif
+3. ✅ **Forward P/E outlier filtreleme** — EPS_FWD/EPS_TTM > 2.5x tespiti çalışıyor
+4. ✅ **AI mega-cap auto-detection** — AMD'de ⭐ AI MEGA-CAP tag aktif
+5. ✅ **Analist konsensüs entegrasyonu** — FMP price-target-consensus eklendi
+6. ✅ **Dual-track raporlama** — Traditional/Forward/Full ayrı sunuluyor
+7. ✅ **Otomatik karar matrisi** — GÜÇLÜ AL / AL / İZLE / PAHALI / GEÇ
 
-### 🟠 YÜKSEK ÖNCELİK (1 vakada görüldü)
-3. [ ] **Forward P/E outlier filtreleme:** EPS_FWD_2Y / EPS_TTM > 2.5x ise ayrı raporla
-4. [ ] **AI mega-cap preset:** Boğa multiplier 1.50+ (AMD analizinde piyasa fiyatı modeli %319 aştı)
-5. [ ] **Analist konsensüs entegrasyonu:** FMP price-target-consensus endpoint
-6. [ ] **Dual-track raporlama:** Mevcut performans vs Beklenti bazlı ayrı kategoriler
-7. [ ] **Karar matrisi otomatikleştirilebilir** (GİR/İZLE/GEÇ)
-
-### 🟡 ORTA ÖNCELİK
+### 🟡 ORTA ÖNCELİK (Sıradaki versiyon için)
 8. [ ] Sektör presetlerini 6 ay sonra rakam doğrulaması yap
 9. [ ] Bankalarda P-B ağırlıklı, diğer yöntemler düşük ağırlık - özel mantık eklenebilir
-10. [ ] DCF için negatif FCF düzeltmesi geliştirilmeli
+10. [ ] DCF için negatif FCF düzeltmesi geliştirilmeli (capex yoğun şirketler için)
 11. [ ] Çoklu hisse karşılaştırma fonksiyonu (peer relative) eklenebilir
 12. [ ] Tarihsel geri test: 1 yıl önce değerlenen hisselerin bugünkü uyumu
-13. [ ] OSAT sektörü için boğa multiplier 1.40-1.45 (AI tedarik zinciri primli)
+13. [ ] OSAT sektörü için AI tedarik zinciri primi (semicon_osat_ai alt-preset)
+14. [ ] Watchlist entegrasyonu: skill çıktısı otomatik watchlist.json'a giriş yapmalı
+15. [ ] Telegram bildirim entegrasyonu: GEÇ kararları için DM uyarısı
 
 ---
 
@@ -135,4 +135,48 @@ Bu, skill'in tarihte en yüksek CV'leri. Yöntemler arası dağılım uçurum bo
 **Karar:** GEÇ. 9 yöntemin tümünün boğa medyanı $99, mevcut $414. Spekülatif Forward boğa $333 bile mevcuttan %19 düşük. Hisse aşırı pahalı veya analist beklentileri zaten fiyatlanmış. AMD pozisyonu varsa kar realize edilmeli; yoksa $250-300 düzeltme bölgesinde tekrar bakılmalı.
 
 **Geri test takibi:** AMD'yi 30 Eylül 2026 (Q3 sonuçları öncesi) kontrol et. Eğer hisse $300 altına düştüyse skill doğru çıkmış demektir. $500+ üstünde kalırsa AI primli mega-cap presetinin kalibrasyonu zorunlu.
+
+
+---
+
+## 2026-05-06 - SKILL v2.0 RELEASE
+
+**Bağlam:** v1.0'dan v2.0'a geçiş. AMKR ve AMD analizlerinde tespit edilen 7 sorun çözüldü.
+
+**Çözülen sorunlar:**
+
+1. **Justified P-B Clipping Bug (AMKR + AMD'de aynı):** ROE < k_e durumunda formül 0.5 alt sınırına dayanıp sabit değer üretiyordu. v2'de:
+   - k_e için %15 cap eklendi
+   - ROE < k_e durumunda Residual Income Model fallback aktif
+   - AMKR test: önceden $9.02 sabit → şimdi $11.88-12.16 senaryolara göre değişiyor
+   - AMD test: önceden $19.32 sabit → şimdi $21.82-22.57 senaryolara göre değişiyor
+
+2. **CV Uyarı Sistemi:** Önceden CV %78-80 ekran çıktısında kaybolurdu. v2'de renkli uyarılar (🟢🟡🟠🔴) ve "KRİTİK: Model güvenilir değil" gibi açık mesajlar eklendi.
+
+3. **Forward Outlier Tespiti:** AMD'de EPS_FWD/EPS_TTM = 3.71x oranı saptırıyordu. v2'de >2.5x ise "FORWARD OUTLIER" uyarısı çıkıyor, kullanıcı yorumlama farkındalığıyla okuyor.
+
+4. **AI Mega-Cap Preset:** AMD ($685B market cap, +%327 1y getiri) artık ⭐ AI MEGA-CAP olarak tag'leniyor, boğa senaryosunda multiplier'lar 1.40-1.55x oluyor. AMD boğa medyan: önceden $99 → şimdi $115 (Traditional), $302 (Forward).
+
+5. **Analist Konsensüsü:** FMP price-target-consensus endpoint entegre edildi. AMKR için $66.75 konsensüs (mevcut $76.61, +%14.9 yukarda). AMD için $401.65 konsensüs (mevcut $413.31, sadece +%2.9 yukarda — kritik bilgi).
+
+6. **Dual-Track Raporlama:** Traditional (TTM bazlı 7 yöntem) ve Forward (FWD bazlı 2 yöntem) ayrı sunuluyor. Bu, AMD gibi yüksek büyüme bekleyen hisseler için kritik. AMD'de:
+   - Traditional Boğa medyan: $115 → mevcut +%258 pahalı
+   - Forward Boğa P75: $392 → mevcut +%5 pahalı (analist hedefiyle uyumlu)
+
+7. **Otomatik Karar Matrisi:** GÜÇLÜ AL → AL → İZLE → PAHALI → GEÇ kararı manuel yorumlamayı azaltıyor. AMKR ve AMD ikisi de "🔴 GEÇ / KAÇIN" çıktı, manuel yorumla aynı.
+
+**v2'nin değer kattığı yerler:**
+
+- AMD analizinde Traditional vs Forward ayrımı sayesinde "geleneksel olarak pahalı ama AI tezi başarılı olursa makul" mesajı net oldu
+- AMKR'da analist konsensüsünden +%15 pahalı olduğu görüldü, hem skill hem analistler "pahalı" diyor (mutabakat)
+- CV %85 kırmızı uyarı ile model güvenilirsizliği görsel olarak öne çıktı
+
+**Test sonuçları:**
+- AMKR v2: GEÇ (Traditional bazlı doğru karar)
+- AMD v2: GEÇ Traditional, Forward outlier dahil edildiğinde fair pahalı
+
+**Sıradaki testler:**
+- JPM (financials_bank) — Justified P-B'nin doğal çalıştığı vaka
+- KO (consumer_staples) — Düşük beta, stabil ROE baseline kontrolü
+- TSLA (consumer_discretionary) — Yüksek volatilite + Forward outlier kontrolü
 
