@@ -1,2 +1,3 @@
 date,ticker,price,sector_preset,market_regime,bear_p25,bear_median,bear_p75,normal_p25,normal_median,normal_p75,bull_p25,bull_median,bull_p75,decision,notes
 2026-05-06,AMKR,76.61,semicon_osat,normal,19.37,23.52,28.53,26.72,31.67,39.63,34.59,39.59,48.97,GEÇ,"CV %40+ tüm senaryolarda, Justified P-B clipping, mevcut fiyat boğa medyandan +%93 pahalı"
+2026-05-06,AMD,413.95,semicon_design,normal,43.07,46.15,63.13,61.53,63.94,85.73,75.59,98.77,123.17,GEÇ,"CV %77-80 felaket seviye, Forward P/E outlier (3.7x EPS büyüme), Justified P-B clipping (2. vaka), mevcut fiyat boğa medyandan +%319"
