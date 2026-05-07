@@ -634,20 +634,6 @@
   ],
   "entries": [
     {
-      "id": "L005",
-      "tarih": "2026-04-13",
-      "kaynak": "k11_analiz",
-      "kategori": "kar_alma",
-      "ders": "K-11 kâr alma çıkışları %33 WR ve ortalama +0.7% veriyor — bu düşük görünse de bağlamı önemli: bu çıkışlar zirveye yakın olduğunda yapılıyor. SM'de kademeli çıkış (+39% → +45% → +54%) doğru uygulandı. K-11'i tamamen kaldırmak yerine katman yapısı korunmalı.",
-      "veri": {
-        "n": 12,
-        "avg": 0.68,
-        "wr": 33.3
-      },
-      "aksiyon": "K-11 Layer 1 (trailing stop aktivasyonu) kalsın. Layer 2 (%25 satış) için minimum 2 RSI+SMA koşulu şart.",
-      "guven": "MUHTEMEL"
-    },
-    {
       "id": "L006",
       "tarih": "2026-04-13",
       "kaynak": "corr_risk_analysis",
@@ -1244,6 +1230,11 @@
       "date": "2026-05-07",
       "source": "closing_analysis",
       "insight": "**DECISION BLOCK**"
+    },
+    {
+      "date": "2026-05-08",
+      "source": "closing_analysis",
+      "insight": "## 8. DECISION BLOCK"
     }
   ]
 }
