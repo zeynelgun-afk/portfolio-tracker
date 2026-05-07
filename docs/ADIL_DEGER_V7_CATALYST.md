@@ -1,10 +1,134 @@
 # Adil Değer v7 — Katalist Katmanı
 
-> **Versiyon:** v7.0-catalyst (7 Mayıs 2026)
-> **Önceki sürüm:** v6.0 (cycle phase + AI consultation)
-> **Önceki dokümantasyon:** `ADIL_DEGER_KULLANIM.md`
+> **Versiyon:** v7.1-catalyst (7 Mayıs 2026, ikinci iterasyon)
+> **Önceki:** v7.0 (ilk catalyst layer), v6.0 (cycle phase + AI consultation)
+
+## v7.1 Değişiklikleri (Bilinen Riskler İyileştirmesi)
+
+v7.0'dan sonra üç bilinen risk vardı: keyword sözlüğü dar, 8-K item-level detayı yok, backtest yapılamadı. v7.1 üçünü de çözer.
+
+**1. 8-K Item Parser**
+
+`_fetch_8k_items()` artık SEC EDGAR'dan 8-K HTML'ini çekip `Item X.XX` pattern'lerini çıkarır. Eğer FMP'nin döndüğü `finalLink` exhibit dosyası ise (örn. `airj-ex99_1.htm`), parent klasör listesinden ana 8-K dosyasını bulur. Bulunan item numaraları `EIGHT_K_ITEM_MAP` ile sınıflandırılır:
+
+| Item | Açıklama | Skor |
+|---|---|---|
+| 1.01 | Maddi anlaşma yapımı | +12 |
+| 1.02 | Maddi anlaşma feshi | -10 |
+| 1.03 | İflas korumasına giriş | -25 |
+| 2.01 | Satın alma tamamlandı | +10 |
+| 2.02 | Kazanç açıklaması | 0 (haberden okunur) |
+| 2.03 | Yeni borç yükümlülüğü | -8 |
+| 2.04 | Tetikleyici olay (covenant) | -15 |
+| 3.01 | Delisting uyarısı | -18 |
+| 3.02 | Tescilsiz hisse satışı | -10 |
+| 4.01 | Denetçi değişikliği | -15 |
+| 4.02 | Geçmiş finansal geri çekme | -25 |
+| 5.02 | Yönetici ayrılışı/atama | -3 (yumuşak negatif) |
+| 5.06 | Shell company status | -15 |
+| 7.01 | Reg FD açıklaması | 0 |
+| 8.01 | Diğer pozitif duyuru | +6 |
+| 9.01 | Finansal ekler | 0 |
+
+Toplam 22 item kategorize edildi (SEC standardı).
+
+Yeni bayraklar:
+- `auditor_change` — Item 4.01 veya 4.02 son 90 günde (güven -12)
+- `director_departure` — Item 5.02 son 30 günde (güven -5)
+- `multiple_negative_8k` — 2+ negatif 8-K item (güven -8)
+- `positive_8k_event` — pozitif 8-K, negatif yok (güven +5)
+
+Canlı test sonucu: AIRJ Şubat 17 8-K → Item 5.02 (yönetici değişikliği), Mart 31 8-K → Item 2.02 (kazanç) + 9.01 (ekler). NVDA testinde de `director_departure` flag yakalandı.
+
+**2. Keyword Sözlüğü Genişletmesi (75 → 180+)**
+
+POSITIVE_KEYWORDS 35 → 65, NEGATIVE_KEYWORDS 35 → 70 keyword'e çıktı. Yeni eklenenler:
+- Onaylar: breakthrough designation, fast track, orphan drug, EPA, FAA, DOE
+- Operasyonel: phase 3 success, primary endpoint met, ahead of schedule
+- Finansman pozitif: DoD award, non-dilutive funding, rating upgrade
+- Yasal: rules in favor, lawsuit dismissed
+- Negatif yeni: covenant breach, going concern, FCPA violation, ransomware, cyberattack, write-down, layoffs, restructuring charges
+
+**3. Regex Pattern'lar (yeni)**
+
+Tek kelime check'inden kaçan ifadeler için 14 pozitif + 15 negatif regex eklendi. Örnekler:
+- `wins?\s+(?:major\s+|new\s+|\$[\d.]+\s*[mb]illion\s+)?contract` — "wins major contract", "wins $5 million contract", "wins contract"
+- `(?:cuts?|lowers?|reduces?)\s+(?:fy\s*\d{2,4}\s+)?guidance` — "cuts FY26 guidance", "lowers guidance"
+- `(?:ceo|cfo|coo)\s+(?:resigns?|steps?\s+down|departs?|terminated|fired)` — "CEO resigns", "CFO steps down"
+
+Pattern eşleşmesi keyword listesine `~<eşleşen kısım>` formatında eklenir, böylece tetikleyenin keyword mü pattern mü olduğu izlenir.
+
+**4. Claude AI Fallback (opsiyonel)**
+
+`compute_catalyst_layer(..., use_ai_fallback=True)` ile aktif olur. Çalışma:
+1. Önce keyword + regex matching
+2. "Notr" sınıflandırılan (hiç hit yok) ve uzun (20+ karakter title) haberler ayrılır
+3. Bu haberler batch halinde Claude Haiku 4.5'a gönderilir (max 10 haber)
+4. Yanıttaki sınıflandırmalar (POZITIF/NEGATIF/NOTR) uygulanır
+5. AI ile sınıflandırılan haberler `_ai_classified=True` flag'i alır
+
+Maliyet kontrolü: default off, ANTHROPIC_API_KEY yoksa sessizce atla, max 10 haber/çağrı, model olarak Haiku (en ucuz). Yaklaşık maliyet: ticker başına ~$0.001.
+
+**5. Prediction Logging (Backtest Temeli)**
+
+Her `compute_catalyst_layer` çağrısı `logs/catalyst_predictions.jsonl`'ye bir kayıt ekler. Schema:
+
+```json
+{
+  "ticker": "AIRJ",
+  "logged_at": "2026-05-07T13:50:21",
+  "archetype": "pre_revenue_hardtech",
+  "score": 4.2,
+  "flags": [...],
+  "logged_price": 3.50,
+  "fwd_5d_return": null,
+  "fwd_10d_return": null,
+  "fwd_30d_return": null
+}
+```
+
+Aynı ticker için günde sadece 1 kez log atılır (duplikasyon önleme).
+
+**Forward Returns Script:** `scripts/catalyst_compute_returns.py`
+
+Günlük çalıştırılır (Railway scheduler veya manuel). T+5/T+10/T+30 günü dolmuş kayıtların forward return'lerini FMP'den hesaplayıp ekler.
+
+Kullanım:
+```bash
+# Forward returns güncelleme (günlük)
+python3 scripts/catalyst_compute_returns.py
+
+# Backtest analiz raporu
+python3 scripts/catalyst_compute_returns.py --analyze
+```
+
+Analiz raporu çıktısı bayrak bazında ortalama return + skor bucket'ları:
+```
+📊 Bayraklar (forward return ortalaması):
+  fresh_positive             T+5: avg +2.3% (n=12)   T+10: avg +3.8% (n=10)
+  director_departure         T+5: avg -1.5% (n=4)    T+10: avg -3.2% (n=4)
+  insider_buying_cluster     T+5: avg +1.8% (n=8)    T+10: avg +4.1% (n=7)
+
+📈 Skor Bucket'ları:
+  score>+30      T+5: avg +2.5% (n=15)
+  score +10..+30 T+5: avg +1.0% (n=22)
+  score -10..+10 T+5: avg +0.2% (n=45)
+```
+
+Asgari 30 gün canlı kullanım sonrası anlamlı sonuç beklenir (n>30 her bucket için).
+
+**6. Confidence Aralık Genişletmesi**
+
+v7.0: -20 ile +15 arası
+v7.1: -25 ile +20 arası
+
+Sebep: birden fazla negatif bayrak (örn. director_departure + dilution_risk + going_concern) toplam -25'i kolayca aşabilir. Genişletme bu durumlarda gerçek risk seviyesini yansıtır.
 
 ---
+
+## v7.0'dan Devralınan Yapı (değişmedi)
+
+
 
 ## 1. v7'nin Çözdüğü Problem
 
