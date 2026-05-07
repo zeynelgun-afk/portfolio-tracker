@@ -516,6 +516,55 @@ ARCHETYPES = {
         detect_priority=2,
     ),
 
+    # ── PRE-REVENUE HARDWARE / CLEANTECH (v7) ─────────────────────────
+    # AIRJ tipi: cleantech, su hasadı, batarya, fuel cell, hidrojen,
+    # erken-aşama hardware ve industrials. Biotech değil ama pre-revenue.
+    "pre_revenue_hardtech": Archetype(
+        key="pre_revenue_hardtech",
+        label="Pre-revenue hardware / cleantech (AIRJ, BLDP-erken, vs.)",
+        description=(
+            "Revenue ≈ 0 (2+ yıl), endüstriyel/elektrikli ekipman/cleantech sektörü, "
+            "JV iştiraki veya pilot proje aşamasında. Değer: NAV + opsiyon değeri."
+        ),
+        primary=[
+            ("nav_per_share_adjusted", 0.35),  # ana — asset-based
+            ("tangible_book_capped",   0.20),  # TBV with dilution penalty
+            ("cash_plus_runway",       0.20),  # nakit + runway opsiyon değeri
+        ],
+        secondary=[
+            ("price_to_tangible_book", 0.10),
+            ("price_to_book",          0.05),
+        ],
+        sanity=[
+            ("analyst_target_method",  0.10),  # tek analist olabilir, düşük güven
+        ],
+        excluded={
+            "trailing_pe":         "no earnings",
+            "forward_pe_ny1":      "no earnings forecasts meaningful",
+            "forward_pe_ny2":      "still pre-revenue",
+            "forward_pe_ny3":      "still pre-revenue",
+            "ev_ebitda":           "negative EBITDA",
+            "ev_ebitda_forward":   "still negative",
+            "ev_revenue":          "no revenue",
+            "ev_rev_growth_adjusted": "no revenue",
+            "dcf_2stage":          "no FCF baseline",
+            "dcf_multi_stage":     "speculative cash flows",
+            "dcf_multi_stage_aggressive": "speculative",
+            "fcf_yield":           "negative FCF",
+            "dividend_discount":   "no dividend",
+            "rnpv_pipeline":       "biotech-specific",
+            "ma_comp_per_indication": "biotech-specific",
+            "real_options_pipeline":  "biotech-specific",
+            "reserves_nav_pv10":   "not oil/gas",
+            "p_ffo":               "not REIT",
+            "p_affo":              "not REIT",
+            "nav_cap_rate":        "not REIT",
+            "peg_forward":         "no growth measurement",
+            "pegy":                "no earnings",
+        },
+        detect_priority=2,
+    ),
+
     "biotech_commercial": Archetype(
         key="biotech_commercial",
         label="Ticari biotech (REGN, VRTX, BMRN)",

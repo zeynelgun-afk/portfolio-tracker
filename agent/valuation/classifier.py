@@ -242,6 +242,31 @@ def classify(ticker: str, verbose: bool = False) -> dict:
         signals["trigger"] = f"Biotech/pharma generic: {industry}"
         return _result(ticker, "biotech_commercial", 0.70, signals, fmp_raw)
 
+    # ── PRIORITY 2b: Pre-revenue hardtech / cleantech (v7) ────────────
+    # Mantık: revenue ≈ 0 + endüstriyel/elektrikli/cleantech sektörü.
+    # AIRJ tipi şirketler buraya düşer.
+    if ttm_rev < 1_000_000:  # neredeyse hiç gelir yok
+        is_industrial_like = (
+            "industrial" in sector_lc or "industrial" in industry_lc or
+            "electrical equipment" in industry_lc or
+            "electronic equipment" in industry_lc or
+            "machinery" in industry_lc or
+            "renewable" in industry_lc or
+            "solar" in industry_lc or
+            "clean" in industry_lc or
+            "battery" in industry_lc or
+            "fuel cell" in industry_lc or
+            "hydrogen" in industry_lc or
+            "water" in industry_lc
+        )
+        # Mcap < $5B → erken aşama olarak kabul et
+        if is_industrial_like and mcap < 5_000_000_000:
+            signals["trigger"] = (
+                f"Pre-revenue hardtech (rev=${ttm_rev/1e6:.1f}M, "
+                f"mcap=${mcap/1e6:.0f}M, ind={industry})"
+            )
+            return _result(ticker, "pre_revenue_hardtech", 0.85, signals, fmp_raw)
+
     # ── PRIORITY 3: Semiconductor ────────────────────────────────────
 
     if "semiconductor" in industry_lc or "semi" in industry_lc:

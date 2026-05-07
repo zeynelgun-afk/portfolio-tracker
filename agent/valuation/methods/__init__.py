@@ -64,6 +64,12 @@ def fetch_all_data(ticker: str) -> dict:
     d["beta"]      = _safe(p.get("beta"), 1.0)
     d["sector"]    = (p.get("sector") or "").strip()
     d["industry"]  = (p.get("industry") or "").strip()
+    # v7: günlük değişim — FMP changesPercentage seans esnasında 0 dönebilir,
+    # manuel hesap güvenli
+    if d["price"] > 0 and d["prev_close"] > 0:
+        d["change_pct_today"] = ((d["price"] - d["prev_close"]) / d["prev_close"]) * 100
+    else:
+        d["change_pct_today"] = _safe(q.get("changePercentage"))
 
     # 2. Ratios-TTM (KRİTİK alan isimleri!)
     r = fmp_get("ratios-ttm", {"symbol": ticker}) or []
@@ -146,6 +152,12 @@ def fetch_all_data(ticker: str) -> dict:
         _safe(b.get("totalStockholdersEquity")) -
         _safe(b.get("goodwillAndIntangibleAssets"))
     )
+    # v7: pre-revenue / NAV-tabanlı değerleme için ek alanlar
+    d["long_term_investments"] = _safe(b.get("longTermInvestments"))
+    d["deferred_tax_liab"]     = _safe(b.get("deferredTaxLiabilitiesNonCurrent"))
+    d["total_liabilities"]     = _safe(b.get("totalLiabilities"))
+    d["current_assets"]        = _safe(b.get("totalCurrentAssets"))
+    d["current_liabilities"]   = _safe(b.get("totalCurrentLiabilities"))
 
     # 7. Analyst estimates (forward EPS / revenue)
     est = fmp_get("analyst-estimates", {"symbol": ticker, "period": "annual", "limit": 5}) or []

@@ -53,6 +53,20 @@ except ImportError:
     should_consult = None
     _AI_CONSULT_AVAILABLE = False
 
+# v7: catalyst layer (haberler + SEC dosyaları)
+try:
+    from valuation.catalyst_layer import (
+        compute_catalyst_layer,
+        detect_unexplained_move,
+        format_catalyst_summary,
+    )
+    _CATALYST_AVAILABLE = True
+except ImportError:
+    compute_catalyst_layer = None
+    detect_unexplained_move = None
+    format_catalyst_summary = None
+    _CATALYST_AVAILABLE = False
+
 
 def _outlier_filter(method_values: list, threshold_factor: float = 3.0) -> tuple[list, list]:
     """
@@ -483,7 +497,7 @@ def valuate(ticker: str, verbose: bool = False, apply_regime: bool = True,
 
     output = {
         "ticker": ticker,
-        "framework_version": "v6.0",
+        "framework_version": "v7.0-catalyst",
         "timestamp": __import__("datetime").datetime.now().isoformat(),
 
         "classification": {
@@ -540,6 +554,65 @@ def valuate(ticker: str, verbose: bool = False, apply_regime: bool = True,
             "analyst_count": data.get("analyst_count"),
         },
     }
+
+    # v7: Catalyst Layer entegrasyonu
+    # ───────────────────────────────────────────────────────────────────
+    # Haber + SEC dosyalarına bakıp:
+    #   - Confidence puanını ±15 ayarla
+    #   - Red flag listesine ekle (fresh_positive, dilution_risk, vb.)
+    #   - Pre-revenue archetype + 90 günde pozitif yok → karar max NÖTR
+    #   - Bugünkü %7+ hareket + son 7 günde haber yok → unexplained_move
+    if _CATALYST_AVAILABLE and compute_catalyst_layer is not None:
+        try:
+            cat_result = compute_catalyst_layer(
+                ticker, archetype=archetype_key,
+                use_cache=use_cache, verbose=verbose,
+            )
+            output["catalyst_layer"] = cat_result
+
+            # Confidence ayarlaması
+            cat_conf_adj = cat_result.get("confidence_adjustment", 0)
+            if cat_conf_adj != 0:
+                old_conf = output["confidence"]["score"]
+                new_conf = max(0, min(100, old_conf + cat_conf_adj))
+                output["confidence"]["score"] = new_conf
+                output["confidence"]["factors"].append(
+                    f"catalyst_layer: {cat_conf_adj:+d} (yeni: {new_conf})"
+                )
+
+            # Red flag birleştirme
+            for flag in cat_result.get("flags", []):
+                output["confidence"]["red_flags"].append(f"catalyst: {flag}")
+
+            # Açıklanamayan hareket tespiti — fiyat hareketi kontrolü
+            change_pct_today = data.get("change_pct_today", 0)
+            if change_pct_today and detect_unexplained_move:
+                if detect_unexplained_move(ticker, change_pct_today, cat_result):
+                    output["confidence"]["red_flags"].append(
+                        f"catalyst: unexplained_move ({change_pct_today:+.1f}%)"
+                    )
+                    output["confidence"]["score"] = max(
+                        0, output["confidence"]["score"] - 8
+                    )
+
+            # Max signal override (pre-revenue + no positive 90d)
+            override = cat_result.get("max_signal_override")
+            if override == "NOTR":
+                cur_karar = output["fair_value"]["karar"]
+                # UCUZ veya ADİL-UCUZ ise NÖTR'e zorla
+                if cur_karar in {"UCUZ", "ADİL-UCUZ", "UCUZ (düşük güven)"}:
+                    output["fair_value"]["karar"] = "ADİL (katalist override)"
+                    output["fair_value"]["original_karar"] = cur_karar
+                    output["confidence"]["red_flags"].append(
+                        "catalyst: pre_revenue_no_catalyst_override"
+                    )
+
+            if verbose:
+                print(format_catalyst_summary(cat_result))
+        except Exception as e:
+            if verbose:
+                print(f"[Valuation v7] catalyst layer atlandı: {e}")
+            output["catalyst_layer"] = {"error": str(e)}
 
     # v6: AI consultation tetikleyici kontrolü
     ai_result = None

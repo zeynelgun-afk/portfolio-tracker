@@ -40,6 +40,8 @@ data/finzora.db-wal
 
 # RAG vector store (JSONL'den rebuild edilebilir)
 data/rag/chroma/
+# v7: catalyst layer cache (FMP'den rebuild edilebilir, 6 saatlik TTL)
+data/rag/catalyst_cache/
 
 # Olay log
 logs/event_log.jsonl

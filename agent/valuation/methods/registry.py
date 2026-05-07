@@ -629,6 +629,120 @@ def rnpv_pipeline(d: dict, archetype: str = "generic_equity") -> dict | None:
 
 
 # ─────────────────────────────────────────────────────────────────────────────
+# PRE-REVENUE / NAV-TABANLI METOTLAR (v7)
+# ─────────────────────────────────────────────────────────────────────────────
+
+def nav_per_share_adjusted(d: dict, archetype: str = "generic_equity") -> dict | None:
+    """
+    Düzeltilmiş NAV per share (pre-revenue için ana metot).
+
+    NAV = (cash + long_term_investments) - (total_liabilities - deferred_tax)
+    Mantık: ertelenmiş vergi gerçek bir nakit yükümlülüğü değil, JV gain üzerine
+    teorik vergidir. JV satılana kadar ödenmez. Bu nedenle NAV hesabında
+    yumuşatılır (çıkarılırken).
+    """
+    cash = d.get("cash", 0)
+    lt_inv = d.get("long_term_investments", 0)
+    total_liab = d.get("total_liabilities", 0)
+    deferred_tax = d.get("deferred_tax_liab", 0)
+    shares = d.get("shares", 0)
+
+    if shares <= 0 or (cash + lt_inv) <= 0:
+        return None
+
+    # Düzeltilmiş yükümlülük = total_liab - deferred_tax × 0.5
+    # (yarısı diskontla, çünkü gerçekleşmesi belirsiz)
+    adjusted_liab = total_liab - (deferred_tax * 0.5)
+    nav = (cash + lt_inv) - adjusted_liab
+    nav_ps = nav / shares
+    if nav_ps <= 0:
+        return None
+    return _ok(nav_ps,
+               f"NAV: (nakit ${cash/1e6:.0f}M + LT yatırım ${lt_inv/1e6:.0f}M "
+               f"- düzelt. yükümlülük ${adjusted_liab/1e6:.0f}M) / {shares/1e6:.0f}M hisse",
+               "nav_per_share_adjusted")
+
+
+def cash_plus_runway(d: dict, archetype: str = "generic_equity") -> dict | None:
+    """
+    Nakit + 2 yıllık burn hakkı için kalan değer.
+    Pre-revenue şirketin "tabanı" gibi davranır.
+
+    fair_value = cash_per_share + (option_value × cash_per_share × 0.5)
+    burn rate yüksekse penalty.
+    """
+    cash = d.get("cash", 0)
+    fcf = d.get("ttm_fcf", 0)  # negatif olur pre-revenue'da
+    shares = d.get("shares", 0)
+    if shares <= 0 or cash <= 0:
+        return None
+
+    cash_ps = cash / shares
+    # Burn rate negatif FCF'in mutlak değeri
+    burn = abs(min(fcf, 0))
+    runway_years = (cash / burn) if burn > 0 else 999
+
+    # Runway < 1 yıl → ciddi risk, sadece nakit değeri
+    # Runway 1-2 yıl → cash_ps × 1.0
+    # Runway 2+ yıl → cash_ps × 1.3 (zaman var, opsiyon değeri)
+    if runway_years < 1.0:
+        mult = 0.85
+        note = f"runway {runway_years:.1f}y (KRİTİK)"
+    elif runway_years < 2.0:
+        mult = 1.0
+        note = f"runway {runway_years:.1f}y"
+    elif runway_years < 4.0:
+        mult = 1.2
+        note = f"runway {runway_years:.1f}y (yeterli)"
+    else:
+        mult = 1.3
+        note = f"runway {runway_years:.1f}y (rahat)"
+
+    return _ok(cash_ps * mult,
+               f"cash/sh ${cash_ps:.2f} × {mult:.2f} ({note})",
+               "cash_plus_runway")
+
+
+def analyst_target_method(d: dict, archetype: str = "generic_equity") -> dict | None:
+    """
+    Analist hedef fiyatı (sanity check metodu).
+    Düşük güven (özellikle pre-revenue'da tek analist olabilir),
+    bu yüzden sanity tier olarak kullanılmalı.
+    """
+    target = d.get("price_target_consensus", 0)
+    if target <= 0:
+        return None
+    n_analysts = d.get("price_target_count", 1)
+    note = f"konsensüs ${target:.2f} ({n_analysts} analist)"
+    return _ok(target, note, "analyst_target_method")
+
+
+def tangible_book_capped(d: dict, archetype: str = "generic_equity") -> dict | None:
+    """
+    Maddi defter değeri × archetype P/B çarpanı, ama dilüsyon penaltısı ile.
+
+    Pre-revenue şirketler genelde sürekli hisse ihraç eder. Son yıldaki
+    hisse büyüme oranı yüksekse (>%15) penalty uygula.
+    """
+    tbvps = d.get("tangible_bvps", 0)
+    if tbvps <= 0:
+        return None
+
+    fair_pb = get_param(archetype, "p_b_fair", 1.2)
+    base = tbvps * fair_pb
+
+    # Dilüsyon kontrolü: shares büyümesi
+    shares_growth = d.get("shares_growth_yoy", 0)
+    if shares_growth > 0.15:
+        penalty = 1 - min(0.30, (shares_growth - 0.15))
+        base *= penalty
+        note = f"TBV ${tbvps:.2f} × {fair_pb:.1f} × dilution_penalty {penalty:.2f}"
+    else:
+        note = f"TBV ${tbvps:.2f} × P/B {fair_pb:.1f}"
+    return _ok(base, note, "tangible_book_capped")
+
+
+# ─────────────────────────────────────────────────────────────────────────────
 # REGISTRY — name → fn lookup
 # ─────────────────────────────────────────────────────────────────────────────
 
@@ -705,6 +819,12 @@ METHOD_REGISTRY = {
     "cash_adjusted_cap_vs_rnpv": rnpv_pipeline,
     "real_options_pipeline":     rnpv_pipeline,
     "ma_comp_per_indication":    rnpv_pipeline,
+
+    # Pre-revenue / NAV (v7)
+    "nav_per_share_adjusted":    nav_per_share_adjusted,
+    "cash_plus_runway":          cash_plus_runway,
+    "analyst_target_method":     analyst_target_method,
+    "tangible_book_capped":      tangible_book_capped,
 
     # Placeholders/simplified
     "sum_of_parts":              dcf_2stage,
