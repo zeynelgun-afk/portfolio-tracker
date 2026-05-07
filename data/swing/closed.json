@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-05-04T18:34:09.933754",
+  "son_guncelleme": "2026-05-07T14:31:11.505336",
   "kapatilan_pozisyonlar": [
     {
       "id": "SWING-020",
@@ -910,6 +910,27 @@
       "partial_exits": [],
       "dersler": "**Hangi K-kural yönetti?**\nK-06 stop disiplini. Stop tetiklendi, anında çıkış zorunluydu. (KESİN)\n\n**Giriş tezi doğru muydu?**\nHayır. Tenkan/Kijun bounce ve NR7 sikisma sinyalleri başarısız oldu. Fiyat 3 günde %11.38 düştü. (KESİN)\n\n**Çıkış zamanlaması?**\nKurala uygun, mekanik olarak doğru. Override yasak, stop çalışınca pozisyon kapandı. (KESİN)\n\n**Somut dersler?**\n1. Ichimoku bounce sinyalleri tek başına yetersiz; genel trend filtresi (K-04) ve VIX savunma (K-10) kontrolü şart. (MUHTEMEL)\n2. N",
       "agent_analiz_tarihi": "2026-05-05"
+    },
+    {
+      "id": "SWING-202605011432-NEE",
+      "sembol": "NEE",
+      "adet": 59,
+      "giris_fiyati": 98.55,
+      "cikis_fiyati": 94.19,
+      "giris_tarihi": "2026-05-01",
+      "cikis_tarihi": "2026-05-07",
+      "cikis_nedeni": "STOP",
+      "kar_zarar_yuzde": -4.42,
+      "tutulan_gun": 6,
+      "sonuc": "ZARAR",
+      "ders": "Stop tetiklendi. Giriş tezi bozuldu. sma50_bounce sinyali bu piyasada yetersiz kaldı.",
+      "giris_nedeni": "Seans içi otomatik giriş — sma50_bounce",
+      "tarama_yontemi": "sma50_bounce",
+      "katalizor": "",
+      "stop_loss": 94.32,
+      "hedef_fiyat": 109.12,
+      "zirve_fiyat": 98.55,
+      "partial_exits": []
     }
   ],
   "istatistikler": {

@@ -139,7 +139,10 @@
         "_decision_id": "a6f6be4f7b18"
       }
     ],
-    "kaynak": "closing"
+    "kaynak": "closing",
+    "executed": true,
+    "executed_at": "2026-05-07T17:33:55.099955+03:00",
+    "executed_count": 0
   },
   "timestamp": "2026-05-07T17:06:05.366660+03:00",
   "k22_nakit_dagitim": {
