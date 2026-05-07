@@ -1,24 +1,24 @@
 {
-  "tarih": "2026-05-05T16:04:54.582400+03:00",
-  "vix": 17.62,
+  "tarih": "2026-05-07T17:06:03.774699+03:00",
+  "vix": 17.2,
   "sektor_performans": {
-    "Basic Materials": -1.8660553570628569,
-    "Communication Services": -0.2471872867395697,
-    "Consumer Cyclical": 0.41586316724617767,
-    "Consumer Defensive": 0.33467823927531004,
-    "Energy": 1.0556372257178204,
-    "Financial Services": 0.3078662055289394,
-    "Healthcare": 0.8432776079603688,
-    "Industrials": -1.0023711873412666,
-    "Real Estate": -0.24183467621702315,
-    "Technology": -0.26544527453004063,
-    "Utilities": 2.140757003925442
+    "Basic Materials": 0.8518314735454835,
+    "Communication Services": 1.2696830155629613,
+    "Consumer Cyclical": 1.4198301365868637,
+    "Consumer Defensive": -1.1992274057821883,
+    "Energy": -0.4358985521945469,
+    "Financial Services": 0.04886618800565845,
+    "Healthcare": 1.0865174055406879,
+    "Industrials": 1.5686804530810505,
+    "Real Estate": 0.15599983894669656,
+    "Technology": 1.47671511959937,
+    "Utilities": 0.08408351603965691
   },
   "dominant_temalar": [
     {
       "tema_adi": "AI_altyapı",
       "güç_skoru": 8,
-      "neden": "VIX 17.6 seviyesinde risk-on ortamında AI güç talebi Utilities sektörünü +2.1% taşıdı ve HCAI %51.4 yükseldi. KESİN",
+      "neden": "Teknoloji sektörü +1.5% ile ikinci sırada, DDOG ve XMTR gibi AI altyapı hisseleri %30 civarında yükseldi, Paul Tudor Jones AI boğa piyasası yorumu destekliyor. [KESİN]",
       "öncelikli_alt_dal": "güç_soğutma",
       "önerilen_hisseler": [
         "VRT",
@@ -37,112 +37,98 @@
     },
     {
       "tema_adi": "savunma_uzay",
-      "güç_skoru": 7,
-      "neden": "İran gerilimi haberleri ve 'savaşa rağmen' ifadesi jeopolitik endişeleri artırıyor, savunma harcamaları beklentisi güçleniyor. MUHTEMEL",
+      "güç_skoru": 6,
+      "neden": "Rubio'nun askeri hamle mesajı jeopolitik gerilimi artırıyor, savunma harcamaları gündemde ancak sektör performansı henüz sınırlı. [MUHTEMEL]",
       "öncelikli_alt_dal": "hipersonik_füze",
       "önerilen_hisseler": [
-        "RTX",
         "LMT",
-        "NOC"
+        "NOC",
+        "RTX"
       ],
       "portföy": "balanced",
       "aciliyet": "orta",
       "hisse_evreni": [
-        "CRWD",
-        "RKLB",
-        "PANW",
-        "RDW",
-        "LHX",
-        "KTOS",
-        "ZS",
-        "S",
-        "LMT",
-        "NOC",
         "AJRD",
+        "LHX",
+        "RKLB",
+        "RTX",
         "GD",
-        "RTX"
+        "KTOS",
+        "NOC",
+        "RDW",
+        "CRWD",
+        "PANW",
+        "S",
+        "ZS",
+        "LMT"
       ]
     },
     {
       "tema_adi": "enerji_geçiş",
-      "güç_skoru": 7,
-      "neden": "AI veri merkezlerinin güç ihtiyacı ve jeopolitik gerilimler enerji güvenliği temasını destekliyor, Energy +1.1%. MUHTEMEL",
-      "öncelikli_alt_dal": "nükleer_modüler",
+      "güç_skoru": 6,
+      "neden": "AAON'un %43.5 yükselişi veri merkezi soğutma talebini gösteriyor, AI güç ihtiyacı enerji altyapısını destekliyor. [MUHTEMEL]",
+      "öncelikli_alt_dal": "nükleer_enerji",
       "önerilen_hisseler": [
-        "CCJ",
-        "URA",
-        "SMR"
+        "NEE",
+        "PLUG",
+        "CWEN"
       ],
       "portföy": "balanced",
       "aciliyet": "orta",
       "hisse_evreni": [
-        "NRG",
-        "VST",
-        "FSLR",
-        "KMI",
-        "ET",
         "OKE",
-        "CEG",
-        "CCJ",
-        "WMB",
         "ENPH",
+        "FSLR",
         "RUN",
-        "NEE"
+        "KMI",
+        "NEE",
+        "WMB",
+        "VST",
+        "CEG",
+        "NRG",
+        "CCJ",
+        "ET"
       ]
     }
   ],
   "kacınılacak": [
     "Real Estate",
-    "Communication Services"
+    "Utilities"
   ],
   "piyasa_modu": "risk-on",
   "aktif_kriz": {
-    "tip": "jeopolitik",
-    "guven": 5,
-    "kanit": "İran gerilimi haberleri (08:38) ve 'savaşa rağmen' ifadesi (08:12) jeopolitik riskleri vurguluyor. Energy sektörü +1.1% ile bu temadan destek buluyor. MUHTEMEL",
-    "beneficiary_sectors": [
-      "Energy",
-      "Defense",
-      "Gold",
-      "Basic Materials",
-      "Real Estate",
-      "Consumer Defensive"
-    ],
-    "sensitive_sectors": [
-      "Technology",
-      "Consumer Cyclical",
-      "Communication Services",
-      "Healthcare",
-      "Financial Services",
-      "Industrials"
-    ]
+    "tip": "yok",
+    "guven": 8,
+    "kanit": "VIX 17.2 ile 20 altında seyrediyor, tüm sektörler pozitif, Rubio'nun mesajı tek başına kriz sinyali değil. [KESİN]",
+    "beneficiary_sectors": [],
+    "sensitive_sectors": []
   },
-  "genel_yorum": "VIX 17.6 ile piyama sakin ancak İran gerilimi jeopolitik riskleri canlı tutuyor. Utilities liderliği ve AI teması güç koruyor. Enerji sektörü jeopolitik endişelerle destekleniyor.",
+  "genel_yorum": "Piyasada genel risk iştahı yüksek, AI altyapı teması güçlü performans gösteriyor. Jeopolitik başlıklar var ancak VIX'te panik yok. [KESİN]",
   "haberler": [
     {
-      "baslik": "First-Quarter Earnings Season Is An Opportunity To De-Risk",
-      "kaynak": "seekingalpha.com",
-      "tarih": "2026-05-05 08:56"
+      "baslik": "US stocks open higher: Dow jumps 0.4%, Nasdaq edges higher",
+      "kaynak": "invezz.com",
+      "tarih": "2026-05-07 09:49"
     },
     {
-      "baslik": "U.S. Trade Deficit Grew in March",
-      "kaynak": "nytimes.com",
-      "tarih": "2026-05-05 08:41"
-    },
-    {
-      "baslik": "Markets Waver as Iran Tensions Drive Uncertainty",
+      "baslik": "'NO MISTAKE': Rubio sends BLUNT message on US military move",
       "kaynak": "youtube.com",
-      "tarih": "2026-05-05 08:38"
+      "tarih": "2026-05-07 09:31"
     },
     {
-      "baslik": "5 Things to Know Before the Stock Market Opens",
-      "kaynak": "investopedia.com",
-      "tarih": "2026-05-05 08:35"
+      "baslik": "There's 'no chance' Warsh will be able to get the Fed to cut rates, Paul Tudor Jones says",
+      "kaynak": "cnbc.com",
+      "tarih": "2026-05-07 09:23"
     },
     {
-      "baslik": "AI Revolutionizing Biopharma: Faster, Better, Cheaper",
-      "kaynak": "seekingalpha.com",
-      "tarih": "2026-05-05 08:30"
+      "baslik": "Americans are behaving like they're in a recession, this storied appliance maker warns",
+      "kaynak": "marketwatch.com",
+      "tarih": "2026-05-07 09:19"
+    },
+    {
+      "baslik": "Legendary investor Paul Tudor Jones: AI bull market has 'another year or two to run'",
+      "kaynak": "youtube.com",
+      "tarih": "2026-05-07 09:16"
     }
   ]
 }

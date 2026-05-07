@@ -271,3 +271,6 @@ date,action,symbol,shares,price,total,reason
 2026-05-05,SELL,MU,1,642.64,642.64,K-11 katman 2: RSI 82 + kâr %25.6
 2026-05-05,SELL,MU,1,644.93,644.93,K-11 katman 2: RSI 82 + kâr %26.0
 2026-05-06,SELL,OKE,93,85.43,7944.99,K-06 stop tetiklendi $85.43≤$87.50
+2026-05-07,SELL,CCJ,211,121.9,25720.9,Finzora: Uranyum teması 2/10 skor - Darwin TEZ_AGIR_HASAR azaltma zorunluluğu
+2026-05-07,BUY,DINO,217,69.1,14994.7,"Finzora: Nakit %37.4 aşım - Discovery skor 91, Energy teması güçlü, K-12 limit içinde"
+2026-05-07,BUY,PR,747,20.07,14988.56,"Finzora: Nakit aşım - Energy teması güçlü, skor 89, temettü potansiyeli"

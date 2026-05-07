@@ -28,7 +28,7 @@
   },
   "baslangic_sermaye": 400000,
   "nakit": {
-    "miktar": 42431.8,
+    "miktar": 68152.7,
     "para_birimi": "USD",
     "agirlik_yuzde": 10.83
   },
@@ -67,7 +67,7 @@
       "sembol": "CCJ",
       "isim": "Cameco Corporation",
       "sektor": "Energy",
-      "adet": 423,
+      "adet": 212,
       "maliyet_baz": 115.4248,
       "giris_fiyati": 115.4248,
       "guncel_fiyat": 123.76,
@@ -216,7 +216,7 @@
       "atr14": 17.5357
     }
   ],
-  "son_guncelleme": "2026-05-06T21:32:39.051664",
+  "son_guncelleme": "2026-05-07T17:16:11.151971+03:00",
   "toplam_deger": 391867.48,
   "toplam_getiri_yuzde": -2.03,
   "toplam_getiri": -8132.52,

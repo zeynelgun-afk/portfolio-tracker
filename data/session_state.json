@@ -12,79 +12,9 @@
   ],
   "faz": "FAZ_0",
   "buy_list": {
-    "tarih": "2026-05-05T16:04:56.170645+03:00",
-    "adaylar": [
-      {
-        "symbol": "NVDA",
-        "tema": "AI_tedarik_zinciri",
-        "portföy": "aggressive",
-        "price": 198.48,
-        "stop": 185.45,
-        "target": 224.04,
-        "rr": 1.96,
-        "score": 6.15,
-        "teknik": 7,
-        "fundamental": 6,
-        "atr": 6.39,
-        "reason": "AI_tedarik_zinciri tema taraması — teknik:7/10 fundamental:6/10",
-        "detay": {
-          "sma200": "✅",
-          "sma50": "✅",
-          "rsi": "✅ 52",
-          "mom_1m": "✅ +11.9%",
-          "skor": 6,
-          "roic": "✅ 62.9%",
-          "büyüme": "✅ ROE 104.4%"
-        }
-      },
-      {
-        "symbol": "LRCX",
-        "tema": "AI_tedarik_zinciri",
-        "portföy": "aggressive",
-        "price": 258.57,
-        "stop": 235.03,
-        "target": 304.58,
-        "rr": 1.95,
-        "score": 5.8,
-        "teknik": 7,
-        "fundamental": 5,
-        "atr": 11.5,
-        "reason": "AI_tedarik_zinciri tema taraması — teknik:7/10 fundamental:5/10",
-        "detay": {
-          "sma200": "✅",
-          "sma50": "✅",
-          "rsi": "✅ 42",
-          "mom_1m": "✅ +18.4%",
-          "skor": 5,
-          "roic": "✅ 42.8%",
-          "büyüme": "✅ ROE 65.8%"
-        }
-      },
-      {
-        "symbol": "MSFT",
-        "tema": "AI_tedarik_zinciri",
-        "portföy": "aggressive",
-        "price": 413.62,
-        "stop": 388.95,
-        "target": 462.97,
-        "rr": 2.0,
-        "score": 5.7,
-        "teknik": 5,
-        "fundamental": 7,
-        "atr": 12.34,
-        "reason": "AI_tedarik_zinciri tema taraması — teknik:5/10 fundamental:7/10",
-        "detay": {
-          "sma50": "✅",
-          "rsi": "✅ 59",
-          "mom_1m": "✅ +10.8%",
-          "skor": 7,
-          "roic": "✅ 21.3%",
-          "pe": "→ 24.5",
-          "büyüme": "✅ ROE 33.1%"
-        }
-      }
-    ],
-    "vix": 17.62,
+    "tarih": "2026-05-07T17:06:05.366321+03:00",
+    "adaylar": [],
+    "vix": 17.2,
     "piyasa_mod": "risk-on"
   },
   "zorunlu_aksiyonlar": [],
@@ -211,7 +141,7 @@
     ],
     "kaynak": "closing"
   },
-  "timestamp": "2026-05-05T16:04:56.170992+03:00",
+  "timestamp": "2026-05-07T17:06:05.366660+03:00",
   "k22_nakit_dagitim": {
     "tarih": "2026-04-28T12:07:57.806450+03:00",
     "vix": 18.23,
