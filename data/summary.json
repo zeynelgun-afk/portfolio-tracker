@@ -1,54 +1,54 @@
 {
-  "son_guncelleme": "2026-05-06",
+  "son_guncelleme": "2026-05-07",
   "toplam_sermaye": 600000,
-  "toplam_deger": 646300.6,
-  "toplam_kar_zarar": 46300.6,
-  "toplam_kar_zarar_yuzde": 7.72,
+  "toplam_deger": 635767.15,
+  "toplam_kar_zarar": 35767.15,
+  "toplam_kar_zarar_yuzde": 5.96,
   "portfolyolar": {
     "dengeli": {
       "isim": "Dengeli Portföy",
-      "deger": 110586.08,
+      "deger": 109768.69,
       "maliyet": 100000,
-      "kar_zarar": 10586.080000000002,
-      "kar_zarar_yuzde": 10.59,
-      "pozisyon_sayisi": 5,
+      "kar_zarar": 9768.690000000002,
+      "kar_zarar_yuzde": 9.77,
+      "pozisyon_sayisi": 6,
       "nakit": {
-        "miktar": 41402.22,
+        "miktar": 26407.52,
         "para_birimi": "USD",
-        "agirlik_yuzde": 37.44
+        "agirlik_yuzde": 24.06
       }
     },
     "agresif": {
       "isim": "Agresif Büyüme Portföyü",
-      "deger": 391867.48,
+      "deger": 383697.06,
       "maliyet": 400000,
-      "kar_zarar": -8132.520000000019,
-      "kar_zarar_yuzde": -2.03,
+      "kar_zarar": -16302.940000000002,
+      "kar_zarar_yuzde": -4.08,
       "pozisyon_sayisi": 6,
       "nakit": {
-        "miktar": 42431.8,
+        "miktar": 68152.7,
         "para_birimi": "USD",
-        "agirlik_yuzde": 10.83
+        "agirlik_yuzde": 17.76
       }
     },
     "temettü": {
       "isim": "Değer + Temettü Portföyü",
-      "deger": 143847.04,
+      "deger": 142301.4,
       "maliyet": 100000,
-      "kar_zarar": 43847.04000000001,
-      "kar_zarar_yuzde": 43.85,
-      "pozisyon_sayisi": 5,
+      "kar_zarar": 42301.399999999994,
+      "kar_zarar_yuzde": 42.3,
+      "pozisyon_sayisi": 6,
       "nakit": {
-        "miktar": 58152.34,
+        "miktar": 43163.78,
         "para_birimi": "USD",
-        "agirlik_yuzde": 40.43
+        "agirlik_yuzde": 30.33
       }
     },
     "swing_trade": {
       "isim": "Swing Trade",
-      "pozisyon_sayisi": 5,
-      "bos_slot": 0,
-      "durum": "5/5 pozisyon aktif"
+      "pozisyon_sayisi": 4,
+      "bos_slot": 1,
+      "durum": "4/5 pozisyon aktif"
     }
   }
 }
