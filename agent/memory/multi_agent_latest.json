@@ -1,82 +1,232 @@
 {
   "macro": {
     "sinyal": "RISK_ON",
-    "guven": "LOW",
-    "ana_tema": "VIX düşük seviyede risk-on gösterse de, önümüzdeki hafta açıklanacak kritik CPI verileri öncesi piyasalar temkinli.",
+    "guven": "MEDIUM",
+    "ana_tema": "VIX'te düşük volatilite ortamı risk iştahını destekliyor ancak önümüzdeki hafta açıklanacak PPI verisi ve Fed yetkililerinin konuşmaları belirsizlik yaratıyor.",
     "beklentiler": [
-      "12 Mayıs CPI verilerinde enflasyonun 3.6% seviyesine yükselmesi bekleniyor",
-      "VIX'in düşük seviyesi mevcut risk-on ortamını yansıtıyor ancak veri öncesi volatilite artabilir"
+      "PPI verisinin beklentileri aşması durumunda enflasyon endişeleri yeniden alevlenebilir",
+      "Fed yetkililerinin konuşmaları para politikası beklentilerini şekillendirecek"
     ],
-    "risk_faktoru": "Beklenenden güçlü enflasyon verilerinin Fed şahinliğini artırma riski",
+    "risk_faktoru": "Önümüzdeki hafta açıklanacak PPI verisi ve üç Fed yetkilisinin konuşması ile enflasyon ve faiz beklentilerindeki potansiyel değişim",
     "tahmin": {
-      "yon": "NEUTRAL",
+      "yon": "UP",
       "buyukluk": "MEDIUM",
       "sembol": "SPY"
     },
     "_agent": "MACRO_AGENT",
-    "_timestamp": "2026-05-07T14:08:40.652960"
+    "_timestamp": "2026-05-08T13:04:32.784139"
   },
   "sector": {
-    "aktif_rejim": "ai_boom",
-    "lider_sektor": "Teknoloji + XLK",
-    "zayif_sektor": "Enerji + XLE",
-    "rotasyon_onerisi": "Enerji sektöründen (XLE) Teknoloji sektörüne (XLK) rotasyon önerilir",
+    "aktif_rejim": "risk_on",
+    "lider_sektor": "Altın (GLD)",
+    "zayif_sektor": "Teknoloji (XLK)",
+    "rotasyon_onerisi": "Teknoloji (XLK) ve Enerji (XLE) sektörlerinden Altın (GLD) ve Sağlık (XLV) sektörlerine rotasyon.",
     "guven": "MEDIUM",
     "tahmin": {
       "yon": "UP",
-      "buyukluk": "MEDIUM",
-      "sembol": "XLK"
+      "buyukluk": "LOW",
+      "sembol": "GLD"
     },
     "_agent": "SECTOR_AGENT",
-    "_timestamp": "2026-05-07T14:09:40.626788"
+    "_timestamp": "2026-05-08T13:08:34.804552"
   },
   "signal": {
+    "portfoy_sinyalleri": [
+      {
+        "sembol": "ETN",
+        "sinyal": "WATCH",
+        "rsi_yorumu": "oversold",
+        "sma_durumu": "altinda",
+        "aciklama": "Stop seviyesine %4.1 yakın, aşağı yönlü momentum devam ediyor."
+      },
+      {
+        "sembol": "CCJ",
+        "sinyal": "WATCH",
+        "rsi_yorumu": "oversold",
+        "sma_durumu": "altinda",
+        "aciklama": "Düşüş ivmesi var, stop mesafesi kritik seviyede."
+      },
+      {
+        "sembol": "AMAT",
+        "sinyal": "HOLD",
+        "rsi_yorumu": "oversold",
+        "sma_durumu": "ustunde",
+        "aciklama": "Kârda olmasına rağmen günlük %4.2 düşüş RSI'ı aşırı satıma itti."
+      },
+      {
+        "sembol": "KLAC",
+        "sinyal": "HOLD",
+        "rsi_yorumu": "normal",
+        "sma_durumu": "ustunde",
+        "aciklama": "Stop mesafesi uygun, teknik görünüm stabil."
+      },
+      {
+        "sembol": "DINO",
+        "sinyal": "WATCH",
+        "rsi_yorumu": "normal",
+        "sma_durumu": "altinda",
+        "aciklama": "Stop %3.9 uzağa, negatif P/L ile dikkat gerektirir."
+      },
+      {
+        "sembol": "SNPS",
+        "sinyal": "HOLD",
+        "rsi_yorumu": "normal",
+        "sma_durumu": "ustunde",
+        "aciklama": "Sınırlı hareket, stop mesafesi rahat."
+      },
+      {
+        "sembol": "PPG",
+        "sinyal": "HOLD",
+        "rsi_yorumu": "normal",
+        "sma_durumu": "altinda",
+        "aciklama": "Günlük %2.3 düşüşe rağmen stop mesafesi korunuyor."
+      },
+      {
+        "sembol": "CF",
+        "sinyal": "WATCH",
+        "rsi_yorumu": "normal",
+        "sma_durumu": "altinda",
+        "aciklama": "Stop %3.9 yakın, negatif P/L risk oluşturuyor."
+      },
+      {
+        "sembol": "COLB",
+        "sinyal": "HOLD",
+        "rsi_yorumu": "normal",
+        "sma_durumu": "altinda",
+        "aciklama": "Küçük kârda, teknik seviyeler dengeli."
+      },
+      {
+        "sembol": "TSM",
+        "sinyal": "HOLD",
+        "rsi_yorumu": "normal",
+        "sma_durumu": "ustunde",
+        "aciklama": "AI teması güçlü, stop mesafesi kabul edilebilir."
+      },
+      {
+        "sembol": "VIRT",
+        "sinyal": "HOLD",
+        "rsi_yorumu": "normal",
+        "sma_durumu": "altinda",
+        "aciklama": "Hafif negatif P/L, stop mesafesi izlenmeli."
+      },
+      {
+        "sembol": "O",
+        "sinyal": "SELL",
+        "rsi_yorumu": "oversold",
+        "sma_durumu": "altinda",
+        "aciklama": "Stop sadece %0.5 uzağa, acil çıkış sinyali."
+      },
+      {
+        "sembol": "GTY",
+        "sinyal": "WATCH",
+        "rsi_yorumu": "normal",
+        "sma_durumu": "altinda",
+        "aciklama": "Stop %3.4 yakın, temettü pozisyonunda zayıflama."
+      },
+      {
+        "sembol": "PSA",
+        "sinyal": "HOLD",
+        "rsi_yorumu": "normal",
+        "sma_durumu": "ustunde",
+        "aciklama": "Kârda, stop mesafesi uygun, istikrarlı."
+      },
+      {
+        "sembol": "GEV",
+        "sinyal": "WATCH",
+        "rsi_yorumu": "oversold",
+        "sma_durumu": "altinda",
+        "aciklama": "Günlük %6.5 düşüşle RSI aşırı satıma işaret ediyor."
+      },
+      {
+        "sembol": "CVS",
+        "sinyal": "HOLD",
+        "rsi_yorumu": "normal",
+        "sma_durumu": "ustunde",
+        "aciklama": "Kârda, pozitif momentum devam ediyor."
+      },
+      {
+        "sembol": "PR",
+        "sinyal": "WATCH",
+        "rsi_yorumu": "oversold",
+        "sma_durumu": "altinda",
+        "aciklama": "Günlük %5.3 düşüş volatiliteyi artırdı."
+      },
+      {
+        "sembol": "TFC",
+        "sinyal": "WATCH",
+        "rsi_yorumu": "oversold",
+        "sma_durumu": "altinda",
+        "aciklama": "Stop %1.1 mesafede, kritik teknik seviye."
+      },
+      {
+        "sembol": "CAT",
+        "sinyal": "WATCH",
+        "rsi_yorumu": "overbought",
+        "sma_durumu": "ustunde",
+        "aciklama": "Kârda ama stop %1.3 yakın, trailing stop riski."
+      },
+      {
+        "sembol": "VRT",
+        "sinyal": "HOLD",
+        "rsi_yorumu": "overbought",
+        "sma_durumu": "ustunde",
+        "aciklama": "Güçlü kâr ve uygun stop mesafesiyle en sağlam setup."
+      },
+      {
+        "sembol": "UEC",
+        "sinyal": "WATCH",
+        "rsi_yorumu": "normal",
+        "sma_durumu": "ustunde",
+        "aciklama": "Kârda ama stop %3.5 yakın, dikkatli izleme."
+      }
+    ],
+    "en_guclu_setup": "VRT",
+    "en_zayif_setup": "O",
+    "guven": "MEDIUM",
     "_agent": "SIGNAL_AGENT",
-    "_raw": "",
-    "_parse_hata": true,
-    "guven": "LOW"
+    "_timestamp": "2026-05-08T13:14:35.011943"
   },
   "risk": {
     "risk_seviyesi": "HIGH",
     "stop_yakini": [
-      "O - %0.2 uzakta",
-      "NEE - %0.2 uzakta",
-      "TFC - %2.0 uzakta",
-      "CF - %2.2 uzakta",
-      "DINO - %2.3 uzakta",
-      "CAT - %2.8 uzakta",
-      "VIRT - %3.4 uzakta",
-      "GTY - %3.4 uzakta"
+      "O - %0.5 uzakta",
+      "TFC - %1.1 uzakta",
+      "CAT - %1.3 uzakta",
+      "GTY - %3.4 uzakta",
+      "UEC - %3.5 uzakta",
+      "DINO - %3.9 uzakta",
+      "CF - %3.9 uzakta"
     ],
-    "konsantrasyon_uyarisi": "Technology sektörü %39.9 ile orta konsantrasyon riski (K-17)",
-    "senaryo_5pct_dusus": "Tahmini portföy kaybı $28,667 (-%5.8), 7 pozisyon stop tetikleyecek",
+    "konsantrasyon_uyarisi": "Technology sektöründe %39.2 konsantrasyon - K-17 riski",
+    "senaryo_5pct_dusus": "Tahmini portföy kaybı: $28,716 (-%5.8). 8 pozisyon stop olur.",
     "onerileri": [
-      "O ve NEE için acil stop loss gözden geçirme (<%1 mesafe)",
-      "DINO, CF, VIRT, GTY, TFC, CAT pozisyonlarında risk yönetimi stratejilerini güncelle",
-      "Technology konsantrasyonunu %40 altına çek"
+      "Stop yakınındaki O, TFC, CAT pozisyonlarını azalt veya sıkı takip et",
+      "Technology konsantrasyonunu %40 altına çekmek için sektör rotasyonu yap",
+      "Nakit kullanımını %10 limitine çekmek için yeni pozisyon açma veya mevcutları azalt",
+      "Tez bozulma riski olan CCJ, UEC, PR pozisyonlarını %50 azalt"
     ],
-    "guven": "HIGH",
+    "guven": "MEDIUM",
     "_agent": "RISK_AGENT",
-    "_timestamp": "2026-05-07T14:10:24.894707"
+    "_timestamp": "2026-05-08T13:14:49.033531"
   },
   "cio": {
-    "karar": "DONDUR",
-    "hedef_sembol": "XLE (Enerji)",
-    "gerekce": "Risk yöneticisinin yüksek risk uyarısı (KESİN), özellikle O ve NEE pozisyonları için stop loss mesafesi <%1 (KESİN) ve teknoloji sektörü konsantrasyonunun %39,9 ile K-17 eşiğini aşması (KESİN) dikkate alındığında, makro analistin CPI öncesi nötr görüşü (MUHTEMEL) ve düşük güveni (MUHTEMEL) ile sektör analistinin XLK yönünde UP önerisi (SPEKÜLATİF) daha düşük önceliğe sahiptir. Jeopolitik kriz rejimi savunma ve enerji ağırlığını artırma yönünde (KESİN). Bu nedenle, portföy riskini azaltmak ve teknoloji konsantrasyonunu %40 altına çekmek için XLK'dan XLE'ye döndürme yapılması gerekmektedir.",
-    "uyari": "O ve NEE pozisyonları için stop loss mesafesi <%1; acil çıkış gerekebilir.",
+    "karar": "ACIL_CIK",
+    "hedef_sembol": "O",
+    "gerekce": "Risk Yöneticisi'nin yüksek risk değerlendirmesi [MUHTEMEL] ve Teknik Analiz'in SAT sinyali kapsamında O sembolünün stop-loss seviyesine yalnızca %0.5 mesafede olduğu [KESİN] tespit edilmiştir. Otomatik stop tetiklenmesini önlemek ve portföy kaybını sınırlandırmak için acil çıkış zorunludur. Sektör Analisti'nin ağırlığı (1.76) ve Makro Analist'in RISK_ON görüşü [MUHTEMEL] genel piyasa koşullarının destekleyici olduğunu gösterse de, Risk Yöneticisi öncelik kuralı gereği acil risk azaltma işlemi gerektirir.",
+    "uyari": "TFC, CAT, GTY, UEC, DINO, CF pozisyonları da kritik stop mesafesindedir ve yakın takip gerektirir. Technology sektörü konsantrasyonu %39.2 ile K-17 limitine yakındır. Önümüzdeki hafta PPI ve Fed konuşmaları volatiliteyi artırabilir.",
     "guven": "HIGH",
-    "analist_uzlasma": "DUSUK",
+    "analist_uzlasma": "ORTA",
     "tahmin": {
       "yon": "NEUTRAL",
       "buyukluk": "MEDIUM",
       "sembol": "SPY"
     },
     "_agent": "CIO_AGENT",
-    "_timestamp": "2026-05-07T14:10:46.870090"
+    "_timestamp": "2026-05-08T13:15:37.175180"
   },
   "weights": {
     "MACRO_AGENT": 0.9791,
-    "SECTOR_AGENT": 1.6793,
+    "SECTOR_AGENT": 1.7633,
     "SIGNAL_AGENT": 0.738,
     "RISK_AGENT": 0.6663,
     "CIO_AGENT": 0.7428

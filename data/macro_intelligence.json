@@ -1,134 +1,151 @@
 {
-  "tarih": "2026-05-07T17:06:03.774699+03:00",
-  "vix": 17.2,
+  "tarih": "2026-05-08T16:03:39.874403+03:00",
+  "vix": 16.89,
   "sektor_performans": {
-    "Basic Materials": 0.8518314735454835,
-    "Communication Services": 1.2696830155629613,
-    "Consumer Cyclical": 1.4198301365868637,
-    "Consumer Defensive": -1.1992274057821883,
-    "Energy": -0.4358985521945469,
-    "Financial Services": 0.04886618800565845,
-    "Healthcare": 1.0865174055406879,
-    "Industrials": 1.5686804530810505,
-    "Real Estate": 0.15599983894669656,
-    "Technology": 1.47671511959937,
-    "Utilities": 0.08408351603965691
+    "Basic Materials": -1.8231160606101304,
+    "Communication Services": -0.2124615955602538,
+    "Consumer Cyclical": -0.22957888219846678,
+    "Consumer Defensive": 1.1331190598159901,
+    "Energy": -0.9626406752238137,
+    "Financial Services": -1.452880295186787,
+    "Healthcare": -1.218812753210441,
+    "Industrials": -1.4718017946220519,
+    "Real Estate": -1.7069335606017089,
+    "Technology": -0.8016773027391344,
+    "Utilities": -2.72505610205942
   },
   "dominant_temalar": [
     {
-      "tema_adi": "AI_altyapı",
-      "güç_skoru": 8,
-      "neden": "Teknoloji sektörü +1.5% ile ikinci sırada, DDOG ve XMTR gibi AI altyapı hisseleri %30 civarında yükseldi, Paul Tudor Jones AI boğa piyasası yorumu destekliyor. [KESİN]",
-      "öncelikli_alt_dal": "güç_soğutma",
+      "tema_adi": "sağlık_yenilik",
+      "güç_skoru": 9,
+      "neden": "KESİN: ATRA, AGL ve RPGL gibi biyoteknoloji hisseleri %70-117 arası yükselişle genel sektör performansını aşarak ilaç yeniliği haberleriyle güçlü momentum gösteriyor.",
+      "öncelikli_alt_dal": "onkoloji_ve_gen_terapisi",
       "önerilen_hisseler": [
-        "VRT",
-        "ETN",
-        "PWR"
+        "XBI",
+        "IBB",
+        "GILD"
       ],
       "portföy": "aggressive",
       "aciliyet": "yüksek",
       "hisse_evreni": [
-        "VRT",
-        "ETN",
-        "PWR",
-        "GNRC",
-        "HUBB"
-      ]
-    },
-    {
-      "tema_adi": "savunma_uzay",
-      "güç_skoru": 6,
-      "neden": "Rubio'nun askeri hamle mesajı jeopolitik gerilimi artırıyor, savunma harcamaları gündemde ancak sektör performansı henüz sınırlı. [MUHTEMEL]",
-      "öncelikli_alt_dal": "hipersonik_füze",
-      "önerilen_hisseler": [
-        "LMT",
-        "NOC",
-        "RTX"
-      ],
-      "portföy": "balanced",
-      "aciliyet": "orta",
-      "hisse_evreni": [
-        "AJRD",
-        "LHX",
-        "RKLB",
-        "RTX",
-        "GD",
-        "KTOS",
-        "NOC",
-        "RDW",
-        "CRWD",
-        "PANW",
-        "S",
-        "ZS",
-        "LMT"
+        "NVO",
+        "MRNA",
+        "ISRG",
+        "SYK",
+        "REGN",
+        "ALT",
+        "BMY",
+        "VKTX",
+        "GILD",
+        "MDT",
+        "EW",
+        "LLY"
       ]
     },
     {
       "tema_adi": "enerji_geçiş",
-      "güç_skoru": 6,
-      "neden": "AAON'un %43.5 yükselişi veri merkezi soğutma talebini gösteriyor, AI güç ihtiyacı enerji altyapısını destekliyor. [MUHTEMEL]",
-      "öncelikli_alt_dal": "nükleer_enerji",
+      "güç_skoru": 8,
+      "neden": "KESİN: AI veri merkezlerinin güç talebi FLNC'yi %39.9 yükseltirken, MUHTEMEL: yeşil enerji altyapısı yatırımlarındaki artış tema için güçlü destek sağlıyor.",
+      "öncelikli_alt_dal": "enerji_depolama_ve_ai_güç_altyapısı",
       "önerilen_hisseler": [
-        "NEE",
-        "PLUG",
-        "CWEN"
+        "FLNC",
+        "VRT",
+        "ETN"
       ],
       "portföy": "balanced",
       "aciliyet": "orta",
       "hisse_evreni": [
-        "OKE",
-        "ENPH",
+        "NEE",
+        "ET",
         "FSLR",
         "RUN",
         "KMI",
-        "NEE",
-        "WMB",
-        "VST",
         "CEG",
         "NRG",
         "CCJ",
-        "ET"
+        "VST",
+        "WMB",
+        "OKE",
+        "ENPH"
+      ]
+    },
+    {
+      "tema_adi": "AI_altyapı",
+      "güç_skoru": 6,
+      "neden": "KESİN: Yazılım hisselerindeki AI endişelerine rağmen RXT'nin %55.1 yükselişiyle bulut altyapısı talebinin sürdüğünü gösteriyor, MUHTEMEL: veri merkezi soğutma ve güç çözümleri öne çıkıyor.",
+      "öncelikli_alt_dal": "veri_merkezi_sogutma",
+      "önerilen_hisseler": [
+        "VRT",
+        "ETN",
+        "NVDA"
+      ],
+      "portföy": "aggressive",
+      "aciliyet": "orta",
+      "hisse_evreni": [
+        "AMAT",
+        "COHR",
+        "VRT",
+        "ONTO",
+        "MU",
+        "ANET",
+        "PWR",
+        "GNRC",
+        "STX",
+        "TER",
+        "ETN",
+        "CAMT",
+        "HUBB",
+        "KLAC",
+        "LRCX",
+        "WDC",
+        "FN",
+        "LITE",
+        "DLR",
+        "IREN",
+        "AAOI",
+        "ASML",
+        "EQIX"
       ]
     }
   ],
   "kacınılacak": [
-    "Real Estate",
-    "Utilities"
+    "Financial Services",
+    "Industrials"
   ],
   "piyasa_modu": "risk-on",
   "aktif_kriz": {
     "tip": "yok",
     "guven": 8,
-    "kanit": "VIX 17.2 ile 20 altında seyrediyor, tüm sektörler pozitif, Rubio'nun mesajı tek başına kriz sinyali değil. [KESİN]",
+    "kanit": "KESİN: VIX 16.9 seviyesiyle 20 altında kalmaya devam ediyor ve istihdam verileri beklentileri aştı. MUHTEMEL: S&P500 yeni zirveler için hazırlanıyor ve sektörler arası karışık görünüm genel kriz işareti değil, hisse spesifik oynaklık ve rotasyon hareketleri olarak yorumlanıyor.",
     "beneficiary_sectors": [],
     "sensitive_sectors": []
   },
-  "genel_yorum": "Piyasada genel risk iştahı yüksek, AI altyapı teması güçlü performans gösteriyor. Jeopolitik başlıklar var ancak VIX'te panik yok. [KESİN]",
+  "genel_yorum": "Piyasada genel risk iştahı yüksek olsa da sektörel rotasyon belirgin. Sağlık yeniliği ve enerji geçişi temaları hisse spesifik katalizörlerle güçlenirken, teknoloji sektörü AI değerlendirme endişeleriyle baskı altında. Taktiksel tema odaklı pozisyonlama öneriliyor.",
   "haberler": [
     {
-      "baslik": "US stocks open higher: Dow jumps 0.4%, Nasdaq edges higher",
-      "kaynak": "invezz.com",
-      "tarih": "2026-05-07 09:49"
+      "baslik": "US economy added 115,000 jobs in April, beating expectations",
+      "kaynak": "foxbusiness.com",
+      "tarih": "2026-05-08 08:51"
     },
     {
-      "baslik": "'NO MISTAKE': Rubio sends BLUNT message on US military move",
+      "baslik": "S&P500 and Nasdaq 100: US Indices Eye Fresh Highs After Earnings Surge",
+      "kaynak": "fxempire.com",
+      "tarih": "2026-05-08 08:47"
+    },
+    {
+      "baslik": "U.S. economy adds 115,000 jobs in April",
       "kaynak": "youtube.com",
-      "tarih": "2026-05-07 09:31"
+      "tarih": "2026-05-08 08:45"
     },
     {
-      "baslik": "There's 'no chance' Warsh will be able to get the Fed to cut rates, Paul Tudor Jones says",
-      "kaynak": "cnbc.com",
-      "tarih": "2026-05-07 09:23"
+      "baslik": "This Software Stock Is Having Its Worst Day Ever. AI Fears Are the Market Reality.",
+      "kaynak": "barrons.com",
+      "tarih": "2026-05-08 08:35"
     },
     {
-      "baslik": "Americans are behaving like they're in a recession, this storied appliance maker warns",
-      "kaynak": "marketwatch.com",
-      "tarih": "2026-05-07 09:19"
-    },
-    {
-      "baslik": "Legendary investor Paul Tudor Jones: AI bull market has 'another year or two to run'",
-      "kaynak": "youtube.com",
-      "tarih": "2026-05-07 09:16"
+      "baslik": "The U.S. added 115,000 jobs in April, the Labor Department said Friday, far exceeding expectations",
+      "kaynak": "wsj.com",
+      "tarih": "2026-05-08 08:34"
     }
   ]
 }
