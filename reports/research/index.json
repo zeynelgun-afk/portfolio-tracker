@@ -1,0 +1,45 @@
+{
+  "_meta": {
+    "description": "Adil değer ve araştırma raporları index - Finzora AI",
+    "created": "2026-05-08",
+    "format": "11 bölüm zorunlu protokol (docs/ADIL_DEGER_RAPOR_PROTOKOLU.md)"
+  },
+  "reports": [
+    {
+      "ticker": "SMCI",
+      "company": "Super Micro Computer, Inc.",
+      "type": "ADIL_DEGER",
+      "date": "2026-05-08",
+      "file": "SMCI_ADIL_DEGER_2026-05-08.md",
+      "current_price": 33.62,
+      "fair_value_weighted": 45.40,
+      "upside_pct": 35.0,
+      "decision": "AL",
+      "portfolio_recommendation": {
+        "balanced": "GIRMEZ",
+        "aggressive": "AL_KADEMELI",
+        "dividend": "GIRMEZ"
+      },
+      "stop_loss": 27.50,
+      "target_12m": 42.00,
+      "target_18m": 52.00,
+      "risk_level": "YUKSEK",
+      "tags": ["AI_supply_chain", "AI_server", "liquid_cooling", "high_beta", "NVIDIA_dependency", "audit_history"]
+    },
+    {
+      "ticker": "FLYW",
+      "company": "Flywire Corporation",
+      "type": "ADIL_DEGER",
+      "date": "2026-05-08",
+      "file": "FLYW_ADIL_DEGER_2026-05-08.md",
+      "decision": "IZLE"
+    },
+    {
+      "ticker": "TLN",
+      "company": "Talen Energy Corporation",
+      "type": "ADIL_DEGER",
+      "date": "2026-05-08",
+      "file": "TLN_ADIL_DEGER_2026-05-08.md"
+    }
+  ]
+}
