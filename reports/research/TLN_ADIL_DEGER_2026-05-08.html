@@ -1,0 +1,1315 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TLN — Adil Değer Analizi · Finzora AI · 8 Mayıs 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,400&family=JetBrains+Mono:wght@300;400;500;600&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0d12;
+    --bg-alt: #0e1218;
+    --surface: #131820;
+    --surface-2: #1a212c;
+    --border: #232c39;
+    --border-strong: #344052;
+    --text: #e8e5dc;
+    --text-dim: #9aa4b2;
+    --text-faint: #5e6a7a;
+    --accent: #d4a574;
+    --accent-dim: #8a6e4f;
+    --gold: #e0b770;
+    --bear: #d6555c;
+    --bear-dim: #4a2024;
+    --bull: #4ea882;
+    --bull-dim: #1f3d33;
+    --warn: #d4914a;
+    --grid-line: rgba(255,255,255,0.04);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Sora', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    font-weight: 300;
+    font-feature-settings: 'ss01', 'cv11';
+    background-image:
+      radial-gradient(ellipse 800px 600px at 80% 0%, rgba(212, 165, 116, 0.06), transparent 60%),
+      radial-gradient(ellipse 600px 400px at 0% 50%, rgba(78, 168, 130, 0.03), transparent 60%);
+    background-attachment: fixed;
+  }
+
+  /* Subtle grain overlay */
+  body::before {
+    content: "";
+    position: fixed; inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.4;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.04 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .container {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 0 32px;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* ========== HERO ========== */
+  .hero {
+    padding: 72px 0 56px;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+
+  .hero-meta {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin-bottom: 28px;
+  }
+
+  .hero-meta .dot {
+    width: 4px; height: 4px;
+    background: var(--accent);
+    border-radius: 50%;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: end;
+  }
+
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .ticker-mark {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--accent);
+    letter-spacing: 0.3em;
+    margin-bottom: -8px;
+  }
+
+  .ticker {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(5rem, 12vw, 9.5rem);
+    font-weight: 400;
+    font-variation-settings: 'opsz' 144, 'SOFT' 50;
+    line-height: 0.92;
+    letter-spacing: -0.04em;
+    color: var(--text);
+  }
+
+  .ticker em {
+    font-style: italic;
+    color: var(--accent);
+    font-weight: 300;
+  }
+
+  .company-name {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 1.4rem;
+    color: var(--text-dim);
+    letter-spacing: -0.01em;
+  }
+
+  .sector-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    padding: 8px 14px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    width: fit-content;
+  }
+
+  .sector-tag::before {
+    content: "";
+    width: 6px; height: 6px;
+    background: var(--bull);
+    border-radius: 50%;
+    box-shadow: 0 0 8px var(--bull);
+  }
+
+  /* Snapshot grid right side */
+  .snapshot-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+
+  .snap-cell {
+    background: var(--bg);
+    padding: 18px 20px;
+  }
+
+  .snap-cell.featured {
+    background: linear-gradient(135deg, var(--surface) 0%, var(--bg) 100%);
+    grid-column: span 2;
+    padding: 28px 24px;
+    border-bottom: 1px solid var(--accent-dim);
+  }
+
+  .snap-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.66rem;
+    color: var(--text-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    margin-bottom: 6px;
+  }
+
+  .snap-value {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: 1.6rem;
+    line-height: 1.1;
+    color: var(--text);
+    letter-spacing: -0.01em;
+  }
+
+  .snap-cell.featured .snap-value {
+    font-size: 2.6rem;
+    color: var(--accent);
+  }
+
+  .snap-sub {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--bear);
+    margin-top: 6px;
+  }
+
+  /* Verdict bar */
+  .verdict-bar {
+    margin-top: 56px;
+    display: flex;
+    align-items: stretch;
+    border: 1px solid var(--accent-dim);
+    background: linear-gradient(90deg, rgba(212,165,116,0.08), transparent);
+  }
+
+  .verdict-cell {
+    padding: 22px 28px;
+    flex: 1;
+    border-right: 1px solid var(--border);
+  }
+
+  .verdict-cell:last-child { border-right: 0; }
+
+  .verdict-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.66rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--text-faint);
+    margin-bottom: 8px;
+  }
+
+  .verdict-value {
+    font-family: 'Fraunces', serif;
+    font-size: 1.7rem;
+    font-weight: 500;
+    color: var(--text);
+    letter-spacing: -0.01em;
+  }
+
+  .verdict-value.upside { color: var(--bull); }
+  .verdict-value.confidence { color: var(--warn); }
+  .verdict-value.action { font-style: italic; }
+
+  /* ========== SECTIONS ========== */
+  section {
+    padding: 80px 0;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+
+  .section-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--accent);
+    letter-spacing: 0.3em;
+    margin-bottom: 12px;
+  }
+
+  h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-variation-settings: 'opsz' 96;
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+    color: var(--text);
+  }
+
+  h2 em {
+    font-style: italic;
+    color: var(--accent);
+    font-weight: 300;
+  }
+
+  .section-lead {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 1.2rem;
+    color: var(--text-dim);
+    max-width: 720px;
+    margin-bottom: 48px;
+    line-height: 1.5;
+  }
+
+  /* Executive summary prose */
+  .summary-prose {
+    font-size: 1.04rem;
+    color: var(--text);
+    max-width: 760px;
+    margin-bottom: 40px;
+  }
+
+  .summary-prose p { margin-bottom: 18px; }
+
+  /* ========== METHOD CARDS ========== */
+  .methods-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+
+  .method-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 24px 22px;
+    position: relative;
+    transition: border-color 0.3s;
+  }
+
+  .method-card:hover { border-color: var(--accent-dim); }
+
+  .method-card.unavailable {
+    opacity: 0.55;
+    background: transparent;
+  }
+
+  .method-card.unavailable::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(45deg, transparent, transparent 12px, rgba(214, 85, 92, 0.04) 12px, rgba(214, 85, 92, 0.04) 13px);
+    pointer-events: none;
+  }
+
+  .method-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 14px;
+  }
+
+  .method-title {
+    font-family: 'Fraunces', serif;
+    font-size: 1.15rem;
+    font-weight: 500;
+    letter-spacing: -0.005em;
+  }
+
+  .method-status {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    padding: 3px 8px;
+    border-radius: 1px;
+    white-space: nowrap;
+  }
+
+  .method-status.ok {
+    background: var(--bull-dim);
+    color: var(--bull);
+    border: 1px solid var(--bull);
+  }
+
+  .method-status.no {
+    background: var(--bear-dim);
+    color: var(--bear);
+    border: 1px solid var(--bear);
+  }
+
+  .method-value {
+    font-family: 'Fraunces', serif;
+    font-size: 2rem;
+    font-weight: 400;
+    color: var(--accent);
+    margin-bottom: 8px;
+    letter-spacing: -0.02em;
+  }
+
+  .method-card.unavailable .method-value {
+    color: var(--text-faint);
+    font-style: italic;
+    font-size: 1.4rem;
+  }
+
+  .method-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--text-dim);
+    line-height: 1.5;
+  }
+
+  .method-meta .key { color: var(--text-faint); }
+
+  /* ========== WEIGHTED TABLE ========== */
+  .weighted-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.88rem;
+    margin-bottom: 32px;
+  }
+
+  .weighted-table th {
+    text-align: left;
+    padding: 14px 18px;
+    background: var(--surface);
+    color: var(--text-faint);
+    font-size: 0.7rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    border-bottom: 1px solid var(--border-strong);
+  }
+
+  .weighted-table th.right, .weighted-table td.right { text-align: right; }
+
+  .weighted-table td {
+    padding: 16px 18px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+  }
+
+  .weighted-table tr.total {
+    background: linear-gradient(90deg, rgba(212,165,116,0.08), transparent);
+  }
+
+  .weighted-table tr.total td {
+    color: var(--accent);
+    font-weight: 500;
+    font-size: 1rem;
+    border-bottom: 0;
+    border-top: 2px solid var(--accent-dim);
+    padding: 22px 18px;
+  }
+
+  /* Confidence indicator */
+  .confidence-block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 24px;
+    margin-top: 24px;
+  }
+
+  .confidence-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 14px;
+  }
+
+  .confidence-bar {
+    height: 6px;
+    background: var(--bg-alt);
+    border-radius: 3px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .confidence-fill {
+    height: 100%;
+    width: 38%;
+    background: linear-gradient(90deg, var(--bear), var(--warn));
+    border-radius: 3px;
+  }
+
+  .confidence-scale {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.66rem;
+    color: var(--text-faint);
+    margin-top: 8px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* ========== SCENARIOS ========== */
+  .scenarios {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  .scenario {
+    background: var(--surface);
+    border-top: 3px solid var(--border);
+    padding: 28px 24px;
+  }
+
+  .scenario.bear { border-top-color: var(--bear); }
+  .scenario.base { border-top-color: var(--accent); }
+  .scenario.bull { border-top-color: var(--bull); }
+
+  .scenario-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    margin-bottom: 16px;
+    color: var(--text-faint);
+  }
+
+  .scenario.bear .scenario-label { color: var(--bear); }
+  .scenario.base .scenario-label { color: var(--accent); }
+  .scenario.bull .scenario-label { color: var(--bull); }
+
+  .scenario-value {
+    font-family: 'Fraunces', serif;
+    font-size: 2.4rem;
+    font-weight: 400;
+    line-height: 1;
+    margin-bottom: 8px;
+    letter-spacing: -0.02em;
+  }
+
+  .scenario-pct {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.95rem;
+    margin-bottom: 18px;
+  }
+
+  .scenario.bear .scenario-pct { color: var(--bear); }
+  .scenario.base .scenario-pct { color: var(--accent); }
+  .scenario.bull .scenario-pct { color: var(--bull); }
+
+  .scenario-prob {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--text-dim);
+    border-top: 1px solid var(--border);
+    padding-top: 14px;
+  }
+
+  /* Expected value callout */
+  .expected-value {
+    margin-top: 32px;
+    padding: 28px 32px;
+    border: 1px solid var(--accent-dim);
+    background: linear-gradient(90deg, rgba(212,165,116,0.06), rgba(212,165,116,0));
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+
+  .expected-value-label {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--text-dim);
+  }
+
+  .expected-value-num {
+    font-family: 'Fraunces', serif;
+    font-size: 2.6rem;
+    font-weight: 400;
+    color: var(--accent);
+    letter-spacing: -0.02em;
+  }
+
+  /* ========== BEAR / BULL SIDE BY SIDE ========== */
+  .case-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+
+  .case-column {
+    padding: 32px 28px;
+    background: var(--surface);
+    border-top: 4px solid;
+    position: relative;
+  }
+
+  .case-column.bear { border-top-color: var(--bear); }
+  .case-column.bull { border-top-color: var(--bull); }
+
+  .case-title {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 1.7rem;
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+
+  .case-column.bear .case-title { color: var(--bear); }
+  .case-column.bull .case-title { color: var(--bull); }
+
+  .case-target {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    margin-bottom: 28px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .case-list {
+    list-style: none;
+    counter-reset: case;
+  }
+
+  .case-list li {
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+    counter-increment: case;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 16px;
+    align-items: baseline;
+  }
+
+  .case-list li:last-child { border-bottom: 0; }
+
+  .case-list li::before {
+    content: counter(case, decimal-leading-zero);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--text-faint);
+    letter-spacing: 0.1em;
+  }
+
+  .case-list strong {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 500;
+    color: var(--text);
+    display: block;
+    margin-bottom: 4px;
+    font-size: 1rem;
+  }
+
+  .case-list .case-detail {
+    font-size: 0.94rem;
+    color: var(--text-dim);
+    line-height: 1.55;
+  }
+
+  /* ========== WHY WRONG ========== */
+  .wrong-block {
+    background: linear-gradient(135deg, rgba(214,145,74,0.04), transparent);
+    border-left: 3px solid var(--warn);
+    padding: 32px 36px;
+    margin: 0;
+  }
+
+  .wrong-list {
+    list-style: none;
+    counter-reset: wrong;
+  }
+
+  .wrong-list li {
+    padding: 12px 0;
+    counter-increment: wrong;
+    display: grid;
+    grid-template-columns: 32px 1fr;
+    gap: 14px;
+    color: var(--text-dim);
+    font-size: 0.96rem;
+    line-height: 1.6;
+  }
+
+  .wrong-list li::before {
+    content: "× " counter(wrong);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--warn);
+    letter-spacing: 0.04em;
+  }
+
+  /* ========== PORTFOLIO MATRIX ========== */
+  .portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+
+  .portfolio-cell {
+    background: var(--bg);
+    padding: 32px 28px;
+  }
+
+  .portfolio-name {
+    font-family: 'Fraunces', serif;
+    font-size: 1.3rem;
+    margin-bottom: 4px;
+  }
+
+  .portfolio-size {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--text-faint);
+    margin-bottom: 20px;
+  }
+
+  .portfolio-fit {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    padding: 6px 12px;
+    display: inline-block;
+    margin-bottom: 18px;
+    border-radius: 1px;
+  }
+
+  .portfolio-fit.uygun { background: var(--bull-dim); color: var(--bull); border: 1px solid var(--bull); }
+  .portfolio-fit.kosullu { background: rgba(214,145,74,0.12); color: var(--warn); border: 1px solid var(--warn); }
+  .portfolio-fit.degil { background: var(--bear-dim); color: var(--bear); border: 1px solid var(--bear); }
+
+  .portfolio-reason {
+    font-size: 0.92rem;
+    color: var(--text-dim);
+    line-height: 1.55;
+  }
+
+  /* ========== ENTRY PLAN ========== */
+  .plan-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 0;
+  }
+
+  .plan-row {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    border-bottom: 1px solid var(--border);
+    padding: 16px 24px;
+  }
+
+  .plan-row:last-child { border-bottom: 0; }
+
+  .plan-row.featured {
+    background: linear-gradient(90deg, rgba(212,165,116,0.05), transparent);
+  }
+
+  .plan-key {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--text-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+  }
+
+  .plan-val {
+    font-family: 'Fraunces', serif;
+    font-size: 1.05rem;
+    color: var(--text);
+  }
+
+  .plan-row.featured .plan-val { color: var(--accent); font-size: 1.2rem; }
+
+  .conditions-list {
+    list-style: none;
+    margin-top: 24px;
+  }
+
+  .conditions-list li {
+    padding: 10px 0 10px 28px;
+    color: var(--text-dim);
+    position: relative;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.94rem;
+  }
+
+  .conditions-list li:last-child { border-bottom: 0; }
+
+  .conditions-list li::before {
+    content: "▸";
+    position: absolute;
+    left: 8px;
+    color: var(--accent);
+  }
+
+  /* ========== TRIGGERS ========== */
+  .triggers {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+
+  .trigger {
+    background: var(--bg);
+    padding: 20px 24px;
+    font-size: 0.94rem;
+    color: var(--text-dim);
+    line-height: 1.5;
+  }
+
+  /* ========== FOOTER ========== */
+  footer {
+    padding: 56px 0 80px;
+    text-align: center;
+  }
+
+  .footer-mark {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--text-dim);
+    margin-bottom: 16px;
+  }
+
+  .footer-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--text-faint);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    line-height: 1.8;
+  }
+
+  .footer-divider {
+    width: 60px;
+    height: 1px;
+    background: var(--accent);
+    margin: 0 auto 24px;
+  }
+
+  /* Tag list */
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 32px;
+  }
+
+  .tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    padding: 5px 10px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    text-transform: lowercase;
+    letter-spacing: 0.04em;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .container { padding: 0 20px; }
+    .hero-grid { grid-template-columns: 1fr; }
+    .methods-grid, .scenarios, .case-grid, .portfolio-grid, .triggers {
+      grid-template-columns: 1fr;
+    }
+    .verdict-bar { flex-wrap: wrap; }
+    .verdict-cell { flex: 1 1 50%; }
+    .plan-row { grid-template-columns: 1fr; gap: 8px; }
+    .expected-value { flex-direction: column; align-items: flex-start; }
+  }
+
+  /* Print */
+  @media print {
+    body { background: white; color: black; }
+    body::before { display: none; }
+    section { page-break-inside: avoid; padding: 30px 0; }
+    .hero { padding: 30px 0; }
+  }
+
+  /* Subtle entrance animation */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero, section { animation: fadeUp 0.6s ease-out backwards; }
+  section:nth-child(2) { animation-delay: 0.1s; }
+  section:nth-child(3) { animation-delay: 0.2s; }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- ========== HERO ========== -->
+  <header class="hero">
+    <div class="hero-meta">
+      <span>Finzora AI</span>
+      <span class="dot"></span>
+      <span>Adil Değer Raporu</span>
+      <span class="dot"></span>
+      <span>v3.7.2 Forward-Adapted</span>
+      <span class="dot"></span>
+      <span>8 Mayıs 2026 · Cuma · Seans Öncesi</span>
+    </div>
+
+    <div class="hero-grid">
+      <div class="hero-left">
+        <div class="ticker-mark">NASDAQ · UTILITIES</div>
+        <h1 class="ticker">T<em>L</em>N</h1>
+        <div class="company-name">Talen Energy Corporation</div>
+        <div class="sector-tag">AI Veri Merkezi · Bağımsız Enerji Üreticisi · Hibrit</div>
+      </div>
+
+      <div class="snapshot-grid">
+        <div class="snap-cell featured">
+          <div class="snap-label">Mevcut Fiyat</div>
+          <div class="snap-value">390,55 dolar</div>
+          <div class="snap-sub">↓ -%4,74 gün içi</div>
+        </div>
+        <div class="snap-cell">
+          <div class="snap-label">Piyasa Değeri</div>
+          <div class="snap-value">17,85 mlr</div>
+        </div>
+        <div class="snap-cell">
+          <div class="snap-label">Enterprise Value</div>
+          <div class="snap-value">23,63 mlr</div>
+        </div>
+        <div class="snap-cell">
+          <div class="snap-label">52H Aralık</div>
+          <div class="snap-value">220 — 451</div>
+        </div>
+        <div class="snap-cell">
+          <div class="snap-label">Beta</div>
+          <div class="snap-value">1,67</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="verdict-bar">
+      <div class="verdict-cell">
+        <div class="verdict-label">Beklenen Adil Değer</div>
+        <div class="verdict-value">492 dolar</div>
+      </div>
+      <div class="verdict-cell">
+        <div class="verdict-label">Yukarı Potansiyel</div>
+        <div class="verdict-value upside">+%26</div>
+      </div>
+      <div class="verdict-cell">
+        <div class="verdict-label">Confidence</div>
+        <div class="verdict-value confidence">Orta-Düşük</div>
+      </div>
+      <div class="verdict-cell">
+        <div class="verdict-label">Karar</div>
+        <div class="verdict-value action">İzle — Koşullu</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========== EXECUTIVE SUMMARY ========== -->
+  <section>
+    <div class="section-num">/ 01 · YÖNETİCİ ÖZETİ</div>
+    <h2>Hibrit bir <em>utility</em>, klasik metrikleri reddediyor.</h2>
+
+    <div class="summary-prose">
+      <p>Talen Energy, ABD'nin bağımsız enerji üreticilerinden biri. Susquehanna nükleer santrali (2.494 MW) sayesinde AI veri merkezi enerji temasının saf oyuncularından (pure-play). Amazon Web Services ile imzalanan 10 yıllık behind-the-meter PPA anlaşması, şirketi klasik utility'den çıkarıp hibrit growth/utility profiline taşıdı.</p>
+
+      <p>Hisse 17 ayda 220 dolardan 451 dolara koştu, sonra 390 dolar civarına geri çekildi. Adil değer hesabının temel zorluğu: TTM net kâr negatif (zarar -216 milyon dolar). Klasik P/E, Graham, ROE bazlı yöntemler kullanılamıyor. Sadece forward bazlı metrikler güvenilir.</p>
+
+      <p>Yöntemler arası dağılım 363-743 dolar bandında. Ağırlıklı orta nokta 492 dolarda kalıyor, fakat confidence orta-düşük. Bu hisse alınacaksa 310-360 dolar zonunda alınmalı, 390 dolardan değil.</p>
+    </div>
+  </section>
+
+  <!-- ========== 9 METHODS ========== -->
+  <section>
+    <div class="section-num">/ 02 · DOKUZ YÖNTEM DEĞERLENDİRMESİ</div>
+    <h2>Beş yöntem konuşuyor, dört yöntem <em>susuyor.</em></h2>
+    <p class="section-lead">TTM zarar nedeniyle dört klasik yöntem otomatik devre dışı; geriye kalan beşi forward versiyona zorlandı.</p>
+
+    <div class="methods-grid">
+
+      <div class="method-card unavailable">
+        <div class="method-header">
+          <div class="method-title">Net P/E TTM</div>
+          <div class="method-status no">Kullanılamaz</div>
+        </div>
+        <div class="method-value">−848,27x</div>
+        <div class="method-meta"><span class="key">Sebep:</span> TTM EPS −4,79 dolar (zarar). Anlamlı değil.</div>
+      </div>
+
+      <div class="method-card">
+        <div class="method-header">
+          <div class="method-title">Forward P/E (2027 NTM)</div>
+          <div class="method-status ok">Kullanılabilir</div>
+        </div>
+        <div class="method-value">743 dolar</div>
+        <div class="method-meta">
+          <div><span class="key">EPS 2027:</span> 30,95 dolar (5 analist)</div>
+          <div><span class="key">Multiple:</span> 22-26x hibrit IPP/AI bandı</div>
+          <div><span class="key">Aralık:</span> 681 - 805 dolar · Ağırlık %30</div>
+        </div>
+      </div>
+
+      <div class="method-card unavailable">
+        <div class="method-header">
+          <div class="method-title">EV/EBIT</div>
+          <div class="method-status no">Kullanılamaz</div>
+        </div>
+        <div class="method-value">FY25 OpInc neg</div>
+        <div class="method-meta"><span class="key">Sebep:</span> Operasyon kârı −70 milyon dolar.</div>
+      </div>
+
+      <div class="method-card">
+        <div class="method-header">
+          <div class="method-title">Forward EV/EBITDA</div>
+          <div class="method-status ok">Kullanılabilir</div>
+        </div>
+        <div class="method-value">487 dolar</div>
+        <div class="method-meta">
+          <div><span class="key">EBITDA 2027:</span> 2,0 - 2,5 mlr</div>
+          <div><span class="key">Marjı:</span> %40-50 varsayım</div>
+          <div><span class="key">Multiple:</span> 11-13x peer · Ağırlık %30</div>
+        </div>
+      </div>
+
+      <div class="method-card">
+        <div class="method-header">
+          <div class="method-title">Forward EV/Revenue</div>
+          <div class="method-status ok">Kullanılabilir</div>
+        </div>
+        <div class="method-value">363 dolar</div>
+        <div class="method-meta">
+          <div><span class="key">Revenue 2027:</span> 5,03 mlr</div>
+          <div><span class="key">Multiple:</span> 4,5x premium IPP</div>
+          <div><span class="key">Not:</span> En muhafazakar uç · Ağırlık %15</div>
+        </div>
+      </div>
+
+      <div class="method-card">
+        <div class="method-header">
+          <div class="method-title">Forward P/FCF</div>
+          <div class="method-status ok">Kullanılabilir</div>
+        </div>
+        <div class="method-value">378 dolar</div>
+        <div class="method-meta">
+          <div><span class="key">FCF 2027:</span> 700 milyon - 1,0 mlr</div>
+          <div><span class="key">Multiple:</span> 18-22x</div>
+          <div><span class="key">Aralık:</span> 276 - 481 dolar · Ağırlık %10</div>
+        </div>
+      </div>
+
+      <div class="method-card unavailable">
+        <div class="method-header">
+          <div class="method-title">ROE Bazlı Değerleme</div>
+          <div class="method-status no">Kullanılamaz</div>
+        </div>
+        <div class="method-value">ROE TTM −%1,7</div>
+        <div class="method-meta"><span class="key">Sebep:</span> Son beş yıl çok düzensiz, sürdürülebilir varsayım yapılamaz.</div>
+      </div>
+
+      <div class="method-card unavailable">
+        <div class="method-header">
+          <div class="method-title">Graham Number</div>
+          <div class="method-status no">Kullanılamaz</div>
+        </div>
+        <div class="method-value">Hesaplanamaz</div>
+        <div class="method-meta"><span class="key">Sebep:</span> EPS negatif olduğundan formül tanımsız (FMP None).</div>
+      </div>
+
+      <div class="method-card">
+        <div class="method-header">
+          <div class="method-title">DCF (2 Aşamalı)</div>
+          <div class="method-status ok">Kullanılabilir</div>
+        </div>
+        <div class="method-value">500 dolar</div>
+        <div class="method-meta">
+          <div><span class="key">Baz FCF:</span> 409 milyon dolar (2025)</div>
+          <div><span class="key">Aşama-1 büyüme:</span> %25 · Terminal: %3</div>
+          <div><span class="key">WACC:</span> %9,5 · Ağırlık %15</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========== WEIGHTED FAIR VALUE ========== -->
+  <section>
+    <div class="section-num">/ 03 · AĞIRLIKLI ADİL DEĞER</div>
+    <h2>Beş yöntem, bir <em>orta nokta.</em></h2>
+    <p class="section-lead">Şirket profili: hibrit utility/AI growth. Ağırlıklar hibrit IPP profiline göre belirlendi.</p>
+
+    <table class="weighted-table">
+      <thead>
+        <tr>
+          <th>Yöntem</th>
+          <th class="right">Adil Değer</th>
+          <th class="right">Ağırlık</th>
+          <th class="right">Katkı</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Forward P/E (2027 NTM)</td><td class="right">743 dolar</td><td class="right">%30</td><td class="right">223 dolar</td></tr>
+        <tr><td>Forward EV/EBITDA</td><td class="right">487 dolar</td><td class="right">%30</td><td class="right">146 dolar</td></tr>
+        <tr><td>Forward EV/Revenue</td><td class="right">363 dolar</td><td class="right">%15</td><td class="right">54 dolar</td></tr>
+        <tr><td>Forward P/FCF</td><td class="right">378 dolar</td><td class="right">%10</td><td class="right">38 dolar</td></tr>
+        <tr><td>DCF (2 Aşamalı)</td><td class="right">500 dolar</td><td class="right">%15</td><td class="right">75 dolar</td></tr>
+        <tr class="total"><td>Ağırlıklı Adil Değer</td><td class="right">—</td><td class="right">%100</td><td class="right">~536 dolar</td></tr>
+      </tbody>
+    </table>
+
+    <div class="confidence-block">
+      <div class="confidence-row">
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: var(--text-faint); letter-spacing: 0.12em; text-transform: uppercase;">Confidence Skoru</span>
+        <span style="font-family: 'Fraunces', serif; font-style: italic; color: var(--warn);">Orta-Düşük · CV ~%25</span>
+      </div>
+      <div class="confidence-bar"><div class="confidence-fill"></div></div>
+      <div class="confidence-scale">
+        <span>Düşük</span>
+        <span>Orta-Düşük</span>
+        <span>Orta</span>
+        <span>Yüksek</span>
+      </div>
+      <p style="margin-top: 18px; color: var(--text-dim); font-size: 0.92rem; line-height: 1.6;">
+        Yöntemler arası dağılım 363-743 dolar (CV ~%25). TTM zarar olduğu için sadece forward verilere dayanılabiliyor; hibrit utility/AI growth profili nedeniyle peer multiple aralığı geniş. AWS PPA gerçek marjı public değil, varsayım yüklü. 2027 EPS estimates beş analiste, 2030 ise sadece iki analiste dayanıyor.
+      </p>
+    </div>
+
+    <div class="expected-value">
+      <div>
+        <div class="expected-value-label">İskontolu adil değer (1 yıl ileri tahminden bugüne çekildi, %10 cost of equity)</div>
+      </div>
+      <div class="expected-value-num">~492 dolar</div>
+    </div>
+  </section>
+
+  <!-- ========== SCENARIOS ========== -->
+  <section>
+    <div class="section-num">/ 04 · SENARYO MATRİSİ</div>
+    <h2>Üç dünya, <em>üç fiyat.</em></h2>
+    <p class="section-lead">Olasılıklar sübjektif; her birinin gerekçesi alt bölümlerde.</p>
+
+    <div class="scenarios">
+      <div class="scenario bear">
+        <div class="scenario-label">Ayı (Bear) — %25</div>
+        <div class="scenario-value">310 dolar</div>
+        <div class="scenario-pct">−%21 mevcut fiyata göre</div>
+        <div class="scenario-prob">15x 2027 EPS varsayımı, multiple compression senaryosu, AI power teması soğur.</div>
+      </div>
+      <div class="scenario base">
+        <div class="scenario-label">Baz (Base) — %50</div>
+        <div class="scenario-value">480 dolar</div>
+        <div class="scenario-pct">+%23 mevcut fiyata göre</div>
+        <div class="scenario-prob">Mevcut tez tutar, 2027 EPS estimate'larına yakın gerçekleşme.</div>
+      </div>
+      <div class="scenario bull">
+        <div class="scenario-label">Boğa (Bull) — %25</div>
+        <div class="scenario-value">700 dolar</div>
+        <div class="scenario-pct">+%79 mevcut fiyata göre</div>
+        <div class="scenario-prob">24x 2027 EPS, AWS-tipi yeni PPA katalisti (MSFT/META), AI power teması süreklilik.</div>
+      </div>
+    </div>
+
+    <div class="expected-value">
+      <div>
+        <div class="expected-value-label">Beklenen değer (olasılık ağırlıklı) · Risk/ödül 1:1,2</div>
+      </div>
+      <div class="expected-value-num">492 dolar</div>
+    </div>
+  </section>
+
+  <!-- ========== BEAR vs BULL ========== -->
+  <section>
+    <div class="section-num">/ 05 · BEAR vs BULL CASE</div>
+    <h2>Tek taraflı analiz <em>yasak.</em></h2>
+    <p class="section-lead">K kuralı: bear case bull case'den daha az detaylı olamaz. İkisi de yedişer maddede işlendi.</p>
+
+    <div class="case-grid">
+      <div class="case-column bear">
+        <div class="case-title">Bear Case</div>
+        <div class="case-target">Hedef: 310 dolar · Multiple compression</div>
+        <ul class="case-list">
+          <li><div><strong>Borç patlaması</strong><div class="case-detail">LT borç 2024'te 2,99 mlr'dan 2025'te 6,78 mlr'a çıktı (+%127). Capex tamamen borçla finanse ediliyor, faiz giderleri net income'u boğuyor.</div></div></li>
+          <li><div><strong>D/E 6,34x ekstrem</strong><div class="case-detail">Sektör ortalaması 1,5-2,5x. Faiz oranlarının %4,5+ kalması TLN'i orantısız vurur. 2026-2027 borç refinansman dalgası kritik.</div></div></li>
+          <li><div><strong>TTM zarar gerçeği</strong><div class="case-detail">2025 net income −216 milyon dolar. EBITDA 2024'te 1,77 mlr'dan 2025'te 415 milyona düştü (−%77). Bu sadece "büyüme yatırımı" değil, operasyonel zayıflık.</div></div></li>
+          <li><div><strong>AWS PPA risk</strong><div class="case-detail">AI veri merkezi talebinin %20-30 yavaşlaması durumunda PPA volume garantileri tartışmalı hale gelebilir. FERC behind-the-meter düzenlemesi hala gri bölge.</div></div></li>
+          <li><div><strong>Multiple compression</strong><div class="case-detail">VST, CEG ile birlikte hepsi son 18 ayda 3-5x oldu. AI power teması soğursa hepsi −%40-50 düşebilir. VST 2025 başında bir kez −%55 yaşadı.</div></div></li>
+          <li><div><strong>Borçla buyback</strong><div class="case-detail">Share count 2023'te 59 milyon, 2025'te 45,7 milyona indi. Borçla buyback EPS şişiriyor fakat bilanço bozuyor — pahalı değer transferi.</div></div></li>
+          <li><div><strong>PJM bağımlılığı</strong><div class="case-detail">Last auction record kırdı (269,92 dolar/MW-day). Bir sonraki müzayede normalize gelirse forward EBITDA tahminleri %15-20 aşağı revize edilir.</div></div></li>
+        </ul>
+      </div>
+
+      <div class="case-column bull">
+        <div class="case-title">Bull Case</div>
+        <div class="case-target">Hedef: 700 dolar · 24x 2027 EPS + yeni PPA</div>
+        <ul class="case-list">
+          <li><div><strong>Susquehanna nükleer</strong><div class="case-detail">2.494 MW baseload, 24/7 carbon-free. Yeni nükleer inşası imkansız (NRC 10+ yıl), TLN'in mevcut santrali replacement value 30 mlr+ dolar.</div></div></li>
+          <li><div><strong>AWS 1,92 GW PPA</strong><div class="case-detail">10 yıllık fix price, behind-the-meter struktur. Çok yüksek capacity factor + premium fiyat. Tahmini incremental EBITDA 400-600 milyon dolar/yıl.</div></div></li>
+          <li><div><strong>Forward EPS curve</strong><div class="case-detail">2027 30,95 dolar → 2030 49,01 dolar. Yıllık +%17 CAGR. Bu büyüme oranı klasik utility'den çok büyüme şirketi profili.</div></div></li>
+          <li><div><strong>PJM kapasite rekor</strong><div class="case-detail">Last auction 269,92 dolar/MW-day. TLN'in %85 PJM ekspozürü ile kapasite gelirleri mekanik olarak artıyor.</div></div></li>
+          <li><div><strong>Yeni PPA katalisti</strong><div class="case-detail">CEG (Three Mile Island) ve VST anlaşmalarından sonra TLN'in Sundance/Brunner Island sahaları için Microsoft veya Meta talep var.</div></div></li>
+          <li><div><strong>AI power teması süreklilik</strong><div class="case-detail">Hyperscaler capex 2025-2030 arası 1 trilyon doları aşacak. Power dar boğaz çözülmedi (3-5 yıl), TLN saf oyuncu.</div></div></li>
+          <li><div><strong>Kurumsal sahiplik artıyor</strong><div class="case-detail">2023 IPO sonrası takipsiz kalan hisse, son 12 ayda kurumsal sahiplik %30'dan %58'e çıktı. Endeks alımları + uzun vadeli para girişi devam ediyor.</div></div></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== WHY WRONG ========== -->
+  <section>
+    <div class="section-num">/ 06 · NEDEN YANLIŞ OLABİLİRİM</div>
+    <h2>Tezimin <em>kırılma</em> noktaları.</h2>
+
+    <div class="wrong-block">
+      <ol class="wrong-list">
+        <li><strong>Multiple seçimi sübjektif.</strong> Klasik utility 18x mi, tech-hybrid 28x mi? Şu an 22-26x kullandım. Eğer pazar TLN'i klasik utility olarak fiyatlarsa adil değer 380'e iner.</li>
+        <li><strong>2027 EPS estimates az coverage.</strong> Beş analist için 2027, sadece iki analist için 2030. Düşük coverage yüksek revizyon riski demek.</li>
+        <li><strong>Capex tahmini tutmayabilir.</strong> Battery storage + nükleer upgrade yatırımları beklenenden büyük olursa FCF tezi çöker.</li>
+        <li><strong>AWS PPA gerçek margin'i public değil.</strong> EBITDA marjı %40-50 varsayımı optimistik olabilir. Gerçek marj %30-35 ise EBITDA bazlı adil değer 380'e iner.</li>
+        <li><strong>TTM zarar = klasik valuation imkansız.</strong> Forward bazlı analiz spekülatif kalır; herhangi bir varsayım sapması büyük değişimlere yol açar.</li>
+        <li><strong>Recency bias.</strong> Son altı haftada AI power teması yeniden ısındı. Mevcut fiyatın bu temayı doğru fiyatlayıp fiyatlamadığı açık değil.</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ========== PORTFOLIO MATRIX ========== -->
+  <section>
+    <div class="section-num">/ 07 · PORTFÖY KARAR MATRİSİ</div>
+    <h2>Üç portföy, üç farklı <em>cevap.</em></h2>
+
+    <div class="portfolio-grid">
+      <div class="portfolio-cell">
+        <div class="portfolio-name">Dengeli</div>
+        <div class="portfolio-size">100K dolar · max 6 pozisyon</div>
+        <span class="portfolio-fit kosullu">Uygun — Koşullu</span>
+        <div class="portfolio-reason">Sadece 168-310 dolar zonunda. AI exposure dengeli portföye uygun fakat borç riski sınırlayıcı. Maksimum %5 ağırlık.</div>
+      </div>
+      <div class="portfolio-cell">
+        <div class="portfolio-name">Agresif Büyüme</div>
+        <div class="portfolio-size">400K dolar · max 6 pozisyon</div>
+        <span class="portfolio-fit kosullu">Uygun — Koşullu</span>
+        <div class="portfolio-reason">AI tedarik zinciri Layer 4 (Power) içinde POWL/VRT/ETN/PWR ile aynı kategori, nükleer pure-play premium. Maksimum %8 ağırlık. Mevcut fiyattan değil, çekilme zonunda.</div>
+      </div>
+      <div class="portfolio-cell">
+        <div class="portfolio-name">Değer + Temettü</div>
+        <div class="portfolio-size">100K dolar · max 6 pozisyon</div>
+        <span class="portfolio-fit degil">Uygun Değil</span>
+        <div class="portfolio-reason">Temettü ödemiyor (yield %0). Borç profili dividend portföyüne uygun değil. Hedge ve inverse ETF de yasak (K-26 kuralı).</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== ENTRY PLAN ========== -->
+  <section>
+    <div class="section-num">/ 08 · GİRİŞ PLANI</div>
+    <h2>Şu an alım <em>yok.</em></h2>
+    <p class="section-lead">Bekle koşullarından en az ikisi karşılanmalı. R/R 4,7 — 310 dolar girişten hesaplandı.</p>
+
+    <div class="plan-box">
+      <div class="plan-row"><div class="plan-key">Mevcut Fiyat</div><div class="plan-val">390,55 dolar</div></div>
+      <div class="plan-row featured"><div class="plan-key">Beklenen Adil Değer</div><div class="plan-val">492 dolar</div></div>
+      <div class="plan-row featured"><div class="plan-key">İdeal Giriş Zonu</div><div class="plan-val">310 — 360 dolar</div></div>
+      <div class="plan-row"><div class="plan-key">Stop Loss</div><div class="plan-val">280 dolar (200 SMA altı)</div></div>
+      <div class="plan-row"><div class="plan-key">Hedef 1 (base)</div><div class="plan-val">480 dolar</div></div>
+      <div class="plan-row"><div class="plan-key">Hedef 2 (bull)</div><div class="plan-val">700 dolar</div></div>
+      <div class="plan-row"><div class="plan-key">R/R Oranı</div><div class="plan-val">4,7 (170 yukarı / 30 aşağı, 310 girişten)</div></div>
+      <div class="plan-row"><div class="plan-key">Pozisyon Boyutu</div><div class="plan-val">24.000 dolar (Agresif portföyün %6'sı)</div></div>
+    </div>
+
+    <h3 style="font-family: 'Fraunces', serif; font-style: italic; font-size: 1.4rem; margin-top: 40px; margin-bottom: 16px; color: var(--text);">Bekle Koşulları</h3>
+    <p style="color: var(--text-dim); margin-bottom: 14px;">En az iki koşul karşılanmalı:</p>
+    <ul class="conditions-list">
+      <li>RSI (14) 40 altına geri çekilme</li>
+      <li>Fiyat 50 SMA üzerinde kalış</li>
+      <li>VIX 22 altında stabilizasyon (K-13 dynamic)</li>
+      <li>Q1 2026 kazanç açıklaması sonrası reaksiyon — borç refinansman detayları kritik</li>
+      <li>AWS-benzeri yeni PPA katalisti (Microsoft veya Meta haberi)</li>
+    </ul>
+  </section>
+
+  <!-- ========== TRIGGERS ========== -->
+  <section>
+    <div class="section-num">/ 09 · İZLEME TETİKLEYİCİLERİ</div>
+    <h2>Neyi izliyoruz?</h2>
+
+    <div class="triggers">
+      <div class="trigger">Q1 2026 kazanç açıklaması (tarih TBD, muhtemelen Mayıs ortası)</div>
+      <div class="trigger">LT borç refinansman koşulları (tahvil ihracı veya bank facility yenileme)</div>
+      <div class="trigger">PJM kapasite müzayede sonuçları (yıllık)</div>
+      <div class="trigger">FERC behind-the-meter düzenleme nihai kararı</div>
+      <div class="trigger">Yeni hyperscaler PPA duyurusu (TLN, CEG, VST üçlüsü için bağlamsal)</div>
+      <div class="trigger">50 SMA testi (320-340 dolar civarı tahmin)</div>
+      <div class="trigger">Insider satış davranışı (son 6 ayda artış varsa kırmızı bayrak)</div>
+      <div class="trigger">Hyperscaler capex sezonu (MSFT/META/GOOGL Q1 sonuçları)</div>
+    </div>
+
+    <div class="tags">
+      <span class="tag">ai_infrastructure</span>
+      <span class="tag">data_center</span>
+      <span class="tag">power</span>
+      <span class="tag">nuclear</span>
+      <span class="tag">ipp</span>
+      <span class="tag">utilities</span>
+      <span class="tag">aws_ppa</span>
+      <span class="tag">susquehanna</span>
+      <span class="tag">pjm</span>
+      <span class="tag">high_debt</span>
+      <span class="tag">ttm_loss</span>
+      <span class="tag">forward_only_valuation</span>
+      <span class="tag">mid_cap</span>
+      <span class="tag">hybrid_growth_utility</span>
+      <span class="tag">watchlist</span>
+      <span class="tag">no_entry_yet</span>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer>
+    <div class="footer-divider"></div>
+    <div class="footer-mark">finzora ai</div>
+    <div class="footer-meta">
+      Adil Değer v3.7.2 · Forward-Adapted<br>
+      9 yöntem · 5 kullanılabilir · 4 kullanılamaz<br>
+      Veri: FMP API stable/ · 8 Mayıs 2026 · Cuma seans öncesi<br>
+      reports/research/TLN_ADIL_DEGER_2026-05-08.md
+    </div>
+  </footer>
+
+</div>
+
+</body>
+</html>
