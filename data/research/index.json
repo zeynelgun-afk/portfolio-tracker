@@ -1,10 +1,10 @@
 {
   "son_guncelleme": "2026-05-08",
-  "toplam_analiz": 9,
+  "toplam_analiz": 10,
   "beat_tahmin": 0,
   "miss_tahmin": 0,
   "beklemede": 1,
-  "aktif_izleme": 8,
+  "aktif_izleme": 9,
   "dogru_tahmin_orani": null,
   "analizler": [
     {
@@ -681,6 +681,171 @@
         "watchlist",
         "no_entry_yet",
         "near_52w_high"
+      ]
+    },
+    {
+      "id": "PENG_ADIL_DEGER_2026-05-08",
+      "ticker": "PENG",
+      "sirket": "Penguin Solutions, Inc.",
+      "sektor": "Technology / Hardware, Equipment & Parts",
+      "analiz_tarihi": "2026-05-08",
+      "bilanco_tarihi": "2026-07-07",
+      "analiz_turu": "adil_deger_hesabi",
+      "durum": "aktif_izleme",
+      "dosya": "reports/research/PENG_ADIL_DEGER_2026-05-08.md",
+      "kataliz": {
+        "olay": "Q2 FY26 sonrası guidance %6 → %12 yukarı revizyonu + AI factory talebi + AMD veri merkezi sıçraması",
+        "tarih": "2026-05-08",
+        "aciklama": "Hisse 8 Mayıs'ta %9,13 sıçradı; 52 hafta zirvesi 43,23 dolar yenilendi. Son 1 yılda %122, son 30 günde %76 rally. Bilanço 7 Temmuz 2026 (Q3 FY26)."
+      },
+      "adil_deger": {
+        "yontem_v": "v3.7.2 forward-adapted",
+        "kullanilabilir_yontem_sayisi": 7,
+        "kullanilamayan_yontem_sayisi": 2,
+        "kullanilamayan_sebebi": "ROE-bazlı (geçiş dönemi yanıltıcı, FY24 zarar etkisi); Net P/E TTM ağırlığa alınmadı (TTM EPS düşük temsiliyet)",
+        "agirlikli_adil_deger": 42.29,
+        "iskontosuz_adil_deger": 42.29,
+        "confidence": "ORTA-DUSUK",
+        "cv_yontem_dagilimi_pct": 38.2,
+        "yontem_dagilimi": {
+          "forward_pe": {
+            "deger": 49.51,
+            "agirlik": 0.3,
+            "multiple_used": "20x NTM EPS 2.48"
+          },
+          "ev_ebit_ttm": {
+            "deger": 24.29,
+            "agirlik": 0.05,
+            "multiple_used": "18x EBIT 85M"
+          },
+          "ev_ebitda_forward": {
+            "deger": 32.61,
+            "agirlik": 0.15,
+            "ebitda_marji_varsayim": "%8 revised guidance"
+          },
+          "ev_revenue_forward": {
+            "deger": 50.99,
+            "agirlik": 0.1,
+            "multiple": "1.75x NTM Rev 1.66B"
+          },
+          "p_fcf_ntm": {
+            "deger": 54.37,
+            "agirlik": 0.15,
+            "fcf_tahmin_m": 140
+          },
+          "graham": {
+            "deger": 16.46,
+            "agirlik": 0.05,
+            "not": "sadece floor referansı"
+          },
+          "dcf_2_asama": {
+            "deger": 36.27,
+            "agirlik": 0.2,
+            "wacc": 0.12,
+            "buyume_asama1": "%20 → %10",
+            "terminal_buyume": 0.035
+          }
+        }
+      },
+      "on_beklenti": {
+        "senaryo_boga": {
+          "kosul": "Multiple 24-28x, yeni AI factory kontratları, Q3 beat+guidance raise tekrar",
+          "fiyat_hedef": 60.0,
+          "getiri_pct": 41.0
+        },
+        "senaryo_baz": {
+          "kosul": "Forward P/E 18-22x, %12 büyüme tutuyor, AI infra ramp devam",
+          "fiyat_hedef": 45.0,
+          "getiri_pct": 5.8
+        },
+        "senaryo_ayi": {
+          "kosul": "Multiple compression, AC %20 düşüş guidance, supply constraint, beta-driven sell-off",
+          "fiyat_hedef": 26.0,
+          "getiri_pct": -38.9
+        },
+        "olasiliklar": {
+          "boga": 0.25,
+          "baz": 0.45,
+          "ayi": 0.3
+        }
+      },
+      "analiz_fiyati": 42.54,
+      "temel_metrikler": {
+        "pe_ttm": 40.88,
+        "forward_pe_fy26": 19.47,
+        "forward_pe_fy27": 16.23,
+        "forward_pe_fy28": 14.16,
+        "ev_ebitda_ttm": 21.04,
+        "fiyat_satis_ttm": 1.66,
+        "fiyat_defter": 3.73,
+        "borclanma_ozkaynak": 0.94,
+        "current_ratio": 2.1,
+        "operating_margin_ttm_pct": 5.33,
+        "fcf_ttm_m": 110,
+        "fcf_yield_ttm_pct": 4.88,
+        "lt_borc_m": 733,
+        "nakit_m": 454,
+        "net_borc_m": 279,
+        "beta": 2.654,
+        "yillik_dip_zirve": [
+          16.04,
+          43.23
+        ],
+        "piyasa_degeri_m": 2243,
+        "enterprise_value_m": 2318,
+        "hisse_adedi_m": 51.5
+      },
+      "portfoy_onerisi": {
+        "dengeli": "uygun_degil",
+        "agresif": "uygun_kosullu",
+        "temettü": "uygun_degil"
+      },
+      "giris_plani": {
+        "ideal_zon": "32-35 dolar",
+        "stop_loss": 36.0,
+        "hedef_1": 48.0,
+        "hedef_2": 58.0,
+        "r_r_orani_mevcut_fiyatta": 1.3,
+        "r_r_orani_pullback_girise": 3.4,
+        "pozisyon_boyut_dolar": 12000,
+        "kosul": "Pullback 32-35 zonuna gelmeli + RSI günlük < 60 + sektör momentumu yukarı + Q3 FY26 sonrası volatilite normalleşmesi"
+      },
+      "izleme_tetikleyicileri": [
+        "Q3 FY26 earnings 7 Temmuz 2026 (revenue 375M, EPS 0.55 beklenti)",
+        "Stifel/Citizens/Loop Capital hedef revizyonları 30+ dolar üzeri",
+        "RSI günlük > 75 → K-11 v3 Katman 2 sinyal",
+        "36 dolar günlük kapanış altı → momentum bozulur",
+        "AI infra sektör momentumu (XLK 21EMA, SOXX/SMH haftalık trend)",
+        "Yeni AI factory kontrat duyuruları (sovereign + enterprise)",
+        "Memory cycle göstergeleri (DRAM/NAND spot fiyat, Samsung/SK Hynix raporları)",
+        "Insider Form 4 satış aktivitesi (Mayıs başı 2 satış var, hızlanırsa kötü)",
+        "Capex revizyonu (FY27+ AI factory ölçek genişlemesi)",
+        "Beta normalleşmesi 1.8-2.0 aralığına"
+      ],
+      "neden_yanlis_olabilirim": [
+        "Multiple seçimi sübjektif: 18-24x aralığı 16 dolarlık fair value gap yaratıyor",
+        "FY26 için sadece 3 analist EPS, FY28 için 1 analist - zayıf coverage",
+        "FMP forward EBITDA tahminleri henüz raised guidance'ı reflect etmiyor olabilir",
+        "AI infra capex artışı FCF tahminlerini %20 düşürebilir",
+        "TTM verilerin temsiliyeti zayıf (FY24 zarar etkisi devam ediyor)",
+        "Recency bias: %122 yıllık rally sonrası trend devam beklentisi tehlikeli",
+        "WACC %12 normalize varsayımı; beta 2.65 ile saf CAPM 19% verir",
+        "Forward büyüme varsayımları (%20 y1, terminal %3.5) yumuşaklık riski"
+      ],
+      "gerceklesen": {
+        "tespit_fiyati": 42.54,
+        "simdiki_fiyat": 42.54,
+        "fiyat_tepkisi_pct": 0,
+        "tez_tuttu": null,
+        "ders": null
+      },
+      "etiketler": [
+        "AI infrastructure",
+        "memory module",
+        "cyclical-to-growth transition",
+        "high beta",
+        "fully priced",
+        "watchlist"
       ]
     }
   ]
