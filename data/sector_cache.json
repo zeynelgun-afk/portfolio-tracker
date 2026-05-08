@@ -248,7 +248,10 @@
     "SBAC": "real_estate",
     "D": "utilities",
     "HSY": "consumer_defensive",
-    "PR": "energy"
+    "PR": "energy",
+    "FANG": "energy",
+    "CBOE": "financial_services",
+    "LEA": "consumer_cyclical"
   },
   "updated": {
     "COHR": 1777299593,
@@ -499,6 +502,9 @@
     "SBAC": 1778103874,
     "D": 1778103884,
     "HSY": 1778103916,
-    "PR": 1778163376
+    "PR": 1778163376,
+    "FANG": 1778250748,
+    "CBOE": 1778250750,
+    "LEA": 1778250751
   }
 }

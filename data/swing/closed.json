@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-05-07T14:31:11.505336",
+  "son_guncelleme": "2026-05-08T14:31:17.426845",
   "kapatilan_pozisyonlar": [
     {
       "id": "SWING-020",
@@ -933,6 +933,27 @@
       "partial_exits": [],
       "dersler": "**Hangi K-kuralı yönetti?**\n- K-06 (stop disiplini) tetiklenince çıkış otomatik gerçekleşti (KESİN)\n- Giriş, K-04 (SMA trend filtresi) kapsamında \"sma50_bounce\" teziyle yapıldı (KESİN)\n\n**Giriş tezi doğru muydu? Ne oldu?**\n- 50 günlük SMA'dan sıçrama beklentisi tutmadı; fiyat desteği kırıp stop loss seviyesine geriledi (KESİN)\n\n**Çıkış zamanlaması doğru muydu?**\n- K-06 sertleştirilmiş disiplin gereği tartışmasız uygulandı, zamanlaması yerindeydi (KESİN)\n\n**Dersler:**\n1. SMA sıçrama kurulumları t",
       "agent_analiz_tarihi": "2026-05-08"
+    },
+    {
+      "id": "SWING-202605041836-UEC",
+      "sembol": "UEC",
+      "adet": 472,
+      "giris_fiyati": 15.05,
+      "cikis_fiyati": 15.03,
+      "giris_tarihi": "2026-05-04",
+      "cikis_tarihi": "2026-05-08",
+      "cikis_nedeni": "STOP",
+      "kar_zarar_yuzde": -0.13,
+      "tutulan_gun": 4,
+      "sonuc": "ZARAR",
+      "ders": "Stop tetiklendi. Giriş tezi bozuldu. tenkan_bounce, kijun_bounce_v2 sinyali bu piyasada yetersiz kaldı.",
+      "giris_nedeni": "Seans içi otomatik giriş — tenkan_bounce, kijun_bounce_v2",
+      "tarama_yontemi": "tenkan_bounce, kijun_bounce_v2",
+      "katalizor": "",
+      "stop_loss": 14.13,
+      "hedef_fiyat": 17.37,
+      "zirve_fiyat": 16.17,
+      "partial_exits": []
     }
   ],
   "istatistikler": {
