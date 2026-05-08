@@ -36,6 +36,23 @@ Aşağıdaki ifadelerden herhangi biri bu protokolü tetikler:
 
 Her tetikleyicide bu protokol uygulanır. Kısa cevap, sadece sayı, tek satır özet **YASAK**. Tam rapor zorunlu.
 
+### 1.1 Chat Çıktısı vs GitHub Kayıt — Net Ayrım
+
+**GitHub kayıt HER ZAMAN tam yapılır.** Kullanıcı çıktıyı nasıl isterse istesin (kısa, sadece karar notu, tek satır vs.) `reports/research/{TICKER}_ADIL_DEGER_{YYYY-MM-DD}.md` dosyası tam 11 bölümlü olarak yazılır, `data/research/index.json` güncellenir, commit + push yapılır.
+
+**Chat çıktısı kullanıcı isteğine göre değişir:**
+
+| Kullanıcı İsteği | Chat'te Göster | GitHub'a Yaz |
+|---|---|---|
+| Açık istek yok / "tam rapor" / "detaylı" | 11 bölümlü tam markdown | 11 bölümlü tam (zorunlu) |
+| "Kısa olsun" / "sadece karar notu" / "özet" | Karar notu (sadece bölüm 9-10 özeti) | 11 bölümlü tam (zorunlu) |
+| "HTML olarak ver" | HTML versiyonu (frontend-design skill) | hem .md hem .html (her ikisi zorunlu) |
+| "Sadece adil değer rakamı" | Tek satır + minimal context | 11 bölümlü tam (zorunlu) |
+
+**Sebep:** Tam rapor olmadan post-trade review yapılamaz, lessons çıkarılamaz, geriye dönük doğrulama imkansızlaşır. Chat ekran kısa olabilir; veri katmanı kısa olamaz.
+
+**İSTİSNA YOK.** "Sadece kontrol etmek istiyorum, kaydetme" gibi istekler bile reddedilir — adil değer komutu çalışıyorsa kayıt yapılır. Kullanıcı kayıt istemiyorsa "deger TICKER" yerine "TICKER fiyat ne, mantıklı mı?" gibi gayri-resmi soru sorar.
+
 ---
 
 ## 2. Zorunlu Çıktı Yolu
