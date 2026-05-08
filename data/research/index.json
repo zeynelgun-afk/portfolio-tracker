@@ -1,10 +1,10 @@
 {
   "son_guncelleme": "2026-05-08",
-  "toplam_analiz": 10,
+  "toplam_analiz": 11,
   "beat_tahmin": 0,
   "miss_tahmin": 0,
   "beklemede": 1,
-  "aktif_izleme": 9,
+  "aktif_izleme": 10,
   "dogru_tahmin_orani": null,
   "analizler": [
     {
@@ -846,6 +846,161 @@
         "high beta",
         "fully priced",
         "watchlist"
+      ]
+    },
+    {
+      "id": "TEM_ADIL_DEGER_2026-05-08",
+      "ticker": "TEM",
+      "sirket": "Tempus AI, Inc.",
+      "sektor": "Healthcare / Medical - Healthcare Information Services",
+      "analiz_tarihi": "2026-05-08",
+      "bilanco_tarihi": "2026-Q1 (Mayıs sonu - Haziran başı tahmini)",
+      "analiz_turu": "adil_deger_hesabi",
+      "durum": "aktif_izleme",
+      "dosya": "reports/research/TEM_ADIL_DEGER_2026-05-08.md",
+      "kataliz": {
+        "olay": "AI destekli precision medicine pure-play, 52H zirvesinden -%53,8 düşmüş, 41-43 dolar dip zonuna yaklaşma",
+        "tarih": "2026-Q2 kazanç (yaklaşık Mayıs-Haziran)",
+        "aciklama": "Yıl başından beri ciddi düşüş yaşadı, 50 ve 200 günlük ortalamaların altında. Tabandan toparlanma adayı; ancak FCF hala negatif ve dilution riski yüksek."
+      },
+      "adil_deger": {
+        "yontem_v": "v3.7.2 forward-adapted (TTM zarar — 6 yöntem iptal)",
+        "kullanilabilir_yontem_sayisi": 4,
+        "kullanilamayan_yontem_sayisi": 6,
+        "kullanilamayan_sebebi": "TTM EPS, EBIT, EBITDA, FCF, ROE hepsi negatif → Net P/E, EV/EBIT, EV/EBITDA, P/FCF, ROE bazlı, Graham Number iptal edildi. Forward zorla aktif.",
+        "agirlikli_adil_deger": 42.83,
+        "iskontosuz_adil_deger": 52.94,
+        "senaryo_beklenen_deger": 45.55,
+        "confidence": "ORTA-DUSUK",
+        "yontem_dagilimi": {
+          "forward_pe": {
+            "deger": 31.11,
+            "agirlik": 0.15,
+            "multiple_used": "28-35x (2028-2030 EPS, %14 iskonto)"
+          },
+          "forward_ev_revenue": {
+            "deger": 61.04,
+            "agirlik": 0.35,
+            "multiple": "6,5x (2026E ve 2027E gelir bazlı, 1 yıl iskonto)"
+          },
+          "forward_p_s": {
+            "deger": 54.78,
+            "agirlik": 0.2,
+            "multiple": "6x (2026E gelir/hisse bazlı)"
+          },
+          "dcf_2_asama": {
+            "deger": 19.45,
+            "agirlik": 0.3,
+            "wacc": 0.14,
+            "buyume_asama1": "2026-2030 analyst tahminleri",
+            "terminal_buyume": 0.03
+          }
+        }
+      },
+      "on_beklenti": {
+        "senaryo_boga": {
+          "kosul": "Hızlı kâr geçişi, Ambry sinerjisi materyalleşir, 8x EV/Sales",
+          "fiyat_hedef": 75,
+          "getiri_pct": 55.6
+        },
+        "senaryo_baz": {
+          "kosul": "Mevcut analyst tahminleri tutar, FCF 2028 pozitife döner, 6,5x EV/Sales",
+          "fiyat_hedef": 43,
+          "getiri_pct": -10.8
+        },
+        "senaryo_ayi": {
+          "kosul": "EBITDA dönüşü gecikir, dilution sürer, healthcare AI multiple compression",
+          "fiyat_hedef": 25,
+          "getiri_pct": -48.1
+        },
+        "olasiliklar": {
+          "boga": 0.25,
+          "baz": 0.45,
+          "ayi": 0.3
+        }
+      },
+      "analiz_fiyati": 48.2,
+      "temel_metrikler": {
+        "pe_ttm": -28.46,
+        "forward_pe_2028": 112.1,
+        "ev_ebitda_ttm": -39.1,
+        "ev_revenue_ttm": 6.38,
+        "fiyat_satis_ttm": 6.16,
+        "fiyat_defter": 20.71,
+        "borclanma_ozkaynak": 1.96,
+        "roe_ttm_pct": -70.2,
+        "fcf_ttm_m": -239.1,
+        "fcf_yield_ttm_pct": -2.48,
+        "lt_borc_m": 802.4,
+        "nakit_m": 755.0,
+        "net_borc_m": 60.7,
+        "beta": 3.99,
+        "yillik_dip_zirve": [
+          41.73,
+          104.32
+        ],
+        "piyasa_degeri_m": 8404.2,
+        "enterprise_value_m": 8697.7,
+        "hisse_adedi_m": 174.3,
+        "gelir_buyume_yoy_pct": 83.4,
+        "brut_marj_ttm_pct": 71.7,
+        "sbc_2025_m": 124.7,
+        "goodwill_intangible_m": 825.5
+      },
+      "portfoy_onerisi": {
+        "dengeli": "uygun_degil",
+        "agresif": "uygun_kosullu",
+        "temettü": "uygun_degil"
+      },
+      "giris_plani": {
+        "ideal_zon": "41-43",
+        "stop_loss": 38,
+        "hedef_1": 60,
+        "hedef_2": 75,
+        "r_r_orani": 3.4,
+        "r_r_orani_bull": 6.4,
+        "pozisyon_boyut_dolar": 20000,
+        "kosul": "Mevcut 48,20'den giriş yok. 41-43 dip teyidi + volume>6M + RSI<35 + healthcare RS bozulmasın + kazanç sonrası tercih"
+      },
+      "izleme_tetikleyicileri": [
+        "Fiyat 41-43 dolar bandı + volume>6M → Agresif portföy alım",
+        "Q1 2026 kazanç (Mayıs-Haziran): gelir konsensüs üstü → fair value +%15",
+        "2027 EPS tahmini pozitife revize edilirse Forward P/E aktif",
+        "SBC gelirin %15 üstüne çıkarsa dilution riski → fair value -%10",
+        "Net cash 500M altına düşerse runway kaygısı, PIPE endişesi",
+        "XLV 50/200 ortalama golden cross → sektör momentum geri",
+        "Konsensüs hedef 80 altına revize → satış baskısı",
+        "Insider satışı yoğunlaşırsa (haftada 1M+ hisse) bull case zayıflar",
+        "CMS reimbursement politika değişikliği → tez bozulması",
+        "Peer M&A (NTRA/GH) yüksek multiple → strategic value primi"
+      ],
+      "neden_yanlis_olabilirim": [
+        "Multiple seçimi sübjektif, peer havuzu karışık (NTRA, GH, RXRX, VEEV) — 5x ile 9x arası makul aralık",
+        "Forward EPS 2-4 yıl uzakta, 2030 tahmini sadece 2 analist",
+        "DCF FCF marjı sıçraması varsayımı en spekülatif halka",
+        "WACC %14 sübjektif — beta 3,99 abartılı IPO sonrası kısa veri kaynaklı, %11-12 makul",
+        "Analyst tahminleri stale (eski) olabilir, henüz aşağı revize edilmemiş",
+        "SBC GAAP/non-GAAP karışıklığı — tahminler hangisini içeriyor doğrulanmadı",
+        "Healthcare regülasyon riski (FDA, CMS reimbursement) modele girmedi",
+        "Recency bias — düşüş momentumu sebebiyle negatif tarafa yatkın olabilirim"
+      ],
+      "gerceklesen": {
+        "tespit_fiyati": 48.2,
+        "simdiki_fiyat": 48.2,
+        "fiyat_tepkisi_pct": 0,
+        "tez_tuttu": null,
+        "ders": null
+      },
+      "etiketler": [
+        "healthcare-ai",
+        "precision-medicine",
+        "diagnostic",
+        "saf-oyuncu",
+        "yuksek-beta",
+        "ttm-zarar",
+        "watchlist",
+        "dip-takip",
+        "agresif-aday"
       ]
     }
   ]
