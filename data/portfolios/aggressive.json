@@ -58,8 +58,8 @@
       "zirve_fiyat": 433.01,
       "stop_mesafe_pct": 4.12,
       "durum": "✅ Normal",
-      "rsi": 50.35,
-      "rsi_son_guncelleme": "2026-05-08T19:02:55.030416+03:00",
+      "rsi": 49.47,
+      "rsi_son_guncelleme": "2026-05-08T19:32:07.767893+03:00",
       "atr14": 15.2779,
       "notlar": "K-22 nakit fazlası dağıtımı: +90 hisse @ $422.44"
     },
@@ -88,8 +88,8 @@
       "zirve_fiyat": 123.76,
       "stop_mesafe_pct": 4.18,
       "durum": "✅ Normal",
-      "rsi": 49.39,
-      "rsi_son_guncelleme": "2026-05-08T19:02:55.030416+03:00",
+      "rsi": 49.07,
+      "rsi_son_guncelleme": "2026-05-08T19:32:07.767893+03:00",
       "atr14": 7.1557,
       "notlar": "K-22 nakit fazlası dağıtımı: +160 hisse @ $118.26"
     },
@@ -118,8 +118,8 @@
       "zirve_fiyat": 428.62,
       "stop_mesafe_pct": 6.09,
       "durum": "✅ Normal",
-      "rsi": 63.69,
-      "rsi_son_guncelleme": "2026-05-08T19:02:55.030416+03:00",
+      "rsi": 64.12,
+      "rsi_son_guncelleme": "2026-05-08T19:32:07.767893+03:00",
       "atr14": 16.0443,
       "notlar": "K-22 nakit fazlası dağıtımı: +35 hisse @ $391.38"
     },
@@ -148,8 +148,8 @@
       "zirve_fiyat": 1816.29,
       "stop_mesafe_pct": 10.18,
       "durum": "✅ Normal",
-      "rsi": 60.19,
-      "rsi_son_guncelleme": "2026-05-08T19:02:55.030416+03:00",
+      "rsi": 60.46,
+      "rsi_son_guncelleme": "2026-05-08T19:32:07.767893+03:00",
       "notlar": "K-22 nakit fazlası dağıtımı: +12 hisse @ $1731.61",
       "atr14": 76.65
     },
@@ -178,8 +178,8 @@
       "zirve_fiyat": 74.5,
       "stop_mesafe_pct": 3.9,
       "durum": "✅ Normal",
-      "rsi": 68.89,
-      "rsi_son_guncelleme": "2026-05-08T19:02:55.030416+03:00",
+      "rsi": 69.08,
+      "rsi_son_guncelleme": "2026-05-08T19:32:07.767893+03:00",
       "notlar": "K-22 nakit fazlası dağıtımı: +120 hisse @ $72.86",
       "atr14": 2.635
     },
@@ -211,8 +211,8 @@
       "stop_guncelleme": "2026-05-05",
       "zirve_fiyat": 507.09,
       "durum": "✅ Normal",
-      "rsi": 69.64,
-      "rsi_son_guncelleme": "2026-05-08T19:02:55.030416+03:00",
+      "rsi": 70.24,
+      "rsi_son_guncelleme": "2026-05-08T19:32:07.767893+03:00",
       "atr14": 17.2243
     }
   ],
