@@ -1,10 +1,10 @@
 {
-  "son_guncelleme": "2026-05-01",
-  "toplam_analiz": 7,
+  "son_guncelleme": "2026-05-08",
+  "toplam_analiz": 8,
   "beat_tahmin": 0,
   "miss_tahmin": 0,
   "beklemede": 1,
-  "aktif_izleme": 6,
+  "aktif_izleme": 7,
   "dogru_tahmin_orani": null,
   "analizler": [
     {
@@ -348,6 +348,171 @@
         "high_growth",
         "high_valuation",
         "insider_red_flag"
+      ]
+    },
+    {
+      "id": "TLN_ADIL_DEGER_2026-05-08",
+      "ticker": "TLN",
+      "sirket": "Talen Energy Corporation",
+      "sektor": "Utilities / Independent Power Producers",
+      "analiz_tarihi": "2026-05-08",
+      "bilanco_tarihi": "2026-05-15",
+      "analiz_turu": "adil_deger_hesabi",
+      "durum": "aktif_izleme",
+      "dosya": "reports/research/TLN_ADIL_DEGER_2026-05-08.md",
+      "kataliz": {
+        "olay": "AI veri merkezi enerji teması — AWS 1,92 GW behind-the-meter PPA + Susquehanna nükleer stratejik varlık",
+        "tarih": "2026-05-08",
+        "aciklama": "Hisse 17 ayda 220'den 451 dolara koştu, 390 civarına geri çekildi. TTM zarar (-216M dolar), borç ikiye katlandı (3.0 -> 6.8 milyar). Forward EPS 2027 30.95 dolar, 2030 49.01 dolar. Hibrit utility/AI growth profili."
+      },
+      "adil_deger": {
+        "yontem_v": "v3.7.2 forward-adapted",
+        "kullanilabilir_yontem_sayisi": 5,
+        "kullanilamayan_yontem_sayisi": 4,
+        "kullanilamayan_sebebi": "TTM EPS negatif (-4.79 dolar). Net P/E, EV/EBIT, Graham, ROE bazli yontemler hesaplanamaz.",
+        "agirlikli_adil_deger": 492,
+        "iskontosuz_adil_deger": 536,
+        "confidence": "ORTA-DUSUK",
+        "yontem_dagilimi": {
+          "forward_pe_2027": {
+            "deger": 743,
+            "agirlik": 0.3,
+            "multiple_used": "22-26x",
+            "kullanilan_eps": 30.95
+          },
+          "forward_ev_ebitda_2027": {
+            "deger": 487,
+            "agirlik": 0.3,
+            "ebitda_marji_varsayim": "%40-50",
+            "multiple": "11-13x"
+          },
+          "forward_ev_revenue_2027": {
+            "deger": 363,
+            "agirlik": 0.15,
+            "multiple": "4.5x"
+          },
+          "forward_p_fcf_2027": {
+            "deger": 378,
+            "agirlik": 0.1,
+            "fcf_tahmin_m": "700-1000"
+          },
+          "dcf_2_asama": {
+            "deger": 500,
+            "agirlik": 0.15,
+            "wacc": 0.095,
+            "buyume_asama1": 0.25,
+            "terminal_buyume": 0.03
+          }
+        }
+      },
+      "on_beklenti": {
+        "senaryo_boga": {
+          "kosul": "AWS-benzeri yeni PPA (MSFT/META) + AI power teması süreklilik + PJM kapasite premium",
+          "fiyat_hedef": 700,
+          "getiri_pct": 79
+        },
+        "senaryo_baz": {
+          "kosul": "Mevcut tez tutar, 2027 EPS estimates'a yakin gerceklesme",
+          "fiyat_hedef": 480,
+          "getiri_pct": 23
+        },
+        "senaryo_ayi": {
+          "kosul": "AI power tema sogur + multiple compression + borc refinansman zorlugu",
+          "fiyat_hedef": 310,
+          "getiri_pct": -21
+        },
+        "olasiliklar": {
+          "boga": 0.25,
+          "baz": 0.5,
+          "ayi": 0.25
+        }
+      },
+      "analiz_fiyati": 390.55,
+      "temel_metrikler": {
+        "pe_ttm": -848.27,
+        "forward_pe_2027": 12.62,
+        "fiyat_satis_ttm": 3.79,
+        "fiyat_defter": 16.6,
+        "ev_ebitda_ttm": 11.1,
+        "borclanma_ozkaynak": 6.34,
+        "roe_ttm_pct": -1.7,
+        "roic_ttm_pct": -3.26,
+        "brut_marj_ttm_pct": 59.17,
+        "operasyon_marj_ttm_pct": 33.08,
+        "net_marj_ttm_pct": -0.45,
+        "fcf_ttm_m": 409,
+        "fcf_yield_ttm_pct": 5.52,
+        "lt_borc_m": 6782,
+        "nakit_m": 752,
+        "net_borc_m": 6030,
+        "ozkaynak_m": 1093,
+        "beta": 1.67,
+        "yillik_dip_zirve": [
+          220.59,
+          451.28
+        ],
+        "piyasa_degeri_m": 17846,
+        "enterprise_value_m": 23626,
+        "hisse_adedi_m": 45.69,
+        "rev_yoy_2025_pct": 21.8,
+        "ebitda_yoy_2025_pct": -76.6,
+        "net_income_yoy_2025_pct": -121.9
+      },
+      "portfoy_onerisi": {
+        "dengeli": "uygun_kosullu",
+        "agresif": "uygun_kosullu",
+        "temettü": "uygun_degil"
+      },
+      "giris_plani": {
+        "ideal_zon": "310-360",
+        "stop_loss": 280,
+        "hedef_1": 480,
+        "hedef_2": 700,
+        "r_r_orani": 4.7,
+        "pozisyon_boyut_dolar": 24000,
+        "kosul": "RSI<40 + 50MA uzeri kalis + VIX<22 + Q1 2026 earnings sonrasi reaksiyon (en az 2 kosul)"
+      },
+      "izleme_tetikleyicileri": [
+        "Q1 2026 kazanc aciklamasi (Mayis ortasi)",
+        "LT borc refinansman kosullari",
+        "PJM kapasite muzayede sonuclari (yillik)",
+        "FERC behind-the-meter duzenleme nihai karari",
+        "Yeni hyperscaler PPA duyurusu (MSFT/META)",
+        "50 SMA testi (320-340 dolar civari)",
+        "Insider satis davranisi"
+      ],
+      "neden_yanlis_olabilirim": [
+        "Multiple secimi subjektif (utility 18x vs hybrid 28x)",
+        "2027 EPS estimates az coverage (5 analist), 2030 sadece 2 analist",
+        "Capex profili belirsiz, battery+nukleer upgrade FCF baskilayabilir",
+        "AWS PPA gercek margin'i public degil, %40-50 EBITDA varsayimi optimistik olabilir",
+        "TTM zarar nedeniyle forward bazli analiz tamamen varsayim yuklu",
+        "Recency bias: AI power temasi son 6 hafta yeniden isindi, dogru fiyatlama belirsiz"
+      ],
+      "gerceklesen": {
+        "tespit_fiyati": 390.55,
+        "simdiki_fiyat": 390.55,
+        "fiyat_tepkisi_pct": 0,
+        "tez_tuttu": null,
+        "ders": null
+      },
+      "etiketler": [
+        "ai_infrastructure",
+        "data_center",
+        "power",
+        "nuclear",
+        "ipp",
+        "utilities",
+        "aws_ppa",
+        "susquehanna",
+        "pjm",
+        "high_debt",
+        "ttm_loss",
+        "forward_only_valuation",
+        "mid_cap",
+        "hybrid_growth_utility",
+        "watchlist",
+        "no_entry_yet"
       ]
     }
   ]
