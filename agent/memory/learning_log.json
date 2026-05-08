@@ -634,28 +634,6 @@
   ],
   "entries": [
     {
-      "id": "L006",
-      "tarih": "2026-04-13",
-      "kaynak": "corr_risk_analysis",
-      "kategori": "korelasyon_riski",
-      "ders": "27 Mart 2026: CAMT+VRT+POWL aynı gün stop, hepsi AI tedarik zinciri. Aynı sektörde aynı anda 3 pozisyon = korelasyon riski. K-17: Aynı sektörde max 2 pozisyon, biri hedge olmalı.",
-      "veri": {
-        "tarih": "2026-03-27",
-        "semboller": [
-          "CAMT",
-          "VRT",
-          "POWL"
-        ],
-        "kayip_pct": [
-          -9.5,
-          -9.7,
-          -10.6
-        ]
-      },
-      "aksiyon": "Agresif portföyde AI supply chain alt sektörlerine göre dağıt: optik/termal/güç/yarı iletken ayrı say.",
-      "guven": "KESİN"
-    },
-    {
       "id": "L007",
       "tarih": "2026-04-13",
       "kaynak": "sell_the_news_cases",
@@ -1235,6 +1213,11 @@
       "date": "2026-05-08",
       "source": "closing_analysis",
       "insight": "## 8. DECISION BLOCK"
+    },
+    {
+      "date": "2026-05-09",
+      "source": "closing_analysis",
+      "insight": "**DECISION BLOCK**"
     }
   ]
 }
