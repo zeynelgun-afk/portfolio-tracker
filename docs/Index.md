@@ -30,6 +30,7 @@ Sistem nasıl çalışır, hangi parça nereye bağlı.
 
 ## 📊 Değerleme (Valuation)
 
+- [[ADIL_DEGER_RAPOR_PROTOKOLU]] — **EMIR:** "TICKER adil değer hesapla" komutu için zorunlu rapor formatı, GitHub kayıt yolu, 11 bölüm şartı
 - [[VALUATION_SYSTEM_v6]] — En güncel framework (v6 + v7 Hybrid Plus)
 - [[VALUATION_FRAMEWORK_v5]] — v5 archetype-routed temeli
 - [[FORWARD_VALUATION_METHOD]] — Forward EPS bazlı yöntem
