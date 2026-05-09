@@ -3,9 +3,19 @@ name: adil-deger-9-yontem
 description: ABD hisse senetleri için kapsamlı adil değer hesaplaması. DUAL-MODE sistem - hızlı büyüyen şirketler için GROWTH modu (sadece büyüme yöntemleri), olgun şirketler için BLENDED modu (ağırlıklı Traditional + Forward + Growth). 13 yöntem, 3 piyasa rejimi (Ayı/Normal/Boğa). PEG, EV/Forward Revenue/EBITDA, Rule of 40, Reverse DCF dahil. AI mega-cap özel preset, otomatik karar matrisi, analist konsensüs entegrasyonu. Tetikleyiciler "X hissesini değerle", "adil değer hesapla", "X için fair value", "X kaç eder", "9 yöntem değerleme". Finzora AI Adil Değer v3.7.2 metodolojisi. Her kullanımda notes klasörü güncellenir.
 ---
 
-# Adil Değer 9 Yöntem (Finzora AI v3.7.2) - v4.0
+# Adil Değer 9 Yöntem (Finzora AI v3.7.2) - v4.1
 
 ## Versiyon Geçmişi
+
+**v4.1 (9 Mayıs 2026)** — Mantık denetimi sonrası 8 hata düzeltildi
+- 🔴 CRITICAL: `weighted_summary` None × float TypeError CRASH onarıldı (BLENDED modunda runtime hatası veriyordu)
+- 🔴 CRITICAL: PEG fair value formülü `eps_fwd_2y` yerine `eps_fwd_1y` (NTM EPS) kullanır — eski hesap %15-30 fazla yüksek değer veriyordu (VST $548 → $473)
+- 🔴 CRITICAL: Hard-coded `'2027'` yıl eşiği yerine dinamik `datetime.now().year + 2` — yıllar geçtikçe eskiyen kod
+- 🔴 CRITICAL: `reverse_dcf` negatif veya aşırı düşük FCF'de `None` döner — eskiden binary search ceiling'e (%50) yapışıp anlamsız implied growth çıkarıyordu
+- 🟠 MAJOR: `forward_outlier` flag'i artık Forward P/E + EV/FWD x + PEG yöntemlerini ELİMİNE eder (önceden sadece bilgi amaçlı print, hesaba katılıyordu)
+- 🟠 MAJOR: `fetch` fonksiyonuna retry mekanizması (429/503/network için 3 deneme, exponential backoff) — eskiden transient hatalarda sessizce None dönerek pipeline'ın yanlış sonuç vermesine yol açıyordu
+- 🟠 MAJOR: `shares` hesabı için çok katmanlı fallback (sharesOutstanding > mcap/price) — eskiden tek mantık vardı, FMP profile.mktCap=0 senaryosunda shares=0 oluyordu
+- 🟡 MINOR: `bear_light` regime kaldırıldı (REGIME_ADJ'da tanımlı değildi, ölü kod) — bear'a fallback
 
 **v4.0 (6 Mayıs 2026)** — Quality/Moat Premium
 - ROE ve Net Margin sektör hedeflerine göre kalite primi (1.0-1.50x)

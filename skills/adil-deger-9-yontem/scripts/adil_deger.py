@@ -17,6 +17,7 @@ v1.0: 9 yöntem temel hesap
 import requests
 import json
 import sys
+import time
 import statistics
 from datetime import datetime
 
@@ -24,18 +25,55 @@ API_KEY = "g1GFJZtV5rCP49UCir4WuP56VjhmA6F8"
 BASE = "https://financialmodelingprep.com/stable"
 
 
-def fetch(endpoint, params=None, timeout=30):
+def fetch(endpoint, params=None, timeout=30, max_retries=3, retry_delay=1.5):
+    """
+    FMP API çağrısı.
+    
+    v4.1 düzeltmesi: Retry mekanizması (429/503/network için 3 deneme).
+    Eskiden transient hatalarda sessizce None dönerek tüm pipeline'ın
+    yanlış sonuç vermesine yol açıyordu (örn. 'eksik veri' yanılgısı).
+    
+    - 200: başarılı
+    - 429 (rate limit): exponential backoff
+    - 503 (overload): sabit retry_delay
+    - Network error: retry
+    - Diğer 4xx: kalıcı hata, None
+    """
     p = {"apikey": API_KEY}
     if params:
         p.update(params)
-    try:
-        r = requests.get(f"{BASE}/{endpoint}", params=p, timeout=timeout)
-        if r.status_code == 200:
-            return r.json()
-        return None
-    except Exception as e:
-        print(f"FMP hata: {e}", file=sys.stderr)
-        return None
+    
+    last_error = None
+    for attempt in range(max_retries):
+        try:
+            r = requests.get(f"{BASE}/{endpoint}", params=p, timeout=timeout)
+            if r.status_code == 200:
+                return r.json()
+            elif r.status_code == 429:
+                wait = retry_delay * (2 ** attempt)
+                print(f"  [retry] {endpoint} 429 rate limit, {wait}s bekleniyor (deneme {attempt+1}/{max_retries})", file=sys.stderr)
+                time.sleep(wait)
+                continue
+            elif r.status_code == 503:
+                print(f"  [retry] {endpoint} 503 overload, {retry_delay}s bekleniyor (deneme {attempt+1}/{max_retries})", file=sys.stderr)
+                time.sleep(retry_delay)
+                continue
+            else:
+                # 4xx kalıcı hata
+                return None
+        except (requests.ConnectionError, requests.Timeout) as e:
+            last_error = e
+            if attempt < max_retries - 1:
+                print(f"  [retry] {endpoint} network error, {retry_delay}s bekleniyor (deneme {attempt+1}/{max_retries})", file=sys.stderr)
+                time.sleep(retry_delay)
+                continue
+        except Exception as e:
+            last_error = e
+            break
+    
+    if last_error:
+        print(f"FMP hata {endpoint}: {last_error}", file=sys.stderr)
+    return None
 
 
 def safe_get(d, key, default=0):
@@ -294,6 +332,8 @@ def detect_market_regime():
         if sma200 > 0:
             spy_dist = (price - sma200) / sma200
     
+    # Sadece REGIME_ADJ'da bulunan key'leri kullan ('bear', 'normal', 'bull')
+    # 'bear_light' kaldırıldı (REGIME_ADJ'da tanımlı değildi, ölü kod)
     regime = 'normal'
     if vix is not None and spy_dist is not None:
         if vix < 16 and spy_dist > 0.05:
@@ -301,7 +341,8 @@ def detect_market_regime():
         elif vix > 28 or spy_dist < -0.05:
             regime = 'bear'
         elif vix > 22:
-            regime = 'bear_light'
+            # Eski 'bear_light' yerine bear'a düş (REGIME_ADJ tutarlı kalır)
+            regime = 'bear'
         else:
             regime = 'normal'
     
@@ -354,16 +395,18 @@ def reverse_dcf(current_price, shares, cash, debt, start_fcf, wacc=0.10, g_term=
     """
     Mevcut fiyatın implied ettiği yıllık büyüme oranını çözer.
     
-    Iterative search: 0% ile %50 arasında binary search.
+    v4.1 düzeltmeleri:
+    - Negatif FCF'de None döner (önceki: 1M'lık baz alıp anlamsız growth çıkarırdı)
+    - Binary search ceiling'e (%50) yapışma kontrolü — sonuç >= %49 ise None (anlamsız)
     """
     if shares <= 0 or current_price <= 0:
+        return None
+    if start_fcf <= 0:
+        # Negatif/sıfır FCF'de reverse DCF anlamsız
         return None
     
     target_equity = current_price * shares
     target_ev = target_equity + debt - cash
-    
-    if start_fcf <= 0:
-        start_fcf = max(1e6, start_fcf)  # ufak pozitif değer
     
     def calc_dcf_with_growth(g):
         fcfs = []
@@ -393,6 +436,13 @@ def reverse_dcf(current_price, shares, cash, debt, start_fcf, wacc=0.10, g_term=
             break
     
     implied_growth = (low + high) / 2
+    
+    # Ceiling yapışma kontrolü — anlamsız sonuç
+    if implied_growth >= 0.49:
+        return None  # Mevcut fiyat %50+ yıllık büyüme implied ediyor — saçma
+    if implied_growth <= 0.001:
+        return None  # 0% growth — yine anlamsız (FCF'i mevcut fiyatı haklı çıkarıyor)
+    
     return implied_growth
 
 
@@ -400,15 +450,24 @@ def reverse_dcf(current_price, shares, cash, debt, start_fcf, wacc=0.10, g_term=
 # YENİ v3: GROWTH YÖNTEMLERİ
 # =============================================================================
 
-def calc_peg(eps_fwd_2y, eps_ttm, growth_pct, peg_target):
-    """PEG Ratio yöntemi: Adil Forward P/E = PEG_target × growth"""
-    if not eps_fwd_2y or eps_fwd_2y <= 0 or growth_pct is None:
+def calc_peg(eps_fwd_1y, growth_pct, peg_target):
+    """
+    PEG Ratio yöntemi: Adil Forward P/E = PEG_target × growth(%)
+    Adil Fiyat = NTM EPS (1 yıl ileri) × Adil Forward P/E
+    
+    DİKKAT: 1 yıl ileri EPS (NTM) kullanılır, 2 yıl ileri DEĞİL.
+    2 yıl ileri EPS × P/E hesabı 2 yıl sonraki future-priced fair value verir,
+    bugünkü adil değer için iskonto edilmesi gerekirdi. Bunun yerine 1y ileri EPS direkt kullan.
+    
+    v4.1 düzeltmesi (v4.0'da eps_fwd_2y kullanıyordu, %30+ fazla yüksek değer veriyordu).
+    """
+    if not eps_fwd_1y or eps_fwd_1y <= 0 or growth_pct is None:
         return None
     if growth_pct < 0.05:
         return None  # Düşük büyümede PEG anlamsız
     growth_pct_for_peg = growth_pct * 100  # %30 büyüme = 30
     target_pe = peg_target * growth_pct_for_peg
-    return eps_fwd_2y * target_pe
+    return eps_fwd_1y * target_pe
 
 
 def calc_ev_forward_revenue(rev_fwd_2y, ev_rev_target, cash, debt, shares):
@@ -455,15 +514,19 @@ def calc_rule_of_40(revenue_growth_pct, fcf_margin_pct, revenue_ttm, cash, debt,
 # 9 YÖNTEM (mevcut) + GROWTH yöntemler
 # =============================================================================
 
-def calculate_methods(data, regime_key, sector_key, is_ai_megacap, mode, quality_mult=1.0):
+def calculate_methods(data, regime_key, sector_key, is_ai_megacap, mode, quality_mult=1.0, forward_outlier=False):
     """
     mode: 'GROWTH' veya 'BLENDED'
     quality_mult: v4 - Sektör lideri/kalite premium çarpanı (1.0-1.50)
+    forward_outlier: v4.1 - True ise Forward P/E ve EV/FWD x yöntemleri None'a düşürülür
+                     (forward EPS'in 2.5x'inden fazla şişkin olması, baz değişikliği veya
+                      L2P artefaktı nedeniyle yöntemler güvenilmez)
     """
     sector_mults = SECTOR_MULTIPLES.get(sector_key, SECTOR_MULTIPLES['generic'])
     adj = REGIME_ADJ[regime_key]
     
     eps_ttm = data['eps_ttm']
+    eps_fwd_1y = data.get('eps_fwd_1y')  # v4.1: PEG için 1y ileri EPS
     eps_fwd = data['eps_fwd_2y']
     bvps = data['bvps']
     revenue = data['revenue_ttm']
@@ -550,10 +613,12 @@ def calculate_methods(data, regime_key, sector_key, is_ai_megacap, mode, quality
     
     # === FORWARD (klasik 2 yöntem) ===
     
-    if eps_fwd and eps_fwd > 0:
+    if eps_fwd and eps_fwd > 0 and not forward_outlier:
         forward['Forward P/E'] = eps_fwd * sector_mults['fwd_pe'] * adj['fwd_pe'] * ai_mult['fwd_pe'] * qm
     else:
         forward['Forward P/E'] = None
+        if forward_outlier:
+            notes['Forward P/E'] = "⚠️ ELENDİ (forward outlier: EPS_FWD/EPS_TTM > 2.5x)"
     
     g_high = sector_mults['g_high'] + adj['g_high_adj']
     forward['DCF'] = dcf_calculate(
@@ -578,19 +643,36 @@ def calculate_methods(data, regime_key, sector_key, is_ai_megacap, mode, quality
         forward_growth = (eps_fwd / eps_ttm) ** 0.5 - 1
     
     # PEG (quality mult uygulanmaz - büyüme bazlı)
-    growth['PEG'] = calc_peg(eps_fwd, eps_ttm, forward_growth, adj['peg_target'])
+    # v4.1: 1 yıl ileri EPS kullanılır (eps_fwd_1y), 2 yıl ileri değil.
+    # eps_fwd_1y yoksa eps_ttm × (1+growth) ile yaklaşık hesapla.
+    if forward_outlier:
+        growth['PEG'] = None
+        notes['PEG'] = "⚠️ ELENDİ (forward outlier)"
+    else:
+        eps_for_peg = eps_fwd_1y
+        if not eps_for_peg and eps_ttm and eps_ttm > 0 and forward_growth:
+            eps_for_peg = eps_ttm * (1 + forward_growth)
+        growth['PEG'] = calc_peg(eps_for_peg, forward_growth, adj['peg_target'])
     
-    # EV/Forward Revenue (quality mult uygulanır)
-    growth['EV/FWD Revenue'] = calc_ev_forward_revenue(
-        rev_fwd, sector_mults['ev_rev'] * adj['ev_rev'] * ai_mult['ev_rev'] * qm,
-        cash, debt, shares
-    )
+    # EV/Forward Revenue (quality mult uygulanır) — outlier'da elimine
+    if forward_outlier:
+        growth['EV/FWD Revenue'] = None
+        notes['EV/FWD Revenue'] = "⚠️ ELENDİ (forward outlier)"
+    else:
+        growth['EV/FWD Revenue'] = calc_ev_forward_revenue(
+            rev_fwd, sector_mults['ev_rev'] * adj['ev_rev'] * ai_mult['ev_rev'] * qm,
+            cash, debt, shares
+        )
     
-    # EV/Forward EBITDA (quality mult uygulanır)
-    growth['EV/FWD EBITDA'] = calc_ev_forward_ebitda(
-        ebitda_fwd, sector_mults['ev_ebitda'] * adj['ev_ebitda'] * ai_mult['ev_ebitda'] * qm,
-        cash, debt, shares
-    )
+    # EV/Forward EBITDA (quality mult uygulanır) — outlier'da elimine
+    if forward_outlier:
+        growth['EV/FWD EBITDA'] = None
+        notes['EV/FWD EBITDA'] = "⚠️ ELENDİ (forward outlier)"
+    else:
+        growth['EV/FWD EBITDA'] = calc_ev_forward_ebitda(
+            ebitda_fwd, sector_mults['ev_ebitda'] * adj['ev_ebitda'] * ai_mult['ev_ebitda'] * qm,
+            cash, debt, shares
+        )
     
     # Rule of 40 (quality mult uygulanmaz - margin'i zaten içeriyor)
     rev_growth = data.get('revenue_growth_yoy')
@@ -666,16 +748,42 @@ def summarize(values_dict):
 
 
 def weighted_summary(traditional_summary, forward_growth_summary, w_trad, w_fwd):
-    """BLENDED modu için ağırlıklı medyan"""
-    if not traditional_summary or not forward_growth_summary:
-        return None
+    """
+    BLENDED modu için ağırlıklı medyan.
     
-    return {
-        'p25': traditional_summary.get('p25', 0) * w_trad + forward_growth_summary.get('p25', 0) * w_fwd,
-        'median': traditional_summary.get('median', 0) * w_trad + forward_growth_summary.get('median', 0) * w_fwd,
-        'p75': traditional_summary.get('p75', 0) * w_trad + forward_growth_summary.get('p75', 0) * w_fwd,
-        'weights': {'traditional': w_trad, 'forward_growth': w_fwd},
-    }
+    Eğer summary'lerden biri yoksa veya kritik alanı (p25/median/p75) None ise:
+    - Diğerine 100% ağırlık ver (fallback)
+    - Eğer ikisi de yoksa None döner
+    
+    Mevcut bug (v4.0'da): None × float TypeError verirdi (RUNTIME CRASH).
+    v4.1: None değerleri akıllı atlatma + ağırlık yeniden normalize.
+    """
+    has_trad = traditional_summary is not None
+    has_fwd = forward_growth_summary is not None
+    
+    if not has_trad and not has_fwd:
+        return None
+    if not has_trad:
+        # Sadece forward+growth varsa direkt kullan
+        return {**forward_growth_summary, "weights": {"traditional": 0.0, "forward_growth": 1.0}}
+    if not has_fwd:
+        # Sadece traditional varsa direkt kullan
+        return {**traditional_summary, "weights": {"traditional": 1.0, "forward_growth": 0.0}}
+    
+    out = {"weights": {"traditional": w_trad, "forward_growth": w_fwd}}
+    for key in ("p25", "median", "p75", "mean"):
+        t_val = traditional_summary.get(key)
+        f_val = forward_growth_summary.get(key)
+        # Akıllı None handling — birinin değeri yoksa diğerine 100% düş
+        if t_val is None and f_val is None:
+            out[key] = None
+        elif t_val is None:
+            out[key] = f_val
+        elif f_val is None:
+            out[key] = t_val
+        else:
+            out[key] = t_val * w_trad + f_val * w_fwd
+    return out
 
 
 def auto_decision(price, summary):
@@ -775,28 +883,58 @@ def analyze(ticker):
     else:
         fcf_normalized = fcf_ttm
     
-    # Forward EPS, Revenue, EBITDA (2 yıl ileri)
+    # Forward EPS, Revenue, EBITDA — dinamik yıl seçimi (v4.1)
+    # 2 yıl ileri (Forward P/E, EV/FWD x için) ve 1 yıl ileri (PEG için NTM EPS)
     eps_fwd_2y = None
+    eps_fwd_1y = None
     rev_fwd_2y = None
     ebitda_fwd_2y = None
     if est_list:
         sorted_est = sorted(est_list, key=lambda x: x.get('date', ''))
+        this_year = datetime.now().year
+        target_year_2y = str(this_year + 2)  # Bugün 2026 → 2028
+        target_year_1y = str(this_year + 1)  # Bugün 2026 → 2027
+        
+        # 2 yıl ileri estimate
         for est in sorted_est:
             date = est.get('date', '')
-            if date and date >= '2027':
+            if date and date >= target_year_2y:
                 eps_fwd_2y = safe_get(est, 'epsAvg')
                 rev_fwd_2y = safe_get(est, 'revenueAvg')
                 ebitda_fwd_2y = safe_get(est, 'ebitdaAvg')
                 break
+        # Fallback: en uzak yıl
         if not eps_fwd_2y and sorted_est:
             last = sorted_est[-1]
             eps_fwd_2y = safe_get(last, 'epsAvg')
             rev_fwd_2y = safe_get(last, 'revenueAvg')
             ebitda_fwd_2y = safe_get(last, 'ebitdaAvg')
+        
+        # 1 yıl ileri estimate (PEG için NTM EPS)
+        for est in sorted_est:
+            date = est.get('date', '')
+            if date and date >= target_year_1y and date < target_year_2y:
+                eps_fwd_1y = safe_get(est, 'epsAvg')
+                break
+        if not eps_fwd_1y and sorted_est:
+            # Fallback: 2 yıl ileri yoksa ilk available
+            for est in sorted_est:
+                date = est.get('date', '')
+                if date >= target_year_1y:
+                    eps_fwd_1y = safe_get(est, 'epsAvg')
+                    break
     
     market_cap = safe_get(quote, 'marketCap') or safe_get(profile, 'mktCap')
     price = safe_get(quote, 'price') or safe_get(profile, 'price')
-    shares = market_cap / price if price > 0 else 0
+    
+    # v4.1 düzeltmesi: shares hesabında çok katmanlı fallback
+    # Eskiden sadece mcap/price — eğer ikisi de 0 ise shares=0 olur (tüm hesaplar bozulur).
+    # Yeni: sharesOutstanding (FMP) öncelik, mcap/price fallback.
+    shares = (
+        safe_get(profile, 'sharesOutstanding')  # FMP profile'da varsa direkt
+        or safe_get(quote, 'sharesOutstanding')   # Quote'ta varsa
+        or (market_cap / price if price > 0 else 0)  # Hesaplı fallback
+    )
     
     cash = safe_get(bs, 'cashAndCashEquivalents') + safe_get(bs, 'shortTermInvestments')
     total_debt = safe_get(bs, 'totalDebt')
@@ -852,7 +990,7 @@ def analyze(ticker):
     quality_mult, quality_detail = calculate_quality_premium(roe, net_margin, sector_mults_for_qm)
     
     data_pack = {
-        'eps_ttm': eps_ttm, 'eps_fwd_2y': eps_fwd_2y, 'bvps': bvps,
+        'eps_ttm': eps_ttm, 'eps_fwd_1y': eps_fwd_1y, 'eps_fwd_2y': eps_fwd_2y, 'bvps': bvps,
         'revenue_ttm': revenue_ttm, 'revenue_fwd_2y': rev_fwd_2y,
         'ebit_ttm': ebit_ttm, 'ebitda_ttm': ebitda_ttm, 'ebitda_fwd_2y': ebitda_fwd_2y,
         'fcf_normalized': fcf_normalized, 'ocf_ttm': ocf_ttm,
@@ -861,11 +999,12 @@ def analyze(ticker):
         'revenue_growth_yoy': revenue_growth_yoy,
     }
     
-    # 3 senaryoda hesapla (v4: quality_mult ile)
+    # 3 senaryoda hesapla (v4: quality_mult ile, v4.1: forward_outlier ile)
     results = {}
     notes_all = {}
     for regime in ['bear', 'normal', 'bull']:
-        m = calculate_methods(data_pack, regime, sector_key, is_ai_megacap, mode, quality_mult)
+        m = calculate_methods(data_pack, regime, sector_key, is_ai_megacap, mode, quality_mult,
+                              forward_outlier=forward_outlier)
         results[regime] = m
         notes_all[regime] = m.get('notes', {})
     
