@@ -112,10 +112,22 @@ Bu doküman bugüne kadar (Mayıs 2026'a kadar) edinilen ve bu skill'in tasarım
 
 **Pipeline'a yansıması**: `05_finalize.py` `CAPITULATION` verdict'ini eler ama `eliminated` listesinde "fallen angel adayı" olarak takipte tutulur. Manuel rapor "Sonraki Adımlar" bölümünde bu hisselerin 2-3 hafta sonra yeniden değerlendirilmesi önerilir.
 
-## 15. Yönetim Conservative Olabilir (Reaffirmed Aslında Tabandır)
+## 16. Yetersiz Miktarda Raise = Analyst Hayal Kırıklığı
 
-**Sorun**: VST gibi şirketlerde yönetim transcript'te "we are reaffirming our guidance" dese bile ima ediyor olabilir ki bu **taban** seviyesidir, gerçek beklenti üst-bant.
+**Sorun**: Şirket transcript'te "we raised our guidance" dese bile, raise miktarı Q1 beat'in altındaysa analistler "effective lower" yorumlar. Yani RAISED guidance ≠ analyst tepkisi pozitif.
 
-**Örnek**: VST CFO'su "These views remain below many third-party forecasts and ISO projections" dedi — yani şirket kendi guidance'ını conservative görüyor. "Reaffirmed" kelimesi yanıltıcı olabilir, gerçekte upward sinyali var.
+**Örnek**: HUBS Q1 2026 — Q1 beat $18M, FY guidance raise sadece $9M (beat'in yarısı). Analistler "%50 below the beat raise = soft" diye yorumladı, 12 broker hedef düşürdü (CAPITULATION).
 
-**Pipeline'a yansıması**: `04_post_earnings_signals.py` transcript verdict'i "REAFFIRMED" olsa bile guidance cümleleri içinde "below... forecasts", "midpoint... opportunity", "expect to update guidance ranges following X" gibi ifadeler aranır. Bunlar "REAFFIRMED+UPSIDE_HINT" olarak alt-kategori oluşturabilir (gelecek versiyon).
+**Pipeline'a yansıması**: Skill HUBS'ı `eliminated` listesine alıyor çünkü analyst CAPITULATION verdict'i transcript RAISED'a baskın. Doğru karar — analyst yön net negatifse, transcript RAISED olsa bile shortlist'ten çıkar.
+
+**Gelecek geliştirme**: Transcript verdict'i RAISED + analyst NET_LOWER birlikte tespit edilirse "WEAK_RAISE" alt kategorisi oluşturulabilir. Bu durumda hisse 2-3 hafta sonra "fallen angel" adayı olarak yeniden değerlendirilir.
+
+## 17. Smart Money Tek Yatırımcıya Bakma
+
+**Sorun**: Skill başlangıçta sadece 5 büyük yatırımcıya bakıyordu (Druckenmiller, Buffett, Burry, Tepper, Ackman). Eksik tarama smart money sinyalini kaçırabilir.
+
+**Örnek**: VST için ilk tarama Druckenmiller/Buffett/Burry'de yoktu, "smart money tezimizi onaylamıyor" dedik. Tepper'ı eklediğimizde **VST'nin Tepper portföyünde olduğunu** keşfettik (Q4 2025).
+
+**Pipeline'a yansıması**: `04_post_earnings_signals.py` `SMART_MONEY` dict'i Tepper'ı içeriyor (5'li set yeterli). Ama daha kapsamlı için `references/smart_money_ciks.md`'deki 18 yatırımcının hepsi taranabilir (5 yerine 18 API call ekstra, kabul edilebilir).
+
+**İdeal**: Pipeline `--smart-money-set` argümanı ile genişletilebilir, default 5 yatırımcı, opsiyonel "expanded" modda 15+ yatırımcı.

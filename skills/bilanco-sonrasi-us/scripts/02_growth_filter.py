@@ -19,6 +19,7 @@ Kullanım:
 import os
 import sys
 import json
+import time
 import argparse
 import requests
 
@@ -26,16 +27,30 @@ API_KEY = os.environ.get("FMP_API_KEY", "g1GFJZtV5rCP49UCir4WuP56VjhmA6F8")
 BASE = "https://financialmodelingprep.com/stable"
 
 
-def fmp_get(endpoint, params=None):
+def fmp_get(endpoint, params=None, max_retries=3, retry_delay=1.5):
+    """FMP API çağrısı. 429/503/network için retry, 4xx için None döner."""
     if params is None:
         params = {}
     params["apikey"] = API_KEY
-    try:
-        r = requests.get(f"{BASE}/{endpoint}", params=params, timeout=20)
-        if r.status_code == 200:
-            return r.json()
-    except Exception:
-        pass
+    for attempt in range(max_retries):
+        try:
+            r = requests.get(f"{BASE}/{endpoint}", params=params, timeout=20)
+            if r.status_code == 200:
+                return r.json()
+            elif r.status_code == 429:
+                time.sleep(retry_delay * (2 ** attempt))
+                continue
+            elif r.status_code == 503:
+                time.sleep(retry_delay)
+                continue
+            else:
+                return None
+        except (requests.ConnectionError, requests.Timeout):
+            if attempt < max_retries - 1:
+                time.sleep(retry_delay)
+                continue
+        except Exception:
+            break
     return None
 
 
@@ -68,11 +83,18 @@ def calc_growth(stock):
     loss_to_profit_yoy = (ni4 < 0 and ni0 > 0)
     loss_to_profit_qoq = (ni1 < 0 and ni0 > 0)
     
+    # Loss narrowing: her iki çeyrek de zarar ama zarar daraldı (örn. -100 -> -50)
+    # Bu da pozitif bir geçiş sinyalidir — turnaround sürecinde
+    loss_narrowing_yoy = (ni4 < 0 and ni0 < 0 and abs(ni0) < abs(ni4) * 0.5)  # Zarar yarıdan az
+    loss_narrowing_qoq = (ni1 < 0 and ni0 < 0 and abs(ni0) < abs(ni1) * 0.7)  # QoQ zarar daralma daha yumuşak
+    
     # Kriter geçişleri
     pass_yoy_rev = (yoy_rev is not None and yoy_rev >= 8)
-    pass_yoy_ni = loss_to_profit_yoy or (yoy_ni_pct is not None and ni4 > 0 and yoy_ni_pct >= 15)
+    pass_yoy_ni = (loss_to_profit_yoy or loss_narrowing_yoy
+                   or (yoy_ni_pct is not None and ni4 > 0 and yoy_ni_pct >= 15))
     pass_qoq_rev = (qoq_rev is not None and qoq_rev >= 3)
-    pass_qoq_ni = loss_to_profit_qoq or (qoq_ni_pct is not None and ni1 > 0 and qoq_ni_pct >= 0)
+    pass_qoq_ni = (loss_to_profit_qoq or loss_narrowing_qoq
+                   or (qoq_ni_pct is not None and ni1 > 0 and qoq_ni_pct >= 0))
     
     passed = sum([pass_yoy_rev, pass_yoy_ni, pass_qoq_rev, pass_qoq_ni])
     if not pass_yoy_rev or passed < 3:
@@ -96,6 +118,8 @@ def calc_growth(stock):
         "qoq_ni_pct": qoq_ni_pct,
         "loss_to_profit_yoy": loss_to_profit_yoy,
         "loss_to_profit_qoq": loss_to_profit_qoq,
+        "loss_narrowing_yoy": loss_narrowing_yoy,
+        "loss_narrowing_qoq": loss_narrowing_qoq,
         "passed_count": passed,
     }
 

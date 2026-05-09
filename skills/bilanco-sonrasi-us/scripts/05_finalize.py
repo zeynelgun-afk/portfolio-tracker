@@ -31,15 +31,28 @@ def calculate_stars(stock):
         stars += 1
         reasons.append(f"Analist hedef +{upside:.0f}% upside")
     
-    # ★ 2: Transcript guidance RAISED veya REAFFIRMED + güçlü
+    # ★ 2: Transcript guidance — RAISED veya REAFFIRMED + güçlü forward-looking sinyali
     ts = sigs.get("transcript", {})
     if ts.get("verdict") == "RAISED":
         stars += 1
         reasons.append("CFO/CEO 'raising guidance' söyledi")
-    elif ts.get("verdict") == "REAFFIRMED" and ts.get("has_reaffirm"):
-        # REAFFIRMED + transcript güçlü forward-looking → 1 yıldız (VST örneği)
-        stars += 1
-        reasons.append("Reaffirmed guidance (yapısal upside sinyali ile)")
+    elif ts.get("verdict") == "REAFFIRMED":
+        # REAFFIRMED için yıldız yalnızca transcript'te explicit upside hint varsa
+        # (örn. VST: "below third-party forecasts", "expect to update guidance ranges")
+        sentences = ts.get("guidance_sentences", [])
+        upside_hint_phrases = [
+            "below many third-party", "below most analyst", "conservatively",
+            "expect to update", "plan to update", "following the closing",
+            "incremental upside", "additional opportunity", "midpoint opportunity",
+            "visible upside", "above the midpoint", "trending toward the high end",
+        ]
+        has_upside_hint = any(
+            any(p in s.get("text", "").lower() for p in upside_hint_phrases)
+            for s in sentences
+        )
+        if has_upside_hint:
+            stars += 1
+            reasons.append("Reaffirmed guidance + upside hint (yönetim conservative)")
     # LOWERED veya QUALITATIVE_ONLY için yıldız yok
     
     # ★ 3: Net analyst target raised > lowered (post-earnings)
@@ -50,15 +63,26 @@ def calculate_stars(stock):
         stars += 1
         reasons.append(f"Analist net raise: {raised}↑ vs {lowered}↓")
     
-    # ★ 4: 13F shares net birikim
+    # ★ 4: 13F shares net birikim — mcap'a göre normalize
     inst = sigs.get("institutional", {})
     shares_change = inst.get("numberOf13FsharesChange", 0) or 0
-    if shares_change > 1_000_000:
+    mcap = stock.get("mcap", 0) or 0
+    price = stock.get("price", 0) or 0
+    
+    # Threshold: total shares outstanding'in en az %0.3'ü kadar birikim
+    # (mcap büyüdükçe absolute threshold da büyür, küçük caps korunur)
+    shares_outstanding = (mcap / price) if price > 0 else 0
+    threshold_pct = 0.003  # %0.3
+    threshold_shares = max(shares_outstanding * threshold_pct, 500_000)  # min 500K
+    
+    if shares_change >= threshold_shares:
         stars += 1
-        reasons.append(f"13F birikim +{shares_change/1e6:.1f}M shares")
-    elif inst.get("verdict") == "ACCUMULATION":
+        pct = (shares_change / shares_outstanding * 100) if shares_outstanding > 0 else 0
+        reasons.append(f"13F birikim +{shares_change/1e6:.1f}M shares ({pct:.2f}% of outstanding)")
+    elif inst.get("verdict") == "ACCUMULATION" and shares_change > 0:
+        # Yeni isim girişi + birikim, küçük olsa bile pozitif sinyal
         stars += 1
-        reasons.append("13F: yeni yatırımcı girişi + birikim")
+        reasons.append(f"13F: yeni yatırımcı girişi (+{inst.get('investorsHoldingChange', 0)} isim) + birikim")
     
     # ★ 5: Smart money portföyünde
     sm = sigs.get("smart_money_owners") or []

@@ -17,6 +17,7 @@ import os
 import sys
 import json
 import re
+import time
 import argparse
 import requests
 from datetime import datetime, date
@@ -34,47 +35,199 @@ SMART_MONEY = {
 }
 
 # Fiscal year tuzakları — calendar Q1 != fiscal Q1 olan şirketler
+# year_offset: calendar quarter → fiscal year offset (BILL FY2026 = Tem 2025-Haz 2026,
+#              dolayısıyla calendar Q3 (Tem-Eyl) ve Q4 (Eki-Ara) BILL FY2026 Q1/Q2 olur, year+1)
 # Genişletilebilir, başlangıç seti:
 NON_CALENDAR_FISCAL = {
-    "BILL": {"fiscal_year_end_month": 6, "calendar_to_fiscal_q": {1: 3, 2: 4, 3: 1, 4: 2}},
-    "HUBS": {"fiscal_year_end_month": 12, "calendar_to_fiscal_q": {1: 1, 2: 2, 3: 3, 4: 4}},  # actually calendar
-    "CRM":  {"fiscal_year_end_month": 1, "calendar_to_fiscal_q": {1: 4, 2: 1, 3: 2, 4: 3}},
-    "ORCL": {"fiscal_year_end_month": 5, "calendar_to_fiscal_q": {1: 3, 2: 4, 3: 1, 4: 2}},
-    "ADBE": {"fiscal_year_end_month": 11, "calendar_to_fiscal_q": {1: 1, 2: 2, 3: 3, 4: 4}},  # close to calendar
-    "NKE":  {"fiscal_year_end_month": 5, "calendar_to_fiscal_q": {1: 3, 2: 4, 3: 1, 4: 2}},
-    "CSCO": {"fiscal_year_end_month": 7, "calendar_to_fiscal_q": {1: 2, 2: 4, 3: 1, 4: 2}},
-    "WMT":  {"fiscal_year_end_month": 1, "calendar_to_fiscal_q": {1: 4, 2: 1, 3: 2, 4: 3}},
+    "BILL": {
+        "calendar_to_fiscal_q": {1: 3, 2: 4, 3: 1, 4: 2},
+        "year_offset":          {1: 0, 2: 0, 3: 1, 4: 1},  # Tem-Haz fiscal year
+    },
+    "CRM":  {  # Salesforce, Şubat biten fiscal year (FY26 = Şub 2025 - Oca 2026)
+        "calendar_to_fiscal_q": {1: 4, 2: 1, 3: 2, 4: 3},
+        "year_offset":          {1: 0, 2: 1, 3: 1, 4: 1},
+    },
+    "ORCL": {  # Oracle, Haziran biten fiscal year (FY26 = Haz 2025 - May 2026)
+        "calendar_to_fiscal_q": {1: 3, 2: 4, 3: 1, 4: 2},
+        "year_offset":          {1: 0, 2: 0, 3: 1, 4: 1},
+    },
+    "NKE":  {  # Nike, Mayıs biten fiscal year (FY26 = Haz 2025 - May 2026)
+        "calendar_to_fiscal_q": {1: 3, 2: 4, 3: 1, 4: 2},
+        "year_offset":          {1: 0, 2: 0, 3: 1, 4: 1},
+    },
+    "CSCO": {  # Cisco, Temmuz biten fiscal year
+        "calendar_to_fiscal_q": {1: 3, 2: 4, 3: 1, 4: 2},
+        "year_offset":          {1: 0, 2: 0, 3: 1, 4: 1},
+    },
+    "WMT":  {  # Walmart, Ocak biten fiscal year (FY27 = Şub 2026 - Oca 2027)
+        "calendar_to_fiscal_q": {1: 4, 2: 1, 3: 2, 4: 3},
+        "year_offset":          {1: 0, 2: 1, 3: 1, 4: 1},
+    },
+    "HD":   {  # Home Depot, Ocak biten fiscal year
+        "calendar_to_fiscal_q": {1: 4, 2: 1, 3: 2, 4: 3},
+        "year_offset":          {1: 0, 2: 1, 3: 1, 4: 1},
+    },
+    "TGT":  {  # Target, Ocak biten fiscal year
+        "calendar_to_fiscal_q": {1: 4, 2: 1, 3: 2, 4: 3},
+        "year_offset":          {1: 0, 2: 1, 3: 1, 4: 1},
+    },
+    "MU":   {  # Micron, Ağustos biten fiscal year (FY26 = Eyl 2025 - Ağu 2026)
+        "calendar_to_fiscal_q": {1: 2, 2: 3, 3: 4, 4: 1},
+        "year_offset":          {1: 0, 2: 0, 3: 0, 4: 1},
+    },
+    "ADBE": {  # Adobe, Kasım sonu biten fiscal year (FY26 = Ara 2025 - Kas 2026)
+        "calendar_to_fiscal_q": {1: 1, 2: 2, 3: 3, 4: 4},
+        "year_offset":          {1: 0, 2: 0, 3: 0, 4: 0},  # neredeyse calendar
+    },
+    "AVGO": {  # Broadcom, Ekim biten fiscal year (FY26 = Kas 2025 - Eki 2026)
+        "calendar_to_fiscal_q": {1: 1, 2: 2, 3: 3, 4: 4},
+        "year_offset":          {1: 0, 2: 0, 3: 0, 4: 1},
+    },
+    "FDX":  {  # FedEx, Mayıs biten fiscal year
+        "calendar_to_fiscal_q": {1: 3, 2: 4, 3: 1, 4: 2},
+        "year_offset":          {1: 0, 2: 0, 3: 1, 4: 1},
+    },
 }
 
 
-def fmp_get(endpoint, params=None):
+def fmp_get(endpoint, params=None, max_retries=3, retry_delay=1.5):
+    """
+    FMP API çağrısı.
+    
+    Retry stratejisi:
+      - 200: başarılı, JSON döner
+      - 429 (rate limit): retry_delay × 2 ile bekle, max_retries kadar dene
+      - 503 (transient overload): retry_delay ile bekle, max_retries kadar dene
+      - Network exception (ConnectionError, Timeout): retry_delay ile bekle, max_retries kadar dene
+      - Diğer 4xx (400, 401, 403, 404): hata, None dön (retry yok)
+    
+    Tüm denemeler başarısızsa None döner.
+    """
     if params is None:
         params = {}
     params["apikey"] = API_KEY
-    try:
-        r = requests.get(f"{BASE}/{endpoint}", params=params, timeout=20)
-        if r.status_code == 200:
-            return r.json()
-    except Exception:
-        pass
+    
+    last_error = None
+    for attempt in range(max_retries):
+        try:
+            r = requests.get(f"{BASE}/{endpoint}", params=params, timeout=20)
+            if r.status_code == 200:
+                return r.json()
+            elif r.status_code == 429:
+                # Rate limit — exponential backoff
+                wait = retry_delay * (2 ** attempt)
+                print(f"  [retry] {endpoint} rate limit (429), {wait}s bekleniyor (deneme {attempt+1}/{max_retries})", file=sys.stderr)
+                time.sleep(wait)
+                continue
+            elif r.status_code == 503:
+                # Transient overload
+                wait = retry_delay
+                print(f"  [retry] {endpoint} server overload (503), {wait}s bekleniyor (deneme {attempt+1}/{max_retries})", file=sys.stderr)
+                time.sleep(wait)
+                continue
+            else:
+                # 4xx errors — kalıcı, retry yok
+                return None
+        except (requests.ConnectionError, requests.Timeout) as e:
+            last_error = e
+            if attempt < max_retries - 1:
+                print(f"  [retry] {endpoint} network error, {retry_delay}s bekleniyor (deneme {attempt+1}/{max_retries}): {e}", file=sys.stderr)
+                time.sleep(retry_delay)
+                continue
+        except Exception as e:
+            last_error = e
+            break
+    
+    if last_error:
+        print(f"  [error] {endpoint} tüm denemeler başarısız: {last_error}", file=sys.stderr)
     return None
 
 
-def fiscal_quarter_for_calendar(symbol, calendar_quarter):
-    """Verilen takvim çeyreğine karşılık gelen fiscal quarter."""
+def fiscal_period_for_calendar(symbol, calendar_year, calendar_quarter):
+    """
+    Verilen takvim çeyreğine karşılık gelen fiscal (year, quarter) tuple'ını döndürür.
+    
+    Calendar Q4 2025 BILL bilançosu için:
+      - calendar_to_fiscal_q[4] = 2  (BILL FY Q2)
+      - year_offset[4] = 1           (calendar Q4 -> fiscal year+1)
+      - Sonuç: (2026, 2) — BILL FY26 Q2 = Eki-Ara 2025
+    
+    Calendar Q1 2026 BILL bilançosu için:
+      - calendar_to_fiscal_q[1] = 3  (BILL FY Q3)
+      - year_offset[1] = 0           (calendar Q1 -> aynı fiscal year)
+      - Sonuç: (2026, 3) — BILL FY26 Q3 = Oca-Mar 2026
+    
+    Standart calendar şirketler için (fiscal year = calendar year):
+      - Sonuç: (calendar_year, calendar_quarter) — değişiklik yok
+    """
     fc = NON_CALENDAR_FISCAL.get(symbol)
-    if fc:
-        return fc["calendar_to_fiscal_q"].get(calendar_quarter, calendar_quarter)
-    return calendar_quarter
+    if not fc:
+        return calendar_year, calendar_quarter  # standart calendar şirket
+    
+    fiscal_q = fc["calendar_to_fiscal_q"].get(calendar_quarter, calendar_quarter)
+    year_off = fc["year_offset"].get(calendar_quarter, 0)
+    return calendar_year + year_off, fiscal_q
 
 
 # 4a) ANALİST REVİZE YÖN SAYIMI -------------------------------------------------
 
+# Title pattern'leri — false positive'i azaltmak için "price target" bağlamı şart
+# (örn. "Concerns are raised over X" RAISED olarak işaretlenmez çünkü "price target" geçmez)
+RAISE_PATTERNS = [
+    r"raise[ds]?\s+(?:its\s+|the\s+|their\s+)?(?:price\s+target|pt|target|outlook)",
+    r"lift[seding]*\s+(?:its\s+|the\s+|their\s+)?(?:price\s+target|pt|target)",
+    r"increas[eding]*\s+(?:its\s+|the\s+|their\s+)?(?:price\s+target|pt|target)",
+    r"boost[seding]*\s+(?:its\s+|the\s+|their\s+)?(?:price\s+target|pt|target)",
+    r"hike[ds]?\s+(?:its\s+|the\s+|their\s+)?(?:price\s+target|pt|target)",
+    r"price\s+target\s+(?:raised|increased|lifted|boosted|hiked|upgraded)",
+    r"new\s+street\s+high",
+    # Rating upgrades (şirket adı arada olabilir, lazy match)
+    r"upgrad[eds]+\s+\S+\s+(?:from\s+\w+\s+)?to\s+(?:buy|outperform|overweight|strong\s+buy)",
+    r"upgrad[eds]+\s+(?:to|its\s+rating)\s+(?:buy|outperform|overweight)",
+]
+
+LOWER_PATTERNS = [
+    r"lower[seding]*\s+(?:its\s+|the\s+|their\s+)?(?:price\s+target|pt|target|outlook)",
+    r"reduc[eding]*\s+(?:its\s+|the\s+|their\s+)?(?:price\s+target|pt|target)",
+    r"cut[s]?\s+(?:its\s+|the\s+|their\s+)?(?:price\s+target|pt|target)",
+    r"slash[eding]*\s+(?:its\s+|the\s+|their\s+)?(?:price\s+target|pt|target)",
+    r"trim[meding]*\s+(?:its\s+|the\s+|their\s+)?(?:price\s+target|pt|target)",
+    r"price\s+target\s+(?:lowered|reduced|cut|slashed|trimmed|downgraded)",
+    # Rating downgrades (şirket adı arada olabilir)
+    r"downgrad[eds]+\s+\S+\s+(?:from\s+\w+\s+)?to\s+(?:hold|underperform|underweight|sell|neutral)",
+    r"downgrad[eds]+\s+(?:to|its\s+rating)\s+(?:hold|underperform|underweight|sell)",
+]
+
+
+def classify_revision_title(title):
+    """Analist haber başlığını RAISED/LOWERED/NEUTRAL olarak sınıflandır.
+    Tek kelime tabanlı eşleşme yerine 'price target' bağlamına bağlı pattern."""
+    if not title:
+        return "NEUTRAL"
+    t = title.lower()
+    
+    for p in RAISE_PATTERNS:
+        if re.search(p, t):
+            return "RAISED"
+    for p in LOWER_PATTERNS:
+        if re.search(p, t):
+            return "LOWERED"
+    
+    # Fallback: pattern'ler eşleşmediyse ama "PT" veya "target" + (raise/lower variant) varsa
+    if "target" in t or "pt" in t or "price" in t:
+        if any(w in t for w in ["raise", "lift", "boost", "hike", "increase", "upgrade"]):
+            return "RAISED"
+        if any(w in t for w in ["lower", "cut", "slash", "trim", "reduce", "downgrade"]):
+            return "LOWERED"
+    
+    return "NEUTRAL"
+
+
 def analyst_revisions(symbol, earnings_date_str):
     """Bilanço sonrası analist hedef revize haberleri."""
-    pt_news = fmp_get("price-target-news", {"symbol": symbol, "limit": 20})
+    pt_news = fmp_get("price-target-news", {"symbol": symbol, "limit": 50})  # 20 → 50, mega-cap'ler için
     if not pt_news or not isinstance(pt_news, list):
-        return {"raised": 0, "lowered": 0, "neutral": 0, "items": []}
+        return {"raised": 0, "lowered": 0, "neutral": 0, "verdict": "NO_DATA", "items": []}
     
     earn_d = datetime.strptime(earnings_date_str, "%Y-%m-%d").date()
     raised = lowered = neutral = 0
@@ -89,19 +242,17 @@ def analyst_revisions(symbol, earnings_date_str):
             continue
         if pub_d < earn_d:
             continue  # Bilanço öncesi
-        title = (n.get("newsTitle") or "").lower()
+        title = n.get("newsTitle") or ""
         new_pt = n.get("priceTarget") or n.get("adjPriceTarget") or 0
         old_pt = n.get("priceWhenPosted") or 0
         analyst = n.get("analystName") or n.get("analystCompany") or "N/A"
         
-        if "raise" in title or "boost" in title or "upgrade" in title:
-            direction = "RAISED"
+        direction = classify_revision_title(title)
+        if direction == "RAISED":
             raised += 1
-        elif "lower" in title or "cut" in title or "downgrade" in title or "reduce" in title:
-            direction = "LOWERED"
+        elif direction == "LOWERED":
             lowered += 1
         else:
-            direction = "NEUTRAL"
             neutral += 1
         
         items.append({
@@ -110,7 +261,7 @@ def analyst_revisions(symbol, earnings_date_str):
             "new_target": new_pt,
             "prior_price": old_pt,
             "direction": direction,
-            "title": n.get("newsTitle"),
+            "title": title,
         })
     
     # Yorum
@@ -143,17 +294,47 @@ def analyst_revisions(symbol, earnings_date_str):
 
 # 4b) TRANSCRIPT GUIDANCE EXTRACT ----------------------------------------------
 
-GUIDANCE_KEYWORDS = {
-    'guidance': 3, 'outlook': 3, 'reaffirm': 3, 'raise': 3, 'midpoint': 3,
-    'partnership': 3, 'anthropic': 5,
-    'expect': 2, 'forecast': 2, 'project': 2, 'lower': 2,
-    'fiscal year': 2, 'full year': 2, 'second quarter': 2, '2027': 2,
-    'q2': 1, 'q3': 1, 'q4': 1, '2026': 1, 'range': 1,
+# Phrase-tabanlı skor sistemi — tek kelime tabanlı yerine bağlam-aware
+# (örn. "lower bound" pozitif olabilir, "raises a question" guidance ile ilgisiz)
+GUIDANCE_PHRASES = {
+    # YÜKSEK SİNYAL (skor 5)
+    "raising the midpoint": 5, "raised our guidance": 5, "raise our guidance": 5,
+    "raising guidance": 5, "raised guidance": 5,
+    "lifting our guidance": 5, "lifted our guidance": 5,
+    "increasing our guidance": 5, "increased our guidance": 5,
+    "lowering our guidance": 5, "lowered our guidance": 5,
+    "reducing our guidance": 5, "cutting our guidance": 5,
+    
+    # ORTA SİNYAL (skor 4)
+    "reaffirming": 4, "reaffirmed": 4, "we reaffirm": 4,
+    "raising our outlook": 4, "lowered our outlook": 4,
+    "updating our guidance": 4, "revised guidance": 4,
+    "fiscal year guidance": 4, "full year guidance": 4, "full-year guidance": 4,
+    "second quarter guidance": 4, "third quarter guidance": 4, "fourth quarter guidance": 4,
+    "next quarter guidance": 4,
+    
+    # FORWARD-LOOKING SİNYAL (skor 3)
+    "we expect": 3, "we anticipate": 3, "we project": 3, "we forecast": 3,
+    "looking ahead": 3, "going forward": 3,
+    "for the full year": 3, "for fiscal year": 3, "for the second quarter": 3,
+    "midpoint of our": 3, "range of our": 3,
+    "outlook for": 3,
+    
+    # KATALİST/PARTNERSHIP (skor 4-5)
+    "strategic partnership": 4, "anthropic": 5, "openai": 4,
+    "acquisition close": 4, "deal close": 4, "merger close": 4,
+    
+    # 2027/uzun vadeli sinyal (skor 3)
+    "2027": 3, "2028": 3, "long-term": 3, "long term": 3,
+    "multi-year": 3, "multiyear": 3,
 }
 
 
-def extract_guidance(content, max_n=12, min_score=4):
-    """Transcript metninden guidance/forward-looking cümleleri extract et."""
+def extract_guidance(content, max_n=12, min_score=3):
+    """
+    Transcript metninden guidance/forward-looking cümleleri extract et.
+    Phrase-tabanlı skor — tek kelime false positive'lerini azaltır.
+    """
     if not content:
         return []
     sentences = re.split(r'(?<=[.!?])\s+', content)
@@ -163,7 +344,8 @@ def extract_guidance(content, max_n=12, min_score=4):
         if len(s) < 30 or len(s) > 800:
             continue
         s_lower = s.lower()
-        score = sum(weight for k, weight in GUIDANCE_KEYWORDS.items() if k in s_lower)
+        # Phrase eşleşmesi (tek kelime değil)
+        score = sum(weight for phrase, weight in GUIDANCE_PHRASES.items() if phrase in s_lower)
         if score >= min_score:
             scored.append((score, s))
     scored.sort(key=lambda x: -x[0])
@@ -183,16 +365,18 @@ def extract_guidance(content, max_n=12, min_score=4):
 
 def transcript_signal(symbol, year, calendar_quarter):
     """Transcript çek + guidance extract + RAISED/REAFFIRMED/LOWERED tespit."""
-    fiscal_q = fiscal_quarter_for_calendar(symbol, calendar_quarter)
-    t = fmp_get("earning-call-transcript", {"symbol": symbol, "year": year, "quarter": fiscal_q})
+    fiscal_year, fiscal_q = fiscal_period_for_calendar(symbol, year, calendar_quarter)
+    t = fmp_get("earning-call-transcript", {"symbol": symbol, "year": fiscal_year, "quarter": fiscal_q})
     if not t or not isinstance(t, list) or len(t) == 0:
-        # Belki calendar_quarter de denenmeli
-        if fiscal_q != calendar_quarter:
+        # Fallback: calendar year/quarter de denenmeli (mapping yanlış olabilir)
+        if (fiscal_year, fiscal_q) != (year, calendar_quarter):
             t = fmp_get("earning-call-transcript", {"symbol": symbol, "year": year, "quarter": calendar_quarter})
             if not t or not isinstance(t, list) or len(t) == 0:
-                return {"available": False, "reason": "transcript_yok"}
+                return {"available": False, "reason": "transcript_yok",
+                        "tried": [f"fiscal:Y{fiscal_year}Q{fiscal_q}", f"calendar:Y{year}Q{calendar_quarter}"]}
         else:
-            return {"available": False, "reason": "transcript_yok"}
+            return {"available": False, "reason": "transcript_yok",
+                    "tried": [f"Y{year}Q{calendar_quarter}"]}
     
     item = t[0]
     content = item.get("content", "")
@@ -203,12 +387,46 @@ def transcript_signal(symbol, year, calendar_quarter):
     
     guidance_sentences = extract_guidance(content, max_n=12)
     
-    # Verdikt: cümlelerde anahtar kelimeler ara
+    # PHRASE-BASED VERDIKT (tek kelime tabanlı tespit yerine, false positive azaltılır)
     full_lower = content.lower()
-    has_raise = "raising the midpoint" in full_lower or "raised our" in full_lower or "increasing the" in full_lower or "we are raising" in full_lower
-    has_reaffirm = "reaffirm" in full_lower
-    has_lower = "lowering our" in full_lower or "we are lowering" in full_lower
     
+    # RAISED phrases — geniş set
+    raise_phrases = [
+        "raising the midpoint", "raised our", "we are raising", "we have raised",
+        "raising guidance", "raised guidance", "raise guidance",
+        "raising our outlook", "raised our outlook", "raise our outlook",
+        "raising our full year", "raised our full year",
+        "lifting our guidance", "lifted our guidance",
+        "increasing our guidance", "increased our guidance",
+        "boosting our guidance", "boosted our guidance",
+        "revised guidance higher", "revising guidance higher",
+        "raising the lower end", "raising the upper end",
+        "raising the low end", "raising the high end",
+        "increasing our outlook", "increased our outlook",
+    ]
+    has_raise = any(p in full_lower for p in raise_phrases)
+    
+    # LOWERED phrases — geniş set
+    lower_phrases = [
+        "lowering our guidance", "lowered our guidance", "lower our guidance",
+        "lowering our outlook", "lowered our outlook",
+        "we are lowering", "we have lowered",
+        "reducing our guidance", "reduced our guidance",
+        "cutting our guidance", "cut our guidance",
+        "revising guidance lower", "revising guidance downward",
+        "trimming our outlook", "trimmed our outlook",
+    ]
+    has_lower = any(p in full_lower for p in lower_phrases)
+    
+    # REAFFIRMED phrases
+    reaffirm_phrases = [
+        "reaffirming", "reaffirmed", "we reaffirm",
+        "maintaining our guidance", "maintain our guidance",
+        "unchanged guidance", "guidance unchanged",
+    ]
+    has_reaffirm = any(p in full_lower for p in reaffirm_phrases)
+    
+    # Verdict önceliği: RAISED > LOWERED > REAFFIRMED > QUALITATIVE
     if has_raise:
         verdict = "RAISED"
     elif has_lower:
@@ -216,13 +434,15 @@ def transcript_signal(symbol, year, calendar_quarter):
     elif has_reaffirm:
         verdict = "REAFFIRMED"
     else:
-        verdict = "QUALITATIVE_ONLY"  # CELH örneği
+        verdict = "QUALITATIVE_ONLY"  # CELH örneği — niteliksel ifadeler var ama RAISED/LOWERED phrase yok
     
     return {
         "available": True,
         "date": date,
-        "fiscal_quarter": fiscal_q,
+        "fiscal_year_used": fiscal_year,
+        "fiscal_quarter_used": fiscal_q,
         "calendar_quarter": calendar_quarter,
+        "calendar_year": year,
         "content_length": len(content),
         "verdict": verdict,
         "has_raise": has_raise,

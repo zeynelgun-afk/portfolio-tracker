@@ -21,6 +21,7 @@ Kullanım:
 import os
 import sys
 import json
+import time
 import argparse
 import requests
 from statistics import mean, stdev
@@ -44,16 +45,30 @@ SECTOR_EVEBITDA_FAIR = {
 }
 
 
-def fmp_get(endpoint, params=None):
+def fmp_get(endpoint, params=None, max_retries=3, retry_delay=1.5):
+    """FMP API çağrısı. 429/503/network için retry, 4xx için None döner."""
     if params is None:
         params = {}
     params["apikey"] = API_KEY
-    try:
-        r = requests.get(f"{BASE}/{endpoint}", params=params, timeout=20)
-        if r.status_code == 200:
-            return r.json()
-    except Exception:
-        pass
+    for attempt in range(max_retries):
+        try:
+            r = requests.get(f"{BASE}/{endpoint}", params=params, timeout=20)
+            if r.status_code == 200:
+                return r.json()
+            elif r.status_code == 429:
+                time.sleep(retry_delay * (2 ** attempt))
+                continue
+            elif r.status_code == 503:
+                time.sleep(retry_delay)
+                continue
+            else:
+                return None
+        except (requests.ConnectionError, requests.Timeout):
+            if attempt < max_retries - 1:
+                time.sleep(retry_delay)
+                continue
+        except Exception:
+            break
     return None
 
 
