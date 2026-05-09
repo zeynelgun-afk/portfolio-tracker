@@ -148,9 +148,9 @@ Memory'deki "On the horizon" listesinden:
 
 1. ✅ **Migrating duplicate fmp_get implementations to fmp_client** — 21/22 tamamlandı
 2. ⏳ **Weekly stats GitHub Actions workflow** — `notes/2026-05-10_FMP_LOG_ANALYSIS.md` çıktısı bu workflow'un içerik şablonu olabilir
-3. ⏳ **Orchestrator silent-failure cleanup** — observability log'a düşen "success=0 error=null" 19 kayıt için
+3. ✅ **Orchestrator silent-failure cleanup** — 26 silent failure'ın kök nedeni bulundu ve düzeltildi (commit aşağıda). 429 ve body "Limit Reach" kod yolları `continue` ile geçerken `last_err` SET ETMİYORDU; retry tükendiğinde `error=None` log'a yazılıyordu. Fix: iki kod yoluna `last_err = "429_rate_limit (attempt N/M)"` ve `last_err = "body_limit_reach (attempt N/M)"` eklendi. 2 yeni test (`test_rate_limit_max_retries_exhausted` güncellendi, `test_body_limit_reach_exhausted_logs_error` eklendi) ile silent failure regression koruması var. Toplam 28/28 PASS.
 4. ⏳ **Git strategy split for bot commits** — bot commit'leri ile manuel commit'leri ayırma
-5. ⏳ **Adding test suite** — `tests/test_fmp_client.py` ile başlangıç yapıldı (27 test). Diğer modüller için (k_engine, observability, valuation) ayrı test suite'leri yazılmalı
+5. ⏳ **Adding test suite** — `tests/test_fmp_client.py` ile başlangıç yapıldı (28 test). Diğer modüller için (k_engine, observability, valuation) ayrı test suite'leri yazılmalı
 
 Yeni eklendi:
 6. ⏳ **`news_radar.py` migration** — kendi retry mantığını canonical'a taşıma (büyük refactor)

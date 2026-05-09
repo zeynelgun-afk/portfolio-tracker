@@ -224,14 +224,43 @@ class TestRateLimit:
 
     @responses.activate
     def test_rate_limit_max_retries_exhausted(self):
-        """Max retry sonrası başarısız - [] döner."""
+        """Max retry sonrası başarısız - [] döner ve log'a doğru error mesajı yazılır."""
         for _ in range(5):
             responses.add(responses.GET, f"{FMP_BASE}/quote", status=429)
-        with patch("fmp_client.time.sleep"):
+        with patch("fmp_client.time.sleep"), \
+             patch("fmp_client.log_fmp_call") as mock_log:
             res = fmp_get("quote", {"symbol": "X"}, max_retries=3)
         assert res == []
         # 3 deneme yapıldı
         assert len(responses.calls) == 3
+        # Final log çağrısı error mesajı içeriyor (silent failure bug fix)
+        # log_fmp_call birden fazla çağrılmış olabilir, sonuncusu retry-exhausted log'u
+        final_log = mock_log.call_args_list[-1]
+        assert final_log.kwargs.get("error") is not None, \
+            "Final log error=None — silent failure bug geri geldi"
+        assert "429" in final_log.kwargs["error"] or "rate_limit" in final_log.kwargs["error"]
+        assert final_log.kwargs.get("status") == 429
+        assert final_log.kwargs.get("retry_count") == 3
+
+    @responses.activate
+    def test_body_limit_reach_exhausted_logs_error(self):
+        """Body 'Limit Reach' tükendiğinde error mesajı log'a yazılır (silent failure fix)."""
+        for _ in range(5):
+            responses.add(
+                responses.GET,
+                f"{FMP_BASE}/quote",
+                json={"Error Message": "Limit Reach . Please upgrade your plan."},
+                status=200,
+            )
+        with patch("fmp_client.time.sleep"), \
+             patch("fmp_client.log_fmp_call") as mock_log:
+            res = fmp_get("quote", {"symbol": "X"}, max_retries=3)
+        assert res == []
+        final_log = mock_log.call_args_list[-1]
+        assert final_log.kwargs.get("error") is not None, \
+            "Body Limit Reach final log error=None — silent failure bug"
+        assert "limit_reach" in final_log.kwargs["error"].lower() or \
+               "limit reach" in final_log.kwargs["error"].lower()
 
 
 # ── Test grubu 4: Geçici sunucu hataları (retry beklenir) ──────────────────────

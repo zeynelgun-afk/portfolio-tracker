@@ -117,6 +117,7 @@ def fmp_get(
             # 429: Rate limit — 60s'ten başla, sonra +30s artır (FMP dakikalık reset)
             if r.status_code == 429:
                 wait = 60 + 30 * attempt  # 60s, 90s, 120s
+                last_err = f"429_rate_limit (attempt {attempt + 1}/{max_retries})"
                 print(f"[fmp_client] 429 rate limit, {wait}s bekliyor (deneme {attempt + 1}/{max_retries})")
                 time.sleep(wait)
                 continue
@@ -139,6 +140,7 @@ def fmp_get(
                 if "Limit Reach" in err_msg:
                     # Body'de rate limit — 429 ile aynı muamele
                     wait = 60 + 30 * attempt
+                    last_err = f"body_limit_reach (attempt {attempt + 1}/{max_retries})"
                     print(f"[fmp_client] Body Limit Reach, {wait}s bekliyor (deneme {attempt + 1}/{max_retries})")
                     time.sleep(wait)
                     continue
