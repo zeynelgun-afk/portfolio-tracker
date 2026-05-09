@@ -19,15 +19,22 @@ API key always goes as `apikey` query parameter. Key is stored in user memory.
 
 ---
 
-## Plan Limits (Premium)
+## Plan Limits (Ultimate)
 
 | Item | Value |
 |------|-------|
 | Daily calls | Sınırsız |
-| Calls per minute | 2,500 |
-| Bandwidth (30-day) | 50GB |
-| Historical data | 30+ years |
-| Coverage | US, UK, Canada |
+| Calls per minute | 3,000 |
+| Bandwidth (30-day) | 50GB+ |
+| Historical data | Full historical (30+ years) |
+| Coverage | Global (US, UK, Canada, EU, APAC) |
+| Earnings call transcripts | ✓ |
+| 13F institutional holdings | ✓ |
+| ETF & mutual fund holdings | ✓ |
+| 1-minute intraday charting | ✓ |
+| Bulk delivery | ✓ |
+
+> **9 Mayıs 2026**: Premium ($49/ay) → Ultimate ($99/ay) plan upgrade yapıldı. Earnings call transcripts, 13F institutional holdings ve ETF holdings endpoint'leri açıldı. API rate 750→3000/dk (4x).
 
 > **⚠️ CRITICAL**: Legacy `/api/v3/` and `/api/v4/` routes are **completely blocked** (403 "Legacy Endpoint" error). **Always use `/stable/` only.**
 
@@ -60,6 +67,8 @@ API key always goes as `apikey` query parameter. Key is stored in user memory.
 | `actualEPS` / `estimatedEPS` | **`epsActual`** / **`epsEstimated`** | earnings |
 | `actualRevenue` / `estimatedRevenue` | **`revenueActual`** / **`revenueEstimated`** | earnings |
 | `exchangeShortName` | **`exchange`** | profile (stable) |
+| `earnings-call-transcript` | **`earning-call-transcript`** (TEKİL!) | transcript endpoint adı |
+| `etf-holdings` (tire) | **`etf/holdings`** (slash) | ETF içerik endpoint adı |
 
 ### Borsa (Exchange) Alanı — Stable Endpoint
 
@@ -552,18 +561,122 @@ fmp_get("historical-price-eod/full", {"symbol": "BTCUSD", "from": "2025-01-01"})
 
 ---
 
-## 🔒 NOT Available on Premium (Requires Ultimate)
+## 🔓 ULTIMATE ENDPOINT'LERİ (9 Mayıs 2026'da Açıldı)
 
-| Feature | Plan Needed |
-|---------|-------------|
-| Earnings Call Transcripts (`earnings-transcript-list`) | Ultimate (402) |
-| ETF & Mutual Fund Holdings (full) | Ultimate |
-| 13F Institutional Holdings (full analytics) | Ultimate |
-| 1-Minute Intraday Charting | Ultimate |
-| `income-statement-ttm` | Returns 402 |
-| Bulk delivery endpoints | Ultimate |
-| Press releases (`press-releases`, `press-releases-latest`) | 404 — bizde yok |
-| Stock news (`stock-news`, `news-stock`) | 404 — bizde yok |
+> **9 Mayıs 2026 — Premium $49/ay → Ultimate $99/ay yükseltildi.** Aşağıdaki endpoint'ler artık erişilebilir.
+
+### 1) Earnings Call Transcripts (Telekonferans Dökümleri)
+
+> **⚠️ FIELD TRAP**: Endpoint adı **`earning-call-transcript`** (TEKİL "earning"). FMP dokümanı bazen "earnings" yazar ama gerçek endpoint TEKİL. `earnings-call-transcript` ile çağırırsanız 404 döner.
+
+| Endpoint | Parametreler | Ne Döner |
+|----------|--------------|----------|
+| `earning-call-transcript` | `symbol`, `year`, `quarter` | Tek bir çeyrek transcript'i (full text) |
+| `earnings-transcript-list` | (parametre opsiyonel) | Tüm şirketlerin transcript sayıları (10,820 kayıt) |
+
+**Dönen alanlar (`earning-call-transcript`)**:
+```json
+{
+  "symbol": "VST",
+  "period": "Q1 2026",
+  "year": 2026,
+  "date": "2026-05-07",
+  "content": "...50,000+ karakter telekonferans transkripti..."
+}
+```
+
+**⚠️ Fiscal Year vs Calendar Year tuzağı**: `quarter` parametresi şirketin **fiscal year**'ına göredir, calendar year'a değil. Örnek:
+- BILL Holdings fiscal year = Temmuz-Haziran. 7 Mayıs 2026'da açıkladığı bilanço Q3 FY2026 (Ocak-Mart calendar) — `quarter=3` kullan, `quarter=1` Temmuz-Eylül 2025'i getirir.
+- VST, CON, CELH fiscal year = Aralık. Calendar Q1 = fiscal Q1 — `quarter=1` doğru.
+- Belirsizse önce `earnings-transcript-list` ile şirketin mevcut transcript dönemlerini gör, sonra istediğini çek.
+
+**⚠️ Yayın gecikmesi**: Bilanço açıklandıktan sonra transcript 12-48 saat içinde upload edilir. FIS 8 Mayıs bilançosu için 9 Mayıs sabahı henüz transcript yoktu (404).
+
+```python
+# Tek transcript
+t = fmp_get("earning-call-transcript", {"symbol": "VST", "year": 2026, "quarter": 1})
+content = t[0]["content"] if t and len(t) > 0 else ""
+
+# Transcript listesi (hangi donemler var)
+lst = fmp_get("earnings-transcript-list", {"symbol": "BILL"})
+# -> {"symbol": "BILL", "companyName": "BILL Holdings, Inc.", "noOfTranscripts": "32"}
+```
+
+### 2) Institutional Ownership (13F Holdings)
+
+| Endpoint | Parametreler | Ne Döner |
+|----------|--------------|----------|
+| `institutional-ownership/latest` | `limit` opsiyonel | En son 13F dosyaları (CIK + finalLink) |
+| `institutional-ownership/symbol-positions-summary` | `symbol`, `year` ZORUNLU | Bir hissenin yıllık 13F pozisyon özeti |
+
+**Dönen alanlar (`institutional-ownership/latest`)**:
+```json
+{
+  "cik": "1166559",
+  "name": "Berkshire Hathaway Inc",
+  "date": "2026-03-31",
+  "filingDate": "2026-05-15",
+  "acceptedDate": "2026-05-15 16:30:00",
+  "formType": "13F-HR",
+  "link": "...",
+  "finalLink": "..."
+}
+```
+
+**Smart money takibi için workflow** (Druckenmiller, Buffett, Burry, Tepper, Loeb):
+```python
+# Belirli bir manager'in son 13F'i
+# Once CIK bul (manuel: Buffett=1067983, Druckenmiller=1536411, Tepper=1656456, Burry=1649339)
+recent = fmp_get("institutional-ownership/latest", {"limit": 100})
+buffett_filings = [f for f in recent if f["cik"] == "1067983"]
+
+# Spesifik hissenin yillik institutional ownership ozeti
+positions = fmp_get("institutional-ownership/symbol-positions-summary",
+                    {"symbol": "VST", "year": 2026})
+```
+
+### 3) ETF & Mutual Fund Holdings
+
+> **⚠️ FIELD TRAP**: Endpoint **`etf/holdings`** (slash ile). `etf-holdings` (tire ile) 404 döner.
+
+| Endpoint | Parametreler | Ne Döner |
+|----------|--------------|----------|
+| `etf/holdings` | `symbol` (ETF ticker) | ETF içeriği — hisse listesi, ağırlıklar, market value |
+
+**Dönen alanlar**:
+```json
+{
+  "symbol": "AAPL",
+  "asset": "AAPL",
+  "name": "Apple Inc",
+  "isin": "US0378331005",
+  "securityCusip": "037833100",
+  "sharesNumber": 1234567,
+  "weightPercentage": 7.85,
+  "marketValue": 36210000000
+}
+```
+
+```python
+# QQQ icindeki Top 10
+qqq = fmp_get("etf/holdings", {"symbol": "QQQ"})
+qqq.sort(key=lambda x: x["weightPercentage"], reverse=True)
+top10 = qqq[:10]
+```
+
+### 4) Bulk Delivery (Toplu İndirme)
+
+`profile-bulk` ve diğer bulk endpoint'leri CSV format döner (JSON değil), `requests.get(...).text` ile alıp `csv.DictReader` ile parse edilmeli. Tipik kullanım: tüm hisselerin profile'ını tek call'da çekmek (saat hızlı tarama için).
+
+---
+
+## 🔒 NOT Available on Ultimate (Bizde HÂLÂ Yok)
+
+| Endpoint | Durum | Alternatif |
+|----------|-------|-----------|
+| `press-releases` / `press-releases-latest` | 404 | Web search ile snippet, veya `sec-filings-search` ile 8-K ex99.1 dosyaları |
+| `stock-news` / `news-stock` | 404 | Web search |
+| `mutual-fund-holdings` | 404 | `etf/holdings` benzeri ama mutual fund için endpoint adı farklı, dokümante edilmeli |
 
 ---
 
@@ -714,6 +827,77 @@ upgrades = fmp_get("upgrades-downgrades", {"symbol": symbol, "limit": 20})
 insider = fmp_get("insider-trading", {"symbol": symbol, "limit": 50})
 ```
 
+### Earnings Call Transcript Workflow (Ultimate)
+
+```python
+# 1) Mevcut transcript donemlerini gor
+lst = fmp_get("earnings-transcript-list", {"symbol": "VST"})
+# -> noOfTranscripts: kac transcript var
+
+# 2) Belirli bir donemi cek
+t = fmp_get("earning-call-transcript", {"symbol": "VST", "year": 2026, "quarter": 1})
+content = t[0]["content"] if t else ""
+
+# 3) Guidance bolumunu cikar
+import re
+sentences = re.split(r'(?<=[.!?])\s+', content)
+guidance_keywords = ['guidance', 'outlook', 'expect', 'reaffirm', 'raise', 'forecast',
+                     'fiscal year', 'full year', 'full-year', 'next quarter', 'q2', 'q3',
+                     'guide', 'project', 'plan to']
+guidance_sentences = []
+for s in sentences:
+    s_lower = s.lower()
+    if any(k in s_lower for k in guidance_keywords) and 30 < len(s) < 600:
+        # Sayisal icerik (rakamsal guidance) onceligi
+        has_number = bool(re.search(r'\$[\d,.]+|\d+%|\d+ to \d+', s))
+        guidance_sentences.append((s, has_number))
+
+# Sayisal olanlar one
+guidance_sentences.sort(key=lambda x: not x[1])
+top_guidance = [s for s,_ in guidance_sentences[:15]]
+```
+
+### Smart Money 13F Tracking (Ultimate)
+
+```python
+# Onemli managerlerin CIK'leri (manuel)
+SMART_MONEY = {
+    "Berkshire Hathaway (Buffett)": "1067983",
+    "Duquesne Family Office (Druckenmiller)": "1536411",
+    "Appaloosa LP (Tepper)": "1656456",
+    "Scion Asset Management (Burry)": "1649339",
+    "Third Point LLC (Loeb)": "1040273",
+    "Pershing Square (Ackman)": "1336528",
+    "Greenlight Capital (Einhorn)": "1209463",
+}
+
+# Son 13F dosyalari
+recent = fmp_get("institutional-ownership/latest", {"limit": 200})
+# Filter to smart money
+smart_filings = [f for f in recent if f["cik"] in SMART_MONEY.values()]
+for f in smart_filings:
+    name = next((k for k,v in SMART_MONEY.items() if v == f["cik"]), f["name"])
+    print(f"{f['filingDate'][:10]} | {name:35s} | {f['formType']} | {f['finalLink']}")
+
+# Spesifik hissenin yillik kurumsal pozisyonu
+positions = fmp_get("institutional-ownership/symbol-positions-summary",
+                    {"symbol": "VST", "year": 2026})
+```
+
+### ETF Holdings Analysis (Ultimate)
+
+```python
+# QQQ icindeki Top 10 agirlik
+qqq = fmp_get("etf/holdings", {"symbol": "QQQ"})
+qqq.sort(key=lambda x: x.get("weightPercentage") or 0, reverse=True)
+for h in qqq[:10]:
+    print(f"{h['asset']:8s} {h['name'][:30]:30s} {h['weightPercentage']:.2f}%")
+
+# Belirli bir hissenin hangi ETF'lerde oldugunu bulmak icin
+# tek tek ETF'leri tarayip "AAPL" var mi diye bakmak gerekiyor
+# Soros ya da WisdomTree gibi tematik ETF'leri tarayarak smart positioning gorulebilir
+```
+
 ---
 
 ## ERROR HANDLING
@@ -769,6 +953,15 @@ All v3/v4 routes are **blocked**. Use these stable equivalents:
 ---
 
 ## CHANGELOG
+
+### 9 Mayıs 2026 (gece) — Ultimate plan upgrade
+- **Plan Premium ($49) → Ultimate ($99) yükseltildi.** API rate 750→3000/dk, global coverage, transcripts ve 13F açıldı.
+- **Earnings call transcripts**: `earning-call-transcript` endpoint'i eklendi (TEKİL "earning" — field trap, "earnings-call-transcript" 404). Test: VST/CON/CELH Q1 2026 transcript'leri başarıyla çekildi (50K+ karakter), guidance extraction Python regex ile çalışıyor. BILL transcript Q1 2026 calendar = Q3 FY2026 (fiscal year tuzağı), FIS transcript 9 Mayıs sabahı henüz yoklu (yayın gecikmesi normal).
+- **Earnings transcript list**: `earnings-transcript-list` endpoint'i (`noOfTranscripts` ile şirketin mevcut transcript sayısı).
+- **13F Institutional holdings**: `institutional-ownership/latest` ve `institutional-ownership/symbol-positions-summary` (year zorunlu) çalışıyor. Smart money tracking için CIK haritası workflow eklendi (Buffett, Druckenmiller, Tepper, Burry, Loeb, Ackman, Einhorn).
+- **ETF Holdings**: `etf/holdings` (slash ile, "etf-holdings" tire ile 404 — field trap).
+- **Hâlâ olmayanlar**: `press-releases`, `stock-news`, `mutual-fund-holdings` Ultimate'da bile 404 — alternatif workflow web search/SEC filings.
+- **Field trap tablosuna eklenenler**: earnings vs earning, etf-holdings vs etf/holdings.
 
 ### 9 Mayıs 2026 (akşam) — SEC Filings bölümü eklendi
 - **`sec-filings-search/symbol`, `sec-filings-search/form-type`, `sec-filings-search/cik`** endpoint'leri belgelendi. Zorunlu `from`/`to` parametreleri.
