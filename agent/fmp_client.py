@@ -38,6 +38,26 @@ _DEFAULT_TIMEOUT = 15
 _MAX_RETRIES = 3
 _RETRY_BACKOFF = 2.0  # exponential base
 
+# 10 May 2026 — burst koruması (30 Nis 11 ardışık 429 dalgası ampirik bulgusu)
+# Min interval: ardışık fmp_get çağrıları arası saniye cinsinden minimum bekleme.
+# 0.05s = 20 call/sn = 1200 call/dk. Ultimate limit 3000/dk altında, yine güvenli marj.
+# fetch_all_data 11 endpoint × 0.05s = 0.55s ek bekleme per ticker, kabul edilebilir.
+# Test ortamında 0 set edilebilir: import fmp_client; fmp_client._MIN_CALL_INTERVAL = 0
+_MIN_CALL_INTERVAL = 0.05
+_last_call_ts = 0.0
+
+
+def _throttle():
+    """Ardışık fmp_get çağrıları arası min interval enforcer."""
+    global _last_call_ts
+    if _MIN_CALL_INTERVAL <= 0:
+        return
+    now = time.monotonic()
+    elapsed = now - _last_call_ts
+    if elapsed < _MIN_CALL_INTERVAL:
+        time.sleep(_MIN_CALL_INTERVAL - elapsed)
+    _last_call_ts = time.monotonic()
+
 
 def fmp_get(
     endpoint: str,
@@ -78,6 +98,7 @@ def fmp_get(
 
     for attempt in range(max_retries):
         try:
+            _throttle()  # 10 May 2026: burst koruması
             r = requests.get(url, params=p, timeout=timeout)
             last_status = r.status_code
 

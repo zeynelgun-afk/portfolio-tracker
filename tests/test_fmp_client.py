@@ -16,27 +16,20 @@ KAPSAM:
     - JSONDecodeError - kalıcı hata, retry yok
     - Timeout/ConnectionError - retry'a değer
     - Wrapper fonksiyonlar (quote, batch_quote, rsi, historical_eod)
+    - Throttle (_MIN_CALL_INTERVAL) burst koruması
     - Test design prensibi: sessiz IGNORE'u yakalamak için low-noise mock
+
+NOT: conftest.py tüm testlerde throttle'ı 0 set ediyor; sadece TestThrottle
+     grubu doğrudan değer set ederek davranışı doğruluyor.
 """
 import json
-import os
-import sys
+import time
 import pytest
 import responses
 from unittest.mock import patch
 
-# Test ortamı için zorunlu env değişkenleri
-os.environ.setdefault("FMP_API_KEY", "test_key_dummy")
-os.environ.setdefault("TELEGRAM_TOKEN", "x")
-os.environ.setdefault("TELEGRAM_PRIVATE_CHAT", "x")
-os.environ.setdefault("ANTHROPIC_API_KEY", "x")
-os.environ.setdefault("GH_TOKEN", "x")
-
-# agent/ path ekle
-REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-sys.path.insert(0, os.path.join(REPO_ROOT, "agent"))
-
-from fmp_client import fmp_get, quote, batch_quote, rsi, historical_eod  # noqa: E402
+import fmp_client
+from fmp_client import fmp_get, quote, batch_quote, rsi, historical_eod
 
 FMP_BASE = "https://financialmodelingprep.com/stable"
 
@@ -445,3 +438,96 @@ class TestDesignPrinciples:
         # endpoint cevabını mock'lar. Gerçek sessiz IGNORE'u yakalayan
         # integration test ayrı yazılmalı (notes/2026-05-10_PRESS_RELEASE_EVAL.md).
         assert res[0]["symbol"] == "AAPL"
+
+
+# ── Test grubu 9: Throttle (burst koruması) ────────────────────────────────────
+
+class TestThrottle:
+    """_MIN_CALL_INTERVAL ile burst koruması.
+
+    10 May 2026 — agent/valuation/methods/__init__.py fetch_all_data() 11
+    ardışık endpoint çağırıyor. 30 Nisan 16:31-34 burst dalgasının kaynağı.
+    Throttle her call arası min 50ms zorlar (max 20 call/sn = 1200/dk,
+    Ultimate 3000/dk altında güvenli).
+    """
+
+    @responses.activate
+    def test_throttle_enforces_min_interval(self):
+        """5 ardışık call arası min 50ms olmalı (default _MIN_CALL_INTERVAL)."""
+        # conftest disable_throttle fixture'ını override et (50ms set)
+        fmp_client._MIN_CALL_INTERVAL = 0.05
+        fmp_client._last_call_ts = 0.0
+        try:
+            for _ in range(5):
+                responses.add(
+                    responses.GET,
+                    f"{FMP_BASE}/quote",
+                    json=[{"price": 100}],
+                    status=200,
+                )
+
+            t0 = time.monotonic()
+            for _ in range(5):
+                fmp_get("quote", {"symbol": "X"})
+            elapsed = time.monotonic() - t0
+
+            # 5 call * 0.05s = 0.20s minimum (ilk call hemen, sonrakiler beklemeli)
+            # En az 4 wait * 0.05s = 0.20s
+            assert elapsed >= 0.20, f"Throttle yetersiz: {elapsed:.3f}s, 0.20s+ olmalı"
+            # Üst sınır da makul olsun (test takılmasın)
+            assert elapsed < 1.0, f"Throttle çok uzun: {elapsed:.3f}s"
+        finally:
+            # Diğer testler etkilenmesin
+            fmp_client._MIN_CALL_INTERVAL = 0
+
+    @responses.activate
+    def test_throttle_zero_disables(self):
+        """_MIN_CALL_INTERVAL=0 throttle'ı disable eder, çağrılar hızlı."""
+        fmp_client._MIN_CALL_INTERVAL = 0
+        for _ in range(3):
+            responses.add(
+                responses.GET,
+                f"{FMP_BASE}/quote",
+                json=[{"price": 100}],
+                status=200,
+            )
+
+        t0 = time.monotonic()
+        for _ in range(3):
+            fmp_get("quote", {"symbol": "X"})
+        elapsed = time.monotonic() - t0
+
+        # 3 call mock'lu, throttle yok → çok hızlı (10ms altı)
+        assert elapsed < 0.10, f"Throttle disable olmalı: {elapsed:.3f}s"
+
+    @responses.activate
+    def test_throttle_does_not_double_count(self):
+        """Önceki call'ın kendi süresi yeterliyse extra wait olmamalı."""
+        fmp_client._MIN_CALL_INTERVAL = 0.05
+        fmp_client._last_call_ts = 0.0
+        try:
+            responses.add(
+                responses.GET,
+                f"{FMP_BASE}/quote",
+                json=[{"price": 100}],
+                status=200,
+            )
+            responses.add(
+                responses.GET,
+                f"{FMP_BASE}/quote",
+                json=[{"price": 100}],
+                status=200,
+            )
+
+            # İlk call
+            fmp_get("quote", {"symbol": "X"})
+            # 100ms bekle (throttle aralığından uzun)
+            time.sleep(0.1)
+            t0 = time.monotonic()
+            fmp_get("quote", {"symbol": "X"})
+            elapsed = time.monotonic() - t0
+
+            # Throttle bekleme yapmamalı çünkü 100ms zaten geçti
+            assert elapsed < 0.04, f"Gereksiz throttle: {elapsed:.3f}s"
+        finally:
+            fmp_client._MIN_CALL_INTERVAL = 0
