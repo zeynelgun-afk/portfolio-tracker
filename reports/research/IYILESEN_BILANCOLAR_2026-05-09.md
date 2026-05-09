@@ -1,188 +1,211 @@
-# Bilanço İyileşmesi + Adil Değer Tarama Raporu
+# Bilanço İyileşmesi + Guidance Teyitli Adil Değer Tarama Raporu
 
-**Tarih**: 9 Mayıs 2026 Cumartesi
-**Tarama dönemi**: 7 ve 8 Mayıs 2026 (son iki işgününde bilanço açıklayan ABD hisseleri)
+**Tarih**: 9 Mayıs 2026 Cumartesi (v2 — guidance teyit eklendi)
+**Tarama dönemi**: 7 ve 8 Mayıs 2026 ABD bilanço açıklamaları
 **Kaynak**: finzora ai
 
 ---
 
-## Özet
+## Önemli Güncelleme: Guidance Teyit Adımı Eklendi
 
-Son iki günde bilanço açıklayan **1.296 ABD hissesi** taranmış. Mid-cap+ filtresi (mcap ≥ 2 milyar dolar, fiyat ≥ 10 dolar, NYSE/NASDAQ/AMEX) sonrası **235 hisse** kalmış. Bunlar arasında çeyrek bazda (QoQ) ve yıllık bazda (YoY) iyileşme kriterlerini geçen **54 hisse** tespit edilmiş. Outlier (IPO/M&A artefaktı) temizliği sonrası **53 aday** kalmış. Adil değer hesabı ve analist hedef fiyatı (analyst price target consensus) doğrulamasından sonra **11 sağlam aday** %30 üzeri yükseliş potansiyeli (upside potential) sergiliyor.
+İlk taramada (sabah versiyonu) sadece geçmiş çeyrek YoY/QoQ iyileşmeleri ve adil değer hesabı kullanılmıştı. Ek katman olarak iki kaynak entegre edildi:
 
-## Tarama Metodolojisi
+1. **FMP price-target-news endpoint** — bilanço sonrası analist hedef revize haberleri (raised/lowered yön sayımı)
+2. **Web search** — şirketin resmi forward guidance açıklamaları (FY/Q2 EBITDA, EPS, ciro öngörüsü)
 
-### Filtre 1: İyileşme Kriterleri
-Aşağıdaki dört kriterden en az üçünü karşılayan ve yıllık ciro (revenue) artışı zorunlu:
-- YoY ciro artışı ≥ 8%
-- YoY net kâr artışı ≥ 15% veya zarardan kâra geçiş (loss-to-profit, kısaca L2P)
-- QoQ ciro artışı ≥ 3% (momentum teyidi)
-- QoQ net kâr iyileşmesi (pozitif değişim)
-
-### Filtre 2: Adil Değer (Fair Value) Hesabı — Dört Yöntem Ağırlıklı
-1. **Analist hedef fiyat ortalaması** (analyst price target consensus) — ağırlık 30%
-2. **Forward P/E × NTM EPS** (ileri F/K çarpanı × gelecek 12 ay EPS, sektör çarpanı ile) — ağırlık 30%
-3. **PEG = 1 fair value** (TTM EPS × büyüme oranı) — ağırlık 20%
-4. **EV/EBITDA peer median × EBITDA − Net debt** (sektör medyanı × FAVÖK eksi net borç) — ağırlık 20%
-
-### Filtre 3: Sağlamlık Kontrolü
-- **Analist hedefi ZATEN minimum %25 yükseliş** vermeli (en güvenilir tek metrik)
-- En az **1 fundamental yöntem** (Forward P/E veya EV/EBITDA) %20+ pozitif teyit
-- L2P (zarardan kâra) hisselerde PEG yöntemi ağırlığı düşürüldü (TTM EPS bozulması)
+Bu katman kritik çünkü geçmiş büyüme ne kadar güçlü olsa da analistlerin bilanço sonrası hedefi DÜŞÜRMESI veya şirketin Q2 outlook'unu beklenti altında vermesi fiyat tepkisini ters çevirir. Aşağıdaki revize sıralama bu yeni veriyi yansıtıyor.
 
 ---
 
-## Sağlam Shortlist (11 Hisse)
+## TOP 5 — Guidance Teyitli (Yeni Sıralama)
 
-| # | Sym | Sektör | Fiyat | Analist Hedef | Üst Pot. | YoY Ciro | Bilanço |
-|---|-----|--------|-------|---------------|----------|----------|---------|
-| 1 | **CELH** | Consumer Defensive | $32.29 | $55.40 | **+71.6%** | +137.7% | 7 May |
-| 2 | **HUBS** | Technology | $197.34 | $306.10 | **+55.1%** | +23.4% | 7 May |
-| 3 | **FIS** | Technology | $43.50 | $67.14 | **+54.3%** | +30.1% | 8 May |
-| 4 | **VST** | Utilities | $147.72 | $227.60 | **+54.1%** | +9.1% | 7 May |
-| 5 | **TOST** | Technology | $25.05 | $37.87 | **+51.2%** | +21.9% | 7 May |
-| 6 | **ARGX** | Healthcare | $782.17 | $1,057 | +35.2% | +319.8% | 7 May |
-| 7 | **PCTY** | Technology | $110.98 | $147.73 | +33.1% | +10.5% | 7 May |
-| 8 | **MKTX** | Financial Services | $147.53 | $195.60 | +32.6% | +12.8% | 7 May |
-| 9 | **BILL** | Technology | $41.83 | $54.80 | +31.0% | +13.5% | 7 May |
-| 10 | **CON** | Healthcare | $24.16 | $31.50 | +30.4% | +13.7% | 7 May |
-| 11 | **LYFT** | Technology | $14.35 | $18.36 | +27.9% | +13.8% | 7 May |
+### 1) VST — Vistra Corp — **GÜÇLÜLEŞTİ** ✓✓✓
 
-## TOP 5 — Hisse Öneri Formatı
+**Bilanço sonuçları (7 May)**:
+- Q1 2026 Net Income $1,029M (Q1 2025: zarar $268M, klasik L2P teyit)
+- Q1 2026 Adjusted EBITDA $1,494M (Q1 2025: $1,240M, +%20)
+- Revenue $5,640M
 
-### 1) CELH — Celsius Holdings (Consumer Defensive, $8.3B mcap)
+**Şirket guidance**:
+- 2026 Adjusted EBITDA reaffirmed: $6.8-7.6 milyar
+- 2026 Adjusted FCFbG reaffirmed: $3.925-4.725 milyar
+- 2027 EBITDA midpoint: $7.4-7.8 milyar
+- 2026 üretiminin %98'i hedge edilmiş, 2027'nin %89'u, 2028'in %65'i
 
-**Tetikleyici sinyal**: Q1 bilançosunda YoY ciro %137.7 patlaması (Alani Nu satın alımı katkısı dahil), YoY EPS %120 artış, QoQ ciro %8.5 momentum. Brand portföyü genişlemesi sonrası ölçek kazanıyor.
+**Yapısal pozitif sinyaller**:
+- Fitch kredi notu Investment Grade'e yükseltti (ikinci ajans)
+- Cogentrix satın alımı + Meta PJM nükleer PPA + AWS Comanche Peak PPA = guidance'a HARİÇ, görünür yukarı yön
+- 4500 MW organik geliştirme pipeline
 
-**Veri dayanağı (FMP)**:
-- Fiyat $32.29, Analist hedef konsensüsü $55.40 (+71.6% potansiyel)
-- Forward P/E temelli adil değer $56.78
-- TTM çeyrek ciroları toparlanmada
-- Mcap $8.3 milyar, hisse fiyatı 52 hafta düşüğüne yakın bölgede
-
-**Risk (bear case) ve stop**:
-- Energy drink (enerji içeceği) kategori büyüme yavaşlaması — Monster/Red Bull rekabeti
-- Pepsi distribütör sözleşmesi yenileme riski
-- EV/EBITDA yöntemi $7.6 fair value veriyor — yüksek FAVÖK çarpanında işlem gördüğü için fundamentaller ile analist beklentisi arasında ayrışma var
-- Stop seviyesi: 50 günlük ortalama altı veya 28 dolar (yaklaşık -%13)
-
-**Hangi portföye uygun**: Agresif Büyüme (consumer momentum + earnings sürprizi) veya Dengeli (defansif tüketim sektöründe büyüme oyunu)
+**Hisse öneri formatı**:
+- **Tetikleyici**: Q1 EBITDA recordu + Investment Grade upgrade + Cogentrix/Meta/AWS upside dışarıda
+- **Veri dayanağı**: FMP analist hedef konsensüs $227.60 (+54.1%), Forward P/E ile fair value $296.75, EV/EBITDA peer median ile $207.93
+- **Risk (bear case)**: AI capex (sermaye harcaması) yavaşlaması, doğal gaz fiyat oynaklığı, Cogentrix kapanışı gecikirse 2026 guidance üst bandına ulaşma riski. Stop seviyesi $135 altı (yaklaşık -%9)
+- **Hangi portföye uygun**: **Aggressive Büyüme** — hafızadaki Aggressive v2 AI Power layer ile birebir uyumlu
 
 ---
 
-### 2) HUBS — HubSpot (Technology / SaaS, $10.2B mcap)
+### 2) CELH — Celsius Holdings — **GÜÇLÜLEŞTİ** ✓✓
 
-**Tetikleyici sinyal**: Q1 zarardan kâra geçiş (L2P) ile YoY EPS %247 artış, YoY ciro %23 büyüme, QoQ ciro %4.1 sürdürülebilir momentum. SMB CRM segmentinde AI Copilot lansmanı katalizör.
+**Bilanço sonuçları (7 May)**:
+- Q1 2026 Revenue $782.6M (Q1 2025: $329.3M, +%138 YoY) — record
+- Wall Street beklentisi $761M, beat %2.9
+- Q1 2026 EPS $0.41 vs forecast $0.30 (beat %36.7)
+- Net Income $110.1M (vs $44.4M, +%148)
+- US energy drink pazar payı %20.9 (Q1 2023: %8.1), Red Bull %38.9→%34.7, Monster %36.9→%32.6
+- Alani Nu Q1 record $368M (entegrasyon synergileri $50M)
+- Pre-market reaksiyon: %+5
 
-**Veri dayanağı (FMP)**:
-- Fiyat $197.34, analist hedef $306.10 (+55.1%)
-- Pazar değeri 10 milyar dolarda, son 6 ayda büyük düşüş yaşamış
-- 32 analistin medyan tavsiyesi pozitif
+**Şirket guidance**:
+- Spesifik sayısal forward guidance verilmedi (energy drink kategorisinde standart yaklaşım)
+- Yönetim Q2 ve yaz sezonu için "iyimser ton"
+- Margin baskısı (gross 48.3% vs 52.3% Q1 2025, Alani Nu integration etkisi) geçici olarak değerlendiriliyor
 
-**Risk (bear case) ve stop**:
-- SaaS multiple sıkışması (compression), büyüme orta tek haneye yavaşlarsa P/S çarpanı düşer
-- Salesforce ve Microsoft Dynamics ile rekabet yoğunlaşıyor
-- L2P sonrası EPS sürdürülebilirliği test edilecek (önümüzdeki 2 çeyrek kritik)
-- Stop seviyesi: 180 dolar altı (yaklaşık -%9)
+**Analist revizyonu (post-earnings)**:
+- Deutsche Bank: $41 → $44 (RAISED) ✓
+- Morgan Stanley: $64 → $55 (lowered, ama hâlâ +%70 upside)
 
-**Hangi portföye uygun**: Agresif Büyüme (SaaS turnaround + AI angle)
-
----
-
-### 3) FIS — Fidelity National Information Services (Technology / FinTech, $22.5B mcap)
-
-**Tetikleyici sinyal**: Q1 YoY ciro %30 büyüme (Worldpay satın alımı sonrası temiz çeyrek), YoY EPS %3000+ (düşük baz etkisi — ölçeklenmiş bakılmalı), QoQ ciro %17.2 momentum. Banking solutions segmenti güçlü.
-
-**Veri dayanağı (FMP)**:
-- Fiyat $43.50, analist hedef $67.14 (+54.3%)
-- Mcap 22.5 milyar dolar, value isim
-- EV/EBITDA bazlı adil değer $106 (peer median ile)
-- Druckenmiller-tarz "low-multiple compounders" profili
-
-**Risk (bear case) ve stop**:
-- Worldpay entegrasyonu hâlâ bilanço üstünde gölge yapabilir
-- Faiz oranlarına duyarlı (yüksek borç yapısı, deal aftermath)
-- Banking software pazarında Q2 holding (FI segmenti) zayıflığı
-- Stop seviyesi: 39 dolar altı (yaklaşık -%10)
-
-**Hangi portföye uygun**: Değer + Temettü (FIS temettü ödüyor, value-momentum kesişimi) veya Dengeli
+**Hisse öneri formatı**:
+- **Tetikleyici**: %138 YoY ciro patlaması + pazar payı kazanımı (Red Bull/Monster'dan) + PepsiCo distribütör entegrasyonu tamamlanması
+- **Veri dayanağı**: FMP analist hedef konsensüs $55.40 (+71.6%), Q1 EPS beat %36.7, Q1 revenue beat %2.9, US energy drink kategorisi #3 portföy
+- **Risk (bear case)**: Gross margin %48.3'e geriledi (Alani Nu lower-margin etkisi), Pepsi distribütör sözleşmesi yenileme riski, energy drink kategori büyüme yavaşlaması. Stop seviyesi $28 altı (yaklaşık -%13)
+- **Hangi portföye uygun**: **Aggressive** veya **Dengeli**
 
 ---
 
-### 4) VST — Vistra Corp (Utilities, $50.0B mcap)
+### 3) BILL — BILL Holdings — **WATCHLIST'TEN YÜKSELDİ** ✓✓
 
-**Tetikleyici sinyal**: Q1 zarardan kâra geçiş (L2P) ile YoY EPS %410 artış, QoQ ciro %141 patlaması (mevsimsel + Energy Harbor entegrasyonu), AI veri merkezi (data center) elektrik talebi katalizörü güçlü.
+**Bilanço sonuçları (7 May)**: Q1 zarardan kâra geçiş (L2P), YoY ciro +%13.5
 
-**Veri dayanağı (FMP)**:
-- Fiyat $147.72, analist hedef $227.60 (+54.1%)
-- Mcap 50 milyar dolar, AI Power tezi içinde merkez isim
-- Forward P/E temelli fair value $296.75
-- EV/EBITDA bazlı adil değer $207.93 (peer median ile)
-- Hafıza notlarında "Aggressive v2 + AI supply chain" tezi içinde Power layer (POWL/VRT/ETN/PWR) ile tematik bağlantı
+**Analist revizyonu (post-earnings)** — bu çok değerli sinyal:
+- Morgan Stanley: $50 → $55 (RAISED) ✓
+- Oppenheimer: $50 → $55 (RAISED) ✓
+- 2 raised, 0 lowered
 
-**Risk (bear case) ve stop**:
-- AI sermaye harcaması (capex) yavaşlaması = veri merkezi elektrik talebi azalır
-- Doğal gaz fiyat oynaklığı kâr marjını etkiler
-- Faiz indirimleri ertelenirse utility çarpanları sıkışır
-- Stop seviyesi: 135 dolar altı (yaklaşık -%9)
+**FMP analist hedef konsensüsü $54.80 (+31.0% upside)**
 
-**Hangi portföye uygun**: Agresif Büyüme (AI supply chain Power layer'da merkez pozisyon) — hafızadaki Aggressive v2 tezi ile birebir uyumlu
+**Hisse öneri formatı**:
+- **Tetikleyici**: SMB fintech segmentinde L2P + bilanço sonrası analist hedef yükseltmeleri
+- **Veri dayanağı**: FMP analist hedef $54.80 (+31%), MS+Oppenheimer raised, Forward P/E temelli fair value $180 (agresif), TTM toparlanma trendi
+- **Risk (bear case)**: SMB harcama yavaşlaması, fintech pazarda Intuit ve Square rekabeti, L2P sonrası EPS sürdürülebilirliği test edilecek. Stop seviyesi $37 altı (yaklaşık -%12)
+- **Hangi portföye uygun**: **Aggressive** (L2P recovery + analyst momentum)
 
 ---
 
-### 5) TOST — Toast (Technology / Restaurant SaaS, $14.5B mcap)
+### 4) CON — Concentra Group Holdings — **WATCHLIST'TEN YÜKSELDİ** ✓
 
-**Tetikleyici sinyal**: Q1 YoY ciro %21.9 büyüme, YoY EPS %127 artış, restoran lokasyon sayısı (location count) +28% ile pazar payı kazanmaya devam ediyor.
+**Bilanço sonuçları (7 May)**: YoY ciro +%13.7, YoY EPS +%26, QoQ ciro +%5.6
 
-**Veri dayanağı (FMP)**:
-- Fiyat $25.05, analist hedef $37.87 (+51.2%)
-- Forward P/E temelli adil değer $69.57
-- Restaurant point-of-sale segmentinde category leader
+**Analist revizyonu (post-earnings)**:
+- Deutsche Bank: $29 → $32 (RAISED) ✓
 
-**Risk (bear case) ve stop**:
-- Restoran sektörü makro durumdan etkileniyor (tüketici harcaması yavaşlaması)
-- Square ve Clover rekabeti yoğun
-- QoQ ciro %-0.2 hafif zayıflık (uyarı sinyali)
-- Stop seviyesi: 22 dolar altı (yaklaşık -%12)
+**FMP analist hedef konsensüsü $31.50 (+30.4% upside)**
 
-**Hangi portföye uygun**: Agresif Büyüme (orta market vertical SaaS)
+**Hisse öneri formatı**:
+- **Tetikleyici**: Occupational health (iş yeri sağlık hizmetleri) segmentinde tutarlı büyüme + analyst raise
+- **Veri dayanağı**: FMP analist hedef $31.50 (+30%), DB raised, EV/EBITDA bazlı fair value $37, mcap $3.1 milyar
+- **Risk (bear case)**: Healthcare reimbursement (geri ödeme) baskısı, yeni IPO benzeri orta ölçek riski, likidite görece düşük. Stop seviyesi $22 altı (yaklaşık -%9)
+- **Hangi portföye uygun**: **Dengeli** (mid-cap healthcare value)
 
 ---
 
-## İzleme Listesi (Watchlist) — Orta Tier %30+ Potansiyel
+### 5) FIS — Fidelity National Information Services — **MIXED, KOŞULLU** ⚠️
 
-- **ARGX** (argenx, Healthcare): YoY ciro %319 patlaması, biotech momentum, analist +35%
-- **PCTY** (Paylocity, Technology): SMB payroll SaaS, analist +33%
-- **MKTX** (MarketAxess, Financial Services): Tahvil elektronik trading lider, analist +33%
-- **BILL** (BILL Holdings, Technology): SMB fintech L2P, analist +31%
-- **CON** (Concentra Group Holdings, Healthcare): Occupational health hizmetleri, analist +30%
-- **LYFT** (Lyft, Technology): Mobility recovery, analist +28%
+**Bilanço sonuçları (8 May)**:
+- Q1 2026 EPS $1.36 vs konsensüs $1.28 (beat %5.4)
+- Revenue $3.30 milyar vs konsensüs $3.28 milyar (beat %2.2)
+- YoY revenue +%30.1 (Worldpay sonrası temiz çeyrek)
+- Adjusted EBITDA margin 39.6% (+87 bps)
 
-Bu altı isim sağlam shortlist içinde ama analist hedefi %25-35 arasında — daha mütevazi pozisyon önerilir veya tetikleyici (catalyst) bekleyerek girmek mantıklı.
+**Şirket guidance**:
+- FY2026 reaffirmed: Revenue $13.77-13.85B, EBITDA $5.8-5.86B, Adjusted EPS $6.22-6.32, FCF $2.05-2.15B
+- Q2 2026 guidance: Revenue $3.385-3.395B, Adjusted EPS $1.45-1.49 — analyst beklenti $1.51 idi, hafif altında
+- Pro forma growth (Worldpay düzeltilmiş): %5.1-5.7
+
+**Stratejik katalizör — DİKKAT**:
+- **Anthropic ile stratejik ortaklık duyuruldu** (yapay zeka entegrasyonu fintech'e)
+- Bu duyuru muhtemelen mevcut analist consensus fiyatlamasında YOK
+
+**Reaksiyon**:
+- Pre-market %-5.9 düşüş (8 May açılış öncesi)
+- "Leverage concerns" başlığı manşetlerde
+
+**Analist revizyonu (post-earnings)**: Henüz price-target-news'te yansımamış (gecikme normal, FIS bilançosu daha dün açıklandı)
+
+**Hisse öneri formatı**:
+- **Tetikleyici**: %30 YoY büyüme + EPS/revenue beat + Anthropic partnership (benzersiz sinyal). Ama Q2 guidance hafif altında ve pre-market satış reaksiyonu.
+- **Veri dayanağı**: FMP analist hedef $67.14 (+54.3%), FY2026 reaffirmed guidance, Anthropic partnership undeflected by current analyst targets
+- **Risk (bear case)**: Yüksek borç yapısı, Worldpay entegrasyon gecikmeleri, Q2 guidance %2.6 altında, pre-market reaction zayıf. Stop seviyesi $39 altı (yaklaşık -%10)
+- **Hangi portföye uygun**: **Dengeli** (low-multiple value momentum) — ama Pazartesi açılış reaksiyonunu görmeden pozisyon almamak mantıklı
 
 ---
 
-## Belirsizlik Etiketleri (KESİN / MUHTEMEL / SPEKÜLATİF)
+## Shortlist'ten ÇIKARILANLAR (Zayıf Guidance / Analist Downgrade)
 
-- **KESİN**: Bilanço verileri, ciro/kâr büyüme yüzdeleri, FMP tarafından sağlanan analist konsensüs hedefleri, mevcut piyasa fiyatları
-- **MUHTEMEL**: Adil değer ağırlıklı ortalamaları (sektör çarpanı varsayımları içeriyor), L2P sonrası TTM EPS sürdürülebilirliği yorumları
-- **SPEKÜLATİF**: AI veri merkezi tezinin VST üzerinden Q2-Q4 boyunca devam edeceği iddiası, sektör rotasyonu zamanlaması
+### HUBS — HubSpot ✗✗ (ÇIKARILDI)
+**13 analist hedef revizyonu, hepsi DÜŞÜRME**:
+- Truist: $300 → $230, Raymond James: $280 → $250
+- Bernstein: $463 → $381, Evercore: $350 → $225
+- Goldman: $442 → $382, Stifel: $325 → $275
+- Canaccord: $350 → $335, UBS: $260 → $250
+
+8 farklı broker'dan tek yönlü kesim, guidance'ın beklentinin ciddi şekilde altında olduğunu gösteriyor.
+
+### TOST — Toast ✗ (ÇIKARILDI)
+**3 analist hedef revizyonu, hepsi DÜŞÜRME**:
+- Morgan Stanley: $51 → $45, Oppenheimer: $39 → $36, UBS: $40 → $34
+
+### PCTY — Paylocity ✗ (Watchlist'ten çıkarıldı)
+- Baird: $220 → $193, Raymond James: $155 → $140, Stephens: $160 → $120
+- UBS sadece $114 → $115 (marginal raise)
+
+### LYFT — Lyft ✗ (Watchlist'ten çıkarıldı)
+- Canaccord: $16 → $15, RBC Capital: $22 → $18, Oppenheimer: $26 → $20
+- Truist: $15 → $16 (marginal), Roth: $22 → $23
+
+---
+
+## Karasız / Bekleme Listesi
+
+- **ARGX** (argenx): 2 raised + 2 lowered, biotech kategoriye özgü. Klinik veri katalizörü beklemek mantıklı.
+- **MKTX** (MarketAxess): Henüz analist hareketi yok, 1-2 işgünü beklemek gerek.
+
+---
+
+## Yenilenmiş Final Sıralama
+
+| # | Sym | Sektör | Fiyat | Hedef | Üst Pot. | Guidance Sinyali |
+|---|-----|--------|-------|-------|----------|-----------------|
+| 1 | **VST** | Utilities/AI Power | $147.72 | $227.60 | +54.1% | ✓✓✓ Reaffirmed + IG upgrade + Meta/AWS upside dışarıda |
+| 2 | **CELH** | Tüketim Defansif | $32.29 | $55.40 | +71.6% | ✓✓ %138 YoY rev, beat, market share |
+| 3 | **BILL** | Tech/SMB FinTech | $41.83 | $54.80 | +31.0% | ✓✓ MS + Oppenheimer raised |
+| 4 | **CON** | Healthcare | $24.16 | $31.50 | +30.4% | ✓ DB raised |
+| 5 | **FIS** | Tech/FinTech | $43.50 | $67.14 | +54.3% | ⚠️ Beat ama Q2 zayıf, Anthropic partnership pozitif |
+
+---
+
+## KESİN / MUHTEMEL / SPEKÜLATİF Etiketleri
+
+- **KESİN**: Q1 2026 bilanço rakamları, FY2026 guidance açıklamaları (VST, FIS), analist hedef revize haberleri (FMP price-target-news), pre-market fiyat hareketleri
+- **MUHTEMEL**: HUBS ve TOST'un Pazartesi açılışında düşmeye devam etme olasılığı, FIS'in Anthropic partnership'in orta vadede multiple expansion sağlama potansiyeli
+- **SPEKÜLATİF**: VST'nin Cogentrix kapanışı sonrası 2026 guidance'ı yukarı revize etme olasılığı, CELH'in Q2 yaz sezonu ile margin toparlanması zamanlaması
 
 ## Neden Yanlış Olabilirim
 
-1. **Earnings sonrası fiyatlama tamamlanmış olabilir**: Bu hisselerin bilanço ertesi günlerde çoktan rallilemiş olma ihtimali var. Bu rapor 9 Mayıs Cumartesi yazılıyor, açılış (Pazartesi) öncesinde fiyat hareketleri zaten upside'ı yakalamış olabilir.
-2. **Analist hedefleri gecikmeli güncellenebilir**: Bilanço sonrası analistler hedef yükseltir, dolayısıyla şu anki konsensüs aslında biraz "stale" olabilir — gerçek upside daha düşük.
-3. **Sektör çarpan varsayımları geneldir**: Tek tek hisselerin business model nüansları (kapital yoğunluğu, tekrarlanan gelir oranı, vs.) sektör ortalamasından sapabilir. Forward P/E 28 (Tech) varsayımı bazı hisseler için yüksek olabilir.
-4. **L2P artefaktı**: Zarardan kâra geçişlerde TTM EPS düşük baz oluşturduğu için PEG ve Forward P/E yöntemleri abartılı çıkmaya meyilli — bu nedenle FIS, LYFT, ARW, BILL gibi isimleri filtreden geçirdim ama HUBS, VST, BILL'in L2P olduğu unutulmamalı.
-5. **Piyasa rejimi değişimi**: VIX yükselişi veya makro şok bu shortlist'in hepsini aşağı çeker — sektör momentum kısa vadede kaybolabilir.
+1. **Pre-market hareketleri yanıltıcı olabilir**: FIS pre-market %-5.9 düştü ama Pazartesi açılışta toparlayabilir; CELH +%5'ti, açılışta düşebilir.
+2. **Analist downgrade dalgası HUBS/TOST için aşırı tepki olabilir**: Bazen analyst downgrade'leri "cleansing event" işlevi görür; aşırı satım fiyatlamasından sonra kontre ralli gelir.
+3. **CELH'de margin sıkışması kalıcı olabilirse**: Alani Nu integration sonrası gross margin toparlanmazsa konsensüs EPS revizyonları aşağı doğru olur.
+4. **VST AI capex tezi 2027'ye kadar konsensüs**: Eğer hyperscaler (büyük bulut sağlayıcı) yatırımları 2026 ortasında yavaşlama sinyali verirse VST'nin 2027 visible upside tezi sarsılır.
+5. **Anthropic-FIS partnership detayları belirsiz**: Sadece duyuru var, mali etkisi öngörülemez.
 
 ---
 
 ## Sonraki Adımlar
 
-1. **Top 5 için tam adil değer raporu** (11 bölüm protokolü, `reports/research/<TICKER>_ADIL_DEGER_2026-05-09.md`) hazırlanabilir — özellikle CELH, VST, FIS, HUBS, TOST için
-2. Pazartesi 11 Mayıs açılış öncesinde (pre-market) fiyat hareketleri kontrol edilmeli — gap up varsa pozisyonlar ve seviyeler revize edilmeli
-3. Aggressive portföy için VST zaten tematik uyumlu, mevcut pozisyonla çakışma analizi yapılmalı
-4. Dengeli portföy için FIS değerlendirilmeli (low-multiple value momentum)
+1. **Pazartesi 11 Mayıs pre-market 14:00 TR civarı** — FIS, VST, CELH, BILL, CON için pre-market hareketleri kontrol et
+2. **VST için tam adil değer raporu** (`reports/research/VST_ADIL_DEGER_2026-05-11.md`, 11-bölüm protokolü) öncelikli — Aggressive v2 tezi ile birebir uyumlu olduğu için
+3. **CELH için tam adil değer raporu** ikinci öncelik
+4. **FIS için Anthropic partnership detayları** araştırılmalı — eğer somut revenue contribution beklentisi varsa tam rapor değerli, yoksa Q2 sonrasına ertelemek mantıklı
+5. **HUBS ve TOST takibe devam** — eğer iki çeyrek üst üste downgrade yağmuru olur ve fiyat dibe vurursa "fallen angel" temasıyla yeniden değerlendirme yapılabilir
 
 **Kaynak**: finzora ai
