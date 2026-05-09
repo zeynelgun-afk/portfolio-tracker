@@ -90,57 +90,74 @@ NON_CALENDAR_FISCAL = {
 }
 
 
-def fmp_get(endpoint, params=None, max_retries=3, retry_delay=1.5):
-    """
-    FMP API çağrısı.
-    
-    Retry stratejisi:
-      - 200: başarılı, JSON döner
-      - 429 (rate limit): retry_delay × 2 ile bekle, max_retries kadar dene
-      - 503 (transient overload): retry_delay ile bekle, max_retries kadar dene
-      - Network exception (ConnectionError, Timeout): retry_delay ile bekle, max_retries kadar dene
-      - Diğer 4xx (400, 401, 403, 404): hata, None dön (retry yok)
-    
-    Tüm denemeler başarısızsa None döner.
-    """
-    if params is None:
-        params = {}
-    params["apikey"] = API_KEY
-    
-    last_error = None
-    for attempt in range(max_retries):
-        try:
-            r = requests.get(f"{BASE}/{endpoint}", params=params, timeout=20)
-            if r.status_code == 200:
-                return r.json()
-            elif r.status_code == 429:
-                # Rate limit — exponential backoff
-                wait = retry_delay * (2 ** attempt)
-                print(f"  [retry] {endpoint} rate limit (429), {wait}s bekleniyor (deneme {attempt+1}/{max_retries})", file=sys.stderr)
-                time.sleep(wait)
-                continue
-            elif r.status_code == 503:
-                # Transient overload
-                wait = retry_delay
-                print(f"  [retry] {endpoint} server overload (503), {wait}s bekleniyor (deneme {attempt+1}/{max_retries})", file=sys.stderr)
-                time.sleep(wait)
-                continue
-            else:
-                # 4xx errors — kalıcı, retry yok
-                return None
-        except (requests.ConnectionError, requests.Timeout) as e:
-            last_error = e
-            if attempt < max_retries - 1:
-                print(f"  [retry] {endpoint} network error, {retry_delay}s bekleniyor (deneme {attempt+1}/{max_retries}): {e}", file=sys.stderr)
-                time.sleep(retry_delay)
-                continue
-        except Exception as e:
-            last_error = e
-            break
-    
-    if last_error:
-        print(f"  [error] {endpoint} tüm denemeler başarısız: {last_error}", file=sys.stderr)
-    return None
+# 10 May 2026 — canonical fmp_client'a migrasyon (None preservation wrapper)
+import sys as _sys_fmp
+from pathlib import Path as _Path_fmp
+
+_AGENT_DIR = _Path_fmp(__file__).resolve().parent.parent.parent.parent / "agent"
+if str(_AGENT_DIR) not in _sys_fmp.path:
+    _sys_fmp.path.insert(0, str(_AGENT_DIR))
+
+try:
+    from fmp_client import fmp_get as _canonical_fmp_get
+
+    def fmp_get(endpoint, params=None, max_retries=3, retry_delay=1.5):
+        """fmp_client wrapper. Hata/boş veride None döner.
+        Canonical sürüm 60+30s*attempt rate limit backoff kullanır."""
+        result = _canonical_fmp_get(endpoint, params)
+        return result if result else None
+except ImportError:
+    def fmp_get(endpoint, params=None, max_retries=3, retry_delay=1.5):
+        """
+        FMP API çağrısı (fallback).
+
+        Retry stratejisi:
+          - 200: başarılı, JSON döner
+          - 429 (rate limit): retry_delay × 2 ile bekle, max_retries kadar dene
+          - 503 (transient overload): retry_delay ile bekle, max_retries kadar dene
+          - Network exception (ConnectionError, Timeout): retry_delay ile bekle, max_retries kadar dene
+          - Diğer 4xx (400, 401, 403, 404): hata, None dön (retry yok)
+
+        Tüm denemeler başarısızsa None döner.
+        """
+        if params is None:
+            params = {}
+        params["apikey"] = API_KEY
+
+        last_error = None
+        for attempt in range(max_retries):
+            try:
+                r = requests.get(f"{BASE}/{endpoint}", params=params, timeout=20)
+                if r.status_code == 200:
+                    return r.json()
+                elif r.status_code == 429:
+                    # Rate limit — exponential backoff
+                    wait = retry_delay * (2 ** attempt)
+                    print(f"  [retry] {endpoint} rate limit (429), {wait}s bekleniyor (deneme {attempt+1}/{max_retries})", file=sys.stderr)
+                    time.sleep(wait)
+                    continue
+                elif r.status_code == 503:
+                    # Transient overload
+                    wait = retry_delay
+                    print(f"  [retry] {endpoint} server overload (503), {wait}s bekleniyor (deneme {attempt+1}/{max_retries})", file=sys.stderr)
+                    time.sleep(wait)
+                    continue
+                else:
+                    # 4xx errors — kalıcı, retry yok
+                    return None
+            except (requests.ConnectionError, requests.Timeout) as e:
+                last_error = e
+                if attempt < max_retries - 1:
+                    print(f"  [retry] {endpoint} network error, {retry_delay}s bekleniyor (deneme {attempt+1}/{max_retries}): {e}", file=sys.stderr)
+                    time.sleep(retry_delay)
+                    continue
+            except Exception as e:
+                last_error = e
+                break
+
+        if last_error:
+            print(f"  [error] {endpoint} tüm denemeler başarısız: {last_error}", file=sys.stderr)
+        return None
 
 
 def fiscal_period_for_calendar(symbol, calendar_year, calendar_quarter):
@@ -502,11 +519,58 @@ def fetch_sec_url(url, max_retries=2):
     return None
 
 
+def has_earnings_press_release(symbol, earnings_date_str, window_days=2):
+    """
+    Hızlı triage: news/press-releases ile bilanço dönemi PR yayınlanmış mı kontrol et.
+    
+    8-K SEC.gov fetch'ten ÖNCE çağrılır. Eğer bilanço dönemi penceresinde
+    "earnings/quarter/results" başlıklı PR yoksa, mevcut SEC fetch akışı atlanır
+    ve hatalı sec-filings-search sorgusu yapılmaz (rate limit dostu).
+    
+    KRİTİK: news/press-releases parametresi `?symbols=` (ÇOĞUL) olmalı.
+    `?symbol=` (tekil) sessizce IGNORE edilir, generic latest döner.
+    Bkz: notes/2026-05-10_PRESS_RELEASE_EVAL.md
+    
+    Returns:
+        bool: True = bilanço PR var (SEC fetch'e devam et)
+              False = bilanço PR yok (SEC fetch'i atla)
+    """
+    prs = fmp_get("news/press-releases", {"symbols": symbol, "limit": 20})
+    if not prs or not isinstance(prs, list):
+        # API hatası veya boş — ihtiyatlı: True dön (SEC fetch yine denenir)
+        return True
+    
+    earn_d = datetime.strptime(earnings_date_str, "%Y-%m-%d").date()
+    earnings_keywords = (
+        "first quarter", "second quarter", "third quarter", "fourth quarter",
+        "1q", "2q", "3q", "4q", "q1", "q2", "q3", "q4",
+        "fiscal", "earnings", "quarterly", "reports", "results",
+    )
+    
+    for pr in prs:
+        try:
+            pr_date_str = pr.get("publishedDate", "")[:10]
+            if not pr_date_str:
+                continue
+            pr_d = datetime.strptime(pr_date_str, "%Y-%m-%d").date()
+            if abs((pr_d - earn_d).days) > window_days:
+                continue
+            title_lower = (pr.get("title") or "").lower()
+            if any(k in title_lower for k in earnings_keywords):
+                return True
+        except (ValueError, TypeError):
+            continue
+    
+    return False
+
+
 def press_release_signal(symbol, earnings_date_str):
     """
     Bilanço sonrası 8-K press release çek + guidance phrase analizi.
     
     Workflow:
+      0. (10 May 2026 ek) news/press-releases ile hızlı triage:
+         bilanço dönemi PR yayınlanmamışsa SEC fetch atlanır
       1. FMP sec-filings-search/symbol ile bilanço tarihinden ±2 gün 8-K bul
       2. finalLink (genelde Exhibit 99.1 = press release) ile SEC.gov direkt fetch
       3. HTML strip → phrase verdict (transcript ile aynı RAISED/LOWERED/REAFFIRMED)
@@ -514,6 +578,10 @@ def press_release_signal(symbol, earnings_date_str):
     Avantaj: Transcript yayınlanmadan önce (12-48 saat gecikme) bile
              bilanço sonrası ilk gün şirket açıklamasını yakalar.
     """
+    # 0. Hızlı triage — bilanço PR yayınlanmış mı?
+    if not has_earnings_press_release(symbol, earnings_date_str):
+        return {"available": False, "reason": "bilanco_PR_yok_triage"}
+    
     earn_d = datetime.strptime(earnings_date_str, "%Y-%m-%d").date()
     from_date = (earn_d - timedelta(days=1)).strftime("%Y-%m-%d")
     to_date = (earn_d + timedelta(days=2)).strftime("%Y-%m-%d")
