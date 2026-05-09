@@ -562,6 +562,92 @@ fmp_get("historical-price-eod/full", {"symbol": "BTCUSD", "from": "2025-01-01"})
 | 1-Minute Intraday Charting | Ultimate |
 | `income-statement-ttm` | Returns 402 |
 | Bulk delivery endpoints | Ultimate |
+| Press releases (`press-releases`, `press-releases-latest`) | 404 — bizde yok |
+| Stock news (`stock-news`, `news-stock`) | 404 — bizde yok |
+
+---
+
+## SEC Filings — Metadata Only
+
+> **9 Mayıs 2026 — Doğrulanmış davranış.** FMP `sec-filings-search/*` endpoint'i SEC dosyalarının **METADATA**'sını verir (URL listesi), İÇERİĞİ DEĞİL. Filing'in tam metni FMP sunucularında saklanmaz; `finalLink` SEC.gov'a işaret eder.
+
+### Çalışan endpoint'ler
+
+| Endpoint | Zorunlu Parametreler | Ne Döner |
+|----------|----------------------|----------|
+| `sec-filings-search/symbol` | `symbol`, `from`, `to` | Şirketin son dosyaları (8-K, 10-Q, 10-K, 6-K, vs.) |
+| `sec-filings-search/form-type` | `formType`, `from`, `to` | Belirli form tipi tüm şirketler |
+| `sec-filings-search/cik` | `cik`, `from`, `to` | CIK'a göre dosya listesi |
+| `sec-filings-financials` | `symbol`, `limit` | Sadece finansal raporlar (mali tabloları olan) |
+
+### Dönen Alanlar
+
+```json
+{
+  "symbol": "VST",
+  "cik": "1692819",
+  "filingDate": "2026-05-07 00:00:00",
+  "acceptedDate": "2026-05-07 16:30:00",
+  "formType": "8-K",
+  "link": "https://www.sec.gov/cgi-bin/browse-edgar?...",
+  "finalLink": "https://www.sec.gov/Archives/edgar/data/1692819/.../vistra-20260331xearningsre.htm"
+}
+```
+
+### Yaygın Form Tipleri
+
+| Tip | Anlamı | Tipik Kullanım |
+|-----|--------|----------------|
+| `8-K` | Material event | Bilanço açıklaması, M&A, guidance update, CEO değişimi, kritik gelişme |
+| `10-Q` | Quarterly report | Çeyrek mali tablolar (geniş, denetlenmemiş) |
+| `10-K` | Annual report | Yıllık mali tablolar (denetlenmiş, kapsamlı) |
+| `6-K` | Foreign issuer | ABD dışı şirketlerin (ARGX, NVO, AZN gibi) periyodik açıklamaları |
+| `4` | Insider transaction | Yönetici/director hisse alım-satımı |
+| `S-8` | Stock-based comp | Çalışan opsiyon planı kayıt |
+| `SC 13G/A` | 5%+ shareholder | Pasif büyük yatırımcı bildirimi |
+| `144` | Restricted stock sale | İçeriden bilgilenenlerin satış bildirimi |
+
+### ⚠️ İçerik Çekme Sorunu — Container'dan SEC.gov 403
+
+> **9 Mayıs 2026 — Doğrulandı.** Container'ın egress IP'si datacenter range'inde olduğu için SEC.gov fair-access policy'si gereği **403 Forbidden** döner. User-Agent format kuralına uygun olsa bile (`"Şirket Adı email@domain.com"` formatı) IP-level bot detection bypass etmiyor. `data.sec.gov/submissions/CIK*.json` da aynı şekilde 403.
+
+**Workaround — İşe yarayan workflow:**
+
+```
+1) FMP sec-filings-search/symbol  → URL listesi al (form type + finalLink)
+2) İçerik gerekirse:
+   a) web_search ile spesifik arama yap (örn: "VST 8-K Q1 2026 guidance")
+      → Search engine'ler SEC sayfalarını cache'lemiş, snippet ile guidance bilgisi döner
+      → Sonuçlarda `sec.gov/Archives/...` URL'leri görüntülenir
+   b) Tam dokuman gerekirse → web_fetch ile search sonucundaki SEC URL'sini aç
+      (web_fetch sadece search'ten gelen URL'leri açabilir, FMP'den gelenleri DEĞİL)
+```
+
+### Kullanım Örneği
+
+```python
+# Son 1 hafta VST dosyalari
+filings = fmp_get("sec-filings-search/symbol", {
+    "symbol": "VST",
+    "from": "2026-05-01",
+    "to": "2026-05-09",
+    "limit": 20
+})
+
+# Sadece 8-K'lari filtrele (guidance/material event)
+eight_k = [f for f in filings if f["formType"] == "8-K"]
+
+# Earnings release tipik patterni: filingDate ~ earnings tarihi
+# Example: VST Q1 8-K = vistra-20260331xearningsre.htm
+
+# Toplu form-type tarama (tum sirketler 8-K)
+all_8k = fmp_get("sec-filings-search/form-type", {
+    "formType": "8-K",
+    "from": "2026-05-07",
+    "to": "2026-05-08",
+    "limit": 100
+})
+```
 
 ---
 
@@ -683,6 +769,13 @@ All v3/v4 routes are **blocked**. Use these stable equivalents:
 ---
 
 ## CHANGELOG
+
+### 9 Mayıs 2026 (akşam) — SEC Filings bölümü eklendi
+- **`sec-filings-search/symbol`, `sec-filings-search/form-type`, `sec-filings-search/cik`** endpoint'leri belgelendi. Zorunlu `from`/`to` parametreleri.
+- FMP'nin sadece METADATA verdiği netleştirildi — filing içeriği FMP'de değil, `finalLink` SEC.gov'a gidiyor.
+- Container'dan SEC.gov 403 sorunu (IP-level bot detection) ve workaround dökümante edildi: `web_search` → snippet, gerekirse search URL'si üzerinden `web_fetch`.
+- Plan'da OLMAYAN endpoint'ler listesine `press-releases`, `stock-news` eklendi (404).
+- Yaygın form tiplerinin tablosu eklendi (8-K, 10-Q, 10-K, 6-K, 4, S-8, SC 13G/A, 144).
 
 ### 9 Mayıs 2026 — `exchange` alanı düzeltmesi
 - **`profile` endpoint'i için doğru alan `exchange`** (NYSE/NASDAQ/AMEX), eski v3'teki `exchangeShortName` DEĞİL. Stable endpoint'inde `exchangeShortName` alanı YOK; `.get("exchangeShortName")` `None` döner ve filtreler sessizce 0 sonuç verir. Aynı dosyadaki "Borsa (Exchange) Alanı" bölümüne taşındı.
