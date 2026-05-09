@@ -24,7 +24,7 @@ API key always goes as `apikey` query parameter. Key is stored in user memory.
 | Item | Value |
 |------|-------|
 | Daily calls | Sınırsız |
-| Calls per minute | 3,000 |
+| Calls per minute | **3,000** (FMP dashboard'da "API Calls / Min: X/3,000" formatında canlı sayaç) |
 | Bandwidth (30-day) | 50GB+ |
 | Historical data | Full historical (30+ years) |
 | Coverage | Global (US, UK, Canada, EU, APAC) |
@@ -35,6 +35,8 @@ API key always goes as `apikey` query parameter. Key is stored in user memory.
 | Bulk delivery | ✓ |
 
 > **9 Mayıs 2026**: Premium ($49/ay) → Ultimate ($99/ay) plan upgrade yapıldı. Earnings call transcripts, 13F institutional holdings ve ETF holdings endpoint'leri açıldı. API rate 750→3000/dk (4x).
+
+> **Rate limit izleme**: FMP dashboard'unda anlık kullanım `API Calls / Min: 0/3,000` formatında görünür. Yoğun pipeline çalıştırırken (örn. bilanço sonrası tarama 1.300 hisse profile çağrısı) bu sayaç tepe yapar. Sayaç 3000'e ulaştığında "Limit Reach" hatası döner — `fmp_get_retry` fonksiyonu otomatik backoff ile bekleyip yeniden dener (stable scriptlerde `429/503` retry mekanizması bu sınırı yönetir).
 
 > **⚠️ CRITICAL**: Legacy `/api/v3/` and `/api/v4/` routes are **completely blocked** (403 "Legacy Endpoint" error). **Always use `/stable/` only.**
 
@@ -949,7 +951,7 @@ for h in qqq[:10]:
 | `402` Restricted | Not in Premium plan | Requires Ultimate |
 | `403` Legacy | Used v3/v4 route | Switch to `/stable/` |
 | `400` Query Error | Missing required param | Add `date`, `sector`, etc. |
-| `{"Error Message": "Limit Reach"}` | Per-minute limit hit (2500/dk) | Kısa bekle, retry |
+| `{"Error Message": "Limit Reach"}` | Per-minute limit hit (Ultimate: 3000/dk, sayaç FMP dashboard'da "API Calls / Min: X/3,000" formatında görünür) | Kısa bekle, retry |
 | `{"Error Message": "Invalid API KEY"}` | Wrong key | Check memory |
 | Empty `[]` with `200` | No data for params | Check symbol, date range |
 
