@@ -607,33 +607,74 @@ lst = fmp_get("earnings-transcript-list", {"symbol": "BILL"})
 | Endpoint | Parametreler | Ne Döner |
 |----------|--------------|----------|
 | `institutional-ownership/latest` | `limit` opsiyonel | En son 13F dosyaları (CIK + finalLink) |
-| `institutional-ownership/symbol-positions-summary` | `symbol`, `year` ZORUNLU | Bir hissenin yıllık 13F pozisyon özeti |
+| `institutional-ownership/symbol-positions-summary` | `symbol`, `year`, `quarter` ZORUNLU | Bir hissenin çeyreklik 13F pozisyon özeti |
+| `institutional-ownership/extract` | `cik`, `year`, `quarter` ZORUNLU | Bir yatırımcının (CIK) tüm 13F holdings listesi |
 
-**Dönen alanlar (`institutional-ownership/latest`)**:
+**`symbol-positions-summary` Dönen Alanlar (9 May 2026 doğrulandı)**:
+
 ```json
 {
-  "cik": "1166559",
-  "name": "Berkshire Hathaway Inc",
-  "date": "2026-03-31",
-  "filingDate": "2026-05-15",
-  "acceptedDate": "2026-05-15 16:30:00",
-  "formType": "13F-HR",
-  "link": "...",
-  "finalLink": "..."
+  "symbol": "VST",
+  "cik": "1692819",
+  "date": "2025-12-31",
+  "investorsHolding": 1423,
+  "lastInvestorsHolding": 1446,
+  "investorsHoldingChange": -23,
+  "numberOf13Fshares": 290500000,
+  "lastNumberOf13Fshares": 283200000,
+  "numberOf13FsharesChange": 7300000,
+  "totalInvested": 47000000000
 }
 ```
 
-**Smart money takibi için workflow** (Druckenmiller, Buffett, Burry, Tepper, Loeb):
-```python
-# Belirli bir manager'in son 13F'i
-# Once CIK bul (manuel: Buffett=1067983, Druckenmiller=1536411, Tepper=1656456, Burry=1649339)
-recent = fmp_get("institutional-ownership/latest", {"limit": 100})
-buffett_filings = [f for f in recent if f["cik"] == "1067983"]
+`numberOf13FsharesChange` pozitifse net kurumsal birikim, negatifse net kurumsal çıkış. `investorsHoldingChange` ise yatırımcı sayısı değişimi (yeni isimler giriyor mu, eskiler çıkıyor mu).
 
-# Spesifik hissenin yillik institutional ownership ozeti
-positions = fmp_get("institutional-ownership/symbol-positions-summary",
-                    {"symbol": "VST", "year": 2026})
+**`extract` Dönen Alanlar (Druckenmiller, Buffett, Burry vs için kullanılır)**:
+
+```json
+{
+  "date": "2025-12-31",
+  "filingDate": "2026-02-14",
+  "cik": "0001536411",
+  "securityCusip": "...",
+  "symbol": "CPNG",
+  "nameOfIssuer": "COUPANG INC",
+  "shares": 6770000,
+  "titleOfClass": "COM",
+  "sharesType": "SH"
+}
 ```
+
+**Smart money CIK referans tablosu (9 May 2026 doğrulandı)**:
+
+| Yatırımcı | Firma | CIK |
+|-----------|-------|-----|
+| Stanley Druckenmiller | Duquesne Family Office | `0001536411` |
+| Warren Buffett | Berkshire Hathaway | `0001067983` |
+| Michael Burry | Scion Asset Management | `0001649339` |
+| David Tepper | Appaloosa Management | `0001656456` |
+| Bill Ackman | Pershing Square Capital | `0001336528` |
+| Ray Dalio | Bridgewater Associates | `0001350694` |
+| Howard Marks | Oaktree Capital | `0000949509` |
+| Daniel Loeb | Third Point | `0001040273` |
+| Seth Klarman | Baupost Group | `0001061768` |
+
+**Smart money workflow örneği**:
+
+```python
+# Druckenmiller'in son ceyrek tum holdings'i
+holdings = fmp_get("institutional-ownership/extract",
+                   {"cik": "0001536411", "year": "2025", "quarter": "4"})
+# En buyuk 15 pozisyon
+sorted_h = sorted(holdings, key=lambda x: x["shares"], reverse=True)[:15]
+
+# Bir hissenin kurumsal birikim trendi
+vst = fmp_get("institutional-ownership/symbol-positions-summary",
+              {"symbol": "VST", "year": "2025", "quarter": "4"})
+net_birikim_M = vst[0]["numberOf13FsharesChange"] / 1e6  # 7.3M shares Q4 birikim
+```
+
+**⚠️ 13F gecikmesi**: SEC kuralı gereği fonlar 13F'i çeyrek kapanışından **45 gün sonra** dosyalar. Q4 2025 (kapanış 31 Aralık 2025) verisi 14 Şubat 2026'ya kadar yayında olmayabilir. Q1 2026 verisi 15 Mayıs 2026 civarı gelecek. Yani şu an (9 May 2026) en güncel 13F dönemi Q4 2025'tir.
 
 ### 3) ETF & Mutual Fund Holdings
 
