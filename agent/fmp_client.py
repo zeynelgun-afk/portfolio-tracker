@@ -11,10 +11,15 @@ KULLANIM:
     rsi   = fmp_get("technical-indicators/rsi", {"symbol": "AAPL", "periodLength": 14, "timeframe": "1day"})
 
 ÖZELLİKLER:
-- Otomatik retry (429, 500, 503 için exponential backoff)
-- 402 yakalama (Premium dışı endpoint)
+- Otomatik retry (429, 500, 502, 503, 504 ve body'deki "Limit Reach" için)
+- Rate limit beklemesi 60s'ten başlar, +30s artar (FMP dakikalık reset uyumlu)
+- 402 yakalama (Premium dışı endpoint, retry yok)
+- JSONDecodeError ayrı yakalanır (CDN HTML hata sayfası vakası, kalıcı hata)
+- Body'de "Limit Reach" mesajı 429 ile aynı muamele görür
 - Telegram'a kritik hata bildirimi (opsiyonel)
 - Timeout default 15s
+
+10 May 2026 GÜNCELLEMESİ — Bkz. docs/FMP_SKILL.md CHANGELOG.
 """
 
 import time
@@ -88,27 +93,43 @@ def fmp_get(
                 )
                 return []
 
-            # 429: Rate limit — backoff ile bekle
+            # 429: Rate limit — 60s'ten başla, sonra +30s artır (FMP dakikalık reset)
             if r.status_code == 429:
-                wait = _RETRY_BACKOFF ** (attempt + 1)
-                print(f"[fmp_client] 429 rate limit, {wait:.1f}s bekliyor...")
+                wait = 60 + 30 * attempt  # 60s, 90s, 120s
+                print(f"[fmp_client] 429 rate limit, {wait}s bekliyor (deneme {attempt + 1}/{max_retries})")
                 time.sleep(wait)
                 continue
 
             r.raise_for_status()
-            data = r.json()
+
+            # JSON parse — FMP arada CDN HTML hata sayfası dönebilir
+            try:
+                data = r.json()
+            except (ValueError, requests.exceptions.JSONDecodeError) as e:
+                last_err = f"JSON parse failed: {str(e)[:100]}"
+                # JSON decode kalıcı hata — retry anlamsız
+                break
+
             response_size = len(r.content) if r.content else 0
 
-            # FMP bazen {"Error Message": "..."} döner
+            # FMP bazen {"Error Message": "..."} döner — "Limit Reach" rate limit, kalanı kalıcı
             if isinstance(data, dict) and "Error Message" in data:
-                print(f"[fmp_client] FMP Error: {data['Error Message']}")
+                err_msg = data["Error Message"]
+                if "Limit Reach" in err_msg:
+                    # Body'de rate limit — 429 ile aynı muamele
+                    wait = 60 + 30 * attempt
+                    print(f"[fmp_client] Body Limit Reach, {wait}s bekliyor (deneme {attempt + 1}/{max_retries})")
+                    time.sleep(wait)
+                    continue
+                # Diğer body error'ları kalıcı (Invalid API KEY, vs.)
+                print(f"[fmp_client] FMP Error: {err_msg}")
                 log_fmp_call(
                     endpoint=endpoint,
                     status=r.status_code,
                     duration_ms=int((time.time() - t_total_start) * 1000),
                     retry_count=attempt,
                     response_size=response_size,
-                    error=data["Error Message"][:200],
+                    error=err_msg[:200],
                 )
                 return []
 
@@ -136,8 +157,11 @@ def fmp_get(
             break
         except Exception as e:
             last_err = f"Unexpected: {type(e).__name__}: {str(e)[:100]}"
+            # Beklenmeyen hata — retry edilebilir ama kontrollü
+            if attempt >= max_retries - 1:
+                break
 
-        # Backoff
+        # Geçici hatalar için backoff (ConnectionError, Timeout)
         if attempt < max_retries - 1:
             time.sleep(_RETRY_BACKOFF ** (attempt + 1))
 

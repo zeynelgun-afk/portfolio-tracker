@@ -1,11 +1,11 @@
 ---
-name: fmp-integration
-description: Comprehensive guide for integrating Financial Modeling Prep (FMP) API, covering stable endpoints, migration from legacy versions, and usage examples. Use this skill whenever AI needs to fetch real financial data from FMP API including stock quotes, financial statements, technical indicators, earnings data, analyst estimates, screener, news, insider trading, ETF holdings, economic calendar, and more. This is the master reference for ALL FMP API calls.
+name: fmp
+description: Financial Modeling Prep (FMP) API ile finansal veri çekme. Stable endpoint /stable/ (v3/v4 yasak), Ultimate plan (3000 calls/min). Hisse quote, gelir tablosu, bilanço, nakit akış, ratios-ttm, key-metrics-ttm, analyst-estimates, price-target-consensus, earnings calendar, earning-call-transcript (TEKİL 'earning'), institutional-ownership 13F (symbol-positions-summary + extract CIK), sec-filings-search/symbol (finalLink → 8-K Exhibit 99.1 SEC.gov direct fetch fair-access User-Agent), ETF holdings, RSI/SMA, ^VIX, screener. Alan tuzakları: changePercentage TEKİL, profile.exchange (exchangeShortName stable yok), epsAvg, priceToEarningsRatioTTM ratios-ttm. Hisse analizi, bilanço, 13F, SEC filings, earnings tarama, transcript guidance, screener her durumda tetikle. 'FMP', 'stable endpoint', '13F', '8-K', 'earnings call transcript', 'analyst estimates' ifadelerini gördüğünde aç.
 ---
 
-# FMP API Integration — Premium Plan Reference
+# FMP API Integration — Ultimate Plan Reference
 
-> **Last verified**: 19 April 2026 | **Plan**: Premium | **Base URL**: `https://financialmodelingprep.com/stable/`
+> **Last verified**: 9 May 2026 | **Plan**: Ultimate ($99/ay, 3000 calls/min) | **Base URL**: `https://financialmodelingprep.com/stable/`
 
 ---
 
@@ -99,29 +99,89 @@ us = [p for p in profiles if p.get("exchangeShortName") in ("NYSE","NASDAQ","AME
 
 ## Standard Python Pattern
 
+> **10 Mayıs 2026 — Hata türü ayrımı eklendi.** Eski örnek `r.raise_for_status()` ile 429'u (rate limit) erken exception'a çeviriyor, body'deki "Limit Reach" mesajına ulaşılamıyordu. Ayrıca `r.json()` ham `JSONDecodeError` fırlatıyordu (FMP arada CDN HTML hata sayfası döndüğünde). Aşağıdaki kalıp `FmpRateLimit` (geçici, retry edilir) ve `FmpEndpointError` (kalıcı, retry edilmez) ayrımı yapar.
+
 ```python
-import requests
+import requests, time, json, logging
 
-FMP_API_KEY = "YOUR_API_KEY"  # From user memory
+FMP_API_KEY = "YOUR_API_KEY"  # User memory'den
 FMP_BASE = "https://financialmodelingprep.com/stable"
+log = logging.getLogger("fmp")
 
-def fmp_get(endpoint, params=None):
+
+class FmpRateLimit(Exception):
+    """429 status veya body'de 'Limit Reach' — bekle ve tekrar dene."""
+
+
+class FmpEndpointError(Exception):
+    """404/400/Invalid API KEY/JSON parse hatası — retry anlamsız."""
+
+
+def fmp_get(endpoint, params=None, timeout=30):
+    """Tek deneme. Boş liste [] geçerli yanıttır, dönüş olarak gelir."""
     if params is None:
         params = {}
     params['apikey'] = FMP_API_KEY
     url = f"{FMP_BASE}/{endpoint}"
+
     try:
-        r = requests.get(url, params=params, timeout=30)
-        r.raise_for_status()
+        r = requests.get(url, params=params, timeout=timeout)
+    except (requests.Timeout, requests.ConnectionError) as e:
+        # Ağ hatası — geçici sayılır
+        raise FmpRateLimit(f"network error: {e}")
+
+    # 1) Rate limit / geçici sunucu hataları
+    if r.status_code in (429, 500, 502, 503, 504):
+        raise FmpRateLimit(f"HTTP {r.status_code}")
+    # 2) Premium dışı endpoint (402) ve diğer kalıcı 4xx hataları
+    if r.status_code >= 400:
+        raise FmpEndpointError(f"HTTP {r.status_code} on {endpoint}: {r.text[:200]}")
+    # 3) JSON parse — FMP arada HTML hata sayfası dönebilir
+    try:
         data = r.json()
-        if isinstance(data, dict) and 'Error Message' in data:
-            print(f"FMP Error: {data['Error Message']}")
+    except (ValueError, json.JSONDecodeError) as e:
+        raise FmpEndpointError(f"Invalid JSON from {endpoint}: {e}")
+    # 4) Body içi hata mesajı — "Limit Reach" rate limit, diğerleri kalıcı
+    if isinstance(data, dict) and "Error Message" in data:
+        msg = data["Error Message"]
+        if "Limit Reach" in msg:
+            raise FmpRateLimit(msg)
+        raise FmpEndpointError(msg)
+    # 5) Boş [] de geçerli yanıt; çağıran karar versin
+    return data
+
+
+def fmp_get_retry(endpoint, params=None, max_retries=3, rate_limit_wait=60):
+    """Sadece geçici hatalarda retry. 404/400/JSON kalıcı hatasında doğrudan None.
+
+    Args:
+        max_retries: Toplam deneme sayısı (default 3).
+        rate_limit_wait: İlk rate-limit beklemesi (saniye). Sonraki denemeler 1.5x büyür.
+    """
+    for attempt in range(max_retries):
+        try:
+            return fmp_get(endpoint, params)
+        except FmpRateLimit as e:
+            wait = rate_limit_wait * (1.5 ** attempt)  # 60s, 90s, 135s
+            log.warning(
+                f"FMP geçici hata ({e}), {wait:.0f}s bekliyor "
+                f"(deneme {attempt + 1}/{max_retries}) endpoint={endpoint}"
+            )
+            time.sleep(wait)
+        except FmpEndpointError as e:
+            log.error(f"FMP kalıcı hata, retry yapılmıyor: {e} endpoint={endpoint}")
             return None
-        return data
-    except requests.exceptions.RequestException as e:
-        print(f"Request failed: {e}")
-        return None
+    log.error(f"FMP retry tükendi: {endpoint}")
+    return None
 ```
+
+> **⚠️ Boş liste `[]` retry edilmez.** Eski sürümdeki `result != []` kontrolü `earnings-calendar`, `news/stock`, `sector-performance-snapshot` (hafta sonu) gibi geçerli boş yanıtları hata sanıp 3 kez yeniden deniyor, 3000/dk sayacını boşa harcatıyordu. `[]` gerçekten "veri yok" demektir; çağıran kod karar verir.
+
+> **⚠️ Rate limit beklemesi 60s'ten başlar.** FMP dakikalık limit, 60 saniyelik döngü ile sıfırlanır. Eski `2 ** attempt` (1+2+4 = 7s) yetersizdi.
+
+> **Production tip — observability**: Yukarıdaki örnek `logging.getLogger("fmp")` kullanır. Finzora pipeline'larında bunun yerine `agent/fmp_client.py` içindeki `fmp_get` import edilir; o sürüm her çağrıyı `observability.log_fmp_call(endpoint, status, duration_ms, retry_count, error)` ile `logs/events.jsonl`'e düşürür ve kritik hatalarda Telegram DM'ye bildirim atar (`notify_on_error=True` ile). Yeni script yazarken `print()` yerine bu yolu kullan; rate-limit ve hata istatistikleri haftalık raporlarda görünür hale gelir.
+
+> **Parametre tipi konvansiyonu**: `year` ve `quarter` her zaman **int** olarak verilir (`{"year": 2026, "quarter": 1}`), string DEĞİL. FMP her ikisini de kabul eder ama kod tabanı boyunca tip tutarlılığı için int. Aynı şekilde `limit`, `periodLength` int; `from`/`to`/`date` string (ISO format `"YYYY-MM-DD"`); `symbol`/`symbols` string (çoğul comma-separated).
 
 ---
 
@@ -213,16 +273,30 @@ screener = fmp_get("company-screener", {
 ```python
 # Portfolio batch quote
 quotes = fmp_get("batch-quote", {"symbols": "SM,KOS,MO,XLE,RGLD,FCX"})
-# Forex/Crypto/Commodity — same endpoint
+# batch-quote LIST döner: [{"symbol": "SM", ...}, {"symbol": "KOS", ...}, ...]
+
+# Tek sembol için de LIST döner (tek elemanlı). [0] ile dict access ZORUNLU.
+q = fmp_get("quote", {"symbol": "AAPL"})
+quote = q[0] if isinstance(q, list) and q else None
+price = quote["price"] if quote else None  # Direkt q["price"] TypeError fırlatır!
+
+# Forex/Crypto/Commodity — aynı şema, hep LIST
 eurusd = fmp_get("quote", {"symbol": "EURUSD"})
 btc = fmp_get("quote", {"symbol": "BTCUSD"})
 gold = fmp_get("quote", {"symbol": "GCUSD"})
 
-# Index sembolleri — ÇALIŞIR (19 Nisan 2026 doğrulandı)
+# Index sembolleri — ÇALIŞIR (19 Nisan 2026 doğrulandı), aynı LIST şeması
 vix = fmp_get("quote", {"symbol": "^VIX"})    # CBOE Volatility Index
 spx = fmp_get("quote", {"symbol": "^GSPC"})   # S&P 500 Index
 ndx = fmp_get("quote", {"symbol": "^IXIC"})   # Nasdaq Composite
+
+# Güvenli helper — projede agent/fmp_client.py içinde quote() wrapper olarak mevcut:
+def quote_dict(symbol):
+    res = fmp_get("quote", {"symbol": symbol})
+    return res[0] if isinstance(res, list) and res else None
 ```
+
+> **⚠️ KRİTİK — `quote` endpoint dönüş tipi**: Tek sembol sorgusunda bile **LIST** döner (tek elemanlı). `quote.get("price")` ile direkt erişim `AttributeError` fırlatır (list .get() yok). Her zaman `[0]` ile dict'e in, `isinstance(q, list) and q` ile boş liste guard'ı koy. Aynı kural `aftermarket-quote`, `quote-short`, `batch-quote`, `batch-quote-short` için de geçerli.
 
 > **✅ quote alanları** (19 Nisan 2026 doğrulandı — stocks, ETF, forex, crypto, commodity, index hepsi aynı):
 >
@@ -251,13 +325,20 @@ ndx = fmp_get("quote", {"symbol": "^IXIC"})   # Nasdaq Composite
 
 Works for stocks, ETFs, forex pairs, crypto, and commodities.
 
+> **⚠️ Tarih sırası — KRİTİK**: `historical-price-eod/*` ve `historical-chart/*` endpoint'leri **newest-first** döner. `data[0]` = en güncel tarih, `data[-1]` = en eski. Backtest döngülerinde sırayı `reversed(data)` veya `sorted(data, key=lambda x: x["date"])` ile çevirmeyi unutma. SMA/EMA/RSI hesabı yanlış yönden başlarsa tüm gösterge değerleri ters çıkar.
+
 ```python
 prices = fmp_get("historical-price-eod/full", {
     "symbol": "AAPL", "from": "2025-01-01", "to": "2026-02-20"
 })
+# prices[0] = 2026-02-20 (en güncel), prices[-1] = 2025-01-02 (en eski)
+# Kronolojik (eskiden yeniye) işlem için:
+prices_chrono = list(reversed(prices))
+
 intraday = fmp_get("historical-chart/1hour", {
     "symbol": "AAPL", "from": "2026-02-18", "to": "2026-02-20"
 })
+# Aynı şekilde newest-first
 ```
 
 ---
@@ -453,10 +534,13 @@ macd = fmp_get("technical-indicators/macd", {"symbol": "AAPL", "periodLength": 1
 | Endpoint | Params | Description |
 |----------|--------|-------------|
 | `news/stock` | `symbols` (comma-sep), `limit` | Stock news ✅ |
-| `news/press-releases` | `symbol`, `limit` | Press releases ✅ (**NOT `press-releases`**) |
+| `news/stock-latest` | `limit` | En son tüm hisse haberleri ✅ |
+| `news/press-releases` | `symbol` veya `symbols` (comma-sep), `limit` | Press releases ✅ (**NOT `press-releases`** öneksiz form 404) |
 | `news/crypto` | `limit` | Crypto news ✅ |
 | `news/forex` | `limit` | Forex news ✅ |
 | `fmp-articles` | `limit` | FMP market articles ✅ (**NOT `news/general`**) |
+
+> **10 Mayıs 2026 — Press releases canlı doğrulandı**: `news/press-releases` **çalışıyor** (Ultimate plan); `symbol=AAPL` veya `symbols=AAPL,MSFT` parametresi kabul ediliyor. Önek olmadan `press-releases` ve `press-releases-latest` 404 döner (bunlar farklı endpoint adları, aynı şey değil).
 
 ```python
 # Stock news
@@ -536,9 +620,22 @@ articles = fmp_get("fmp-articles", {"limit": 20})
 
 | Endpoint | Params | Description |
 |----------|--------|-------------|
-| `treasury-rates` | `from`, `to` | US treasury yields |
+| `treasury-rates` | `from`, `to` | US treasury yields (alanlar **yüzde formunda**: 4.38 = %4.38) |
 | `economic-indicators` | `name`, `from`, `to` | GDP, CPI, unemployment, etc. |
 | `market-risk-premium` | `date` | Country risk premiums |
+
+> **✅ treasury-rates dönüş alanları** (10 Mayıs 2026 doğrulandı): `date`, `month1`, `month2`, `month3`, `month6`, `year1`, `year2`, `year3`, `year5`, `year7`, `year10`, `year20`, `year30`. **Değerler ham yüzde** — örneğin `year10 = 4.38` → %4.38'i ifade eder.
+>
+> ```python
+> rates = fmp_get("treasury-rates", {"from": "2026-05-01", "to": "2026-05-09"})
+> # En güncel önce gelir
+> latest = rates[0] if rates else {}
+> ust10 = latest.get("year10")  # 4.38 → ekrana "%4.38" şeklinde yaz
+> # Matematiksel formüllerde decimal (ondalık) gerekirse: ust10 / 100 → 0.0438
+> # Spread hesabı: yield curve = year10 - year2 (her ikisi yüzde, fark da yüzde puan)
+> ```
+>
+> **⚠️ Tarih sırası**: Newest-first döner — `rates[0]` en güncel tarih, `rates[-1]` en eski. `from`/`to` aralığında her iş günü için bir kayıt (hafta sonu/tatil yok).
 
 ---
 
@@ -608,9 +705,26 @@ lst = fmp_get("earnings-transcript-list", {"symbol": "BILL"})
 
 | Endpoint | Parametreler | Ne Döner |
 |----------|--------------|----------|
-| `institutional-ownership/latest` | `limit` opsiyonel | En son 13F dosyaları (CIK + finalLink) |
+| `institutional-ownership/latest` | `limit` opsiyonel | En son 13F dosyaları (alanlar aşağıda) |
 | `institutional-ownership/symbol-positions-summary` | `symbol`, `year`, `quarter` ZORUNLU | Bir hissenin çeyreklik 13F pozisyon özeti |
 | `institutional-ownership/extract` | `cik`, `year`, `quarter` ZORUNLU | Bir yatırımcının (CIK) tüm 13F holdings listesi |
+
+**`institutional-ownership/latest` Dönen Alanlar (10 May 2026 doğrulandı)**:
+
+```json
+{
+  "cik": "0001592616",
+  "name": "NOTIS-MCCONARTY EDWARD",
+  "date": "2026-03-31",
+  "filingDate": "2026-05-08 00:00:00",
+  "acceptedDate": "2026-05-08 17:26:33",
+  "formType": "13F-HR/A",
+  "link": "https://www.sec.gov/Archives/edgar/data/.../...-index.htm",
+  "finalLink": "https://www.sec.gov/Archives/edgar/data/.../inftable.xml"
+}
+```
+
+Form tipleri: `13F-HR` (orijinal), `13F-HR/A` (amendment/düzeltme), `13F-NT` (no holdings). `cik` 10 hane sıfır-padded gelir (örn. `0001536411`); kendi CIK haritanla eşleştirirken her iki formata (zero-padded ve trim) hazır ol.
 
 **`symbol-positions-summary` Dönen Alanlar (9 May 2026 doğrulandı)**:
 
@@ -665,14 +779,15 @@ lst = fmp_get("earnings-transcript-list", {"symbol": "BILL"})
 
 ```python
 # Druckenmiller'in son ceyrek tum holdings'i
+# Not: year ve quarter int olarak verilir (string de kabul edilir ama proje boyu int kullan)
 holdings = fmp_get("institutional-ownership/extract",
-                   {"cik": "0001536411", "year": "2025", "quarter": "4"})
+                   {"cik": "0001536411", "year": 2025, "quarter": 4})
 # En buyuk 15 pozisyon
 sorted_h = sorted(holdings, key=lambda x: x["shares"], reverse=True)[:15]
 
-# Bir hissenin kurumsal birikim trendi
+# Bir hissenin kurumsal birikim trendi (quarter ZORUNLU, atlama)
 vst = fmp_get("institutional-ownership/symbol-positions-summary",
-              {"symbol": "VST", "year": "2025", "quarter": "4"})
+              {"symbol": "VST", "year": 2025, "quarter": 4})
 net_birikim_M = vst[0]["numberOf13FsharesChange"] / 1e6  # 7.3M shares Q4 birikim
 ```
 
@@ -709,7 +824,55 @@ top10 = qqq[:10]
 
 ### 4) Bulk Delivery (Toplu İndirme)
 
-`profile-bulk` ve diğer bulk endpoint'leri CSV format döner (JSON değil), `requests.get(...).text` ile alıp `csv.DictReader` ile parse edilmeli. Tipik kullanım: tüm hisselerin profile'ını tek call'da çekmek (saat hızlı tarama için).
+`profile-bulk` ve diğer bulk endpoint'leri **CSV formatında** döner (JSON değil), normal `fmp_get` ile alınamaz çünkü `r.json()` parse hatası fırlatır. Doğru kalıp aşağıdaki gibi `requests.get(...).text` + `csv.DictReader`:
+
+```python
+import csv, io, requests
+from _config import FMP_KEY  # veya FMP_API_KEY
+# FmpRateLimit ve FmpEndpointError için Standard Pattern bölümüne bak
+
+def fmp_bulk_csv(endpoint, params=None, timeout=120):
+    """CSV format dönen bulk endpoint'leri için. Liste-of-dict döner.
+
+    JSON endpoint'lerinden farklı olarak r.json() çağırılmaz; raw text + csv parse.
+    Hata semantik olarak fmp_get ile aynı (FmpRateLimit / FmpEndpointError).
+    """
+    p = dict(params or {})
+    p["apikey"] = FMP_KEY
+    try:
+        r = requests.get(f"https://financialmodelingprep.com/stable/{endpoint}",
+                         params=p, timeout=timeout)
+    except (requests.Timeout, requests.ConnectionError) as e:
+        raise FmpRateLimit(f"bulk network error: {e}")
+    if r.status_code in (429, 500, 502, 503, 504):
+        raise FmpRateLimit(f"bulk HTTP {r.status_code}")
+    if r.status_code >= 400:
+        raise FmpEndpointError(f"bulk HTTP {r.status_code} on {endpoint}: {r.text[:200]}")
+    if not r.text or not r.text.strip().startswith('"'):
+        return []  # Boş part veya hata sayfası
+    return list(csv.DictReader(io.StringIO(r.text)))
+
+# Tüm hisselerin profile'ı (parçalı — "part" parametresi 0,1,2... şeklinde)
+all_profiles = []
+for part in range(10):  # 10 parçaya kadar dene
+    chunk = fmp_bulk_csv("profile-bulk", {"part": str(part)})
+    if not chunk:
+        break
+    all_profiles.extend(chunk)
+
+# Sadece US listings
+us_profiles = [p for p in all_profiles
+               if p.get("exchange") in ("NYSE", "NASDAQ", "AMEX")]
+
+# Market cap > $2B filtresi (CSV'den string gelir, int'e çevir)
+midcap_plus = [p for p in us_profiles
+               if p.get("marketCap") and int(p["marketCap"]) > 2_000_000_000]
+```
+
+> **Bulk profile-bulk dönen kolonlar** (10 May 2026 doğrulandı):
+> `symbol, price, marketCap, beta, lastDividend, range, change, changePercentage, volume, averageVolume, companyName, currency, cik, isin, cusip, exchangeFullName, exchange, industry, website, description, ceo, sector, country, fullTimeEmployees, phone, address, city, state, zip, image, ipoDate, defaultImage, isEtf, isActivelyTrading, isAdr, isFund`
+>
+> Bu, 1.300 hisse için tek tek `profile` çağırmaktan **~300x daha hızlıdır** ve tek call sayılır (rate limit avantajı). Bilanço sonrası geniş tarama, screener besleme gibi senaryolarda zorunlu pattern.
 
 ---
 
@@ -717,9 +880,9 @@ top10 = qqq[:10]
 
 | Endpoint | Durum | Alternatif |
 |----------|-------|-----------|
-| `press-releases` / `press-releases-latest` | 404 | Web search ile snippet, veya `sec-filings-search` ile 8-K ex99.1 dosyaları |
-| `stock-news` / `news-stock` | 404 | Web search |
-| `mutual-fund-holdings` | 404 | `etf/holdings` benzeri ama mutual fund için endpoint adı farklı, dokümante edilmeli |
+| `press-releases` / `press-releases-latest` (öneksiz) | 404 — bu adlar yok | **`news/press-releases`** kullan (önek ile çalışıyor, satır 12'ye bak) |
+| `stock-news` (öneksiz) | 404 — bu ad yok | `news/stock` kullan (önek ile çalışıyor) |
+| `mutual-fund-holdings` | 404 | `etf/holdings` mutual fund için yok; alternatif yok |
 
 ---
 
@@ -922,9 +1085,9 @@ for f in smart_filings:
     name = next((k for k,v in SMART_MONEY.items() if v == f["cik"]), f["name"])
     print(f"{f['filingDate'][:10]} | {name:35s} | {f['formType']} | {f['finalLink']}")
 
-# Spesifik hissenin yillik kurumsal pozisyonu
+# Spesifik hissenin yillik kurumsal pozisyonu (quarter ZORUNLU)
 positions = fmp_get("institutional-ownership/symbol-positions-summary",
-                    {"symbol": "VST", "year": 2026})
+                    {"symbol": "VST", "year": 2026, "quarter": 1})
 ```
 
 ### ETF Holdings Analysis (Ultimate)
@@ -956,15 +1119,11 @@ for h in qqq[:10]:
 | Empty `[]` with `200` | No data for params | Check symbol, date range |
 
 ```python
-import time
-
-def fmp_get_retry(endpoint, params=None, max_retries=3):
-    for attempt in range(max_retries):
-        result = fmp_get(endpoint, params)
-        if result is not None and result != []:
-            return result
-        time.sleep(2 ** attempt)
-    return None
+# Standard Python Pattern bölümündeki fmp_get_retry'yi kullan.
+# Anahtar prensipler:
+#  - Boş [] retry edilmez (geçerli yanıt).
+#  - Rate limit (429/Limit Reach) retry edilir, ilk bekleme 60s.
+#  - 404/400/Invalid Key/JSON hatası retry edilmez (kalıcı).
 ```
 
 ---
@@ -996,6 +1155,18 @@ All v3/v4 routes are **blocked**. Use these stable equivalents:
 ---
 
 ## CHANGELOG
+
+### 10 Mayıs 2026 — Mantık hataları ve eksikler
+- **`fmp_get` ve `fmp_get_retry` tamamen yenilendi**: Eski örnek (1) boş listeyi `[]` hata sayıp 3 kez retry ediyordu (rate limit israfı), (2) 429/404/JSON-decode hatasını ayırt etmiyordu, (3) `r.raise_for_status()` ile body'deki "Limit Reach" mesajını öldürüyordu, (4) `JSONDecodeError`'u yakalamıyordu. Yeni sürümde `FmpRateLimit` (geçici, retry edilir) vs `FmpEndpointError` (kalıcı, retry edilmez) ayrımı, ilk rate-limit beklemesi 60s'den başlıyor, boş `[]` geçerli yanıt sayılıyor.
+- **`institutional-ownership/symbol-positions-summary` örnekleri hizalandı**: `quarter` parametresi ZORUNLU, tüm örneklerde mevcut. Hem bu endpoint hem `extract` için tip = `int` (string değil).
+- **`news/press-releases` çelişkisi giderildi** (canlı doğrulandı 10 May 2026): `news/press-releases` Ultimate'da çalışıyor — `symbol=AAPL` veya `symbols=AAPL,MSFT` parametre formu kabul ediliyor. Önek olmadan `press-releases` ve `press-releases-latest` 404 döner. "NOT Available" tablosu bunu net açıklıyor.
+- **`quote` LIST döner notu eklendi**: Tek sembol bile `[{"symbol":"AAPL", ...}]` döner. Direkt `q["price"]` `TypeError` fırlatır. `[0]` access + `isinstance(q, list) and q` guard zorunlu. `agent/fmp_client.py` zaten `quote()` wrapper'ı sunuyor.
+- **`treasury-rates` format dökümante edildi**: Alanlar yüzde formunda (`year10 = 4.38` → %4.38). Tarih sırası newest-first. Tüm 12 vade alanı listelendi.
+- **`historical-price-eod/*` ve `historical-chart/*` için newest-first uyarısı eklendi**: SMA/EMA/RSI hesaplamasında `reversed()` ile kronolojik sıraya çevirme zorunlu.
+- **`institutional-ownership/latest` dönen alanları (8 alan) tam liste olarak eklendi**: `cik, name, date, filingDate, acceptedDate, formType, link, finalLink`. Form tipleri (13F-HR, 13F-HR/A, 13F-NT) açıklandı, CIK zero-padded format uyarısı eklendi.
+- **Bulk delivery örnek kodu eklendi**: `fmp_bulk_csv()` helper'ı, `profile-bulk` 36 alanlık tam kolon listesi. 1.300 hisse profile için tek call'da CSV indirme — bilanço sonrası taramada zorunlu pattern.
+- **Parametre tipi konvansiyonu sabitlendi**: `year`/`quarter` int, `from`/`to`/`date` string, `limit`/`periodLength` int.
+- **Production logging notu eklendi**: `agent/fmp_client.py` + `observability.log_fmp_call()` üzerinden `logs/events.jsonl`'e düşen path tercih edilir.
 
 ### 9 Mayıs 2026 (gece) — Ultimate plan upgrade
 - **Plan Premium ($49) → Ultimate ($99) yükseltildi.** API rate 750→3000/dk, global coverage, transcripts ve 13F açıldı.
