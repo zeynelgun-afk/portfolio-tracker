@@ -27,16 +27,20 @@ FMP_KEY   = os.environ.get("FMP_API_KEY", "")
 FMP_BASE  = "https://financialmodelingprep.com/stable"
 
 
-def fmp_get(endpoint: str, params: dict = None) -> list | dict:
-    p = params or {}
-    p["apikey"] = FMP_KEY
-    try:
-        r = requests.get(f"{FMP_BASE}/{endpoint}", params=p, timeout=12)
-        r.raise_for_status()
-        return r.json()
-    except Exception as e:
-        print(f"[Risk] FMP hatası ({endpoint}): {e}")
-        return []
+try:
+    from fmp_client import fmp_get  # canonical — observability + retry dahil
+except ImportError:
+    # Fallback (CI/test ortamı)
+    def fmp_get(endpoint: str, params: dict = None) -> list | dict:
+        p = params or {}
+        p["apikey"] = FMP_KEY
+        try:
+            r = requests.get(f"{FMP_BASE}/{endpoint}", params=p, timeout=12)
+            r.raise_for_status()
+            return r.json()
+        except Exception as e:
+            print(f"[Risk fallback] FMP hatası ({endpoint}): {e}")
+            return []
 
 
 # ── 1. Korelasyon Analizi ─────────────────────────────────────────────────────

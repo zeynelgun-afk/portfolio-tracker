@@ -33,15 +33,19 @@ FMP_KEY   = os.environ.get("FMP_API_KEY", "")
 FMP_BASE  = "https://financialmodelingprep.com/stable"
 
 
-def fmp_get(endpoint, params=None):
-    p = params or {}
-    p["apikey"] = FMP_KEY
-    try:
-        r = requests.get(f"{FMP_BASE}/{endpoint}", params=p, timeout=12)
-        r.raise_for_status()
-        return r.json()
-    except Exception as e:
-        return []
+try:
+    from fmp_client import fmp_get  # canonical — observability + retry dahil
+except ImportError:
+    # Fallback (CI/test ortamı)
+    def fmp_get(endpoint, params=None):
+        p = params or {}
+        p["apikey"] = FMP_KEY
+        try:
+            r = requests.get(f"{FMP_BASE}/{endpoint}", params=p, timeout=12)
+            r.raise_for_status()
+            return r.json()
+        except Exception:
+            return []
 
 
 # ── 1. Mevcut Kural Performansı ───────────────────────────────────────────────

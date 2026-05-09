@@ -45,26 +45,25 @@ REPO_ROOT = Path(__file__).parent.parent
 
 
 # ── FMP Yardımcısı ────────────────────────────────────────────────────────────
+# 10 May 2026 — Yerel fmp_get kaldırıldı, fmp_client canonical sürümüne geçildi.
+# fmp_client retry/observability mantığı (60s+30s rate limit, body Limit Reach,
+# JSONDecodeError ayrı, observability log) burada da geçerli oluyor.
 
-def fmp_get(endpoint: str, params: dict = None) -> list | dict:
-    """FMP stable API'den veri çeker."""
-    p = params or {}
-    p["apikey"] = FMP_KEY
-    try:
-        r = requests.get(f"{FMP_BASE}/{endpoint}", params=p, timeout=15)
-        r.raise_for_status()
-        return r.json()
-    except Exception as e:
-        err_str = str(e)
-        print(f"[FMP] Hata ({endpoint}): {err_str}")
-        # Kritik HTTP hataları Telegram'a git
-        if any(code in err_str for code in ["402", "429", "500", "503", "ConnectionError", "Timeout"]):
-            _log.hata(
-                f"FMP API hatası: {endpoint}",
-                f"Hata: {err_str[:150]}",
-                kaynak="tools.fmp_get"
-            )
-        return []
+try:
+    from fmp_client import fmp_get  # canonical — observability + retry dahil
+except ImportError:
+    # Fallback (CI/test ortamında fmp_client modülü yoksa)
+    def fmp_get(endpoint: str, params: dict = None) -> list | dict:
+        """Basit fallback. Production'da bu yola düşmez; fmp_client kullanılır."""
+        p = params or {}
+        p["apikey"] = FMP_KEY
+        try:
+            r = requests.get(f"{FMP_BASE}/{endpoint}", params=p, timeout=15)
+            r.raise_for_status()
+            return r.json()
+        except Exception as e:
+            print(f"[FMP fallback] Hata ({endpoint}): {e}")
+            return []
 
 
 # ── Portföy Okuma ─────────────────────────────────────────────────────────────
