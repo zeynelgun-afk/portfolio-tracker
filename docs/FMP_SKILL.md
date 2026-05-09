@@ -59,8 +59,28 @@ API key always goes as `apikey` query parameter. Key is stored in user memory.
 | `numberAnalystEstimatedRevenue` | **`numAnalystsRevenue`** | analyst-estimates |
 | `actualEPS` / `estimatedEPS` | **`epsActual`** / **`epsEstimated`** | earnings |
 | `actualRevenue` / `estimatedRevenue` | **`revenueActual`** / **`revenueEstimated`** | earnings |
+| `exchangeShortName` | **`exchange`** | profile (stable) |
 
-**⚠️ NEDEN TEHLİKELİ**: `quote.get("changesPercentage", 0)` HER ZAMAN `0` döner çünkü quote endpoint'inde bu alan yok (asıl ad `changePercentage`, tekil). "Piyasa dışında 0 dönüyor, manuel hesaplayalım" diye yorumlanır ama aslında alan hep yoktur — kod sessiz sessiz yanlış çalışır.
+### Borsa (Exchange) Alanı — Stable Endpoint
+
+> **9 Mayıs 2026 — Doğrulandı.** `profile` endpoint'i (stable/) borsa kısa adı için **`exchange`** alanını kullanır, eski v3'teki `exchangeShortName` DEĞİL.
+
+| Alan | Değer Tipi | Örnek |
+|------|------------|-------|
+| `exchange` | Kısa kod (filtre için bunu kullan) | `"NASDAQ"`, `"NYSE"`, `"AMEX"` |
+| `exchangeFullName` | Tam ad (gösterim için) | `"NASDAQ Global Select"`, `"New York Stock Exchange"` |
+
+**US listing filtresi (doğru):**
+```python
+us = [p for p in profiles if p.get("exchange") in ("NYSE","NASDAQ","AMEX")]
+```
+
+**YANLIŞ (hep boş döner):**
+```python
+us = [p for p in profiles if p.get("exchangeShortName") in ("NYSE","NASDAQ","AMEX")]  # ❌ key yok
+```
+
+**⚠️ NEDEN TEHLİKELİ**: `quote.get("changesPercentage", 0)` HER ZAMAN `0` döner çünkü quote endpoint'inde bu alan yok (asıl ad `changePercentage`, tekil). "Piyasa dışında 0 dönüyor, manuel hesaplayalım" diye yorumlanır ama aslında alan hep yoktur — kod sessiz sessiz yanlış çalışır. Aynı tuzak `exchangeShortName` için de geçerli — filtre 0 sonuç döner ama hata yok.
 
 **TEST YAKLAŞIMI**: Yeni bir endpoint kullanmadan önce `curl -s 'URL' | jq 'keys'` ile gerçek alan adlarını doğrula. Production kodunda doğrudan `dict["key"]` (KeyError fırlatır) kullan, `.get()` sadece varsayılan gerçekten makulse.
 
@@ -663,6 +683,9 @@ All v3/v4 routes are **blocked**. Use these stable equivalents:
 ---
 
 ## CHANGELOG
+
+### 9 Mayıs 2026 — `exchange` alanı düzeltmesi
+- **`profile` endpoint'i için doğru alan `exchange`** (NYSE/NASDAQ/AMEX), eski v3'teki `exchangeShortName` DEĞİL. Stable endpoint'inde `exchangeShortName` alanı YOK; `.get("exchangeShortName")` `None` döner ve filtreler sessizce 0 sonuç verir. Aynı dosyadaki "Borsa (Exchange) Alanı" bölümüne taşındı.
 
 ### 19 Nisan 2026 — Kritik alan adı düzeltmeleri
 - **Alan Adı Tuzakları bölümü eklendi** — `changesPercentage` (YANLIŞ) → `changePercentage` (DOĞRU), `estimatedEpsAvg` → `epsAvg`, `actualEPS` → `epsActual`, vs. Python `.get(k, 0)` ile sessiz 0 dönüşünün kaynağı bu alanlardı.
