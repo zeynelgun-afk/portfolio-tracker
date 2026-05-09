@@ -13,7 +13,7 @@
 
 **🟡 ★★★☆☆ (3/5 yıldız) — Aggressive portföy için izleme listesi adayı, day-1 chasing yasak**
 
-Aşama 2 (büyüme filtresi) elenen ama post-earnings sinyallerde güçlü olan kontroversiyel bir vaka. Skill'in olağan workflow'u dışında zorla çalıştırıldı çünkü TEM henüz GAAP kâr şirketi değil (AI growth fazında, zarar derinleşiyor) ama transcript guidance RAISED ve kurumsal birikim güçlü.
+Aşama 2 (büyüme filtresi) elenen ama post-earnings sinyallerde güçlü olan kontroversiyel bir vaka. Skill'in olağan workflow'u dışında zorla çalıştırıldı çünkü TEM finansal tablosu iyileşme göstermiyor (zarar Q1 2025'ten Q1 2026'ya iki kat derinleşti, QoQ ciro düştü) ama transcript guidance RAISED ve kurumsal birikim güçlü.
 
 ---
 
@@ -36,7 +36,7 @@ Aşama 2 (büyüme filtresi) elenen ama post-earnings sinyallerde güçlü olan 
 | YoY Net Income ≥%15 veya zarardan kâra geçiş (L2P) | -$68M → -$126M (zarar derinleşti) | ✗ KALDI |
 | QoQ NI ≥0 veya L2P | -$54M → -$126M | ✗ KALDI |
 
-Skill mevcut tasarımı "kâra geçmiş veya geçecek" şirketleri arıyor. TEM henüz GAAP kâr fazında değil (AI healthcare yatırım fazı), bu yüzden eleniyor. Ancak post-earnings sinyallerinin gücü göz ardı edilemeyecek seviyede, bu nedenle force-passed analiz yapıldı.
+Skill mevcut tasarımı **finansal tablosu iyileşen** şirketleri arıyor — 4 büyüme kriterinden en az 3'ü geçmeli (YoY ciro, YoY net kâr/zarar daralma, QoQ ciro, QoQ net kâr/zarar daralma). Kâr şart değil, loss narrowing (zarar yarıdan az daralma) bile geçer. TEM'in elenmesinin sebebi GAAP kâr eksikliği değil, finansal tablonun YoY zarar derinleşmesi (-$68M → -$126M) ve QoQ ciro düşüşü (-%5.2). Ancak post-earnings sinyallerinin gücü göz ardı edilemeyecek seviyede, bu nedenle force-passed analiz yapıldı.
 
 ---
 
