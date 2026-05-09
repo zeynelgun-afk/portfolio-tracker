@@ -372,3 +372,61 @@ Beklenen değer 45,55 dolar mevcut fiyata yakın → fiyat kabaca adil. Fakat da
 ---
 
 **Karar Özeti:** İZLE — 41-43 dolar zonuna kadar bekle, kazanç sonrası giriş tercih edilir. Agresif portföyde maks 20.000 dolar (%5) pozisyon kabul edilebilir, kesinlikle Dengeli ve Temettü portföylerine uygun değil.
+
+
+---
+
+## EK: Q1 2026 BİLANÇO SONRASI REVİZYON (8 Mayıs 2026, finzora-stock-analysis skill ile)
+
+**Bu raporun ilk versiyonunda Q1 2026 bilançosunun "Mayıs sonu - Haziran başı tahmini" geleceği belirtilmişti — yanlıştı, zaten açıklanmıştı.** Skill bilanço sonrası analizi şu kritik tespitleri ekledi:
+
+### Q1 2026 Sonuçları (31 Mart döneminin Mayıs başı raporu)
+
+| Metrik | Q1 2026 | Q4 2025 | Sequential | YoY Tahmin |
+|---|---|---|---|---|
+| Gelir | 348,1 milyon dolar | 367,2 milyon dolar | −%5,2 | trajectory korunuyor |
+| Net Zarar | −125,9 milyon dolar | −54,2 milyon dolar | **2,3x kötüleşme** | — |
+| EPS Diluted | −0,71 dolar | −0,30 dolar | **2,4x kötüleşme** | FY tahmini −0,375 → tek çeyrekte %89 aştı |
+| EBITDA | −51,1 milyon dolar | −120,2 milyon dolar | düzelme | yine negatif |
+| Hisse Adedi | 179,0 milyon | 174,3 milyon | **+%2,7 dilution** | yıllık ~%11 hızında |
+
+**Yıllık Q1 projeksiyonu (basit 4x):**
+- Gelir 1,392 milyar dolar (FY2025: 1,272M, +%9 büyüme — FY2024→2025 +%83'ten dramatik yavaşlama)
+- Net zarar −504 milyon dolar (FY2025: −245M, 2x kötüleşme)
+- EPS −2,84 dolar (Wall St 2026 tahmini −0,375'in 7,5 katı kötü)
+
+### Sonuçların Ana Rapor Üzerindeki Etkisi
+
+**1. Confidence düşürüldü: ORTA-DÜŞÜK → DÜŞÜK**
+Wall Street 2026 EPS −0,375 tahmini Q1 sonuçları sonrası geçersiz. Tüm Forward P/E ve DCF hesabımları analyst tahminlerine dayanıyordu — bu tabloyu bozdu. EPS kalemi bazlı yöntemler güvenilirliğini kaybetti.
+
+**2. Senaryo olasılıkları aşağı yöne kaydı:**
+| Senaryo | Önceki | Yeni | Sebep |
+|---|---|---|---|
+| Boğa | %25 | %25 | aynı (Q2 toparlanma teorik mümkün) |
+| Baz | %45 | %40 | revizyon riski net |
+| Ayı | %30 | %35 | Q1 verisi ayı tezini güçlendirdi |
+
+Senaryo beklenen değer: $45,55 → $39,40 (mevcut $48,20'den **−%18,3**)
+
+**3. Hedef 1 (base) revizyonu: 60 dolar → 48 dolar**
+Önceki rapor 41-43 girişten EV/Sales 6,5x ile 60 dolar baz hedef veriyordu. Q1 sonuçları gelir trajectory'sinin %9 büyüme tarafına kaymasıyla EV/Sales 5-6x bandını gerçekçi kılıyor (önceki 6,5x değil). Yeni baz hedef 48 dolar (giriş 42'den +%14, R/R 1,5:1 zayıf).
+
+**4. Portföy Karar Matrisi: Agresif portföy uygun_kosullu → uygun_degil**
+Q1 ciddi miss + dilution +%11 yıllık trajectory + Wall Street revizyon riski 4-6 hafta aktif. Bu üçü birden Agresif portföy giriş kriterleriyle çatışıyor. Q2 2026 sonuçları (Ağustos) görülmeden veya 41-43 dolar dip teyidi olmadan **alım yok**. Bilanço öncesi raporda "uygun_kosullu max 20.000 dolar" idi, bu hüküm iptal.
+
+**5. Yeni izleme tetikleyicisi (en yüksek öncelikli):**
+- Q2 2026 bilanço (yaklaşık 5-12 Ağustos): Gelir 350M+ ve EPS −0,40 üstü → revizyon şoku tamamlandı sinyali
+- Wall Street konsensüs hedef 60 altına revize → satış baskısı tamamlanma sinyali
+
+### Kritik Çıkarım
+
+**Önceki "İZLE 41-43 zonu" kararı geçerli kalıyor**, ama uygulama koşulu daraltıldı. 41-43 zonu görülse bile **Q2 2026 bilançosu öncesi pozisyon açma — çift risk var (Wall Street revizyon şoku + Q2 sonuçları belirsizliği).** En sağlam strateji: Q2 sonrası giriş, veya Q2 öncesi 41-43 zonunda volume>8M dip teyidi + RSI<30 + insider alımı görmek.
+
+### Görsel Dashboard
+
+Bu bilanço sonrası analizin görsel dashboard'u: `reports/research/TEM_BILANCO_SONRASI_2026-05-08.html` (finzora-stock-analysis skill v1, 12 zorunlu bölüm — header, 52H konum, 8 metrik kartı, 3Y trend sparkline'ları, bilanço & değerleme tabloları, teknik sinyal, Q1 2026 bilanço kutusu, 3 senaryo, boğa/ayı tezleri, tavsiye kutusu, portföy uygunluk matrisi).
+
+---
+
+**Bilanço sonrası revize karar: BEKLE** (Agresif uygun_degil, Q2 sonuçları zorunlu kontrol noktası)

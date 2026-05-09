@@ -854,14 +854,14 @@
       "sirket": "Tempus AI, Inc.",
       "sektor": "Healthcare / Medical - Healthcare Information Services",
       "analiz_tarihi": "2026-05-08",
-      "bilanco_tarihi": "2026-Q1 (Mayıs sonu - Haziran başı tahmini)",
+      "bilanco_tarihi": "Q1 2026 (31 Mart) zaten açıklandı — Q2 2026 yaklaşık 5-12 Ağustos",
       "analiz_turu": "adil_deger_hesabi",
       "durum": "aktif_izleme",
       "dosya": "reports/research/TEM_ADIL_DEGER_2026-05-08.md",
       "kataliz": {
         "olay": "AI destekli precision medicine pure-play, 52H zirvesinden -%53,8 düşmüş, 41-43 dolar dip zonuna yaklaşma",
         "tarih": "2026-Q2 kazanç (yaklaşık Mayıs-Haziran)",
-        "aciklama": "Yıl başından beri ciddi düşüş yaşadı, 50 ve 200 günlük ortalamaların altında. Tabandan toparlanma adayı; ancak FCF hala negatif ve dilution riski yüksek."
+        "aciklama": "Q1 2026 bilanço sonrası KRİTİK MISS: EPS -0,71 vs FY tahmini -0,375 (%89 aştı tek çeyrekte). Net zarar Q4-Q1 2,3x kötüleşti. Wall Street 2026 EPS revizyonu bekleniyor. Q2 öncesi pozisyon riskli — revizyon şoku + Q2 sonuçları çift risk."
       },
       "adil_deger": {
         "yontem_v": "v3.7.2 forward-adapted (TTM zarar — 6 yöntem iptal)",
@@ -871,7 +871,7 @@
         "agirlikli_adil_deger": 42.83,
         "iskontosuz_adil_deger": 52.94,
         "senaryo_beklenen_deger": 45.55,
-        "confidence": "ORTA-DUSUK",
+        "confidence": "DUSUK",
         "yontem_dagilimi": {
           "forward_pe": {
             "deger": 31.11,
@@ -904,19 +904,19 @@
           "getiri_pct": 55.6
         },
         "senaryo_baz": {
-          "kosul": "Mevcut analyst tahminleri tutar, FCF 2028 pozitife döner, 6,5x EV/Sales",
+          "kosul": "Q1 mevsimsel zayıflık, Q2 toparlanma sinyali, gelir guidance korunur (1,55Mr$), EV/Sales 6x",
           "fiyat_hedef": 43,
           "getiri_pct": -10.8
         },
         "senaryo_ayi": {
-          "kosul": "EBITDA dönüşü gecikir, dilution sürer, healthcare AI multiple compression",
-          "fiyat_hedef": 25,
-          "getiri_pct": -48.1
+          "kosul": "Q2 yine miss, Wall St 2026 EPS -0,80'e revize, EBITDA dönüşü 2028'e kayar",
+          "fiyat_hedef": 26,
+          "getiri_pct": -46.1
         },
         "olasiliklar": {
           "boga": 0.25,
-          "baz": 0.45,
-          "ayi": 0.3
+          "baz": 0.4,
+          "ayi": 0.35
         }
       },
       "analiz_fiyati": 48.2,
@@ -949,20 +949,22 @@
       },
       "portfoy_onerisi": {
         "dengeli": "uygun_degil",
-        "agresif": "uygun_kosullu",
+        "agresif": "uygun_degil",
         "temettü": "uygun_degil"
       },
       "giris_plani": {
         "ideal_zon": "41-43",
         "stop_loss": 38,
-        "hedef_1": 60,
+        "hedef_1": 48,
         "hedef_2": 75,
         "r_r_orani": 3.4,
         "r_r_orani_bull": 6.4,
         "pozisyon_boyut_dolar": 20000,
-        "kosul": "Mevcut 48,20'den giriş yok. 41-43 dip teyidi + volume>6M + RSI<35 + healthcare RS bozulmasın + kazanç sonrası tercih"
+        "kosul": "Q1 2026 ciddi MISS sonrası Agresif portföye uygun_degil. Q2 2026 (Ağustos) sonuçları veya 41-43 dolar dip teyidi sonrası tekrar değerlendir. Wall St EPS revizyon riski 4-6 hafta aktif."
       },
       "izleme_tetikleyicileri": [
+        "Q2 2026 bilanço (yaklaşık 5-12 Ağustos): gelir 350M+ ve EPS -0,40 üstü → revizyon şoku tamamlandı sinyali",
+        "Wall Street konsensüs hedef 60 altına revize → satış baskısı tamamlanma sinyali",
         "Fiyat 41-43 dolar bandı + volume>6M → Agresif portföy alım",
         "Q1 2026 kazanç (Mayıs-Haziran): gelir konsensüs üstü → fair value +%15",
         "2027 EPS tahmini pozitife revize edilirse Forward P/E aktif",
@@ -1000,7 +1002,18 @@
         "ttm-zarar",
         "watchlist",
         "dip-takip",
-        "agresif-aday"
+        "agresif-aday",
+        "bilanco-sonrasi-miss",
+        "Q1-2026-EPS-71cent",
+        "konsensus-revizyon-bekleme"
+      ],
+      "ek_dosyalar": [
+        {
+          "tur": "html_dashboard",
+          "dosya": "reports/research/TEM_BILANCO_SONRASI_2026-05-08.html",
+          "aciklama": "Finzora skill v1 dashboard — 12 bölümlü, Q1 2026 bilanço sonrası analiz",
+          "skill": "finzora-stock-analysis"
+        }
       ]
     }
   ]

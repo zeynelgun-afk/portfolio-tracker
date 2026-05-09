@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TEM (Tempus AI) — Bilanço Sonrası Analizi · Finzora AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<style>
+:root{
+  --bg:#0d1117; --surface:#161b22; --surface-2:#1c2230; --border:#21262d;
+  --teal:#2dd4bf; --teal-dim:#0f766e; --gold:#f59e0b; --red:#f87171; --red-dim:#7f1d1d;
+  --green:#4ade80; --blue:#60a5fa; --muted:#7d8590; --text:#e6edf3;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--text);font-family:'DM Mono',monospace;font-size:14px;line-height:1.55}
+.wrap{max-width:1240px;margin:0 auto;padding:32px 24px 64px}
+
+/* HEADER */
+.hdr{display:grid;grid-template-columns:auto 1fr auto;gap:24px;align-items:end;padding-bottom:20px;border-bottom:2px solid var(--teal-dim);margin-bottom:32px}
+.hdr-tk{font-family:'Syne',sans-serif;font-weight:800;font-size:96px;line-height:0.85;color:var(--teal);letter-spacing:-3px}
+.hdr-name{font-family:'Syne',sans-serif;font-size:24px;font-weight:500;color:var(--text);margin-bottom:6px}
+.hdr-sub{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:2px}
+.hdr-px-block{text-align:right}
+.hdr-px{font-family:'Syne',sans-serif;font-weight:600;font-size:48px;color:var(--text);line-height:1}
+.hdr-chg{font-size:14px;margin-top:6px;color:var(--red)}
+.hdr-chg.pos{color:var(--green)}
+.hdr-meta{display:flex;gap:18px;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1.2px;margin-top:8px;justify-content:flex-end}
+
+/* CRITICAL BANNER */
+.alert-band{background:linear-gradient(90deg, rgba(248,113,113,0.18), rgba(127,29,29,0.08));border-left:4px solid var(--red);padding:18px 22px;margin-bottom:32px;border-radius:0 8px 8px 0}
+.alert-band-title{font-family:'Syne',sans-serif;font-weight:700;font-size:16px;color:var(--red);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px}
+.alert-band-text{color:#fecaca;font-size:13px;line-height:1.6}
+
+/* SECTION HEADER */
+.sec{margin-bottom:36px}
+.sec-h{font-family:'Syne',sans-serif;font-size:11px;font-weight:600;color:var(--gold);text-transform:uppercase;letter-spacing:3px;margin-bottom:14px;padding-bottom:6px;border-bottom:1px solid var(--border)}
+.sec-num{display:inline-block;color:var(--teal);font-size:11px;margin-right:10px}
+
+/* 52W BAR */
+.bar52{position:relative;height:64px;background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.bar52-fill{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg, var(--red-dim) 0%, var(--gold) 50%, var(--green) 100%);opacity:0.18;width:100%}
+.bar52-marker{position:absolute;top:8px;bottom:8px;width:3px;background:var(--teal);box-shadow:0 0 12px var(--teal)}
+.bar52-marker::after{content:'';position:absolute;top:-2px;left:-5px;width:13px;height:13px;background:var(--teal);border-radius:50%}
+.bar52-sma50,.bar52-sma200{position:absolute;top:6px;bottom:6px;width:1px;background:var(--muted);opacity:0.6}
+.bar52-sma50::before,.bar52-sma200::before{position:absolute;top:-18px;font-size:9px;color:var(--muted);white-space:nowrap;letter-spacing:0.5px}
+.bar52-sma50::before{content:'50SMA';left:-15px}
+.bar52-sma200::before{content:'200SMA';left:-22px}
+.bar52-label{position:absolute;bottom:6px;font-size:10px;color:var(--muted)}
+.bar52-label.lo{left:10px}.bar52-label.hi{right:10px}
+
+/* METRIC CARDS */
+.mgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.mcard{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px 18px}
+.mcard.bad{border-color:var(--red);background:linear-gradient(180deg,rgba(248,113,113,0.07),var(--surface))}
+.mcard.warn{border-color:var(--gold);background:linear-gradient(180deg,rgba(245,158,11,0.06),var(--surface))}
+.mcard.good{border-color:var(--green);background:linear-gradient(180deg,rgba(74,222,128,0.06),var(--surface))}
+.mcard-lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px}
+.mcard-val{font-family:'Syne',sans-serif;font-size:26px;font-weight:600;color:var(--text);line-height:1.1}
+.mcard.bad .mcard-val{color:var(--red)} .mcard.warn .mcard-val{color:var(--gold)} .mcard.good .mcard-val{color:var(--green)}
+.mcard-note{font-size:10px;color:var(--muted);margin-top:6px}
+
+/* SPARKLINES */
+.spgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.spcard{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 16px;height:160px;display:flex;flex-direction:column}
+.spcard-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.spcard-lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px}
+.spcard-val{font-family:'Syne',sans-serif;font-size:14px;font-weight:600}
+.spcard-val.pos{color:var(--green)}.spcard-val.neg{color:var(--red)}
+.spcard-canvas-wrap{flex:1;position:relative}
+
+/* TABLE GRID */
+.tgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.ttable{background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.ttable-h{background:var(--surface-2);padding:11px 18px;font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:var(--gold);font-weight:600;border-bottom:1px solid var(--border)}
+.ttable-row{display:flex;justify-content:space-between;padding:9px 18px;font-size:13px;border-bottom:1px solid rgba(33,38,45,0.5)}
+.ttable-row:last-child{border:0}
+.ttable-row .lbl{color:var(--muted)}
+.ttable-row .val{color:var(--text);font-weight:500}
+.ttable-row .val.pos{color:var(--green)}.ttable-row .val.neg{color:var(--red)}.ttable-row .val.warn{color:var(--gold)}
+
+/* TECHNIQUE SIGNAL */
+.signal-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.sg-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 16px}
+.sg-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;font-size:12px}
+.sg-row:last-child{margin-bottom:0}
+.sg-row .lbl{color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:1px}
+.sg-badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:1px}
+.sg-badge.bear{background:rgba(248,113,113,0.18);color:var(--red);border:1px solid var(--red-dim)}
+.sg-badge.bull{background:rgba(74,222,128,0.18);color:var(--green);border:1px solid #166534}
+.sg-badge.neut{background:rgba(245,158,11,0.18);color:var(--gold);border:1px solid #92400e}
+
+/* EARNINGS BOX */
+.earnings{background:linear-gradient(135deg,rgba(248,113,113,0.10),rgba(245,158,11,0.05));border:1px solid var(--red-dim);border-radius:12px;padding:24px 26px}
+.earnings-lab{font-size:10px;color:var(--red);text-transform:uppercase;letter-spacing:2.5px;margin-bottom:8px;font-weight:600}
+.earnings-h{font-family:'Syne',sans-serif;font-size:24px;font-weight:700;margin-bottom:18px}
+.earnings-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.earn-cell{padding:12px 14px;background:rgba(13,17,23,0.5);border-radius:8px}
+.earn-cell-lbl{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:5px}
+.earn-cell-val{font-family:'Syne',sans-serif;font-size:18px;font-weight:600}
+.earn-cell-val.bad{color:var(--red)}
+.earn-cell-sub{font-size:10px;color:var(--muted);margin-top:3px}
+.beat-pat{display:flex;gap:6px;margin-top:18px;align-items:center;flex-wrap:wrap}
+.beat-pat-lbl{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-right:4px}
+.beat-tag{display:inline-flex;flex-direction:column;align-items:center;padding:6px 10px;border-radius:6px;font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;min-width:80px}
+.beat-tag.miss{background:rgba(248,113,113,0.15);color:var(--red);border:1px solid var(--red-dim)}
+.beat-tag.q{font-size:10px;font-weight:500}
+.beat-tag .eps{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;margin-top:2px}
+
+/* SCENARIOS */
+.scn-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.scn{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px 20px;position:relative;overflow:hidden}
+.scn::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.scn.bull::before{background:var(--green)} .scn.base::before{background:var(--gold)} .scn.bear::before{background:var(--red)}
+.scn-tag{font-size:10px;text-transform:uppercase;letter-spacing:2.5px;font-weight:600;margin-bottom:6px}
+.scn.bull .scn-tag{color:var(--green)} .scn.base .scn-tag{color:var(--gold)} .scn.bear .scn-tag{color:var(--red)}
+.scn-name{font-family:'Syne',sans-serif;font-size:18px;font-weight:600;margin-bottom:10px}
+.scn-prob{font-family:'Syne',sans-serif;font-size:32px;font-weight:700;margin-bottom:12px}
+.scn-targets{font-size:11px;color:var(--muted);line-height:1.7}
+.scn-tg{font-family:'Syne',sans-serif;font-size:14px;color:var(--text);font-weight:600}
+.scn-desc{font-size:11px;color:var(--muted);margin-top:10px;line-height:1.55;border-top:1px solid var(--border);padding-top:10px}
+
+/* THESIS */
+.thesis{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.th-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px 22px}
+.th-h{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:2.5px;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.th-card.bull .th-h{color:var(--green)}
+.th-card.bear .th-h{color:var(--red)}
+.th-list{list-style:none}
+.th-li{padding:8px 0 8px 24px;font-size:12px;color:#cbd5e1;border-bottom:1px solid rgba(33,38,45,0.4);position:relative;line-height:1.55}
+.th-li:last-child{border:0}
+.th-li::before{content:'◆';position:absolute;left:6px;top:9px;font-size:9px;color:var(--muted)}
+.th-card.bull .th-li::before{color:var(--green)}
+.th-card.bear .th-li::before{color:var(--red)}
+
+/* RECO BOX */
+.reco{background:linear-gradient(135deg,rgba(245,158,11,0.10),rgba(13,17,23,0.6));border:2px solid var(--gold);border-radius:14px;padding:28px 32px}
+.reco-tag{font-size:10px;color:var(--gold);text-transform:uppercase;letter-spacing:3px;font-weight:700;margin-bottom:10px}
+.reco-action{font-family:'Syne',sans-serif;font-size:48px;font-weight:800;color:var(--gold);line-height:1;letter-spacing:-1px;margin-bottom:18px}
+.reco-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-bottom:14px}
+.reco-cell{padding:10px 14px;background:rgba(13,17,23,0.5);border-radius:8px;border:1px solid var(--border)}
+.reco-cell-lbl{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:4px}
+.reco-cell-val{font-family:'Syne',sans-serif;font-size:18px;font-weight:600}
+.reco-text{font-size:13px;color:#cbd5e1;line-height:1.65;margin-top:14px;border-top:1px solid var(--border);padding-top:14px}
+
+/* PORTFOLIO */
+.port-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.port{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px 20px}
+.port-name{font-family:'Syne',sans-serif;font-size:14px;font-weight:600;margin-bottom:6px}
+.port-sub{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:12px}
+.port-status{display:inline-block;padding:4px 12px;border-radius:6px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px}
+.port-status.no{background:rgba(248,113,113,0.15);color:var(--red);border:1px solid var(--red-dim)}
+.port-status.cond{background:rgba(245,158,11,0.15);color:var(--gold);border:1px solid #92400e}
+.port-status.ok{background:rgba(74,222,128,0.15);color:var(--green);border:1px solid #166534}
+.port-reason{font-size:11px;color:#cbd5e1;line-height:1.6}
+
+/* FOOTER */
+.ftr{margin-top:48px;padding-top:24px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px}
+.ftr-brand{font-family:'Syne',sans-serif;font-weight:700;color:var(--teal);font-size:11px}
+
+@media (max-width:900px){
+  .mgrid,.spgrid,.signal-grid,.scn-grid,.port-grid{grid-template-columns:1fr 1fr}
+  .tgrid,.thesis,.earnings-grid,.reco-grid{grid-template-columns:1fr}
+  .hdr{grid-template-columns:1fr}
+  .hdr-tk{font-size:64px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- 1. HEADER -->
+<div class="hdr">
+  <div class="hdr-tk">TEM</div>
+  <div>
+    <div class="hdr-name">Tempus AI, Inc.</div>
+    <div class="hdr-sub">NASDAQ · Healthcare · Medical Information Services</div>
+  </div>
+  <div class="hdr-px-block">
+    <div class="hdr-px">$48,20</div>
+    <div class="hdr-chg">−%2,57 gün içi</div>
+    <div class="hdr-meta">
+      <span>Piyasa Değeri 8,40 Mr$</span><span>Hacim 6,0M</span><span>8 May 2026</span>
+    </div>
+  </div>
+</div>
+
+<!-- ALERT BAND -->
+<div class="alert-band">
+  <div class="alert-band-title">⚠ Bilanço Sonrası Pozisyonlandırma</div>
+  <div class="alert-band-text">
+    TEM Q1 2026 sonuçlarını açıkladı (31 Mart döneminin Mayıs başı raporu). EPS −0,71 dolar, gelir 348,1 milyon dolar. Net zarar 125,9 milyon dolar — Q4 2025'in (−54,2 milyon dolar) <strong>2,3 katı</strong>. Bu tek çeyrek, FY2026 konsensüs EPS tahminini (−0,375) <strong>%89 aştı</strong>. Hisse adedi 174,3M → 179,0M (+%2,7 çeyreklik dilution). Konsensüs hedef 83,43 dolar henüz aşağı revize edilmedi — "stale target" baskısı bekleniyor.
+  </div>
+</div>
+
+<!-- 2. 52W BAR -->
+<div class="sec">
+  <div class="sec-h"><span class="sec-num">02</span>52 Hafta Konum</div>
+  <div class="bar52" id="bar52">
+    <div class="bar52-fill"></div>
+    <div class="bar52-marker" style="left:10.3%"></div>
+    <div class="bar52-sma50" style="left:14.0%"></div>
+    <div class="bar52-sma200" style="left:40.4%"></div>
+    <span class="bar52-label lo">Düşük 41,73 dolar</span>
+    <span class="bar52-label hi">Yüksek 104,32 dolar</span>
+  </div>
+  <div style="display:flex;gap:24px;font-size:11px;color:var(--muted);margin-top:14px;flex-wrap:wrap">
+    <div>Diipten %10,3 yukarıda</div>
+    <div>Zirveden −%53,8 aşağıda</div>
+    <div style="color:var(--red)">50SMA altında (50,51 dolar)</div>
+    <div style="color:var(--red)">200SMA altında (67,02 dolar)</div>
+  </div>
+</div>
+
+<!-- 3. 8 METRIC CARDS -->
+<div class="sec">
+  <div class="sec-h"><span class="sec-num">03</span>Temel Değerleme & Marj</div>
+  <div class="mgrid">
+    <div class="mcard bad"><div class="mcard-lbl">P/E TTM</div><div class="mcard-val">−28,5x</div><div class="mcard-note">TTM zarar — anlamsız</div></div>
+    <div class="mcard bad"><div class="mcard-lbl">EV/EBITDA TTM</div><div class="mcard-val">−39,1x</div><div class="mcard-note">EBITDA negatif</div></div>
+    <div class="mcard warn"><div class="mcard-lbl">EV/Sales TTM</div><div class="mcard-val">6,38x</div><div class="mcard-note">Sektör median</div></div>
+    <div class="mcard bad"><div class="mcard-lbl">P/FCF TTM</div><div class="mcard-val">−40,3x</div><div class="mcard-note">FCF negatif</div></div>
+    <div class="mcard good"><div class="mcard-lbl">Brüt Marj TTM</div><div class="mcard-val">%71,7</div><div class="mcard-note">Software-tier</div></div>
+    <div class="mcard bad"><div class="mcard-lbl">EBITDA Marj TTM</div><div class="mcard-val">−%14,6</div><div class="mcard-note">Nakit yakıyor</div></div>
+    <div class="mcard bad"><div class="mcard-lbl">Net Marj TTM</div><div class="mcard-val">−%22,2</div><div class="mcard-note">Ciddi zarar</div></div>
+    <div class="mcard bad"><div class="mcard-lbl">ROE TTM</div><div class="mcard-val">−%70,2</div><div class="mcard-note">Goodwill ağır</div></div>
+  </div>
+</div>
+
+<!-- 4. SPARKLINES -->
+<div class="sec">
+  <div class="sec-h"><span class="sec-num">04</span>3 Yıllık Trend</div>
+  <div class="spgrid">
+    <div class="spcard">
+      <div class="spcard-h"><span class="spcard-lbl">Gelir</span><span class="spcard-val pos">1.272 M$</span></div>
+      <div class="spcard-canvas-wrap"><canvas id="spRev"></canvas></div>
+    </div>
+    <div class="spcard">
+      <div class="spcard-h"><span class="spcard-lbl">EPS Diluted</span><span class="spcard-val neg">−1,41</span></div>
+      <div class="spcard-canvas-wrap"><canvas id="spEps"></canvas></div>
+    </div>
+    <div class="spcard">
+      <div class="spcard-h"><span class="spcard-lbl">FCF</span><span class="spcard-val neg">−239 M$</span></div>
+      <div class="spcard-canvas-wrap"><canvas id="spFcf"></canvas></div>
+    </div>
+    <div class="spcard">
+      <div class="spcard-h"><span class="spcard-lbl">Net Borç</span><span class="spcard-val neg">+61 M$</span></div>
+      <div class="spcard-canvas-wrap"><canvas id="spNd"></canvas></div>
+    </div>
+  </div>
+</div>
+
+<!-- 5. BALANCE & VALUATION TABLES -->
+<div class="sec">
+  <div class="sec-h"><span class="sec-num">05</span>Bilanço & Değerleme</div>
+  <div class="tgrid">
+    <div class="ttable">
+      <div class="ttable-h">Bilanço (FY2025)</div>
+      <div class="ttable-row"><span class="lbl">Nakit + KV Yat.</span><span class="val">755,0 M$</span></div>
+      <div class="ttable-row"><span class="lbl">Toplam Borç</span><span class="val warn">815,7 M$</span></div>
+      <div class="ttable-row"><span class="lbl">Net Borç</span><span class="val warn">+60,7 M$</span></div>
+      <div class="ttable-row"><span class="lbl">Özkaynak</span><span class="val">491,3 M$</span></div>
+      <div class="ttable-row"><span class="lbl">Goodwill + Maddi Olmayan</span><span class="val warn">825,5 M$</span></div>
+      <div class="ttable-row"><span class="lbl">Tangible Book / Hisse</span><span class="val neg">−2,15 dolar</span></div>
+      <div class="ttable-row"><span class="lbl">Cari Oran</span><span class="val pos">3,31x</span></div>
+      <div class="ttable-row"><span class="lbl">Borç / Özkaynak</span><span class="val warn">1,96x</span></div>
+    </div>
+    <div class="ttable">
+      <div class="ttable-h">Forward Değerleme</div>
+      <div class="ttable-row"><span class="lbl">2026E Gelir (12 analist)</span><span class="val">1.591,8 M$</span></div>
+      <div class="ttable-row"><span class="lbl">2026E EPS</span><span class="val neg">−0,375 dolar</span></div>
+      <div class="ttable-row"><span class="lbl">2027E Gelir</span><span class="val">1.937,0 M$</span></div>
+      <div class="ttable-row"><span class="lbl">2027E EPS</span><span class="val neg">−0,11 dolar</span></div>
+      <div class="ttable-row"><span class="lbl">2028E EPS (ilk pozitif)</span><span class="val">+0,43 dolar</span></div>
+      <div class="ttable-row"><span class="lbl">Forward EV/Sales 2026</span><span class="val">5,46x</span></div>
+      <div class="ttable-row"><span class="lbl">Wall St Konsensüs Hedef</span><span class="val pos">83,43 dolar (stale)</span></div>
+      <div class="ttable-row"><span class="lbl">Beta</span><span class="val warn">3,99 (aşırı)</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- 6. TECHNICAL SIGNAL -->
+<div class="sec">
+  <div class="sec-h"><span class="sec-num">06</span>Teknik Sinyal</div>
+  <div class="signal-grid">
+    <div class="sg-card">
+      <div class="sg-row"><span class="lbl">50 Gün Ortalaması</span><span class="sg-badge bear">Altında</span></div>
+      <div class="sg-row"><span class="lbl">200 Gün Ortalaması</span><span class="sg-badge bear">Altında</span></div>
+      <div class="sg-row"><span class="lbl">52H Konum</span><span class="sg-badge bear">Dipte (%10)</span></div>
+    </div>
+    <div class="sg-card">
+      <div class="sg-row"><span class="lbl">Trend</span><span class="sg-badge bear">Düşüş</span></div>
+      <div class="sg-row"><span class="lbl">Hacim Profili</span><span class="sg-badge neut">Ortalama</span></div>
+      <div class="sg-row"><span class="lbl">Momentum (50/200)</span><span class="sg-badge bear">Death Cross alanı</span></div>
+    </div>
+    <div class="sg-card">
+      <div class="sg-row"><span class="lbl">Destek 1</span><span class="val" style="font-family:'Syne'">41,73 (52H dip)</span></div>
+      <div class="sg-row"><span class="lbl">Direnç 1</span><span class="val" style="font-family:'Syne'">50,51 (50SMA)</span></div>
+      <div class="sg-row"><span class="lbl">Direnç 2</span><span class="val" style="font-family:'Syne'">67,02 (200SMA)</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- 7. EARNINGS BOX -->
+<div class="sec">
+  <div class="sec-h"><span class="sec-num">07</span>Bilanço Performansı (Q1 2026 Geçti)</div>
+  <div class="earnings">
+    <div class="earnings-lab">⚠ Yakın Geçmiş Bilanço — Kritik MISS</div>
+    <div class="earnings-h">Q1 2026 (31 Mart) — Gelir tutarken kâr tarafı çöktü</div>
+    <div class="earnings-grid">
+      <div class="earn-cell"><div class="earn-cell-lbl">Q1 2026 Gelir</div><div class="earn-cell-val">348,1 M$</div><div class="earn-cell-sub">QoQ −%5,2</div></div>
+      <div class="earn-cell"><div class="earn-cell-lbl">Q1 2026 EPS</div><div class="earn-cell-val bad">−0,71 dolar</div><div class="earn-cell-sub">FY tahmini −0,375 → MISS</div></div>
+      <div class="earn-cell"><div class="earn-cell-lbl">Q1 Net Zarar</div><div class="earn-cell-val bad">−125,9 M$</div><div class="earn-cell-sub">Q4: −54,2 → 2,3x kötü</div></div>
+      <div class="earn-cell"><div class="earn-cell-lbl">Hisse Adedi</div><div class="earn-cell-val bad">179,0M</div><div class="earn-cell-sub">+%2,7 çeyreklik dilution</div></div>
+    </div>
+    <div class="beat-pat">
+      <span class="beat-pat-lbl">Son 4 çeyrek EPS:</span>
+      <div class="beat-tag miss"><span class="q">Q2 25</span><span class="eps">−0,25</span></div>
+      <div class="beat-tag miss"><span class="q">Q3 25</span><span class="eps">−0,46</span></div>
+      <div class="beat-tag miss"><span class="q">Q4 25</span><span class="eps">−0,30</span></div>
+      <div class="beat-tag miss"><span class="q">Q1 26</span><span class="eps">−0,71</span></div>
+    </div>
+    <div style="font-size:11px;color:var(--muted);margin-top:14px;line-height:1.6;border-top:1px solid var(--red-dim);padding-top:12px">
+      <strong style="color:var(--red)">Sonraki bilanço:</strong> Q2 2026 (30 Haziran dönem sonu, açıklama yaklaşık 5-12 Ağustos 2026). Q1 sonuçları sonrası analyst revizyonları henüz tamamlanmadı — Wall Street'in 2026 EPS tahminini −0,375'ten ciddi aşağı çekmesi bekleniyor (yıllık projeksiyon trajectory'de −2,84 dolar EPS işaret ediyor). <strong>Q2 öncesi entry yapılırsa, revize tahmin şokunu da yemek gerekir.</strong>
+    </div>
+  </div>
+</div>
+
+<!-- 8. SCENARIOS -->
+<div class="sec">
+  <div class="sec-h"><span class="sec-num">08</span>3 Senaryo (12 Ay Vadeli)</div>
+  <div class="scn-grid">
+    <div class="scn bear">
+      <div class="scn-tag">Senaryo C — Ayı</div>
+      <div class="scn-name">2027 dönüş gecikiyor</div>
+      <div class="scn-prob">%35</div>
+      <div class="scn-targets">Hedef Aralık<br><span class="scn-tg">22 - 30 dolar</span><br>Mevcuta göre <strong style="color:var(--red)">−%38 ile −%54</strong></div>
+      <div class="scn-desc">Q2 2026 yine miss. Wall St 2026 EPS −0,80'e revize. EBITDA 2028'e kayar. Multiple compression EV/Sales 4-5x. Dilution sürer.</div>
+    </div>
+    <div class="scn base">
+      <div class="scn-tag">Senaryo B — Baz</div>
+      <div class="scn-name">Q1 mevsimsel zayıflık</div>
+      <div class="scn-prob">%40</div>
+      <div class="scn-targets">Hedef Aralık<br><span class="scn-tg">38 - 48 dolar</span><br>Mevcuta göre <strong style="color:var(--gold)">−%21 ile flat</strong></div>
+      <div class="scn-desc">Q2 2026 toparlanma sinyali. Gelir guidance korunur (~1,55 Mr$). EBITDA 2028 dönüşü teyit. EV/Sales 6x baz. Konsensüs hedef 60'a revize.</div>
+    </div>
+    <div class="scn bull">
+      <div class="scn-tag">Senaryo A — Boğa</div>
+      <div class="scn-name">Beat & Raise Q2</div>
+      <div class="scn-prob">%25</div>
+      <div class="scn-targets">Hedef Aralık<br><span class="scn-tg">58 - 75 dolar</span><br>Mevcuta göre <strong style="color:var(--green)">+%20 ile +%56</strong></div>
+      <div class="scn-desc">Q2 2026 beat + raise. Ambry sinerjileri materyalleşir. AI hype healthcare'a döner. EV/Sales 7-8x bull. Wall St hedef 95'e revize.</div>
+    </div>
+  </div>
+</div>
+
+<!-- 9. THESIS -->
+<div class="sec">
+  <div class="sec-h"><span class="sec-num">09</span>Boğa & Ayı Tezleri</div>
+  <div class="thesis">
+    <div class="th-card bull">
+      <div class="th-h">▲ Boğa Tezi</div>
+      <ul class="th-list">
+        <li class="th-li"><strong>Gelir büyümesi sektörde nadir:</strong> FY2024→2025 +%83 YoY (693M → 1.272M dolar). Q1 2026 348M dolar = 4Q ortalaması 318M, yıllık ~1.272M trajectory koruyor.</li>
+        <li class="th-li"><strong>Brüt marj %71,7 software-tier:</strong> Diagnostic peer'lerin (NTRA %60-65, GH %60-67) üstünde. Ölçek geldikçe operating leverage genişleyebilir.</li>
+        <li class="th-li"><strong>Ambry Genetics akvizisyonu:</strong> ~400M dolar yıllık gelir ekledi, hereditary cancer test pazarını açtı. Sinerjiler 2026-2027 çeyreklerinde materyalleşebilir.</li>
+        <li class="th-li"><strong>AI destekli precision medicine pure-play:</strong> Halka açık nadir saf oyuncu. AI hype healthcare'a döndüğünde multiple expansion potansiyeli.</li>
+        <li class="th-li"><strong>Net borç manageable:</strong> 60,7M dolar net borç, runway 3+ yıl. Sermaye artırımı şart değil.</li>
+        <li class="th-li"><strong>Wall Street median 85 dolar:</strong> Yüksek hedef 105, low 59. 13+ analist coverage. Eğer guidance düzeltilse bile +%30-45 yukarı potansiyel.</li>
+      </ul>
+    </div>
+    <div class="th-card bear">
+      <div class="th-h">▼ Ayı Tezi</div>
+      <ul class="th-list">
+        <li class="th-li"><strong>Q1 2026 EPS −0,71 → konsensüsü %89 aştı:</strong> FY2026 EPS tahmini −0,375 idi. Tek çeyrek hesabı zaten yıl tahminini katladı. Wall St aşağı revize zorunlu.</li>
+        <li class="th-li"><strong>Sequential 2,3x kötüleşme:</strong> Q4 net zarar −54M iken Q1 −126M. Marj erozyonu tetiklendi, mevsimsel olamayacak kadar sert.</li>
+        <li class="th-li"><strong>Yıllık dilution +%11 hızında:</strong> Q4 174,3M → Q1 179,0M hisse (+%2,7 sadece çeyreklik). 5 yılda hisse 250M+ olabilir, EPS hedeflerini ezer.</li>
+        <li class="th-li"><strong>Goodwill 825,5M dolar (varlığın %36'sı):</strong> Ambry sinerjileri gecikirse impairment riski. Tangible book −2,15 dolar/hisse.</li>
+        <li class="th-li"><strong>Beta 3,99 — aşırı volatil:</strong> SPY −%3 düşse TEM −%12 düşer. Fed sıkı kalırken yüksek beta growth zehir.</li>
+        <li class="th-li"><strong>52H zirvesinin %53,8 altı:</strong> 50SMA ve 200SMA altı, death cross alanı. Momentum kırılmış, technical bottom teyidi yok.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- 10. RECO BOX -->
+<div class="sec">
+  <div class="sec-h"><span class="sec-num">10</span>Finzora Tavsiyesi</div>
+  <div class="reco">
+    <div class="reco-tag">Bilanço Sonrası Karar</div>
+    <div class="reco-action">BEKLE</div>
+    <div class="reco-grid">
+      <div class="reco-cell"><div class="reco-cell-lbl">İdeal Giriş Zonu</div><div class="reco-cell-val">41 - 43 dolar</div></div>
+      <div class="reco-cell"><div class="reco-cell-lbl">Stop Loss</div><div class="reco-cell-val" style="color:var(--red)">38 dolar</div></div>
+      <div class="reco-cell"><div class="reco-cell-lbl">Hedef 1 (Baz)</div><div class="reco-cell-val" style="color:var(--gold)">48 dolar</div></div>
+      <div class="reco-cell"><div class="reco-cell-lbl">Hedef 2 (Boğa)</div><div class="reco-cell-val" style="color:var(--green)">65 dolar</div></div>
+    </div>
+    <div class="reco-text">
+      Q1 2026 ciddi bir miss verdi (EPS −0,71 vs FY tahmini −0,375). Bu sonuç henüz analyst tahminlerine yansımadı — önümüzdeki 4-6 hafta downward revision (aşağı revizyon) baskısı bekleniyor. Mevcut 48,20 dolar bu revizyon riskini taşımıyor. <strong>Q2 2026 bilançosu (yaklaşık Ağustos başı) öncesi giriş, çift risk demek</strong> (revizyon şoku + Q2 sonuçları). En sağlam strateji: Q2 öncesi 41-43 dolar zonuna düşülmesini bekle veya Q2 sonuçlarını gör. R/R giriş 42 / stop 38 / hedef 48: 1,5:1 (zayıf) | hedef 65: 5,75:1 (cazip). <em>Karar verilemiyorsa pozisyon açma — Tempus AI sabırla beklenmeyi hak ediyor.</em>
+    </div>
+  </div>
+</div>
+
+<!-- 11. PORTFOLIO MATRIX -->
+<div class="sec">
+  <div class="sec-h"><span class="sec-num">11</span>Finzora Portföy Uygunluk Matrisi</div>
+  <div class="port-grid">
+    <div class="port">
+      <div class="port-name">Dengeli Portföy</div>
+      <div class="port-sub">100K dolar · multi-sector value+momentum</div>
+      <div class="port-status no">❌ Uygun Değil</div>
+      <div class="port-reason">TTM zarar yazıyor, FCF negatif, beta 3,99 ile defansif karaktere ters. P/E negatif, 50SMA altı. K-19/K-20 risk filtreleri otomatik dışlar.</div>
+    </div>
+    <div class="port">
+      <div class="port-name">Agresif Büyüme</div>
+      <div class="port-sub">400K dolar · momentum + earnings surprise</div>
+      <div class="port-status no">❌ Uygun Değil (Q2 öncesi)</div>
+      <div class="port-reason">Bilanço öncesi raporda "uygun_kosullu" idi. Q1 2026 ciddi miss + revizyon riski sonrası "uygun_degil" yapıldı. Q2 2026 sonuçları veya 41-43 dolar dip teyidi sonrası tekrar değerlendir.</div>
+    </div>
+    <div class="port">
+      <div class="port-name">Değer + Temettü</div>
+      <div class="port-sub">100K dolar · yield + value</div>
+      <div class="port-status no">❌ Uygun Değil</div>
+      <div class="port-reason">Temettü ödemiyor (yield %0). Tangible book negatif (−2,15 dolar/hisse). P/E negatif. K-15c kategorik dışlama. Hiçbir Temettü kriteri tutmuyor.</div>
+    </div>
+  </div>
+</div>
+
+<!-- 12. FOOTER -->
+<div class="ftr">
+  <div class="ftr-brand">⬢ Finzora AI</div>
+  <div>Veri kaynağı: FMP API stable/ · 8 Mayıs 2026, seans içi · Bu rapor finansal danışmanlık değildir.</div>
+</div>
+
+</div>
+
+<script>
+const COMMON = {
+  responsive:true, maintainAspectRatio:false,
+  plugins:{ legend:{display:false}, tooltip:{enabled:true, backgroundColor:'#161b22', titleColor:'#2dd4bf', bodyColor:'#e6edf3', borderColor:'#21262d', borderWidth:1, padding:10}},
+  scales:{
+    x:{ display:true, grid:{display:false}, ticks:{color:'#7d8590', font:{family:'DM Mono', size:9}} },
+    y:{ display:false }
+  },
+  elements:{ point:{radius:3, hoverRadius:5}, line:{tension:0.3, borderWidth:2}}
+};
+
+// Revenue trend (3Y annual + Q1 26 run-rate annualized)
+new Chart(document.getElementById('spRev'), {
+  type:'line',
+  data:{
+    labels:['FY23','FY24','FY25','Q1 26 RR'],
+    datasets:[{
+      data:[531.8, 693.4, 1271.8, 1392.0],
+      borderColor:'#4ade80',
+      backgroundColor:'rgba(74,222,128,0.12)',
+      fill:true
+    }]
+  },
+  options:COMMON
+});
+
+// EPS trend (3Y annual)
+new Chart(document.getElementById('spEps'), {
+  type:'line',
+  data:{
+    labels:['FY23','FY24','FY25','Q1 26 RR'],
+    datasets:[{
+      data:[-1.73, -4.60, -1.41, -2.84],
+      borderColor:'#f87171',
+      backgroundColor:'rgba(248,113,113,0.12)',
+      fill:true
+    }]
+  },
+  options:COMMON
+});
+
+// FCF trend (3Y annual)
+new Chart(document.getElementById('spFcf'), {
+  type:'line',
+  data:{
+    labels:['FY22','FY23','FY24','FY25'],
+    datasets:[{
+      data:[-186.6, -248.9, -211.2, -239.1],
+      borderColor:'#f87171',
+      backgroundColor:'rgba(248,113,113,0.12)',
+      fill:true
+    }]
+  },
+  options:COMMON
+});
+
+// Net debt trend (proxy: total debt - cash, FY24 vs FY25)
+new Chart(document.getElementById('spNd'), {
+  type:'line',
+  data:{
+    labels:['FY24','FY25'],
+    datasets:[{
+      data:[19.8, 60.7],
+      borderColor:'#f59e0b',
+      backgroundColor:'rgba(245,158,11,0.12)',
+      fill:true
+    }]
+  },
+  options:COMMON
+});
+</script>
+
+</body>
+</html>
