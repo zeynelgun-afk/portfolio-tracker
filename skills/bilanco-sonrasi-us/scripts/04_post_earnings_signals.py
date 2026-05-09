@@ -20,7 +20,7 @@ import re
 import time
 import argparse
 import requests
-from datetime import datetime, date
+from datetime import datetime, date, timedelta
 
 API_KEY = os.environ.get("FMP_API_KEY", "g1GFJZtV5rCP49UCir4WuP56VjhmA6F8")
 BASE = "https://financialmodelingprep.com/stable"
@@ -452,6 +452,159 @@ def transcript_signal(symbol, year, calendar_quarter):
     }
 
 
+# 4d) 8-K PRESS RELEASE (SEC direct fetch) -------------------------------------
+# Transcript yayınlanmadan önce (12-48 saat gecikme) bile bilanço sonrası şirket
+# açıklamasını yakalamak için. SEC.gov fair-access için identifying User-Agent şart.
+
+# SEC EDGAR resmi şartı: "Sample Company Name AdminContact@samplecompany.com"
+SEC_USER_AGENT = "Finzora AI Research zeynelgun@finzora.example.com"
+
+
+def strip_html(html_text):
+    """Basit HTML tag temizleme (bs4 yerine standalone)."""
+    if not html_text:
+        return ""
+    text = re.sub(r'<script[^>]*>.*?</script>', ' ', html_text, flags=re.DOTALL | re.IGNORECASE)
+    text = re.sub(r'<style[^>]*>.*?</style>', ' ', text, flags=re.DOTALL | re.IGNORECASE)
+    text = re.sub(r'<[^>]+>', ' ', text)
+    # HTML entity decode (basit)
+    text = text.replace('&amp;', '&').replace('&nbsp;', ' ').replace('&#160;', ' ')
+    text = text.replace('&#x201c;', '"').replace('&#x201d;', '"')
+    text = text.replace('&#x2019;', "'").replace('&#149;', '•').replace('&#8212;', '—')
+    text = re.sub(r'&[#\w]+;', ' ', text)
+    text = re.sub(r'\s+', ' ', text).strip()
+    return text
+
+
+def fetch_sec_url(url, max_retries=2):
+    """SEC.gov'dan dosya çek. Doğru User-Agent ile fair-access kuralına uy."""
+    headers = {
+        "User-Agent": SEC_USER_AGENT,
+        "Accept-Encoding": "gzip, deflate",
+        "Host": "www.sec.gov",
+    }
+    for attempt in range(max_retries):
+        try:
+            r = requests.get(url, headers=headers, timeout=20)
+            if r.status_code == 200:
+                return r.text
+            elif r.status_code in (429, 503):
+                time.sleep(1.0 * (2 ** attempt))
+                continue
+            else:
+                return None
+        except (requests.ConnectionError, requests.Timeout):
+            if attempt < max_retries - 1:
+                time.sleep(1.0)
+                continue
+        except Exception:
+            break
+    return None
+
+
+def press_release_signal(symbol, earnings_date_str):
+    """
+    Bilanço sonrası 8-K press release çek + guidance phrase analizi.
+    
+    Workflow:
+      1. FMP sec-filings-search/symbol ile bilanço tarihinden ±2 gün 8-K bul
+      2. finalLink (genelde Exhibit 99.1 = press release) ile SEC.gov direkt fetch
+      3. HTML strip → phrase verdict (transcript ile aynı RAISED/LOWERED/REAFFIRMED)
+    
+    Avantaj: Transcript yayınlanmadan önce (12-48 saat gecikme) bile
+             bilanço sonrası ilk gün şirket açıklamasını yakalar.
+    """
+    earn_d = datetime.strptime(earnings_date_str, "%Y-%m-%d").date()
+    from_date = (earn_d - timedelta(days=1)).strftime("%Y-%m-%d")
+    to_date = (earn_d + timedelta(days=2)).strftime("%Y-%m-%d")
+    
+    filings = fmp_get("sec-filings-search/symbol",
+                      {"symbol": symbol, "from": from_date, "to": to_date})
+    if not filings or not isinstance(filings, list):
+        return {"available": False, "reason": "filings_yok"}
+    
+    # 8-K (US) veya 6-K (foreign issuer) bul
+    eight_k = next((f for f in filings if f.get("formType") in ("8-K", "6-K")), None)
+    if not eight_k:
+        return {"available": False, "reason": "8-K/6-K_yok"}
+    
+    final_link = eight_k.get("finalLink") or eight_k.get("link")
+    if not final_link:
+        return {"available": False, "reason": "link_yok"}
+    
+    # SEC.gov direkt fetch
+    html = fetch_sec_url(final_link)
+    if not html:
+        return {"available": False, "reason": "sec_fetch_basarisiz"}
+    
+    text = strip_html(html)
+    if len(text) < 500:
+        return {"available": False, "reason": "icerik_cok_kisa", "length": len(text)}
+    
+    # Transcript ile aynı phrase listeleri (verdict tutarlılığı için)
+    full_lower = text.lower()
+    
+    raise_phrases = [
+        "raising the midpoint", "raised our", "we are raising", "we have raised",
+        "raising guidance", "raised guidance", "raise guidance",
+        "raising our outlook", "raised our outlook",
+        "raising our full year", "raised our full year",
+        "lifting our guidance", "lifted our guidance",
+        "increasing our guidance", "increased our guidance",
+        "increasing revenue guidance", "increasing our revenue",  # 8-K specific
+        "boosting our guidance", "boosted our guidance",
+        "revised guidance higher", "revising guidance higher",
+        "raising the lower end", "raising the upper end",
+        "raising the low end", "raising the high end",
+        "increasing our outlook", "increased our outlook",
+    ]
+    has_raise = any(p in full_lower for p in raise_phrases)
+    
+    lower_phrases = [
+        "lowering our guidance", "lowered our guidance",
+        "lowering our outlook", "lowered our outlook",
+        "we are lowering", "we have lowered",
+        "reducing our guidance", "reduced our guidance",
+        "cutting our guidance", "cut our guidance",
+        "revising guidance lower", "revising guidance downward",
+        "trimming our outlook", "trimmed our outlook",
+        "reducing revenue guidance", "lowered revenue guidance",  # 8-K specific
+    ]
+    has_lower = any(p in full_lower for p in lower_phrases)
+    
+    reaffirm_phrases = [
+        "reaffirming", "reaffirmed", "we reaffirm",
+        "maintaining our guidance", "maintain our guidance",
+        "unchanged guidance", "guidance unchanged",
+    ]
+    has_reaffirm = any(p in full_lower for p in reaffirm_phrases)
+    
+    if has_raise:
+        verdict = "RAISED"
+    elif has_lower:
+        verdict = "LOWERED"
+    elif has_reaffirm:
+        verdict = "REAFFIRMED"
+    else:
+        verdict = "QUALITATIVE_ONLY"
+    
+    # Top guidance cümleleri extract
+    guidance_sentences = extract_guidance(text, max_n=10, min_score=3)
+    
+    return {
+        "available": True,
+        "form_type": eight_k.get("formType"),
+        "filing_date": eight_k.get("filingDate"),
+        "url": final_link,
+        "content_length": len(text),
+        "verdict": verdict,
+        "has_raise": has_raise,
+        "has_reaffirm": has_reaffirm,
+        "has_lower": has_lower,
+        "guidance_sentences": guidance_sentences,
+    }
+
+
 # 4c) 13F KURUMSAL BİRİKİM + SMART MONEY ---------------------------------------
 
 def institutional_signal(symbol, year, quarter):
@@ -544,9 +697,16 @@ def main():
         # 4b) Transcript
         ts = transcript_signal(sym, args.year, args.quarter)
         if ts.get("available"):
-            print(f"  Transcript: {ts['verdict']} ({ts['content_length']} char, fiscal Q{ts['fiscal_quarter']})")
+            print(f"  Transcript: {ts['verdict']} ({ts['content_length']} char, fiscal Q{ts.get('fiscal_quarter_used')})")
         else:
             print(f"  Transcript: {ts.get('reason', 'yok')}")
+        
+        # 4d) 8-K Press Release (transcript yayınlanmadan önce de çalışır)
+        pr = press_release_signal(sym, earn_date)
+        if pr.get("available"):
+            print(f"  Press release ({pr['form_type']}): {pr['verdict']} ({pr['content_length']} char)")
+        else:
+            print(f"  Press release: {pr.get('reason', 'yok')}")
         
         # 4c) 13F kurumsal
         inst = institutional_signal(sym, args.thirteenf_year, args.thirteenf_quarter)
@@ -564,6 +724,7 @@ def main():
             "post_earnings_signals": {
                 "analyst_revisions": rev,
                 "transcript": ts,
+                "press_release": pr,
                 "institutional": inst,
                 "smart_money_owners": sm_owned_by,
             },

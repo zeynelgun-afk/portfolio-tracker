@@ -29,7 +29,7 @@ Bilanço açıklamış ABD hisseleri arasından yapısal olarak iyileşme göste
 |---|--------|--------------|-------------|
 | 1 | Bilanço Temel Verileri | `income-statement?period=quarter`, `profile`, `ratios-ttm`, `key-metrics-ttm` | YoY/QoQ ciro+kâr büyüme, mid-cap+ filtre |
 | 2 | Adil Değer ve Analist Hedefi | `price-target-consensus`, `analyst-estimates`, `key-metrics-ttm` | 4 yöntem ağırlıklı fair value, analist konsensüs hedefi |
-| 3 | **Bilanço Sonrası Sinyaller (CORE)** | `price-target-news` (analist revize haberleri), `earning-call-transcript` (Ultimate gerekiyor) | Analist raised vs lowered yön sayımı, CFO/CEO doğrudan guidance sözleri |
+| 3 | **Bilanço Sonrası Sinyaller (CORE)** | `price-target-news`, `earning-call-transcript` (Ultimate), `sec-filings-search/symbol` + SEC.gov direct fetch | Analist raised vs lowered yön sayımı, CFO/CEO transcript guidance, **8-K press release guidance** (transcript yayınlanmadan önce de çalışır) |
 | 4 | **Smart Money Birikim (CORE)** | `institutional-ownership/symbol-positions-summary`, `institutional-ownership/extract` | 13F shares net değişim, Druckenmiller/Buffett/Burry portföy kontrolü |
 
 3. ve 4. katmanlar bu skill'in özgün değer önermesidir — diğer tarayıcılarda yoktur. Bu iki katman olmadan **HUBS örneği** (analyst downgrade dalgası) veya **CON örneği** (yatırımcı sayısı +10 yeni isim) tespit edilemez.
@@ -126,6 +126,22 @@ Top 10-12 cümleyi extract et, manuel okuma için raporta sun.
 - "Lowering our outlook" → LOWERED ✗
 - "We expect to update our guidance ranges following X" → upcoming UPWARD revize sinyali (VST Cogentrix örneği)
 - "Side-step", "plateau" → kısa vade momentum uyarısı (CELH Q2 örneği)
+
+#### 4d) 8-K Press Release Guidance (SEC Direct Fetch — v1.2 yeni)
+
+Transcript yayınlanmadan önce (12-48 saat gecikme) bilanço sonrası ilk gün şirket açıklamasını yakalamak için. **Foreign issuer 6-K** dosyaları için de çalışır (ARGX, NVO, AZN gibi ADR'ler).
+
+Workflow:
+1. FMP `sec-filings-search/symbol?symbol=X&from=...&to=...` ile bilanço tarihinden ±2 gün içindeki 8-K/6-K filing bul
+2. `finalLink` alanından press release URL al (genelde Exhibit 99.1, örn. `tem-ex99_1.htm`)
+3. **SEC.gov direct fetch** — `User-Agent: "Finzora AI Research zeynelgun@finzora.example.com"` header ile (SEC EDGAR fair-access kuralı)
+4. HTML strip + transcript ile aynı phrase verdict (RAISED/LOWERED/REAFFIRMED/QUALITATIVE_ONLY)
+
+**Önemli teknik detay**: SEC.gov datacenter IP'lerden 403 dönüyor, **proper identifying User-Agent şart**. FMP doğrudan press release tam içeriği vermez (sadece metadata + URL), bu yüzden SEC direct fetch gerekli.
+
+**Cross-validation**: TEM örneği (5 May 2026) — Transcript RAISED + Press Release RAISED = çift teyit, daha güvenilir sinyal. BILL örneği — Transcript RAISED ama press release QUALITATIVE_ONLY (sayısal data verir, "raised" phrase az kullanılır), bu durumda transcript öncelikli.
+
+**Transcript yokluğunda fallback**: TEM Q1 transcript yayınlanmadan press release ile aynı RAISED sinyalini yakalandı. Bu sayede bilanço-1 ilk gün analiz mümkün.
 
 #### 4c) 13F Kurumsal Birikim ve Smart Money Kontrolü
 
@@ -234,6 +250,18 @@ Argümanlar:
 - `docs/PORTFOLIO_OPPORTUNITY_SYSTEM.md` — Sabah taraması ile entegrasyon (PART 1C portföy fırsat taraması)
 
 ## CHANGELOG
+
+### v1.2 — 9 Mayıs 2026
+- **Aşama 4d eklendi**: 8-K press release guidance fetch (SEC direct, FMP Ultimate `sec-filings-search/symbol` + `finalLink` ile)
+- Transcript yayınlanmadan önce (12-48 saat gecikme) bilanço sonrası ilk gün şirket açıklamasını yakalar
+- Foreign issuer 6-K filings da destekleniyor (ARGX, NVO, AZN gibi ADR'ler)
+- SEC.gov direct fetch için identifying User-Agent ("Finzora AI Research zeynelgun@finzora.example.com") — datacenter IP fair-access bypass
+- Yıldız 2 mantığı genişletildi: transcript RAISED yoksa press release RAISED kabul edilir
+- Eleme kriteri genişletildi: press release LOWERED + transcript pozitif değilse hisse elenir
+- TEM örneği canlı test: 8-K (29.7K char) + transcript çift teyit ile RAISED sinyali
+
+### v1.1 — 9 Mayıs 2026
+- Mantık denetimi sonrası 7 hata düzeltildi (fiscal year mapping, phrase tabanlı verdict, retry mekanizması, vb.)
 
 ### v1.0 — 9 Mayıs 2026
 - İlk sürüm. 7-8 Mayıs 2026 bilanço taraması (1.296 hisse → Top 5: VST, BILL, CON, CELH, FIS) bu skill'in ilk uygulamasından doğdu

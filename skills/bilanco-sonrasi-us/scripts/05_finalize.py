@@ -31,14 +31,16 @@ def calculate_stars(stock):
         stars += 1
         reasons.append(f"Analist hedef +{upside:.0f}% upside")
     
-    # ★ 2: Transcript guidance — RAISED veya REAFFIRMED + güçlü forward-looking sinyali
+    # ★ 2: Şirket guidance — transcript VEYA 8-K press release RAISED
+    # (transcript yayınlanmadan önce 8-K kullanılır, ikisi de varsa transcript öncelikli)
     ts = sigs.get("transcript", {})
-    if ts.get("verdict") == "RAISED":
-        stars += 1
-        reasons.append("CFO/CEO 'raising guidance' söyledi")
-    elif ts.get("verdict") == "REAFFIRMED":
-        # REAFFIRMED için yıldız yalnızca transcript'te explicit upside hint varsa
-        # (örn. VST: "below third-party forecasts", "expect to update guidance ranges")
+    pr = sigs.get("press_release", {})
+    
+    raised_in_transcript = ts.get("verdict") == "RAISED"
+    raised_in_press_release = pr.get("verdict") == "RAISED"
+    reaffirmed_with_hint = False
+    
+    if ts.get("verdict") == "REAFFIRMED":
         sentences = ts.get("guidance_sentences", [])
         upside_hint_phrases = [
             "below many third-party", "below most analyst", "conservatively",
@@ -46,13 +48,21 @@ def calculate_stars(stock):
             "incremental upside", "additional opportunity", "midpoint opportunity",
             "visible upside", "above the midpoint", "trending toward the high end",
         ]
-        has_upside_hint = any(
+        reaffirmed_with_hint = any(
             any(p in s.get("text", "").lower() for p in upside_hint_phrases)
             for s in sentences
         )
-        if has_upside_hint:
-            stars += 1
-            reasons.append("Reaffirmed guidance + upside hint (yönetim conservative)")
+    
+    if raised_in_transcript:
+        stars += 1
+        reasons.append("CFO/CEO 'raising guidance' söyledi (transcript)")
+    elif raised_in_press_release and not raised_in_transcript:
+        # Transcript yok ama 8-K'da RAISED varsa
+        stars += 1
+        reasons.append(f"8-K {pr.get('form_type', '8-K')} press release: 'raising guidance' (transcript henüz yok)")
+    elif reaffirmed_with_hint:
+        stars += 1
+        reasons.append("Reaffirmed guidance + upside hint (yönetim conservative)")
     # LOWERED veya QUALITATIVE_ONLY için yıldız yok
     
     # ★ 3: Net analyst target raised > lowered (post-earnings)
@@ -113,12 +123,21 @@ def main():
     survivors = []
     eliminated = []
     for s in enriched:
-        rev_verdict = s.get("post_earnings_signals", {}).get("analyst_revisions", {}).get("verdict", "")
+        sigs = s.get("post_earnings_signals", {})
+        rev_verdict = sigs.get("analyst_revisions", {}).get("verdict", "")
+        ts_verdict = sigs.get("transcript", {}).get("verdict") if sigs.get("transcript", {}).get("available") else None
+        pr_verdict = sigs.get("press_release", {}).get("verdict") if sigs.get("press_release", {}).get("available") else None
+        
         if rev_verdict in ("CAPITULATION", "STRONG_LOWER", "NET_LOWER"):
             s["elimination_reason"] = f"Analist {rev_verdict}"
             eliminated.append(s)
-        elif s.get("post_earnings_signals", {}).get("transcript", {}).get("verdict") == "LOWERED":
+        elif ts_verdict == "LOWERED":
             s["elimination_reason"] = "Transcript LOWERED guidance"
+            eliminated.append(s)
+        elif pr_verdict == "LOWERED" and ts_verdict not in ("RAISED", "REAFFIRMED"):
+            # Press release LOWERED + transcript pozitif değilse ele
+            # (transcript RAISED/REAFFIRMED ise press release lowered çelişkili olabilir, transcript öncelikli)
+            s["elimination_reason"] = "8-K press release LOWERED guidance"
             eliminated.append(s)
         else:
             survivors.append(s)
