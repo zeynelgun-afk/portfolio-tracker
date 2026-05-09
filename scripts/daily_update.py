@@ -52,26 +52,45 @@ def log(message):
         f.write(log_msg + '\n')
 
 
-def fmp_get(endpoint, params=None):
-    """FMP API'den veri çek"""
-    if params is None:
-        params = {}
-    params['apikey'] = FMP_API_KEY
-    url = f"{FMP_BASE}/{endpoint}"
-    
-    try:
-        response = requests.get(url, params=params, timeout=30)
-        response.raise_for_status()
-        data = response.json()
-        
-        if isinstance(data, dict) and 'Error Message' in data:
-            log(f"❌ FMP Error: {data['Error Message']}")
+# 10 May 2026 — canonical fmp_client'a migrasyon (None preservation wrapper)
+import sys as _sys_fmp
+from pathlib import Path as _Path_fmp
+
+_AGENT_DIR = _Path_fmp(__file__).resolve().parent.parent / "agent"
+if str(_AGENT_DIR) not in _sys_fmp.path:
+    _sys_fmp.path.insert(0, str(_AGENT_DIR))
+
+try:
+    from fmp_client import fmp_get as _canonical_fmp_get
+
+    def fmp_get(endpoint, params=None):
+        """fmp_client wrapper. Hata/boş veride None döner."""
+        result = _canonical_fmp_get(endpoint, params)
+        if isinstance(result, dict) and 'Error Message' in result:
+            log(f"❌ FMP Error: {result['Error Message']}")
             return None
-        
-        return data
-    except requests.exceptions.RequestException as e:
-        log(f"❌ Request failed for {endpoint}: {e}")
-        return None
+        return result if result else None
+except ImportError:
+    def fmp_get(endpoint, params=None):
+        """FMP API'den veri çek (fallback)"""
+        if params is None:
+            params = {}
+        params['apikey'] = FMP_API_KEY
+        url = f"{FMP_BASE}/{endpoint}"
+
+        try:
+            response = requests.get(url, params=params, timeout=30)
+            response.raise_for_status()
+            data = response.json()
+
+            if isinstance(data, dict) and 'Error Message' in data:
+                log(f"❌ FMP Error: {data['Error Message']}")
+                return None
+
+            return data
+        except requests.exceptions.RequestException as e:
+            log(f"❌ Request failed for {endpoint}: {e}")
+            return None
 
 
 def get_batch_quotes(symbols):

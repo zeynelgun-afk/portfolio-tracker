@@ -27,31 +27,47 @@ API_KEY = os.environ.get("FMP_API_KEY", "g1GFJZtV5rCP49UCir4WuP56VjhmA6F8")
 BASE = "https://financialmodelingprep.com/stable"
 
 
-def fmp_get(endpoint, params=None, max_retries=3, retry_delay=1.5):
-    """FMP API çağrısı. 429/503/network için retry, 4xx için None döner."""
-    if params is None:
-        params = {}
-    params["apikey"] = API_KEY
-    for attempt in range(max_retries):
-        try:
-            r = requests.get(f"{BASE}/{endpoint}", params=params, timeout=20)
-            if r.status_code == 200:
-                return r.json()
-            elif r.status_code == 429:
-                time.sleep(retry_delay * (2 ** attempt))
-                continue
-            elif r.status_code == 503:
-                time.sleep(retry_delay)
-                continue
-            else:
-                return None
-        except (requests.ConnectionError, requests.Timeout):
-            if attempt < max_retries - 1:
-                time.sleep(retry_delay)
-                continue
-        except Exception:
-            break
-    return None
+# 10 May 2026 — canonical fmp_client'a migrasyon (None preservation wrapper)
+import sys as _sys_fmp
+from pathlib import Path as _Path_fmp
+
+_AGENT_DIR = _Path_fmp(__file__).resolve().parent.parent.parent.parent / "agent"
+if str(_AGENT_DIR) not in _sys_fmp.path:
+    _sys_fmp.path.insert(0, str(_AGENT_DIR))
+
+try:
+    from fmp_client import fmp_get as _canonical_fmp_get
+
+    def fmp_get(endpoint, params=None, max_retries=3, retry_delay=1.5):
+        """fmp_client wrapper. Hata/boş veride None döner."""
+        result = _canonical_fmp_get(endpoint, params)
+        return result if result else None
+except ImportError:
+    def fmp_get(endpoint, params=None, max_retries=3, retry_delay=1.5):
+        """FMP API çağrısı (fallback). 429/503/network için retry, 4xx için None döner."""
+        if params is None:
+            params = {}
+        params["apikey"] = API_KEY
+        for attempt in range(max_retries):
+            try:
+                r = requests.get(f"{BASE}/{endpoint}", params=params, timeout=20)
+                if r.status_code == 200:
+                    return r.json()
+                elif r.status_code == 429:
+                    time.sleep(retry_delay * (2 ** attempt))
+                    continue
+                elif r.status_code == 503:
+                    time.sleep(retry_delay)
+                    continue
+                else:
+                    return None
+            except (requests.ConnectionError, requests.Timeout):
+                if attempt < max_retries - 1:
+                    time.sleep(retry_delay)
+                    continue
+            except Exception:
+                break
+        return None
 
 
 def calc_growth(stock):

@@ -35,19 +35,37 @@ FMP_BASE = "https://financialmodelingprep.com/stable"
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
-def fmp_get(endpoint, params=None):
-    if params is None:
-        params = {}
-    params['apikey'] = FMP_API_KEY
-    try:
-        r = requests.get(f"{FMP_BASE}/{endpoint}", params=params, timeout=30)
-        r.raise_for_status()
-        data = r.json()
-        if isinstance(data, dict) and 'Error Message' in data:
+# 10 May 2026 — canonical fmp_client'a migrasyon (None preservation wrapper)
+import sys as _sys_fmp
+from pathlib import Path as _Path_fmp
+
+_AGENT_DIR = _Path_fmp(__file__).resolve().parent.parent / "agent"
+if str(_AGENT_DIR) not in _sys_fmp.path:
+    _sys_fmp.path.insert(0, str(_AGENT_DIR))
+
+try:
+    from fmp_client import fmp_get as _canonical_fmp_get
+
+    def fmp_get(endpoint, params=None):
+        """fmp_client wrapper. Hata/boş veride None döner."""
+        result = _canonical_fmp_get(endpoint, params)
+        if isinstance(result, dict) and 'Error Message' in result:
             return None
-        return data
-    except:
-        return None
+        return result if result else None
+except ImportError:
+    def fmp_get(endpoint, params=None):
+        if params is None:
+            params = {}
+        params['apikey'] = FMP_API_KEY
+        try:
+            r = requests.get(f"{FMP_BASE}/{endpoint}", params=params, timeout=30)
+            r.raise_for_status()
+            data = r.json()
+            if isinstance(data, dict) and 'Error Message' in data:
+                return None
+            return data
+        except:
+            return None
 
 
 # ============================================================

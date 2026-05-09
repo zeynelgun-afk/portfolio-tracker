@@ -122,17 +122,33 @@ EXCLUDE_KEYWORDS = [
 ]
 
 
-def fmp_get(endpoint: str, params: dict) -> list:
-    """FMP API çağrısı."""
-    params["apikey"] = FMP_KEY
-    try:
-        r = requests.get(f"{FMP_URL}/{endpoint}", params=params, timeout=20)
-        r.raise_for_status()
-        data = r.json()
-        return data if isinstance(data, list) else []
-    except Exception as e:
-        print(f"  [HATA] FMP {endpoint}: {e}")
-        return []
+# 10 May 2026 — canonical fmp_client'a migrasyon. Boş veride [] döner (geri uyum).
+import sys as _sys_fmp
+from pathlib import Path as _Path_fmp
+
+_AGENT_DIR = _Path_fmp(__file__).resolve().parent.parent / "agent"
+if str(_AGENT_DIR) not in _sys_fmp.path:
+    _sys_fmp.path.insert(0, str(_AGENT_DIR))
+
+try:
+    from fmp_client import fmp_get as _canonical_fmp_get
+
+    def fmp_get(endpoint: str, params: dict) -> list:
+        """fmp_client wrapper. Boş/hata durumunda [] döner."""
+        result = _canonical_fmp_get(endpoint, params)
+        return result if isinstance(result, list) else []
+except ImportError:
+    def fmp_get(endpoint: str, params: dict) -> list:
+        """FMP API çağrısı (fallback)."""
+        params["apikey"] = FMP_KEY
+        try:
+            r = requests.get(f"{FMP_URL}/{endpoint}", params=params, timeout=20)
+            r.raise_for_status()
+            data = r.json()
+            return data if isinstance(data, list) else []
+        except Exception as e:
+            print(f"  [HATA] FMP {endpoint}: {e}")
+            return []
 
 
 def fetch_macro_events(baslangic: date, bitis: date) -> list[dict]:

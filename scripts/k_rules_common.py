@@ -26,20 +26,39 @@ SCRIPTS_DIR = REPO_ROOT / "scripts"
 sys.path.insert(0, str(SCRIPTS_DIR))
 
 
-def fmp_get(endpoint, params=None):
-    """FMP stable API çağrısı. Hata durumunda None döner."""
-    params = params or {}
-    params["apikey"] = FMP_KEY
-    url = f"{FMP_BASE}/{endpoint.lstrip('/')}"
-    try:
-        r = requests.get(url, params=params, timeout=15)
-        if r.status_code == 200:
-            return r.json()
-        print(f"[FMP HATA] {endpoint} → HTTP {r.status_code}", file=sys.stderr)
-        return None
-    except Exception as e:
-        print(f"[FMP HATA] {endpoint} → {e}", file=sys.stderr)
-        return None
+# 10 May 2026 — canonical fmp_client'a migrasyon. Yerel implementasyon
+# fallback olarak korundu (CI veya agent/ erişilemediği durum).
+# Wrapper boş veride None döner; çağrı yerlerindeki `if data and isinstance(...)`
+# pattern'i hem None hem [] için doğru çalışıyor.
+import sys as _sys_fmp
+from pathlib import Path as _Path_fmp
+
+_AGENT_DIR = _Path_fmp(__file__).resolve().parent.parent / "agent"
+if str(_AGENT_DIR) not in _sys_fmp.path:
+    _sys_fmp.path.insert(0, str(_AGENT_DIR))
+
+try:
+    from fmp_client import fmp_get as _canonical_fmp_get  # observability + retry dahil
+
+    def fmp_get(endpoint, params=None):
+        """fmp_client canonical wrapper. Boş veride None döner (eski API uyumu)."""
+        result = _canonical_fmp_get(endpoint, params)
+        return result if result else None
+except ImportError:
+    def fmp_get(endpoint, params=None):
+        """Fallback: standalone FMP çağrısı. Hata durumunda None döner."""
+        params = params or {}
+        params["apikey"] = FMP_KEY
+        url = f"{FMP_BASE}/{endpoint.lstrip('/')}"
+        try:
+            r = requests.get(url, params=params, timeout=15)
+            if r.status_code == 200:
+                return r.json()
+            print(f"[FMP HATA] {endpoint} → HTTP {r.status_code}", file=sys.stderr)
+            return None
+        except Exception as e:
+            print(f"[FMP HATA] {endpoint} → {e}", file=sys.stderr)
+            return None
 
 
 def load_portfolios():

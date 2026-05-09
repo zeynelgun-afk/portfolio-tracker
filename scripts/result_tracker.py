@@ -37,16 +37,34 @@ RADAR_CHECK_DAYS = 5
 def log(msg):
     print(f"[{datetime.now().strftime('%H:%M:%S')}] {msg}", flush=True)
 
-def fmp_get(endpoint, params=None):
-    p = {"apikey": FMP_KEY, **(params or {})}
-    try:
-        time.sleep(1.5)
-        r = requests.get(f"{FMP_BASE}/{endpoint}", params=p, timeout=15)
-        if r.status_code == 200 and r.text.strip() and "DNS" not in r.text:
-            return r.json()
-    except Exception as e:
-        log(f"FMP hata ({endpoint}): {e}")
-    return []
+# 10 May 2026 — canonical fmp_client'a migrasyon. Pre-throttle (1.5s sleep) korundu;
+# canonical retry mantığı bunun üstüne eklenir. Boş veride [] döner (geri uyum).
+import sys as _sys_fmp
+from pathlib import Path as _Path_fmp
+
+_AGENT_DIR = _Path_fmp(__file__).resolve().parent.parent / "agent"
+if str(_AGENT_DIR) not in _sys_fmp.path:
+    _sys_fmp.path.insert(0, str(_AGENT_DIR))
+
+try:
+    from fmp_client import fmp_get as _canonical_fmp_get
+
+    def fmp_get(endpoint, params=None):
+        """fmp_client wrapper + pre-throttle. Boş veride [] döner."""
+        time.sleep(1.5)  # legacy pre-throttle, korundu
+        result = _canonical_fmp_get(endpoint, params)
+        return result if result else []
+except ImportError:
+    def fmp_get(endpoint, params=None):
+        p = {"apikey": FMP_KEY, **(params or {})}
+        try:
+            time.sleep(1.5)
+            r = requests.get(f"{FMP_BASE}/{endpoint}", params=p, timeout=15)
+            if r.status_code == 200 and r.text.strip() and "DNS" not in r.text:
+                return r.json()
+        except Exception as e:
+            log(f"FMP hata ({endpoint}): {e}")
+        return []
 
 def send_telegram(msg):
     if not BOT_TOKEN:

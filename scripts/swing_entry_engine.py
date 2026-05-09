@@ -55,15 +55,32 @@ except ImportError:
                                   "macro_yas_saat": None}}
 
 
-def fmp_get(endpoint: str, params: dict = None, timeout: int = 12):
-    p = (params or {})
-    p["apikey"] = FMP_KEY
-    try:
-        r = requests.get(f"{FMP_BASE}/{endpoint}", params=p, timeout=timeout)
-        return r.json()
-    except Exception as e:
-        print(f"  ⚠ FMP hatası ({endpoint}): {e}")
-        return None
+# 10 May 2026 — canonical fmp_client'a migrasyon (None preservation wrapper)
+import sys as _sys_fmp
+from pathlib import Path as _Path_fmp
+
+_AGENT_DIR = _Path_fmp(__file__).resolve().parent.parent / "agent"
+if str(_AGENT_DIR) not in _sys_fmp.path:
+    _sys_fmp.path.insert(0, str(_AGENT_DIR))
+
+try:
+    from fmp_client import fmp_get as _canonical_fmp_get
+
+    def fmp_get(endpoint: str, params: dict = None, timeout: int = 12):
+        """fmp_client wrapper. Hata/boş veride None döner.
+        timeout parametresi geri uyum için tutuldu, canonical kendi timeout'unu kullanır."""
+        result = _canonical_fmp_get(endpoint, params)
+        return result if result else None
+except ImportError:
+    def fmp_get(endpoint: str, params: dict = None, timeout: int = 12):
+        p = (params or {})
+        p["apikey"] = FMP_KEY
+        try:
+            r = requests.get(f"{FMP_BASE}/{endpoint}", params=p, timeout=timeout)
+            return r.json()
+        except Exception as e:
+            print(f"  ⚠ FMP hatası ({endpoint}): {e}")
+            return None
 
 
 def get_price_history(symbol: str, limit: int = 60) -> list:
