@@ -1,0 +1,60 @@
+name: Weekly FMP Stats
+
+# Memory kuralı: cron yasak. Sadece manuel tetikleme veya
+# script/workflow değişiminde otomatik smoke test.
+on:
+  workflow_dispatch:
+    inputs:
+      days:
+        description: 'Kaç günlük rapor (default 7)'
+        required: false
+        default: '7'
+      send_telegram:
+        description: 'Zeynel DM Telegrama gönder'
+        required: false
+        type: boolean
+        default: true
+  push:
+    paths:
+      - 'scripts/finzora_stats.py'
+      - '.github/workflows/weekly_fmp_stats.yml'
+
+jobs:
+  stats:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Bağımlılıklar
+        run: pip install requests
+
+      - name: Çalıştır ve raporla
+        run: |
+          DAYS="${{ github.event.inputs.days || '7' }}"
+          SEND_TELEGRAM="${{ github.event.inputs.send_telegram || 'false' }}"
+          ARGS="--days $DAYS"
+          # Push tetiğinde Telegrama gitme (smoke test). Manuel dispatch'de gönder.
+          if [ "$SEND_TELEGRAM" = "true" ]; then
+            ARGS="$ARGS --telegram"
+          fi
+          echo "Çalıştırılıyor: python3 scripts/finzora_stats.py $ARGS"
+          python3 scripts/finzora_stats.py $ARGS | tee weekly_fmp_stats_output.md
+        env:
+          PYTHONPATH: ${{ github.workspace }}/scripts:${{ github.workspace }}/agent
+          FMP_API_KEY: ${{ secrets.FMP_API_KEY }}
+          # Hem standart hem legacy env adları (script fallback'li)
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_PRIVATE_ID: ${{ secrets.TELEGRAM_PRIVATE_ID }}
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_PRIVATE_CHAT: ${{ secrets.TELEGRAM_PRIVATE_ID }}
+
+      - name: Raporu artifact olarak yükle
+        uses: actions/upload-artifact@v4
+        with:
+          name: weekly-fmp-stats-${{ github.run_id }}
+          path: weekly_fmp_stats_output.md
+          retention-days: 90

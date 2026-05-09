@@ -94,10 +94,12 @@ def send_to_telegram(text: str) -> bool:
     import os
     import requests
 
-    token = os.environ.get("TELEGRAM_TOKEN", "")
-    chat = os.environ.get("TELEGRAM_PRIVATE_CHAT", "")
+    # Env fallback: hem eski (TELEGRAM_TOKEN/PRIVATE_CHAT) hem standart (BOT_TOKEN/PRIVATE_ID) destekli
+    token = os.environ.get("TELEGRAM_TOKEN") or os.environ.get("TELEGRAM_BOT_TOKEN", "")
+    chat = os.environ.get("TELEGRAM_PRIVATE_CHAT") or os.environ.get("TELEGRAM_PRIVATE_ID", "")
     if not token or not chat:
-        print("UYARI: TELEGRAM_TOKEN veya TELEGRAM_PRIVATE_CHAT tanımsız")
+        print("UYARI: TELEGRAM token veya private chat ID tanımsız "
+              "(TELEGRAM_BOT_TOKEN+TELEGRAM_PRIVATE_ID veya legacy TELEGRAM_TOKEN+TELEGRAM_PRIVATE_CHAT)")
         return False
 
     # Telegram max 4096 karakter
