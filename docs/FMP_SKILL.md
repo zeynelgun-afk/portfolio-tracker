@@ -535,12 +535,25 @@ macd = fmp_get("technical-indicators/macd", {"symbol": "AAPL", "periodLength": 1
 |----------|--------|-------------|
 | `news/stock` | `symbols` (comma-sep), `limit` | Stock news ✅ |
 | `news/stock-latest` | `limit` | En son tüm hisse haberleri ✅ |
-| `news/press-releases` | `symbol` veya `symbols` (comma-sep), `limit` | Press releases ✅ (**NOT `press-releases`** öneksiz form 404) |
+| `news/press-releases` | `symbols` (comma-sep) ZORUNLU, `limit` | Press releases ✅ (**`?symbol=` tekil sessizce IGNORE edilir, latest döner**) |
 | `news/crypto` | `limit` | Crypto news ✅ |
 | `news/forex` | `limit` | Forex news ✅ |
 | `fmp-articles` | `limit` | FMP market articles ✅ (**NOT `news/general`**) |
 
-> **10 Mayıs 2026 — Press releases canlı doğrulandı**: `news/press-releases` **çalışıyor** (Ultimate plan); `symbol=AAPL` veya `symbols=AAPL,MSFT` parametresi kabul ediliyor. Önek olmadan `press-releases` ve `press-releases-latest` 404 döner (bunlar farklı endpoint adları, aynı şey değil).
+> **⚠️ KRİTİK — `news/press-releases` parametre tuzağı** (10 Mayıs 2026 doğrulandı): `symbols` (ÇOĞUL, comma-separated) ZORUNLU. `symbol` (tekil) parametresi sessizce IGNORE edilir, status 200 döner ama filtre çalışmaz, generic "latest press releases" listesi döner (genelde AAPL gibi yüksek-haber yoğunluklu ticker'lar gelir). `?symbol=AAPL` ile test ederken bu tuzak görünmez çünkü AAPL latest'te zaten var; başka bir ticker ile (örn `?symbol=VST` → tümü AAPL döner) yakalanır.
+>
+> ```python
+> # ❌ YANLIŞ — VST yerine AAPL latest news döner
+> pr = fmp_get("news/press-releases", {"symbol": "VST", "limit": 10})
+>
+> # ✅ DOĞRU — VST press release'leri filtreli
+> pr = fmp_get("news/press-releases", {"symbols": "VST", "limit": 10})
+>
+> # ✅ Multi-symbol batch (tek call)
+> pr = fmp_get("news/press-releases", {"symbols": "VST,CON,CELH", "limit": 30})
+> ```
+>
+> **⚠️ Content kapsamı**: `text` alanı **özet (~500-1500 karakter)**, tam press release değil. Detaylı guidance phrase analizi için tam metin gerekirse `url` alanı (genelde businesswire / prnewswire / globenewswire) ayrı fetch edilmeli. 8-K Exhibit 99.1 (SEC.gov direct fetch) tipik 10K-30K karakter; içerik kapsamı açısından üstün. Bilanço dönemi triage için `news/press-releases` hızlı, derinlemesine analiz için `sec-filings-search` + SEC.gov fetch tercih edilir.
 
 ```python
 # Stock news
@@ -1155,6 +1168,11 @@ All v3/v4 routes are **blocked**. Use these stable equivalents:
 ---
 
 ## CHANGELOG
+
+### 10 Mayıs 2026 (akşam) — `news/press-releases` parametre tuzağı düzeltmesi
+
+- **`news/press-releases` ZORUNLU param `symbols` (çoğul)**, tekil `symbol` sessizce IGNORE edilir ve generic "latest press releases" listesi döner. İlk audit testinde AAPL ile yapılan teyit yanıltıcıydı (AAPL latest'te zaten vardı). VST ile yapılan canlı test bu tuzağı ortaya çıkardı: `?symbol=VST` → 10 PR'ın tümü AAPL döndü; `?symbols=VST` → "Vistra Reports First Quarter 2026 Results" doğru filtre. Skill ve memory düzeltildi.
+- **Content kapsamı uyarısı**: `text` alanı özet (~500-1500 karakter), tam press release değil. Tam metin için `url` (businesswire / prnewswire) veya 8-K Exhibit 99.1 SEC fetch (tipik 10K-30K char) gerekli. `bilanco-sonrasi-us` skill'i mevcut SEC.gov fetch akışını korumalı; `news/press-releases` triage için yardımcı.
 
 ### 10 Mayıs 2026 — Mantık hataları ve eksikler
 - **`fmp_get` ve `fmp_get_retry` tamamen yenilendi**: Eski örnek (1) boş listeyi `[]` hata sayıp 3 kez retry ediyordu (rate limit israfı), (2) 429/404/JSON-decode hatasını ayırt etmiyordu, (3) `r.raise_for_status()` ile body'deki "Limit Reach" mesajını öldürüyordu, (4) `JSONDecodeError`'u yakalamıyordu. Yeni sürümde `FmpRateLimit` (geçici, retry edilir) vs `FmpEndpointError` (kalıcı, retry edilmez) ayrımı, ilk rate-limit beklemesi 60s'den başlıyor, boş `[]` geçerli yanıt sayılıyor.
