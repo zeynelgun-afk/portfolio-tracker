@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-05-08",
+  "son_guncelleme": "2026-05-10",
   "analiz_donemi": "2026-02-17 → 2026-04-13",
   "toplam_trade": 62,
   "k_kural_istatistikleri": {
@@ -206,7 +206,7 @@
     "rsi40_50_kural": "RSI 40-50 arası sinyal = yarım pozisyon al"
   },
   "stop_loss": {
-    "toplam_tetik": 9,
+    "toplam_tetik": 13,
     "tarihler": [
       "2026-04-23",
       "2026-04-29",
@@ -214,7 +214,8 @@
       "2026-04-29",
       "2026-05-03",
       "2026-05-05",
-      "2026-05-08"
+      "2026-05-08",
+      "2026-05-10"
     ]
   }
 }

@@ -634,77 +634,6 @@
   ],
   "entries": [
     {
-      "id": "L007",
-      "tarih": "2026-04-13",
-      "kaynak": "sell_the_news_cases",
-      "kategori": "haber_yorumu",
-      "ders": "Güçlü kazanç bile otomatik ralli yaratmıyor (MU, RKLB). Kazanç sonrası 'sat the news' riski yüksek. Kazanç geçmişi ne olursa olsun ilk 30dk bekle, sonra fiyat yönünü konfirme et.",
-      "veri": {
-        "semboller": [
-          "MU",
-          "RKLB"
-        ],
-        "patern": "güçlü kazanç sonrası satış"
-      },
-      "aksiyon": "Earnings günü FAZ_1'de kesinlikle giriş yok. FAZ_2'de bile %2 yukarı konfirmasyon bekle.",
-      "guven": "MUHTEMEL"
-    },
-    {
-      "id": "L008",
-      "tarih": "2026-04-13",
-      "kaynak": "cos_analysis",
-      "kategori": "en_iyi_trade",
-      "ders": "KOS en iyi trade: +54.5% (45 gün). Deep value + güçlü sektör katalog + kademeli çıkış kombinasyonu. Başarı formülü: düşük değerleme + net sektör katalizörü + K-11 kademeli çıkış + stop-loss kurtarma yok.",
-      "veri": {
-        "sembol": "KOS",
-        "giris": "2026-02-17",
-        "cikis": "2026-03-09",
-        "pnl": 54.5,
-        "hold_days": 20
-      },
-      "aksiyon": "Dengeli portföyde KOS benzeri deep-value + sektör katalog kombinasyonuna ağırlık ver.",
-      "guven": "KESİN"
-    },
-    {
-      "id": "BT001",
-      "tarih": "2026-04-13",
-      "kaynak": "backtest_45_hisse_600gun",
-      "kategori": "k11_trailing_stop",
-      "ders": "3xATR chandelier trailing, 2xATR'den çok daha iyi. 2xATR: PF 1.14, ort -0.52% (çok erken çıkış, 8.3 gün). 3xATR RSI-70: PF 2.13, ort +0.72% (15.3 gün). 2xATR pozisyonu nefes alamadan keserek büyük kazançları kaçırıyor. ONAY: Mevcut 3xATR implementasyonu doğru. RSI 70 eşiği en uygun.",
-      "veri": {
-        "k11_2xATR": {
-          "n": 300,
-          "wr": 40.0,
-          "avg": -0.52,
-          "pf": 1.14,
-          "hold": 8.3,
-          "aw": 4.05,
-          "al": -3.57
-        },
-        "k11_3xATR_rsi70": {
-          "n": 300,
-          "wr": 37.3,
-          "avg": 0.72,
-          "pf": 2.13,
-          "hold": 15.3,
-          "aw": 9.1,
-          "al": -4.26
-        },
-        "k11_3xATR_rsi75": {
-          "n": 300,
-          "wr": 37.0,
-          "avg": 0.49,
-          "pf": 2.02,
-          "hold": 15.7,
-          "aw": 8.56,
-          "al": -4.25
-        }
-      },
-      "aksiyon": "K-11: 3xATR chandelier + RSI 70 eşiği koru. 2xATR'ye düşürme.",
-      "guven": "KESİN",
-      "n_trade": 900
-    },
-    {
       "id": "BT002",
       "tarih": "2026-04-13",
       "kaynak": "backtest_45_hisse_600gun",
@@ -1218,6 +1147,21 @@
       "date": "2026-05-09",
       "source": "closing_analysis",
       "insight": "**DECISION BLOCK**"
+    },
+    {
+      "date": "2026-05-10",
+      "source": "auto_weekly",
+      "insight": "## 2. RİSK ANALİZİ: Konsantrasyon, Korelasyon ve K-12 İhlalleri"
+    },
+    {
+      "date": "2026-05-10",
+      "source": "auto_weekly",
+      "insight": "**Nakit Aşımı**: Tüm segmentler K-10 limiti %10'u aşıyor:"
+    },
+    {
+      "date": "2026-05-10",
+      "source": "auto_weekly",
+      "insight": "**KESİN** ihlal. Kural gereği: yükseliş bekleniyorsa fırsat sektörlerine konuşlandırma, geri çekilme bekleniyorsa defansif rotasyon **ZORUNLU**. Mevcut VIX 17.2 (düşük, risk-on) ve tema skorları güçlü"
     }
   ]
 }

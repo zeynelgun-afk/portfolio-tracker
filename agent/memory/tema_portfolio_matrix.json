@@ -1,9 +1,9 @@
 {
-  "guncelleme": "2026-05-03 09:05",
+  "guncelleme": "2026-05-10 09:06",
   "matris": {
-    "BILINMIYOR": {
+    "sağlık_yenilik": {
       "swing": {
-        "trade_sayisi": 29,
+        "trade_sayisi": 33,
         "toplam_pnl": 0.0,
         "ortalama_pnl": 0.0,
         "win_rate": 0.0,
@@ -13,16 +13,16 @@
     }
   },
   "ozet": {
-    "en_karli_tema": "BILINMIYOR",
-    "en_kotu_tema": "BILINMIYOR",
+    "en_karli_tema": "sağlık_yenilik",
+    "en_kotu_tema": "sağlık_yenilik",
     "tema_pnl_sirali": {
-      "BILINMIYOR": 0.0
+      "sağlık_yenilik": 0.0
     },
     "portfoy_en_iyi_tema": {
       "agresif": null,
       "dengeli": null,
       "temettü": null,
-      "swing": "BILINMIYOR"
+      "swing": "sağlık_yenilik"
     }
   }
 }

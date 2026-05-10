@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-05-08T21:32:27.154108",
+  "son_guncelleme": "2026-05-10T09:01:03.008597",
   "not": "SWING TRADE SADECE SİMÜLASYON - Sadece % kazanç/kayıp takibi (MAX: 5 pozisyon)",
   "aktif_pozisyonlar": [
     {
@@ -23,7 +23,7 @@
       "chandelier_stop": 883.87,
       "k11_aktif": false,
       "k11_profit_lock": null,
-      "son_guncelleme": "2026-05-08T21:32:27.154108",
+      "son_guncelleme": "2026-05-10",
       "notlar": [],
       "kar_zarar_yuzde": 7.92,
       "tutulan_gun": 11,
@@ -52,18 +52,19 @@
       "guncel_fiyat": 339.97,
       "son_fiyat": 339.97,
       "zirve_fiyat": 358.92,
-      "chandelier_stop": 322.57,
+      "chandelier_stop": 329.84,
       "k11_aktif": false,
       "k11_profit_lock": null,
-      "son_guncelleme": "2026-05-08T21:32:27.154108",
+      "son_guncelleme": "2026-05-10",
       "notlar": [],
       "kar_zarar_yuzde": 7.76,
       "tutulan_gun": 8,
       "atr14": 14.54,
       "pnl_pct": 7.76,
-      "chandelier_atr_carpan": 2.5,
+      "chandelier_atr_carpan": 2.0,
       "rsi": 63.43,
-      "rsi_son_guncelleme": "2026-05-08T22:32:09.894203+03:00"
+      "rsi_son_guncelleme": "2026-05-08T22:32:09.894203+03:00",
+      "kzst_aktif": true
     }
   ],
   "ozet": {

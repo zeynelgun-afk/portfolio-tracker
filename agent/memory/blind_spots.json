@@ -1,0 +1,25 @@
+{
+  "son_guncelleme": "2026-05-10T09:06:09.119192",
+  "spots": [
+    {
+      "konu": "CIO_AGENT DOWN yönünde sistematik hata yapıyor",
+      "frekans": 5,
+      "oneri": "CIO_AGENT prompt'u revize edilmeli — DOWN bias var"
+    },
+    {
+      "konu": "DEBATE_CIO DOWN yönünde sistematik hata yapıyor",
+      "frekans": 4,
+      "oneri": "DEBATE_CIO prompt'u revize edilmeli — DOWN bias var"
+    },
+    {
+      "konu": "CIO_AGENT DOWN yönünde sistematik hata yapıyor",
+      "frekans": 5,
+      "oneri": "CIO_AGENT prompt'u revize edilmeli — DOWN bias var"
+    },
+    {
+      "konu": "DEBATE_CIO DOWN yönünde sistematik hata yapıyor",
+      "frekans": 4,
+      "oneri": "DEBATE_CIO prompt'u revize edilmeli — DOWN bias var"
+    }
+  ]
+}

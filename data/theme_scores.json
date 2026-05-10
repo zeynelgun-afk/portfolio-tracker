@@ -1,32 +1,32 @@
 {
-  "tarih": "2026-05-03T12:05:39.946075+03:00",
-  "spy_10g_perf": 1.48,
+  "tarih": "2026-05-10T12:05:56.740481+03:00",
+  "spy_10g_perf": 3.32,
   "temalar": {
     "ai_yari_iletken": {
       "ad": "AI / Yari-iletken",
       "kategori": "buyume",
-      "skor": 8,
+      "skor": 9,
       "seviye": "GUCLU",
-      "perf_10g": 6.31,
-      "rs_vs_spy": 4.83,
+      "perf_10g": 12.2,
+      "rs_vs_spy": 8.89,
       "sembol_sayisi": 9
     },
     "ai_yazilim": {
       "ad": "AI Yazilim / Bulut",
       "kategori": "buyume",
-      "skor": 6,
-      "seviye": "ORTA",
-      "perf_10g": 1.54,
-      "rs_vs_spy": 0.06,
+      "skor": 9,
+      "seviye": "GUCLU",
+      "perf_10g": 11.86,
+      "rs_vs_spy": 8.54,
       "sembol_sayisi": 8
     },
     "elektrik_altyapi": {
       "ad": "Elektrik / Sebeke / DC",
       "kategori": "buyume",
-      "skor": 9,
-      "seviye": "GUCLU",
-      "perf_10g": 6.94,
-      "rs_vs_spy": 5.46,
+      "skor": 4,
+      "seviye": "ZAYIF",
+      "perf_10g": 2.77,
+      "rs_vs_spy": -0.55,
       "sembol_sayisi": 8
     },
     "uranyum_nukleer": {
@@ -34,8 +34,8 @@
       "kategori": "agresif",
       "skor": 2,
       "seviye": "TEHLIKELI",
-      "perf_10g": -2.43,
-      "rs_vs_spy": -3.91,
+      "perf_10g": -0.15,
+      "rs_vs_spy": -3.47,
       "sembol_sayisi": 8
     },
     "savunma": {
@@ -43,8 +43,8 @@
       "kategori": "defansif_buyume",
       "skor": 1,
       "seviye": "TEHLIKELI",
-      "perf_10g": -8.75,
-      "rs_vs_spy": -10.23,
+      "perf_10g": -3.69,
+      "rs_vs_spy": -7.01,
       "sembol_sayisi": 7
     },
     "saglik": {
@@ -52,17 +52,17 @@
       "kategori": "defansif",
       "skor": 2,
       "seviye": "TEHLIKELI",
-      "perf_10g": -1.07,
-      "rs_vs_spy": -2.55,
+      "perf_10g": 0.96,
+      "rs_vs_spy": -2.36,
       "sembol_sayisi": 7
     },
     "tuketici_temel": {
       "ad": "Tuketici Temel (XLP)",
       "kategori": "defansif",
-      "skor": 8,
-      "seviye": "GUCLU",
-      "perf_10g": 3.94,
-      "rs_vs_spy": 2.46,
+      "skor": 2,
+      "seviye": "TEHLIKELI",
+      "perf_10g": 1.27,
+      "rs_vs_spy": -2.04,
       "sembol_sayisi": 8
     },
     "altin": {
@@ -70,26 +70,26 @@
       "kategori": "guvenli_liman",
       "skor": 1,
       "seviye": "TEHLIKELI",
-      "perf_10g": -11.15,
-      "rs_vs_spy": -12.63,
+      "perf_10g": -2.38,
+      "rs_vs_spy": -5.69,
       "sembol_sayisi": 6
     },
     "kripto": {
       "ad": "Kripto / Ethereum",
       "kategori": "yuksek_risk",
-      "skor": 2,
-      "seviye": "TEHLIKELI",
-      "perf_10g": -0.67,
-      "rs_vs_spy": -2.15,
+      "skor": 9,
+      "seviye": "GUCLU",
+      "perf_10g": 8.96,
+      "rs_vs_spy": 5.65,
       "sembol_sayisi": 6
     },
     "petrol_enerji": {
       "ad": "Petrol / Enerji",
       "kategori": "siklus",
-      "skor": 8,
-      "seviye": "GUCLU",
-      "perf_10g": 5.16,
-      "rs_vs_spy": 3.68,
+      "skor": 1,
+      "seviye": "TEHLIKELI",
+      "perf_10g": -3.03,
+      "rs_vs_spy": -6.35,
       "sembol_sayisi": 6
     }
   }

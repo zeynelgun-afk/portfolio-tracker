@@ -1,0 +1,18 @@
+{
+  "kuyruk": [
+    {
+      "id": "prop_20260510_1206",
+      "tur": "yeni_agent_DOWN_GUARD_AGENT",
+      "aciklama": "Aşağı yönlü piyasa koşullarında sistematik risk tespiti, short fırsatları ve portföy korunma stratejileri",
+      "gerekce": "Blind spot: CIO_AGENT DOWN yönünde sistematik hata yapıyor",
+      "oneren": "blind_spot_detector",
+      "backtest_gerekli": false,
+      "olusturma_tarihi": "2026-05-10T12:06:51.976564+03:00",
+      "durum": "BEKLIYOR",
+      "dry_run_bitis": "2026-05-24",
+      "dry_run_sonuc": null,
+      "kalan_gun": 13
+    }
+  ],
+  "son_degerlendirme": "2026-05-10"
+}
