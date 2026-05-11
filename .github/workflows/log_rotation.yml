@@ -1,0 +1,91 @@
+name: Log Rotation
+
+# Memory kuralı: cron yasak. Sadece manuel tetikleme veya
+# script/workflow değişiminde otomatik smoke test (--dry-run --stats).
+on:
+  workflow_dispatch:
+    inputs:
+      action:
+        description: 'Yapılacak işlem'
+        required: true
+        type: choice
+        options:
+          - stats
+          - archive-completed
+          - archive-month
+        default: 'stats'
+      month:
+        description: 'Ay (sadece archive-month için, YYYY-MM)'
+        required: false
+        default: ''
+      dry_run:
+        description: 'Dry-run (dosya yazma, sadece simule et)'
+        required: false
+        type: boolean
+        default: true
+  push:
+    paths:
+      - 'scripts/log_rotation.py'
+      - '.github/workflows/log_rotation.yml'
+
+jobs:
+  rotate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # archive commit için tam history
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Çalıştır
+        run: |
+          ACTION="${{ github.event.inputs.action || 'stats' }}"
+          MONTH="${{ github.event.inputs.month || '' }}"
+          DRY_RUN="${{ github.event.inputs.dry_run || 'true' }}"
+
+          ARGS=""
+          case "$ACTION" in
+            stats)
+              ARGS="--stats"
+              ;;
+            archive-completed)
+              ARGS="--archive-completed"
+              ;;
+            archive-month)
+              if [ -z "$MONTH" ]; then
+                echo "HATA: archive-month için month input zorunlu (YYYY-MM)"
+                exit 1
+              fi
+              ARGS="--archive-month $MONTH"
+              ;;
+          esac
+
+          if [ "$DRY_RUN" = "true" ]; then
+            ARGS="$ARGS --dry-run"
+          fi
+
+          # Push tetiklerinde her zaman dry-run + stats (güvenli smoke)
+          if [ -z "${{ github.event.inputs.action }}" ]; then
+            ARGS="--stats"
+          fi
+
+          echo "Çalıştırılıyor: python scripts/log_rotation.py $ARGS"
+          python scripts/log_rotation.py $ARGS
+
+      - name: Archive değişikliklerini commit et
+        if: github.event.inputs.dry_run == 'false' && github.event.inputs.action != 'stats'
+        run: |
+          git config user.name "Finzora Bot"
+          git config user.email "finzora-bot@users.noreply.github.com"
+          git add logs/events.jsonl logs/archive/ 2>/dev/null || true
+          if git diff --staged --quiet; then
+            echo "Değişiklik yok"
+          else
+            git commit -m "[bot/log-rotation] $(date +'%Y-%m-%d') ${{ github.event.inputs.action }}"
+            git push origin main
+          fi

@@ -48,6 +48,7 @@ logs/event_log.jsonl
 logs/*.log
 !logs/.gitkeep
 !logs/events.jsonl
+!logs/archive/
 
 # Sistem
 .DS_Store
