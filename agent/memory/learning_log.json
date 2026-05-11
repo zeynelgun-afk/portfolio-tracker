@@ -634,54 +634,6 @@
   ],
   "entries": [
     {
-      "id": "BT002",
-      "tarih": "2026-04-13",
-      "kaynak": "backtest_45_hisse_600gun",
-      "kategori": "k06_stop_loss",
-      "ders": "Stop-loss karşılaştırması: %5 sabit stop PF 1.97 (AvgWin +10.5%, AvgLoss -5.3%). 3xATR dinamik stop da PF 1.97 — neredeyse aynı sonuç. %7 sabit stop WR'ı %48.7'ye çıkarıyor ama PF 1.48'e düşüyor (stop geniş = pozisyon daha fazla yaşıyor ama kayıplar da büyüyor). 2xATR stop ise çok dar — PF 1.09, neredeyse breakeven.",
-      "veri": {
-        "stop_5pct": {
-          "n": 300,
-          "wr": 39.3,
-          "avg": 0.9,
-          "pf": 1.97,
-          "hold": 19.7,
-          "aw": 10.49,
-          "al": -5.31
-        },
-        "stop_7pct": {
-          "n": 300,
-          "wr": 48.7,
-          "avg": 1.36,
-          "pf": 1.48,
-          "hold": 23.0,
-          "aw": 9.74,
-          "al": -6.59
-        },
-        "stop_3xATR": {
-          "n": 300,
-          "wr": 38.0,
-          "avg": 0.55,
-          "pf": 1.97,
-          "hold": 15.5,
-          "aw": 8.47,
-          "al": -4.3
-        },
-        "stop_2xATR": {
-          "n": 300,
-          "wr": 40.0,
-          "avg": -0.59,
-          "pf": 1.09,
-          "hold": 8.3,
-          "aw": 3.88,
-          "al": -3.57
-        }
-      },
-      "aksiyon": "K-06: %5 sabit stop VEYA 3xATR (ikisi eşdeğer). %7 stop kullanma — PF düşüyor.",
-      "guven": "KESİN",
-      "n_trade": 1200
-    },
-    {
       "id": "BT003",
       "tarih": "2026-04-13",
       "kaynak": "backtest_25_hisse_730gun",
@@ -1162,6 +1114,11 @@
       "date": "2026-05-10",
       "source": "auto_weekly",
       "insight": "**KESİN** ihlal. Kural gereği: yükseliş bekleniyorsa fırsat sektörlerine konuşlandırma, geri çekilme bekleniyorsa defansif rotasyon **ZORUNLU**. Mevcut VIX 17.2 (düşük, risk-on) ve tema skorları güçlü"
+    },
+    {
+      "date": "2026-05-12",
+      "source": "closing_analysis",
+      "insight": "**DECISION BLOCK**"
     }
   ]
 }
