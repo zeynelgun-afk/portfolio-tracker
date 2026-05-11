@@ -1,11 +1,11 @@
 {
   "son_guncelleme": "2026-05-11",
   "toplam_analiz": 13,
-  "beat_tahmin": 0,
+  "beat_tahmin": 1,
   "miss_tahmin": 0,
-  "beklemede": 2,
+  "beklemede": 0,
   "aktif_izleme": 10,
-  "dogru_tahmin_orani": null,
+  "dogru_tahmin_orani": 1.0,
   "analizler": [
     {
       "id": "BDC_2026-04-26",
@@ -15,7 +15,7 @@
       "analiz_tarihi": "2026-04-26",
       "bülançö_tarihi": "2026-04-30",
       "analiz_turu": "bilanço_oncesi",
-      "durum": "beklemede",
+      "durum": "beat",
       "dosya": "reports/research/BDC_2026-04-26.md",
       "on_beklenti": {
         "eps_konsensus": 1.7,
@@ -32,13 +32,15 @@
         "temettü": "uygun_degil"
       },
       "gerceklesen": {
-        "eps": null,
-        "gelir_m": null,
-        "surpriz_pct": null,
-        "senaryo": null,
-        "fiyat_tepkisi_pct": null,
-        "dogru_tahmin": null,
-        "ders": null
+        "eps": 1.77,
+        "eps_beklenti": 1.71,
+        "surpriz_pct": 3.5,
+        "gelir_m": 696.4,
+        "gelir_beklenti_m": 677.0,
+        "fiyat_tepkisi_pct": 1.5,
+        "senaryo": "B — In-Line Beat",
+        "dogru_tahmin": true,
+        "ders": "Beat | Sürpriz +3.5% | Fiyat +1.5%"
       },
       "etiketler": [
         "industrial",
