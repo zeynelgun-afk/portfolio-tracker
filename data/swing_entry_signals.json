@@ -1,23 +1,88 @@
 {
-  "tarih": "2026-05-08T11:09:12.509082",
+  "tarih": "2026-05-11T11:03:20.422560",
   "toplam_taranan": 39,
-  "giris_sayisi": 1,
+  "giris_sayisi": 6,
   "giris_sinyalleri": [
-    "RSI"
+    "CAT",
+    "KLAC",
+    "AMAT",
+    "RPRX",
+    "NNE",
+    "LEU"
   ],
   "detaylar": [
     {
-      "sembol": "RSI",
-      "fiyat": 27.9,
-      "stop": 25.0,
-      "stop_pct": 10.4,
-      "hedef": 35.15,
-      "rsi": 76,
-      "adet": 129,
-      "kalite_skor": 71,
-      "kalite_karar": "GUCLU",
+      "sembol": "KLAC",
+      "fiyat": 1869.19,
+      "stop": 1695.18,
+      "stop_pct": 9.3,
+      "hedef": 2304.22,
+      "rsi": 55,
+      "adet": 2,
+      "kalite_skor": null,
+      "kalite_karar": null,
+      "carpan": 1.75
+    },
+    {
+      "sembol": "AMAT",
+      "fiyat": 435.44,
+      "stop": 387.64,
+      "stop_pct": 11.0,
+      "hedef": 554.94,
+      "rsi": 64,
+      "adet": 7,
+      "kalite_skor": null,
+      "kalite_karar": null,
       "carpan": 1.5
+    },
+    {
+      "sembol": "RPRX",
+      "fiyat": 50.79,
+      "stop": 49.09,
+      "stop_pct": 3.3,
+      "hedef": 55.04,
+      "rsi": 66,
+      "adet": 294,
+      "kalite_skor": 79,
+      "kalite_karar": "GUCLU",
+      "carpan": 2.0
+    },
+    {
+      "sembol": "NNE",
+      "fiyat": 27.45,
+      "stop": 24.21,
+      "stop_pct": 11.8,
+      "hedef": 35.55,
+      "rsi": 54,
+      "adet": 131,
+      "kalite_skor": 61,
+      "kalite_karar": "ORTA",
+      "carpan": 1.7
+    },
+    {
+      "sembol": "CAT",
+      "fiyat": 897.45,
+      "stop": 817.81,
+      "stop_pct": 8.9,
+      "hedef": 1096.55,
+      "rsi": 70,
+      "adet": 4,
+      "kalite_skor": 60,
+      "kalite_karar": "ORTA",
+      "carpan": 1.5
+    },
+    {
+      "sembol": "LEU",
+      "fiyat": 207.33,
+      "stop": 200.33,
+      "stop_pct": 3.4,
+      "hedef": 224.83,
+      "rsi": 52,
+      "adet": 35,
+      "kalite_skor": 45,
+      "kalite_karar": "ZAYIF",
+      "carpan": 1.0
     }
   ],
-  "ham_cikti": "[Tema] Aktif tema havuzu: 65 hisse (kaynak: makro(21.0h)+tracker)\n\n[Kapasite] 4/8 pozisyon aktif — 4 boş slot\n\n[SwingEntry] 39 hisse taranıyor...\n  [ 1/39] CAT... —\n  [ 2/39] WDC... —\n  [ 3/39] KLAC... —\n  [ 4/39] AMAT... —\n  [ 5/39] MRK... —\n  [ 6/39] UPS... —\n  [ 7/39] DUK... —\n  [ 8/39] NEE... —\n  [ 9/39] GEV... —\n  [10/39] ATMU... —\n  [11/39] MU... —\n  [12/39] LMT... —\n  [13/39] VRT... —\n  [14/39] ANET... —\n  [15/39] KMB... —\n  [16/39] OKE... —\n  [17/39] LLY... —\n  [18/39] REGN... —\n  [19/39] RPRX... —\n  [20/39] ABBV... —\n  [21/39] KEY... —\n  [22/39] AR... —\n  [23/39] TFC... —\n  [24/39] LAUR... —\n  [25/39] PYPL... —\n  [26/39] LRCX... —\n  [27/39] CCJ... —\n  [28/39] OKLO... —\n  [29/39] NNE... —\n  [30/39] UEC... —\n  [31/39] VST... —\n  [32/39] BWXT... —\n  [33/39] LEU... —\n  [34/39] DNN... —\n  [35/39] ALAB... —\n  [36/39] PLAB... —\n  [37/39] COHU... —\n  [38/39] CRDO... —\n  [39/39] RSI... ✅ GİRİŞ ✅ (tenkan_bounce) ⭐ skor:71\n\n[SwingEntry] Sonuç: 1/39 giriş sinyali\n\n==============================================================================\nGİRİŞ SİNYALLERİ (1 hisse)\n==============================================================================\nSYM      Fiyat    Stop  Stop%   Hedef  RSI TEMA           Sinyal\n------------------------------------------------------------------------------\nRSI    $  27.90 $  25.00  10.4% $  35.15   76 —              tenkan_bounce\n       Adet: 129 | ATR: $1.47 | KALITE: 71/100 (GUCLU) | CARPAN: 1.50x | GİRİŞ ✅ (tenkan_bounce) ⭐ skor:71\n\n"
+  "ham_cikti": "[_config] Eksik kritik env: ['TELEGRAM_BOT_TOKEN', 'TELEGRAM_PRIVATE_ID']. Bu modülü kullanan script'ler çalışmayacak.\n[Tema] Aktif tema havuzu: 23 hisse (kaynak: tracker)\n\n[Kapasite] 2/8 pozisyon aktif — 6 boş slot\n\n[SwingEntry] 39 hisse taranıyor...\n  [ 1/39] CAT... ✅ GİRİŞ ✅ (tenkan_bounce) skor:60\n  [ 2/39] WDC... —\n  [ 3/39] KLAC... ✅ GİRİŞ ✅ (tenkan_bounce) ⭐ skor:85\n  [ 4/39] AMAT... ✅ GİRİŞ ✅ (tenkan_bounce) ⭐ skor:80\n  [ 5/39] MRK... —\n  [ 6/39] UPS... —\n  [ 7/39] DUK... —\n  [ 8/39] NEE... —\n  [ 9/39] GEV... —\n  [10/39] ATMU... —\n  [11/39] MU... —\n  [12/39] LMT... —\n  [13/39] VRT... —\n  [14/39] ANET... —\n  [15/39] KMB... —\n  [16/39] OKE... —\n  [17/39] LLY... —\n  [18/39] REGN... —\n  [19/39] RPRX... ✅ GİRİŞ ✅ (tenkan_bounce) ⭐ skor:79\n  [20/39] ABBV... —\n  [21/39] KEY... —\n  [22/39] AR... —\n  [23/39] TFC... —\n  [24/39] LAUR... —\n  [25/39] PYPL... —\n  [26/39] LRCX... —\n  [27/39] CCJ... —\n  [28/39] OKLO... —\n  [29/39] NNE... ✅ GİRİŞ ✅ (tenkan_bounce) skor:61\n  [30/39] UEC... —\n  [31/39] VST... —\n  [32/39] BWXT... —\n  [33/39] LEU... ✅ GİRİŞ ✅ (kijun_bounce_v2) ⚠️ skor:45\n  [34/39] DNN... —\n  [35/39] ALAB... —\n  [36/39] PLAB... —\n  [37/39] COHU... —\n  [38/39] CRDO... —\n  [39/39] RSI... —\n\n[SwingEntry] Sonuç: 6/39 giriş sinyali\n\n==============================================================================\nGİRİŞ SİNYALLERİ (6 hisse)\n==============================================================================\nSYM      Fiyat    Stop  Stop%   Hedef  RSI TEMA           Sinyal\n------------------------------------------------------------------------------\nKLAC   $1869.19 $1695.18   9.3% $2304.22   55 AI / Yari-il   tenkan_bounce, kijun_bounce_v2\n       Adet: 2 | ATR: $83.01 | KALITE: 85/100 +T10 (GUCLU) | CARPAN: 1.75x | GİRİŞ ✅ (tenkan_bounce) ⭐ skor:85\n\nAMAT   $ 435.44 $ 387.64  11.0% $ 554.94   64 AI / Yari-il   tenkan_bounce\n       Adet: 7 | ATR: $17.42 | KALITE: 80/100 +T10 (GUCLU) | CARPAN: 1.50x | GİRİŞ ✅ (tenkan_bounce) ⭐ skor:80\n\nRPRX   $  50.79 $  49.09   3.3% $  55.04   66 —              tenkan_bounce, kijun_bounce_v2, nr7_sikisma\n       Adet: 294 | ATR: $1.01 | KALITE: 79/100 (GUCLU) | CARPAN: 2.00x | GİRİŞ ✅ (tenkan_bounce) ⭐ skor:79\n\nNNE    $  27.45 $  24.21  11.8% $  35.55   54 —              tenkan_bounce, kijun_bounce_v2\n       Adet: 131 | ATR: $2.57 | KALITE: 61/100 (ORTA) | CARPAN: 1.70x | GİRİŞ ✅ (tenkan_bounce) skor:61\n\nCAT    $ 897.45 $ 817.81   8.9% $1096.55   70 —              tenkan_bounce\n       Adet: 4 | ATR: $29.09 | KALITE: 60/100 (ORTA) | CARPAN: 1.50x | GİRİŞ ✅ (tenkan_bounce) skor:60\n\nLEU    $ 207.33 $ 200.33   3.4% $ 224.83   52 —              kijun_bounce_v2\n       Adet: 35 | ATR: $18.30 | KALITE: 45/100 (ZAYIF) | CARPAN: 1.00x | GİRİŞ ✅ (kijun_bounce_v2) ⚠️ skor:45\n\n"
 }
