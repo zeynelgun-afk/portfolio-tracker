@@ -556,6 +556,14 @@ def calculate_methods(data, regime_key, sector_key, is_ai_megacap, mode, quality
     sector_mults = SECTOR_MULTIPLES.get(sector_key, SECTOR_MULTIPLES['generic'])
     adj = REGIME_ADJ[regime_key]
     
+    # v5.0: Canlı PE override varsa kullan, yoksa statik tablodan al
+    pe_mult = data.get('live_pe_override') or sector_mults['pe']
+    # Forward P/E için canlı PE'yi biraz daha düşük kullan (klasik TTM>FWD ilişkisi)
+    fwd_pe_mult = (data.get('live_pe_override') * 0.88) if data.get('live_pe_override') else sector_mults['fwd_pe']
+    
+    # v5.0: Dinamik WACC varsa DCF için kullan, yoksa statik tablodan
+    wacc = data.get('dynamic_wacc') or adj['wacc']
+    
     eps_ttm = data['eps_ttm']
     eps_fwd_1y = data.get('eps_fwd_1y')  # v4.1: PEG için 1y ileri EPS
     eps_fwd = data['eps_fwd_2y']
@@ -585,9 +593,9 @@ def calculate_methods(data, regime_key, sector_key, is_ai_megacap, mode, quality
     
     # === TRADITIONAL (TTM bazlı 4 yöntem - v5.0) ===
     
-    # 1. Net P/E
+    # 1. Net P/E (canlı PE override öncelikli)
     if eps_ttm and eps_ttm > 0:
-        traditional['Net P/E'] = eps_ttm * sector_mults['pe'] * adj['pe'] * ai_mult['pe'] * qm
+        traditional['Net P/E'] = eps_ttm * pe_mult * adj['pe'] * ai_mult['pe'] * qm
     else:
         traditional['Net P/E'] = None
     
@@ -618,22 +626,30 @@ def calculate_methods(data, regime_key, sector_key, is_ai_megacap, mode, quality
     
     # === FORWARD (2 yöntem) ===
     
-    # 5. Forward P/E
+    # 5. Forward P/E (canlı PE override öncelikli)
     if eps_fwd and eps_fwd > 0 and not forward_outlier:
-        forward['Forward P/E'] = eps_fwd * sector_mults['fwd_pe'] * adj['fwd_pe'] * ai_mult['fwd_pe'] * qm
+        forward['Forward P/E'] = eps_fwd * fwd_pe_mult * adj['fwd_pe'] * ai_mult['fwd_pe'] * qm
     else:
         forward['Forward P/E'] = None
         if forward_outlier:
             notes['Forward P/E'] = "⚠️ ELENDİ (forward outlier: EPS_FWD/EPS_TTM > 2.5x)"
     
-    # 6. DCF
-    g_high = sector_mults['g_high'] + adj['g_high_adj']
+    # 6. DCF (dinamik WACC + gerçek revenue growth override öncelikli)
+    # v5.0: Statik g_high yerine canlı revenue_yoy kullan (sektör multiple üst sınır 50%)
+    static_g_high = sector_mults['g_high'] + adj['g_high_adj']
+    actual_growth = data.get('revenue_growth_yoy')
+    if actual_growth and actual_growth > static_g_high:
+        # Gerçek büyüme statik tablodan yüksekse onu kullan, ama 50%'de cap'le
+        g_high_eff = min(actual_growth, 0.50)
+    else:
+        g_high_eff = static_g_high
+    
     forward['DCF'] = dcf_calculate(
         start_fcf=fcf_norm if fcf_norm and fcf_norm > 0 else (data['ocf_ttm'] * 0.3 if data['ocf_ttm'] else 0),
-        g_high=g_high,
-        g_mid=g_high * 0.6,
+        g_high=g_high_eff,
+        g_mid=g_high_eff * 0.6,
         g_term=adj['g_term'],
-        wacc=adj['wacc'],
+        wacc=wacc,
         cash=cash,
         debt=debt,
         shares=shares
@@ -997,7 +1013,52 @@ def analyze(ticker):
         'revenue_growth_yoy': revenue_growth_yoy,
     }
     
-    # 3 senaryoda hesapla (v4: quality_mult ile, v4.1: forward_outlier ile)
+    # =========================================================================
+    # v5.0 KALIBRASYON SİNYALLERİ — calculate_methods'tan ÖNCE topla
+    # (Bu değerler yöntem hesaplarını override eder)
+    # =========================================================================
+    
+    v5_signals = {}
+    if _V5_MODULES_AVAILABLE:
+        try:
+            # Canlı sektör/industry P/E — Net P/E + Forward P/E hesaplarını override eder
+            static_pe = SECTOR_MULTIPLES.get(sector_key, SECTOR_MULTIPLES['generic']).get('pe', 20)
+            live_pe, live_pe_source = fmp_layer.get_live_pe_for_sector_key(sector_key, static_fallback_pe=static_pe)
+            v5_signals['live_pe'] = {
+                'value': round(live_pe, 2) if live_pe else None,
+                'source': live_pe_source,
+                'static_fallback': static_pe,
+                'delta_pct': round((live_pe - static_pe) / static_pe * 100, 1) if (live_pe and static_pe) else None,
+            }
+            # Sadece canlı veri geldiyse (statik fallback değilse) override yap
+            if live_pe and live_pe_source in ('industry', 'sector'):
+                # %50'den fazla sapma varsa şüpheli — orta nokta al
+                if abs((live_pe - static_pe) / static_pe) > 0.5:
+                    blended_pe = (live_pe + static_pe) / 2
+                    data_pack['live_pe_override'] = blended_pe
+                    v5_signals['live_pe']['applied_value'] = round(blended_pe, 2)
+                    v5_signals['live_pe']['blend_note'] = f"Statik {static_pe}x ile canlı {live_pe:.1f}x ortalandı (sapma >%50)"
+                else:
+                    data_pack['live_pe_override'] = live_pe
+                    v5_signals['live_pe']['applied_value'] = round(live_pe, 2)
+            
+            # Dinamik WACC (CAPM) — DCF hesabını override eder
+            dyn_wacc, wacc_source = fmp_layer.calculate_dynamic_wacc(beta=safe_get(profile, 'beta', 1.2))
+            v5_signals['dynamic_wacc'] = {
+                'value': round(dyn_wacc * 100, 2),
+                'source': wacc_source,
+                'static_fallback': round(REGIME_ADJ[market['regime'].lower()]['wacc'] * 100, 1),
+            }
+            # CAPM hesabı geçerliyse override yap (sınır 8-18%)
+            if 'CAPM' in wacc_source and 0.08 <= dyn_wacc <= 0.18:
+                data_pack['dynamic_wacc'] = dyn_wacc
+                v5_signals['dynamic_wacc']['applied'] = True
+            else:
+                v5_signals['dynamic_wacc']['applied'] = False
+        except Exception as e:
+            print(f"⚠️ v5.0 kalibrasyon sinyalleri toplanırken hata: {e}", file=sys.stderr)
+    
+    # 3 senaryoda hesapla (v4: quality_mult ile, v4.1: forward_outlier ile, v5: canlı PE + WACC override)
     results = {}
     notes_all = {}
     for regime in ['bear', 'normal', 'bull']:
@@ -1048,10 +1109,10 @@ def analyze(ticker):
     decision = auto_decision(price, {r: summaries[r]['main'] or {} for r in ['bear', 'normal', 'bull']})
     
     # =========================================================================
-    # v5.0 EKSTRA SİNYALLER (fmp_layer)
+    # v5.0 EKSTRA SİNYALLER — calculate_methods SONRASI (bizim DCF ile karşılaştırma)
+    # (live_pe + dynamic_wacc zaten calculate_methods öncesi toplandı, burada eklenmez)
     # =========================================================================
     
-    v5_signals = {}
     if _V5_MODULES_AVAILABLE:
         try:
             # Altman Z + Piotroski (risk skorları)
@@ -1081,7 +1142,7 @@ def analyze(ticker):
             if momentum:
                 v5_signals['upgrade_momentum'] = momentum
             
-            # FMP'nin kendi DCF (sanity check)
+            # FMP'nin kendi DCF (sanity check) — bizim DCF ile karşılaştırma
             fmp_dcf = fmp_layer.get_fmp_dcf(ticker)
             if fmp_dcf and fmp_dcf.get('dcf'):
                 v5_signals['fmp_dcf'] = {
@@ -1104,24 +1165,6 @@ def analyze(ticker):
             if geo_risk:
                 v5_signals['concentration_risk_geo'] = geo_risk
             
-            # Canlı sektör/industry P/E
-            static_pe = SECTOR_MULTIPLES.get(sector_key, SECTOR_MULTIPLES['generic']).get('pe', 20)
-            live_pe, live_pe_source = fmp_layer.get_live_pe_for_sector_key(sector_key, static_fallback_pe=static_pe)
-            v5_signals['live_pe'] = {
-                'value': round(live_pe, 2) if live_pe else None,
-                'source': live_pe_source,
-                'static_fallback': static_pe,
-                'delta_pct': round((live_pe - static_pe) / static_pe * 100, 1) if (live_pe and static_pe) else None,
-            }
-            
-            # Dinamik WACC (CAPM ile)
-            dyn_wacc, wacc_source = fmp_layer.calculate_dynamic_wacc(beta=safe_get(profile, 'beta', 1.2))
-            v5_signals['dynamic_wacc'] = {
-                'value': round(dyn_wacc * 100, 2),
-                'source': wacc_source,
-                'static_fallback': round(REGIME_ADJ[market['regime'].lower()]['wacc'] * 100, 1),
-            }
-            
             # Pre-IPO tespiti (genelde False döner, IPO calendar'daysa True)
             pre_ipo = fmp_layer.is_ticker_pre_ipo(ticker)
             if pre_ipo:
@@ -1129,6 +1172,73 @@ def analyze(ticker):
         
         except Exception as e:
             print(f"⚠️ v5.0 sinyalleri toplanırken hata: {e}", file=sys.stderr)
+    
+    # =========================================================================
+    # v5.0 — 5 YILLIK PROJEKSİYON (projection_engine)
+    # =========================================================================
+    
+    projection = None
+    if _V5_MODULES_AVAILABLE:
+        try:
+            # Op margin TTM
+            op_margin_ttm = (ebit_ttm / revenue_ttm) if (ebit_ttm and revenue_ttm and revenue_ttm > 0) else 0
+            
+            # Margin profil tespiti
+            profile_key = projection_engine.detect_margin_profile(
+                sector_key=sector_key,
+                current_op_margin=op_margin_ttm,
+                revenue_yoy_growth=revenue_growth_yoy or 0.10,
+                is_pre_revenue=(revenue_ttm < 50e6),
+            )
+            
+            # Revenue projection (analist 1y/2y kullanılır)
+            analyst_rev_1y = None  # Mevcut FMP analyst estimates 1y için ayrı endpoint gerek
+            # eps_fwd_2y zaten 2y forward, ondan rev_fwd_2y birleşik
+            revenues = projection_engine.project_revenue_5y(
+                revenue_ttm=revenue_ttm,
+                revenue_yoy_growth=revenue_growth_yoy or 0.15,
+                analyst_rev_1y=None,
+                analyst_rev_2y=rev_fwd_2y,
+                ttm_year=datetime.now().year - 1,
+            )
+            
+            # P&L projection
+            pnl = projection_engine.project_pnl_5y(
+                revenue_list=revenues,
+                profile_key=profile_key,
+                shares_basic=shares,
+            )
+            
+            # Multiples projection
+            mults = projection_engine.project_multiples_5y(
+                pnl_table=pnl,
+                current_price=price,
+                shares_basic=shares,
+                current_cash=cash,
+                current_debt=total_debt,
+            )
+            
+            # Normalizasyon yılı (canlı sektör PE ile)
+            normalization_pe = v5_signals.get('live_pe', {}).get('value') or SECTOR_MULTIPLES.get(sector_key, {}).get('pe', 25)
+            normalization_ev_sales = SECTOR_MULTIPLES.get(sector_key, {}).get('ev_rev', 8)
+            norm = projection_engine.detect_normalization_year(
+                multiples_table=mults,
+                sector_median_pe=normalization_pe,
+                sector_median_ev_sales=normalization_ev_sales,
+            )
+            
+            projection = {
+                'profile_key': profile_key,
+                'profile_description': projection_engine.SECTOR_MARGIN_PROFILES.get(profile_key, {}).get('description', ''),
+                'pnl': pnl,
+                'multiples': mults,
+                'normalization': norm,
+                'sector_median_pe_used': normalization_pe,
+            }
+        except Exception as e:
+            print(f"⚠️ Projection üretilirken hata: {e}", file=sys.stderr)
+            import traceback
+            traceback.print_exc(file=sys.stderr)
     
     return {
         'ticker': ticker,
@@ -1175,6 +1285,7 @@ def analyze(ticker):
         'summaries': summaries,
         'decision': {'action': decision[0], 'reasoning': decision[1]},
         'v5_signals': v5_signals,
+        'projection': projection,
     }
 
 
@@ -1397,17 +1508,352 @@ def format_output(result):
             out.append(f"  IPO Tarihi: {pi.get('ipo_date')}  |  Aralık: {pi.get('price_range')}")
             out.append(f"  ⚠️ Pre-IPO veri eksik — FMP TTM yok, manuel analiz gerekli")
     
+    # v5.0 — 5 YILLIK PROJEKSİYON
+    proj = result.get('projection')
+    if proj:
+        out.append("")
+        out.append("─" * 75)
+        out.append("  📅 5 YILLIK FİNANSAL PROJEKSİYON (v5.0 Yeni)")
+        out.append("─" * 75)
+        out.append(f"\n  Profil: {proj['profile_key']}")
+        if proj.get('profile_description'):
+            out.append(f"  {proj['profile_description']}")
+        
+        pnl = proj.get('pnl', [])
+        if pnl:
+            out.append("\n  📊 P&L Tablosu:")
+            # Header
+            years = [str(r['year']) for r in pnl]
+            out.append(f"  {'Kalem':<22}" + "".join(f"{y:>12}" for y in years))
+            
+            def fmt_money(v, width=12):
+                if v is None:
+                    return f"{'N/A':>{width}}"
+                if abs(v) >= 1e9:
+                    return f"{('$%.2fB' % (v/1e9)):>{width}}"
+                elif abs(v) >= 1e6:
+                    return f"{('$%.0fM' % (v/1e6)):>{width}}"
+                else:
+                    return f"{('$%.0f' % v):>{width}}"
+            
+            def fmt_pct(v, width=12):
+                if v is None:
+                    return f"{'N/A':>{width}}"
+                return f"{('%' + ('%.1f' % (v*100))):>{width}}"
+            
+            def fmt_eps(v, width=12):
+                if v is None:
+                    return f"{'N/A':>{width}}"
+                return f"{('$%.2f' % v):>{width}}"
+            
+            out.append(f"  {'Gelir':<22}" + "".join(fmt_money(r['revenue']) for r in pnl))
+            out.append(f"  {'  Büyüme':<22}" + "".join(fmt_pct(r['revenue_growth']) for r in pnl))
+            out.append(f"  {'Brüt Marj':<22}" + "".join(fmt_pct(r['gross_margin']) for r in pnl))
+            out.append(f"  {'Faaliyet Marjı':<22}" + "".join(fmt_pct(r['op_margin']) for r in pnl))
+            out.append(f"  {'Faaliyet Kârı':<22}" + "".join(fmt_money(r['operating_income']) for r in pnl))
+            out.append(f"  {'Net Marj':<22}" + "".join(fmt_pct(r['net_margin']) for r in pnl))
+            out.append(f"  {'Net Kâr':<22}" + "".join(fmt_money(r['net_income']) for r in pnl))
+            out.append(f"  {'EPS (basic)':<22}" + "".join(fmt_eps(r['eps_basic']) for r in pnl))
+        
+        mults = proj.get('multiples', [])
+        if mults:
+            out.append("\n  💹 Forward Çarpanlar (fiyat sabit varsayımı):")
+            years = [str(r['year']) for r in mults]
+            out.append(f"  {'Çarpan':<22}" + "".join(f"{y:>12}" for y in years))
+            
+            def fmt_mult(v, width=12):
+                if v is None or v < 0 or v > 999:
+                    return f"{'N/A':>{width}}"
+                return f"{('%.1fx' % v):>{width}}"
+            
+            out.append(f"  {'Forward P/E':<22}" + "".join(fmt_mult(r['fwd_pe']) for r in mults))
+            out.append(f"  {'Forward P/S':<22}" + "".join(fmt_mult(r['fwd_ps']) for r in mults))
+            out.append(f"  {'Forward EV/Sales':<22}" + "".join(fmt_mult(r['fwd_ev_sales']) for r in mults))
+            out.append(f"  {'Forward EV/EBITDA':<22}" + "".join(fmt_mult(r['fwd_ev_ebitda']) for r in mults))
+        
+        norm = proj.get('normalization')
+        if norm:
+            out.append("\n  🎯 Normalizasyon Yılı:")
+            sector_pe_label = f"{proj.get('sector_median_pe_used', norm['sector_median_pe']):.0f}x"
+            pe_year = norm.get('pe_normalization_year')
+            if pe_year:
+                years_to_wait = pe_year - datetime.now().year
+                emoji = "🟢" if years_to_wait <= 2 else ("🟡" if years_to_wait <= 4 else "🟠")
+                out.append(f"  {emoji} Forward P/E sektör medyanı ({sector_pe_label}) {pe_year}'da oturuyor ({years_to_wait} yıl bekleme)")
+            else:
+                last_pe = mults[-1].get('fwd_pe') if mults else None
+                if last_pe:
+                    out.append(f"  🔴 5 yıl sonunda bile P/E sektör medyanı altına inmiyor ({mults[-1]['year']}: {last_pe:.0f}x)")
+                else:
+                    out.append(f"  ⚠️ 5 yıl içinde kâra geçmiyor")
+    
+    out.append("")
+    return "\n".join(out)
+
+
+def analyze_pre_ipo(input_json_path):
+    """
+    Pre-IPO modu — FMP'de olmayan şirketler için manuel JSON input.
+    
+    Sadece projection_engine kullanır (9 yöntem TTM hesabı atlanır, TTM verisi yok).
+    
+    JSON şema (test_data/cbrs_pre_ipo.json örneği):
+    {
+        "ticker": "CBRS",
+        "company": "Cerebras Systems Inc.",
+        "sector_key": "semicon_design",
+        "revenue_ttm": 510000000,
+        "revenue_yoy_growth": 0.76,
+        "shares_basic": 224000000,
+        "shares_diluted": 257000000,
+        "ipo_price_mid": 155,
+        "ipo_date": "2026-05-13",
+        "custom_revenues": {"2026": 1200000000, "2027": 2700000000, ...},
+        "interest_expense_annual": 60000000,
+        "current_op_margin": -0.28,
+        "is_pre_revenue": false,
+        "current_cash": 4200000000,
+        "current_debt": 1000000000,
+        "notes": "OpenAI MRA + AWS Bedrock..."
+    }
+    """
+    if not _V5_MODULES_AVAILABLE:
+        return {'error': 'v5.0 modülleri yüklü değil, pre-IPO modu kullanılamaz'}
+    
+    try:
+        with open(input_json_path, 'r', encoding='utf-8') as f:
+            d = json.load(f)
+    except Exception as e:
+        return {'error': f'JSON dosyası okunamadı: {e}'}
+    
+    ticker = d.get('ticker', 'UNKNOWN')
+    company = d.get('company', ticker)
+    sector_key = d.get('sector_key', 'generic')
+    revenue_ttm = d.get('revenue_ttm', 0)
+    revenue_yoy = d.get('revenue_yoy_growth', 0.20)
+    shares_basic = d.get('shares_basic', 0)
+    shares_diluted = d.get('shares_diluted') or shares_basic
+    ipo_price = d.get('ipo_price_mid') or d.get('ipo_price_low', 0)
+    
+    custom_revenues_str = d.get('custom_revenues', {})
+    custom_revenues = {int(k): float(v) for k, v in custom_revenues_str.items()}
+    
+    interest_expense = d.get('interest_expense_annual', 0)
+    op_margin = d.get('current_op_margin', 0)
+    is_pre_revenue = d.get('is_pre_revenue', revenue_ttm < 50e6)
+    cash = d.get('current_cash', 0)
+    debt = d.get('current_debt', 0)
+    
+    # Profil tespiti
+    profile_key = projection_engine.detect_margin_profile(
+        sector_key=sector_key,
+        current_op_margin=op_margin,
+        revenue_yoy_growth=revenue_yoy,
+        is_pre_revenue=is_pre_revenue,
+    )
+    
+    # Revenue projection
+    ttm_year = datetime.now().year - 1
+    revenues = projection_engine.project_revenue_5y(
+        revenue_ttm=revenue_ttm,
+        revenue_yoy_growth=revenue_yoy,
+        custom_revenues=custom_revenues if custom_revenues else None,
+        ttm_year=ttm_year,
+    )
+    
+    # P&L projection
+    pnl = projection_engine.project_pnl_5y(
+        revenue_list=revenues,
+        profile_key=profile_key,
+        shares_basic=shares_basic,
+        shares_diluted=shares_diluted,
+        interest_expense_annual=interest_expense,
+    )
+    
+    # Multiples projection
+    mults = projection_engine.project_multiples_5y(
+        pnl_table=pnl,
+        current_price=ipo_price,
+        shares_basic=shares_basic,
+        current_cash=cash,
+        current_debt=debt,
+    )
+    
+    # Sektör medyan PE (statik tablodan veya canlı)
+    static_pe = SECTOR_MULTIPLES.get(sector_key, SECTOR_MULTIPLES['generic']).get('pe', 25)
+    try:
+        live_pe, source = fmp_layer.get_live_pe_for_sector_key(sector_key, static_fallback_pe=static_pe)
+        sector_pe_used = live_pe if source != 'static' else static_pe
+    except Exception:
+        sector_pe_used = static_pe
+        source = 'static'
+    
+    static_ev_sales = SECTOR_MULTIPLES.get(sector_key, {}).get('ev_rev', 8)
+    norm = projection_engine.detect_normalization_year(
+        multiples_table=mults,
+        sector_median_pe=sector_pe_used,
+        sector_median_ev_sales=static_ev_sales,
+    )
+    
+    return {
+        'ticker': ticker,
+        'company': company,
+        'mode': 'PRE_IPO',
+        'analysis_date': datetime.now().strftime('%Y-%m-%d %H:%M'),
+        'version': '5.0',
+        'sector_key': sector_key,
+        'ipo_price_mid': ipo_price,
+        'ipo_date': d.get('ipo_date'),
+        'ipo_price_low': d.get('ipo_price_low'),
+        'ipo_price_high': d.get('ipo_price_high'),
+        'notes': d.get('notes', ''),
+        'inputs': {
+            'revenue_ttm': revenue_ttm,
+            'revenue_yoy_growth': revenue_yoy,
+            'shares_basic': shares_basic,
+            'shares_diluted': shares_diluted,
+            'op_margin_ttm': op_margin,
+            'cash': cash,
+            'debt': debt,
+            'interest_expense_annual': interest_expense,
+        },
+        'projection': {
+            'profile_key': profile_key,
+            'profile_description': projection_engine.SECTOR_MARGIN_PROFILES.get(profile_key, {}).get('description', ''),
+            'pnl': pnl,
+            'multiples': mults,
+            'normalization': norm,
+            'sector_median_pe_used': sector_pe_used,
+            'sector_pe_source': source,
+        },
+    }
+
+
+def format_pre_ipo_output(result):
+    """Pre-IPO modu için sade çıktı formatı."""
+    out = []
+    out.append("")
+    out.append("=" * 75)
+    out.append(f"  {result['ticker']} - {result['company']} | v{result['version']} | PRE-IPO MODU")
+    out.append(f"  IPO Tarihi: {result.get('ipo_date', 'N/A')}  |  Sektör: {result['sector_key']}")
+    if result.get('ipo_price_low') and result.get('ipo_price_high'):
+        out.append(f"  IPO Aralık: ${result['ipo_price_low']}-${result['ipo_price_high']}  |  Orta: ${result['ipo_price_mid']}")
+    else:
+        out.append(f"  IPO Fiyat (mid): ${result['ipo_price_mid']}")
+    out.append("=" * 75)
+    
+    if result.get('notes'):
+        out.append(f"\nNotlar: {result['notes']}")
+    
+    inp = result['inputs']
+    out.append("\n📊 GİRDİ ÖZETİ:")
+    out.append(f"  Revenue TTM: ${inp['revenue_ttm']/1e6:.0f}M (+%{inp['revenue_yoy_growth']*100:.0f})")
+    out.append(f"  Shares: {inp['shares_basic']/1e6:.0f}M (basic) / {inp['shares_diluted']/1e6:.0f}M (diluted)")
+    out.append(f"  Op Margin TTM: %{inp['op_margin_ttm']*100:.1f}")
+    out.append(f"  Cash: ${inp['cash']/1e9:.2f}B  |  Debt: ${inp['debt']/1e9:.2f}B")
+    out.append(f"  Faiz Gideri Yıllık: ${inp['interest_expense_annual']/1e6:.0f}M")
+    
+    proj = result['projection']
+    out.append("\n" + "─" * 75)
+    out.append(f"  📅 5 YILLIK PROJEKSİYON ({proj['profile_key']})")
+    out.append("─" * 75)
+    out.append(f"  {proj['profile_description']}")
+    
+    pnl = proj.get('pnl', [])
+    if pnl:
+        years = [str(r['year']) for r in pnl]
+        out.append("\n  📊 P&L:")
+        out.append(f"  {'Kalem':<22}" + "".join(f"{y:>12}" for y in years))
+        
+        def fmt_money(v, w=12):
+            if v is None: return f"{'N/A':>{w}}"
+            if abs(v) >= 1e9: return f"{('$%.2fB' % (v/1e9)):>{w}}"
+            elif abs(v) >= 1e6: return f"{('$%.0fM' % (v/1e6)):>{w}}"
+            else: return f"{('$%.0f' % v):>{w}}"
+        def fmt_pct(v, w=12):
+            if v is None: return f"{'N/A':>{w}}"
+            return f"{('%' + ('%.1f' % (v*100))):>{w}}"
+        def fmt_eps(v, w=12):
+            if v is None: return f"{'N/A':>{w}}"
+            return f"{('$%.2f' % v):>{w}}"
+        
+        out.append(f"  {'Gelir':<22}" + "".join(fmt_money(r['revenue']) for r in pnl))
+        out.append(f"  {'  Büyüme':<22}" + "".join(fmt_pct(r['revenue_growth']) for r in pnl))
+        out.append(f"  {'Brüt Marj':<22}" + "".join(fmt_pct(r['gross_margin']) for r in pnl))
+        out.append(f"  {'Faaliyet Marjı':<22}" + "".join(fmt_pct(r['op_margin']) for r in pnl))
+        out.append(f"  {'Faaliyet Kârı':<22}" + "".join(fmt_money(r['operating_income']) for r in pnl))
+        out.append(f"  {'Net Marj':<22}" + "".join(fmt_pct(r['net_margin']) for r in pnl))
+        out.append(f"  {'Net Kâr':<22}" + "".join(fmt_money(r['net_income']) for r in pnl))
+        out.append(f"  {'EPS (basic)':<22}" + "".join(fmt_eps(r['eps_basic']) for r in pnl))
+        out.append(f"  {'EPS (diluted)':<22}" + "".join(fmt_eps(r['eps_diluted']) for r in pnl))
+    
+    mults = proj.get('multiples', [])
+    if mults:
+        out.append("\n  💹 Forward Çarpanlar (IPO fiyatı sabit):")
+        out.append(f"  {'Çarpan':<22}" + "".join(f"{y:>12}" for y in years))
+        
+        def fmt_mult(v, w=12):
+            if v is None or v < 0 or v > 999: return f"{'N/A':>{w}}"
+            return f"{('%.1fx' % v):>{w}}"
+        
+        out.append(f"  {'Forward P/E':<22}" + "".join(fmt_mult(r['fwd_pe']) for r in mults))
+        out.append(f"  {'Forward P/S':<22}" + "".join(fmt_mult(r['fwd_ps']) for r in mults))
+        out.append(f"  {'Forward EV/Sales':<22}" + "".join(fmt_mult(r['fwd_ev_sales']) for r in mults))
+        out.append(f"  {'Forward EV/EBITDA':<22}" + "".join(fmt_mult(r['fwd_ev_ebitda']) for r in mults))
+    
+    norm = proj.get('normalization')
+    if norm:
+        sector_pe_label = f"{proj.get('sector_median_pe_used'):.0f}x"
+        pe_year = norm.get('pe_normalization_year')
+        out.append("\n  🎯 Normalizasyon Yılı:")
+        if pe_year:
+            years_to_wait = pe_year - datetime.now().year
+            emoji = "🟢" if years_to_wait <= 2 else ("🟡" if years_to_wait <= 4 else "🟠")
+            out.append(f"  {emoji} Forward P/E sektör medyanı ({sector_pe_label}) {pe_year}'da oturuyor ({years_to_wait} yıl bekleme)")
+        else:
+            last_pe = mults[-1].get('fwd_pe') if mults else None
+            if last_pe and last_pe > 0:
+                out.append(f"  🔴 5 yıl sonunda bile P/E sektör medyanı altına inmiyor ({mults[-1]['year']}: {last_pe:.0f}x)")
+            else:
+                out.append(f"  ⚠️ 5 yıl içinde kâra geçmiyor — spekülatif yatırım")
+    
+    out.append("")
+    out.append("⚠️ NOT: Pre-IPO analizi sadece projeksiyon temelli. TTM TTM bazlı 9 yöntem hesaplanmadı.")
+    out.append("    Analist konsensüsü ve canlı veri olmadan: girdiler manuel/S-1 bazlı varsayımdır.")
     out.append("")
     return "\n".join(out)
 
 
 def main():
     if len(sys.argv) < 2:
-        print("Kullanım: python adil_deger.py TICKER [--json]")
+        print("Kullanım:")
+        print("  python adil_deger.py TICKER [--json]")
+        print("  python adil_deger.py --pre-ipo input.json")
         sys.exit(1)
     
-    ticker = sys.argv[1].upper()
     json_only = '--json' in sys.argv
+    
+    # Pre-IPO modu
+    if '--pre-ipo' in sys.argv:
+        idx = sys.argv.index('--pre-ipo')
+        if idx + 1 >= len(sys.argv):
+            print("HATA: --pre-ipo sonrasında JSON dosya yolu lazım")
+            sys.exit(1)
+        input_path = sys.argv[idx + 1]
+        result = analyze_pre_ipo(input_path)
+        
+        if 'error' in result:
+            print(f"HATA: {result['error']}")
+            sys.exit(1)
+        
+        if json_only:
+            print(json.dumps(result, indent=2, default=str, ensure_ascii=False))
+        else:
+            print(format_pre_ipo_output(result))
+        return
+    
+    # Standart akış
+    ticker = sys.argv[1].upper()
     
     result = analyze(ticker)
     
