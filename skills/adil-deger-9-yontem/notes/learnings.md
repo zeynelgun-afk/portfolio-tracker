@@ -337,3 +337,91 @@ def calculate_quality_premium(roe, net_margin, sector_mults):
 - KO'yu 30 Haziran 2026'da kontrol et. Hâlâ analist hedef civarında işlem görüyorsa skill kalibrasyon doğru.
 - Quality premium uygulanan ilk vakada başarılı oldu, başka kalite şirketleri (JNJ, PEP, MA, V) ile test edilmeli.
 
+
+---
+
+## 2026-05-11 — v5.0 Etap 3 Test Bulguları
+
+### NVDA — Kalibrasyon Override Dramatik Fark Yarattı
+
+**Etap 2 sonrası (override yok):**
+- DCF: $59 (statik WACC %10, statik g_high %15)
+- Forward Bandı: $137-$294
+- FMP DCF $247 ile karşılaştırma: **%-76 fark** 🔴
+
+**Etap 3 sonrası (override aktif):**
+- DCF: $140 (dinamik CAPM WACC %17.84, gerçek growth %65 cap'li)
+- Forward Bandı: $260-$498
+- FMP DCF $247 ile karşılaştırma: **%-43 fark** 🟠 (kabul edilebilir)
+
+**Ders:** Statik tabloya bağlı kalmak yapısal hatalar üretiyor. Canlı CAPM WACC + gerçek growth rate ile DCF çok daha gerçekçi sonuçlar verir.
+
+### NVDA — Yeni Sinyallerin Açtığı Gözler
+
+1. **Konsantrasyon riski (yeni):** Data Center %90 (KRİTİK 🔴), ABD %69 (YÜKSEK 🟠) — Eskiden hiç bahsetmiyorduk. Mega-cap için bile bu kritik bir sinyal.
+
+2. **Analist downgrade momentum (yeni):** Son 6 ay -6 net rating düşüşü. Konsensüs hâlâ Buy, ama yön zayıflıyor. Erken uyarı.
+
+3. **Sektör multiple inflation:** Canlı semicon industry P/E 62.3x vs statik tablomuz 28x → %+123 sapma. Sektör tablosu 4-5 ay eski olmuş.
+
+### KO — Quality Şirket Doğru Tespit Edildi
+
+- Piotroski 8/9 (ÇOK GÜÇLÜ 🟢) — KO için mükemmel
+- Altman Z 5.18 — güvenli
+- WACC dinamik %8 (beta 0.36 sayesinde statik %10'dan düşük)
+- Bu defa **WACC overrideı DCF'i düşürmedi, yukarı çıkardı** — düşük beta lehine
+
+**Ders:** CAPM WACC sadece NVDA gibi yüksek-beta için DCF'i düşürür, KO gibi düşük-beta için DCF'i yükseltir. Doğru kalibrasyon.
+
+### CBRS Pre-IPO — Manuel Akış Mükemmel Çalıştı
+
+- Profile auto-detection: `semicon_design_growth_ai` ✅
+- Revenue trajectory custom_revenues ile: $510M → $9.5B
+- Net Kâr 2026: -$96M (**manuel hesabımla TAM uyum**)
+- 2028 Forward P/E: 52.6x (manuel: 53x — TAM uyum)
+- Normalizasyon: 2028 (sektör medyanı 62x — canlı veri)
+
+**Ders:** Pre-IPO için kanonik bir akış oluştu. S-1 belgesinden inputları çıkar, JSON yaz, çalıştır. CBRS dışındaki gelecek IPO'lar için (Etap 5'te beklenir: bir Çin AI, bir ABD fintech, vs) aynı şablon kullanılabilir.
+
+### AMD — Beklenmedik Bir Yer
+
+- DCF bizim $70, FMP $52 (Levered $52) — **bizim %+34 daha yüksek**
+- Sebep: AMD revenue_yoy %34 → growth override bizim DCF'i yükseltti
+- AMD beta 2.40, CAPM WACC %18 sınırına dayandı
+- 5y projeksiyon agresif: 2030 EPS $41 (analist 2y forward $97B revenue'dan extrapolate)
+
+**Ders:** Analist 2y forward konsensüsü olduğu kadar agresif olabilir. Y3-Y5 için decay daha sert olmalı. Bu Etap 5'te düzeltilebilir.
+
+---
+
+## v5.0 İçin Skill Geliştirme Önceliği
+
+### ✅ Etap 1 (11 Mayıs 2026) — Modüler altyapı
+- fmp_layer.py (Ultimate plan endpoint wrapper)
+- projection_engine.py (17 sektör profili + projeksiyon fonksiyonları)
+- CBRS test başarılı
+
+### ✅ Etap 2 (11 Mayıs 2026) — Sadeleştirme + Yeni Sinyaller
+- 4 yöntem kaldırıldı (Graham, EV/EBIT, Justified P-B, Rule of 40)
+- 6 yeni sinyal: risk skorları, sentiment, FMP DCF, konsantrasyon, canlı PE, dinamik WACC
+
+### ✅ Etap 3 (11 Mayıs 2026) — Kalibrasyon override + Projeksiyon + Pre-IPO
+- Live PE + dinamik WACC + actual growth → calculate_methods'a injekte
+- 5y projeksiyon analyze() içine entegre
+- --pre-ipo flag + JSON input akışı
+
+### ⬜ Etap 4 (devam ediyor) — Dokümantasyon
+- SKILL.md v5.0 ✅
+- references/sektor-margin-profilleri.md ✅
+- references/fmp-endpoint-rehberi.md ✅
+- notes/learnings.md (bu güncelleme) ✅
+
+### ⬜ Etap 5 (gelecek) — İleri Özellikler
+- Markdown rapor üretici (--md flag) — 12 bölüm protokole uygun
+- Y3-Y5 revenue decay daha sert (AMD projeksiyon abartıyı)
+- Multi-year analyst estimates (1y/2y/3y forward) entegrasyonu
+- Pre-IPO için canlı IPO calendar enrichment
+- Geniş test: TEM, FLYW, SMCI, AVGO, MSTR, PLTR
+
+---
+

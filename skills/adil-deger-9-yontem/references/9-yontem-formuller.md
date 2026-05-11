@@ -1,5 +1,16 @@
 # 9 Yöntem - Detaylı Formüller
 
+> **v5.0 NOT (11 Mayıs 2026)**: Bu dosya v3-v4 dönemi 13 yöntem formüllerini içerir.
+> v5.0'da **4 yöntem kaldırıldı**:
+> - ❌ EV/EBIT (EV/EBITDA ile tekrar)
+> - ❌ Justified P-B (karmaşık, modern büyüme şirketlerinde yanıltıcı)
+> - ❌ Graham Number (1949'dan kalma, modern AI/tech için saçma)
+> - ❌ Rule of 40 (saf SaaS için, portföyde yok)
+>
+> Kalan **9 yöntem**: Net P/E, EV/EBITDA, EV/Revenue, P/FCF, Forward P/E, DCF, PEG, EV/FWD Revenue, EV/FWD EBITDA.
+>
+> Ayrıca v5.0'da yöntem hesaplamalarına 3 override mekanizması eklendi (canlı sektör PE, dinamik CAPM WACC, gerçek revenue growth). Bkz `fmp-endpoint-rehberi.md` ve `notes/v5_etap3_development.md`.
+
 Tüm yöntemler 3 senaryoda hesaplanır: Ayı / Normal / Boğa.
 Çarpanlar `sektor-medyanlari.md` ve `piyasa-rejimleri.md`'den gelir.
 

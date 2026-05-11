@@ -1,5 +1,7 @@
 # Sektör Medyan Çarpanları (10 Yıllık)
 
+> **v5.0 NOT (11 Mayıs 2026)**: Bu dosyadaki **statik** sektör tabloları v5.0'da **fallback** olarak korunur. Skill öncelikle FMP `sector-pe-snapshot` ve `industry-pe-snapshot` ile **canlı veri** çekiyor. Canlı veri statik tablodan %50+ saparsa blend yapılır (orta nokta). NVDA testinde canlı semicon industry P/E 62.3x iken statik tablo 28x'ti — %+123 sapma. Bkz `fmp-endpoint-rehberi.md`.
+
 Tüm değerler **Normal Piyasa** baseline'dır. Ayı/Boğa ayarlamaları için `piyasa-rejimleri.md` ile çarpılır.
 
 ## Auto-Detection Kuralları
