@@ -110,6 +110,50 @@
       "type": "ADIL_DEGER",
       "date": "2026-05-08",
       "file": "TLN_ADIL_DEGER_2026-05-08.md"
+    },
+    {
+      "ticker": "AAOI",
+      "company": "Applied Optoelectronics, Inc.",
+      "type": "BILANCO_SONRASI",
+      "date": "2026-05-11",
+      "file": "AAOI_BILANCO_SONRASI_2026-05-11.md",
+      "current_price": 172.5,
+      "fair_value_weighted": 147.94,
+      "fair_value_bear": 90.0,
+      "fair_value_base": 148.0,
+      "fair_value_bull": 220.0,
+      "analyst_target_avg_post_earnings": 141.62,
+      "yildiz_skoru": 2.5,
+      "yildiz_max": 5,
+      "tier": "IZLEME",
+      "karar": "IZLE",
+      "portfoy_uygunluk": {
+        "agresif": "IZLE_GIRIS_125-135",
+        "dengeli": "GEC",
+        "temettu": "GEC",
+        "swing": "KOSULLU_130_ALTINDA"
+      },
+      "stop": 150.0,
+      "skill": "bilanco-sonrasi-us_v1.2",
+      "guidance_verdict": "STRONG_RAISED",
+      "analyst_revize_post_earnings": {
+        "raised": 4,
+        "lowered": 0,
+        "analysts": [
+          "Raymond James 160",
+          "Rosenblatt 220",
+          "B. Riley 129",
+          "Northland 57.50"
+        ]
+      },
+      "kritik_riskler": [
+        "Day-1+ chasing (pazartesi pre-market +%16 gap-up)",
+        "Analist hedef avg ($141.6) mevcut fiyatın ($172.5) altında",
+        "200-day SMA'nın %214 üzerinde aşırı extension",
+        "13F Q1 2026 -43.4M shares dağılım",
+        "Beta 3.76 yüksek volatilite",
+        "Capacity-constrained execution riski 2H 2026"
+      ]
     }
   ]
 }

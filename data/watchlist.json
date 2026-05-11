@@ -1,6 +1,6 @@
 {
-  "son_guncelleme": "2026-05-08T21:32:27.156706",
-  "not": "3 portföy merkezi aday havuzu. PART 1C 15:38 TR güncelleme: DUK/NEE/GEV yeni EKLE (K-04+K-18 temiz), POWL K-18 ELENDİ ($27.3M insider satış), ön piyasa gap-up sonrası kovalama yasağı 4 aday için aktif. | 11 Nisan: Nükleer tema adayları eklendi (CCJ, OKLO, NNE, UEC, VST) — tematik araştırma, K-14 aktif olduğu için hepsi İZLE statüsünde. | 11 Nisan ek: BWXT (savunma tekel+NRC katalizör), LEU (HALEU tekeli), DNN (Wheeler River) İZLE. SMR (class action lawsuit) ve UUUU (%6 upside) GEÇ. | 2026-04-14: ALAB+PLAB+COHU eklendi — optik/bağlantı/test ekipmanı tematik araştırması. Hepsi IZLE statüsünde, geri çekilme bekleniyor. | 2026-04-30: RSI (Rush Street Interactive) eklendi — Q1 2026 kazanç patlaması (+%16.58 günlük) sonrası izleme. Aşırı alım nedeniyle ($25 + RSI<65) tetikleyicili. Hedef portföy: dengeli.",
+  "son_guncelleme": "2026-05-11T14:25:59.821358",
+  "not": "3 portföy merkezi aday havuzu. PART 1C 15:38 TR güncelleme: DUK/NEE/GEV yeni EKLE (K-04+K-18 temiz), POWL K-18 ELENDİ ($27.3M insider satış), ön piyasa gap-up sonrası kovalama yasağı 4 aday için aktif. | 11 Nisan: Nükleer tema adayları eklendi (CCJ, OKLO, NNE, UEC, VST) — tematik araştırma, K-14 aktif olduğu için hepsi İZLE statüsünde. | 11 Nisan ek: BWXT (savunma tekel+NRC katalizör), LEU (HALEU tekeli), DNN (Wheeler River) İZLE. SMR (class action lawsuit) ve UUUU (%6 upside) GEÇ. | 2026-04-14: ALAB+PLAB+COHU eklendi — optik/bağlantı/test ekipmanı tematik araştırması. Hepsi IZLE statüsünde, geri çekilme bekleniyor. | 2026-04-30: RSI (Rush Street Interactive) eklendi — Q1 2026 kazanç patlaması (+%16.58 günlük) sonrası izleme. Aşırı alım nedeniyle ($25 + RSI<65) tetikleyicili. Hedef portföy: dengeli. | 2026-05-11: AAOI eklendi — Q1 2026 bilanço sonrası guidance RAISED ama analist hedef avg ($141.6) mevcut fiyatın ($172.5) altında. Yıldız 2.5/5, izleme tier. Hedef giriş 125-135.",
   "sistem_referans": "docs/PORTFOLIO_OPPORTUNITY_SYSTEM.md",
   "script": "scripts/portfolio_scan_common.py",
   "kalibre_notu": "8 nisan 2026 v3: Eşikler gerçek piyasa verisine göre kalibre edildi (dengeli 12→9, temettü 13→9, agresif 14 aynı). Agresif için kalite guard rails eklendi: P/E>60 -2, P/E>80 -3, ROIC<8 -1, ROIC<0 -3. Niteliksel bonus yok (sübjektif bias önleme).",
@@ -1015,6 +1015,43 @@
         "gelir_surpriz_pct": 12.0,
         "fiyat_tepkisi_1g": 16.58
       }
+    },
+    {
+      "sembol": "AAOI",
+      "hedef_portfoy": "agresif",
+      "guncel_fiyat": 172.5,
+      "rsi": 57.58,
+      "skor_yildiz": 2.5,
+      "skor_yildiz_max": 5,
+      "skor_detay": "Skill bilanco-sonrasi-us v1.2 değerlendirmesi | Guidance RAISED: +1 | Net analist target raised>lowered (4:0): +1 | Q4 2025 13F birikim ama Q1 2026 dağılım: +0.5 | Analist hedef avg 141.6$ mevcut fiyatın altında: 0 | Smart money portföyünde yok: 0",
+      "sektor": "Teknoloji / Yarı İletken",
+      "tema": "AI optik tedarik zinciri (800G/1.6T transceivers), US manufacturing, hyperscaler captive",
+      "urgency": "low",
+      "ekleme_tarihi": "2026-05-11",
+      "son_kontrol": "2026-05-11",
+      "hedef_giris": "125-135 (50-day SMA çekilmesi) veya RSI<50 + 2 gün cooldown",
+      "hedef_fiyat_1": 160,
+      "hedef_fiyat_2": 200,
+      "stop_loss": 115,
+      "r_r_orani": 1.8,
+      "adil_deger": 147.94,
+      "adil_deger_yontem": "post-earnings analist hedef avg ($141.6, %35) + Forward P/E 30x 2027 EPS ($163.2, %35) + EV/EBITDA 20x peer ($137.5, %30)",
+      "tez": "Q1 2026 bilanço sonrası 2026 ciro guidance 1.0B → 1.1B+ yükseltildi, 140M+ non-GAAP op income açıklandı. 4 analist (Raymond James 160, Rosenblatt 220, B. Riley 129, Northland 57.50) post-earnings target raised, 0 lowered. 800G/1.6T optical transceivers hyperscaler tedarikçisi. US manufacturing avantajı (Texas tesisi 30%). 2027 forward EV/Sales 5.1x sektör peer aralığında.",
+      "karsit_argumani": "ANALİST HEDEF AVG ($141.6) MEVCUT FİYATIN ($172.5) ALTINDA — skill sağlamlık filtresi başarısız. 200-day SMA'nın %214 üzerinde aşırı extension. Beta 3.76 yüksek volatilite. Day-1+ chasing yasağı: Pazartesi (11 May) pre-market +%16 gap-up, intraday $152'ye geri çekildi. 13F Q1 2026 -43.4M shares dağılım (kurumlar çıkıyor). TTM zarar makinesi (net margin -%8.5), 2H 2026 capacity ramp execution riski. Smart money portföyünde yok (7/7).",
+      "tetikler": [
+        "Fiyat 130$ altına çekilirse pozisyon aç",
+        "RSI(14) < 50 + 2-gün cooldown",
+        "Q2 2026 earnings (Ağustos başı) guidance teyit edilirse",
+        "13F Q1 2026 son filing'leri 15 Mayıs sonrası kurumsal yön netleşince",
+        "Northland hedefini $100+'a güncellerse"
+      ],
+      "eleme_tetikleri": [
+        "2H 2026 sequential growth guidance miss",
+        "Yeni secondary offering duyurusu",
+        "Microsoft / Amazon / Google capex revize-aşağı"
+      ],
+      "skill": "bilanco-sonrasi-us_v1.2",
+      "rapor": "reports/research/AAOI_BILANCO_SONRASI_2026-05-11.md"
     }
   ],
   "haric_tutulanlar": [
