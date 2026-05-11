@@ -7,7 +7,7 @@ description: ABD hisse senetleri için kapsamlı adil değer hesaplaması v5.0. 
 
 ## Versiyon Geçmişi
 
-**v5.0 (11 Mayıs 2026)** — Büyük Yükseltme
+**v5.0 (11 Mayıs 2026)** — Büyük Yükseltme (6 etap halinde, commit `b430bd8` → ...)
 - 🟢 SADELEŞTIRME: 4 yöntem kaldırıldı (Graham Number, EV/EBIT, Justified P-B, Rule of 40). Skill ismi ile uyumlu **9 yöntem**.
 - 🟢 FMP ULTIMATE ENTEGRASYONU: 20 endpoint kullanımı, yeni `fmp_layer.py` modülü ile sarmalandı.
 - 🟢 CANLI SEKTÖR P/E: `sector-pe-snapshot` + `industry-pe-snapshot` endpoint'leri ile statik tabloyu override eder (>%50 sapmada blend).
@@ -18,8 +18,12 @@ description: ABD hisse senetleri için kapsamlı adil değer hesaplaması v5.0. 
 - 🟢 FMP DCF SANITY CHECK: FMP'nin kendi DCF'i (unlevered + levered) ile bizim DCF karşılaştırması.
 - 🟢 KONSANTRASYON RİSKİ: Ürün/segment + coğrafya bazlı %50+ tek müşteri konsantrasyonu otomatik tespiti.
 - 🟢 5 YILLIK PROJEKSİYON: Yeni `projection_engine.py` modülü ile yıl yıl P&L + Forward çarpan + normalizasyon yılı analizi.
-- 🟢 17 SEKTÖR MARJ PROFİLİ: AI growth (CBRS, NVDA 2018), büyüyen semicon (AMD 2017-2020), olgun (NVDA 2024), SaaS growth/mature, biotech pre-revenue/commercial, pharma, devices, consumer staples, industrials.
+- 🟢 17 SEKTÖR MARJ PROFİLİ: AI growth, büyüyen semicon, olgun, SaaS growth/mature, biotech vs.
 - 🟢 PRE-IPO MODU: `--pre-ipo input.json` ile FMP'de olmayan şirketler için manuel JSON akışı.
+- 🟢 MARKDOWN RAPOR ÜRETİCİ: `--md` flag ile 12 bölümlü protokol uyumlu çıktı (Yönetici Özeti, Senaryo Matrisi, Bear/Bull/Wrong Case otomatik 5+ madde, Portföy Karar Matrisi, Giriş Planı, İzleme Tetikleyicileri).
+- 🟢 Y3-Y5 DECAY CAP: AMD gibi agresif projeksiyonlar için (Y3 max %30, Y4 max %22, Y5 max %15).
+- 🟢 v5 RİSK UYARILARI: Markdown sonunda Piotroski zayıf / downgrade / kritik konsantrasyon / FMP DCF negatif uyarıları.
+- 🟢 OTOMATİK KAYIT (`--commit`): index.json güncelleme + git commit + pull --rebase + push, tek komutla.
 
 **v4.1 (9 Mayıs 2026)** — Mantık denetimi sonrası 8 hata düzeltildi (weighted_summary None × float, PEG eps_fwd_1y, hard-coded 2027, reverse_dcf None, forward_outlier ELİMİNE, fetch retry, shares fallback)
 
@@ -44,14 +48,32 @@ Hisse senetleri için 9 yöntem × 3 piyasa rejimi (27 değerleme noktası) + ca
 ## Kullanım
 
 ```bash
-# Standart akış (halka açık şirketler)
+# Standart akış (halka açık şirketler) - sadece chat çıktısı
 python3 skills/adil-deger-9-yontem/scripts/adil_deger.py NVDA
 python3 skills/adil-deger-9-yontem/scripts/adil_deger.py NVDA --json
 
+# Markdown rapor (chat + dosya, commit yok)
+python3 skills/adil-deger-9-yontem/scripts/adil_deger.py NVDA --md
+python3 skills/adil-deger-9-yontem/scripts/adil_deger.py NVDA --md --md-out /tmp/nvda.md
+
+# Tam kayıt akışı (markdown + index.json + git commit + push) — ÖNERİLEN
+python3 skills/adil-deger-9-yontem/scripts/adil_deger.py NVDA --commit
+
+# Commit ama push yok (test)
+python3 skills/adil-deger-9-yontem/scripts/adil_deger.py NVDA --commit --no-push
+
 # Pre-IPO modu (FMP'de olmayan şirketler)
 python3 skills/adil-deger-9-yontem/scripts/adil_deger.py --pre-ipo input.json
-python3 skills/adil-deger-9-yontem/scripts/adil_deger.py --pre-ipo input.json --json
+python3 skills/adil-deger-9-yontem/scripts/adil_deger.py --pre-ipo input.json --md
+python3 skills/adil-deger-9-yontem/scripts/adil_deger.py --pre-ipo input.json --commit
 ```
+
+**Önerilen kullanım**: `--commit` flag tek komutla tam akışı yapar:
+1. FMP veri çek + 9 yöntem hesabı + v5 sinyalleri
+2. 12 bölümlü markdown rapor üret → `reports/research/{TICKER}_ADIL_DEGER_{YYYY-MM-DD}.md`
+3. `data/research/index.json` güncelle (analizler dizisine yeni giriş)
+4. Git add + commit + pull --rebase + push
+5. Chat'te tam rapor göster
 
 ## 9 Yöntem (v5.0)
 

@@ -2445,15 +2445,295 @@ def format_markdown_report(result, output_path=None):
     return md_text
 
 
+def update_research_index(result, md_path, repo_root=None):
+    """
+    data/research/index.json içindeki 'analizler' dizisine yeni giriş ekler.
+    
+    repo_root: portfolio-tracker repo kökü (auto-detect: script dizininden 3 üst)
+    """
+    if repo_root is None:
+        # scripts/adil_deger.py → skills/adil-deger-9-yontem/scripts → skills/adil-deger-9-yontem → skills → portfolio-tracker
+        repo_root = os.path.abspath(os.path.join(_SCRIPT_DIR, '..', '..', '..'))
+    
+    index_path = os.path.join(repo_root, 'data', 'research', 'index.json')
+    
+    # Index dosyasını oku
+    if os.path.exists(index_path):
+        with open(index_path, 'r', encoding='utf-8') as f:
+            index_data = json.load(f)
+    else:
+        index_data = {
+            "son_guncelleme": "",
+            "toplam_analiz": 0,
+            "aktif_izleme": 0,
+            "beklemede": 0,
+            "beat_tahmin": 0,
+            "miss_tahmin": 0,
+            "dogru_tahmin_orani": None,
+            "analizler": [],
+        }
+    
+    analizler = index_data.get('analizler', [])
+    
+    # Pre-IPO modu mu standart mı?
+    ticker = result['ticker']
+    today = datetime.now().strftime('%Y-%m-%d')
+    entry_id = f"{ticker}_ADIL_DEGER_{today}"
+    
+    # Mevcut girişi temizle (aynı id varsa)
+    analizler = [a for a in analizler if a.get('id') != entry_id]
+    
+    # Pre-IPO için ayrı şema
+    if result.get('mode') == 'PRE_IPO':
+        proj = result.get('projection', {})
+        pnl_table = proj.get('pnl', [])
+        # Normalize edilmiş forward EPS
+        eps_y2 = next((r['eps_basic'] for r in pnl_table if r['year'] == datetime.now().year + 1), None)
+        
+        entry = {
+            "id": entry_id,
+            "ticker": ticker,
+            "sirket": result.get('company', ticker),
+            "sektor": result.get('sector_key', 'unknown'),
+            "analiz_tarihi": today,
+            "ipo_tarihi": result.get('ipo_date'),
+            "analiz_turu": "pre_ipo_adil_deger",
+            "durum": "aktif_izleme",
+            "dosya": os.path.relpath(md_path, repo_root) if md_path else None,
+            "ipo_fiyat_aralik": [result.get('ipo_price_low'), result.get('ipo_price_high')],
+            "ipo_fiyat_orta": result.get('ipo_price_mid'),
+            "projeksiyon": {
+                "profile_key": proj.get('profile_key'),
+                "normalizasyon_yili": proj.get('normalization', {}).get('pe_normalization_year'),
+                "sektor_pe_medyan": proj.get('sector_median_pe_used'),
+                "5y_son_eps": pnl_table[-1].get('eps_basic') if pnl_table else None,
+                "5y_son_revenue_b": (pnl_table[-1].get('revenue', 0) / 1e9) if pnl_table else None,
+            },
+            "notlar": result.get('notes', ''),
+            "gerceklesen": {
+                "ipo_aktivasyon": None,
+                "ilk_islem_fiyati": None,
+                "1ay_sonra": None,
+                "3ay_sonra": None,
+                "12ay_sonra": None,
+            },
+            "etiketler": ["pre_ipo", "v5.0_skill"],
+        }
+    else:
+        # Standart akış
+        p = result['profile']
+        di = result['data_inputs']
+        v5 = result.get('v5_signals', {})
+        proj = result.get('projection', {})
+        normal_main = (result['summaries']['normal'].get('main') or {})
+        bear_main = (result['summaries']['bear'].get('main') or {})
+        bull_main = (result['summaries']['bull'].get('main') or {})
+        normal_median = normal_main.get('median')
+        price = p['price']
+        
+        # Confidence — v5 sinyallerinden türet
+        confidence = "ORTA"
+        if v5.get('altman_z', {}).get('label') == 'GÜVENLİ' and v5.get('piotroski', {}).get('value', 0) >= 7:
+            confidence = "YUKSEK"
+        elif v5.get('altman_z', {}).get('label') == 'İFLAS RİSKİ' or v5.get('piotroski', {}).get('value', 9) <= 3:
+            confidence = "DUSUK"
+        
+        normal_methods = result['methods_by_regime']['normal']
+        kullanilabilir = sum(1 for cat in ['traditional', 'forward', 'growth']
+                             for v in normal_methods.get(cat, {}).values() if v is not None and v > 0)
+        kullanilamaz = 9 - kullanilabilir
+        
+        # Senaryo getirileri
+        bear_med = bear_main.get('median')
+        bull_med = bull_main.get('median')
+        
+        # Stop loss (~%13 altı)
+        stop_loss = round(price * 0.87, 2)
+        
+        # Portföy önerileri (markdown'dakiyle aynı mantık)
+        mode = result['mode']
+        is_growth = (mode == 'GROWTH')
+        is_ai = result['is_ai_megacap']
+        altman_safe = (v5.get('altman_z', {}).get('label') == 'GÜVENLİ')
+        roe = di.get('roe_pct', 0)
+        
+        dengeli = "uygun" if (altman_safe and not v5.get('upgrade_momentum', {}).get('direction') == 'downgrade') else "uygun_kosullu"
+        agresif = "uygun" if (is_growth or is_ai) else "uygun_kosullu"
+        if roe > 15 and altman_safe and not is_growth:
+            temettu = "uygun"
+        elif is_growth:
+            temettu = "uygun_degil"
+        else:
+            temettu = "uygun_kosullu"
+        
+        entry = {
+            "id": entry_id,
+            "ticker": ticker,
+            "sirket": p.get('name', ticker),
+            "sektor": f"{p.get('sector', '')} / {p.get('industry', '')}",
+            "analiz_tarihi": today,
+            "analiz_turu": "adil_deger_hesabi",
+            "durum": "aktif_izleme",
+            "dosya": os.path.relpath(md_path, repo_root) if md_path else None,
+            "adil_deger": {
+                "yontem_v": "v5.0",
+                "mod": mode,
+                "kullanilabilir_yontem_sayisi": kullanilabilir,
+                "kullanilamayan_yontem_sayisi": kullanilamaz,
+                "agirlikli_adil_deger": round(normal_median, 2) if normal_median else None,
+                "confidence": confidence,
+                "quality_premium": round(result.get('quality_mult', 1.0), 3),
+                "ai_mega_cap": is_ai,
+            },
+            "on_beklenti": {
+                "senaryo_boga": {"fiyat_hedef": round(bull_med, 2) if bull_med else None,
+                                 "getiri_pct": round((bull_med - price) / price * 100, 1) if bull_med else None,
+                                 "olasilik": 0.225},
+                "senaryo_baz": {"fiyat_hedef": round(normal_median, 2) if normal_median else None,
+                                "getiri_pct": round((normal_median - price) / price * 100, 1) if normal_median else None,
+                                "olasilik": 0.475},
+                "senaryo_ayi": {"fiyat_hedef": round(bear_med, 2) if bear_med else None,
+                                "getiri_pct": round((bear_med - price) / price * 100, 1) if bear_med else None,
+                                "olasilik": 0.30},
+            },
+            "analiz_fiyati": price,
+            "temel_metrikler": {
+                "pe_ttm": round(price / di['eps_ttm'], 2) if di['eps_ttm'] and di['eps_ttm'] > 0 else None,
+                "forward_pe": round(price / di.get('eps_fwd_2y', 0), 2) if di.get('eps_fwd_2y') else None,
+                "roe_ttm_pct": di['roe_pct'],
+                "net_margin_pct": di['net_margin_pct'],
+                "revenue_growth_yoy_pct": di.get('revenue_growth_yoy_pct'),
+                "piyasa_degeri_m": round((p.get('market_cap') or 0) / 1e6, 0),
+                "beta": p.get('beta'),
+                "vix_at_analysis": result['market_regime']['vix'],
+            },
+            "v5_sinyaller": {
+                "altman_z": v5.get('altman_z'),
+                "piotroski": v5.get('piotroski'),
+                "analist_sentiment": v5.get('grades_consensus'),
+                "upgrade_momentum": v5.get('upgrade_momentum'),
+                "fmp_dcf_unlevered": v5.get('fmp_dcf', {}).get('value') if v5.get('fmp_dcf') else None,
+                "konsantrasyon_urun": v5.get('concentration_risk_product'),
+                "konsantrasyon_cografya": v5.get('concentration_risk_geo'),
+                "canli_sektor_pe": v5.get('live_pe', {}).get('value') if v5.get('live_pe') else None,
+                "dinamik_wacc": v5.get('dynamic_wacc', {}).get('value') if v5.get('dynamic_wacc') else None,
+            },
+            "projeksiyon": {
+                "profile_key": proj.get('profile_key') if proj else None,
+                "normalizasyon_yili": proj.get('normalization', {}).get('pe_normalization_year') if proj else None,
+            } if proj else None,
+            "portfoy_onerisi": {
+                "dengeli": dengeli,
+                "agresif": agresif,
+                "temettu": temettu,
+            },
+            "giris_plani": {
+                "stop_loss": stop_loss,
+                "hedef_1": round(normal_median, 2) if normal_median else None,
+                "hedef_2": round(bull_med, 2) if bull_med else None,
+            },
+            "karar": result['decision']['action'],
+            "karar_gerekce": result['decision']['reasoning'],
+            "gerceklesen": {
+                "tespit_fiyati": price,
+                "simdiki_fiyat": None,
+                "fiyat_tepkisi_pct": 0,
+                "tez_tuttu": None,
+                "ders": None,
+            },
+            "etiketler": [mode.lower(), "v5.0_skill"] + (["ai_megacap"] if is_ai else []) + ([s for s in [proj.get('profile_key')] if s and proj]),
+        }
+    
+    analizler.append(entry)
+    
+    # Üst-seviye sayaçları güncelle
+    index_data['analizler'] = analizler
+    index_data['son_guncelleme'] = today
+    index_data['toplam_analiz'] = len(analizler)
+    index_data['aktif_izleme'] = sum(1 for a in analizler if a.get('durum') == 'aktif_izleme')
+    
+    # Yaz
+    os.makedirs(os.path.dirname(index_path), exist_ok=True)
+    with open(index_path, 'w', encoding='utf-8') as f:
+        json.dump(index_data, f, indent=2, ensure_ascii=False)
+    
+    print(f"📋 index.json güncellendi ({index_path}): {entry_id}", file=sys.stderr)
+    return index_path
+
+
+def git_commit_and_push(ticker, md_path, index_path, repo_root=None, push=True):
+    """
+    Markdown rapor + index.json'ı git'e kaydet, push et.
+    """
+    import subprocess
+    
+    if repo_root is None:
+        repo_root = os.path.abspath(os.path.join(_SCRIPT_DIR, '..', '..', '..'))
+    
+    today = datetime.now().strftime('%Y-%m-%d')
+    
+    # Dosya yollarını relatif yap
+    md_rel = os.path.relpath(md_path, repo_root) if os.path.isabs(md_path) else md_path
+    index_rel = os.path.relpath(index_path, repo_root) if os.path.isabs(index_path) else index_path
+    
+    try:
+        # git add
+        subprocess.run(['git', 'add', md_rel, index_rel], cwd=repo_root, check=True, capture_output=True)
+        
+        # Değişiklik var mı?
+        diff = subprocess.run(['git', 'diff', '--cached', '--quiet'], cwd=repo_root, capture_output=True)
+        if diff.returncode == 0:
+            print(f"⚠️ Değişiklik yok, commit atlanıyor", file=sys.stderr)
+            return False
+        
+        # commit
+        commit_msg = f"[VALUATION] {ticker} adil değer hesabı eklendi ({today})"
+        subprocess.run(['git', 'commit', '-m', commit_msg], cwd=repo_root, check=True, capture_output=True)
+        print(f"💾 Commit: {commit_msg}", file=sys.stderr)
+        
+        if push:
+            # Push (rebase ile)
+            try:
+                subprocess.run(['git', 'pull', '--rebase', 'origin', 'main'], cwd=repo_root, check=True, capture_output=True)
+            except subprocess.CalledProcessError:
+                pass  # Önemli değil, ana push deneyelim
+            
+            push_result = subprocess.run(['git', 'push', 'origin', 'main'], cwd=repo_root, capture_output=True)
+            if push_result.returncode == 0:
+                print(f"📤 Push edildi: origin/main", file=sys.stderr)
+                return True
+            else:
+                print(f"❌ Push başarısız: {push_result.stderr.decode()}", file=sys.stderr)
+                return False
+        
+        return True
+    except subprocess.CalledProcessError as e:
+        print(f"❌ Git hatası: {e.stderr.decode() if e.stderr else e}", file=sys.stderr)
+        return False
+
+
 def main():
     if len(sys.argv) < 2:
         print("Kullanım:")
-        print("  python adil_deger.py TICKER [--json] [--md] [--md-out PATH]")
-        print("  python adil_deger.py --pre-ipo input.json [--md]")
+        print("  python adil_deger.py TICKER [--json] [--md] [--md-out PATH] [--commit] [--no-push]")
+        print("  python adil_deger.py --pre-ipo input.json [--md] [--commit]")
+        print()
+        print("Flag'ler:")
+        print("  --json        JSON çıktı (tüm result dict)")
+        print("  --md          Markdown rapor üret + chat'te göster + dosyaya yaz")
+        print("  --md-out PATH Custom markdown output path (default: reports/research/X_ADIL_DEGER_DATE.md)")
+        print("  --commit      Markdown + index.json + git commit + push (--md ile birlikte)")
+        print("  --no-push     --commit ile commit yapar ama push etmez")
         sys.exit(1)
     
     json_only = '--json' in sys.argv
     md_only = '--md' in sys.argv
+    commit_flag = '--commit' in sys.argv
+    no_push = '--no-push' in sys.argv
+    
+    # --commit aktif ise otomatik --md
+    if commit_flag:
+        md_only = True
     
     md_out_path = None
     if '--md-out' in sys.argv:
@@ -2476,6 +2756,31 @@ def main():
         
         if json_only:
             print(json.dumps(result, indent=2, default=str, ensure_ascii=False))
+            return
+        
+        if md_only:
+            # Pre-IPO için sade markdown - şu an protokol markdown'ı sadece standart için
+            # Pre-IPO için minimal markdown üret
+            today = datetime.now().strftime('%Y-%m-%d')
+            if not md_out_path:
+                # Repo köküne göre
+                repo_root = os.path.abspath(os.path.join(_SCRIPT_DIR, '..', '..', '..'))
+                md_out_path = os.path.join(repo_root, 'reports', 'research', f"{result['ticker']}_ADIL_DEGER_{today}.md")
+            
+            md_text = format_pre_ipo_output(result)
+            os.makedirs(os.path.dirname(md_out_path), exist_ok=True)
+            with open(md_out_path, 'w', encoding='utf-8') as f:
+                f.write(f"# {result['ticker']} - {result['company']} | Pre-IPO Adil Değer Raporu\n\n")
+                f.write(f"**Tarih**: {today}  |  **Mod**: PRE_IPO  |  **Skill**: Adil Değer v{result['version']}\n\n")
+                f.write("```\n")
+                f.write(md_text)
+                f.write("\n```\n\nKaynak: finzora ai\n")
+            print(f"📄 Pre-IPO rapor yazıldı: {md_out_path}", file=sys.stderr)
+            print(md_text)
+            
+            if commit_flag:
+                index_path = update_research_index(result, md_out_path)
+                git_commit_and_push(result['ticker'], md_out_path, index_path, push=not no_push)
         else:
             print(format_pre_ipo_output(result))
         return
@@ -2494,11 +2799,16 @@ def main():
         return
     
     if md_only:
-        # Otomatik output path varsayılan
+        today = datetime.now().strftime('%Y-%m-%d')
         if not md_out_path:
-            md_out_path = f"reports/research/{ticker}_ADIL_DEGER_{datetime.now().strftime('%Y-%m-%d')}.md"
+            repo_root = os.path.abspath(os.path.join(_SCRIPT_DIR, '..', '..', '..'))
+            md_out_path = os.path.join(repo_root, 'reports', 'research', f"{ticker}_ADIL_DEGER_{today}.md")
         md_text = format_markdown_report(result, output_path=md_out_path)
         print(md_text)
+        
+        if commit_flag:
+            index_path = update_research_index(result, md_out_path)
+            git_commit_and_push(ticker, md_out_path, index_path, push=not no_push)
         return
     
     print(format_output(result))
