@@ -153,7 +153,7 @@ Memory'deki "On the horizon" listesinden:
 5. ✅ **Adding test suite** — toplam **63 test** PASS (1.43s). Modüller: `tests/test_fmp_client.py` (28 test — retry mantığı, exception ayrımı, throttle, silent failure regression), `tests/test_observability.py` (17 test — JSONL append, log_fmp_call status→success eşleme, error field persistence, query aggregation, graceful degradation), `tests/test_k_engine.py` (18 test — K-13 v4.2 VIX karar matrisi: 4 tier × faydalanıcı/duyarlı × sektör eşleştirme × base_size ölçekleme). **Kısmen tamamlandı**: k_engine'in FMP'ye bağımlı fonksiyonları (k05, k17, k18, k19, k20) ve valuation/ modülünün 11 alt dosyası (5,664 satır) için ayrı test suite'leri gerekli.
 
 Yeni eklendi:
-6. ⏳ **`news_radar.py` migration** — kendi retry mantığını canonical'a taşıma (büyük refactor)
+6. ✅ **`news_radar.py` migration** — kendi 30+ satırlık özel retry mantığı canonical `fmp_client`'a yönlendirildi (try/except ImportError fallback pattern). Kaldırılan defansif kod: "DNS cache overflow body detection" (logs/events.jsonl'da 0 kez tetiklenmiş, ölü kod). Eski farklı backoff timing'leri (503: 5/10/20s, 429: 10/20/40s, timeout: 3/6/12s) yerine canonical 60+30s\*attempt timing kullanılıyor (30 Nis 2026 burst dalgası ampirik analizi sonucu). Smoke test canlı API ile doğrulandı (AAPL=$293.257). Migration durumu artık **22/22** tamam — `_archive` script'ler hariç repo'da hiç duplicate `fmp_get` kalmadı.
 7. ⏳ **`bilanco-sonrasi-us` Aşama 4d effectiveness ölçümü** — Senaryo A triage'in pazartesi sonrası gerçek bilanço sezonunda kaç hisse için "bilanco_PR_yok_triage" döndüğünü ve kaç gereksiz SEC fetch'in önlendiğini observability'den çıkar
 
 ---

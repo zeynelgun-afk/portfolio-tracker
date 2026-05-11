@@ -45,39 +45,26 @@ def log(msg):
     print(f"[{ts}] {msg}", flush=True)
 
 def fmp_get(endpoint, params=None, retries=3):
-    """FMP API çağrısı — 503/429/timeout için exponential backoff ile yeniden dene."""
-    p = params or {}
-    p["apikey"] = FMP_KEY
-    last_error = None
-    for attempt in range(retries):
+    """FMP API çağrısı — canonical agent/fmp_client.py'ye yönlendirilir.
+
+    Migration 10 May 2026: eski özel retry mantığı (DNS cache overflow body
+    detection + farklı backoff zamanlamaları) kaldırıldı. canonical client
+    şu an 60+30s*attempt timing kullanıyor (30 Nis 2026 burst dalgası
+    ampirik analizi sonucu). DNS cache overflow logs/events.jsonl'da hiç
+    tetiklenmemiş, defansif kod kaldırıldı.
+    """
+    try:
+        from fmp_client import fmp_get as _canonical
+        return _canonical(endpoint, params=params, max_retries=retries)
+    except ImportError:
+        # Çok ender: agent/ sys.path'te yoksa basit fallback
+        p = params or {}
+        p["apikey"] = FMP_KEY
         try:
             r = requests.get(f"{FMP_BASE}/{endpoint}", params=p, timeout=15)
-            if r.status_code == 200 and r.text.strip():
-                return r.json()
-            elif r.status_code == 503 or "DNS cache overflow" in r.text:
-                wait = 2 ** attempt * 5  # 5s, 10s, 20s
-                log(f"FMP 503 ({endpoint}) — {wait}s bekleniyor (deneme {attempt+1}/{retries})")
-                time.sleep(wait)
-                continue
-            elif r.status_code == 429:
-                wait = 2 ** attempt * 10  # 10s, 20s, 40s
-                log(f"FMP 429 rate limit ({endpoint}) — {wait}s bekleniyor (deneme {attempt+1}/{retries})")
-                time.sleep(wait)
-                continue
-            else:
-                last_error = f"HTTP {r.status_code}: {r.text[:100]}"
-                break
-        except requests.exceptions.Timeout:
-            last_error = "timeout"
-            wait = 2 ** attempt * 3
-            log(f"FMP timeout ({endpoint}) — {wait}s bekleniyor (deneme {attempt+1}/{retries})")
-            time.sleep(wait)
-            continue
-        except Exception as e:
-            last_error = str(e)
-            break
-    log(f"FMP başarısız ({endpoint}): {last_error}")
-    return []
+            return r.json() if r.status_code == 200 else []
+        except Exception:
+            return []
 
 def load_log():
     if os.path.exists(LOG_FILE):
