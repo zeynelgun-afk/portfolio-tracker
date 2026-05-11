@@ -1129,6 +1129,12 @@ def analyze(ticker):
         }
     
     decision = auto_decision(price, {r: summaries[r]['main'] or {} for r in ['bear', 'normal', 'bull']})
+    heritage_decision = decision  # 9 yöntem bazlı orijinal karar (referans)
+    heritage_median = summaries['normal']['main'].get('median') if summaries['normal']['main'] else None
+    
+    # v5.0 Etap 13 Fix-2: Forward-First Hibrit — projection oluşunca aşağıda override edilir
+    forward_first_active = False
+    forward_normalized_value = None
     
     # =========================================================================
     # v5.0 EKSTRA SİNYALLER — calculate_methods SONRASI (bizim DCF ile karşılaştırma)
@@ -1290,10 +1296,109 @@ def analyze(ticker):
                 'normalization': norm,
                 'sector_median_pe_used': normalization_pe,
             }
+            
+            # v5.0 Etap 13 Fix-2: Hibrit Forward Normalize Değerleme
+            # Sub-industry premium tespiti
+            description_text = profile.get('description', '') or ''
+            sub_premium, sub_premium_key, sub_premium_reason = projection_engine.detect_sub_industry_premium(
+                sector=profile.get('sector'),
+                industry=profile.get('industry'),
+                description=description_text,
+                revenue_yoy=revenue_growth_yoy or 0,
+                is_ai_megacap=is_ai_megacap,
+            )
+            
+            # Hibrit hesap için sektör Forward P/E seçimi:
+            # - Sub-industry premium varsa (AI_INFRASTRUCTURE, CLOUD_SAAS): canlı sektör PE × 1.0 premium
+            #   (canlı PE growth fiyatlamayı zaten yansıtıyor, ek premium yok)
+            # - Sub-industry yoksa (mature/value): statik SECTOR_MULTIPLES median
+            #   (mature için canlı PE risklidir, sabit median daha güvenli)
+            # - AI_MEGACAP istisna: statik × 1.25 premium (NVDA gibi yerleşik)
+            static_sector_pe = SECTOR_MULTIPLES.get(sector_key, {}).get('fwd_pe', 18)
+            if sub_premium_key in ('AI_INFRASTRUCTURE', 'CLOUD_NATIVE_SAAS'):
+                # Canlı sektör PE kullan, premium 1.0 (zaten dahil)
+                sector_fwd_pe_for_norm = normalization_pe if normalization_pe else static_sector_pe
+                sub_premium = 1.0
+                sub_premium_reason = f"{sub_premium_key} tespit: canlı sektör PE ({sector_fwd_pe_for_norm:.1f}x) growth fiyatlamayı zaten yansıtır, ayrı premium yok"
+            elif sub_premium_key == 'AI_MEGACAP':
+                sector_fwd_pe_for_norm = static_sector_pe
+                # sub_premium 1.25 zaten
+            else:
+                # Mature/default: statik PE
+                sector_fwd_pe_for_norm = static_sector_pe
+            # WACC: dinamik varsa onu kullan, yoksa default %10
+            wacc_for_norm = data_pack.get('dynamic_wacc') or 0.10
+            
+            # Analyst raw EPS dict (Fix-2.1: PNL fallback yerine analyst öncelikli)
+            analyst_eps_dict_for_norm = None
+            if multi_year:
+                analyst_eps_dict_for_norm = {
+                    year: data['eps_avg']
+                    for year, data in multi_year.items()
+                    if data.get('eps_avg') is not None
+                }
+            
+            forward_normalized = projection_engine.calculate_forward_normalized_value(
+                pnl=pnl,
+                normalization=norm,
+                sector_forward_pe=sector_fwd_pe_for_norm,
+                wacc=wacc_for_norm,
+                sub_industry_premium=sub_premium,
+                analyst_eps_dict=analyst_eps_dict_for_norm,
+            )
+            
+            if forward_normalized:
+                forward_normalized['sub_industry_key'] = sub_premium_key
+                forward_normalized['sub_industry_reason'] = sub_premium_reason
+                projection['forward_normalized'] = forward_normalized
+            
+            # Pivot tespiti (FY+1 = next fiscal year = current_year + 1)
+            analyst_rev_fy1 = None
+            if analyst_revenues_dict:
+                analyst_rev_fy1 = analyst_revenues_dict.get(datetime.now().year + 1)
+                # Fallback: ilk pozitif yıl
+                if not analyst_rev_fy1:
+                    for year in sorted(analyst_revenues_dict.keys()):
+                        if year > datetime.now().year and analyst_revenues_dict[year]:
+                            analyst_rev_fy1 = analyst_revenues_dict[year]
+                            break
+            
+            pivot_detected, pivot_reason = projection_engine.detect_pivot_mode(
+                revenue_ttm=revenue_ttm,
+                revenue_yoy=revenue_growth_yoy,
+                ttm_op_margin=(ebit_ttm / revenue_ttm) if (ebit_ttm and revenue_ttm and revenue_ttm > 0) else None,
+                analyst_rev_fwd_1y=analyst_rev_fy1,
+                forward_data_quality=forward_data_quality,
+            )
+            projection['pivot_detected'] = pivot_detected
+            projection['pivot_reason'] = pivot_reason
         except Exception as e:
             print(f"⚠️ Projection üretilirken hata: {e}", file=sys.stderr)
             import traceback
             traceback.print_exc(file=sys.stderr)
+    
+    # v5.0 Etap 13 Fix-2: Forward-First Hibrit karar override
+    # Projection ve forward_normalized hazırlandıktan sonra çalışır
+    if projection and projection.get('forward_normalized'):
+        fn = projection['forward_normalized']
+        if (fn.get('eps_source') == 'analyst_raw' and
+            forward_data_quality in ('CONSENSUS', 'SINGLE')):
+            forward_first_active = True
+            forward_normalized_value = fn['value']
+            
+            # Hibrit değerine göre yeni karar (basit ratio bandı)
+            if forward_normalized_value > 0:
+                ratio = price / forward_normalized_value
+                if ratio <= 0.70:
+                    decision = ("🟢 GÜÇLÜ AL", f"Hibrit Forward (${forward_normalized_value:.2f}) — fiyat %{(1-ratio)*100:.0f} altında, derin değer.")
+                elif ratio <= 0.90:
+                    decision = ("🟢 AL", f"Hibrit Forward (${forward_normalized_value:.2f}) — fiyat %{(1-ratio)*100:.0f} altında.")
+                elif ratio <= 1.10:
+                    decision = ("🟡 İZLE", f"Hibrit Forward (${forward_normalized_value:.2f}) — fiyat adil değer civarında (±%10).")
+                elif ratio <= 1.30:
+                    decision = ("🟠 PAHALI / İZLE", f"Hibrit Forward (${forward_normalized_value:.2f}) — fiyat %{(ratio-1)*100:.0f} üstünde.")
+                else:
+                    decision = ("🔴 GEÇ / KAÇIN", f"Hibrit Forward (${forward_normalized_value:.2f}) — fiyat %{(ratio-1)*100:.0f} üstünde.")
     
     return {
         'ticker': ticker,
@@ -1317,6 +1422,11 @@ def analyze(ticker):
         'forward_growth_ratio': round(forward_growth_ratio, 2) if forward_growth_ratio else None,
         'analyst_count_fwd': analyst_count_fwd,  # v5.0 Etap 12: forward verisi güven göstergesi
         'forward_data_quality': forward_data_quality,  # CONSENSUS/SINGLE/ALGORITHMIC/UNKNOWN
+        # v5.0 Etap 13 Fix-2: Forward-First Hibrit
+        'forward_first_active': forward_first_active,
+        'forward_normalized_value': forward_normalized_value,
+        'heritage_decision': {'action': heritage_decision[0], 'reasoning': heritage_decision[1]} if heritage_decision else None,
+        'heritage_median': round(heritage_median, 2) if heritage_median else None,
         'revenue_3y_cagr': round(revenue_3y_cagr * 100, 1) if revenue_3y_cagr else None,
         'price_1y_return_pct': round(price_1y_return * 100, 1) if price_1y_return else None,
         'implied_growth_pct': round(implied_growth * 100, 1) if implied_growth else None,
@@ -1951,10 +2061,30 @@ def format_markdown_report(result, output_path=None):
     if pio_val <= 4 and confidence == "YÜKSEK":
         confidence = "ORTA"
     
-    md.append(f"**Beklenen Adil Değer (normal medyan)**: ${normal_median:.2f}" if normal_median else "**Beklenen Adil Değer**: hesaplanamadı")
-    if upside_pct is not None:
-        yon = "yukarı" if upside_pct > 0 else "aşağı"
-        md.append(f"**Potansiyel**: %{abs(upside_pct):.1f} {yon} (mevcut ${price:.2f})")
+    # v5.0 Etap 13 Fix-2: Forward-First Hibrit — ana adil değer hibrit hesabı olur
+    forward_first = result.get('forward_first_active', False)
+    fn_value = result.get('forward_normalized_value')
+    heritage_median = result.get('heritage_median')
+    
+    if forward_first and fn_value:
+        # Hibrit ana, 9 yöntem heritage olarak göster
+        primary_adil_deger = fn_value
+        upside_pct_primary = ((primary_adil_deger - price) / price * 100) if price else None
+        md.append(f"**Adil Değer (Hibrit Forward Normalize)**: ${primary_adil_deger:.2f}")
+        if heritage_median is not None:
+            md.append(f"**9 Yöntem Medyanı (referans)**: ${heritage_median:.2f}")
+        if upside_pct_primary is not None:
+            yon = "yukarı" if upside_pct_primary > 0 else "aşağı"
+            md.append(f"**Potansiyel**: %{abs(upside_pct_primary):.1f} {yon} (mevcut ${price:.2f})")
+    else:
+        # Eski mantık — 9 yöntem medyanı ana
+        if normal_median:
+            md.append(f"**Beklenen Adil Değer (normal medyan)**: ${normal_median:.2f}")
+        else:
+            md.append("**Beklenen Adil Değer**: hesaplanamadı")
+        if upside_pct is not None:
+            yon = "yukarı" if upside_pct > 0 else "aşağı"
+            md.append(f"**Potansiyel**: %{abs(upside_pct):.1f} {yon} (mevcut ${price:.2f})")
     md.append(f"**Confidence**: {confidence}")
     md.append("")
     
@@ -1988,6 +2118,22 @@ def format_markdown_report(result, output_path=None):
     else:
         coverage_label = "🔴 KAPSAM YOK"
     md.append(f"| Forward Veri Kalitesi | {coverage_label} |")
+    
+    # v5.0 Etap 13 Fix-2: Forward-First Hibrit detayları
+    if forward_first and fn_value:
+        proj = result.get('projection', {}) or {}
+        fn_detail = proj.get('forward_normalized', {})
+        md.append(f"| Mod | **Forward-First Hibrit** (analyst raw EPS bazlı) |")
+        md.append(f"| Normalize Yıl | {fn_detail.get('normalization_year', 'N/A')} (ilk pozitif EPS) |")
+        md.append(f"| Normalize EPS (3y ort) | ${fn_detail.get('normalize_eps', 0):.2f} |")
+        sub_key = fn_detail.get('sub_industry_key', '')
+        sub_mult = fn_detail.get('sub_industry_premium', 1.0)
+        if sub_key and sub_key != 'GROWTH_DEFAULT':
+            md.append(f"| Sub-Industry Premium | {sub_mult:.2f}x ({sub_key}) |")
+    
+    # Pivot bayrağı (varsa)
+    if (result.get('projection') or {}).get('pivot_detected'):
+        md.append(f"| Pivot Mode | 🔄 EVET — Şirket dramatic dönüşüm aşamasında |")
     md.append(f"| Piyasa Rejimi | {result['market_regime']['regime']} (VIX {result['market_regime']['vix']}) |")
     md.append("")
     
@@ -2346,14 +2492,24 @@ def format_markdown_report(result, output_path=None):
     is_avoid = ('GEÇ' in karar_text or 'KAÇIN' in karar_text or 'GEC' in karar_text)
     is_hold = ('İZLE' in karar_text or 'IZLE' in karar_text or 'HOLD' in karar_text or 'PAHALI' in karar_text)
     
+    # v5.0 Etap 13 Fix-2: Forward-First aktifse hibrit değeri ana hedef
+    forward_first = result.get('forward_first_active', False)
+    fn_value = result.get('forward_normalized_value')
+    if forward_first and fn_value:
+        primary_target = fn_value      # ana hedef
+        primary_label = "Hibrit Forward"
+    else:
+        primary_target = normal_median  # 9 yöntem medyanı
+        primary_label = "normal medyan"
+    
     if is_buy:
         # LONG SETUP — Skill mevcut fiyatı ucuz buluyor
-        md.append("**Setup**: 🟢 LONG (skill mevcut fiyatı adil değerin altında buluyor)")
+        md.append(f"**Setup**: 🟢 LONG (skill mevcut fiyatı adil değerin altında buluyor — {primary_label} bazlı)")
         md.append("")
         md.append("| Parametre | Değer |")
         md.append("|---|---|")
         md.append(f"| Mevcut Fiyat | ${price:.2f} |")
-        md.append(f"| Beklenen Adil Değer | ${normal_median:.2f} |" if normal_median else "| Beklenen Adil Değer | hesaplanamadı |")
+        md.append(f"| Beklenen Adil Değer | ${primary_target:.2f} ({primary_label}) |" if primary_target else "| Beklenen Adil Değer | hesaplanamadı |")
         
         if bear_median and bear_median < price:
             ideal_low = bear_median
@@ -2371,14 +2527,14 @@ def format_markdown_report(result, output_path=None):
         else:
             md.append(f"| Stop Loss | ${stop:.2f} (-%13) |")
         
-        if normal_median and normal_median > price:
-            md.append(f"| Hedef 1 (base) | ${normal_median:.2f} (normal medyan, +%{((normal_median/price-1)*100):.1f}) |")
+        if primary_target and primary_target > price:
+            md.append(f"| Hedef 1 (base) | ${primary_target:.2f} ({primary_label}, +%{((primary_target/price-1)*100):.1f}) |")
         if bull_median and bull_median > price:
             md.append(f"| Hedef 2 (bull) | ${bull_median:.2f} (boğa medyan, +%{((bull_median/price-1)*100):.1f}) |")
         
         # R/R (yalnızca hedef > mevcut > stop ise anlamlı)
-        if normal_median and normal_median > price and stop and stop < price:
-            reward = normal_median - price
+        if primary_target and primary_target > price and stop and stop < price:
+            reward = primary_target - price
             risk = price - stop
             rr = reward / risk
             md.append(f"| R/R Oranı | 1:{rr:.1f} |")
@@ -2387,23 +2543,26 @@ def format_markdown_report(result, output_path=None):
         
     elif is_avoid:
         # GEÇ / KAÇIN — Skill mevcut fiyatı tüm senaryoların üstünde buluyor
-        md.append("**Setup**: 🔴 GİRİŞ ÖNERMİYORUZ — Mevcut fiyat skill'in tüm senaryolarının üstünde")
+        md.append(f"**Setup**: 🔴 GİRİŞ ÖNERMİYORUZ — Mevcut fiyat {primary_label} üstünde")
         md.append("")
         md.append("| Parametre | Değer |")
         md.append("|---|---|")
         md.append(f"| Mevcut Fiyat | ${price:.2f} |")
-        md.append(f"| Beklenen Adil Değer | ${normal_median:.2f} (mevcut fiyatın **%{((price/normal_median-1)*100):.0f} altında**) |" if normal_median and normal_median > 0 else "| Beklenen Adil Değer | hesaplanamadı |")
+        if primary_target and primary_target > 0:
+            md.append(f"| Adil Değer ({primary_label}) | ${primary_target:.2f} (mevcut fiyat **%{((price/primary_target-1)*100):.0f} üstünde**) |")
+        else:
+            md.append("| Adil Değer | hesaplanamadı |")
         
         if bull_median:
-            md.append(f"| Boğa Senaryosu Hedefi | ${bull_median:.2f} (mevcut fiyatın **%{((price/bull_median-1)*100):.0f} altında**) |" if bull_median > 0 else "")
+            md.append(f"| Boğa Senaryosu Hedefi | ${bull_median:.2f} (mevcut fiyat **%{((price/bull_median-1)*100):.0f} üstünde**) |" if bull_median > 0 else "")
         
         md.append("| Long Setup | ❌ ÖNERİLMEZ (fiyat tüm senaryoların üstünde) |")
         
         # Short setup (opsiyonel, sadece bilgi amaçlı)
-        if normal_median and normal_median > 0 and price > normal_median:
+        if primary_target and primary_target > 0 and price > primary_target:
             short_stop = price * 1.13  # %13 yukarı
-            short_target_1 = bull_median if bull_median and bull_median < price else normal_median
-            short_target_2 = normal_median
+            short_target_1 = bull_median if bull_median and bull_median < price else primary_target
+            short_target_2 = primary_target
             md.append("| | |")
             md.append(f"| **Short Setup (opsiyonel)** | (spekülatif, beta yüksekse riskli) |")
             md.append(f"| Short Giriş | Mevcut ${price:.2f} civarı |")
@@ -2413,12 +2572,12 @@ def format_markdown_report(result, output_path=None):
         
     else:
         # İZLE / PAHALI / HOLD — Belirsiz alan, küçük long pozisyon mümkün
-        md.append("**Setup**: 🟡 İZLE / KÜÇÜK POZİSYON (skill belirsiz, fiyat adil değer civarında)")
+        md.append(f"**Setup**: 🟡 İZLE / KÜÇÜK POZİSYON (skill belirsiz, fiyat {primary_label} civarında)")
         md.append("")
         md.append("| Parametre | Değer |")
         md.append("|---|---|")
         md.append(f"| Mevcut Fiyat | ${price:.2f} |")
-        md.append(f"| Beklenen Adil Değer | ${normal_median:.2f} |" if normal_median else "| Beklenen Adil Değer | hesaplanamadı |")
+        md.append(f"| Adil Değer ({primary_label}) | ${primary_target:.2f} |" if primary_target else "| Adil Değer | hesaplanamadı |")
         
         if bear_median:
             ideal_low = bear_median
@@ -2428,8 +2587,8 @@ def format_markdown_report(result, output_path=None):
         stop = price * 0.87
         md.append(f"| Stop Loss (eğer pozisyon açılırsa) | ${stop:.2f} (-%13) |")
         
-        if normal_median and normal_median > price:
-            md.append(f"| Hedef 1 | ${normal_median:.2f} |")
+        if primary_target and primary_target > price:
+            md.append(f"| Hedef 1 | ${primary_target:.2f} |")
         if bull_median and bull_median > price:
             md.append(f"| Hedef 2 | ${bull_median:.2f} |")
         

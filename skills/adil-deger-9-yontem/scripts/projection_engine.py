@@ -642,3 +642,287 @@ def format_normalization_summary(normalization, multiples_table, sector_label='s
             lines.append(f"   Uzun vadeli yatırım, yol boyunca volatilite yüksek.")
     
     return "\n".join(lines)
+
+
+# =============================================================================
+# v5.0 ETAP 13 FIX-2: HİBRİT FORWARD NORMALİZE DEĞERLEME
+# =============================================================================
+# Seçenek 4 (Normalizasyon Yılı) + Seçenek 2 (3 Yıl Ortalama) hibrit
+#
+# Mantık:
+# 1. Skill'in zaten hesapladığı normalizasyon yılını bul
+# 2. O yıldan başlayarak Y_n, Y_n+1, Y_n+2 EPS ortalaması al (Y+2 yoksa Y+1, sadece Y_n)
+# 3. × sektör forward P/E × sub-industry premium
+# 4. Bugüne diskonto (WACC ile)
+# 5. Eğer 5y içinde normalize olmazsa: Y5 fallback
+
+def calculate_forward_normalized_value(
+    pnl, normalization, sector_forward_pe, wacc,
+    sub_industry_premium=1.0, current_year=None,
+    analyst_eps_dict=None
+):
+    """
+    Hibrit Forward Normalize Value hesabı (v5.0 Etap 13 Fix-2).
+    
+    v5.0 Etap 13 Fix-2.1: analyst_eps_dict varsa ÖNCELİKLİ kullan.
+    PNL projeksiyonu sektör profile'a bağlı (Etap 10) — bazı şirketlerde marj
+    eğrisi gerçeği yansıtmayabilir (APLD gibi pivot şirketleri).
+    Analyst raw EPS değerleri daha güvenilir kaynak.
+    
+    Args:
+        pnl: project_pnl_5y çıktısı (6 yıllık liste, fallback)
+        normalization: project_pnl_5y'dan dönen normalization dict
+        sector_forward_pe: sektör forward P/E median (örn 25x)
+        wacc: discount rate (örn 0.12)
+        sub_industry_premium: 1.0 (default) ila 2.0 arası multiplier
+        current_year: int (default: datetime.now().year)
+        analyst_eps_dict: {YYYY: eps_avg} — analyst raw EPS verisi (varsa öncelikli)
+    
+    Returns: dict veya None
+    """
+    if current_year is None:
+        current_year = datetime.now().year
+    
+    # v5.0 Etap 13 Fix-2.1: Analyst EPS dict öncelikli (varsa)
+    eps_source = 'analyst_raw' if analyst_eps_dict else 'pnl_projection'
+    
+    if analyst_eps_dict:
+        # Yıl bazlı EPS dict'i kullan
+        # İlk pozitif EPS yılını bul (sıralı)
+        sorted_years = sorted(analyst_eps_dict.keys())
+        norm_year = None
+        for year in sorted_years:
+            eps_val = analyst_eps_dict[year]
+            if eps_val is not None and eps_val > 0:
+                norm_year = year
+                break
+        
+        if norm_year is None:
+            # Hiç pozitif EPS yılı yok, analyst kapsamı içinde
+            return None
+        
+        # Y_norm, Y_norm+1 EPS'leri al (varsa)
+        # v5.0 Etap 13 Fix-2.2: 3 yıl yerine 2 yıl — Y_norm+2 sıklıkla anomali
+        # (analyst forecast 3+ yıl ileri çok değişken, APLD'de Y2030 anomalisi gibi)
+        eps_values = []
+        for offset in range(2):  # 0, 1 (yani Y_norm ve Y_norm+1)
+            yr = norm_year + offset
+            if yr in analyst_eps_dict:
+                val = analyst_eps_dict[yr]
+                if val is not None and val > 0:
+                    eps_values.append(val)
+        
+        if not eps_values:
+            return None
+        
+        normalize_eps = sum(eps_values) / len(eps_values)
+        method_note = f"Analyst raw EPS Y_norm={norm_year}, {len(eps_values)} yıl ortalaması (Hibrit Forward Normalize, 2y window)"
+    
+    else:
+        # Fallback: PNL'den EPS al (eski mantık)
+        if not pnl or len(pnl) < 2:
+            return None
+        
+        norm_year = normalization.get('pe_normalization_year') if normalization else None
+        
+        if not norm_year:
+            norm_year = pnl[-1]['year']
+            method_note = f"5y içinde sektör medyanına ulaşılmadı → Y5 ({norm_year}) kullanıldı (PNL fallback)"
+        else:
+            method_note = f"Normalizasyon yılı: {norm_year} (PNL projection)"
+        
+        norm_idx = None
+        for i, p in enumerate(pnl):
+            if p['year'] == norm_year:
+                norm_idx = i
+                break
+        
+        if norm_idx is None:
+            norm_idx = len(pnl) - 1
+            norm_year = pnl[norm_idx]['year']
+            method_note += f" (Y{norm_idx} fallback)"
+        
+        eps_values = []
+        for i in range(norm_idx, min(norm_idx + 3, len(pnl))):
+            eps = pnl[i].get('eps_basic')
+            if eps is not None and eps > 0:
+                eps_values.append(eps)
+        
+        if not eps_values:
+            for p in reversed(pnl):
+                eps = p.get('eps_basic')
+                if eps is not None and eps > 0:
+                    eps_values.append(eps)
+                    norm_year = p['year']
+                    method_note = f"İlk pozitif EPS yılı kullanıldı: {norm_year} (PNL fallback)"
+                    break
+        
+        if not eps_values:
+            return None
+        
+        normalize_eps = sum(eps_values) / len(eps_values)
+    
+    # Mature state value
+    mature_value = normalize_eps * sector_forward_pe * sub_industry_premium
+    
+    # Bugüne diskonto
+    years_to_norm = norm_year - current_year
+    if years_to_norm < 0:
+        years_to_norm = 0
+    
+    discount_factor = (1 + wacc) ** years_to_norm
+    present_value = mature_value / discount_factor
+    
+    return {
+        'value': round(present_value, 2),
+        'normalization_year': norm_year,
+        'normalize_eps': round(normalize_eps, 3),
+        'eps_values_used': eps_values,
+        'eps_source': eps_source,
+        'years_to_normalize': years_to_norm,
+        'discount_factor': round(discount_factor, 3),
+        'sub_industry_premium': sub_industry_premium,
+        'sector_forward_pe': sector_forward_pe,
+        'wacc': wacc,
+        'mature_value': round(mature_value, 2),
+        'method': method_note,
+    }
+
+
+# =============================================================================
+# SUB-INDUSTRY PREMIUM TESPİTİ
+# =============================================================================
+
+# Sub-industry premium çarpanları (sektör forward P/E üzerine)
+SUB_INDUSTRY_PREMIUMS = {
+    'AI_INFRASTRUCTURE': 1.50,   # APLD, CRWV, NBIS — hyperscaler tedarikçileri
+    'CLOUD_NATIVE_SAAS': 1.30,   # SNOW, NET, DDOG, MDB
+    'AI_MEGACAP': 1.25,           # NVDA, AVGO (zaten skill'de quality_mult var)
+    'BIOTECH_GROWTH': 1.20,       # Klinik faz çıkışı şirketler
+    'GROWTH_DEFAULT': 1.0,        # Default, premium yok
+}
+
+
+def detect_sub_industry_premium(sector, industry, description='', revenue_yoy=0, is_ai_megacap=False):
+    """
+    Sub-industry premium çarpanını tespit et.
+    
+    Args:
+        sector: FMP sector field
+        industry: FMP industry field
+        description: company description (anahtar kelime arama)
+        revenue_yoy: yıllık revenue büyüme
+        is_ai_megacap: AI mega-cap flag
+    
+    Returns: (premium_value, premium_key, reasoning)
+    """
+    sector_lower = (sector or '').lower()
+    industry_lower = (industry or '').lower()
+    desc_lower = (description or '').lower()
+    
+    # AI Infrastructure: data center hyperscaler tedariği
+    # Anahtar kelime sayısı: en az 2 farklı keyword grupundan match
+    kw_groups = {
+        'compute': ['high-performance computing', 'hpc hosting', 'hpc applications', 'gpu computing', 'gpu-as-a-service'],
+        'infra': ['data center', 'ai factory', 'ai infrastructure', 'digital infrastructure'],
+        'demand': ['hyperscaler', 'ai workloads', 'ai and machine learning', 'foundational ai'],
+    }
+    
+    kw_matches = sum(1 for group in kw_groups.values() if any(kw in desc_lower for kw in group))
+    
+    sector_ok = any(kw in (sector_lower + ' ' + industry_lower) for kw in [
+        'information technology services', 'technology services', 'software',
+        'technology', 'real estate'  # data center REIT'leri için
+    ])
+    
+    if (
+        revenue_yoy > 0.30 and  # %30+ büyüme (önceden %50 idi, daha esnek)
+        kw_matches >= 2 and      # En az 2 keyword group eşleşmesi
+        sector_ok
+    ):
+        return (
+            SUB_INDUSTRY_PREMIUMS['AI_INFRASTRUCTURE'],
+            'AI_INFRASTRUCTURE',
+            f"AI Infrastructure tespit edildi ({kw_matches} keyword group, revenue YoY %{revenue_yoy*100:.0f}). Premium 1.50x"
+        )
+    
+    # Cloud-native SaaS: subscription, ARR, hızlı büyüme
+    if (
+        revenue_yoy > 0.30 and
+        'software' in industry_lower and
+        any(kw in desc_lower for kw in [
+            'subscription', 'saas', 'cloud platform', 'annual recurring revenue',
+            'recurring subscription'
+        ])
+    ):
+        return (
+            SUB_INDUSTRY_PREMIUMS['CLOUD_NATIVE_SAAS'],
+            'CLOUD_NATIVE_SAAS',
+            f"Cloud-native SaaS tespit edildi (revenue YoY %{revenue_yoy*100:.0f}). Premium 1.30x"
+        )
+    
+    # AI Mega-Cap: zaten skill'de quality_mult var, burada hafif premium
+    if is_ai_megacap:
+        return (
+            SUB_INDUSTRY_PREMIUMS['AI_MEGACAP'],
+            'AI_MEGACAP',
+            "AI mega-cap. Premium 1.25x (quality_mult ile birlikte değerlendirilmeli)"
+        )
+    
+    # Default: premium yok
+    return (1.0, 'GROWTH_DEFAULT', 'Sub-industry premium yok')
+
+
+# =============================================================================
+# PİVOT TESPİTİ
+# =============================================================================
+
+def detect_pivot_mode(revenue_ttm, revenue_yoy, ttm_op_margin, analyst_rev_fwd_1y,
+                     forward_data_quality='UNKNOWN'):
+    """
+    Şirketin pivot/dramatic transformation aşamasında olup olmadığını tespit et.
+    
+    Kriterler:
+    - Revenue YoY > %50 (büyük momentum)
+    - TTM operasyonel marj negatif (mevcut iş kolu zayıf)
+    - Forward 1y revenue / TTM revenue > 2.0 (forward 2x büyüme)
+    - Forward analyst data var (CONSENSUS veya SINGLE)
+    
+    Returns: (is_pivot, reasoning)
+    """
+    if revenue_ttm is None or revenue_ttm <= 0:
+        return (False, "TTM revenue verisi yok")
+    
+    if not analyst_rev_fwd_1y or analyst_rev_fwd_1y <= 0:
+        return (False, "Forward analyst revenue verisi yok")
+    
+    forward_growth = analyst_rev_fwd_1y / revenue_ttm
+    
+    if forward_data_quality == 'UNKNOWN':
+        return (False, "Forward kapsamı yok, pivot tespiti yapılamaz")
+    
+    conditions = []
+    
+    cond_growth = revenue_yoy and revenue_yoy > 0.50
+    conditions.append(('Revenue YoY > %50', cond_growth, f'%{(revenue_yoy or 0)*100:.0f}'))
+    
+    cond_op_negative = ttm_op_margin is not None and ttm_op_margin < 0
+    conditions.append(('TTM Op Margin < 0', cond_op_negative, f'%{(ttm_op_margin or 0)*100:.1f}'))
+    
+    cond_fwd_2x = forward_growth > 2.0
+    conditions.append(('Forward 1y / TTM > 2.0', cond_fwd_2x, f'{forward_growth:.1f}x'))
+    
+    cond_data = forward_data_quality in ('CONSENSUS', 'SINGLE')
+    conditions.append(('Forward data güvenilir', cond_data, forward_data_quality))
+    
+    all_met = all(c[1] for c in conditions)
+    
+    if all_met:
+        reasoning = "PIVOT tespit edildi. Koşullar: " + ", ".join(
+            f"{name}={val}" for name, ok, val in conditions
+        )
+    else:
+        not_met = [name for name, ok, val in conditions if not ok]
+        reasoning = "PIVOT değil. Eksik: " + ", ".join(not_met)
+    
+    return (all_met, reasoning)
