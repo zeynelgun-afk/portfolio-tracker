@@ -18,21 +18,40 @@ from pathlib import Path
 
 # ── Zorunlu anahtarlar ────────────────────────────────────────────────────────
 FMP_KEY = os.environ.get("FMP_API_KEY", "").strip()
-# Telegram: iki farklı naming convention destekle (TELEGRAM_TOKEN vs TELEGRAM_BOT_TOKEN)
+
+# Telegram env standartı (memory entry #9, #29):
+#   TELEGRAM_BOT_TOKEN  → bot token (standart)
+#   TELEGRAM_PRIVATE_ID → Zeynel DM (standart) — chat_id 1403072107
+#   TELEGRAM_CHAT_ID    → Grup (standart) — chat_id -1003827034395
+# Legacy adlar (geriye dönük uyum için fallback):
+#   TELEGRAM_TOKEN, TELEGRAM_PRIVATE_CHAT, TELEGRAM_GROUP_CHAT
 TELEGRAM_TOKEN = (
-    os.environ.get("TELEGRAM_TOKEN", "").strip()
-    or os.environ.get("TELEGRAM_BOT_TOKEN", "").strip()
+    os.environ.get("TELEGRAM_BOT_TOKEN", "").strip()  # standart
+    or os.environ.get("TELEGRAM_TOKEN", "").strip()    # legacy
 )
 TELEGRAM_PRIVATE_CHAT = (
-    os.environ.get("TELEGRAM_PRIVATE_CHAT", "").strip()
-    or os.environ.get("TELEGRAM_CHAT_ID", "").strip()
+    os.environ.get("TELEGRAM_PRIVATE_ID", "").strip()      # standart (memory)
+    or os.environ.get("TELEGRAM_PRIVATE_CHAT", "").strip()  # legacy
 )
+TELEGRAM_GROUP_CHAT = (
+    os.environ.get("TELEGRAM_CHAT_ID", "").strip()       # standart (memory: grup)
+    or os.environ.get("TELEGRAM_GROUP_CHAT", "").strip()  # legacy
+)
+
 ANTHROPIC_KEY = os.environ.get("ANTHROPIC_API_KEY", "").strip()
 
 # ── Opsiyonel anahtarlar ──────────────────────────────────────────────────────
 RAPIDAPI_KEY = os.environ.get("RAPIDAPI_KEY", "").strip()
-TELEGRAM_GROUP_CHAT = os.environ.get("TELEGRAM_GROUP_CHAT", "").strip()
 VOYAGE_API_KEY = os.environ.get("VOYAGE_API_KEY", "").strip()
+GH_TOKEN = os.environ.get("GH_TOKEN", "").strip() or os.environ.get("PAT_TOKEN", "").strip()
+
+# ── Standart ad alias'ları (yeni kodun kullanması için) ──────────────────────
+# Bu alias'lar geriye dönük uyumu kırmadan yeni kodun memory standart adlarını
+# import etmesine izin verir. Eski kod TELEGRAM_TOKEN/PRIVATE_CHAT/GROUP_CHAT'i,
+# yeni kod TELEGRAM_BOT_TOKEN/PRIVATE_ID/CHAT_ID'yi kullanabilir.
+TELEGRAM_BOT_TOKEN = TELEGRAM_TOKEN
+TELEGRAM_PRIVATE_ID = TELEGRAM_PRIVATE_CHAT
+TELEGRAM_CHAT_ID = TELEGRAM_GROUP_CHAT
 
 # ── Sabitler ──────────────────────────────────────────────────────────────────
 FMP_BASE = "https://financialmodelingprep.com/stable"
@@ -77,9 +96,15 @@ def have_all(required_keys: list[str]) -> bool:
 
 
 # ── Modül yüklendiğinde erken uyarı ──────────────────────────────────────────
-# Kritik eksikleri sessizce bırakmak yerine stderr'e yaz.
-_CRITICAL = ["FMP_API_KEY", "TELEGRAM_TOKEN", "TELEGRAM_PRIVATE_CHAT"]
-_missing_at_load = [k for k in _CRITICAL if not os.environ.get(k, "").strip()]
+# Python sembolü bazlı kontrol — env adı tutarsızlığını kapsar.
+# Standart adın yerine legacy ad set edilmiş olsa bile fallback çalıştıktan
+# sonra sembol dolu olur, yanlış uyarı çıkmaz (önceki bug: env adına bakıyordu).
+_CRITICAL_SYMBOLS = {
+    "FMP_API_KEY": FMP_KEY,
+    "TELEGRAM_BOT_TOKEN": TELEGRAM_TOKEN,
+    "TELEGRAM_PRIVATE_ID": TELEGRAM_PRIVATE_CHAT,
+}
+_missing_at_load = [name for name, value in _CRITICAL_SYMBOLS.items() if not value]
 if _missing_at_load and os.environ.get("FINZORA_SUPPRESS_CONFIG_WARN") != "1":
     print(
         f"[_config] Eksik kritik env: {_missing_at_load}. "
