@@ -277,3 +277,5 @@ date,action,symbol,shares,price,total,reason
 2026-05-07,SELL,NEE,59,94.19,5557.21,Swing çıkış — STOP. P/L: -4.4% (6 gün)
 2026-05-08,SELL,UEC,472,15.03,7094.16,Swing çıkış — STOP. P/L: -0.1% (4 gün)
 2026-05-08,SELL,TFC,71,49.15,3489.65,Swing çıkış — STOP. P/L: -4.0% (11 gün)
+2026-05-11,SELL,GEV,6,1064.96,6389.76,"Finzora: Tez ağır hasar (tema 4/10, sektör RS -6.0%) + K-17 risk yönetimi"
+2026-05-11,SELL,PR,373,19.93,7435.75,"Finzora: Tez ağır hasar (sektör RS -3.6%, 50SMA altı) + K-17 risk yönetimi"

@@ -898,6 +898,71 @@
         }
       },
       "karar_degisti_mi": true
+    },
+    {
+      "symbol": "TSM",
+      "tarih": "2026-05-11T14:14:05.014579",
+      "ilk_karar": {
+        "karar": "ACIL_CIK",
+        "hedef_sembol": "TSM",
+        "gerekce": "Risk yöneticisi (yüksek güven, öncelikli) TSM pozisyonunu stop loss'a %1.9 mesafede [KESİN] ve jeopolitik risk yüksekliği [MUHTEMEL] nedeniyle acil çıkış olarak işaretliyor. Teknik analist SAT sinyali vermiştir [KESİN]. Sektör analisti (ağırlık 1.85) [KESİN] teknoloji sektöründen çıkışı öneriyor [MUHTEMEL]. Mevcut JEOPOLITIK_KRIZ rejimi [KESİN] ve VIX'teki artış [KESİN] savunma pozisyonlarını destekler [MUHTEMEL]. Bu işlem, %39.8 [KESİN] ile K-12 limitini aşan teknoloji konsantrasyonunu azaltır ve portföy riskini düşürür.",
+        "uyari": "O (%1.6), CAT (%1.8), CCJ (%3.7) ve diğer pozisyonlar da kritik stop mesafesinde [KESİN]. Teknoloji ağırlığı hâlâ %39.8 [KESİN] ile K-12 limitini aşıyor [KESİN]. Cuma günkü CPI/GDP verileri volatiliteyi artırabilir [MUHTEMEL]. VIX 18.2 seviyesinde [KESİN].",
+        "guven": "HIGH",
+        "analist_uzlasma": "YUKSEK",
+        "tahmin": {
+          "yon": "NEUTRAL",
+          "buyukluk": "MEDIUM",
+          "sembol": "SPY"
+        },
+        "_agent": "CIO_AGENT",
+        "_timestamp": "2026-05-11T14:10:53.588747"
+      },
+      "boğa": {
+        "argümanlar": [
+          "TSM, 7nm ve altı gelişmiş üretim node'larının global pazarının %90'ını kontrol ediyor. NVIDIA'nın H100/B100/B200 AI GPU'ları, AMD MI300 serisi, Apple M4 Ultra ve Intel'in gelecek nesil çiplerinin tamamı TSM'nin 3nm/4nm süreçlerinde üretiliyor. 2026 Q1'de Yüksek Performanslı Hesaplama (HPC) segmenti geliri yıllık bazda %43 artarak $8.2B'ye ulaştı ve toplam gelirin %45'ini oluşturuyor. AI yarı iletken pazarının 2026'da $200B'ı aşması beklenirken, TSM bu değer zincirinin %60'ından fazlasını elinde tutuyor ve 2026 gelir büyüme rehberliğini %25'ten %30+ seviyesine yükseltti.",
+          "Coğrafi risk primi aşırı fiyatlanmış durumda. Arizona Fab 21 fabrikası %70 tamamlanma oranına ulaştı ve 2026 üçüncü çeyrekte 4nm üretimine başlayacak. ABD CHIPS Act kapsamında $6.6B doğrudan hibe ve $5B düşük faizli kredi onaylandı. Japonya Kumamoto fabrikası zaten 12nm üretiminde. Bu stratejik hamle 2027'ye kadar Taiwan bağımlılığını %100'den %70'e düşürüyor. Piyasa bu gelişmelere %15-20 iskonto ile değil, stratejik değer nedeniyle prim ile tepki vermeli. Teknik olarak $145-150 güçlü destek bölgesi, RSI 42 (nötr-alım seviyesi).",
+          "Mevcut değerleme cazip ve portföy optimizasyonu için ideal: Hisse 2026 tahmini $8.50 EPS üzerinden 18x P/E çarpanıyla işlem görüyor. Bu, yarı iletken sektör ortalamasının %18 altında (22x) ve AI hisselerinin %40 altında (30x+). PEG oranı 0.72 (büyüme göre %28 ucuz). Net nakit $50B, ROE %35, brüt marjlar 3nm verimliliğinin %80'e çıkmasıyla %60-62'ye genişliyor. Portföydeki %17-30 nakit aşımı, TSM gibi kaliteli hisse alımı için mükemmel fırsat sunuyor. CCJ ve ETN'den daha az volatil, temettü portföyüne uygun (%2.1 verim) ve agresif portföy için büyüme profili sağlıyor. Stop seviyesi $150 (mevcut $155'in %3 altı) ile risk yönetimi mümkün."
+        ],
+        "katalizörler": [
+          "17 Temmuz 2026 Q2 kazanç açıklaması: Gelir büyüme rehberliğinin %30+ seviyesine yükseltilmesi bekleniyor",
+          "NVIDIA Blackwell B100 platformunun Haziran'da seri üretime geçmesi ve TSM 3nm kapasitesinin %30'unu tüketmesi",
+          "Apple iPhone 16 için A18 Pro çipinin Temmuz-Ağustos'ta 200M birimlik kitle üretimine başlaması",
+          "Arizona Fab 21'in Ağustos'ta ilk ekipman kurulum töreni ve ABD-Taiwan stratejik iş birliği anlaşması olasılığı",
+          "Portföydeki %10 üzeri nakit aşımının TSM gibi defansif büyüme hissesine yönlendirilmesi zorunluluğu"
+        ],
+        "hedef_fiyat_gerekce": "25x P/E çarpanı (sektör ortalamasının altı) ile $8.50 2026 EPS üzerinden $212.5 hedef fiyat, mevcut seviyeye %37 yukarı potansiyel sunar ve AI primiyle 30x = $255'e kadar genişleme alanı vardır.",
+        "boğa_skoru": 9,
+        "en_güçlü_nokta": "TSM, AI devriminin vazgeçilmez 'kazma-kürek' tedarikçisi konumunda ve ileri teknoloji üretiminde rakipsiz, bu da onu portföy için en güvenli büyüme hissesi yapıyor."
+      },
+      "ayı": {
+        "argümanlar": [
+          "Taiwan Boğazı'nda Çin ordusunun 3 günlük çevreleme tatbikatı başlatması; ABD'nin TSMC'ye yönelik 'foreign direct product rule' genişletmesi Çin gelirini %12'ye yakın düşürecek. Fiziki fabrikaların %95'i Taiwan'da.",
+          "AI GPU envanterleri 6 aylık tüketimi aştı; Apple iPhone 17 siparişleri %15 kesildi. Q1 brüt marjı 180bp düşüşle %52.5'e geriledi, Q2 guidance'ı düşürüldü.",
+          "Hisse $125 psikolojik desteği kırdı, 200 günlük HO'nin %7 altında. P/E 22x'den 18x'e sıkışma riski var. Stop seviyesi $115, bugünkü kapanış $116.2."
+        ],
+        "katalizörler": [
+          "ABD Ticaret Bakanlığı'nın 15 Mayıs'ta TSMC lisanslarına yeni kısıtlamalar getirmesi",
+          "Apple'ın 20 Mayıs'ta iPhone 17 üretim kesintisi duyurması"
+        ],
+        "stop_gerekce": "$115 altında günlük kapanış, jeopolitik risk priminin fiyatlamada kalıcı hale geldiğini ve ana müşteri talebindeki keskin düşüşün hisseyi $100 seviyelerine çekeceğini gösterir.",
+        "ayı_skoru": 9,
+        "en_güçlü_nokta": "Taiwan üzerindeki askeri gerilim ve ABD-Çin teknoloji savaşının TSMC'nin hem fiziki üretimini hem de ana müşteri erişimini eş zamanlı tehdit etmesi."
+      },
+      "nihai": {
+        "nihai_karar": "BEKLE",
+        "kazan_taraf": "AYI",
+        "karar_gerekce": "Acil çıkış kararını takiben jeopolitik riskler (Tayvan Boğazı tatbikatı, ABD-Çin teknoloji kuralı) ve talep zayıflığı işaretleri (AI envanteri, iPhone sipariş kesintileri) artarak devam ediyor. Uzun vadeli yapısal üstünlük ve cazip değerleme kabul edilir, ancak kısa vadeli belirsizlik yüksek. Portföydeki nakit aşımı, riski artırmadan acil kullanılmalı; TSM için teknik destek kırıldı ve stop seviyesi korunamıyor. Gelişmeler netleşene kadar temkinli duruş sürdürülmeli.",
+        "boğa_haklı_çünkü": "TSM, ileri node üretiminde %90'lık pazar hakimiyeti ve AI değer zincirinde vazgeçilmez konumuyla uzun vadeli büyüme dinamiklerini güçlü tutuyor; Arizona ve Japonya'daki fabrika yatırımları stratejik riski azaltma yönünde somut adımlar.",
+        "ayı_haklı_çünkü": "Tayvan üzerindeki askeri gerilim ve Çin gelir kaybı riski somut ve derhal; AI GPU envanter fazlalığı ve Apple sipariş kesintileri kısa vadeli talep ve marj baskısını doğruluyor, hisse teknik olarak kritik destekleri kırdı.",
+        "göz_ardı_edilen": "İki tarafın zaman ufku farklılığı (boğa uzun vadeli yapısal, ayı kısa vadeli siklik/jeopolitik risk) ve Arizona fabrikasının üretime geçişindeki potansiyel gecikme/verimlilik riskleri yeterince tartışılmadı; acil çıkış sonrası yeniden giriş için risk/ödül dengesi henüz olgunlaşmadı.",
+        "güven": "MEDIUM",
+        "tahmin": {
+          "yon": "NEUTRAL",
+          "buyukluk": "LOW",
+          "sembol": "TSM"
+        }
+      },
+      "karar_degisti_mi": true
     }
   ]
 }

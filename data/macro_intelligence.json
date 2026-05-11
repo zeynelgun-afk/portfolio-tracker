@@ -1,151 +1,140 @@
 {
-  "tarih": "2026-05-08T16:03:39.874403+03:00",
-  "vix": 16.89,
+  "tarih": "2026-05-11T17:05:04.641433+03:00",
+  "vix": 18.2,
   "sektor_performans": {
-    "Basic Materials": -1.8231160606101304,
-    "Communication Services": -0.2124615955602538,
-    "Consumer Cyclical": -0.22957888219846678,
-    "Consumer Defensive": 1.1331190598159901,
-    "Energy": -0.9626406752238137,
-    "Financial Services": -1.452880295186787,
-    "Healthcare": -1.218812753210441,
-    "Industrials": -1.4718017946220519,
-    "Real Estate": -1.7069335606017089,
-    "Technology": -0.8016773027391344,
-    "Utilities": -2.72505610205942
+    "Basic Materials": -0.11139974574962963,
+    "Communication Services": 0.2677106648204086,
+    "Consumer Cyclical": 0.852196982542841,
+    "Consumer Defensive": -0.28558825875374394,
+    "Energy": -0.1707175615106693,
+    "Financial Services": -0.32157058790373005,
+    "Healthcare": -0.1356548123044865,
+    "Industrials": -0.6525118165803923,
+    "Real Estate": 0.023049998408675165,
+    "Technology": 2.5681649816608365,
+    "Utilities": -2.6506656917687943
   },
   "dominant_temalar": [
     {
-      "tema_adi": "sağlık_yenilik",
+      "tema_adi": "AI_altyapı",
       "güç_skoru": 9,
-      "neden": "KESİN: ATRA, AGL ve RPGL gibi biyoteknoloji hisseleri %70-117 arası yükselişle genel sektör performansını aşarak ilaç yeniliği haberleriyle güçlü momentum gösteriyor.",
-      "öncelikli_alt_dal": "onkoloji_ve_gen_terapisi",
+      "neden": "Teknoloji sektörü %2.6 ile en güçlü performansı gösterirken [KESİN] AI haberleri destekliyor.",
+      "öncelikli_alt_dal": "güç_soğutma",
       "önerilen_hisseler": [
-        "XBI",
-        "IBB",
-        "GILD"
+        "VRT",
+        "ETN",
+        "PWR"
       ],
       "portföy": "aggressive",
       "aciliyet": "yüksek",
       "hisse_evreni": [
-        "NVO",
-        "MRNA",
-        "ISRG",
-        "SYK",
-        "REGN",
-        "ALT",
-        "BMY",
-        "VKTX",
-        "GILD",
-        "MDT",
-        "EW",
-        "LLY"
+        "VRT",
+        "ETN",
+        "PWR",
+        "GNRC",
+        "HUBB"
+      ]
+    },
+    {
+      "tema_adi": "savunma_uzay",
+      "güç_skoru": 5,
+      "neden": "İran gerilimi haberleri jeopolitik riski artırıyor [KESİN].",
+      "öncelikli_alt_dal": "hipersonik",
+      "önerilen_hisseler": [
+        "LHX",
+        "RTX",
+        "NOC"
+      ],
+      "portföy": "defensive",
+      "aciliyet": "orta",
+      "hisse_evreni": [
+        "RDW",
+        "S",
+        "LHX",
+        "RTX",
+        "RKLB",
+        "ZS",
+        "NOC",
+        "LMT",
+        "AJRD",
+        "CRWD",
+        "PANW",
+        "KTOS",
+        "GD"
       ]
     },
     {
       "tema_adi": "enerji_geçiş",
-      "güç_skoru": 8,
-      "neden": "KESİN: AI veri merkezlerinin güç talebi FLNC'yi %39.9 yükseltirken, MUHTEMEL: yeşil enerji altyapısı yatırımlarındaki artış tema için güçlü destek sağlıyor.",
-      "öncelikli_alt_dal": "enerji_depolama_ve_ai_güç_altyapısı",
+      "güç_skoru": 4,
+      "neden": "İran gerilimi petrol fiyatlarını yükseltse de enerji sektörü hafif geriledi [KESİN].",
+      "öncelikli_alt_dal": "nükleer",
       "önerilen_hisseler": [
-        "FLNC",
-        "VRT",
-        "ETN"
+        "NEE",
+        "SO",
+        "DUK"
       ],
       "portföy": "balanced",
-      "aciliyet": "orta",
+      "aciliyet": "düşük",
       "hisse_evreni": [
-        "NEE",
-        "ET",
-        "FSLR",
-        "RUN",
-        "KMI",
         "CEG",
-        "NRG",
-        "CCJ",
         "VST",
-        "WMB",
-        "OKE",
-        "ENPH"
-      ]
-    },
-    {
-      "tema_adi": "AI_altyapı",
-      "güç_skoru": 6,
-      "neden": "KESİN: Yazılım hisselerindeki AI endişelerine rağmen RXT'nin %55.1 yükselişiyle bulut altyapısı talebinin sürdüğünü gösteriyor, MUHTEMEL: veri merkezi soğutma ve güç çözümleri öne çıkıyor.",
-      "öncelikli_alt_dal": "veri_merkezi_sogutma",
-      "önerilen_hisseler": [
-        "VRT",
-        "ETN",
-        "NVDA"
-      ],
-      "portföy": "aggressive",
-      "aciliyet": "orta",
-      "hisse_evreni": [
-        "AMAT",
-        "COHR",
-        "VRT",
-        "ONTO",
-        "MU",
-        "ANET",
-        "PWR",
-        "GNRC",
-        "STX",
-        "TER",
-        "ETN",
-        "CAMT",
-        "HUBB",
-        "KLAC",
-        "LRCX",
-        "WDC",
-        "FN",
-        "LITE",
-        "DLR",
-        "IREN",
-        "AAOI",
-        "ASML",
-        "EQIX"
+        "NRG",
+        "CCJ"
       ]
     }
   ],
   "kacınılacak": [
-    "Financial Services",
-    "Industrials"
+    "Consumer Defensive",
+    "Real Estate"
   ],
   "piyasa_modu": "risk-on",
   "aktif_kriz": {
-    "tip": "yok",
-    "guven": 8,
-    "kanit": "KESİN: VIX 16.9 seviyesiyle 20 altında kalmaya devam ediyor ve istihdam verileri beklentileri aştı. MUHTEMEL: S&P500 yeni zirveler için hazırlanıyor ve sektörler arası karışık görünüm genel kriz işareti değil, hisse spesifik oynaklık ve rotasyon hareketleri olarak yorumlanıyor.",
-    "beneficiary_sectors": [],
-    "sensitive_sectors": []
+    "tip": "jeopolitik",
+    "guven": 6,
+    "kanit": "Haberlerde İran gerilimi doğrudan belirtiliyor [KESİN]. VIX 18.2 ile kriz eşiğinin altında [KESİN] kalsa da jeopolitik risk varlığını koruyor [MUHTEMEL]. Enerji sektörünün beklenenin aksine hafif gerilemesi piyasanın krizi hafife aldığını gösteriyor [MUHTEMEL].",
+    "beneficiary_sectors": [
+      "Energy",
+      "Defense",
+      "Gold",
+      "Materials",
+      "Real Estate",
+      "Consumer Defensive"
+    ],
+    "sensitive_sectors": [
+      "Technology",
+      "Consumer Cyclical",
+      "Communication Services",
+      "Healthcare",
+      "Financial Services",
+      "Industrials"
+    ]
   },
-  "genel_yorum": "Piyasada genel risk iştahı yüksek olsa da sektörel rotasyon belirgin. Sağlık yeniliği ve enerji geçişi temaları hisse spesifik katalizörlerle güçlenirken, teknoloji sektörü AI değerlendirme endişeleriyle baskı altında. Taktiksel tema odaklı pozisyonlama öneriliyor.",
+  "genel_yorum": "Teknoloji sektörünün güçlü liderliği risk-on modunu gösteriyor [KESİN]. İran gerilimine rağmen VIX 18.2 ile sınırlı korku var [KESİN]. AI teması belirgin şekilde öne çıkıyor [KESİN].",
   "haberler": [
     {
-      "baslik": "US economy added 115,000 jobs in April, beating expectations",
-      "kaynak": "foxbusiness.com",
-      "tarih": "2026-05-08 08:51"
-    },
-    {
-      "baslik": "S&P500 and Nasdaq 100: US Indices Eye Fresh Highs After Earnings Surge",
+      "baslik": "Nasdaq 100, Dow Jones 30 and S&P 500 Forecasts – Two of Three Indices Stretched",
       "kaynak": "fxempire.com",
-      "tarih": "2026-05-08 08:47"
+      "tarih": "2026-05-11 09:47"
     },
     {
-      "baslik": "U.S. economy adds 115,000 jobs in April",
-      "kaynak": "youtube.com",
-      "tarih": "2026-05-08 08:45"
+      "baslik": "Dow slips 56 points as Iran tensions lift oil prices, hit airlines",
+      "kaynak": "invezz.com",
+      "tarih": "2026-05-11 09:40"
     },
     {
-      "baslik": "This Software Stock Is Having Its Worst Day Ever. AI Fears Are the Market Reality.",
-      "kaynak": "barrons.com",
-      "tarih": "2026-05-08 08:35"
+      "baslik": "Nasdaq 100 Index RSI hits a level that triggered a 16% crash last time",
+      "kaynak": "invezz.com",
+      "tarih": "2026-05-11 09:06"
     },
     {
-      "baslik": "The U.S. added 115,000 jobs in April, the Labor Department said Friday, far exceeding expectations",
-      "kaynak": "wsj.com",
-      "tarih": "2026-05-08 08:34"
+      "baslik": "Chinese Landscape Architect Becomes A Billionaire After AI Pivot Sends His Company's Shares Up Almost 1,600%",
+      "kaynak": "forbes.com",
+      "tarih": "2026-05-11 09:05"
+    },
+    {
+      "baslik": "Wise set to make Nasdaq debut as company completes shift from London to New York",
+      "kaynak": "reuters.com",
+      "tarih": "2026-05-11 09:03"
     }
   ]
 }
