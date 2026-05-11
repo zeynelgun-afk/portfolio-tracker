@@ -2,9 +2,72 @@
   "_meta": {
     "description": "Adil değer ve araştırma raporları index - Finzora AI",
     "created": "2026-05-08",
-    "format": "11 bölüm zorunlu protokol (docs/ADIL_DEGER_RAPOR_PROTOKOLU.md)"
+    "format": "11 bölüm zorunlu protokol (docs/ADIL_DEGER_RAPOR_PROTOKOLU.md)",
+    "son_guncelleme": "2026-05-11"
   },
   "reports": [
+    {
+      "ticker": "CBRS",
+      "company": "Cerebras Systems Inc.",
+      "type": "ADIL_DEGER",
+      "date": "2026-05-11",
+      "file": "CBRS_ADIL_DEGER_2026-05-11.md",
+      "current_price": null,
+      "ipo_pricing_date": "2026-05-13",
+      "ipo_trading_start": "2026-05-14",
+      "ipo_price_range_low": 150.0,
+      "ipo_price_range_high": 160.0,
+      "fair_value_weighted": 127.0,
+      "fair_value_bear": 75.0,
+      "fair_value_base": 127.0,
+      "fair_value_bull": 185.0,
+      "expected_value": 123.0,
+      "upside_pct_vs_ipo_top": -21.0,
+      "decision": "AL_KADEMELI_BEKLE_ZONLAMA",
+      "portfolio_recommendation": {
+        "balanced": "GIRMEZ",
+        "aggressive": "AL_KADEMELI_POST_IPO_ZONLAMA",
+        "dividend": "GIRMEZ"
+      },
+      "entry_zone_low": 130.0,
+      "entry_zone_high": 150.0,
+      "stop_loss": 115.0,
+      "target_12m": 185.0,
+      "target_18m": 250.0,
+      "risk_level": "YUKSEK",
+      "confidence": "ORTA",
+      "methodology_mode": "GROWTH",
+      "methods_used": 7,
+      "methods_unusable": 6,
+      "methods_unusable_reason": "TTM operating loss; pre-IPO durum; nakit dışı GAAP kazanç",
+      "cv_pct": 32.0,
+      "key_catalysts": [
+        "OpenAI MRA 750 MW + 1.25 GW opsiyonu (2 GW potansiyel = $50B+)",
+        "AWS Bedrock partnership Q4 2026 lansman",
+        "Backlog $24.6B, %43 dönüşüm 2028-2029'da",
+        "Inference TAM $251B -> $672B (2025-2029, %28 CAGR)"
+      ],
+      "key_risks": [
+        "Müşteri konsantrasyonu %86 (MBZUAI+G42)",
+        "Kâr kalitesi: GAAP NI $363M nakit dışı kazançtan",
+        "NVIDIA rekabet baskısı",
+        "Lock-up sonrası satış (Kasım 2026)",
+        "K-13 day-1 chase yasak"
+      ],
+      "tags": [
+        "AI_supply_chain",
+        "AI_inference",
+        "wafer_scale",
+        "OpenAI_partnership",
+        "AWS_partnership",
+        "pre_IPO",
+        "high_beta",
+        "customer_concentration",
+        "UAE_exposure",
+        "growth_mode",
+        "NVIDIA_competitor"
+      ]
+    },
     {
       "ticker": "SMCI",
       "company": "Super Micro Computer, Inc.",
@@ -12,7 +75,7 @@
       "date": "2026-05-08",
       "file": "SMCI_ADIL_DEGER_2026-05-08.md",
       "current_price": 33.62,
-      "fair_value_weighted": 45.40,
+      "fair_value_weighted": 45.4,
       "upside_pct": 35.0,
       "decision": "AL",
       "portfolio_recommendation": {
@@ -20,11 +83,18 @@
         "aggressive": "AL_KADEMELI",
         "dividend": "GIRMEZ"
       },
-      "stop_loss": 27.50,
-      "target_12m": 42.00,
-      "target_18m": 52.00,
+      "stop_loss": 27.5,
+      "target_12m": 42.0,
+      "target_18m": 52.0,
       "risk_level": "YUKSEK",
-      "tags": ["AI_supply_chain", "AI_server", "liquid_cooling", "high_beta", "NVIDIA_dependency", "audit_history"]
+      "tags": [
+        "AI_supply_chain",
+        "AI_server",
+        "liquid_cooling",
+        "high_beta",
+        "NVIDIA_dependency",
+        "audit_history"
+      ]
     },
     {
       "ticker": "FLYW",

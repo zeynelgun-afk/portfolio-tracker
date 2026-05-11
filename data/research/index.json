@@ -1,9 +1,9 @@
 {
-  "son_guncelleme": "2026-05-08",
-  "toplam_analiz": 11,
+  "son_guncelleme": "2026-05-11",
+  "toplam_analiz": 12,
   "beat_tahmin": 0,
   "miss_tahmin": 0,
-  "beklemede": 1,
+  "beklemede": 2,
   "aktif_izleme": 10,
   "dogru_tahmin_orani": null,
   "analizler": [
@@ -1014,6 +1014,205 @@
           "aciklama": "Finzora skill v1 dashboard — 12 bölümlü, Q1 2026 bilanço sonrası analiz",
           "skill": "finzora-stock-analysis"
         }
+      ]
+    },
+    {
+      "id": "CBRS_ADIL_DEGER_2026-05-11",
+      "ticker": "CBRS",
+      "sirket": "Cerebras Systems Inc.",
+      "sektor": "Semiconductor / AI Compute - Wafer Scale Engine pure-play",
+      "analiz_tarihi": "2026-05-11",
+      "bilanco_tarihi": "Q2 2026 (Ağustos-Eylül 2026, post-IPO ilk halka açık rapor)",
+      "analiz_turu": "adil_deger_hesabi",
+      "durum": "pre_IPO_izleme",
+      "dosya": "reports/research/CBRS_ADIL_DEGER_2026-05-11.md",
+      "kataliz": {
+        "olay": "Halka arz (IPO) 13 Mayıs 2026 pricing, 14 Mayıs işlem başlangıcı. OpenAI MRA 20B+ ($1B loan + 33.4M warrant) + AWS Bedrock partnership (Mart 2026) + Backlog $24.6B.",
+        "tarih": "2026-05-13 (pricing) / 2026-05-14 (NYSE açılış)",
+        "aciklama": "20x+ oversubscribed talep, fiyat aralığı $115-125 → $125-135 → $150-160 iki kez yukarı revize. Day-1 pop beklentisi %25-50. Hisse $190-240 zonunda açılabilir. K-13 day-1 chase yasak. Lock-up Kasım 2026 ek satış baskısı riski."
+      },
+      "adil_deger": {
+        "yontem_v": "v3.7.2 forward-adapted (TTM op loss — 6 yöntem iptal, GROWTH modu)",
+        "kullanilabilir_yontem_sayisi": 7,
+        "kullanilamayan_yontem_sayisi": 6,
+        "kullanilamayan_sebebi": "TTM operating loss -$146M, GAAP NI nakit dışı $363M kazançtan, FCF negatif, ROE birikmiş zarar nedeniyle anlamsız. Net P/E, Forward P/E (NTM), EV/EBIT, EV/EBITDA, P/FCF, ROE bazlı, Graham Number iptal. Forward bazlı zorla aktif (2026/2027/2028 EV/Revenue, DCF, EV/Backlog).",
+        "agirlikli_adil_deger": 127.0,
+        "iskontosuz_adil_deger": 127.0,
+        "senaryo_beklenen_deger": 123.0,
+        "confidence": "ORTA",
+        "yontem_dagilimi": {
+          "ev_revenue_ttm": {
+            "deger": 54.0,
+            "agirlik": 0.05,
+            "multiple_used": "24x ($510M × 24 / 224M)"
+          },
+          "forward_ev_revenue_2026": {
+            "deger": 79.0,
+            "agirlik": 0.15,
+            "multiple": "15x",
+            "revenue_assumption_b": 1.2
+          },
+          "forward_ev_revenue_2027": {
+            "deger": 145.0,
+            "agirlik": 0.2,
+            "multiple": "12x",
+            "revenue_assumption_b": 2.7
+          },
+          "forward_ev_revenue_2028": {
+            "deger": 196.0,
+            "agirlik": 0.15,
+            "multiple": "8x",
+            "revenue_assumption_b": 5.5
+          },
+          "dcf_2_asama": {
+            "deger": 108.0,
+            "agirlik": 0.25,
+            "wacc": 0.13,
+            "terminal_buyume": 0.04,
+            "buyume_asama1_2026_2030": "100%+ azalan",
+            "op_margin_2030": 0.23
+          },
+          "ev_backlog": {
+            "deger": 134.0,
+            "agirlik": 0.15,
+            "backlog_b": 30.0,
+            "multiple": "1.0x"
+          },
+          "forward_pe_2028_normalize": {
+            "deger": 130.0,
+            "agirlik": 0.05,
+            "eps_assumption": 1.3,
+            "multiple": "100x"
+          }
+        },
+        "cv_pct": 32.0,
+        "cv_label": "🟡 Normal dağılım"
+      },
+      "on_beklenti": {
+        "senaryo_boga": {
+          "kosul": "OpenAI 1,25 GW ek opsiyon %50+ yürürlüğe, AWS Bedrock üretim ölçeği, sovereign AI sözleşmeleri (Suudi/Hindistan/AB), brüt marj %50+",
+          "fiyat_hedef": 185.0,
+          "getiri_pct_vs_ipo_top": 16.0
+        },
+        "senaryo_baz": {
+          "kosul": "Backlog S-1 takvimine sadık dönüşüm, 2026 $1,2B → 2027 $2,7B → 2028 $5,5B, brüt marj %42-45, AWS Bedrock canlı ama mega scale değil",
+          "fiyat_hedef": 127.0,
+          "getiri_pct_vs_ipo_top": -21.0
+        },
+        "senaryo_ayi": {
+          "kosul": "UAE müşteri konsantrasyon krizi, CFIUS yeniden incelemesi, NVDA fiyat baskısı, brüt marj %30 altı, backlog dönüşümü gecikir, OpenAI ilişkisi soğur",
+          "fiyat_hedef": 75.0,
+          "getiri_pct_vs_ipo_top": -53.0
+        },
+        "olasiliklar": {
+          "boga": 0.2,
+          "baz": 0.5,
+          "ayi": 0.3
+        }
+      },
+      "analiz_fiyati": null,
+      "ipo_pricing_aralik": {
+        "low": 150.0,
+        "high": 160.0,
+        "tarih": "2026-05-13"
+      },
+      "ipo_islem_baslangic": "2026-05-14",
+      "ipo_offering": {
+        "shares_offered_m": 28.0,
+        "greenshoe_m": 4.2,
+        "fully_diluted_post_ipo_m": 257.0,
+        "basic_post_ipo_m": 224.0,
+        "raise_b": 3.5,
+        "valuation_top_b": 35.8
+      },
+      "temel_metrikler": {
+        "revenue_2025_m": 510.0,
+        "revenue_yoy": 0.76,
+        "revenue_2024_m": 290.3,
+        "gross_margin_2025": 0.39,
+        "gaap_net_income_2025_m": 87.9,
+        "non_gaap_net_loss_2025_m": -75.7,
+        "gaap_operating_loss_2025_m": -145.9,
+        "non_cash_gain_2025_m": 363.3,
+        "cash_2025_m": 701.7,
+        "backlog_rpo_b": 24.6,
+        "backlog_konversiyon_2026_2027_pct": 15,
+        "backlog_konversiyon_2028_2029_pct": 43,
+        "backlog_konversiyon_2030_plus_pct": 42,
+        "musteri_konsantrasyon_pct": 86,
+        "musteri_mbzuai_pct": 62,
+        "musteri_g42_pct": 24,
+        "us_revenue_decline_yoy_pct": -34
+      },
+      "anahtar_sozlesmeler": {
+        "openai_mra": {
+          "tarih": "Ocak 2026",
+          "tutar_b": 20.0,
+          "kapasite_mw": 750,
+          "sure": "2028'e kadar (3 yıl, 250 MW/yıl)",
+          "opsiyon_gw": 1.25,
+          "opsiyon_sure": "2030'a kadar",
+          "ek_kredi_b": 1.0,
+          "kredi_faiz_pct": 6,
+          "warrant_milyon": 33.4,
+          "warrant_sinif": "Class N non-voting",
+          "nisan_2026_eklenti_b": 10.0,
+          "toplam_potansiyel_2gw_b": 50.0
+        },
+        "aws_bedrock": {
+          "tarih": "13 Mart 2026",
+          "tip": "Multi-year disaggregated inference partnership",
+          "mimari": "AWS Trainium prefill + Cerebras CS-3 decode + EFA networking",
+          "lansman": "Q4 2026 / Q1 2027",
+          "destekli_modeller": "Amazon Nova + açık kaynak LLM'ler (Llama, Mistral)",
+          "performans": "5x token kapasitesi, 10x hız vs GPU"
+        }
+      },
+      "portfoy_onerisi": {
+        "dengeli": "girmez",
+        "agresif": "al_kademeli_post_ipo_zonlama",
+        "temettu": "girmez",
+        "swing": "izle_post_pop_consolidation"
+      },
+      "giris_plani": {
+        "ideal_zon_low": 130.0,
+        "ideal_zon_high": 150.0,
+        "stop_loss": 115.0,
+        "hedef_12m": 185.0,
+        "hedef_18m_24m": 250.0,
+        "rr_orani": 3.0,
+        "agresif_pozisyon_usd": "16000-20000",
+        "agresif_pozisyon_pct": "4-5",
+        "bekle_kosullari": [
+          "Day-1 ve Day-2 close gözlemlenir (K-13 1 gün cooldown)",
+          "5-7 gün post-IPO consolidation, gün-içi volatilite %5 altı",
+          "NVDA+AMD+AVGO korelasyon, AI sektörü düşüyorsa giriş ertelenir"
+        ]
+      },
+      "izleme_tetikleyicileri": [
+        "13 Mayıs 2026 IPO pricing - final fiyat $145 altı veya $160 üstü tepkisi",
+        "14 Mayıs 2026 NYSE açılış - day-1 open ve day-2 close",
+        "Q3 2026 ilk halka açık bilanço (Ağustos-Eylül)",
+        "Kasım 2026 lock-up expiration (180 gün), insider satış",
+        "Q4 2026 / Q1 2027 AWS Bedrock Cerebras hardware lansman",
+        "2027 Q2 OpenAI ilk 250 MW tranche teslimat doğrulaması",
+        "2027 sonu kümülatif backlog dönüşüm $3.7B doğrulaması",
+        "OpenAI 2 GW ek opsiyon vesting (8-K filing tetikleyicisi)"
+      ],
+      "risk_seviyesi": "YUKSEK",
+      "etiketler": [
+        "AI_supply_chain",
+        "AI_inference",
+        "wafer_scale",
+        "OpenAI_partnership",
+        "AWS_partnership",
+        "pre_IPO",
+        "high_beta",
+        "customer_concentration",
+        "UAE_exposure",
+        "growth_mode",
+        "NVIDIA_competitor",
+        "backlog_visibility"
       ]
     }
   ]
