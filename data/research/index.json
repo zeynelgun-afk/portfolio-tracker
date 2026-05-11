@@ -1,10 +1,10 @@
 {
   "son_guncelleme": "2026-05-11",
-  "toplam_analiz": 12,
+  "toplam_analiz": 13,
   "beat_tahmin": 0,
   "miss_tahmin": 0,
   "beklemede": 2,
-  "aktif_izleme": 10,
+  "aktif_izleme": 11,
   "dogru_tahmin_orani": null,
   "analizler": [
     {
@@ -1213,6 +1213,124 @@
         "growth_mode",
         "NVIDIA_competitor",
         "backlog_visibility"
+      ]
+    },
+    {
+      "id": "NVDA_ADIL_DEGER_2026-05-11",
+      "ticker": "NVDA",
+      "sirket": "NVIDIA Corporation",
+      "sektor": "Technology / Semiconductors",
+      "analiz_tarihi": "2026-05-11",
+      "analiz_turu": "adil_deger_hesabi",
+      "durum": "aktif_izleme",
+      "dosya": "reports/research/NVDA_ADIL_DEGER_2026-05-11.md",
+      "adil_deger": {
+        "yontem_v": "v5.0",
+        "mod": "GROWTH",
+        "kullanilabilir_yontem_sayisi": 9,
+        "kullanilamayan_yontem_sayisi": 0,
+        "agirlikli_adil_deger": 259.25,
+        "confidence": "ORTA",
+        "quality_premium": 1.396,
+        "ai_mega_cap": false
+      },
+      "on_beklenti": {
+        "senaryo_boga": {
+          "fiyat_hedef": 310.68,
+          "getiri_pct": 44.4,
+          "olasilik": 0.225
+        },
+        "senaryo_baz": {
+          "fiyat_hedef": 259.25,
+          "getiri_pct": 20.5,
+          "olasilik": 0.475
+        },
+        "senaryo_ayi": {
+          "fiyat_hedef": 194.96,
+          "getiri_pct": -9.4,
+          "olasilik": 0.3
+        }
+      },
+      "analiz_fiyati": 215.217,
+      "temel_metrikler": {
+        "pe_ttm": 43.57,
+        "forward_pe": 19.34,
+        "roe_ttm_pct": 76.33,
+        "net_margin_pct": 55.6,
+        "revenue_growth_yoy_pct": 65.5,
+        "piyasa_degeri_m": 5230849.0,
+        "beta": 2.244,
+        "vix_at_analysis": 18.12
+      },
+      "v5_sinyaller": {
+        "altman_z": {
+          "value": 68.23,
+          "label": "GÜVENLİ",
+          "emoji": "🟢"
+        },
+        "piotroski": {
+          "value": 6,
+          "label": "SAĞLAM",
+          "emoji": "🟡"
+        },
+        "analist_sentiment": {
+          "strong_buy": 2,
+          "buy": 58,
+          "hold": 16,
+          "sell": 3,
+          "strong_sell": 0,
+          "consensus_label": "Buy"
+        },
+        "upgrade_momentum": {
+          "direction": "downgrade",
+          "magnitude": -6,
+          "label": "🔴 DOWNGRADE TRENDI (-6)"
+        },
+        "fmp_dcf_unlevered": 247.15,
+        "konsantrasyon_urun": {
+          "top_segment": "Data Center",
+          "top_share_pct": 89.7,
+          "top2_share_pct": 97.1,
+          "label": "🔴 KRİTİK: Data Center %90",
+          "fiscal_year": 2026
+        },
+        "konsantrasyon_cografya": {
+          "top_segment": "UNITED STATES",
+          "top_share_pct": 69.3,
+          "top2_share_pct": 88.9,
+          "label": "🟠 YÜKSEK: UNITED STATES %69",
+          "fiscal_year": 2026
+        },
+        "canli_sektor_pe": 62.32,
+        "dinamik_wacc": 17.84
+      },
+      "projeksiyon": {
+        "profile_key": "semicon_design_mature",
+        "normalizasyon_yili": 2026
+      },
+      "portfoy_onerisi": {
+        "dengeli": "uygun_kosullu",
+        "agresif": "uygun",
+        "temettu": "uygun_degil"
+      },
+      "giris_plani": {
+        "stop_loss": 187.24,
+        "hedef_1": 259.25,
+        "hedef_2": 310.68
+      },
+      "karar": "🟢 AL",
+      "karar_gerekce": "Mevcut fiyat normal medyan altında. İyi giriş seviyesi.",
+      "gerceklesen": {
+        "tespit_fiyati": 215.217,
+        "simdiki_fiyat": null,
+        "fiyat_tepkisi_pct": 0,
+        "tez_tuttu": null,
+        "ders": null
+      },
+      "etiketler": [
+        "growth",
+        "v5.0_skill",
+        "semicon_design_mature"
       ]
     }
   ]
