@@ -2335,46 +2335,116 @@ def format_markdown_report(result, output_path=None):
     md.append("")
     
     # ========================================
-    # BÖLÜM 10: Giriş Planı
+    # BÖLÜM 10: Giriş Planı (v5.0 Etap 13: Karar-Stop tutarlılığı)
     # ========================================
     md.append("## 10. Giriş Planı")
     md.append("")
     
-    md.append("| Parametre | Değer |")
-    md.append("|---|---|")
-    md.append(f"| Mevcut Fiyat | ${price:.2f} |")
-    md.append(f"| Beklenen Adil Değer | ${normal_median:.2f}" if normal_median else "| Beklenen Adil Değer | hesaplanamadı")
+    # Karar'a göre setup tipi belirle
+    karar_text = (result.get('decision', {}).get('action', '') or '').upper()
+    is_buy = ('AL' in karar_text)
+    is_avoid = ('GEÇ' in karar_text or 'KAÇIN' in karar_text or 'GEC' in karar_text)
+    is_hold = ('İZLE' in karar_text or 'IZLE' in karar_text or 'HOLD' in karar_text or 'PAHALI' in karar_text)
     
-    if bear_median:
-        ideal_low = bear_median
-        ideal_high = bear_median * 1.10
-        md.append(f"| İdeal Giriş Zonu | ${ideal_low:.2f} - ${ideal_high:.2f} (bear medyan + %10) |")
-    
-    # Stop loss = ATR proxy %12-15 altı veya bear medyan altı
-    stop = price * 0.87  # %13 stop
-    md.append(f"| Stop Loss | ${stop:.2f} (-%13) |")
-    
-    if normal_median:
-        md.append(f"| Hedef 1 (base) | ${normal_median:.2f} (normal medyan) |")
-    if bull_median:
-        md.append(f"| Hedef 2 (bull) | ${bull_median:.2f} (boğa medyan) |")
-    
-    # R/R
-    if normal_median and stop:
-        reward = normal_median - price
-        risk = price - stop
-        rr = reward / risk if risk > 0 else None
-        if rr:
+    if is_buy:
+        # LONG SETUP — Skill mevcut fiyatı ucuz buluyor
+        md.append("**Setup**: 🟢 LONG (skill mevcut fiyatı adil değerin altında buluyor)")
+        md.append("")
+        md.append("| Parametre | Değer |")
+        md.append("|---|---|")
+        md.append(f"| Mevcut Fiyat | ${price:.2f} |")
+        md.append(f"| Beklenen Adil Değer | ${normal_median:.2f} |" if normal_median else "| Beklenen Adil Değer | hesaplanamadı |")
+        
+        if bear_median and bear_median < price:
+            ideal_low = bear_median
+            ideal_high = min(bear_median * 1.10, price * 0.98)
+            md.append(f"| İdeal Giriş Zonu | ${ideal_low:.2f} - ${ideal_high:.2f} (bear medyan civarı) |")
+        else:
+            md.append(f"| İdeal Giriş Zonu | Mevcut fiyat veya küçük geri çekilmede |")
+        
+        # Long stop = mevcut fiyat × 0.87 (%13 altı) VEYA bear medyan altı (hangisi yakınsa)
+        stop_pct13 = price * 0.87
+        stop = stop_pct13
+        if bear_median and bear_median * 0.95 > stop_pct13:
+            stop = bear_median * 0.95
+            md.append(f"| Stop Loss | ${stop:.2f} (bear medyanın %5 altı) |")
+        else:
+            md.append(f"| Stop Loss | ${stop:.2f} (-%13) |")
+        
+        if normal_median and normal_median > price:
+            md.append(f"| Hedef 1 (base) | ${normal_median:.2f} (normal medyan, +%{((normal_median/price-1)*100):.1f}) |")
+        if bull_median and bull_median > price:
+            md.append(f"| Hedef 2 (bull) | ${bull_median:.2f} (boğa medyan, +%{((bull_median/price-1)*100):.1f}) |")
+        
+        # R/R (yalnızca hedef > mevcut > stop ise anlamlı)
+        if normal_median and normal_median > price and stop and stop < price:
+            reward = normal_median - price
+            risk = price - stop
+            rr = reward / risk
             md.append(f"| R/R Oranı | 1:{rr:.1f} |")
+        
+        md.append(f"| Pozisyon Boyutu | Portföy max %15-20 (mode'a göre) |")
+        
+    elif is_avoid:
+        # GEÇ / KAÇIN — Skill mevcut fiyatı tüm senaryoların üstünde buluyor
+        md.append("**Setup**: 🔴 GİRİŞ ÖNERMİYORUZ — Mevcut fiyat skill'in tüm senaryolarının üstünde")
+        md.append("")
+        md.append("| Parametre | Değer |")
+        md.append("|---|---|")
+        md.append(f"| Mevcut Fiyat | ${price:.2f} |")
+        md.append(f"| Beklenen Adil Değer | ${normal_median:.2f} (mevcut fiyatın **%{((price/normal_median-1)*100):.0f} altında**) |" if normal_median and normal_median > 0 else "| Beklenen Adil Değer | hesaplanamadı |")
+        
+        if bull_median:
+            md.append(f"| Boğa Senaryosu Hedefi | ${bull_median:.2f} (mevcut fiyatın **%{((price/bull_median-1)*100):.0f} altında**) |" if bull_median > 0 else "")
+        
+        md.append("| Long Setup | ❌ ÖNERİLMEZ (fiyat tüm senaryoların üstünde) |")
+        
+        # Short setup (opsiyonel, sadece bilgi amaçlı)
+        if normal_median and normal_median > 0 and price > normal_median:
+            short_stop = price * 1.13  # %13 yukarı
+            short_target_1 = bull_median if bull_median and bull_median < price else normal_median
+            short_target_2 = normal_median
+            md.append("| | |")
+            md.append(f"| **Short Setup (opsiyonel)** | (spekülatif, beta yüksekse riskli) |")
+            md.append(f"| Short Giriş | Mevcut ${price:.2f} civarı |")
+            md.append(f"| Short Stop | ${short_stop:.2f} (+%13, yeni ATH) |")
+            md.append(f"| Short Hedef 1 | ${short_target_1:.2f} |")
+            md.append(f"| Short Hedef 2 | ${short_target_2:.2f} |")
+        
+    else:
+        # İZLE / PAHALI / HOLD — Belirsiz alan, küçük long pozisyon mümkün
+        md.append("**Setup**: 🟡 İZLE / KÜÇÜK POZİSYON (skill belirsiz, fiyat adil değer civarında)")
+        md.append("")
+        md.append("| Parametre | Değer |")
+        md.append("|---|---|")
+        md.append(f"| Mevcut Fiyat | ${price:.2f} |")
+        md.append(f"| Beklenen Adil Değer | ${normal_median:.2f} |" if normal_median else "| Beklenen Adil Değer | hesaplanamadı |")
+        
+        if bear_median:
+            ideal_low = bear_median
+            ideal_high = bear_median * 1.10
+            md.append(f"| İdeal Giriş Zonu | ${ideal_low:.2f} - ${ideal_high:.2f} (bear medyan civarı) |")
+        
+        stop = price * 0.87
+        md.append(f"| Stop Loss (eğer pozisyon açılırsa) | ${stop:.2f} (-%13) |")
+        
+        if normal_median and normal_median > price:
+            md.append(f"| Hedef 1 | ${normal_median:.2f} |")
+        if bull_median and bull_median > price:
+            md.append(f"| Hedef 2 | ${bull_median:.2f} |")
+        
+        md.append(f"| Pozisyon Boyutu | Max %5 (belirsiz alan, küçük tut) |")
     
-    md.append(f"| Pozisyon Boyutu | Portföy max %15-20 (mode'a göre) |")
-    
-    # Bekleme koşulları
+    # Bekleme koşulları (her durumda)
     wait_conditions = []
-    if result['forward_outlier']:
+    if is_avoid and normal_median and price > normal_median:
+        wait_conditions.append(f"Fiyat ${normal_median:.2f} (adil değer) altına düşüş")
+    if result.get('forward_outlier'):
         wait_conditions.append("Forward outlier flag düşene kadar bekle (1 çeyrek sonra revize)")
     if v5.get('upgrade_momentum', {}).get('direction') == 'downgrade':
         wait_conditions.append("Analist downgrade momentum stabilize olana kadar bekle")
+    if result.get('forward_data_quality') in ('SINGLE', 'ALGORITHMIC'):
+        wait_conditions.append("Daha fazla analyst kapsamı (en az 3) bekle")
     if not wait_conditions:
         wait_conditions = ["RSI < 70 (overbought değil)", "Sektör momentum pozitif (sektör ETF SMA200 üstünde)"]
     
