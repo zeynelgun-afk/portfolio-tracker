@@ -897,46 +897,68 @@ def analyze(ticker):
     else:
         fcf_normalized = fcf_ttm
     
-    # Forward EPS, Revenue, EBITDA — dinamik yıl seçimi (v4.1)
-    # 2 yıl ileri (Forward P/E, EV/FWD x için) ve 1 yıl ileri (PEG için NTM EPS)
+    # Forward EPS, Revenue, EBITDA — dinamik yıl seçimi (v5.0 Etap 12)
+    # ÖNEMLİ: "eps_fwd_2y" adı tarihsel, gerçekte FY1 (next fiscal year, ~1y forward) alır.
+    # Sektör standardı Forward P/E = NTM veya FY1, FY+2 değil.
     eps_fwd_2y = None
     eps_fwd_1y = None
     rev_fwd_2y = None
     ebitda_fwd_2y = None
+    analyst_count_fwd = 0  # Forward verisi için güven göstergesi
+    forward_data_quality = 'UNKNOWN'  # CONSENSUS / SINGLE / ALGORITHMIC / UNKNOWN
+    
     if est_list:
         sorted_est = sorted(est_list, key=lambda x: x.get('date', ''))
         this_year = datetime.now().year
-        target_year_2y = str(this_year + 2)  # Bugün 2026 → 2028
-        target_year_1y = str(this_year + 1)  # Bugün 2026 → 2027
+        # FY+1 = next fiscal year (gerçek 1-1.5y forward, sektör standart)
+        target_year_2y = str(this_year + 1)  # 2026 → "2027" (FY1)
+        target_year_1y = str(this_year)      # 2026 → "2026" (current FY)
         
-        # 2 yıl ileri estimate
+        # FY1 estimate — eps_fwd_2y olarak kullan (next fiscal year, sektör standart)
+        # Veri kalitesini kaybetmeyiz, sadece flagleriz (ALGORITHMIC dahil)
         for est in sorted_est:
             date = est.get('date', '')
-            if date and date >= target_year_2y:
-                eps_fwd_2y = safe_get(est, 'epsAvg')
-                rev_fwd_2y = safe_get(est, 'revenueAvg')
-                ebitda_fwd_2y = safe_get(est, 'ebitdaAvg')
-                break
-        # Fallback: en uzak yıl
+            if not date or date < target_year_2y:
+                continue
+            eps_fwd_2y = safe_get(est, 'epsAvg')
+            rev_fwd_2y = safe_get(est, 'revenueAvg')
+            ebitda_fwd_2y = safe_get(est, 'ebitdaAvg')
+            n_eps = est.get('numAnalystsEps', 0) or 0
+            n_rev = est.get('numAnalystsRevenue', 0) or 0
+            analyst_count_fwd = max(n_eps, n_rev)
+            if analyst_count_fwd >= 2:
+                forward_data_quality = 'CONSENSUS'
+            elif analyst_count_fwd == 1:
+                forward_data_quality = 'SINGLE'
+            else:
+                forward_data_quality = 'ALGORITHMIC'  # FMP extrapolation
+            break
+        # Fallback: en uzak yıl (en azından bir veri varsa kullan)
         if not eps_fwd_2y and sorted_est:
             last = sorted_est[-1]
             eps_fwd_2y = safe_get(last, 'epsAvg')
             rev_fwd_2y = safe_get(last, 'revenueAvg')
             ebitda_fwd_2y = safe_get(last, 'ebitdaAvg')
+            n_eps = last.get('numAnalystsEps', 0) or 0
+            n_rev = last.get('numAnalystsRevenue', 0) or 0
+            analyst_count_fwd = max(n_eps, n_rev)
+            forward_data_quality = 'CONSENSUS' if analyst_count_fwd >= 2 else ('SINGLE' if analyst_count_fwd == 1 else 'ALGORITHMIC')
         
-        # 1 yıl ileri estimate (PEG için NTM EPS)
+        # 1 yıl ileri estimate (PEG için NTM EPS) - current FY veya FY1
         for est in sorted_est:
             date = est.get('date', '')
-            if date and date >= target_year_1y and date < target_year_2y:
-                eps_fwd_1y = safe_get(est, 'epsAvg')
-                break
-        if not eps_fwd_1y and sorted_est:
-            # Fallback: 2 yıl ileri yoksa ilk available
+            if not date or date < target_year_1y or date >= target_year_2y:
+                continue
+            eps_fwd_1y = safe_get(est, 'epsAvg')
+            break
+        if not eps_fwd_1y:
+            # Fallback: ilk geçerli yıl (kalite ne olursa olsun)
             for est in sorted_est:
                 date = est.get('date', '')
-                if date >= target_year_1y:
-                    eps_fwd_1y = safe_get(est, 'epsAvg')
-                    break
+                if not date or date < target_year_1y:
+                    continue
+                eps_fwd_1y = safe_get(est, 'epsAvg')
+                break
     
     market_cap = safe_get(quote, 'marketCap') or safe_get(profile, 'mktCap')
     price = safe_get(quote, 'price') or safe_get(profile, 'price')
@@ -1293,6 +1315,8 @@ def analyze(ticker):
         'market_regime': market, 'pure_forward': pure_forward,
         'forward_outlier': forward_outlier,
         'forward_growth_ratio': round(forward_growth_ratio, 2) if forward_growth_ratio else None,
+        'analyst_count_fwd': analyst_count_fwd,  # v5.0 Etap 12: forward verisi güven göstergesi
+        'forward_data_quality': forward_data_quality,  # CONSENSUS/SINGLE/ALGORITHMIC/UNKNOWN
         'revenue_3y_cagr': round(revenue_3y_cagr * 100, 1) if revenue_3y_cagr else None,
         'price_1y_return_pct': round(price_1y_return * 100, 1) if price_1y_return else None,
         'implied_growth_pct': round(implied_growth * 100, 1) if implied_growth else None,
@@ -1913,6 +1937,20 @@ def format_markdown_report(result, output_path=None):
     elif v5.get('altman_z', {}).get('label') == 'İFLAS RİSKİ' or v5.get('piotroski', {}).get('value', 9) <= 3:
         confidence = "DÜŞÜK"
     
+    # v5.0 Etap 12: Forward veri kalitesi confidence'a etki eder
+    fdq = result.get('forward_data_quality', 'UNKNOWN')
+    if fdq == 'UNKNOWN':
+        confidence = "DÜŞÜK"  # Hiç forward yok
+    elif fdq == 'ALGORITHMIC' and confidence == "YÜKSEK":
+        confidence = "ORTA"  # Algorithmic + Piotroski/Altman güçlü olsa bile YÜKSEK olmasın
+    elif fdq == 'SINGLE' and confidence == "YÜKSEK":
+        confidence = "ORTA"
+    
+    # v5.0 Etap 12: Piotroski ≤ 4 (zayıf kalite) → confidence en fazla ORTA olabilir
+    pio_val = v5.get('piotroski', {}).get('value', 9)
+    if pio_val <= 4 and confidence == "YÜKSEK":
+        confidence = "ORTA"
+    
     md.append(f"**Beklenen Adil Değer (normal medyan)**: ${normal_median:.2f}" if normal_median else "**Beklenen Adil Değer**: hesaplanamadı")
     if upside_pct is not None:
         yon = "yukarı" if upside_pct > 0 else "aşağı"
@@ -1938,6 +1976,18 @@ def format_markdown_report(result, output_path=None):
     md.append(f"| Revenue YoY | %{di.get('revenue_growth_yoy_pct', 'N/A')} |")
     md.append(f"| AI Mega-Cap | {'⭐ EVET' if result['is_ai_megacap'] else 'Hayır'} |")
     md.append(f"| Quality Premium | {result.get('quality_mult', 1.0):.2f}x |")
+    # v5.0 Etap 12: Analyst coverage göstergesi
+    acf = result.get('analyst_count_fwd', 0)
+    fdq = result.get('forward_data_quality', 'UNKNOWN')
+    if fdq == 'CONSENSUS':
+        coverage_label = f"✅ {acf} analyst (gerçek konsensüs)"
+    elif fdq == 'SINGLE':
+        coverage_label = f"⚠️ 1 analyst (zayıf)"
+    elif fdq == 'ALGORITHMIC':
+        coverage_label = f"🟡 FMP algorithmic (analyst sayısı 0, muhtemelen yönetim guidance bazlı)"
+    else:
+        coverage_label = "🔴 KAPSAM YOK"
+    md.append(f"| Forward Veri Kalitesi | {coverage_label} |")
     md.append(f"| Piyasa Rejimi | {result['market_regime']['regime']} (VIX {result['market_regime']['vix']}) |")
     md.append("")
     
@@ -1991,24 +2041,34 @@ def format_markdown_report(result, output_path=None):
         md.append("")
         md.append("| Kategori | Yöntem Sayısı | Medyan | Ağırlık | Katkı |")
         md.append("|---|---|---|---|---|")
-        fwd_med = result['summaries']['normal']['forward'].get('median', 0) or 0
-        growth_med = result['summaries']['normal']['growth'].get('median', 0) or 0
+        fwd_summary = result['summaries']['normal'].get('forward') or {}
+        growth_summary = result['summaries']['normal'].get('growth') or {}
+        fwd_med = fwd_summary.get('median', 0) or 0
+        growth_med = growth_summary.get('median', 0) or 0
         # Forward+Growth eşit ağırlıkta basit ortalama
         md.append(f"| Forward (FWD P/E + DCF) | 2 | ${fwd_med:.2f} | %50 | ${fwd_med*0.5:.2f} |")
         md.append(f"| Growth (PEG + EV/FWD x2) | 3 | ${growth_med:.2f} | %50 | ${growth_med*0.5:.2f} |")
-        md.append(f"| **Toplam (Forward+Growth medyan)** | | | | **${normal_median:.2f}** |" if normal_median else "")
+        if normal_median:
+            md.append(f"| **Toplam (Forward+Growth medyan)** | | | | **${normal_median:.2f}** |")
+        else:
+            md.append("| **Toplam** | | | | **HESAPLANAMADI** — Forward/Growth yöntemleri yetersiz |")
     else:
         md.append("**Mod**: ⚖️ BLENDED — Traditional + Forward+Growth ağırlıklı")
         md.append("")
         md.append("Forward growth oranına göre ağırlık değişir (>1.5x: 50/50, 1.2-1.5x: 65/35, <1.2x: 80/20)")
         md.append("")
-        trad_med = result['summaries']['normal']['traditional'].get('median', 0) or 0
-        fg_med = result['summaries']['normal']['forward_growth_combined'].get('median', 0) or 0
+        trad_summary = result['summaries']['normal'].get('traditional') or {}
+        fg_summary = result['summaries']['normal'].get('forward_growth_combined') or {}
+        trad_med = trad_summary.get('median', 0) or 0
+        fg_med = fg_summary.get('median', 0) or 0
         md.append("| Kategori | Yöntem Sayısı | Medyan |")
         md.append("|---|---|---|")
         md.append(f"| Traditional | 4 | ${trad_med:.2f} |")
         md.append(f"| Forward + Growth | 5 | ${fg_med:.2f} |")
-        md.append(f"| **Ağırlıklı Sonuç** | | **${normal_median:.2f}** |" if normal_median else "")
+        if normal_median:
+            md.append(f"| **Ağırlıklı Sonuç** | | **${normal_median:.2f}** |")
+        else:
+            md.append("| **Ağırlıklı Sonuç** | | **HESAPLANAMADI** |")
     md.append("")
     
     # ========================================
@@ -2454,6 +2514,22 @@ def format_markdown_report(result, output_path=None):
         risk_warnings.append(f"⚠️ Ürün konsantrasyonu KRİTİK: {cr['top_segment']} %{cr['top_share_pct']}")
     if v5.get('fmp_dcf', {}).get('value', 0) < 0:
         risk_warnings.append(f"⚠️ FMP DCF NEGATİF (${v5['fmp_dcf']['value']:.2f}) — şirket negatif FCF üretiyor, modeli sorgula")
+    
+    # v5.0 Etap 12: Forward veri kalitesi uyarıları (skip değil, flag)
+    acf = result.get('analyst_count_fwd', 0)
+    fdq = result.get('forward_data_quality', 'UNKNOWN')
+    if fdq == 'ALGORITHMIC':
+        risk_warnings.append(f"🟡 Forward veri FMP ALGORITHMIC — gerçek analyst konsensüsü değil, muhtemelen yönetim guidance/capacity rakamlarından extrapolated. Tek başına 'gelecek kesin' olarak alma; bull case görünümlü olabilir.")
+    elif fdq == 'SINGLE':
+        risk_warnings.append(f"⚠️ Tek analyst forward kapsamı — outlier riski yüksek, geniş güven aralığı bekle.")
+    elif fdq == 'UNKNOWN':
+        risk_warnings.append(f"🔴 ANALYST KAPSAMI YOK — Forward yöntemler kullanılamadı. Adil değer sadece TTM/Traditional veriden hesaplandı.")
+    
+    # v5.0 Etap 12: Kalite tuzağı tespiti (Piotroski zayıf + FMP DCF negatif kombinasyonu)
+    pio_val = v5.get('piotroski', {}).get('value', 9)
+    fmp_dcf_val = (v5.get('fmp_dcf') or {}).get('value', 0)
+    if pio_val <= 3 and fmp_dcf_val and fmp_dcf_val < 0:
+        risk_warnings.append(f"🚨 KALİTE TUZAĞI SİNYALİ — Piotroski {pio_val}/9 + FMP DCF negatif kombinasyonu klasik value trap deseni. Adil değer ucuz görünebilir ama fundamental dayanak zayıf.")
     
     if risk_warnings:
         md.append("### v5.0 Risk Uyarıları")

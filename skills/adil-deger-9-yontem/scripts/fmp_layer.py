@@ -403,14 +403,32 @@ def detect_upgrade_momentum(grades_historical, lookback_months=6):
 # TIER 1 — MULTI-YEAR ANALYST ESTIMATES (v5.0 Etap 9)
 # =============================================================================
 
-def get_analyst_estimates_multi_year(symbol, years=5):
+def get_analyst_estimates_multi_year(symbol, years=5, min_analysts=0):
     """
     Analist konsensüsünü 5 yıla kadar al, yıl bazlı dict olarak döner.
     
     Y1 = Bir sonraki fiscal year (yaklaşık)
     Y5 = Beş yıl sonrası
     
-    Returns: dict {YYYY: {'revenue_avg': ..., 'eps_avg': ..., 'analyst_count': ...}, ...}
+    v5.0 Etap 12: Veri kalite sınıflandırması (skip değil, flag).
+    
+    Sınıflar (data_quality):
+    - 'CONSENSUS' : numAnalysts >= 2  →  Çok analyst görüşü, güvenilir
+    - 'SINGLE'    : numAnalysts == 1  →  Tek analyst, düşük güven
+    - 'ALGORITHMIC' : numAnalysts == 0 →  FMP extrapolation (genelde yönetim guidance/capacity'den)
+                                           Bilgi taşır ama dikkatli kullan, bull case görünümlü olabilir
+    
+    AAOI gibi durumlarda (numAnalysts=0 ama EPS dolu) FMP'nin verisi büyük olasılıkla
+    yönetim guidance'ından extrapolated → veriyi tut, ALGORITHMIC olarak flagla.
+    
+    Args:
+        symbol: ticker
+        years: kaç yıl ileri (1-10)
+        min_analysts: minimum analyst eşiği (default 0 = hepsini al, ALGORITHMIC dahil)
+                      2 verirsen yalnızca CONSENSUS verilerini alır
+    
+    Returns: dict {YYYY: {'revenue_avg': ..., 'eps_avg': ...,
+                           'analyst_count': N, 'data_quality': str}, ...}
              ya da None (veri yok)
     """
     data = _fetch("analyst-estimates", {"symbol": symbol, "period": "annual", "limit": years})
@@ -418,30 +436,49 @@ def get_analyst_estimates_multi_year(symbol, years=5):
         return None
     
     result = {}
+    skipped_years = []
     for d in data:
         date_str = d.get('date', '')
         if not date_str:
             continue
         try:
-            # date format: YYYY-MM-DD (fiscal year end). Yılı çıkar.
             fiscal_year = int(date_str[:4])
         except (ValueError, TypeError):
             continue
         
         revenue_avg = d.get('revenueAvg')
         eps_avg = d.get('epsAvg')
-        analyst_count = d.get('numAnalystsEstimatedRevenue', 0) or d.get('numAnalystsEstimatedEps', 0) or 0
+        n_rev = d.get('numAnalystsRevenue', 0) or 0
+        n_eps = d.get('numAnalystsEps', 0) or 0
+        analyst_count = max(n_rev, n_eps)
+        
+        if analyst_count < min_analysts:
+            skipped_years.append(fiscal_year)
+            continue
+        
+        # Veri kalite etiketi
+        if analyst_count >= 2:
+            data_quality = 'CONSENSUS'
+        elif analyst_count == 1:
+            data_quality = 'SINGLE'
+        else:
+            data_quality = 'ALGORITHMIC'  # FMP extrapolation, muhtemelen yönetim guidance
         
         if revenue_avg or eps_avg:
             result[fiscal_year] = {
                 'revenue_avg': revenue_avg,
                 'eps_avg': eps_avg,
                 'analyst_count': analyst_count,
+                'data_quality': data_quality,
                 'revenue_high': d.get('revenueHigh'),
                 'revenue_low': d.get('revenueLow'),
                 'eps_high': d.get('epsHigh'),
                 'eps_low': d.get('epsLow'),
             }
+    
+    if skipped_years:
+        import sys as _sys
+        _sys.stderr.write(f"⚠️ {symbol}: numAnalysts<{min_analysts} olan yıllar atlandı: {skipped_years}\n")
     
     return result if result else None
 
