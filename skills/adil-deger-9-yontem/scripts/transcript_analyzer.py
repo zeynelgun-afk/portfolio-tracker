@@ -28,7 +28,7 @@ from urllib.error import URLError, HTTPError
 
 OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
 KIMI_MODEL = "moonshotai/kimi-k2-thinking"
-EARNINGS_FRESHNESS_DAYS = 10  # T+10 gün eşiği
+EARNINGS_FRESHNESS_DAYS = 15  # T+10 gün eşiği
 
 
 def get_last_earnings_date(fmp_get, ticker):
@@ -201,7 +201,7 @@ Transcript:
         "Authorization": f"Bearer {api_key}",
         "Content-Type": "application/json",
         "HTTP-Referer": "https://github.com/zeynelgun-afk/portfolio-tracker",  # OpenRouter recommend
-        "X-Title": "Finzora AI - Adil Değer Skill",
+        "X-Title": "Finzora AI - Adil Deger Skill",
     }
     
     try:

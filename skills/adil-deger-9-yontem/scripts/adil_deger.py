@@ -2137,9 +2137,9 @@ def format_markdown_report(result, output_path=None):
     md.append(f"| 52w High / Low | ${p.get('year_high', 'N/A')} / ${p.get('year_low', 'N/A')} |")
     md.append(f"| SMA 50 / 200 | ${p.get('sma_50', 'N/A')} / ${p.get('sma_200', 'N/A')} |")
     md.append(f"| EPS TTM | ${di['eps_ttm']} |")
-    md.append(f"| EPS FWD 2y | ${di.get('eps_fwd_2y', 'N/A')} |")
+    md.append(f"| EPS FWD 1y (FY1) | ${di.get('eps_fwd_2y', 'N/A')} |")
     md.append(f"| Revenue TTM | ${di['revenue_ttm_billions']}B |")
-    md.append(f"| Revenue FWD 2y | ${di.get('revenue_fwd_2y_billions', 'N/A')}B |")
+    md.append(f"| Revenue FWD 1y (FY1) | ${di.get('revenue_fwd_2y_billions', 'N/A')}B |")
     md.append(f"| ROE | %{di['roe_pct']} |")
     md.append(f"| Net Margin | %{di['net_margin_pct']} |")
     md.append(f"| Revenue YoY | %{di.get('revenue_growth_yoy_pct', 'N/A')} |")
@@ -2357,9 +2357,9 @@ def format_markdown_report(result, output_path=None):
     md.append("")
     
     # ========================================
-    # BÖLÜM 5: Bear Case (otomatik iskelet + manuel)
+    # BÖLÜM 4: Bear Case (otomatik iskelet + manuel)
     # ========================================
-    md.append("## 5. Bear Case (en az 5 madde)")
+    md.append("## 4. Bear Case (en az 5 madde)")
     md.append("")
     bear_items = []
     
@@ -2411,9 +2411,9 @@ def format_markdown_report(result, output_path=None):
     md.append("")
     
     # ========================================
-    # BÖLÜM 6: Bull Case
+    # BÖLÜM 5: Bull Case
     # ========================================
-    md.append("## 6. Bull Case (en az 5 madde)")
+    md.append("## 5. Bull Case (en az 5 madde)")
     md.append("")
     bull_items = []
     
@@ -2449,6 +2449,29 @@ def format_markdown_report(result, output_path=None):
         if fmp_dcf_val > price * 1.20:
             bull_items.append(f"**FMP DCF ${fmp_dcf_val:.2f}** mevcut fiyatın %{((fmp_dcf_val/price-1)*100):.0f} üstünde (MUHTEMEL). Bağımsız DCF onay sinyali.")
     
+    # v5.0 Etap 13 Fix-3: Analyst Buy konsensüs sinyali
+    ar = v5.get('grades_consensus', {})
+    if ar:
+        total_buy = ar.get('strong_buy', 0) + ar.get('buy', 0)
+        total_sell = ar.get('strong_sell', 0) + ar.get('sell', 0)
+        total_all = total_buy + ar.get('hold', 0) + total_sell
+        if total_all >= 5 and total_buy / total_all >= 0.80 and total_sell == 0:
+            bull_items.append(f"**Analyst Buy konsensüsü**: {total_buy}/{total_all} analyst Buy/Strong Buy, 0 Sell (KESİN). Wall Street uyumlu pozitif görünüm.")
+    
+    # v5.0 Etap 13 Fix-3: Forward-First Hibrit aktifse
+    if result.get('forward_first_active') and result.get('forward_normalized_value'):
+        fn_val_b = result['forward_normalized_value']
+        if fn_val_b > price * 1.20:
+            bull_items.append(f"**Hibrit Forward Normalize ${fn_val_b:.2f}** — analyst raw EPS bazlı, mevcut fiyatın %{((fn_val_b/price-1)*100):.0f} üstünde (KESİN). Tepe kazanç gücü diskonto edilmiş.")
+    
+    # v5.0 Etap 13 Fix-3: Sub-Industry premium (AI Infrastructure, Cloud SaaS)
+    proj_fn = (proj or {}).get('forward_normalized', {})
+    sub_key_b = proj_fn.get('sub_industry_key', '')
+    if sub_key_b == 'AI_INFRASTRUCTURE':
+        bull_items.append(f"**AI Infrastructure tematik**: Sektör 3-5 yıllık structural AI tailwind, hyperscaler capex artıyor (MUHTEMEL). Şirket bu trend içinde konumlu.")
+    elif sub_key_b == 'CLOUD_NATIVE_SAAS':
+        bull_items.append(f"**Cloud-native SaaS tematik**: SaaS market structural büyümede, sticky recurring revenue (MUHTEMEL).")
+    
     # Generic bull
     if len(bull_items) < 5:
         bull_items.append("**Sektör tailwind**: Sektör 3-5 yıllık structural growth trendinde, şirket payı koruyor (MUHTEMEL).")
@@ -2460,9 +2483,9 @@ def format_markdown_report(result, output_path=None):
     md.append("")
     
     # ========================================
-    # BÖLÜM 7: Neden Yanlış Olabilirim
+    # BÖLÜM 6: Neden Yanlış Olabilirim
     # ========================================
-    md.append("## 7. Neden Yanlış Olabilirim (en az 5 madde)")
+    md.append("## 6. Neden Yanlış Olabilirim (en az 5 madde)")
     md.append("")
     wrong_items = []
     
@@ -2500,13 +2523,13 @@ def format_markdown_report(result, output_path=None):
     md.append("")
     
     # ========================================
-    # BÖLÜM 8: v5.0 Yeni Sinyaller (Risk + Sentiment + DCF Sanity + Konsantrasyon)
+    # BÖLÜM 7: v5.0 Yeni Sinyaller (Risk + Sentiment + DCF Sanity + Konsantrasyon)
     # ========================================
-    md.append("## 8. v5.0 Yeni Sinyaller")
+    md.append("## 7. v5.0 Yeni Sinyaller")
     md.append("")
     
     if v5:
-        md.append("### 8.1 Risk Skorları")
+        md.append("### 7.1 Risk Skorları")
         if v5.get('altman_z'):
             az = v5['altman_z']
             md.append(f"- **Altman Z (iflas riski)**: {az['value']:.2f} → {az['emoji']} **{az['label']}** (KESİN)")
@@ -2518,7 +2541,7 @@ def format_markdown_report(result, output_path=None):
         if v5.get('grades_consensus'):
             gc = v5['grades_consensus']
             total = gc['strong_buy'] + gc['buy'] + gc['hold'] + gc['sell'] + gc['strong_sell']
-            md.append("### 8.2 Analist Sentiment")
+            md.append("### 7.2 Analist Sentiment")
             md.append(f"- Toplam {total} analist: Strong Buy {gc['strong_buy']} / Buy {gc['buy']} / Hold {gc['hold']} / Sell {gc['sell']} / Strong Sell {gc['strong_sell']}")
             md.append(f"- Konsensüs: **{gc.get('consensus_label', 'N/A')}**")
             if v5.get('upgrade_momentum'):
@@ -2526,7 +2549,7 @@ def format_markdown_report(result, output_path=None):
             md.append("")
         
         if v5.get('fmp_dcf'):
-            md.append("### 8.3 DCF Sanity Check")
+            md.append("### 7.3 DCF Sanity Check")
             md.append(f"- FMP DCF (unlevered): ${v5['fmp_dcf']['value']:.2f}")
             if v5.get('fmp_dcf_levered'):
                 md.append(f"- FMP DCF (levered): ${v5['fmp_dcf_levered']['value']:.2f}")
@@ -2537,11 +2560,20 @@ def format_markdown_report(result, output_path=None):
             md.append("")
         
         if v5.get('concentration_risk_product') or v5.get('concentration_risk_geo'):
-            md.append("### 8.4 Konsantrasyon Riski")
+            md.append("### 7.4 Konsantrasyon Riski")
+            # v5.0 Etap 13 Fix-3: Pivot/yüksek-growth durumunda eski FMP segmentation yumuşat
+            is_pivot_or_growth_74 = (
+                (result.get('forward_first_active') and (di.get('revenue_growth_yoy_pct') or 0) > 50)
+                or (result.get('projection') or {}).get('pivot_detected')
+            )
             if v5.get('concentration_risk_product'):
                 cr = v5['concentration_risk_product']
-                md.append(f"- **Ürün/Segment** ({cr['fiscal_year']}): {cr['label']}")
-                md.append(f"  - Top: {cr['top_segment']} %{cr['top_share_pct']}  |  Top 2: %{cr['top2_share_pct']}")
+                if cr.get('top_share_pct', 0) >= 50 and is_pivot_or_growth_74:
+                    md.append(f"- **Ürün/Segment** ({cr['fiscal_year']}): 🟡 ESKİ VERİ OLABİLİR — şirket pivot/yüksek büyüme aşamasında")
+                    md.append(f"  - FMP segmentation: {cr['top_segment']} %{cr['top_share_pct']} (eski iş kolu, son çeyrek raporlarından doğrula)")
+                else:
+                    md.append(f"- **Ürün/Segment** ({cr['fiscal_year']}): {cr['label']}")
+                    md.append(f"  - Top: {cr['top_segment']} %{cr['top_share_pct']}  |  Top 2: %{cr['top2_share_pct']}")
             if v5.get('concentration_risk_geo'):
                 cr = v5['concentration_risk_geo']
                 md.append(f"- **Coğrafya** ({cr['fiscal_year']}): {cr['label']}")
@@ -2550,7 +2582,7 @@ def format_markdown_report(result, output_path=None):
         
         if v5.get('live_pe', {}).get('value'):
             lp = v5['live_pe']
-            md.append("### 8.5 Canlı Sektör P/E")
+            md.append("### 7.5 Canlı Sektör P/E")
             md.append(f"- Canlı: {lp['value']:.1f}x ({lp['source']})  |  Statik fallback: {lp['static_fallback']}x")
             if lp.get('delta_pct') is not None:
                 md.append(f"- Sapma: %{lp['delta_pct']:+.1f}")
@@ -2560,16 +2592,16 @@ def format_markdown_report(result, output_path=None):
         
         if v5.get('dynamic_wacc'):
             dw = v5['dynamic_wacc']
-            md.append("### 8.6 Dinamik CAPM WACC")
+            md.append("### 7.6 Dinamik CAPM WACC")
             md.append(f"- WACC: %{dw['value']:.2f}  |  Statik fallback: %{dw['static_fallback']}")
             md.append(f"- Hesaplama: {dw['source']}")
             md.append("")
     
     
     # ========================================
-    # BÖLÜM 9: İzleme Tetikleyicileri
+    # BÖLÜM 8: İzleme Tetikleyicileri
     # ========================================
-    md.append("## 9. İzleme Tetikleyicileri (en az 5 madde)")
+    md.append("## 8. İzleme Tetikleyicileri (en az 5 madde)")
     md.append("")
     
     triggers = []
@@ -2587,11 +2619,18 @@ def format_markdown_report(result, output_path=None):
         cr = v5['concentration_risk_product']
         triggers.append(f"**Müşteri konsantrasyonu izle**: {cr['top_segment']} %{cr['top_share_pct']} payı — segmentation raporlarında değişim takip et (KESİN).")
     
-    if bear_median:
-        triggers.append(f"**Bear medyan altına düşüş**: Fiyat ${bear_median:.2f} altına inerse pozisyon büyüt veya stop tetikle (KESİN).")
-    
-    if bull_median:
-        triggers.append(f"**Boğa medyanını geçiş**: Fiyat ${bull_median:.2f} üstüne çıkarsa kısmi kâr al (KESİN).")
+    # v5.0 Etap 13 Fix-3: Forward-First aktifse İzleme tetikleyicileri Hibrit senaryolardan
+    if result.get('forward_first_active') and result.get('forward_normalized_value'):
+        fn_val_tr = result['forward_normalized_value']
+        bear_scenario = fn_val_tr * 0.70
+        bull_scenario = fn_val_tr * 1.30
+        triggers.append(f"**Bear senaryo altına düşüş** (Hibrit): Fiyat ${bear_scenario:.2f} altına inerse pozisyon büyüt veya stop tetikle (KESİN).")
+        triggers.append(f"**Bull senaryo üstüne çıkış** (Hibrit): Fiyat ${bull_scenario:.2f} üstüne çıkarsa kısmi kâr al (KESİN).")
+    else:
+        if bear_median:
+            triggers.append(f"**Bear medyan altına düşüş**: Fiyat ${bear_median:.2f} altına inerse pozisyon büyüt veya stop tetikle (KESİN).")
+        if bull_median:
+            triggers.append(f"**Boğa medyanını geçiş**: Fiyat ${bull_median:.2f} üstüne çıkarsa kısmi kâr al (KESİN).")
     
     triggers.append("**VIX > 28**: Bear regime tetiklenir, tüm yöntemler -%25-35 düşer. Pozisyon revize (KESİN).")
     
@@ -2604,10 +2643,10 @@ def format_markdown_report(result, output_path=None):
     md.append("")
     
     # ========================================
-    # BÖLÜM 10: 5 Yıllık Finansal Projeksiyon (v5.0)
+    # BÖLÜM 9: 5 Yıllık Finansal Projeksiyon (v5.0)
     # ========================================
     if proj:
-        md.append("## 10. 5 Yıllık Finansal Projeksiyon (v5.0)")
+        md.append("## 9. 5 Yıllık Finansal Projeksiyon (v5.0)")
         md.append("")
         md.append(f"**Profil**: `{proj['profile_key']}` — {proj.get('profile_description', '')}")
         md.append("")
@@ -2688,6 +2727,11 @@ def format_markdown_report(result, output_path=None):
     
     # v5.0 risk overlay - kararı override etmez ama uyarı ekler
     risk_warnings = []
+    # v5.0 Etap 13 Fix-3: pivot/yüksek-growth durumunda eski FMP segmentation yumuşat
+    is_pivot_or_growth_rw = (
+        (result.get('forward_first_active') and (di.get('revenue_growth_yoy_pct') or 0) > 50)
+        or (result.get('projection') or {}).get('pivot_detected')
+    )
     if v5.get('piotroski', {}).get('value', 9) <= 4:
         risk_warnings.append(f"⚠️ Piotroski {v5['piotroski']['value']}/9 — fundamental kalite ZAYIF, kararın gerektirdiği güveni düşürür")
     if v5.get('altman_z', {}).get('label') == 'İFLAS RİSKİ':
@@ -2696,9 +2740,40 @@ def format_markdown_report(result, output_path=None):
         risk_warnings.append(f"⚠️ {v5['upgrade_momentum']['label']} — analist sentiment'i kötüleşiyor")
     if v5.get('concentration_risk_product', {}).get('top_share_pct', 0) >= 80:
         cr = v5['concentration_risk_product']
-        risk_warnings.append(f"⚠️ Ürün konsantrasyonu KRİTİK: {cr['top_segment']} %{cr['top_share_pct']}")
+        if is_pivot_or_growth_rw:
+            risk_warnings.append(f"🟡 FMP segmentation ({cr['fiscal_year']}): {cr['top_segment']} %{cr['top_share_pct']} — eski veri, şirket pivot/yüksek büyüme aşamasında")
+        else:
+            risk_warnings.append(f"⚠️ Ürün konsantrasyonu KRİTİK: {cr['top_segment']} %{cr['top_share_pct']}")
     if v5.get('fmp_dcf', {}).get('value', 0) < 0:
         risk_warnings.append(f"⚠️ FMP DCF NEGATİF (${v5['fmp_dcf']['value']:.2f}) — şirket negatif FCF üretiyor, modeli sorgula")
+    
+    # v5.0 Etap 13 Fix-3: P&L projeksiyon vs Analyst konsensüs çelişkisi
+    # Skill'in dahili 5y projeksiyonu negatif EPS gösteriyor, ama analyst konsensüsü pozitif
+    if result.get('forward_first_active'):
+        proj_pnl_list = (result.get('projection') or {}).get('pnl', []) or []
+        fn_data = (result.get('projection') or {}).get('forward_normalized', {})
+        norm_yr_rw = fn_data.get('normalization_year', 0)
+        if norm_yr_rw and proj_pnl_list:
+            # Liste içinden normalize yılını bul
+            skill_eps_at_norm = None
+            for row in proj_pnl_list:
+                if row.get('year') == norm_yr_rw:
+                    skill_eps_at_norm = row.get('eps_basic')
+                    break
+            analyst_eps_at_norm = fn_data.get('normalize_eps', 0)
+            if skill_eps_at_norm is not None and analyst_eps_at_norm:
+                # Skill negatif, analyst pozitif ise çelişki var
+                if skill_eps_at_norm < 0 and analyst_eps_at_norm > 0:
+                    risk_warnings.append(
+                        f"🚨 PROJEKSİYON ÇELİŞKİSİ — Skill'in dahili 5y modeli Y{norm_yr_rw} EPS ${skill_eps_at_norm:.2f} hesaplıyor (negatif), "
+                        f"analyst konsensüsü ${analyst_eps_at_norm:.2f} (pozitif). Skill profili APLD gibi pivot/data-center şirketleri için "
+                        f"uygun olmayabilir. Forward-First analyst verisini kullandı, ancak çelişki kararı sorgulatır."
+                    )
+                elif abs(skill_eps_at_norm - analyst_eps_at_norm) / max(abs(analyst_eps_at_norm), 0.01) > 0.50:
+                    risk_warnings.append(
+                        f"🟡 PROJEKSİYON SAPMASI — Skill'in dahili modeli Y{norm_yr_rw} EPS ${skill_eps_at_norm:.2f}, "
+                        f"analyst konsensüsü ${analyst_eps_at_norm:.2f}. %{abs(skill_eps_at_norm - analyst_eps_at_norm) / abs(analyst_eps_at_norm) * 100:.0f} sapma."
+                    )
     
     # v5.0 Etap 12: Forward veri kalitesi uyarıları (skip değil, flag)
     acf = result.get('analyst_count_fwd', 0)
