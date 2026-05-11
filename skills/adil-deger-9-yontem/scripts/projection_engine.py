@@ -248,7 +248,7 @@ def detect_margin_profile(sector_key, current_op_margin, revenue_yoy_growth, is_
 # =============================================================================
 
 def project_revenue_5y(revenue_ttm, revenue_yoy_growth, analyst_rev_1y=None, analyst_rev_2y=None,
-                       custom_revenues=None, ttm_year=None):
+                       custom_revenues=None, ttm_year=None, analyst_revenues_dict=None):
     """
     5 yıllık gelir projeksiyonu.
     
@@ -256,12 +256,14 @@ def project_revenue_5y(revenue_ttm, revenue_yoy_growth, analyst_rev_1y=None, ana
     - Yıl 0 = ttm_year (default: current_year - 1) — TTM ACTUAL (geçmiş bilanço)
     - Yıl 1-5 = ttm_year + 1 ... ttm_year + 5 — projeksiyon
     
-    Strategy:
-    - Yıl 1 & 2: analist konsensüs veya custom_revenues (varsa)
-    - Yıl 3-5: kademeli azalan büyüme oranı
+    v5.0 Etap 9 öncelik sırası (yüksekten düşüğe):
+    1. custom_revenues (pre-IPO veya manuel)
+    2. analyst_revenues_dict (FMP analyst-estimates, yıl yıl) — YENİ
+    3. analyst_rev_1y / analyst_rev_2y (eski tek nokta parametreler)
+    4. revenue_yoy_growth ile extrapolation
     
-    custom_revenues: pre-IPO veya özel durumda manuel girdi
-                     {2026: 1.2e9, 2027: 2.7e9, ...} formatında, $
+    analyst_revenues_dict şeması:
+        {2027: 368e9, 2028: 486e9, 2029: 567e9, ...} ($ cinsinden)
     
     Returns: list of (year, revenue) tuples, 6 element (yıl 0 TTM + 5 yıl projection)
     """
@@ -281,7 +283,25 @@ def project_revenue_5y(revenue_ttm, revenue_yoy_growth, analyst_rev_1y=None, ana
                 revenues.append((year, prev * 1.20))
         return revenues
     
-    # Yıl 1
+    # v5.0 Etap 9: analyst_revenues_dict varsa onu öncele
+    if analyst_revenues_dict:
+        for i in range(1, 6):
+            year = ttm_year + i
+            if year in analyst_revenues_dict and analyst_revenues_dict[year]:
+                revenues.append((year, analyst_revenues_dict[year]))
+            else:
+                # Yıl bulunamadıysa önceki yıldan profile fallback
+                prev = revenues[-1][1]
+                # Geriye gidip yıl bazlı büyüme oranı tahmin et
+                if len(revenues) >= 2:
+                    last_growth = (revenues[-1][1] / revenues[-2][1] - 1) if revenues[-2][1] > 0 else 0.15
+                    last_growth = max(0.05, min(0.50, last_growth * 0.7))  # decay + cap
+                else:
+                    last_growth = 0.15
+                revenues.append((year, prev * (1 + last_growth)))
+        return revenues
+    
+    # Yıl 1 (eski tek-nokta parametreler)
     if analyst_rev_1y and analyst_rev_1y > 0:
         rev_y1 = analyst_rev_1y
     else:
@@ -316,34 +336,86 @@ def project_revenue_5y(revenue_ttm, revenue_yoy_growth, analyst_rev_1y=None, ana
 
 
 def project_pnl_5y(revenue_list, profile_key, shares_basic, shares_diluted=None,
-                   interest_expense_annual=0, override_curves=None):
+                   interest_expense_annual=0, override_curves=None,
+                   actual_ttm_margins=None):
     """
     5 yıllık tam P&L tablosu.
+    
+    v5.0 Etap 10: actual_ttm_margins verildiğinde DELTA-BASED projection.
+    Profile mutlak değer yerine "trend" olarak yorumlanır:
+    - Y0 = şirketin gerçek TTM marjı
+    - Y1-Y5 = profile delta'ları (Y1-Y0, Y2-Y1, ...) TTM üzerine uygulanır
+    
+    Bu sayede NVDA (TTM gross %75) ve INTC (TTM gross %32) aynı 
+    `semicon_design_mature` profilini kullanır ama doğru başlar.
     
     Args:
         revenue_list: project_revenue_5y çıktısı [(year, revenue), ...]
         profile_key: SECTOR_MARGIN_PROFILES anahtarı
         shares_basic: basic shares outstanding
         shares_diluted: fully diluted shares (yoksa basic kullanılır)
-        interest_expense_annual: yıllık faiz gideri (M$ değil $)
-        override_curves: {'gross_margin_curve': [...], ...} — preset üzerine yazar
+        interest_expense_annual: yıllık faiz gideri ($)
+        override_curves: {'gross_margin_curve': [...], ...} — profile yerine bunları kullan
+        actual_ttm_margins: {'gross': 0.75, 'op': 0.31, 'net': 0.26, 'tax': 0.21, 'capex': 0.04}
+                            Verilirse delta-based projection devreye girer.
+                            None ise eski mutlak profil davranışı.
     
     Returns: list of dicts (6 yıl: yıl 0 TTM + 5 yıl projeksiyon)
     """
     profile = SECTOR_MARGIN_PROFILES.get(profile_key, SECTOR_MARGIN_PROFILES['generic'])
     
-    gm = profile['gross_margin_curve'][:]
-    op_m = profile['op_margin_curve'][:]
-    net_m = profile['net_margin_curve'][:]
-    tax_r = profile['effective_tax_curve'][:]
-    capex_p = profile['capex_pct_revenue'][:]
+    gm_raw = profile['gross_margin_curve'][:]
+    op_m_raw = profile['op_margin_curve'][:]
+    net_m_raw = profile['net_margin_curve'][:]
+    tax_r_raw = profile['effective_tax_curve'][:]
+    capex_p_raw = profile['capex_pct_revenue'][:]
     
     if override_curves:
-        gm = override_curves.get('gross_margin_curve', gm)
-        op_m = override_curves.get('op_margin_curve', op_m)
-        net_m = override_curves.get('net_margin_curve', net_m)
-        tax_r = override_curves.get('effective_tax_curve', tax_r)
-        capex_p = override_curves.get('capex_pct_revenue', capex_p)
+        gm_raw = override_curves.get('gross_margin_curve', gm_raw)
+        op_m_raw = override_curves.get('op_margin_curve', op_m_raw)
+        net_m_raw = override_curves.get('net_margin_curve', net_m_raw)
+        tax_r_raw = override_curves.get('effective_tax_curve', tax_r_raw)
+        capex_p_raw = override_curves.get('capex_pct_revenue', capex_p_raw)
+    
+    # v5.0 Etap 10: DELTA-BASED hesaplama
+    if actual_ttm_margins:
+        ttm_gross = actual_ttm_margins.get('gross', gm_raw[0])
+        ttm_op = actual_ttm_margins.get('op', op_m_raw[0])
+        ttm_net = actual_ttm_margins.get('net', net_m_raw[0])
+        ttm_tax = actual_ttm_margins.get('tax', tax_r_raw[0])
+        ttm_capex = actual_ttm_margins.get('capex', capex_p_raw[0])
+        
+        # Profile'dan delta serisi hesapla (Y1-Y0, Y2-Y1, ..., Y5-Y4)
+        # Y0 = 0 (TTM gerçek, delta sıfır)
+        def deltas(curve):
+            return [0.0] + [curve[i] - curve[i-1] for i in range(1, 6)]
+        
+        gm_d = deltas(gm_raw)
+        op_d = deltas(op_m_raw)
+        net_d = deltas(net_m_raw)
+        tax_d = deltas(tax_r_raw)
+        capex_d = deltas(capex_p_raw)
+        
+        # Kümülatif: Y0 = TTM, Yi = Yi-1 + delta_i
+        gm = [ttm_gross + sum(gm_d[:i+1]) for i in range(6)]
+        op_m = [ttm_op + sum(op_d[:i+1]) for i in range(6)]
+        net_m = [ttm_net + sum(net_d[:i+1]) for i in range(6)]
+        tax_r = [ttm_tax + sum(tax_d[:i+1]) for i in range(6)]
+        capex_p = [ttm_capex + sum(capex_d[:i+1]) for i in range(6)]
+        
+        # Sınır kontrolü (marjlar -100% ile +100% arası, vergi 0-50%, capex 0-50%)
+        gm = [max(-1.0, min(1.0, v)) for v in gm]
+        op_m = [max(-2.0, min(1.0, v)) for v in op_m]
+        net_m = [max(-2.0, min(1.0, v)) for v in net_m]
+        tax_r = [max(0.0, min(0.50, v)) for v in tax_r]
+        capex_p = [max(0.0, min(0.50, v)) for v in capex_p]
+    else:
+        # Eski mutlak davranış (geriye uyum)
+        gm = gm_raw
+        op_m = op_m_raw
+        net_m = net_m_raw
+        tax_r = tax_r_raw
+        capex_p = capex_p_raw
     
     if shares_diluted is None or shares_diluted <= 0:
         shares_diluted = shares_basic

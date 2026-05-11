@@ -400,6 +400,53 @@ def detect_upgrade_momentum(grades_historical, lookback_months=6):
 
 
 # =============================================================================
+# TIER 1 — MULTI-YEAR ANALYST ESTIMATES (v5.0 Etap 9)
+# =============================================================================
+
+def get_analyst_estimates_multi_year(symbol, years=5):
+    """
+    Analist konsensüsünü 5 yıla kadar al, yıl bazlı dict olarak döner.
+    
+    Y1 = Bir sonraki fiscal year (yaklaşık)
+    Y5 = Beş yıl sonrası
+    
+    Returns: dict {YYYY: {'revenue_avg': ..., 'eps_avg': ..., 'analyst_count': ...}, ...}
+             ya da None (veri yok)
+    """
+    data = _fetch("analyst-estimates", {"symbol": symbol, "period": "annual", "limit": years})
+    if not isinstance(data, list) or not data:
+        return None
+    
+    result = {}
+    for d in data:
+        date_str = d.get('date', '')
+        if not date_str:
+            continue
+        try:
+            # date format: YYYY-MM-DD (fiscal year end). Yılı çıkar.
+            fiscal_year = int(date_str[:4])
+        except (ValueError, TypeError):
+            continue
+        
+        revenue_avg = d.get('revenueAvg')
+        eps_avg = d.get('epsAvg')
+        analyst_count = d.get('numAnalystsEstimatedRevenue', 0) or d.get('numAnalystsEstimatedEps', 0) or 0
+        
+        if revenue_avg or eps_avg:
+            result[fiscal_year] = {
+                'revenue_avg': revenue_avg,
+                'eps_avg': eps_avg,
+                'analyst_count': analyst_count,
+                'revenue_high': d.get('revenueHigh'),
+                'revenue_low': d.get('revenueLow'),
+                'eps_high': d.get('epsHigh'),
+                'eps_low': d.get('epsLow'),
+            }
+    
+    return result if result else None
+
+
+# =============================================================================
 # TIER 2 — FMP'NIN KENDİ DCF HESABI (bizim DCF ile karşılaştırma)
 # =============================================================================
 

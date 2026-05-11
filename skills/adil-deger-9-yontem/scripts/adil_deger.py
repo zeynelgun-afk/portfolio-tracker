@@ -1183,6 +1183,26 @@ def analyze(ticker):
             # Op margin TTM
             op_margin_ttm = (ebit_ttm / revenue_ttm) if (ebit_ttm and revenue_ttm and revenue_ttm > 0) else 0
             
+            # v5.0 Etap 10: TTM gerçek marjları topla (delta-based projection için)
+            # FMP ratios-ttm'den geliyor (zaten çekildi), yoksa income statement'tan türet
+            ratios_ttm_for_margins = fmp_layer.get_ratios_ttm(ticker) if _V5_MODULES_AVAILABLE else None
+            
+            actual_ttm_margins = None
+            if ratios_ttm_for_margins:
+                actual_ttm_margins = {
+                    'gross': ratios_ttm_for_margins.get('grossProfitMarginTTM') or 0.40,
+                    'op': ratios_ttm_for_margins.get('operatingProfitMarginTTM') or op_margin_ttm,
+                    'net': ratios_ttm_for_margins.get('netProfitMarginTTM') or 0.10,
+                    'tax': ratios_ttm_for_margins.get('effectiveTaxRateTTM') or 0.21,
+                    'capex': 0.05,  # placeholder, ratios-ttm'de yok, cash-flow'dan türetilir
+                }
+                # capex/revenue cash flow'dan
+                cash_flows_for_capex = data.get('cash_flows', []) if 'data' in dir() else []
+                if cash_flows_for_capex and revenue_ttm > 0:
+                    capex_ttm = sum(abs(cf.get('capitalExpenditure', 0) or 0) for cf in cash_flows_for_capex[:4]) / 4
+                    if capex_ttm > 0:
+                        actual_ttm_margins['capex'] = capex_ttm / revenue_ttm
+            
             # Margin profil tespiti
             profile_key = projection_engine.detect_margin_profile(
                 sector_key=sector_key,
@@ -1191,22 +1211,35 @@ def analyze(ticker):
                 is_pre_revenue=(revenue_ttm < 50e6),
             )
             
-            # Revenue projection (analist 1y/2y kullanılır)
-            analyst_rev_1y = None  # Mevcut FMP analyst estimates 1y için ayrı endpoint gerek
-            # eps_fwd_2y zaten 2y forward, ondan rev_fwd_2y birleşik
+            # Revenue projection (Etap 9: multi-year analyst estimates)
+            # FMP analyst-estimates'ten 5 yıla kadar konsensüs çek
+            analyst_revenues_dict = None
+            try:
+                multi_year = fmp_layer.get_analyst_estimates_multi_year(ticker, years=5)
+                if multi_year:
+                    analyst_revenues_dict = {
+                        year: data['revenue_avg']
+                        for year, data in multi_year.items()
+                        if data.get('revenue_avg') and data['revenue_avg'] > 0
+                    }
+            except Exception as e:
+                print(f"⚠️ Multi-year analyst estimates alınamadı: {e}", file=sys.stderr)
+            
             revenues = projection_engine.project_revenue_5y(
                 revenue_ttm=revenue_ttm,
                 revenue_yoy_growth=revenue_growth_yoy or 0.15,
                 analyst_rev_1y=None,
                 analyst_rev_2y=rev_fwd_2y,
                 ttm_year=datetime.now().year - 1,
+                analyst_revenues_dict=analyst_revenues_dict,
             )
             
-            # P&L projection
+            # P&L projection (Etap 10: actual_ttm_margins ile delta-based)
             pnl = projection_engine.project_pnl_5y(
                 revenue_list=revenues,
                 profile_key=profile_key,
                 shares_basic=shares,
+                actual_ttm_margins=actual_ttm_margins,
             )
             
             # Multiples projection
