@@ -349,6 +349,197 @@ def format_adil_deger(symbol: str, res: dict, analyst: dict, detay: bool = False
     return f"<b>{symbol}</b> — beklenmedik veri formatı."
 
 
+# ── ADİL DEĞER SKILL v5.0 ENTEGRASYONU (Etap 7) ─────────────────────────────
+
+def run_adil_deger_skill_v5(ticker: str, full_mode: bool = False) -> dict | None:
+    """
+    Adil Değer Skill v5.0'ı subprocess ile çalıştırır.
+    --commit flag ile çalışır: markdown + index.json + git push otomatik.
+    
+    Returns: skill çıktısı + index.json entry, ya da None (hata)
+    """
+    import subprocess
+    
+    repo_root = "/app" if os.path.exists("/app") else os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+    skill_path = os.path.join(repo_root, "skills", "adil-deger-9-yontem", "scripts", "adil_deger.py")
+    
+    if not os.path.exists(skill_path):
+        return {"error": f"Skill bulunamadı: {skill_path}"}
+    
+    try:
+        # Skill'i --commit ile çalıştır (180sn timeout - FMP yavaş olabilir)
+        result = subprocess.run(
+            ["python3", skill_path, ticker.upper(), "--commit"],
+            cwd=repo_root,
+            capture_output=True,
+            text=True,
+            timeout=180,
+        )
+        
+        if result.returncode != 0:
+            return {"error": f"Skill hatası (exit {result.returncode}): {result.stderr[-500:] if result.stderr else result.stdout[-500:]}"}
+        
+        # index.json'dan son giriş oku
+        today = datetime.now().strftime("%Y-%m-%d")
+        index_path = os.path.join(repo_root, "data", "research", "index.json")
+        
+        if not os.path.exists(index_path):
+            return {"error": "index.json oluşmadı"}
+        
+        with open(index_path, "r", encoding="utf-8") as f:
+            index_data = json.load(f)
+        
+        entry_id = f"{ticker.upper()}_ADIL_DEGER_{today}"
+        entry = next((a for a in index_data.get("analizler", []) if a.get("id") == entry_id), None)
+        
+        if not entry:
+            return {"error": f"Index'te giriş bulunamadı: {entry_id}"}
+        
+        # Markdown dosyasını da hazır oku (full mode için)
+        md_path = os.path.join(repo_root, entry.get("dosya", ""))
+        md_text = None
+        if full_mode and os.path.exists(md_path):
+            with open(md_path, "r", encoding="utf-8") as f:
+                md_text = f.read()
+        
+        return {
+            "entry": entry,
+            "md_path": entry.get("dosya"),
+            "md_text": md_text,
+            "stdout_tail": result.stdout[-1000:] if result.stdout else "",
+        }
+    except subprocess.TimeoutExpired:
+        return {"error": "Skill 180sn içinde tamamlanmadı (FMP yavaş veya analiz başarısız)"}
+    except Exception as e:
+        return {"error": f"Skill çalıştırma hatası: {type(e).__name__}: {e}"}
+
+
+def format_v5_telegram_summary(entry: dict, github_url: str | None = None) -> str:
+    """
+    index.json entry'sinden Telegram için kısa HTML özet.
+    """
+    ticker = entry.get("ticker", "?")
+    sirket = entry.get("sirket", "")
+    karar = entry.get("karar", "—")
+    karar_gerekce = entry.get("karar_gerekce", "")
+    fiyat = entry.get("analiz_fiyati", 0)
+    
+    ad = entry.get("adil_deger", {})
+    mod = ad.get("mod", "—")
+    agirlikli = ad.get("agirlikli_adil_deger")
+    confidence = ad.get("confidence", "ORTA")
+    quality = ad.get("quality_premium", 1.0)
+    ai_mega = ad.get("ai_mega_cap", False)
+    
+    on = entry.get("on_beklenti", {})
+    bear = on.get("senaryo_ayi", {})
+    base = on.get("senaryo_baz", {})
+    bull = on.get("senaryo_boga", {})
+    
+    v5 = entry.get("v5_sinyaller", {})
+    altman = v5.get("altman_z") or {}
+    pio = v5.get("piotroski") or {}
+    momentum = v5.get("upgrade_momentum") or {}
+    cons_p = v5.get("konsantrasyon_urun") or {}
+    fmp_dcf = v5.get("fmp_dcf_unlevered")
+    live_pe = v5.get("canli_sektor_pe")
+    wacc = v5.get("dinamik_wacc")
+    
+    proj = entry.get("projeksiyon") or {}
+    norm_year = proj.get("normalizasyon_yili")
+    profile_key = proj.get("profile_key")
+    
+    portfoy = entry.get("portfoy_onerisi", {})
+    giris = entry.get("giris_plani", {})
+    
+    parts = []
+    parts.append(f"<b>📊 {ticker} — Adil Değer v5.0</b>")
+    if sirket:
+        parts.append(f"<i>{sirket}</i>")
+    parts.append("")
+    parts.append(f"💰 <b>Fiyat:</b> ${fiyat:.2f}")
+    if agirlikli:
+        upside = (agirlikli - fiyat) / fiyat * 100 if fiyat else 0
+        sign = "+" if upside >= 0 else ""
+        parts.append(f"🎯 <b>Adil Değer:</b> ${agirlikli:.2f} ({sign}%{upside:.1f})")
+    parts.append(f"🎲 <b>Mod:</b> {mod}  |  <b>Confidence:</b> {confidence}")
+    if quality and quality > 1.05:
+        parts.append(f"⭐ <b>Quality Premium:</b> {quality:.2f}x")
+    if ai_mega:
+        parts.append(f"🤖 <b>AI Mega-Cap aktif</b>")
+    parts.append("")
+    parts.append(f"<b>📈 Karar:</b> {karar}")
+    if karar_gerekce:
+        parts.append(f"<i>{karar_gerekce}</i>")
+    parts.append("")
+    
+    # Senaryolar
+    if bear and base and bull:
+        parts.append("<b>🎭 Senaryolar:</b>")
+        if bear.get("fiyat_hedef"):
+            parts.append(f"  🐻 Bear:  ${bear['fiyat_hedef']:.2f} ({bear.get('getiri_pct', 0):+.1f}%)")
+        if base.get("fiyat_hedef"):
+            parts.append(f"  ⚖️ Baz:   ${base['fiyat_hedef']:.2f} ({base.get('getiri_pct', 0):+.1f}%)")
+        if bull.get("fiyat_hedef"):
+            parts.append(f"  🐂 Bull:  ${bull['fiyat_hedef']:.2f} ({bull.get('getiri_pct', 0):+.1f}%)")
+        parts.append("")
+    
+    # v5 sinyaller
+    parts.append("<b>🔍 v5 Sinyaller:</b>")
+    if altman.get("value") is not None:
+        parts.append(f"  🛡️ Altman Z: {altman['value']:.2f} {altman.get('emoji','')} {altman.get('label','')}")
+    if pio.get("value") is not None:
+        parts.append(f"  📋 Piotroski: {pio['value']}/9 {pio.get('emoji','')} {pio.get('label','')}")
+    if momentum.get("label"):
+        parts.append(f"  📊 Sentiment 6 ay: {momentum['label']}")
+    if cons_p.get("label"):
+        parts.append(f"  🎯 Ürün: {cons_p['label']}")
+    if live_pe:
+        parts.append(f"  🌐 Canlı sektör P/E: {live_pe:.1f}x")
+    if wacc:
+        parts.append(f"  💼 CAPM WACC: %{wacc:.2f}")
+    if fmp_dcf is not None:
+        parts.append(f"  📐 FMP DCF: ${fmp_dcf:.2f}")
+    parts.append("")
+    
+    # Projeksiyon
+    if norm_year and profile_key:
+        years_to_wait = norm_year - datetime.now().year
+        emoji = "🟢" if years_to_wait <= 2 else ("🟡" if years_to_wait <= 4 else "🟠")
+        parts.append(f"<b>📅 Normalizasyon:</b> {emoji} {norm_year} ({years_to_wait} yıl)  |  Profil: <code>{profile_key}</code>")
+        parts.append("")
+    
+    # Giriş planı
+    if giris.get("stop_loss"):
+        parts.append("<b>🚀 Giriş Planı:</b>")
+        parts.append(f"  Stop: ${giris.get('stop_loss', 0):.2f}  |  H1: ${giris.get('hedef_1', 0):.2f}  |  H2: ${giris.get('hedef_2', 0):.2f}")
+        parts.append("")
+    
+    # Portföy
+    parts.append("<b>📁 Portföy Uygunluğu:</b>")
+    parts.append(f"  Dengeli: {portfoy.get('dengeli', '—')}")
+    parts.append(f"  Agresif: {portfoy.get('agresif', '—')}")
+    parts.append(f"  Temettü: {portfoy.get('temettu', portfoy.get('temettü', '—'))}")
+    parts.append("")
+    
+    # GitHub link
+    if github_url:
+        parts.append(f'<b>📄 Tam Rapor:</b> <a href="{github_url}">GitHub</a>')
+    
+    parts.append("")
+    parts.append("<i>Tam rapor için: <code>/deger {} full</code></i>".format(ticker))
+    parts.append("<i>finzora ai — Adil Değer Skill v5.0</i>")
+    
+    return "\n".join(parts)
+
+
+def github_md_url(repo_path: str) -> str:
+    """
+    Repo içi göreceli markdown yolundan GitHub blob URL üret.
+    """
+    return f"https://github.com/zeynelgun-afk/portfolio-tracker/blob/main/{repo_path}"
+
+
 def format_yardim() -> str:
     return """<b>🤖 Finzora AI Bot — Komutlar</b>
 
@@ -374,9 +565,13 @@ def format_yardim() -> str:
   <code>/risk</code> — Risk paneli (manuel üret + grup'a gönder)
   <code>/fiyat AAPL</code> — Canlı fiyat + değişim
 
-<b>Hisse Analizi:</b>
-  <code>AAPL</code> veya <code>/deger AAPL</code> (30-50sn)
-  → Framework + Kimi v7 (forward EPS, peer PE, stale filter, senaryolar)
+<b>Adil Değer v5.0 (önerilen — 11 May 2026 sonrası):</b>
+  <code>/deger AAPL</code> — Tam akış: 9 yöntem + v5 sinyaller + 5y projeksiyon → markdown + GitHub push (30-90sn)
+  <code>/deger AAPL full</code> — Aynı + tam markdown raporu Telegram'a kopyalar
+  → 12 bölümlü protokole uygun rapor: Bear/Bull/Wrong case otomatik, Altman+Piotroski, FMP DCF sanity, konsantrasyon, CAPM WACC, 5y P&amp;L+forward+normalizasyon yılı, portföy karar matrisi, giriş planı, izleme tetikleyicileri
+
+<b>Hisse Analizi (eski v7/Kimi):</b>
+  <code>AAPL</code> sadece — Framework + Kimi v7 (forward EPS, peer PE, senaryolar) ~30-50sn
   <code>/q AAPL</code> (alias: <code>/hizli</code>) — Sadece framework, ~2sn
   <code>/detay AAPL</code> — Uzun rapor + tüm metotlar
   <code>/beklenti AAPL</code> — Analist + EPS beklentileri
@@ -1638,11 +1833,54 @@ def isle_mesaj(msg: dict):
             ticker = parts[1].upper()
             hizli_modu = True
 
-    # "/deger AAPL" veya "/beklenti AAPL" — Kimi-led (~30-50sn)
+    # "/deger AAPL" veya "/deger AAPL full" → v5.0 SKILL (Etap 7, 2026-05-11)
+    # /commit ile rapor + index.json + git push otomatik
     elif text.upper().startswith("/DEGER ") or text.upper().startswith("/BEKLENTI "):
         parts = text.split()
         if len(parts) >= 2:
-            ticker = parts[1].upper()
+            tkr = parts[1].upper()
+            full_mode = (len(parts) >= 3 and parts[2].lower() in ("full", "tam", "detay"))
+            
+            tg_send(chat_id,
+                    f"⏳ <b>{tkr}</b> Adil Değer v5.0 hesaplanıyor...\n"
+                    f"<i>FMP veri → 9 yöntem + v5 sinyaller + 5y projeksiyon → markdown rapor → GitHub push (30-90sn)</i>",
+                    reply_to=msg_id)
+            
+            res = run_adil_deger_skill_v5(tkr, full_mode=full_mode)
+            
+            if not res or res.get("error"):
+                tg_send(chat_id,
+                        f"❌ <b>{tkr}</b> için skill çalıştırılamadı.\n"
+                        f"<code>{(res or {}).get('error', 'bilinmeyen hata')}</code>",
+                        reply_to=msg_id)
+                return
+            
+            entry = res["entry"]
+            md_path = res.get("md_path")
+            url = github_md_url(md_path) if md_path else None
+            
+            # Kısa özet
+            summary = format_v5_telegram_summary(entry, github_url=url)
+            tg_send(chat_id, summary, reply_to=msg_id)
+            
+            # Full mode: tam markdown'ı parça parça da gönder (4000 karakter sınırı)
+            if full_mode and res.get("md_text"):
+                md = res["md_text"]
+                # HTML escape değil, sadece markdown olarak Telegram'da düz metin yolla
+                # Telegram 4096 karakter sınırı
+                CHUNK = 3800
+                tg_send(chat_id, f"📄 <b>{tkr} - Tam Markdown Rapor:</b>", reply_to=msg_id)
+                for i in range(0, len(md), CHUNK):
+                    chunk = md[i:i+CHUNK]
+                    # Basit HTML escape
+                    chunk_safe = chunk.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+                    tg_send(chat_id, f"<pre>{chunk_safe}</pre>", parse_mode="HTML")
+            
+            print(f"[Bot] /deger {tkr} v5.0 yanıtı gönderildi → {chat_id} (full={full_mode})")
+            return  # Eski adil_deger_hesapla path'ini bypass
+
+    # "/deger AAPL" eskiden — Kimi-led (~30-50sn) — ARTIK kullanılmıyor, v5'e taşındı
+    # Aşağıdaki blok eski uyum için duruyor, tetiklenmez:
 
     # Doğrudan ticker: "AAPL", "MU", "NVDA"
     elif TICKER_PATTERN.match(text_upper) and len(text_upper) >= 2:
