@@ -687,36 +687,29 @@ def calculate_forward_normalized_value(
     eps_source = 'analyst_raw' if analyst_eps_dict else 'pnl_projection'
     
     if analyst_eps_dict:
-        # Yıl bazlı EPS dict'i kullan
-        # İlk pozitif EPS yılını bul (sıralı)
+        # v5.0 Etap 13 Fix-2.3: EN YÜKSEK pozitif EPS kullan (2 yıl ortalama yerine)
+        # Mantık: Şirketin ulaşılabilir tepe kazanç gücü → discount back.
+        # Tek yıl ortalama yerine, en yüksek olası kazanç noktasını al ve bugüne diskonto et.
+        # Bu, analyst'lerin gördüğü "best year" ile bizim hesabımızı hizalar.
         sorted_years = sorted(analyst_eps_dict.keys())
-        norm_year = None
+        
+        # Tüm pozitif EPS yıllarını topla
+        positive_years = []
         for year in sorted_years:
             eps_val = analyst_eps_dict[year]
             if eps_val is not None and eps_val > 0:
-                norm_year = year
-                break
+                positive_years.append((year, eps_val))
         
-        if norm_year is None:
-            # Hiç pozitif EPS yılı yok, analyst kapsamı içinde
-            return None
+        if not positive_years:
+            return None  # Hiç pozitif EPS yılı yok
         
-        # Y_norm, Y_norm+1 EPS'leri al (varsa)
-        # v5.0 Etap 13 Fix-2.2: 3 yıl yerine 2 yıl — Y_norm+2 sıklıkla anomali
-        # (analyst forecast 3+ yıl ileri çok değişken, APLD'de Y2030 anomalisi gibi)
-        eps_values = []
-        for offset in range(2):  # 0, 1 (yani Y_norm ve Y_norm+1)
-            yr = norm_year + offset
-            if yr in analyst_eps_dict:
-                val = analyst_eps_dict[yr]
-                if val is not None and val > 0:
-                    eps_values.append(val)
-        
-        if not eps_values:
-            return None
-        
-        normalize_eps = sum(eps_values) / len(eps_values)
-        method_note = f"Analyst raw EPS Y_norm={norm_year}, {len(eps_values)} yıl ortalaması (Hibrit Forward Normalize, 2y window)"
+        # En yüksek EPS yılını bul
+        best_year, best_eps = max(positive_years, key=lambda x: x[1])
+        norm_year = best_year
+        normalize_eps = best_eps
+        eps_values = [best_eps]
+        eps_source = 'analyst_raw'
+        method_note = f"En yüksek pozitif EPS yılı Y{best_year}=${best_eps:.2f} (tüm pozitif yıllar arasında)"
     
     else:
         # Fallback: PNL'den EPS al (eski mantık)

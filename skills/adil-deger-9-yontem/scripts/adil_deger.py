@@ -50,6 +50,13 @@ except ImportError as e:
     print(f"⚠️ v5.0 modülleri yüklenemedi ({e}), v4.1 mode'a düşülüyor", file=sys.stderr)
     _V5_MODULES_AVAILABLE = False
 
+try:
+    import transcript_analyzer
+    _TRANSCRIPT_ANALYZER_AVAILABLE = True
+except ImportError as e:
+    print(f"⚠️ transcript_analyzer yüklenemedi ({e})", file=sys.stderr)
+    _TRANSCRIPT_ANALYZER_AVAILABLE = False
+
 API_KEY = os.environ.get("FMP_API_KEY", "g1GFJZtV5rCP49UCir4WuP56VjhmA6F8")
 BASE = "https://financialmodelingprep.com/stable"
 HEADERS = {"User-Agent": "finzora-ai-adil-deger/5.0"}
@@ -1400,6 +1407,15 @@ def analyze(ticker):
                 else:
                     decision = ("🔴 GEÇ / KAÇIN", f"Hibrit Forward (${forward_normalized_value:.2f}) — fiyat %{(ratio-1)*100:.0f} üstünde.")
     
+    # v5.0 Etap 13 Fix-3: Bilanço Sonrası Tazelik Analizi
+    # Son earnings tarihi ≤10 gün ise transcript çek + Kimi K2 Thinking ile analiz et
+    freshness = None
+    if _TRANSCRIPT_ANALYZER_AVAILABLE:
+        try:
+            freshness = transcript_analyzer.get_freshness_analysis(fetch, ticker)
+        except Exception as e:
+            sys.stderr.write(f"⚠️ Freshness analizi hatası: {e}\n")
+    
     return {
         'ticker': ticker,
         'analysis_date': datetime.now().strftime('%Y-%m-%d %H:%M'),
@@ -1414,6 +1430,8 @@ def analyze(ticker):
             'year_high': safe_get(quote, 'yearHigh'), 'year_low': year_low,
             'sma_50': safe_get(quote, 'priceAvg50'), 'sma_200': safe_get(quote, 'priceAvg200'),
         },
+        'company_description': profile.get('description', '') or '',
+        'freshness': freshness,  # v5.0 Etap 13 Fix-3: Bilanço tazelik + transcript analizi
         'sector_key': sector_key, 'is_ai_megacap': is_ai_megacap,
         'quality_mult': quality_mult,
         'quality_detail': quality_detail,
@@ -2028,6 +2046,27 @@ def format_markdown_report(result, output_path=None):
     md.append("")
     
     # ========================================
+    # ŞİRKET TANIMI (FMP description)
+    # ========================================
+    company_desc = result.get('company_description', '') or ''
+    if company_desc:
+        md.append("## Şirket Hakkında")
+        md.append("")
+        # İlk cümleyi al + maks 400 karakter
+        # FMP description çoğunlukla "X Corporation does Y." şeklinde başlar
+        first_sentence_end = company_desc.find('. ', 50)  # en az 50 char sonra ilk nokta
+        if first_sentence_end > 0 and first_sentence_end < 400:
+            short_desc = company_desc[:first_sentence_end + 1]
+        else:
+            short_desc = company_desc[:400].rstrip()
+            # Son kelimeyi kırpma
+            last_space = short_desc.rfind(' ')
+            if last_space > 300:
+                short_desc = short_desc[:last_space] + '...'
+        md.append(short_desc)
+        md.append("")
+    
+    # ========================================
     # BÖLÜM 1: Yönetici Özeti
     # ========================================
     md.append("## 1. Yönetici Özeti")
@@ -2123,19 +2162,103 @@ def format_markdown_report(result, output_path=None):
     if forward_first and fn_value:
         proj = result.get('projection', {}) or {}
         fn_detail = proj.get('forward_normalized', {})
-        md.append(f"| Mod | **Forward-First Hibrit** (analyst raw EPS bazlı) |")
-        md.append(f"| Normalize Yıl | {fn_detail.get('normalization_year', 'N/A')} (ilk pozitif EPS) |")
-        md.append(f"| Normalize EPS (3y ort) | ${fn_detail.get('normalize_eps', 0):.2f} |")
+        md.append(f"| Hibrit Hesap Modu | Forward-First (analyst raw EPS bazlı) |")
+        md.append(f"| Normalize Yıl | {fn_detail.get('normalization_year', 'N/A')} (en yüksek EPS yılı) |")
+        md.append(f"| Normalize EPS | ${fn_detail.get('normalize_eps', 0):.2f} (tek yıl, tepe kazanç) |")
         sub_key = fn_detail.get('sub_industry_key', '')
         sub_mult = fn_detail.get('sub_industry_premium', 1.0)
-        if sub_key and sub_key != 'GROWTH_DEFAULT':
-            md.append(f"| Sub-Industry Premium | {sub_mult:.2f}x ({sub_key}) |")
+        sector_pe_used = fn_detail.get('sector_forward_pe', 0)
+        if sub_key == 'AI_INFRASTRUCTURE':
+            md.append(f"| Sub-Industry | AI Infrastructure → canlı sektör P/E kullanıldı |")
+            md.append(f"| Sektör Forward P/E | {sector_pe_used:.1f}x (canlı, growth dahil) |")
+        elif sub_key == 'CLOUD_NATIVE_SAAS':
+            md.append(f"| Sub-Industry | Cloud-native SaaS → canlı sektör P/E kullanıldı |")
+            md.append(f"| Sektör Forward P/E | {sector_pe_used:.1f}x (canlı, growth dahil) |")
+        elif sub_key == 'AI_MEGACAP':
+            md.append(f"| Sub-Industry | AI Mega-Cap → statik sektör P/E × {sub_mult:.2f}x premium |")
+            md.append(f"| Sektör Forward P/E | {sector_pe_used:.1f}x (statik) |")
+        else:
+            md.append(f"| Sektör Forward P/E | {sector_pe_used:.1f}x (statik) |")
+        wacc = fn_detail.get('wacc', 0.10)
+        years_norm = fn_detail.get('years_to_normalize', 0)
+        df = fn_detail.get('discount_factor', 1.0)
+        md.append(f"| WACC | %{wacc*100:.1f} |")
+        if years_norm > 0:
+            md.append(f"| Diskonto ({years_norm} yıl) | ÷ {df:.3f} |")
     
     # Pivot bayrağı (varsa)
     if (result.get('projection') or {}).get('pivot_detected'):
         md.append(f"| Pivot Mode | 🔄 EVET — Şirket dramatic dönüşüm aşamasında |")
     md.append(f"| Piyasa Rejimi | {result['market_regime']['regime']} (VIX {result['market_regime']['vix']}) |")
     md.append("")
+    
+    # ========================================
+    # HESABIN ADIMLARI (Forward-First Hibrit aktifse)
+    # ========================================
+    if forward_first and fn_value:
+        proj = result.get('projection', {}) or {}
+        fn_detail = proj.get('forward_normalized', {})
+        
+        md.append("### Hibrit Forward Normalize — Hesabın Adımları")
+        md.append("")
+        md.append("| Adım | Hesap | Değer |")
+        md.append("|---|---|---|")
+        
+        # Adım 1: Analyst forward EPS verisi (sıralı)
+        analyst_eps_dict_md = {}
+        # Yeniden multi_year'dan çek (bu fonksiyonda multi_year değişkeni yok, projection'a saklamadık)
+        # Bunun yerine eps_values_used'ı gösterelim ve normalize yılı belirtelim
+        eps_used = fn_detail.get('eps_values_used', [])
+        norm_yr = fn_detail.get('normalization_year', 0)
+        norm_eps = fn_detail.get('normalize_eps', 0)
+        sector_pe = fn_detail.get('sector_forward_pe', 0)
+        sub_mult = fn_detail.get('sub_industry_premium', 1.0)
+        wacc_val = fn_detail.get('wacc', 0.10)
+        years_n = fn_detail.get('years_to_normalize', 0)
+        df_val = fn_detail.get('discount_factor', 1.0)
+        mature = fn_detail.get('mature_value', 0)
+        
+        # EPS dökümü - en yüksek tek yıl
+        if eps_used and norm_yr:
+            md.append(f"| 1. Analyst forward EPS taraması | Tüm pozitif yıllar arasından en yüksek | {fn_detail.get('eps_source', '')} |")
+        
+        md.append(f"| 2. Normalize yıl seçimi | En yüksek pozitif EPS yılı | {norm_yr} |")
+        
+        md.append(f"| 3. Normalize EPS | Y{norm_yr} EPS (tek yıl, tepe kazanç) | ${norm_eps:.2f} |")
+        
+        sub_key = fn_detail.get('sub_industry_key', '')
+        if sub_key and sub_key != 'GROWTH_DEFAULT':
+            sub_label = {
+                'AI_INFRASTRUCTURE': 'AI Infrastructure (canlı sektör P/E)',
+                'CLOUD_NATIVE_SAAS': 'Cloud-native SaaS (canlı sektör P/E)',
+                'AI_MEGACAP': f'AI Mega-Cap (statik × {sub_mult:.2f}x premium)',
+            }.get(sub_key, sub_key)
+            md.append(f"| 4. Sub-Industry tespiti | {sub_label} | premium {sub_mult:.2f}x |")
+        
+        md.append(f"| 5. Sektör Forward P/E | Information Technology Services | {sector_pe:.2f}x |")
+        
+        if sub_mult != 1.0:
+            md.append(f"| 6. Mature value (normalize yılında) | ${norm_eps:.2f} × {sector_pe:.2f} × {sub_mult:.2f} | ${mature:.2f} |")
+        else:
+            md.append(f"| 6. Mature value (normalize yılında) | ${norm_eps:.2f} × {sector_pe:.2f} | ${mature:.2f} |")
+        
+        if years_n > 0:
+            md.append(f"| 7. Years to normalize | {norm_yr} - {datetime.now().year} | {years_n} yıl |")
+            md.append(f"| 8. Discount factor | (1 + %{wacc_val*100:.1f})^{years_n} | × {df_val:.3f} |")
+            md.append(f"| 9. Adil değer (bugün) | ${mature:.2f} / {df_val:.3f} | **${fn_value:.2f}** |")
+        else:
+            md.append(f"| 7. Years to normalize | {norm_yr} ≤ {datetime.now().year} (diskonto yok) | 0 yıl |")
+            md.append(f"| 8. Adil değer (bugün) | Mature value doğrudan | **${fn_value:.2f}** |")
+        md.append("")
+    
+    # ========================================
+    # FRESHNESS — Bilanço Sonrası Transcript Analizi (Etap 13 Fix-3)
+    # ========================================
+    freshness = result.get('freshness')
+    if freshness and _TRANSCRIPT_ANALYZER_AVAILABLE:
+        freshness_lines = transcript_analyzer.format_freshness_markdown(freshness)
+        if freshness_lines:
+            md.extend(freshness_lines)
     
     # ========================================
     # BÖLÜM 2: 9 Yöntem Bazlı Değerlendirme
@@ -2176,75 +2299,61 @@ def format_markdown_report(result, output_path=None):
     md.append("")
     
     # ========================================
-    # BÖLÜM 3: Ağırlıklı Adil Değer Tablosu
+    # BÖLÜM 3: Senaryo Matrisi
+    # (Eski Bölüm 3 'Ağırlıklı Adil Değer Tablosu' kaldırıldı — Hibrit ana hesap olduğunda
+    # Heritage 9 yöntem medyanı zaten Yönetici Özeti'nde referans olarak görünüyor.)
+    # (Eski Bölüm 4 → Bölüm 3, numaralandırma 1 azaldı)
     # ========================================
-    md.append("## 3. Ağırlıklı Adil Değer Tablosu (Normal Senaryo)")
+    md.append("## 3. Senaryo Matrisi")
     md.append("")
     
-    mode = result['mode']
-    if mode == 'GROWTH':
-        md.append("**Mod**: 🚀 GROWTH — sadece Forward + Growth yöntemleri ana hesaba katılır. Traditional sadece zemin (Margin of Safety) olarak gösterilir.")
+    # v5.0 Etap 13 Fix-2: Forward-First aktifse senaryolar Hibrit değerine göre
+    # Aksi halde eski Heritage senaryoları
+    if forward_first and fn_value:
+        primary = fn_value
+        scenario_bear = primary * 0.70
+        scenario_base = primary
+        scenario_bull = primary * 1.30
+        md.append("**Hesap tabanı**: Hibrit Forward Normalize (Bear = ×0.70, Bull = ×1.30)")
         md.append("")
-        md.append("| Kategori | Yöntem Sayısı | Medyan | Ağırlık | Katkı |")
+        md.append("| Senaryo | Adil Değer | Mevcut Fiyata Göre | Olasılık | Gerekçe |")
         md.append("|---|---|---|---|---|")
-        fwd_summary = result['summaries']['normal'].get('forward') or {}
-        growth_summary = result['summaries']['normal'].get('growth') or {}
-        fwd_med = fwd_summary.get('median', 0) or 0
-        growth_med = growth_summary.get('median', 0) or 0
-        # Forward+Growth eşit ağırlıkta basit ortalama
-        md.append(f"| Forward (FWD P/E + DCF) | 2 | ${fwd_med:.2f} | %50 | ${fwd_med*0.5:.2f} |")
-        md.append(f"| Growth (PEG + EV/FWD x2) | 3 | ${growth_med:.2f} | %50 | ${growth_med*0.5:.2f} |")
-        if normal_median:
-            md.append(f"| **Toplam (Forward+Growth medyan)** | | | | **${normal_median:.2f}** |")
-        else:
-            md.append("| **Toplam** | | | | **HESAPLANAMADI** — Forward/Growth yöntemleri yetersiz |")
-    else:
-        md.append("**Mod**: ⚖️ BLENDED — Traditional + Forward+Growth ağırlıklı")
-        md.append("")
-        md.append("Forward growth oranına göre ağırlık değişir (>1.5x: 50/50, 1.2-1.5x: 65/35, <1.2x: 80/20)")
-        md.append("")
-        trad_summary = result['summaries']['normal'].get('traditional') or {}
-        fg_summary = result['summaries']['normal'].get('forward_growth_combined') or {}
-        trad_med = trad_summary.get('median', 0) or 0
-        fg_med = fg_summary.get('median', 0) or 0
-        md.append("| Kategori | Yöntem Sayısı | Medyan |")
-        md.append("|---|---|---|")
-        md.append(f"| Traditional | 4 | ${trad_med:.2f} |")
-        md.append(f"| Forward + Growth | 5 | ${fg_med:.2f} |")
-        if normal_median:
-            md.append(f"| **Ağırlıklı Sonuç** | | **${normal_median:.2f}** |")
-        else:
-            md.append("| **Ağırlıklı Sonuç** | | **HESAPLANAMADI** |")
-    md.append("")
-    
-    # ========================================
-    # BÖLÜM 4: Senaryo Matrisi
-    # ========================================
-    md.append("## 4. Senaryo Matrisi")
-    md.append("")
-    
-    bear_diff = ((bear_median - price) / price * 100) if bear_median else None
-    normal_diff = upside_pct
-    bull_diff = ((bull_median - price) / price * 100) if bull_median else None
-    
-    md.append("| Senaryo | Adil Değer | Mevcut Fiyata Göre | Olasılık | Gerekçe |")
-    md.append("|---|---|---|---|---|")
-    if bear_median:
-        sign = "+" if bear_diff > 0 else ""
-        md.append(f"| 🐻 Bear | ${bear_median:.2f} | %{sign}{bear_diff:.1f} | %25-30 | Multiple compression, sektör rotasyonu |")
-    if normal_median:
-        sign = "+" if normal_diff > 0 else ""
-        md.append(f"| ⚖️ Base | ${normal_median:.2f} | %{sign}{normal_diff:.1f} | %45-50 | Mevcut piyasa rejimi (Normal), analist konsensüs uyumlu |")
-    if bull_median:
-        sign = "+" if bull_diff > 0 else ""
-        md.append(f"| 🐂 Bull | ${bull_median:.2f} | %{sign}{bull_diff:.1f} | %20-25 | Sektör tailwind devam, AI mega-cap premium |")
-    
-    # Beklenen Değer
-    if bear_median and normal_median and bull_median:
-        ev = bear_median * 0.275 + normal_median * 0.475 + bull_median * 0.225
+        bear_diff_h = ((scenario_bear - price) / price * 100)
+        base_diff_h = ((scenario_base - price) / price * 100)
+        bull_diff_h = ((scenario_bull - price) / price * 100)
+        sign_b = "+" if bear_diff_h > 0 else ""
+        sign_n = "+" if base_diff_h > 0 else ""
+        sign_u = "+" if bull_diff_h > 0 else ""
+        md.append(f"| 🐻 Bear | ${scenario_bear:.2f} | %{sign_b}{bear_diff_h:.1f} | %25-30 | Forward EPS yarısı gerçekleşmez, multiple compression |")
+        md.append(f"| ⚖️ Base | ${scenario_base:.2f} | %{sign_n}{base_diff_h:.1f} | %45-50 | Analyst konsensüs doğru çıkar, normalize yıl ulaşılır |")
+        md.append(f"| 🐂 Bull | ${scenario_bull:.2f} | %{sign_u}{bull_diff_h:.1f} | %20-25 | Tepe EPS aşılır veya multiple expansion |")
+        # Beklenen Değer
+        ev = scenario_bear * 0.275 + scenario_base * 0.475 + scenario_bull * 0.225
         ev_diff = ((ev - price) / price * 100)
-        sign = "+" if ev_diff > 0 else ""
-        md.append(f"| **Beklenen Değer** | **${ev:.2f}** | **%{sign}{ev_diff:.1f}** | %100 | Senaryo ağırlıklı |")
+        sign_ev = "+" if ev_diff > 0 else ""
+        md.append(f"| **Beklenen Değer** | **${ev:.2f}** | **%{sign_ev}{ev_diff:.1f}** | %100 | Senaryo ağırlıklı |")
+    else:
+        # Heritage senaryolar
+        bear_diff = ((bear_median - price) / price * 100) if bear_median else None
+        normal_diff = upside_pct
+        bull_diff = ((bull_median - price) / price * 100) if bull_median else None
+        
+        md.append("| Senaryo | Adil Değer | Mevcut Fiyata Göre | Olasılık | Gerekçe |")
+        md.append("|---|---|---|---|---|")
+        if bear_median:
+            sign = "+" if bear_diff > 0 else ""
+            md.append(f"| 🐻 Bear | ${bear_median:.2f} | %{sign}{bear_diff:.1f} | %25-30 | Multiple compression, sektör rotasyonu |")
+        if normal_median:
+            sign = "+" if normal_diff > 0 else ""
+            md.append(f"| ⚖️ Base | ${normal_median:.2f} | %{sign}{normal_diff:.1f} | %45-50 | Mevcut piyasa rejimi, analist konsensüs uyumlu |")
+        if bull_median:
+            sign = "+" if bull_diff > 0 else ""
+            md.append(f"| 🐂 Bull | ${bull_median:.2f} | %{sign}{bull_diff:.1f} | %20-25 | Sektör tailwind, AI mega-cap premium |")
+        if bear_median and normal_median and bull_median:
+            ev = bear_median * 0.275 + normal_median * 0.475 + bull_median * 0.225
+            ev_diff = ((ev - price) / price * 100)
+            sign = "+" if ev_diff > 0 else ""
+            md.append(f"| **Beklenen Değer** | **${ev:.2f}** | **%{sign}{ev_diff:.1f}** | %100 | Senaryo ağırlıklı |")
     md.append("")
     
     # ========================================
@@ -2264,9 +2373,18 @@ def format_markdown_report(result, output_path=None):
     if v5.get('upgrade_momentum', {}).get('direction') == 'downgrade':
         bear_items.append(f"**Analist downgrade momentum**: {v5['upgrade_momentum']['label']} (KESİN). Son 6 ayda analist sentiment'i kötüleşiyor.")
     
-    if v5.get('concentration_risk_product', {}).get('top_share_pct', 0) >= 50:
+    # Ürün konsantrasyonu — pivot/yüksek-growth durumda segmentation eski iş kolunu
+    # yansıtır, yanıltıcı olabilir. forward_first aktif + yüksek revenue growth varsa gizle.
+    is_pivot_or_growth = (
+        (result.get('forward_first_active') and (di.get('revenue_growth_yoy_pct') or 0) > 50)
+        or (result.get('projection') or {}).get('pivot_detected')
+    )
+    if v5.get('concentration_risk_product', {}).get('top_share_pct', 0) >= 50 and not is_pivot_or_growth:
         cr = v5['concentration_risk_product']
         bear_items.append(f"**Ürün konsantrasyonu KRİTİK**: {cr['top_segment']} %{cr['top_share_pct']} gelir (KESİN). Tek müşteri/segment kaybı şirketi sarsabilir.")
+    elif v5.get('concentration_risk_product', {}).get('top_share_pct', 0) >= 50 and is_pivot_or_growth:
+        cr = v5['concentration_risk_product']
+        bear_items.append(f"**FMP segmentation eski veri olabilir**: {cr['top_segment']} %{cr['top_share_pct']} (KESİN). Şirket pivot/yüksek büyüme aşamasında, son çeyrek raporlarından gerçek mix doğrulanmalı.")
     
     if v5.get('concentration_risk_geo', {}).get('top_share_pct', 0) >= 60:
         cr = v5['concentration_risk_geo']
@@ -2447,173 +2565,11 @@ def format_markdown_report(result, output_path=None):
             md.append(f"- Hesaplama: {dw['source']}")
             md.append("")
     
-    # ========================================
-    # BÖLÜM 9: Portföy Karar Matrisi
-    # ========================================
-    md.append("## 9. Portföy Karar Matrisi (3 Portföy)")
-    md.append("")
-    
-    # Otomatik öneriler (basit kurallar)
-    is_growth = (mode == 'GROWTH')
-    has_dividend = (di.get('roe_pct', 0) > 15 and not is_growth)
-    is_quality = (result.get('quality_mult', 1.0) >= 1.20)
-    altman_safe = (v5.get('altman_z', {}).get('label') == 'GÜVENLİ')
-    
-    md.append("| Portföy | Uygunluk | Gerekçe + Maks Ağırlık |")
-    md.append("|---|---|---|")
-    
-    # Dengeli
-    dengeli = "uygun" if (altman_safe and not v5.get('upgrade_momentum', {}).get('direction') == 'downgrade') else "uygun_kosullu"
-    md.append(f"| Dengeli ($100K) | {dengeli} | Karışık sektör tezi, max %15 ağırlık |")
-    
-    # Agresif Büyüme
-    agresif = "uygun" if (is_growth or result['is_ai_megacap']) else "uygun_kosullu"
-    md.append(f"| Agresif Büyüme ($400K) | {agresif} | AI/momentum/growth tematik, max %20 ağırlık |")
-    
-    # Değer + Temettü
-    if has_dividend and altman_safe and not is_growth:
-        temettu = "uygun"
-    elif is_growth:
-        temettu = "uygun_degil"
-    else:
-        temettu = "uygun_kosullu"
-    md.append(f"| Değer + Temettü ($100K) | {temettu} | Defansif/temettü, max %15 ağırlık |")
-    md.append("")
     
     # ========================================
-    # BÖLÜM 10: Giriş Planı (v5.0 Etap 13: Karar-Stop tutarlılığı)
+    # BÖLÜM 9: İzleme Tetikleyicileri
     # ========================================
-    md.append("## 10. Giriş Planı")
-    md.append("")
-    
-    # Karar'a göre setup tipi belirle
-    karar_text = (result.get('decision', {}).get('action', '') or '').upper()
-    is_buy = ('AL' in karar_text)
-    is_avoid = ('GEÇ' in karar_text or 'KAÇIN' in karar_text or 'GEC' in karar_text)
-    is_hold = ('İZLE' in karar_text or 'IZLE' in karar_text or 'HOLD' in karar_text or 'PAHALI' in karar_text)
-    
-    # v5.0 Etap 13 Fix-2: Forward-First aktifse hibrit değeri ana hedef
-    forward_first = result.get('forward_first_active', False)
-    fn_value = result.get('forward_normalized_value')
-    if forward_first and fn_value:
-        primary_target = fn_value      # ana hedef
-        primary_label = "Hibrit Forward"
-    else:
-        primary_target = normal_median  # 9 yöntem medyanı
-        primary_label = "normal medyan"
-    
-    if is_buy:
-        # LONG SETUP — Skill mevcut fiyatı ucuz buluyor
-        md.append(f"**Setup**: 🟢 LONG (skill mevcut fiyatı adil değerin altında buluyor — {primary_label} bazlı)")
-        md.append("")
-        md.append("| Parametre | Değer |")
-        md.append("|---|---|")
-        md.append(f"| Mevcut Fiyat | ${price:.2f} |")
-        md.append(f"| Beklenen Adil Değer | ${primary_target:.2f} ({primary_label}) |" if primary_target else "| Beklenen Adil Değer | hesaplanamadı |")
-        
-        if bear_median and bear_median < price:
-            ideal_low = bear_median
-            ideal_high = min(bear_median * 1.10, price * 0.98)
-            md.append(f"| İdeal Giriş Zonu | ${ideal_low:.2f} - ${ideal_high:.2f} (bear medyan civarı) |")
-        else:
-            md.append(f"| İdeal Giriş Zonu | Mevcut fiyat veya küçük geri çekilmede |")
-        
-        # Long stop = mevcut fiyat × 0.87 (%13 altı) VEYA bear medyan altı (hangisi yakınsa)
-        stop_pct13 = price * 0.87
-        stop = stop_pct13
-        if bear_median and bear_median * 0.95 > stop_pct13:
-            stop = bear_median * 0.95
-            md.append(f"| Stop Loss | ${stop:.2f} (bear medyanın %5 altı) |")
-        else:
-            md.append(f"| Stop Loss | ${stop:.2f} (-%13) |")
-        
-        if primary_target and primary_target > price:
-            md.append(f"| Hedef 1 (base) | ${primary_target:.2f} ({primary_label}, +%{((primary_target/price-1)*100):.1f}) |")
-        if bull_median and bull_median > price:
-            md.append(f"| Hedef 2 (bull) | ${bull_median:.2f} (boğa medyan, +%{((bull_median/price-1)*100):.1f}) |")
-        
-        # R/R (yalnızca hedef > mevcut > stop ise anlamlı)
-        if primary_target and primary_target > price and stop and stop < price:
-            reward = primary_target - price
-            risk = price - stop
-            rr = reward / risk
-            md.append(f"| R/R Oranı | 1:{rr:.1f} |")
-        
-        md.append(f"| Pozisyon Boyutu | Portföy max %15-20 (mode'a göre) |")
-        
-    elif is_avoid:
-        # GEÇ / KAÇIN — Skill mevcut fiyatı tüm senaryoların üstünde buluyor
-        md.append(f"**Setup**: 🔴 GİRİŞ ÖNERMİYORUZ — Mevcut fiyat {primary_label} üstünde")
-        md.append("")
-        md.append("| Parametre | Değer |")
-        md.append("|---|---|")
-        md.append(f"| Mevcut Fiyat | ${price:.2f} |")
-        if primary_target and primary_target > 0:
-            md.append(f"| Adil Değer ({primary_label}) | ${primary_target:.2f} (mevcut fiyat **%{((price/primary_target-1)*100):.0f} üstünde**) |")
-        else:
-            md.append("| Adil Değer | hesaplanamadı |")
-        
-        if bull_median:
-            md.append(f"| Boğa Senaryosu Hedefi | ${bull_median:.2f} (mevcut fiyat **%{((price/bull_median-1)*100):.0f} üstünde**) |" if bull_median > 0 else "")
-        
-        md.append("| Long Setup | ❌ ÖNERİLMEZ (fiyat tüm senaryoların üstünde) |")
-        
-        # Short setup (opsiyonel, sadece bilgi amaçlı)
-        if primary_target and primary_target > 0 and price > primary_target:
-            short_stop = price * 1.13  # %13 yukarı
-            short_target_1 = bull_median if bull_median and bull_median < price else primary_target
-            short_target_2 = primary_target
-            md.append("| | |")
-            md.append(f"| **Short Setup (opsiyonel)** | (spekülatif, beta yüksekse riskli) |")
-            md.append(f"| Short Giriş | Mevcut ${price:.2f} civarı |")
-            md.append(f"| Short Stop | ${short_stop:.2f} (+%13, yeni ATH) |")
-            md.append(f"| Short Hedef 1 | ${short_target_1:.2f} |")
-            md.append(f"| Short Hedef 2 | ${short_target_2:.2f} |")
-        
-    else:
-        # İZLE / PAHALI / HOLD — Belirsiz alan, küçük long pozisyon mümkün
-        md.append(f"**Setup**: 🟡 İZLE / KÜÇÜK POZİSYON (skill belirsiz, fiyat {primary_label} civarında)")
-        md.append("")
-        md.append("| Parametre | Değer |")
-        md.append("|---|---|")
-        md.append(f"| Mevcut Fiyat | ${price:.2f} |")
-        md.append(f"| Adil Değer ({primary_label}) | ${primary_target:.2f} |" if primary_target else "| Adil Değer | hesaplanamadı |")
-        
-        if bear_median:
-            ideal_low = bear_median
-            ideal_high = bear_median * 1.10
-            md.append(f"| İdeal Giriş Zonu | ${ideal_low:.2f} - ${ideal_high:.2f} (bear medyan civarı) |")
-        
-        stop = price * 0.87
-        md.append(f"| Stop Loss (eğer pozisyon açılırsa) | ${stop:.2f} (-%13) |")
-        
-        if primary_target and primary_target > price:
-            md.append(f"| Hedef 1 | ${primary_target:.2f} |")
-        if bull_median and bull_median > price:
-            md.append(f"| Hedef 2 | ${bull_median:.2f} |")
-        
-        md.append(f"| Pozisyon Boyutu | Max %5 (belirsiz alan, küçük tut) |")
-    
-    # Bekleme koşulları (her durumda)
-    wait_conditions = []
-    if is_avoid and normal_median and price > normal_median:
-        wait_conditions.append(f"Fiyat ${normal_median:.2f} (adil değer) altına düşüş")
-    if result.get('forward_outlier'):
-        wait_conditions.append("Forward outlier flag düşene kadar bekle (1 çeyrek sonra revize)")
-    if v5.get('upgrade_momentum', {}).get('direction') == 'downgrade':
-        wait_conditions.append("Analist downgrade momentum stabilize olana kadar bekle")
-    if result.get('forward_data_quality') in ('SINGLE', 'ALGORITHMIC'):
-        wait_conditions.append("Daha fazla analyst kapsamı (en az 3) bekle")
-    if not wait_conditions:
-        wait_conditions = ["RSI < 70 (overbought değil)", "Sektör momentum pozitif (sektör ETF SMA200 üstünde)"]
-    
-    md.append(f"| Bekle Koşulları | {' / '.join(wait_conditions)} |")
-    md.append("")
-    
-    # ========================================
-    # BÖLÜM 11: İzleme Tetikleyicileri
-    # ========================================
-    md.append("## 11. İzleme Tetikleyicileri (en az 5 madde)")
+    md.append("## 9. İzleme Tetikleyicileri (en az 5 madde)")
     md.append("")
     
     triggers = []
@@ -2648,10 +2604,10 @@ def format_markdown_report(result, output_path=None):
     md.append("")
     
     # ========================================
-    # BÖLÜM 12: 5 Yıllık Finansal Projeksiyon (v5.0)
+    # BÖLÜM 10: 5 Yıllık Finansal Projeksiyon (v5.0)
     # ========================================
     if proj:
-        md.append("## 12. 5 Yıllık Finansal Projeksiyon (v5.0)")
+        md.append("## 10. 5 Yıllık Finansal Projeksiyon (v5.0)")
         md.append("")
         md.append(f"**Profil**: `{proj['profile_key']}` — {proj.get('profile_description', '')}")
         md.append("")
