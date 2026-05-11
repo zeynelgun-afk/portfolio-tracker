@@ -1824,14 +1824,642 @@ def format_pre_ipo_output(result):
     return "\n".join(out)
 
 
+def format_markdown_report(result, output_path=None):
+    """
+    v5.0 — 12 bölümlü protokol uyumlu markdown rapor üretir.
+    
+    Adil Değer Rapor Protokolü (docs/ADIL_DEGER_RAPOR_PROTOKOLU.md) bölümleri:
+    1. Yönetici Özeti
+    2. 9 Yöntem Bazlı Değerlendirme
+    3. Ağırlıklı Adil Değer Tablosu
+    4. Senaryo Matrisi
+    5. Bear Case (en az 5 madde)
+    6. Bull Case (en az 5 madde)
+    7. "Neden Yanlış Olabilirim" (en az 5 madde)
+    8. v5.0 Yeni Sinyaller (Risk + Sentiment + DCF Sanity + Konsantrasyon) [v5.0 ek]
+    9. Portföy Karar Matrisi
+    10. Giriş Planı
+    11. İzleme Tetikleyicileri
+    12. 5 Yıllık Finansal Projeksiyon [v5.0 ek]
+    
+    output_path verilirse dosyaya yazar. Her durumda markdown string döner.
+    """
+    ticker = result['ticker']
+    p = result['profile']
+    di = result['data_inputs']
+    v5 = result.get('v5_signals', {})
+    proj = result.get('projection')
+    price = p['price']
+    today = datetime.now().strftime('%Y-%m-%d')
+    
+    md = []
+    md.append(f"# {ticker} — Adil Değer Raporu")
+    md.append(f"**Tarih**: {today}  |  **Şirket**: {p['name']}  |  **Sektör**: {p['sector']} / {p['industry']}")
+    md.append(f"**Kaynak**: finzora ai  |  **Skill**: Adil Değer v{result['version']}  |  **Mod**: {result['mode']}")
+    md.append("")
+    md.append("---")
+    md.append("")
+    
+    # ========================================
+    # BÖLÜM 1: Yönetici Özeti
+    # ========================================
+    md.append("## 1. Yönetici Özeti")
+    md.append("")
+    
+    # Beklenen Adil Değer = normal medyan (main)
+    normal_main = result['summaries']['normal'].get('main', {})
+    normal_median = normal_main.get('median') if normal_main else None
+    bear_median = (result['summaries']['bear'].get('main') or {}).get('median')
+    bull_median = (result['summaries']['bull'].get('main') or {}).get('median')
+    
+    upside_pct = ((normal_median - price) / price * 100) if normal_median else None
+    
+    confidence = "ORTA"
+    if v5.get('altman_z', {}).get('label') == 'GÜVENLİ' and v5.get('piotroski', {}).get('value', 0) >= 7:
+        confidence = "YÜKSEK"
+    elif v5.get('altman_z', {}).get('label') == 'İFLAS RİSKİ' or v5.get('piotroski', {}).get('value', 9) <= 3:
+        confidence = "DÜŞÜK"
+    
+    md.append(f"**Beklenen Adil Değer (normal medyan)**: ${normal_median:.2f}" if normal_median else "**Beklenen Adil Değer**: hesaplanamadı")
+    if upside_pct is not None:
+        yon = "yukarı" if upside_pct > 0 else "aşağı"
+        md.append(f"**Potansiyel**: %{abs(upside_pct):.1f} {yon} (mevcut ${price:.2f})")
+    md.append(f"**Confidence**: {confidence}")
+    md.append("")
+    
+    md.append("### Snapshot")
+    md.append("")
+    md.append("| Metrik | Değer |")
+    md.append("|---|---|")
+    md.append(f"| Mevcut Fiyat | ${price:.2f} |")
+    md.append(f"| Piyasa Değeri | ${(p['market_cap'] or 0)/1e9:.1f}B |")
+    md.append(f"| Beta | {p.get('beta', 'N/A')} |")
+    md.append(f"| 52w High / Low | ${p.get('year_high', 'N/A')} / ${p.get('year_low', 'N/A')} |")
+    md.append(f"| SMA 50 / 200 | ${p.get('sma_50', 'N/A')} / ${p.get('sma_200', 'N/A')} |")
+    md.append(f"| EPS TTM | ${di['eps_ttm']} |")
+    md.append(f"| EPS FWD 2y | ${di.get('eps_fwd_2y', 'N/A')} |")
+    md.append(f"| Revenue TTM | ${di['revenue_ttm_billions']}B |")
+    md.append(f"| Revenue FWD 2y | ${di.get('revenue_fwd_2y_billions', 'N/A')}B |")
+    md.append(f"| ROE | %{di['roe_pct']} |")
+    md.append(f"| Net Margin | %{di['net_margin_pct']} |")
+    md.append(f"| Revenue YoY | %{di.get('revenue_growth_yoy_pct', 'N/A')} |")
+    md.append(f"| AI Mega-Cap | {'⭐ EVET' if result['is_ai_megacap'] else 'Hayır'} |")
+    md.append(f"| Quality Premium | {result.get('quality_mult', 1.0):.2f}x |")
+    md.append(f"| Piyasa Rejimi | {result['market_regime']['regime']} (VIX {result['market_regime']['vix']}) |")
+    md.append("")
+    
+    # ========================================
+    # BÖLÜM 2: 9 Yöntem Bazlı Değerlendirme
+    # ========================================
+    md.append("## 2. 9 Yöntem Bazlı Değerlendirme")
+    md.append("")
+    md.append("v5.0 yöntem listesi (Graham, EV/EBIT, Justified P-B, Rule of 40 v5.0'da kaldırıldı).")
+    md.append("")
+    
+    normal_methods = result['methods_by_regime']['normal']
+    method_order = [
+        ('Net P/E', 'traditional'),
+        ('EV/EBITDA', 'traditional'),
+        ('EV/Revenue', 'traditional'),
+        ('P/FCF', 'traditional'),
+        ('Forward P/E', 'forward'),
+        ('DCF', 'forward'),
+        ('PEG', 'growth'),
+        ('EV/FWD Revenue', 'growth'),
+        ('EV/FWD EBITDA', 'growth'),
+    ]
+    
+    md.append("| Yöntem | Kategori | Normal Değer | Durum |")
+    md.append("|---|---|---|---|")
+    for method_name, cat in method_order:
+        val = normal_methods.get(cat, {}).get(method_name)
+        if val is not None and val > 0:
+            durum = "KULLANILABİLİR"
+            val_str = f"${val:.2f}"
+        else:
+            durum = "KULLANILAMAZ"
+            val_str = "N/A"
+            # Sebep notu (varsa)
+            note = (result.get('method_notes', {}).get('normal') or {}).get(method_name)
+            if note:
+                durum = f"ELENDİ ({note.replace('⚠️ ', '')})"
+        md.append(f"| {method_name} | {cat} | {val_str} | {durum} |")
+    md.append("")
+    
+    # ========================================
+    # BÖLÜM 3: Ağırlıklı Adil Değer Tablosu
+    # ========================================
+    md.append("## 3. Ağırlıklı Adil Değer Tablosu (Normal Senaryo)")
+    md.append("")
+    
+    mode = result['mode']
+    if mode == 'GROWTH':
+        md.append("**Mod**: 🚀 GROWTH — sadece Forward + Growth yöntemleri ana hesaba katılır. Traditional sadece zemin (Margin of Safety) olarak gösterilir.")
+        md.append("")
+        md.append("| Kategori | Yöntem Sayısı | Medyan | Ağırlık | Katkı |")
+        md.append("|---|---|---|---|---|")
+        fwd_med = result['summaries']['normal']['forward'].get('median', 0) or 0
+        growth_med = result['summaries']['normal']['growth'].get('median', 0) or 0
+        # Forward+Growth eşit ağırlıkta basit ortalama
+        md.append(f"| Forward (FWD P/E + DCF) | 2 | ${fwd_med:.2f} | %50 | ${fwd_med*0.5:.2f} |")
+        md.append(f"| Growth (PEG + EV/FWD x2) | 3 | ${growth_med:.2f} | %50 | ${growth_med*0.5:.2f} |")
+        md.append(f"| **Toplam (Forward+Growth medyan)** | | | | **${normal_median:.2f}** |" if normal_median else "")
+    else:
+        md.append("**Mod**: ⚖️ BLENDED — Traditional + Forward+Growth ağırlıklı")
+        md.append("")
+        md.append("Forward growth oranına göre ağırlık değişir (>1.5x: 50/50, 1.2-1.5x: 65/35, <1.2x: 80/20)")
+        md.append("")
+        trad_med = result['summaries']['normal']['traditional'].get('median', 0) or 0
+        fg_med = result['summaries']['normal']['forward_growth_combined'].get('median', 0) or 0
+        md.append("| Kategori | Yöntem Sayısı | Medyan |")
+        md.append("|---|---|---|")
+        md.append(f"| Traditional | 4 | ${trad_med:.2f} |")
+        md.append(f"| Forward + Growth | 5 | ${fg_med:.2f} |")
+        md.append(f"| **Ağırlıklı Sonuç** | | **${normal_median:.2f}** |" if normal_median else "")
+    md.append("")
+    
+    # ========================================
+    # BÖLÜM 4: Senaryo Matrisi
+    # ========================================
+    md.append("## 4. Senaryo Matrisi")
+    md.append("")
+    
+    bear_diff = ((bear_median - price) / price * 100) if bear_median else None
+    normal_diff = upside_pct
+    bull_diff = ((bull_median - price) / price * 100) if bull_median else None
+    
+    md.append("| Senaryo | Adil Değer | Mevcut Fiyata Göre | Olasılık | Gerekçe |")
+    md.append("|---|---|---|---|---|")
+    if bear_median:
+        sign = "+" if bear_diff > 0 else ""
+        md.append(f"| 🐻 Bear | ${bear_median:.2f} | %{sign}{bear_diff:.1f} | %25-30 | Multiple compression, sektör rotasyonu |")
+    if normal_median:
+        sign = "+" if normal_diff > 0 else ""
+        md.append(f"| ⚖️ Base | ${normal_median:.2f} | %{sign}{normal_diff:.1f} | %45-50 | Mevcut piyasa rejimi (Normal), analist konsensüs uyumlu |")
+    if bull_median:
+        sign = "+" if bull_diff > 0 else ""
+        md.append(f"| 🐂 Bull | ${bull_median:.2f} | %{sign}{bull_diff:.1f} | %20-25 | Sektör tailwind devam, AI mega-cap premium |")
+    
+    # Beklenen Değer
+    if bear_median and normal_median and bull_median:
+        ev = bear_median * 0.275 + normal_median * 0.475 + bull_median * 0.225
+        ev_diff = ((ev - price) / price * 100)
+        sign = "+" if ev_diff > 0 else ""
+        md.append(f"| **Beklenen Değer** | **${ev:.2f}** | **%{sign}{ev_diff:.1f}** | %100 | Senaryo ağırlıklı |")
+    md.append("")
+    
+    # ========================================
+    # BÖLÜM 5: Bear Case (otomatik iskelet + manuel)
+    # ========================================
+    md.append("## 5. Bear Case (en az 5 madde)")
+    md.append("")
+    bear_items = []
+    
+    # Otomatik bear maddeleri (v5.0 sinyallerinden)
+    if v5.get('altman_z', {}).get('label') in ('İFLAS RİSKİ', 'BELİRSİZ'):
+        bear_items.append(f"**Altman Z {v5['altman_z']['value']}** — {v5['altman_z']['label']} bölgesinde (KESİN). İflas/finansal stres riski yükseliyor.")
+    
+    if v5.get('piotroski', {}).get('value', 9) <= 4:
+        bear_items.append(f"**Piotroski {v5['piotroski']['value']}/9** — {v5['piotroski']['label']} kalite skoru (KESİN). Fundamental zayıflık var.")
+    
+    if v5.get('upgrade_momentum', {}).get('direction') == 'downgrade':
+        bear_items.append(f"**Analist downgrade momentum**: {v5['upgrade_momentum']['label']} (KESİN). Son 6 ayda analist sentiment'i kötüleşiyor.")
+    
+    if v5.get('concentration_risk_product', {}).get('top_share_pct', 0) >= 50:
+        cr = v5['concentration_risk_product']
+        bear_items.append(f"**Ürün konsantrasyonu KRİTİK**: {cr['top_segment']} %{cr['top_share_pct']} gelir (KESİN). Tek müşteri/segment kaybı şirketi sarsabilir.")
+    
+    if v5.get('concentration_risk_geo', {}).get('top_share_pct', 0) >= 60:
+        cr = v5['concentration_risk_geo']
+        bear_items.append(f"**Coğrafi konsantrasyon**: {cr['top_segment']} %{cr['top_share_pct']} gelir (KESİN). Tarife/regülasyon riskine maruz.")
+    
+    if v5.get('live_pe', {}).get('delta_pct', 0) and abs(v5['live_pe']['delta_pct']) > 50:
+        bear_items.append(f"**Sektör multiple inflation**: Canlı sektör P/E statik tabloya göre %{v5['live_pe']['delta_pct']:+.0f} sapmış (KESİN). Multiple compression riski.")
+    
+    if di.get('revenue_growth_yoy_pct', 0) and di['revenue_growth_yoy_pct'] < 0:
+        bear_items.append(f"**Revenue küçülüyor**: YoY %{di['revenue_growth_yoy_pct']:.1f} (KESİN). Büyüme hikayesi bozuluyor.")
+    
+    # Generic bear maddeleri (her hisse için)
+    if len(bear_items) < 5:
+        bear_items.append("**Multiple compression riski**: Sektör çarpanları tarihsel medyana doğru sıkışırsa adil değer düşer (MUHTEMEL).")
+    if len(bear_items) < 5:
+        bear_items.append("**Recession/durgunluk**: Genel ekonomik yavaşlama özellikle döngüsel iş kollarını etkiler (SPEKÜLATİF).")
+    if len(bear_items) < 5:
+        bear_items.append("**Rakip baskısı**: Yeni rakipler veya alternatif ürünler pazar payı erozyonu yaratabilir (SPEKÜLATİF).")
+    if len(bear_items) < 5:
+        bear_items.append("**Regülasyon riski**: Antitrust, ihracat kontrolü veya yeni vergi rejimleri marj baskısı yapabilir (SPEKÜLATİF).")
+    
+    for i, item in enumerate(bear_items, 1):
+        md.append(f"{i}. {item}")
+    md.append("")
+    
+    # ========================================
+    # BÖLÜM 6: Bull Case
+    # ========================================
+    md.append("## 6. Bull Case (en az 5 madde)")
+    md.append("")
+    bull_items = []
+    
+    if v5.get('altman_z', {}).get('label') == 'GÜVENLİ' and v5['altman_z']['value'] >= 5:
+        bull_items.append(f"**Altman Z {v5['altman_z']['value']}** — çok güvenli finansal yapı (KESİN). İflas riski sıfıra yakın, savunmacı pozisyon.")
+    
+    if v5.get('piotroski', {}).get('value', 0) >= 7:
+        bull_items.append(f"**Piotroski {v5['piotroski']['value']}/9** — {v5['piotroski']['label']} fundamental kalite (KESİN). Karlı, verimli, sağlam bilanço.")
+    
+    if v5.get('upgrade_momentum', {}).get('direction') == 'upgrade':
+        bull_items.append(f"**Analist upgrade momentum**: {v5['upgrade_momentum']['label']} (KESİN). Son 6 ayda sentiment iyileşiyor.")
+    
+    if di.get('revenue_growth_yoy_pct', 0) and di['revenue_growth_yoy_pct'] > 30:
+        bull_items.append(f"**Güçlü gelir büyümesi**: YoY %{di['revenue_growth_yoy_pct']:.1f} (KESİN). Tepe çizgisi momentum'u devam ediyor.")
+    
+    if di.get('roe_pct', 0) > 20:
+        bull_items.append(f"**Yüksek ROE %{di['roe_pct']}** (KESİN). Sermaye verimliliği üst quartil, kapital allocation güçlü.")
+    
+    if result['is_ai_megacap']:
+        bull_items.append(f"**AI mega-cap premium aktif** (KESİN). Sektör trendi + ölçek + ekosistem avantajları.")
+    
+    if result.get('quality_mult', 1.0) >= 1.3:
+        bull_items.append(f"**Quality Premium {result['quality_mult']:.2f}x** (KESİN). ROE + Net Margin sektör hedeflerinin üstünde — fiyat gücü ve marj koruması yüksek.")
+    
+    if proj and proj.get('normalization', {}).get('pe_normalization_year'):
+        pe_year = proj['normalization']['pe_normalization_year']
+        years_to_wait = pe_year - datetime.now().year
+        if years_to_wait <= 2:
+            bull_items.append(f"**Hızlı normalizasyon**: {pe_year}'da Forward P/E sektör medyanına oturuyor ({years_to_wait} yıl bekleme, MUHTEMEL). Yakın vadede makul değerleme.")
+    
+    if v5.get('fmp_dcf', {}).get('value') and normal_median:
+        fmp_dcf_val = v5['fmp_dcf']['value']
+        if fmp_dcf_val > price * 1.20:
+            bull_items.append(f"**FMP DCF ${fmp_dcf_val:.2f}** mevcut fiyatın %{((fmp_dcf_val/price-1)*100):.0f} üstünde (MUHTEMEL). Bağımsız DCF onay sinyali.")
+    
+    # Generic bull
+    if len(bull_items) < 5:
+        bull_items.append("**Sektör tailwind**: Sektör 3-5 yıllık structural growth trendinde, şirket payı koruyor (MUHTEMEL).")
+    if len(bull_items) < 5:
+        bull_items.append("**Hisse geri alımı potansiyeli**: Nakit pozisyonu güçlü, kullanmadığı sermaye buyback'a dönüşebilir (SPEKÜLATİF).")
+    
+    for i, item in enumerate(bull_items, 1):
+        md.append(f"{i}. {item}")
+    md.append("")
+    
+    # ========================================
+    # BÖLÜM 7: Neden Yanlış Olabilirim
+    # ========================================
+    md.append("## 7. Neden Yanlış Olabilirim (en az 5 madde)")
+    md.append("")
+    wrong_items = []
+    
+    # Otomatik şüphe maddeleri
+    if v5.get('live_pe', {}).get('delta_pct') and abs(v5['live_pe']['delta_pct']) > 50:
+        wrong_items.append(f"**Sektör multiple seçimi sübjektif**: Canlı semicon P/E 62x, statik tablo 28x, ben blend %50/50 kullanıyorum. Doğru çarpan tartışmalı (SPEKÜLATİF).")
+    
+    if v5.get('fmp_dcf', {}).get('value') and normal_methods.get('forward', {}).get('DCF'):
+        our_dcf = normal_methods['forward']['DCF']
+        fmp_dcf = v5['fmp_dcf']['value']
+        diff = abs((our_dcf - fmp_dcf) / fmp_dcf * 100)
+        if diff > 30:
+            wrong_items.append(f"**DCF varsayım farkı**: Bizim DCF ${our_dcf:.0f}, FMP DCF ${fmp_dcf:.0f} (%{diff:.0f} fark). Terminal growth/WACC/capex varsayımları farklı (SPEKÜLATİF).")
+    
+    if di.get('revenue_growth_yoy_pct', 0) and di['revenue_growth_yoy_pct'] > 40:
+        wrong_items.append(f"**Forward varsayımlar agresif**: YoY %{di['revenue_growth_yoy_pct']:.0f} gibi yüksek büyüme uzun vadeli sürdürülemez. Y3-Y5 projeksiyon hatalı olabilir (MUHTEMEL).")
+    
+    if result.get('forward_outlier'):
+        wrong_items.append(f"**Forward EPS şişkin**: EPS_FWD/EPS_TTM oranı {result.get('forward_growth_ratio', 'N/A')}x — base değişikliği veya tek seferlik kazanç olabilir. Forward yöntemler elendi (KESİN).")
+    
+    # Generic
+    if len(wrong_items) < 5:
+        wrong_items.append("**TTM verilerin temsiliyeti**: Son 12 ay tek seferlik olaylar (vergi avantajı, varlık satışı, restructuring) içerebilir (MUHTEMEL).")
+    if len(wrong_items) < 5:
+        wrong_items.append("**Analyst coverage zayıflığı**: Forward EPS/Revenue tahminleri analyst konsensüsüne dayanır; analyst'ler son 6 ay sürpriz olmuşsa modelleri eski olabilir (MUHTEMEL).")
+    if len(wrong_items) < 5:
+        wrong_items.append("**Capex / FCF varsayımları**: Yöntemlerden P/FCF ve DCF normalized FCF kullanır (4 yıl ortalama). Capex döngüsel ise normalize FCF gerçek FCF'i yansıtmaz (SPEKÜLATİF).")
+    if len(wrong_items) < 5:
+        wrong_items.append("**Sektör multiple aralığının geniş olması**: Aynı sektörde +/-30% spread var (örn semicon: AVGO 50x vs INTC 12x). Tek bir 'sektör medyanı' yanıltıcı olabilir (MUHTEMEL).")
+    if len(wrong_items) < 5:
+        wrong_items.append("**Recency bias**: Son 1 yıl performansı modele aşırı yansımış olabilir; tarihsel ortalamayla farkı doğrulamadım (SPEKÜLATİF).")
+    
+    for i, item in enumerate(wrong_items, 1):
+        md.append(f"{i}. {item}")
+    md.append("")
+    
+    # ========================================
+    # BÖLÜM 8: v5.0 Yeni Sinyaller (Risk + Sentiment + DCF Sanity + Konsantrasyon)
+    # ========================================
+    md.append("## 8. v5.0 Yeni Sinyaller")
+    md.append("")
+    
+    if v5:
+        md.append("### 8.1 Risk Skorları")
+        if v5.get('altman_z'):
+            az = v5['altman_z']
+            md.append(f"- **Altman Z (iflas riski)**: {az['value']:.2f} → {az['emoji']} **{az['label']}** (KESİN)")
+        if v5.get('piotroski'):
+            pi = v5['piotroski']
+            md.append(f"- **Piotroski F-Score**: {pi['value']}/9 → {pi['emoji']} **{pi['label']}** (KESİN)")
+        md.append("")
+        
+        if v5.get('grades_consensus'):
+            gc = v5['grades_consensus']
+            total = gc['strong_buy'] + gc['buy'] + gc['hold'] + gc['sell'] + gc['strong_sell']
+            md.append("### 8.2 Analist Sentiment")
+            md.append(f"- Toplam {total} analist: Strong Buy {gc['strong_buy']} / Buy {gc['buy']} / Hold {gc['hold']} / Sell {gc['sell']} / Strong Sell {gc['strong_sell']}")
+            md.append(f"- Konsensüs: **{gc.get('consensus_label', 'N/A')}**")
+            if v5.get('upgrade_momentum'):
+                md.append(f"- Son 6 ay momentum: {v5['upgrade_momentum']['label']}")
+            md.append("")
+        
+        if v5.get('fmp_dcf'):
+            md.append("### 8.3 DCF Sanity Check")
+            md.append(f"- FMP DCF (unlevered): ${v5['fmp_dcf']['value']:.2f}")
+            if v5.get('fmp_dcf_levered'):
+                md.append(f"- FMP DCF (levered): ${v5['fmp_dcf_levered']['value']:.2f}")
+            our_dcf = normal_methods.get('forward', {}).get('DCF')
+            if our_dcf:
+                diff_pct = (our_dcf - v5['fmp_dcf']['value']) / v5['fmp_dcf']['value'] * 100
+                md.append(f"- Bizim DCF (normal): ${our_dcf:.2f}  |  Fark: %{diff_pct:+.0f}")
+            md.append("")
+        
+        if v5.get('concentration_risk_product') or v5.get('concentration_risk_geo'):
+            md.append("### 8.4 Konsantrasyon Riski")
+            if v5.get('concentration_risk_product'):
+                cr = v5['concentration_risk_product']
+                md.append(f"- **Ürün/Segment** ({cr['fiscal_year']}): {cr['label']}")
+                md.append(f"  - Top: {cr['top_segment']} %{cr['top_share_pct']}  |  Top 2: %{cr['top2_share_pct']}")
+            if v5.get('concentration_risk_geo'):
+                cr = v5['concentration_risk_geo']
+                md.append(f"- **Coğrafya** ({cr['fiscal_year']}): {cr['label']}")
+                md.append(f"  - Top: {cr['top_segment']} %{cr['top_share_pct']}  |  Top 2: %{cr['top2_share_pct']}")
+            md.append("")
+        
+        if v5.get('live_pe', {}).get('value'):
+            lp = v5['live_pe']
+            md.append("### 8.5 Canlı Sektör P/E")
+            md.append(f"- Canlı: {lp['value']:.1f}x ({lp['source']})  |  Statik fallback: {lp['static_fallback']}x")
+            if lp.get('delta_pct') is not None:
+                md.append(f"- Sapma: %{lp['delta_pct']:+.1f}")
+            if lp.get('blend_note'):
+                md.append(f"- Not: {lp['blend_note']}")
+            md.append("")
+        
+        if v5.get('dynamic_wacc'):
+            dw = v5['dynamic_wacc']
+            md.append("### 8.6 Dinamik CAPM WACC")
+            md.append(f"- WACC: %{dw['value']:.2f}  |  Statik fallback: %{dw['static_fallback']}")
+            md.append(f"- Hesaplama: {dw['source']}")
+            md.append("")
+    
+    # ========================================
+    # BÖLÜM 9: Portföy Karar Matrisi
+    # ========================================
+    md.append("## 9. Portföy Karar Matrisi (3 Portföy)")
+    md.append("")
+    
+    # Otomatik öneriler (basit kurallar)
+    is_growth = (mode == 'GROWTH')
+    has_dividend = (di.get('roe_pct', 0) > 15 and not is_growth)
+    is_quality = (result.get('quality_mult', 1.0) >= 1.20)
+    altman_safe = (v5.get('altman_z', {}).get('label') == 'GÜVENLİ')
+    
+    md.append("| Portföy | Uygunluk | Gerekçe + Maks Ağırlık |")
+    md.append("|---|---|---|")
+    
+    # Dengeli
+    dengeli = "uygun" if (altman_safe and not v5.get('upgrade_momentum', {}).get('direction') == 'downgrade') else "uygun_kosullu"
+    md.append(f"| Dengeli ($100K) | {dengeli} | Karışık sektör tezi, max %15 ağırlık |")
+    
+    # Agresif Büyüme
+    agresif = "uygun" if (is_growth or result['is_ai_megacap']) else "uygun_kosullu"
+    md.append(f"| Agresif Büyüme ($400K) | {agresif} | AI/momentum/growth tematik, max %20 ağırlık |")
+    
+    # Değer + Temettü
+    if has_dividend and altman_safe and not is_growth:
+        temettu = "uygun"
+    elif is_growth:
+        temettu = "uygun_degil"
+    else:
+        temettu = "uygun_kosullu"
+    md.append(f"| Değer + Temettü ($100K) | {temettu} | Defansif/temettü, max %15 ağırlık |")
+    md.append("")
+    
+    # ========================================
+    # BÖLÜM 10: Giriş Planı
+    # ========================================
+    md.append("## 10. Giriş Planı")
+    md.append("")
+    
+    md.append("| Parametre | Değer |")
+    md.append("|---|---|")
+    md.append(f"| Mevcut Fiyat | ${price:.2f} |")
+    md.append(f"| Beklenen Adil Değer | ${normal_median:.2f}" if normal_median else "| Beklenen Adil Değer | hesaplanamadı")
+    
+    if bear_median:
+        ideal_low = bear_median
+        ideal_high = bear_median * 1.10
+        md.append(f"| İdeal Giriş Zonu | ${ideal_low:.2f} - ${ideal_high:.2f} (bear medyan + %10) |")
+    
+    # Stop loss = ATR proxy %12-15 altı veya bear medyan altı
+    stop = price * 0.87  # %13 stop
+    md.append(f"| Stop Loss | ${stop:.2f} (-%13) |")
+    
+    if normal_median:
+        md.append(f"| Hedef 1 (base) | ${normal_median:.2f} (normal medyan) |")
+    if bull_median:
+        md.append(f"| Hedef 2 (bull) | ${bull_median:.2f} (boğa medyan) |")
+    
+    # R/R
+    if normal_median and stop:
+        reward = normal_median - price
+        risk = price - stop
+        rr = reward / risk if risk > 0 else None
+        if rr:
+            md.append(f"| R/R Oranı | 1:{rr:.1f} |")
+    
+    md.append(f"| Pozisyon Boyutu | Portföy max %15-20 (mode'a göre) |")
+    
+    # Bekleme koşulları
+    wait_conditions = []
+    if result['forward_outlier']:
+        wait_conditions.append("Forward outlier flag düşene kadar bekle (1 çeyrek sonra revize)")
+    if v5.get('upgrade_momentum', {}).get('direction') == 'downgrade':
+        wait_conditions.append("Analist downgrade momentum stabilize olana kadar bekle")
+    if not wait_conditions:
+        wait_conditions = ["RSI < 70 (overbought değil)", "Sektör momentum pozitif (sektör ETF SMA200 üstünde)"]
+    
+    md.append(f"| Bekle Koşulları | {' / '.join(wait_conditions)} |")
+    md.append("")
+    
+    # ========================================
+    # BÖLÜM 11: İzleme Tetikleyicileri
+    # ========================================
+    md.append("## 11. İzleme Tetikleyicileri (en az 5 madde)")
+    md.append("")
+    
+    triggers = []
+    # Bir sonraki kazanç
+    triggers.append(f"**Bir sonraki kazanç açıklaması**: EPS_TTM ${di['eps_ttm']} → revize: yeni rakam ±%10 dışındaysa modeli yenile (KESİN).")
+    
+    if v5.get('live_pe', {}).get('value'):
+        lp = v5['live_pe']
+        triggers.append(f"**Sektör P/E değişimi**: Canlı {lp['value']:.0f}x → %20+ azalırsa multiple compression sinyali (KESİN).")
+    
+    if v5.get('upgrade_momentum'):
+        triggers.append(f"**Analist rating değişimleri**: Şu an momentum {v5['upgrade_momentum']['direction']} — yön ters dönerse pozisyon revize (KESİN).")
+    
+    if v5.get('concentration_risk_product', {}).get('top_share_pct', 0) >= 50:
+        cr = v5['concentration_risk_product']
+        triggers.append(f"**Müşteri konsantrasyonu izle**: {cr['top_segment']} %{cr['top_share_pct']} payı — segmentation raporlarında değişim takip et (KESİN).")
+    
+    if bear_median:
+        triggers.append(f"**Bear medyan altına düşüş**: Fiyat ${bear_median:.2f} altına inerse pozisyon büyüt veya stop tetikle (KESİN).")
+    
+    if bull_median:
+        triggers.append(f"**Boğa medyanını geçiş**: Fiyat ${bull_median:.2f} üstüne çıkarsa kısmi kâr al (KESİN).")
+    
+    triggers.append("**VIX > 28**: Bear regime tetiklenir, tüm yöntemler -%25-35 düşer. Pozisyon revize (KESİN).")
+    
+    if proj and proj.get('normalization', {}).get('pe_normalization_year'):
+        pe_year = proj['normalization']['pe_normalization_year']
+        triggers.append(f"**{pe_year} kazanç dönemi**: Projeksiyona göre normalizasyon yılı, EPS hedefinin yarısı altında kalırsa tez bozuldu sayılır (MUHTEMEL).")
+    
+    for i, item in enumerate(triggers[:8], 1):
+        md.append(f"{i}. {item}")
+    md.append("")
+    
+    # ========================================
+    # BÖLÜM 12: 5 Yıllık Finansal Projeksiyon (v5.0)
+    # ========================================
+    if proj:
+        md.append("## 12. 5 Yıllık Finansal Projeksiyon (v5.0)")
+        md.append("")
+        md.append(f"**Profil**: `{proj['profile_key']}` — {proj.get('profile_description', '')}")
+        md.append("")
+        
+        pnl = proj.get('pnl', [])
+        if pnl:
+            md.append("### P&L Projeksiyonu")
+            md.append("")
+            years = [str(r['year']) for r in pnl]
+            md.append("| Kalem | " + " | ".join(years) + " |")
+            md.append("|" + "---|" * (len(years) + 1))
+            
+            def fmt_money(v):
+                if v is None: return "N/A"
+                if abs(v) >= 1e9: return f"${v/1e9:.2f}B"
+                elif abs(v) >= 1e6: return f"${v/1e6:.0f}M"
+                else: return f"${v:.0f}"
+            def fmt_pct(v):
+                if v is None: return "—"
+                return f"%{v*100:.1f}"
+            def fmt_eps(v):
+                if v is None: return "N/A"
+                return f"${v:.2f}"
+            
+            md.append("| **Gelir** | " + " | ".join(fmt_money(r['revenue']) for r in pnl) + " |")
+            md.append("| Büyüme | " + " | ".join(fmt_pct(r['revenue_growth']) for r in pnl) + " |")
+            md.append("| Brüt Marj | " + " | ".join(fmt_pct(r['gross_margin']) for r in pnl) + " |")
+            md.append("| Faaliyet Marjı | " + " | ".join(fmt_pct(r['op_margin']) for r in pnl) + " |")
+            md.append("| **Faaliyet Kârı** | " + " | ".join(fmt_money(r['operating_income']) for r in pnl) + " |")
+            md.append("| Net Marj | " + " | ".join(fmt_pct(r['net_margin']) for r in pnl) + " |")
+            md.append("| **Net Kâr** | " + " | ".join(fmt_money(r['net_income']) for r in pnl) + " |")
+            md.append("| **EPS (basic)** | " + " | ".join(fmt_eps(r['eps_basic']) for r in pnl) + " |")
+            md.append("")
+        
+        mults = proj.get('multiples', [])
+        if mults:
+            md.append("### Forward Çarpanlar (Mevcut fiyat sabit varsayımı)")
+            md.append("")
+            md.append("| Çarpan | " + " | ".join(years) + " |")
+            md.append("|" + "---|" * (len(years) + 1))
+            
+            def fmt_mult(v):
+                if v is None or v < 0: return "N/A"
+                if v > 999: return ">999"
+                return f"{v:.1f}x"
+            
+            md.append("| **Forward P/E** | " + " | ".join(fmt_mult(r['fwd_pe']) for r in mults) + " |")
+            md.append("| Forward P/S | " + " | ".join(fmt_mult(r['fwd_ps']) for r in mults) + " |")
+            md.append("| Forward EV/Sales | " + " | ".join(fmt_mult(r['fwd_ev_sales']) for r in mults) + " |")
+            md.append("| Forward EV/EBITDA | " + " | ".join(fmt_mult(r['fwd_ev_ebitda']) for r in mults) + " |")
+            md.append("")
+        
+        norm = proj.get('normalization')
+        if norm:
+            md.append("### Normalizasyon Yılı")
+            md.append("")
+            sector_pe_label = f"{proj.get('sector_median_pe_used', norm['sector_median_pe']):.0f}x"
+            pe_year = norm.get('pe_normalization_year')
+            if pe_year:
+                years_to_wait = pe_year - datetime.now().year
+                emoji = "🟢" if years_to_wait <= 2 else ("🟡" if years_to_wait <= 4 else "🟠")
+                md.append(f"{emoji} **Forward P/E** sektör medyanı ({sector_pe_label})'e **{pe_year}** yılında oturuyor ({years_to_wait} yıl bekleme).")
+            else:
+                md.append(f"🔴 5 yıl sonunda bile P/E sektör medyanı altına inmiyor — uzun vadeli yatırım gerekli veya hisse pahalı.")
+            md.append("")
+    
+    # ========================================
+    # SON: Sonuç Notu + v5 Risk Uyarıları
+    # ========================================
+    md.append("---")
+    md.append("")
+    md.append("## Otomatik Karar")
+    md.append("")
+    md.append(f"**{result['decision']['action']}**")
+    md.append("")
+    md.append(f"_{result['decision']['reasoning']}_")
+    md.append("")
+    
+    # v5.0 risk overlay - kararı override etmez ama uyarı ekler
+    risk_warnings = []
+    if v5.get('piotroski', {}).get('value', 9) <= 4:
+        risk_warnings.append(f"⚠️ Piotroski {v5['piotroski']['value']}/9 — fundamental kalite ZAYIF, kararın gerektirdiği güveni düşürür")
+    if v5.get('altman_z', {}).get('label') == 'İFLAS RİSKİ':
+        risk_warnings.append(f"⚠️ Altman Z {v5['altman_z']['value']:.2f} — İFLAS RİSKİ, pozisyon almadan önce gözden geçir")
+    if v5.get('upgrade_momentum', {}).get('direction') == 'downgrade':
+        risk_warnings.append(f"⚠️ {v5['upgrade_momentum']['label']} — analist sentiment'i kötüleşiyor")
+    if v5.get('concentration_risk_product', {}).get('top_share_pct', 0) >= 80:
+        cr = v5['concentration_risk_product']
+        risk_warnings.append(f"⚠️ Ürün konsantrasyonu KRİTİK: {cr['top_segment']} %{cr['top_share_pct']}")
+    if v5.get('fmp_dcf', {}).get('value', 0) < 0:
+        risk_warnings.append(f"⚠️ FMP DCF NEGATİF (${v5['fmp_dcf']['value']:.2f}) — şirket negatif FCF üretiyor, modeli sorgula")
+    
+    if risk_warnings:
+        md.append("### v5.0 Risk Uyarıları")
+        md.append("")
+        for w in risk_warnings:
+            md.append(f"- {w}")
+        md.append("")
+        md.append("_Otomatik karar yalnızca fiyat vs adil değer karşılaştırmasına dayanır. Yukarıdaki sinyaller pozisyon büyüklüğü ve giriş zamanlamasına etki etmeli._")
+        md.append("")
+    
+    md.append(f"**Kaynak**: finzora ai — Adil Değer Skill v{result['version']}")
+    md.append("")
+    
+    md_text = "\n".join(md)
+    
+    if output_path:
+        os.makedirs(os.path.dirname(output_path), exist_ok=True) if os.path.dirname(output_path) else None
+        with open(output_path, 'w', encoding='utf-8') as f:
+            f.write(md_text)
+        print(f"📄 Rapor yazıldı: {output_path}", file=sys.stderr)
+    
+    return md_text
+
+
 def main():
     if len(sys.argv) < 2:
         print("Kullanım:")
-        print("  python adil_deger.py TICKER [--json]")
-        print("  python adil_deger.py --pre-ipo input.json")
+        print("  python adil_deger.py TICKER [--json] [--md] [--md-out PATH]")
+        print("  python adil_deger.py --pre-ipo input.json [--md]")
         sys.exit(1)
     
     json_only = '--json' in sys.argv
+    md_only = '--md' in sys.argv
+    
+    md_out_path = None
+    if '--md-out' in sys.argv:
+        idx = sys.argv.index('--md-out')
+        if idx + 1 < len(sys.argv):
+            md_out_path = sys.argv[idx + 1]
     
     # Pre-IPO modu
     if '--pre-ipo' in sys.argv:
@@ -1857,13 +2485,21 @@ def main():
     
     result = analyze(ticker)
     
+    if 'error' in result:
+        print(f"HATA: {result['error']}")
+        sys.exit(1)
+    
     if json_only:
         print(json.dumps(result, indent=2, default=str, ensure_ascii=False))
         return
     
-    if 'error' in result:
-        print(f"HATA: {result['error']}")
-        sys.exit(1)
+    if md_only:
+        # Otomatik output path varsayılan
+        if not md_out_path:
+            md_out_path = f"reports/research/{ticker}_ADIL_DEGER_{datetime.now().strftime('%Y-%m-%d')}.md"
+        md_text = format_markdown_report(result, output_path=md_out_path)
+        print(md_text)
+        return
     
     print(format_output(result))
 

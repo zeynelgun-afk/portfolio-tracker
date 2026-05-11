@@ -295,12 +295,14 @@ def project_revenue_5y(revenue_ttm, revenue_yoy_growth, analyst_rev_1y=None, ana
         rev_y2 = rev_y1 * (1 + revenue_yoy_growth * 0.85)
     revenues.append((ttm_year + 2, rev_y2))
     
-    # Yıl 3, 4, 5 — kademeli azalan büyüme
+    # Yıl 3, 4, 5 — kademeli azalan büyüme (v5.0 Etap 5: AMD gibi aşırı agresif decay sorununu çöz)
+    # Y2 analist konsensüsü genelde optimistic; Y3-Y5 daha sert decay + mutlak cap
     y1_y2_growth = (rev_y2 / rev_y1) - 1 if rev_y1 > 0 else 0.20
     
-    g_y3 = max(0.10, y1_y2_growth * 0.70)
-    g_y4 = max(0.08, y1_y2_growth * 0.50)
-    g_y5 = max(0.05, y1_y2_growth * 0.35)
+    # Mutlak cap: yüksek y1_y2_growth (örn %90 AMD) Y3-Y5'e doğrudan yansımamalı
+    g_y3 = min(max(0.10, y1_y2_growth * 0.55), 0.30)  # max %30
+    g_y4 = min(max(0.08, y1_y2_growth * 0.35), 0.22)  # max %22
+    g_y5 = min(max(0.05, y1_y2_growth * 0.20), 0.15)  # max %15
     
     rev_y3 = rev_y2 * (1 + g_y3)
     rev_y4 = rev_y3 * (1 + g_y4)
