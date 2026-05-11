@@ -2135,12 +2135,14 @@ def main():
             (14,  0, "morning_scan.yml",     {"mode":"all"},        True,  False, "Sabah Evren Taraması"),
             (16,  0, "agent.yml",            {"mode":"morning"},    True,  False, "Agent Sabah"),
             (23, 30, "result_tracker.yml",   {},                    True,  False, "Sonuç Takip"),
+            (23, 35, "research_tracker.yml", {"mode":"daily"},      False, False, "Research Tracker Günlük"),  # v5.0 Etap 11 her gün 23:35
             # Kapanış: gece yarısı 00:30 TR (yeni güne geçmiş ama hafta içinde)
             # Pzt gecesi 00:30 = Salı sabahı, Cum gecesi 00:30 = Cmt sabahı
             # weekday(): Sal=1…Cmt=5 → 1-5 arası = gece öncesi hafta içiydi
             (0,  30, "agent.yml",            {"mode":"closing"},    False, False, "Agent Kapanış"),
             # Haftalık — Pazar
             (12,  0, "agent.yml",            {"mode":"weekly"},     False, True,  "Agent Haftalık"),
+            (14,  0, "research_tracker.yml", {"mode":"weekly"},     False, True,  "Research Tracker Haftalık"),  # v5.0 Etap 11 Pazar 14:00
         ]
 
         # Monitor: seans saatlerinde her 30 dakika ayrı liste
@@ -2204,8 +2206,10 @@ def main():
         print(f"[Bot]   16:00 TR (Hft) → Agent Sabah")
         print(f"[Bot]   17:00-23:30 TR (Hft/30dk) → Agent Monitor")
         print(f"[Bot]   23:30 TR (Hft) → Sonuç Takip")
+        print(f"[Bot]   23:35 TR (Gün) → Research Tracker Günlük (v5.0)")
         print(f"[Bot]   00:30 TR (Hft) → Agent Kapanış")
         print(f"[Bot]   12:00 TR (Pzr) → Agent Haftalık")
+        print(f"[Bot]   14:00 TR (Pzr) → Research Tracker Haftalık DM Özet (v5.0)")
 
         # ── Günlük Risk Panel (09:30 TR Hft, grup chat'e PNG) ─────
         def _send_risk_panel(date_str: str) -> bool:

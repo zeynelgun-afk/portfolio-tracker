@@ -4,7 +4,7 @@
   "beat_tahmin": 0,
   "miss_tahmin": 0,
   "beklemede": 2,
-  "aktif_izleme": 11,
+  "aktif_izleme": 10,
   "dogru_tahmin_orani": null,
   "analizler": [
     {
@@ -491,10 +491,12 @@
       ],
       "gerceklesen": {
         "tespit_fiyati": 390.55,
-        "simdiki_fiyat": 390.55,
-        "fiyat_tepkisi_pct": 0,
+        "simdiki_fiyat": 385.04,
+        "fiyat_tepkisi_pct": -1.4,
         "tez_tuttu": null,
-        "ders": null
+        "ders": null,
+        "gun_sayisi": 3,
+        "son_kontrol": "2026-05-11 14:08"
       },
       "etiketler": [
         "ai_infrastructure",
@@ -661,10 +663,12 @@
       ],
       "gerceklesen": {
         "tespit_fiyati": 17.73,
-        "simdiki_fiyat": 17.73,
-        "fiyat_tepkisi_pct": 0,
+        "simdiki_fiyat": 16.8,
+        "fiyat_tepkisi_pct": -5.2,
         "tez_tuttu": null,
-        "ders": null
+        "ders": null,
+        "gun_sayisi": 3,
+        "son_kontrol": "2026-05-11 14:08"
       },
       "etiketler": [
         "fintech",
@@ -834,10 +838,12 @@
       ],
       "gerceklesen": {
         "tespit_fiyati": 42.54,
-        "simdiki_fiyat": 42.54,
-        "fiyat_tepkisi_pct": 0,
+        "simdiki_fiyat": 44.36,
+        "fiyat_tepkisi_pct": 4.3,
         "tez_tuttu": null,
-        "ders": null
+        "ders": null,
+        "gun_sayisi": 3,
+        "son_kontrol": "2026-05-11 14:08"
       },
       "etiketler": [
         "AI infrastructure",
@@ -856,7 +862,7 @@
       "analiz_tarihi": "2026-05-08",
       "bilanco_tarihi": "Q1 2026 (31 Mart) zaten açıklandı — Q2 2026 yaklaşık 5-12 Ağustos",
       "analiz_turu": "adil_deger_hesabi",
-      "durum": "aktif_izleme",
+      "durum": "kapandi",
       "dosya": "reports/research/TEM_ADIL_DEGER_2026-05-08.md",
       "kataliz": {
         "olay": "AI destekli precision medicine pure-play, 52H zirvesinden -%53,8 düşmüş, 41-43 dolar dip zonuna yaklaşma",
@@ -988,10 +994,12 @@
       ],
       "gerceklesen": {
         "tespit_fiyati": 48.2,
-        "simdiki_fiyat": 48.2,
-        "fiyat_tepkisi_pct": 0,
-        "tez_tuttu": null,
-        "ders": null
+        "simdiki_fiyat": 48.76,
+        "fiyat_tepkisi_pct": 1.2,
+        "tez_tuttu": true,
+        "ders": "Baz hedef $48.00 3. günde tutturuldu, fiyat $48.76 (+%1.2)",
+        "gun_sayisi": 3,
+        "son_kontrol": "2026-05-11 14:08"
       },
       "etiketler": [
         "healthcare-ai",
@@ -1322,10 +1330,12 @@
       "karar_gerekce": "Mevcut fiyat normal medyan altında. İyi giriş seviyesi.",
       "gerceklesen": {
         "tespit_fiyati": 215.217,
-        "simdiki_fiyat": null,
-        "fiyat_tepkisi_pct": 0,
+        "simdiki_fiyat": 218.21,
+        "fiyat_tepkisi_pct": 1.4,
         "tez_tuttu": null,
-        "ders": null
+        "ders": null,
+        "gun_sayisi": 0,
+        "son_kontrol": "2026-05-11 14:08"
       },
       "etiketler": [
         "growth",
