@@ -1,28 +1,58 @@
 #!/usr/bin/env python3
 """
-Adil Değer - 9 Yöntem × 3 Senaryo Hesaplayıcı v3.0
+Adil Değer - 9 Yöntem × 3 Senaryo Hesaplayıcı v5.0
 Finzora AI v3.7.2 metodolojisi
 
-v3.0 Değişiklikleri:
-- DUAL-MODE: 🚀 GROWTH (hızlı büyüyen) vs ⚖️ BLENDED (olgun)
-- GROWTH modunda Traditional yöntemler kaldırıldı (sadece zemin gösterir)
-- Yeni yöntemler: PEG Ratio, EV/Forward Revenue, EV/Forward EBITDA, Rule of 40, Reverse DCF
-- BLENDED modunda Forward growth ratio'ya göre ağırlıklandırma
-- Otomatik mod tespiti (5 kriter)
+v5.0 Değişiklikleri (11 Mayıs 2026):
+- SADELEŞTIRME: 4 yöntem kaldırıldı (Graham Number, EV/EBIT, Justified P-B, Rule of 40)
+  → Skill ismindeki "9 Yöntem" ile içerik tutarlı: 4 Traditional + 2 Forward + 3 Growth = 9
+- FMP Ultimate plan entegrasyonu (fmp_layer.py):
+  * ratios-ttm + key-metrics-ttm hazır oranlar (manuel hesap kaldırıldı)
+  * sector-pe-snapshot + industry-pe-snapshot canlı sektör P/E (statik SECTOR_MULTIPLES fallback)
+  * financial-scores: Altman Z + Piotroski risk skorları
+  * grades-consensus + historical: analist sentiment + upgrade momentum
+  * discounted-cash-flow: FMP'nin kendi DCF (sanity check)
+  * revenue-product/geographic-segmentation: konsantrasyon riski otomatik
+  * enterprise-values 5y: tarihsel multiple bandı
+  * treasury-rates + CAPM: dinamik WACC
+  * ipos-calendar: otomatik pre-IPO tespit
+- YIL YIL PROJEKSİYON: projection_engine.py entegrasyonu
+  * 5 yıllık tam P&L (gelir, brüt, faaliyet, vergi, net, EPS)
+  * Forward P/E, P/S, EV/Sales yıl yıl projeksiyon
+  * "Hangi yıl sektör medyanına oturur?" yorumu
+- Reverse DCF yöntem listesinden çıkarıldı, bilgi notu olarak çıkış aşağıda
 
-v2.0: k_e cap, RIM fallback, CV uyarı, Forward outlier, AI mega-cap, Analist konsensüs, Dual-track
+v4.1: Mantık denetimi sonrası 8 hata düzeltildi
+v4.0: Quality/Moat Premium
+v3.0: DUAL-MODE GROWTH vs BLENDED
+v2.0: k_e cap, RIM fallback, CV uyarı, Forward outlier, AI mega-cap, Analist konsensüs
 v1.0: 9 yöntem temel hesap
 """
 
-import requests
-import json
+import os
 import sys
+import json
 import time
+import requests
 import statistics
 from datetime import datetime
 
-API_KEY = "g1GFJZtV5rCP49UCir4WuP56VjhmA6F8"
+# v5.0: fmp_layer ve projection_engine modüllerini import et
+_SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+if _SCRIPT_DIR not in sys.path:
+    sys.path.insert(0, _SCRIPT_DIR)
+
+try:
+    import fmp_layer
+    import projection_engine
+    _V5_MODULES_AVAILABLE = True
+except ImportError as e:
+    print(f"⚠️ v5.0 modülleri yüklenemedi ({e}), v4.1 mode'a düşülüyor", file=sys.stderr)
+    _V5_MODULES_AVAILABLE = False
+
+API_KEY = os.environ.get("FMP_API_KEY", "g1GFJZtV5rCP49UCir4WuP56VjhmA6F8")
 BASE = "https://financialmodelingprep.com/stable"
+HEADERS = {"User-Agent": "finzora-ai-adil-deger/5.0"}
 
 
 def fetch(endpoint, params=None, timeout=30, max_retries=3, retry_delay=1.5):
@@ -46,7 +76,7 @@ def fetch(endpoint, params=None, timeout=30, max_retries=3, retry_delay=1.5):
     last_error = None
     for attempt in range(max_retries):
         try:
-            r = requests.get(f"{BASE}/{endpoint}", params=p, timeout=timeout)
+            r = requests.get(f"{BASE}/{endpoint}", params=p, headers=HEADERS, timeout=timeout)
             if r.status_code == 200:
                 return r.json()
             elif r.status_code == 429:
@@ -516,11 +546,12 @@ def calc_rule_of_40(revenue_growth_pct, fcf_margin_pct, revenue_ttm, cash, debt,
 
 def calculate_methods(data, regime_key, sector_key, is_ai_megacap, mode, quality_mult=1.0, forward_outlier=False):
     """
+    v5.0: 13 yöntem → 9 yöntem (Graham, EV/EBIT, Justified P-B, Rule of 40 çıkarıldı).
+    Toplam: 4 Traditional + 2 Forward + 3 Growth = 9
+    
     mode: 'GROWTH' veya 'BLENDED'
     quality_mult: v4 - Sektör lideri/kalite premium çarpanı (1.0-1.50)
     forward_outlier: v4.1 - True ise Forward P/E ve EV/FWD x yöntemleri None'a düşürülür
-                     (forward EPS'in 2.5x'inden fazla şişkin olması, baz değişikliği veya
-                      L2P artefaktı nedeniyle yöntemler güvenilmez)
     """
     sector_mults = SECTOR_MULTIPLES.get(sector_key, SECTOR_MULTIPLES['generic'])
     adj = REGIME_ADJ[regime_key]
@@ -528,27 +559,23 @@ def calculate_methods(data, regime_key, sector_key, is_ai_megacap, mode, quality
     eps_ttm = data['eps_ttm']
     eps_fwd_1y = data.get('eps_fwd_1y')  # v4.1: PEG için 1y ileri EPS
     eps_fwd = data['eps_fwd_2y']
-    bvps = data['bvps']
     revenue = data['revenue_ttm']
     rev_fwd = data['revenue_fwd_2y']
-    ebit = data['ebit_ttm']
     ebitda = data['ebitda_ttm']
     ebitda_fwd = data['ebitda_fwd_2y']
     fcf_norm = data['fcf_normalized']
     cash = data['cash']
     debt = data['total_debt']
     shares = data['shares']
-    roe = data['roe']
-    beta = data['beta']
     
-    # AI mega-cap boğa primi
+    # AI mega-cap boğa primi (v5.0: ev_ebit çıkarıldı)
     if is_ai_megacap and regime_key == 'bull':
         ai_mult = AI_MEGACAP_BULL_PREMIUM
     else:
-        ai_mult = {k: 1.0 for k in ['pe', 'fwd_pe', 'ev_ebit', 'ev_ebitda', 'ev_rev', 'p_fcf']}
+        ai_mult = {k: 1.0 for k in ['pe', 'fwd_pe', 'ev_ebitda', 'ev_rev', 'p_fcf']}
     
     # v4: Quality premium hangi yöntemlere uygulanır
-    # Skip: Justified P-B (zaten ROE içerir), Graham (klasik), DCF (büyüme), PEG, Rule of 40 (margin içerir)
+    # v5.0: Justified P-B + Graham + Rule of 40 zaten kaldırıldı
     qm = quality_mult  # Kısaltma
     
     traditional = {}
@@ -556,63 +583,42 @@ def calculate_methods(data, regime_key, sector_key, is_ai_megacap, mode, quality
     growth = {}
     notes = {}
     
-    # === TRADITIONAL (TTM bazlı 7 yöntem) ===
+    # === TRADITIONAL (TTM bazlı 4 yöntem - v5.0) ===
     
+    # 1. Net P/E
     if eps_ttm and eps_ttm > 0:
         traditional['Net P/E'] = eps_ttm * sector_mults['pe'] * adj['pe'] * ai_mult['pe'] * qm
     else:
         traditional['Net P/E'] = None
     
-    if ebit and ebit > 0 and shares > 0:
-        ev = ebit * sector_mults['ev_ebit'] * adj['ev_ebit'] * ai_mult['ev_ebit'] * qm
-        traditional['EV/EBIT'] = (ev + cash - debt) / shares
-    else:
-        traditional['EV/EBIT'] = None
-    
+    # 2. EV/EBITDA (EV/EBIT v5.0'da kaldırıldı, EV/EBITDA ile yer değiştirme zaten)
     if ebitda and ebitda > 0 and shares > 0:
         ev = ebitda * sector_mults['ev_ebitda'] * adj['ev_ebitda'] * ai_mult['ev_ebitda'] * qm
         traditional['EV/EBITDA'] = (ev + cash - debt) / shares
     else:
         traditional['EV/EBITDA'] = None
     
+    # 3. EV/Revenue
     if revenue and revenue > 0 and shares > 0:
         ev = revenue * sector_mults['ev_rev'] * adj['ev_rev'] * ai_mult['ev_rev'] * qm
         traditional['EV/Revenue'] = (ev + cash - debt) / shares
     else:
         traditional['EV/Revenue'] = None
     
+    # 4. P/FCF
     if fcf_norm and fcf_norm > 0 and shares > 0:
         traditional['P/FCF'] = (fcf_norm / shares) * sector_mults['p_fcf'] * adj['p_fcf'] * ai_mult['p_fcf'] * qm
     else:
         traditional['P/FCF'] = None
     
-    # Justified P-B
-    k_e = calculate_cost_of_equity(beta, adj['k_e_adj'])
-    if bvps and bvps > 0:
-        if roe and roe > 0.05 and roe > k_e:
-            g = min(roe * 0.5, 0.05) + adj['g_pb_adj']
-            if k_e > g:
-                jpb = max(0.5, min(6.0, (roe - g) / (k_e - g)))
-                traditional['Justified P-B'] = bvps * jpb
-                notes['Justified P-B'] = f"Gordon (k_e={k_e*100:.0f}%, g={g*100:.0f}%)"
-            else:
-                traditional['Justified P-B'] = None
-        elif roe and roe > 0 and roe <= k_e:
-            ri = residual_income_value(eps_ttm, bvps, roe, k_e, terminal_g=adj['g_term'])
-            traditional['Justified P-B'] = ri
-            notes['Justified P-B'] = f"⚠️ RIM (ROE %{roe*100:.0f} < k_e %{k_e*100:.0f})"
-        else:
-            traditional['Justified P-B'] = None
-    else:
-        traditional['Justified P-B'] = None
+    # NOT: v5.0 çıkarılan yöntemler:
+    # - Justified P-B (Gordon/RIM) — karmaşık, modern büyüme şirketlerinde yanıltıcı
+    # - Graham Number — 1949'dan kalma, kalite şirketleri ve AI/tech için saçma sonuç
+    # - EV/EBIT — EV/EBITDA ile tekrar; D&A farkı ihmal edilebilir
     
-    if eps_ttm and eps_ttm > 0 and bvps and bvps > 0:
-        traditional['Graham'] = (adj['graham_k'] * eps_ttm * bvps) ** 0.5
-    else:
-        traditional['Graham'] = None
+    # === FORWARD (2 yöntem) ===
     
-    # === FORWARD (klasik 2 yöntem) ===
-    
+    # 5. Forward P/E
     if eps_fwd and eps_fwd > 0 and not forward_outlier:
         forward['Forward P/E'] = eps_fwd * sector_mults['fwd_pe'] * adj['fwd_pe'] * ai_mult['fwd_pe'] * qm
     else:
@@ -620,6 +626,7 @@ def calculate_methods(data, regime_key, sector_key, is_ai_megacap, mode, quality
         if forward_outlier:
             notes['Forward P/E'] = "⚠️ ELENDİ (forward outlier: EPS_FWD/EPS_TTM > 2.5x)"
     
+    # 6. DCF
     g_high = sector_mults['g_high'] + adj['g_high_adj']
     forward['DCF'] = dcf_calculate(
         start_fcf=fcf_norm if fcf_norm and fcf_norm > 0 else (data['ocf_ttm'] * 0.3 if data['ocf_ttm'] else 0),
@@ -634,7 +641,7 @@ def calculate_methods(data, regime_key, sector_key, is_ai_megacap, mode, quality
     if forward['DCF'] and forward['DCF'] <= 0:
         forward['DCF'] = None
     
-    # === GROWTH (yeni v3 yöntemler) ===
+    # === GROWTH (3 yöntem - v5.0: Rule of 40 çıkarıldı) ===
     
     # Forward growth oranı (PEG için)
     forward_growth = None
@@ -642,9 +649,7 @@ def calculate_methods(data, regime_key, sector_key, is_ai_megacap, mode, quality
         # 2 yıllık büyüme → yıllık geometrik
         forward_growth = (eps_fwd / eps_ttm) ** 0.5 - 1
     
-    # PEG (quality mult uygulanmaz - büyüme bazlı)
-    # v4.1: 1 yıl ileri EPS kullanılır (eps_fwd_1y), 2 yıl ileri değil.
-    # eps_fwd_1y yoksa eps_ttm × (1+growth) ile yaklaşık hesapla.
+    # 7. PEG
     if forward_outlier:
         growth['PEG'] = None
         notes['PEG'] = "⚠️ ELENDİ (forward outlier)"
@@ -654,7 +659,7 @@ def calculate_methods(data, regime_key, sector_key, is_ai_megacap, mode, quality
             eps_for_peg = eps_ttm * (1 + forward_growth)
         growth['PEG'] = calc_peg(eps_for_peg, forward_growth, adj['peg_target'])
     
-    # EV/Forward Revenue (quality mult uygulanır) — outlier'da elimine
+    # 8. EV/Forward Revenue
     if forward_outlier:
         growth['EV/FWD Revenue'] = None
         notes['EV/FWD Revenue'] = "⚠️ ELENDİ (forward outlier)"
@@ -664,7 +669,7 @@ def calculate_methods(data, regime_key, sector_key, is_ai_megacap, mode, quality
             cash, debt, shares
         )
     
-    # EV/Forward EBITDA (quality mult uygulanır) — outlier'da elimine
+    # 9. EV/Forward EBITDA
     if forward_outlier:
         growth['EV/FWD EBITDA'] = None
         notes['EV/FWD EBITDA'] = "⚠️ ELENDİ (forward outlier)"
@@ -674,17 +679,10 @@ def calculate_methods(data, regime_key, sector_key, is_ai_megacap, mode, quality
             cash, debt, shares
         )
     
-    # Rule of 40 (quality mult uygulanmaz - margin'i zaten içeriyor)
-    rev_growth = data.get('revenue_growth_yoy')
-    fcf_margin = (fcf_norm / revenue) if (fcf_norm and revenue and revenue > 0) else None
-    growth['Rule of 40'] = calc_rule_of_40(
-        rev_growth, fcf_margin, revenue, cash, debt, shares,
-        ai_premium=ai_mult.get('ev_rev', 1.0)
-    )
+    # NOT: Rule of 40 v5.0'da çıkarıldı — saf SaaS şirketleri için, portföyde yok
     
-    # Reverse DCF (sadece bilgi amaçlı, "implied" sayılmadan değil)
-    # Bu bir adil değer DEĞİL, mevcut fiyatın implied büyümesini gösterir
-    # Çıktıya not olarak eklenecek, methods listesinde olmayacak
+    # Reverse DCF (sadece bilgi amaçlı, yöntem listesinde değil)
+    # Çıktıya not olarak eklenecek
     
     return {
         'traditional': traditional,
@@ -1049,10 +1047,93 @@ def analyze(ticker):
     
     decision = auto_decision(price, {r: summaries[r]['main'] or {} for r in ['bear', 'normal', 'bull']})
     
+    # =========================================================================
+    # v5.0 EKSTRA SİNYALLER (fmp_layer)
+    # =========================================================================
+    
+    v5_signals = {}
+    if _V5_MODULES_AVAILABLE:
+        try:
+            # Altman Z + Piotroski (risk skorları)
+            scores = fmp_layer.get_financial_scores(ticker)
+            if scores:
+                z_val, z_lbl, z_emoji = fmp_layer.interpret_altman_z(scores.get('altmanZScore'))
+                if z_val is not None:
+                    v5_signals['altman_z'] = {'value': round(z_val, 2), 'label': z_lbl, 'emoji': z_emoji}
+                p_val, p_lbl, p_emoji = fmp_layer.interpret_piotroski(scores.get('piotroskiScore'))
+                if p_val is not None:
+                    v5_signals['piotroski'] = {'value': p_val, 'label': p_lbl, 'emoji': p_emoji}
+            
+            # Analist sentiment + momentum
+            consensus = fmp_layer.get_grades_consensus(ticker)
+            if consensus:
+                v5_signals['grades_consensus'] = {
+                    'strong_buy': consensus.get('strongBuy', 0),
+                    'buy': consensus.get('buy', 0),
+                    'hold': consensus.get('hold', 0),
+                    'sell': consensus.get('sell', 0),
+                    'strong_sell': consensus.get('strongSell', 0),
+                    'consensus_label': consensus.get('consensus'),
+                }
+            
+            grades_hist = fmp_layer.get_grades_historical(ticker)
+            momentum = fmp_layer.detect_upgrade_momentum(grades_hist, lookback_months=6)
+            if momentum:
+                v5_signals['upgrade_momentum'] = momentum
+            
+            # FMP'nin kendi DCF (sanity check)
+            fmp_dcf = fmp_layer.get_fmp_dcf(ticker)
+            if fmp_dcf and fmp_dcf.get('dcf'):
+                v5_signals['fmp_dcf'] = {
+                    'value': round(float(fmp_dcf.get('dcf', 0)), 2),
+                    'stock_price': fmp_dcf.get('Stock Price'),
+                }
+            
+            fmp_dcf_lev = fmp_layer.get_fmp_dcf(ticker, levered=True)
+            if fmp_dcf_lev and fmp_dcf_lev.get('dcf'):
+                v5_signals['fmp_dcf_levered'] = {'value': round(float(fmp_dcf_lev.get('dcf', 0)), 2)}
+            
+            # Konsantrasyon riski (product + geographic)
+            prod_segs = fmp_layer.get_revenue_product_segmentation(ticker)
+            prod_risk = fmp_layer.detect_concentration_risk(prod_segs)
+            if prod_risk:
+                v5_signals['concentration_risk_product'] = prod_risk
+            
+            geo_segs = fmp_layer.get_revenue_geographic_segmentation(ticker)
+            geo_risk = fmp_layer.detect_concentration_risk(geo_segs)
+            if geo_risk:
+                v5_signals['concentration_risk_geo'] = geo_risk
+            
+            # Canlı sektör/industry P/E
+            static_pe = SECTOR_MULTIPLES.get(sector_key, SECTOR_MULTIPLES['generic']).get('pe', 20)
+            live_pe, live_pe_source = fmp_layer.get_live_pe_for_sector_key(sector_key, static_fallback_pe=static_pe)
+            v5_signals['live_pe'] = {
+                'value': round(live_pe, 2) if live_pe else None,
+                'source': live_pe_source,
+                'static_fallback': static_pe,
+                'delta_pct': round((live_pe - static_pe) / static_pe * 100, 1) if (live_pe and static_pe) else None,
+            }
+            
+            # Dinamik WACC (CAPM ile)
+            dyn_wacc, wacc_source = fmp_layer.calculate_dynamic_wacc(beta=safe_get(profile, 'beta', 1.2))
+            v5_signals['dynamic_wacc'] = {
+                'value': round(dyn_wacc * 100, 2),
+                'source': wacc_source,
+                'static_fallback': round(REGIME_ADJ[market['regime'].lower()]['wacc'] * 100, 1),
+            }
+            
+            # Pre-IPO tespiti (genelde False döner, IPO calendar'daysa True)
+            pre_ipo = fmp_layer.is_ticker_pre_ipo(ticker)
+            if pre_ipo:
+                v5_signals['pre_ipo'] = pre_ipo
+        
+        except Exception as e:
+            print(f"⚠️ v5.0 sinyalleri toplanırken hata: {e}", file=sys.stderr)
+    
     return {
         'ticker': ticker,
         'analysis_date': datetime.now().strftime('%Y-%m-%d %H:%M'),
-        'version': '4.0',
+        'version': '5.0',
         'mode': mode,
         'mode_criteria_met': criteria_count,
         'mode_criteria_detail': criteria_detail,
@@ -1093,6 +1174,7 @@ def analyze(ticker):
         'method_notes': notes_all,
         'summaries': summaries,
         'decision': {'action': decision[0], 'reasoning': decision[1]},
+        'v5_signals': v5_signals,
     }
 
 
@@ -1228,6 +1310,92 @@ def format_output(result):
     out.append(f"\n🎲 OTOMATIK KARAR ({result['summaries']['normal']['main_label'] if result['summaries']['normal']['main'] else 'N/A'} bazlı):")
     out.append(f"  {result['decision']['action']}")
     out.append(f"     {result['decision']['reasoning']}")
+    
+    # v5.0 YENİ SİNYALLER
+    v5 = result.get('v5_signals', {})
+    if v5:
+        out.append("")
+        out.append("─" * 75)
+        out.append("  v5.0 EK SİNYALLER (Ultimate FMP Plan)")
+        out.append("─" * 75)
+        
+        # Risk skorları
+        if v5.get('altman_z') or v5.get('piotroski'):
+            out.append("\n🛡️  RİSK SKORLARI:")
+            if v5.get('altman_z'):
+                az = v5['altman_z']
+                out.append(f"  Altman Z (iflas riski): {az['value']:.2f} → {az['emoji']} {az['label']}")
+            if v5.get('piotroski'):
+                pi = v5['piotroski']
+                out.append(f"  Piotroski (kalite): {pi['value']}/9 → {pi['emoji']} {pi['label']}")
+        
+        # Analist sentiment
+        if v5.get('grades_consensus'):
+            gc = v5['grades_consensus']
+            total = gc['strong_buy'] + gc['buy'] + gc['hold'] + gc['sell'] + gc['strong_sell']
+            out.append(f"\n📊 ANALİST SENTIMENT (toplam {total}):")
+            out.append(f"  💚 Strong Buy: {gc['strong_buy']}  |  Buy: {gc['buy']}  |  ⚪ Hold: {gc['hold']}  |  Sell: {gc['sell']}  |  ❤️ Strong Sell: {gc['strong_sell']}")
+            if gc.get('consensus_label'):
+                out.append(f"  Konsensüs: {gc['consensus_label']}")
+        
+        if v5.get('upgrade_momentum'):
+            um = v5['upgrade_momentum']
+            out.append(f"  Son 6 ay: {um['label']}")
+        
+        # FMP DCF karşılaştırma
+        if v5.get('fmp_dcf'):
+            fd = v5['fmp_dcf']
+            our_dcf_normal = None
+            try:
+                our_dcf_normal = result['methods_by_regime']['normal']['forward'].get('DCF')
+            except (KeyError, TypeError):
+                pass
+            out.append(f"\n📐 DCF SANITY CHECK:")
+            out.append(f"  FMP DCF (unlevered): ${fd['value']:.2f}")
+            if v5.get('fmp_dcf_levered'):
+                out.append(f"  FMP DCF (levered):   ${v5['fmp_dcf_levered']['value']:.2f}")
+            if our_dcf_normal:
+                out.append(f"  Bizim DCF (normal):  ${our_dcf_normal:.2f}")
+                diff_pct = (our_dcf_normal - fd['value']) / fd['value'] * 100
+                if abs(diff_pct) > 30:
+                    out.append(f"  ⚠️ Fark %{diff_pct:+.0f} — varsayımlar farklı, gözden geçir")
+                else:
+                    out.append(f"  Fark %{diff_pct:+.0f} (uyumlu)")
+        
+        # Konsantrasyon riski
+        if v5.get('concentration_risk_product') or v5.get('concentration_risk_geo'):
+            out.append(f"\n🎯 KONSANTRASYON RİSKİ:")
+            if v5.get('concentration_risk_product'):
+                cr = v5['concentration_risk_product']
+                out.append(f"  Ürün/Segment ({cr['fiscal_year']}): {cr['label']}")
+                out.append(f"    Top: {cr['top_segment']} %{cr['top_share_pct']} | Top 2: %{cr['top2_share_pct']}")
+            if v5.get('concentration_risk_geo'):
+                cr = v5['concentration_risk_geo']
+                out.append(f"  Coğrafya ({cr['fiscal_year']}): {cr['label']}")
+                out.append(f"    Top: {cr['top_segment']} %{cr['top_share_pct']} | Top 2: %{cr['top2_share_pct']}")
+        
+        # Canlı sektör P/E vs statik
+        if v5.get('live_pe') and v5['live_pe'].get('value'):
+            lp = v5['live_pe']
+            out.append(f"\n🌐 CANLI SEKTÖR P/E:")
+            src_label = {'industry': 'industry-pe-snapshot', 'sector': 'sector-pe-snapshot', 'static': 'statik tablo (API down)'}.get(lp['source'], lp['source'])
+            out.append(f"  Canlı: {lp['value']:.1f}x ({src_label})  |  Statik (skill içi): {lp['static_fallback']}x")
+            if lp.get('delta_pct') is not None and abs(lp['delta_pct']) > 15:
+                yon = "yukarıda" if lp['delta_pct'] > 0 else "aşağıda"
+                out.append(f"  ⚠️ Statik tablo %{lp['delta_pct']:+.0f} sapmış — sektör eskimiş tabloya göre {yon}")
+        
+        # Dinamik WACC
+        if v5.get('dynamic_wacc'):
+            dw = v5['dynamic_wacc']
+            out.append(f"\n💰 DİNAMİK WACC (CAPM):")
+            out.append(f"  Canlı: %{dw['value']:.2f} ({dw['source']})  |  Statik fallback: %{dw['static_fallback']}")
+        
+        # Pre-IPO uyarısı
+        if v5.get('pre_ipo'):
+            pi = v5['pre_ipo']
+            out.append(f"\n🆕 PRE-IPO UYARISI:")
+            out.append(f"  IPO Tarihi: {pi.get('ipo_date')}  |  Aralık: {pi.get('price_range')}")
+            out.append(f"  ⚠️ Pre-IPO veri eksik — FMP TTM yok, manuel analiz gerekli")
     
     out.append("")
     return "\n".join(out)
