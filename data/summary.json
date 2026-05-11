@@ -1,54 +1,54 @@
 {
-  "son_guncelleme": "2026-05-08",
+  "son_guncelleme": "2026-05-11",
   "toplam_sermaye": 600000,
-  "toplam_deger": 646030.35,
-  "toplam_kar_zarar": 46030.35,
-  "toplam_kar_zarar_yuzde": 7.67,
+  "toplam_deger": 649608.68,
+  "toplam_kar_zarar": 49608.68,
+  "toplam_kar_zarar_yuzde": 8.27,
   "portfolyolar": {
     "dengeli": {
       "isim": "Dengeli Portföy",
-      "deger": 110422.55,
+      "deger": 110938.64,
       "maliyet": 100000,
-      "kar_zarar": 10422.550000000003,
-      "kar_zarar_yuzde": 10.42,
+      "kar_zarar": 10938.64,
+      "kar_zarar_yuzde": 10.94,
       "pozisyon_sayisi": 6,
       "nakit": {
         "miktar": 26407.52,
         "para_birimi": "USD",
-        "agirlik_yuzde": 23.91
+        "agirlik_yuzde": 23.8
       }
     },
     "agresif": {
       "isim": "Agresif Büyüme Portföyü",
-      "deger": 392737.43,
+      "deger": 394623.75,
       "maliyet": 400000,
-      "kar_zarar": -7262.570000000007,
-      "kar_zarar_yuzde": -1.82,
-      "pozisyon_sayisi": 6,
+      "kar_zarar": -5376.25,
+      "kar_zarar_yuzde": -1.34,
+      "pozisyon_sayisi": 5,
       "nakit": {
-        "miktar": 68152.7,
+        "miktar": 118988.03,
         "para_birimi": "USD",
-        "agirlik_yuzde": 17.35
+        "agirlik_yuzde": 30.15
       }
     },
     "temettü": {
       "isim": "Değer + Temettü Portföyü",
-      "deger": 142870.37,
+      "deger": 144046.29,
       "maliyet": 100000,
-      "kar_zarar": 42870.369999999995,
-      "kar_zarar_yuzde": 42.87,
+      "kar_zarar": 44046.29000000001,
+      "kar_zarar_yuzde": 44.05,
       "pozisyon_sayisi": 6,
       "nakit": {
-        "miktar": 43163.78,
+        "miktar": 56989.29,
         "para_birimi": "USD",
-        "agirlik_yuzde": 30.21
+        "agirlik_yuzde": 39.56
       }
     },
     "swing_trade": {
       "isim": "Swing Trade",
-      "pozisyon_sayisi": 2,
-      "bos_slot": 3,
-      "durum": "2/5 pozisyon aktif"
+      "pozisyon_sayisi": 5,
+      "bos_slot": 0,
+      "durum": "5/5 pozisyon aktif"
     }
   }
 }
