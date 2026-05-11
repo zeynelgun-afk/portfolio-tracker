@@ -24,8 +24,8 @@ jobs:
           TELEGRAM_PRIVATE_ID: ${{ secrets.TELEGRAM_PRIVATE_ID }}
       - name: Git commit
         run: |
-          git config user.name "Finzora AI"
-          git config user.email "zeynelgun@users.noreply.github.com"
+          git config user.name "Finzora Bot"
+          git config user.email "finzora-bot@users.noreply.github.com"
           git add reports/
-          git diff --staged --quiet || git commit -m "auto: adil değer raporu $(date +%Y-%m-%d)"
+          git diff --staged --quiet || git commit -m "[bot/panel-weekly] Adil değer raporu $(date +%Y-%m-%d)"
           git push

@@ -53,8 +53,8 @@ jobs:
 
       - name: Git config
         run: |
-          git config user.name "Finzora AI"
-          git config user.email "zeynelgun@users.noreply.github.com"
+          git config user.name "Finzora Bot"
+          git config user.email "finzora-bot@users.noreply.github.com"
 
       - name: Taramayi calistir
         run: |
@@ -97,8 +97,8 @@ jobs:
           if git diff --staged --quiet; then
             echo "Degisiklik yok - commit atlaniyor"
           else
-            git commit -m "[AUTO-SCAN] $(date +'%Y-%m-%d %H:%M UTC')"
-            git push origin main || (sleep 15 && git fetch origin main && git reset --hard origin/main && cp /tmp/scan_*.json data/ 2>/dev/null; cp /tmp/scan_vpred.jsonl logs/valuation_predictions.jsonl 2>/dev/null; git add data/daily_scan_*.json data/daily_full_scan.json logs/valuation_predictions.jsonl && git commit -m "[AUTO-SCAN-RETRY] $(date +'%Y-%m-%d %H:%M UTC')" && git push origin main)
+            git commit -m "[bot/scan] $(date +'%Y-%m-%d %H:%M UTC')"
+            git push origin main || (sleep 15 && git fetch origin main && git reset --hard origin/main && cp /tmp/scan_*.json data/ 2>/dev/null; cp /tmp/scan_vpred.jsonl logs/valuation_predictions.jsonl 2>/dev/null; git add data/daily_scan_*.json data/daily_full_scan.json logs/valuation_predictions.jsonl && git commit -m "[bot/scan-retry] $(date +'%Y-%m-%d %H:%M UTC')" && git push origin main)
           fi
 
   swing-entry-scan:
@@ -120,8 +120,8 @@ jobs:
 
       - name: Git config
         run: |
-          git config user.name "Finzora AI"
-          git config user.email "zeynelgun@users.noreply.github.com"
+          git config user.name "Finzora Bot"
+          git config user.email "finzora-bot@users.noreply.github.com"
 
       - name: Swing Entry Scan
         run: |
@@ -146,7 +146,7 @@ jobs:
           if git diff --staged --quiet; then
             echo "Degisiklik yok"
           else
-            git commit -m "[AUTO] Swing entry sinyalleri $(date +%Y-%m-%d)"
+            git commit -m "[bot/swing-entry] $(date +%Y-%m-%d)"
             git push origin main || (sleep 10 && git pull origin main && git push origin main) || true
           fi
 

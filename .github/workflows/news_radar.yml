@@ -30,8 +30,8 @@ jobs:
 
       - name: Log commit et
         run: |
-          git config user.name  "Finzora AI"
-          git config user.email "zeynelgun@users.noreply.github.com"
+          git config user.name  "Finzora Bot"
+          git config user.email "finzora-bot@users.noreply.github.com"
           git add data/news_radar_log.json || true
-          git diff --staged --quiet || git commit -m "[RADAR] Haber radarı log güncellendi $(date +'%Y-%m-%d %H:%M')"
+          git diff --staged --quiet || git commit -m "[bot/radar] Haber radarı log güncellendi $(date +'%Y-%m-%d %H:%M')"
           git push || true

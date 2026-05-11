@@ -30,7 +30,7 @@ jobs:
       - name: Offset geri yukle
         run: |
           git config user.name "Finzora Bot"
-          git config user.email "zeynelgun@users.noreply.github.com"
+          git config user.email "finzora-bot@users.noreply.github.com"
 
       - name: Bot calistir
         run: python scripts/telegram_bot.py
@@ -51,7 +51,7 @@ jobs:
             if git diff --staged --quiet; then
               echo "Offset değişmedi"
             else
-              git commit -m "[Bot] Telegram offset güncellendi"
+              git commit -m "[bot/telegram-offset] Telegram offset güncellendi"
               git push origin main || true
             fi
           fi

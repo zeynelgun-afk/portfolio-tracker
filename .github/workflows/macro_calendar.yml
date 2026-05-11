@@ -55,13 +55,13 @@ jobs:
             python scripts/macro_calendar_updater.py $AY_ARG --aylar "$AYLAR" --test
           else
             python scripts/macro_calendar_updater.py $AY_ARG --aylar "$AYLAR"
-            git config user.name  "Finzora AI"
-            git config user.email "zeynelgun@users.noreply.github.com"
+            git config user.name  "Finzora Bot"
+            git config user.email "finzora-bot@users.noreply.github.com"
             git add data/calendars/macro_events.ics
             if git diff --staged --quiet; then
               echo "Değişiklik yok."
             else
-              git commit -m "[DATA] Makro takvim güncellendi — $(date +'%Y-%m')"
+              git commit -m "[bot/macro] Makro takvim güncellendi — $(date +'%Y-%m')"
               git push
             fi
             TARIH_TR=$(date +'%B %Y')
