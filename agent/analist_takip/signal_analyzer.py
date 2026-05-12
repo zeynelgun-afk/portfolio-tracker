@@ -89,8 +89,63 @@ def analyze_signals(
     elif require_post_earnings and not last_earnings_date:
         drift_status = "no_recent_earnings"
 
-    # Eğer drift penceresi geçmişse, hemen NEUTRAL döner
+    # Eğer drift penceresi geçmişse → çoğunlukla NEUTRAL,
+    # AMA: tek büyük raise (>%30) varsa WATCH üret (kaçırma riski azalt)
     if drift_status == "expired":
+        # Pre-check: drift dışında olsa bile büyük raise var mı?
+        # Bunu bulmak için tüm signals'a (cutoff_total override öncesi) bak
+        big_raise_drift_expired = None
+        for s in signals:
+            if s["published_at"] < earnings_cutoff:
+                continue  # bilanço öncesi hariç
+            pct = s.get("change_pct")
+            if pct is not None and pct >= 30.0:
+                # Bu büyüklükte raise drift dışında bile dikkat çekici
+                if big_raise_drift_expired is None or pct > big_raise_drift_expired["pct"]:
+                    big_raise_drift_expired = {
+                        "company": s.get("analyst_company") or s.get("grading_company"),
+                        "pct": round(pct, 1),
+                        "old": s.get("old_target"),
+                        "new": s.get("new_target") or s.get("price_target"),
+                        "date": s["published_at"].isoformat(),
+                    }
+
+        if big_raise_drift_expired:
+            return {
+                "ticker": ticker,
+                "decision": "WATCH",
+                "confidence": "low",
+                "raised_count_48h": 1,
+                "lowered_count_48h": 0,
+                "raised_count_24h": 0,
+                "lowered_count_24h": 0,
+                "upgrades_count": 0,
+                "downgrades_count": 0,
+                "downgrades_count_24h": 0,
+                "avg_revision_pct": big_raise_drift_expired["pct"],
+                "biggest_raise": big_raise_drift_expired,
+                "biggest_cut": None,
+                "rationale": (
+                    f"Drift penceresi geçmiş ({days_since_earnings}d) "
+                    f"AMA {big_raise_drift_expired['company']} büyük raise "
+                    f"(+{big_raise_drift_expired['pct']:.0f}%) → izle"
+                ),
+                "evidence": [{
+                    "date": big_raise_drift_expired["date"],
+                    "company": big_raise_drift_expired["company"],
+                    "action": "raised",
+                    "old_target": big_raise_drift_expired["old"],
+                    "new_target": big_raise_drift_expired["new"],
+                    "change_pct": big_raise_drift_expired["pct"],
+                }],
+                "total_signals_in_window": 1,
+                "analyzed_at": now.isoformat(),
+                "drift_status": drift_status,
+                "days_since_earnings": days_since_earnings,
+                "last_earnings_date": last_earnings_date.isoformat() if last_earnings_date else None,
+            }
+
+        # Büyük raise yoksa NEUTRAL
         return {
             "ticker": ticker,
             "decision": "NEUTRAL",
@@ -190,10 +245,15 @@ def analyze_signals(
     evidence = []
     confidence = "low"
 
-    # VETO kuralları: Karşıt sinyaller varsa AL/STRONG_AL yasak
+    # VETO kuralları:
+    # - 2+ downgrade veto eder (çoğunluk şart). 1 downgrade tolere edilir.
+    # - Net pozitif sinyal varsa AL üretilebilir
+    multi_downgrade_veto = len(downgrades) >= 2
     has_recent_downgrade = len(downgrades) > 0
     has_recent_upgrade = len(upgrades) > 0
     has_mixed_signals = (raised and lowered) or (upgrades and downgrades)
+    # Net pozitif sinyal: raise sayısı ≥ (lowered + downgrades) + 1
+    net_signal_positive = len(raised) - len(lowered) - len(downgrades) >= 1
 
     # STRONG_SELL kontrolü (öncelik)
     if (len(lowered) >= STRONG_SELL_MIN_LOWERED
@@ -213,27 +273,31 @@ def analyze_signals(
         if biggest_cut and biggest_cut["pct"] <= SELL_BIG_CUT_PCT:
             rationale_parts.append(f"{biggest_cut['company']} büyük cut ({biggest_cut['pct']:.1f}%)")
 
-    # VETO: Downgrade varsa AL kararları YASAK — max WATCH
-    elif has_recent_downgrade and (raised or has_recent_upgrade):
+    # VETO: 2+ downgrade varsa AL kararları YASAK
+    elif multi_downgrade_veto:
         decision = "WATCH"
         confidence = "low"
         rationale_parts.append(f"KARIŞIK: {len(raised)} raise + {len(downgrades)} downgrade")
-        rationale_parts.append("AL veto: downgrade var")
+        rationale_parts.append("AL veto: 2+ downgrade")
 
-    # STRONG_BUY kontrolü
+    # STRONG_BUY kontrolü (1 downgrade'i tolere et ama avg ve count daha sıkı)
     elif (len(raised) >= STRONG_BUY_MIN_RAISED
             and (avg_revision_pct or 0) >= STRONG_BUY_MIN_AVG_PCT
             and len(lowered) <= STRONG_BUY_MAX_LOWERED
-            and not has_recent_downgrade):  # downgrade veto
+            and len(downgrades) == 0):  # STRONG_BUY için 0 downgrade şart
         decision = "STRONG_BUY"
         confidence = "high"
         rationale_parts.append(f"{len(raised)} analist hedef yükseltti")
         rationale_parts.append(f"avg revize +{avg_revision_pct}%")
-        rationale_parts.append("0 düşüş")
+        rationale_parts.append("0 düşüş, 0 downgrade")
 
-    # BUY kontrolü
+    # BUY kontrolü — Bu blok'a giriyorsak zaten:
+    #   • Büyük raise (>%25) VAR, VEYA
+    #   • Net raised ≥ 2 VAR
+    # 2+ downgrade yukarıda zaten veto etti → buradayız demek 1 veya 0 downgrade.
+    # Bu durumda 1 downgrade tolere edilir (çoğunluk pozitif).
     elif ((biggest_raise and biggest_raise["pct"] >= BUY_BIG_RAISE_PCT) or
-          len(raised) >= BUY_MIN_NET_RAISED) and not has_recent_downgrade:
+          len(raised) >= BUY_MIN_NET_RAISED):
         decision = "BUY"
         confidence = "medium" if len(raised) >= BUY_MIN_NET_RAISED else "high"
         if biggest_raise and biggest_raise["pct"] >= BUY_BIG_RAISE_PCT:
@@ -242,6 +306,8 @@ def analyze_signals(
             )
         if len(raised) >= BUY_MIN_NET_RAISED:
             rationale_parts.append(f"{len(raised)} analist yükseltti")
+        if has_recent_downgrade:
+            rationale_parts.append(f"({len(downgrades)} downgrade tolere edildi)")
 
     # WATCH (karışık veya tek hafif hareket)
     elif raised or lowered or upgrades or downgrades:
