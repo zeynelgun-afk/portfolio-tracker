@@ -1,0 +1,159 @@
+{
+  "meta": {
+    "ticker": "DIOD",
+    "fiscal_period_reported": "Q1 2026",
+    "filing_date": "2026-05-07",
+    "parser_version": "v1.0",
+    "currency": "USD"
+  },
+  "results_actual": {
+    "revenue_usd_b": 0.4055,
+    "yoy_revenue_growth_pct": 22.0,
+    "qoq_revenue_growth_pct": 3.5,
+    "gaap_eps": 0.32,
+    "non_gaap_eps": 0.43,
+    "gaap_net_income_m": 15.0,
+    "non_gaap_net_income_m": 19.8,
+    "gross_margin_pct": 31.8,
+    "operating_margin_pct": 6.13,
+    "operating_income_m": 24.86,
+    "free_cash_flow_m": 32.4,
+    "diluted_share_count_m": 46.138
+  },
+  "guidance_next_quarter": {
+    "provided": true,
+    "fiscal_period": "Q2 2026",
+    "revenue_low_b": 0.422,
+    "revenue_mid_b": 0.435,
+    "revenue_high_b": 0.448,
+    "non_gaap_eps_low": 0.5,
+    "non_gaap_eps_mid": 0.6,
+    "non_gaap_eps_high": 0.7,
+    "gaap_eps_low": null,
+    "gaap_eps_mid": null,
+    "gaap_eps_high": null,
+    "gross_margin_low_pct": 31.8,
+    "gross_margin_mid_pct": 32.8,
+    "gross_margin_high_pct": 33.8,
+    "operating_margin_mid_pct": null
+  },
+  "guidance_full_year": {
+    "provided": false,
+    "fiscal_period": null,
+    "revenue_low_b": null,
+    "revenue_mid_b": null,
+    "revenue_high_b": null,
+    "non_gaap_eps_low": null,
+    "non_gaap_eps_mid": null,
+    "non_gaap_eps_high": null,
+    "gross_margin_mid_pct": null,
+    "capex_guidance_b": null,
+    "opex_growth_guidance_pct": null
+  },
+  "segment_breakdown": [],
+  "one_time_items": [
+    {
+      "description": "Amortization of acquisition-related intangible assets",
+      "amount_usd_m": 3.944,
+      "pretax_or_aftertax": "pretax",
+      "segment_affected": null
+    },
+    {
+      "description": "Board member/Officer retirement",
+      "amount_usd_m": 1.149,
+      "pretax_or_aftertax": "pretax",
+      "segment_affected": null
+    },
+    {
+      "description": "Gain/Loss on Investments",
+      "amount_usd_m": 1.14,
+      "pretax_or_aftertax": "pretax",
+      "segment_affected": null
+    }
+  ],
+  "capital_return": {
+    "buyback_authorization_b": null,
+    "buyback_executed_in_period_b": null,
+    "dividend_per_share": null,
+    "dividend_change_pct": null
+  },
+  "qualitative_signals": {
+    "tone_score": 3,
+    "tone_label": "bullish",
+    "evidence_phrases": [
+      "solid demand recovery and momentum we are seeing across our key focus areas",
+      "fifth consecutive quarter of double-digit year-over-year growth",
+      "over 100% year-over-year increase in quarterly earnings"
+    ],
+    "warning_phrases": [],
+    "guidance_color": null,
+    "approximations": [
+      "revenue to be approximately $435 million"
+    ],
+    "ceo_quote_primary": "Our first quarter revenue grew 22% year-over-year and an above-seasonal 3.5% sequentially, highlighting the solid demand recovery and momentum we are seeing across our key focus areas of automotive, industrial and AI-server related applications.",
+    "cfo_quote_primary": null
+  },
+  "source_quotes": {
+    "results_actual.revenue_usd_b": "Revenue was $405.5 million",
+    "results_actual.yoy_revenue_growth_pct": "Our first quarter revenue grew 22% year-over-year",
+    "results_actual.qoq_revenue_growth_pct": "above-seasonal 3.5% sequentially",
+    "results_actual.gaap_eps": "GAAP EPS was $0.32 per diluted share",
+    "results_actual.non_gaap_eps": "Non-GAAP EPS was $0.43 per diluted share",
+    "results_actual.gaap_net_income_m": "GAAP net income was $15.0 million",
+    "results_actual.non_gaap_net_income_m": "Non-GAAP adjusted net income was $19.8 million",
+    "results_actual.gross_margin_pct": "GAAP gross profit margin was 31.8 percent",
+    "results_actual.operating_income_m": "GAAP operating income $19.8 million (from table: Income from operations $19,765) plus non-GAAP adjustments $5.1 million",
+    "results_actual.operating_margin_pct": "Computed from non-GAAP operating income $24.86 million divided by revenue $405.5 million",
+    "results_actual.free_cash_flow_m": "Free cash flow (a non-GAAP measure) was $32.4 million",
+    "results_actual.diluted_share_count_m": "Diluted 46,138 (in thousands)",
+    "guidance_next_quarter.revenue_mid_b": "we expect revenue to be approximately $435 million",
+    "guidance_next_quarter.revenue_low_b": "plus or minus 3 percent",
+    "guidance_next_quarter.revenue_high_b": "plus or minus 3 percent",
+    "guidance_next_quarter.non_gaap_eps_mid": "Non-GAAP adjusted EPS is expected to be $0.60",
+    "guidance_next_quarter.non_gaap_eps_low": "plus or minus $0.10",
+    "guidance_next_quarter.non_gaap_eps_high": "plus or minus $0.10",
+    "guidance_next_quarter.gross_margin_mid_pct": "GAAP gross margin is expected to be 32.8 percent",
+    "guidance_next_quarter.gross_margin_low_pct": "plus or minus 1 percent",
+    "guidance_next_quarter.gross_margin_high_pct": "plus or minus 1 percent"
+  },
+  "confidence": {
+    "results_actual": "high",
+    "guidance_next_quarter": "high",
+    "guidance_full_year": "high",
+    "segment_breakdown": "high",
+    "overall": "high"
+  },
+  "ambiguous_items": [
+    {
+      "field": "results_actual.operating_income_m",
+      "explanation": "Computed: GAAP operating income $19.765M (from Consolidated Statements of Operations table) + non-GAAP adjustments ($3.944M amortization of acquisition-related intangible assets + $1.149M board/officer retirement) = $24.858M, rounded to $24.86M. Non-GAAP operating income not explicitly stated in document."
+    },
+    {
+      "field": "results_actual.operating_margin_pct",
+      "explanation": "Computed: non-GAAP operating income $24.86M / revenue $405.5M = 6.13%. Not explicitly stated in document."
+    },
+    {
+      "field": "guidance_next_quarter.gross_margin_mid_pct",
+      "explanation": "Document provides GAAP gross margin guidance only (32.8%). Non-GAAP gross margin guidance not explicitly stated. Using GAAP value per R2 flagging requirement."
+    },
+    {
+      "field": "guidance_next_quarter.gross_margin_low_pct",
+      "explanation": "Computed: 32.8% - 1% = 31.8%. Based on GAAP guidance range."
+    },
+    {
+      "field": "guidance_next_quarter.gross_margin_high_pct",
+      "explanation": "Computed: 32.8% + 1% = 33.8%. Based on GAAP guidance range."
+    },
+    {
+      "field": "results_actual.yoy_revenue_growth_pct",
+      "explanation": "Document states '22% year-over-year' in CEO quote. Exact calculation from tables yields 22.08%. Using 22.0 as stated in narrative."
+    }
+  ],
+  "self_check": {
+    "no_quarterly_annual_mixup": true,
+    "all_numbers_have_source_quote": true,
+    "units_consistent": true,
+    "no_investment_language": true,
+    "json_valid": true
+  }
+}

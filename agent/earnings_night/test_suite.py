@@ -258,16 +258,39 @@ FIXTURE_CHECKS = {
             check_eq("gaap_net_income_m ($13,790M)", 13790.0, p.results_actual.gaap_net_income_m, 50),
             check_eq("gross_margin_pct", 74.9, p.results_actual.gross_margin_pct, 1.0),
             check_eq("guidance_q_provided (Q3 FY26)", True, p.guidance_next_quarter.provided),
-            # Q3 guidance: revenue $32.75-34.25B (mid $33.5B), EPS $18.75-19.55
             check_eq("guidance_q_revenue_mid_b ($33.5B)", 33.5, p.guidance_next_quarter.revenue_mid_b, 0.5),
             check_eq("guidance_q_revenue_low_b", 32.75, p.guidance_next_quarter.revenue_low_b, 0.5),
             check_eq("guidance_q_revenue_high_b", 34.25, p.guidance_next_quarter.revenue_high_b, 0.5),
             check_eq("guidance_q_eps_mid ($19.15)", 19.15, p.guidance_next_quarter.non_gaap_eps_mid, 0.2),
             check_eq("guidance_q_gross_margin (81%)", 81.0, p.guidance_next_quarter.gross_margin_mid_pct, 1.0),
-            # Segment breakdown
             check_eq("segment_count (4: Cloud/Core DC/Mobile/Auto)", 4, len(p.segment_breakdown)),
-            # Tone
             check_eq("tone_score_very_bullish (5)", True, p.qualitative_signals.tone_score >= 4),
+        ],
+    },
+    "diod_q1_2026": {
+        "filing_date": "2026-05-07",
+        "fiscal_period": "Q1 2026",
+        "company_name": "Diodes Incorporated",
+        "ticker": "DIOD",
+        "checks": lambda p: [
+            # Turnaround hikayesi: analog/discrete semi, zarardan kara dönüş
+            check_eq("revenue_usd_b ($405.5M)", 0.4055, p.results_actual.revenue_usd_b, 0.005),
+            check_eq("yoy_revenue_growth_pct (+22%)", 22.0, p.results_actual.yoy_revenue_growth_pct, 1.0),
+            check_eq("qoq_revenue_growth_pct (+3.5%)", 3.5, p.results_actual.qoq_revenue_growth_pct, 0.5),
+            check_eq("gaap_eps ($0.32)", 0.32, p.results_actual.gaap_eps, 0.02),
+            check_eq("non_gaap_eps ($0.43)", 0.43, p.results_actual.non_gaap_eps, 0.02),
+            check_eq("gaap_net_income_m ($15.0M)", 15.0, p.results_actual.gaap_net_income_m, 0.5),
+            check_eq("non_gaap_net_income_m ($19.8M)", 19.8, p.results_actual.non_gaap_net_income_m, 0.5),
+            check_eq("gross_margin_pct (GAAP %31.8)", 31.8, p.results_actual.gross_margin_pct, 0.5),
+            check_eq("free_cash_flow_m ($32.4M)", 32.4, p.results_actual.free_cash_flow_m, 0.5),
+            # Q2 2026 guidance: Revenue $422-448M (mid $435M), EPS $0.60, GM %32.8
+            check_eq("guidance_q_provided", True, p.guidance_next_quarter.provided),
+            check_eq("guidance_q_revenue_mid_b (~$435M)", 0.435, p.guidance_next_quarter.revenue_mid_b, 0.005),
+            check_eq("guidance_q_eps_mid ($0.60)", 0.60, p.guidance_next_quarter.non_gaap_eps_mid, 0.05),
+            check_eq("guidance_q_gross_margin (32.8%)", 32.8, p.guidance_next_quarter.gross_margin_mid_pct, 0.5),
+            check_eq("guidance_fy_provided (yok)", False, p.guidance_full_year.provided),
+            check_eq("one_time_items_min_2 (M&A amort + retirement + investments)", True, len(p.one_time_items) >= 2),
+            check_eq("tone_score_bullish (turnaround)", True, p.qualitative_signals.tone_score >= 2),
         ],
     },
 }
