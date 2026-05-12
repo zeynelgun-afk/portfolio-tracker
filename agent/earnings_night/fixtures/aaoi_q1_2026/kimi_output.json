@@ -1,0 +1,211 @@
+{
+  "meta": {
+    "ticker": "AAOI",
+    "fiscal_period_reported": "Q1 2026",
+    "filing_date": "2026-05-07",
+    "parser_version": "v1.0",
+    "currency": "USD"
+  },
+  "results_actual": {
+    "revenue_usd_b": 0.1511,
+    "yoy_revenue_growth_pct": 51.3,
+    "qoq_revenue_growth_pct": 12.5,
+    "gaap_eps": -0.19,
+    "non_gaap_eps": -0.07,
+    "gaap_net_income_m": -14.3,
+    "non_gaap_net_income_m": -4.9,
+    "gross_margin_pct": 29.2,
+    "operating_margin_pct": null,
+    "operating_income_m": null,
+    "free_cash_flow_m": null,
+    "diluted_share_count_m": 75.98
+  },
+  "guidance_next_quarter": {
+    "provided": true,
+    "fiscal_period": "Q2 2026",
+    "revenue_low_b": 0.18,
+    "revenue_mid_b": 0.189,
+    "revenue_high_b": 0.198,
+    "non_gaap_eps_low": -0.03,
+    "non_gaap_eps_mid": 0.0,
+    "non_gaap_eps_high": 0.03,
+    "gaap_eps_low": null,
+    "gaap_eps_mid": null,
+    "gaap_eps_high": null,
+    "gross_margin_low_pct": 29.0,
+    "gross_margin_mid_pct": 29.5,
+    "gross_margin_high_pct": 30.0,
+    "operating_margin_mid_pct": null
+  },
+  "guidance_full_year": {
+    "provided": false,
+    "fiscal_period": null,
+    "revenue_low_b": null,
+    "revenue_mid_b": null,
+    "revenue_high_b": null,
+    "non_gaap_eps_low": null,
+    "non_gaap_eps_mid": null,
+    "non_gaap_eps_high": null,
+    "gross_margin_mid_pct": null,
+    "capex_guidance_b": null,
+    "opex_growth_guidance_pct": null
+  },
+  "segment_breakdown": [
+    {
+      "segment_name": "CATV",
+      "revenue_usd_b": 0.0668,
+      "yoy_growth_pct": 3.6,
+      "operating_margin_pct": null
+    },
+    {
+      "segment_name": "Datacenter",
+      "revenue_usd_b": 0.0814,
+      "yoy_growth_pct": 154.0,
+      "operating_margin_pct": null
+    },
+    {
+      "segment_name": "Telecom",
+      "revenue_usd_b": 0.0026,
+      "yoy_growth_pct": -12.9,
+      "operating_margin_pct": null
+    },
+    {
+      "segment_name": "Other",
+      "revenue_usd_b": 0.0003,
+      "yoy_growth_pct": -8.6,
+      "operating_margin_pct": null
+    }
+  ],
+  "one_time_items": [
+    {
+      "description": "Non-recurring expenses including employee severance and legal expenses associated with litigation and certain legal and advisory expenses associated with purchase termination or patent protection",
+      "amount_usd_m": 0.276,
+      "pretax_or_aftertax": "pretax",
+      "segment_affected": null
+    },
+    {
+      "description": "Unrealized foreign exchange loss",
+      "amount_usd_m": 1.177,
+      "pretax_or_aftertax": "pretax",
+      "segment_affected": null
+    },
+    {
+      "description": "Non-cash expenses associated with discontinued products, including depreciation and inventory obsolescence",
+      "amount_usd_m": 0.916,
+      "pretax_or_aftertax": "pretax",
+      "segment_affected": null
+    }
+  ],
+  "capital_return": {
+    "buyback_authorization_b": null,
+    "buyback_executed_in_period_b": null,
+    "dividend_per_share": null,
+    "dividend_change_pct": null
+  },
+  "qualitative_signals": {
+    "tone_score": 3,
+    "tone_label": "bullish",
+    "evidence_phrases": [
+      "We are pleased to deliver first quarter results that were in line with our expectations, driven by broad based demand in both our datacenter and CATV businesses",
+      "strong customer engagement around our 800G transceivers and 1.6 Tb products",
+      "fourth consecutive quarter of record revenue in Q1",
+      "unprecedented demand"
+    ],
+    "warning_phrases": [],
+    "guidance_color": null,
+    "approximations": [],
+    "ceo_quote_primary": "We are pleased to deliver first quarter results that were in line with our expectations, driven by broad based demand in both our datacenter and CATV businesses. We continue to see strong customer engagement around our 800G transceivers and 1.6 Tb products, particularly as AI-driven datacenter investments accelerate.",
+    "cfo_quote_primary": "We generated our fourth consecutive quarter of record revenue in Q1. We continued to make progress on increasing our production capacity in both our U.S. and Taiwan locations, exiting Q1 with total manufacturing capacity of nearly 100,000 units of 800G transceivers per month."
+  },
+  "source_quotes": {
+    "results_actual.revenue_usd_b": "GAAP revenue was $151.1 million",
+    "results_actual.yoy_revenue_growth_pct": "GAAP revenue was $151.1 million, compared with $99.9 million in the first quarter of 2025",
+    "results_actual.qoq_revenue_growth_pct": "GAAP revenue was $151.1 million, compared with ... $134.3 million in the fourth quarter of 2025",
+    "results_actual.gaap_eps": "GAAP net loss was $14.3 million, or $0.19 per basic share",
+    "results_actual.non_gaap_eps": "Non-GAAP net loss was $4.9 million, or $0.07 per basic share",
+    "results_actual.gaap_net_income_m": "GAAP net loss was $14.3 million",
+    "results_actual.non_gaap_net_income_m": "Non-GAAP net loss was $4.9 million",
+    "results_actual.gross_margin_pct": "Non-GAAP gross margin was 29.2%",
+    "results_actual.diluted_share_count_m": "Weighted-average shares used to compute net loss per share attributable to common stockholders diluted 75,980 (in thousands)",
+    "guidance_next_quarter.revenue_low_b": "Revenue in the range of $180 million to $198 million",
+    "guidance_next_quarter.revenue_high_b": "Revenue in the range of $180 million to $198 million",
+    "guidance_next_quarter.non_gaap_eps_low": "non-GAAP income per share in the range of a loss of $0.03 to earnings of $0.03",
+    "guidance_next_quarter.non_gaap_eps_high": "non-GAAP income per share in the range of a loss of $0.03 to earnings of $0.03",
+    "guidance_next_quarter.gross_margin_low_pct": "Non-GAAP gross margin in the range of 29% to 30%",
+    "guidance_next_quarter.gross_margin_high_pct": "Non-GAAP gross margin in the range of 29% to 30%",
+    "segment_breakdown.0.revenue_usd_b": "CATV $66,841 (in thousands)",
+    "segment_breakdown.0.yoy_growth_pct": "CATV $66,841 compared with $64,501 in Q1 2025",
+    "segment_breakdown.1.revenue_usd_b": "Datacenter $81,404 (in thousands)",
+    "segment_breakdown.1.yoy_growth_pct": "Datacenter $81,404 compared with $32,049 in Q1 2025",
+    "segment_breakdown.2.revenue_usd_b": "Telecom $2,559 (in thousands)",
+    "segment_breakdown.2.yoy_growth_pct": "Telecom $2,559 compared with $2,937 in Q1 2025",
+    "segment_breakdown.3.revenue_usd_b": "Other $340 (in thousands)",
+    "segment_breakdown.3.yoy_growth_pct": "Other $340 compared with $372 in Q1 2025",
+    "one_time_items.0.description": "non-recurring expenses in Q1 2026 ... employee severance expenses (if any) and legal expenses associated with litigation and certain legal and advisory expenses associated with purchase termination or patent protection",
+    "one_time_items.0.amount_usd_m": "Non-recurring (income) expense $276 (in thousands)",
+    "one_time_items.1.description": "unrealized foreign exchange loss (gain)",
+    "one_time_items.1.amount_usd_m": "Unrealized exchange loss (gain) $1,177 (in thousands)",
+    "one_time_items.2.description": "expenses associated with discontinued products, including depreciation and inventory obsolescence",
+    "one_time_items.2.amount_usd_m": "Non-cash expenses associated with discontinued products $916 (in thousands)"
+  },
+  "confidence": {
+    "results_actual": "high",
+    "guidance_next_quarter": "high",
+    "guidance_full_year": "high",
+    "segment_breakdown": "high",
+    "overall": "high"
+  },
+  "ambiguous_items": [
+    {
+      "field": "results_actual.yoy_revenue_growth_pct",
+      "explanation": "Computed: (151.1 - 99.9) / 99.9 * 100 = 51.3%. Not explicitly stated as percentage in document."
+    },
+    {
+      "field": "results_actual.qoq_revenue_growth_pct",
+      "explanation": "Computed: (151.1 - 134.3) / 134.3 * 100 = 12.5%. Not explicitly stated as percentage in document."
+    },
+    {
+      "field": "results_actual.operating_income_m",
+      "explanation": "GAAP operating loss of $(12.991) million stated, but Non-GAAP operating income not explicitly provided. Calculation would require assumptions about allocation of share-based compensation and other adjustments between COGS and OpEx."
+    },
+    {
+      "field": "results_actual.operating_margin_pct",
+      "explanation": "Cannot be computed without explicit Non-GAAP operating income."
+    },
+    {
+      "field": "guidance_next_quarter.revenue_mid_b",
+      "explanation": "Computed: (180 + 198) / 2 = 189 million = 0.189 billion. Midpoint of stated range."
+    },
+    {
+      "field": "guidance_next_quarter.gross_margin_mid_pct",
+      "explanation": "Computed: (29 + 30) / 2 = 29.5%. Midpoint of stated range."
+    },
+    {
+      "field": "guidance_next_quarter.non_gaap_eps_mid",
+      "explanation": "Computed: (-0.03 + 0.03) / 2 = 0.00. Midpoint of stated range."
+    },
+    {
+      "field": "segment_breakdown.0.yoy_growth_pct",
+      "explanation": "Computed: (66.841 - 64.501) / 64.501 * 100 = 3.6%. Not explicitly stated."
+    },
+    {
+      "field": "segment_breakdown.1.yoy_growth_pct",
+      "explanation": "Computed: (81.404 - 32.049) / 32.049 * 100 = 154.0%. Not explicitly stated."
+    },
+    {
+      "field": "segment_breakdown.2.yoy_growth_pct",
+      "explanation": "Computed: (2.559 - 2.937) / 2.937 * 100 = -12.9%. Not explicitly stated."
+    },
+    {
+      "field": "segment_breakdown.3.yoy_growth_pct",
+      "explanation": "Computed: (0.340 - 0.372) / 0.372 * 100 = -8.6%. Not explicitly stated."
+    }
+  ],
+  "self_check": {
+    "no_quarterly_annual_mixup": true,
+    "all_numbers_have_source_quote": true,
+    "units_consistent": true,
+    "no_investment_language": true,
+    "json_valid": true
+  }
+}

@@ -430,10 +430,15 @@ def implied_multiple_valuation(
             annualize edilir. False ise ham GAAP EPS × 4 kullanılır.
     """
     # Zımni çarpanları hesapla (pre-earnings analist bazlı)
-    pe_avg_raw = pre_earnings_snapshot["target_avg_pre"] / pre_earnings_snapshot["forward_eps_pre"]
-    pe_high_raw = pre_earnings_snapshot["target_high_pre"] / pre_earnings_snapshot["forward_eps_pre"]
-    ps_avg_raw = pre_earnings_snapshot["target_avg_pre"] / pre_earnings_snapshot["forward_revenue_per_share_pre"]
-    ps_high_raw = pre_earnings_snapshot["target_high_pre"] / pre_earnings_snapshot["forward_revenue_per_share_pre"]
+    fwd_eps_pre = pre_earnings_snapshot.get("forward_eps_pre")
+    fwd_rps_pre = pre_earnings_snapshot.get("forward_revenue_per_share_pre")
+    target_avg_pre = pre_earnings_snapshot.get("target_avg_pre")
+    target_high_pre = pre_earnings_snapshot.get("target_high_pre")
+
+    pe_avg_raw = (target_avg_pre / fwd_eps_pre) if (target_avg_pre and fwd_eps_pre and fwd_eps_pre > 0) else None
+    pe_high_raw = (target_high_pre / fwd_eps_pre) if (target_high_pre and fwd_eps_pre and fwd_eps_pre > 0) else None
+    ps_avg_raw = (target_avg_pre / fwd_rps_pre) if (target_avg_pre and fwd_rps_pre and fwd_rps_pre > 0) else None
+    ps_high_raw = (target_high_pre / fwd_rps_pre) if (target_high_pre and fwd_rps_pre and fwd_rps_pre > 0) else None
 
     # Çarpan revizesi (post-earnings re-rating)
     revision_info = None
@@ -444,10 +449,10 @@ def implied_multiple_valuation(
             sector_momentum_factor=sector_momentum_factor,
         )
         revision_mult = 1 + revision_info["revision_pct"]
-        pe_avg = pe_avg_raw * revision_mult
-        pe_high = pe_high_raw * revision_mult
-        ps_avg = ps_avg_raw * revision_mult
-        ps_high = ps_high_raw * revision_mult
+        pe_avg = pe_avg_raw * revision_mult if pe_avg_raw else None
+        pe_high = pe_high_raw * revision_mult if pe_high_raw else None
+        ps_avg = ps_avg_raw * revision_mult if ps_avg_raw else None
+        ps_high = ps_high_raw * revision_mult if ps_high_raw else None
     else:
         pe_avg, pe_high = pe_avg_raw, pe_high_raw
         ps_avg, ps_high = ps_avg_raw, ps_high_raw
@@ -484,9 +489,13 @@ def implied_multiple_valuation(
     forward_eps_post = None
     if method1_eps is not None:
         method2_eps = method1_eps * (1 + historical_beat_rate_pct / 100)
-        consensus_delta_pct = (method1_eps / pre_earnings_snapshot["forward_eps_pre"] - 1) * 100
-        method3_eps = pre_earnings_snapshot["forward_eps_pre"] * (1 + consensus_delta_pct / 100 * 0.7)
-        forward_eps_post = 0.4 * method1_eps + 0.3 * method2_eps + 0.3 * method3_eps
+        if fwd_eps_pre and fwd_eps_pre > 0:
+            consensus_delta_pct = (method1_eps / fwd_eps_pre - 1) * 100
+            method3_eps = fwd_eps_pre * (1 + consensus_delta_pct / 100 * 0.7)
+            forward_eps_post = 0.4 * method1_eps + 0.3 * method2_eps + 0.3 * method3_eps
+        else:
+            # Pre-earnings forward EPS yok — sadece method1+method2 blend
+            forward_eps_post = 0.6 * method1_eps + 0.4 * method2_eps
 
     # Yeni forward revenue per share — 3 katmanlı fallback
     forward_rev_per_share_post = None
