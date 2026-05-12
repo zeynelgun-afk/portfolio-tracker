@@ -58,8 +58,8 @@
       "zirve_fiyat": 443.62,
       "stop_mesafe_pct": 12.12,
       "durum": "✅ Normal",
-      "rsi": 56.78,
-      "rsi_son_guncelleme": "2026-05-12T18:31:46.149295+03:00",
+      "rsi": 56.3,
+      "rsi_son_guncelleme": "2026-05-12T19:03:45.558040+03:00",
       "atr14": 17.8907,
       "notlar": "K-22 nakit fazlası dağıtımı: +35 hisse @ $391.38"
     },
@@ -88,8 +88,8 @@
       "zirve_fiyat": 1869.19,
       "stop_mesafe_pct": 6.16,
       "durum": "✅ Normal",
-      "rsi": 50.88,
-      "rsi_son_guncelleme": "2026-05-12T18:31:46.149295+03:00",
+      "rsi": 50.31,
+      "rsi_son_guncelleme": "2026-05-12T19:03:45.558040+03:00",
       "notlar": "K-22 nakit fazlası dağıtımı: +12 hisse @ $1731.61",
       "atr14": 83.23
     },
@@ -118,8 +118,8 @@
       "zirve_fiyat": 74.5,
       "stop_mesafe_pct": 6.95,
       "durum": "✅ Normal",
-      "rsi": 66.24,
-      "rsi_son_guncelleme": "2026-05-12T18:31:46.149295+03:00",
+      "rsi": 68.27,
+      "rsi_son_guncelleme": "2026-05-12T19:03:45.558040+03:00",
       "notlar": "K-22 nakit fazlası dağıtımı: +120 hisse @ $72.86",
       "atr14": 2.7571
     },
@@ -151,8 +151,8 @@
       "stop_guncelleme": "2026-05-05",
       "zirve_fiyat": 516.48,
       "durum": "✅ Normal",
-      "rsi": 67.04,
-      "rsi_son_guncelleme": "2026-05-12T18:31:46.149295+03:00",
+      "rsi": 66.88,
+      "rsi_son_guncelleme": "2026-05-12T19:03:45.558040+03:00",
       "atr14": 16.5957
     }
   ],
