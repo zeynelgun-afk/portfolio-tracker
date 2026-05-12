@@ -32,6 +32,12 @@ PRIVATE_CHAT = os.environ.get("TELEGRAM_PRIVATE_CHAT", "")
 GROUP_CHAT   = "-1003827034395"
 API_BASE     = f"https://api.telegram.org/bot{BOT_TOKEN}"
 REPO_ROOT    = Path(__file__).parent.parent
+# `from agent.X import Y` çağrılarının çalışması için REPO_ROOT sys.path'te olmalı.
+# Python ana script çalışıyorsa default sys.path[0] = scripts/ olur, agent paketi
+# bulunmaz. Bu satır olmadan handler içindeki `from agent.analist_takip` fails.
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
 OFFSET_FILE  = REPO_ROOT / "data" / "telegram_offset.json"
 FMP_KEY      = os.environ.get("FMP_API_KEY", "")
 FMP_BASE     = "https://financialmodelingprep.com/stable"
