@@ -8,6 +8,8 @@ from __future__ import annotations
 from datetime import datetime, timedelta, timezone
 from typing import Optional
 
+from datetime import date as _date_type
+
 from .config import (
     SIGNAL_WINDOW_RECENT_HOURS,
     SIGNAL_WINDOW_TOTAL_HOURS,
@@ -20,7 +22,12 @@ from .config import (
     SELL_BIG_CUT_PCT,
     STRONG_SELL_MIN_LOWERED,
     STRONG_SELL_DOWNGRADE_REQUIRED,
+    POST_EARNINGS_WATCH_DAYS,
 )
+
+
+# Post-earnings drift penceresi: bilanço sonrası kaç gün anlamlı revizyonlar
+DRIFT_WINDOW_DAYS = 14
 
 
 def analyze_signals(
@@ -28,6 +35,8 @@ def analyze_signals(
     signals: list[dict],
     now: Optional[datetime] = None,
     window_hours: Optional[int] = None,
+    last_earnings_date: Optional[_date_type] = None,
+    require_post_earnings: bool = True,
 ) -> dict:
     """
     Toplanan revizyon listesinden karar üretir.
@@ -36,7 +45,10 @@ def analyze_signals(
         ticker: Hisse sembolü
         signals: fetch_all_signals'dan dönen liste
         now: Şu an (test için override)
-        window_hours: Pencere genişliği (None ise config default SIGNAL_WINDOW_TOTAL_HOURS)
+        window_hours: Pencere genişliği (None ise config default)
+        last_earnings_date: Son tamamlanmış bilanço tarihi
+        require_post_earnings: True ise, sadece bilanço sonrası revizyonlar sayılır
+                              ve >14 gün geçmişse NEUTRAL döner
 
     Returns:
         {decision, confidence, raised_count_48h, lowered_count_48h, ...}
@@ -47,11 +59,66 @@ def analyze_signals(
         now = now.replace(tzinfo=timezone.utc)
 
     total_window = window_hours if window_hours is not None else SIGNAL_WINDOW_TOTAL_HOURS
-    # Recent pencere: total / 2 (örn 48h total → 24h recent)
     recent_window = max(SIGNAL_WINDOW_RECENT_HOURS, total_window // 2)
 
     cutoff_total = now - timedelta(hours=total_window)
     cutoff_recent = now - timedelta(hours=recent_window)
+
+    # === BİLANÇO CUTOFF MANTIĞI ===
+    # Eğer last_earnings_date varsa:
+    # 1. Pre-earnings revizyonları sayma (bilanço beklentilerine yönelik, sinyal değil)
+    # 2. Bilançodan >14 gün geçmişse drift penceresi bitti → NEUTRAL
+    earnings_cutoff = None
+    drift_status = None  # "active" | "expired" | "no_recent_earnings"
+    days_since_earnings = None
+
+    if require_post_earnings and last_earnings_date:
+        earnings_cutoff = datetime.combine(
+            last_earnings_date,
+            datetime.min.time(),
+        ).replace(tzinfo=timezone.utc)
+        days_since_earnings = (now.date() - last_earnings_date).days
+        if days_since_earnings > DRIFT_WINDOW_DAYS:
+            drift_status = "expired"
+        else:
+            drift_status = "active"
+
+        # cutoff_total'ı bilanço tarihinden geri gitmeyecek şekilde ayarla
+        if cutoff_total < earnings_cutoff:
+            cutoff_total = earnings_cutoff
+    elif require_post_earnings and not last_earnings_date:
+        drift_status = "no_recent_earnings"
+
+    # Eğer drift penceresi geçmişse, hemen NEUTRAL döner
+    if drift_status == "expired":
+        return {
+            "ticker": ticker,
+            "decision": "NEUTRAL",
+            "confidence": "low",
+            "raised_count_48h": 0,
+            "lowered_count_48h": 0,
+            "raised_count_24h": 0,
+            "lowered_count_24h": 0,
+            "upgrades_count": 0,
+            "downgrades_count": 0,
+            "downgrades_count_24h": 0,
+            "avg_revision_pct": None,
+            "biggest_raise": None,
+            "biggest_cut": None,
+            "rationale": (
+                f"Post-earnings drift penceresi geçmiş "
+                f"(son bilanço {days_since_earnings}d önce, >{DRIFT_WINDOW_DAYS}d eşik)"
+            ),
+            "evidence": [],
+            "total_signals_in_window": 0,
+            "analyzed_at": now.isoformat(),
+            "drift_status": drift_status,
+            "days_since_earnings": days_since_earnings,
+            "last_earnings_date": last_earnings_date.isoformat() if last_earnings_date else None,
+        }
+
+    # Pencere içindeki sinyalleri filtrele
+    in_window = [s for s in signals if s["published_at"] >= cutoff_total]
 
     # Pencere içindeki sinyalleri filtrele
     in_window = [s for s in signals if s["published_at"] >= cutoff_total]
@@ -123,6 +190,11 @@ def analyze_signals(
     evidence = []
     confidence = "low"
 
+    # VETO kuralları: Karşıt sinyaller varsa AL/STRONG_AL yasak
+    has_recent_downgrade = len(downgrades) > 0
+    has_recent_upgrade = len(upgrades) > 0
+    has_mixed_signals = (raised and lowered) or (upgrades and downgrades)
+
     # STRONG_SELL kontrolü (öncelik)
     if (len(lowered) >= STRONG_SELL_MIN_LOWERED
             and (downgrades or not STRONG_SELL_DOWNGRADE_REQUIRED)):
@@ -141,10 +213,18 @@ def analyze_signals(
         if biggest_cut and biggest_cut["pct"] <= SELL_BIG_CUT_PCT:
             rationale_parts.append(f"{biggest_cut['company']} büyük cut ({biggest_cut['pct']:.1f}%)")
 
+    # VETO: Downgrade varsa AL kararları YASAK — max WATCH
+    elif has_recent_downgrade and (raised or has_recent_upgrade):
+        decision = "WATCH"
+        confidence = "low"
+        rationale_parts.append(f"KARIŞIK: {len(raised)} raise + {len(downgrades)} downgrade")
+        rationale_parts.append("AL veto: downgrade var")
+
     # STRONG_BUY kontrolü
     elif (len(raised) >= STRONG_BUY_MIN_RAISED
             and (avg_revision_pct or 0) >= STRONG_BUY_MIN_AVG_PCT
-            and len(lowered) <= STRONG_BUY_MAX_LOWERED):
+            and len(lowered) <= STRONG_BUY_MAX_LOWERED
+            and not has_recent_downgrade):  # downgrade veto
         decision = "STRONG_BUY"
         confidence = "high"
         rationale_parts.append(f"{len(raised)} analist hedef yükseltti")
@@ -152,8 +232,8 @@ def analyze_signals(
         rationale_parts.append("0 düşüş")
 
     # BUY kontrolü
-    elif (biggest_raise and biggest_raise["pct"] >= BUY_BIG_RAISE_PCT) or \
-         len(raised) >= BUY_MIN_NET_RAISED:
+    elif ((biggest_raise and biggest_raise["pct"] >= BUY_BIG_RAISE_PCT) or
+          len(raised) >= BUY_MIN_NET_RAISED) and not has_recent_downgrade:
         decision = "BUY"
         confidence = "medium" if len(raised) >= BUY_MIN_NET_RAISED else "high"
         if biggest_raise and biggest_raise["pct"] >= BUY_BIG_RAISE_PCT:
@@ -163,11 +243,18 @@ def analyze_signals(
         if len(raised) >= BUY_MIN_NET_RAISED:
             rationale_parts.append(f"{len(raised)} analist yükseltti")
 
-    # WATCH (karışık)
+    # WATCH (karışık veya tek hafif hareket)
     elif raised or lowered or upgrades or downgrades:
         decision = "WATCH"
         confidence = "low"
-        rationale_parts.append(f"{len(raised)}↑ / {len(lowered)}↓ — karışık")
+        if has_mixed_signals or has_recent_downgrade:
+            rationale_parts.append(f"KARIŞIK: {len(raised)}↑ / {len(lowered)}↓")
+            if downgrades:
+                rationale_parts.append(f"{len(downgrades)} downgrade")
+            if upgrades:
+                rationale_parts.append(f"{len(upgrades)} upgrade")
+        else:
+            rationale_parts.append(f"{len(raised)}↑ / {len(lowered)}↓ — eşik altı")
 
     # Upgrade/downgrade'i decision'a güçlendir
     if upgrades and decision in ("BUY", "STRONG_BUY", "WATCH"):
@@ -210,4 +297,7 @@ def analyze_signals(
         "evidence": evidence,
         "total_signals_in_window": len(in_window),
         "analyzed_at": now.isoformat(),
+        "drift_status": drift_status,
+        "days_since_earnings": days_since_earnings,
+        "last_earnings_date": last_earnings_date.isoformat() if last_earnings_date else None,
     }

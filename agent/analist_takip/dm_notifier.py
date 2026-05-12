@@ -126,14 +126,17 @@ def format_signal_message(
     lowered = signal.get("lowered_count_48h", 0)
     raised_24 = signal.get("raised_count_24h", 0)
     lowered_24 = signal.get("lowered_count_24h", 0)
+    upgrades = signal.get("upgrades_count", 0)
+    downgrades = signal.get("downgrades_count", 0)
     avg_pct = signal.get("avg_revision_pct")
 
-    lines.append(f"  Hedef yükselten: {raised} ({raised_24} son 24s)")
-    lines.append(f"  Hedef düşüren: {lowered} ({lowered_24} son 24s)")
-    if signal.get("upgrades_count"):
-        lines.append(f"  Upgrade: {signal['upgrades_count']}")
-    if signal.get("downgrades_count"):
-        lines.append(f"  Downgrade: {signal['downgrades_count']}")
+    lines.append(f"  📈 Hedef yükselten: {raised} ({raised_24} son 24s)")
+    lines.append(f"  📉 Hedef düşüren: {lowered} ({lowered_24} son 24s)")
+    if upgrades:
+        lines.append(f"  ⬆️ Upgrade: {upgrades}")
+    if downgrades:
+        # Downgrade çok önemli - vurgulu göster
+        lines.append(f"  🚨 <b>Downgrade: {downgrades}</b>")
     if avg_pct is not None:
         lines.append(f"  Ortalama revize: {avg_pct:+.1f}%")
 

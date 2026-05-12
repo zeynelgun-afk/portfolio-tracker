@@ -33,7 +33,12 @@ from .config import (
     ANALIST_LOG,
     DRY_RUN,
 )
-from .revision_fetcher import fetch_all_signals, get_current_price, get_market_cap_b
+from .revision_fetcher import (
+    fetch_all_signals,
+    get_current_price,
+    get_market_cap_b,
+    get_last_actual_earnings_date,
+)
 from .signal_analyzer import analyze_signals
 from .state_tracker import (
     filter_unseen, mark_revision_seen, record_signal,
@@ -196,8 +201,16 @@ def _run_polling_cycle(
             # 2. İşlenmemiş olanları filtrele (idempotency)
             unseen = filter_unseen(signals)
 
-            # 3. Karar üret
-            decision = analyze_signals(ticker, signals, now=now_utc)
+            # 3. Son tamamlanmış bilanço tarihini al (drift filter için)
+            last_earnings = get_last_actual_earnings_date(ticker)
+
+            # 4. Karar üret (post-earnings drift mantığıyla)
+            decision = analyze_signals(
+                ticker, signals,
+                now=now_utc,
+                last_earnings_date=last_earnings,
+                require_post_earnings=True,
+            )
 
             # 4. Anlamlı bir karar mı?
             if decision["decision"] in ("NEUTRAL", "WATCH"):
@@ -288,10 +301,13 @@ def force_run_now(
     for ticker in tickers:
         try:
             signals = fetch_all_signals(ticker, since)
+            last_earnings = get_last_actual_earnings_date(ticker)
             decision = analyze_signals(
                 ticker, signals,
                 now=now_utc,
                 window_hours=window_hours,
+                last_earnings_date=last_earnings,
+                require_post_earnings=True,
             )
             results.append({
                 "ticker": ticker,
@@ -303,6 +319,9 @@ def force_run_now(
                 "rationale": decision["rationale"],
                 "biggest_raise": decision.get("biggest_raise"),
                 "biggest_cut": decision.get("biggest_cut"),
+                "drift_status": decision.get("drift_status"),
+                "days_since_earnings": decision.get("days_since_earnings"),
+                "last_earnings_date": decision.get("last_earnings_date"),
             })
         except Exception as e:
             results.append({"ticker": ticker, "error": str(e)})

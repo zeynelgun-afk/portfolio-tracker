@@ -10,6 +10,7 @@ from __future__ import annotations
 import json
 from datetime import date, datetime, timedelta
 from pathlib import Path
+from typing import Optional
 
 import requests
 
@@ -62,11 +63,41 @@ def get_portfolio_tickers() -> set[str]:
     return tickers
 
 
-def get_recent_earnings_tickers(days_back: int = POST_EARNINGS_WATCH_DAYS) -> set[str]:
+def _fetch_market_caps_batch(tickers: list[str], fmp_key: str) -> dict[str, float]:
     """
-    Son `days_back` gün içinde bilanço açıklayan ABD hisseleri.
-    Sadece ABD borsaları: NYSE, NASDAQ. Suffix'li ticker'lar (KS, HK, TO) hariç.
+    Verilen ticker listesi için market cap'leri toplu çek.
+    FMP quote endpoint tek tek çağrılır (parallel toplu yok)
+    ama sadece bilanço açıklayan ~150-300 ticker için yapılır.
     """
+    caps = {}
+    for t in tickers:
+        try:
+            r = requests.get(
+                f"{FMP_BASE}/quote",
+                params={"symbol": t, "apikey": fmp_key},
+                timeout=8,
+            )
+            if r.ok:
+                data = r.json()
+                if isinstance(data, list) and data:
+                    mcap = data[0].get("marketCap", 0)
+                    caps[t] = mcap / 1e9 if mcap else 0
+        except Exception:
+            caps[t] = 0
+    return caps
+
+
+def get_recent_earnings_tickers(
+    days_back: int = POST_EARNINGS_WATCH_DAYS,
+    min_market_cap_b: Optional[float] = None,
+) -> set[str]:
+    """
+    Son `days_back` gün içinde bilanço açıklayan ABD mid-cap+ hisseleri.
+    """
+    from .config import MIN_MARKET_CAP_B
+    if min_market_cap_b is None:
+        min_market_cap_b = MIN_MARKET_CAP_B
+
     end = date.today()
     start = end - timedelta(days=days_back)
 
@@ -82,32 +113,32 @@ def get_recent_earnings_tickers(days_back: int = POST_EARNINGS_WATCH_DAYS) -> se
     except Exception:
         return set()
 
-    tickers = set()
+    # Önce ABD ticker filter
+    candidates = set()
     for e in r.json():
         t = e.get("symbol")
         if not t:
             continue
-        # ABD ticker filtreleri (sıkı):
-        # - Maks 5 karakter (BRK.B 5 karakter dahil)
-        # - Suffix'siz: AAPL, GOOGL
-        # - Veya tek nokta + tek harf: BRK.B, BF.B
-        # - Tüm karakterler harf olmalı (rakam yok, başka karakter yok)
         if "." in t:
             parts = t.split(".")
             if len(parts) != 2:
                 continue
             main, suffix = parts
-            # Suffix tek harf olmalı (.B, .A gibi)
             if len(suffix) != 1 or not suffix.isalpha():
                 continue
-            # Main 1-4 harf olmalı (BRK, BF gibi)
             if not (1 <= len(main) <= 4 and main.isalpha()):
                 continue
         else:
-            # Suffix'siz ticker: 1-5 harf, sadece alfabe
             if not (1 <= len(t) <= 5 and t.isalpha()):
                 continue
-        tickers.add(t.upper())
+        candidates.add(t.upper())
+
+    # Market cap filter — batch fetch
+    if not candidates:
+        return set()
+
+    caps = _fetch_market_caps_batch(list(candidates), fmp_key)
+    tickers = {t for t, mcap in caps.items() if mcap >= min_market_cap_b}
 
     return tickers
 

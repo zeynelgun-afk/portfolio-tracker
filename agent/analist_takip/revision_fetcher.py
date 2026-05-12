@@ -311,3 +311,25 @@ def get_market_cap_b(ticker: str) -> Optional[float]:
         mcap = data[0].get("marketCap", 0)
         return round(mcap / 1e9, 2) if mcap else None
     return None
+
+
+def get_last_actual_earnings_date(ticker: str) -> Optional["date"]:
+    """
+    En son TAMAMLANMIŞ (EPS actual dolu) bilanço tarihi.
+    Post-earnings drift penceresi için bu tarihi referans alıyoruz.
+
+    Returns:
+        date veya None (hiç actual yoksa)
+    """
+    from datetime import date as _date
+    data = _fmp_get("earnings", symbol=ticker, limit=8)
+    if not isinstance(data, list):
+        return None
+    # En yeni → eskiye doğru gez, ilk actual'lı tarih
+    for e in data:
+        if e.get("epsActual") is not None:
+            try:
+                return datetime.fromisoformat(e["date"]).date()
+            except (ValueError, KeyError):
+                continue
+    return None
