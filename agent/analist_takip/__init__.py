@@ -14,6 +14,18 @@ from .telegram_helpers import (
     format_system_status,
     run_scan_now,
     format_analist_help,
+    format_performance_watchlist,
+    add_ticker_command,
+    remove_ticker_command,
+)
+from .performance_tracker import (
+    add_to_watchlist,
+    add_manual_ticker,
+    remove_from_watchlist,
+    get_watchlist as get_performance_watchlist,
+    get_watchlist_with_performance,
+    get_statistics as get_performance_statistics,
+    cleanup_old as cleanup_performance_old,
 )
 
 __all__ = [
@@ -26,4 +38,8 @@ __all__ = [
     "record_signal", "get_recent_signals", "already_signaled_recently",
     "analyze_single_ticker_now", "format_watchlist_summary",
     "format_system_status", "run_scan_now", "format_analist_help",
+    "format_performance_watchlist", "add_ticker_command", "remove_ticker_command",
+    "add_to_watchlist", "add_manual_ticker", "remove_from_watchlist",
+    "get_performance_watchlist", "get_watchlist_with_performance",
+    "get_performance_statistics", "cleanup_performance_old",
 ]

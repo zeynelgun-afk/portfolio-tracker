@@ -1,0 +1,22 @@
+{
+  "tickers": {
+    "CEVA": {
+      "symbol": "CEVA",
+      "added_at": "2026-05-12T15:03:21.210261Z",
+      "added_price": 37.96,
+      "added_decision": "MANUAL",
+      "added_confidence": "manual",
+      "added_rationale": "AI chip IP play",
+      "biggest_raise": null,
+      "biggest_cut": null,
+      "raised_count": null,
+      "lowered_count": null,
+      "avg_revision_pct": null,
+      "market_cap_b": null,
+      "manual": true,
+      "tags": [],
+      "notes": "AI chip IP play"
+    }
+  },
+  "archived": []
+}

@@ -277,6 +277,20 @@ def _run_polling_cycle(
                 "label": label,
             })
 
+            # 10. AL kararları için performans watchlist'ine otomatik ekle
+            if decision["decision"] in ("BUY", "STRONG_BUY"):
+                try:
+                    from .performance_tracker import add_to_watchlist
+                    add_to_watchlist(
+                        ticker,
+                        decision,
+                        current_price=current_price,
+                        market_cap_b=market_cap_b,
+                        manual=False,
+                    )
+                except Exception as e:
+                    _log(f"{ticker} performans watchlist ekleme hatası: {e}")
+
             if success:
                 decisions_sent += 1
                 _log(f"{ticker} → {decision['decision']} ({decision['confidence']}) — DM gönderildi")

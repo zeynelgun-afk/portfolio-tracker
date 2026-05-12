@@ -25,9 +25,14 @@ from .config import (
 
 
 def get_portfolio_tickers() -> set[str]:
-    """3 portföy + swing active ticker'larını döner."""
+    """3 portföy + swing active ticker'larını döner.
+    
+    Portföy JSON Türkçe şema: {'pozisyonlar': [{'sembol': 'PPG', ...}, ...]}
+    Swing JSON: {'aktif_pozisyonlar': [...]}
+    """
     tickers = set()
 
+    # Portföyler (pozisyonlar / sembol)
     for portfolio_file in PORTFOLIO_FILES:
         p = Path(portfolio_file)
         if not p.exists():
@@ -35,26 +40,49 @@ def get_portfolio_tickers() -> set[str]:
         try:
             with open(p) as f:
                 data = json.load(f)
-            # Portföy JSON şemasında pozisyonlar farklı isimle olabilir
-            positions = data.get("positions") or data.get("holdings") or []
+            # Türkçe + İngilizce + alternatif anahtarlar
+            positions = (
+                data.get("pozisyonlar")
+                or data.get("positions")
+                or data.get("holdings")
+                or []
+            )
             for pos in positions:
                 if isinstance(pos, dict):
-                    t = pos.get("symbol") or pos.get("ticker")
+                    t = (
+                        pos.get("sembol")
+                        or pos.get("symbol")
+                        or pos.get("ticker")
+                    )
                     if t:
                         tickers.add(t.upper())
         except Exception:
             continue
 
-    # Swing
+    # Swing pozisyonları (aktif_pozisyonlar / sembol)
     sp = Path(SWING_ACTIVE_FILE)
     if sp.exists():
         try:
             with open(sp) as f:
                 data = json.load(f)
-            positions = data.get("positions", []) if isinstance(data, dict) else data
+            if isinstance(data, dict):
+                positions = (
+                    data.get("aktif_pozisyonlar")
+                    or data.get("pozisyonlar")
+                    or data.get("positions")
+                    or []
+                )
+            elif isinstance(data, list):
+                positions = data
+            else:
+                positions = []
             for pos in positions:
                 if isinstance(pos, dict):
-                    t = pos.get("symbol") or pos.get("ticker")
+                    t = (
+                        pos.get("sembol")
+                        or pos.get("symbol")
+                        or pos.get("ticker")
+                    )
                     if t:
                         tickers.add(t.upper())
         except Exception:
@@ -162,9 +190,16 @@ def get_manual_watchlist() -> set[str]:
 
 def build_watchlist(include_recent_earnings: bool = True) -> dict:
     """
-    Tüm kaynaklardan watchlist'i birleştir ve döner.
+    Sinyal kaynağı watchlist'i (polling için).
+    
+    Kaynaklar:
+    1. Son 14 gün bilanço açıklayan ABD mid-cap+ hisseler (asıl kaynak)
+    2. Manuel watchlist (data/analist_takip/manual_watchlist.json)
+    
+    NOT: Portföy ticker'ları artık watchlist'e DAHIL EDİLMİYOR (12 May).
+    Portföy izleme = data/portfolios/*.json'da ayrı sistem.
+    Analist Takip = bağımsız sinyal arama sistemi.
     """
-    portfolio = get_portfolio_tickers()
     manual = get_manual_watchlist()
 
     if include_recent_earnings:
@@ -172,14 +207,14 @@ def build_watchlist(include_recent_earnings: bool = True) -> dict:
     else:
         recent_earnings = set()
 
-    combined = portfolio | recent_earnings | manual
+    combined = recent_earnings | manual
 
     return {
-        "portfolio": sorted(portfolio),
+        "portfolio": [],  # KALDIRILDI
         "recent_earnings": sorted(recent_earnings),
         "manual": sorted(manual),
         "combined": sorted(combined),
-        "portfolio_count": len(portfolio),
+        "portfolio_count": 0,
         "recent_earnings_count": len(recent_earnings),
         "manual_count": len(manual),
         "total_count": len(combined),

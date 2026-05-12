@@ -566,9 +566,12 @@ def format_yardim() -> str:
 
 <b>📡 Analist Takip:</b>
   <code>/analist TICKER</code> — Tek hissenin anlık analist sinyali
-  <code>/analist watchlist</code> — İzlenen ticker'lar listesi
-  <code>/analist status</code> — Son 24h sinyal özeti + sistem durumu
-  <code>/analist tara</code> — Şimdi tüm watchlist için manuel tarama
+  <code>/analist liste</code> — İzleme listesi + performans tablosu
+  <code>/analist ekle TICKER</code> — Listeye manuel hisse ekle
+  <code>/analist sil TICKER</code> — Listeden çıkar
+  <code>/analist watchlist</code> — Sinyal taranan ticker'lar
+  <code>/analist status</code> — Son 24h sinyal özeti + sistem
+  <code>/analist tara</code> — Şimdi manuel tarama yap
   <code>/fiyat AAPL</code> — Canlı fiyat + değişim
 
 <b>Adil Değer v5.0 (önerilen — 11 May 2026 sonrası):</b>
@@ -1580,7 +1583,7 @@ def isle_mesaj(msg: dict):
         tg_send(chat_id, format_vix(), reply_to=msg_id)
         return
 
-    # ── /analist [TICKER|watchlist|status|tara|yardim] ─────────────
+    # ── /analist [TICKER|watchlist|status|tara|liste|ekle|sil|yardim] ───
     # Analist Takip sistemi komutları (DM'lerin yanı sıra manuel sorgu)
     if text_lower.startswith("/analist"):
         arg = text_lower.replace("/analist", "").strip()
@@ -1591,6 +1594,9 @@ def isle_mesaj(msg: dict):
                 format_system_status,
                 run_scan_now,
                 format_analist_help,
+                format_performance_watchlist,
+                add_ticker_command,
+                remove_ticker_command,
             )
         except Exception as e:
             tg_send(chat_id, f"❌ Analist Takip modülü yüklenemedi: {e}", reply_to=msg_id)
@@ -1600,7 +1606,29 @@ def isle_mesaj(msg: dict):
             tg_send(chat_id, format_analist_help(), reply_to=msg_id)
             return
 
-        if arg in ("watchlist", "wl", "izleme"):
+        # Performans listesi
+        if arg in ("liste", "list", "izleme", "performance", "perf"):
+            tg_send(chat_id, "⏳ Performans listesi yükleniyor (fiyat fetch)...", reply_to=msg_id)
+            tg_send(chat_id, format_performance_watchlist(), reply_to=msg_id)
+            return
+
+        # Ekle (orijinal text'ten al — büyük/küçük korunsun)
+        if arg.startswith("ekle ") or arg.startswith("add "):
+            # text orijinal, lowercase değil
+            orig_arg = text.split(maxsplit=2)
+            ekle_arg = orig_arg[2] if len(orig_arg) >= 3 else ""
+            tg_send(chat_id, add_ticker_command(ekle_arg), reply_to=msg_id)
+            return
+
+        # Sil
+        if arg.startswith("sil ") or arg.startswith("remove ") or arg.startswith("rm "):
+            sil_parts = arg.split(maxsplit=1)
+            sil_arg = sil_parts[1] if len(sil_parts) > 1 else ""
+            tg_send(chat_id, remove_ticker_command(sil_arg), reply_to=msg_id)
+            return
+
+        # Sinyal watchlist (polling kaynağı)
+        if arg in ("watchlist", "wl"):
             tg_send(chat_id, "⏳ Watchlist alınıyor...", reply_to=msg_id)
             tg_send(chat_id, format_watchlist_summary(), reply_to=msg_id)
             return

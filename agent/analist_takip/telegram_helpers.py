@@ -317,11 +317,156 @@ def format_analist_help() -> str:
     """Komut listesi."""
     return """<b>📡 Analist Takip — Komutlar</b>
 
+<b>Sorgu:</b>
 <code>/analist TICKER</code> — Tek hissenin anlık analist sinyali
    Örnek: <code>/analist AAOI</code>
 
-<code>/analist watchlist</code> — İzlenen tüm ticker'lar
-<code>/analist status</code> — Son 24h sinyaller + sistem durumu
-<code>/analist tara</code> — Şimdi tüm portföy+son bilanço için polling
+<b>İzleme Listesi (Performans):</b>
+<code>/analist liste</code> — İzleme listesi + performans tablosu
+<code>/analist ekle TICKER [not]</code> — Listeye manuel ekle
+   Örnek: <code>/analist ekle CEVA AI chip IP play</code>
+<code>/analist sil TICKER</code> — Listeden çıkar
 
-<i>Otomatik DM'ler arka planda gönderilir (TR 13:00-01:30).</i>"""
+<b>Sistem:</b>
+<code>/analist watchlist</code> — Sinyal taranan ticker'lar (otomatik)
+<code>/analist status</code> — Son 24h sinyaller + sistem durumu
+<code>/analist tara</code> — Şimdi manuel polling tara
+
+<i>Sistem BUY/STRONG_BUY ürettiği her hisseyi otomatik listeye ekler.
+30 günden eski (manuel olmayan) kayıtlar arşivlenir.</i>"""
+
+
+def format_performance_watchlist() -> str:
+    """
+    /analist liste — Performans tablosu.
+    """
+    from .performance_tracker import get_watchlist_with_performance, get_statistics, cleanup_old
+
+    # Önce eski kayıtları temizle
+    cleanup_old()
+
+    perf = get_watchlist_with_performance()
+    stats = get_statistics()
+
+    if not perf:
+        return ("<b>👀 İzleme Listesi (boş)</b>\n\n"
+                "Henüz hisse yok. Sistem BUY/STRONG_BUY ürettiğinde otomatik eklenir.\n"
+                "Manuel ekle: <code>/analist ekle TICKER</code>")
+
+    lines = [
+        f"<b>👀 İzleme Listesi Performansı</b>",
+        f"<i>{stats['total']} hisse, ortalama {stats['avg_performance']:+.1f}%</i>"
+        if stats['avg_performance'] is not None
+        else f"<i>{stats['total']} hisse</i>",
+        "",
+    ]
+
+    # Decision'a göre grupla
+    by_decision = {}
+    for p in perf:
+        d = p.get("added_decision", "MANUAL")
+        by_decision.setdefault(d, []).append(p)
+
+    decision_order = ["STRONG_BUY", "BUY", "MANUAL", "WATCH", "SELL", "STRONG_SELL"]
+    decision_title = {
+        "STRONG_BUY": "🟢🟢 GÜÇLÜ AL",
+        "BUY": "🟢 AL",
+        "MANUAL": "✋ Manuel",
+        "WATCH": "🟡 İZLE",
+        "SELL": "🔴 SAT",
+        "STRONG_SELL": "🔴🔴 GÜÇLÜ SAT",
+    }
+
+    for d in decision_order:
+        if d not in by_decision:
+            continue
+        group = by_decision[d]
+        lines.append(f"<b>{decision_title.get(d, d)} ({len(group)}):</b>")
+        for p in group[:8]:  # Her gruptan max 8
+            sym = p["symbol"]
+            added_at = p.get("added_at", "")[:10]
+            added_p = p.get("added_price")
+            current_p = p.get("current_price")
+            perf_pct = p.get("performance_pct")
+            hold = p.get("hold_days", "?")
+
+            line_parts = [f"<code>{sym}</code>"]
+            if added_p and current_p:
+                line_parts.append(f"${added_p:.2f}→${current_p:.2f}")
+            if perf_pct is not None:
+                emoji = "✅" if perf_pct > 1 else ("❌" if perf_pct < -1 else "⏸️")
+                line_parts.append(f"<b>{perf_pct:+.1f}%</b> {emoji}")
+            line_parts.append(f"<i>{added_at} ({hold}d)</i>")
+            lines.append("  " + " ".join(line_parts))
+        if len(group) > 8:
+            lines.append(f"  <i>... ve {len(group) - 8} tane daha</i>")
+        lines.append("")
+
+    # İstatistikler
+    lines.append(f"<b>📊 İstatistikler:</b>")
+    lines.append(f"  Pozitif: {stats['positive']} | Negatif: {stats['negative']} | Nötr: {stats['neutral']}")
+    if stats['hit_rate'] is not None:
+        lines.append(f"  İsabet oranı: <b>{stats['hit_rate']}%</b>")
+
+    if stats['best']:
+        b = stats['best']
+        lines.append(f"  🏆 En iyi: <code>{b['symbol']}</code> {b['performance_pct']:+.1f}%")
+    if stats['worst'] and stats['worst'] != stats['best']:
+        w = stats['worst']
+        lines.append(f"  📉 En kötü: <code>{w['symbol']}</code> {w['performance_pct']:+.1f}%")
+
+    return "\n".join(lines)
+
+
+def add_ticker_command(arg: str) -> str:
+    """
+    /analist ekle TICKER [açıklama] komutu.
+    """
+    from .performance_tracker import add_manual_ticker
+
+    parts = arg.strip().split(maxsplit=1)
+    if not parts:
+        return "❌ Kullanım: <code>/analist ekle TICKER [açıklama]</code>"
+
+    ticker = parts[0].upper().replace("$", "")
+    notes = parts[1] if len(parts) > 1 else ""
+
+    if not (1 <= len(ticker) <= 6):
+        return f"❌ Geçersiz ticker: <code>{ticker}</code>"
+
+    result = add_manual_ticker(ticker, notes=notes)
+    if not result["added"]:
+        return f"⚠️ <code>{ticker}</code> eklenemedi: {result.get('reason', '')}"
+
+    entry = result["entry"]
+    price_str = f"${entry['added_price']:.2f}" if entry.get("added_price") else "fiyat alınamadı"
+    return (
+        f"✅ <code>{ticker}</code> izleme listesine eklendi\n"
+        f"  Fiyat: {price_str}\n"
+        f"  Not: <i>{notes if notes else 'manuel ekleme'}</i>\n\n"
+        f"<i>Performansı görmek için: /analist liste</i>"
+    )
+
+
+def remove_ticker_command(arg: str) -> str:
+    """
+    /analist sil TICKER komutu.
+    """
+    from .performance_tracker import remove_from_watchlist
+
+    ticker = arg.strip().upper().replace("$", "")
+    if not (1 <= len(ticker) <= 6):
+        return f"❌ Geçersiz ticker: <code>{ticker}</code>"
+
+    result = remove_from_watchlist(ticker)
+    if not result["removed"]:
+        return f"⚠️ <code>{ticker}</code> listede yok"
+
+    entry = result["entry"]
+    added_at = entry.get("added_at", "")[:10]
+    decision = entry.get("added_decision", "?")
+    return (
+        f"✅ <code>{ticker}</code> listeden çıkarıldı\n"
+        f"  Eklendiği gün: {added_at}\n"
+        f"  Kararı: {decision}"
+    )
