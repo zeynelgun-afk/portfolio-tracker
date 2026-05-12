@@ -2279,6 +2279,32 @@ def main():
         print(f"[Bot]   09:30 TR (Hft) → Günlük Risk Paneli (grup chat'e PNG)")
         # ─────────────────────────────────────────────────────────
 
+        # ─────────────────────────────────────────────────────────
+        # BİLANÇO MÜDÜRÜ — 8-K earnings monitor (12 May 2026)
+        # 08:30 catchup, 13:00-16:30 BMO/15dk, 17:00 T-1 snapshot,
+        # 22:00-01:30 AMC/15dk, 02:00 AMC geç catchup. Tümü DM-only.
+        try:
+            from agent.bilanco_muduru import bilanco_muduru_tick
+
+            def _bilanco_muduru_zamanlayici():
+                while True:
+                    try:
+                        bilanco_muduru_tick()
+                    except Exception as e:
+                        print(f"[BilancoMuduru-Zamanlayici] Hata: {e}")
+                    time.sleep(60)
+
+            _tbm = threading.Thread(
+                target=_bilanco_muduru_zamanlayici,
+                daemon=True,
+                name="BilancoMuduru",
+            )
+            _tbm.start()
+            print(f"[Bot]   08:30/13-16:30/17:00/22-01:30/02:00 TR → Bilanço Müdürü (DM-only)")
+        except Exception as e:
+            print(f"[Bot] BilancoMuduru başlatılamadı: {e}")
+        # ─────────────────────────────────────────────────────────
+
         offset = load_offset()
         hata_sayisi = 0
 
