@@ -213,8 +213,20 @@ def _run_polling_cycle(
             )
 
             # 4. Anlamlı bir karar mı?
-            if decision["decision"] in ("NEUTRAL", "WATCH"):
-                # Sadece görülmemiş revizyonları mark et, DM atma
+            # DM atılan kararlar:
+            #   • BUY, STRONG_BUY, SELL, STRONG_SELL (asıl aksiyon)
+            #   • WATCH + drift expired + büyük raise (>%30 — drift dışı flagged)
+            is_actionable = decision["decision"] in (
+                "BUY", "STRONG_BUY", "SELL", "STRONG_SELL"
+            )
+            is_drift_expired_big_raise = (
+                decision["decision"] == "WATCH"
+                and decision.get("drift_status") == "expired"
+                and decision.get("biggest_raise")
+                and (decision["biggest_raise"].get("pct") or 0) >= 30
+            )
+            if not (is_actionable or is_drift_expired_big_raise):
+                # WATCH/NEUTRAL — DM atma, sadece state'e işaretle
                 for s in unseen:
                     mark_revision_seen(s)
                 continue
