@@ -101,7 +101,9 @@
       }
     ],
     "kaynak": "sabah_raporu",
-    "executed": false
+    "executed": true,
+    "executed_at": "2026-05-12T17:34:42.412519+03:00",
+    "executed_count": 3
   },
   "timestamp": "2026-05-12T16:02:51.456849+03:00",
   "k22_nakit_dagitim": {

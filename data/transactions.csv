@@ -284,3 +284,4 @@ date,action,symbol,shares,price,total,reason
 2026-05-11,BUY,AMAT,10,442.48,4424.8,"Swing giriş — tenkan_bounce, kijun_bounce_v2, nr7_sikisma. Stop: $395.88, Hedef: $558.98"
 2026-05-11,BUY,RPRX,205,51.16,10487.8,"Swing giriş — tenkan_bounce, kijun_bounce_v2. Stop: $49.09, Hedef: $56.33"
 2026-05-12,SELL,CAT,3,926.79,2780.37,Swing çıkış — SURE. P/L: +11.5% (15 gün)
+2026-05-12,SELL,GEV,3,1048.24,3144.73,"Finzora: Tez ağır hasarlı (skor 55), K-11 kısmi kâr alma disiplini"
