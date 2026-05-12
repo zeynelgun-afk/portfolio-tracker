@@ -327,6 +327,13 @@ def format_analist_help() -> str:
    Örnek: <code>/analist ekle CEVA AI chip IP play</code>
 <code>/analist sil TICKER</code> — Listeden çıkar
 
+<b>📨 DM Filter:</b>
+<code>/analist dm</code> — Mevcut DM ayarlarını göster
+<code>/analist dm sadece-al</code> — Sadece BUY/STRONG_BUY DM
+<code>/analist dm sat-da</code> — + SELL/STRONG_SELL DM
+<code>/analist dm hepsi</code> — + Drift dışı büyük raise WATCH
+<code>/analist dm sadece-guclu</code> — Sadece STRONG_*
+
 <b>Sistem:</b>
 <code>/analist watchlist</code> — Sinyal taranan ticker'lar (otomatik)
 <code>/analist status</code> — Son 24h sinyaller + sistem durumu

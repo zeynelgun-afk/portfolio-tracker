@@ -1,0 +1,11 @@
+{
+  "preset": "sadece-al",
+  "preset_name": "Sadece AL",
+  "preset_description": "BUY ve STRONG_BUY DM'leri",
+  "enabled_decisions": [
+    "BUY",
+    "STRONG_BUY"
+  ],
+  "drift_expired_big_raise": false,
+  "updated_at": "2026-05-12T18:11:30.085903Z"
+}

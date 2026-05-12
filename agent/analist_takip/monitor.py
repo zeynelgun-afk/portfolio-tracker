@@ -213,21 +213,11 @@ def _run_polling_cycle(
                 require_post_earnings=True,
             )
 
-            # 4. Anlamlı bir karar mı?
-            # DM atılan kararlar:
-            #   • BUY, STRONG_BUY, SELL, STRONG_SELL (asıl aksiyon)
-            #   • WATCH + drift expired + büyük raise (>%30 — drift dışı flagged)
-            is_actionable = decision["decision"] in (
-                "BUY", "STRONG_BUY", "SELL", "STRONG_SELL"
-            )
-            is_drift_expired_big_raise = (
-                decision["decision"] == "WATCH"
-                and decision.get("drift_status") == "expired"
-                and decision.get("biggest_raise")
-                and (decision["biggest_raise"].get("pct") or 0) >= 30
-            )
-            if not (is_actionable or is_drift_expired_big_raise):
-                # WATCH/NEUTRAL — DM atma, sadece state'e işaretle
+            # 4. Anlamlı bir karar mı? DM filter ayarlarına göre kontrol
+            #    (Zeynel /analist dm komutuyla preset değiştirebilir)
+            from .dm_settings import should_send_dm
+            if not should_send_dm(decision):
+                # Filter dışı — sadece state'e işaretle, DM atma
                 for s in unseen:
                     mark_revision_seen(s)
                 continue

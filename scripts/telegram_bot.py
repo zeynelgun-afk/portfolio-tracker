@@ -575,6 +575,7 @@ def format_yardim() -> str:
   <code>/analist liste</code> — İzleme listesi + performans tablosu
   <code>/analist ekle TICKER</code> — Listeye manuel hisse ekle
   <code>/analist sil TICKER</code> — Listeden çıkar
+  <code>/analist dm</code> — DM filter ayarları (hangi sinyal DM olsun)
   <code>/analist watchlist</code> — Sinyal taranan ticker'lar
   <code>/analist status</code> — Son 24h sinyal özeti + sistem
   <code>/analist tara</code> — Şimdi manuel tarama yap
@@ -1616,6 +1617,23 @@ def isle_mesaj(msg: dict):
         if arg in ("liste", "list", "izleme", "performance", "perf"):
             tg_send(chat_id, "⏳ Performans listesi yükleniyor (fiyat fetch)...", reply_to=msg_id)
             tg_send(chat_id, format_performance_watchlist(), reply_to=msg_id)
+            return
+
+        # DM filter ayarları
+        if arg.startswith("dm"):
+            try:
+                from agent.analist_takip import format_dm_settings, set_dm_preset, format_dm_set_result
+            except Exception as e:
+                tg_send(chat_id, f"❌ DM settings yüklenemedi: {e}", reply_to=msg_id)
+                return
+            dm_arg = arg[2:].strip()  # "dm sadece-al" → "sadece-al"
+            if not dm_arg:
+                # Mevcut ayarları göster
+                tg_send(chat_id, format_dm_settings(), reply_to=msg_id)
+                return
+            # Preset değiştir
+            result = set_dm_preset(dm_arg)
+            tg_send(chat_id, format_dm_set_result(result), reply_to=msg_id)
             return
 
         # Ekle (orijinal text'ten al — büyük/küçük korunsun)
