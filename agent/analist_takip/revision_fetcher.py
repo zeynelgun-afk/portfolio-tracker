@@ -313,6 +313,46 @@ def get_market_cap_b(ticker: str) -> Optional[float]:
     return None
 
 
+def get_target_consensus(ticker: str) -> Optional[dict]:
+    """
+    FMP price-target-consensus endpoint'inden analist hedef özetini al.
+
+    Returns:
+        {
+            "avg": 120.0,
+            "high": 160.0,
+            "low": 75.0,
+            "median": 118.0,
+            "num_analysts": 12,
+        } veya None
+    """
+    data = _fmp_get("price-target-consensus", symbol=ticker)
+    if not data:
+        return None
+    if isinstance(data, list) and data:
+        d = data[0]
+    elif isinstance(data, dict):
+        d = data
+    else:
+        return None
+
+    avg = d.get("targetConsensus")
+    high = d.get("targetHigh")
+    low = d.get("targetLow")
+    median = d.get("targetMedian")
+
+    if not (avg or high or low):
+        return None
+
+    return {
+        "avg": avg,
+        "high": high,
+        "low": low,
+        "median": median,
+        "num_analysts": d.get("numberOfAnalysts"),
+    }
+
+
 def get_last_actual_earnings_date(ticker: str) -> Optional["date"]:
     """
     En son TAMAMLANMIŞ (EPS actual dolu) bilanço tarihi.

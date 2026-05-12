@@ -94,9 +94,16 @@ def format_signal_message(
     signal: dict,
     current_price: Optional[float] = None,
     market_cap_b: Optional[float] = None,
+    target_consensus: Optional[dict] = None,
 ) -> str:
     """
     analyze_signals çıktısını DM mesajına çevir.
+
+    Args:
+        signal: signal_analyzer çıktısı
+        current_price: Mevcut fiyat
+        market_cap_b: Market cap (USD billion)
+        target_consensus: {'avg', 'high', 'low', 'median', 'num_analysts'}
     """
     prefix = "🧪 <b>[DRY-RUN]</b> " if DRY_RUN else ""
     ticker = signal["ticker"]
@@ -119,6 +126,39 @@ def format_signal_message(
     if price_line_parts:
         lines.append(" | ".join(price_line_parts))
         lines.append("")
+
+    # Analist hedef özeti (avg/high/low)
+    if target_consensus:
+        avg = target_consensus.get("avg")
+        high = target_consensus.get("high")
+        low = target_consensus.get("low")
+        num_analysts = target_consensus.get("num_analysts")
+
+        if avg or high or low:
+            lines.append(f"<b>🎯 Analist Hedef Aralığı</b>")
+            target_parts = []
+            if low is not None:
+                upside_low = ((low / current_price - 1) * 100) if current_price and current_price > 0 else None
+                low_str = f"  Düşük: ${low:.2f}"
+                if upside_low is not None:
+                    low_str += f" ({upside_low:+.0f}%)"
+                target_parts.append(low_str)
+            if avg is not None:
+                upside_avg = ((avg / current_price - 1) * 100) if current_price and current_price > 0 else None
+                avg_str = f"  Ortalama: ${avg:.2f}"
+                if upside_avg is not None:
+                    avg_str += f" ({upside_avg:+.0f}%)"
+                target_parts.append(avg_str)
+            if high is not None:
+                upside_high = ((high / current_price - 1) * 100) if current_price and current_price > 0 else None
+                high_str = f"  Yüksek: ${high:.2f}"
+                if upside_high is not None:
+                    high_str += f" ({upside_high:+.0f}%)"
+                target_parts.append(high_str)
+            lines.extend(target_parts)
+            if num_analysts:
+                lines.append(f"  <i>({num_analysts} analist)</i>")
+            lines.append("")
 
     # Sinyal özeti
     lines.append(f"<b>📊 Analist Hareketi (son 48s)</b>")
@@ -176,9 +216,15 @@ def notify_signal(
     signal: dict,
     current_price: Optional[float] = None,
     market_cap_b: Optional[float] = None,
+    target_consensus: Optional[dict] = None,
 ) -> bool:
     """Sinyal DM bildirimi gönder."""
-    msg = format_signal_message(signal, current_price, market_cap_b)
+    msg = format_signal_message(
+        signal,
+        current_price=current_price,
+        market_cap_b=market_cap_b,
+        target_consensus=target_consensus,
+    )
     return send_dm(msg)
 
 

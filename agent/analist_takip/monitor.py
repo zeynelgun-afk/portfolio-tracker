@@ -38,6 +38,7 @@ from .revision_fetcher import (
     get_current_price,
     get_market_cap_b,
     get_last_actual_earnings_date,
+    get_target_consensus,
 )
 from .signal_analyzer import analyze_signals
 from .state_tracker import (
@@ -243,9 +244,10 @@ def _run_polling_cycle(
                 # Tüm sinyaller daha önce görülmüş; bu karar zaten DM edildi sayılır
                 continue
 
-            # 7. Mevcut fiyat + mcap fetch
+            # 7. Mevcut fiyat + mcap + analist hedef özeti fetch
             current_price = None
             market_cap_b = None
+            target_consensus = None
             try:
                 from .revision_fetcher import _fmp_get
                 quote_data = _fmp_get("quote", symbol=ticker)
@@ -253,11 +255,17 @@ def _run_polling_cycle(
                     q = quote_data[0]
                     current_price = q.get("price")
                     market_cap_b = round(q.get("marketCap", 0) / 1e9, 2) if q.get("marketCap") else None
+                target_consensus = get_target_consensus(ticker)
             except Exception:
                 pass
 
             # 8. DM gönder
-            success = notify_signal(decision, current_price=current_price, market_cap_b=market_cap_b)
+            success = notify_signal(
+                decision,
+                current_price=current_price,
+                market_cap_b=market_cap_b,
+                target_consensus=target_consensus,
+            )
 
             # 9. State'e kaydet
             for s in unseen:
