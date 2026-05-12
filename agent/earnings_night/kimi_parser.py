@@ -317,6 +317,89 @@ def normalize_eps_from_one_time_items(
     return round(gaap_eps - eps_impact, 4)
 
 
+def compute_multiple_revision(
+    parse_result: EarningsParse,
+    pre_earnings_snapshot: dict,
+    sector_momentum_factor: float = 0.0,
+) -> dict:
+    """
+    Pre-earnings zımni çarpana revize uygulanır.
+
+    Re-rating sebepleri (cumulative, max ±%30):
+    1. Tone score: +5 → +%15, +3 → +%9, 0 → 0%, -3 → -%9, -5 → -%15
+    2. Revenue growth surprise: actual YoY - pre-earnings tahmin
+       Her +%5 büyüme sürprizi → çarpan +%3
+    3. Sector momentum factor: caller'dan gelir (-0.10 ila +0.10)
+       (örn. AI/semis hot → +0.10, kömür/enerji cold → -0.10)
+    4. Methodology change warning: ambiguous_items'da methodology_change varsa
+       → çarpan ek -%5 (belirsizlik artışı)
+
+    Args:
+        parse_result: Kimi parse sonucu
+        pre_earnings_snapshot: Pre-earnings veriler
+        sector_momentum_factor: -0.10 (cold) ila +0.10 (hot)
+
+    Returns:
+        {
+            "revision_pct": float (örn. +0.12 = %12 yukarı revize),
+            "components": {...},
+            "rationale": str,
+        }
+    """
+    components = {}
+
+    # 1. Tone component
+    tone_score = parse_result.qualitative_signals.tone_score
+    tone_component = tone_score * 0.03  # +5 → +%15
+    components["tone"] = tone_component
+
+    # 2. Revenue growth surprise
+    actual_yoy = parse_result.results_actual.yoy_revenue_growth_pct
+    growth_component = 0.0
+    if actual_yoy is not None:
+        # Pre-earnings consensus YoY'yi snapshot'tan al
+        expected_yoy = pre_earnings_snapshot.get("expected_yoy_revenue_growth_pct")
+        if expected_yoy is not None:
+            surprise = actual_yoy - expected_yoy
+            growth_component = (surprise / 5.0) * 0.03  # her +%5 sürpriz → +%3
+            growth_component = max(-0.10, min(0.10, growth_component))  # cap ±%10
+    components["growth_surprise"] = growth_component
+
+    # 3. Sector momentum
+    components["sector_momentum"] = sector_momentum_factor
+
+    # 4. Methodology change penalty
+    methodology_penalty = 0.0
+    for ai in parse_result.ambiguous_items:
+        if "methodology" in ai.field.lower():
+            methodology_penalty = -0.05
+            break
+    components["methodology_penalty"] = methodology_penalty
+
+    # Toplam revision (cap ±%30)
+    total_revision = sum(components.values())
+    total_revision = max(-0.30, min(0.30, total_revision))
+
+    # Rationale
+    parts = []
+    if abs(tone_component) > 0.01:
+        parts.append(f"tone {tone_score:+d} ({tone_component:+.1%})")
+    if abs(growth_component) > 0.01:
+        parts.append(f"growth surprise ({growth_component:+.1%})")
+    if abs(sector_momentum_factor) > 0.01:
+        parts.append(f"sector momentum ({sector_momentum_factor:+.1%})")
+    if methodology_penalty < 0:
+        parts.append(f"methodology change penalty ({methodology_penalty:.1%})")
+
+    rationale = " + ".join(parts) if parts else "nötr (revize yok)"
+
+    return {
+        "revision_pct": round(total_revision, 4),
+        "components": {k: round(v, 4) for k, v in components.items()},
+        "rationale": rationale,
+    }
+
+
 def implied_multiple_valuation(
     parse_result: EarningsParse,
     pre_earnings_snapshot: dict,
@@ -325,6 +408,8 @@ def implied_multiple_valuation(
     analyst_fwd_eps_fy1: Optional[float] = None,
     analyst_fwd_revenue_fy1_b: Optional[float] = None,
     use_normalized_eps: bool = True,
+    sector_momentum_factor: float = 0.0,
+    apply_multiple_revision: bool = True,
 ) -> dict:
     """
     Implied Multiple değerleme hesaplaması (v2.0 — no-guidance fallback dahil).
@@ -344,11 +429,28 @@ def implied_multiple_valuation(
         use_normalized_eps: True ise GAAP EPS'ten one_time_items çıkarılıp
             annualize edilir. False ise ham GAAP EPS × 4 kullanılır.
     """
-    # Zımni çarpanları hesapla
-    pe_avg = pre_earnings_snapshot["target_avg_pre"] / pre_earnings_snapshot["forward_eps_pre"]
-    pe_high = pre_earnings_snapshot["target_high_pre"] / pre_earnings_snapshot["forward_eps_pre"]
-    ps_avg = pre_earnings_snapshot["target_avg_pre"] / pre_earnings_snapshot["forward_revenue_per_share_pre"]
-    ps_high = pre_earnings_snapshot["target_high_pre"] / pre_earnings_snapshot["forward_revenue_per_share_pre"]
+    # Zımni çarpanları hesapla (pre-earnings analist bazlı)
+    pe_avg_raw = pre_earnings_snapshot["target_avg_pre"] / pre_earnings_snapshot["forward_eps_pre"]
+    pe_high_raw = pre_earnings_snapshot["target_high_pre"] / pre_earnings_snapshot["forward_eps_pre"]
+    ps_avg_raw = pre_earnings_snapshot["target_avg_pre"] / pre_earnings_snapshot["forward_revenue_per_share_pre"]
+    ps_high_raw = pre_earnings_snapshot["target_high_pre"] / pre_earnings_snapshot["forward_revenue_per_share_pre"]
+
+    # Çarpan revizesi (post-earnings re-rating)
+    revision_info = None
+    if apply_multiple_revision:
+        revision_info = compute_multiple_revision(
+            parse_result=parse_result,
+            pre_earnings_snapshot=pre_earnings_snapshot,
+            sector_momentum_factor=sector_momentum_factor,
+        )
+        revision_mult = 1 + revision_info["revision_pct"]
+        pe_avg = pe_avg_raw * revision_mult
+        pe_high = pe_high_raw * revision_mult
+        ps_avg = ps_avg_raw * revision_mult
+        ps_high = ps_high_raw * revision_mult
+    else:
+        pe_avg, pe_high = pe_avg_raw, pe_high_raw
+        ps_avg, ps_high = ps_avg_raw, ps_high_raw
 
     # Yeni forward EPS — 4 katmanlı fallback
     guidance_q = parse_result.guidance_next_quarter
@@ -443,12 +545,19 @@ def implied_multiple_valuation(
         decision = "İZLE"
 
     return {
+        "implied_multiples_raw": {
+            "pe_avg": round(pe_avg_raw, 2),
+            "pe_high": round(pe_high_raw, 2),
+            "ps_avg": round(ps_avg_raw, 2),
+            "ps_high": round(ps_high_raw, 2),
+        },
         "implied_multiples": {
             "pe_avg": round(pe_avg, 2),
             "pe_high": round(pe_high, 2),
             "ps_avg": round(ps_avg, 2),
             "ps_high": round(ps_high, 2),
         },
+        "multiple_revision": revision_info,
         "forward_inputs": {
             "forward_eps_post": round(forward_eps_post, 2) if forward_eps_post else None,
             "forward_eps_source": forward_eps_source,
