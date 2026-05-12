@@ -330,8 +330,9 @@ def format_analist_help() -> str:
 <b>📨 DM Filter:</b>
 <code>/analist dm</code> — Mevcut DM ayarlarını göster
 <code>/analist dm sadece-al</code> — Sadece BUY/STRONG_BUY DM
+<code>/analist dm al-ve-izle</code> — AL + drift dışı büyük raise WATCH
 <code>/analist dm sat-da</code> — + SELL/STRONG_SELL DM
-<code>/analist dm hepsi</code> — + Drift dışı büyük raise WATCH
+<code>/analist dm hepsi</code> — Aksiyon + drift dışı WATCH
 <code>/analist dm sadece-guclu</code> — Sadece STRONG_*
 
 <b>Sistem:</b>

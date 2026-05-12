@@ -25,6 +25,12 @@ PRESETS = {
         "enabled_decisions": ["BUY", "STRONG_BUY"],
         "drift_expired_big_raise": False,
     },
+    "al-ve-izle": {
+        "name": "AL + İzleme",
+        "description": "BUY/STRONG_BUY + drift dışı büyük raise (WATCH)",
+        "enabled_decisions": ["BUY", "STRONG_BUY"],
+        "drift_expired_big_raise": True,
+    },
     "sat-da": {
         "name": "AL + SAT",
         "description": "BUY/STRONG_BUY + SELL/STRONG_SELL",
@@ -54,6 +60,11 @@ PRESET_ALIASES = {
     "sadece-al": "sadece-al",
     "al": "sadece-al",
     "buy": "sadece-al",
+    "al-ve-izle": "al-ve-izle",
+    "al-izle": "al-ve-izle",
+    "al-watch": "al-ve-izle",
+    "al+izle": "al-ve-izle",
+    "buy-watch": "al-ve-izle",
     "sat-da": "sat-da",
     "sat": "sat-da",
     "sell": "sat-da",
@@ -62,7 +73,7 @@ PRESET_ALIASES = {
     "full": "hepsi",
 }
 
-DEFAULT_PRESET = "sadece-al"
+DEFAULT_PRESET = "al-ve-izle"
 
 
 def _ensure_dirs():
@@ -210,6 +221,7 @@ def format_settings_message() -> str:
     lines.append("")
     lines.append("<b>Değiştirmek için:</b>")
     lines.append("  <code>/analist dm sadece-al</code> — Sadece AL")
+    lines.append("  <code>/analist dm al-ve-izle</code> — AL + drift dışı izleme")
     lines.append("  <code>/analist dm sat-da</code> — AL + SAT")
     lines.append("  <code>/analist dm hepsi</code> — Aksiyon + drift dışı izleme")
     lines.append("  <code>/analist dm sadece-guclu</code> — Sadece STRONG_*")

@@ -1,11 +1,11 @@
 {
-  "preset": "sadece-al",
-  "preset_name": "Sadece AL",
-  "preset_description": "BUY ve STRONG_BUY DM'leri",
+  "preset": "al-ve-izle",
+  "preset_name": "AL + İzleme",
+  "preset_description": "BUY/STRONG_BUY + drift dışı büyük raise (WATCH)",
   "enabled_decisions": [
     "BUY",
     "STRONG_BUY"
   ],
-  "drift_expired_big_raise": false,
-  "updated_at": "2026-05-12T18:11:30.085903Z"
+  "drift_expired_big_raise": true,
+  "updated_at": "2026-05-12T18:13:37.953857Z"
 }
