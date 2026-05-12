@@ -100,7 +100,8 @@ class Segment(BaseModel):
     segment_name: str
     revenue_usd_b: Optional[float] = Field(None, ge=0)
     yoy_growth_pct: Optional[float] = None
-    operating_margin_pct: Optional[float] = Field(None, ge=-50, le=100)
+    # Other Bets gibi küçük segmentler ekstrem margin alabilir (-500% gibi)
+    operating_margin_pct: Optional[float] = Field(None, ge=-2000, le=200)
 
 
 class OneTimeItem(BaseModel):
@@ -146,8 +147,28 @@ class ConfidenceGrades(BaseModel):
 
 
 class AmbiguousItem(BaseModel):
+    """
+    Ambiguity flag. `explanation` zorunlu — eğer modelin çıktısında
+    explanation yoksa, issue+computation alanlarından otomatik üretilir.
+    """
+    model_config = {"extra": "allow"}
+
     field: str
     explanation: str
+
+    @model_validator(mode="before")
+    @classmethod
+    def coerce_explanation(cls, data):
+        """Kimi bazen 'issue' + 'computation' verir, 'explanation' vermez."""
+        if isinstance(data, dict) and not data.get("explanation"):
+            issue = data.get("issue", "")
+            computation = data.get("computation", "")
+            parts = [p for p in [issue, computation] if p]
+            if parts:
+                data["explanation"] = " | ".join(str(p) for p in parts)
+            else:
+                data["explanation"] = "(no explanation provided)"
+        return data
 
 
 class SelfCheck(BaseModel):

@@ -220,7 +220,12 @@ You MUST return JSON with EXACTLY these top-level keys and nested structure. No 
     "segment_breakdown": "high",
     "overall": "high"
   },
-  "ambiguous_items": [],
+  "ambiguous_items": [
+    {
+      "field": "JSON_PATH_STRING (e.g. results_actual.operating_margin_pct)",
+      "explanation": "STRING — single combined explanation. Include both the AMBIGUITY DESCRIPTION and any COMPUTATION shown, separated by ' | '. Example: 'Computed: non-GAAP operating income 46107 / revenue 68127 = 67.7%. Not explicitly stated in document.'"
+    }
+  ],
   "self_check": {
     "no_quarterly_annual_mixup": true,
     "all_numbers_have_source_quote": true,
