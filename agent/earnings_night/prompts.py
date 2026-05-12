@@ -78,8 +78,42 @@ When the document gives a number "in millions" (per "$ in millions" table header
 - Dollar amounts in tables that say "$ in millions": treat numbers as millions, convert revenue to billions
 - Non-USD currencies: convert using FX rate stated in document; if no FX rate, leave null and add to `ambiguous_items`
 
-### R6. ONE-TIME ITEMS — SEPARATE FROM RECURRING
-Identify ALL non-recurring items: restructuring charges, legal settlements, asset impairments, gain/loss on divestitures, one-time tax items (e.g., OBBBA, TCJA adjustments), M&A-related expenses, inventory write-downs (e.g., H20 charges for export controls). Each populates `one_time_items[]` with: description, amount_usd_m, pretax_or_aftertax, segment_affected (if applicable).
+### R6. ONE-TIME ITEMS — SEPARATE FROM RECURRING (EXHAUSTIVE LIST)
+Identify ALL non-recurring items. These are CRITICAL because they distort EPS and require normalization downstream. Each populates `one_time_items[]` with: description, amount_usd_m, pretax_or_aftertax, segment_affected.
+
+Categories to flag (NOT exhaustive but covers most common):
+
+**Investment / Equity gains-losses (HIGH IMPORTANCE):**
+- Gains/losses on non-marketable equity securities (e.g., Anthropic stake mark-up for GOOGL, Stripe/SpaceX stakes)
+- Gains/losses on publicly-held equity securities held as investments (e.g., Berkshire-style mark-to-market)
+- Realized gains from divestitures, secondary offerings, or M&A consideration changes
+- These often appear in line "Other income/expense, net" or "Non-operating income"
+- Example phrasing: "net unrealized gains on our non-marketable equity securities", "fair value adjustments to strategic investments"
+
+**Operational one-time:**
+- Restructuring charges (severance, facility consolidation, workforce reduction)
+- Asset impairments (goodwill, intangibles, fixed assets, inventory write-downs)
+- Legal settlements (one-time fines, antitrust, class action)
+- M&A-related costs (transaction fees, integration costs)
+- Foreign exchange (FX) impacts when explicitly called out as one-time
+
+**Tax-related one-time:**
+- Tax law changes (TCJA, OBBBA, foreign tax adjustments)
+- Tax credit recognition or release
+- Valuation allowance changes on deferred tax assets
+
+**Industry-specific:**
+- Inventory write-downs from export controls (e.g., NVDA H20 charges)
+- Loss/gain on debt extinguishment
+- Pension settlement charges
+- Insurance recoveries
+
+**CRITICAL PARSING TIP:**
+If the press release narrative says something like "Other income reflected a net gain of $X billion, primarily the result of [non-marketable equity / equity investments / fair value adjustments]", THIS IS A ONE-TIME ITEM. Flag it.
+
+If the income statement table shows a line "Total other income, net" with a large value materially different from interest income (e.g., $37B vs $1B interest income), check the narrative — large positive often = equity gains; large negative often = impairment.
+
+Mark these in `one_time_items` even if the company does NOT call them "one-time" or "non-recurring" explicitly. Investment gains/losses from equity stakes are inherently non-recurring for valuation purposes.
 
 ### R7. NO INVESTMENT INTERPRETATION
 DO NOT use language like "beat", "missed", "exceeded expectations", "disappointed", "positive surprise". Your job is data extraction.

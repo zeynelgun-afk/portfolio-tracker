@@ -280,14 +280,54 @@ class KimiEarningsParser:
         return content, usage
 
 
+def normalize_eps_from_one_time_items(
+    parse_result: EarningsParse,
+    effective_tax_rate: float = 0.21,
+) -> Optional[float]:
+    """
+    GAAP EPS'ten one-time items'ı çıkararak normalize EPS hesaplar.
+
+    Args:
+        parse_result: 8-K parse sonucu
+        effective_tax_rate: Pretax kalemleri after-tax'e çevirmek için (default 21%)
+
+    Returns:
+        Normalize EPS (USD per share) veya None (veri eksikse).
+    """
+    gaap_eps = parse_result.results_actual.gaap_eps
+    shares_m = parse_result.results_actual.diluted_share_count_m
+
+    if gaap_eps is None or shares_m is None or shares_m <= 0:
+        return None
+
+    if not parse_result.one_time_items:
+        # One-time yoksa GAAP EPS zaten "normalize"
+        return gaap_eps
+
+    after_tax_adjustment_m = 0.0
+    for item in parse_result.one_time_items:
+        if item.amount_usd_m is None:
+            continue
+        if item.pretax_or_aftertax == "aftertax":
+            after_tax_adjustment_m += item.amount_usd_m
+        else:  # pretax
+            after_tax_adjustment_m += item.amount_usd_m * (1 - effective_tax_rate)
+
+    eps_impact = after_tax_adjustment_m / shares_m
+    return round(gaap_eps - eps_impact, 4)
+
+
 def implied_multiple_valuation(
     parse_result: EarningsParse,
     pre_earnings_snapshot: dict,
     current_price: float,
     historical_beat_rate_pct: float = 5.0,
+    analyst_fwd_eps_fy1: Optional[float] = None,
+    analyst_fwd_revenue_fy1_b: Optional[float] = None,
+    use_normalized_eps: bool = True,
 ) -> dict:
     """
-    Implied Multiple değerleme hesaplaması.
+    Implied Multiple değerleme hesaplaması (v2.0 — no-guidance fallback dahil).
 
     pre_earnings_snapshot:
         {
@@ -296,6 +336,13 @@ def implied_multiple_valuation(
           "forward_eps_pre": 4.00,
           "forward_revenue_per_share_pre": 7.50,
         }
+
+    Args:
+        analyst_fwd_eps_fy1: Guidance yoksa fallback için FMP analyst-estimates'ten
+            FY+1 yıllık EPS konsensüsü. None ise sıradaki fallback'e geçer.
+        analyst_fwd_revenue_fy1_b: Aynısı revenue için (USD billions).
+        use_normalized_eps: True ise GAAP EPS'ten one_time_items çıkarılıp
+            annualize edilir. False ise ham GAAP EPS × 4 kullanılır.
     """
     # Zımni çarpanları hesapla
     pe_avg = pre_earnings_snapshot["target_avg_pre"] / pre_earnings_snapshot["forward_eps_pre"]
@@ -303,35 +350,60 @@ def implied_multiple_valuation(
     ps_avg = pre_earnings_snapshot["target_avg_pre"] / pre_earnings_snapshot["forward_revenue_per_share_pre"]
     ps_high = pre_earnings_snapshot["target_high_pre"] / pre_earnings_snapshot["forward_revenue_per_share_pre"]
 
-    # Yeni forward EPS (3 yöntem blend)
-    # Yöntem 1: Pure guidance (eğer FY guidance varsa direkt; yoksa Q × 4)
+    # Yeni forward EPS — 4 katmanlı fallback
     guidance_q = parse_result.guidance_next_quarter
     guidance_fy = parse_result.guidance_full_year
 
+    forward_eps_source = None  # Hangi kaynaktan geldiğini takip et
+
     if guidance_fy.provided and guidance_fy.non_gaap_eps_mid:
         method1_eps = guidance_fy.non_gaap_eps_mid
+        forward_eps_source = "company_guidance_fy"
     elif guidance_q.provided and guidance_q.non_gaap_eps_mid:
         method1_eps = guidance_q.non_gaap_eps_mid * 4
+        forward_eps_source = "company_guidance_q_annualized"
+    elif analyst_fwd_eps_fy1 is not None:
+        # FALLBACK 1: Analist FY+1 konsensüsü
+        method1_eps = analyst_fwd_eps_fy1
+        forward_eps_source = "analyst_consensus_fy1"
     else:
-        method1_eps = None  # EPS guidance yok
+        # FALLBACK 2: Current quarter actual EPS × 4 (normalize edilebilir)
+        if use_normalized_eps:
+            current_eps = normalize_eps_from_one_time_items(parse_result)
+        else:
+            current_eps = parse_result.results_actual.non_gaap_eps or parse_result.results_actual.gaap_eps
+        if current_eps is not None:
+            method1_eps = current_eps * 4
+            forward_eps_source = "current_quarter_annualized_normalized" if use_normalized_eps else "current_quarter_annualized_raw"
+        else:
+            method1_eps = None
+            forward_eps_source = "no_data"
 
     forward_eps_post = None
     if method1_eps is not None:
-        # Yöntem 2: Guidance + historical beat
         method2_eps = method1_eps * (1 + historical_beat_rate_pct / 100)
-        # Yöntem 3: Konsensüs-revize (guidance vs consensus delta'nın %70'i)
         consensus_delta_pct = (method1_eps / pre_earnings_snapshot["forward_eps_pre"] - 1) * 100
         method3_eps = pre_earnings_snapshot["forward_eps_pre"] * (1 + consensus_delta_pct / 100 * 0.7)
-        # Blend
         forward_eps_post = 0.4 * method1_eps + 0.3 * method2_eps + 0.3 * method3_eps
 
-    # Yeni forward revenue per share (sadeleştirilmiş)
+    # Yeni forward revenue per share — 3 katmanlı fallback
     forward_rev_per_share_post = None
-    if guidance_q.provided and guidance_q.revenue_mid_b and parse_result.results_actual.diluted_share_count_m:
-        # Q1 guidance × 4 / diluted shares = forward rev per share
-        forward_rev_per_share_post = (
-            guidance_q.revenue_mid_b * 1000 * 4 / parse_result.results_actual.diluted_share_count_m
-        )
+    shares_m = parse_result.results_actual.diluted_share_count_m
+    forward_rev_source = None
+
+    if guidance_fy.provided and guidance_fy.revenue_mid_b and shares_m:
+        forward_rev_per_share_post = guidance_fy.revenue_mid_b * 1000 / shares_m
+        forward_rev_source = "company_guidance_fy"
+    elif guidance_q.provided and guidance_q.revenue_mid_b and shares_m:
+        forward_rev_per_share_post = guidance_q.revenue_mid_b * 1000 * 4 / shares_m
+        forward_rev_source = "company_guidance_q_annualized"
+    elif analyst_fwd_revenue_fy1_b is not None and shares_m:
+        forward_rev_per_share_post = analyst_fwd_revenue_fy1_b * 1000 / shares_m
+        forward_rev_source = "analyst_consensus_fy1"
+    elif parse_result.results_actual.revenue_usd_b and shares_m:
+        # FALLBACK 3: Current quarter revenue × 4 annualize
+        forward_rev_per_share_post = parse_result.results_actual.revenue_usd_b * 1000 * 4 / shares_m
+        forward_rev_source = "current_quarter_annualized"
 
     # Implied multiple uygula
     new_target_avg_eps = pe_avg * forward_eps_post if forward_eps_post else None
@@ -379,7 +451,9 @@ def implied_multiple_valuation(
         },
         "forward_inputs": {
             "forward_eps_post": round(forward_eps_post, 2) if forward_eps_post else None,
+            "forward_eps_source": forward_eps_source,
             "forward_rev_per_share_post": round(forward_rev_per_share_post, 2) if forward_rev_per_share_post else None,
+            "forward_rev_source": forward_rev_source,
         },
         "new_targets": {
             "target_avg": round(final_avg, 2) if final_avg else None,

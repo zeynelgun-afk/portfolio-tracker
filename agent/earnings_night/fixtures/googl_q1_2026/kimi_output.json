@@ -15,7 +15,7 @@
     "gaap_net_income_m": 62578.0,
     "non_gaap_net_income_m": null,
     "gross_margin_pct": null,
-    "operating_margin_pct": 36.0,
+    "operating_margin_pct": 36.1,
     "operating_income_m": 39696.0,
     "free_cash_flow_m": 10116.0,
     "diluted_share_count_m": 12238.0
@@ -67,12 +67,12 @@
       "segment_name": "Other Bets",
       "revenue_usd_b": 0.411,
       "yoy_growth_pct": -8.7,
-      "operating_margin_pct": -510.9
+      "operating_margin_pct": null
     }
   ],
   "one_time_items": [
     {
-      "description": "Net unrealized gains on non-marketable equity securities (gain on equity securities)",
+      "description": "Net unrealized gains on non-marketable equity securities",
       "amount_usd_m": 36915.0,
       "pretax_or_aftertax": "pretax",
       "segment_affected": null
@@ -89,9 +89,9 @@
     "tone_label": "very_bullish",
     "evidence_phrases": [
       "2026 is off to a terrific start",
-      "outstanding results",
-      "strongest quarter ever for our consumer AI plans",
-      "really exciting to see how our AI investments are delivering value"
+      "Our AI investments and full stack approach are lighting up every part of the business",
+      "This was our strongest quarter ever for our consumer AI plans",
+      "These outstanding results are built on our differentiated, full stack approach"
     ],
     "warning_phrases": [],
     "guidance_color": null,
@@ -100,29 +100,28 @@
     "cfo_quote_primary": null
   },
   "source_quotes": {
-    "results_actual.revenue_usd_b": "Revenues $ 109,896 (in millions)",
-    "results_actual.yoy_revenue_growth_pct": "Change in revenues year over year 22 %",
-    "results_actual.qoq_revenue_growth_pct": "Total revenues ... (3) % [Change from Prior Period December 31, 2025 to March 31, 2026]",
-    "results_actual.gaap_eps": "Diluted net income per share $ 5.11",
-    "results_actual.gaap_net_income_m": "Net income $ 62,578",
-    "results_actual.operating_margin_pct": "Operating margin 36 %",
-    "results_actual.operating_income_m": "Operating income $ 39,696",
-    "results_actual.free_cash_flow_m": "Free cash flow $ 10,116 [Quarter Ended March 31, 2026]",
+    "results_actual.revenue_usd_b": "Consolidated Alphabet revenues increased 22%, or 19% in constant currency, to $109.9 billion",
+    "results_actual.yoy_revenue_growth_pct": "Consolidated Alphabet revenues increased 22%, or 19% in constant currency, to $109.9 billion",
+    "results_actual.qoq_revenue_growth_pct": "Total revenues $113,828 (Q4 2025) to $109,896 (Q1 2026) — computed (3)% decline",
+    "results_actual.gaap_eps": "EPS increased 82% to $5.11",
+    "results_actual.gaap_net_income_m": "Net income increased 81% and EPS increased 82% to $5.11 — table shows Net income $62,578",
+    "results_actual.operating_margin_pct": "operating margin expanded by 2 percentage points to 36.1%",
+    "results_actual.operating_income_m": "Consolidated Alphabet operating income increased 30% — table shows Operating income $39,696",
+    "results_actual.free_cash_flow_m": "Free cash flow $10,116 — from reconciliation table Q1 2026",
     "results_actual.diluted_share_count_m": "Number of shares used in diluted net income per share calculation 12,238",
-    "segment_breakdown.0.revenue_usd_b": "Google Services total $ 89,637",
+    "segment_breakdown.0.revenue_usd_b": "Google Services revenues increased 16% to $89.6 billion — table shows $89,637",
     "segment_breakdown.0.yoy_growth_pct": "Google Services revenues increased 16% to $89.6 billion",
-    "segment_breakdown.0.operating_margin_pct": "Google Services operating income $ 40,589; Google Services total revenues $ 89,637",
-    "segment_breakdown.1.revenue_usd_b": "Google Cloud $ 20,028",
+    "segment_breakdown.0.operating_margin_pct": "Google Services operating income $40,589 / revenue $89,637 = 45.3%",
+    "segment_breakdown.1.revenue_usd_b": "Google Cloud saw a meaningful acceleration in growth as revenues increased 63% to $20.0 billion — table shows $20,028",
     "segment_breakdown.1.yoy_growth_pct": "Google Cloud saw a meaningful acceleration in growth as revenues increased 63% to $20.0 billion",
-    "segment_breakdown.1.operating_margin_pct": "Google Cloud operating income $ 6,598; Google Cloud revenues $ 20,028",
-    "segment_breakdown.2.revenue_usd_b": "Other Bets $ 411",
-    "segment_breakdown.2.yoy_growth_pct": "Other Bets revenues $ 411 (2026) vs $ 450 (2025)",
-    "segment_breakdown.2.operating_margin_pct": "Other Bets operating loss $ (2,100); Other Bets revenues $ 411",
-    "one_time_items.0.amount_usd_m": "Gain (loss) on equity securities, net $ 36,915",
+    "segment_breakdown.1.operating_margin_pct": "Google Cloud operating income $6,598 / revenue $20,028 = 32.9%",
+    "segment_breakdown.2.revenue_usd_b": "Other Bets $411 million — table shows $411",
+    "segment_breakdown.2.yoy_growth_pct": "Other Bets $450 million (Q1 2025) to $411 million (Q1 2026) — computed (8.7)%",
     "one_time_items.0.description": "Other income reflected a net gain of $37.7 billion, primarily the result of net unrealized gains on our non-marketable equity securities",
-    "capital_return.dividend_per_share": "Alphabet's Board of Directors declared a quarterly cash dividend of $0.22 per share",
-    "capital_return.dividend_change_pct": "representing a 5% increase from the previous quarterly dividend of $0.21 per share",
-    "capital_return.buyback_executed_in_period_b": "Repurchases of stock $ 0 [in millions]"
+    "one_time_items.0.amount_usd_m": "Gain (loss) on equity securities, net $36,915 — table in millions",
+    "capital_return.buyback_executed_in_period_b": "Repurchases of stock $0 — table shows 0",
+    "capital_return.dividend_per_share": "quarterly cash dividend of $0.22 per share",
+    "capital_return.dividend_change_pct": "representing a 5% increase from the previous quarterly dividend of $0.21 per share"
   },
   "confidence": {
     "results_actual": "high",
@@ -133,22 +132,24 @@
   },
   "ambiguous_items": [
     {
-      "field": "results_actual.operating_margin_pct",
-      "explanation": "Document provides GAAP operating margin of 36% (table) / 36.1% (text). Non-GAAP operating margin not disclosed. Using GAAP value per R2 (GAAP-only allowed with flag).",
-      "issue": "Document provides GAAP operating margin of 36% (table) / 36.1% (text). Non-GAAP operating margin not disclosed. Using GAAP value per R2 (GAAP-only allowed with flag).",
-      "computation": null
+      "field": "results_actual.qoq_revenue_growth_pct",
+      "explanation": "Computed: ($109,896 - $113,828) / $113,828 = -3.45%, rounded to -3%. Not explicitly stated as percentage in document; derived from Q4 2025 total revenues $113,828 million and Q1 2026 $109,896 million."
     },
     {
-      "field": "segment_breakdown",
-      "explanation": "Operating margins for segments computed from segment operating income divided by segment revenue. Google Services: 40589/89637=45.3%, Google Cloud: 6598/20028=32.9%, Other Bets: -2100/411=-510.9%. | 40589/89637, 6598/20028, -2100/411",
-      "issue": "Operating margins for segments computed from segment operating income divided by segment revenue. Google Services: 40589/89637=45.3%, Google Cloud: 6598/20028=32.9%, Other Bets: -2100/411=-510.9%.",
-      "computation": "40589/89637, 6598/20028, -2100/411"
+      "field": "segment_breakdown.0.operating_margin_pct",
+      "explanation": "Computed: Google Services operating income $40,589 / revenue $89,637 = 45.3%. Not explicitly stated in document."
+    },
+    {
+      "field": "segment_breakdown.1.operating_margin_pct",
+      "explanation": "Computed: Google Cloud operating income $6,598 / revenue $20,028 = 32.9%. Not explicitly stated in document."
     },
     {
       "field": "segment_breakdown.2.yoy_growth_pct",
-      "explanation": "Other Bets YoY growth not explicitly stated as percentage; calculated from 2025 revenue of $450 million and 2026 revenue of $411 million: (411-450)/450 = -8.7%. | (411-450)/450",
-      "issue": "Other Bets YoY growth not explicitly stated as percentage; calculated from 2025 revenue of $450 million and 2026 revenue of $411 million: (411-450)/450 = -8.7%.",
-      "computation": "(411-450)/450"
+      "explanation": "Computed: ($411 - $450) / $450 = -8.7%. Not explicitly stated as percentage in document."
+    },
+    {
+      "field": "one_time_items.0.amount_usd_m",
+      "explanation": "Document states 'net gain of $37.7 billion' in narrative but table shows 'Gain (loss) on equity securities, net' of $36,915 million. Using table figure $36,915 million as more precise. The $37.7 billion narrative figure appears to include other components or be rounded."
     }
   ],
   "self_check": {
