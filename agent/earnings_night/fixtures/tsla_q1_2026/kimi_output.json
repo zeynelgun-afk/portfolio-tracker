@@ -1,0 +1,158 @@
+{
+  "meta": {
+    "ticker": "TSLA",
+    "fiscal_period_reported": "Q1 2026",
+    "filing_date": "2026-04-22",
+    "parser_version": "v1.0",
+    "currency": "USD"
+  },
+  "results_actual": {
+    "revenue_usd_b": 22.387,
+    "yoy_revenue_growth_pct": 16.0,
+    "qoq_revenue_growth_pct": -10.1,
+    "gaap_eps": 0.13,
+    "non_gaap_eps": 0.41,
+    "gaap_net_income_m": 477.0,
+    "non_gaap_net_income_m": 1453.0,
+    "gross_margin_pct": 21.1,
+    "operating_margin_pct": 4.2,
+    "operating_income_m": 941.0,
+    "free_cash_flow_m": 1444.0,
+    "diluted_share_count_m": 3538.0
+  },
+  "guidance_next_quarter": {
+    "provided": false,
+    "fiscal_period": null,
+    "revenue_low_b": null,
+    "revenue_mid_b": null,
+    "revenue_high_b": null,
+    "non_gaap_eps_low": null,
+    "non_gaap_eps_mid": null,
+    "non_gaap_eps_high": null,
+    "gaap_eps_low": null,
+    "gaap_eps_mid": null,
+    "gaap_eps_high": null,
+    "gross_margin_low_pct": null,
+    "gross_margin_mid_pct": null,
+    "gross_margin_high_pct": null,
+    "operating_margin_mid_pct": null
+  },
+  "guidance_full_year": {
+    "provided": false,
+    "fiscal_period": null,
+    "revenue_low_b": null,
+    "revenue_mid_b": null,
+    "revenue_high_b": null,
+    "non_gaap_eps_low": null,
+    "non_gaap_eps_mid": null,
+    "non_gaap_eps_high": null,
+    "gross_margin_mid_pct": null,
+    "capex_guidance_b": null,
+    "opex_growth_guidance_pct": null
+  },
+  "segment_breakdown": [
+    {
+      "segment_name": "Automotive",
+      "revenue_usd_b": 16.234,
+      "yoy_growth_pct": 16.0,
+      "operating_margin_pct": null
+    },
+    {
+      "segment_name": "Energy generation and storage",
+      "revenue_usd_b": 2.408,
+      "yoy_growth_pct": -12.0,
+      "operating_margin_pct": null
+    },
+    {
+      "segment_name": "Services and other",
+      "revenue_usd_b": 3.745,
+      "yoy_growth_pct": 42.0,
+      "operating_margin_pct": null
+    }
+  ],
+  "one_time_items": [
+    {
+      "description": "Digital assets loss, net",
+      "amount_usd_m": 222.0,
+      "pretax_or_aftertax": "pretax",
+      "segment_affected": null
+    }
+  ],
+  "capital_return": {
+    "buyback_authorization_b": null,
+    "buyback_executed_in_period_b": null,
+    "dividend_per_share": null,
+    "dividend_change_pct": null
+  },
+  "qualitative_signals": {
+    "tone_score": 3,
+    "tone_label": "bullish",
+    "evidence_phrases": [
+      "The future is incredibly bright.",
+      "We are excited about Tesla's positioning in 2026 with tailwinds persisting for the autos business",
+      "record net new subscriptions in Q1"
+    ],
+    "warning_phrases": [],
+    "guidance_color": null,
+    "approximations": [],
+    "ceo_quote_primary": null,
+    "cfo_quote_primary": null
+  },
+  "source_quotes": {
+    "results_actual.revenue_usd_b": "Total revenues 19,335 22,496 28,095 24,901 22,387",
+    "results_actual.yoy_revenue_growth_pct": "Total revenues ... 22,387 16%",
+    "results_actual.qoq_revenue_growth_pct": "Total revenues ... 24,901 22,387",
+    "results_actual.gaap_eps": "EPS attributable to common stockholders, diluted (GAAP) 0.12 0.33 0.39 0.24 0.13",
+    "results_actual.non_gaap_eps": "EPS attributable to common stockholders, diluted (non-GAAP) 0.27 0.40 0.50 0.50 0.41",
+    "results_actual.gaap_net_income_m": "Net income attributable to common stockholders (GAAP) 409 1,172 1,373 840 477",
+    "results_actual.non_gaap_net_income_m": "Net income attributable to common stockholders (non-GAAP) 934 1,393 1,770 1,761 1,453",
+    "results_actual.gross_margin_pct": "Total GAAP gross margin 16.3% 17.2% 18.0% 20.1% 21.1%",
+    "results_actual.operating_margin_pct": "Operating margin 2.1% 4.1% 5.8% 5.7% 4.2%",
+    "results_actual.operating_income_m": "Income from operations 399 923 1,624 1,409 941",
+    "results_actual.free_cash_flow_m": "Free cash flow 664 146 3,990 1,420 1,444",
+    "results_actual.diluted_share_count_m": "Shares used in EPS calculation, diluted (GAAP and non-GAAP) 3,521 3,519 3,526 3,539 3,538",
+    "segment_breakdown[0].revenue_usd_b": "Total automotive revenues 13,967 16,661 21,205 17,693 16,234",
+    "segment_breakdown[0].yoy_growth_pct": "Total automotive revenues ... 16,234 16%",
+    "segment_breakdown[1].revenue_usd_b": "Energy generation and storage revenue 2,730 2,789 3,415 3,837 2,408",
+    "segment_breakdown[1].yoy_growth_pct": "Energy generation and storage revenue ... 2,408 -12%",
+    "segment_breakdown[2].revenue_usd_b": "Services and other revenue 2,638 3,046 3,475 3,371 3,745",
+    "segment_breakdown[2].yoy_growth_pct": "Services and other revenue ... 3,745 42%",
+    "one_time_items[0].amount_usd_m": "Digital assets loss (gain), net 125 (284) (80) 307 222"
+  },
+  "confidence": {
+    "results_actual": "high",
+    "guidance_next_quarter": "high",
+    "guidance_full_year": "high",
+    "segment_breakdown": "high",
+    "overall": "high"
+  },
+  "ambiguous_items": [
+    {
+      "field": "results_actual.gross_margin_pct",
+      "explanation": "Value 21.1% represents GAAP Total Gross Margin. Non-GAAP total gross margin not explicitly stated in document; automotive non-GAAP gross margin excluding regulatory credits was 19.2% but this is segment-specific only."
+    },
+    {
+      "field": "results_actual.operating_margin_pct",
+      "explanation": "Value 4.2% represents GAAP Operating Margin. Non-GAAP operating margin not explicitly stated in document."
+    },
+    {
+      "field": "results_actual.operating_income_m",
+      "explanation": "Value 941 represents GAAP Operating Income. Non-GAAP operating income not explicitly stated in document."
+    },
+    {
+      "field": "results_actual.qoq_revenue_growth_pct",
+      "explanation": "Computed: (22387-24901)/24901*100 = -10.1%. QoQ growth rate not explicitly stated in narrative text."
+    },
+    {
+      "field": "one_time_items",
+      "explanation": "Narrative mentions 'automotive one-time benefits related to warranty and tariffs' and 'energy one-time benefits related to tariffs' but specific monetary amounts are not quantified in the document."
+    }
+  ],
+  "self_check": {
+    "no_quarterly_annual_mixup": true,
+    "all_numbers_have_source_quote": true,
+    "units_consistent": true,
+    "no_investment_language": true,
+    "json_valid": true
+  }
+}

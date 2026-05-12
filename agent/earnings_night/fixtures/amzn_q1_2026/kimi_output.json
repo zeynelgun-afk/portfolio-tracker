@@ -1,0 +1,164 @@
+{
+  "meta": {
+    "ticker": "AMZN",
+    "fiscal_period_reported": "Q1 2026",
+    "filing_date": "2026-04-29",
+    "parser_version": "v1.0",
+    "currency": "USD"
+  },
+  "results_actual": {
+    "revenue_usd_b": 181.519,
+    "yoy_revenue_growth_pct": 17.0,
+    "qoq_revenue_growth_pct": null,
+    "gaap_eps": 2.78,
+    "non_gaap_eps": null,
+    "gaap_net_income_m": 30255.0,
+    "non_gaap_net_income_m": null,
+    "gross_margin_pct": null,
+    "operating_margin_pct": 13.1,
+    "operating_income_m": 23852.0,
+    "free_cash_flow_m": 1232.0,
+    "diluted_share_count_m": 10874.0
+  },
+  "guidance_next_quarter": {
+    "provided": true,
+    "fiscal_period": "Q2 2026",
+    "revenue_low_b": 194.0,
+    "revenue_mid_b": 196.5,
+    "revenue_high_b": 199.0,
+    "non_gaap_eps_low": null,
+    "non_gaap_eps_mid": null,
+    "non_gaap_eps_high": null,
+    "gaap_eps_low": null,
+    "gaap_eps_mid": null,
+    "gaap_eps_high": null,
+    "gross_margin_low_pct": null,
+    "gross_margin_mid_pct": null,
+    "gross_margin_high_pct": null,
+    "operating_margin_mid_pct": null
+  },
+  "guidance_full_year": {
+    "provided": false,
+    "fiscal_period": null,
+    "revenue_low_b": null,
+    "revenue_mid_b": null,
+    "revenue_high_b": null,
+    "non_gaap_eps_low": null,
+    "non_gaap_eps_mid": null,
+    "non_gaap_eps_high": null,
+    "gross_margin_mid_pct": null,
+    "capex_guidance_b": null,
+    "opex_growth_guidance_pct": null
+  },
+  "segment_breakdown": [
+    {
+      "segment_name": "North America",
+      "revenue_usd_b": 104.143,
+      "yoy_growth_pct": 12.0,
+      "operating_margin_pct": 7.9
+    },
+    {
+      "segment_name": "International",
+      "revenue_usd_b": 39.789,
+      "yoy_growth_pct": 19.0,
+      "operating_margin_pct": 3.6
+    },
+    {
+      "segment_name": "AWS",
+      "revenue_usd_b": 37.587,
+      "yoy_growth_pct": 28.0,
+      "operating_margin_pct": 37.7
+    }
+  ],
+  "one_time_items": [
+    {
+      "description": "Pre-tax gains from investments in Anthropic included in non-operating income",
+      "amount_usd_m": 16800.0,
+      "pretax_or_aftertax": "pretax",
+      "segment_affected": null
+    }
+  ],
+  "capital_return": {
+    "buyback_authorization_b": null,
+    "buyback_executed_in_period_b": null,
+    "dividend_per_share": null,
+    "dividend_change_pct": null
+  },
+  "qualitative_signals": {
+    "tone_score": 5,
+    "tone_label": "very_bullish",
+    "evidence_phrases": [
+      "We're making customers' lives easier and better every day across all our businesses, and their response is driving significant growth",
+      "AWS is growing 28% (our fastest growth in 15 quarters) on a very large base",
+      "our chips business topped a $20 billion revenue run rate (growing triple digits year-over-year)",
+      "Advertising grew to over $70 billion in TTM revenue",
+      "unit growth in our Stores reached 15% (the highest since the tail end of covid lockdowns)",
+      "I'm very optimistic about what's ahead for our customers and Amazon"
+    ],
+    "warning_phrases": [],
+    "guidance_color": null,
+    "approximations": [],
+    "ceo_quote_primary": "We're making customers' lives easier and better every day across all our businesses, and their response is driving significant growth. AWS is growing 28% (our fastest growth in 15 quarters) on a very large base, our chips business topped a $20 billion revenue run rate (growing triple digits year-over-year), Advertising grew to over $70 billion in TTM revenue, and unit growth in our Stores reached 15% (the highest since the tail end of covid lockdowns). We also hit exciting milestones with delivery speed (more than 1 billion items same-day or overnight in 2026 and counting), Project Hail Mary (nearly $615 million at the box office to date and the second most successful non-sequel, non-franchise opening of recent memory), and Amazon Leo continues to resonate with prospective customers, with Delta Airlines the latest to sign on. We're in the middle of some of the biggest inflections of our lifetime, we're well positioned to lead, and I'm very optimistic about what's ahead for our customers and Amazon.",
+    "cfo_quote_primary": null
+  },
+  "source_quotes": {
+    "results_actual.revenue_usd_b": "Net sales increased 17% to $181.5 billion in the first quarter, compared with $155.7 billion in first quarter 2025.",
+    "results_actual.yoy_revenue_growth_pct": "Net sales increased 17% to $181.5 billion in the first quarter, compared with $155.7 billion in first quarter 2025.",
+    "results_actual.gaap_eps": "Net income increased to $30.3 billion in the first quarter, or $2.78 per diluted share, compared with $17.1 billion, or $1.59 per diluted share, in first quarter 2025.",
+    "results_actual.gaap_net_income_m": "Net income increased to $30.3 billion in the first quarter, or $2.78 per diluted share, compared with $17.1 billion, or $1.59 per diluted share, in first quarter 2025.",
+    "results_actual.operating_income_m": "Operating income increased to $23.9 billion in the first quarter, compared with $18.4 billion in first quarter 2025.",
+    "results_actual.operating_margin_pct": "Operating margin -- % of WW net sales: 13.1%",
+    "results_actual.free_cash_flow_m": "Free cash flow decreased to $1.2 billion for the trailing twelve months, driven primarily by a year-over-year increase of $59.3 billion in purchases of property and equipment, net of proceeds from sales and incentives.",
+    "results_actual.diluted_share_count_m": "Weighted-average shares used in computation of earnings per share: Diluted 10,874 (in millions)",
+    "guidance_next_quarter.revenue_low_b": "Net sales are expected to be between $194.0 billion and $199.0 billion, or to grow between 16% and 19% compared with second quarter 2025.",
+    "guidance_next_quarter.revenue_high_b": "Net sales are expected to be between $194.0 billion and $199.0 billion, or to grow between 16% and 19% compared with second quarter 2025.",
+    "guidance_next_quarter.revenue_mid_b": "Computed: (194.0 + 199.0) / 2 = 196.5",
+    "segment_breakdown.0.revenue_usd_b": "North America segment sales increased 12% year-over-year to $104.1 billion.",
+    "segment_breakdown.0.yoy_growth_pct": "North America segment sales increased 12% year-over-year to $104.1 billion.",
+    "segment_breakdown.0.operating_margin_pct": "Operating margin -- % of North America net sales: 7.9%",
+    "segment_breakdown.1.revenue_usd_b": "International segment sales increased 19% year-over-year to $39.8 billion, or increased 11% excluding changes in foreign exchange rates.",
+    "segment_breakdown.1.yoy_growth_pct": "International segment sales increased 19% year-over-year to $39.8 billion, or increased 11% excluding changes in foreign exchange rates.",
+    "segment_breakdown.1.operating_margin_pct": "Operating margin -- % of International net sales: 3.6%",
+    "segment_breakdown.2.revenue_usd_b": "AWS segment sales increased 28% year-over-year to $37.6 billion.",
+    "segment_breakdown.2.yoy_growth_pct": "AWS segment sales increased 28% year-over-year to $37.6 billion.",
+    "segment_breakdown.2.operating_margin_pct": "Operating margin -- % of AWS net sales: 37.7%",
+    "one_time_items.0.description": "First quarter 2026 net income includes pre-tax gains of $16.8 billion included in non-operating income from our investments in Anthropic.",
+    "one_time_items.0.amount_usd_m": "First quarter 2026 net income includes pre-tax gains of $16.8 billion included in non-operating income from our investments in Anthropic."
+  },
+  "confidence": {
+    "results_actual": "high",
+    "guidance_next_quarter": "medium",
+    "guidance_full_year": "high",
+    "segment_breakdown": "high",
+    "overall": "high"
+  },
+  "ambiguous_items": [
+    {
+      "field": "guidance_next_quarter.revenue_mid_b",
+      "explanation": "Computed: (194.0 + 199.0) / 2 = 196.5. Not explicitly stated in document."
+    },
+    {
+      "field": "results_actual.non_gaap_eps",
+      "explanation": "Document does not provide Non-GAAP EPS reconciliation. Only GAAP EPS of $2.78 is stated."
+    },
+    {
+      "field": "results_actual.non_gaap_net_income_m",
+      "explanation": "Document does not provide Non-GAAP net income. Only GAAP net income of $30.3 billion is stated."
+    },
+    {
+      "field": "results_actual.gross_margin_pct",
+      "explanation": "Gross margin not explicitly stated in document. Cost of sales provided but gross profit not labeled."
+    },
+    {
+      "field": "guidance_next_quarter.operating_income_low_m",
+      "explanation": "Operating income guidance provided as $20.0 billion to $24.0 billion, but no standard field exists for operating income guidance in schema. Document states: 'Operating income is expected to be between $20.0 billion and $24.0 billion, compared with $19.2 billion in second quarter 2025.'"
+    }
+  ],
+  "self_check": {
+    "no_quarterly_annual_mixup": true,
+    "all_numbers_have_source_quote": true,
+    "units_consistent": true,
+    "no_investment_language": true,
+    "json_valid": true
+  }
+}

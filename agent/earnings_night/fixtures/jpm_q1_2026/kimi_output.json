@@ -1,0 +1,174 @@
+{
+  "meta": {
+    "ticker": "JPM",
+    "fiscal_period_reported": "Q1 2026",
+    "filing_date": "2026-04-14",
+    "parser_version": "v1.0",
+    "currency": "USD"
+  },
+  "results_actual": {
+    "revenue_usd_b": 50.536,
+    "yoy_revenue_growth_pct": 10.0,
+    "qoq_revenue_growth_pct": 8.0,
+    "gaap_eps": 5.94,
+    "non_gaap_eps": null,
+    "gaap_net_income_m": 16494.0,
+    "non_gaap_net_income_m": null,
+    "gross_margin_pct": null,
+    "operating_margin_pct": null,
+    "operating_income_m": null,
+    "free_cash_flow_m": null,
+    "diluted_share_count_m": null
+  },
+  "guidance_next_quarter": {
+    "provided": false,
+    "fiscal_period": null,
+    "revenue_low_b": null,
+    "revenue_mid_b": null,
+    "revenue_high_b": null,
+    "non_gaap_eps_low": null,
+    "non_gaap_eps_mid": null,
+    "non_gaap_eps_high": null,
+    "gaap_eps_low": null,
+    "gaap_eps_mid": null,
+    "gaap_eps_high": null,
+    "gross_margin_low_pct": null,
+    "gross_margin_mid_pct": null,
+    "gross_margin_high_pct": null,
+    "operating_margin_mid_pct": null
+  },
+  "guidance_full_year": {
+    "provided": false,
+    "fiscal_period": null,
+    "revenue_low_b": null,
+    "revenue_mid_b": null,
+    "revenue_high_b": null,
+    "non_gaap_eps_low": null,
+    "non_gaap_eps_mid": null,
+    "non_gaap_eps_high": null,
+    "gross_margin_mid_pct": null,
+    "capex_guidance_b": null,
+    "opex_growth_guidance_pct": null
+  },
+  "segment_breakdown": [
+    {
+      "segment_name": "Consumer & Community Banking (CCB)",
+      "revenue_usd_b": 19.568,
+      "yoy_growth_pct": 7.0,
+      "operating_margin_pct": null
+    },
+    {
+      "segment_name": "Commercial & Investment Bank (CIB)",
+      "revenue_usd_b": 23.379,
+      "yoy_growth_pct": 19.0,
+      "operating_margin_pct": null
+    },
+    {
+      "segment_name": "Asset & Wealth Management (AWM)",
+      "revenue_usd_b": 6.374,
+      "yoy_growth_pct": 11.0,
+      "operating_margin_pct": null
+    },
+    {
+      "segment_name": "Corporate",
+      "revenue_usd_b": 1.215,
+      "yoy_growth_pct": -47.0,
+      "operating_margin_pct": null
+    }
+  ],
+  "one_time_items": [
+    {
+      "description": "Absence of First Republic-related gain in prior year (non-recurring gain comparison)",
+      "amount_usd_m": 588.0,
+      "pretax_or_aftertax": "pretax",
+      "segment_affected": "Corporate"
+    },
+    {
+      "description": "Absence of FDIC special assessment accrual release in prior year",
+      "amount_usd_m": null,
+      "pretax_or_aftertax": "pretax",
+      "segment_affected": "Firmwide/Corporate"
+    }
+  ],
+  "capital_return": {
+    "buyback_authorization_b": null,
+    "buyback_executed_in_period_b": 8.1,
+    "dividend_per_share": 1.5,
+    "dividend_change_pct": null
+  },
+  "qualitative_signals": {
+    "tone_score": 3,
+    "tone_label": "bullish",
+    "evidence_phrases": [
+      "The Firm delivered strong results in the first quarter, reporting net income of $16.5 billion.",
+      "Performance was strong across our businesses.",
+      "Markets revenue reached a record $11.6 billion",
+      "We continued to acquire new customers at a robust rate across the franchise",
+      "The U.S. economy remained resilient in the quarter"
+    ],
+    "warning_phrases": [],
+    "guidance_color": null,
+    "approximations": [],
+    "ceo_quote_primary": "The Firm delivered strong results in the first quarter, reporting net income of $16.5 billion.",
+    "cfo_quote_primary": null
+  },
+  "source_quotes": {
+    "results_actual.revenue_usd_b": "Net revenue - managed: $50,536 million (table: Results for JPM)",
+    "results_actual.yoy_revenue_growth_pct": "Net revenue - managed: O/(U) % 10 (versus prior-year first quarter)",
+    "results_actual.qoq_revenue_growth_pct": "Net revenue - managed: O/(U) % 8 (versus 4Q25)",
+    "results_actual.gaap_eps": "Earnings per share - diluted: $5.94 (table: Results for JPM)",
+    "results_actual.gaap_net_income_m": "Net income: $16,494 million (table: Results for JPM)",
+    "segment_breakdown.0.revenue_usd_b": "Net revenue: $19,568 million (CCB table)",
+    "segment_breakdown.0.yoy_growth_pct": "Net revenue: O/(U) % 7 (versus prior-year first quarter, CCB)",
+    "segment_breakdown.1.revenue_usd_b": "Net revenue: $23,379 million (CIB table)",
+    "segment_breakdown.1.yoy_growth_pct": "Net revenue: O/(U) % 19 (versus prior-year first quarter, CIB)",
+    "segment_breakdown.2.revenue_usd_b": "Net revenue: $6,374 million (AWM table)",
+    "segment_breakdown.2.yoy_growth_pct": "Net revenue: O/(U) % 11 (versus prior-year first quarter, AWM)",
+    "segment_breakdown.3.revenue_usd_b": "Net revenue: $1,215 million (Corporate table)",
+    "segment_breakdown.3.yoy_growth_pct": "Net revenue: O/(U) % (47) (versus prior-year first quarter, Corporate)",
+    "capital_return.buyback_executed_in_period_b": "$8.1 billion of common stock net repurchases",
+    "capital_return.dividend_per_share": "Common dividend of $4.1 billion or $1.50 per share",
+    "one_time_items.0.description": "Noninterest revenue excluding Markets was $15.7 billion, up 14%... partially offset by the absence of the $588 million First Republic-related gain in the prior year.",
+    "one_time_items.1.description": "Noninterest expense was $26.9 billion, up 14%... The increase also reflected the absence of an FDIC special assessment accrual release in the prior year."
+  },
+  "confidence": {
+    "results_actual": "high",
+    "guidance_next_quarter": "high",
+    "guidance_full_year": "high",
+    "segment_breakdown": "high",
+    "overall": "high"
+  },
+  "ambiguous_items": [
+    {
+      "field": "results_actual.revenue_usd_b",
+      "explanation": "Document reports both 'reported' ($49.836B) and 'managed' ($50.536B) revenue. Per R2, using managed (non-GAAP) as primary for revenue where both disclosed, though schema uses revenue_usd_b without GAAP/non-GAAP distinction. Selected managed basis as it is management's primary reporting metric per page 6 note 2a."
+    },
+    {
+      "field": "results_actual.yoy_revenue_growth_pct",
+      "explanation": "Document states 'up 10%' for managed revenue YoY. Table shows 8% for managed QoQ, 10% for managed YoY. Using 10% as YoY growth."
+    },
+    {
+      "field": "results_actual.qoq_revenue_growth_pct",
+      "explanation": "Document table shows 8% O/(U) % for managed revenue versus 4Q25. This is QoQ growth rate."
+    },
+    {
+      "field": "one_time_items.0.amount_usd_m",
+      "explanation": "Amount of $588 million is from prior year (1Q25) and is described as 'absence' in current period. This is a comparative one-time item - the gain was realized in prior year and is absent in current year. Amount represents magnitude of prior period non-recurring item for context."
+    },
+    {
+      "field": "one_time_items.1.amount_usd_m",
+      "explanation": "FDIC special assessment accrual release amount not explicitly stated in document. Only described as 'absence' in current year. Cannot determine exact amount from text provided."
+    },
+    {
+      "field": "segment_breakdown.3.yoy_growth_pct",
+      "explanation": "Corporate segment shows (47)% decline in revenue YoY. This is explicitly stated in table as O/(U) %."
+    }
+  ],
+  "self_check": {
+    "no_quarterly_annual_mixup": true,
+    "all_numbers_have_source_quote": true,
+    "units_consistent": true,
+    "no_investment_language": true,
+    "json_valid": true
+  }
+}

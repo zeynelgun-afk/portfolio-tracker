@@ -1,0 +1,174 @@
+{
+  "meta": {
+    "ticker": "META",
+    "fiscal_period_reported": "Q1 2026",
+    "filing_date": "2026-04-30",
+    "parser_version": "v1.0",
+    "currency": "USD"
+  },
+  "results_actual": {
+    "revenue_usd_b": 56.311,
+    "yoy_revenue_growth_pct": 33.0,
+    "qoq_revenue_growth_pct": null,
+    "gaap_eps": 10.44,
+    "non_gaap_eps": null,
+    "gaap_net_income_m": 26773.0,
+    "non_gaap_net_income_m": null,
+    "gross_margin_pct": 81.9,
+    "operating_margin_pct": 41.0,
+    "operating_income_m": 22872.0,
+    "free_cash_flow_m": 12386.0,
+    "diluted_share_count_m": 2564.0
+  },
+  "guidance_next_quarter": {
+    "provided": true,
+    "fiscal_period": "Q2 2026",
+    "revenue_low_b": 58.0,
+    "revenue_mid_b": 59.5,
+    "revenue_high_b": 61.0,
+    "non_gaap_eps_low": null,
+    "non_gaap_eps_mid": null,
+    "non_gaap_eps_high": null,
+    "gaap_eps_low": null,
+    "gaap_eps_mid": null,
+    "gaap_eps_high": null,
+    "gross_margin_low_pct": null,
+    "gross_margin_mid_pct": null,
+    "gross_margin_high_pct": null,
+    "operating_margin_mid_pct": null
+  },
+  "guidance_full_year": {
+    "provided": true,
+    "fiscal_period": "FY 2026",
+    "revenue_low_b": null,
+    "revenue_mid_b": null,
+    "revenue_high_b": null,
+    "non_gaap_eps_low": null,
+    "non_gaap_eps_mid": null,
+    "non_gaap_eps_high": null,
+    "gross_margin_mid_pct": null,
+    "capex_guidance_b": 135.0,
+    "opex_growth_guidance_pct": null
+  },
+  "segment_breakdown": [
+    {
+      "segment_name": "Family of Apps",
+      "revenue_usd_b": 55.909,
+      "yoy_growth_pct": 33.4,
+      "operating_margin_pct": 48.1
+    },
+    {
+      "segment_name": "Reality Labs",
+      "revenue_usd_b": 0.402,
+      "yoy_growth_pct": -2.4,
+      "operating_margin_pct": -1002.0
+    }
+  ],
+  "one_time_items": [
+    {
+      "description": "Income tax benefit from U.S. Treasury Notice 2026-7 regarding Corporate Alternative Minimum Tax treatment of previously capitalized R&D costs, partially offsetting the Q3 2025 One Big Beautiful Bill Act charge",
+      "amount_usd_m": 8030.0,
+      "pretax_or_aftertax": "aftertax",
+      "segment_affected": null
+    },
+    {
+      "description": "Unrealized loss on equity investments",
+      "amount_usd_m": 1075.0,
+      "pretax_or_aftertax": "pretax",
+      "segment_affected": null
+    }
+  ],
+  "capital_return": {
+    "buyback_authorization_b": null,
+    "buyback_executed_in_period_b": 0.0,
+    "dividend_per_share": null,
+    "dividend_change_pct": null
+  },
+  "qualitative_signals": {
+    "tone_score": 3,
+    "tone_label": "bullish",
+    "evidence_phrases": [
+      "We had a milestone quarter with strong momentum across our apps",
+      "We're on track to deliver personal superintelligence to billions of people"
+    ],
+    "warning_phrases": [
+      "we continue to monitor active legal and regulatory matters, including headwinds in the EU and the U.S. that could significantly impact our business and financial results",
+      "which may ultimately result in a material loss"
+    ],
+    "guidance_color": "Q2 2026 revenue $58-61 billion; FY 2026 expenses $162-169 billion; FY 2026 CapEx $125-145 billion (increased from prior $115-135 billion)",
+    "approximations": [],
+    "ceo_quote_primary": "We had a milestone quarter with strong momentum across our apps and the release of our first model from Meta Superintelligence Labs,",
+    "cfo_quote_primary": "We expect second quarter 2026 total revenue to be in the range of $58-61 billion."
+  },
+  "source_quotes": {
+    "results_actual.revenue_usd_b": "Revenue $ 56,311",
+    "results_actual.yoy_revenue_growth_pct": "Revenue was $56.31 billion, an increase of 33% year-over-year",
+    "results_actual.gaap_eps": "Diluted $ 10.44",
+    "results_actual.gaap_net_income_m": "Net income $ 26,773",
+    "results_actual.operating_margin_pct": "Operating margin 41 %",
+    "results_actual.operating_income_m": "Income from operations $ 22,872",
+    "results_actual.free_cash_flow_m": "Free cash flow $ 12,386",
+    "results_actual.diluted_share_count_m": "Diluted 2,564",
+    "results_actual.gross_margin_pct": "Revenue $ 56,311; Cost of revenue 10,218",
+    "guidance_next_quarter.revenue_low_b": "We expect second quarter 2026 total revenue to be in the range of $58-61 billion",
+    "guidance_next_quarter.revenue_high_b": "We expect second quarter 2026 total revenue to be in the range of $58-61 billion",
+    "guidance_full_year.capex_guidance_b": "We anticipate 2026 capital expenditures... to be in the range of $125-145 billion",
+    "one_time_items.0.amount_usd_m": "Includes an $8.03 billion income tax benefit recognized in the first quarter of 2026",
+    "one_time_items.1.amount_usd_m": "Unrealized (gain) loss on equity investments 1,075",
+    "segment_breakdown.0.revenue_usd_b": "Family of Apps 55,909",
+    "segment_breakdown.1.revenue_usd_b": "Reality Labs 402",
+    "capital_return.buyback_executed_in_period_b": "Repurchases of Class A common stock —"
+  },
+  "confidence": {
+    "results_actual": "high",
+    "guidance_next_quarter": "high",
+    "guidance_full_year": "high",
+    "segment_breakdown": "medium",
+    "overall": "high"
+  },
+  "ambiguous_items": [
+    {
+      "field": "results_actual.gross_margin_pct",
+      "explanation": "Computed: (Revenue 56311 - Cost of revenue 10218) / Revenue 56311 * 100 = 81.9%. Not explicitly stated as Non-GAAP gross margin; derived from GAAP figures."
+    },
+    {
+      "field": "results_actual.qoq_revenue_growth_pct",
+      "explanation": "Not stated in document. Only YoY growth provided."
+    },
+    {
+      "field": "guidance_next_quarter.revenue_mid_b",
+      "explanation": "Computed: (58 + 61) / 2 = 59.5. Midpoint of stated range."
+    },
+    {
+      "field": "guidance_full_year.capex_guidance_b",
+      "explanation": "Computed: (125 + 145) / 2 = 135. Midpoint of stated range."
+    },
+    {
+      "field": "segment_breakdown[0].yoy_growth_pct",
+      "explanation": "Computed: (55909 - 41902) / 41902 * 100 = 33.4%. Derived from segment revenue table."
+    },
+    {
+      "field": "segment_breakdown[0].operating_margin_pct",
+      "explanation": "Computed: Operating income 26900 / Revenue 55909 * 100 = 48.1%. Not explicitly stated in document."
+    },
+    {
+      "field": "segment_breakdown[1].yoy_growth_pct",
+      "explanation": "Computed: (402 - 412) / 412 * 100 = -2.4%. Derived from segment revenue table."
+    },
+    {
+      "field": "segment_breakdown[1].operating_margin_pct",
+      "explanation": "Computed: Operating loss (4028) / Revenue 402 * 100 = -1002.0%. Not explicitly stated in document."
+    },
+    {
+      "field": "one_time_items[1].amount_usd_m",
+      "explanation": "Identified from cash flow statement adjustment 'Unrealized (gain) loss on equity investments' of $1,075 million. Classified as one-time per R6 (investment gains/losses)."
+    }
+  ],
+  "self_check": {
+    "no_quarterly_annual_mixup": true,
+    "all_numbers_have_source_quote": true,
+    "units_consistent": true,
+    "no_investment_language": true,
+    "json_valid": true
+  }
+}
