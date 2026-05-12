@@ -125,6 +125,98 @@ FIXTURE_CHECKS = {
             check_eq("tone_score (very_bullish)", True, p.qualitative_signals.tone_score >= 4),
         ],
     },
+    "tsla_q1_2026": {
+        "filing_date": "2026-04-22",
+        "fiscal_period": "Q1 2026",
+        "company_name": "Tesla, Inc.",
+        "ticker": "TSLA",
+        "checks": lambda p: [
+            check_eq("revenue_usd_b", 22.387, p.results_actual.revenue_usd_b, 0.1),
+            check_eq("yoy_revenue_growth_pct", 16.0, p.results_actual.yoy_revenue_growth_pct, 1.0),
+            check_eq("gaap_eps", 0.13, p.results_actual.gaap_eps, 0.02),
+            check_eq("non_gaap_eps", 0.41, p.results_actual.non_gaap_eps, 0.02),
+            check_eq("gross_margin_pct (GAAP)", 21.1, p.results_actual.gross_margin_pct, 0.5),
+            check_eq("operating_margin_pct", 4.2, p.results_actual.operating_margin_pct, 0.3),
+            check_eq("free_cash_flow_m", 1444.0, p.results_actual.free_cash_flow_m, 50),
+            check_eq("guidance_q_provided (TSLA qualitative only)", False, p.guidance_next_quarter.provided),
+            check_eq("guidance_fy_provided (qualitative only)", False, p.guidance_full_year.provided),
+            check_eq("segment_count_min", True, len(p.segment_breakdown) >= 3),
+            check_eq("tone_score (bullish AI/Optimus narrative)", True, p.qualitative_signals.tone_score >= 2),
+        ],
+    },
+    "jpm_q1_2026": {
+        "filing_date": "2026-04-14",
+        "fiscal_period": "Q1 2026",
+        "company_name": "JPMorgan Chase & Co.",
+        "ticker": "JPM",
+        "checks": lambda p: [
+            # JPM banka — revenue "managed" vs "reported" ayrımı, ikisi de kabul edilebilir
+            check_eq("revenue_usd_b (50.5 managed veya 49.8 reported)", True,
+                     p.results_actual.revenue_usd_b is not None
+                     and abs(p.results_actual.revenue_usd_b - 50.0) < 1.0),
+            check_eq("gaap_eps", 5.94, p.results_actual.gaap_eps, 0.02),
+            check_eq("gaap_net_income_m", 16500.0, p.results_actual.gaap_net_income_m, 200),
+            check_eq("guidance_q_provided (banka çeyrek guide vermez)", False, p.guidance_next_quarter.provided),
+            # JPM bazen NII outlook verir → guidance_full_year provided olabilir, bu OK
+            check_eq("tone_score reasonable", True, -2 <= p.qualitative_signals.tone_score <= 5),
+        ],
+    },
+    "lly_q1_2026": {
+        "filing_date": "2026-04-30",
+        "fiscal_period": "Q1 2026",
+        "company_name": "Eli Lilly and Company",
+        "ticker": "LLY",
+        "checks": lambda p: [
+            check_eq("revenue_usd_b", 19.799, p.results_actual.revenue_usd_b, 0.1),
+            check_eq("yoy_revenue_growth_pct", 56.0, p.results_actual.yoy_revenue_growth_pct, 1.0),
+            check_eq("gaap_eps", 8.26, p.results_actual.gaap_eps, 0.02),
+            check_eq("non_gaap_eps", 8.55, p.results_actual.non_gaap_eps, 0.02),
+            # FULL YEAR GUIDANCE RAISED → provided=True KRITIK
+            check_eq("guidance_fy_provided (LLY YILLIK guide verir)", True, p.guidance_full_year.provided),
+            check_eq("guidance_fy_revenue_low_b", 82.0, p.guidance_full_year.revenue_low_b, 0.5),
+            check_eq("guidance_fy_revenue_high_b", 85.0, p.guidance_full_year.revenue_high_b, 0.5),
+            check_eq("guidance_fy_eps_low", 35.50, p.guidance_full_year.non_gaap_eps_low, 0.5),
+            check_eq("guidance_fy_eps_high", 37.00, p.guidance_full_year.non_gaap_eps_high, 0.5),
+            check_eq("IPR&D_one_time_flagged", True, len(p.one_time_items) >= 1),
+            check_eq("tone_score (very_bullish guidance RAISE)", True, p.qualitative_signals.tone_score >= 3),
+        ],
+    },
+    "amzn_q1_2026": {
+        "filing_date": "2026-04-29",
+        "fiscal_period": "Q1 2026",
+        "company_name": "Amazon.com, Inc.",
+        "ticker": "AMZN",
+        "checks": lambda p: [
+            check_eq("revenue_usd_b", 181.5, p.results_actual.revenue_usd_b, 0.5),
+            check_eq("yoy_revenue_growth_pct", 17.0, p.results_actual.yoy_revenue_growth_pct, 1.0),
+            check_eq("gaap_eps", 2.78, p.results_actual.gaap_eps, 0.02),
+            check_eq("gaap_net_income_m", 30300.0, p.results_actual.gaap_net_income_m, 200),
+            check_eq("operating_income_m", 23900.0, p.results_actual.operating_income_m, 200),
+            # AWS, NA, International segmentleri
+            check_eq("segment_count", 3, len(p.segment_breakdown)),
+            # Anthropic $16.8B pre-tax one-time (KRİTİK — R6 yeni eklendi)
+            check_eq("anthropic_gains_one_time_flagged", True, len(p.one_time_items) >= 1),
+            # AMZN guidance verir — Q2 revenue range
+            check_eq("guidance_q_provided", True, p.guidance_next_quarter.provided),
+            check_eq("tone_score (very_bullish AWS acc)", True, p.qualitative_signals.tone_score >= 3),
+        ],
+    },
+    "meta_q1_2026": {
+        "filing_date": "2026-04-29",
+        "fiscal_period": "Q1 2026",
+        "company_name": "Meta Platforms, Inc.",
+        "ticker": "META",
+        "checks": lambda p: [
+            check_eq("revenue_usd_b", 56.311, p.results_actual.revenue_usd_b, 0.1),
+            check_eq("yoy_revenue_growth_pct", 33.0, p.results_actual.yoy_revenue_growth_pct, 1.0),
+            check_eq("operating_margin_pct", 41.0, p.results_actual.operating_margin_pct, 1.0),
+            check_eq("operating_income_m", 22872.0, p.results_actual.operating_income_m, 100),
+            # META Q2 revenue guidance + FY capex guidance verir
+            check_eq("guidance_q_or_fy_provided", True,
+                     p.guidance_next_quarter.provided or p.guidance_full_year.provided),
+            check_eq("tone_score (Superintelligence narrative)", True, p.qualitative_signals.tone_score >= 3),
+        ],
+    },
 }
 
 
