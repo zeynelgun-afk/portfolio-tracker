@@ -2280,29 +2280,29 @@ def main():
         # ─────────────────────────────────────────────────────────
 
         # ─────────────────────────────────────────────────────────
-        # BİLANÇO MÜDÜRÜ — 8-K earnings monitor (12 May 2026)
-        # 08:30 catchup, 13:00-16:30 BMO/15dk, 17:00 T-1 snapshot,
-        # 22:00-01:30 AMC/15dk, 02:00 AMC geç catchup. Tümü DM-only.
+        # ANALİST TAKİP — Analyst revision monitoring (12 May 2026)
+        # 13:00-16:30 (60dk), 16:30-23:30 (30dk), 23:30-01:30 (30dk),
+        # Cmt 10:00 catchup. Tümü DM-only.
         try:
-            from agent.bilanco_muduru import bilanco_muduru_tick
+            from agent.analist_takip import analist_takip_tick
 
-            def _bilanco_muduru_zamanlayici():
+            def _analist_takip_zamanlayici():
                 while True:
                     try:
-                        bilanco_muduru_tick()
+                        analist_takip_tick()
                     except Exception as e:
-                        print(f"[BilancoMuduru-Zamanlayici] Hata: {e}")
+                        print(f"[AnalistTakip-Zamanlayici] Hata: {e}")
                     time.sleep(60)
 
-            _tbm = threading.Thread(
-                target=_bilanco_muduru_zamanlayici,
+            _tat = threading.Thread(
+                target=_analist_takip_zamanlayici,
                 daemon=True,
-                name="BilancoMuduru",
+                name="AnalistTakip",
             )
-            _tbm.start()
-            print(f"[Bot]   08:30/13-16:30/17:00/22-01:30/02:00 TR → Bilanço Müdürü (DM-only)")
+            _tat.start()
+            print(f"[Bot]   13:00-01:30 TR → Analist Takip (revize polling, DM-only)")
         except Exception as e:
-            print(f"[Bot] BilancoMuduru başlatılamadı: {e}")
+            print(f"[Bot] AnalistTakip başlatılamadı: {e}")
         # ─────────────────────────────────────────────────────────
 
         offset = load_offset()
