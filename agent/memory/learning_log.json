@@ -634,22 +634,6 @@
   ],
   "entries": [
     {
-      "id": "BT005",
-      "tarih": "2026-04-13",
-      "kaynak": "backtest_nasdaq_30hisse_2021_2023",
-      "kategori": "k11_ayı_performansı",
-      "ders": "K-11 3xATR chandelier 2022 ayı piyasasında PF 1.89 — en yüksek PF. Neden: Ayı piyasasında nadiren RSI 70'e çıkıldığı için K-11 exit nadiren tetikleniyor, chandelier trailing stop büyük kazançları koruyor (avg win +16%). 2xATR ayı piyasasında PF 1.42 — dar stop çok erken kesiyor. K-11 3xATR tüm rejimlerde en yüksek PF'yi veriyor.",
-      "veri": {
-        "2022_k11_3xATR_pf": 1.89,
-        "2022_k11_2xATR_pf": 1.42,
-        "2022_stop5pct_pf": 2.32,
-        "2022_k11_3xATR_aw": 16.05
-      },
-      "aksiyon": "K-11 3xATR chandelier ayı piyasasında da koru. Minimum 3xATR — 2xATR'ye asla düşme.",
-      "guven": "KESİN",
-      "n_trade": 900
-    },
-    {
       "id": "BT006",
       "tarih": "2026-04-13",
       "kaynak": "backtest_nasdaq_30hisse_2021_2023",
@@ -1084,6 +1068,11 @@
       "date": "2026-05-12",
       "source": "post_trade",
       "insight": "CAT: DERS: CAT'te tenkan_bounce sinyali momentum sağlayabilir ancak K-11 kademeli kâr alma sistemi SURE çıkışından önce kârı korumak için mutlaka devreye alınmalı."
+    },
+    {
+      "date": "2026-05-13",
+      "source": "closing_analysis",
+      "insight": "# DECISION BLOCK"
     }
   ]
 }
