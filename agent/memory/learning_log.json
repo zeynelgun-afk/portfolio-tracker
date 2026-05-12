@@ -634,51 +634,6 @@
   ],
   "entries": [
     {
-      "id": "BT003",
-      "tarih": "2026-04-13",
-      "kaynak": "backtest_25_hisse_730gun",
-      "kategori": "giris_sinyali",
-      "ders": "Giriş filtresi karşılaştırması: RSI≤40 + SMA200 üstü en iyi. RSI≤40/SMA200: PF 1.46, WR 53.2%, 79 sinyal (yeterli fırsat). RSI≤35/SMA200: PF 1.10, WR 56.2%, sadece 32 sinyal (çok az fırsat). Daha sıkı RSI filtresi (35) daha az trade + daha düşük PF veriyor. SMA200 üstü olmak kritik — aşağısında bounce denemeleri çok riskli.",
-      "veri": {
-        "entry_rsi40_sma200": {
-          "n": 79,
-          "wr": 53.2,
-          "avg": 2.14,
-          "pf": 1.46,
-          "hold": 23.5,
-          "aw": 10.17,
-          "al": -6.97
-        },
-        "entry_rsi35_sma200": {
-          "n": 32,
-          "wr": 56.2,
-          "avg": 1.4,
-          "pf": 1.1,
-          "hold": 22.5,
-          "aw": 8.52,
-          "al": -7.76
-        }
-      },
-      "aksiyon": "Swing/portföy girişlerde: RSI ≤ 40 + SMA200 üstü kombinasyonu kullan. RSI 35'e düşürme.",
-      "guven": "MUHTEMEL",
-      "n_trade": 111
-    },
-    {
-      "id": "BT004",
-      "tarih": "2026-04-13",
-      "kaynak": "backtest_nasdaq_30hisse_2021_2023",
-      "kategori": "rejim_farkliligi",
-      "ders": "2022 ayı piyasasında TÜM stratejiler negatif ortalama getiri üretti. 2022 stop_5pct: WR %11.3, avg -3.88% (piyasa sürekli düşünce stop keser). 2023 toparlanmada stop_5pct: WR %32.6, avg +1.57%, PF 2.90. SONUÇ: Rejim tespiti kritik. VIX > 30 veya SPY SMA200 altındayken normal giriş kuralları çalışmıyor — ya daha az pozisyon ya da hiç giriş yok. K-13 (VIX bazlı konum boyutu) bu nedenle var — ayı piyasasında küçük poz al.",
-      "veri": {
-        "2021_boga_avg": 1.67,
-        "2022_ayi_avg": -3.88,
-        "2023_top_avg": 1.57
-      },
-      "aksiyon": "SPY SMA200 altındayken: pozisyon büyüklüğünü yarıya indir, stop'u %5'e çek, yeni giriş sayısını max 1'e sınırla.",
-      "guven": "KESİN",
-      "n_trade": 695
-    },
-    {
       "id": "BT005",
       "tarih": "2026-04-13",
       "kaynak": "backtest_nasdaq_30hisse_2021_2023",
@@ -1119,6 +1074,16 @@
       "date": "2026-05-12",
       "source": "closing_analysis",
       "insight": "**DECISION BLOCK**"
+    },
+    {
+      "date": "2026-05-12",
+      "source": "post_trade",
+      "insight": "GEV: DERS: Dividend portföyde tenkan_bounce sinyali strateji uyumsuzluğu yarattı, temel analiz önceliği esas alınmalı."
+    },
+    {
+      "date": "2026-05-12",
+      "source": "post_trade",
+      "insight": "CAT: DERS: CAT'te tenkan_bounce sinyali momentum sağlayabilir ancak K-11 kademeli kâr alma sistemi SURE çıkışından önce kârı korumak için mutlaka devreye alınmalı."
     }
   ]
 }

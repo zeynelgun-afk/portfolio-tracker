@@ -1,225 +1,207 @@
 {
   "macro": {
-    "sinyal": "NEUTRAL",
+    "sinyal": "RISK_OFF",
     "guven": "MEDIUM",
-    "ana_tema": "CPI verileri öncesi VIX'te hafif yükselişle temkinli bekleme modu",
+    "ana_tema": "CPI ve GDP verileri öncesi karışık sinyaller; tahvil faizleri yükselirken VIX normal seviyede, stagflasyon riski izleniyor",
     "beklentiler": [
-      "Cuma günkü enflasyon ve GDP verileri volatiliteyi artıracak",
-      "VIX'in 20 seviyesini aşması durumunda risk-off rotasyonu gerekebilir"
+      "15 Mayıs CPI verisi enflasyondaki yavaşlamayı teyit edecek ancak %5.8 ile yüksek seviye korunacak",
+      "17 Mayıs GDP verisinin -2.8% ile resesyon sinyali vermesi durumunda stagflasyon endişeleri güçlenebilir"
     ],
-    "risk_faktoru": "Beklenenden yüksek CPI ve tahvil getirilerindeki keskin yükseliş",
+    "risk_faktoru": "GDP verisinin -2.8% ile beklentileri aşağı yönlü sert şekilde bozması ve stagflasyon senaryosunun güçlenmesi",
     "tahmin": {
-      "yon": "NEUTRAL",
-      "buyukluk": "MEDIUM",
+      "yon": "DOWN",
+      "buyukluk": "LOW",
       "sembol": "SPY"
     },
     "_agent": "MACRO_AGENT",
-    "_timestamp": "2026-05-11T14:05:57.946536"
+    "_timestamp": "2026-05-12T13:06:31.364799"
   },
   "sector": {
-    "aktif_rejim": "jeopolitik_kriz",
-    "lider_sektor": "Sanayi (XLI)",
-    "zayif_sektor": "Teknoloji (XLK)",
-    "rotasyon_onerisi": "Teknoloji (XLK) sektöründen Sanayi (XLI) sektörüne",
+    "aktif_rejim": "ai_boom",
+    "lider_sektor": "Teknoloji / XLK",
+    "zayif_sektor": "Faydalı Hizmetler / XLU",
+    "rotasyon_onerisi": "Aşırı yoğunlaşan teknoloji (XLK) pozisyonlarından enerji (XLE) ve endüstri (XLI) sektörlerine kademeli rotasyon",
     "guven": "MEDIUM",
     "tahmin": {
-      "yon": "UP",
+      "yon": "NEUTRAL",
       "buyukluk": "MEDIUM",
-      "sembol": "XLI"
+      "sembol": "XLK"
     },
     "_agent": "SECTOR_AGENT",
-    "_timestamp": "2026-05-11T14:07:33.842481"
+    "_timestamp": "2026-05-12T13:07:29.285451"
   },
   "signal": {
     "portfoy_sinyalleri": [
       {
-        "sembol": "ETN",
-        "sinyal": "WATCH",
-        "rsi_yorumu": "oversold",
-        "sma_durumu": "altinda",
-        "aciklama": "Negatif P/L ve düşük momentum, SMA50 altında baskı gösteriyor."
-      },
-      {
         "sembol": "CCJ",
-        "sinyal": "WATCH",
+        "sinyal": "HOLD",
         "rsi_yorumu": "normal",
-        "sma_durumu": "altinda",
-        "aciklama": "Stop mesafesi kritik düzeyde, momentum takibi gerekiyor."
+        "sma_durumu": "ustunde",
+        "aciklama": "Manuel inceleme gerektiren momentum, stop seviyesi korunuyor."
       },
       {
         "sembol": "AMAT",
         "sinyal": "HOLD",
         "rsi_yorumu": "overbought",
         "sma_durumu": "ustunde",
-        "aciklama": "Güçlü momentum ve geniş stop ile SMA50 üzerinde."
+        "aciklama": "Kâr realizasyonu için uygun, trend güçlü."
       },
       {
         "sembol": "KLAC",
         "sinyal": "HOLD",
         "rsi_yorumu": "normal",
         "sma_durumu": "ustunde",
-        "aciklama": "Pozitif P/L ve stabil teknik görünüm korunuyor."
+        "aciklama": "Kısa vadeli geri çekilme, stop mesafesi korunuyor."
       },
       {
         "sembol": "DINO",
         "sinyal": "HOLD",
         "rsi_yorumu": "normal",
         "sma_durumu": "ustunde",
-        "aciklama": "Enerji sektörü liderliğinde, stop mesafesi uygun."
+        "aciklama": "Hafif zarar ama stop güvenli mesafede."
       },
       {
         "sembol": "SNPS",
         "sinyal": "HOLD",
         "rsi_yorumu": "normal",
         "sma_durumu": "ustunde",
-        "aciklama": "Hafif günlük düşüşe rağmen teknik yapı sağlam."
+        "aciklama": "Konsolidasyon görünümü, stop korunuyor."
       },
       {
         "sembol": "PPG",
-        "sinyal": "HOLD",
-        "rsi_yorumu": "oversold",
-        "sma_durumu": "altinda",
-        "aciklama": "SMA50 altında ve zayıf momentum ile baskı altında."
-      },
-      {
-        "sembol": "CF",
         "sinyal": "WATCH",
         "rsi_yorumu": "oversold",
         "sma_durumu": "altinda",
-        "aciklama": "Güçlü günlük toparlanma ancak SMA50 altında."
+        "aciklama": "Düşüş momentumu, dikkatli izleme gerekiyor."
+      },
+      {
+        "sembol": "CF",
+        "sinyal": "BUY",
+        "rsi_yorumu": "overbought",
+        "sma_durumu": "ustunde",
+        "aciklama": "Güçlü hacimli çıkış, yeni momentum başlangıcı."
       },
       {
         "sembol": "COLB",
         "sinyal": "HOLD",
-        "rsi_yorumu": "normal",
-        "sma_durumu": "ustunde",
-        "aciklama": "Pozitif P/L ve normal stop mesafesi ile stabil."
+        "rsi_yorumu": "oversold",
+        "sma_durumu": "altinda",
+        "aciklama": "Destek test ediyor, stop mesafesi korunuyor."
       },
       {
         "sembol": "TSM",
         "sinyal": "SELL",
-        "rsi_yorumu": "oversold",
+        "rsi_yorumu": "normal",
         "sma_durumu": "altinda",
-        "aciklama": "Jeopolitik risk ve stop'a %1.9 mesafede acil satış."
+        "aciklama": "Stop uyarısı ve manuel inceleme, risk yüksek."
       },
       {
         "sembol": "VIRT",
         "sinyal": "HOLD",
         "rsi_yorumu": "normal",
         "sma_durumu": "ustunde",
-        "aciklama": "Pozitif P/L ve geniş stop mesafesi ile momentum korunuyor."
-      },
-      {
-        "sembol": "DINO",
-        "sinyal": "HOLD",
-        "rsi_yorumu": "normal",
-        "sma_durumu": "ustunde",
-        "aciklama": "İkinci pozisyon, güçlü P/L ve enerji desteği var."
+        "aciklama": "Sakin seyir, stop mesafesi iyi."
       },
       {
         "sembol": "O",
-        "sinyal": "WATCH",
+        "sinyal": "SELL",
         "rsi_yorumu": "oversold",
         "sma_durumu": "altinda",
-        "aciklama": "Stop mesafesi %1.6 ile kritik, faiz hassasiyeti devam ediyor."
+        "aciklama": "Stop çok yakın, temettü pozisyonu risk altında."
       },
       {
         "sembol": "GTY",
-        "sinyal": "HOLD",
+        "sinyal": "SELL",
         "rsi_yorumu": "oversold",
         "sma_durumu": "altinda",
-        "aciklama": "Zayıf P/L ve dar stop mesafesi ile dikkatli izlenmeli."
+        "aciklama": "Stop uyarısı ve negatif getiri, çıkış düşünülmeli."
       },
       {
         "sembol": "PSA",
         "sinyal": "HOLD",
         "rsi_yorumu": "normal",
         "sma_durumu": "ustunde",
-        "aciklama": "Pozitif P/L ve geniş stop mesafesi ile sağlam."
+        "aciklama": "Sınırda stop, temettü gücü korunuyor."
       },
       {
         "sembol": "GEV",
         "sinyal": "HOLD",
-        "rsi_yorumu": "oversold",
-        "sma_durumu": "altinda",
-        "aciklama": "Negatif P/L'ye rağmen enerji toparlanması destekliyor."
+        "rsi_yorumu": "normal",
+        "sma_durumu": "ustunde",
+        "aciklama": "Günlük sıçrama ama manuel inceleme var."
       },
       {
         "sembol": "CVS",
         "sinyal": "HOLD",
-        "rsi_yorumu": "normal",
+        "rsi_yorumu": "overbought",
         "sma_durumu": "ustunde",
-        "aciklama": "Güçlü P/L ve geniş stop mesafesi ile sağlam teknik pozisyon."
+        "aciklama": "Kâr güçlü, realizasyon için uygun."
       },
       {
         "sembol": "PR",
         "sinyal": "HOLD",
-        "rsi_yorumu": "oversold",
-        "sma_durumu": "altinda",
-        "aciklama": "Enerji sektörü desteği ve uygun stop mesafesi var."
-      },
-      {
-        "sembol": "CAT",
-        "sinyal": "WATCH",
         "rsi_yorumu": "normal",
         "sma_durumu": "ustunde",
-        "aciklama": "Swing'de stop %1.8 mesafede, kâr koruma modunda."
+        "aciklama": "Dengeli yükseliş, adil değer üzerinde."
       },
       {
         "sembol": "VRT",
         "sinyal": "HOLD",
+        "rsi_yorumu": "overbought",
+        "sma_durumu": "ustunde",
+        "aciklama": "Swing kârı yüksek, stop takip ediyor."
+      },
+      {
+        "sembol": "RPRX",
+        "sinyal": "HOLD",
         "rsi_yorumu": "normal",
         "sma_durumu": "ustunde",
-        "aciklama": "Güçlü P/L ve geniş stop ile swing pozisyonu sağlam."
+        "aciklama": "Sınırlı hareket, stop korunuyor."
       }
     ],
-    "en_guclu_setup": "AMAT - Güçlü momentum, geniş stop mesafesi",
-    "en_zayif_setup": "TSM - Jeopolitik risk, stop'a %1.9 mesafede",
+    "en_guclu_setup": "CF - güçlü momentum ve adil değerleşme",
+    "en_zayif_setup": "TSM - stop uyarısı ve düşük manuel skor",
     "guven": "MEDIUM",
     "_agent": "SIGNAL_AGENT",
-    "_timestamp": "2026-05-11T14:10:17.652846"
+    "_timestamp": "2026-05-12T13:09:54.066027"
   },
   "risk": {
     "risk_seviyesi": "HIGH",
     "stop_yakini": [
-      "O - %1.6 uzakta",
-      "CAT - %1.8 uzakta",
-      "TSM - %1.9 uzakta",
-      "CCJ - %3.7 uzakta",
-      "GTY - %4.1 uzakta",
-      "CF - %4.7 uzakta",
-      "ETN - %4.8 uzakta"
+      "O - %0.6 uzakta",
+      "TSM - %3.0 uzakta",
+      "GTY - %3.4 uzakta",
+      "PSA - %4.0 uzakta"
     ],
-    "konsantrasyon_uyarisi": "Technology sektör konsantrasyonu %39.8 ile K-12 limitlerini zorluyor.",
-    "senaryo_5pct_dusus": "Piyasa %5 düşerse tahmini kayıp $29,524 (-%5.8), 7 pozisyon stopa yakın.",
+    "konsantrasyon_uyarisi": "Technology sektörü %45.4 ile kritik konsantrasyon seviyesinde - K-12 limiti aşıyor",
+    "senaryo_5pct_dusus": "Tahmini portföy kaybı $26,443 (-%5.9), 7 pozisyon stop kaybı ile kapanacak",
     "onerileri": [
-      "O, CAT, TSM, CCJ için acilen stop mesafesi artır veya pozisyon küçült",
-      "Technology konsantrasyonunu %35 altına çek",
-      "Nakit aşımlarını K-10'a göre düzelt - defansif rotasyon uygula",
-      "VIX 18.2 artışında - savunma pozisyonlarına geçiş değerlendir"
+      "Technology konsantrasyonunu %40 altına düşür - CCJ veya KLAC azaltılabilir",
+      "TSM, O, GTY, PSA için stop mesafesi acil gözden geçirilmeli veya pozisyon küçültülmeli",
+      "GEV, O, PR için tez bozulma alarmı nedeniyle risk azaltma veya çıkış planı yapılmalı"
     ],
-    "guven": "HIGH",
+    "guven": "MEDIUM",
     "_agent": "RISK_AGENT",
-    "_timestamp": "2026-05-11T14:10:31.913670"
+    "_timestamp": "2026-05-12T13:11:08.966865"
   },
   "cio": {
     "karar": "ACIL_CIK",
-    "hedef_sembol": "TSM",
-    "gerekce": "Risk yöneticisi (yüksek güven, öncelikli) TSM pozisyonunu stop loss'a %1.9 mesafede [KESİN] ve jeopolitik risk yüksekliği [MUHTEMEL] nedeniyle acil çıkış olarak işaretliyor. Teknik analist SAT sinyali vermiştir [KESİN]. Sektör analisti (ağırlık 1.85) [KESİN] teknoloji sektöründen çıkışı öneriyor [MUHTEMEL]. Mevcut JEOPOLITIK_KRIZ rejimi [KESİN] ve VIX'teki artış [KESİN] savunma pozisyonlarını destekler [MUHTEMEL]. Bu işlem, %39.8 [KESİN] ile K-12 limitini aşan teknoloji konsantrasyonunu azaltır ve portföy riskini düşürür.",
-    "uyari": "O (%1.6), CAT (%1.8), CCJ (%3.7) ve diğer pozisyonlar da kritik stop mesafesinde [KESİN]. Teknoloji ağırlığı hâlâ %39.8 [KESİN] ile K-12 limitini aşıyor [KESİN]. Cuma günkü CPI/GDP verileri volatiliteyi artırabilir [MUHTEMEL]. VIX 18.2 seviyesinde [KESİN].",
+    "hedef_sembol": "O",
+    "gerekce": "Risk Yöneticisi (öncelik #1) portföy riskini YÜKSEK olarak tespit etti [KESİN]. Realty Income (O) stop seviyesine yalnızca %0.6 uzaklıkta [KESİN] ve tez bozulma alarmı veriyor [KESİN]. Teknik analist SAT sinyali üretti [KESİN]. Makro RISK_OFF ve stagflasyon riski belirtiyor [MUHTEMEL]. Sektör analistinin teknoloji aşırı konsantrasyonu uyarısı ve jeopolitik kriz rejimi riski besliyor [MUHTEMEL]. Acil çıkış zorunlu.",
+    "uyari": "Technology konsantrasyonu %45.4 ile limiti aşıyor [KESİN]. TSM, GTY, PSA pozisyonları da kritik stop mesafesinde [KESİN]. Derhal risk azaltma gerekliliği devam ediyor.",
     "guven": "HIGH",
-    "analist_uzlasma": "YUKSEK",
+    "analist_uzlasma": "ORTA",
     "tahmin": {
-      "yon": "NEUTRAL",
-      "buyukluk": "MEDIUM",
+      "yon": "DOWN",
+      "buyukluk": "LOW",
       "sembol": "SPY"
     },
     "_agent": "CIO_AGENT",
-    "_timestamp": "2026-05-11T14:10:53.588747"
+    "_timestamp": "2026-05-12T13:12:50.305234"
   },
   "weights": {
     "MACRO_AGENT": 0.9791,
-    "SECTOR_AGENT": 1.8515,
+    "SECTOR_AGENT": 1.9441,
     "SIGNAL_AGENT": 0.738,
     "RISK_AGENT": 0.6663,
     "CIO_AGENT": 0.7428

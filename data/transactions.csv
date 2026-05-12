@@ -283,3 +283,4 @@ date,action,symbol,shares,price,total,reason
 2026-05-11,BUY,KLAC,3,1870.52,5611.56,"Swing giriş — tenkan_bounce, kijun_bounce_v2, nr7_sikisma. Stop: $1723.32, Hedef: $2238.54"
 2026-05-11,BUY,AMAT,10,442.48,4424.8,"Swing giriş — tenkan_bounce, kijun_bounce_v2, nr7_sikisma. Stop: $395.88, Hedef: $558.98"
 2026-05-11,BUY,RPRX,205,51.16,10487.8,"Swing giriş — tenkan_bounce, kijun_bounce_v2. Stop: $49.09, Hedef: $56.33"
+2026-05-12,SELL,CAT,3,926.79,2780.37,Swing çıkış — SURE. P/L: +11.5% (15 gün)

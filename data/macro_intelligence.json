@@ -1,25 +1,25 @@
 {
-  "tarih": "2026-05-11T17:05:04.641433+03:00",
-  "vix": 18.2,
+  "tarih": "2026-05-12T16:02:51.053418+03:00",
+  "vix": 18.67,
   "sektor_performans": {
-    "Basic Materials": -0.11139974574962963,
-    "Communication Services": 0.2677106648204086,
-    "Consumer Cyclical": 0.852196982542841,
-    "Consumer Defensive": -0.28558825875374394,
-    "Energy": -0.1707175615106693,
-    "Financial Services": -0.32157058790373005,
-    "Healthcare": -0.1356548123044865,
-    "Industrials": -0.6525118165803923,
-    "Real Estate": 0.023049998408675165,
-    "Technology": 2.5681649816608365,
-    "Utilities": -2.6506656917687943
+    "Basic Materials": 1.9204965235012805,
+    "Communication Services": -1.177271248050027,
+    "Consumer Cyclical": 1.4933173189642934,
+    "Consumer Defensive": -1.0397928955325098,
+    "Energy": 2.3755945202041495,
+    "Financial Services": 0.047903509406643785,
+    "Healthcare": -1.36118808260709,
+    "Industrials": 0.8489149980683397,
+    "Real Estate": 0.9693766137897297,
+    "Technology": 1.0410287139578145,
+    "Utilities": -2.566140243510062
   },
   "dominant_temalar": [
     {
-      "tema_adi": "AI_altyapı",
+      "tema_adi": "enerji_geçiş",
       "güç_skoru": 9,
-      "neden": "Teknoloji sektörü %2.6 ile en güçlü performansı gösterirken [KESİN] AI haberleri destekliyor.",
-      "öncelikli_alt_dal": "güç_soğutma",
+      "neden": "Enerji sektörü %2.4 ile en güçlü performansı gösterdi ve İran savaşının enerji fiyatlarını artırması enflasyonu 3.8%'e çıkardı. [KESİN]",
+      "öncelikli_alt_dal": "güç_altyapısı",
       "önerilen_hisseler": [
         "VRT",
         "ETN",
@@ -28,58 +28,64 @@
       "portföy": "aggressive",
       "aciliyet": "yüksek",
       "hisse_evreni": [
-        "VRT",
-        "ETN",
-        "PWR",
-        "GNRC",
-        "HUBB"
+        "CEG",
+        "WMB",
+        "FSLR",
+        "NEE",
+        "ENPH",
+        "OKE",
+        "NRG",
+        "RUN",
+        "VST",
+        "ET",
+        "KMI",
+        "CCJ"
+      ]
+    },
+    {
+      "tema_adi": "emtia_kaynak",
+      "güç_skoru": 8,
+      "neden": "Hammaddeler sektörü %1.9 artışla ikinci sırada yer aldı ve enflasyonist ortamda emtialar güvenli liman olarak öne çıkıyor. [KESİN]",
+      "öncelikli_alt_dal": "nadir_toprak",
+      "önerilen_hisseler": [
+        "MP",
+        "CCJ",
+        "FCX"
+      ],
+      "portföy": "aggressive",
+      "aciliyet": "yüksek",
+      "hisse_evreni": [
+        "MP",
+        "NOVN",
+        "USA"
       ]
     },
     {
       "tema_adi": "savunma_uzay",
-      "güç_skoru": 5,
-      "neden": "İran gerilimi haberleri jeopolitik riski artırıyor [KESİN].",
+      "güç_skoru": 7,
+      "neden": "İran savaşı jeopolitik gerilimi artırıyor ve savunma harcamaları beklentilerini güçlendiriyor. [MUHTEMEL]",
       "öncelikli_alt_dal": "hipersonik",
       "önerilen_hisseler": [
-        "LHX",
         "RTX",
+        "LMT",
         "NOC"
       ],
-      "portföy": "defensive",
+      "portföy": "balanced",
       "aciliyet": "orta",
       "hisse_evreni": [
-        "RDW",
-        "S",
-        "LHX",
-        "RTX",
+        "CRWD",
+        "LMT",
         "RKLB",
         "ZS",
-        "NOC",
-        "LMT",
-        "AJRD",
-        "CRWD",
-        "PANW",
         "KTOS",
-        "GD"
-      ]
-    },
-    {
-      "tema_adi": "enerji_geçiş",
-      "güç_skoru": 4,
-      "neden": "İran gerilimi petrol fiyatlarını yükseltse de enerji sektörü hafif geriledi [KESİN].",
-      "öncelikli_alt_dal": "nükleer",
-      "önerilen_hisseler": [
-        "NEE",
-        "SO",
-        "DUK"
-      ],
-      "portföy": "balanced",
-      "aciliyet": "düşük",
-      "hisse_evreni": [
-        "CEG",
-        "VST",
-        "NRG",
-        "CCJ"
+        "PANW",
+        "LHX",
+        "RDW",
+        "RTX",
+        "AJRD",
+        "S",
+        "GD",
+        "NOC"
       ]
     }
   ],
@@ -89,52 +95,49 @@
   ],
   "piyasa_modu": "risk-on",
   "aktif_kriz": {
-    "tip": "jeopolitik",
-    "guven": 6,
-    "kanit": "Haberlerde İran gerilimi doğrudan belirtiliyor [KESİN]. VIX 18.2 ile kriz eşiğinin altında [KESİN] kalsa da jeopolitik risk varlığını koruyor [MUHTEMEL]. Enerji sektörünün beklenenin aksine hafif gerilemesi piyasanın krizi hafife aldığını gösteriyor [MUHTEMEL].",
+    "tip": "enflasyon",
+    "guven": 8,
+    "kanit": "Nisan enflasyonu 3.8%'e çıktı ve haberlerde İran savaşının enerji fiyatlarını artırdığı belirtildi. Enerji sektörü %2.4, Hammaddeler %1.9 artışla öne çıkarken Savunma tüketimi -%1.0 ile geriledi. [KESİN]",
     "beneficiary_sectors": [
       "Energy",
-      "Defense",
-      "Gold",
-      "Materials",
-      "Real Estate",
-      "Consumer Defensive"
+      "Basic Materials",
+      "Gold"
     ],
     "sensitive_sectors": [
+      "Consumer Defensive",
       "Technology",
       "Consumer Cyclical",
-      "Communication Services",
-      "Healthcare",
       "Financial Services",
+      "Healthcare",
       "Industrials"
     ]
   },
-  "genel_yorum": "Teknoloji sektörünün güçlü liderliği risk-on modunu gösteriyor [KESİN]. İran gerilimine rağmen VIX 18.2 ile sınırlı korku var [KESİN]. AI teması belirgin şekilde öne çıkıyor [KESİN].",
+  "genel_yorum": "Piyasada enflasyonist baskılar öne çıkarken jeopolitik gerilim enerji ve emtia temalarını güçlendiriyor. VIX 18.7 ile risk-on modu devam ediyor ancak sektörel rotasyon belirgin. [KESİN]",
   "haberler": [
     {
-      "baslik": "Nasdaq 100, Dow Jones 30 and S&P 500 Forecasts – Two of Three Indices Stretched",
-      "kaynak": "fxempire.com",
-      "tarih": "2026-05-11 09:47"
+      "baslik": "A Buying Opportunity In The Bond Market This Summer",
+      "kaynak": "seekingalpha.com",
+      "tarih": "2026-05-12 08:52"
     },
     {
-      "baslik": "Dow slips 56 points as Iran tensions lift oil prices, hit airlines",
-      "kaynak": "invezz.com",
-      "tarih": "2026-05-11 09:40"
+      "baslik": "Inflation continued to rise in April as Iran war impacted energy prices",
+      "kaynak": "foxbusiness.com",
+      "tarih": "2026-05-12 08:51"
     },
     {
-      "baslik": "Nasdaq 100 Index RSI hits a level that triggered a 16% crash last time",
-      "kaynak": "invezz.com",
-      "tarih": "2026-05-11 09:06"
-    },
-    {
-      "baslik": "Chinese Landscape Architect Becomes A Billionaire After AI Pivot Sends His Company's Shares Up Almost 1,600%",
+      "baslik": "Inflation Approached 3-Year High In April As Energy Prices Soared",
       "kaynak": "forbes.com",
-      "tarih": "2026-05-11 09:05"
+      "tarih": "2026-05-12 08:45"
     },
     {
-      "baslik": "Wise set to make Nasdaq debut as company completes shift from London to New York",
-      "kaynak": "reuters.com",
-      "tarih": "2026-05-11 09:03"
+      "baslik": "US inflation jumped to 3.8% in April as war with Iran continues to drive up prices",
+      "kaynak": "theguardian.com",
+      "tarih": "2026-05-12 08:37"
+    },
+    {
+      "baslik": "The End Of Long-Term Investing?",
+      "kaynak": "seekingalpha.com",
+      "tarih": "2026-05-12 08:34"
     }
   ]
 }

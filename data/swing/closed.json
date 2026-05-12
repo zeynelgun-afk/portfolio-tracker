@@ -1,5 +1,5 @@
 {
-  "son_guncelleme": "2026-05-08T15:31:39.875931",
+  "son_guncelleme": "2026-05-12T13:01:34.181856",
   "kapatilan_pozisyonlar": [
     {
       "id": "SWING-020",
@@ -808,7 +808,7 @@
       "kar_zarar_yuzde": 7.7,
       "tutulan_gun": 14,
       "sonuc": "KAZANC",
-      "ders": "## Post-Trade Analiz: GEV (Swing)\n\n**Veri Tutarsızlığı Uyarısı (KESİN):** Giriş 1000, çıkış 1077 olarak görünüyor — bu +%7.7 kâr demek. Ancak P/L %0 ve çıkış nedeni STOP olarak işaretlenmiş. Ya veri hatalı ya da \"1077\" stop seviyesi (giriş üstü trailing stop). Analizi STOP senaryosu üzerinden yapıyorum.\n\n### 1. Hangi K-kuralı?\n**KESİN:** K-06 (stop disiplini) tetiklendi. Tutma süresi 0 gün → seans içi giriş, seans içi stop. K-07 (trailing) devreye girmemiş çünkü süre yok.\n\n### 2. Giriş tezi doğr",
+      "ders": "1. **Kural:** K-06 (stop disiplini) ve K-09 (yakın stop yönetimi) yönetti. **KESİN**\n\n2. **Tezi:** tenkan_bounce. **KESİN** Geçmiş kayıtlarda bu sinyal başarısız (UPS, UEC). **KESİN** GEV'de kısmen çalıştı—+%7.7 kazanç sağladı ancak sürdürülemedi, stop vurdu. **MUHTEMEL**\n\n3. **Çıkış:** K-06 gereği stop vurunca otomatik çıkış doğruydu. **KESİN** Stop seviyesi kârı korudu. **MUHTEMEL**\n\n4. **Dersler:**\n   - Dividend portföyde teknik bounce sinyali strateji uyumsuzluğu; temel analiz önceliği kaçır",
       "giris_nedeni": "Seans içi otomatik giriş — tenkan_bounce",
       "tarama_yontemi": "tenkan_bounce",
       "katalizor": "",
@@ -816,8 +816,8 @@
       "hedef_fiyat": 1269.52,
       "zirve_fiyat": 1166.62,
       "partial_exits": [],
-      "dersler": "## Post-Trade Analiz: GEV (Swing)\n\n**Veri Tutarsızlığı Uyarısı (KESİN):** Giriş 1000, çıkış 1077 olarak görünüyor — bu +%7.7 kâr demek. Ancak P/L %0 ve çıkış nedeni STOP olarak işaretlenmiş. Ya veri hatalı ya da \"1077\" stop seviyesi (giriş üstü trailing stop). Analizi STOP senaryosu üzerinden yapıyorum.\n\n### 1. Hangi K-kuralı?\n**KESİN:** K-06 (stop disiplini) tetiklendi. Tutma süresi 0 gün → seans içi giriş, seans içi stop. K-07 (trailing) devreye girmemiş çünkü süre yok.\n\n### 2. Giriş tezi doğr",
-      "agent_analiz_tarihi": "2026-04-29"
+      "dersler": "1. **Kural:** K-06 (stop disiplini) ve K-09 (yakın stop yönetimi) yönetti. **KESİN**\n\n2. **Tezi:** tenkan_bounce. **KESİN** Geçmiş kayıtlarda bu sinyal başarısız (UPS, UEC). **KESİN** GEV'de kısmen çalıştı—+%7.7 kazanç sağladı ancak sürdürülemedi, stop vurdu. **MUHTEMEL**\n\n3. **Çıkış:** K-06 gereği stop vurunca otomatik çıkış doğruydu. **KESİN** Stop seviyesi kârı korudu. **MUHTEMEL**\n\n4. **Dersler:**\n   - Dividend portföyde teknik bounce sinyali strateji uyumsuzluğu; temel analiz önceliği kaçır",
+      "agent_analiz_tarihi": "2026-05-12"
     },
     {
       "id": "SWING-202604271833-NNE",
@@ -975,6 +975,29 @@
       "hedef_fiyat": 59.95,
       "zirve_fiyat": 51.57,
       "partial_exits": []
+    },
+    {
+      "id": "SWING-202604271903-CAT",
+      "sembol": "CAT",
+      "adet": 3,
+      "giris_fiyati": 831.57,
+      "cikis_fiyati": 926.79,
+      "giris_tarihi": "2026-04-27",
+      "cikis_tarihi": "2026-05-12",
+      "cikis_nedeni": "SURE",
+      "kar_zarar_yuzde": 11.45,
+      "tutulan_gun": 15,
+      "sonuc": "KAZANC",
+      "ders": "**1. Hangi K-kuralı yönetti?**  \nK-06 (stop disiplini) ve 15-gün süre sınırı (SURE) temel kurallar. K-04 (SMA filtresi) girişte, K-11 (kademeli kâr alma) çıkışta etkili.\n\n**2. Giriş tezi doğru muydu? Ne oldu?**  \nTenkan_bounce tezi doğru çıktı. **KESİN:** 15 günde %11.45 kazanç. Önceki CAT işlemi (%4.26) gibi her zaman bu kadar güçlü olmuyor.\n\n**3. Çıkış zamanlaması iyi miydi?**  \nSURE nedeniyle 15. gün çıkışı. **KESİN:** Kurala uyuldu. **MUHTEMEL:** Momentum devam ederken erken olabilir.\n\n**4. ",
+      "giris_nedeni": "Seans içi otomatik giriş — tenkan_bounce",
+      "tarama_yontemi": "tenkan_bounce",
+      "katalizor": "",
+      "stop_loss": 754.92,
+      "hedef_fiyat": 1023.2,
+      "zirve_fiyat": 929.71,
+      "partial_exits": [],
+      "dersler": "**1. Hangi K-kuralı yönetti?**  \nK-06 (stop disiplini) ve 15-gün süre sınırı (SURE) temel kurallar. K-04 (SMA filtresi) girişte, K-11 (kademeli kâr alma) çıkışta etkili.\n\n**2. Giriş tezi doğru muydu? Ne oldu?**  \nTenkan_bounce tezi doğru çıktı. **KESİN:** 15 günde %11.45 kazanç. Önceki CAT işlemi (%4.26) gibi her zaman bu kadar güçlü olmuyor.\n\n**3. Çıkış zamanlaması iyi miydi?**  \nSURE nedeniyle 15. gün çıkışı. **KESİN:** Kurala uyuldu. **MUHTEMEL:** Momentum devam ederken erken olabilir.\n\n**4. ",
+      "agent_analiz_tarihi": "2026-05-12"
     }
   ],
   "istatistikler": {
