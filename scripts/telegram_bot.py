@@ -563,6 +563,12 @@ def format_yardim() -> str:
   <code>/tema</code> — Bugünün dominant temaları (AI tespiti)
   <code>/havuz</code> — AI'nin son aday hisse havuzu + son kararlar
   <code>/risk</code> — Risk paneli (manuel üret + grup'a gönder)
+
+<b>📡 Analist Takip:</b>
+  <code>/analist TICKER</code> — Tek hissenin anlık analist sinyali
+  <code>/analist watchlist</code> — İzlenen ticker'lar listesi
+  <code>/analist status</code> — Son 24h sinyal özeti + sistem durumu
+  <code>/analist tara</code> — Şimdi tüm watchlist için manuel tarama
   <code>/fiyat AAPL</code> — Canlı fiyat + değişim
 
 <b>Adil Değer v5.0 (önerilen — 11 May 2026 sonrası):</b>
@@ -1572,6 +1578,52 @@ def isle_mesaj(msg: dict):
     # ── /vix ──────────────────────────────────────────────────────
     if text_lower in ("/vix",):
         tg_send(chat_id, format_vix(), reply_to=msg_id)
+        return
+
+    # ── /analist [TICKER|watchlist|status|tara|yardim] ─────────────
+    # Analist Takip sistemi komutları (DM'lerin yanı sıra manuel sorgu)
+    if text_lower.startswith("/analist"):
+        arg = text_lower.replace("/analist", "").strip()
+        try:
+            from agent.analist_takip import (
+                analyze_single_ticker_now,
+                format_watchlist_summary,
+                format_system_status,
+                run_scan_now,
+                format_analist_help,
+            )
+        except Exception as e:
+            tg_send(chat_id, f"❌ Analist Takip modülü yüklenemedi: {e}", reply_to=msg_id)
+            return
+
+        if not arg or arg in ("yardim", "yardım", "help", "?"):
+            tg_send(chat_id, format_analist_help(), reply_to=msg_id)
+            return
+
+        if arg in ("watchlist", "wl", "izleme"):
+            tg_send(chat_id, "⏳ Watchlist alınıyor...", reply_to=msg_id)
+            tg_send(chat_id, format_watchlist_summary(), reply_to=msg_id)
+            return
+
+        if arg in ("status", "durum", "sağlık", "saglik"):
+            tg_send(chat_id, format_system_status(), reply_to=msg_id)
+            return
+
+        if arg in ("tara", "scan", "polling"):
+            tg_send(chat_id, "⏳ Tarama başlatıldı (30-90sn)...", reply_to=msg_id)
+            tg_send(chat_id, run_scan_now(), reply_to=msg_id)
+            return
+
+        # Aksi halde ticker olarak yorumla
+        ticker = arg.upper().replace(" ", "").replace("$", "")
+        if 1 <= len(ticker) <= 6 and (ticker.isalpha() or "." in ticker):
+            tg_send(chat_id, f"⏳ <code>{ticker}</code> analist sinyali alınıyor...",
+                    reply_to=msg_id)
+            tg_send(chat_id, analyze_single_ticker_now(ticker), reply_to=msg_id)
+        else:
+            tg_send(chat_id, f"❌ Geçersiz argüman: <code>{arg}</code>\n\n"
+                             f"<code>/analist yardim</code> ile komutları gör.",
+                    reply_to=msg_id)
         return
 
     # ── /kriz ─────────────────────────────────────────────────────
