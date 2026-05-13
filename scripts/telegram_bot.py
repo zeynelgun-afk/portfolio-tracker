@@ -2118,29 +2118,52 @@ def main():
         # hafta_ici=True  → sadece Pzt-Cum
         # pazar_mu=True   → sadece Pazar
         # Her ikisi False → her gün
+        # Tuple yapısı: (saat, dakika, workflow, inputs, hft, pazar, açıklama, nyse_relative)
+        # nyse_relative=True → NYSE seans saatine bağlı, kış aylarında (DST off)
+        # otomatik +1 saat ötelenir (NYSE kışın 1 saat geç açıldığı için).
+        # nyse_relative=False → TR sabit saat, NYSE'den bağımsız (haber, weekly vs.)
         _GH_ZAMANLAMALAR = [
             # Hafta içi sabit
-            (9,   0, "news_radar.yml",       {},                    True,  False, "Haber Radarı"),
-            (12, 30, "adil_deger_panel.yml", {},                    True,  False, "Adil Değer Paneli"),
+            (9,   0, "news_radar.yml",       {},                    True,  False, "Haber Radarı",                  False),
+            (12, 30, "adil_deger_panel.yml", {},                    True,  False, "Adil Değer Paneli",             False),
             # 13 May 2026: morning_scan.yml (swing_entry_engine) → scripts/legacy/, kaldırıldı.
             # 13 May 2026: result_tracker.yml → scripts/legacy/, kaldırıldı (kullanılmıyor).
-            (16,  0, "agent.yml",            {"mode":"morning"},    True,  False, "Agent Sabah"),
-            (23, 35, "research_tracker.yml", {"mode":"daily"},      False, False, "Research Tracker Günlük"),  # v5.0 Etap 11 her gün 23:35
+            (16,  0, "agent.yml",            {"mode":"morning"},    True,  False, "Agent Sabah",                   True),
+            (23, 35, "research_tracker.yml", {"mode":"daily"},      False, False, "Research Tracker Günlük",       True),  # v5.0 Etap 11 her gün 23:35
             # Kapanış: gece yarısı 00:30 TR (yeni güne geçmiş ama hafta içinde)
             # Pzt gecesi 00:30 = Salı sabahı, Cum gecesi 00:30 = Cmt sabahı
             # weekday(): Sal=1…Cmt=5 → 1-5 arası = gece öncesi hafta içiydi
-            (0,  30, "agent.yml",            {"mode":"closing"},    False, False, "Agent Kapanış"),
+            (0,  30, "agent.yml",            {"mode":"closing"},    False, False, "Agent Kapanış",                 True),
             # Haftalık — Pazar
-            (12,  0, "agent.yml",            {"mode":"weekly"},     False, True,  "Agent Haftalık"),
-            (14,  0, "research_tracker.yml", {"mode":"weekly"},     False, True,  "Research Tracker Haftalık"),  # v5.0 Etap 11 Pazar 14:00
+            (12,  0, "agent.yml",            {"mode":"weekly"},     False, True,  "Agent Haftalık",                False),
+            (14,  0, "research_tracker.yml", {"mode":"weekly"},     False, True,  "Research Tracker Haftalık",     False),  # v5.0 Etap 11 Pazar 14:00
         ]
 
+        def _is_nyse_dst_active():
+            """NYSE şu an DST'de mi? Yaz aylarında True, kışın False."""
+            try:
+                ny = pytz.timezone("America/New_York")
+                return bool(datetime.now(ny).dst())
+            except Exception:
+                return True  # default yaz kabul et (Mart-Kasım arası)
+
+        def _ofset_saati(saat_orig, nyse_relative):
+            """nyse_relative=True ise ve kış mevsimindeysek saati +1 ötele."""
+            if nyse_relative and not _is_nyse_dst_active():
+                return (saat_orig + 1) % 24
+            return saat_orig
+
         # Monitor: seans saatlerinde her 30 dakika ayrı liste
-        # 17:00-23:30 TR arası (14:00-20:30 UTC) Pzt-Cum
-        _MONITOR_SAATLER = set()
-        for _h in range(17, 24):
-            _MONITOR_SAATLER.add((_h, 0))
-            _MONITOR_SAATLER.add((_h, 30))
+        # YAZ: NYSE TR 16:30-23:00 → monitor 17:00-23:30 (seans içi)
+        # KIŞ: NYSE TR 17:30-00:00 → monitor 18:00-00:30 (seans içi)
+        def _monitor_saatler_simdiki():
+            """Mevsime göre dinamik monitor saatleri."""
+            saatler = set()
+            offset = 0 if _is_nyse_dst_active() else 1
+            for _h in range(17 + offset, 24 + offset):
+                saatler.add((_h % 24, 0))
+                saatler.add((_h % 24, 30))
+            return saatler
 
         _gh_tetiklendi = {}  # "key:YYYY-MM-DD:HH:MM" → True
 
@@ -2155,13 +2178,14 @@ def main():
                     saat, dakika = simdi.hour, simdi.minute
                     gun_str    = simdi.strftime("%Y-%m-%d")
 
-                    # Sabit zamanlamalar
-                    for s, d, wf, inputs, hft, pazar, aciklama in _GH_ZAMANLAMALAR:
+                    # Sabit zamanlamalar (DST-aware: nyse_relative=True kışın +1sa ötelenir)
+                    for s_orig, d, wf, inputs, hft, pazar, aciklama, nyse_rel in _GH_ZAMANLAMALAR:
+                        s = _ofset_saati(s_orig, nyse_rel)  # kış aylarında +1 saat ötele
                         if saat != s or dakika != d:
                             continue
                         if hft   and not is_hft:   continue
                         if pazar and not is_pazar:  continue
-                        # Kapanış özel kontrolü (00:30 TR, önceki gün hft olmalı)
+                        # Kapanış özel kontrolü (00:30 TR yaz / 01:30 TR kış, önceki gün hft olmalı)
                         if wf == "agent.yml" and inputs.get("mode") == "closing":
                             if not is_gece_hft: continue
 
@@ -2171,8 +2195,9 @@ def main():
                             print(f"[GH] {simdi.strftime('%H:%M')} → {aciklama}")
                             _gh_dispatch(wf, inputs or None)
 
-                    # Monitor: seans içi her 30 dk
-                    if is_hft and (saat, dakika) in _MONITOR_SAATLER:
+                    # Monitor: seans içi her 30 dk (DST-aware dinamik saat seti)
+                    monitor_saatler = _monitor_saatler_simdiki()
+                    if is_hft and (saat, dakika) in monitor_saatler:
                         key = f"agent_monitor:{gun_str}:{saat:02d}{dakika:02d}"
                         if key not in _gh_tetiklendi:
                             _gh_tetiklendi[key] = True
@@ -2189,15 +2214,16 @@ def main():
 
         _tw = threading.Thread(target=_workflow_zamanlayici, daemon=True, name="WorkflowZamanlayici")
         _tw.start()
-        print(f"[Bot] Workflow zamanlayıcı başlatıldı (tüm cron'lar Railway'de):")
+        nyse_dst = _is_nyse_dst_active()
+        mevsim = "YAZ (NYSE DST aktif)" if nyse_dst else "KIŞ (NYSE DST kapalı, +1sa ofset)"
+        ofs = 0 if nyse_dst else 1
+        print(f"[Bot] Workflow zamanlayıcı başlatıldı ({mevsim}):")
         print(f"[Bot]   09:00 TR (Hft) → Haber Radarı")
         print(f"[Bot]   12:30 TR (Hft) → Adil Değer Paneli")
-        print(f"[Bot]   14:00 TR (Hft) → Sabah Evren Taraması")
-        print(f"[Bot]   16:00 TR (Hft) → Agent Sabah")
-        print(f"[Bot]   17:00-23:30 TR (Hft/30dk) → Agent Monitor")
-        print(f"[Bot]   23:30 TR (Hft) → Sonuç Takip")
-        print(f"[Bot]   23:35 TR (Gün) → Research Tracker Günlük (v5.0)")
-        print(f"[Bot]   00:30 TR (Hft) → Agent Kapanış")
+        print(f"[Bot]   {16+ofs:02d}:00 TR (Hft) → Agent Sabah")
+        print(f"[Bot]   {17+ofs:02d}:00-{23+ofs:02d}:30 TR (Hft/30dk) → Agent Monitor")
+        print(f"[Bot]   {23+ofs:02d}:35 TR (Gün) → Research Tracker Günlük (v5.0)")
+        print(f"[Bot]   {(0+ofs):02d}:30 TR (Hft gecesi) → Agent Kapanış")
         print(f"[Bot]   12:00 TR (Pzr) → Agent Haftalık")
         print(f"[Bot]   14:00 TR (Pzr) → Research Tracker Haftalık DM Özet (v5.0)")
 
