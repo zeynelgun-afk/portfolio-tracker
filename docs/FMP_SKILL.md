@@ -204,6 +204,7 @@ Many endpoints were renamed. Wrong names silently return `[]`. Always use these:
 | `financial-score` | `financial-scores` | plural |
 | `earnings-surprises` / `earnings-surprise` | `earnings` | earnings endpoint'i hem geçmiş hem gelecek veriyor; surprise manuel hesaplanır |
 | `historical-earnings` / `earnings-historical` | `earnings` | tek endpoint — limit param ile geçmiş tahmini dönüyor |
+| `historical-eod` | `historical-price-eod/full` | **13 May 2026 doğrulandı**: kısa `historical-eod` HTTP 404 + body `[]` döner; "endpoint yok" ile boş veri kolayca karıştırılır. `historical-price-eod/light` = date+price+volume; `historical-price-eod/full` = OHLCV. |
 
 ---
 
@@ -1169,7 +1170,12 @@ All v3/v4 routes are **blocked**. Use these stable equivalents:
 
 ## CHANGELOG
 
+### 13 Mayıs 2026 — `historical-eod` 404 tuzağı dökümante edildi
+
+- **Endpoint Name Traps tablosuna eklendi**: `historical-eod` kısa adı HTTP 404 + body `[]` döner. Doğru ad `historical-price-eod/full` (OHLCV) veya `historical-price-eod/light` (date+price+volume). Bu tuzağa monitor.py ATR hesabını yazarken düşüldü — eski memory notu "historical-eod newest-first" formatı doğru ama endpoint adı eksikti. 404 + boş `[]` body kombinasyonu özellikle yanıltıcı çünkü gerçekten endpoint yok ile veri yok arasındaki farkı gizliyor.
+
 ### 10 Mayıs 2026 (akşam) — `news/press-releases` parametre tuzağı düzeltmesi
+
 
 - **`news/press-releases` ZORUNLU param `symbols` (çoğul)**, tekil `symbol` sessizce IGNORE edilir ve generic "latest press releases" listesi döner. İlk audit testinde AAPL ile yapılan teyit yanıltıcıydı (AAPL latest'te zaten vardı). VST ile yapılan canlı test bu tuzağı ortaya çıkardı: `?symbol=VST` → 10 PR'ın tümü AAPL döndü; `?symbols=VST` → "Vistra Reports First Quarter 2026 Results" doğru filtre. Skill ve memory düzeltildi.
 - **Content kapsamı uyarısı**: `text` alanı özet (~500-1500 karakter), tam press release değil. Tam metin için `url` (businesswire / prnewswire) veya 8-K Exhibit 99.1 SEC fetch (tipik 10K-30K char) gerekli. `bilanco-sonrasi-us` skill'i mevcut SEC.gov fetch akışını korumalı; `news/press-releases` triage için yardımcı.
