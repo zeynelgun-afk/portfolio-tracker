@@ -1,7 +1,15 @@
 #!/usr/bin/env python3
 """
-Adil Değer - 9 Yöntem × 3 Senaryo Hesaplayıcı v5.0
+Adil Değer - 9 Yöntem × 3 Senaryo Hesaplayıcı v5.1
 Finzora AI v3.7.2 metodolojisi
+
+v5.1 Değişiklikleri (12 Mayıs 2026 - LQDA testi sonrası):
+- INFLECTION POINT TESPİTİ (Forward outlier flag düzeltmesi):
+  Son 2 çeyrek POZİTİF EPS + önceki 2 çeyrek NEGATİF EPS → gerçek karlılık dönüşümü
+  → forward_outlier flag iptal, Forward P/E + PEG + EV/FWD yöntemleri korunur
+  Tetikleyici örnek: LQDA Q4-2025 (+$0.17) + Q1-2026 (+$0.60) sonrası
+  EPS_FWD/EPS_TTM = 21.56x ratio'ya rağmen Forward yöntemleri ELENMEDİ
+  Önceki davranış: Inflection biotech'ler yanlışlıkla outlier sayılıp Forward elenirdi
 
 v5.0 Değişiklikleri (11 Mayıs 2026):
 - SADELEŞTIRME: 4 yöntem kaldırıldı (Graham Number, EV/EBIT, Justified P-B, Rule of 40)
@@ -1005,12 +1013,41 @@ def analyze(ticker):
         if rev_now > 0 and rev_prev > 0:
             revenue_growth_yoy = (rev_now - rev_prev) / rev_prev
     
-    # Forward outlier
+    # Forward outlier (v5.1: inflection-aware)
+    # v5.1 değişikliği: Son 2 çeyrek POZİTİF + önceki 2 çeyrek NEGATİF EPS varsa
+    # gerçek "inflection point" → outlier flag iptal (LQDA gibi biotech ramp örnekleri).
+    # Aksi halde forward_growth_ratio > 2.5 ise outlier (FWD şişkin = base değişikliği).
     forward_growth_ratio = None
     forward_outlier = False
+    inflection_point = False
+    inflection_note = None
+    
+    # v5.1: Quarterly EPS bazlı inflection tespiti
+    if len(qinc_list) >= 4:
+        try:
+            q_eps = [safe_get(qinc_list[i], 'eps') for i in range(4)]
+            # qinc_list newest-first: [Q-son, Q-1, Q-2, Q-3]
+            # İnflection: son 2 ardışık pozitif + önceki 2 ardışık negatif
+            if (q_eps[0] is not None and q_eps[1] is not None and
+                q_eps[2] is not None and q_eps[3] is not None and
+                q_eps[0] > 0 and q_eps[1] > 0 and
+                q_eps[2] < 0 and q_eps[3] < 0):
+                inflection_point = True
+                inflection_note = (
+                    f"INFLECTION POINT teyit: Son 2 çeyrek EPS pozitif "
+                    f"(${q_eps[1]:.2f} → ${q_eps[0]:.2f}), önceki 2 çeyrek negatif "
+                    f"(${q_eps[3]:.2f}, ${q_eps[2]:.2f}). Forward outlier flag iptal."
+                )
+        except (IndexError, TypeError, KeyError):
+            pass
+    
     if eps_fwd_2y and eps_ttm and eps_ttm > 0:
         forward_growth_ratio = eps_fwd_2y / eps_ttm
-        forward_outlier = forward_growth_ratio > 2.5
+        # v5.1: Inflection point varsa outlier flag DEVRE DIŞI
+        if inflection_point:
+            forward_outlier = False
+        else:
+            forward_outlier = forward_growth_ratio > 2.5
     
     # 1y price return
     price_1y_return = None
@@ -1419,7 +1456,7 @@ def analyze(ticker):
     return {
         'ticker': ticker,
         'analysis_date': datetime.now().strftime('%Y-%m-%d %H:%M'),
-        'version': '5.0',
+        'version': '5.1',
         'mode': mode,
         'mode_criteria_met': criteria_count,
         'mode_criteria_detail': criteria_detail,
@@ -1438,6 +1475,8 @@ def analyze(ticker):
         'market_regime': market, 'pure_forward': pure_forward,
         'forward_outlier': forward_outlier,
         'forward_growth_ratio': round(forward_growth_ratio, 2) if forward_growth_ratio else None,
+        'inflection_point': inflection_point,
+        'inflection_note': inflection_note,
         'analyst_count_fwd': analyst_count_fwd,  # v5.0 Etap 12: forward verisi güven göstergesi
         'forward_data_quality': forward_data_quality,  # CONSENSUS/SINGLE/ALGORITHMIC/UNKNOWN
         # v5.0 Etap 13 Fix-2: Forward-First Hibrit
@@ -1492,6 +1531,12 @@ def format_output(result):
     
     if result['forward_outlier']:
         out.append(f"  ⚠️ Forward outlier: EPS_FWD/EPS_TTM = {result['forward_growth_ratio']}x")
+    
+    # v5.1: Inflection point teyidi
+    if result.get('inflection_point'):
+        out.append(f"  🌱 v5.1 INFLECTION POINT: Forward yöntemler korundu")
+        if result.get('inflection_note'):
+            out.append(f"     {result['inflection_note']}")
     
     # v4: Quality premium bilgisi
     qd = result.get('quality_detail', {})
@@ -1885,7 +1930,7 @@ def analyze_pre_ipo(input_json_path):
         'company': company,
         'mode': 'PRE_IPO',
         'analysis_date': datetime.now().strftime('%Y-%m-%d %H:%M'),
-        'version': '5.0',
+        'version': '5.1',
         'sector_key': sector_key,
         'ipo_price_mid': ipo_price,
         'ipo_date': d.get('ipo_date'),
