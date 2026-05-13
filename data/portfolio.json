@@ -1,6 +1,6 @@
 {
   "_aciklama": "Tek portföy — 13 Mayıs 2026 sadeleştirmesi sonrası. Sleeve/sektör ağırlığı yok. Pozisyon büyüklüğü kararı Zeynel'e ait.",
-  "_son_guncelleme": "2026-05-13 17:56",
+  "_son_guncelleme": "2026-05-13 17:57",
   "_template_acik": {
     "symbol": "TICKER",
     "sector": "Sektör adı (Türkçe veya İngilizce)",
@@ -99,7 +99,7 @@
     },
     {
       "symbol": "SNPS",
-      "sector": "Technology / EDA Software",
+      "sector": "Technology",
       "entry_date": "2026-05-05",
       "entry_price": 507.09,
       "shares": 180,
@@ -169,7 +169,7 @@
     },
     {
       "symbol": "VRT",
-      "sector": "—",
+      "sector": "Industrials",
       "entry_date": "2026-04-30",
       "entry_price": 315.48,
       "shares": 10,
@@ -179,7 +179,7 @@
     },
     {
       "symbol": "RPRX",
-      "sector": "—",
+      "sector": "Healthcare",
       "entry_date": "2026-05-11",
       "entry_price": 51.16,
       "shares": 205,
@@ -189,7 +189,7 @@
     },
     {
       "symbol": "RSI",
-      "sector": "—",
+      "sector": "Consumer Cyclical",
       "entry_date": "2026-05-12",
       "entry_price": 28.21,
       "shares": 116,
