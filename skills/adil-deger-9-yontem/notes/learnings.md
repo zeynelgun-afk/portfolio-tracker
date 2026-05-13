@@ -637,3 +637,129 @@ Karar: 🟢 GÜÇLÜ AL
 
 **Manuel hesabımızla uyumluluk:** Manuel medyan $68, skill medyan ~$130 (PEG ve DCF olduğu için yukarı çekiyor). PEG hala yüksek (cap %50 cömert biotech için) — bu noktanın daha sıkı kalibrasyona ihtiyacı var (v5.3 önerisi). Ama önceki saçma değerler ($1590, N/A, $2-7) yok.
 
+
+---
+
+## v5.3 — PEG Growth Source Hiyerarşi (12 Mayıs 2026)
+
+### v5.2 Sonrası Açıklar — Manuel Hesap ile Tutarsızlık
+
+v5.2'nin LQDA için 3 düzeltmesi başarılıydı ancak PEG hala manuel referansın üzerindeydi:
+
+| Yöntem | v5.2 LQDA Sonucu | Manuel Referans |
+|---|---|---|
+| Forward P/E | $94-160 (sektör 22x × $3.09=$68 üst) | $77 (P/E 25x × $3.09) |
+| DCF | $132-154 | — |
+| **PEG** | **$218-409** | **$77 (sürdürülebilir P/E 25x)** |
+| EV/FWD Revenue | $60-120 | $61-92 (P/S 8-12x) |
+| EV/FWD EBITDA | $41-66 | — |
+
+**Sorun:** PEG, growth_pct = sustainable_cap %50 ile çalışıyordu — biotech için cömert.
+**Gerçek growth:** LQDA 3y forward CAGR (2026→2029) %36.6.
+
+### Fix: FMP analyst-estimates Multi-Year CAGR
+
+FMP'nin kendi dokümantasyonu netleştiriyor:
+> "We use compound annual growth rate to estimate revenue as we found it gives the most accurate result."
+
+`analyst-estimates` endpoint'i zaten CAGR-bazlı yıllık tahminler veriyor. Doğrudan multi-year extraction ile gerçek LTG elde edilir.
+
+### v5.3 Hiyerarşi
+
+`adil_deger.py` calculate_methods içinde:
+
+```python
+# 1. ÖNCE: 3y analyst CAGR (Wall Street LTG standardı)
+cagr_3y = data.get('forward_eps_3y_cagr')  # FY1→FY4 atlama 3
+if cagr_3y is not None and cagr_3y > 0:
+    forward_growth_raw = cagr_3y
+    forward_growth_source = 'analyst_3y_cagr'
+
+# 2. FALLBACK: 2y analyst CAGR
+elif cagr_2y is not None and cagr_2y > 0:
+    forward_growth_raw = cagr_2y
+    forward_growth_source = 'analyst_2y_cagr'
+
+# 3. FALLBACK: v5.2 2y geometric
+elif eps_fwd and eps_ttm > 0:
+    forward_growth_raw = (eps_fwd / eps_ttm) ** 0.5 - 1
+    forward_growth_source = 'fwd_eps_geometric'
+
+# Sustainable cap her durumda uygulanır
+forward_growth = min(forward_growth_raw, sustainable_cap)
+```
+
+CAGR hesabı analyze() içinde önceden yapılıp data_pack'e iletiliyor:
+
+```python
+forward_years_pos = [e for e in forward_years if safe_get(e, 'epsAvg') > 0]
+if len(forward_years_pos) >= 4:
+    # 3y CAGR (FY1 → FY4, 3 yıl atlama)
+    eps_fy1 = safe_get(forward_years_pos[0], 'epsAvg')
+    eps_fy4 = safe_get(forward_years_pos[3], 'epsAvg')
+    forward_eps_3y_cagr = (eps_fy4 / eps_fy1) ** (1/3) - 1
+```
+
+### v5.3 Karşılaştırmalı Sonuçlar
+
+**LQDA (inflection biotech):**
+- 3y CAGR: **%36.6** (FY1 $3.09 → FY4 $7.88, min analyst=2)
+- PEG: v5.2 $218-409 → **v5.3 $90-169** (manuel $77 referansına yakın)
+
+**KO (olgun, dividend):**
+- 3y CAGR: **%6.5** (FY1 $3.26 → FY4 $3.93, min analyst=2)
+- PEG: v5.2 N/A (eşik altı) → **v5.3 $16-31** — şimdi hesaplanabilir
+- Mevcut $73 → PEG'e göre KO çok pahalı (düşük büyüme şirketi yüksek P/E)
+
+**NVDA (AI mega-cap):**
+- 3y CAGR: **%40.1** (FY1 $8.28 → FY4 $12.92, min analyst=10)
+- PEG: v5.2 $445-834 → **v5.3 $150-282**
+- Mevcut ~$190 → PEG ($188 normal) **çok yakın**, model iyi kalibre
+
+### Önemli Mimari Karar: `forward_eps_3y_cagr` Önceden Hesaplama
+
+CAGR hesabı analyze() içinde önceden yapılıp data_pack'e konuldu (calculate_methods'a iletilmek yerine). Bunun gerekçesi:
+- calculate_methods sektör/regime/mod kombinasyonu için 3 kez çağrılıyor (bear/normal/bull)
+- 3y CAGR ticker-bağımsız, regime-bağımsız (aynı est_list)
+- Her seferinde tekrar hesaplamak boşa iş
+
+Bu paterni gelecek v5.x değişikliklerinde de izle: **ticker-level metadata önceden hesapla, regime-level scenarios calculate_methods içinde uygula**.
+
+### est_list Limit Değişikliği
+
+Önceki: `limit=4` — sadece 4 yıl tahmin
+Yeni: `limit=6` — 6 yıl (geçmiş + forward), forward'ı filtreledikten sonra 4-5 forward yıl elde edilir.
+
+3y CAGR (FY1→FY4) için **en az 4 forward yıl şart**. limit=4 yetersiz olabiliyordu (FMP bazı şirketlerde 1-2 geçmiş yıl da döndürüyor).
+
+### Genel Ders
+
+**Bir hesap için "doğru veri kaynağı" varsa, türetilmiş yedek kaynaklar (geometric, ratios) ikincil olmalı.** v5.0-v5.2'de PEG için geometric türetilme kullanılıyordu çünkü "tek yıl forward" varsayılıyordu. FMP `analyst-estimates` zaten multi-year CAGR-bazlı projeksiyon veriyor — bu bilgiyi kullanmamak veri israfıydı.
+
+**"Inflection-Aware Computation Cascade" prensibinin v5.3 uzantısı:** Hesaplama hiyerarşisi her zaman doğrudan kaynaklı veriden türetilmiş veriye doğru olmalı. Multi-year analyst CAGR → 2y geometric → sektör default sırası bu prensibe uyuyor.
+
+### LQDA v5.3 Tam Sonuç
+
+```
+🚀 MOD: GROWTH (4/5 kriter)
+🌱 v5.1 INFLECTION POINT: Forward yöntemler korundu
+🌱 v5.2 DCF FCF override: Geçmiş yıllık ortalama yerine TTM FCF kullanıldı
+📊 v5.3 PEG GROWTH KAYNAĞI: %36.6 (3y CAGR (FY1→FY4), min analyst#=2)
+
+Forward P/E            $94.23       $130.88      $159.67
+DCF                    $132.32      $154.28      $154.28      ← v5.2
+PEG                    $90.59       $113.24      $169.86      ← v5.3
+EV/FWD Revenue         $60.14       $92.56       $120.35
+EV/FWD EBITDA          $41.61       $55.50       $66.62       ← v5.2
+
+Karar: 🟢 GÜÇLÜ AL
+```
+
+**Manuel hesap referansıyla uyum:**
+- Forward P/E normal $131 vs manuel $77 (skill cömert, ama büyüme primi var)
+- PEG normal **$113 vs manuel $77** (çok daha yakın, %46 fark)
+- EV/FWD Revenue normal $93 vs manuel $61-92 (üst aralık)
+- Skill medyan ~$115, manuel medyan $77 — fark anlamlı şekilde azaldı (önceki $130'dan)
+
+v5.3 ile inflection biotech için skill **production-ready** seviyede artık.
+
