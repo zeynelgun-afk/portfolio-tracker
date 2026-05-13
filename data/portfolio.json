@@ -1,6 +1,6 @@
 {
   "_aciklama": "Tek portföy — 13 Mayıs 2026 sadeleştirmesi sonrası. Sleeve/sektör ağırlığı yok. Pozisyon büyüklüğü kararı Zeynel'e ait.",
-  "_son_guncelleme": "2026-05-13T08:14:06",
+  "_son_guncelleme": "2026-05-13 17:45",
   "_template_acik": {
     "symbol": "TICKER",
     "sector": "Sektör adı (Türkçe veya İngilizce)",
@@ -83,9 +83,9 @@
       "entry_date": "2026-04-29",
       "entry_price": 389.34,
       "shares": 149,
-      "entry_reason": "[BİRLEŞTİRİLDİ — 2 giriş] Finzora: AI/yarı-iletken tema 9/10 momentum güçlü, nakit konuşlandırma | K-22 nakit fazlası dağıtımı: +35 hisse @ $391.38 // [SWING — tenkan_bounce, kijun_bounce_v2, nr7_sikisma] | Seans içi otomatik giriş — tenkan_bounce, kijun_bounce_v2, nr7_sikisma",
-      "stop_loss": 369.87,
-      "target": null
+      "entry_reason": "LONG — AI tedarik zinciri tematik pozisyon (semiconductor capex döngüsü). Önceki SWING kısmı 13 May 2026'da bu long tez içinde konsolide edildi (felsefe çelişkisi giderildi). Stop $406 = 21SMA (mevcut $436'tan 2.4×ATR altı, entry üstünde kalır). Target $506 = en yüksek 3 analyst hedef ortalaması ($517/$500/$500). Tez bozulması: AI capex döngüsü tepe yapma, yarı-iletken talep düşüşü, makro şok.",
+      "stop_loss": 406.0,
+      "target": 506.0
     },
     {
       "symbol": "KLAC",
@@ -93,9 +93,9 @@
       "entry_date": "2026-05-05",
       "entry_price": 1749.73,
       "shares": 23,
-      "entry_reason": "[BİRLEŞTİRİLDİ — 2 giriş] AI_tedarik_zinciri tema taraması — teknik:8/10 fundamental:5/10 | K-22 nakit fazlası dağıtımı: +12 hisse @ $1731.61 // [SWING — tenkan_bounce, kijun_bounce_v2, nr7_sikisma] | Seans içi otomatik giriş — tenkan_bounce, kijun_bounce_v2, nr7_sikisma",
-      "stop_loss": 1723.32,
-      "target": null
+      "entry_reason": "LONG — AI tedarik zinciri tematik pozisyon (proses kontrol ekipmanları). Önceki SWING kısmı 13 May 2026'da bu long tez içinde konsolide edildi (felsefe çelişkisi giderildi). Stop $1713 = son 4 hafta dip (21SMA çok sıkıydı, 0.9×ATR sahte tetik riski). Target $2000 = en yüksek 3 analyst hedef ortalaması (3 ayrı analyst aynı seviye). Tez bozulması: AI capex döngüsü tepe yapma, KLA pazar payı kaybı, makro şok.",
+      "stop_loss": 1713.0,
+      "target": 2000.0
     },
     {
       "symbol": "SNPS",
