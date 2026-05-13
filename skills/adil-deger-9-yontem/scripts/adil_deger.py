@@ -1,7 +1,20 @@
 #!/usr/bin/env python3
 """
-Adil Değer - 9 Yöntem × 3 Senaryo Hesaplayıcı v5.1
+Adil Değer - 9 Yöntem × 3 Senaryo Hesaplayıcı v5.2
 Finzora AI v3.7.2 metodolojisi
+
+v5.2 Değişiklikleri (12 Mayıs 2026 - LQDA v5.1 çıktısı analiz sonrası):
+- PEG GROWTH CAP: forward_growth Lynch standardı sürdürülebilirlik tavanı.
+  Sektör bazlı: high-growth (semicon/tech/biotech/comm) %50, mature %35.
+  Inflection biotech (LQDA: raw 2y CAGR %377) PEG = $1590 saçma değer üretiyordu.
+  v5.2: cap'li %50 → PEG ~makul aralık. forward_growth_capped flag + not eklendi.
+- DCF FCF INFLECTION OVERRIDE: inflection_point + fcf_ttm > 0 ise
+  fcf_normalized = fcf_ttm (TTM FCF, son 4 çeyrek toplamı).
+  Önceki: cf_list[:4] yıllık ortalama → 3 yıl zarar dahil olduğu için DCF bastırılıyordu.
+  LQDA fcf_ttm ~$41M (Q1-26 +$50M + Q4-25 +$42M + Q3-25 -$11M + Q2-25 -$40M) → DCF anlamlı.
+- EV/FWD EBITDA PROXY: ebitda_fwd_2y yok/negatif (ALGORITHMIC quality veya analist eksik) iken
+  rev_fwd × sektör_net_margin × marj çarpan ile proxy EBITDA hesaplanır.
+  Çarpan: healthcare 1.5x, tech 1.4x, generic 1.3x. ebitda_proxy_used flag + not.
 
 v5.1 Değişiklikleri (12 Mayıs 2026 - LQDA testi sonrası):
 - INFLECTION POINT TESPİTİ (Forward outlier flag düzeltmesi):
@@ -675,10 +688,24 @@ def calculate_methods(data, regime_key, sector_key, is_ai_megacap, mode, quality
     # === GROWTH (3 yöntem - v5.0: Rule of 40 çıkarıldı) ===
     
     # Forward growth oranı (PEG için)
+    # v5.2: Inflection point veya yüksek büyüme durumunda sürdürülebilirlik cap'i uygula.
+    # Tek seferlik patlama (örnek LQDA TTM EPS $0.26 → FWD EPS $5.46, raw growth %377)
+    # PEG'in target_pe = peg_target × growth_pct formülü ile saçma değerler üretir.
+    # Lynch standardı: PEG için "sürdürülebilir" 5y CAGR ya da analist long-term growth kullan.
     forward_growth = None
+    forward_growth_raw = None
+    forward_growth_capped = False
     if eps_fwd and eps_ttm and eps_ttm > 0:
         # 2 yıllık büyüme → yıllık geometrik
-        forward_growth = (eps_fwd / eps_ttm) ** 0.5 - 1
+        forward_growth_raw = (eps_fwd / eps_ttm) ** 0.5 - 1
+        # Sektör bazlı sürdürülebilirlik cap'i
+        if sector_key in {'semicon_design', 'semicon_growing', 'tech_software', 
+                          'healthcare_biotech', 'communication'}:
+            sustainable_cap = 0.50  # %50 (high-growth sektörler)
+        else:
+            sustainable_cap = 0.35  # %35 (olgun/mature sektörler)
+        forward_growth = min(forward_growth_raw, sustainable_cap)
+        forward_growth_capped = forward_growth_raw > sustainable_cap
     
     # 7. PEG
     if forward_outlier:
@@ -689,6 +716,10 @@ def calculate_methods(data, regime_key, sector_key, is_ai_megacap, mode, quality
         if not eps_for_peg and eps_ttm and eps_ttm > 0 and forward_growth:
             eps_for_peg = eps_ttm * (1 + forward_growth)
         growth['PEG'] = calc_peg(eps_for_peg, forward_growth, adj['peg_target'])
+        if forward_growth_capped and growth['PEG']:
+            notes['PEG'] = (f"⚠️ v5.2 GROWTH CAP: Raw 2y CAGR %{forward_growth_raw*100:.0f} "
+                          f"→ sürdürülebilir %{forward_growth*100:.0f} ile cap'lendi "
+                          f"(sektör: {sector_key})")
     
     # 8. EV/Forward Revenue
     if forward_outlier:
@@ -705,10 +736,39 @@ def calculate_methods(data, regime_key, sector_key, is_ai_megacap, mode, quality
         growth['EV/FWD EBITDA'] = None
         notes['EV/FWD EBITDA'] = "⚠️ ELENDİ (forward outlier)"
     else:
+        # v5.2: ebitda_fwd yok/negatif ise rev_fwd × sektör tipik EBITDA marjı ile proxy
+        # Bu özellikle inflection biotech için kritik — analist EBITDA tahmini
+        # ALGORITHMIC quality'de yanlış işaretli veya eksik gelebiliyor.
+        ebitda_for_calc = ebitda_fwd
+        ebitda_proxy_used = False
+        ebitda_margin_proxy = None
+        
+        if (not ebitda_fwd or ebitda_fwd <= 0) and rev_fwd and rev_fwd > 0:
+            # Sektör tipik EBITDA marjı: net_margin_target × marj çarpan
+            # Healthcare/Pharma: × 1.5 (yüksek brüt + R&D)
+            # Tech/SaaS: × 1.4 (yazılım marj profili)
+            # Generic mature: × 1.3
+            if 'healthcare' in sector_key:
+                margin_mult = 1.5
+            elif sector_key in {'tech_software', 'semicon_design', 'semicon_growing'}:
+                margin_mult = 1.4
+            else:
+                margin_mult = 1.3
+            net_margin_t = sector_mults.get('net_margin_target', 0.15)
+            ebitda_margin_proxy = net_margin_t * margin_mult
+            ebitda_for_calc = rev_fwd * ebitda_margin_proxy
+            ebitda_proxy_used = True
+        
         growth['EV/FWD EBITDA'] = calc_ev_forward_ebitda(
-            ebitda_fwd, sector_mults['ev_ebitda'] * adj['ev_ebitda'] * ai_mult['ev_ebitda'] * qm,
+            ebitda_for_calc, sector_mults['ev_ebitda'] * adj['ev_ebitda'] * ai_mult['ev_ebitda'] * qm,
             cash, debt, shares
         )
+        if ebitda_proxy_used and growth['EV/FWD EBITDA']:
+            notes['EV/FWD EBITDA'] = (
+                f"⚠️ v5.2 PROXY: Forward EBITDA yok/negatif "
+                f"(analist tahmin eksik veya ALGORITHMIC). "
+                f"Rev_fwd × %{ebitda_margin_proxy*100:.1f} sektör EBITDA marjı kullanıldı."
+            )
     
     # NOT: Rule of 40 v5.0'da çıkarıldı — saf SaaS şirketleri için, portföyde yok
     
@@ -1048,6 +1108,15 @@ def analyze(ticker):
             forward_outlier = False
         else:
             forward_outlier = forward_growth_ratio > 2.5
+    
+    # v5.2: Inflection point sonrası DCF için fcf_normalized override
+    # Geçmiş yıllık FCF anlamsız (zararlı dönem dahil, ortalama bastırıyor).
+    # TTM FCF (son 4 çeyrek toplamı) inflection sonrası gerçek karlılık koşu hızını yansıtır.
+    fcf_normalize_overridden = False
+    if inflection_point and fcf_ttm and fcf_ttm > 0:
+        original_fcf_norm = fcf_normalized
+        fcf_normalized = fcf_ttm
+        fcf_normalize_overridden = True
     
     # 1y price return
     price_1y_return = None
@@ -1456,7 +1525,7 @@ def analyze(ticker):
     return {
         'ticker': ticker,
         'analysis_date': datetime.now().strftime('%Y-%m-%d %H:%M'),
-        'version': '5.1',
+        'version': '5.2',
         'mode': mode,
         'mode_criteria_met': criteria_count,
         'mode_criteria_detail': criteria_detail,
@@ -1477,6 +1546,8 @@ def analyze(ticker):
         'forward_growth_ratio': round(forward_growth_ratio, 2) if forward_growth_ratio else None,
         'inflection_point': inflection_point,
         'inflection_note': inflection_note,
+        # v5.2: Inflection sonrası FCF override teyidi
+        'fcf_normalize_overridden': fcf_normalize_overridden,
         'analyst_count_fwd': analyst_count_fwd,  # v5.0 Etap 12: forward verisi güven göstergesi
         'forward_data_quality': forward_data_quality,  # CONSENSUS/SINGLE/ALGORITHMIC/UNKNOWN
         # v5.0 Etap 13 Fix-2: Forward-First Hibrit
@@ -1537,6 +1608,9 @@ def format_output(result):
         out.append(f"  🌱 v5.1 INFLECTION POINT: Forward yöntemler korundu")
         if result.get('inflection_note'):
             out.append(f"     {result['inflection_note']}")
+        # v5.2: FCF normalize override
+        if result.get('fcf_normalize_overridden'):
+            out.append(f"  🌱 v5.2 DCF FCF override: Geçmiş yıllık ortalama yerine TTM FCF kullanıldı")
     
     # v4: Quality premium bilgisi
     qd = result.get('quality_detail', {})
@@ -1930,7 +2004,7 @@ def analyze_pre_ipo(input_json_path):
         'company': company,
         'mode': 'PRE_IPO',
         'analysis_date': datetime.now().strftime('%Y-%m-%d %H:%M'),
-        'version': '5.1',
+        'version': '5.2',
         'sector_key': sector_key,
         'ipo_price_mid': ipo_price,
         'ipo_date': d.get('ipo_date'),
