@@ -67,6 +67,4 @@ Thumbs.db
 data/swing/active.json.bak-*
 data/k13_pending_change.json
 
-# Runtime state — not version-controlled
-data/monitor_state.json
 agent/data/

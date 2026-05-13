@@ -127,9 +127,11 @@ jobs:
           git fetch origin main
           git pull --rebase origin main || git rebase --abort
 
-          # Only data/portfolio.json and report files should change.
-          # monitor_state.json is gitignored.
-          git add data/portfolio.json reports/ 2>/dev/null || true
+          # Track portfolio data, reports, AND monitor state so the
+          # idempotency cache survives across GitHub Actions runs.
+          # Without monitor_state.json being committed, every 30-min run
+          # would re-fire the same alerts (spam).
+          git add data/portfolio.json data/monitor_state.json reports/ 2>/dev/null || true
 
           if git diff --staged --quiet; then
             echo "No changes to commit"
