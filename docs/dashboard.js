@@ -17,10 +17,11 @@ const CATEGORY_COLORS = {
 
 // Status colors (border tint for workflows)
 const STATUS_COLORS = {
-  ok:   "#3fb950",
-  warn: "#d29922",
-  err:  "#f85149",
-  gray: "#6e7681",
+  ok:      "#3fb950",
+  warn:    "#d29922",
+  err:     "#f85149",
+  gray:    "#6e7681",
+  railway: "#1f6feb",  // mavi — GitHub'da görünmeyen, Railway subprocess
 };
 
 // ---- Helpers ----
@@ -93,6 +94,10 @@ function buildElements(systemMap, statusByWorkflow) {
       const run = statusByWorkflow[n.workflow_file];
       statusClass = classifyStatus(run);
       lastRunInfo = run;
+    } else if (n.category === "workflow" && !n.workflow_file) {
+      // Workflow node'u var ama GitHub Actions'tan dispatch edilmiyor
+      // (Railway subprocess olarak çalışıyor) — özel durum
+      statusClass = "railway";
     }
     elements.push({
       data: {
@@ -128,13 +133,21 @@ function generateStatusReport(state) {
   if (!state) return "# Henüz veri yüklenmedi.\n";
 
   const { systemMap, statusByWorkflow, elements, generatedAt } = state;
-  const counts = { ok: 0, warn: 0, err: 0, gray: 0 };
+  const counts = { ok: 0, warn: 0, err: 0, gray: 0, railway: 0 };
   const rows = [];
   const problems = [];
 
   systemMap.nodes
     .filter(n => n.category === "workflow")
     .forEach(n => {
+      // Railway-managed (no workflow_file) — özel durum
+      if (!n.workflow_file) {
+        counts.railway++;
+        rows.push(
+          `| ${n.label} | 🔵 RAILWAY | Railway subprocess | ${n.schedule || "—"} | — |`
+        );
+        return;
+      }
       const run = statusByWorkflow[n.workflow_file];
       const status = classifyStatus(run);
       counts[status] = (counts[status] || 0) + 1;
@@ -161,7 +174,7 @@ function generateStatusReport(state) {
       }
     });
 
-  const totalWf = counts.ok + counts.warn + counts.err + counts.gray;
+  const totalWf = counts.ok + counts.warn + counts.err + counts.gray + counts.railway;
   const lines = [];
   lines.push("# Finzora AI — Sistem Durum Raporu");
   lines.push("");
@@ -174,6 +187,7 @@ function generateStatusReport(state) {
   lines.push(`- ✅ Başarılı: **${counts.ok}** / ${totalWf}`);
   lines.push(`- ⏳ Bekliyor / eski: **${counts.warn}** / ${totalWf}`);
   lines.push(`- ❌ Hata: **${counts.err}** / ${totalWf}`);
+  lines.push(`- 🔵 Railway-managed: **${counts.railway}** / ${totalWf}`);
   lines.push(`- — Bilinmiyor: **${counts.gray}** / ${totalWf}`);
   lines.push("");
 
@@ -345,7 +359,11 @@ function renderDetail(nodeData) {
   }
 
   if (meta.category === "workflow") {
-    if (run) {
+    if (nodeData.statusClass === "railway") {
+      parts.push(`<div class="status-line ok">🔵 Railway tarafından subprocess olarak çalıştırılır</div>`);
+      parts.push(`<div class="field"><span class="k">Tetikleyici</span><span class="v">${meta.schedule || "—"}</span></div>`);
+      parts.push(`<div class="field"><span class="k">Not</span><span class="v">GitHub Actions'ta görünmez — son çalışma data dosyaları üzerinden takip edilir</span></div>`);
+    } else if (run) {
       const statusText = {
         ok:   `✅ Son çalışma başarılı`,
         warn: `⏳ Devam ediyor veya eski`,
@@ -368,7 +386,7 @@ function renderDetail(nodeData) {
 
 // ---- Status counts ----
 function updateStats(elements) {
-  const counts = { ok: 0, warn: 0, err: 0, gray: 0 };
+  const counts = { ok: 0, warn: 0, err: 0, gray: 0, railway: 0 };
   elements.forEach((el) => {
     if (el.data.category === "workflow") {
       counts[el.data.statusClass] = (counts[el.data.statusClass] || 0) + 1;
@@ -377,7 +395,8 @@ function updateStats(elements) {
   document.getElementById("ok-count").textContent   = counts.ok;
   document.getElementById("warn-count").textContent = counts.warn;
   document.getElementById("err-count").textContent  = counts.err;
-  document.getElementById("gray-count").textContent = counts.gray;
+  // Railway-managed olanlar gray sayılmasın — kendi sayacı olsun
+  document.getElementById("gray-count").textContent = counts.gray + " / " + counts.railway + " Railway";
 }
 
 // ---- Main render ----

@@ -43,8 +43,8 @@
       "id": "macro_calendar.yml",
       "label": "Makro Takvim",
       "category": "workflow",
-      "workflow_file": "macro_calendar.yml",
-      "schedule": "Ayın 1'i"
+      "schedule": "Ayın 1'i 09:00 TR (Railway subprocess; GitHub'da görünmez)",
+      "tag": "Railway"
     },
     {
       "id": "weekly_fmp_stats.yml",
@@ -337,6 +337,10 @@
     {
       "source": "agent.telegram",
       "target": "ext.telegram"
+    },
+    {
+      "source": "scripts/telegram_bot.py",
+      "target": "scripts/macro_calendar_updater.py"
     }
   ]
 }
