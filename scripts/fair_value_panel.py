@@ -228,6 +228,195 @@ def render_telegram(rows: list[dict]) -> str:
 # ────────────────────────────── main ──────────────────────────────
 
 
+def discover_undervalued_tickers(
+    min_potential_pct: float = 25.0,
+    universe: Optional[list[str]] = None,
+) -> dict:
+    """
+    Aşama 3 (13 May 2026): Geniş evren tarama (analist_takip'in evreni ~200
+    ticker) ile %25+ analyst target potansiyeli olan hisseleri keşfet ve
+    watchlist'e ekle.
+
+    Mantık (Zeynel standardı):
+        FV = (en yeni analyst hedef + en yüksek hedef) / 2
+        potansiyel_pct = (FV - current_price) / current_price * 100
+        Eğer potansiyel_pct >= 25 → watchlist'e ekle
+
+    Args:
+        min_potential_pct: Threshold (default %25)
+        universe: Opsiyonel — özel ticker listesi. None ise analist_takip
+                  evreni kullanılır.
+
+    Returns:
+        {"scanned": N, "discovered": N, "added": [(sym, pct)]}
+    """
+    if universe is not None:
+        tickers = universe
+    else:
+        try:
+            from agent.legacy.analist_takip.watchlist import build_watchlist
+        except ImportError as e:
+            print(f"[fair_value] discover import hatası: {e}")
+            return {"scanned": 0, "discovered": 0, "added": []}
+
+        try:
+            u = build_watchlist()
+            if isinstance(u, dict):
+                tickers = list(u.keys()) if u else []
+            else:
+                tickers = list(u)
+        except Exception as e:
+            print(f"[fair_value] universe oluşturulamadı: {e}")
+            return {"scanned": 0, "discovered": 0, "added": []}
+
+    try:
+        from agent.watchlist import add as wl_add, is_in_pool, is_in_portfolio, is_excluded
+    except ImportError as e:
+        print(f"[fair_value] watchlist import hatası: {e}")
+        return {"scanned": 0, "discovered": 0, "added": []}
+
+    if not tickers:
+        return {"scanned": 0, "discovered": 0, "added": []}
+
+    print(f"[fair_value] Geniş evren tarama: {len(tickers)} ticker")
+    discovered = []
+    added = []
+
+    for symbol in tickers:
+        # Skip eğer zaten portföyde, watchlist'te veya excluded
+        if is_in_portfolio(symbol) or is_in_pool(symbol) or is_excluded(symbol):
+            continue
+
+        try:
+            quote = fmp_get("quote", {"symbol": symbol})
+            if not quote or not isinstance(quote, list):
+                continue
+            current = quote[0].get("price")
+            if not current or current <= 0:
+                continue
+
+            targets = fetch_analyst_targets(symbol)
+            fv = compute_fair_value(targets)
+            if not fv:
+                continue
+
+            potential_pct = (fv["fair_value"] - current) / current * 100
+            if potential_pct < min_potential_pct:
+                continue
+
+            discovered.append((symbol, potential_pct, fv["fair_value"]))
+
+            # Watchlist'e ekle
+            result = wl_add(
+                symbol=symbol,
+                source="analyst_target_discount",
+                rationale=f"FV ${fv['fair_value']:.2f} = +%{potential_pct:.1f} potansiyel "
+                          f"(en yeni ${fv['latest_target']}, en yüksek ${fv['highest_target']})",
+                price=current,
+                score_components={
+                    "fair_value_discount_pct": round(potential_pct, 2),
+                    "fair_value_target": fv["fair_value"],
+                    "fair_value_latest_target": fv["latest_target"],
+                    "fair_value_highest_target": fv["highest_target"],
+                    "fair_value_sample_size": fv["sample_size"],
+                },
+            )
+            if result["action"] == "added":
+                added.append((symbol, potential_pct))
+        except Exception as e:
+            print(f"[fair_value] {symbol} discover hatası: {e}")
+            continue
+
+    if discovered:
+        print(f"[fair_value] %{min_potential_pct:.0f}+ potansiyel: {len(discovered)} keşfedildi")
+        for sym, pct, fv in sorted(discovered, key=lambda x: -x[1])[:10]:
+            in_pool_marker = "✓ EKLENDİ" if any(s == sym for s, _ in added) else "(zaten var)"
+            print(f"  {sym}: +%{pct:.1f} (FV ${fv:.2f}) {in_pool_marker}")
+
+    return {
+        "scanned": len(tickers),
+        "discovered": len(discovered),
+        "added": added,
+    }
+
+
+def update_watchlist_fair_values() -> dict:
+    """
+    Aşama 3 (13 May 2026): Watchlist hisseleri için adil değer hesapla,
+    score_components.fair_value_discount_pct alanını güncelle.
+
+    Rapor formatını değiştirmez — sessiz update. AI orchestrator (Aşama 5)
+    bu skorları okur ve "öncelikli alım" önerilerinde kullanır.
+
+    Returns:
+        {"checked": N, "updated": N, "deep_discounts": [(sym, disc)]}
+    """
+    try:
+        from agent.watchlist import all_symbols, add as wl_add
+    except ImportError:
+        return {"checked": 0, "updated": 0, "deep_discounts": []}
+
+    symbols = all_symbols()
+    if not symbols:
+        return {"checked": 0, "updated": 0, "deep_discounts": []}
+
+    print(f"[fair_value] Watchlist tarama: {len(symbols)} ticker")
+    deep_discounts = []  # %25+ iskontolu olanlar (Zeynel standardı)
+    updated = 0
+
+    for symbol in symbols:
+        try:
+            # Current price — FMP quote
+            quote = fmp_get("quote", {"symbol": symbol})
+            if not quote or not isinstance(quote, list):
+                continue
+            current = quote[0].get("price")
+            if not current:
+                continue
+
+            # Fair value calculation (aynı portfolyo akışıyla)
+            targets = fetch_analyst_targets(symbol)
+            fv = compute_fair_value(targets)
+            if not fv:
+                continue
+
+            disc = discount_pct(current, fv["fair_value"])
+            if disc is None:
+                continue
+
+            # Sessiz update — multi-source merge
+            wl_add(
+                symbol=symbol,
+                source="fair_value_panel",
+                rationale=f"FV ${fv['fair_value']:.2f}, %{disc:+.1f} iskonto",
+                score_components={
+                    "fair_value_discount_pct": round(disc, 2),
+                    "fair_value_target": fv["fair_value"],
+                    "fair_value_latest_target": fv["latest_target"],
+                    "fair_value_highest_target": fv["highest_target"],
+                    "fair_value_sample_size": fv["sample_size"],
+                },
+            )
+            updated += 1
+
+            if disc >= 25:
+                deep_discounts.append((symbol, disc, fv["fair_value"]))
+        except Exception as e:
+            print(f"[fair_value] {symbol} hata: {e}")
+            continue
+
+    if deep_discounts:
+        print(f"[fair_value] %25+ iskontolu watchlist: {len(deep_discounts)}")
+        for sym, disc, fv in sorted(deep_discounts, key=lambda x: -x[1]):
+            print(f"  {sym}: %{disc:.1f} (FV ${fv:.2f})")
+
+    return {
+        "checked": len(symbols),
+        "updated": updated,
+        "deep_discounts": deep_discounts,
+    }
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--dry-run", action="store_true", help="Don't send Telegram")
@@ -242,6 +431,26 @@ def main() -> int:
 
     rows = build_panel_rows(portfolio)
     md = render_markdown(rows)
+
+    # Aşama 3 (13 May 2026): Watchlist hisselerinin adil değer skorlarını
+    # da güncelle (sessiz update — rapor formatı değişmez, AI orchestrator
+    # bu bilgiyi kullanır).
+    try:
+        wl_result = update_watchlist_fair_values()
+        if wl_result["updated"]:
+            print(f"[fair_value] Watchlist score_components güncellendi: "
+                  f"{wl_result['updated']}/{wl_result['checked']} ticker")
+    except Exception as e:
+        print(f"[fair_value] Watchlist tarama hatası: {e}")
+
+    # Aşama 3 (13 May 2026): Geniş evren tarama — %25+ analyst target
+    # potansiyeli olan yeni hisseleri keşfet, watchlist'e ekle.
+    try:
+        disc_result = discover_undervalued_tickers(min_potential_pct=25.0)
+        if disc_result["added"]:
+            print(f"[fair_value] Watchlist'e {len(disc_result['added'])} yeni hisse eklendi (%25+ potansiyel)")
+    except Exception as e:
+        print(f"[fair_value] Discover hatası: {e}")
 
     # Write report file
     out_dir = REPO_ROOT / "reports" / "daily"
