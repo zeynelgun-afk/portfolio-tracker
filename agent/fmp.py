@@ -32,11 +32,13 @@ import requests
 
 # ---------- Configuration ----------
 
-FMP_KEY = os.environ.get(
-    "FMP_API_KEY",
-    "g1GFJZtV5rCP49UCir4WuP56VjhmA6F8",  # fallback from memory
-)
+FMP_KEY = os.environ.get("FMP_API_KEY", "")
 FMP_BASE = "https://financialmodelingprep.com/stable"
+
+if not FMP_KEY:
+    # Don't crash at import time — some test environments may not need FMP.
+    # The first fmp_get() call will print a clear error.
+    pass
 
 _DEFAULT_TIMEOUT  = 15
 _MAX_RETRIES      = 3

@@ -29,14 +29,30 @@ import requests
 
 # ---------- Configuration ----------
 
-BOT_TOKEN = os.environ.get(
-    "TELEGRAM_BOT_TOKEN",
-    "8749931249:AAGTLVKLHx5grcGlJhuodg-DbFDkFYjpCcI",
-)
-GROUP_CHAT_ID = int(os.environ.get("TELEGRAM_GROUP_CHAT_ID", "-1003827034395"))
-DM_CHAT_ID    = int(os.environ.get("TELEGRAM_DM_CHAT_ID",    "1403072107"))
+BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN", "")
+_GROUP_RAW = os.environ.get("TELEGRAM_GROUP_CHAT_ID", "")
+_DM_RAW    = os.environ.get("TELEGRAM_DM_CHAT_ID", "")
 
-API_BASE = f"https://api.telegram.org/bot{BOT_TOKEN}"
+# Parse chat IDs lazily — don't crash at import. Some callers may only need
+# md_to_telegram() and similar helpers without sending anything.
+GROUP_CHAT_ID = int(_GROUP_RAW) if _GROUP_RAW else None
+DM_CHAT_ID    = int(_DM_RAW)    if _DM_RAW    else None
+
+API_BASE = f"https://api.telegram.org/bot{BOT_TOKEN}" if BOT_TOKEN else None
+
+
+def _ensure_configured() -> None:
+    """Raise if Telegram environment is not set. Called from send functions."""
+    if not BOT_TOKEN:
+        raise RuntimeError(
+            "TELEGRAM_BOT_TOKEN environment variable is required. "
+            "Set it in GitHub Actions secrets or your shell."
+        )
+    if GROUP_CHAT_ID is None or DM_CHAT_ID is None:
+        raise RuntimeError(
+            "TELEGRAM_GROUP_CHAT_ID and TELEGRAM_DM_CHAT_ID environment "
+            "variables are required."
+        )
 MAX_MESSAGE_LEN = 4000   # Telegram hard limit is 4096; leave headroom
 MAX_CAPTION_LEN = 1024   # Telegram caption limit
 
@@ -49,6 +65,7 @@ def send_to_group(
     disable_preview: bool = True,
 ) -> bool:
     """Send a text message to the Finzora group chat."""
+    _ensure_configured()
     return _send_message(text, GROUP_CHAT_ID, parse_mode, disable_preview)
 
 
@@ -58,6 +75,7 @@ def send_to_dm(
     disable_preview: bool = True,
 ) -> bool:
     """Send a text message to Zeynel's DM (system/alerts/maintenance)."""
+    _ensure_configured()
     return _send_message(text, DM_CHAT_ID, parse_mode, disable_preview)
 
 
@@ -71,6 +89,7 @@ def send_photo(
     Send a photo (PNG/JPG) to either 'group' or 'dm'.
     Caption is capped at 1024 chars by Telegram.
     """
+    _ensure_configured()
     chat_id = _resolve_target(target)
     image_path = Path(image_path)
     if not image_path.exists():
