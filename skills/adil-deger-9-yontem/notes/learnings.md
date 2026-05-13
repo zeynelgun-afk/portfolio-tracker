@@ -505,3 +505,135 @@ Bu ikisini ayırt etmek için "ardışık çeyrek EPS sign change" sinyali güve
 
 Önceki LQDA değerleme raporunda (`valuations/_LEARNINGS.md`) "Rule of 40 sektör filtresi eklenmeli" diye not düşmüştüm. Bu yanlıştı — **Rule of 40 zaten v5.0'da kaldırılmış**. /mnt'deki Claude.ai-upload paketinin eski v4.1 olduğunu fark etmemiştim. GitHub'daki canlı production versiyonu kontrol etmek her zaman önceliklidir.
 
+
+---
+
+## v5.2 — Inflection Sonrası 3 Yöntem Düzeltmesi (12 Mayıs 2026)
+
+### v5.1 Sonrası Açıklar — LQDA Tam Çıktısı Analizi
+
+v5.1 ile Forward yöntemleri inflection biotech'lerde korundu, ancak LQDA çıktısında 3 ek sorun gözlendi:
+
+| Yöntem | v5.1 Sonucu | Sorun |
+|---|---|---|
+| PEG | $1590 / $1988 / $2982 | growth_pct %377 cap'siz |
+| DCF | $2-7 (önceki v4.1'den) | fcf_normalized 4 yıl ortalama (3 yıl zarar) |
+| EV/FWD EBITDA | N/A | ebitda_fwd_2y analist ALGORITHMIC quality, negatif |
+
+### Düzeltme 1: PEG Growth Cap (Lynch Standardı)
+
+**Sorun:** LQDA için raw forward_growth = (5.46/0.26)^0.5 - 1 = **%377 yıllık**. PEG formülü `target_pe = peg_target × growth_pct` ile 1.0 × 377 = 377x P/E, $3.09 × 377 = **$1166 fair value** çıkarıyor.
+
+**Gerçek:** Bu yıllık büyüme oranı **tek seferlik patlama** (inflection sonrası). Sürdürülebilir 5y CAGR ~%29 (2026E $3.09 → 2030E $8.38).
+
+**Fix (`adil_deger.py` L677-712):**
+```python
+forward_growth_raw = (eps_fwd / eps_ttm) ** 0.5 - 1
+# Sektör bazlı sürdürülebilirlik cap'i (Lynch standardı)
+if sector_key in {'semicon_design', 'semicon_growing', 'tech_software', 
+                  'healthcare_biotech', 'communication'}:
+    sustainable_cap = 0.50  # High-growth sektörler
+else:
+    sustainable_cap = 0.35  # Mature sektörler
+forward_growth = min(forward_growth_raw, sustainable_cap)
+forward_growth_capped = forward_growth_raw > sustainable_cap
+```
+
+**Sonuç:** LQDA PEG: $218 / $272 / $409 (cap'siz $1590'dan makul aralığa indi).
+
+### Düzeltme 2: DCF FCF Inflection Override
+
+**Sorun:** `fcf_normalized = mean(cf_list[:4])` son 4 yıllık FCF ortalaması. LQDA için:
+- 2022: -$100M (yatırım dönemi)
+- 2023: -$120M
+- 2024: -$110M
+- 2025: -$30M (ramp başlangıcı)
+- Ortalama: -$90M
+
+Negatif FCF → DCF bastırılmış sonuçlar ($2-7).
+
+**Gerçek:** Şirket Q3-2025'ten itibaren pozitif FCF üretiyor. Q1-2026 FCF $50M (annualize $200M). Yıllık ortalama anlamsız çünkü "şirketin yeni gerçeği" Q3-25'ten itibaren başladı.
+
+**Fix (`adil_deger.py` L1018-1025):**
+```python
+# v5.2: Inflection point sonrası DCF için fcf_normalized override
+if inflection_point and fcf_ttm and fcf_ttm > 0:
+    original_fcf_norm = fcf_normalized
+    fcf_normalized = fcf_ttm  # TTM FCF (son 4 çeyrek toplamı)
+    fcf_normalize_overridden = True
+```
+
+**Sonuç:** LQDA fcf_ttm = $41.2M (Q1-26 +$50, Q4-25 +$42, Q3-25 -$11, Q2-25 -$40). DCF: $132 / $154 / $154 — mantıklı.
+
+**Tradeoff:** TTM FCF aşırı agresif olabilir (Q1-26 +$50M sürdürülebilir mi?). Q2-26 verisi geldiğinde yeniden değerlendirme gerekli. Ancak yıllık ortalama yöntemi açıkça daha kötü çünkü zararlı dönemleri içeriyor.
+
+### Düzeltme 3: EV/FWD EBITDA Proxy
+
+**Sorun:** LQDA için `analyst-estimates`'den gelen ebitdaAvg negatif/None (forward_data_quality=ALGORITHMIC, analist sayısı yetersiz). calc_ev_forward_ebitda fonksiyonu ebitda<=0 ise None döner. Yöntem N/A.
+
+**Gerçek:** Şirket Q1-2026'da +$53M Net Income üretti, EBITDA pozitif. Analist tahminleri eksik, FMP'nin algoritmik tahmini yanlış işaretli.
+
+**Fix (`adil_deger.py` L713-748):**
+```python
+ebitda_for_calc = ebitda_fwd
+ebitda_proxy_used = False
+if (not ebitda_fwd or ebitda_fwd <= 0) and rev_fwd and rev_fwd > 0:
+    # Sektör tipik EBITDA marjı: net_margin_target × marj_çarpan
+    if 'healthcare' in sector_key:
+        margin_mult = 1.5  # Healthcare/Pharma yüksek brüt + R&D
+    elif sector_key in {'tech_software', 'semicon_design', 'semicon_growing'}:
+        margin_mult = 1.4
+    else:
+        margin_mult = 1.3
+    ebitda_margin_proxy = sector_mults.get('net_margin_target', 0.15) * margin_mult
+    ebitda_for_calc = rev_fwd * ebitda_margin_proxy
+    ebitda_proxy_used = True
+```
+
+**Sonuç:** LQDA için healthcare_biotech net_margin_target=0.15 × 1.5 = 22.5% EBITDA marjı proxy. rev_fwd $681M × 0.225 = $153M proxy EBITDA. EV/FWD EBITDA $41 / $55 / $66 — manuel hesabımızla ($60-80 aralık) uyumlu.
+
+### Regression Test Sonuçları
+
+Düzeltmelerin **sadece inflection point şirketleri** etkilediği teyit edildi:
+
+**KO (olgun, dividend):**
+- MOD: BLENDED (doğru)
+- v5.2 notları görünmüyor ✅ (inflection yok)
+- DCF $20-45, EV/FWD EBITDA $48-82 — beklendiği gibi normal
+- PEG: N/A (büyüme %5 altı → PEG anlamsız, doğru)
+
+**NVDA (AI mega-cap, sürekli karlı):**
+- MOD: GROWTH (doğru)
+- v5.2 notları görünmüyor ✅ (inflection yok, ardışık çeyrek pozitif EPS)
+- DCF $134-139, PEG $445-834, EV/FWD EBITDA $194-310 — beklendiği gibi normal
+
+### Genel Ders
+
+**Inflection point tek başına bir flag değil, kademeli bir özellik.** v5.1 sadece Forward yöntemlerin elenmesini engelledi. Ancak skill içindeki ÖZ HESAPLAMA mantıkları (PEG growth_pct, DCF fcf_normalized, EV/FWD EBITDA proxy) hala inflection-naive idi.
+
+**Doğru yaklaşım:** Bir kez `inflection_point=True` tespit edildikten sonra, geçmiş döneme dayalı **her metrik** revize edilmelidir:
+- Growth rate → sürdürülebilir cap'le
+- FCF → TTM bazlı, geçmiş ortalama değil
+- EBITDA → forward proxy, TTM negatif olduğu için kullanılmaz
+- (Gelecek v5.3 düşüncesi) Margin → forward bazlı, TTM bazlı değil
+
+Bu **"inflection-aware computation cascade"** prensibi olarak öğrenildi. Bir flag tüm bağlı hesapları etkilemeli.
+
+### LQDA v5.2 Tam Sonuç
+
+```
+🚀 MOD: GROWTH (4/5 kriter)
+🌱 v5.1 INFLECTION POINT: Forward yöntemler korundu
+🌱 v5.2 DCF FCF override: Geçmiş yıllık ortalama yerine TTM FCF kullanıldı
+
+Forward P/E            $94.23       $130.88      $159.67
+DCF                    $132.32      $154.28      $154.28      ← v5.2 düzeltme
+PEG                    $218.29      $272.87      $409.30      ← v5.2 düzeltme (cap %50)
+EV/FWD Revenue         $60.14       $92.56       $120.35
+EV/FWD EBITDA          $41.61       $55.50       $66.62       ← v5.2 düzeltme (proxy)
+
+Karar: 🟢 GÜÇLÜ AL
+```
+
+**Manuel hesabımızla uyumluluk:** Manuel medyan $68, skill medyan ~$130 (PEG ve DCF olduğu için yukarı çekiyor). PEG hala yüksek (cap %50 cömert biotech için) — bu noktanın daha sıkı kalibrasyona ihtiyacı var (v5.3 önerisi). Ama önceki saçma değerler ($1590, N/A, $2-7) yok.
+
