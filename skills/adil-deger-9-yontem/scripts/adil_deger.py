@@ -1,7 +1,16 @@
 #!/usr/bin/env python3
 """
-Adil Değer - 9 Yöntem × 3 Senaryo Hesaplayıcı v5.2
+Adil Değer - 9 Yöntem × 3 Senaryo Hesaplayıcı v5.3
 Finzora AI v3.7.2 metodolojisi
+
+v5.3 Değişiklikleri (12 Mayıs 2026):
+- PEG GROWTH SOURCE HİYERARŞİ: Wall Street long-term growth standardı (analist multi-year CAGR).
+  Hiyerarşi: 3y forward CAGR (FY1→FY4) → 2y forward CAGR (FY1→FY3) → 2y geometric (v5.2 fallback).
+  Sustainable cap her durumda korunur (high-growth %50, mature %35).
+  FMP docs: "We use compound annual growth rate to estimate revenue" — analyst-estimates
+  zaten CAGR-based, multi-year extraction ile gerçek LTG elde edilir.
+  LQDA: v5.2 raw growth %377 → cap'li %50 → v5.3 3y CAGR %36.6 (gerçek sürdürülebilir).
+  est_list limit 4 → 6 yükseltildi (3y CAGR için en az 4 forward yıl gerekli).
 
 v5.2 Değişiklikleri (12 Mayıs 2026 - LQDA v5.1 çıktısı analiz sonrası):
 - PEG GROWTH CAP: forward_growth Lynch standardı sürdürülebilirlik tavanı.
@@ -688,22 +697,44 @@ def calculate_methods(data, regime_key, sector_key, is_ai_megacap, mode, quality
     # === GROWTH (3 yöntem - v5.0: Rule of 40 çıkarıldı) ===
     
     # Forward growth oranı (PEG için)
-    # v5.2: Inflection point veya yüksek büyüme durumunda sürdürülebilirlik cap'i uygula.
-    # Tek seferlik patlama (örnek LQDA TTM EPS $0.26 → FWD EPS $5.46, raw growth %377)
-    # PEG'in target_pe = peg_target × growth_pct formülü ile saçma değerler üretir.
-    # Lynch standardı: PEG için "sürdürülebilir" 5y CAGR ya da analist long-term growth kullan.
+    # v5.3 HİYERARŞİ:
+    #   1. Birincil: 3y forward EPS CAGR (FY1→FY4) — Wall Street long-term standardı
+    #   2. Fallback: 2y forward EPS CAGR (FY1→FY3)
+    #   3. Fallback: 2y geometric (eps_fwd_2y/eps_ttm)^0.5 - 1 — v5.2 davranışı
+    #   Tüm seçeneklerde sektör cap'i uygulanır (high-growth %50, mature %35).
+    #
+    # FMP analyst-estimates kendi "CAGR formula" ile türetilmiş yıllık tahminleri sağlar
+    # (FMP docs onaylı). Multi-year CAGR bu yüzden en güvenilir LTG kaynağıdır.
+    # Inflection biotech (LQDA: TTM EPS $0.26 → FWD EPS $5.46) için 2y geometric %377
+    # saçma değer üretirken, multi-year CAGR %29-37 makul aralık verir.
     forward_growth = None
     forward_growth_raw = None
     forward_growth_capped = False
-    if eps_fwd and eps_ttm and eps_ttm > 0:
-        # 2 yıllık büyüme → yıllık geometrik
+    forward_growth_source = None  # 'analyst_3y_cagr' / 'analyst_2y_cagr' / 'fwd_eps_geometric' / 'sector_default'
+    
+    # Sektör bazlı sürdürülebilirlik cap'i (her zaman uygulanır)
+    if sector_key in {'semicon_design', 'semicon_growing', 'tech_software',
+                      'healthcare_biotech', 'communication'}:
+        sustainable_cap = 0.50  # %50 (high-growth sektörler)
+    else:
+        sustainable_cap = 0.35  # %35 (olgun/mature sektörler)
+    
+    # 1. ÖNCE: 3y analyst CAGR (Wall Street LTG standardı)
+    cagr_3y = data.get('forward_eps_3y_cagr')
+    cagr_2y = data.get('forward_eps_2y_cagr')
+    
+    if cagr_3y is not None and cagr_3y > 0:
+        forward_growth_raw = cagr_3y
+        forward_growth_source = 'analyst_3y_cagr'
+    elif cagr_2y is not None and cagr_2y > 0:
+        forward_growth_raw = cagr_2y
+        forward_growth_source = 'analyst_2y_cagr'
+    elif eps_fwd and eps_ttm and eps_ttm > 0:
+        # Fallback: v5.2 2y geometric
         forward_growth_raw = (eps_fwd / eps_ttm) ** 0.5 - 1
-        # Sektör bazlı sürdürülebilirlik cap'i
-        if sector_key in {'semicon_design', 'semicon_growing', 'tech_software', 
-                          'healthcare_biotech', 'communication'}:
-            sustainable_cap = 0.50  # %50 (high-growth sektörler)
-        else:
-            sustainable_cap = 0.35  # %35 (olgun/mature sektörler)
+        forward_growth_source = 'fwd_eps_geometric'
+    
+    if forward_growth_raw is not None:
         forward_growth = min(forward_growth_raw, sustainable_cap)
         forward_growth_capped = forward_growth_raw > sustainable_cap
     
@@ -716,10 +747,18 @@ def calculate_methods(data, regime_key, sector_key, is_ai_megacap, mode, quality
         if not eps_for_peg and eps_ttm and eps_ttm > 0 and forward_growth:
             eps_for_peg = eps_ttm * (1 + forward_growth)
         growth['PEG'] = calc_peg(eps_for_peg, forward_growth, adj['peg_target'])
-        if forward_growth_capped and growth['PEG']:
-            notes['PEG'] = (f"⚠️ v5.2 GROWTH CAP: Raw 2y CAGR %{forward_growth_raw*100:.0f} "
-                          f"→ sürdürülebilir %{forward_growth*100:.0f} ile cap'lendi "
-                          f"(sektör: {sector_key})")
+        # v5.3: Hangi kaynak kullanıldığını + cap durumunu notla
+        if growth['PEG']:
+            source_labels = {
+                'analyst_3y_cagr': '3y analist CAGR',
+                'analyst_2y_cagr': '2y analist CAGR (fallback)',
+                'fwd_eps_geometric': 'FWD EPS / TTM EPS geometric (v5.2 fallback)',
+            }
+            source_label = source_labels.get(forward_growth_source, forward_growth_source)
+            base_note = f"📊 v5.3 GROWTH: %{forward_growth*100:.1f} ({source_label})"
+            if forward_growth_capped:
+                base_note += f" — raw %{forward_growth_raw*100:.0f} sustainable cap'le düşürüldü ({sector_key})"
+            notes['PEG'] = base_note
     
     # 8. EV/Forward Revenue
     if forward_outlier:
@@ -933,7 +972,7 @@ def analyze(ticker):
     bs_list = fetch("balance-sheet-statement", {"symbol": ticker, "limit": 1}) or []
     qinc_list = fetch("income-statement", {"symbol": ticker, "period": "quarter", "limit": 5}) or []
     qcf_list = fetch("cash-flow-statement", {"symbol": ticker, "period": "quarter", "limit": 4}) or []
-    est_list = fetch("analyst-estimates", {"symbol": ticker, "period": "annual", "limit": 4}) or []
+    est_list = fetch("analyst-estimates", {"symbol": ticker, "period": "annual", "limit": 6}) or []
     
     analyst_targets = fetch_analyst_consensus(ticker)
     
@@ -1034,6 +1073,47 @@ def analyze(ticker):
                     continue
                 eps_fwd_1y = safe_get(est, 'epsAvg')
                 break
+    
+    # v5.3: Multi-year forward EPS CAGR (Wall Street long-term growth standardı)
+    # FMP analyst-estimates "CAGR formula" ile türetilmiş olduğunu kendi dokümantasyonunda açıklıyor.
+    # PEG için bu en iyi kaynak — 3y CAGR (FY+1 → FY+4) öncelikli, 2y CAGR fallback.
+    # Inflection biotech ve hyper-growth tech için sürdürülebilir büyüme oranı sağlar.
+    forward_eps_3y_cagr = None
+    forward_eps_2y_cagr = None
+    forward_cagr_source = None  # 3y_consensus / 2y_consensus / unavailable
+    forward_cagr_analyst_min = None  # FY1 ve uzak yıl analist sayısının min'i
+    
+    if est_list:
+        sorted_est_for_cagr = sorted(est_list, key=lambda x: x.get('date', ''))
+        # Forward yıllar: bu yıl ve sonrası
+        forward_years = [e for e in sorted_est_for_cagr if e.get('date', '') >= target_year_1y]
+        # Sadece pozitif EPS olan forward yıllar (negatif EPS CAGR'ı bozar)
+        forward_years_pos = [e for e in forward_years if safe_get(e, 'epsAvg') > 0]
+        
+        if len(forward_years_pos) >= 4:
+            # 3y CAGR (FY1 → FY4, 3 yıl atlama) — Wall Street long-term standardı
+            eps_fy1 = safe_get(forward_years_pos[0], 'epsAvg')
+            eps_fy4 = safe_get(forward_years_pos[3], 'epsAvg')
+            if eps_fy1 > 0 and eps_fy4 > 0:
+                forward_eps_3y_cagr = (eps_fy4 / eps_fy1) ** (1/3) - 1
+                forward_cagr_source = '3y_consensus'
+                n1 = forward_years_pos[0].get('numAnalystsEps', 0) or 0
+                n4 = forward_years_pos[3].get('numAnalystsEps', 0) or 0
+                forward_cagr_analyst_min = min(n1, n4) if (n1 and n4) else max(n1, n4)
+        
+        if len(forward_years_pos) >= 3 and forward_eps_3y_cagr is None:
+            # Fallback: 2y CAGR (FY1 → FY3, 2 yıl atlama)
+            eps_fy1 = safe_get(forward_years_pos[0], 'epsAvg')
+            eps_fy3 = safe_get(forward_years_pos[2], 'epsAvg')
+            if eps_fy1 > 0 and eps_fy3 > 0:
+                forward_eps_2y_cagr = (eps_fy3 / eps_fy1) ** (1/2) - 1
+                forward_cagr_source = '2y_consensus'
+                n1 = forward_years_pos[0].get('numAnalystsEps', 0) or 0
+                n3 = forward_years_pos[2].get('numAnalystsEps', 0) or 0
+                forward_cagr_analyst_min = min(n1, n3) if (n1 and n3) else max(n1, n3)
+    
+    # Birleşik forward_cagr — birincil 3y, fallback 2y
+    forward_cagr_consensus = forward_eps_3y_cagr if forward_eps_3y_cagr is not None else forward_eps_2y_cagr
     
     market_cap = safe_get(quote, 'marketCap') or safe_get(profile, 'mktCap')
     price = safe_get(quote, 'price') or safe_get(profile, 'price')
@@ -1146,6 +1226,12 @@ def analyze(ticker):
         'cash': cash, 'total_debt': total_debt, 'shares': shares,
         'roe': roe, 'beta': safe_get(profile, 'beta', 1.0) or 1.0,
         'revenue_growth_yoy': revenue_growth_yoy,
+        # v5.3: Multi-year analyst EPS CAGR (Wall Street LTG)
+        'forward_eps_3y_cagr': forward_eps_3y_cagr,
+        'forward_eps_2y_cagr': forward_eps_2y_cagr,
+        'forward_cagr_consensus': forward_cagr_consensus,
+        'forward_cagr_source': forward_cagr_source,
+        'forward_cagr_analyst_min': forward_cagr_analyst_min,
     }
     
     # =========================================================================
@@ -1525,7 +1611,7 @@ def analyze(ticker):
     return {
         'ticker': ticker,
         'analysis_date': datetime.now().strftime('%Y-%m-%d %H:%M'),
-        'version': '5.2',
+        'version': '5.3',
         'mode': mode,
         'mode_criteria_met': criteria_count,
         'mode_criteria_detail': criteria_detail,
@@ -1548,6 +1634,12 @@ def analyze(ticker):
         'inflection_note': inflection_note,
         # v5.2: Inflection sonrası FCF override teyidi
         'fcf_normalize_overridden': fcf_normalize_overridden,
+        # v5.3: Multi-year forward CAGR (Wall Street LTG) - PEG için kullanıldı
+        'forward_eps_3y_cagr': round(forward_eps_3y_cagr * 100, 1) if forward_eps_3y_cagr else None,
+        'forward_eps_2y_cagr': round(forward_eps_2y_cagr * 100, 1) if forward_eps_2y_cagr else None,
+        'forward_cagr_consensus': round(forward_cagr_consensus * 100, 1) if forward_cagr_consensus else None,
+        'forward_cagr_source': forward_cagr_source,
+        'forward_cagr_analyst_min': forward_cagr_analyst_min,
         'analyst_count_fwd': analyst_count_fwd,  # v5.0 Etap 12: forward verisi güven göstergesi
         'forward_data_quality': forward_data_quality,  # CONSENSUS/SINGLE/ALGORITHMIC/UNKNOWN
         # v5.0 Etap 13 Fix-2: Forward-First Hibrit
@@ -1611,6 +1703,15 @@ def format_output(result):
         # v5.2: FCF normalize override
         if result.get('fcf_normalize_overridden'):
             out.append(f"  🌱 v5.2 DCF FCF override: Geçmiş yıllık ortalama yerine TTM FCF kullanıldı")
+    
+    # v5.3: PEG growth kaynağı
+    cagr_source = result.get('forward_cagr_source')
+    cagr_value = result.get('forward_cagr_consensus')
+    cagr_analysts = result.get('forward_cagr_analyst_min')
+    if cagr_source and cagr_value is not None:
+        source_label = {'3y_consensus': '3y CAGR (FY1→FY4)',
+                        '2y_consensus': '2y CAGR (FY1→FY3, fallback)'}.get(cagr_source, cagr_source)
+        out.append(f"  📊 v5.3 PEG GROWTH KAYNAĞI: %{cagr_value} ({source_label}, min analyst#={cagr_analysts})")
     
     # v4: Quality premium bilgisi
     qd = result.get('quality_detail', {})
@@ -2004,7 +2105,7 @@ def analyze_pre_ipo(input_json_path):
         'company': company,
         'mode': 'PRE_IPO',
         'analysis_date': datetime.now().strftime('%Y-%m-%d %H:%M'),
-        'version': '5.2',
+        'version': '5.3',
         'sector_key': sector_key,
         'ipo_price_mid': ipo_price,
         'ipo_date': d.get('ipo_date'),
