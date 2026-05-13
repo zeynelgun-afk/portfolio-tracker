@@ -1,11 +1,17 @@
 ---
 name: adil-deger-9-yontem
-description: ABD hisse senetleri için kapsamlı adil değer hesaplaması v5.1. 9 YÖNTEM (4 Traditional + 2 Forward + 3 Growth), DUAL-MODE sistem (GROWTH vs BLENDED), 3 piyasa rejimi (Ayı/Normal/Boğa), inflection-point aware Forward outlier flag. FMP Ultimate plan ile canlı sektör P/E, dinamik CAPM WACC, Altman Z + Piotroski risk skorları, analist sentiment momentum, FMP DCF sanity check, konsantrasyon riski tespiti. 5 YILLIK FİNANSAL PROJEKSİYON (gelir, brüt, faaliyet, net, EPS yıl yıl + Forward çarpanlar + normalizasyon yılı). PRE-IPO MODU (manuel JSON input, FMP'de olmayan şirketler için). 17 sektör marj profili. Tetikleyiciler "X hissesini değerle", "adil değer hesapla", "X için fair value", "X kaç eder", "9 yöntem değerleme", "pre-IPO analiz". Finzora AI Adil Değer v3.7.2 metodolojisi. Her kullanımda notes klasörü güncellenir.
+description: ABD hisse senetleri için kapsamlı adil değer hesaplaması v5.2. 9 YÖNTEM (4 Traditional + 2 Forward + 3 Growth), DUAL-MODE sistem (GROWTH vs BLENDED), 3 piyasa rejimi (Ayı/Normal/Boğa), inflection-point aware Forward outlier flag + PEG growth cap + DCF FCF override + EV/FWD EBITDA proxy. FMP Ultimate plan ile canlı sektör P/E, dinamik CAPM WACC, Altman Z + Piotroski risk skorları, analist sentiment momentum, FMP DCF sanity check, konsantrasyon riski tespiti. 5 YILLIK FİNANSAL PROJEKSİYON (gelir, brüt, faaliyet, net, EPS yıl yıl + Forward çarpanlar + normalizasyon yılı). PRE-IPO MODU (manuel JSON input, FMP'de olmayan şirketler için). 17 sektör marj profili. Tetikleyiciler "X hissesini değerle", "adil değer hesapla", "X için fair value", "X kaç eder", "9 yöntem değerleme", "pre-IPO analiz". Finzora AI Adil Değer v3.7.2 metodolojisi. Her kullanımda notes klasörü güncellenir.
 ---
 
-# Adil Değer 9 Yöntem (Finzora AI v3.7.2) — v5.1
+# Adil Değer 9 Yöntem (Finzora AI v3.7.2) — v5.2
 
 ## Versiyon Geçmişi
+
+**v5.2 (12 Mayıs 2026)** — Inflection Sonrası 3 Yöntem Düzeltmesi (LQDA v5.1 çıktısı analiz)
+- 🌱 **PEG GROWTH CAP**: `forward_growth` artık Lynch standardı sürdürülebilirlik tavanı uygular. Sektör bazlı: high-growth (semicon/tech/biotech/communication) %50, mature/value %35. Inflection sonrası raw 2y CAGR %200+ olduğu durumlarda PEG saçma değerler üretiyordu (LQDA: PEG $1590). v5.2 cap'li: LQDA PEG ~$218-409 makul aralık. `forward_growth_capped` flag + not eklendi.
+- 🌱 **DCF FCF INFLECTION OVERRIDE**: `inflection_point=True` ve `fcf_ttm>0` ise `fcf_normalized = fcf_ttm`. Önceki: cf_list[:4] yıllık ortalama → 3 yıl zarar dahil olduğu için DCF bastırılıyordu. LQDA: TTM FCF ~$41M kullanılarak DCF $132-154 (mantıklı), önceki ortalama yöntemiyle DCF $2-7 saçma değerdi. `fcf_normalize_overridden` flag + çıktıda v5.2 notu.
+- 🌱 **EV/FWD EBITDA PROXY**: `ebitda_fwd_2y` yok/negatif (ALGORITHMIC veya analist eksik) iken `rev_fwd × sektör_net_margin × marj_çarpan` ile proxy. Çarpan: healthcare 1.5x, tech 1.4x, generic 1.3x. LQDA: önceki N/A → v5.2 ile $41-66 hesaplanıyor. `ebitda_proxy_used` flag + not.
+- 🌱 **Regression test**: KO (olgun), NVDA (AI mega-cap inflection yok) için davranış değişmedi — düzeltmeler sadece inflection point tespit edilen şirketlerde tetikleniyor.
 
 **v5.1 (12 Mayıs 2026)** — Inflection Point Aware Forward Outlier (LQDA testi sonrası)
 - 🌱 **INFLECTION POINT TESPİTİ**: Son 2 çeyrek POZİTİF EPS + önceki 2 çeyrek NEGATİF EPS olan şirketlerde `forward_outlier` flag iptal edilir. Forward P/E, PEG, EV/FWD Revenue, EV/FWD EBITDA yöntemleri korunur.
