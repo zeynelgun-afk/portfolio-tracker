@@ -34,7 +34,7 @@ API_BASE     = f"https://api.telegram.org/bot{BOT_TOKEN}"
 REPO_ROOT    = Path(__file__).parent.parent
 # `from agent.X import Y` çağrılarının çalışması için REPO_ROOT sys.path'te olmalı.
 # Python ana script çalışıyorsa default sys.path[0] = scripts/ olur, agent paketi
-# bulunmaz. Bu satır olmadan handler içindeki `from agent.analist_takip` fails.
+# bulunmaz. Bu satır olmadan handler içindeki `from agent.legacy.analist_takip` fails.
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
@@ -1595,7 +1595,7 @@ def isle_mesaj(msg: dict):
     if text_lower.startswith("/analist"):
         arg = text_lower.replace("/analist", "").strip()
         try:
-            from agent.analist_takip import (
+            from agent.legacy.analist_takip import (
                 analyze_single_ticker_now,
                 format_watchlist_summary,
                 format_system_status,
@@ -1622,7 +1622,7 @@ def isle_mesaj(msg: dict):
         # DM filter ayarları
         if arg.startswith("dm"):
             try:
-                from agent.analist_takip import format_dm_settings, set_dm_preset, format_dm_set_result
+                from agent.legacy.analist_takip import format_dm_settings, set_dm_preset, format_dm_set_result
             except Exception as e:
                 tg_send(chat_id, f"❌ DM settings yüklenemedi: {e}", reply_to=msg_id)
                 return
@@ -2388,7 +2388,7 @@ def main():
         # 13:00-16:30 (60dk), 16:30-23:30 (30dk), 23:30-01:30 (30dk),
         # Cmt 10:00 catchup. Tümü DM-only.
         try:
-            from agent.analist_takip import analist_takip_tick
+            from agent.legacy.analist_takip import analist_takip_tick
 
             def _analist_takip_zamanlayici():
                 while True:

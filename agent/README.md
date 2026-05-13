@@ -1,67 +1,72 @@
-# Finzora Agent
+# Finzora AI — agent package v2
 
-Zeynel'in otonom portföy izleme asistanı.
+Simplified agent system written 13 May 2026 to replace the 50+ file legacy
+system archived under `agent/legacy/`. Driven by Zeynel's feedback that the
+previous system "felt too institutional".
 
-## Phase 1 — Sadece İzler (Şu An)
+## Philosophy
 
-Agent hiçbir dosyaya **yazmaz**. Sadece okur, analiz yapar, Zeynel'e özel Telegram'a yazar.
+- **Single source of truth:** `data/portfolio.json` (no sleeve / theme files)
+- **Claude is a scribe + analyst**, not a portfolio manager
+- **No automatic decision-imposing rules** (K-11, K-12, K-15c, K-22 removed)
+- **English code, English file names, English reports.** Turkish only for
+  Telegram bot messages and direct conversation with Zeynel.
+- **Small, readable modules.** Each file should fit on a single screen if
+  possible. No 2700-line orchestrators.
 
-```
-Finzora Kanalı (@finzora)  → mevcut sistem bildirimleri (değişmedi)
-Zeynel private chat         → Agent yorumları (yeni)
-```
+## Module status (as of 13 May 2026)
 
-## Çalışma Zamanları
-
-| Zaman (TR) | Mod | Ne yapar |
+| Module | Status | Purpose |
 |---|---|---|
-| 16:00 (Pzt-Cuma) | morning | Sabah analizi, günün planı |
-| 00:30 (Pzt-Cuma) | closing | Kapanış yorumu |
-| Her 30dk (16:30-23:00) | monitor | Stop uyarısı, acil durum |
-| Pazar 12:00 | weekly | Haftalık derin analiz |
+| `portfolio.py` | ✅ Implemented | CRUD + FMP price enrichment + metrics |
+| `reports/morning.py` | 🟡 TODO | Daily pre-session report generator |
+| `reports/closing.py` | 🟡 TODO | Daily post-close report generator |
+| `reports/weekly.py` | 🟡 TODO | Sunday weekly review |
+| `monitor.py` | 🟡 TODO | Position alerts (K-13 VIX, K-23 drawdown) |
+| `telegram.py` | 🟡 TODO | Turkish message sender (group + DM) |
+| `fmp.py` | 🟡 TODO | FMP client wrapper (currently uses legacy/fmp_client) |
 
-## Kurulum
+## Migration path
 
-### 1. GitHub Secrets Ekle
+Each new module is written from scratch with the single-portfolio model.
+When functional, the corresponding legacy module (e.g.
+`agent/legacy/orchestrator.py`) is no longer called by Telegram bot or
+GitHub Actions. Legacy modules remain on disk for reference but are not
+maintained.
 
-`Settings → Secrets and variables → Actions → New repository secret`
+GitHub Actions workflows that reference legacy paths (`agent.yml`,
+`agent_morning`, `agent_closing`, etc.) will be updated in a follow-up
+commit once the morning/closing report modules are in place.
 
-```
-ANTHROPIC_API_KEY     → Anthropic Console'dan al
-TELEGRAM_PRIVATE_CHAT → @userinfobot'tan al (kişisel chat ID)
-FMP_API_KEY           → Zaten var
-TELEGRAM_TOKEN        → Zaten var
-```
+## Data schema (post-simplification)
 
-### 2. İlk Testi Çalıştır
-
-GitHub Actions → Finzora Agent → Run workflow → mode: morning
-
-### 3. Telegram'dan Takip Et
-
-Agent yorumları sadece sana gelir. Finzora kanalı etkilenmez.
-
-## Dosya Yapısı
-
-```
-agent/
-├── orchestrator.py   → Ana döngü, mod yönetimi
-├── claude_agent.py   → LLM API bağlantısı
-├── tools.py          → FMP, Telegram, veri okuma
-└── README.md         → Bu dosya
-
-.github/workflows/
-└── agent.yml         → Zamanlanmış çalışma
+Open position (8 fields):
+```json
+{
+  "symbol": "TICKER",
+  "sector": "Sector name",
+  "entry_date": "YYYY-MM-DD",
+  "entry_price": 0.00,
+  "shares": 0,
+  "entry_reason": "Detailed thesis — why entered, catalyst, etc.",
+  "stop_loss": 0.00,
+  "target": null
+}
 ```
 
-## Phase Yol Haritası
+On close, the following fields are appended:
+```json
+{
+  "exit_date": "YYYY-MM-DD",
+  "exit_price": 0.00,
+  "exit_reason": "Stop / target / thesis break / other",
+  "pnl_pct": 0.00,
+  "lessons": "Optional post-trade review"
+}
+```
 
-- **Phase 1** (Şu an): Sadece izle, yorum yap, Telegram'a yaz
-- **Phase 2**: Karar ver, Telegram'da onay iste, onaylanınca uygula
-- **Phase 3**: Tam otonom, broker bağlantısı
+## See also
 
-## Önemli
-
-Agent şu an `contents: read` yetkisiyle çalışıyor.
-Hiçbir portföy dosyasını, JSON'ı, CSV'yi değiştiremez.
-Bu Phase 2'de değişecek.
+- `notes/2026-05-13_SIMPLIFICATION.md` — full simplification record
+- `docs/K_RULES_QUICK_REF.md` — current minimal K-rules
+- `agent/legacy/README.md` — old system reference (do not extend)
