@@ -121,8 +121,18 @@ def fetch_recent_news(lookback_hours=NEWS_LOOKBACK_HOURS):
     else:
         log("Portföy ticker'ları bulunamadı — sadece sektör listesi kullanılacak.")
 
+    # Watchlist (havuz) ticker'ları — Aşama 3 (13 May 2026 sonrası)
+    watchlist_tickers = []
+    try:
+        from agent.watchlist import all_symbols as _wl_symbols
+        watchlist_tickers = _wl_symbols()
+        if watchlist_tickers:
+            log(f"Watchlist takibe ekleniyor ({len(watchlist_tickers)} ticker): {watchlist_tickers[:10]}{'...' if len(watchlist_tickers) > 10 else ''}")
+    except Exception as e:
+        log(f"Watchlist okunamadı: {e}")
+
     # Birleştir + dedupe
-    all_tickers = sorted(set(sector_tickers + portfolio_tickers))
+    all_tickers = sorted(set(sector_tickers + portfolio_tickers + watchlist_tickers))
     log(f"Toplam takip edilen ticker sayısı: {len(all_tickers)}")
 
     # 15'erli gruplar halinde FMP'ye sor (URL uzunluk limiti için)

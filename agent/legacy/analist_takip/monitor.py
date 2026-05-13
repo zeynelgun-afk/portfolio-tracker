@@ -281,6 +281,35 @@ def _run_polling_cycle(
                 except Exception as e:
                     _log(f"{ticker} performans watchlist ekleme hatası: {e}")
 
+                # 10b. Ana havuza da ekle (data/watchlist.json — Asama 3, 13 May 2026)
+                # Sadece STRONG_BUY tetiğinde — düşük güvenli BUY'lar gönderilmiyor
+                if decision["decision"] == "STRONG_BUY":
+                    try:
+                        from agent.watchlist import add as pool_add
+                        avg_pct = decision.get("avg_revision_pct")
+                        raised_count = decision.get("raised_count")
+                        rationale = (
+                            f"analist_takip STRONG_BUY: {raised_count or '?'} raise"
+                            + (f", avg +{avg_pct:.1f}%" if avg_pct else "")
+                        )
+                        result = pool_add(
+                            symbol=ticker,
+                            source="analist_takip_strong_buy",
+                            rationale=rationale,
+                            price=current_price,
+                            score_components={
+                                "analist_takip": {
+                                    "raised_count": raised_count,
+                                    "avg_revision_pct": avg_pct,
+                                    "decision_confidence": decision.get("confidence"),
+                                },
+                            },
+                        )
+                        if result["action"] in ("added", "updated"):
+                            _log(f"{ticker} ana havuza eklendi/güncellendi: {result['action']}")
+                    except Exception as e:
+                        _log(f"{ticker} ana havuz ekleme hatası: {e}")
+
             if success:
                 decisions_sent += 1
                 _log(f"{ticker} → {decision['decision']} ({decision['confidence']}) — DM gönderildi")
