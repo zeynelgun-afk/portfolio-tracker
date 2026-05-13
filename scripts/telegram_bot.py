@@ -550,8 +550,6 @@ def format_yardim() -> str:
     return """<b>🤖 Finzora AI Bot — Komutlar</b>
 
 <b>📅 Takvim &amp; Makro:</b>
-  <code>/takvim</code> — Yarınki takvim etkinlikleri (Telegram bildirimi)
-  <code>/takvim bugün</code> — Bugünkü etkinlikler
   <code>/makro</code> — Bu haftanın ABD makro olayları (CPI/NFP/PCE…)
   <code>/fomc</code> — Sonraki FOMC toplantısı + kaç gün kaldı
   <code>/kazanc</code> — Önümüzdeki 14 gün bilanço takvimi
@@ -1135,78 +1133,8 @@ _MAKRO_DISI = ["CFTC","Baker Hughes","Mortgage","MBA ","API Crude",
                "EIA Crude","Natural Gas","Redbook","Challenger","speculative"]
 
 
-def format_takvim(hedef: str = "yarın") -> str:
-    """Google Calendar iCal -> yarın/bugün etkinlikleri. RRULE (tekrarlayan) destekler."""
-    from datetime import date as _d, timedelta as _td
-    ical_urls_raw  = os.environ.get("GCAL_ICAL_URLS","")
-    ical_names_raw = os.environ.get("GCAL_ICAL_NAMES","Ana Takvim")
-    if not ical_urls_raw:
-        return "⚠️ GCAL_ICAL_URLS tanımlanmamış. Railway env değişkenlerine ekle."
-    try:
-        from icalendar import Calendar as _Cal
-        import recurring_ical_events as _rie
-    except ImportError:
-        return "⚠️ Eksik kütüphane: pip install icalendar recurring-ical-events"
-
-    urls  = [u.strip() for u in ical_urls_raw.split(",") if u.strip()]
-    names = [n.strip() for n in ical_names_raw.split(",") if n.strip()]
-    while len(names) < len(urls):
-        names.append(f"Takvim {len(names)+1}")
-
-    bugun = _d.today()
-    if hedef.lower().strip() in ("bugün","bugun","today"):
-        hedef_tarih, etiket = bugun, "BUGÜN"
-    else:
-        hedef_tarih, etiket = bugun + _td(days=1), "YARIN"
-
-    # recurring_ical_events naive datetime ister
-    sorgu_bas = datetime(hedef_tarih.year, hedef_tarih.month, hedef_tarih.day, 0, 0, 0)
-    sorgu_bit = datetime(hedef_tarih.year, hedef_tarih.month, hedef_tarih.day, 23, 59, 59)
-
-    etkinlikler = []
-    for takvim_adi, url in zip(names, urls):
-        try:
-            resp = requests.get(url, timeout=15, headers={"User-Agent":"FinzoraBot/1.0"})
-            resp.raise_for_status()
-            cal = _Cal.from_ical(resp.content)
-            events = _rie.of(cal).between(sorgu_bas, sorgu_bit)
-            for ev in events:
-                summary = str(ev.get("SUMMARY","İsimsiz"))
-                dtstart = ev.get("DTSTART")
-                if dtstart is None: continue
-                dt = dtstart.dt
-                if hasattr(dt, "date"):
-                    # datetime — timezone'u TR'ye çevir
-                    try:
-                        from datetime import timezone as _tz
-                        if dt.tzinfo:
-                            import pytz as _pytz2
-                            tr = dt.astimezone(_pytz2.timezone("Europe/Istanbul"))
-                            event_time = tr.strftime("%H:%M")
-                        else:
-                            event_time = dt.strftime("%H:%M")
-                    except Exception:
-                        event_time = "?"
-                else:
-                    event_time = "Tüm gün"
-                etkinlikler.append({"baslik": summary, "saat": event_time, "takvim": takvim_adi})
-        except Exception as e:
-            etkinlikler.append({"baslik": f"⚠️ {takvim_adi}: {e}", "saat":"", "takvim":""})
-
-    etkinlikler.sort(key=lambda x: x["saat"] if x["saat"] not in ("","Tüm gün") else "00:00")
-    gun_adlari = ["Pazartesi","Salı","Çarşamba","Perşembe","Cuma","Cumartesi","Pazar"]
-    aylar = ["Oca","Şub","Mar","Nis","May","Haz","Tem","Ağu","Eyl","Eki","Kas","Ara"]
-    tarih_str = f"{gun_adlari[hedef_tarih.weekday()]} {hedef_tarih.day} {aylar[hedef_tarih.month-1]}"
-    if not etkinlikler:
-        return f"📅 <b>TAKVİM — {etiket}</b>\n<i>{tarih_str}</i>\n\n✅ Etkinlik yok."
-    lines = [f"📅 <b>TAKVİM — {etiket}</b>",
-             f"<i>{tarih_str} • {len(etkinlikler)} etkinlik</i>",""]
-    for i, ev in enumerate(etkinlikler, 1):
-        saat_str = f" {ev['saat']}" if ev["saat"] and ev["saat"] not in ("","Tüm gün") else " 📆"
-        lines.append(f"<b>{i}. {ev['baslik']}</b>{saat_str}")
-        if ev["takvim"]: lines.append(f"   📂 {ev['takvim']}")
-    lines.append("\n<i>finzora ai • takvim</i>")
-    return "\n".join(lines)
+# format_takvim() kaldırıldı — kişisel takvim sistemi
+# zeynelgun-afk/asistan repo'suna taşındı (13 May 2026).
 
 
 def format_makro(gun: int = 7) -> str:
@@ -1561,12 +1489,7 @@ def isle_mesaj(msg: dict):
         tg_send(chat_id, format_swing(), reply_to=msg_id)
         return
 
-    # ── /takvim [bugün|yarın] ─────────────────────────────────────
-    if text_lower.startswith("/takvim"):
-        arg = text_lower.replace("/takvim", "").strip() or "yarın"
-        tg_send(chat_id, "⏳ Takvim alınıyor...", reply_to=msg_id)
-        tg_send(chat_id, format_takvim(arg), reply_to=msg_id)
-        return
+    # /takvim handler kaldırıldı — zeynelgun-afk/asistan repo'suna taşındı.
 
     # ── /makro ────────────────────────────────────────────────────
     if text_lower in ("/makro", "/macro"):
@@ -2093,45 +2016,8 @@ def main():
         print(f"[Bot] Railway modu — sürekli polling başlıyor")
         print(f"[Bot] {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
 
-        # ── Dahili Günlük Zamanlayıcı ─────────────────────────────
-        # GitHub Actions schedule güvenilmez — Railway 7/24 çalıştığı için
-        # takvim bildirimini buradan gönderiyoruz. Hedef: 08:30 TR
-        # pytz & threading üstte import edildi
-
-        _TR_TZ = pytz.timezone("Europe/Istanbul")
-        _zamanlayi_durum = {"son_tarih": None}  # aynı gün iki kez göndermesin
-
-        def _gunluk_bildirim():
-            """Her 60sn bir zamanı kontrol et, 08:30 TR olunca takvim bildirimini gönder."""
-            while True:
-                try:
-                    simdi_tr = datetime.now(_TR_TZ)
-                    bugun    = simdi_tr.date()
-                    saat     = simdi_tr.hour
-                    dakika   = simdi_tr.minute
-
-                    # 08:30 - 08:34 arasında, bugün henüz gönderilmemişse
-                    if (saat == 8 and 30 <= dakika <= 34
-                            and _zamanlayi_durum["son_tarih"] != bugun):
-
-                        _zamanlayi_durum["son_tarih"] = bugun
-                        print(f"[Zamanlayıcı] Takvim bildirimi gönderiliyor — {simdi_tr.strftime('%H:%M TR')}")
-
-                        try:
-                            mesaj = format_takvim("yarın")
-                            tg_send(PRIVATE_CHAT, mesaj)
-                            print(f"[Zamanlayıcı] ✅ Gönderildi.")
-                        except Exception as e:
-                            print(f"[Zamanlayıcı] ❌ Hata: {e}")
-
-                except Exception as e:
-                    print(f"[Zamanlayıcı] Döngü hatası: {e}")
-
-                time.sleep(60)  # Her dakika kontrol et
-
-        _t = threading.Thread(target=_gunluk_bildirim, daemon=True, name="GunlukZamanlayici")
-        _t.start()
-        print(f"[Bot] Günlük zamanlayıcı başlatıldı — hedef 08:30 TR")
+        # 08:30 TR kişisel takvim bildirimi scheduler'ı kaldırıldı —
+        # zeynelgun-afk/asistan repo'suna taşındı (13 May 2026).
 
         # ── Aylık Makro Takvim Güncelleyici ───────────────────────
         def _aylik_makro():
