@@ -38,12 +38,12 @@ import sys
 from pathlib import Path
 from typing import Optional
 
-# agent/ klasöründen import için root'u sys.path'e ekle
-_ROOT = Path(__file__).resolve().parent.parent
-if str(_ROOT) not in sys.path:
-    sys.path.insert(0, str(_ROOT))
+# agent/ klasörünü sys.path'e ekle ki "agent.fmp_client" yerine doğrudan "fmp_client" import edilsin
+_AGENT_DIR = Path(__file__).resolve().parent
+if str(_AGENT_DIR) not in sys.path:
+    sys.path.insert(0, str(_AGENT_DIR))
 
-from agent.fmp_client import fmp_get
+from fmp_client import fmp_get  # noqa: E402
 
 
 # ============================================================================
@@ -324,14 +324,32 @@ def _evaluate_vcp(contractions: list, current_price: float, trend_ok: bool) -> d
 # ANA FONKSIYON
 # ============================================================================
 
-def detect_vcp(symbol: str, lookback_days: int = LOOKBACK_DAYS) -> dict:
+def detect_vcp(symbol: str, lookback_days: int = LOOKBACK_DAYS, as_of_date: Optional[str] = None) -> dict:
     """
     Bir sembol için VCP tespiti yapar.
+
+    Args:
+        symbol: Ticker
+        lookback_days: Geriye bakılacak gün sayısı
+        as_of_date: "YYYY-MM-DD" formatında. Verilirse, sanki o tarihteymişiz gibi
+                    sadece o tarihe kadar olan veri kullanılır (backtest için).
     """
-    hist = fmp_get("historical-price-eod/full", {"symbol": symbol, "limit": lookback_days + 60})
+    params = {"symbol": symbol, "limit": lookback_days + 60}
+    if as_of_date:
+        # "to" parametresi ile o tarihe kadar olan veriyi al
+        params["to"] = as_of_date
+        # "from" da gerekli olabilir — limit her zaman çalışmıyor "to" ile
+        from datetime import datetime, timedelta
+        to_dt = datetime.strptime(as_of_date, "%Y-%m-%d")
+        # lookback + 60 takvim günü (haftasonu/tatil için ek marj × 1.5)
+        from_dt = to_dt - timedelta(days=int((lookback_days + 60) * 1.5))
+        params["from"] = from_dt.strftime("%Y-%m-%d")
+
+    hist = fmp_get("historical-price-eod/full", params)
     if not hist or not isinstance(hist, list) or len(hist) < 50:
         return {
             "symbol": symbol,
+            "as_of_date": as_of_date,
             "vcp_status": "ERROR",
             "vcp_score": 0,
             "reason": "yeterli geçmiş veri yok",
@@ -363,6 +381,7 @@ def detect_vcp(symbol: str, lookback_days: int = LOOKBACK_DAYS) -> dict:
 
     return {
         "symbol": symbol,
+        "as_of_date": as_of_date,
         "current_price": round(current_price, 2),
         "sma50": round(sma50, 2) if sma50 else None,
         "sma200": round(sma200, 2) if sma200 else None,

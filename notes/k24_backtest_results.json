@@ -1,0 +1,342 @@
+[
+  {
+    "symbol": "ZS",
+    "entry_date": "2026-02-24",
+    "as_of": "2026-02-23",
+    "pnl_pct": 2.55,
+    "hold_days": 3,
+    "vcp_status": "NONE",
+    "vcp_score": 20,
+    "pivot_dist": -16.99
+  },
+  {
+    "symbol": "GOOGL",
+    "entry_date": "2026-01-02",
+    "as_of": "2026-01-01",
+    "pnl_pct": 7.79,
+    "hold_days": 23,
+    "vcp_status": "WEAK",
+    "vcp_score": 45,
+    "pivot_dist": -2.59
+  },
+  {
+    "symbol": "CAT",
+    "entry_date": "2026-02-04",
+    "as_of": "2026-02-03",
+    "pnl_pct": 12.02,
+    "hold_days": 7,
+    "vcp_status": "WEAK",
+    "vcp_score": 61,
+    "pivot_dist": 3.37
+  },
+  {
+    "symbol": "VZ",
+    "entry_date": "2026-02-03",
+    "as_of": "2026-02-02",
+    "pnl_pct": 3.89,
+    "hold_days": 15,
+    "vcp_status": "NONE",
+    "vcp_score": 28,
+    "pivot_dist": 8.91
+  },
+  {
+    "symbol": "XOM",
+    "entry_date": "2026-02-03",
+    "as_of": "2026-02-02",
+    "pnl_pct": 5.53,
+    "hold_days": 15,
+    "vcp_status": "WEAK",
+    "vcp_score": 68,
+    "pivot_dist": -2.77
+  },
+  {
+    "symbol": "WMT",
+    "entry_date": "2026-02-06",
+    "as_of": "2026-02-05",
+    "pnl_pct": -3.48,
+    "hold_days": 12,
+    "vcp_status": "NONE",
+    "vcp_score": 38,
+    "pivot_dist": 4.37
+  },
+  {
+    "symbol": "AMT",
+    "entry_date": "2026-02-17",
+    "as_of": "2026-02-16",
+    "pnl_pct": -3.3507690714174734,
+    "hold_days": 2,
+    "vcp_status": "WEAK",
+    "vcp_score": 51,
+    "pivot_dist": 5.61
+  },
+  {
+    "symbol": "NVDA",
+    "entry_date": "2026-02-12",
+    "as_of": "2026-02-11",
+    "pnl_pct": 2.88,
+    "hold_days": 11,
+    "vcp_status": "NONE",
+    "vcp_score": 35,
+    "pivot_dist": -2.28
+  },
+  {
+    "symbol": "NEM",
+    "entry_date": "2026-02-12",
+    "as_of": "2026-02-11",
+    "pnl_pct": 2.13,
+    "hold_days": 12,
+    "vcp_status": "WEAK",
+    "vcp_score": 73,
+    "pivot_dist": -7.62
+  },
+  {
+    "symbol": "LMT",
+    "entry_date": "2026-02-13",
+    "as_of": "2026-02-12",
+    "pnl_pct": 1.43,
+    "hold_days": 18,
+    "vcp_status": "WEAK",
+    "vcp_score": 45,
+    "pivot_dist": -1.42
+  },
+  {
+    "symbol": "GE",
+    "entry_date": "2026-02-18",
+    "as_of": "2026-02-17",
+    "pnl_pct": 1.68,
+    "hold_days": 13,
+    "vcp_status": "WEAK",
+    "vcp_score": 45,
+    "pivot_dist": 0.8
+  },
+  {
+    "symbol": "HAL",
+    "entry_date": "2026-02-24",
+    "as_of": "2026-02-23",
+    "pnl_pct": -5.1,
+    "hold_days": 13,
+    "vcp_status": "WEAK",
+    "vcp_score": 45,
+    "pivot_dist": -0.42
+  },
+  {
+    "symbol": "CEG",
+    "entry_date": "2026-03-02",
+    "as_of": "2026-02-27",
+    "pnl_pct": -5.05,
+    "hold_days": 7,
+    "vcp_status": "WEAK",
+    "vcp_score": 55,
+    "pivot_dist": -4.88
+  },
+  {
+    "symbol": "T",
+    "entry_date": "2026-02-17",
+    "as_of": "2026-02-16",
+    "pnl_pct": -5.54,
+    "hold_days": 22,
+    "vcp_status": "STRONG",
+    "vcp_score": 70,
+    "pivot_dist": -2.08
+  },
+  {
+    "symbol": "CTSH",
+    "entry_date": "2026-02-26",
+    "as_of": "2026-02-25",
+    "pnl_pct": 1.45,
+    "hold_days": 13,
+    "vcp_status": "NONE",
+    "vcp_score": 30,
+    "pivot_dist": -7.2
+  },
+  {
+    "symbol": "ALMU",
+    "entry_date": "2026-03-10",
+    "as_of": "2026-03-09",
+    "pnl_pct": -6.11,
+    "hold_days": 2,
+    "vcp_status": "NONE",
+    "vcp_score": 30,
+    "pivot_dist": -26.67
+  },
+  {
+    "symbol": "SOFI",
+    "entry_date": "2026-02-24",
+    "as_of": "2026-02-23",
+    "pnl_pct": -3.62,
+    "hold_days": 16,
+    "vcp_status": "NONE",
+    "vcp_score": 20,
+    "pivot_dist": -8.95
+  },
+  {
+    "symbol": "DUK",
+    "entry_date": "2026-02-19",
+    "as_of": "2026-02-18",
+    "pnl_pct": 1.52,
+    "hold_days": 28,
+    "vcp_status": "STRONG",
+    "vcp_score": 80,
+    "pivot_dist": -2.91
+  },
+  {
+    "symbol": "DVA",
+    "entry_date": "2026-02-20",
+    "as_of": "2026-02-19",
+    "pnl_pct": 1.05,
+    "hold_days": 27,
+    "vcp_status": "NONE",
+    "vcp_score": 20,
+    "pivot_dist": -3.49
+  },
+  {
+    "symbol": "RTX",
+    "entry_date": "2026-03-12",
+    "as_of": "2026-03-11",
+    "pnl_pct": -5.16,
+    "hold_days": 12,
+    "vcp_status": "STRONG",
+    "vcp_score": 85,
+    "pivot_dist": -3.38
+  },
+  {
+    "symbol": "NEM",
+    "entry_date": "2026-03-24",
+    "as_of": "2026-03-23",
+    "pnl_pct": 4.18,
+    "hold_days": 1,
+    "vcp_status": "NONE",
+    "vcp_score": 30,
+    "pivot_dist": -12.85
+  },
+  {
+    "symbol": "AROC",
+    "entry_date": "2026-03-24",
+    "as_of": "2026-03-23",
+    "pnl_pct": -4.95,
+    "hold_days": 2,
+    "vcp_status": "STRONG",
+    "vcp_score": 88,
+    "pivot_dist": -1.23
+  },
+  {
+    "symbol": "CAT",
+    "entry_date": "2026-04-10",
+    "as_of": "2026-04-09",
+    "pnl_pct": 4.26,
+    "hold_days": 17,
+    "vcp_status": "STRONG",
+    "vcp_score": 81,
+    "pivot_dist": 6.36
+  },
+  {
+    "symbol": "KLAC",
+    "entry_date": "2026-04-10",
+    "as_of": "2026-04-09",
+    "pnl_pct": 8.85,
+    "hold_days": 17,
+    "vcp_status": "STRONG",
+    "vcp_score": 81,
+    "pivot_dist": 9.15
+  },
+  {
+    "symbol": "AMAT",
+    "entry_date": "2026-04-10",
+    "as_of": "2026-04-09",
+    "pnl_pct": 1.36,
+    "hold_days": 17,
+    "vcp_status": "STRONG",
+    "vcp_score": 81,
+    "pivot_dist": 4.69
+  },
+  {
+    "symbol": "GEV",
+    "entry_date": "2026-04-14",
+    "as_of": "2026-04-13",
+    "pnl_pct": 7.7,
+    "hold_days": 14,
+    "vcp_status": "STRONG",
+    "vcp_score": 81,
+    "pivot_dist": 4.51
+  },
+  {
+    "symbol": "NNE",
+    "entry_date": "2026-04-27",
+    "as_of": "2026-04-24",
+    "pnl_pct": -7.8,
+    "hold_days": 1,
+    "vcp_status": "NONE",
+    "vcp_score": 20,
+    "pivot_dist": -13.52
+  },
+  {
+    "symbol": "RPRX",
+    "entry_date": "2026-04-14",
+    "as_of": "2026-04-13",
+    "pnl_pct": 2.8,
+    "hold_days": 15,
+    "vcp_status": "WEAK",
+    "vcp_score": 45,
+    "pivot_dist": -1.28
+  },
+  {
+    "symbol": "UEC",
+    "entry_date": "2026-04-28",
+    "as_of": "2026-04-27",
+    "pnl_pct": -9.25,
+    "hold_days": 1,
+    "vcp_status": "NONE",
+    "vcp_score": 20,
+    "pivot_dist": -3.57
+  },
+  {
+    "symbol": "UPS",
+    "entry_date": "2026-05-01",
+    "as_of": "2026-04-30",
+    "pnl_pct": -11.38,
+    "hold_days": 3,
+    "vcp_status": "NONE",
+    "vcp_score": 35,
+    "pivot_dist": 0.26
+  },
+  {
+    "symbol": "NEE",
+    "entry_date": "2026-05-01",
+    "as_of": "2026-04-30",
+    "pnl_pct": -4.42,
+    "hold_days": 6,
+    "vcp_status": "WEAK",
+    "vcp_score": 45,
+    "pivot_dist": 0.26
+  },
+  {
+    "symbol": "UEC",
+    "entry_date": "2026-05-04",
+    "as_of": "2026-05-01",
+    "pnl_pct": -0.13,
+    "hold_days": 4,
+    "vcp_status": "WEAK",
+    "vcp_score": 63,
+    "pivot_dist": -3.43
+  },
+  {
+    "symbol": "TFC",
+    "entry_date": "2026-04-27",
+    "as_of": "2026-04-24",
+    "pnl_pct": -3.97,
+    "hold_days": 11,
+    "vcp_status": "STRONG",
+    "vcp_score": 80,
+    "pivot_dist": 0.1
+  },
+  {
+    "symbol": "CAT",
+    "entry_date": "2026-04-27",
+    "as_of": "2026-04-24",
+    "pnl_pct": 11.45,
+    "hold_days": 15,
+    "vcp_status": "NONE",
+    "vcp_score": 38,
+    "pivot_dist": 4.04
+  }
+]
