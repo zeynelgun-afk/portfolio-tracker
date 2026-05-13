@@ -19,9 +19,11 @@ import requests
 from datetime import datetime, timedelta, timezone
 
 # ── Config ──────────────────────────────────────────────────────────────────
-FMP_KEY          = os.environ.get("FMP_API_KEY", "g1GFJZtV5rCP49UCir4WuP56VjhmA6F8")
+# 13 May 2026: hardcoded fallback'lar kaldırıldı (güvenlik). Env vars
+# yoksa script çalışmaz — workflow secrets üzerinden set ediliyor.
+FMP_KEY          = os.environ.get("FMP_API_KEY", "")
 BOT_TOKEN        = os.environ.get("TELEGRAM_BOT_TOKEN", "")
-PRIVATE_CHAT_ID  = os.environ.get("TELEGRAM_PRIVATE_ID", "1403072107")
+PRIVATE_CHAT_ID  = os.environ.get("TELEGRAM_DM_CHAT_ID") or os.environ.get("TELEGRAM_PRIVATE_ID", "")
 GH_TOKEN         = os.environ.get("GH_TOKEN", "")
 GH_REPO          = "zeynelgun-afk/portfolio-tracker"
 
@@ -29,11 +31,12 @@ FMP_BASE         = "https://financialmodelingprep.com/stable"
 TELEGRAM_API     = f"https://api.telegram.org/bot{BOT_TOKEN}"
 GH_API           = "https://api.github.com"
 
-# LLM client (Kimi via OpenRouter) — lazy-imported when analyze_with_claude runs
-_REPO_DIR_FOR_AGENT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-sys.path.insert(0, os.path.join(_REPO_DIR_FOR_AGENT, "agent"))
-
+# 13 May 2026: agent reorganization sonrası import path düzeltildi.
+# Eski: agent/fmp_client.py → Yeni: agent/fmp.py (sade v2 wrapper)
 REPO_ROOT        = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if REPO_ROOT not in sys.path:
+    sys.path.insert(0, REPO_ROOT)
+
 LOG_FILE         = os.path.join(REPO_ROOT, "data", "news_radar_log.json")
 
 # Haber gecikmesi: kaç saat geriye bak
@@ -45,19 +48,12 @@ def log(msg):
     print(f"[{ts}] {msg}", flush=True)
 
 def fmp_get(endpoint, params=None, retries=3):
-    """FMP API çağrısı — canonical agent/fmp_client.py'ye yönlendirilir.
-
-    Migration 10 May 2026: eski özel retry mantığı (DNS cache overflow body
-    detection + farklı backoff zamanlamaları) kaldırıldı. canonical client
-    şu an 60+30s*attempt timing kullanıyor (30 Nis 2026 burst dalgası
-    ampirik analizi sonucu). DNS cache overflow logs/events.jsonl'da hiç
-    tetiklenmemiş, defansif kod kaldırıldı.
-    """
+    """FMP API çağrısı — yeni agent/fmp.py'ye yönlendirilir."""
     try:
-        from fmp_client import fmp_get as _canonical
+        from agent.fmp import fmp_get as _canonical
         return _canonical(endpoint, params=params, max_retries=retries)
     except ImportError:
-        # Çok ender: agent/ sys.path'te yoksa basit fallback
+        # Fallback: agent/ erişilemiyorsa basit fetch
         p = params or {}
         p["apikey"] = FMP_KEY
         try:
@@ -78,24 +74,26 @@ def save_log(data):
         json.dump(data, f, ensure_ascii=False, indent=2)
 
 def load_portfolio_tickers():
-    """3 portföy JSON'ından mevcut pozisyon ticker'larını dinamik çek."""
-    portfolio_files = ["balanced.json", "aggressive.json", "dividend.json"]
-    tickers = set()
-    for fname in portfolio_files:
-        path = os.path.join(REPO_ROOT, "data", "portfolios", fname)
-        if not os.path.exists(path):
-            log(f"Portföy dosyası yok: {path}")
-            continue
-        try:
-            with open(path) as f:
-                data = json.load(f)
-            for pos in data.get("pozisyonlar", []):
-                sym = pos.get("sembol")
-                if sym and isinstance(sym, str):
-                    tickers.add(sym.upper().strip())
-        except Exception as e:
-            log(f"Portföy okuma hatası ({fname}): {e}")
-    return sorted(tickers)
+    """
+    Açık pozisyon ticker'larını yeni tek-portföy yapısından çek.
+    13 May 2026 sadeleştirme sonrası: data/portfolio.json (positions[]).
+    """
+    path = os.path.join(REPO_ROOT, "data", "portfolio.json")
+    if not os.path.exists(path):
+        log(f"Portföy dosyası yok: {path}")
+        return []
+    try:
+        with open(path) as f:
+            data = json.load(f)
+        tickers = set()
+        for pos in data.get("positions", []):
+            sym = pos.get("symbol")
+            if sym and isinstance(sym, str):
+                tickers.add(sym.upper().strip())
+        return sorted(tickers)
+    except Exception as e:
+        log(f"Portföy okuma hatası: {e}")
+        return []
 
 # ── Haber Çekimi ────────────────────────────────────────────────────────────
 def fetch_recent_news(lookback_hours=NEWS_LOOKBACK_HOURS):
@@ -251,7 +249,8 @@ Return ONLY the JSON array — no extra prose."""
 def analyze_with_claude(news_items):
     """Analyze news with Kimi (via OpenRouter). Function name kept for backward compatibility."""
     try:
-        from llm_client import chat as _llm_chat, get_api_key as _get_api_key
+        # 13 May 2026: llm_client şimdi agent/legacy/'de
+        from agent.legacy.llm_client import chat as _llm_chat, get_api_key as _get_api_key
     except ImportError as e:
         log(f"HATA: llm_client import edilemedi: {e}")
         return []

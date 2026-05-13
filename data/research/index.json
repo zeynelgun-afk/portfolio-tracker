@@ -493,12 +493,12 @@
       ],
       "gerceklesen": {
         "tespit_fiyati": 390.55,
-        "simdiki_fiyat": 385.04,
-        "fiyat_tepkisi_pct": -1.4,
+        "simdiki_fiyat": 374.61,
+        "fiyat_tepkisi_pct": -4.1,
         "tez_tuttu": null,
         "ders": null,
-        "gun_sayisi": 3,
-        "son_kontrol": "2026-05-11 14:08"
+        "gun_sayisi": 5,
+        "son_kontrol": "2026-05-13 12:03"
       },
       "etiketler": [
         "ai_infrastructure",
@@ -665,12 +665,12 @@
       ],
       "gerceklesen": {
         "tespit_fiyati": 17.73,
-        "simdiki_fiyat": 16.8,
-        "fiyat_tepkisi_pct": -5.2,
+        "simdiki_fiyat": 16.66,
+        "fiyat_tepkisi_pct": -6.0,
         "tez_tuttu": null,
         "ders": null,
-        "gun_sayisi": 3,
-        "son_kontrol": "2026-05-11 14:08"
+        "gun_sayisi": 5,
+        "son_kontrol": "2026-05-13 12:03"
       },
       "etiketler": [
         "fintech",
@@ -840,12 +840,12 @@
       ],
       "gerceklesen": {
         "tespit_fiyati": 42.54,
-        "simdiki_fiyat": 44.36,
-        "fiyat_tepkisi_pct": 4.3,
+        "simdiki_fiyat": 44.13,
+        "fiyat_tepkisi_pct": 3.7,
         "tez_tuttu": null,
         "ders": null,
-        "gun_sayisi": 3,
-        "son_kontrol": "2026-05-11 14:08"
+        "gun_sayisi": 5,
+        "son_kontrol": "2026-05-13 12:03"
       },
       "etiketler": [
         "AI infrastructure",
@@ -1332,12 +1332,12 @@
       "karar_gerekce": "Mevcut fiyat normal medyan altında. İyi giriş seviyesi.",
       "gerceklesen": {
         "tespit_fiyati": 215.217,
-        "simdiki_fiyat": 218.21,
-        "fiyat_tepkisi_pct": 1.4,
+        "simdiki_fiyat": 220.78,
+        "fiyat_tepkisi_pct": 2.6,
         "tez_tuttu": null,
         "ders": null,
-        "gun_sayisi": 0,
-        "son_kontrol": "2026-05-11 14:08"
+        "gun_sayisi": 2,
+        "son_kontrol": "2026-05-13 12:03"
       },
       "etiketler": [
         "growth",

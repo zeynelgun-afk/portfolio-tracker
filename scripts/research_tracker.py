@@ -27,7 +27,7 @@ import requests
 from datetime import datetime, timedelta
 from pathlib import Path
 
-API_KEY = os.environ.get("FMP_API_KEY", "g1GFJZtV5rCP49UCir4WuP56VjhmA6F8")
+API_KEY = os.environ.get("FMP_API_KEY", "")
 BASE = "https://financialmodelingprep.com/stable"
 HEADERS = {"User-Agent": "finzora-research-tracker/5.0"}
 
@@ -35,8 +35,8 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 INDEX_PATH = REPO_ROOT / "data" / "research" / "index.json"
 
 # Telegram (optional)
-TELEGRAM_TOKEN = os.environ.get("TELEGRAM_TOKEN", "8749931249:AAGTLVKLHx5grcGlJhuodg-DbFDkFYjpCcI")
-PRIVATE_CHAT = os.environ.get("TELEGRAM_PRIVATE_CHAT", "1403072107")  # Zeynel DM
+TELEGRAM_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN") or os.environ.get("TELEGRAM_TOKEN", "")
+PRIVATE_CHAT = os.environ.get("TELEGRAM_DM_CHAT_ID") or os.environ.get("TELEGRAM_PRIVATE_CHAT", "")  # Zeynel DM
 
 
 def fetch_quote(ticker):
