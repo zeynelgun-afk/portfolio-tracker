@@ -1,11 +1,25 @@
 ---
 name: adil-deger-9-yontem
-description: ABD hisse senetleri için kapsamlı adil değer hesaplaması v5.2. 9 YÖNTEM (4 Traditional + 2 Forward + 3 Growth), DUAL-MODE sistem (GROWTH vs BLENDED), 3 piyasa rejimi (Ayı/Normal/Boğa), inflection-point aware Forward outlier flag + PEG growth cap + DCF FCF override + EV/FWD EBITDA proxy. FMP Ultimate plan ile canlı sektör P/E, dinamik CAPM WACC, Altman Z + Piotroski risk skorları, analist sentiment momentum, FMP DCF sanity check, konsantrasyon riski tespiti. 5 YILLIK FİNANSAL PROJEKSİYON (gelir, brüt, faaliyet, net, EPS yıl yıl + Forward çarpanlar + normalizasyon yılı). PRE-IPO MODU (manuel JSON input, FMP'de olmayan şirketler için). 17 sektör marj profili. Tetikleyiciler "X hissesini değerle", "adil değer hesapla", "X için fair value", "X kaç eder", "9 yöntem değerleme", "pre-IPO analiz". Finzora AI Adil Değer v3.7.2 metodolojisi. Her kullanımda notes klasörü güncellenir.
+description: ABD hisse senetleri için kapsamlı adil değer hesaplaması v5.3. 9 YÖNTEM (4 Traditional + 2 Forward + 3 Growth), DUAL-MODE sistem (GROWTH vs BLENDED), 3 piyasa rejimi (Ayı/Normal/Boğa), inflection-point aware Forward outlier flag + PEG growth cap + DCF FCF override + EV/FWD EBITDA proxy + PEG multi-year CAGR source (Wall Street LTG). FMP Ultimate plan ile canlı sektör P/E, dinamik CAPM WACC, Altman Z + Piotroski risk skorları, analist sentiment momentum, FMP DCF sanity check, konsantrasyon riski tespiti. 5 YILLIK FİNANSAL PROJEKSİYON (gelir, brüt, faaliyet, net, EPS yıl yıl + Forward çarpanlar + normalizasyon yılı). PRE-IPO MODU (manuel JSON input, FMP'de olmayan şirketler için). 17 sektör marj profili. Tetikleyiciler "X hissesini değerle", "adil değer hesapla", "X için fair value", "X kaç eder", "9 yöntem değerleme", "pre-IPO analiz". Finzora AI Adil Değer v3.7.2 metodolojisi. Her kullanımda notes klasörü güncellenir.
 ---
 
-# Adil Değer 9 Yöntem (Finzora AI v3.7.2) — v5.2
+# Adil Değer 9 Yöntem (Finzora AI v3.7.2) — v5.3
 
 ## Versiyon Geçmişi
+
+**v5.3 (12 Mayıs 2026)** — PEG Growth Source Hiyerarşi (Wall Street LTG)
+- 📊 **MULTI-YEAR FORWARD CAGR**: PEG `growth_pct` artık hiyerarşik kaynak kullanır:
+  1. **Birincil**: 3y forward EPS CAGR (FY1→FY4) — Wall Street long-term growth standardı
+  2. **Fallback**: 2y forward EPS CAGR (FY1→FY3)
+  3. **Fallback**: 2y geometric `(eps_fwd_2y/eps_ttm)^0.5 - 1` (v5.2 davranışı)
+  Sektör sustainable cap (high-growth %50, mature %35) her durumda korunur.
+- 📊 **GEREKÇE**: FMP docs onaylı — `analyst-estimates` "We use compound annual growth rate" ile türetiliyor. Multi-year EPS verileri zaten CAGR-bazlı, doğrudan extraction ile gerçek LTG elde edilir. v5.2'nin 2y geometric (eps_fwd/eps_ttm)^0.5 yöntemi inflection biotech'lerde TTM EPS yakın-sıfır olduğu için saçma yüksek değerler veriyordu.
+- 📊 **TEST EDİLEN ÖRNEKLER**:
+  - LQDA: v5.2 raw 2y growth %377 → cap'li %50 → v5.3 3y CAGR %36.6 → PEG $90-169 ($1590 → $90 doğrulu yolda)
+  - KO: v5.2 PEG N/A (büyüme eşik altı) → v5.3 PEG $16-31 (3y CAGR %6.5) — model artık olgun şirketleri de değerleyebiliyor
+  - NVDA: v5.2 PEG $445-834 → v5.3 PEG $150-282 (3y CAGR %40.1) — mevcut fiyat $190 ile çok uyumlu
+- 📊 **est_list limit 4 → 6**: 3y CAGR için en az 4 forward yıl gerekli, geçmiş yıllar olabileceği için 6'ya yükseltildi.
+- 📊 Yeni alan: `forward_cagr_source` (`3y_consensus` / `2y_consensus` / `geometric_fallback`), `forward_cagr_analyst_min` (en az analist sayısı — güven göstergesi).
 
 **v5.2 (12 Mayıs 2026)** — Inflection Sonrası 3 Yöntem Düzeltmesi (LQDA v5.1 çıktısı analiz)
 - 🌱 **PEG GROWTH CAP**: `forward_growth` artık Lynch standardı sürdürülebilirlik tavanı uygular. Sektör bazlı: high-growth (semicon/tech/biotech/communication) %50, mature/value %35. Inflection sonrası raw 2y CAGR %200+ olduğu durumlarda PEG saçma değerler üretiyordu (LQDA: PEG $1590). v5.2 cap'li: LQDA PEG ~$218-409 makul aralık. `forward_growth_capped` flag + not eklendi.
