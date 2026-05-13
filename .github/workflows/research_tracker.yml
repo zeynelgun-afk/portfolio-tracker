@@ -23,7 +23,10 @@ jobs:
       - name: Repo çek
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.PAT_TOKEN || secrets.GITHUB_TOKEN }}
+          # PAT_TOKEN secret was created 2026-02-18 and expired around May 2026.
+          # GITHUB_TOKEN with `permissions: contents: write` (set above) is
+          # sufficient for both read and push to the same repo.
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Python kur
         uses: actions/setup-python@v5

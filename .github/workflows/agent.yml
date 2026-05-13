@@ -124,27 +124,36 @@ jobs:
           MODE="${{ steps.mode.outputs.mode }}"
           TIME=$(date -u '+%Y-%m-%d %H:%M UTC')
 
-          git fetch origin main
-          git pull --rebase origin main || git rebase --abort
-
+          # 1) Stage changes FIRST (so they don't block git pull/rebase).
           # Track portfolio data, reports, AND monitor state so the
           # idempotency cache survives across GitHub Actions runs.
-          # Without monitor_state.json being committed, every 30-min run
-          # would re-fire the same alerts (spam).
           git add data/portfolio.json data/monitor_state.json reports/ 2>/dev/null || true
 
+          # 2) Nothing to commit → exit cleanly
           if git diff --staged --quiet; then
             echo "No changes to commit"
-          else
-            git commit -m "[bot/agent-$MODE] Auto update — $TIME"
-            git push origin main || (
-              # Retry once on push race
-              sleep 5
-              git fetch origin main
-              git pull --rebase origin main
-              git push origin main
-            )
+            exit 0
           fi
+
+          # 3) Commit locally
+          git commit -m "[bot/agent-$MODE] Auto update — $TIME"
+
+          # 4) Push, with rebase-retry on race against another run
+          push_with_retry() {
+            for attempt in 1 2 3; do
+              if git push origin main; then
+                echo "Push succeeded (attempt $attempt)"
+                return 0
+              fi
+              echo "Push failed (attempt $attempt) — rebasing on latest main"
+              git fetch origin main
+              # If rebase fails, abort and bail out
+              git rebase origin/main || { git rebase --abort; return 1; }
+              sleep $((attempt * 2))
+            done
+            return 1
+          }
+          push_with_retry
 
       - name: Error notification (Zeynel DM)
         if: failure()
