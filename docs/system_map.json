@@ -14,7 +14,6 @@
     {"id": "macro_calendar.yml",        "label": "Makro Takvim",             "category": "workflow", "workflow_file": "macro_calendar.yml",        "schedule": "Ayın 1'i"},
     {"id": "weekly_fmp_stats.yml",      "label": "FMP Stats (haftalık)",     "category": "workflow", "workflow_file": "weekly_fmp_stats.yml",      "schedule": "Pzr"},
     {"id": "log_rotation.yml",          "label": "Log Rotation",             "category": "workflow", "workflow_file": "log_rotation.yml",          "schedule": "Periyodik"},
-    {"id": "adil_deger_weekly.yml",     "label": "Adil Değer Haftalık",      "category": "workflow", "workflow_file": "adil_deger_weekly.yml",     "schedule": "Manuel"},
 
     {"id": "scripts/news_radar.py",        "label": "news_radar.py",         "category": "script"},
     {"id": "scripts/fair_value_panel.py",  "label": "fair_value_panel.py",   "category": "script", "tag": "yeni"},
