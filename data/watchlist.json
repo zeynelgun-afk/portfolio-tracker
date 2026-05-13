@@ -1,6 +1,6 @@
 {
-  "son_guncelleme": "2026-05-12T21:32:05.734142",
-  "not": "3 portföy merkezi aday havuzu. PART 1C 15:38 TR güncelleme: DUK/NEE/GEV yeni EKLE (K-04+K-18 temiz), POWL K-18 ELENDİ ($27.3M insider satış), ön piyasa gap-up sonrası kovalama yasağı 4 aday için aktif. | 11 Nisan: Nükleer tema adayları eklendi (CCJ, OKLO, NNE, UEC, VST) — tematik araştırma, K-14 aktif olduğu için hepsi İZLE statüsünde. | 11 Nisan ek: BWXT (savunma tekel+NRC katalizör), LEU (HALEU tekeli), DNN (Wheeler River) İZLE. SMR (class action lawsuit) ve UUUU (%6 upside) GEÇ. | 2026-04-14: ALAB+PLAB+COHU eklendi — optik/bağlantı/test ekipmanı tematik araştırması. Hepsi IZLE statüsünde, geri çekilme bekleniyor. | 2026-04-30: RSI (Rush Street Interactive) eklendi — Q1 2026 kazanç patlaması (+%16.58 günlük) sonrası izleme. Aşırı alım nedeniyle ($25 + RSI<65) tetikleyicili. Hedef portföy: dengeli. | 2026-05-11: AAOI eklendi — Q1 2026 bilanço sonrası guidance RAISED ama analist hedef avg ($141.6) mevcut fiyatın ($172.5) altında. Yıldız 2.5/5, izleme tier. Hedef giriş 125-135.",
+  "son_guncelleme": "2026-05-13T05:08:45.919320Z",
+  "not": "3 portföy merkezi aday havuzu. PART 1C 15:38 TR güncelleme: DUK/NEE/GEV yeni EKLE (K-04+K-18 temiz), POWL K-18 ELENDİ ($27.3M insider satış), ön piyasa gap-up sonrası kovalama yasağı 4 aday için aktif. | 11 Nisan: Nükleer tema adayları eklendi (CCJ, OKLO, NNE, UEC, VST) — tematik araştırma, K-14 aktif olduğu için hepsi İZLE statüsünde. | 11 Nisan ek: BWXT (savunma tekel+NRC katalizör), LEU (HALEU tekeli), DNN (Wheeler River) İZLE. SMR (class action lawsuit) ve UUUU (%6 upside) GEÇ. | 2026-04-14: ALAB+PLAB+COHU eklendi — optik/bağlantı/test ekipmanı tematik araştırması. Hepsi IZLE statüsünde, geri çekilme bekleniyor. | 2026-04-30: RSI (Rush Street Interactive) eklendi — Q1 2026 kazanç patlaması (+%16.58 günlük) sonrası izleme. Aşırı alım nedeniyle ($25 + RSI<65) tetikleyicili. Hedef portföy: dengeli. | 2026-05-11: AAOI eklendi — Q1 2026 bilanço sonrası guidance RAISED ama analist hedef avg ($141.6) mevcut fiyatın ($172.5) altında. Yıldız 2.5/5, izleme tier. Hedef giriş 125-135. | 2026-05-12: LQDA (Liquidia) eklendi — Q1 2026 inflection (Rev $132.9M YoY +%4,187, NI +$52.9M), analist takip STRONG_BUY tetiklendi (3 raise/2gün: HCW $67, WF $62, JEF $60). Adil değer $62-77, Risk/Ödül 3.8:1. Ancak RSI 85.2 aşırı alım, kovalama yasak. Hedef giriş $45-50 bandı, geri çekilme bekle. Hedef portföy: agresif, $20K (%5).",
   "sistem_referans": "docs/PORTFOLIO_OPPORTUNITY_SYSTEM.md",
   "script": "scripts/portfolio_scan_common.py",
   "kalibre_notu": "8 nisan 2026 v3: Eşikler gerçek piyasa verisine göre kalibre edildi (dengeli 12→9, temettü 13→9, agresif 14 aynı). Agresif için kalite guard rails eklendi: P/E>60 -2, P/E>80 -3, ROIC<8 -1, ROIC<0 -3. Niteliksel bonus yok (sübjektif bias önleme).",
@@ -41,7 +41,8 @@
       "ALAB",
       "PLAB",
       "COHU",
-      "RSI"
+      "RSI",
+      "LQDA"
     ],
     "GEC": [
       "POWL",
@@ -1053,6 +1054,25 @@
       "skill": "bilanco-sonrasi-us_v1.2",
       "rapor": "reports/research/AAOI_BILANCO_SONRASI_2026-05-11.md",
       "momentum_5gun": 1.83
+    },
+    {
+      "sembol": "LQDA",
+      "hedef_portfoy": "agresif",
+      "guncel_fiyat": 56.6,
+      "rsi": 85.2,
+      "skor": 12,
+      "skor_detay": "Q1 2026 inflection point (Rev $132.9M, NI +$52.9M): +3 | YUTREPIA pazar payı rampa (TAM $8B+): +2 | Analist takip STRONG_BUY (3 raise/2gün: HCW $67, WF $62, JEF $60): +3 | Patent davası temizlendi (SCOTUS Ekim 2024 lehte): +2 | Sağlam bilanço (cash $222M, debt $57M): +1 | Yeni sektör (Healthcare biotech) agresif portföyde yok: +2 | RSI 85.2 aşırı alım (-1)",
+      "sektor": "Sağlık",
+      "tema": "Biyoteknoloji inflection, YUTREPIA (treprostinil inhale toz) PAH/PH-ILD pazar payı kapma, UTHR Tyvaso ailesinden hasta alış",
+      "urgency": "medium",
+      "ekleme_tarihi": "2026-05-12",
+      "son_kontrol": "2026-05-12",
+      "hedef_giris": "45-50",
+      "hedef_fiyat_1": 67,
+      "hedef_fiyat_2": 77,
+      "stop_loss": 44,
+      "r_r_orani": 3.8,
+      "tez": "Q1 2026 net karlılık inflection noktası teyit edildi: Revenue $132.9M (+%4,187 YoY), Net Income +$52.9M (önceki yıl Q1 -$38.4M), FCF +$50.2M. YUTREPIA (FDA onayı Mayıs 2025) Tyvaso ailesine karşı agresif pazar payı kapıyor (Bleecker Street anketi: 2 ayda %5 pazar payı). SCOTUS Ekim 2024'te UTHR '793 patentinin geçersizliğini onayladı, '782 yeni davası taktiksel manevra olarak görülüyor. Manuel adil değer hesabı $62-77 aralığı (Forward P/E 20-30x × 2026E EPS $3.09). Son 24 saatte 3 major analist (HCW, WF, JEF) hedef yükseltti — memory'deki analist takip sistemi STRONG_BUY tetikledi. ANCAK RSI 85.2 (aşırı alım), bilanço sonrası 4 günde %34 ralli oldu — kovalama yasak. $45-50 bandında geri çekilme + RSI<65 teyidi sonrası 1. dilim $15K, $50 altı dip yaparsa 2. dilim $5K. Toplam pozisyon $20K (agresif portföyün %5'i). Hedef 1: $67 (analist yüksek, %19 yukarı), Hedef 2: $77 (yöntem medyan, %36 yukarı). Stop $44 (50DMA $38 üstü, %22 risk). Risk/Ödül 3.8:1. İzleme noktaları: Q2 2026 bilanço (Ağustos) karlılık sürdürülebilirlik teyit, '782 dava ilk karar, Tyvaso prescription trend (UTHR Q2 raporu)."
     }
   ],
   "haric_tutulanlar": [
