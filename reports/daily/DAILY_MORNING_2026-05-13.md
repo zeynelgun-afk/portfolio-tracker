@@ -1,11 +1,11 @@
 # DAILY MORNING REPORT — 2026-05-13
 
-*Generated: 2026-05-13 10:05 *  
+*Generated: 2026-05-13 10:35 *  
 *Source: finzora ai (agent v2)*
 
 ## 0. Market intelligence
 
-**VIX:** 17.89 (-0.56%) — *regime: low (risk-on)*
+**VIX:** 17.95 (-0.22%) — *regime: low (risk-on)*
 
 | Symbol | Price | Day % | Note |
 |--------|------:|------:|------|
@@ -19,7 +19,6 @@
 ## 1. Portfolio health
 
 - **Open positions:** 17
-- **Cost basis:** $418,381
 - **Market value:** $430,697
 - **Unrealized P&L:** +12,315 USD (+2.94%)
 

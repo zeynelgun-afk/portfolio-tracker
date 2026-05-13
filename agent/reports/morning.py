@@ -139,7 +139,6 @@ def render_report(macro: dict, portfolio: dict, today: str) -> str:
     lines.append("## 1. Portfolio health")
     lines.append("")
     lines.append(f"- **Open positions:** {m.get('position_count', 0)}")
-    lines.append(f"- **Cost basis:** ${m.get('total_cost_basis', 0):,.0f}")
     if "total_market_value" in m:
         lines.append(f"- **Market value:** ${m['total_market_value']:,.0f}")
         lines.append(f"- **Unrealized P&L:** {m['total_unrealized_pnl']:+,.0f} USD "
@@ -244,7 +243,6 @@ def render_telegram_summary(macro: dict, portfolio: dict, today: str) -> str:
         "",
         f"💼 <b>Portföy:</b>",
         f"  Pozisyon: {m.get('position_count', 0)}",
-        f"  Maliyet: ${m.get('total_cost_basis', 0):,.0f}",
     ]
     if "total_market_value" in m:
         lines.append(f"  Piyasa: ${m['total_market_value']:,.0f}")

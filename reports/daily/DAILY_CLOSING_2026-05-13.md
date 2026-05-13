@@ -1,11 +1,11 @@
 # DAILY CLOSING REPORT — 2026-05-13
 
-*Generated: 2026-05-13 10:14*  
+*Generated: 2026-05-13 10:35*  
 *Source: finzora ai (agent v2)*
 
 ## 0. Market close
 
-**VIX close:** 17.88 (-0.61%) — *regime: low (risk-on)*
+**VIX close:** 17.95 (-0.22%) — *regime: low (risk-on)*
 
 | Symbol | Close | Day % | Tone |
 |--------|------:|------:|------|
@@ -19,7 +19,6 @@
 ## 1. Portfolio day
 
 - **Open positions:** 17
-- **Cost basis:** $418,381
 - **Market value (close):** $430,697
 - **Unrealized P&L:** +12,315 USD (+2.94%)
 - **Today's portfolio change:** -3,609 USD (-0.83%)

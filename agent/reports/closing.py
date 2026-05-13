@@ -100,7 +100,6 @@ def render_report(macro: dict, portfolio: dict, today: str) -> str:
     lines.append("## 1. Portfolio day")
     lines.append("")
     lines.append(f"- **Open positions:** {m.get('position_count', 0)}")
-    lines.append(f"- **Cost basis:** ${m.get('total_cost_basis', 0):,.0f}")
     if "total_market_value" in m:
         lines.append(f"- **Market value (close):** ${m['total_market_value']:,.0f}")
         lines.append(
