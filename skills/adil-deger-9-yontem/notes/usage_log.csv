@@ -1,7 +1,0 @@
-date,ticker,price,sector_preset,market_regime,bear_p25,bear_median,bear_p75,normal_p25,normal_median,normal_p75,bull_p25,bull_median,bull_p75,decision,notes
-2026-05-06,AMKR,76.61,semicon_osat,normal,19.37,23.52,28.53,26.72,31.67,39.63,34.59,39.59,48.97,GEÇ,"CV %40+ tüm senaryolarda, Justified P-B clipping, mevcut fiyat boğa medyandan +%93 pahalı"
-2026-05-06,AMD,413.95,semicon_design,normal,43.07,46.15,63.13,61.53,63.94,85.73,75.59,98.77,123.17,GEÇ,"CV %77-80 felaket seviye, Forward P/E outlier (3.7x EPS büyüme), Justified P-B clipping (2. vaka), mevcut fiyat boğa medyandan +%319"
-2026-05-06,AMD,413.53,semicon_design,normal,129.46,164.92,196.74,142.58,221.05,293.83,224.34,382.23,572.47,PAHALI/İZLE,"v3 GROWTH modu (4/5 kriter), Reverse DCF %48.7 implied growth, analist hedef $401.65 ile uyumlu (sadece +%3 fark)"
-2026-05-06,AMKR,77.55,semicon_osat,normal,24.22,29.82,38.27,32.12,39.24,49.79,39.07,47.83,60.68,GEÇ,"v3 BLENDED %65/%35, Reverse DCF %27.2, analist konsensus $66.75 ile uyumlu (skill GEÇ analist GEÇ)"
-2026-05-06,KO,78.66,consumer_staples,normal,21.06,29.74,38.35,28.55,40.53,47.40,33.33,51.13,59.16,GEÇ,"v3 BLENDED %80/%20, ÇELİŞKİ: skill GEÇ ama analist hedef $85 (+%8). Quality premium eksikliği tespit edildi"
-2026-05-06,KO,78.75,consumer_staples,normal,26.70,40.53,49.09,35.64,48.46,69.11,48.88,68.95,85.52,PAHALI/İZLE,"v4 Quality Premium 1.40x (KALİTE ÖNCÜSÜ), boğa P75 $85.52 analist konsensüs $85.71 ile %0.2 fark - BAŞARILI"
