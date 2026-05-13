@@ -107,8 +107,7 @@ jobs:
               python -m agent.monitor
               ;;
             closing)
-              echo "[agent v2] closing report not yet implemented — placeholder run"
-              # Future: python -m agent.reports.closing --send
+              python -m agent.reports.closing --send
               ;;
             weekly)
               echo "[agent v2] weekly report not yet implemented — placeholder run"
