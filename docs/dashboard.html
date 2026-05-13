@@ -50,7 +50,7 @@
   .dot.warn { background: var(--warn); }
   .dot.err { background: var(--err); }
   .dot.gray { background: var(--gray); }
-  #refresh {
+  #refresh, #download {
     background: var(--accent);
     color: #fff;
     border: none;
@@ -59,8 +59,11 @@
     cursor: pointer;
     font-size: 13px;
   }
-  #refresh:hover { opacity: 0.85; }
-  #refresh:disabled { opacity: 0.5; cursor: wait; }
+  #download {
+    background: var(--ok);
+  }
+  #refresh:hover, #download:hover { opacity: 0.85; }
+  #refresh:disabled, #download:disabled { opacity: 0.5; cursor: wait; }
 
   main { display: flex; flex: 1; min-height: 0; }
   #cy {
@@ -139,6 +142,7 @@
     <span class="stat-pill"><span class="dot warn"></span><span id="warn-count">–</span> bekliyor</span>
     <span class="stat-pill"><span class="dot err"></span><span id="err-count">–</span> hata</span>
     <span class="stat-pill"><span class="dot gray"></span><span id="gray-count">–</span> bilinmiyor</span>
+    <button id="download" title="Anlık sistem durumunu Markdown olarak indir, Claude'a yapıştır">📥 Rapor İndir</button>
     <button id="refresh">Yenile</button>
   </div>
 </header>

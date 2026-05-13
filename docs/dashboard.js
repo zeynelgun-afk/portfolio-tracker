@@ -121,6 +121,124 @@ function buildElements(systemMap, statusByWorkflow) {
   return elements;
 }
 
+// ---- Status report generator ----
+let _latestState = null;  // {systemMap, statusByWorkflow, elements, generatedAt}
+
+function generateStatusReport(state) {
+  if (!state) return "# Henüz veri yüklenmedi.\n";
+
+  const { systemMap, statusByWorkflow, elements, generatedAt } = state;
+  const counts = { ok: 0, warn: 0, err: 0, gray: 0 };
+  const rows = [];
+  const problems = [];
+
+  systemMap.nodes
+    .filter(n => n.category === "workflow")
+    .forEach(n => {
+      const run = statusByWorkflow[n.workflow_file];
+      const status = classifyStatus(run);
+      counts[status] = (counts[status] || 0) + 1;
+      const conclusion = run ? (run.conclusion || run.status || "—") : "hiç çalışmamış";
+      const updated = run ? new Date(run.updated_at).toLocaleString("tr-TR") : "—";
+      const ago = run ? timeAgoTR(run.updated_at) : "—";
+      const url = run && run.html_url ? run.html_url : "";
+      const emoji = { ok: "✅", warn: "⏳", err: "❌", gray: "—" }[status];
+
+      rows.push(
+        `| ${n.label} | ${emoji} ${status.toUpperCase()} | ${conclusion} | ${updated} | ${ago} |`
+      );
+
+      if (status === "err" || status === "warn") {
+        problems.push({
+          label: n.label,
+          status,
+          conclusion,
+          updated,
+          ago,
+          url,
+          schedule: n.schedule || "—",
+        });
+      }
+    });
+
+  const totalWf = counts.ok + counts.warn + counts.err + counts.gray;
+  const lines = [];
+  lines.push("# Finzora AI — Sistem Durum Raporu");
+  lines.push("");
+  lines.push(`**Oluşturulma:** ${generatedAt.toLocaleString("tr-TR")}`);
+  lines.push(`**Repo:** https://github.com/${REPO_OWNER}/${REPO_NAME}`);
+  lines.push(`**Dashboard:** https://${REPO_OWNER}.github.io/${REPO_NAME}/dashboard.html`);
+  lines.push("");
+  lines.push("## Özet");
+  lines.push("");
+  lines.push(`- ✅ Başarılı: **${counts.ok}** / ${totalWf}`);
+  lines.push(`- ⏳ Bekliyor / eski: **${counts.warn}** / ${totalWf}`);
+  lines.push(`- ❌ Hata: **${counts.err}** / ${totalWf}`);
+  lines.push(`- — Bilinmiyor: **${counts.gray}** / ${totalWf}`);
+  lines.push("");
+
+  if (problems.length > 0) {
+    lines.push("## ⚠️ Dikkat gerektiren workflow'lar");
+    lines.push("");
+    problems.forEach(p => {
+      const icon = p.status === "err" ? "❌" : "⏳";
+      lines.push(`### ${icon} ${p.label}`);
+      lines.push(`- **Durum:** ${p.status.toUpperCase()} (${p.conclusion})`);
+      lines.push(`- **Son çalışma:** ${p.updated} (${p.ago})`);
+      lines.push(`- **Zamanlama:** ${p.schedule}`);
+      if (p.url) lines.push(`- **GitHub run:** ${p.url}`);
+      lines.push("");
+    });
+  } else {
+    lines.push("## ✅ Sorun bulunmadı");
+    lines.push("");
+    lines.push("Tüm workflow'lar başarılı veya henüz çalıştırılmamış.");
+    lines.push("");
+  }
+
+  lines.push("## Tüm Workflow'lar");
+  lines.push("");
+  lines.push("| Workflow | Durum | Conclusion | Son çalışma (TR) | Önce |");
+  lines.push("|---|---|---|---|---|");
+  rows.forEach(r => lines.push(r));
+  lines.push("");
+
+  lines.push("## Sistem Haritası");
+  lines.push("");
+  const byCat = {};
+  systemMap.nodes.forEach(n => {
+    byCat[n.category] = (byCat[n.category] || 0) + 1;
+  });
+  lines.push(`- Toplam **${systemMap.nodes.length}** node, **${systemMap.edges.length}** edge`);
+  Object.entries(byCat).forEach(([cat, n]) => {
+    lines.push(`  - ${cat}: ${n}`);
+  });
+  lines.push("");
+
+  lines.push("---");
+  lines.push(`*Bu rapor Finzora AI dashboard'undan otomatik üretildi.*`);
+  return lines.join("\n");
+}
+
+function downloadReport() {
+  if (!_latestState) {
+    alert("Önce veriler yüklensin (sayfayı yenile veya 'Yenile' bas).");
+    return;
+  }
+  const md = generateStatusReport(_latestState);
+  const ts = new Date().toISOString().replace(/[:.]/g, "-").slice(0, 19);
+  const filename = `finzora_status_${ts}.md`;
+  const blob = new Blob([md], { type: "text/markdown;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
 // ---- Cytoscape style ----
 const cyStyle = [
   {
@@ -308,6 +426,12 @@ async function render() {
     }
 
     updateStats(elements);
+    _latestState = {
+      systemMap,
+      statusByWorkflow,
+      elements,
+      generatedAt: new Date(),
+    };
     document.getElementById("last-update").textContent =
       "Son güncelleme: " + new Date().toLocaleString("tr-TR");
   } catch (err) {
@@ -321,4 +445,5 @@ async function render() {
 }
 
 document.getElementById("refresh").addEventListener("click", render);
+document.getElementById("download").addEventListener("click", downloadReport);
 render();
