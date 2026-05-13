@@ -2236,9 +2236,9 @@ def main():
             # Hafta içi sabit
             (9,   0, "news_radar.yml",       {},                    True,  False, "Haber Radarı"),
             (12, 30, "adil_deger_panel.yml", {},                    True,  False, "Adil Değer Paneli"),
-            (14,  0, "morning_scan.yml",     {"mode":"all"},        True,  False, "Sabah Evren Taraması"),
+            # 13 May 2026: morning_scan.yml (swing_entry_engine) → scripts/legacy/, kaldırıldı.
+            # 13 May 2026: result_tracker.yml → scripts/legacy/, kaldırıldı (kullanılmıyor).
             (16,  0, "agent.yml",            {"mode":"morning"},    True,  False, "Agent Sabah"),
-            (23, 30, "result_tracker.yml",   {},                    True,  False, "Sonuç Takip"),
             (23, 35, "research_tracker.yml", {"mode":"daily"},      False, False, "Research Tracker Günlük"),  # v5.0 Etap 11 her gün 23:35
             # Kapanış: gece yarısı 00:30 TR (yeni güne geçmiş ama hafta içinde)
             # Pzt gecesi 00:30 = Salı sabahı, Cum gecesi 00:30 = Cmt sabahı
