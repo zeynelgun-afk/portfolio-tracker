@@ -1,30 +1,46 @@
 name: Adil Değer Paneli
 
+# Günlük 12:30 TR — Railway scheduler (telegram_bot.py thread) dispatch eder.
+# Manuel test için workflow_dispatch da var.
+
 on:
   workflow_dispatch:
+    inputs:
+      target:
+        description: 'Telegram hedefi (dm/group)'
+        required: false
+        default: 'dm'
 
 jobs:
   panel:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.PAT || secrets.GITHUB_TOKEN }}
+
       - uses: actions/setup-python@v4
         with:
           python-version: '3.11'
-      - name: Bağımlılıklar
+
+      - name: Install dependencies
         run: pip install requests python-dateutil
-      - name: Çalıştır
-        run: python3 scripts/portfoy_adil_deger.py --rapor --telegram
+
+      - name: Run fair value panel
+        run: |
+          python3 scripts/fair_value_panel.py --target "${{ github.event.inputs.target || 'dm' }}"
         env:
-          PYTHONPATH: ${{ github.workspace }}/scripts
           FMP_API_KEY: ${{ secrets.FMP_API_KEY }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-          TELEGRAM_PRIVATE_ID: ${{ secrets.TELEGRAM_PRIVATE_ID }}
-      - name: Commit
+          TELEGRAM_GROUP_CHAT_ID: ${{ secrets.TELEGRAM_GROUP_CHAT_ID }}
+          TELEGRAM_DM_CHAT_ID: ${{ secrets.TELEGRAM_DM_CHAT_ID }}
+
+      - name: Commit fair-value report
         run: |
           git config user.name "Finzora Bot"
           git config user.email "finzora-bot@users.noreply.github.com"
-          git add reports/ || true
-          git diff --staged --quiet || git commit -m "[bot/panel] Adil Değer Paneli $(date +%Y-%m-%d)"
+          git pull --rebase origin main || true
+          git add reports/daily/FAIR_VALUE_*.md 2>/dev/null || true
+          git diff --staged --quiet || \
+            git commit -m "[bot/fair-value] Adil değer paneli $(date -u +%Y-%m-%d)"
           git push || true
