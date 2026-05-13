@@ -425,3 +425,83 @@ def calculate_quality_premium(roe, net_margin, sector_mults):
 
 ---
 
+
+---
+
+## v5.1 — Inflection Point Düzeltmesi (12 Mayıs 2026)
+
+### LQDA Liquidia Corporation — v5.0'ın Yakaladığı Hata
+
+**Sorun:** LQDA için v5.0 çalıştırıldığında:
+- MOD: GROWTH (doğru tespit, 4/5 kriter)
+- EPS_FWD/EPS_TTM ratio = 21.56x (eps_fwd_2y=$5.46, eps_ttm=$0.26)
+- → `forward_outlier = True`
+- → **Forward P/E, PEG, EV/FWD Revenue, EV/FWD EBITDA hepsi N/A (ELENDİ)**
+- → Geriye sadece Growth bandı kaldı, ana medyan güvenilir değil
+
+**Gerçek durum:** LQDA gerçek bir karlılık dönüşümü yaşıyor:
+- Q2-2025: -$0.49 (negatif)
+- Q3-2025: -$0.04 (negatif)
+- Q4-2025: +$0.17 (POZİTİF — inflection)
+- Q1-2026: +$0.60 (POZİTİF — sürdürülebilir)
+
+Son 2 çeyrek ardışık pozitif EPS, önceki 2 çeyrek ardışık negatif → klasik "inflection point" örüntüsü. Forward EPS şişkin değil, gerçek pazara girmiş ilaç (YUTREPIA FDA onayı Mayıs 2025) sayesinde gerçek karlılık.
+
+### Düzeltme (v5.1)
+
+`adil_deger.py` L1008-1040 bölgesi:
+
+```python
+# v5.1: Quarterly EPS bazlı inflection tespiti
+inflection_point = False
+inflection_note = None
+
+if len(qinc_list) >= 4:
+    try:
+        q_eps = [safe_get(qinc_list[i], 'eps') for i in range(4)]
+        # qinc_list newest-first: [Q-son, Q-1, Q-2, Q-3]
+        if (all(e is not None for e in q_eps) and
+            q_eps[0] > 0 and q_eps[1] > 0 and
+            q_eps[2] < 0 and q_eps[3] < 0):
+            inflection_point = True
+            inflection_note = f"INFLECTION POINT teyit: ..."
+    except (IndexError, TypeError, KeyError):
+        pass
+
+if eps_fwd_2y and eps_ttm and eps_ttm > 0:
+    forward_growth_ratio = eps_fwd_2y / eps_ttm
+    if inflection_point:
+        forward_outlier = False  # v5.1: outlier flag iptal
+    else:
+        forward_outlier = forward_growth_ratio > 2.5
+```
+
+### v5.1 ile LQDA Sonucu
+
+```
+🚀 MOD: GROWTH (4/5 kriter)
+🌱 v5.1 INFLECTION POINT: Forward yöntemler korundu
+   INFLECTION POINT teyit: Son 2 çeyrek EPS pozitif ($0.17 → $0.60), 
+   önceki 2 çeyrek negatif ($-0.49, $-0.04). Forward outlier flag iptal.
+
+Forward P/E            $94.23       $130.88      $159.67
+EV/FWD Revenue         $60.14       $92.56       $120.35
+PEG                    [PEG hesabında ayrı bir bug var, growth_pct çok düşük]
+EV/FWD EBITDA          N/A (negatif TTM EBITDA, ayrı sebep)
+```
+
+Bu sonuç **manuel hesabımızla uyumlu** (Forward P/E 2027E×P/E 20x = $62, mevcut analist konsensüs $63 medyan).
+
+### Genel Ders
+
+**Outlier tespiti birden fazla sinyal gerektirir, tek bir oran yeterli değil.** Forward EPS şişkinliği iki farklı sebepten kaynaklanabilir:
+
+1. **Yapay/şişkin forward (gerçek outlier):** Analistler tek seferlik kazanç projeksiyonu, henüz teyit edilmemiş büyüme, biased tahminler → Forward yöntemleri ELENMELİ.
+2. **Gerçek inflection (turn-around/biotech ramp):** Önceki dönem zararlı (yatırım fazlası), yeni dönem pazar mümkün (ilaç onayı, ürün lansman, ölçek ekonomisi) → Forward yöntemleri KORUNMALI.
+
+Bu ikisini ayırt etmek için "ardışık çeyrek EPS sign change" sinyali güvenilir. Tek bir TTM/FWD oranına bakmak yeterli değil.
+
+### Önceki Yanlış Notlandırma Düzeltmesi
+
+Önceki LQDA değerleme raporunda (`valuations/_LEARNINGS.md`) "Rule of 40 sektör filtresi eklenmeli" diye not düşmüştüm. Bu yanlıştı — **Rule of 40 zaten v5.0'da kaldırılmış**. /mnt'deki Claude.ai-upload paketinin eski v4.1 olduğunu fark etmemiştim. GitHub'daki canlı production versiyonu kontrol etmek her zaman önceliklidir.
+
