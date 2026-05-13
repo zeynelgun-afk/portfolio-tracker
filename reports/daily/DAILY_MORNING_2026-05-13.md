@@ -1,11 +1,11 @@
 # DAILY MORNING REPORT — 2026-05-13
 
-*Generated: 2026-05-13 09:52 *  
+*Generated: 2026-05-13 10:05 *  
 *Source: finzora ai (agent v2)*
 
 ## 0. Market intelligence
 
-**VIX:** 17.88 (-0.61%) — *regime: low (risk-on)*
+**VIX:** 17.89 (-0.56%) — *regime: low (risk-on)*
 
 | Symbol | Price | Day % | Note |
 |--------|------:|------:|------|

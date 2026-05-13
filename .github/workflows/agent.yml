@@ -1,45 +1,52 @@
-name: Finzora Agent
+name: Finzora Agent v2
+
+# Triggered by:
+#   1) scripts/telegram_bot.py thread scheduler (Railway) via workflow_dispatch
+#   2) Manual run in GitHub UI (Actions tab)
+#   3) Push of agent/** code (validation run only, no agent execution)
+#
+# Modes:
+#   morning  — daily pre-session report (agent/reports/morning.py)
+#   monitor  — position alerts every 30 min (agent/monitor.py)
+#   closing  — daily post-close report (PLACEHOLDER, not yet implemented)
+#   weekly   — Sunday weekly summary (PLACEHOLDER, not yet implemented)
+#
+# Replaces the 216-line legacy agent.yml that called agent/legacy/orchestrator.py.
+# Old file kept as agent.yml.legacy for reference.
 
 on:
   workflow_dispatch:
     inputs:
       mode:
-        description: 'Calisma modu'
+        description: 'Execution mode'
         required: false
-        default: 'morning'
+        default: 'monitor'
         type: choice
         options:
           - morning
-          - closing
           - monitor
+          - closing
           - weekly
   push:
     paths:
-      - 'agent/*.py'
+      - 'agent/**/*.py'
       - '.github/workflows/agent.yml'
 
 permissions:
   contents: write
 
-# 29 Nis 2026 ekleme: Race condition onleme.
-# Manuel morning + scheduled monitor ayni anda calisirsa swing/portfolio
-# JSON'larini bozar. Concurrency ile en eski olan iptal edilir.
+# Manual morning + scheduled monitor at the same time would race on
+# data/portfolio.json. Drop the older one rather than queue.
 concurrency:
   group: finzora-agent-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
-  validate:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Event kontrol
-        run: echo "Event=${{ github.event_name }} — schedule aktif"
-
   agent:
     runs-on: ubuntu-latest
-    needs: validate
+    # Push events run only the validate step; they don't dispatch the agent.
     if: github.event_name != 'push'
-    timeout-minutes: 30
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
         with:
@@ -50,166 +57,113 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: ChromaDB cache
-        uses: actions/cache@v4
-        with:
-          path: data/rag/chroma
-          # events.jsonl her run değişiyordu → cache hiç hit etmiyordu.
-          # Haftalık stable key + docs hash (dersler docs'a eklendiğinde refresh).
-          key: chroma-v2-${{ hashFiles('docs/*.md','data/swing/closed.json') }}-wk${{ github.run_number }}
-          restore-keys: |
-            chroma-v2-${{ hashFiles('docs/*.md','data/swing/closed.json') }}-
-            chroma-v2-
-            chroma-
+      - name: Install dependencies
+        run: pip install requests pytz
 
-      - name: Bagimliliklar
-        run: pip install 'openai>=1.40.0' requests pytz beautifulsoup4 voyageai chromadb
-
-      - name: Git kimlik
+      - name: Git identity
         run: |
           git config user.name "Finzora Bot"
           git config user.email "finzora-bot@users.noreply.github.com"
 
-      - name: Modu belirle
+      - name: Determine mode
         id: mode
         run: |
           INPUT_MODE="${{ github.event.inputs.mode }}"
           HOUR=$(TZ=Europe/Istanbul date +%H)
-          MIN=$(TZ=Europe/Istanbul date +%M)
           WDAY=$(date +%u)
-          TODAY=$(TZ=Europe/Istanbul date +%Y-%m-%d)
-          SABAH_FILE="reports/daily/DAILY_SABAH_${TODAY}.md"
 
-          # RESCUE 1: Input monitor olsa bile, 17:00-20:59 TR arasi ve bugun
-          # icin sabah raporu yoksa morning'e yukselt. Bu, 16:00 sabah agent
-          # cancelled/failed oldugunda olusan boslugu kapatir.
-          if [ "$INPUT_MODE" = "monitor" ] && [ "$HOUR" -ge 17 ] && [ "$HOUR" -le 20 ] && [ "$WDAY" -le 5 ] && [ ! -f "$SABAH_FILE" ]; then
-            echo "[RESCUE] Input=monitor ama sabah raporu yok ($SABAH_FILE) → morning'e yukseltiliyor"
-            echo "mode=morning" >> $GITHUB_OUTPUT
-          elif [ -n "$INPUT_MODE" ]; then
-            echo "mode=$INPUT_MODE" >> $GITHUB_OUTPUT
+          if [ -n "$INPUT_MODE" ]; then
+            MODE="$INPUT_MODE"
           else
-            if [ "$WDAY" -eq 7 ]; then
-              echo "mode=weekly" >> $GITHUB_OUTPUT
-            elif [ "$HOUR" -eq 16 ] || ([ "$HOUR" -eq 15 ] && [ "$MIN" -ge 45 ]); then
-              echo "mode=morning" >> $GITHUB_OUTPUT
+            # Time-based fallback if dispatched without input
+            if [ "$WDAY" -eq 7 ] && [ "$HOUR" -ge 12 ] && [ "$HOUR" -le 13 ]; then
+              MODE="weekly"
+            elif [ "$HOUR" -eq 16 ]; then
+              MODE="morning"
             elif [ "$HOUR" -eq 0 ] || [ "$HOUR" -eq 1 ]; then
-              echo "mode=closing" >> $GITHUB_OUTPUT
-            # Rescue: TR saat 17:00-20:59 arasi (monitor penceresi) ve bugunku
-            # SABAH raporu henuz yazilmamis — sabah cron (13:00/13:12 UTC)
-            # atlandigi icin monitor'u morning'e yukselt. run_morning'deki
-            # duplicate-guard zaten cift yazmayi engeller.
-            elif [ "$HOUR" -ge 17 ] && [ "$HOUR" -le 20 ] && [ "$WDAY" -le 5 ] && [ ! -f "$SABAH_FILE" ]; then
-              echo "[rescue] $SABAH_FILE yok, monitor -> morning'e yukseltiliyor"
-              echo "mode=morning" >> $GITHUB_OUTPUT
+              MODE="closing"
             else
-              echo "mode=monitor" >> $GITHUB_OUTPUT
+              MODE="monitor"
             fi
           fi
 
-      - name: RAG index guncelle
+          echo "Selected mode: $MODE (TR hour=$HOUR, weekday=$WDAY)"
+          echo "mode=$MODE" >> $GITHUB_OUTPUT
+
+      - name: Run agent
+        env:
+          FMP_API_KEY:            ${{ secrets.FMP_API_KEY }}
+          TELEGRAM_BOT_TOKEN:     ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_GROUP_CHAT_ID: '-1003827034395'
+          TELEGRAM_DM_CHAT_ID:    '1403072107'
+          PYTHONUNBUFFERED:       '1'
         run: |
-          python scripts/rag/indexer.py 2>&1 | tail -20 || echo "RAG index atlandi (toleransli hata)"
-        env:
-          VOYAGE_API_KEY: ${{ secrets.VOYAGE_API_KEY }}
-        continue-on-error: true
-
-      - name: Agent calistir
-        run: python agent/orchestrator.py
-        env:
-          OPENROUTER_API_KEY:    ${{ secrets.OPENROUTER_API_KEY }}
-          ANTHROPIC_API_KEY:     ${{ secrets.ANTHROPIC_API_KEY }}
-          FMP_API_KEY:           ${{ secrets.FMP_API_KEY }}
-          # 4 May 2026 fix: scripts/telegram_notify.py TELEGRAM_BOT_TOKEN okuyor,
-          # eskiden TELEGRAM_TOKEN atanıyordu → token boş → "Not Found" hatası →
-          # swing alım/satım grupa düşmüyordu. Hem token hem grup chat_id atandı.
-          TELEGRAM_BOT_TOKEN:    ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_TOKEN:        ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_CHAT_ID:      "-1003827034395"
-          TELEGRAM_PRIVATE_ID:   "1403072107"
-          TELEGRAM_PRIVATE_CHAT: "1403072107"
-          RAPIDAPI_KEY:          ${{ secrets.RAPIDAPI_KEY }}
-          VOYAGE_API_KEY:        ${{ secrets.VOYAGE_API_KEY }}
-          AGENT_MODE:            ${{ steps.mode.outputs.mode }}
-          PYTHONUNBUFFERED:      '1'
-
-      - name: Macro intelligence Telegram DM (sabah)
-        if: success() && steps.mode.outputs.mode == 'morning'
-        run: python3 scripts/macro_intelligence_notify.py
-        env:
-          TELEGRAM_BOT_TOKEN:  ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_PRIVATE_ID: "1403072107"
-        continue-on-error: true
-
-      - name: Kapanis ozeti
-        if: success() && steps.mode.outputs.mode == 'closing'
-        run: python scripts/heartbeat.py --mode ozet
-        env:
-          TELEGRAM_BOT_TOKEN:  ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_PRIVATE_ID: "1403072107"
-
-      - name: Hata bildirimi
-        if: failure()
-        run: |
-          pip install requests -q
-          python scripts/event_logger.py \
-            --seviye kritik \
-            --baslik "Agent coktu" \
-            --detay "Commit: ${{ github.sha }}" \
-            --kaynak "github_actions" || true
-        env:
-          TELEGRAM_BOT_TOKEN:  ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_PRIVATE_ID: "1403072107"
-
-      - name: Degisiklikleri kaydet
-        run: |
-          mkdir -p /tmp/ab/data/portfolios /tmp/ab/data/swing /tmp/ab/agent/memory /tmp/ab/logs /tmp/ab/reports/daily /tmp/ab/reports/weekly
-          cp data/portfolios/*.json /tmp/ab/data/portfolios/ 2>/dev/null || true
-          cp data/swing/*.json      /tmp/ab/data/swing/      2>/dev/null || true
-          cp data/*.json            /tmp/ab/data/            2>/dev/null || true
-          cp data/*.csv             /tmp/ab/data/            2>/dev/null || true
-          cp agent/memory/*.json    /tmp/ab/agent/memory/    2>/dev/null || true
-          cp logs/events.jsonl      /tmp/ab/logs/            2>/dev/null || true
-          cp logs/valuation_predictions.jsonl /tmp/ab/logs/  2>/dev/null || true
-          # Raporlari da yedekle — 21 Nisan 2026 bug: git reset --hard
-          # origin/main sirasinda orchestrator'un yazdigi DAILY_SABAH
-          # dosyasi siliniyor, cunku _save_report'un kendi commit+push'u
-          # sessizce basarisiz olabiliyor. reports/ yedegi + restore ile
-          # savunmaci olarak koruyoruz.
-          cp reports/daily/*.md     /tmp/ab/reports/daily/   2>/dev/null || true
-          cp reports/weekly/*.md    /tmp/ab/reports/weekly/  2>/dev/null || true
-          git fetch origin main
-          git rebase --abort 2>/dev/null || true
-          git reset --hard origin/main
-          cp /tmp/ab/data/portfolios/*.json data/portfolios/ 2>/dev/null || true
-          cp /tmp/ab/data/swing/*.json      data/swing/      2>/dev/null || true
-          cp /tmp/ab/data/*.json            data/            2>/dev/null || true
-          cp /tmp/ab/data/*.csv             data/            2>/dev/null || true
-          cp /tmp/ab/agent/memory/*.json    agent/memory/    2>/dev/null || true
-          # Raporlari geri yaz — reset --hard tracked raporlari silmis olabilir.
-          mkdir -p reports/daily reports/weekly
-          cp /tmp/ab/reports/daily/*.md     reports/daily/   2>/dev/null || true
-          cp /tmp/ab/reports/weekly/*.md    reports/weekly/  2>/dev/null || true
-          # Observability JSONL merge (id bazlı dedup) — ayrı script, YAML temiz kalsın
-          if [ -f /tmp/ab/logs/events.jsonl ] && [ -f logs/events.jsonl ]; then
-            python3 scripts/_merge_events_jsonl.py logs/events.jsonl /tmp/ab/logs/events.jsonl > logs/events.jsonl.new
-            mv logs/events.jsonl.new logs/events.jsonl
-          elif [ -f /tmp/ab/logs/events.jsonl ]; then
-            cp /tmp/ab/logs/events.jsonl logs/events.jsonl
-          fi
-          # Valuation predictions: append-only, timestamp bazlı dedup
-          if [ -f /tmp/ab/logs/valuation_predictions.jsonl ] && [ -f logs/valuation_predictions.jsonl ]; then
-            cat logs/valuation_predictions.jsonl /tmp/ab/logs/valuation_predictions.jsonl | sort -u > logs/valuation_predictions.jsonl.new
-            mv logs/valuation_predictions.jsonl.new logs/valuation_predictions.jsonl
-          elif [ -f /tmp/ab/logs/valuation_predictions.jsonl ]; then
-            cp /tmp/ab/logs/valuation_predictions.jsonl logs/valuation_predictions.jsonl
-          fi
           MODE="${{ steps.mode.outputs.mode }}"
-          ZAMAN=$(date -u '+%Y-%m-%d %H:%M UTC')
-          git add data/ agent/memory/ reports/ logs/events.jsonl logs/valuation_predictions.jsonl 2>/dev/null || true
+          case "$MODE" in
+            morning)
+              python -m agent.reports.morning --send
+              ;;
+            monitor)
+              python -m agent.monitor
+              ;;
+            closing)
+              echo "[agent v2] closing report not yet implemented — placeholder run"
+              # Future: python -m agent.reports.closing --send
+              ;;
+            weekly)
+              echo "[agent v2] weekly report not yet implemented — placeholder run"
+              # Future: python -m agent.reports.weekly --send
+              ;;
+            *)
+              echo "Unknown mode: $MODE"
+              exit 1
+              ;;
+          esac
+
+      - name: Commit changes
+        if: success()
+        run: |
+          MODE="${{ steps.mode.outputs.mode }}"
+          TIME=$(date -u '+%Y-%m-%d %H:%M UTC')
+
+          git fetch origin main
+          git pull --rebase origin main || git rebase --abort
+
+          # Only data/portfolio.json and report files should change.
+          # monitor_state.json is gitignored.
+          git add data/portfolio.json reports/ 2>/dev/null || true
+
           if git diff --staged --quiet; then
-            echo "Degisiklik yok"
+            echo "No changes to commit"
           else
-            git commit -m "[bot/agent-$MODE] Otomatik guncelleme — $ZAMAN"
-            git push origin main || (sleep 10 && git fetch origin main && git reset --hard origin/main && cp /tmp/ab/data/portfolios/*.json data/portfolios/ 2>/dev/null && mkdir -p data/swing && cp /tmp/ab/data/swing/*.json data/swing/ 2>/dev/null && cp /tmp/ab/data/*.json data/ 2>/dev/null && cp /tmp/ab/data/*.csv data/ 2>/dev/null && cp /tmp/ab/logs/events.jsonl logs/ 2>/dev/null && cp /tmp/ab/logs/valuation_predictions.jsonl logs/ 2>/dev/null && mkdir -p reports/daily reports/weekly && cp /tmp/ab/reports/daily/*.md reports/daily/ 2>/dev/null && cp /tmp/ab/reports/weekly/*.md reports/weekly/ 2>/dev/null && git add -A && git commit -m "[bot/agent-$MODE] Retry — $ZAMAN" && git push origin main)
+            git commit -m "[bot/agent-$MODE] Auto update — $TIME"
+            git push origin main || (
+              # Retry once on push race
+              sleep 5
+              git fetch origin main
+              git pull --rebase origin main
+              git push origin main
+            )
           fi
+
+      - name: Error notification (Zeynel DM)
+        if: failure()
+        env:
+          TELEGRAM_BOT_TOKEN:  ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_DM_CHAT_ID: '1403072107'
+        run: |
+          python -c "
+          import sys
+          sys.path.insert(0, '.')
+          from agent.telegram import send_to_dm
+          mode = '${{ steps.mode.outputs.mode }}'
+          sha = '${{ github.sha }}'[:8]
+          run_id = '${{ github.run_id }}'
+          repo = '${{ github.repository }}'
+          send_to_dm(
+              f'❌ <b>Agent workflow başarısız</b>\n'
+              f'Mod: {mode}\n'
+              f'Commit: {sha}\n'
+              f'Log: https://github.com/{repo}/actions/runs/{run_id}'
+          )
+          " || true
