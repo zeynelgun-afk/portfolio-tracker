@@ -210,10 +210,10 @@ def _enrich_with_quotes(positions: list[dict]) -> list[dict]:
     (does not mutate input). Falls back gracefully if FMP unreachable.
     """
     try:
-        # Use the legacy fmp_client for now; will replace with agent/fmp.py later
-        from agent.legacy.fmp_client import fmp_get
+        # Use the new agent/fmp.py module (replaced legacy fmp_client)
+        from agent.fmp import batch_quote as _batch_quote
     except ImportError:
-        # FMP client not available — return positions without enrichment
+        # FMP module not available — return positions without enrichment
         return positions
 
     symbols = sorted({p["symbol"] for p in positions if p.get("symbol")})
@@ -221,11 +221,10 @@ def _enrich_with_quotes(positions: list[dict]) -> list[dict]:
         return positions
 
     try:
-        quotes = fmp_get("batch-quote", {"symbols": ",".join(symbols)})
-        if not isinstance(quotes, list):
-            return positions
-        price_map = {q.get("symbol"): q for q in quotes if isinstance(q, dict)}
+        price_map = _batch_quote(symbols)
     except Exception:
+        return positions
+    if not price_map:
         return positions
 
     # Compute total cost basis for weight calculation
