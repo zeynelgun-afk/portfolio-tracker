@@ -1,0 +1,324 @@
+// Finzora AI Dashboard
+// Renders the system map and overlays live workflow status from GitHub Actions API.
+// Public repo → no token needed.
+
+const REPO_OWNER = "zeynelgun-afk";
+const REPO_NAME  = "portfolio-tracker";
+
+// ---- Color palette per node category (must match HTML legend) ----
+const CATEGORY_COLORS = {
+  workflow:    "#a371f7",
+  script:      "#3fb950",
+  module:      "#58a6ff",
+  "module-core": "#1f6feb",
+  data:        "#d29922",
+  external:    "#8b949e",
+};
+
+// Status colors (border tint for workflows)
+const STATUS_COLORS = {
+  ok:   "#3fb950",
+  warn: "#d29922",
+  err:  "#f85149",
+  gray: "#6e7681",
+};
+
+// ---- Helpers ----
+function timeAgoTR(isoDate) {
+  if (!isoDate) return "—";
+  const diff = (Date.now() - new Date(isoDate).getTime()) / 1000;
+  if (diff < 60)        return `${Math.floor(diff)}sn önce`;
+  if (diff < 3600)      return `${Math.floor(diff / 60)}dk önce`;
+  if (diff < 86400)     return `${Math.floor(diff / 3600)}sa önce`;
+  if (diff < 86400*7)   return `${Math.floor(diff / 86400)}g önce`;
+  return `${Math.floor(diff / 86400)}g önce`;
+}
+
+function classifyStatus(run) {
+  if (!run) return "gray";
+  const conclusion = run.conclusion;        // success, failure, cancelled, skipped, null (in_progress)
+  const updated = new Date(run.updated_at).getTime();
+  const ageHours = (Date.now() - updated) / 3600000;
+
+  if (conclusion === null || run.status === "in_progress") return "warn";
+  if (conclusion === "failure") return "err";
+  if (conclusion === "cancelled") return "warn";
+  if (conclusion === "success") {
+    if (ageHours > 36) return "warn";   // stale success
+    return "ok";
+  }
+  return "gray";
+}
+
+// ---- Load system map ----
+async function loadMap() {
+  const res = await fetch("system_map.json");
+  if (!res.ok) throw new Error("system_map.json yüklenemedi");
+  return await res.json();
+}
+
+// ---- Fetch live workflow runs ----
+async function fetchWorkflowRuns() {
+  const url = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/actions/workflows`;
+  const res = await fetch(url);
+  if (!res.ok) throw new Error("GitHub API hatası: " + res.status);
+  const data = await res.json();
+
+  // For each workflow, fetch latest run
+  const map = {};
+  await Promise.all(data.workflows.map(async (wf) => {
+    const fileName = wf.path.split("/").pop();
+    try {
+      const runRes = await fetch(
+        `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/actions/workflows/${wf.id}/runs?per_page=1`
+      );
+      if (!runRes.ok) { map[fileName] = null; return; }
+      const runData = await runRes.json();
+      map[fileName] = runData.workflow_runs[0] || null;
+    } catch (e) {
+      map[fileName] = null;
+    }
+  }));
+  return map;
+}
+
+// ---- Build Cytoscape elements ----
+function buildElements(systemMap, statusByWorkflow) {
+  const elements = [];
+
+  systemMap.nodes.forEach((n) => {
+    let statusClass = "gray";
+    let lastRunInfo = null;
+    if (n.category === "workflow" && n.workflow_file) {
+      const run = statusByWorkflow[n.workflow_file];
+      statusClass = classifyStatus(run);
+      lastRunInfo = run;
+    }
+    elements.push({
+      data: {
+        id: n.id,
+        label: n.label,
+        category: n.category,
+        color: CATEGORY_COLORS[n.category] || "#888",
+        statusColor: STATUS_COLORS[statusClass] || STATUS_COLORS.gray,
+        statusClass: statusClass,
+        meta: n,
+        run: lastRunInfo,
+      },
+    });
+  });
+
+  systemMap.edges.forEach((e) => {
+    elements.push({
+      data: {
+        id: `${e.source}__${e.target}`,
+        source: e.source,
+        target: e.target,
+      },
+    });
+  });
+
+  return elements;
+}
+
+// ---- Cytoscape style ----
+const cyStyle = [
+  {
+    selector: "node",
+    style: {
+      "background-color": "data(color)",
+      "label": "data(label)",
+      "color": "#e6edf3",
+      "font-size": "11px",
+      "text-valign": "bottom",
+      "text-halign": "center",
+      "text-margin-y": 6,
+      "text-outline-width": 2,
+      "text-outline-color": "#0d1117",
+      "width": 30,
+      "height": 30,
+      "border-width": 0,
+    },
+  },
+  {
+    selector: "node[category = 'workflow']",
+    style: {
+      "shape": "round-rectangle",
+      "width": 50,
+      "height": 30,
+      "border-width": 3,
+      "border-color": "data(statusColor)",
+      "font-size": "12px",
+      "font-weight": 600,
+    },
+  },
+  {
+    selector: "node[category = 'module-core']",
+    style: {
+      "width": 38,
+      "height": 38,
+      "border-width": 2,
+      "border-color": "#58a6ff",
+    },
+  },
+  {
+    selector: "node[category = 'external']",
+    style: {
+      "shape": "diamond",
+      "width": 32,
+      "height": 32,
+    },
+  },
+  {
+    selector: "node[category = 'data']",
+    style: {
+      "shape": "barrel",
+      "width": 40,
+      "height": 28,
+    },
+  },
+  {
+    selector: "edge",
+    style: {
+      "width": 1.2,
+      "line-color": "#30363d",
+      "target-arrow-color": "#30363d",
+      "target-arrow-shape": "triangle",
+      "curve-style": "bezier",
+      "arrow-scale": 0.8,
+      "opacity": 0.7,
+    },
+  },
+  {
+    selector: "node:selected",
+    style: {
+      "border-width": 4,
+      "border-color": "#58a6ff",
+    },
+  },
+  {
+    selector: "edge.highlighted",
+    style: {
+      "line-color": "#58a6ff",
+      "target-arrow-color": "#58a6ff",
+      "width": 2,
+      "opacity": 1,
+    },
+  },
+];
+
+// ---- Detail panel ----
+function renderDetail(nodeData) {
+  const meta = nodeData.meta;
+  const run = nodeData.run;
+  const parts = [`<h2>${meta.label}</h2>`];
+
+  parts.push(`<div class="field"><span class="k">ID</span><span class="v">${meta.id}</span></div>`);
+  parts.push(`<div class="field"><span class="k">Kategori</span><span class="v">${meta.category}</span></div>`);
+
+  if (meta.schedule) {
+    parts.push(`<div class="field"><span class="k">Zamanlama</span><span class="v">${meta.schedule}</span></div>`);
+  }
+  if (meta.url) {
+    parts.push(`<div class="field"><span class="k">URL</span><span class="v"><a href="${meta.url}" target="_blank">${meta.url}</a></span></div>`);
+  }
+  if (meta.tag) {
+    parts.push(`<div class="field"><span class="k">Etiket</span><span class="v">${meta.tag}</span></div>`);
+  }
+
+  if (meta.category === "workflow") {
+    if (run) {
+      const statusText = {
+        ok:   `✅ Son çalışma başarılı`,
+        warn: `⏳ Devam ediyor veya eski`,
+        err:  `❌ Son çalışma BAŞARISIZ`,
+        gray: `— Bilinmiyor`,
+      }[nodeData.statusClass];
+      parts.push(`<div class="status-line ${nodeData.statusClass}">${statusText}</div>`);
+      parts.push(`<div class="field"><span class="k">Son durum</span><span class="v">${run.conclusion || run.status || "—"}</span></div>`);
+      parts.push(`<div class="field"><span class="k">Son çalışma</span><span class="v">${timeAgoTR(run.updated_at)}</span></div>`);
+      if (run.html_url) {
+        parts.push(`<div class="field"><span class="k">Detay</span><span class="v"><a href="${run.html_url}" target="_blank">GitHub'da aç</a></span></div>`);
+      }
+    } else {
+      parts.push(`<div class="status-line gray">Henüz çalıştırılmamış</div>`);
+    }
+  }
+
+  document.getElementById("detail").innerHTML = parts.join("\n");
+}
+
+// ---- Status counts ----
+function updateStats(elements) {
+  const counts = { ok: 0, warn: 0, err: 0, gray: 0 };
+  elements.forEach((el) => {
+    if (el.data.category === "workflow") {
+      counts[el.data.statusClass] = (counts[el.data.statusClass] || 0) + 1;
+    }
+  });
+  document.getElementById("ok-count").textContent   = counts.ok;
+  document.getElementById("warn-count").textContent = counts.warn;
+  document.getElementById("err-count").textContent  = counts.err;
+  document.getElementById("gray-count").textContent = counts.gray;
+}
+
+// ---- Main render ----
+let cy;
+async function render() {
+  const btn = document.getElementById("refresh");
+  btn.disabled = true;
+  btn.textContent = "Yükleniyor…";
+
+  try {
+    const systemMap = await loadMap();
+    const statusByWorkflow = await fetchWorkflowRuns();
+    const elements = buildElements(systemMap, statusByWorkflow);
+
+    if (cy) {
+      cy.elements().remove();
+      cy.add(elements);
+      cy.layout({ name: "cose", animate: false, padding: 30, nodeRepulsion: 12000 }).run();
+    } else {
+      cy = cytoscape({
+        container: document.getElementById("cy"),
+        elements: elements,
+        style: cyStyle,
+        layout: {
+          name: "cose",
+          animate: false,
+          padding: 30,
+          nodeRepulsion: 12000,
+          idealEdgeLength: 80,
+          edgeElasticity: 100,
+        },
+        wheelSensitivity: 0.2,
+      });
+
+      cy.on("tap", "node", (e) => {
+        const n = e.target;
+        cy.elements("edge.highlighted").removeClass("highlighted");
+        n.connectedEdges().addClass("highlighted");
+        renderDetail(n.data());
+      });
+      cy.on("tap", (e) => {
+        if (e.target === cy) {
+          cy.elements("edge.highlighted").removeClass("highlighted");
+        }
+      });
+    }
+
+    updateStats(elements);
+    document.getElementById("last-update").textContent =
+      "Son güncelleme: " + new Date().toLocaleString("tr-TR");
+  } catch (err) {
+    console.error(err);
+    document.getElementById("last-update").textContent =
+      "HATA: " + err.message;
+  } finally {
+    btn.disabled = false;
+    btn.textContent = "Yenile";
+  }
+}
+
+document.getElementById("refresh").addEventListener("click", render);
+render();

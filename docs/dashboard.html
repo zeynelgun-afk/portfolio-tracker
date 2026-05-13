@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Finzora AI — Sistem Haritası</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --panel: #161b22;
+    --border: #30363d;
+    --text: #e6edf3;
+    --muted: #8b949e;
+    --accent: #58a6ff;
+    --ok: #3fb950;
+    --warn: #d29922;
+    --err: #f85149;
+    --gray: #6e7681;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    display: flex;
+    flex-direction: column;
+  }
+  header {
+    padding: 14px 22px;
+    border-bottom: 1px solid var(--border);
+    background: var(--panel);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  h1 { font-size: 18px; margin: 0; font-weight: 600; }
+  h1 .sub { color: var(--muted); font-weight: 400; margin-left: 8px; font-size: 14px; }
+  .stats {
+    display: flex;
+    gap: 18px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .stat-pill { display: inline-flex; align-items: center; gap: 6px; }
+  .dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+  .dot.ok { background: var(--ok); }
+  .dot.warn { background: var(--warn); }
+  .dot.err { background: var(--err); }
+  .dot.gray { background: var(--gray); }
+  #refresh {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+  }
+  #refresh:hover { opacity: 0.85; }
+  #refresh:disabled { opacity: 0.5; cursor: wait; }
+
+  main { display: flex; flex: 1; min-height: 0; }
+  #cy {
+    flex: 1;
+    background: var(--bg);
+  }
+  aside {
+    width: 340px;
+    background: var(--panel);
+    border-left: 1px solid var(--border);
+    padding: 16px;
+    overflow-y: auto;
+    font-size: 13px;
+  }
+  aside h2 { font-size: 15px; margin: 0 0 10px 0; }
+  aside .placeholder { color: var(--muted); font-style: italic; }
+  aside .field { margin: 8px 0; display: flex; justify-content: space-between; gap: 8px; }
+  aside .field .k { color: var(--muted); }
+  aside .field .v { color: var(--text); text-align: right; word-break: break-all; }
+  aside .status-line { padding: 8px 10px; border-radius: 6px; margin-top: 10px; font-size: 12px; }
+  aside .status-line.ok   { background: rgba(63,185,80,0.12);  color: var(--ok); }
+  aside .status-line.warn { background: rgba(210,153,34,0.12); color: var(--warn); }
+  aside .status-line.err  { background: rgba(248,81,73,0.12);  color: var(--err); }
+  aside .status-line.gray { background: rgba(110,118,129,0.12); color: var(--muted); }
+  aside a { color: var(--accent); text-decoration: none; }
+  aside a:hover { text-decoration: underline; }
+
+  .legend {
+    display: flex;
+    gap: 14px;
+    font-size: 12px;
+    color: var(--muted);
+    flex-wrap: wrap;
+  }
+  .legend .item { display: inline-flex; align-items: center; gap: 5px; }
+  .legend .swatch {
+    width: 12px; height: 12px; border-radius: 50%;
+    display: inline-block;
+    border: 2px solid #fff;
+  }
+
+  footer {
+    border-top: 1px solid var(--border);
+    background: var(--panel);
+    padding: 8px 22px;
+    font-size: 12px;
+    color: var(--muted);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  @media (max-width: 800px) {
+    aside { width: 100%; max-height: 40vh; border-left: none; border-top: 1px solid var(--border); }
+    main { flex-direction: column; }
+    .stats { font-size: 12px; gap: 10px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>Finzora AI <span class="sub">Sistem Haritası</span></h1>
+    <div class="legend" style="margin-top:6px">
+      <span class="item"><span class="swatch" style="background:#a371f7"></span>Workflow</span>
+      <span class="item"><span class="swatch" style="background:#3fb950"></span>Script</span>
+      <span class="item"><span class="swatch" style="background:#58a6ff"></span>Modül</span>
+      <span class="item"><span class="swatch" style="background:#d29922"></span>Veri</span>
+      <span class="item"><span class="swatch" style="background:#8b949e"></span>Dış API</span>
+    </div>
+  </div>
+  <div class="stats" id="stats">
+    <span class="stat-pill"><span class="dot ok"></span><span id="ok-count">–</span> başarılı</span>
+    <span class="stat-pill"><span class="dot warn"></span><span id="warn-count">–</span> bekliyor</span>
+    <span class="stat-pill"><span class="dot err"></span><span id="err-count">–</span> hata</span>
+    <span class="stat-pill"><span class="dot gray"></span><span id="gray-count">–</span> bilinmiyor</span>
+    <button id="refresh">Yenile</button>
+  </div>
+</header>
+
+<main>
+  <div id="cy"></div>
+  <aside id="detail">
+    <h2>Detay</h2>
+    <div class="placeholder">Bir düğüm seçince burada gözükür.</div>
+  </aside>
+</main>
+
+<footer>
+  <span id="last-update">Henüz veri çekilmedi.</span>
+  <span><a href="https://github.com/zeynelgun-afk/portfolio-tracker" target="_blank">github.com/zeynelgun-afk/portfolio-tracker</a></span>
+</footer>
+
+<script src="https://unpkg.com/cytoscape@3.28.1/dist/cytoscape.min.js"></script>
+<script src="dashboard.js"></script>
+</body>
+</html>

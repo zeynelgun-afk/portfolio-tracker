@@ -1,0 +1,98 @@
+{
+  "version": "1.0",
+  "generated": "2026-05-13",
+  "repo": "zeynelgun-afk/portfolio-tracker",
+  "_comment": "Finzora AI sistem haritası. workflow_id alanı GitHub API'den çekilen canlı durum için kullanılır. category renkleri dashboard.js'de tanımlı.",
+
+  "nodes": [
+    {"id": "agent.yml",                 "label": "Finzora Agent v2",         "category": "workflow", "workflow_file": "agent.yml",                 "schedule": "16:00 morning · 17-23:30/30dk monitor · 00:30 closing · Pzr 12:00 weekly"},
+    {"id": "news_radar.yml",            "label": "Haber Radarı",             "category": "workflow", "workflow_file": "news_radar.yml",            "schedule": "09:00 hafta içi"},
+    {"id": "adil_deger_panel.yml",      "label": "Adil Değer Paneli",        "category": "workflow", "workflow_file": "adil_deger_panel.yml",      "schedule": "12:30 hafta içi"},
+    {"id": "research_tracker.yml",      "label": "Research Tracker",         "category": "workflow", "workflow_file": "research_tracker.yml",      "schedule": "23:35 her gün · Pzr 14:00"},
+    {"id": "consistency_check.yml",     "label": "Tutarlılık Kontrolü",      "category": "workflow", "workflow_file": "consistency_check.yml",     "schedule": "Manuel / push"},
+    {"id": "calendar_notifier.yml",     "label": "Takvim Bildirimi",         "category": "workflow", "workflow_file": "calendar_notifier.yml",     "schedule": "08:30"},
+    {"id": "macro_calendar.yml",        "label": "Makro Takvim",             "category": "workflow", "workflow_file": "macro_calendar.yml",        "schedule": "Ayın 1'i"},
+    {"id": "weekly_fmp_stats.yml",      "label": "FMP Stats (haftalık)",     "category": "workflow", "workflow_file": "weekly_fmp_stats.yml",      "schedule": "Pzr"},
+    {"id": "log_rotation.yml",          "label": "Log Rotation",             "category": "workflow", "workflow_file": "log_rotation.yml",          "schedule": "Periyodik"},
+    {"id": "adil_deger_weekly.yml",     "label": "Adil Değer Haftalık",      "category": "workflow", "workflow_file": "adil_deger_weekly.yml",     "schedule": "Manuel"},
+
+    {"id": "scripts/news_radar.py",        "label": "news_radar.py",         "category": "script"},
+    {"id": "scripts/fair_value_panel.py",  "label": "fair_value_panel.py",   "category": "script", "tag": "yeni"},
+    {"id": "scripts/research_tracker.py",  "label": "research_tracker.py",   "category": "script"},
+    {"id": "scripts/consistency_check.py", "label": "consistency_check.py",  "category": "script"},
+    {"id": "scripts/calendar_notifier.py", "label": "calendar_notifier.py",  "category": "script"},
+    {"id": "scripts/macro_calendar_updater.py", "label": "macro_calendar_updater.py", "category": "script"},
+    {"id": "scripts/finzora_stats.py",     "label": "finzora_stats.py",      "category": "script"},
+    {"id": "scripts/log_rotation.py",      "label": "log_rotation.py",       "category": "script"},
+    {"id": "scripts/telegram_bot.py",      "label": "telegram_bot.py",       "category": "script", "tag": "Railway"},
+    {"id": "scripts/risk_panel_generator.py", "label": "risk_panel_generator.py", "category": "script"},
+
+    {"id": "agent.reports.morning", "label": "reports.morning",  "category": "module"},
+    {"id": "agent.reports.closing", "label": "reports.closing",  "category": "module"},
+    {"id": "agent.reports.weekly",  "label": "reports.weekly",   "category": "module"},
+    {"id": "agent.monitor",         "label": "monitor",          "category": "module"},
+    {"id": "agent.portfolio",       "label": "portfolio",        "category": "module-core"},
+    {"id": "agent.fmp",             "label": "fmp (API wrapper)","category": "module-core"},
+    {"id": "agent.telegram",        "label": "telegram (sender)","category": "module-core"},
+
+    {"id": "data/portfolio.json",       "label": "portfolio.json",       "category": "data"},
+    {"id": "data/monitor_state.json",   "label": "monitor_state.json",   "category": "data"},
+    {"id": "data/research/index.json",  "label": "research/index.json",  "category": "data"},
+    {"id": "data/transactions.csv",     "label": "transactions.csv",     "category": "data"},
+
+    {"id": "ext.fmp",        "label": "FMP API",         "category": "external", "url": "https://financialmodelingprep.com"},
+    {"id": "ext.telegram",   "label": "Telegram Bot",    "category": "external", "url": "https://api.telegram.org"},
+    {"id": "ext.openrouter", "label": "OpenRouter (Kimi)","category": "external", "url": "https://openrouter.ai"}
+  ],
+
+  "edges": [
+    {"source": "agent.yml", "target": "agent.reports.morning"},
+    {"source": "agent.yml", "target": "agent.reports.closing"},
+    {"source": "agent.yml", "target": "agent.reports.weekly"},
+    {"source": "agent.yml", "target": "agent.monitor"},
+
+    {"source": "news_radar.yml",         "target": "scripts/news_radar.py"},
+    {"source": "adil_deger_panel.yml",   "target": "scripts/fair_value_panel.py"},
+    {"source": "research_tracker.yml",   "target": "scripts/research_tracker.py"},
+    {"source": "consistency_check.yml",  "target": "scripts/consistency_check.py"},
+    {"source": "calendar_notifier.yml",  "target": "scripts/calendar_notifier.py"},
+    {"source": "macro_calendar.yml",     "target": "scripts/macro_calendar_updater.py"},
+    {"source": "weekly_fmp_stats.yml",   "target": "scripts/finzora_stats.py"},
+    {"source": "log_rotation.yml",       "target": "scripts/log_rotation.py"},
+
+    {"source": "agent.reports.morning", "target": "agent.portfolio"},
+    {"source": "agent.reports.morning", "target": "agent.fmp"},
+    {"source": "agent.reports.morning", "target": "agent.telegram"},
+    {"source": "agent.reports.closing", "target": "agent.portfolio"},
+    {"source": "agent.reports.closing", "target": "agent.fmp"},
+    {"source": "agent.reports.closing", "target": "agent.telegram"},
+    {"source": "agent.reports.weekly",  "target": "agent.portfolio"},
+    {"source": "agent.reports.weekly",  "target": "agent.telegram"},
+    {"source": "agent.monitor",         "target": "agent.portfolio"},
+    {"source": "agent.monitor",         "target": "agent.fmp"},
+    {"source": "agent.monitor",         "target": "agent.telegram"},
+
+    {"source": "scripts/news_radar.py",        "target": "agent.fmp"},
+    {"source": "scripts/news_radar.py",        "target": "ext.openrouter"},
+    {"source": "scripts/news_radar.py",        "target": "ext.telegram"},
+    {"source": "scripts/news_radar.py",        "target": "data/portfolio.json"},
+
+    {"source": "scripts/fair_value_panel.py",  "target": "agent.portfolio"},
+    {"source": "scripts/fair_value_panel.py",  "target": "agent.fmp"},
+    {"source": "scripts/fair_value_panel.py",  "target": "agent.telegram"},
+
+    {"source": "scripts/research_tracker.py",  "target": "data/research/index.json"},
+    {"source": "scripts/research_tracker.py",  "target": "ext.fmp"},
+    {"source": "scripts/research_tracker.py",  "target": "ext.telegram"},
+
+    {"source": "scripts/telegram_bot.py",         "target": "ext.telegram"},
+    {"source": "scripts/risk_panel_generator.py", "target": "ext.fmp"},
+
+    {"source": "agent.portfolio", "target": "agent.fmp"},
+    {"source": "agent.portfolio", "target": "data/portfolio.json"},
+    {"source": "agent.monitor",   "target": "data/monitor_state.json"},
+
+    {"source": "agent.fmp",      "target": "ext.fmp"},
+    {"source": "agent.telegram", "target": "ext.telegram"}
+  ]
+}
