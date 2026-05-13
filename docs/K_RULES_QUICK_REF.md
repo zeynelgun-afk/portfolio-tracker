@@ -53,6 +53,7 @@ related:
 | **K-20** | sektör RS dead cat bounce | son 3g negatif → bounce yanıltıcı | otomatik | — |
 | **K-21** ⭐ | VIX 5g'de %20+ sıçradı | swing girişi YOK (1 gün) | otomatik | ✅ Crisis rally KTOS -%32 ders |
 | **K-22** ⭐ | nakit oranı >%10 | portföy tipine göre dağıtım önerisi | otomatik | — |
+| **K-24** 🆕 | swing girişi öncesi VCP kalite kontrol | STRONG → tam poz, WEAK → yarım, NONE → geç | otomatik | 13 May 2026 Minervini metodu |
 | **K-ZST** ⭐ | swing 10. gün | kâr +%5+ → pik penceresi uyarısı | otomatik | ✅ Tema 10g +%6.39 |
 | **K-EVR** | swing aday tarama | beta(1Y)<0.7 elendi | otomatik | — |
 | **K-ATR** | giriş stop kurulumu | <2×ATR(14) ise yarım poz veya yasak | otomatik | — |
@@ -538,4 +539,23 @@ Bu kritik bir düzeltmedir — API kullanımını gereksiz kısıtlamak zorunda 
 | **K-KRZ** | Kriz gün-1 giriş yasağı (1 gün cooling) | 1 trade (RTX, LMT, HAL genel) |
 | **K-JEO** | Jeopolitik trade'de çıkış tetikleyicisi zorunlu | 1 trade (HAL) |
 
+**K-24 VCP SETUP KALİTE FİLTRESİ** (13 May 2026 — prototip, backtest bekliyor):
+- Tetik: Swing girişi öncesi (Ichimoku 4/4 + K-19/K-20 geçen aday için zorunlu son filtre)
+- Yöntem: Mark Minervini Volatility Contraction Pattern — algoritmik tespit
+- Algoritma: Son 120 günde zigzag pivot (%3+ swing) → ardışık daralan kontraksyon zinciri → her birinde hacim azalması → pivot yakınlığı → SMA50>SMA200 trend filtresi
+- Skor (0-100): zincir uzunluğu (30p) + daralma sırası (25p) + hacim kuruması (20p) + pivot yakınlığı (15p) + trend (10p)
+- Karar:
+  - **STRONG** (≥70): Tam pozisyon ($8-10K)
+  - **WEAK** (40-69): Yarım pozisyon ($5K) veya izleme
+  - **NONE** (<40): Giriş YOK
+- Setup-bozuldu güvenliği: Pivot'tan %5+ aşağıdaki hisse STRONG verilemez (max WEAK), %10+ aşağıda max NONE
+- Uygulama: `agent/vcp_detector.py:detect_vcp(symbol)` — FMP historical-price-eod/full
+- Kanıt: backtest bekliyor — son 6 ay swing trade'lerinde VCP ✅ olanların ortalama getiri farkı ölçülecek
+
+**K-24 örnek tarama** (13 May 2026 watchlist üzerinde test):
+- CAT: WEAK 68 (pivot $931, -2.06% uzak, 2 ardışık daralan) → izlemede tut
+- LMT: WEAK 75 (VCP zinciri güçlü ama pivot -18% bozuk) → setup geçti, geçmiş fırsat
+- MRK: WEAK 75 (VCP güçlü ama pivot -9% bozuk) → setup geçti
+- NVDA, AAPL, WDC, KLAC, AMAT, MU, PLTR: VCP zinciri yok veya pivot bozuk
+- STRONG çıkan yok — Minervini doktrini: STRONG VCP nadir, bu beklenen sonuç
 > `scripts/k_rule_performance.py --all` → tam rapor + backtest sonuçları güncelleme
