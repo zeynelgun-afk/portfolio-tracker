@@ -1,11 +1,17 @@
 ---
 name: adil-deger-9-yontem
-description: ABD hisse senetleri için kapsamlı adil değer hesaplaması v5.0. 9 YÖNTEM (4 Traditional + 2 Forward + 3 Growth), DUAL-MODE sistem (GROWTH vs BLENDED), 3 piyasa rejimi (Ayı/Normal/Boğa). FMP Ultimate plan ile canlı sektör P/E, dinamik CAPM WACC, Altman Z + Piotroski risk skorları, analist sentiment momentum, FMP DCF sanity check, konsantrasyon riski tespiti. 5 YILLIK FİNANSAL PROJEKSİYON (gelir, brüt, faaliyet, net, EPS yıl yıl + Forward çarpanlar + normalizasyon yılı). PRE-IPO MODU (manuel JSON input, FMP'de olmayan şirketler için). 17 sektör marj profili. Tetikleyiciler "X hissesini değerle", "adil değer hesapla", "X için fair value", "X kaç eder", "9 yöntem değerleme", "pre-IPO analiz". Finzora AI Adil Değer v3.7.2 metodolojisi. Her kullanımda notes klasörü güncellenir.
+description: ABD hisse senetleri için kapsamlı adil değer hesaplaması v5.1. 9 YÖNTEM (4 Traditional + 2 Forward + 3 Growth), DUAL-MODE sistem (GROWTH vs BLENDED), 3 piyasa rejimi (Ayı/Normal/Boğa), inflection-point aware Forward outlier flag. FMP Ultimate plan ile canlı sektör P/E, dinamik CAPM WACC, Altman Z + Piotroski risk skorları, analist sentiment momentum, FMP DCF sanity check, konsantrasyon riski tespiti. 5 YILLIK FİNANSAL PROJEKSİYON (gelir, brüt, faaliyet, net, EPS yıl yıl + Forward çarpanlar + normalizasyon yılı). PRE-IPO MODU (manuel JSON input, FMP'de olmayan şirketler için). 17 sektör marj profili. Tetikleyiciler "X hissesini değerle", "adil değer hesapla", "X için fair value", "X kaç eder", "9 yöntem değerleme", "pre-IPO analiz". Finzora AI Adil Değer v3.7.2 metodolojisi. Her kullanımda notes klasörü güncellenir.
 ---
 
-# Adil Değer 9 Yöntem (Finzora AI v3.7.2) — v5.0
+# Adil Değer 9 Yöntem (Finzora AI v3.7.2) — v5.1
 
 ## Versiyon Geçmişi
+
+**v5.1 (12 Mayıs 2026)** — Inflection Point Aware Forward Outlier (LQDA testi sonrası)
+- 🌱 **INFLECTION POINT TESPİTİ**: Son 2 çeyrek POZİTİF EPS + önceki 2 çeyrek NEGATİF EPS olan şirketlerde `forward_outlier` flag iptal edilir. Forward P/E, PEG, EV/FWD Revenue, EV/FWD EBITDA yöntemleri korunur.
+- 🌱 **Gerekçe**: Inflection biotech/turn-around şirketleri (örnek: LQDA Q4-25 +$0.17 → Q1-26 +$0.60, önceki Q3-25 -$0.04, Q2-25 -$0.49) gerçek karlılık dönüşümü yaşıyor, "şişkin forward" değil. v5.0'a kadar bu şirketlerde EPS_FWD/EPS_TTM > 2.5x ratio yüzünden Forward yöntemleri yanlışlıkla ELENİYORDU.
+- 🌱 **Çıktıda**: `🌱 v5.1 INFLECTION POINT: Forward yöntemler korundu` notu görünür.
+- 🌱 **Test edilen örnek**: LQDA EPS_FWD/EPS_TTM = 21.56x → v5.0'da tüm Forward yöntemleri N/A çıkıyordu. v5.1'de Forward P/E $94-160, EV/FWD Revenue $60-120 hesaplanıyor.
 
 **v5.0 (11 Mayıs 2026)** — Büyük Yükseltme (6 etap halinde, commit `b430bd8` → ...)
 - 🟢 SADELEŞTIRME: 4 yöntem kaldırıldı (Graham Number, EV/EBIT, Justified P-B, Rule of 40). Skill ismi ile uyumlu **9 yöntem**.
