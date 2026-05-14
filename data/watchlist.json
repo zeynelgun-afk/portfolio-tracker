@@ -1,5 +1,5 @@
 {
-  "_son_guncelleme": "2026-05-14T20:50:00+03:00",
+  "_son_guncelleme": "2026-05-14 20:01",
   "_aciklama": "Finzora AI — Tek hisse havuzu. Tüm besleyiciler (analist_takip, fair_value_panel, tematik_keşif, ai_orchestrator, manuel) buraya yazar. Max 80 ticker. Sade şema, 13 May 2026 sıfırlandı. | 14 May 2026: limit 80→300 (tematik genişleme)",
   "_limit": 300,
   "_schema_version": "2.0",
@@ -39,8 +39,8 @@
         "Tema: AI Hardware Supercycle (yukselis, score 92)"
       ],
       "tags": [
-        "ai_hardware_supercycle",
-        "yukselis"
+        "yukselis",
+        "ai_hardware_supercycle"
       ],
       "score": 94.0,
       "score_updated_at": "2026-05-14T06:40:39.316732+00:00",
@@ -57,7 +57,8 @@
       },
       "last_news_check": null,
       "last_action_signal": null,
-      "notes": ""
+      "notes": "",
+      "last_updated": "2026-05-14T20:01:52.002635+00:00"
     },
     "AMD": {
       "symbol": "AMD",
@@ -72,8 +73,8 @@
         "Tema: AI Hardware Supercycle (yukselis, score 92)"
       ],
       "tags": [
-        "ai_hardware_supercycle",
-        "yukselis"
+        "yukselis",
+        "ai_hardware_supercycle"
       ],
       "score": null,
       "score_updated_at": null,
@@ -84,7 +85,8 @@
       },
       "last_news_check": null,
       "last_action_signal": null,
-      "notes": ""
+      "notes": "",
+      "last_updated": "2026-05-14T20:01:52.004873+00:00"
     },
     "LRCX": {
       "symbol": "LRCX",
@@ -99,8 +101,8 @@
         "Tema: AI Hardware Supercycle (yukselis, score 92)"
       ],
       "tags": [
-        "ai_hardware_supercycle",
-        "yukselis"
+        "yukselis",
+        "ai_hardware_supercycle"
       ],
       "score": 88.0,
       "score_updated_at": "2026-05-14T06:40:39.323331+00:00",
@@ -117,7 +119,8 @@
       },
       "last_news_check": null,
       "last_action_signal": null,
-      "notes": ""
+      "notes": "",
+      "last_updated": "2026-05-14T20:01:52.009362+00:00"
     },
     "TSM": {
       "symbol": "TSM",
@@ -132,8 +135,8 @@
         "Tema: AI Hardware Supercycle (yukselis, score 92)"
       ],
       "tags": [
-        "ai_hardware_supercycle",
-        "yukselis"
+        "yukselis",
+        "ai_hardware_supercycle"
       ],
       "score": 91.0,
       "score_updated_at": "2026-05-14T06:40:39.319151+00:00",
@@ -150,7 +153,8 @@
       },
       "last_news_check": null,
       "last_action_signal": null,
-      "notes": ""
+      "notes": "",
+      "last_updated": "2026-05-14T20:01:52.024615+00:00"
     },
     "AVGO": {
       "symbol": "AVGO",
@@ -165,8 +169,8 @@
         "Tema: AI Hardware Supercycle (yukselis, score 92)"
       ],
       "tags": [
-        "ai_hardware_supercycle",
-        "yukselis"
+        "yukselis",
+        "ai_hardware_supercycle"
       ],
       "score": 89.0,
       "score_updated_at": "2026-05-14T06:40:39.321247+00:00",
@@ -183,7 +187,8 @@
       },
       "last_news_check": null,
       "last_action_signal": null,
-      "notes": ""
+      "notes": "",
+      "last_updated": "2026-05-14T20:01:52.007027+00:00"
     },
     "MRVL": {
       "symbol": "MRVL",
@@ -198,8 +203,8 @@
         "Tema: AI Hardware Supercycle (yukselis, score 92)"
       ],
       "tags": [
-        "ai_hardware_supercycle",
-        "yukselis"
+        "yukselis",
+        "ai_hardware_supercycle"
       ],
       "score": null,
       "score_updated_at": null,
@@ -210,7 +215,8 @@
       },
       "last_news_check": null,
       "last_action_signal": null,
-      "notes": ""
+      "notes": "",
+      "last_updated": "2026-05-14T20:01:52.018139+00:00"
     },
     "QCOM": {
       "symbol": "QCOM",
@@ -225,8 +231,8 @@
         "Tema: AI Hardware Supercycle (yukselis, score 92)"
       ],
       "tags": [
-        "ai_hardware_supercycle",
-        "yukselis"
+        "yukselis",
+        "ai_hardware_supercycle"
       ],
       "score": null,
       "score_updated_at": null,
@@ -237,7 +243,8 @@
       },
       "last_news_check": null,
       "last_action_signal": null,
-      "notes": ""
+      "notes": "",
+      "last_updated": "2026-05-14T20:01:52.020332+00:00"
     },
     "INTC": {
       "symbol": "INTC",
@@ -252,8 +259,8 @@
         "Tema: AI Hardware Supercycle (yukselis, score 92)"
       ],
       "tags": [
-        "ai_hardware_supercycle",
-        "yukselis"
+        "yukselis",
+        "ai_hardware_supercycle"
       ],
       "score": null,
       "score_updated_at": null,
@@ -264,7 +271,8 @@
       },
       "last_news_check": null,
       "last_action_signal": null,
-      "notes": ""
+      "notes": "",
+      "last_updated": "2026-05-14T20:01:52.016012+00:00"
     },
     "ASML": {
       "symbol": "ASML",
@@ -279,8 +287,8 @@
         "Tema: AI Hardware Supercycle (yukselis, score 92)"
       ],
       "tags": [
-        "ai_hardware_supercycle",
-        "yukselis"
+        "yukselis",
+        "ai_hardware_supercycle"
       ],
       "score": 87.0,
       "score_updated_at": "2026-05-14T06:40:39.325437+00:00",
@@ -297,7 +305,8 @@
       },
       "last_news_check": null,
       "last_action_signal": null,
-      "notes": ""
+      "notes": "",
+      "last_updated": "2026-05-14T20:01:52.011713+00:00"
     },
     "ON": {
       "symbol": "ON",
@@ -312,8 +321,8 @@
         "Tema: AI Hardware Supercycle (yukselis, score 92)"
       ],
       "tags": [
-        "ai_hardware_supercycle",
-        "yukselis"
+        "yukselis",
+        "ai_hardware_supercycle"
       ],
       "score": null,
       "score_updated_at": null,
@@ -324,7 +333,8 @@
       },
       "last_news_check": null,
       "last_action_signal": null,
-      "notes": ""
+      "notes": "",
+      "last_updated": "2026-05-14T20:01:52.026814+00:00"
     },
     "MU": {
       "symbol": "MU",
@@ -339,8 +349,8 @@
         "Tema: AI Hardware Supercycle (yukselis, score 92)"
       ],
       "tags": [
-        "ai_hardware_supercycle",
-        "yukselis"
+        "yukselis",
+        "ai_hardware_supercycle"
       ],
       "score": 85.0,
       "score_updated_at": "2026-05-14T06:40:39.327576+00:00",
@@ -357,7 +367,8 @@
       },
       "last_news_check": null,
       "last_action_signal": null,
-      "notes": ""
+      "notes": "",
+      "last_updated": "2026-05-14T20:01:52.022473+00:00"
     },
     "ADI": {
       "symbol": "ADI",
@@ -372,8 +383,8 @@
         "Tema: AI Hardware Supercycle (yukselis, score 92)"
       ],
       "tags": [
-        "ai_hardware_supercycle",
-        "yukselis"
+        "yukselis",
+        "ai_hardware_supercycle"
       ],
       "score": null,
       "score_updated_at": null,
@@ -384,7 +395,8 @@
       },
       "last_news_check": null,
       "last_action_signal": null,
-      "notes": ""
+      "notes": "",
+      "last_updated": "2026-05-14T20:01:52.013858+00:00"
     },
     "MCHP": {
       "symbol": "MCHP",
@@ -399,8 +411,8 @@
         "Tema: AI Hardware Supercycle (yukselis, score 92)"
       ],
       "tags": [
-        "ai_hardware_supercycle",
-        "yukselis"
+        "yukselis",
+        "ai_hardware_supercycle"
       ],
       "score": null,
       "score_updated_at": null,
@@ -411,7 +423,8 @@
       },
       "last_news_check": null,
       "last_action_signal": null,
-      "notes": ""
+      "notes": "",
+      "last_updated": "2026-05-14T20:01:52.028958+00:00"
     },
     "ENPH": {
       "symbol": "ENPH",
@@ -438,7 +451,8 @@
       },
       "last_news_check": null,
       "last_action_signal": null,
-      "notes": ""
+      "notes": "",
+      "last_updated": "2026-05-14T20:01:52.031613+00:00"
     },
     "SEDG": {
       "symbol": "SEDG",
@@ -465,7 +479,8 @@
       },
       "last_news_check": null,
       "last_action_signal": null,
-      "notes": ""
+      "notes": "",
+      "last_updated": "2026-05-14T20:01:52.053055+00:00"
     },
     "FSLR": {
       "symbol": "FSLR",
@@ -498,7 +513,8 @@
       },
       "last_news_check": null,
       "last_action_signal": null,
-      "notes": ""
+      "notes": "",
+      "last_updated": "2026-05-14T20:01:52.033757+00:00"
     },
     "NEE": {
       "symbol": "NEE",
@@ -525,7 +541,8 @@
       },
       "last_news_check": null,
       "last_action_signal": null,
-      "notes": ""
+      "notes": "",
+      "last_updated": "2026-05-14T20:01:52.042296+00:00"
     },
     "PLUG": {
       "symbol": "PLUG",
@@ -552,7 +569,8 @@
       },
       "last_news_check": null,
       "last_action_signal": null,
-      "notes": ""
+      "notes": "",
+      "last_updated": "2026-05-14T20:01:52.046575+00:00"
     },
     "BE": {
       "symbol": "BE",
@@ -585,7 +603,8 @@
       },
       "last_news_check": null,
       "last_action_signal": null,
-      "notes": ""
+      "notes": "",
+      "last_updated": "2026-05-14T20:01:52.044436+00:00"
     },
     "CSIQ": {
       "symbol": "CSIQ",
@@ -612,7 +631,8 @@
       },
       "last_news_check": null,
       "last_action_signal": null,
-      "notes": ""
+      "notes": "",
+      "last_updated": "2026-05-14T20:01:52.038030+00:00"
     },
     "JKS": {
       "symbol": "JKS",
@@ -639,7 +659,8 @@
       },
       "last_news_check": null,
       "last_action_signal": null,
-      "notes": ""
+      "notes": "",
+      "last_updated": "2026-05-14T20:01:52.040145+00:00"
     },
     "SPWR": {
       "symbol": "SPWR",
@@ -666,7 +687,8 @@
       },
       "last_news_check": null,
       "last_action_signal": null,
-      "notes": ""
+      "notes": "",
+      "last_updated": "2026-05-14T20:01:52.048723+00:00"
     },
     "RUN": {
       "symbol": "RUN",
@@ -693,7 +715,8 @@
       },
       "last_news_check": null,
       "last_action_signal": null,
-      "notes": ""
+      "notes": "",
+      "last_updated": "2026-05-14T20:01:52.050891+00:00"
     },
     "NOVA": {
       "symbol": "NOVA",
@@ -720,7 +743,8 @@
       },
       "last_news_check": null,
       "last_action_signal": null,
-      "notes": ""
+      "notes": "",
+      "last_updated": "2026-05-14T20:01:52.055201+00:00"
     },
     "ARRY": {
       "symbol": "ARRY",
@@ -747,7 +771,8 @@
       },
       "last_news_check": null,
       "last_action_signal": null,
-      "notes": ""
+      "notes": "",
+      "last_updated": "2026-05-14T20:01:52.035896+00:00"
     },
     "BAC": {
       "symbol": "BAC",
@@ -774,7 +799,8 @@
       },
       "last_news_check": null,
       "last_action_signal": null,
-      "notes": ""
+      "notes": "",
+      "last_updated": "2026-05-14T20:01:52.062319+00:00"
     },
     "JPM": {
       "symbol": "JPM",
@@ -801,7 +827,8 @@
       },
       "last_news_check": null,
       "last_action_signal": null,
-      "notes": ""
+      "notes": "",
+      "last_updated": "2026-05-14T20:01:52.060119+00:00"
     },
     "WFC": {
       "symbol": "WFC",
@@ -828,7 +855,8 @@
       },
       "last_news_check": null,
       "last_action_signal": null,
-      "notes": ""
+      "notes": "",
+      "last_updated": "2026-05-14T20:01:52.077600+00:00"
     },
     "C": {
       "symbol": "C",
@@ -855,7 +883,8 @@
       },
       "last_news_check": null,
       "last_action_signal": null,
-      "notes": ""
+      "notes": "",
+      "last_updated": "2026-05-14T20:01:52.066682+00:00"
     },
     "GS": {
       "symbol": "GS",
@@ -882,7 +911,8 @@
       },
       "last_news_check": null,
       "last_action_signal": null,
-      "notes": ""
+      "notes": "",
+      "last_updated": "2026-05-14T20:01:52.064509+00:00"
     },
     "MS": {
       "symbol": "MS",
@@ -909,7 +939,8 @@
       },
       "last_news_check": null,
       "last_action_signal": null,
-      "notes": ""
+      "notes": "",
+      "last_updated": "2026-05-14T20:01:52.086489+00:00"
     },
     "BLK": {
       "symbol": "BLK",
@@ -936,7 +967,8 @@
       },
       "last_news_check": null,
       "last_action_signal": null,
-      "notes": ""
+      "notes": "",
+      "last_updated": "2026-05-14T20:01:52.068870+00:00"
     },
     "AXP": {
       "symbol": "AXP",
@@ -963,7 +995,8 @@
       },
       "last_news_check": null,
       "last_action_signal": null,
-      "notes": ""
+      "notes": "",
+      "last_updated": "2026-05-14T20:01:52.071046+00:00"
     },
     "USB": {
       "symbol": "USB",
@@ -990,7 +1023,8 @@
       },
       "last_news_check": null,
       "last_action_signal": null,
-      "notes": ""
+      "notes": "",
+      "last_updated": "2026-05-14T20:01:52.075421+00:00"
     },
     "PNC": {
       "symbol": "PNC",
@@ -1017,7 +1051,8 @@
       },
       "last_news_check": null,
       "last_action_signal": null,
-      "notes": ""
+      "notes": "",
+      "last_updated": "2026-05-14T20:01:52.082108+00:00"
     },
     "TFC": {
       "symbol": "TFC",
@@ -1044,7 +1079,8 @@
       },
       "last_news_check": null,
       "last_action_signal": null,
-      "notes": ""
+      "notes": "",
+      "last_updated": "2026-05-14T20:01:52.084317+00:00"
     },
     "COF": {
       "symbol": "COF",
@@ -1071,7 +1107,8 @@
       },
       "last_news_check": null,
       "last_action_signal": null,
-      "notes": ""
+      "notes": "",
+      "last_updated": "2026-05-14T20:01:52.073242+00:00"
     },
     "SCHW": {
       "symbol": "SCHW",
@@ -1098,7 +1135,8 @@
       },
       "last_news_check": null,
       "last_action_signal": null,
-      "notes": ""
+      "notes": "",
+      "last_updated": "2026-05-14T20:01:52.079869+00:00"
     },
     "PG": {
       "symbol": "PG",
@@ -1125,7 +1163,8 @@
       },
       "last_news_check": null,
       "last_action_signal": null,
-      "notes": ""
+      "notes": "",
+      "last_updated": "2026-05-14T20:01:52.125647+00:00"
     },
     "KO": {
       "symbol": "KO",
@@ -1152,7 +1191,8 @@
       },
       "last_news_check": null,
       "last_action_signal": null,
-      "notes": ""
+      "notes": "",
+      "last_updated": "2026-05-14T20:01:52.127943+00:00"
     },
     "PEP": {
       "symbol": "PEP",
@@ -1179,7 +1219,8 @@
       },
       "last_news_check": null,
       "last_action_signal": null,
-      "notes": ""
+      "notes": "",
+      "last_updated": "2026-05-14T20:01:52.130258+00:00"
     },
     "WMT": {
       "symbol": "WMT",
@@ -1206,7 +1247,8 @@
       },
       "last_news_check": null,
       "last_action_signal": null,
-      "notes": ""
+      "notes": "",
+      "last_updated": "2026-05-14T20:01:52.132679+00:00"
     },
     "COST": {
       "symbol": "COST",
@@ -1233,7 +1275,8 @@
       },
       "last_news_check": null,
       "last_action_signal": null,
-      "notes": ""
+      "notes": "",
+      "last_updated": "2026-05-14T20:01:52.134991+00:00"
     },
     "CL": {
       "symbol": "CL",
@@ -1260,7 +1303,8 @@
       },
       "last_news_check": null,
       "last_action_signal": null,
-      "notes": ""
+      "notes": "",
+      "last_updated": "2026-05-14T20:01:52.144185+00:00"
     },
     "MDLZ": {
       "symbol": "MDLZ",
@@ -1314,7 +1358,8 @@
       },
       "last_news_check": null,
       "last_action_signal": null,
-      "notes": ""
+      "notes": "",
+      "last_updated": "2026-05-14T20:01:52.141882+00:00"
     },
     "GIS": {
       "symbol": "GIS",
@@ -1341,7 +1386,8 @@
       },
       "last_news_check": null,
       "last_action_signal": null,
-      "notes": ""
+      "notes": "",
+      "last_updated": "2026-05-14T20:01:52.137295+00:00"
     },
     "SJM": {
       "symbol": "SJM",
@@ -1368,7 +1414,8 @@
       },
       "last_news_check": null,
       "last_action_signal": null,
-      "notes": ""
+      "notes": "",
+      "last_updated": "2026-05-14T20:01:52.153358+00:00"
     },
     "CHD": {
       "symbol": "CHD",
@@ -1395,7 +1442,8 @@
       },
       "last_news_check": null,
       "last_action_signal": null,
-      "notes": ""
+      "notes": "",
+      "last_updated": "2026-05-14T20:01:52.146462+00:00"
     },
     "HSY": {
       "symbol": "HSY",
@@ -1422,7 +1470,8 @@
       },
       "last_news_check": null,
       "last_action_signal": null,
-      "notes": ""
+      "notes": "",
+      "last_updated": "2026-05-14T20:01:52.139604+00:00"
     },
     "KHC": {
       "symbol": "KHC",
@@ -1449,7 +1498,8 @@
       },
       "last_news_check": null,
       "last_action_signal": null,
-      "notes": ""
+      "notes": "",
+      "last_updated": "2026-05-14T20:01:52.151064+00:00"
     },
     "CLX": {
       "symbol": "CLX",
@@ -1476,7 +1526,8 @@
       },
       "last_news_check": null,
       "last_action_signal": null,
-      "notes": ""
+      "notes": "",
+      "last_updated": "2026-05-14T20:01:52.148753+00:00"
     },
     "GILD": {
       "symbol": "GILD",
@@ -1503,7 +1554,8 @@
       },
       "last_news_check": null,
       "last_action_signal": null,
-      "notes": ""
+      "notes": "",
+      "last_updated": "2026-05-14T20:01:52.091438+00:00"
     },
     "AMGN": {
       "symbol": "AMGN",
@@ -1530,7 +1582,8 @@
       },
       "last_news_check": null,
       "last_action_signal": null,
-      "notes": ""
+      "notes": "",
+      "last_updated": "2026-05-14T20:01:52.093690+00:00"
     },
     "BIIB": {
       "symbol": "BIIB",
@@ -1563,7 +1616,8 @@
       },
       "last_news_check": null,
       "last_action_signal": null,
-      "notes": ""
+      "notes": "",
+      "last_updated": "2026-05-14T20:01:52.095970+00:00"
     },
     "REGN": {
       "symbol": "REGN",
@@ -1590,7 +1644,8 @@
       },
       "last_news_check": null,
       "last_action_signal": null,
-      "notes": ""
+      "notes": "",
+      "last_updated": "2026-05-14T20:01:52.111575+00:00"
     },
     "VRTX": {
       "symbol": "VRTX",
@@ -1623,7 +1678,8 @@
       },
       "last_news_check": null,
       "last_action_signal": null,
-      "notes": ""
+      "notes": "",
+      "last_updated": "2026-05-14T20:01:52.109334+00:00"
     },
     "MRNA": {
       "symbol": "MRNA",
@@ -1650,7 +1706,8 @@
       },
       "last_news_check": null,
       "last_action_signal": null,
-      "notes": ""
+      "notes": "",
+      "last_updated": "2026-05-14T20:01:52.113796+00:00"
     },
     "BMRN": {
       "symbol": "BMRN",
@@ -1677,7 +1734,8 @@
       },
       "last_news_check": null,
       "last_action_signal": null,
-      "notes": ""
+      "notes": "",
+      "last_updated": "2026-05-14T20:01:52.098172+00:00"
     },
     "ALNY": {
       "symbol": "ALNY",
@@ -1704,7 +1762,8 @@
       },
       "last_news_check": null,
       "last_action_signal": null,
-      "notes": ""
+      "notes": "",
+      "last_updated": "2026-05-14T20:01:52.100411+00:00"
     },
     "SRPT": {
       "symbol": "SRPT",
@@ -1731,7 +1790,8 @@
       },
       "last_news_check": null,
       "last_action_signal": null,
-      "notes": ""
+      "notes": "",
+      "last_updated": "2026-05-14T20:01:52.118297+00:00"
     },
     "IONS": {
       "symbol": "IONS",
@@ -1758,7 +1818,8 @@
       },
       "last_news_check": null,
       "last_action_signal": null,
-      "notes": ""
+      "notes": "",
+      "last_updated": "2026-05-14T20:01:52.120573+00:00"
     },
     "CRSP": {
       "symbol": "CRSP",
@@ -1785,7 +1846,8 @@
       },
       "last_news_check": null,
       "last_action_signal": null,
-      "notes": ""
+      "notes": "",
+      "last_updated": "2026-05-14T20:01:52.102656+00:00"
     },
     "EDIT": {
       "symbol": "EDIT",
@@ -1812,7 +1874,8 @@
       },
       "last_news_check": null,
       "last_action_signal": null,
-      "notes": ""
+      "notes": "",
+      "last_updated": "2026-05-14T20:01:52.107103+00:00"
     },
     "NTLA": {
       "symbol": "NTLA",
@@ -1863,6 +1926,169 @@
         "thematic_momentum": 58,
         "thematic_id": "biotech_recovery",
         "thematic_stage": "dogus"
+      },
+      "last_news_check": null,
+      "last_action_signal": null,
+      "notes": "",
+      "last_updated": "2026-05-14T20:01:52.104878+00:00"
+    },
+    "BEP": {
+      "symbol": "BEP",
+      "added_at": "2026-05-14T20:01:52.057366+00:00",
+      "added_price": null,
+      "source": "tematik_clean_energy_renewal",
+      "sources": [
+        "tematik_clean_energy_renewal"
+      ],
+      "rationale": "Tema: Clean Energy Renewal (yukselis, score 68)",
+      "rationales": [
+        "Tema: Clean Energy Renewal (yukselis, score 68)"
+      ],
+      "tags": [
+        "clean_energy_renewal",
+        "yukselis"
+      ],
+      "score": null,
+      "score_updated_at": null,
+      "score_components": {
+        "thematic_momentum": 68,
+        "thematic_id": "clean_energy_renewal",
+        "thematic_stage": "yukselis"
+      },
+      "last_news_check": null,
+      "last_action_signal": null,
+      "notes": ""
+    },
+    "BK": {
+      "symbol": "BK",
+      "added_at": "2026-05-14T20:01:52.088673+00:00",
+      "added_price": null,
+      "source": "tematik_fed_chair_transition",
+      "sources": [
+        "tematik_fed_chair_transition"
+      ],
+      "rationale": "Tema: Fed Chair Transition (dogus, score 55)",
+      "rationales": [
+        "Tema: Fed Chair Transition (dogus, score 55)"
+      ],
+      "tags": [
+        "fed_chair_transition",
+        "dogus"
+      ],
+      "score": null,
+      "score_updated_at": null,
+      "score_components": {
+        "thematic_momentum": 55,
+        "thematic_id": "fed_chair_transition",
+        "thematic_stage": "dogus"
+      },
+      "last_news_check": null,
+      "last_action_signal": null,
+      "notes": ""
+    },
+    "SGEN": {
+      "symbol": "SGEN",
+      "added_at": "2026-05-14T20:01:52.116026+00:00",
+      "added_price": null,
+      "source": "tematik_biotech_recovery",
+      "sources": [
+        "tematik_biotech_recovery"
+      ],
+      "rationale": "Tema: Biotech Recovery (dogus, score 58)",
+      "rationales": [
+        "Tema: Biotech Recovery (dogus, score 58)"
+      ],
+      "tags": [
+        "biotech_recovery",
+        "dogus"
+      ],
+      "score": null,
+      "score_updated_at": null,
+      "score_components": {
+        "thematic_momentum": 58,
+        "thematic_id": "biotech_recovery",
+        "thematic_stage": "dogus"
+      },
+      "last_news_check": null,
+      "last_action_signal": null,
+      "notes": ""
+    },
+    "ARWR": {
+      "symbol": "ARWR",
+      "added_at": "2026-05-14T20:01:52.122803+00:00",
+      "added_price": null,
+      "source": "tematik_biotech_recovery",
+      "sources": [
+        "tematik_biotech_recovery"
+      ],
+      "rationale": "Tema: Biotech Recovery (dogus, score 58)",
+      "rationales": [
+        "Tema: Biotech Recovery (dogus, score 58)"
+      ],
+      "tags": [
+        "biotech_recovery",
+        "dogus"
+      ],
+      "score": null,
+      "score_updated_at": null,
+      "score_components": {
+        "thematic_momentum": 58,
+        "thematic_id": "biotech_recovery",
+        "thematic_stage": "dogus"
+      },
+      "last_news_check": null,
+      "last_action_signal": null,
+      "notes": ""
+    },
+    "CPB": {
+      "symbol": "CPB",
+      "added_at": "2026-05-14T20:01:52.155636+00:00",
+      "added_price": null,
+      "source": "tematik_defensive_rotation",
+      "sources": [
+        "tematik_defensive_rotation"
+      ],
+      "rationale": "Tema: Defensive Staples Rotation (olgun, score 45)",
+      "rationales": [
+        "Tema: Defensive Staples Rotation (olgun, score 45)"
+      ],
+      "tags": [
+        "defensive_rotation",
+        "olgun"
+      ],
+      "score": null,
+      "score_updated_at": null,
+      "score_components": {
+        "thematic_momentum": 45,
+        "thematic_id": "defensive_rotation",
+        "thematic_stage": "olgun"
+      },
+      "last_news_check": null,
+      "last_action_signal": null,
+      "notes": ""
+    },
+    "ADM": {
+      "symbol": "ADM",
+      "added_at": "2026-05-14T20:01:52.157953+00:00",
+      "added_price": null,
+      "source": "tematik_defensive_rotation",
+      "sources": [
+        "tematik_defensive_rotation"
+      ],
+      "rationale": "Tema: Defensive Staples Rotation (olgun, score 45)",
+      "rationales": [
+        "Tema: Defensive Staples Rotation (olgun, score 45)"
+      ],
+      "tags": [
+        "defensive_rotation",
+        "olgun"
+      ],
+      "score": null,
+      "score_updated_at": null,
+      "score_components": {
+        "thematic_momentum": 45,
+        "thematic_id": "defensive_rotation",
+        "thematic_stage": "olgun"
       },
       "last_news_check": null,
       "last_action_signal": null,
