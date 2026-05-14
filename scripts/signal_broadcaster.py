@@ -280,7 +280,6 @@ def format_signal_message(c: dict) -> str:
 
     lines.append("")
     lines.append("<i>finzora ai — Aşama 6 sinyal yayını</i>")
-    lines.append("<i>Pozisyon büyüklüğü ve uygulama: Zeynel</i>")
     return "\n".join(lines)
 
 
