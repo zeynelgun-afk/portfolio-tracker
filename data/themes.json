@@ -1,0 +1,31 @@
+{
+  "_son_guncelleme": "2026-05-14 09:25",
+  "_aciklama": "Finzora AI — AI türeyen aktif tema kataloğu. Günlük dar + haftalık geniş araştırma sonucu güncellenir. Tema yaşam döngüsü: dogus → yukselis → olgun → sönüs → archived.",
+  "_schema_version": "1.0",
+  "_lifecycle_stages": ["dogus", "yukselis", "olgun", "sönüs"],
+  "_template_theme": {
+    "id": "tema_id_snake_case",
+    "name": "Görünür Tema Adı",
+    "description": "Kısa açıklama",
+    "created_at": "ISO-8601",
+    "updated_at": "ISO-8601",
+    "lifecycle_stage": "yukselis",
+    "momentum_score": 0,
+    "score_history": [
+      {"date": "YYYY-MM-DD", "score": 0, "stage": "..."}
+    ],
+    "signals": {
+      "sector_rs_4w_pct": null,
+      "news_velocity_7d": null,
+      "analyst_upgrade_count_30d": null,
+      "etf_inflow_4w_usd_m": null
+    },
+    "related_tickers": [],
+    "evidence": [
+      {"date": "YYYY-MM-DD", "text": "haber özeti"}
+    ],
+    "source": "ai_thematic_discovery | manual"
+  },
+  "themes": {},
+  "archived_themes": []
+}
