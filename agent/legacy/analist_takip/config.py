@@ -43,8 +43,10 @@ SIGNAL_WINDOW_RECENT_HOURS = 24    # "Son X saat" pencere
 SIGNAL_WINDOW_TOTAL_HOURS = 48     # Toplam pencere
 
 # AL eşikleri
-STRONG_BUY_MIN_RAISED = 3
-STRONG_BUY_MIN_AVG_PCT = 5.0
+# 14 May 2026 (Zeynel kararı): nicelikten niteliğe — 3 analist x %5 yerine
+# 1 analist x %20+ konvik. Az tetiklenir ama daha güçlü sinyal.
+STRONG_BUY_MIN_RAISED = 1
+STRONG_BUY_MIN_AVG_PCT = 20.0
 STRONG_BUY_MAX_LOWERED = 0
 
 BUY_BIG_RAISE_PCT = 25.0           # Tek bir analistin >%25 hedef artışı
