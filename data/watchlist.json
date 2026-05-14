@@ -1,5 +1,5 @@
 {
-  "_son_guncelleme": "2026-05-14 20:01",
+  "_son_guncelleme": "2026-05-14 23:04",
   "_aciklama": "Finzora AI — Tek hisse havuzu. Tüm besleyiciler (analist_takip, fair_value_panel, tematik_keşif, ai_orchestrator, manuel) buraya yazar. Max 80 ticker. Sade şema, 13 May 2026 sıfırlandı. | 14 May 2026: limit 80→300 (tematik genişleme)",
   "_limit": 300,
   "_schema_version": "2.0",
@@ -43,17 +43,17 @@
         "ai_hardware_supercycle"
       ],
       "score": 94.0,
-      "score_updated_at": "2026-05-14T06:40:39.316732+00:00",
+      "score_updated_at": "2026-05-14T23:04:24.916401+00:00",
       "score_components": {
         "thematic_momentum": 92,
         "thematic_id": "ai_hardware_supercycle",
         "thematic_stage": "yukselis",
         "orchestrator_rank": 1,
-        "orchestrator_reason": "AI süper döngüsünün amiral gemisi, 5 analist yükseltmesi, 5489B likidite, uptrend RSI 72 hâlâ sürdürülebilir.",
-        "orchestrator_entry": "$220-225",
-        "orchestrator_stop": 195,
-        "orchestrator_target": 280,
-        "orchestrator_rr": "1:2.4"
+        "orchestrator_reason": "AI süper döngüsünün bayrak taşıyıcısı, analist PT yükselişleri ve güçlü momentumla birlikte.",
+        "orchestrator_entry": "$230-235",
+        "orchestrator_stop": 210,
+        "orchestrator_target": 285,
+        "orchestrator_rr": "1:2.5"
       },
       "last_news_check": null,
       "last_action_signal": null,
@@ -104,18 +104,18 @@
         "yukselis",
         "ai_hardware_supercycle"
       ],
-      "score": 88.0,
-      "score_updated_at": "2026-05-14T06:40:39.323331+00:00",
+      "score": 89.0,
+      "score_updated_at": "2026-05-14T23:04:24.922995+00:00",
       "score_components": {
         "thematic_momentum": 92,
         "thematic_id": "ai_hardware_supercycle",
         "thematic_stage": "yukselis",
         "orchestrator_rank": 4,
-        "orchestrator_reason": "Ekipman süper döngüsünün doğrudan oynu, 370B cap, RSI 64.5 ile güçlü uptrend.",
-        "orchestrator_entry": "$290-295",
-        "orchestrator_stop": 265,
-        "orchestrator_target": 360,
-        "orchestrator_rr": "1:2.8"
+        "orchestrator_reason": "Yarıiletken ekipman talebinin ikinci dalga faydalanıcısı, temiz RSI ile yükseliş.",
+        "orchestrator_entry": "$295-300",
+        "orchestrator_stop": 275,
+        "orchestrator_target": 340,
+        "orchestrator_rr": "1:2.0"
       },
       "last_news_check": null,
       "last_action_signal": null,
@@ -139,17 +139,17 @@
         "ai_hardware_supercycle"
       ],
       "score": 91.0,
-      "score_updated_at": "2026-05-14T06:40:39.319151+00:00",
+      "score_updated_at": "2026-05-14T23:04:24.918808+00:00",
       "score_components": {
         "thematic_momentum": 92,
         "thematic_id": "ai_hardware_supercycle",
         "thematic_stage": "yukselis",
         "orchestrator_rank": 2,
-        "orchestrator_reason": "Yarıiletken üretiminin temel taşı, 2074B likidite, RSI 56.6 hâlâ boşta, uptrend sağlam.",
-        "orchestrator_entry": "$390-395",
-        "orchestrator_stop": 365,
+        "orchestrator_reason": "AI çip talebinin doğrudan faydalanıcısı, teknik kırılım sonrası hacimli yükseliş.",
+        "orchestrator_entry": "$410-415",
+        "orchestrator_stop": 385,
         "orchestrator_target": 470,
-        "orchestrator_rr": "1:2.8"
+        "orchestrator_rr": "1:2.2"
       },
       "last_news_check": null,
       "last_action_signal": null,
@@ -172,18 +172,18 @@
         "yukselis",
         "ai_hardware_supercycle"
       ],
-      "score": 89.0,
-      "score_updated_at": "2026-05-14T06:40:39.321247+00:00",
+      "score": 90.0,
+      "score_updated_at": "2026-05-14T23:04:24.920861+00:00",
       "score_components": {
         "thematic_momentum": 92,
         "thematic_id": "ai_hardware_supercycle",
         "thematic_stage": "yukselis",
         "orchestrator_rank": 3,
-        "orchestrator_reason": "Yüksek marjlı AI yonga tasarımı, 1973B likidite, RSI 58.3 ile momentum korunuyor.",
-        "orchestrator_entry": "$410-415",
-        "orchestrator_stop": 380,
+        "orchestrator_reason": "AI ASIC ve ağ çipi lideri, %5.5 günlük sıçrama ile momentum yeniden canlandı.",
+        "orchestrator_entry": "$435-440",
+        "orchestrator_stop": 400,
         "orchestrator_target": 500,
-        "orchestrator_rr": "1:2.7"
+        "orchestrator_rr": "1:2.1"
       },
       "last_news_check": null,
       "last_action_signal": null,
@@ -206,12 +206,18 @@
         "yukselis",
         "ai_hardware_supercycle"
       ],
-      "score": null,
-      "score_updated_at": null,
+      "score": 87.0,
+      "score_updated_at": "2026-05-14T23:04:24.925069+00:00",
       "score_components": {
         "thematic_momentum": 92,
         "thematic_id": "ai_hardware_supercycle",
-        "thematic_stage": "yukselis"
+        "thematic_stage": "yukselis",
+        "orchestrator_rank": 5,
+        "orchestrator_reason": "AI optik ve veri merkezi çiplerinde hızlanan talep, teknik kırılım sonrası.",
+        "orchestrator_entry": "$180-185",
+        "orchestrator_stop": 165,
+        "orchestrator_target": 220,
+        "orchestrator_rr": "1:2.7"
       },
       "last_news_check": null,
       "last_action_signal": null,
@@ -234,12 +240,18 @@
         "yukselis",
         "ai_hardware_supercycle"
       ],
-      "score": null,
-      "score_updated_at": null,
+      "score": 85.0,
+      "score_updated_at": "2026-05-14T23:04:24.927093+00:00",
       "score_components": {
         "thematic_momentum": 92,
         "thematic_id": "ai_hardware_supercycle",
-        "thematic_stage": "yukselis"
+        "thematic_stage": "yukselis",
+        "orchestrator_rank": 6,
+        "orchestrator_reason": "AI PC ve mobildeki konumuyla düşük RSI ve negatif günlük performansı dip alım fırsatı.",
+        "orchestrator_entry": "$195-200",
+        "orchestrator_stop": 185,
+        "orchestrator_target": 230,
+        "orchestrator_rr": "1:2.5"
       },
       "last_news_check": null,
       "last_action_signal": null,
@@ -352,18 +364,18 @@
         "yukselis",
         "ai_hardware_supercycle"
       ],
-      "score": 85.0,
-      "score_updated_at": "2026-05-14T06:40:39.327576+00:00",
+      "score": 80.0,
+      "score_updated_at": "2026-05-14T23:04:24.931204+00:00",
       "score_components": {
         "thematic_momentum": 92,
         "thematic_id": "ai_hardware_supercycle",
         "thematic_stage": "yukselis",
-        "orchestrator_rank": 6,
-        "orchestrator_reason": "Hafıza süper döngüsü, 906B cap, güçlü momentum, RSI 81.3 aşırı ama talep karşılıyor.",
-        "orchestrator_entry": "$780-800",
+        "orchestrator_rank": 8,
+        "orchestrator_reason": "HBM bellek talebinde AI süper döngüsü faydalanıcısı, %3.4 düşüş dip alım fırsatı.",
+        "orchestrator_entry": "$770-775",
         "orchestrator_stop": 720,
-        "orchestrator_target": 950,
-        "orchestrator_rr": "1:2.4"
+        "orchestrator_target": 880,
+        "orchestrator_rr": "1:2.1"
       },
       "last_news_check": null,
       "last_action_signal": null,
@@ -442,12 +454,18 @@
         "clean_energy_renewal",
         "yukselis"
       ],
-      "score": null,
-      "score_updated_at": null,
+      "score": 78.0,
+      "score_updated_at": "2026-05-14T23:04:24.933292+00:00",
       "score_components": {
         "thematic_momentum": 68,
         "thematic_id": "clean_energy_renewal",
-        "thematic_stage": "yukselis"
+        "thematic_stage": "yukselis",
+        "orchestrator_rank": 9,
+        "orchestrator_reason": "Temiz enerji yenilenmesinde güneş mikro invertör lideri, %14.3 günlük sıçrama momentum.",
+        "orchestrator_entry": "$46-48",
+        "orchestrator_stop": 42,
+        "orchestrator_target": 58,
+        "orchestrator_rr": "1:2.0"
       },
       "last_news_check": null,
       "last_action_signal": null,
@@ -470,12 +488,18 @@
         "clean_energy_renewal",
         "yukselis"
       ],
-      "score": null,
-      "score_updated_at": null,
+      "score": 75.0,
+      "score_updated_at": "2026-05-14T23:04:24.935324+00:00",
       "score_components": {
         "thematic_momentum": 68,
         "thematic_id": "clean_energy_renewal",
-        "thematic_stage": "yukselis"
+        "thematic_stage": "yukselis",
+        "orchestrator_rank": 10,
+        "orchestrator_reason": "Temiz enerji yenilenmesinde güneş invertörü, %17.5 günlük sıçrama ile dip dönüş sinyali.",
+        "orchestrator_entry": "$48-50",
+        "orchestrator_stop": 44,
+        "orchestrator_target": 60,
+        "orchestrator_rr": "1:2.0"
       },
       "last_news_check": null,
       "last_action_signal": null,
@@ -588,18 +612,18 @@
         "clean_energy_renewal",
         "yukselis"
       ],
-      "score": 80.0,
-      "score_updated_at": "2026-05-14T06:40:39.331714+00:00",
+      "score": 82.0,
+      "score_updated_at": "2026-05-14T23:04:24.929148+00:00",
       "score_components": {
         "thematic_momentum": 68,
         "thematic_id": "clean_energy_renewal",
         "thematic_stage": "yukselis",
-        "orchestrator_rank": 8,
-        "orchestrator_reason": "Yeşil hidrojen altyapısı, 70B cap, RSI 67.1 ile sağlam momentum, yatırım akışı artıyor.",
-        "orchestrator_entry": "$285-290",
-        "orchestrator_stop": 260,
-        "orchestrator_target": 350,
-        "orchestrator_rr": "1:2.6"
+        "orchestrator_rank": 7,
+        "orchestrator_reason": "Temiz enerji yenilenmesinde yeşil hidrojen lideri, %4.7 günlük sıçrama ile momentum.",
+        "orchestrator_entry": "$300-305",
+        "orchestrator_stop": 275,
+        "orchestrator_target": 360,
+        "orchestrator_rr": "1:2.0"
       },
       "last_news_check": null,
       "last_action_signal": null,
