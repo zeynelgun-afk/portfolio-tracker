@@ -48,7 +48,7 @@ jobs:
         env:
           FMP_API_KEY: ${{ secrets.FMP_API_KEY }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_DM_CHAT_ID: ${{ secrets.TELEGRAM_DM_CHAT_ID }}
+          TELEGRAM_DM_CHAT_ID: '1403072107'
         run: |
           SUNDAY="${{ github.event.inputs.sunday_mode || 'false' }}"
           DM="${{ github.event.inputs.dm || 'false' }}"

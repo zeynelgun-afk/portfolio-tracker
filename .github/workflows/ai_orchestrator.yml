@@ -49,8 +49,8 @@ jobs:
           FMP_API_KEY: ${{ secrets.FMP_API_KEY }}
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_GROUP_CHAT_ID: ${{ secrets.TELEGRAM_GROUP_CHAT_ID }}
-          TELEGRAM_DM_CHAT_ID: ${{ secrets.TELEGRAM_DM_CHAT_ID }}
+          TELEGRAM_GROUP_CHAT_ID: '-1003827034395'
+          TELEGRAM_DM_CHAT_ID: '1403072107'
         run: |
           MODE="${{ github.event.inputs.mode || 'daily' }}"
           DRY="${{ github.event.inputs.dry_run || 'false' }}"
