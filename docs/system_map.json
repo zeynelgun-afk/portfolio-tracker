@@ -179,6 +179,20 @@
       "label": "OpenRouter (Kimi)",
       "category": "external",
       "url": "https://openrouter.ai"
+    },
+    {
+      "id": "thematic_discovery.yml",
+      "label": "Tematik Keşif",
+      "category": "workflow",
+      "schedule": "Hft 23:00 daily / Pzr 11:00 weekly",
+      "workflow_file": "thematic_discovery.yml",
+      "tag": "AI"
+    },
+    {
+      "id": "data/themes.json",
+      "label": "themes.json",
+      "category": "data",
+      "tag": "AI türeyen tema kataloğu"
     }
   ],
   "edges": [
@@ -341,6 +355,30 @@
     {
       "source": "scripts/telegram_bot.py",
       "target": "scripts/macro_calendar_updater.py"
+    },
+    {
+      "source": "scripts/telegram_bot.py",
+      "target": "thematic_discovery.yml"
+    },
+    {
+      "source": "thematic_discovery.yml",
+      "target": "scripts/thematic_discovery.py"
+    },
+    {
+      "source": "scripts/thematic_discovery.py",
+      "target": "data/themes.json"
+    },
+    {
+      "source": "scripts/thematic_discovery.py",
+      "target": "data/watchlist.json"
+    },
+    {
+      "source": "scripts/thematic_discovery.py",
+      "target": "fmp_api"
+    },
+    {
+      "source": "scripts/thematic_discovery.py",
+      "target": "openrouter_api"
     }
   ]
 }

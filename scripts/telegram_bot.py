@@ -2129,12 +2129,14 @@ def main():
             # 13 May 2026: morning_scan.yml (swing_entry_engine) → scripts/legacy/, kaldırıldı.
             # 13 May 2026: result_tracker.yml → scripts/legacy/, kaldırıldı (kullanılmıyor).
             (16,  0, "agent.yml",            {"mode":"morning"},    True,  False, "Agent Sabah",                   True),
+            (23,  0, "thematic_discovery.yml",{"mode":"daily"},      True,  False, "Tematik Keşif Günlük",          False),  # Asama 4 (14 May 2026): gun sonu tema tarama
             (23, 35, "research_tracker.yml", {"mode":"daily"},      False, False, "Research Tracker Günlük",       True),  # v5.0 Etap 11 her gün 23:35
             # Kapanış: gece yarısı 00:30 TR (yeni güne geçmiş ama hafta içinde)
             # Pzt gecesi 00:30 = Salı sabahı, Cum gecesi 00:30 = Cmt sabahı
             # weekday(): Sal=1…Cmt=5 → 1-5 arası = gece öncesi hafta içiydi
             (0,  30, "agent.yml",            {"mode":"closing"},    False, False, "Agent Kapanış",                 True),
             # Haftalık — Pazar
+            (11,  0, "thematic_discovery.yml",{"mode":"weekly"},     False, True,  "Tematik Keşif Haftalık",        False),  # Asama 4 weekly, agent weekly oncesi
             (12,  0, "agent.yml",            {"mode":"weekly"},     False, True,  "Agent Haftalık",                False),
             (14,  0, "research_tracker.yml", {"mode":"weekly"},     False, True,  "Research Tracker Haftalık",     False),  # v5.0 Etap 11 Pazar 14:00
         ]
