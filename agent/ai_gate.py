@@ -44,7 +44,8 @@ OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
 LLM_MODEL = "moonshotai/kimi-k2"
 
 # Fallback davranışı: AI çağrısı başarısız ise besleyici eski mantığa düşer
-FALLBACK_ON_ERROR = True
+# False = AI olmazsa RED (Zeynel vizyonu, 14 May 2026)
+FALLBACK_ON_ERROR = False
 
 
 def _log(msg: str) -> None:
@@ -293,15 +294,15 @@ def evaluate_signal(symbol: str, signal_type: str,
     result = _call_llm(prompt)
 
     if not result:
-        # Fallback: AI çağrısı başarısız → çağıran karar versin
+        # AI çağrısı başarısız → RED (Zeynel vizyonu: AI olmasa eklenmesin)
         if FALLBACK_ON_ERROR:
-            _log(f"{symbol} gate başarısız — fallback EKLE (çağıranın eski mantığı)")
+            _log(f"{symbol} gate başarısız — fallback EKLE (eski mantık)")
             return {"action": "EKLE", "score": 50,
                     "reason": "AI gate başarısız, fallback eski mantığa",
                     "theme_match": None, "cautions": ["gate_failed"]}
-        return {"action": "HATA", "score": 0,
-                "reason": "LLM çağrısı başarısız",
-                "theme_match": None, "cautions": ["llm_error"]}
+        return {"action": "RED", "score": 0,
+                "reason": "AI gate çağrısı başarısız — sinyal kabul edilmedi",
+                "theme_match": None, "cautions": ["gate_failed", "ai_unavailable"]}
 
     # 4. Sonucu normalize et
     action = str(result.get("action", "RED")).upper()
