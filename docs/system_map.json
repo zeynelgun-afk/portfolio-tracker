@@ -201,6 +201,14 @@
       "schedule": "Hft 02:00 daily / Pzr 13:00 weekly",
       "workflow_file": "ai_orchestrator.yml",
       "tag": "AI"
+    },
+    {
+      "id": "signal_broadcaster.yml",
+      "label": "Signal Broadcaster",
+      "category": "workflow",
+      "schedule": "Seans-içi her 30dk (monitor ile paralel)",
+      "workflow_file": "signal_broadcaster.yml",
+      "tag": "AI"
     }
   ],
   "edges": [
@@ -411,6 +419,34 @@
     {
       "source": "scripts/ai_orchestrator.py",
       "target": "openrouter_api"
+    },
+    {
+      "source": "scripts/telegram_bot.py",
+      "target": "signal_broadcaster.yml"
+    },
+    {
+      "source": "signal_broadcaster.yml",
+      "target": "scripts/signal_broadcaster.py"
+    },
+    {
+      "source": "scripts/signal_broadcaster.py",
+      "target": "data/watchlist.json"
+    },
+    {
+      "source": "scripts/signal_broadcaster.py",
+      "target": "data/themes.json"
+    },
+    {
+      "source": "scripts/signal_broadcaster.py",
+      "target": "data/portfolio.json"
+    },
+    {
+      "source": "scripts/signal_broadcaster.py",
+      "target": "fmp_api"
+    },
+    {
+      "source": "scripts/signal_broadcaster.py",
+      "target": "telegram_api"
     }
   ]
 }

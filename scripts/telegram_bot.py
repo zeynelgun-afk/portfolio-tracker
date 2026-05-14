@@ -2208,6 +2208,14 @@ def main():
                             print(f"[GH] {simdi.strftime('%H:%M')} → Agent Monitor")
                             _gh_dispatch("agent.yml", {"mode": "monitor"})
 
+                        # Asama 6 (14 May 2026): seans-ici 30dk sinyal yayini
+                        # Monitor ile ayni slot'larda paralel kosur.
+                        sig_key = f"signal_broadcaster:{gun_str}:{saat:02d}{dakika:02d}"
+                        if sig_key not in _gh_tetiklendi:
+                            _gh_tetiklendi[sig_key] = True
+                            print(f"[GH] {simdi.strftime('%H:%M')} → Signal Broadcaster")
+                            _gh_dispatch("signal_broadcaster.yml", None)
+
                     # Bellek temizliği
                     if len(_gh_tetiklendi) > 200:
                         _gh_tetiklendi.clear()
