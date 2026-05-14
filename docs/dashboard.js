@@ -11,6 +11,7 @@ const CATEGORY_COLORS = {
   script:      "#3fb950",
   module:      "#58a6ff",
   "module-core": "#1f6feb",
+  agent:       "#bc8cff",   // pastel mor — AI/agent kategorisi (ai_gate, vb.)
   data:        "#d29922",
   external:    "#8b949e",
 };
