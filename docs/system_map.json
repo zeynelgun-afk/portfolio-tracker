@@ -215,6 +215,36 @@
       "label": "AI Gate",
       "category": "agent",
       "tag": "AI - LLM gatekeeper"
+    },
+    {
+      "id": "scripts/thematic_discovery.py",
+      "label": "thematic_discovery.py",
+      "category": "script",
+      "tag": "Aşama 4 — LLM tematik keşif"
+    },
+    {
+      "id": "scripts/ai_orchestrator.py",
+      "label": "ai_orchestrator.py",
+      "category": "script",
+      "tag": "Aşama 5 — Top-10 LLM seçici"
+    },
+    {
+      "id": "scripts/signal_broadcaster.py",
+      "label": "signal_broadcaster.py",
+      "category": "script",
+      "tag": "Aşama 6 — Sinyal yayını"
+    },
+    {
+      "id": "agent/legacy/analist_takip/monitor.py",
+      "label": "analist_takip/monitor.py",
+      "category": "module",
+      "tag": "Analist revize takibi"
+    },
+    {
+      "id": "data/watchlist.json",
+      "label": "watchlist.json",
+      "category": "data",
+      "tag": "Aşama 2-8 hisse havuzu v2.0 (max 80)"
     }
   ],
   "edges": [
@@ -396,11 +426,11 @@
     },
     {
       "source": "scripts/thematic_discovery.py",
-      "target": "fmp_api"
+      "target": "ext.fmp"
     },
     {
       "source": "scripts/thematic_discovery.py",
-      "target": "openrouter_api"
+      "target": "ext.openrouter"
     },
     {
       "source": "scripts/telegram_bot.py",
@@ -420,11 +450,11 @@
     },
     {
       "source": "scripts/ai_orchestrator.py",
-      "target": "fmp_api"
+      "target": "ext.fmp"
     },
     {
       "source": "scripts/ai_orchestrator.py",
-      "target": "openrouter_api"
+      "target": "ext.openrouter"
     },
     {
       "source": "scripts/telegram_bot.py",
@@ -448,11 +478,11 @@
     },
     {
       "source": "scripts/signal_broadcaster.py",
-      "target": "fmp_api"
+      "target": "ext.fmp"
     },
     {
       "source": "scripts/signal_broadcaster.py",
-      "target": "telegram_api"
+      "target": "ext.telegram"
     },
     {
       "source": "agent/legacy/analist_takip/monitor.py",
@@ -468,7 +498,7 @@
     },
     {
       "source": "agent/ai_gate.py",
-      "target": "openrouter_api"
+      "target": "ext.openrouter"
     },
     {
       "source": "agent/ai_gate.py",
