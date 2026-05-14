@@ -193,6 +193,14 @@
       "label": "themes.json",
       "category": "data",
       "tag": "AI türeyen tema kataloğu"
+    },
+    {
+      "id": "ai_orchestrator.yml",
+      "label": "AI Orchestrator",
+      "category": "workflow",
+      "schedule": "Hft 02:00 daily / Pzr 13:00 weekly",
+      "workflow_file": "ai_orchestrator.yml",
+      "tag": "AI"
     }
   ],
   "edges": [
@@ -378,6 +386,30 @@
     },
     {
       "source": "scripts/thematic_discovery.py",
+      "target": "openrouter_api"
+    },
+    {
+      "source": "scripts/telegram_bot.py",
+      "target": "ai_orchestrator.yml"
+    },
+    {
+      "source": "ai_orchestrator.yml",
+      "target": "scripts/ai_orchestrator.py"
+    },
+    {
+      "source": "scripts/ai_orchestrator.py",
+      "target": "data/watchlist.json"
+    },
+    {
+      "source": "scripts/ai_orchestrator.py",
+      "target": "data/themes.json"
+    },
+    {
+      "source": "scripts/ai_orchestrator.py",
+      "target": "fmp_api"
+    },
+    {
+      "source": "scripts/ai_orchestrator.py",
       "target": "openrouter_api"
     }
   ]

@@ -2135,9 +2135,11 @@ def main():
             # Pzt gecesi 00:30 = Salı sabahı, Cum gecesi 00:30 = Cmt sabahı
             # weekday(): Sal=1…Cmt=5 → 1-5 arası = gece öncesi hafta içiydi
             (0,  30, "agent.yml",            {"mode":"closing"},    False, False, "Agent Kapanış",                 True),
+            (2,   0, "ai_orchestrator.yml",  {"mode":"daily"},      False, False, "AI Orchestrator Günlük",        True),  # Asama 5: kapanis sonrasi tum sinyalleri sentez
             # Haftalık — Pazar
             (11,  0, "thematic_discovery.yml",{"mode":"weekly"},     False, True,  "Tematik Keşif Haftalık",        False),  # Asama 4 weekly, agent weekly oncesi
             (12,  0, "agent.yml",            {"mode":"weekly"},     False, True,  "Agent Haftalık",                False),
+            (13,  0, "ai_orchestrator.yml",  {"mode":"weekly"},     False, True,  "AI Orchestrator Haftalık",      False),  # Asama 5 weekly derin analiz
             (14,  0, "research_tracker.yml", {"mode":"weekly"},     False, True,  "Research Tracker Haftalık",     False),  # v5.0 Etap 11 Pazar 14:00
         ]
 

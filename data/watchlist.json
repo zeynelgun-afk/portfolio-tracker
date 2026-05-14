@@ -1,5 +1,5 @@
 {
-  "_son_guncelleme": "2026-05-14 06:28",
+  "_son_guncelleme": "2026-05-14 06:40",
   "_aciklama": "Finzora AI — Tek hisse havuzu. Tüm besleyiciler (analist_takip, fair_value_panel, tematik_keşif, ai_orchestrator, manuel) buraya yazar. Max 80 ticker. Sade şema, 13 May 2026 sıfırlandı.",
   "_limit": 80,
   "_schema_version": "2.0",
@@ -42,12 +42,18 @@
         "ai_hardware_supercycle",
         "yukselis"
       ],
-      "score": null,
-      "score_updated_at": null,
+      "score": 94.0,
+      "score_updated_at": "2026-05-14T06:40:39.316732+00:00",
       "score_components": {
         "thematic_momentum": 92,
         "thematic_id": "ai_hardware_supercycle",
-        "thematic_stage": "yukselis"
+        "thematic_stage": "yukselis",
+        "orchestrator_rank": 1,
+        "orchestrator_reason": "AI süper döngüsünün amiral gemisi, 5 analist yükseltmesi, 5489B likidite, uptrend RSI 72 hâlâ sürdürülebilir.",
+        "orchestrator_entry": "$220-225",
+        "orchestrator_stop": 195,
+        "orchestrator_target": 280,
+        "orchestrator_rr": "1:2.4"
       },
       "last_news_check": null,
       "last_action_signal": null,
@@ -96,12 +102,18 @@
         "ai_hardware_supercycle",
         "yukselis"
       ],
-      "score": null,
-      "score_updated_at": null,
+      "score": 88.0,
+      "score_updated_at": "2026-05-14T06:40:39.323331+00:00",
       "score_components": {
         "thematic_momentum": 92,
         "thematic_id": "ai_hardware_supercycle",
-        "thematic_stage": "yukselis"
+        "thematic_stage": "yukselis",
+        "orchestrator_rank": 4,
+        "orchestrator_reason": "Ekipman süper döngüsünün doğrudan oynu, 370B cap, RSI 64.5 ile güçlü uptrend.",
+        "orchestrator_entry": "$290-295",
+        "orchestrator_stop": 265,
+        "orchestrator_target": 360,
+        "orchestrator_rr": "1:2.8"
       },
       "last_news_check": null,
       "last_action_signal": null,
@@ -123,12 +135,18 @@
         "ai_hardware_supercycle",
         "yukselis"
       ],
-      "score": null,
-      "score_updated_at": null,
+      "score": 91.0,
+      "score_updated_at": "2026-05-14T06:40:39.319151+00:00",
       "score_components": {
         "thematic_momentum": 92,
         "thematic_id": "ai_hardware_supercycle",
-        "thematic_stage": "yukselis"
+        "thematic_stage": "yukselis",
+        "orchestrator_rank": 2,
+        "orchestrator_reason": "Yarıiletken üretiminin temel taşı, 2074B likidite, RSI 56.6 hâlâ boşta, uptrend sağlam.",
+        "orchestrator_entry": "$390-395",
+        "orchestrator_stop": 365,
+        "orchestrator_target": 470,
+        "orchestrator_rr": "1:2.8"
       },
       "last_news_check": null,
       "last_action_signal": null,
@@ -150,12 +168,18 @@
         "ai_hardware_supercycle",
         "yukselis"
       ],
-      "score": null,
-      "score_updated_at": null,
+      "score": 89.0,
+      "score_updated_at": "2026-05-14T06:40:39.321247+00:00",
       "score_components": {
         "thematic_momentum": 92,
         "thematic_id": "ai_hardware_supercycle",
-        "thematic_stage": "yukselis"
+        "thematic_stage": "yukselis",
+        "orchestrator_rank": 3,
+        "orchestrator_reason": "Yüksek marjlı AI yonga tasarımı, 1973B likidite, RSI 58.3 ile momentum korunuyor.",
+        "orchestrator_entry": "$410-415",
+        "orchestrator_stop": 380,
+        "orchestrator_target": 500,
+        "orchestrator_rr": "1:2.7"
       },
       "last_news_check": null,
       "last_action_signal": null,
@@ -258,12 +282,18 @@
         "ai_hardware_supercycle",
         "yukselis"
       ],
-      "score": null,
-      "score_updated_at": null,
+      "score": 87.0,
+      "score_updated_at": "2026-05-14T06:40:39.325437+00:00",
       "score_components": {
         "thematic_momentum": 92,
         "thematic_id": "ai_hardware_supercycle",
-        "thematic_stage": "yukselis"
+        "thematic_stage": "yukselis",
+        "orchestrator_rank": 5,
+        "orchestrator_reason": "EUV tekeli, 610B cap, RSI 60.7 ile güvenli bölge, uptrend sağlam.",
+        "orchestrator_entry": "$1550-1580",
+        "orchestrator_stop": 1450,
+        "orchestrator_target": 1850,
+        "orchestrator_rr": "1:2.5"
       },
       "last_news_check": null,
       "last_action_signal": null,
@@ -312,12 +342,18 @@
         "ai_hardware_supercycle",
         "yukselis"
       ],
-      "score": null,
-      "score_updated_at": null,
+      "score": 85.0,
+      "score_updated_at": "2026-05-14T06:40:39.327576+00:00",
       "score_components": {
         "thematic_momentum": 92,
         "thematic_id": "ai_hardware_supercycle",
-        "thematic_stage": "yukselis"
+        "thematic_stage": "yukselis",
+        "orchestrator_rank": 6,
+        "orchestrator_reason": "Hafıza süper döngüsü, 906B cap, güçlü momentum, RSI 81.3 aşırı ama talep karşılıyor.",
+        "orchestrator_entry": "$780-800",
+        "orchestrator_stop": 720,
+        "orchestrator_target": 950,
+        "orchestrator_rr": "1:2.4"
       },
       "last_news_check": null,
       "last_action_signal": null,
@@ -447,12 +483,18 @@
         "clean_energy_renewal",
         "yukselis"
       ],
-      "score": null,
-      "score_updated_at": null,
+      "score": 82.0,
+      "score_updated_at": "2026-05-14T06:40:39.329670+00:00",
       "score_components": {
         "thematic_momentum": 68,
         "thematic_id": "clean_energy_renewal",
-        "thematic_stage": "yukselis"
+        "thematic_stage": "yukselis",
+        "orchestrator_rank": 7,
+        "orchestrator_reason": "Temiz enerji yenilenmesinde lider, 25B cap, RSI 68.7 ile güçlü uptrend, yeni teşvikler.",
+        "orchestrator_entry": "$230-235",
+        "orchestrator_stop": 210,
+        "orchestrator_target": 290,
+        "orchestrator_rr": "1:2.6"
       },
       "last_news_check": null,
       "last_action_signal": null,
@@ -528,12 +570,18 @@
         "clean_energy_renewal",
         "yukselis"
       ],
-      "score": null,
-      "score_updated_at": null,
+      "score": 80.0,
+      "score_updated_at": "2026-05-14T06:40:39.331714+00:00",
       "score_components": {
         "thematic_momentum": 68,
         "thematic_id": "clean_energy_renewal",
-        "thematic_stage": "yukselis"
+        "thematic_stage": "yukselis",
+        "orchestrator_rank": 8,
+        "orchestrator_reason": "Yeşil hidrojen altyapısı, 70B cap, RSI 67.1 ile sağlam momentum, yatırım akışı artıyor.",
+        "orchestrator_entry": "$285-290",
+        "orchestrator_stop": 260,
+        "orchestrator_target": 350,
+        "orchestrator_rr": "1:2.6"
       },
       "last_news_check": null,
       "last_action_signal": null,
@@ -1500,12 +1548,18 @@
         "biotech_recovery",
         "dogus"
       ],
-      "score": null,
-      "score_updated_at": null,
+      "score": 76.0,
+      "score_updated_at": "2026-05-14T06:40:39.336027+00:00",
       "score_components": {
         "thematic_momentum": 58,
         "thematic_id": "biotech_recovery",
-        "thematic_stage": "dogus"
+        "thematic_stage": "dogus",
+        "orchestrator_rank": 10,
+        "orchestrator_reason": "Düşkün biyotek içinde RSI 68.8 ile toparlanma sinyali, 30B cap, yeni ilanlar yakında.",
+        "orchestrator_entry": "$200-205",
+        "orchestrator_stop": 185,
+        "orchestrator_target": 245,
+        "orchestrator_rr": "1:2.3"
       },
       "last_news_check": null,
       "last_action_signal": null,
@@ -1554,12 +1608,18 @@
         "biotech_recovery",
         "dogus"
       ],
-      "score": null,
-      "score_updated_at": null,
+      "score": 78.0,
+      "score_updated_at": "2026-05-14T06:40:39.333879+00:00",
       "score_components": {
         "thematic_momentum": 58,
         "thematic_id": "biotech_recovery",
-        "thematic_stage": "dogus"
+        "thematic_stage": "dogus",
+        "orchestrator_rank": 9,
+        "orchestrator_reason": "Biyotek toparlanmasında sağlam temeller, 115B cap, RSI 61.2 ile yeni uptrend başlangıcı.",
+        "orchestrator_entry": "$445-450",
+        "orchestrator_stop": 415,
+        "orchestrator_target": 520,
+        "orchestrator_rr": "1:2.5"
       },
       "last_news_check": null,
       "last_action_signal": null,
