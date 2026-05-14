@@ -66,12 +66,12 @@ SIGNAL_HISTORY_PATH = "data/analist_takip/signals.jsonl"
 ANALIST_LOG = "logs/analist_takip.log"
 
 # === Portfolio Dosyaları ===
+# 13 May 2026 simplification: tek dosya (data/portfolio.json).
+# Eski 3-portföy yapısı data/archive/2026-05-13_pre_simplification/ altında.
 PORTFOLIO_FILES = [
-    "data/portfolios/balanced.json",
-    "data/portfolios/aggressive.json",
-    "data/portfolios/dividend.json",
+    "data/portfolio.json",
 ]
-SWING_ACTIVE_FILE = "data/swing/active.json"
+SWING_ACTIVE_FILE = "data/swing/active.json"  # Hâlâ aktifse okunur, yoksa atlanır
 
 # === Telegram ===
 TELEGRAM_DM_CHAT_ID = 1403072107  # @Zeynelgun

@@ -32,7 +32,8 @@ PORTFOLIO_PATH = REPO_ROOT / "data" / "portfolio.json"
 
 # Limit (yeni eklemeler buna takılır, eski tickerlar `_limit` aşılırsa
 # `score` en düşük olanlardan arşivlenir — score yoksa eski tarihliden)
-DEFAULT_LIMIT = 80
+# 14 May 2026: 80 → 300 (tematik kaynaklar genişledi, daha geniş havuz)
+DEFAULT_LIMIT = 300
 
 
 # ────────────────────────────── I/O ──────────────────────────────

@@ -23,8 +23,14 @@ from datetime import datetime
 from pathlib import Path
 try:
     import pytz
+    _TR_TZ = pytz.timezone("Europe/Istanbul")
 except ImportError:
     pytz = None
+    try:
+        from zoneinfo import ZoneInfo  # Python 3.9+ stdlib fallback
+        _TR_TZ = ZoneInfo("Europe/Istanbul")
+    except ImportError:
+        _TR_TZ = None  # son çare: datetime.now(None) → naive local time
 
 # ── Config ────────────────────────────────────────────────────────────────────
 BOT_TOKEN    = os.environ.get("TELEGRAM_TOKEN", "")
