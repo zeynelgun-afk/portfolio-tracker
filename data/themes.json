@@ -1,8 +1,13 @@
 {
-  "_son_guncelleme": "2026-05-14 09:25",
+  "_son_guncelleme": "2026-05-14 06:28",
   "_aciklama": "Finzora AI — AI türeyen aktif tema kataloğu. Günlük dar + haftalık geniş araştırma sonucu güncellenir. Tema yaşam döngüsü: dogus → yukselis → olgun → sönüs → archived.",
   "_schema_version": "1.0",
-  "_lifecycle_stages": ["dogus", "yukselis", "olgun", "sönüs"],
+  "_lifecycle_stages": [
+    "dogus",
+    "yukselis",
+    "olgun",
+    "sönüs"
+  ],
   "_template_theme": {
     "id": "tema_id_snake_case",
     "name": "Görünür Tema Adı",
@@ -12,7 +17,11 @@
     "lifecycle_stage": "yukselis",
     "momentum_score": 0,
     "score_history": [
-      {"date": "YYYY-MM-DD", "score": 0, "stage": "..."}
+      {
+        "date": "YYYY-MM-DD",
+        "score": 0,
+        "stage": "..."
+      }
     ],
     "signals": {
       "sector_rs_4w_pct": null,
@@ -22,10 +31,325 @@
     },
     "related_tickers": [],
     "evidence": [
-      {"date": "YYYY-MM-DD", "text": "haber özeti"}
+      {
+        "date": "YYYY-MM-DD",
+        "text": "haber özeti"
+      }
     ],
     "source": "ai_thematic_discovery | manual"
   },
-  "themes": {},
+  "themes": {
+    "ai_hardware_supercycle": {
+      "id": "ai_hardware_supercycle",
+      "name": "AI Hardware Supercycle",
+      "description": "Yapay zekâ donanım talebindeki patlama ile yarı iletken ekipman üreticileri ve çip tasarımcıları rallide.",
+      "created_at": "2026-05-14T06:28:37.132408+00:00",
+      "updated_at": "2026-05-14T06:28:37.132408+00:00",
+      "lifecycle_stage": "yukselis",
+      "momentum_score": 92,
+      "score_history": [
+        {
+          "date": "2026-05-14",
+          "score": 92,
+          "stage": "yukselis"
+        }
+      ],
+      "signals": {
+        "sector_rs_4w_pct": 27.04,
+        "news_velocity_7d": 8
+      },
+      "related_tickers": [
+        "ADI",
+        "AMAT",
+        "AMD",
+        "ASML",
+        "AVGO",
+        "INTC",
+        "KLAC",
+        "LRCX",
+        "MCHP",
+        "MRVL",
+        "MU",
+        "NVDA",
+        "ON",
+        "QCOM",
+        "TSM"
+      ],
+      "evidence": [
+        {
+          "date": "2026-05-14",
+          "text": "SOXX %50.3 3A ralli, SMH %41 3A ralli"
+        },
+        {
+          "date": "2026-05-14",
+          "text": "WSJ: Hedge Funds Making a Killing in the ‘Golden Age' of AI Hardware"
+        },
+        {
+          "date": "2026-05-14",
+          "text": "YouTube: US-China AI BATTLE hinges on rare earths, critical minerals"
+        },
+        {
+          "date": "2026-05-14",
+          "text": "XLK 1A %17.66, 3A %27.04 lider sektör"
+        }
+      ],
+      "source": "ai_thematic_discovery_daily"
+    },
+    "clean_energy_renewal": {
+      "id": "clean_energy_renewal",
+      "name": "Clean Energy Renewal",
+      "description": "Solar ve geniş temiz enerji ETF'leri 3 ayda %19'a varan kazançlarla yeniden ilgi odağı.",
+      "created_at": "2026-05-14T06:28:37.145492+00:00",
+      "updated_at": "2026-05-14T06:28:37.145492+00:00",
+      "lifecycle_stage": "yukselis",
+      "momentum_score": 68,
+      "score_history": [
+        {
+          "date": "2026-05-14",
+          "score": 68,
+          "stage": "yukselis"
+        }
+      ],
+      "signals": {
+        "sector_rs_4w_pct": 19.04,
+        "news_velocity_7d": 3
+      },
+      "related_tickers": [
+        "ARRY",
+        "BE",
+        "CSIQ",
+        "ENPH",
+        "FSLR",
+        "ICLN",
+        "JKS",
+        "NEE",
+        "NOVA",
+        "PLUG",
+        "RUN",
+        "SEDG",
+        "SPWR",
+        "TAN"
+      ],
+      "evidence": [
+        {
+          "date": "2026-05-14",
+          "text": "TAN 5g %6.78, 1A %15.35, 3A %12.22"
+        },
+        {
+          "date": "2026-05-14",
+          "text": "ICLN 5g %5.65, 3A %19.04"
+        },
+        {
+          "date": "2026-05-14",
+          "text": "YouTube: US-China AI BATTLE hinges on rare earths, critical minerals (temiz enerji için de kritik mineraller)"
+        }
+      ],
+      "source": "ai_thematic_discovery_daily"
+    },
+    "fed_chair_transition": {
+      "id": "fed_chair_transition",
+      "name": "Fed Chair Transition",
+      "description": "Kevin Warsh'ın onaylanmasıyla para politikası beklentileri değişiyor; finansal hisseler baskı altında.",
+      "created_at": "2026-05-14T06:28:37.162045+00:00",
+      "updated_at": "2026-05-14T06:28:37.162045+00:00",
+      "lifecycle_stage": "dogus",
+      "momentum_score": 55,
+      "score_history": [
+        {
+          "date": "2026-05-14",
+          "score": 55,
+          "stage": "dogus"
+        }
+      ],
+      "signals": {
+        "sector_rs_4w_pct": -1.35,
+        "news_velocity_7d": 12
+      },
+      "related_tickers": [
+        "AXP",
+        "BAC",
+        "BLK",
+        "C",
+        "COF",
+        "GS",
+        "JPM",
+        "KRE",
+        "MS",
+        "PNC",
+        "SCHW",
+        "TFC",
+        "USB",
+        "WFC",
+        "XLF"
+      ],
+      "evidence": [
+        {
+          "date": "2026-05-14",
+          "text": "WSJ: Kevin Warsh confirmed as Fed Chair in most divisive vote ever"
+        },
+        {
+          "date": "2026-05-14",
+          "text": "Barron's: The Fed Will Have a New Chair. It Also Has an Inflation Problem"
+        },
+        {
+          "date": "2026-05-14",
+          "text": "XLF 1A -2.26%, 3A -1.35% negatif RS"
+        },
+        {
+          "date": "2026-05-14",
+          "text": "Boston Fed Collins: possible rate hike if inflation broadens"
+        }
+      ],
+      "source": "ai_thematic_discovery_daily"
+    },
+    "defensive_rotation": {
+      "id": "defensive_rotation",
+      "name": "Defensive Staples Rotation",
+      "description": "Yüksek momentumlu teknolojiye kıyasla tüketici zorunlu ürünler (XLP) nispeten güçlü.",
+      "created_at": "2026-05-14T06:28:37.184809+00:00",
+      "updated_at": "2026-05-14T06:28:37.184809+00:00",
+      "lifecycle_stage": "olgun",
+      "momentum_score": 45,
+      "score_history": [
+        {
+          "date": "2026-05-14",
+          "score": 45,
+          "stage": "olgun"
+        }
+      ],
+      "signals": {
+        "sector_rs_4w_pct": -5.03,
+        "news_velocity_7d": 2
+      },
+      "related_tickers": [
+        "CHD",
+        "CL",
+        "CLX",
+        "COST",
+        "GIS",
+        "HSY",
+        "KHC",
+        "KMB",
+        "KO",
+        "MDLZ",
+        "PEP",
+        "PG",
+        "SJM",
+        "WMT",
+        "XLP"
+      ],
+      "evidence": [
+        {
+          "date": "2026-05-14",
+          "text": "XLP 1A %4.52, 3A -5.03 ile XLK'ya kıyasla daha az volatil"
+        },
+        {
+          "date": "2026-05-14",
+          "text": "Barron's: Inflation Problem vurgusu defansif hisseleri destekleyebilir"
+        }
+      ],
+      "source": "ai_thematic_discovery_daily"
+    },
+    "biotech_recovery": {
+      "id": "biotech_recovery",
+      "name": "Biotech Recovery",
+      "description": "Biyoteknoloji sektörü (XBI) 3 ayda %10.29 yükselişle dikkat çekiyor; küçük-mid cap değer.",
+      "created_at": "2026-05-14T06:28:37.215086+00:00",
+      "updated_at": "2026-05-14T06:28:37.215086+00:00",
+      "lifecycle_stage": "dogus",
+      "momentum_score": 58,
+      "score_history": [
+        {
+          "date": "2026-05-14",
+          "score": 58,
+          "stage": "dogus"
+        }
+      ],
+      "signals": {
+        "sector_rs_4w_pct": 10.29,
+        "news_velocity_7d": 1
+      },
+      "related_tickers": [
+        "ALNY",
+        "AMGN",
+        "BEAM",
+        "BIIB",
+        "BMRN",
+        "CRSP",
+        "EDIT",
+        "GILD",
+        "IONS",
+        "MRNA",
+        "NTLA",
+        "REGN",
+        "SRPT",
+        "VRTX",
+        "XBI"
+      ],
+      "evidence": [
+        {
+          "date": "2026-05-14",
+          "text": "XBI 3A %10.29 ralli, 5g %1.64"
+        },
+        {
+          "date": "2026-05-14",
+          "text": "Healthcare sektörü genel zayıf (-5.96% 3A) ama biyotek ayrışıyor"
+        }
+      ],
+      "source": "ai_thematic_discovery_daily"
+    },
+    "airline_headwinds": {
+      "id": "airline_headwinds",
+      "name": "Airline Headwinds",
+      "description": "Jet fuel krizi ve yüksek gaz fiyatları havayollarını (JETS) baskılamaya devam ediyor.",
+      "created_at": "2026-05-14T06:28:37.251543+00:00",
+      "updated_at": "2026-05-14T06:28:37.251543+00:00",
+      "lifecycle_stage": "sönüs",
+      "momentum_score": 18,
+      "score_history": [
+        {
+          "date": "2026-05-14",
+          "score": 18,
+          "stage": "sönüs"
+        }
+      ],
+      "signals": {
+        "sector_rs_4w_pct": -10.91,
+        "news_velocity_7d": 2
+      },
+      "related_tickers": [
+        "AAL",
+        "AC",
+        "ALGT",
+        "ALK",
+        "CJT",
+        "DAL",
+        "HA",
+        "JBLU",
+        "JETS",
+        "LUV",
+        "MESA",
+        "RYAAY",
+        "SAVE",
+        "SKYW",
+        "UAL"
+      ],
+      "evidence": [
+        {
+          "date": "2026-05-14",
+          "text": "JETS 5g -5.29%, 1A -3.29%, 3A -10.91% keskin düşüş"
+        },
+        {
+          "date": "2026-05-14",
+          "text": "Reuters: Jet fuel crisis, European airlines downplay fears"
+        },
+        {
+          "date": "2026-05-14",
+          "text": "CNBC: Beer demand stumbles as gas prices surge (tüketici baskısı)"
+        }
+      ],
+      "source": "ai_thematic_discovery_daily"
+    }
+  },
   "archived_themes": []
 }

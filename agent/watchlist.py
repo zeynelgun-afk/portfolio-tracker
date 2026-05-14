@@ -262,8 +262,9 @@ if __name__ == "__main__":
         print()
         for sym, e in wl["tickers"].items():
             srcs = e.get("sources", [e.get("source", "?")])
-            score = e.get("score", "—")
-            print(f"  {sym:6} score={score:>5} sources={','.join(srcs)} added={e.get('added_at','?')[:10]}")
+            score = e.get("score")
+            score_str = f"{score:>5.0f}" if score is not None else "  —  "
+            print(f"  {sym:6} score={score_str} sources={','.join(srcs)} added={e.get('added_at','?')[:10]}")
         sys.exit(0)
 
     cmd = sys.argv[1]

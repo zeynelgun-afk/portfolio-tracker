@@ -1,5 +1,5 @@
 {
-  "_son_guncelleme": "2026-05-13 21:00",
+  "_son_guncelleme": "2026-05-14 06:28",
   "_aciklama": "Finzora AI — Tek hisse havuzu. Tüm besleyiciler (analist_takip, fair_value_panel, tematik_keşif, ai_orchestrator, manuel) buraya yazar. Max 80 ticker. Sade şema, 13 May 2026 sıfırlandı.",
   "_limit": 80,
   "_schema_version": "2.0",
@@ -9,7 +9,9 @@
     "added_price": 0.0,
     "source": "manual | analist_takip_strong_buy | fair_value_discount | tematik_X | ai_orchestrator | news_radar",
     "rationale": "neden eklendi (kısa açıklama)",
-    "tags": ["tema veya kategori etiketleri"],
+    "tags": [
+      "tema veya kategori etiketleri"
+    ],
     "score": null,
     "score_updated_at": null,
     "score_components": {
@@ -23,7 +25,1790 @@
     "last_action_signal": null,
     "notes": ""
   },
-  "tickers": {},
+  "tickers": {
+    "NVDA": {
+      "symbol": "NVDA",
+      "added_at": "2026-05-14T06:28:37.133466+00:00",
+      "added_price": null,
+      "source": "tematik_ai_hardware_supercycle",
+      "sources": [
+        "tematik_ai_hardware_supercycle"
+      ],
+      "rationale": "Tema: AI Hardware Supercycle (yukselis, score 92)",
+      "rationales": [
+        "Tema: AI Hardware Supercycle (yukselis, score 92)"
+      ],
+      "tags": [
+        "ai_hardware_supercycle",
+        "yukselis"
+      ],
+      "score": null,
+      "score_updated_at": null,
+      "score_components": {
+        "thematic_momentum": 92,
+        "thematic_id": "ai_hardware_supercycle",
+        "thematic_stage": "yukselis"
+      },
+      "last_news_check": null,
+      "last_action_signal": null,
+      "notes": ""
+    },
+    "AMD": {
+      "symbol": "AMD",
+      "added_at": "2026-05-14T06:28:37.134255+00:00",
+      "added_price": null,
+      "source": "tematik_ai_hardware_supercycle",
+      "sources": [
+        "tematik_ai_hardware_supercycle"
+      ],
+      "rationale": "Tema: AI Hardware Supercycle (yukselis, score 92)",
+      "rationales": [
+        "Tema: AI Hardware Supercycle (yukselis, score 92)"
+      ],
+      "tags": [
+        "ai_hardware_supercycle",
+        "yukselis"
+      ],
+      "score": null,
+      "score_updated_at": null,
+      "score_components": {
+        "thematic_momentum": 92,
+        "thematic_id": "ai_hardware_supercycle",
+        "thematic_stage": "yukselis"
+      },
+      "last_news_check": null,
+      "last_action_signal": null,
+      "notes": ""
+    },
+    "LRCX": {
+      "symbol": "LRCX",
+      "added_at": "2026-05-14T06:28:37.135277+00:00",
+      "added_price": null,
+      "source": "tematik_ai_hardware_supercycle",
+      "sources": [
+        "tematik_ai_hardware_supercycle"
+      ],
+      "rationale": "Tema: AI Hardware Supercycle (yukselis, score 92)",
+      "rationales": [
+        "Tema: AI Hardware Supercycle (yukselis, score 92)"
+      ],
+      "tags": [
+        "ai_hardware_supercycle",
+        "yukselis"
+      ],
+      "score": null,
+      "score_updated_at": null,
+      "score_components": {
+        "thematic_momentum": 92,
+        "thematic_id": "ai_hardware_supercycle",
+        "thematic_stage": "yukselis"
+      },
+      "last_news_check": null,
+      "last_action_signal": null,
+      "notes": ""
+    },
+    "TSM": {
+      "symbol": "TSM",
+      "added_at": "2026-05-14T06:28:37.136400+00:00",
+      "added_price": null,
+      "source": "tematik_ai_hardware_supercycle",
+      "sources": [
+        "tematik_ai_hardware_supercycle"
+      ],
+      "rationale": "Tema: AI Hardware Supercycle (yukselis, score 92)",
+      "rationales": [
+        "Tema: AI Hardware Supercycle (yukselis, score 92)"
+      ],
+      "tags": [
+        "ai_hardware_supercycle",
+        "yukselis"
+      ],
+      "score": null,
+      "score_updated_at": null,
+      "score_components": {
+        "thematic_momentum": 92,
+        "thematic_id": "ai_hardware_supercycle",
+        "thematic_stage": "yukselis"
+      },
+      "last_news_check": null,
+      "last_action_signal": null,
+      "notes": ""
+    },
+    "AVGO": {
+      "symbol": "AVGO",
+      "added_at": "2026-05-14T06:28:37.137188+00:00",
+      "added_price": null,
+      "source": "tematik_ai_hardware_supercycle",
+      "sources": [
+        "tematik_ai_hardware_supercycle"
+      ],
+      "rationale": "Tema: AI Hardware Supercycle (yukselis, score 92)",
+      "rationales": [
+        "Tema: AI Hardware Supercycle (yukselis, score 92)"
+      ],
+      "tags": [
+        "ai_hardware_supercycle",
+        "yukselis"
+      ],
+      "score": null,
+      "score_updated_at": null,
+      "score_components": {
+        "thematic_momentum": 92,
+        "thematic_id": "ai_hardware_supercycle",
+        "thematic_stage": "yukselis"
+      },
+      "last_news_check": null,
+      "last_action_signal": null,
+      "notes": ""
+    },
+    "MRVL": {
+      "symbol": "MRVL",
+      "added_at": "2026-05-14T06:28:37.138011+00:00",
+      "added_price": null,
+      "source": "tematik_ai_hardware_supercycle",
+      "sources": [
+        "tematik_ai_hardware_supercycle"
+      ],
+      "rationale": "Tema: AI Hardware Supercycle (yukselis, score 92)",
+      "rationales": [
+        "Tema: AI Hardware Supercycle (yukselis, score 92)"
+      ],
+      "tags": [
+        "ai_hardware_supercycle",
+        "yukselis"
+      ],
+      "score": null,
+      "score_updated_at": null,
+      "score_components": {
+        "thematic_momentum": 92,
+        "thematic_id": "ai_hardware_supercycle",
+        "thematic_stage": "yukselis"
+      },
+      "last_news_check": null,
+      "last_action_signal": null,
+      "notes": ""
+    },
+    "QCOM": {
+      "symbol": "QCOM",
+      "added_at": "2026-05-14T06:28:37.138959+00:00",
+      "added_price": null,
+      "source": "tematik_ai_hardware_supercycle",
+      "sources": [
+        "tematik_ai_hardware_supercycle"
+      ],
+      "rationale": "Tema: AI Hardware Supercycle (yukselis, score 92)",
+      "rationales": [
+        "Tema: AI Hardware Supercycle (yukselis, score 92)"
+      ],
+      "tags": [
+        "ai_hardware_supercycle",
+        "yukselis"
+      ],
+      "score": null,
+      "score_updated_at": null,
+      "score_components": {
+        "thematic_momentum": 92,
+        "thematic_id": "ai_hardware_supercycle",
+        "thematic_stage": "yukselis"
+      },
+      "last_news_check": null,
+      "last_action_signal": null,
+      "notes": ""
+    },
+    "INTC": {
+      "symbol": "INTC",
+      "added_at": "2026-05-14T06:28:37.139845+00:00",
+      "added_price": null,
+      "source": "tematik_ai_hardware_supercycle",
+      "sources": [
+        "tematik_ai_hardware_supercycle"
+      ],
+      "rationale": "Tema: AI Hardware Supercycle (yukselis, score 92)",
+      "rationales": [
+        "Tema: AI Hardware Supercycle (yukselis, score 92)"
+      ],
+      "tags": [
+        "ai_hardware_supercycle",
+        "yukselis"
+      ],
+      "score": null,
+      "score_updated_at": null,
+      "score_components": {
+        "thematic_momentum": 92,
+        "thematic_id": "ai_hardware_supercycle",
+        "thematic_stage": "yukselis"
+      },
+      "last_news_check": null,
+      "last_action_signal": null,
+      "notes": ""
+    },
+    "ASML": {
+      "symbol": "ASML",
+      "added_at": "2026-05-14T06:28:37.140803+00:00",
+      "added_price": null,
+      "source": "tematik_ai_hardware_supercycle",
+      "sources": [
+        "tematik_ai_hardware_supercycle"
+      ],
+      "rationale": "Tema: AI Hardware Supercycle (yukselis, score 92)",
+      "rationales": [
+        "Tema: AI Hardware Supercycle (yukselis, score 92)"
+      ],
+      "tags": [
+        "ai_hardware_supercycle",
+        "yukselis"
+      ],
+      "score": null,
+      "score_updated_at": null,
+      "score_components": {
+        "thematic_momentum": 92,
+        "thematic_id": "ai_hardware_supercycle",
+        "thematic_stage": "yukselis"
+      },
+      "last_news_check": null,
+      "last_action_signal": null,
+      "notes": ""
+    },
+    "ON": {
+      "symbol": "ON",
+      "added_at": "2026-05-14T06:28:37.141696+00:00",
+      "added_price": null,
+      "source": "tematik_ai_hardware_supercycle",
+      "sources": [
+        "tematik_ai_hardware_supercycle"
+      ],
+      "rationale": "Tema: AI Hardware Supercycle (yukselis, score 92)",
+      "rationales": [
+        "Tema: AI Hardware Supercycle (yukselis, score 92)"
+      ],
+      "tags": [
+        "ai_hardware_supercycle",
+        "yukselis"
+      ],
+      "score": null,
+      "score_updated_at": null,
+      "score_components": {
+        "thematic_momentum": 92,
+        "thematic_id": "ai_hardware_supercycle",
+        "thematic_stage": "yukselis"
+      },
+      "last_news_check": null,
+      "last_action_signal": null,
+      "notes": ""
+    },
+    "MU": {
+      "symbol": "MU",
+      "added_at": "2026-05-14T06:28:37.142865+00:00",
+      "added_price": null,
+      "source": "tematik_ai_hardware_supercycle",
+      "sources": [
+        "tematik_ai_hardware_supercycle"
+      ],
+      "rationale": "Tema: AI Hardware Supercycle (yukselis, score 92)",
+      "rationales": [
+        "Tema: AI Hardware Supercycle (yukselis, score 92)"
+      ],
+      "tags": [
+        "ai_hardware_supercycle",
+        "yukselis"
+      ],
+      "score": null,
+      "score_updated_at": null,
+      "score_components": {
+        "thematic_momentum": 92,
+        "thematic_id": "ai_hardware_supercycle",
+        "thematic_stage": "yukselis"
+      },
+      "last_news_check": null,
+      "last_action_signal": null,
+      "notes": ""
+    },
+    "ADI": {
+      "symbol": "ADI",
+      "added_at": "2026-05-14T06:28:37.143863+00:00",
+      "added_price": null,
+      "source": "tematik_ai_hardware_supercycle",
+      "sources": [
+        "tematik_ai_hardware_supercycle"
+      ],
+      "rationale": "Tema: AI Hardware Supercycle (yukselis, score 92)",
+      "rationales": [
+        "Tema: AI Hardware Supercycle (yukselis, score 92)"
+      ],
+      "tags": [
+        "ai_hardware_supercycle",
+        "yukselis"
+      ],
+      "score": null,
+      "score_updated_at": null,
+      "score_components": {
+        "thematic_momentum": 92,
+        "thematic_id": "ai_hardware_supercycle",
+        "thematic_stage": "yukselis"
+      },
+      "last_news_check": null,
+      "last_action_signal": null,
+      "notes": ""
+    },
+    "MCHP": {
+      "symbol": "MCHP",
+      "added_at": "2026-05-14T06:28:37.144919+00:00",
+      "added_price": null,
+      "source": "tematik_ai_hardware_supercycle",
+      "sources": [
+        "tematik_ai_hardware_supercycle"
+      ],
+      "rationale": "Tema: AI Hardware Supercycle (yukselis, score 92)",
+      "rationales": [
+        "Tema: AI Hardware Supercycle (yukselis, score 92)"
+      ],
+      "tags": [
+        "ai_hardware_supercycle",
+        "yukselis"
+      ],
+      "score": null,
+      "score_updated_at": null,
+      "score_components": {
+        "thematic_momentum": 92,
+        "thematic_id": "ai_hardware_supercycle",
+        "thematic_stage": "yukselis"
+      },
+      "last_news_check": null,
+      "last_action_signal": null,
+      "notes": ""
+    },
+    "ENPH": {
+      "symbol": "ENPH",
+      "added_at": "2026-05-14T06:28:37.146347+00:00",
+      "added_price": null,
+      "source": "tematik_clean_energy_renewal",
+      "sources": [
+        "tematik_clean_energy_renewal"
+      ],
+      "rationale": "Tema: Clean Energy Renewal (yukselis, score 68)",
+      "rationales": [
+        "Tema: Clean Energy Renewal (yukselis, score 68)"
+      ],
+      "tags": [
+        "clean_energy_renewal",
+        "yukselis"
+      ],
+      "score": null,
+      "score_updated_at": null,
+      "score_components": {
+        "thematic_momentum": 68,
+        "thematic_id": "clean_energy_renewal",
+        "thematic_stage": "yukselis"
+      },
+      "last_news_check": null,
+      "last_action_signal": null,
+      "notes": ""
+    },
+    "SEDG": {
+      "symbol": "SEDG",
+      "added_at": "2026-05-14T06:28:37.147418+00:00",
+      "added_price": null,
+      "source": "tematik_clean_energy_renewal",
+      "sources": [
+        "tematik_clean_energy_renewal"
+      ],
+      "rationale": "Tema: Clean Energy Renewal (yukselis, score 68)",
+      "rationales": [
+        "Tema: Clean Energy Renewal (yukselis, score 68)"
+      ],
+      "tags": [
+        "clean_energy_renewal",
+        "yukselis"
+      ],
+      "score": null,
+      "score_updated_at": null,
+      "score_components": {
+        "thematic_momentum": 68,
+        "thematic_id": "clean_energy_renewal",
+        "thematic_stage": "yukselis"
+      },
+      "last_news_check": null,
+      "last_action_signal": null,
+      "notes": ""
+    },
+    "FSLR": {
+      "symbol": "FSLR",
+      "added_at": "2026-05-14T06:28:37.148683+00:00",
+      "added_price": null,
+      "source": "tematik_clean_energy_renewal",
+      "sources": [
+        "tematik_clean_energy_renewal"
+      ],
+      "rationale": "Tema: Clean Energy Renewal (yukselis, score 68)",
+      "rationales": [
+        "Tema: Clean Energy Renewal (yukselis, score 68)"
+      ],
+      "tags": [
+        "clean_energy_renewal",
+        "yukselis"
+      ],
+      "score": null,
+      "score_updated_at": null,
+      "score_components": {
+        "thematic_momentum": 68,
+        "thematic_id": "clean_energy_renewal",
+        "thematic_stage": "yukselis"
+      },
+      "last_news_check": null,
+      "last_action_signal": null,
+      "notes": ""
+    },
+    "NEE": {
+      "symbol": "NEE",
+      "added_at": "2026-05-14T06:28:37.149930+00:00",
+      "added_price": null,
+      "source": "tematik_clean_energy_renewal",
+      "sources": [
+        "tematik_clean_energy_renewal"
+      ],
+      "rationale": "Tema: Clean Energy Renewal (yukselis, score 68)",
+      "rationales": [
+        "Tema: Clean Energy Renewal (yukselis, score 68)"
+      ],
+      "tags": [
+        "clean_energy_renewal",
+        "yukselis"
+      ],
+      "score": null,
+      "score_updated_at": null,
+      "score_components": {
+        "thematic_momentum": 68,
+        "thematic_id": "clean_energy_renewal",
+        "thematic_stage": "yukselis"
+      },
+      "last_news_check": null,
+      "last_action_signal": null,
+      "notes": ""
+    },
+    "PLUG": {
+      "symbol": "PLUG",
+      "added_at": "2026-05-14T06:28:37.151214+00:00",
+      "added_price": null,
+      "source": "tematik_clean_energy_renewal",
+      "sources": [
+        "tematik_clean_energy_renewal"
+      ],
+      "rationale": "Tema: Clean Energy Renewal (yukselis, score 68)",
+      "rationales": [
+        "Tema: Clean Energy Renewal (yukselis, score 68)"
+      ],
+      "tags": [
+        "clean_energy_renewal",
+        "yukselis"
+      ],
+      "score": null,
+      "score_updated_at": null,
+      "score_components": {
+        "thematic_momentum": 68,
+        "thematic_id": "clean_energy_renewal",
+        "thematic_stage": "yukselis"
+      },
+      "last_news_check": null,
+      "last_action_signal": null,
+      "notes": ""
+    },
+    "BE": {
+      "symbol": "BE",
+      "added_at": "2026-05-14T06:28:37.152467+00:00",
+      "added_price": null,
+      "source": "tematik_clean_energy_renewal",
+      "sources": [
+        "tematik_clean_energy_renewal"
+      ],
+      "rationale": "Tema: Clean Energy Renewal (yukselis, score 68)",
+      "rationales": [
+        "Tema: Clean Energy Renewal (yukselis, score 68)"
+      ],
+      "tags": [
+        "clean_energy_renewal",
+        "yukselis"
+      ],
+      "score": null,
+      "score_updated_at": null,
+      "score_components": {
+        "thematic_momentum": 68,
+        "thematic_id": "clean_energy_renewal",
+        "thematic_stage": "yukselis"
+      },
+      "last_news_check": null,
+      "last_action_signal": null,
+      "notes": ""
+    },
+    "CSIQ": {
+      "symbol": "CSIQ",
+      "added_at": "2026-05-14T06:28:37.153711+00:00",
+      "added_price": null,
+      "source": "tematik_clean_energy_renewal",
+      "sources": [
+        "tematik_clean_energy_renewal"
+      ],
+      "rationale": "Tema: Clean Energy Renewal (yukselis, score 68)",
+      "rationales": [
+        "Tema: Clean Energy Renewal (yukselis, score 68)"
+      ],
+      "tags": [
+        "clean_energy_renewal",
+        "yukselis"
+      ],
+      "score": null,
+      "score_updated_at": null,
+      "score_components": {
+        "thematic_momentum": 68,
+        "thematic_id": "clean_energy_renewal",
+        "thematic_stage": "yukselis"
+      },
+      "last_news_check": null,
+      "last_action_signal": null,
+      "notes": ""
+    },
+    "JKS": {
+      "symbol": "JKS",
+      "added_at": "2026-05-14T06:28:37.155253+00:00",
+      "added_price": null,
+      "source": "tematik_clean_energy_renewal",
+      "sources": [
+        "tematik_clean_energy_renewal"
+      ],
+      "rationale": "Tema: Clean Energy Renewal (yukselis, score 68)",
+      "rationales": [
+        "Tema: Clean Energy Renewal (yukselis, score 68)"
+      ],
+      "tags": [
+        "clean_energy_renewal",
+        "yukselis"
+      ],
+      "score": null,
+      "score_updated_at": null,
+      "score_components": {
+        "thematic_momentum": 68,
+        "thematic_id": "clean_energy_renewal",
+        "thematic_stage": "yukselis"
+      },
+      "last_news_check": null,
+      "last_action_signal": null,
+      "notes": ""
+    },
+    "SPWR": {
+      "symbol": "SPWR",
+      "added_at": "2026-05-14T06:28:37.156714+00:00",
+      "added_price": null,
+      "source": "tematik_clean_energy_renewal",
+      "sources": [
+        "tematik_clean_energy_renewal"
+      ],
+      "rationale": "Tema: Clean Energy Renewal (yukselis, score 68)",
+      "rationales": [
+        "Tema: Clean Energy Renewal (yukselis, score 68)"
+      ],
+      "tags": [
+        "clean_energy_renewal",
+        "yukselis"
+      ],
+      "score": null,
+      "score_updated_at": null,
+      "score_components": {
+        "thematic_momentum": 68,
+        "thematic_id": "clean_energy_renewal",
+        "thematic_stage": "yukselis"
+      },
+      "last_news_check": null,
+      "last_action_signal": null,
+      "notes": ""
+    },
+    "RUN": {
+      "symbol": "RUN",
+      "added_at": "2026-05-14T06:28:37.158163+00:00",
+      "added_price": null,
+      "source": "tematik_clean_energy_renewal",
+      "sources": [
+        "tematik_clean_energy_renewal"
+      ],
+      "rationale": "Tema: Clean Energy Renewal (yukselis, score 68)",
+      "rationales": [
+        "Tema: Clean Energy Renewal (yukselis, score 68)"
+      ],
+      "tags": [
+        "clean_energy_renewal",
+        "yukselis"
+      ],
+      "score": null,
+      "score_updated_at": null,
+      "score_components": {
+        "thematic_momentum": 68,
+        "thematic_id": "clean_energy_renewal",
+        "thematic_stage": "yukselis"
+      },
+      "last_news_check": null,
+      "last_action_signal": null,
+      "notes": ""
+    },
+    "NOVA": {
+      "symbol": "NOVA",
+      "added_at": "2026-05-14T06:28:37.159588+00:00",
+      "added_price": null,
+      "source": "tematik_clean_energy_renewal",
+      "sources": [
+        "tematik_clean_energy_renewal"
+      ],
+      "rationale": "Tema: Clean Energy Renewal (yukselis, score 68)",
+      "rationales": [
+        "Tema: Clean Energy Renewal (yukselis, score 68)"
+      ],
+      "tags": [
+        "clean_energy_renewal",
+        "yukselis"
+      ],
+      "score": null,
+      "score_updated_at": null,
+      "score_components": {
+        "thematic_momentum": 68,
+        "thematic_id": "clean_energy_renewal",
+        "thematic_stage": "yukselis"
+      },
+      "last_news_check": null,
+      "last_action_signal": null,
+      "notes": ""
+    },
+    "ARRY": {
+      "symbol": "ARRY",
+      "added_at": "2026-05-14T06:28:37.161191+00:00",
+      "added_price": null,
+      "source": "tematik_clean_energy_renewal",
+      "sources": [
+        "tematik_clean_energy_renewal"
+      ],
+      "rationale": "Tema: Clean Energy Renewal (yukselis, score 68)",
+      "rationales": [
+        "Tema: Clean Energy Renewal (yukselis, score 68)"
+      ],
+      "tags": [
+        "clean_energy_renewal",
+        "yukselis"
+      ],
+      "score": null,
+      "score_updated_at": null,
+      "score_components": {
+        "thematic_momentum": 68,
+        "thematic_id": "clean_energy_renewal",
+        "thematic_stage": "yukselis"
+      },
+      "last_news_check": null,
+      "last_action_signal": null,
+      "notes": ""
+    },
+    "BAC": {
+      "symbol": "BAC",
+      "added_at": "2026-05-14T06:28:37.163111+00:00",
+      "added_price": null,
+      "source": "tematik_fed_chair_transition",
+      "sources": [
+        "tematik_fed_chair_transition"
+      ],
+      "rationale": "Tema: Fed Chair Transition (dogus, score 55)",
+      "rationales": [
+        "Tema: Fed Chair Transition (dogus, score 55)"
+      ],
+      "tags": [
+        "fed_chair_transition",
+        "dogus"
+      ],
+      "score": null,
+      "score_updated_at": null,
+      "score_components": {
+        "thematic_momentum": 55,
+        "thematic_id": "fed_chair_transition",
+        "thematic_stage": "dogus"
+      },
+      "last_news_check": null,
+      "last_action_signal": null,
+      "notes": ""
+    },
+    "JPM": {
+      "symbol": "JPM",
+      "added_at": "2026-05-14T06:28:37.164614+00:00",
+      "added_price": null,
+      "source": "tematik_fed_chair_transition",
+      "sources": [
+        "tematik_fed_chair_transition"
+      ],
+      "rationale": "Tema: Fed Chair Transition (dogus, score 55)",
+      "rationales": [
+        "Tema: Fed Chair Transition (dogus, score 55)"
+      ],
+      "tags": [
+        "fed_chair_transition",
+        "dogus"
+      ],
+      "score": null,
+      "score_updated_at": null,
+      "score_components": {
+        "thematic_momentum": 55,
+        "thematic_id": "fed_chair_transition",
+        "thematic_stage": "dogus"
+      },
+      "last_news_check": null,
+      "last_action_signal": null,
+      "notes": ""
+    },
+    "WFC": {
+      "symbol": "WFC",
+      "added_at": "2026-05-14T06:28:37.166196+00:00",
+      "added_price": null,
+      "source": "tematik_fed_chair_transition",
+      "sources": [
+        "tematik_fed_chair_transition"
+      ],
+      "rationale": "Tema: Fed Chair Transition (dogus, score 55)",
+      "rationales": [
+        "Tema: Fed Chair Transition (dogus, score 55)"
+      ],
+      "tags": [
+        "fed_chair_transition",
+        "dogus"
+      ],
+      "score": null,
+      "score_updated_at": null,
+      "score_components": {
+        "thematic_momentum": 55,
+        "thematic_id": "fed_chair_transition",
+        "thematic_stage": "dogus"
+      },
+      "last_news_check": null,
+      "last_action_signal": null,
+      "notes": ""
+    },
+    "C": {
+      "symbol": "C",
+      "added_at": "2026-05-14T06:28:37.167720+00:00",
+      "added_price": null,
+      "source": "tematik_fed_chair_transition",
+      "sources": [
+        "tematik_fed_chair_transition"
+      ],
+      "rationale": "Tema: Fed Chair Transition (dogus, score 55)",
+      "rationales": [
+        "Tema: Fed Chair Transition (dogus, score 55)"
+      ],
+      "tags": [
+        "fed_chair_transition",
+        "dogus"
+      ],
+      "score": null,
+      "score_updated_at": null,
+      "score_components": {
+        "thematic_momentum": 55,
+        "thematic_id": "fed_chair_transition",
+        "thematic_stage": "dogus"
+      },
+      "last_news_check": null,
+      "last_action_signal": null,
+      "notes": ""
+    },
+    "GS": {
+      "symbol": "GS",
+      "added_at": "2026-05-14T06:28:37.169408+00:00",
+      "added_price": null,
+      "source": "tematik_fed_chair_transition",
+      "sources": [
+        "tematik_fed_chair_transition"
+      ],
+      "rationale": "Tema: Fed Chair Transition (dogus, score 55)",
+      "rationales": [
+        "Tema: Fed Chair Transition (dogus, score 55)"
+      ],
+      "tags": [
+        "fed_chair_transition",
+        "dogus"
+      ],
+      "score": null,
+      "score_updated_at": null,
+      "score_components": {
+        "thematic_momentum": 55,
+        "thematic_id": "fed_chair_transition",
+        "thematic_stage": "dogus"
+      },
+      "last_news_check": null,
+      "last_action_signal": null,
+      "notes": ""
+    },
+    "MS": {
+      "symbol": "MS",
+      "added_at": "2026-05-14T06:28:37.171022+00:00",
+      "added_price": null,
+      "source": "tematik_fed_chair_transition",
+      "sources": [
+        "tematik_fed_chair_transition"
+      ],
+      "rationale": "Tema: Fed Chair Transition (dogus, score 55)",
+      "rationales": [
+        "Tema: Fed Chair Transition (dogus, score 55)"
+      ],
+      "tags": [
+        "fed_chair_transition",
+        "dogus"
+      ],
+      "score": null,
+      "score_updated_at": null,
+      "score_components": {
+        "thematic_momentum": 55,
+        "thematic_id": "fed_chair_transition",
+        "thematic_stage": "dogus"
+      },
+      "last_news_check": null,
+      "last_action_signal": null,
+      "notes": ""
+    },
+    "BLK": {
+      "symbol": "BLK",
+      "added_at": "2026-05-14T06:28:37.172710+00:00",
+      "added_price": null,
+      "source": "tematik_fed_chair_transition",
+      "sources": [
+        "tematik_fed_chair_transition"
+      ],
+      "rationale": "Tema: Fed Chair Transition (dogus, score 55)",
+      "rationales": [
+        "Tema: Fed Chair Transition (dogus, score 55)"
+      ],
+      "tags": [
+        "fed_chair_transition",
+        "dogus"
+      ],
+      "score": null,
+      "score_updated_at": null,
+      "score_components": {
+        "thematic_momentum": 55,
+        "thematic_id": "fed_chair_transition",
+        "thematic_stage": "dogus"
+      },
+      "last_news_check": null,
+      "last_action_signal": null,
+      "notes": ""
+    },
+    "AXP": {
+      "symbol": "AXP",
+      "added_at": "2026-05-14T06:28:37.174510+00:00",
+      "added_price": null,
+      "source": "tematik_fed_chair_transition",
+      "sources": [
+        "tematik_fed_chair_transition"
+      ],
+      "rationale": "Tema: Fed Chair Transition (dogus, score 55)",
+      "rationales": [
+        "Tema: Fed Chair Transition (dogus, score 55)"
+      ],
+      "tags": [
+        "fed_chair_transition",
+        "dogus"
+      ],
+      "score": null,
+      "score_updated_at": null,
+      "score_components": {
+        "thematic_momentum": 55,
+        "thematic_id": "fed_chair_transition",
+        "thematic_stage": "dogus"
+      },
+      "last_news_check": null,
+      "last_action_signal": null,
+      "notes": ""
+    },
+    "USB": {
+      "symbol": "USB",
+      "added_at": "2026-05-14T06:28:37.176224+00:00",
+      "added_price": null,
+      "source": "tematik_fed_chair_transition",
+      "sources": [
+        "tematik_fed_chair_transition"
+      ],
+      "rationale": "Tema: Fed Chair Transition (dogus, score 55)",
+      "rationales": [
+        "Tema: Fed Chair Transition (dogus, score 55)"
+      ],
+      "tags": [
+        "fed_chair_transition",
+        "dogus"
+      ],
+      "score": null,
+      "score_updated_at": null,
+      "score_components": {
+        "thematic_momentum": 55,
+        "thematic_id": "fed_chair_transition",
+        "thematic_stage": "dogus"
+      },
+      "last_news_check": null,
+      "last_action_signal": null,
+      "notes": ""
+    },
+    "PNC": {
+      "symbol": "PNC",
+      "added_at": "2026-05-14T06:28:37.178008+00:00",
+      "added_price": null,
+      "source": "tematik_fed_chair_transition",
+      "sources": [
+        "tematik_fed_chair_transition"
+      ],
+      "rationale": "Tema: Fed Chair Transition (dogus, score 55)",
+      "rationales": [
+        "Tema: Fed Chair Transition (dogus, score 55)"
+      ],
+      "tags": [
+        "fed_chair_transition",
+        "dogus"
+      ],
+      "score": null,
+      "score_updated_at": null,
+      "score_components": {
+        "thematic_momentum": 55,
+        "thematic_id": "fed_chair_transition",
+        "thematic_stage": "dogus"
+      },
+      "last_news_check": null,
+      "last_action_signal": null,
+      "notes": ""
+    },
+    "TFC": {
+      "symbol": "TFC",
+      "added_at": "2026-05-14T06:28:37.179821+00:00",
+      "added_price": null,
+      "source": "tematik_fed_chair_transition",
+      "sources": [
+        "tematik_fed_chair_transition"
+      ],
+      "rationale": "Tema: Fed Chair Transition (dogus, score 55)",
+      "rationales": [
+        "Tema: Fed Chair Transition (dogus, score 55)"
+      ],
+      "tags": [
+        "fed_chair_transition",
+        "dogus"
+      ],
+      "score": null,
+      "score_updated_at": null,
+      "score_components": {
+        "thematic_momentum": 55,
+        "thematic_id": "fed_chair_transition",
+        "thematic_stage": "dogus"
+      },
+      "last_news_check": null,
+      "last_action_signal": null,
+      "notes": ""
+    },
+    "COF": {
+      "symbol": "COF",
+      "added_at": "2026-05-14T06:28:37.181655+00:00",
+      "added_price": null,
+      "source": "tematik_fed_chair_transition",
+      "sources": [
+        "tematik_fed_chair_transition"
+      ],
+      "rationale": "Tema: Fed Chair Transition (dogus, score 55)",
+      "rationales": [
+        "Tema: Fed Chair Transition (dogus, score 55)"
+      ],
+      "tags": [
+        "fed_chair_transition",
+        "dogus"
+      ],
+      "score": null,
+      "score_updated_at": null,
+      "score_components": {
+        "thematic_momentum": 55,
+        "thematic_id": "fed_chair_transition",
+        "thematic_stage": "dogus"
+      },
+      "last_news_check": null,
+      "last_action_signal": null,
+      "notes": ""
+    },
+    "SCHW": {
+      "symbol": "SCHW",
+      "added_at": "2026-05-14T06:28:37.183491+00:00",
+      "added_price": null,
+      "source": "tematik_fed_chair_transition",
+      "sources": [
+        "tematik_fed_chair_transition"
+      ],
+      "rationale": "Tema: Fed Chair Transition (dogus, score 55)",
+      "rationales": [
+        "Tema: Fed Chair Transition (dogus, score 55)"
+      ],
+      "tags": [
+        "fed_chair_transition",
+        "dogus"
+      ],
+      "score": null,
+      "score_updated_at": null,
+      "score_components": {
+        "thematic_momentum": 55,
+        "thematic_id": "fed_chair_transition",
+        "thematic_stage": "dogus"
+      },
+      "last_news_check": null,
+      "last_action_signal": null,
+      "notes": ""
+    },
+    "PG": {
+      "symbol": "PG",
+      "added_at": "2026-05-14T06:28:37.186122+00:00",
+      "added_price": null,
+      "source": "tematik_defensive_rotation",
+      "sources": [
+        "tematik_defensive_rotation"
+      ],
+      "rationale": "Tema: Defensive Staples Rotation (olgun, score 45)",
+      "rationales": [
+        "Tema: Defensive Staples Rotation (olgun, score 45)"
+      ],
+      "tags": [
+        "defensive_rotation",
+        "olgun"
+      ],
+      "score": null,
+      "score_updated_at": null,
+      "score_components": {
+        "thematic_momentum": 45,
+        "thematic_id": "defensive_rotation",
+        "thematic_stage": "olgun"
+      },
+      "last_news_check": null,
+      "last_action_signal": null,
+      "notes": ""
+    },
+    "KO": {
+      "symbol": "KO",
+      "added_at": "2026-05-14T06:28:37.188039+00:00",
+      "added_price": null,
+      "source": "tematik_defensive_rotation",
+      "sources": [
+        "tematik_defensive_rotation"
+      ],
+      "rationale": "Tema: Defensive Staples Rotation (olgun, score 45)",
+      "rationales": [
+        "Tema: Defensive Staples Rotation (olgun, score 45)"
+      ],
+      "tags": [
+        "defensive_rotation",
+        "olgun"
+      ],
+      "score": null,
+      "score_updated_at": null,
+      "score_components": {
+        "thematic_momentum": 45,
+        "thematic_id": "defensive_rotation",
+        "thematic_stage": "olgun"
+      },
+      "last_news_check": null,
+      "last_action_signal": null,
+      "notes": ""
+    },
+    "PEP": {
+      "symbol": "PEP",
+      "added_at": "2026-05-14T06:28:37.190062+00:00",
+      "added_price": null,
+      "source": "tematik_defensive_rotation",
+      "sources": [
+        "tematik_defensive_rotation"
+      ],
+      "rationale": "Tema: Defensive Staples Rotation (olgun, score 45)",
+      "rationales": [
+        "Tema: Defensive Staples Rotation (olgun, score 45)"
+      ],
+      "tags": [
+        "defensive_rotation",
+        "olgun"
+      ],
+      "score": null,
+      "score_updated_at": null,
+      "score_components": {
+        "thematic_momentum": 45,
+        "thematic_id": "defensive_rotation",
+        "thematic_stage": "olgun"
+      },
+      "last_news_check": null,
+      "last_action_signal": null,
+      "notes": ""
+    },
+    "WMT": {
+      "symbol": "WMT",
+      "added_at": "2026-05-14T06:28:37.192052+00:00",
+      "added_price": null,
+      "source": "tematik_defensive_rotation",
+      "sources": [
+        "tematik_defensive_rotation"
+      ],
+      "rationale": "Tema: Defensive Staples Rotation (olgun, score 45)",
+      "rationales": [
+        "Tema: Defensive Staples Rotation (olgun, score 45)"
+      ],
+      "tags": [
+        "defensive_rotation",
+        "olgun"
+      ],
+      "score": null,
+      "score_updated_at": null,
+      "score_components": {
+        "thematic_momentum": 45,
+        "thematic_id": "defensive_rotation",
+        "thematic_stage": "olgun"
+      },
+      "last_news_check": null,
+      "last_action_signal": null,
+      "notes": ""
+    },
+    "COST": {
+      "symbol": "COST",
+      "added_at": "2026-05-14T06:28:37.194079+00:00",
+      "added_price": null,
+      "source": "tematik_defensive_rotation",
+      "sources": [
+        "tematik_defensive_rotation"
+      ],
+      "rationale": "Tema: Defensive Staples Rotation (olgun, score 45)",
+      "rationales": [
+        "Tema: Defensive Staples Rotation (olgun, score 45)"
+      ],
+      "tags": [
+        "defensive_rotation",
+        "olgun"
+      ],
+      "score": null,
+      "score_updated_at": null,
+      "score_components": {
+        "thematic_momentum": 45,
+        "thematic_id": "defensive_rotation",
+        "thematic_stage": "olgun"
+      },
+      "last_news_check": null,
+      "last_action_signal": null,
+      "notes": ""
+    },
+    "CL": {
+      "symbol": "CL",
+      "added_at": "2026-05-14T06:28:37.196071+00:00",
+      "added_price": null,
+      "source": "tematik_defensive_rotation",
+      "sources": [
+        "tematik_defensive_rotation"
+      ],
+      "rationale": "Tema: Defensive Staples Rotation (olgun, score 45)",
+      "rationales": [
+        "Tema: Defensive Staples Rotation (olgun, score 45)"
+      ],
+      "tags": [
+        "defensive_rotation",
+        "olgun"
+      ],
+      "score": null,
+      "score_updated_at": null,
+      "score_components": {
+        "thematic_momentum": 45,
+        "thematic_id": "defensive_rotation",
+        "thematic_stage": "olgun"
+      },
+      "last_news_check": null,
+      "last_action_signal": null,
+      "notes": ""
+    },
+    "MDLZ": {
+      "symbol": "MDLZ",
+      "added_at": "2026-05-14T06:28:37.198212+00:00",
+      "added_price": null,
+      "source": "tematik_defensive_rotation",
+      "sources": [
+        "tematik_defensive_rotation"
+      ],
+      "rationale": "Tema: Defensive Staples Rotation (olgun, score 45)",
+      "rationales": [
+        "Tema: Defensive Staples Rotation (olgun, score 45)"
+      ],
+      "tags": [
+        "defensive_rotation",
+        "olgun"
+      ],
+      "score": null,
+      "score_updated_at": null,
+      "score_components": {
+        "thematic_momentum": 45,
+        "thematic_id": "defensive_rotation",
+        "thematic_stage": "olgun"
+      },
+      "last_news_check": null,
+      "last_action_signal": null,
+      "notes": ""
+    },
+    "KMB": {
+      "symbol": "KMB",
+      "added_at": "2026-05-14T06:28:37.200359+00:00",
+      "added_price": null,
+      "source": "tematik_defensive_rotation",
+      "sources": [
+        "tematik_defensive_rotation"
+      ],
+      "rationale": "Tema: Defensive Staples Rotation (olgun, score 45)",
+      "rationales": [
+        "Tema: Defensive Staples Rotation (olgun, score 45)"
+      ],
+      "tags": [
+        "defensive_rotation",
+        "olgun"
+      ],
+      "score": null,
+      "score_updated_at": null,
+      "score_components": {
+        "thematic_momentum": 45,
+        "thematic_id": "defensive_rotation",
+        "thematic_stage": "olgun"
+      },
+      "last_news_check": null,
+      "last_action_signal": null,
+      "notes": ""
+    },
+    "GIS": {
+      "symbol": "GIS",
+      "added_at": "2026-05-14T06:28:37.202463+00:00",
+      "added_price": null,
+      "source": "tematik_defensive_rotation",
+      "sources": [
+        "tematik_defensive_rotation"
+      ],
+      "rationale": "Tema: Defensive Staples Rotation (olgun, score 45)",
+      "rationales": [
+        "Tema: Defensive Staples Rotation (olgun, score 45)"
+      ],
+      "tags": [
+        "defensive_rotation",
+        "olgun"
+      ],
+      "score": null,
+      "score_updated_at": null,
+      "score_components": {
+        "thematic_momentum": 45,
+        "thematic_id": "defensive_rotation",
+        "thematic_stage": "olgun"
+      },
+      "last_news_check": null,
+      "last_action_signal": null,
+      "notes": ""
+    },
+    "SJM": {
+      "symbol": "SJM",
+      "added_at": "2026-05-14T06:28:37.204670+00:00",
+      "added_price": null,
+      "source": "tematik_defensive_rotation",
+      "sources": [
+        "tematik_defensive_rotation"
+      ],
+      "rationale": "Tema: Defensive Staples Rotation (olgun, score 45)",
+      "rationales": [
+        "Tema: Defensive Staples Rotation (olgun, score 45)"
+      ],
+      "tags": [
+        "defensive_rotation",
+        "olgun"
+      ],
+      "score": null,
+      "score_updated_at": null,
+      "score_components": {
+        "thematic_momentum": 45,
+        "thematic_id": "defensive_rotation",
+        "thematic_stage": "olgun"
+      },
+      "last_news_check": null,
+      "last_action_signal": null,
+      "notes": ""
+    },
+    "CHD": {
+      "symbol": "CHD",
+      "added_at": "2026-05-14T06:28:37.206818+00:00",
+      "added_price": null,
+      "source": "tematik_defensive_rotation",
+      "sources": [
+        "tematik_defensive_rotation"
+      ],
+      "rationale": "Tema: Defensive Staples Rotation (olgun, score 45)",
+      "rationales": [
+        "Tema: Defensive Staples Rotation (olgun, score 45)"
+      ],
+      "tags": [
+        "defensive_rotation",
+        "olgun"
+      ],
+      "score": null,
+      "score_updated_at": null,
+      "score_components": {
+        "thematic_momentum": 45,
+        "thematic_id": "defensive_rotation",
+        "thematic_stage": "olgun"
+      },
+      "last_news_check": null,
+      "last_action_signal": null,
+      "notes": ""
+    },
+    "HSY": {
+      "symbol": "HSY",
+      "added_at": "2026-05-14T06:28:37.209041+00:00",
+      "added_price": null,
+      "source": "tematik_defensive_rotation",
+      "sources": [
+        "tematik_defensive_rotation"
+      ],
+      "rationale": "Tema: Defensive Staples Rotation (olgun, score 45)",
+      "rationales": [
+        "Tema: Defensive Staples Rotation (olgun, score 45)"
+      ],
+      "tags": [
+        "defensive_rotation",
+        "olgun"
+      ],
+      "score": null,
+      "score_updated_at": null,
+      "score_components": {
+        "thematic_momentum": 45,
+        "thematic_id": "defensive_rotation",
+        "thematic_stage": "olgun"
+      },
+      "last_news_check": null,
+      "last_action_signal": null,
+      "notes": ""
+    },
+    "KHC": {
+      "symbol": "KHC",
+      "added_at": "2026-05-14T06:28:37.211311+00:00",
+      "added_price": null,
+      "source": "tematik_defensive_rotation",
+      "sources": [
+        "tematik_defensive_rotation"
+      ],
+      "rationale": "Tema: Defensive Staples Rotation (olgun, score 45)",
+      "rationales": [
+        "Tema: Defensive Staples Rotation (olgun, score 45)"
+      ],
+      "tags": [
+        "defensive_rotation",
+        "olgun"
+      ],
+      "score": null,
+      "score_updated_at": null,
+      "score_components": {
+        "thematic_momentum": 45,
+        "thematic_id": "defensive_rotation",
+        "thematic_stage": "olgun"
+      },
+      "last_news_check": null,
+      "last_action_signal": null,
+      "notes": ""
+    },
+    "CLX": {
+      "symbol": "CLX",
+      "added_at": "2026-05-14T06:28:37.213658+00:00",
+      "added_price": null,
+      "source": "tematik_defensive_rotation",
+      "sources": [
+        "tematik_defensive_rotation"
+      ],
+      "rationale": "Tema: Defensive Staples Rotation (olgun, score 45)",
+      "rationales": [
+        "Tema: Defensive Staples Rotation (olgun, score 45)"
+      ],
+      "tags": [
+        "defensive_rotation",
+        "olgun"
+      ],
+      "score": null,
+      "score_updated_at": null,
+      "score_components": {
+        "thematic_momentum": 45,
+        "thematic_id": "defensive_rotation",
+        "thematic_stage": "olgun"
+      },
+      "last_news_check": null,
+      "last_action_signal": null,
+      "notes": ""
+    },
+    "GILD": {
+      "symbol": "GILD",
+      "added_at": "2026-05-14T06:28:37.216711+00:00",
+      "added_price": null,
+      "source": "tematik_biotech_recovery",
+      "sources": [
+        "tematik_biotech_recovery"
+      ],
+      "rationale": "Tema: Biotech Recovery (dogus, score 58)",
+      "rationales": [
+        "Tema: Biotech Recovery (dogus, score 58)"
+      ],
+      "tags": [
+        "biotech_recovery",
+        "dogus"
+      ],
+      "score": null,
+      "score_updated_at": null,
+      "score_components": {
+        "thematic_momentum": 58,
+        "thematic_id": "biotech_recovery",
+        "thematic_stage": "dogus"
+      },
+      "last_news_check": null,
+      "last_action_signal": null,
+      "notes": ""
+    },
+    "AMGN": {
+      "symbol": "AMGN",
+      "added_at": "2026-05-14T06:28:37.219023+00:00",
+      "added_price": null,
+      "source": "tematik_biotech_recovery",
+      "sources": [
+        "tematik_biotech_recovery"
+      ],
+      "rationale": "Tema: Biotech Recovery (dogus, score 58)",
+      "rationales": [
+        "Tema: Biotech Recovery (dogus, score 58)"
+      ],
+      "tags": [
+        "biotech_recovery",
+        "dogus"
+      ],
+      "score": null,
+      "score_updated_at": null,
+      "score_components": {
+        "thematic_momentum": 58,
+        "thematic_id": "biotech_recovery",
+        "thematic_stage": "dogus"
+      },
+      "last_news_check": null,
+      "last_action_signal": null,
+      "notes": ""
+    },
+    "BIIB": {
+      "symbol": "BIIB",
+      "added_at": "2026-05-14T06:28:37.221429+00:00",
+      "added_price": null,
+      "source": "tematik_biotech_recovery",
+      "sources": [
+        "tematik_biotech_recovery"
+      ],
+      "rationale": "Tema: Biotech Recovery (dogus, score 58)",
+      "rationales": [
+        "Tema: Biotech Recovery (dogus, score 58)"
+      ],
+      "tags": [
+        "biotech_recovery",
+        "dogus"
+      ],
+      "score": null,
+      "score_updated_at": null,
+      "score_components": {
+        "thematic_momentum": 58,
+        "thematic_id": "biotech_recovery",
+        "thematic_stage": "dogus"
+      },
+      "last_news_check": null,
+      "last_action_signal": null,
+      "notes": ""
+    },
+    "REGN": {
+      "symbol": "REGN",
+      "added_at": "2026-05-14T06:28:37.223938+00:00",
+      "added_price": null,
+      "source": "tematik_biotech_recovery",
+      "sources": [
+        "tematik_biotech_recovery"
+      ],
+      "rationale": "Tema: Biotech Recovery (dogus, score 58)",
+      "rationales": [
+        "Tema: Biotech Recovery (dogus, score 58)"
+      ],
+      "tags": [
+        "biotech_recovery",
+        "dogus"
+      ],
+      "score": null,
+      "score_updated_at": null,
+      "score_components": {
+        "thematic_momentum": 58,
+        "thematic_id": "biotech_recovery",
+        "thematic_stage": "dogus"
+      },
+      "last_news_check": null,
+      "last_action_signal": null,
+      "notes": ""
+    },
+    "VRTX": {
+      "symbol": "VRTX",
+      "added_at": "2026-05-14T06:28:37.226359+00:00",
+      "added_price": null,
+      "source": "tematik_biotech_recovery",
+      "sources": [
+        "tematik_biotech_recovery"
+      ],
+      "rationale": "Tema: Biotech Recovery (dogus, score 58)",
+      "rationales": [
+        "Tema: Biotech Recovery (dogus, score 58)"
+      ],
+      "tags": [
+        "biotech_recovery",
+        "dogus"
+      ],
+      "score": null,
+      "score_updated_at": null,
+      "score_components": {
+        "thematic_momentum": 58,
+        "thematic_id": "biotech_recovery",
+        "thematic_stage": "dogus"
+      },
+      "last_news_check": null,
+      "last_action_signal": null,
+      "notes": ""
+    },
+    "MRNA": {
+      "symbol": "MRNA",
+      "added_at": "2026-05-14T06:28:37.228872+00:00",
+      "added_price": null,
+      "source": "tematik_biotech_recovery",
+      "sources": [
+        "tematik_biotech_recovery"
+      ],
+      "rationale": "Tema: Biotech Recovery (dogus, score 58)",
+      "rationales": [
+        "Tema: Biotech Recovery (dogus, score 58)"
+      ],
+      "tags": [
+        "biotech_recovery",
+        "dogus"
+      ],
+      "score": null,
+      "score_updated_at": null,
+      "score_components": {
+        "thematic_momentum": 58,
+        "thematic_id": "biotech_recovery",
+        "thematic_stage": "dogus"
+      },
+      "last_news_check": null,
+      "last_action_signal": null,
+      "notes": ""
+    },
+    "BMRN": {
+      "symbol": "BMRN",
+      "added_at": "2026-05-14T06:28:37.231366+00:00",
+      "added_price": null,
+      "source": "tematik_biotech_recovery",
+      "sources": [
+        "tematik_biotech_recovery"
+      ],
+      "rationale": "Tema: Biotech Recovery (dogus, score 58)",
+      "rationales": [
+        "Tema: Biotech Recovery (dogus, score 58)"
+      ],
+      "tags": [
+        "biotech_recovery",
+        "dogus"
+      ],
+      "score": null,
+      "score_updated_at": null,
+      "score_components": {
+        "thematic_momentum": 58,
+        "thematic_id": "biotech_recovery",
+        "thematic_stage": "dogus"
+      },
+      "last_news_check": null,
+      "last_action_signal": null,
+      "notes": ""
+    },
+    "ALNY": {
+      "symbol": "ALNY",
+      "added_at": "2026-05-14T06:28:37.233939+00:00",
+      "added_price": null,
+      "source": "tematik_biotech_recovery",
+      "sources": [
+        "tematik_biotech_recovery"
+      ],
+      "rationale": "Tema: Biotech Recovery (dogus, score 58)",
+      "rationales": [
+        "Tema: Biotech Recovery (dogus, score 58)"
+      ],
+      "tags": [
+        "biotech_recovery",
+        "dogus"
+      ],
+      "score": null,
+      "score_updated_at": null,
+      "score_components": {
+        "thematic_momentum": 58,
+        "thematic_id": "biotech_recovery",
+        "thematic_stage": "dogus"
+      },
+      "last_news_check": null,
+      "last_action_signal": null,
+      "notes": ""
+    },
+    "SRPT": {
+      "symbol": "SRPT",
+      "added_at": "2026-05-14T06:28:37.236479+00:00",
+      "added_price": null,
+      "source": "tematik_biotech_recovery",
+      "sources": [
+        "tematik_biotech_recovery"
+      ],
+      "rationale": "Tema: Biotech Recovery (dogus, score 58)",
+      "rationales": [
+        "Tema: Biotech Recovery (dogus, score 58)"
+      ],
+      "tags": [
+        "biotech_recovery",
+        "dogus"
+      ],
+      "score": null,
+      "score_updated_at": null,
+      "score_components": {
+        "thematic_momentum": 58,
+        "thematic_id": "biotech_recovery",
+        "thematic_stage": "dogus"
+      },
+      "last_news_check": null,
+      "last_action_signal": null,
+      "notes": ""
+    },
+    "IONS": {
+      "symbol": "IONS",
+      "added_at": "2026-05-14T06:28:37.238995+00:00",
+      "added_price": null,
+      "source": "tematik_biotech_recovery",
+      "sources": [
+        "tematik_biotech_recovery"
+      ],
+      "rationale": "Tema: Biotech Recovery (dogus, score 58)",
+      "rationales": [
+        "Tema: Biotech Recovery (dogus, score 58)"
+      ],
+      "tags": [
+        "biotech_recovery",
+        "dogus"
+      ],
+      "score": null,
+      "score_updated_at": null,
+      "score_components": {
+        "thematic_momentum": 58,
+        "thematic_id": "biotech_recovery",
+        "thematic_stage": "dogus"
+      },
+      "last_news_check": null,
+      "last_action_signal": null,
+      "notes": ""
+    },
+    "CRSP": {
+      "symbol": "CRSP",
+      "added_at": "2026-05-14T06:28:37.241711+00:00",
+      "added_price": null,
+      "source": "tematik_biotech_recovery",
+      "sources": [
+        "tematik_biotech_recovery"
+      ],
+      "rationale": "Tema: Biotech Recovery (dogus, score 58)",
+      "rationales": [
+        "Tema: Biotech Recovery (dogus, score 58)"
+      ],
+      "tags": [
+        "biotech_recovery",
+        "dogus"
+      ],
+      "score": null,
+      "score_updated_at": null,
+      "score_components": {
+        "thematic_momentum": 58,
+        "thematic_id": "biotech_recovery",
+        "thematic_stage": "dogus"
+      },
+      "last_news_check": null,
+      "last_action_signal": null,
+      "notes": ""
+    },
+    "EDIT": {
+      "symbol": "EDIT",
+      "added_at": "2026-05-14T06:28:37.244379+00:00",
+      "added_price": null,
+      "source": "tematik_biotech_recovery",
+      "sources": [
+        "tematik_biotech_recovery"
+      ],
+      "rationale": "Tema: Biotech Recovery (dogus, score 58)",
+      "rationales": [
+        "Tema: Biotech Recovery (dogus, score 58)"
+      ],
+      "tags": [
+        "biotech_recovery",
+        "dogus"
+      ],
+      "score": null,
+      "score_updated_at": null,
+      "score_components": {
+        "thematic_momentum": 58,
+        "thematic_id": "biotech_recovery",
+        "thematic_stage": "dogus"
+      },
+      "last_news_check": null,
+      "last_action_signal": null,
+      "notes": ""
+    },
+    "NTLA": {
+      "symbol": "NTLA",
+      "added_at": "2026-05-14T06:28:37.247077+00:00",
+      "added_price": null,
+      "source": "tematik_biotech_recovery",
+      "sources": [
+        "tematik_biotech_recovery"
+      ],
+      "rationale": "Tema: Biotech Recovery (dogus, score 58)",
+      "rationales": [
+        "Tema: Biotech Recovery (dogus, score 58)"
+      ],
+      "tags": [
+        "biotech_recovery",
+        "dogus"
+      ],
+      "score": null,
+      "score_updated_at": null,
+      "score_components": {
+        "thematic_momentum": 58,
+        "thematic_id": "biotech_recovery",
+        "thematic_stage": "dogus"
+      },
+      "last_news_check": null,
+      "last_action_signal": null,
+      "notes": ""
+    },
+    "BEAM": {
+      "symbol": "BEAM",
+      "added_at": "2026-05-14T06:28:37.249876+00:00",
+      "added_price": null,
+      "source": "tematik_biotech_recovery",
+      "sources": [
+        "tematik_biotech_recovery"
+      ],
+      "rationale": "Tema: Biotech Recovery (dogus, score 58)",
+      "rationales": [
+        "Tema: Biotech Recovery (dogus, score 58)"
+      ],
+      "tags": [
+        "biotech_recovery",
+        "dogus"
+      ],
+      "score": null,
+      "score_updated_at": null,
+      "score_components": {
+        "thematic_momentum": 58,
+        "thematic_id": "biotech_recovery",
+        "thematic_stage": "dogus"
+      },
+      "last_news_check": null,
+      "last_action_signal": null,
+      "notes": ""
+    }
+  },
   "archived": [],
   "excluded": []
 }
