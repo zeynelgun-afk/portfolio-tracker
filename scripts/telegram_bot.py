@@ -565,7 +565,11 @@ def format_yardim() -> str:
   <code>/vix</code> — Güncel VIX + seviye
   <code>/kriz</code> — K-13 aktif kriz matrisi
   <code>/tema</code> — Bugünün dominant temaları (AI tespiti)
-  <code>/havuz</code> — AI'nin son aday hisse havuzu + son kararlar
+  <code>/temalar</code> — Aktif tema kataloğu (Aşama 4 LLM)
+  <code>/havuz</code> (<code>/watchlist</code>, <code>/iz</code>) — Watchlist v2.0 top 20 (tematik + skor + entry/stop/target)
+  <code>/ekle SYM [tema]</code> — Watchlist'e manuel hisse ekle
+  <code>/sil SYM</code> — Watchlist'ten arşivle
+  <code>/duzelt SYM stop=X target=Y</code> — Watchlist score_components override
   <code>/risk</code> — Risk paneli (manuel üret + grup'a gönder)
 
 <b>📡 Analist Takip:</b>
@@ -763,64 +767,261 @@ def format_stats() -> str:
 
 
 def format_watchlist() -> str:
-    """Günlük tarama watchlist."""
+    """Watchlist v2.0 — Aşama 4-6 tematik havuz, top 20."""
     try:
         import html as _html
-        p = REPO_ROOT / "data" / "watchlist.json"
-        if not p.exists():
-            return "📋 Watchlist henüz oluşturulmamış."
-        d = json.load(open(p))
-        # v3 şeması: izleme_listesi. Eski: adaylar/izlenenler (backward compat)
-        adaylar = d.get("izleme_listesi", d.get("adaylar", d.get("izlenenler", [])))
-        toplam = len(adaylar)
-        if not adaylar:
-            return "📋 Watchlist boş."
+        sys.path.insert(0, str(REPO_ROOT))
+        from agent.watchlist import load as wl_load
 
-        # urgency + skor sıralaması: high/medium/low önce, sonra yüksek skor
-        urg_rank = {"high": 0, "medium": 1, "low": 2}
-        adaylar = sorted(
-            adaylar,
-            key=lambda x: (
-                urg_rank.get(str(x.get("urgency", "")).lower(), 3),
-                -float(x.get("skor", x.get("score", 0)) or 0),
-            ),
-        )[:10]
+        d = wl_load()
+        tickers = d.get("tickers", {})
+        toplam = len(tickers)
+        if not tickers:
+            return "📋 Watchlist boş. Tematik keşif henüz çalışmadı."
 
-        lines = [f"<b>📋 Watchlist (top {len(adaylar)}/{toplam})</b>", ""]
-        for a in adaylar:
-            sym   = a.get("sembol", a.get("symbol", "?"))
-            skor  = a.get("skor", a.get("score", "?"))
-            port  = a.get("hedef_portfoy", a.get("portfoy", a.get("portföy", "-")))
-            urg   = str(a.get("urgency", "")).lower()
-            karar = a.get("karar", "")
-            tez   = (a.get("tez", a.get("neden", a.get("reason", ""))) or "")[:90]
-            hgir  = a.get("hedef_giris", "")
-            rr    = a.get("r_r_orani", a.get("r_r", ""))
+        sorted_t = sorted(tickers.items(), key=lambda kv: -(kv[1].get("score") or 0))
+        top = sorted_t[:20]
 
-            ico = {"high": "🔥", "medium": "⚡", "low": "·"}.get(urg, "•")
-            head = f"{ico} <b>{_html.escape(str(sym))}</b> ({_html.escape(str(port))}) skor {skor}"
-            if karar:
-                head += f" [{_html.escape(str(karar))}]"
-            if hgir:
-                head += f" · giriş {_html.escape(str(hgir))}"
-            if rr:
-                head += f" · R:R {rr}"
+        lines = [
+            f"<b>📋 Watchlist v2.0 (top {len(top)}/{toplam})</b>",
+            f"<i>Maks 80 · Son güncelleme: {d.get('_son_guncelleme', '?')}</i>",
+            "",
+        ]
+
+        for sym, e in top:
+            score = e.get("score")
+            sc = e.get("score_components", {}) or {}
+            sources = e.get("sources", [e.get("source", "?")])
+
+            score_str = f"<b>{score:.0f}</b>" if score is not None else "—"
+            head = f"<b>{_html.escape(sym)}</b> · skor {score_str}"
+
+            rank = sc.get("orchestrator_rank")
+            if rank:
+                head += f" (#{rank})"
             lines.append(head)
-            if tez:
-                lines.append(f"   {_html.escape(tez)}")
 
-        # Mekanik karar özeti (varsa)
-        mk = d.get("mekanik_kararlar", {})
-        if mk:
-            ekle = len(mk.get("EKLE", []))
-            izle = len(mk.get("IZLE", []))
-            gec  = len(mk.get("GEC", []))
+            entry = sc.get("orchestrator_entry")
+            target = sc.get("orchestrator_target")
+            stop = sc.get("orchestrator_stop")
+            rr = sc.get("orchestrator_rr")
+            if entry and target:
+                lines.append(
+                    f"   Giriş {_html.escape(str(entry))} · "
+                    f"Stop ${stop} · Target ${target} · R/R {_html.escape(str(rr or '?'))}"
+                )
+
+            tema_id = sc.get("thematic_id")
+            if tema_id:
+                stage = sc.get("thematic_stage", "?")
+                mom = sc.get("thematic_momentum")
+                mom_str = f"{mom:.0f}" if mom else "?"
+                lines.append(f"   <i>Tema:</i> {_html.escape(tema_id)} "
+                             f"({stage}, score {mom_str})")
+
+        if toplam > 20:
             lines.append("")
-            lines.append(f"<i>Mekanik: EKLE {ekle} · İZLE {izle} · GEÇ {gec}</i>")
+            lines.append(f"<i>... ve {toplam - 20} hisse daha</i>")
 
         return "\n".join(lines)
     except Exception as e:
         return f"Watchlist okunamadı: {e}"
+
+
+def format_temalar() -> str:
+    """Aktif tema kataloğu — Aşama 4 LLM tespiti."""
+    try:
+        import html as _html
+        sys.path.insert(0, str(REPO_ROOT))
+        from agent.themes import load as themes_load
+
+        d = themes_load()
+        themes = d.get("themes", {})
+        if not themes:
+            return "🎯 Tema kataloğu boş. Tematik keşif henüz çalışmamış."
+
+        active = [(tid, t) for tid, t in themes.items()
+                  if t.get("lifecycle_stage") in ("dogus", "yukselis", "olgun")]
+        dying = [(tid, t) for tid, t in themes.items()
+                 if t.get("lifecycle_stage") == "sönüs"]
+        active.sort(key=lambda kv: -kv[1].get("momentum_score", 0))
+        dying.sort(key=lambda kv: -kv[1].get("momentum_score", 0))
+
+        lines = [
+            f"<b>🎯 Aktif Tema Kataloğu</b>",
+            f"<i>Son güncelleme: {d.get('_son_guncelleme', '?')}</i>",
+            "",
+        ]
+
+        stage_emoji = {"dogus": "🌱", "yukselis": "📈", "olgun": "🟢", "sönüs": "🔴"}
+
+        if active:
+            lines.append(f"<b>Aktif ({len(active)}):</b>")
+            for tid, t in active:
+                emoji = stage_emoji.get(t.get("lifecycle_stage"), "•")
+                score = t.get("momentum_score", 0)
+                name = t.get("name", tid)
+                n = len(t.get("related_tickers", []))
+                lines.append(f"  {emoji} <b>{_html.escape(name)}</b> "
+                             f"({t.get('lifecycle_stage')}) — "
+                             f"skor {score:.0f}, {n} ticker")
+                tickers_sample = ", ".join(t.get("related_tickers", [])[:6])
+                if tickers_sample:
+                    lines.append(f"     <i>{_html.escape(tickers_sample)}</i>")
+
+        if dying:
+            lines.append("")
+            lines.append(f"<b>Sönüşte ({len(dying)}):</b>")
+            for tid, t in dying:
+                name = t.get("name", tid)
+                lines.append(f"  🔴 {_html.escape(name)} — skor {t.get('momentum_score', 0):.0f}")
+
+        archived = d.get("archived_themes", [])
+        if archived:
+            lines.append("")
+            lines.append(f"<i>Arşivli: {len(archived)} tema</i>")
+
+        return "\n".join(lines)
+    except Exception as e:
+        return f"Temalar okunamadı: {e}"
+
+
+def handle_ekle(text: str) -> str:
+    """
+    /ekle SYM [tema_id]  — watchlist'e manuel ekle.
+    Örnek: /ekle PLTR    veya    /ekle PLTR ai_hardware_supercycle
+    """
+    try:
+        sys.path.insert(0, str(REPO_ROOT))
+        from agent.watchlist import add as wl_add
+
+        parts = text.strip().split(maxsplit=2)
+        if len(parts) < 2:
+            return ("Kullanım: <code>/ekle SYM [tema_id]</code>\n"
+                    "Örnek: <code>/ekle PLTR</code> "
+                    "veya <code>/ekle PLTR ai_hardware_supercycle</code>")
+
+        sym = parts[1].upper().strip()
+        tema_id = parts[2].strip() if len(parts) >= 3 else None
+
+        kwargs = {
+            "symbol": sym,
+            "source": "manuel_telegram",
+            "rationale": f"Manuel ekleme (Zeynel, {datetime.now().strftime('%Y-%m-%d %H:%M')})"
+                         + (f" — tema {tema_id}" if tema_id else ""),
+            "tags": ["manuel"] + ([tema_id] if tema_id else []),
+        }
+        if tema_id:
+            kwargs["score_components"] = {"thematic_id": tema_id,
+                                           "thematic_stage": "manuel"}
+
+        result = wl_add(**kwargs)
+        action = result.get("action", "?")
+        if action == "added":
+            return f"✅ <b>{sym}</b> watchlist'e eklendi" + (
+                f" (tema: <code>{tema_id}</code>)" if tema_id else "")
+        elif action == "updated":
+            return f"♻️ <b>{sym}</b> zaten watchlist'te, kaynak/etiket güncellendi"
+        else:
+            return f"⚠️ <b>{sym}</b>: {action} — {result.get('reason', '?')}"
+    except Exception as e:
+        return f"Ekleme hatası: {e}"
+
+
+def handle_sil(text: str) -> str:
+    """
+    /sil SYM  — watchlist'ten kalıcı çıkar (exclude listesine ekler,
+    besleyiciler tekrar eklemez).
+    """
+    try:
+        sys.path.insert(0, str(REPO_ROOT))
+        from agent.watchlist import exclude as wl_exclude
+
+        parts = text.strip().split()
+        if len(parts) < 2:
+            return "Kullanım: <code>/sil SYM</code>\nÖrnek: <code>/sil PLTR</code>"
+
+        sym = parts[1].upper().strip()
+        result = wl_exclude(symbol=sym, reason="manuel_telegram_sil")
+        action = result.get("action", "?")
+        if action == "excluded":
+            return (f"🗑️ <b>{sym}</b> watchlist'ten çıkarıldı "
+                    f"(kalıcı, besleyiciler tekrar ekleyemez)")
+        else:
+            return f"⚠️ <b>{sym}</b>: {action} — {result.get('reason', '?')}"
+    except Exception as e:
+        return f"Silme hatası: {e}"
+
+
+def handle_duzelt(text: str) -> str:
+    """
+    /duzelt SYM alan=değer [alan=değer ...]  — score_components alanlarını override et.
+    Örnek: /duzelt NVDA stop=200 target=300
+    Geçerli alanlar: stop, target, entry, rr, score
+    """
+    try:
+        sys.path.insert(0, str(REPO_ROOT))
+        from agent.watchlist import update_score as wl_update_score
+
+        parts = text.strip().split()
+        if len(parts) < 3:
+            return ("Kullanım: <code>/duzelt SYM alan=değer ...</code>\n"
+                    "Geçerli alanlar: <code>stop</code>, <code>target</code>, "
+                    "<code>entry</code>, <code>rr</code>, <code>score</code>\n"
+                    "Örnek: <code>/duzelt NVDA stop=200 target=300</code>")
+
+        sym = parts[1].upper().strip()
+        # parts[2:] içinde alan=değer çiftleri var
+        components = {}
+        new_score = None
+        for kv in parts[2:]:
+            if "=" not in kv:
+                continue
+            k, v = kv.split("=", 1)
+            k = k.strip().lower()
+            v = v.strip()
+            if k == "score":
+                try:
+                    new_score = float(v)
+                except ValueError:
+                    return f"⚠️ score sayısal olmalı: {v}"
+            elif k == "stop":
+                try:
+                    components["orchestrator_stop"] = float(v)
+                except ValueError:
+                    components["orchestrator_stop"] = v
+            elif k == "target":
+                try:
+                    components["orchestrator_target"] = float(v)
+                except ValueError:
+                    components["orchestrator_target"] = v
+            elif k == "entry":
+                components["orchestrator_entry"] = v
+            elif k == "rr":
+                components["orchestrator_rr"] = v
+            else:
+                return f"⚠️ Bilinmeyen alan: {k}. Geçerli: stop, target, entry, rr, score"
+
+        if not components and new_score is None:
+            return "⚠️ Geçerli alan=değer çifti bulunamadı."
+
+        # update_score score zorunlu — yoksa mevcut skoru koru
+        from agent.watchlist import load as wl_load
+        if new_score is None:
+            wl = wl_load()
+            new_score = wl.get("tickers", {}).get(sym, {}).get("score") or 0
+
+        result = wl_update_score(symbol=sym, score=new_score,
+                                  components=components if components else None)
+        action = result.get("action", "?")
+        if action == "scored":
+            updated_str = ", ".join(f"{k}={v}" for k, v in components.items())
+            return (f"✏️ <b>{sym}</b> güncellendi · "
+                    f"skor {new_score} · {updated_str}")
+        else:
+            return f"⚠️ <b>{sym}</b>: {action} — {result.get('reason', '?')}"
+    except Exception as e:
+        return f"Düzeltme hatası: {e}"
 
 
 def format_kapanan() -> str:
@@ -1611,9 +1812,31 @@ def isle_mesaj(msg: dict):
         tg_send(chat_id, format_tema(), reply_to=msg_id)
         return
 
-    # ── /havuz ─ AI'nin son aday hisse havuzu + kararlar ──────────
+    # ── /havuz ─ Watchlist v2.0 (Aşama 4-6) ──────────────
+    # Eski Kimi havuz (data/aday_havuz.json) kaldırıldı, watchlist v2.0 kullanılıyor.
     if text_lower in ("/havuz", "/aday", "/adaylar", "/buylist"):
-        tg_send(chat_id, format_havuz(), reply_to=msg_id)
+        tg_send(chat_id, format_watchlist(), reply_to=msg_id)
+        return
+
+    # ── /temalar ─ Aşama 4 tema kataloğu ──────────────────
+    if text_lower in ("/temalar", "/themes", "/tema_listesi"):
+        tg_send(chat_id, format_temalar(), reply_to=msg_id)
+        return
+
+    # ── /ekle SYM [tema_id] ─ Aşama 7 manuel watchlist ekleme ──
+    if text_lower.startswith("/ekle ") or text_lower == "/ekle":
+        tg_send(chat_id, handle_ekle(text), reply_to=msg_id)
+        return
+
+    # ── /sil SYM ─ Aşama 7 manuel watchlist arşivleme ─────
+    if text_lower.startswith("/sil ") or text_lower == "/sil":
+        tg_send(chat_id, handle_sil(text), reply_to=msg_id)
+        return
+
+    # ── /duzelt SYM alan=değer ─ Aşama 7 watchlist override ──
+    if (text_lower.startswith("/duzelt ") or text_lower.startswith("/düzelt ")
+            or text_lower == "/duzelt" or text_lower == "/düzelt"):
+        tg_send(chat_id, handle_duzelt(text), reply_to=msg_id)
         return
 
     # ── /risk ─ Manuel risk panel üret + grup chat'e gönder ───────
