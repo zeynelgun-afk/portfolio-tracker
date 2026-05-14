@@ -889,11 +889,13 @@ def format_temalar() -> str:
 def handle_ekle(text: str) -> str:
     """
     /ekle SYM [tema_id]  — watchlist'e manuel ekle.
-    Örnek: /ekle PLTR    veya    /ekle PLTR ai_hardware_supercycle
+    Asama 8: AI gate zenginlestirme (RED diyebilir ama yine de eklenir,
+    Zeynel'in iradesine saygi). AI'nin score'u + temasi + uyarilari kaydedilir.
     """
     try:
         sys.path.insert(0, str(REPO_ROOT))
         from agent.watchlist import add as wl_add
+        from agent.ai_gate import evaluate_signal as ai_gate_eval
 
         parts = text.strip().split(maxsplit=2)
         if len(parts) < 2:
@@ -904,26 +906,69 @@ def handle_ekle(text: str) -> str:
         sym = parts[1].upper().strip()
         tema_id = parts[2].strip() if len(parts) >= 3 else None
 
-        kwargs = {
-            "symbol": sym,
-            "source": "manuel_telegram",
-            "rationale": f"Manuel ekleme (Zeynel, {datetime.now().strftime('%Y-%m-%d %H:%M')})"
-                         + (f" — tema {tema_id}" if tema_id else ""),
-            "tags": ["manuel"] + ([tema_id] if tema_id else []),
-        }
-        if tema_id:
-            kwargs["score_components"] = {"thematic_id": tema_id,
-                                           "thematic_stage": "manuel"}
+        # Asama 8: AI gate zenginlestirme
+        gate_result = ai_gate_eval(
+            symbol=sym,
+            signal_type="manuel",
+            signal_data={
+                "user_rationale": f"Manuel ekleme (Zeynel)",
+                "tema_hint": tema_id,
+                "added_by": "Zeynel",
+            },
+        )
 
-        result = wl_add(**kwargs)
-        action = result.get("action", "?")
-        if action == "added":
-            return f"✅ <b>{sym}</b> watchlist'e eklendi" + (
-                f" (tema: <code>{tema_id}</code>)" if tema_id else "")
-        elif action == "updated":
-            return f"♻️ <b>{sym}</b> zaten watchlist'te, kaynak/etiket güncellendi"
+        ai_action = gate_result["action"]
+        ai_score = gate_result["score"]
+        ai_reason = gate_result["reason"]
+        ai_theme = gate_result.get("theme_match")
+        ai_cautions = gate_result.get("cautions", [])
+
+        # Manuel ekleme her zaman EKLE — AI RED dese bile Zeynel'in iradesi
+        # ama AI'nin uyarisi rationale'e ve cautions'a yansir
+        rationale = f"Manuel (Zeynel, {datetime.now().strftime('%Y-%m-%d %H:%M')})"
+        if tema_id:
+            rationale += f" tema: {tema_id}"
+        rationale += f" — AI gate: {ai_reason}"
+
+        tags = ["manuel"] + ([tema_id] if tema_id else [])
+        if ai_action == "RED":
+            tags.append("ai_uyarili")
+
+        result = wl_add(
+            symbol=sym,
+            source="manuel_telegram",
+            rationale=rationale,
+            score=ai_score,
+            tags=tags,
+            score_components={
+                "ai_gate": {
+                    "action": ai_action,
+                    "score": ai_score,
+                    "theme_match": ai_theme,
+                    "cautions": ai_cautions,
+                },
+                **({"thematic_id": tema_id, "thematic_stage": "manuel"} if tema_id else {}),
+            },
+        )
+
+        action_done = result.get("action", "?")
+        if action_done == "added":
+            msg = f"✅ <b>{sym}</b> watchlist'e eklendi (skor {ai_score})"
+            if tema_id:
+                msg += f" · tema <code>{tema_id}</code>"
+            msg += f"\n<i>AI değerlendirmesi:</i> {ai_reason}"
+            if ai_action == "RED":
+                msg += "\n⚠️ <b>AI uyarısı vardı (yine de eklendi):</b>"
+                for c in ai_cautions[:3]:
+                    msg += f"\n  • {c}"
+            elif ai_theme:
+                msg += f"\n<i>Tema bağlantısı:</i> {ai_theme}"
+            return msg
+        elif action_done == "updated":
+            return (f"♻️ <b>{sym}</b> zaten watchlist'te, güncellendi "
+                    f"(yeni AI skor {ai_score})\n<i>{ai_reason}</i>")
         else:
-            return f"⚠️ <b>{sym}</b>: {action} — {result.get('reason', '?')}"
+            return f"⚠️ <b>{sym}</b>: {action_done} — {result.get('reason', '?')}"
     except Exception as e:
         return f"Ekleme hatası: {e}"
 

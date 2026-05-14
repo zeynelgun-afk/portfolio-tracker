@@ -113,6 +113,7 @@ def add(
     rationale: str = "",
     tags: Optional[list[str]] = None,
     price: Optional[float] = None,
+    score: Optional[float] = None,
     score_components: Optional[dict] = None,
 ) -> dict:
     """
@@ -123,6 +124,8 @@ def add(
     - Limit (_limit) doluysa: en düşük skorlu / en eski ticker arşivlenir
     - Symbol zaten watchlist'te varsa: rationale ve tags güncellenir,
       source ek olarak `sources` listesinde tutulur (multi-source destek)
+    - `score` verilirse yeni eklemede direkt set edilir, mevcut girdide ise
+      yüksek olan korunur (sinyal güçlenmesi).
 
     Returns:
         dict — {"action": "added"|"updated"|"skipped", "reason": "...", "symbol": "..."}
@@ -155,6 +158,12 @@ def add(
             entry["tags"] = list(set(entry.get("tags", []) + tags))
         if score_components:
             entry.setdefault("score_components", {}).update(score_components)
+        # Score: yeni gelen >= mevcut ise güncelle (sinyal güçlenmesi)
+        if score is not None:
+            current_score = entry.get("score") or 0
+            if score >= current_score:
+                entry["score"] = score
+                entry["score_updated_at"] = now_iso
         entry["last_updated"] = now_iso
         save(data)
         return {"action": "updated", "reason": "added source", "symbol": symbol,
@@ -187,8 +196,8 @@ def add(
         "rationale": rationale,
         "rationales": [rationale] if rationale else [],
         "tags": tags or [],
-        "score": None,
-        "score_updated_at": None,
+        "score": score,
+        "score_updated_at": now_iso if score is not None else None,
         "score_components": score_components or {},
         "last_news_check": None,
         "last_action_signal": None,

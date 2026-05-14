@@ -286,27 +286,55 @@ def _run_polling_cycle(
                 if decision["decision"] == "STRONG_BUY":
                     try:
                         from agent.watchlist import add as pool_add
+                        from agent.ai_gate import evaluate_signal as ai_gate_eval
                         avg_pct = decision.get("avg_revision_pct")
                         raised_count = decision.get("raised_count")
+
+                        # Asama 8 (14 May 2026): LLM gate — her sinyal AI'dan gecer
+                        gate_result = ai_gate_eval(
+                            symbol=ticker,
+                            signal_type="analist_revize",
+                            signal_data={
+                                "raised_count": raised_count,
+                                "avg_revision_pct": avg_pct,
+                                "lowered_count": decision.get("lowered_count", 0),
+                                "downgrade_count": decision.get("downgrade_count", 0),
+                                "decision_confidence": decision.get("confidence"),
+                                "current_price": current_price,
+                            },
+                        )
+
+                        if gate_result["action"] != "EKLE":
+                            _log(f"{ticker} AI gate REDDETTI: {gate_result['reason']}")
+                            continue
+
+                        # AI onayladi — ekle, AI'nin score'u ve gerekcesi kullanilir
                         rationale = (
-                            f"analist_takip STRONG_BUY: {raised_count or '?'} raise"
+                            f"analist_takip STRONG_BUY ({raised_count or '?'} raise"
                             + (f", avg +{avg_pct:.1f}%" if avg_pct else "")
+                            + f") + AI gate: {gate_result['reason']}"
                         )
                         result = pool_add(
                             symbol=ticker,
                             source="analist_takip_strong_buy",
                             rationale=rationale,
                             price=current_price,
+                            score=gate_result["score"],  # AI'nin verdigi skor
                             score_components={
                                 "analist_takip": {
                                     "raised_count": raised_count,
                                     "avg_revision_pct": avg_pct,
                                     "decision_confidence": decision.get("confidence"),
                                 },
+                                "ai_gate": {
+                                    "score": gate_result["score"],
+                                    "theme_match": gate_result.get("theme_match"),
+                                    "cautions": gate_result.get("cautions", []),
+                                },
                             },
                         )
                         if result["action"] in ("added", "updated"):
-                            _log(f"{ticker} ana havuza eklendi/güncellendi: {result['action']}")
+                            _log(f"{ticker} ana havuza eklendi/güncellendi (AI score {gate_result['score']}): {result['action']}")
                     except Exception as e:
                         _log(f"{ticker} ana havuz ekleme hatası: {e}")
 

@@ -209,6 +209,12 @@
       "schedule": "Seans-içi her 30dk (monitor ile paralel)",
       "workflow_file": "signal_broadcaster.yml",
       "tag": "AI"
+    },
+    {
+      "id": "agent/ai_gate.py",
+      "label": "AI Gate",
+      "category": "agent",
+      "tag": "AI - LLM gatekeeper"
     }
   ],
   "edges": [
@@ -447,6 +453,30 @@
     {
       "source": "scripts/signal_broadcaster.py",
       "target": "telegram_api"
+    },
+    {
+      "source": "agent/legacy/analist_takip/monitor.py",
+      "target": "agent/ai_gate.py"
+    },
+    {
+      "source": "scripts/fair_value_panel.py",
+      "target": "agent/ai_gate.py"
+    },
+    {
+      "source": "scripts/telegram_bot.py",
+      "target": "agent/ai_gate.py"
+    },
+    {
+      "source": "agent/ai_gate.py",
+      "target": "openrouter_api"
+    },
+    {
+      "source": "agent/ai_gate.py",
+      "target": "data/watchlist.json"
+    },
+    {
+      "source": "agent/ai_gate.py",
+      "target": "data/themes.json"
     }
   ]
 }

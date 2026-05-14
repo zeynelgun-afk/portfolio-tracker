@@ -306,19 +306,55 @@ def discover_undervalued_tickers(
 
             discovered.append((symbol, potential_pct, fv["fair_value"]))
 
-            # Watchlist'e ekle
+            # Asama 8 (14 May 2026): LLM gate — her sinyal AI'dan gecer
+            try:
+                from agent.ai_gate import evaluate_signal as ai_gate_eval
+                gate_result = ai_gate_eval(
+                    symbol=symbol,
+                    signal_type="fair_value_iskonto",
+                    signal_data={
+                        "fair_value": fv["fair_value"],
+                        "current_price": current,
+                        "potential_pct": round(potential_pct, 2),
+                        "latest_target": fv["latest_target"],
+                        "highest_target": fv["highest_target"],
+                        "sample_size": fv["sample_size"],
+                    },
+                )
+                if gate_result["action"] != "EKLE":
+                    print(f"[fair_value] {symbol} AI gate REDDETTI: {gate_result['reason']}")
+                    continue
+                ai_score = gate_result["score"]
+                ai_reason = gate_result["reason"]
+                ai_theme = gate_result.get("theme_match")
+                ai_cautions = gate_result.get("cautions", [])
+            except Exception as e:
+                print(f"[fair_value] {symbol} AI gate hatası: {e} — eski mantığa fallback")
+                ai_score = 50
+                ai_reason = "AI gate başarısız"
+                ai_theme = None
+                ai_cautions = ["gate_failed"]
+
+            # Watchlist'e ekle (AI onayı + zenginleştirme ile)
             result = wl_add(
                 symbol=symbol,
                 source="analyst_target_discount",
-                rationale=f"FV ${fv['fair_value']:.2f} = +%{potential_pct:.1f} potansiyel "
-                          f"(en yeni ${fv['latest_target']}, en yüksek ${fv['highest_target']})",
+                rationale=f"FV ${fv['fair_value']:.2f} = +%{potential_pct:.1f} "
+                          f"(en yeni ${fv['latest_target']}, en yüksek ${fv['highest_target']}) "
+                          f"+ AI gate: {ai_reason}",
                 price=current,
+                score=ai_score,
                 score_components={
                     "fair_value_discount_pct": round(potential_pct, 2),
                     "fair_value_target": fv["fair_value"],
                     "fair_value_latest_target": fv["latest_target"],
                     "fair_value_highest_target": fv["highest_target"],
                     "fair_value_sample_size": fv["sample_size"],
+                    "ai_gate": {
+                        "score": ai_score,
+                        "theme_match": ai_theme,
+                        "cautions": ai_cautions,
+                    },
                 },
             )
             if result["action"] == "added":
