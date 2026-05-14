@@ -184,9 +184,13 @@ def _get_signal_guidance(signal_type: str) -> str:
                 "(b) sektör downtrend'de mi? "
                 "Bunlar varsa RED. Kalite şirket + iskonto = EKLE.")
     if signal_type == "manuel":
-        return ("Zeynel manuel ekledi. RED nadiren — sadece tehlikeli yönlere "
-                "(spekülatif penny stock, sönüş tema) işaret ediyorsa. "
-                "Genelde EKLE + tema önerisi.")
+        return ("Zeynel manuel ekledi. RED kriterleri (varsa tetikle): "
+                "(a) sönüş aşamasındaki temaya bağlı, "
+                "(b) penny stock / mikro-cap (mcap < $1B) value-trap, "
+                "(c) hisse zaten portföyde veya excluded'da, "
+                "(d) finansalları çok zayıf (sürekli zarar, yüksek borç), "
+                "(e) yakın zamanda ciddi negatif olay (delisting riski). "
+                "Bu kriterlerden hiçbiri yoksa EKLE + tema önerisi.")
     if signal_type == "tematik":
         return "Tematik keşif sinyali. Tema aktifse (dogus/yukselis/olgun) EKLE."
     return ""

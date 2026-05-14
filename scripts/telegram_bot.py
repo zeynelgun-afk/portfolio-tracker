@@ -888,9 +888,8 @@ def format_temalar() -> str:
 
 def handle_ekle(text: str) -> str:
     """
-    /ekle SYM [tema_id]  — watchlist'e manuel ekle.
-    Asama 8: AI gate zenginlestirme (RED diyebilir ama yine de eklenir,
-    Zeynel'in iradesine saygi). AI'nin score'u + temasi + uyarilari kaydedilir.
+    /ekle SYM [tema_id]  — watchlist'e manuel ekleme.
+    Asama 8 (14 May 2026): AI gate karari saygi — RED dese eklenmez.
     """
     try:
         sys.path.insert(0, str(REPO_ROOT))
@@ -906,7 +905,7 @@ def handle_ekle(text: str) -> str:
         sym = parts[1].upper().strip()
         tema_id = parts[2].strip() if len(parts) >= 3 else None
 
-        # Asama 8: AI gate zenginlestirme
+        # AI gate degerlendirmesi
         gate_result = ai_gate_eval(
             symbol=sym,
             signal_type="manuel",
@@ -923,16 +922,23 @@ def handle_ekle(text: str) -> str:
         ai_theme = gate_result.get("theme_match")
         ai_cautions = gate_result.get("cautions", [])
 
-        # Manuel ekleme her zaman EKLE — AI RED dese bile Zeynel'in iradesi
-        # ama AI'nin uyarisi rationale'e ve cautions'a yansir
+        # AI RED dediyse eklenmez
+        if ai_action == "RED":
+            msg = f"🚫 <b>{sym}</b> watchlist'e EKLENMEDİ"
+            msg += f"\n\n<i>AI değerlendirmesi:</i> {ai_reason}"
+            if ai_cautions:
+                msg += "\n\n<b>Uyarılar:</b>"
+                for c in ai_cautions[:5]:
+                    msg += f"\n  • {c}"
+            return msg
+
+        # AI EKLE -> ekleme yapilir
         rationale = f"Manuel (Zeynel, {datetime.now().strftime('%Y-%m-%d %H:%M')})"
         if tema_id:
             rationale += f" tema: {tema_id}"
         rationale += f" — AI gate: {ai_reason}"
 
         tags = ["manuel"] + ([tema_id] if tema_id else [])
-        if ai_action == "RED":
-            tags.append("ai_uyarili")
 
         result = wl_add(
             symbol=sym,
@@ -957,11 +963,7 @@ def handle_ekle(text: str) -> str:
             if tema_id:
                 msg += f" · tema <code>{tema_id}</code>"
             msg += f"\n<i>AI değerlendirmesi:</i> {ai_reason}"
-            if ai_action == "RED":
-                msg += "\n⚠️ <b>AI uyarısı vardı (yine de eklendi):</b>"
-                for c in ai_cautions[:3]:
-                    msg += f"\n  • {c}"
-            elif ai_theme:
+            if ai_theme:
                 msg += f"\n<i>Tema bağlantısı:</i> {ai_theme}"
             return msg
         elif action_done == "updated":
