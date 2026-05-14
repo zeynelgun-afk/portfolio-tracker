@@ -17,11 +17,18 @@ related:
 > **Son güncelleme**: 10 Nisan 2026
 > **Amaç**: Tüm JSON/CSV dosyalarının güncel şeması, script envanteri ve sistem kuralları
 
+> ⚠️ **DEPRECATED — 13 Mayıs 2026 öncesi yapı.** Bu doküman eski 3-portföy
+> (`data/portfolios/{balanced,aggressive,dividend}.json`) + swing
+> (`data/swing/active.json`) + `data/transactions.csv` yapısını anlatır.
+> 13 May 2026 simplification ile tek `data/portfolio.json` (positions+closed)
+> kullanılıyor; transactions.csv `data/archive/2026-05-13_pre_simplification/`
+> altına taşındı. Güncel mimari için `docs/SYSTEM_MAP.md` (14 May 2026).
+
 ---
 
 ## KRİTİK KURALLAR
 
-1. **İşlemler YALNIZCA `data/transactions.csv`'ye** — portföy JSON'larındaki `transactions[]` artık kullanılmıyor
+1. **İşlemler `data/portfolio.json`'a** — `positions[]` (açık) + `closed[]` (kapanmış). Eski `transactions.csv` artık ARŞİVDE (`data/archive/2026-05-13_pre_simplification/`), 17 Şubat–12 Mayıs 2026 dönemini kapsar; yeni işlem yazılmıyor.
 2. **Türkçe zorunlu** — commit mesajları, alan açıklamaları, tezler Türkçe
 3. **Her değişiklikten sonra** git commit + push
 4. **Hesaplama tutarlılığı**: `yatirim = adet × maliyet_baz`, `kar_zarar = guncel_deger - yatirim`

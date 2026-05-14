@@ -384,30 +384,15 @@ WorkflowZamanlayici → thematic_discovery.yml
 
 ---
 
-## 5. `transactions.csv` DURUMU (önemli not)
+## 5. `transactions.csv` ARŞİVLENDİ (14 May 2026)
 
-`data/transactions.csv` **eski sistemin tek işlem kaydı** olarak tasarlanmıştı (sütunlar: `date, action, symbol, shares, price, total, reason`). 13 Mayıs 2026 simplification ile rolü değişti:
+`data/transactions.csv` 17 Şub–12 May 2026 dönemini kapsayan eski tek-işlem-kaydı dosyasıydı (sütunlar: `date, action, symbol, shares, price, total, reason`). 13 Mayıs 2026 simplification ile rolü duplicate hale geldi: `data/portfolio.json` zaten `positions[]` (entry_date/price/shares/reason) ve `closed[]` (+ exit_date/price/reason/pnl) ile tam işlem tarihçesini tutuyor.
 
-**Modern v2 sisteminde yazıcı yok:**
-- `agent/portfolio.py`, `agent/reports/*` — hiç dokunmuyor
-- `scripts/telegram_bot.py` — hiç dokunmuyor
+**14 May 2026 kararı:** Dosya `data/archive/2026-05-13_pre_simplification/transactions.csv` altına taşındı; dashboard'dan node silindi (44 node, 71 edge). Yeni işlem yazımı YOK — modern v2 sistemi `data/portfolio.json` üzerinden çalışır.
 
-**Sadece legacy modüller yazar:**
-- `agent/legacy/execution_engine.py:140`
-- `agent/legacy/swing_manager.py:430`
+**Geçmiş verisinin durumu:** 290 satır, 36 KB, 17 Şubat 2026 başlangıcından 12 Mayıs 2026'ya kadar tüm alım-satımlar arşivde sağlam korunuyor. K-kural backtest, geçmiş performans analizi gerektiğinde `data/archive/2026-05-13_pre_simplification/transactions.csv` okunabilir.
 
-**Sadece legacy + backtest modülleri okur:**
-- `agent/legacy/closing_enrichment.py`, `trade_feedback.py`, `prediction_logger.py`, `darwin_evolution.py`, `tema_portfolio_tracker.py`, `orchestrator.py`
-- `scripts/k_rules_backtest.py` (geçmiş backtest için)
-
-**Şu anki durum:** `data/portfolio.json` zaten `positions[]` (entry_date/price/shares/reason) ve `closed[]` (+ exit_date/price/reason/pnl) ile tam işlem tarihçesini tutuyor. `transactions.csv` ile veri duplicate.
-
-**`notes/2026-05-13_SIMPLIFICATION.md` planı:** "eski format korunabilir, sadece kayıt amaçlı". Yani dashboard'da bağlantısız görünmesi beklenen davranış — modern sistem onsuz da işlem tarihçesini tutuyor.
-
-**İleride bir karar gerekirse seçenekler:**
-1. **Statu quo:** Geçmiş 17 Şubat–13 Mayıs verisi için arşiv olarak tut, yeni yazıcı eklenmesin.
-2. **Çift yazım:** Modern `agent.portfolio.add_position/close_position` çağrıları transactions.csv'ye de bir satır eklesin (audit trail için).
-3. **Tamamen kaldır:** `data/archive/2026-05-13_pre_simplification/`'a taşı, dashboard'dan node'u sil.
+**Hala arşivde transactions.csv okuyan modüller** (legacy klasöründe, aktif sisteme bağlı değil): `agent/legacy/closing_enrichment.py`, `trade_feedback.py`, `prediction_logger.py`, `darwin_evolution.py`, `tema_portfolio_tracker.py`, `orchestrator.py`, `execution_engine.py`, `swing_manager.py`; `scripts/k_rules_backtest.py` (backtest yapılırsa yol güncellenmeli).
 
 ---
 

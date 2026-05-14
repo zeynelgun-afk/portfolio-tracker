@@ -158,11 +158,6 @@
       "category": "data"
     },
     {
-      "id": "data/transactions.csv",
-      "label": "transactions.csv",
-      "category": "data"
-    },
-    {
       "id": "ext.fmp",
       "label": "FMP API",
       "category": "external",

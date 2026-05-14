@@ -94,7 +94,7 @@ finzora-ai/
 │   │   ├── closed.json             # Kapanan trade'ler + dersler
 │   │   ├── status.json             # Sistem durumu
 │   │   └── watchlist.json          # Swing izleme listesi
-│   ├── transactions.csv            # Tüm işlem geçmişi (TEK KAYNAK)
+│   ├── archive/2026-05-13_pre_simplification/transactions.csv  # ARŞİV — eski TEK KAYNAK
 │   ├── watchlist.json              # Portföy izleme listesi
 │   ├── daily_full_scan.json        # ~1100 hisse tarama sonuçları
 │   ├── daily_scan_{aggressive,balanced,dividend}.json
@@ -159,7 +159,7 @@ agent/orchestrator.py
 | Veri | Dosya | Yazar |
 |------|-------|-------|
 | Portföy pozisyonları | `data/portfolios/{aggressive,balanced,dividend}.json` | Agent + Manuel |
-| Tüm işlemler | `data/transactions.csv` — 7 sütun: `date,action,symbol,shares,price,total,reason` | Agent + Manuel |
+| Tüm işlemler | ARŞİV — `data/archive/2026-05-13_pre_simplification/transactions.csv` (17 Şub–12 May 2026). Modern sistemde `data/portfolio.json` `positions[]` + `closed[]` tarihçeyi tutar. | — |
 | Swing pozisyonlar | `data/swing/active.json` | Agent (otomatik) |
 | Swing geçmişi | `data/swing/closed.json` | Agent (otomatik) |
 | Agent hafızası | `agent/memory/*.json` | Agent (otomatik) |
