@@ -570,6 +570,7 @@ def format_yardim() -> str:
   <code>/ekle SYM [tema]</code> — Watchlist'e manuel hisse ekle
   <code>/sil SYM</code> — Watchlist'ten arşivle
   <code>/duzelt SYM stop=X target=Y</code> — Watchlist score_components override
+  <code>/sinyaller</code> (<code>/signals</code>) — Sinyal performans takibi (Aşama 9)
   <code>/risk</code> — Risk paneli (manuel üret + grup'a gönder)
 
 <b>📡 Analist Takip:</b>
@@ -1675,6 +1676,84 @@ Kurallar: Em dash yok, cümleler büyük harfle, spekülatif/muhtemel/kesin ayr�
         return f"Analiz hatası: {e}"
 
 
+def format_sinyaller() -> str:
+    """Sinyal performans tablosu — Aşama 9 tracker verisi."""
+    try:
+        import html as _html
+        p = REPO_ROOT / "data" / "signal_performance.json"
+        if not p.exists():
+            return ("📊 Sinyal performans verisi henüz yok.\n\n"
+                    "<i>Aşama 6 sinyal yayını başlamış ama henüz checkpoint günü "
+                    "(7g/14g/30g) gelmemiş olabilir.</i>")
+        d = json.load(open(p, encoding="utf-8"))
+        signals = d.get("signals", {})
+        stats = d.get("stats", {})
+
+        if not signals:
+            return "📊 Henüz takip edilen sinyal yok."
+
+        lines = [
+            f"<b>📊 Sinyal Performans Takibi</b>",
+            f"<i>Son güncelleme: {d.get('_son_guncelleme', '?')}</i>",
+            "",
+            f"<b>Genel istatistik:</b>",
+            f"  Toplam: {stats.get('total_signals', 0)}",
+            f"  Takipte: {stats.get('tracking', 0)}",
+            f"  🟢 Hit target: {stats.get('hit_target', 0)}",
+            f"  🔴 Hit stop: {stats.get('hit_stop', 0)}",
+            f"  ⚪ Timeout 30g: {stats.get('timeout', 0)}",
+        ]
+
+        if stats.get("hit_rate") is not None:
+            lines.append(f"  Hit oranı: %{stats['hit_rate'] * 100:.1f}")
+        if stats.get("avg_return_pct") is not None:
+            lines.append(f"  Ort getiri: %{stats['avg_return_pct']:+.2f}")
+
+        # Son 10 sinyal
+        sorted_sigs = sorted(signals.values(), key=lambda s: s.get("sent_at", ""),
+                              reverse=True)[:10]
+        if sorted_sigs:
+            lines.append("")
+            lines.append(f"<b>Son sinyaller (max 10):</b>")
+            for sig in sorted_sigs:
+                sym = sig.get("symbol", "?")
+                score = sig.get("score", "?")
+                status = sig.get("status", "?")
+                sent = sig.get("sent_at", "?")[:10]
+
+                emoji = {"hit_target": "🟢", "hit_stop": "🔴",
+                         "timeout_30d": "⚪", "tracking": "⏳"}.get(status, "?")
+
+                # En son checkpoint pct
+                last_pct = None
+                for cp in ["30d", "14d", "7d"]:
+                    if cp in sig.get("checkpoints", {}):
+                        last_pct = sig["checkpoints"][cp]["pct"]
+                        break
+
+                pct_str = f"%{last_pct:+.2f}" if last_pct is not None else "—"
+                lines.append(f"  {emoji} <b>{_html.escape(sym)}</b> "
+                             f"skor {score}, {sent} → {pct_str} ({status})")
+
+        # Skor kalibrasyon
+        if stats.get("avg_score_winners") and stats.get("avg_score_losers"):
+            diff = stats["avg_score_winners"] - stats["avg_score_losers"]
+            lines.append("")
+            lines.append(f"<b>Skor kalibrasyon:</b>")
+            lines.append(f"  Kazanan ort: {stats['avg_score_winners']}")
+            lines.append(f"  Kaybeden ort: {stats['avg_score_losers']}")
+            if diff > 3:
+                lines.append(f"  ✓ Öngörü gücü iyi ({diff:+.1f})")
+            else:
+                lines.append(f"  ⚠️ Öngörü gücü zayıf ({diff:+.1f})")
+
+        lines.append("")
+        lines.append("<i>finzora ai — Aşama 9 sinyal tracker</i>")
+        return "\n".join(lines)
+    except Exception as e:
+        return f"Sinyal performans okunamadı: {e}"
+
+
 # Geriye uyumluluk — eski fonksiyon adı
 claude_analiz = finzora_analiz
 
@@ -1884,6 +1963,11 @@ def isle_mesaj(msg: dict):
     if (text_lower.startswith("/duzelt ") or text_lower.startswith("/düzelt ")
             or text_lower == "/duzelt" or text_lower == "/düzelt"):
         tg_send(chat_id, handle_duzelt(text), reply_to=msg_id)
+        return
+
+    # ── /sinyaller ─ Aşama 9 sinyal performans takibi ──
+    if text_lower in ("/sinyaller", "/signals", "/performans", "/performance"):
+        tg_send(chat_id, format_sinyaller(), reply_to=msg_id)
         return
 
     # ── /risk ─ Manuel risk panel üret + grup chat'e gönder ───────
@@ -2401,6 +2485,7 @@ def main():
             (16,  0, "agent.yml",            {"mode":"morning"},    True,  False, "Agent Sabah",                   True),
             (23,  0, "thematic_discovery.yml",{"mode":"daily"},      True,  False, "Tematik Keşif Günlük",          False),  # Asama 4 (14 May 2026): gun sonu tema tarama
             (23, 35, "research_tracker.yml", {"mode":"daily"},      False, False, "Research Tracker Günlük",       True),  # v5.0 Etap 11 her gün 23:35
+            (23, 45, "signal_tracker.yml",   None,                  True,  False, "Sinyal Tracker Günlük",         False),  # Asama 9 (14 May 2026): gun sonu performans guncelleme
             # Kapanış: gece yarısı 00:30 TR (yeni güne geçmiş ama hafta içinde)
             # Pzt gecesi 00:30 = Salı sabahı, Cum gecesi 00:30 = Cmt sabahı
             # weekday(): Sal=1…Cmt=5 → 1-5 arası = gece öncesi hafta içiydi
@@ -2411,6 +2496,7 @@ def main():
             (12,  0, "agent.yml",            {"mode":"weekly"},     False, True,  "Agent Haftalık",                False),
             (13,  0, "ai_orchestrator.yml",  {"mode":"weekly"},     False, True,  "AI Orchestrator Haftalık",      False),  # Asama 5 weekly derin analiz
             (14,  0, "research_tracker.yml", {"mode":"weekly"},     False, True,  "Research Tracker Haftalık",     False),  # v5.0 Etap 11 Pazar 14:00
+            (19,  0, "signal_tracker.yml",   {"sunday_mode":"true","dm":"true"}, False, True, "Sinyal Tracker Haftalık", False),  # Asama 9 weekly DM rapor
         ]
 
         def _is_nyse_dst_active():

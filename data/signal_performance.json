@@ -1,0 +1,18 @@
+{
+  "_son_guncelleme": "2026-05-14 08:12",
+  "_aciklama": "Aşama 9 — Sinyal performans takibi (7g/14g/30g checkpoint)",
+  "_schema_version": "1.0",
+  "signals": {},
+  "stats": {
+    "total_signals": 0,
+    "tracking": 0,
+    "completed": 0,
+    "hit_target": 0,
+    "hit_stop": 0,
+    "timeout": 0,
+    "hit_rate": null,
+    "avg_return_pct": null,
+    "avg_score_winners": null,
+    "avg_score_losers": null
+  }
+}

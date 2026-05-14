@@ -245,6 +245,31 @@
       "label": "watchlist.json",
       "category": "data",
       "tag": "Aşama 2-8 hisse havuzu v2.0 (max 80)"
+    },
+    {
+      "id": "signal_tracker.yml",
+      "label": "Signal Tracker",
+      "category": "workflow",
+      "schedule": "Hft 23:45 / Pzr 19:00 weekly DM",
+      "tag": "AI - Performans takibi"
+    },
+    {
+      "id": "scripts/signal_tracker.py",
+      "label": "signal_tracker.py",
+      "category": "script",
+      "tag": "Aşama 9 — 7g/14g/30g checkpoint"
+    },
+    {
+      "id": "data/signal_performance.json",
+      "label": "signal_performance.json",
+      "category": "data",
+      "tag": "Aşama 9 — sinyal performans veri"
+    },
+    {
+      "id": "logs/events.jsonl",
+      "label": "events.jsonl",
+      "category": "data",
+      "tag": "Sistem event log JSONL"
     }
   ],
   "edges": [
@@ -507,6 +532,30 @@
     {
       "source": "agent/ai_gate.py",
       "target": "data/themes.json"
+    },
+    {
+      "source": "scripts/telegram_bot.py",
+      "target": "signal_tracker.yml"
+    },
+    {
+      "source": "signal_tracker.yml",
+      "target": "scripts/signal_tracker.py"
+    },
+    {
+      "source": "scripts/signal_tracker.py",
+      "target": "logs/events.jsonl"
+    },
+    {
+      "source": "scripts/signal_tracker.py",
+      "target": "data/signal_performance.json"
+    },
+    {
+      "source": "scripts/signal_tracker.py",
+      "target": "ext.fmp"
+    },
+    {
+      "source": "scripts/signal_tracker.py",
+      "target": "ext.telegram"
     }
   ]
 }

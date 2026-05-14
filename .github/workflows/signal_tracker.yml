@@ -1,0 +1,74 @@
+name: Signal Tracker
+on:
+  workflow_dispatch:
+    inputs:
+      sunday_mode:
+        description: 'Pazar modu (sağlık + analiz dahil)'
+        required: false
+        default: 'false'
+        type: choice
+        options:
+          - 'false'
+          - 'true'
+      dm:
+        description: 'DM rapor gönder'
+        required: false
+        default: 'false'
+        type: choice
+        options:
+          - 'false'
+          - 'true'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: finzora-tracker-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  track:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run signal tracker
+        env:
+          FMP_API_KEY: ${{ secrets.FMP_API_KEY }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_DM_CHAT_ID: ${{ secrets.TELEGRAM_DM_CHAT_ID }}
+        run: |
+          SUNDAY="${{ github.event.inputs.sunday_mode || 'false' }}"
+          DM="${{ github.event.inputs.dm || 'false' }}"
+          ARGS=""
+          [ "$SUNDAY" = "true" ] && ARGS="$ARGS --sunday"
+          [ "$DM" = "true" ] && ARGS="$ARGS --dm"
+          python scripts/signal_tracker.py $ARGS
+
+      - name: Commit performance data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/signal_performance.json
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "[tracker] signal performance update"
+            for i in 1 2 3; do
+              git pull --rebase origin main && git push origin main && break
+              echo "Push retry $i..."
+              sleep 2
+            done
+          fi
