@@ -1,6 +1,6 @@
 {
   "_aciklama": "Tek portföy — 13 Mayıs 2026 sadeleştirmesi sonrası. Sleeve/sektör ağırlığı yok. Pozisyon büyüklüğü kararı Zeynel'e ait.",
-  "_son_guncelleme": "2026-05-13 17:57",
+  "_son_guncelleme": "2026-05-15 15:42 UTC",
   "_template_acik": {
     "symbol": "TICKER",
     "sector": "Sektör adı (Türkçe veya İngilizce)",
@@ -106,16 +106,6 @@
       "entry_reason": "Agresif v2 EDA tedarik zinciri yeni katman. FY26 fwd P/E 34x cazip (peer CDNS 42x). Q1 FY26 gelir +%65 YoY 2.41B. Design Automation segmenti +%96. Ansys sinerji başlangıç. Geride kalmış kalite (1Y +%4 vs CDNS +%10). DCF baz adil değer 520, analist konsensüs 544 (+%9). 20 analistten 14 buy.",
       "stop_loss": 461.0,
       "target": 540.0
-    },
-    {
-      "symbol": "O",
-      "sector": "Real Estate",
-      "entry_date": "2026-04-22",
-      "entry_price": 63.62,
-      "shares": 314,
-      "entry_reason": "Dividend: Realty Income REIT, aylık temettü ~%5.7, 30yr art arda artış, diversified commercial",
-      "stop_loss": 61.5,
-      "target": 67.05
     },
     {
       "symbol": "GTY",
@@ -708,6 +698,21 @@
       "exit_reason": "SURE",
       "pnl_pct": 11.45,
       "lessons": "**1. Hangi K-kuralı yönetti?**  \nK-06 (stop disiplini) ve 15-gün süre sınırı (SURE) temel kurallar. K-04 (SMA filtresi) girişte, K-11 (kademeli kâr alma) çıkışta etkili.\n\n**2. Giriş tezi doğru muydu? Ne oldu?**  \nTenkan_bounce tezi doğru çıktı. **KESİN:** 15 günde %11.45 kazanç. Önceki CAT işlemi (%4.26) gibi her zaman bu kadar güçlü olmuyor.\n\n**3. Çıkış zamanlaması iyi miydi?**  \nSURE nedeniyle 15. gün çıkışı. **KESİN:** Kurala uyuldu. **MUHTEMEL:** Momentum devam ederken erken olabilir.\n\n**4. "
+    },
+    {
+      "symbol": "O",
+      "sector": "Real Estate",
+      "entry_date": "2026-04-22",
+      "entry_price": 63.62,
+      "shares": 314,
+      "entry_reason": "Dividend: Realty Income REIT, aylık temettü ~%5.7, 30yr art arda artış, diversified commercial",
+      "stop_loss": 61.5,
+      "target": 67.05,
+      "exit_date": "2026-05-15",
+      "exit_price": 61.2,
+      "exit_reason": "Stop-loss tetik (intraday): fiyat $61.2 < stop $61.5. Day low $61.185.",
+      "pnl_pct": -3.8,
+      "lessons": "REIT sektörü faiz duyarlılığı tezi (30yr dividend artış track record) bozulmadı; ancak fiyat aksiyonu stop'a getirdi. Disiplinli stop = kayıp -%3.55 ile sınırlı kaldı. Dividend pozisyonu kapanışı = aylık dağıtım da kesildi — gelir akışı kaybı ayrı bir maliyet."
     }
   ]
 }
