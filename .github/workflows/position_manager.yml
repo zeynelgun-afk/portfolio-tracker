@@ -1,0 +1,64 @@
+name: Position Manager — Daily Close Scan
+
+# Daily 21:30 UTC = NYSE close + ~1h (FMP daily bar update margin).
+# In TR: 00:30 (yaz) / 00:30 (kış — DST-aware).
+# Trade gününden hemen sonra çalışır; ikinci ardışık günlük kapanış stop
+# altı tespit edilirse otomatik kapatma + Telegram GROUP raporu üretir.
+#
+# Manual: workflow_dispatch with dry_run=true for testing without closing positions.
+
+on:
+  schedule:
+    - cron: '30 21 * * 1-5'  # NYSE workdays only (Mon-Fri)
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Dry run (kapanış yapmaz, sadece tarama sonucu)'
+        required: false
+        default: 'false'
+        type: choice
+        options:
+          - 'false'
+          - 'true'
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.PAT || secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests python-dateutil
+
+      - name: Run position manager scan
+        env:
+          FMP_API_KEY:            ${{ secrets.FMP_API_KEY }}
+          TELEGRAM_BOT_TOKEN:     ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_GROUP_CHAT_ID: ${{ secrets.TELEGRAM_GROUP_CHAT_ID }}
+          TELEGRAM_DM_CHAT_ID:    ${{ secrets.TELEGRAM_DM_CHAT_ID }}
+        run: |
+          if [ "${{ github.event.inputs.dry_run }}" = "true" ]; then
+            python3 -m agent.position_manager scan --dry-run
+          else
+            python3 -m agent.position_manager scan
+          fi
+
+      - name: Commit portfolio + events changes
+        if: github.event.inputs.dry_run != 'true'
+        run: |
+          git config user.name "Finzora Bot"
+          git config user.email "finzora-bot@users.noreply.github.com"
+          git pull --rebase origin main || true
+          git add data/portfolio.json logs/events.jsonl 2>/dev/null || true
+          if git diff --staged --quiet; then
+            echo "No changes to commit (no positions closed)."
+          else
+            git commit -m "[bot/position-manager] Auto close scan $(date -u +%Y-%m-%d)"
+            git push || true
+          fi
