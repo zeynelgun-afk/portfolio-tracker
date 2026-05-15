@@ -23,11 +23,164 @@ from .config import (
     STRONG_SELL_MIN_LOWERED,
     STRONG_SELL_DOWNGRADE_REQUIRED,
     POST_EARNINGS_WATCH_DAYS,
+    GAP_STRONG_UPSIDE_AVG,
+    GAP_STRONG_UPSIDE_MAX,
+    GAP_STRONG_RR,
+    GAP_MEDIUM_UPSIDE_AVG,
+    GAP_MEDIUM_UPSIDE_MAX,
+    GAP_MEDIUM_RR,
+    GAP_WATCH_UPSIDE_AVG,
+    GAP_WATCH_UPSIDE_MAX,
+    GAP_WATCH_RR,
+    PRICE_TARGET_GAP_GATE_ENABLED,
 )
 
 
 # Post-earnings drift penceresi: bilanço sonrası kaç gün anlamlı revizyonlar
 DRIFT_WINDOW_DAYS = 14
+
+
+# === PRICE-TARGET GAP GATE (15 May 2026) ===
+# VIK gözlemi: 4 analist hedef yükseltti ama avg hedef kapanışın ALTINDA,
+# max hedef sadece +10%, low -32%. Analist sinyali pozitif olsa bile
+# AL kararı asimetrik kötü R/R verir.
+def price_target_gap_gate(
+    current_price: Optional[float],
+    target_consensus: Optional[dict],
+) -> dict:
+    """
+    Fiyatın analist hedef bandı içindeki konumunu değerlendirir ve
+    AL kararları için izin verilen tavan seviyesini döner.
+
+    Args:
+        current_price: Mevcut hisse fiyatı
+        target_consensus: {'avg', 'high', 'low', ...} veya None
+
+    Returns:
+        {
+            'enabled': bool,             # gate hesaplanabildi mi
+            'gap_quality': str,          # STRONG | MEDIUM | WATCH | SKIP | UNKNOWN
+            'max_decision': str,         # STRONG_BUY | BUY | WATCH
+            'upside_avg_pct': float|None,
+            'upside_max_pct': float|None,
+            'downside_pct': float|None,  # low'a göre downside (negatif)
+            'risk_reward': float|None,
+            'reason': str,               # insan okur açıklama
+        }
+    """
+    # Gate kapalıysa veya veri yoksa: serbest geç
+    if not PRICE_TARGET_GAP_GATE_ENABLED:
+        return {
+            "enabled": False,
+            "gap_quality": "UNKNOWN",
+            "max_decision": "STRONG_BUY",
+            "upside_avg_pct": None,
+            "upside_max_pct": None,
+            "downside_pct": None,
+            "risk_reward": None,
+            "reason": "Gate kapalı",
+        }
+
+    if not current_price or current_price <= 0 or not target_consensus:
+        return {
+            "enabled": False,
+            "gap_quality": "UNKNOWN",
+            "max_decision": "STRONG_BUY",
+            "upside_avg_pct": None,
+            "upside_max_pct": None,
+            "downside_pct": None,
+            "risk_reward": None,
+            "reason": "Fiyat/hedef verisi yok — gate atlandı",
+        }
+
+    avg = target_consensus.get("avg")
+    high = target_consensus.get("high")
+    low = target_consensus.get("low")
+
+    upside_avg = ((avg / current_price - 1) * 100) if avg else None
+    upside_max = ((high / current_price - 1) * 100) if high else None
+    downside = ((low / current_price - 1) * 100) if low else None
+
+    # R/R: ortalama upside'in absolute değeri / downside'in absolute değeri
+    risk_reward = None
+    if upside_avg is not None and downside is not None and downside < 0:
+        risk_reward = upside_avg / abs(downside)  # negatif upside negatif R/R verir
+
+    # En az upside_avg ve upside_max gerek; biri yoksa gate eksik
+    if upside_avg is None or upside_max is None:
+        return {
+            "enabled": False,
+            "gap_quality": "UNKNOWN",
+            "max_decision": "STRONG_BUY",
+            "upside_avg_pct": upside_avg,
+            "upside_max_pct": upside_max,
+            "downside_pct": downside,
+            "risk_reward": risk_reward,
+            "reason": "Hedef avg veya high eksik — gate atlandı",
+        }
+
+    # Üçüncü kontrol (R/R) yoksa, sadece upside_avg + upside_max'a bak
+    rr_check = risk_reward if risk_reward is not None else None
+
+    def _meets(req_avg, req_max, req_rr):
+        if upside_avg < req_avg:
+            return False
+        if upside_max < req_max:
+            return False
+        # R/R verisi yoksa onu atlayabilir (low eksik durumda)
+        if rr_check is not None and rr_check < req_rr:
+            return False
+        return True
+
+    if _meets(GAP_STRONG_UPSIDE_AVG, GAP_STRONG_UPSIDE_MAX, GAP_STRONG_RR):
+        quality = "STRONG"
+        max_dec = "STRONG_BUY"
+    elif _meets(GAP_MEDIUM_UPSIDE_AVG, GAP_MEDIUM_UPSIDE_MAX, GAP_MEDIUM_RR):
+        quality = "MEDIUM"
+        max_dec = "BUY"
+    elif _meets(GAP_WATCH_UPSIDE_AVG, GAP_WATCH_UPSIDE_MAX, GAP_WATCH_RR):
+        quality = "WATCH"
+        max_dec = "WATCH"
+    else:
+        quality = "SKIP"
+        max_dec = "WATCH"
+
+    # Gerekçe metni
+    parts = [f"avg upside {upside_avg:+.1f}%", f"max upside {upside_max:+.1f}%"]
+    if rr_check is not None:
+        parts.append(f"R/R {rr_check:.2f}")
+    reason = f"Gap={quality}: " + ", ".join(parts)
+
+    return {
+        "enabled": True,
+        "gap_quality": quality,
+        "max_decision": max_dec,
+        "upside_avg_pct": round(upside_avg, 2),
+        "upside_max_pct": round(upside_max, 2),
+        "downside_pct": round(downside, 2) if downside is not None else None,
+        "risk_reward": round(rr_check, 2) if rr_check is not None else None,
+        "reason": reason,
+    }
+
+
+# Karar hiyerarşisi: gate max'ı kararı sınırlandırırken kullanılır
+_DECISION_RANK = {
+    "STRONG_BUY": 3,
+    "BUY": 2,
+    "WATCH": 1,
+    "NEUTRAL": 0,
+    "SELL": -1,
+    "STRONG_SELL": -2,
+}
+
+
+def _apply_gate_cap(decision: str, gate_max: str) -> str:
+    """Gate'in izin verdiği max karar seviyesine cap'le. SELL'lere dokunma."""
+    if decision in ("SELL", "STRONG_SELL", "NEUTRAL"):
+        return decision  # Gate sadece AL kararları için
+    if _DECISION_RANK.get(decision, 0) > _DECISION_RANK.get(gate_max, 3):
+        return gate_max
+    return decision
 
 
 def analyze_signals(
@@ -37,6 +190,8 @@ def analyze_signals(
     window_hours: Optional[int] = None,
     last_earnings_date: Optional[_date_type] = None,
     require_post_earnings: bool = True,
+    current_price: Optional[float] = None,
+    target_consensus: Optional[dict] = None,
 ) -> dict:
     """
     Toplanan revizyon listesinden karar üretir.
@@ -49,9 +204,13 @@ def analyze_signals(
         last_earnings_date: Son tamamlanmış bilanço tarihi
         require_post_earnings: True ise, sadece bilanço sonrası revizyonlar sayılır
                               ve >14 gün geçmişse NEUTRAL döner
+        current_price: Mevcut fiyat (price-target gap gate için)
+        target_consensus: {'avg', 'high', 'low', ...} (price-target gap gate için)
 
     Returns:
-        {decision, confidence, raised_count_48h, lowered_count_48h, ...}
+        {decision, confidence, raised_count_48h, lowered_count_48h, ...,
+         gap_quality, gap_max_decision, upside_avg_pct, upside_max_pct,
+         downside_pct, risk_reward, gate_reason, gate_applied, original_decision}
     """
     if now is None:
         now = datetime.now(timezone.utc)
@@ -143,6 +302,16 @@ def analyze_signals(
                 "drift_status": drift_status,
                 "days_since_earnings": days_since_earnings,
                 "last_earnings_date": last_earnings_date.isoformat() if last_earnings_date else None,
+                # Gate metadata (drift expired path — gate uygulanmadı)
+                "gap_quality": "UNKNOWN",
+                "gap_max_decision": "WATCH",
+                "upside_avg_pct": None,
+                "upside_max_pct": None,
+                "downside_pct": None,
+                "risk_reward": None,
+                "gate_reason": "Drift expired path — gate atlandı",
+                "gate_applied": False,
+                "original_decision": "WATCH",
             }
 
         # Büyük raise yoksa NEUTRAL
@@ -170,6 +339,16 @@ def analyze_signals(
             "drift_status": drift_status,
             "days_since_earnings": days_since_earnings,
             "last_earnings_date": last_earnings_date.isoformat() if last_earnings_date else None,
+            # Gate metadata (drift expired path — gate uygulanmadı)
+            "gap_quality": "UNKNOWN",
+            "gap_max_decision": "WATCH",
+            "upside_avg_pct": None,
+            "upside_max_pct": None,
+            "downside_pct": None,
+            "risk_reward": None,
+            "gate_reason": "Drift expired path — gate atlandı",
+            "gate_applied": False,
+            "original_decision": "NEUTRAL",
         }
 
     # Pencere içindeki sinyalleri filtrele
@@ -345,6 +524,25 @@ def analyze_signals(
             "title": s.get("title") or s.get("news_title"),
         })
 
+    # === PRICE-TARGET GAP GATE (15 May 2026) ===
+    # AL kararlarının fiyat-hedef bandı pozisyonuna göre filtrele/sınırla
+    gate = price_target_gap_gate(current_price, target_consensus)
+    original_decision = decision
+    gate_applied = False
+
+    if gate["enabled"] and decision in ("BUY", "STRONG_BUY"):
+        capped = _apply_gate_cap(decision, gate["max_decision"])
+        if capped != decision:
+            gate_applied = True
+            decision = capped
+            # Confidence'i de düşür
+            if decision == "WATCH":
+                confidence = "low"
+            elif decision == "BUY" and gate["gap_quality"] == "MEDIUM":
+                confidence = "medium"
+            # Rationale'a gate notunu ekle
+            rationale = f"{rationale} | GATE: {original_decision}→{decision} ({gate['reason']})"
+
     return {
         "ticker": ticker,
         "decision": decision,
@@ -366,4 +564,14 @@ def analyze_signals(
         "drift_status": drift_status,
         "days_since_earnings": days_since_earnings,
         "last_earnings_date": last_earnings_date.isoformat() if last_earnings_date else None,
+        # Gate metadata
+        "gap_quality": gate["gap_quality"],
+        "gap_max_decision": gate["max_decision"],
+        "upside_avg_pct": gate["upside_avg_pct"],
+        "upside_max_pct": gate["upside_max_pct"],
+        "downside_pct": gate["downside_pct"],
+        "risk_reward": gate["risk_reward"],
+        "gate_reason": gate["reason"],
+        "gate_applied": gate_applied,
+        "original_decision": original_decision,
     }

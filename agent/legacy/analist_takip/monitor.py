@@ -205,12 +205,30 @@ def _run_polling_cycle(
             # 3. Son tamamlanmış bilanço tarihini al (drift filter için)
             last_earnings = get_last_actual_earnings_date(ticker)
 
-            # 4. Karar üret (post-earnings drift mantığıyla)
+            # 3b. Mevcut fiyat + mcap + analist hedef özetini şimdi çek
+            #     (analyze_signals'a gate için iletilecek)
+            current_price = None
+            market_cap_b = None
+            target_consensus = None
+            try:
+                from .revision_fetcher import _fmp_get
+                quote_data = _fmp_get("quote", symbol=ticker)
+                if isinstance(quote_data, list) and quote_data:
+                    q = quote_data[0]
+                    current_price = q.get("price")
+                    market_cap_b = round(q.get("marketCap", 0) / 1e9, 2) if q.get("marketCap") else None
+                target_consensus = get_target_consensus(ticker)
+            except Exception:
+                pass
+
+            # 4. Karar üret (post-earnings drift + price-target gap gate)
             decision = analyze_signals(
                 ticker, signals,
                 now=now_utc,
                 last_earnings_date=last_earnings,
                 require_post_earnings=True,
+                current_price=current_price,
+                target_consensus=target_consensus,
             )
 
             # 4. Anlamlı bir karar mı? DM filter ayarlarına göre kontrol
@@ -234,21 +252,7 @@ def _run_polling_cycle(
                 # Tüm sinyaller daha önce görülmüş; bu karar zaten DM edildi sayılır
                 continue
 
-            # 7. Mevcut fiyat + mcap + analist hedef özeti fetch
-            current_price = None
-            market_cap_b = None
-            target_consensus = None
-            try:
-                from .revision_fetcher import _fmp_get
-                quote_data = _fmp_get("quote", symbol=ticker)
-                if isinstance(quote_data, list) and quote_data:
-                    q = quote_data[0]
-                    current_price = q.get("price")
-                    market_cap_b = round(q.get("marketCap", 0) / 1e9, 2) if q.get("marketCap") else None
-                target_consensus = get_target_consensus(ticker)
-            except Exception:
-                pass
-
+            # 7. Fiyat/mcap/target_consensus zaten Adım 3b'de çekildi.
             # 8. DM gönder
             success = notify_signal(
                 decision,
@@ -383,12 +387,27 @@ def force_run_now(
         try:
             signals = fetch_all_signals(ticker, since)
             last_earnings = get_last_actual_earnings_date(ticker)
+
+            # Fiyat + hedef özet (gate için)
+            current_price = None
+            target_consensus = None
+            try:
+                from .revision_fetcher import _fmp_get
+                quote_data = _fmp_get("quote", symbol=ticker)
+                if isinstance(quote_data, list) and quote_data:
+                    current_price = quote_data[0].get("price")
+                target_consensus = get_target_consensus(ticker)
+            except Exception:
+                pass
+
             decision = analyze_signals(
                 ticker, signals,
                 now=now_utc,
                 window_hours=window_hours,
                 last_earnings_date=last_earnings,
                 require_post_earnings=True,
+                current_price=current_price,
+                target_consensus=target_consensus,
             )
             results.append({
                 "ticker": ticker,
@@ -403,6 +422,13 @@ def force_run_now(
                 "drift_status": decision.get("drift_status"),
                 "days_since_earnings": decision.get("days_since_earnings"),
                 "last_earnings_date": decision.get("last_earnings_date"),
+                # Gate bilgisi
+                "gap_quality": decision.get("gap_quality"),
+                "upside_avg_pct": decision.get("upside_avg_pct"),
+                "upside_max_pct": decision.get("upside_max_pct"),
+                "risk_reward": decision.get("risk_reward"),
+                "gate_applied": decision.get("gate_applied"),
+                "original_decision": decision.get("original_decision"),
             })
         except Exception as e:
             results.append({"ticker": ticker, "error": str(e)})

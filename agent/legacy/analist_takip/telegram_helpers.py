@@ -62,16 +62,7 @@ def analyze_single_ticker_now(ticker: str, hours_back: int = 168) -> str:
     # 2. Bilanço tarihi
     last_e = get_last_actual_earnings_date(ticker)
 
-    # 3. Karar üret
-    decision = analyze_signals(
-        ticker, signals,
-        now=now,
-        window_hours=hours_back,
-        last_earnings_date=last_e,
-        require_post_earnings=True,
-    )
-
-    # 4. Fiyat + mcap + consensus
+    # 3. Fiyat + mcap + consensus (gate için analyze_signals'dan ÖNCE)
     current_price = None
     market_cap_b = None
     target_consensus = None
@@ -84,6 +75,17 @@ def analyze_single_ticker_now(ticker: str, hours_back: int = 168) -> str:
         target_consensus = get_target_consensus(ticker)
     except Exception:
         pass
+
+    # 4. Karar üret (price-target gap gate dahil)
+    decision = analyze_signals(
+        ticker, signals,
+        now=now,
+        window_hours=hours_back,
+        last_earnings_date=last_e,
+        require_post_earnings=True,
+        current_price=current_price,
+        target_consensus=target_consensus,
+    )
 
     # 5. Tam DM formatını kullan
     msg = format_signal_message(

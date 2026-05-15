@@ -204,6 +204,37 @@ def format_signal_message(
         for e in evidence[:5]:
             lines.append(_format_evidence_line(e))
 
+    # === Price-Target Gap Gate bilgisi (15 May 2026) ===
+    gap_quality = signal.get("gap_quality")
+    upside_avg = signal.get("upside_avg_pct")
+    upside_max = signal.get("upside_max_pct")
+    risk_reward = signal.get("risk_reward")
+    gate_applied = signal.get("gate_applied", False)
+    original_decision = signal.get("original_decision")
+
+    if gap_quality and gap_quality != "UNKNOWN":
+        lines.append("")
+        gap_emoji = {
+            "STRONG": "🟢",
+            "MEDIUM": "🟡",
+            "WATCH": "🟠",
+            "SKIP": "🔴",
+        }.get(gap_quality, "")
+        lines.append(f"<b>📐 Fiyat-Hedef Boşluğu: {gap_emoji} {gap_quality}</b>")
+        gap_parts = []
+        if upside_avg is not None:
+            gap_parts.append(f"  Avg upside: {upside_avg:+.1f}%")
+        if upside_max is not None:
+            gap_parts.append(f"  Max upside: {upside_max:+.1f}%")
+        if risk_reward is not None:
+            gap_parts.append(f"  R/R: {risk_reward:.2f}")
+        lines.extend(gap_parts)
+
+        if gate_applied and original_decision:
+            orig_title = DECISION_TITLE.get(original_decision, original_decision)
+            new_title = DECISION_TITLE.get(decision, decision)
+            lines.append(f"  ⚠️ <i>{orig_title} → {new_title}'a düşürüldü</i>")
+
     # Karar + rationale
     lines.append("")
     lines.append(f"<b>► KARAR: {title} ({confidence})</b>")

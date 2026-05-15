@@ -58,6 +58,36 @@ SELL_BIG_CUT_PCT = -15.0
 STRONG_SELL_MIN_LOWERED = 3
 STRONG_SELL_DOWNGRADE_REQUIRED = True
 
+# === Price-Target Gap Gate (15 May 2026, VIK gözleminden eklendi) ===
+# Analist hareketi pozitif olsa bile, fiyat zaten hedef bandının üstünde/yakınında
+# olduğunda AL kararı asimetrik kötü R/R verir. Bu gate, BUY/STRONG_BUY kararlarını
+# fiyatın analist hedef bandı içindeki konumuna göre filtreler/düşürür.
+#
+# upside_avg: (target_avg - current_price) / current_price
+# upside_max: (target_high - current_price) / current_price
+# downside:   (target_low - current_price) / current_price   (negatif olur)
+# risk_reward: |upside_avg| / |downside|  (her ikisi de yüzde)
+#
+# Gap kalite seviyeleri ve izin verilen MAX karar:
+#   STRONG → STRONG_BUY izinli
+#   MEDIUM → BUY tavan (STRONG_BUY → BUY)
+#   WATCH  → WATCH tavan (BUY/STRONG_BUY → WATCH)
+#   SKIP   → WATCH tavan (downgrade)
+GAP_STRONG_UPSIDE_AVG = 15.0       # ortalama hedef ≥ +15% upside
+GAP_STRONG_UPSIDE_MAX = 30.0       # max hedef ≥ +30% upside
+GAP_STRONG_RR = 2.0                # R/R ≥ 2.0
+
+GAP_MEDIUM_UPSIDE_AVG = 8.0
+GAP_MEDIUM_UPSIDE_MAX = 20.0
+GAP_MEDIUM_RR = 1.5
+
+GAP_WATCH_UPSIDE_AVG = 5.0
+GAP_WATCH_UPSIDE_MAX = 15.0
+GAP_WATCH_RR = 1.0
+
+# Gate uygulanmasi: True → BUY/STRONG_BUY kararlari sinirlanir
+PRICE_TARGET_GAP_GATE_ENABLED = True
+
 # === Dosya Yolları ===
 ANALIST_STATE_DIR = "data/analist_takip"
 WATCHLIST_PATH = "data/analist_takip/watchlist.json"
