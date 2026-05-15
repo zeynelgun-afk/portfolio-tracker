@@ -712,7 +712,7 @@
       "exit_price": 61.2,
       "exit_reason": "Stop-loss tetik (intraday): fiyat $61.2 < stop $61.5. Day low $61.185.",
       "pnl_pct": -3.8,
-      "lessons": "REIT sektörü faiz duyarlılığı tezi (30yr dividend artış track record) bozulmadı; ancak fiyat aksiyonu stop'a getirdi. Disiplinli stop = kayıp -%3.55 ile sınırlı kaldı. Dividend pozisyonu kapanışı = aylık dağıtım da kesildi — gelir akışı kaybı ayrı bir maliyet."
+      "lessons": "REIT sektörü faiz duyarlılığı tezi (30yr+ dividend artış) bozulmadı; fiyat aksiyonu stop'a getirdi. Disiplinli stop kayıp -%3.80 ile sınırlı kaldı. Aylık temettü gelir akışı da kesildi (ayrı maliyet).\n\nPOST-CLOSE NOT (aynı gün politika güncellemesi): Stop tetik kuralı 2-bar daily close confirmation'a yükseltildi (agent/position_manager.py, commit b4053725). Retroactive: 14 May kapanış $61.96 stop $61.50 üstü, 15 May kapanış $61.39 stop altı → yeni kural bu sabah intraday kapatma yapmazdı, 'pending' verirdi. Pzt (18 May) kapanışı da stop altı olsaydı oto kapanırdı. Karar (Zeynel, 15 May 19:30 TR): yeni kural ileriye dönük uygulanır; bu işlem kayıtta kalır. Ders: politika değişiklikleri retro değil ileri yönde."
     }
   ]
 }
