@@ -167,6 +167,34 @@ def vix_quote() -> Optional[dict]:
     return quote("^VIX")
 
 
+def earnings_calendar(from_date: str, to_date: str) -> list[dict]:
+    """
+    Belirtilen tarih aralığındaki earnings takvimini döndür.
+    Field'lar: symbol, date, epsActual, epsEstimated, revenueActual,
+    revenueEstimated, lastUpdated. Max 90 gün.
+    NOT: time field (BMO/AMC) stable endpoint'te YOK — sadece tarih.
+    """
+    result = fmp_get("earnings-calendar", {"from": from_date, "to": to_date})
+    return result if isinstance(result, list) else []
+
+
+def aftermarket_batch(symbols: list[str]) -> dict[str, dict]:
+    """
+    Batch extended-hours quote (pre-market ve after-hours için tek endpoint).
+    Field'lar: symbol, bidSize, bidPrice, askSize, askPrice, volume, timestamp.
+    NOT: last trade price YOK — mid = (bid+ask)/2 hesaplanmalı.
+    Pre-market saatleri dışında (ET 04:00 öncesi / ET 20:00 sonrası)
+    son işlemi döndürür, gerçek zamanlı değil.
+    """
+    if not symbols:
+        return {}
+    syms = ",".join(symbols)
+    result = fmp_get("batch-aftermarket-quote", {"symbols": syms})
+    if not isinstance(result, list):
+        return {}
+    return {q.get("symbol"): q for q in result if isinstance(q, dict) and q.get("symbol")}
+
+
 # ---------- CLI for sanity checks ----------
 
 if __name__ == "__main__":

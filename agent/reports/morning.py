@@ -19,7 +19,7 @@ from __future__ import annotations
 
 import sys
 from collections import defaultdict
-from datetime import datetime
+from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Optional
 
@@ -29,7 +29,9 @@ if str(_REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(_REPO_ROOT))
 
 from agent.portfolio import get_positions, portfolio_metrics  # noqa: E402
-from agent.fmp import batch_quote, vix_quote                   # noqa: E402
+from agent.fmp import (                                       # noqa: E402
+    batch_quote, vix_quote, earnings_calendar, aftermarket_batch
+)
 from agent.telegram import send_to_group                       # noqa: E402
 
 REPORTS_DIR = _REPO_ROOT / "reports" / "daily"
@@ -226,41 +228,182 @@ def render_report(macro: dict, portfolio: dict, today: str) -> str:
     return "\n".join(lines)
 
 
+def _fetch_today_earnings(symbols: set[str], today: str) -> list[dict]:
+    """
+    Bugün earnings açıklayacak portföy sembollerini döndür.
+    Sabah TR 16:00 = ET 09:00 (pre-market). Bugün BMO veya AMC olabilir,
+    FMP stable endpoint time/timing field vermiyor — sadece tarih.
+    """
+    try:
+        cal = earnings_calendar(today, today)
+        return [e for e in cal if e.get("symbol") in symbols]
+    except Exception as e:
+        print(f"[morning] earnings_calendar failed: {e}")
+        return []
+
+
+def _fetch_premarket_movers(positions: list[dict]) -> list[dict]:
+    """
+    Portföy pozisyonları için pre-market hareketi (>1.5% mutlak) tespiti.
+    Aftermarket-quote endpoint mid (bid+ask)/2 verir; previousClose ile
+    karşılaştırılarak % değişim hesaplanır.
+    Graceful: data yoksa veya endpoint hata verirse boş döner.
+    """
+    syms = [p.get("symbol") for p in positions if p.get("symbol")]
+    if not syms:
+        return []
+    try:
+        am = aftermarket_batch(syms)
+    except Exception as e:
+        print(f"[morning] aftermarket_batch failed: {e}")
+        return []
+    if not am:
+        return []
+
+    movers = []
+    for p in positions:
+        sym = p.get("symbol")
+        prev_close = _safe_float(p.get("current_price"))  # dünkü kapanış (enrich price)
+        am_data = am.get(sym) or {}
+        bid = _safe_float(am_data.get("bidPrice"))
+        ask = _safe_float(am_data.get("askPrice"))
+        if not (bid and ask and prev_close):
+            continue
+        mid = (bid + ask) / 2
+        if mid <= 0:
+            continue
+        chg_pct = (mid - prev_close) / prev_close * 100
+        if abs(chg_pct) >= 1.5:
+            movers.append({
+                "symbol": sym,
+                "premarket_price": round(mid, 2),
+                "prev_close": prev_close,
+                "premarket_chg_pct": round(chg_pct, 2),
+            })
+    movers.sort(key=lambda x: abs(x["premarket_chg_pct"]), reverse=True)
+    return movers
+
+
 def render_telegram_summary(macro: dict, portfolio: dict, today: str) -> str:
-    """Concise Turkish summary for the Finzora group chat."""
+    """
+    Sabah raporu Telegram özeti — AKSIYON ODAKLI format (2026-05-15 yeni).
+
+    Yapı:
+      • Piyasa başlığı (VIX/SPY/QQQ)
+      • ⚠ Stop'a yakın pozisyonlar (stop_distance < 3%)
+      • 🎯 Hedefe yakın pozisyonlar (target_distance < 5%)
+      • 📅 Bugün earnings açıklayacak portföy hisseleri
+      • 🌐 Pre-market'te hareketli portföy hisseleri (|chg| ≥ 1.5%)
+      • 📊 Alt özet (pozitif/toplam, ortalama K/Z%)
+
+    Dolar tutarları (toplam piyasa değeri, P&K USD) tamamen çıkarıldı.
+    Premarket data graceful — endpoint başarısız olursa o blok atlanır.
+    """
     vix_price = macro["vix"]["price"]
     spy = macro["macro"].get("SPY", {})
     qqq = macro["macro"].get("QQQ", {})
-    m = portfolio["metrics"]
+    positions = portfolio["positions"]
+    sortable = [p for p in positions if p.get("unrealized_pnl_pct") is not None]
 
     lines = [
-        f"<b>🌅 SABAH RAPORU — {today}</b>",
+        f"<b>🌅 SABAH — {today}</b>",
         "",
-        f"📊 <b>Piyasa:</b>",
-        f"  VIX: {_fmt(vix_price)} ({_vix_regime(vix_price)})",
-        f"  SPY: ${_fmt(spy.get('price'))} ({_fmt_pct(_safe_float(spy.get('changePercentage')))})",
-        f"  QQQ: ${_fmt(qqq.get('price'))} ({_fmt_pct(_safe_float(qqq.get('changePercentage')))})",
+        f"📊 VIX {_fmt(vix_price)} ({_vix_regime(vix_price)}) | "
+        f"SPY {_fmt_pct(_safe_float(spy.get('changePercentage')))} | "
+        f"QQQ {_fmt_pct(_safe_float(qqq.get('changePercentage')))}",
         "",
-        f"💼 <b>Portföy:</b>",
-        f"  Pozisyon: {m.get('position_count', 0)}",
     ]
-    if "total_market_value" in m:
-        lines.append(f"  Piyasa: ${m['total_market_value']:,.0f}")
-        lines.append(
-            f"  P&K: {m['total_unrealized_pnl']:+,.0f} USD "
-            f"({m['total_unrealized_pnl_pct']:+.2f}%)"
-        )
 
-    if portfolio["stop_near"]:
-        near = [p for p in portfolio["stop_near"] if p["stop_distance_pct"] < 2]
-        if near:
-            lines.append("")
-            lines.append(f"⚠️ <b>Stop yakın</b> ({len(near)} pozisyon):")
-            for p in near[:5]:
-                lines.append(
-                    f"  {p['symbol']}: ${_fmt(p.get('current_price'))} → "
-                    f"stop ${p['stop_loss']:.2f} ({p['stop_distance_pct']:+.2f}%)"
-                )
+    # ---- STOP'A YAKIN ----
+    stop_near = [
+        p for p in positions
+        if p.get("stop_distance_pct") is not None and p["stop_distance_pct"] < 3
+    ]
+    stop_near.sort(key=lambda x: x["stop_distance_pct"])
+    if stop_near:
+        lines.append(f"⚠️ <b>STOP'A YAKIN</b> ({len(stop_near)}):")
+        for p in stop_near:
+            cp = _safe_float(p.get("current_price"))
+            sl = _safe_float(p.get("stop_loss"))
+            dist = p["stop_distance_pct"]
+            tag = " <b>STOP ALTI!</b>" if dist < 0 else ""
+            lines.append(
+                f"  <b>{p['symbol']}</b>: ${_fmt(cp)} → stop ${_fmt(sl)} "
+                f"({dist:+.2f}%){tag}"
+            )
+        lines.append("")
+
+    # ---- HEDEFE YAKIN ----
+    target_near = [
+        p for p in positions
+        if p.get("target_distance_pct") is not None and 0 <= p["target_distance_pct"] < 5
+    ]
+    target_near.sort(key=lambda x: x["target_distance_pct"])
+    # Hedefi geçenler ayrı: target_distance < 0
+    target_passed = [
+        p for p in positions
+        if p.get("target_distance_pct") is not None and p["target_distance_pct"] < 0
+    ]
+    if target_passed:
+        lines.append(f"🎯 <b>HEDEF GEÇİLDİ</b> ({len(target_passed)}) — kar alımı düşün:")
+        for p in target_passed:
+            cp = _safe_float(p.get("current_price"))
+            tg = _safe_float(p.get("target"))
+            pnl = p.get("unrealized_pnl_pct")
+            lines.append(
+                f"  <b>{p['symbol']}</b>: ${_fmt(cp)} > target ${_fmt(tg)} "
+                f"(K/Z: {_fmt_pct(pnl)})"
+            )
+        lines.append("")
+    if target_near:
+        lines.append(f"🎯 <b>HEDEFE YAKIN</b> ({len(target_near)}):")
+        for p in target_near:
+            cp = _safe_float(p.get("current_price"))
+            tg = _safe_float(p.get("target"))
+            dist = p["target_distance_pct"]
+            lines.append(
+                f"  <b>{p['symbol']}</b>: ${_fmt(cp)} → target ${_fmt(tg)} "
+                f"({dist:+.2f}% kaldı)"
+            )
+        lines.append("")
+
+    # ---- BUGÜN EARNINGS ----
+    portfolio_syms = {p.get("symbol") for p in positions if p.get("symbol")}
+    earnings_today = _fetch_today_earnings(portfolio_syms, today)
+    if earnings_today:
+        lines.append(f"📅 <b>BUGÜN EARNINGS</b> ({len(earnings_today)}):")
+        for e in earnings_today:
+            eps_est = e.get("epsEstimated")
+            rev_est = e.get("revenueEstimated")
+            details = []
+            if eps_est is not None:
+                details.append(f"EPS est ${eps_est:.2f}")
+            if rev_est:
+                details.append(f"rev est ${rev_est/1e9:.2f}B")
+            detail_s = f" — {', '.join(details)}" if details else ""
+            lines.append(f"  <b>{e['symbol']}</b>{detail_s}")
+        lines.append("")
+
+    # ---- PREMARKET HAREKETLİ ----
+    premarket = _fetch_premarket_movers(positions)
+    if premarket:
+        lines.append(f"🌐 <b>PREMARKET HAREKETLİ</b> ({len(premarket)}):")
+        for m in premarket[:5]:
+            arrow = "↑" if m["premarket_chg_pct"] > 0 else "↓"
+            lines.append(
+                f"  {arrow} <b>{m['symbol']}</b>: ${m['prev_close']:.2f} → "
+                f"${m['premarket_price']:.2f} ({m['premarket_chg_pct']:+.2f}%)"
+            )
+        lines.append("")
+
+    # ---- ALT ÖZET ----
+    if sortable:
+        wins = sum(1 for p in sortable if p["unrealized_pnl_pct"] > 0)
+        avg = sum(p["unrealized_pnl_pct"] for p in sortable) / len(sortable)
+        lines.append(
+            f"📊 {len(sortable)} pozisyon | Pozitif: <b>{wins}/{len(sortable)}</b> | "
+            f"Ort. K/Z: <b>{avg:+.2f}%</b>"
+        )
 
     lines.append("")
     lines.append("<i>Detay: reports/daily/ klasöründe</i>")

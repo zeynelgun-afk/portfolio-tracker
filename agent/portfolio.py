@@ -270,6 +270,15 @@ def _enrich_with_quotes(positions: list[dict]) -> list[dict]:
                 )
             except (TypeError, ValueError):
                 pass
+        # Target distance: pozitif = hedefe henüz X% kaldı, negatif = hedef geçildi
+        target_distance_pct = None
+        if p.get("target") and price:
+            try:
+                target_distance_pct = round(
+                    (float(p["target"]) - float(price)) / float(price) * 100, 2
+                )
+            except (TypeError, ValueError):
+                pass
 
         enriched.append({
             **p,
@@ -280,6 +289,7 @@ def _enrich_with_quotes(positions: list[dict]) -> list[dict]:
             "unrealized_pnl_pct": unrealized_pnl_pct,
             "weight_pct": weight_pct,
             "stop_distance_pct": stop_distance_pct,
+            "target_distance_pct": target_distance_pct,
         })
 
     return enriched
