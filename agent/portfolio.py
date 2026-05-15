@@ -80,35 +80,43 @@ def add_position(
     symbol: str,
     sector: str,
     entry_price: float,
-    shares: float,
     entry_reason: str,
     stop_loss: float,
+    shares: Optional[float] = None,
     target: Optional[float] = None,
     entry_date: Optional[str] = None,
 ) -> dict:
     """
     Add a new position to data/portfolio.json.
 
-    stop_loss is REQUIRED (post-simplification rule). target is optional.
+    stop_loss is REQUIRED (post-simplification rule).
+    target is optional.
+    shares is optional (15 May 2026 Zeynel kararı — adet izleme yok;
+        sistem sadece fiyat hareketini takip eder, P&L yüzde bazlı).
+        Manuel pozisyonlar için shares geçilebilir.
+
     Returns the inserted position dict.
     """
     if not symbol or not isinstance(symbol, str):
         raise ValueError("symbol must be a non-empty string")
     if stop_loss is None:
         raise ValueError("stop_loss is required for new positions")
-    if entry_price <= 0 or shares <= 0:
-        raise ValueError("entry_price and shares must be positive")
+    if entry_price <= 0:
+        raise ValueError("entry_price must be positive")
+    if shares is not None and shares <= 0:
+        raise ValueError("shares must be positive when provided")
 
     new_pos = {
         "symbol": symbol.upper(),
         "sector": sector,
         "entry_date": entry_date or datetime.now().strftime("%Y-%m-%d"),
         "entry_price": round(float(entry_price), 4),
-        "shares": shares,
         "entry_reason": entry_reason,
         "stop_loss": round(float(stop_loss), 4),
         "target": round(float(target), 4) if target is not None else None,
     }
+    if shares is not None:
+        new_pos["shares"] = shares
 
     data = load_portfolio()
     data.setdefault("positions", []).append(new_pos)

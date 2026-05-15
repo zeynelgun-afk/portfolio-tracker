@@ -1,12 +1,11 @@
 {
-  "_aciklama": "Tek portföy — 13 Mayıs 2026 sadeleştirmesi sonrası. Sleeve/sektör ağırlığı yok. Pozisyon büyüklüğü kararı Zeynel'e ait.",
+  "_aciklama": "Tek portföy — 13 Mayıs 2026 sadeleştirmesi sonrası. Sleeve/sektör ağırlığı yok. Pozisyon büyüklüğü kararı Zeynel'e ait. 15 Mayıs 2026: Adet (shares) izleme kaldırıldı — sistem sadece market fiyatından pozisyon açılış/kapanış kaydı tutar, P&L yüzde bazlı hesaplanır. Mevcut (eski) pozisyonların shares alanı tarihi kayıt olarak korunur.",
   "_son_guncelleme": "2026-05-15 15:42 UTC",
   "_template_acik": {
     "symbol": "TICKER",
     "sector": "Sektör adı (Türkçe veya İngilizce)",
     "entry_date": "YYYY-MM-DD",
     "entry_price": 0.0,
-    "shares": 0,
     "entry_reason": "Detaylı giriş tezi — neden alındı, hangi katalizör, tez",
     "stop_loss": 0.0,
     "target": null
@@ -16,7 +15,6 @@
     "sector": "...",
     "entry_date": "YYYY-MM-DD",
     "entry_price": 0.0,
-    "shares": 0,
     "entry_reason": "...",
     "stop_loss": 0.0,
     "target": null,

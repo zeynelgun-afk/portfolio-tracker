@@ -19,9 +19,10 @@ Sorumluluklar
 4. Otomatik açılış infazı (15 May 2026 — Aşama 7):
      Aşama 6 signal_broadcaster sinyallerini takip eder. Yayın sonrası
      ilk fiyat çekiminde entry_zone içine girmiş sinyaller için
-     portfolio.add_position çağrılır (shares=1 placeholder; Zeynel
-     `/adet SEMBOL X` komutuyla günceller). Idempotent: aynı sinyal
-     için `position_opened` event yazılır, sonraki taramalarda atlanır.
+     portfolio.add_position çağrılır (adet izleme yok — sadece market
+     fiyatından açılış kaydı; P&L yüzde bazlı, USD yok). Idempotent:
+     aynı sinyal için `position_opened` event yazılır, sonraki taramalarda
+     atlanır.
 
 Tüm pozisyon değişikliği kararları bu modülden geçmelidir. Mevcut
 agent.monitor.check_stop_proximity sadece "yakın/kırıldı" intraday
@@ -64,20 +65,30 @@ def _log_event(event_type: str, symbol: str, **fields) -> None:
 def _format_group_close_msg(closed: dict, reason_text: str) -> str:
     entry  = float(closed["entry_price"])
     exit_p = float(closed["exit_price"])
-    shares = int(closed["shares"])
-    pnl_usd = round((exit_p - entry) * shares, 2)
+    shares = closed.get("shares")
     pnl_pct = closed["pnl_pct"]
     hold_days = (
         datetime.fromisoformat(closed["exit_date"]).date()
         - datetime.fromisoformat(closed["entry_date"]).date()
     ).days
+
+    if shares is not None:
+        pnl_usd = round((exit_p - entry) * int(shares), 2)
+        entry_line = f"<b>Giriş   :</b> ${entry:.2f} × {int(shares)} ({closed['entry_date']})\n"
+        exit_line  = f"<b>Çıkış   :</b> ${exit_p:.2f} × {int(shares)} ({closed['exit_date']}, {hold_days}g)\n"
+        pnl_line   = f"<b>P&amp;L     :</b> <b>${pnl_usd:+,.2f}</b> ({pnl_pct:+.2f}%)\n\n"
+    else:
+        entry_line = f"<b>Giriş   :</b> ${entry:.2f} ({closed['entry_date']})\n"
+        exit_line  = f"<b>Çıkış   :</b> ${exit_p:.2f} ({closed['exit_date']}, {hold_days}g)\n"
+        pnl_line   = f"<b>P&amp;L     :</b> <b>{pnl_pct:+.2f}%</b>\n\n"
+
     return (
         f"🔴 <b>OTOMATİK STOP KAPANIŞI — {closed['symbol']}</b>\n\n"
         f"<b>Sektör  :</b> {closed['sector']}\n"
-        f"<b>Giriş   :</b> ${entry:.2f} × {shares} ({closed['entry_date']})\n"
-        f"<b>Çıkış   :</b> ${exit_p:.2f} × {shares} ({closed['exit_date']}, {hold_days}g)\n"
+        f"{entry_line}"
+        f"{exit_line}"
         f"<b>Stop    :</b> ${closed['stop_loss']:.2f}\n\n"
-        f"<b>P&amp;L     :</b> <b>${pnl_usd:+,.2f}</b> ({pnl_pct:+.2f}%)\n\n"
+        f"{pnl_line}"
         f"<b>Çıkış nedeni:</b> {reason_text}"
     )
 
@@ -85,20 +96,30 @@ def _format_group_close_msg(closed: dict, reason_text: str) -> str:
 def _format_group_target_msg(closed: dict, reason_text: str) -> str:
     entry  = float(closed["entry_price"])
     exit_p = float(closed["exit_price"])
-    shares = int(closed["shares"])
-    pnl_usd = round((exit_p - entry) * shares, 2)
+    shares = closed.get("shares")
     pnl_pct = closed["pnl_pct"]
     hold_days = (
         datetime.fromisoformat(closed["exit_date"]).date()
         - datetime.fromisoformat(closed["entry_date"]).date()
     ).days
+
+    if shares is not None:
+        pnl_usd = round((exit_p - entry) * int(shares), 2)
+        entry_line = f"<b>Giriş   :</b> ${entry:.2f} × {int(shares)} ({closed['entry_date']})\n"
+        exit_line  = f"<b>Çıkış   :</b> ${exit_p:.2f} × {int(shares)} ({closed['exit_date']}, {hold_days}g)\n"
+        pnl_line   = f"<b>P&amp;L     :</b> <b>${pnl_usd:+,.2f}</b> ({pnl_pct:+.2f}%)\n\n"
+    else:
+        entry_line = f"<b>Giriş   :</b> ${entry:.2f} ({closed['entry_date']})\n"
+        exit_line  = f"<b>Çıkış   :</b> ${exit_p:.2f} ({closed['exit_date']}, {hold_days}g)\n"
+        pnl_line   = f"<b>P&amp;L     :</b> <b>{pnl_pct:+.2f}%</b>\n\n"
+
     return (
         f"🟢 <b>OTOMATİK TARGET KAPANIŞI — {closed['symbol']}</b>\n\n"
         f"<b>Sektör  :</b> {closed['sector']}\n"
-        f"<b>Giriş   :</b> ${entry:.2f} × {shares} ({closed['entry_date']})\n"
-        f"<b>Çıkış   :</b> ${exit_p:.2f} × {shares} ({closed['exit_date']}, {hold_days}g)\n"
+        f"{entry_line}"
+        f"{exit_line}"
         f"<b>Target  :</b> ${closed.get('target', 0):.2f}\n\n"
-        f"<b>P&amp;L     :</b> <b>${pnl_usd:+,.2f}</b> ({pnl_pct:+.2f}%)\n\n"
+        f"{pnl_line}"
         f"<b>Çıkış nedeni:</b> {reason_text}"
     )
 
@@ -205,7 +226,11 @@ def auto_close(symbol: str, exit_reason: str, exit_price: float,
     )
 
     entry   = float(closed["entry_price"])
-    pnl_usd = round((exit_price - entry) * int(closed["shares"]), 2)
+    shares_val = closed.get("shares")
+    if shares_val is not None:
+        pnl_usd = round((exit_price - entry) * int(shares_val), 2)
+    else:
+        pnl_usd = None
 
     _log_event(
         "position_closed",
@@ -214,7 +239,7 @@ def auto_close(symbol: str, exit_reason: str, exit_price: float,
         trigger=trigger_kind,
         entry_price=entry,
         exit_price=exit_price,
-        shares=closed["shares"],
+        shares=shares_val,
         pnl_pct=closed["pnl_pct"],
         pnl_usd=pnl_usd,
         exit_reason=exit_reason,
@@ -230,10 +255,13 @@ def auto_close(symbol: str, exit_reason: str, exit_price: float,
     except Exception as e:
         print(f"[position_manager] Telegram GROUP send failed: {e}", file=sys.stderr)
     try:
+        if pnl_usd is not None:
+            dm_pnl = f"pnl_pct={closed['pnl_pct']:+.2f}% pnl_usd=${pnl_usd:+,.2f}"
+        else:
+            dm_pnl = f"pnl_pct={closed['pnl_pct']:+.2f}%"
         telegram.send_to_dm(
             f"✅ <b>position_manager: {symbol} kapatıldı ({trigger_kind})</b>\n"
-            f"<code>exit_price={exit_price} pnl_pct={closed['pnl_pct']:+.2f}% "
-            f"pnl_usd=${pnl_usd:+,.2f}</code>\n"
+            f"<code>exit_price={exit_price} {dm_pnl}</code>\n"
             f"Reason: {exit_reason}",
             parse_mode="HTML",
         )
@@ -313,10 +341,12 @@ def scan_stops_and_targets(dry_run: bool = False) -> dict:
 # tarar; fiyat entry_zone içine girmiş ve henüz portföyde olmayan her
 # sinyal için pozisyon açar.
 #
-# Sizing politikası (Zeynel kararı, 15 May 2026):
-#   - Otomatik sizing kuralı YOK. shares=1 placeholder ile açılır.
-#   - Zeynel /adet SEMBOL X komutuyla gerçek adedi günceller.
-#   - entry_reason alanına "[ŞARES: placeholder=1]" notu eklenir.
+# Adet politikası (Zeynel kararı, 15 May 2026):
+#   - Adet (shares) izlenmez. Sistem sadece market fiyatından pozisyon
+#     açılış kaydı oluşturur; portfolio.json'da shares alanı yazılmaz.
+#   - P&L sadece yüzde olarak hesaplanır (giriş fiyatı → çıkış fiyatı).
+#   - Mevcut (eski) pozisyonların shares alanı korunur, geriye uyumluluk
+#     için close mesajlarında "× N" + USD P&L gösterilir.
 #
 # Idempotency:
 #   - position_opened event yazılır.
@@ -420,12 +450,13 @@ def _get_sector(symbol: str) -> str:
 
 def _format_group_open_msg(opened: dict, score: float, source_zone: str,
                            entry_target: Optional[float]) -> str:
-    """Otomatik açılış için GROUP rapor mesajı."""
+    """Otomatik açılış için GROUP rapor mesajı (adet izleme yok — sadece fiyat)."""
     sym    = opened["symbol"]
     sector = opened.get("sector", "?")
     price  = float(opened["entry_price"])
     stop   = float(opened["stop_loss"])
     target = opened.get("target")
+    entry_date = opened.get("entry_date", "?")
     stop_pct   = (stop - price) / price * 100
     target_pct = (target - price) / price * 100 if target else None
 
@@ -434,7 +465,7 @@ def _format_group_open_msg(opened: dict, score: float, source_zone: str,
         f"<i>Aşama 7: zone-girişi otomatik açılış (skor {score:.0f})</i>",
         "",
         f"<b>Sektör  :</b> {sector}",
-        f"<b>Giriş   :</b> ${price:.2f} × 1 (placeholder, /adet ile güncelle)",
+        f"<b>Giriş   :</b> ${price:.2f} ({entry_date})",
         f"<b>Zone    :</b> {source_zone}",
         f"<b>Stop    :</b> ${stop:.2f} ({stop_pct:+.2f}%)",
     ]
@@ -446,8 +477,6 @@ def _format_group_open_msg(opened: dict, score: float, source_zone: str,
     rr = abs(target_pct / stop_pct) if (target and stop_pct != 0) else None
     if rr:
         lines.append(f"<b>R/R     :</b> 1:{rr:.2f}")
-    lines.append("")
-    lines.append("⚠️ <i>Şares = 1 placeholder. Gerçek adet için /adet komutu.</i>")
     return "\n".join(lines)
 
 
@@ -458,24 +487,26 @@ def auto_open(symbol: str, entry_price: float, stop_loss: float,
     Pozisyonu otomatik açar (portfolio.add_position), event yazar,
     Telegram GROUP + DM mesajları gönderir.
 
+    Adet izlenmez (15 May 2026 Zeynel kararı). Sadece market fiyatından
+    pozisyon açılış kaydı oluşturulur; P&L sadece yüzde olarak hesaplanır.
+
     Returns
     -------
-    Açılan pozisyon dict (portfolio.add_position çıktısı) + ek alanlar.
+    Açılan pozisyon dict (portfolio.add_position çıktısı).
     """
     sector = _get_sector(symbol)
     score_int = int(round(score))
     theme_note = f", {theme}" if theme else ""
     entry_reason = (
         f"Aşama 6 sinyali (skor {score_int}{theme_note}). "
-        f"Otomatik zone-girişi alım. [ŞARES: placeholder=1, /adet ile güncelle]"
+        f"Otomatik zone-girişi alım — market fiyatından."
     )
 
-    # shares=1 placeholder (Zeynel kararı 15 May 2026 — sizing kuralı yok)
+    # shares geçilmiyor — adet izleme yok (Zeynel kararı 15 May 2026)
     opened = portfolio.add_position(
         symbol       = symbol,
         sector       = sector,
         entry_price  = entry_price,
-        shares       = 1,
         entry_reason = entry_reason,
         stop_loss    = stop_loss,
         target       = target,
@@ -490,7 +521,6 @@ def auto_open(symbol: str, entry_price: float, stop_loss: float,
         entry_price=entry_price,
         stop_loss=stop_loss,
         target=target,
-        shares=1,
         sector=sector,
         source_zone=source_zone,
         theme=theme,
@@ -506,9 +536,8 @@ def auto_open(symbol: str, entry_price: float, stop_loss: float,
         telegram.send_to_dm(
             f"✅ <b>position_manager: {symbol} otomatik açıldı</b>\n"
             f"<code>entry={entry_price} stop={stop_loss} "
-            f"target={target if target else '—'} shares=1 (placeholder)</code>\n"
-            f"Skor: {score_int} | Zone: {source_zone}\n"
-            f"<i>Gerçek adet için: /adet {symbol} N</i>",
+            f"target={target if target else '—'}</code>\n"
+            f"Skor: {score_int} | Zone: {source_zone}",
             parse_mode="HTML",
         )
     except Exception as e:
@@ -721,7 +750,7 @@ def _cli() -> int:
                 telegram.send_to_dm(
                     f"🚀 <b>Aşama 7 — otomatik açılış infaz raporu</b>\n\n"
                     f"<b>Açıldı ({len(res['opened'])}):</b>\n{opened_lines}\n\n"
-                    f"<i>Şares = 1 placeholder. Gerçek adetler için /adet komutu.</i>",
+                    f"<i>Market fiyatından açıldı, adet izlenmez.</i>",
                     parse_mode="HTML",
                 )
             except Exception as e:
