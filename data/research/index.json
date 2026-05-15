@@ -493,12 +493,12 @@
       ],
       "gerceklesen": {
         "tespit_fiyati": 390.55,
-        "simdiki_fiyat": 352.88,
-        "fiyat_tepkisi_pct": -9.6,
+        "simdiki_fiyat": 334.24,
+        "fiyat_tepkisi_pct": -14.4,
         "tez_tuttu": null,
         "ders": null,
-        "gun_sayisi": 6,
-        "son_kontrol": "2026-05-14 20:35"
+        "gun_sayisi": 7,
+        "son_kontrol": "2026-05-15 20:35"
       },
       "etiketler": [
         "ai_infrastructure",
@@ -665,12 +665,12 @@
       ],
       "gerceklesen": {
         "tespit_fiyati": 17.73,
-        "simdiki_fiyat": 16.35,
-        "fiyat_tepkisi_pct": -7.8,
+        "simdiki_fiyat": 16.06,
+        "fiyat_tepkisi_pct": -9.4,
         "tez_tuttu": null,
         "ders": null,
-        "gun_sayisi": 6,
-        "son_kontrol": "2026-05-14 20:35"
+        "gun_sayisi": 7,
+        "son_kontrol": "2026-05-15 20:35"
       },
       "etiketler": [
         "fintech",
@@ -1332,12 +1332,12 @@
       "karar_gerekce": "Mevcut fiyat normal medyan altında. İyi giriş seviyesi.",
       "gerceklesen": {
         "tespit_fiyati": 215.217,
-        "simdiki_fiyat": 235.75,
-        "fiyat_tepkisi_pct": 9.5,
+        "simdiki_fiyat": 225.32,
+        "fiyat_tepkisi_pct": 4.7,
         "tez_tuttu": null,
         "ders": null,
-        "gun_sayisi": 3,
-        "son_kontrol": "2026-05-14 20:35"
+        "gun_sayisi": 4,
+        "son_kontrol": "2026-05-15 20:35"
       },
       "etiketler": [
         "growth",
