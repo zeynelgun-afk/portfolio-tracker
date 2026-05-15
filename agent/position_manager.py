@@ -16,11 +16,12 @@ Sorumluluklar
      portfolio.close_position çağrısı + logs/events.jsonl event +
      Telegram GROUP'a formal satış raporu + DM'e teknik teyit.
 
-İleride bu modüle gelecek karar yetkileri (tek merkez prensibi):
-    • set_stop_loss / set_target — pozisyon yaşam döngüsü içinde güncelleme
-    • propose_entry — alım kararı pipeline (signal_tracker + ai_gate'i
-      bu modülde finalize eden orchestrator)
-    • confirm_entry — broker fiili fill sonrası kayıt
+4. Otomatik açılış infazı (15 May 2026 — Aşama 7):
+     Aşama 6 signal_broadcaster sinyallerini takip eder. Yayın sonrası
+     ilk fiyat çekiminde entry_zone içine girmiş sinyaller için
+     portfolio.add_position çağrılır (shares=1 placeholder; Zeynel
+     `/adet SEMBOL X` komutuyla günceller). Idempotent: aynı sinyal
+     için `position_opened` event yazılır, sonraki taramalarda atlanır.
 
 Tüm pozisyon değişikliği kararları bu modülden geçmelidir. Mevcut
 agent.monitor.check_stop_proximity sadece "yakın/kırıldı" intraday
@@ -304,6 +305,347 @@ def scan_stops_and_targets(dry_run: bool = False) -> dict:
 
 
 # ----------------------------------------------------------------------
+# Auto OPEN (Aşama 7 — 15 May 2026)
+# ----------------------------------------------------------------------
+#
+# Aşama 6 (signal_broadcaster.py) sinyali yayınlar, events.jsonl'a
+# "signal_sent" event yazar. Bu fonksiyonlar son N gün sinyallerini
+# tarar; fiyat entry_zone içine girmiş ve henüz portföyde olmayan her
+# sinyal için pozisyon açar.
+#
+# Sizing politikası (Zeynel kararı, 15 May 2026):
+#   - Otomatik sizing kuralı YOK. shares=1 placeholder ile açılır.
+#   - Zeynel /adet SEMBOL X komutuyla gerçek adedi günceller.
+#   - entry_reason alanına "[ŞARES: placeholder=1]" notu eklenir.
+#
+# Idempotency:
+#   - position_opened event yazılır.
+#   - Bir sembol için son LOOKBACK_DAYS içinde position_opened varsa atla.
+#   - portfolio.json positions[].symbol kontrolü ek güvence.
+
+SIGNAL_LOOKBACK_DAYS = 5  # son N gün signal_sent kayıtlarını tara
+ZONE_TOLERANCE_PCT   = 1.0  # zone üst sınırının +%1 tolerans (slipaj için)
+
+
+def _read_recent_signals(lookback_days: int = SIGNAL_LOOKBACK_DAYS) -> list[dict]:
+    """events.jsonl'dan son N gün signal_sent kayıtlarını oku."""
+    if not EVENTS_PATH.exists():
+        return []
+    cutoff = datetime.now(timezone.utc).timestamp() - lookback_days * 86400
+    out = []
+    try:
+        for line in EVENTS_PATH.read_text(encoding="utf-8").splitlines():
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                e = json.loads(line)
+            except json.JSONDecodeError:
+                continue
+            if e.get("type") != "signal_sent":
+                continue
+            ts_str = e.get("ts") or e.get("timestamp") or ""
+            try:
+                # Parse ISO timestamp
+                ts_dt = datetime.fromisoformat(ts_str.replace("Z", "+00:00"))
+                if ts_dt.timestamp() < cutoff:
+                    continue
+            except Exception:
+                continue
+            out.append(e)
+    except Exception as e:
+        print(f"[position_manager] events.jsonl read failed: {e}", file=sys.stderr)
+    return out
+
+
+def _opened_recently(symbol: str, lookback_days: int = SIGNAL_LOOKBACK_DAYS) -> bool:
+    """Idempotency: bu sembol için son N günde position_opened event var mı?"""
+    if not EVENTS_PATH.exists():
+        return False
+    cutoff = datetime.now(timezone.utc).timestamp() - lookback_days * 86400
+    sym_u  = symbol.upper()
+    try:
+        for line in EVENTS_PATH.read_text(encoding="utf-8").splitlines():
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                e = json.loads(line)
+            except json.JSONDecodeError:
+                continue
+            if e.get("type") != "position_opened":
+                continue
+            if (e.get("symbol") or "").upper() != sym_u:
+                continue
+            ts_str = e.get("ts") or e.get("timestamp") or ""
+            try:
+                if datetime.fromisoformat(ts_str.replace("Z", "+00:00")).timestamp() >= cutoff:
+                    return True
+            except Exception:
+                continue
+    except Exception:
+        pass
+    return False
+
+
+def _parse_zone(zone_str: str) -> Optional[tuple[float, float]]:
+    """'$410-415' veya '$1550-1580' → (alt, üst). Para sembolü/virgül temizlenir."""
+    if not zone_str or not isinstance(zone_str, str):
+        return None
+    clean = zone_str.replace("$", "").replace(",", "").strip()
+    if "-" in clean:
+        parts = clean.split("-")
+        if len(parts) == 2:
+            try:
+                return (float(parts[0].strip()), float(parts[1].strip()))
+            except ValueError:
+                return None
+    try:
+        v = float(clean)
+        return (v * 0.99, v * 1.01)
+    except ValueError:
+        return None
+
+
+def _get_sector(symbol: str) -> str:
+    """FMP profile'dan sektör çek (best-effort)."""
+    try:
+        prof = fmp.fmp_get("profile", {"symbol": symbol})
+        if isinstance(prof, list) and prof:
+            return prof[0].get("sector") or "Unknown"
+    except Exception:
+        pass
+    return "Unknown"
+
+
+def _format_group_open_msg(opened: dict, score: float, source_zone: str,
+                           entry_target: Optional[float]) -> str:
+    """Otomatik açılış için GROUP rapor mesajı."""
+    sym    = opened["symbol"]
+    sector = opened.get("sector", "?")
+    price  = float(opened["entry_price"])
+    stop   = float(opened["stop_loss"])
+    target = opened.get("target")
+    stop_pct   = (stop - price) / price * 100
+    target_pct = (target - price) / price * 100 if target else None
+
+    lines = [
+        f"🟢 <b>OTOMATİK ALIM — {sym}</b>",
+        f"<i>Aşama 7: zone-girişi otomatik açılış (skor {score:.0f})</i>",
+        "",
+        f"<b>Sektör  :</b> {sector}",
+        f"<b>Giriş   :</b> ${price:.2f} × 1 (placeholder, /adet ile güncelle)",
+        f"<b>Zone    :</b> {source_zone}",
+        f"<b>Stop    :</b> ${stop:.2f} ({stop_pct:+.2f}%)",
+    ]
+    if target:
+        lines.append(f"<b>Target  :</b> ${float(target):.2f} ({target_pct:+.2f}%)")
+    else:
+        lines.append(f"<b>Target  :</b> —")
+
+    rr = abs(target_pct / stop_pct) if (target and stop_pct != 0) else None
+    if rr:
+        lines.append(f"<b>R/R     :</b> 1:{rr:.2f}")
+    lines.append("")
+    lines.append("⚠️ <i>Şares = 1 placeholder. Gerçek adet için /adet komutu.</i>")
+    return "\n".join(lines)
+
+
+def auto_open(symbol: str, entry_price: float, stop_loss: float,
+              target: Optional[float], score: float, source_zone: str,
+              theme: Optional[str] = None) -> dict:
+    """
+    Pozisyonu otomatik açar (portfolio.add_position), event yazar,
+    Telegram GROUP + DM mesajları gönderir.
+
+    Returns
+    -------
+    Açılan pozisyon dict (portfolio.add_position çıktısı) + ek alanlar.
+    """
+    sector = _get_sector(symbol)
+    score_int = int(round(score))
+    theme_note = f", {theme}" if theme else ""
+    entry_reason = (
+        f"Aşama 6 sinyali (skor {score_int}{theme_note}). "
+        f"Otomatik zone-girişi alım. [ŞARES: placeholder=1, /adet ile güncelle]"
+    )
+
+    # shares=1 placeholder (Zeynel kararı 15 May 2026 — sizing kuralı yok)
+    opened = portfolio.add_position(
+        symbol       = symbol,
+        sector       = sector,
+        entry_price  = entry_price,
+        shares       = 1,
+        entry_reason = entry_reason,
+        stop_loss    = stop_loss,
+        target       = target,
+    )
+
+    _log_event(
+        "position_opened",
+        symbol,
+        actor="position_manager",
+        trigger="signal_zone_entry",
+        score=score,
+        entry_price=entry_price,
+        stop_loss=stop_loss,
+        target=target,
+        shares=1,
+        sector=sector,
+        source_zone=source_zone,
+        theme=theme,
+    )
+
+    # Telegram — best-effort
+    group_msg = _format_group_open_msg(opened, score, source_zone, target)
+    try:
+        telegram.send_to_group(group_msg, parse_mode="HTML")
+    except Exception as e:
+        print(f"[position_manager] Telegram GROUP open send failed: {e}", file=sys.stderr)
+    try:
+        telegram.send_to_dm(
+            f"✅ <b>position_manager: {symbol} otomatik açıldı</b>\n"
+            f"<code>entry={entry_price} stop={stop_loss} "
+            f"target={target if target else '—'} shares=1 (placeholder)</code>\n"
+            f"Skor: {score_int} | Zone: {source_zone}\n"
+            f"<i>Gerçek adet için: /adet {symbol} N</i>",
+            parse_mode="HTML",
+        )
+    except Exception as e:
+        print(f"[position_manager] Telegram DM open send failed: {e}", file=sys.stderr)
+
+    return opened
+
+
+def execute_pending_signals(dry_run: bool = False,
+                            lookback_days: int = SIGNAL_LOOKBACK_DAYS) -> dict:
+    """
+    Son N gün signal_sent kayıtlarını tarar; entry_zone içine girmiş
+    ve henüz açılmamış olanları otomatik açar.
+
+    Returns
+    -------
+    {
+      "scanned":         int,                    # taranan unique sembol
+      "opened":          list[dict],             # gerçekten açılanlar
+      "skipped_in_pf":   list[str],              # zaten portföyde
+      "skipped_idempot": list[str],              # son N günde açılmış
+      "skipped_no_zone": list[str],              # zone parse edilemedi
+      "skipped_out_zone": list[dict],            # zone dışı (bekleyenler)
+      "errors":          list[dict],
+    }
+    """
+    result = {
+        "scanned": 0,
+        "opened":           [],
+        "skipped_in_pf":    [],
+        "skipped_idempot":  [],
+        "skipped_no_zone":  [],
+        "skipped_out_zone": [],
+        "errors":           [],
+    }
+
+    # 1) Son N gün sinyallerini al, sembol başına en yeni'yi tut
+    signals = _read_recent_signals(lookback_days)
+    if not signals:
+        return result
+
+    latest_by_sym: dict[str, dict] = {}
+    for s in signals:
+        sym = (s.get("symbol") or "").upper()
+        if not sym:
+            continue
+        ts_str = s.get("ts") or s.get("timestamp") or ""
+        if sym not in latest_by_sym or ts_str > (
+            latest_by_sym[sym].get("ts") or latest_by_sym[sym].get("timestamp") or ""
+        ):
+            latest_by_sym[sym] = s
+
+    # 2) Mevcut portföy sembolleri
+    try:
+        pf_syms = {p["symbol"].upper() for p in portfolio.get_positions(enrich=False)}
+    except Exception as e:
+        result["errors"].append({"stage": "load_portfolio", "msg": str(e)})
+        return result
+
+    # 3) Her sinyali değerlendir
+    for sym, sig in latest_by_sym.items():
+        result["scanned"] += 1
+
+        # 3a) Portföyde varsa atla
+        if sym in pf_syms:
+            result["skipped_in_pf"].append(sym)
+            continue
+
+        # 3b) Idempotency
+        if _opened_recently(sym, lookback_days=lookback_days):
+            result["skipped_idempot"].append(sym)
+            continue
+
+        # 3c) Zone parse
+        zone_str = sig.get("entry_zone") or ""
+        zone = _parse_zone(zone_str)
+        if not zone:
+            result["skipped_no_zone"].append(sym)
+            continue
+        zone_lo, zone_hi = zone
+        zone_hi_tol = zone_hi * (1 + ZONE_TOLERANCE_PCT / 100)
+
+        # 3d) Anlık fiyat
+        try:
+            q = fmp.quote(sym)
+            if not q or not q.get("price"):
+                result["errors"].append({"symbol": sym, "msg": "quote yok"})
+                continue
+            price = float(q["price"])
+        except Exception as e:
+            result["errors"].append({"symbol": sym, "msg": f"quote hata: {e}"})
+            continue
+
+        # 3e) Zone içi mi?
+        if not (zone_lo <= price <= zone_hi_tol):
+            result["skipped_out_zone"].append({
+                "symbol": sym, "price": price,
+                "zone": f"${zone_lo:.2f}-${zone_hi:.2f}",
+            })
+            continue
+
+        # 3f) Tetik — aç
+        stop   = sig.get("stop_loss")
+        target = sig.get("target")
+        score  = float(sig.get("score") or 0)
+
+        if stop is None:
+            result["errors"].append({"symbol": sym, "msg": "stop_loss yok"})
+            continue
+
+        try:
+            if dry_run:
+                result["opened"].append({
+                    "symbol": sym, "price": price, "stop": stop, "target": target,
+                    "score": score, "dry_run": True,
+                })
+            else:
+                opened = auto_open(
+                    symbol      = sym,
+                    entry_price = price,
+                    stop_loss   = float(stop),
+                    target      = float(target) if target else None,
+                    score       = score,
+                    source_zone = zone_str,
+                )
+                result["opened"].append({
+                    "symbol": sym, "price": price, "stop": float(stop),
+                    "target": float(target) if target else None,
+                    "score": score,
+                })
+        except Exception as e:
+            result["errors"].append({"symbol": sym, "msg": f"auto_open hata: {e}"})
+
+    return result
+
+
+# ----------------------------------------------------------------------
 # CLI
 # ----------------------------------------------------------------------
 
@@ -313,7 +655,8 @@ def _cli() -> int:
             "Kullanım:\n"
             "  python -m agent.position_manager scan [--dry-run]\n"
             "  python -m agent.position_manager check-stop SYMBOL\n"
-            "  python -m agent.position_manager check-target SYMBOL"
+            "  python -m agent.position_manager check-target SYMBOL\n"
+            "  python -m agent.position_manager execute-signals [--dry-run]"
         )
         return 1
 
@@ -361,6 +704,28 @@ def _cli() -> int:
             print(f"{sym} target tanımlı değil"); return 1
         print(json.dumps(check_target_hit(sym, float(pos["target"])),
                          indent=2, ensure_ascii=False))
+        return 0
+
+    if cmd == "execute-signals":
+        dry = "--dry-run" in sys.argv
+        res = execute_pending_signals(dry_run=dry)
+        print(json.dumps(res, indent=2, ensure_ascii=False))
+        # DM özet — açılan varsa
+        if res["opened"] and not dry:
+            opened_lines = "\n".join(
+                f"  • {o['symbol']}: ${o['price']:.2f} | stop ${o['stop']:.2f} "
+                f"| target {('$%.2f' % o['target']) if o.get('target') else '—'} | skor {o['score']:.0f}"
+                for o in res["opened"]
+            )
+            try:
+                telegram.send_to_dm(
+                    f"🚀 <b>Aşama 7 — otomatik açılış infaz raporu</b>\n\n"
+                    f"<b>Açıldı ({len(res['opened'])}):</b>\n{opened_lines}\n\n"
+                    f"<i>Şares = 1 placeholder. Gerçek adetler için /adet komutu.</i>",
+                    parse_mode="HTML",
+                )
+            except Exception as e:
+                print(f"[position_manager] Açılış özet DM failed: {e}", file=sys.stderr)
         return 0
 
     print(f"Bilinmeyen komut: {cmd}")

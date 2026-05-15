@@ -893,6 +893,69 @@ def format_temalar() -> str:
         return f"Temalar okunamadı: {e}"
 
 
+def handle_adet(text: str) -> str:
+    """
+    /adet SYM N  — portfolio.json'daki açık pozisyonun shares değerini günceller.
+    Otomatik açılış (Aşama 7) shares=1 placeholder ile yazıyor; Zeynel gerçek
+    broker'da aldığı adedi bu komutla sisteme girer.
+
+    Örnek: /adet NVDA 50  → NVDA pozisyonu shares=50 olur.
+    """
+    try:
+        sys.path.insert(0, str(REPO_ROOT))
+        from agent import portfolio as pf
+        import json as _json
+        from datetime import datetime as _dt
+
+        parts = text.strip().split()
+        if len(parts) < 3:
+            return ("Kullanım: <code>/adet SYM N</code>\n"
+                    "Örnek: <code>/adet NVDA 50</code> → NVDA pozisyonu 50 hisse olur.")
+
+        sym = parts[1].upper().strip()
+        try:
+            new_shares = float(parts[2])
+        except ValueError:
+            return f"⚠️ Adet sayısal olmalı: {parts[2]}"
+        if new_shares <= 0:
+            return "⚠️ Adet 0'dan büyük olmalı."
+
+        data = pf.load_portfolio()
+        positions = data.get("positions", [])
+        idx = next((i for i, p in enumerate(positions)
+                    if p.get("symbol", "").upper() == sym), None)
+        if idx is None:
+            return f"⚠️ <b>{sym}</b> açık pozisyon değil."
+
+        old_shares = positions[idx].get("shares")
+        positions[idx]["shares"] = int(new_shares) if new_shares.is_integer() else new_shares
+        pf.save_portfolio(data)
+
+        # events.jsonl log
+        try:
+            evt_path = REPO_ROOT / "logs" / "events.jsonl"
+            evt_path.parent.mkdir(parents=True, exist_ok=True)
+            with evt_path.open("a", encoding="utf-8") as f:
+                f.write(_json.dumps({
+                    "type": "shares_updated",
+                    "symbol": sym,
+                    "old_shares": old_shares,
+                    "new_shares": positions[idx]["shares"],
+                    "actor": "telegram_/adet",
+                    "ts": _dt.utcnow().isoformat() + "+00:00",
+                }, ensure_ascii=False) + "\n")
+        except Exception:
+            pass
+
+        entry_p = positions[idx].get("entry_price", 0)
+        notional = float(entry_p) * float(positions[idx]["shares"])
+        return (f"✅ <b>{sym}</b> adet güncellendi · "
+                f"{old_shares} → {positions[idx]['shares']} hisse · "
+                f"notional ≈ ${notional:,.2f}")
+    except Exception as e:
+        return f"Adet güncelleme hatası: {e}"
+
+
 def handle_ekle(text: str) -> str:
     """
     /ekle SYM [tema_id]  — watchlist'e manuel ekleme.
@@ -1953,6 +2016,11 @@ def isle_mesaj(msg: dict):
     # ── /temalar ─ Aşama 4 tema kataloğu ──────────────────
     if text_lower in ("/temalar", "/themes", "/tema_listesi"):
         tg_send(chat_id, format_temalar(), reply_to=msg_id)
+        return
+
+    # ── /adet SYM N ─ Aşama 7 otomatik açılışta placeholder shares güncelleme ──
+    if text_lower.startswith("/adet ") or text_lower == "/adet":
+        tg_send(chat_id, handle_adet(text), reply_to=msg_id)
         return
 
     # ── /ekle SYM [tema_id] ─ Aşama 7 manuel watchlist ekleme ──
