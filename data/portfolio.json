@@ -184,6 +184,24 @@
       "entry_reason": "[SWING — tenkan_bounce] | Seans içi otomatik giriş — tenkan_bounce",
       "stop_loss": 25.0,
       "target": 36.25
+    },
+    {
+      "symbol": "TSM",
+      "sector": "Technology",
+      "entry_date": "2026-05-15",
+      "entry_price": 402.14,
+      "entry_reason": "Aşama 6 sinyali (skor 91, ai_hardware_supercycle). Telegram sinyal fiyatından manuel açılış — Zeynel talebi, zone-altı seans-sonu kayıt.",
+      "stop_loss": 385.0,
+      "target": 470.0
+    },
+    {
+      "symbol": "AVGO",
+      "sector": "Technology",
+      "entry_date": "2026-05-15",
+      "entry_price": 424.44,
+      "entry_reason": "Aşama 6 sinyali (skor 90, ai_hardware_supercycle). Telegram sinyal fiyatından manuel açılış — Zeynel talebi, zone-altı seans-sonu kayıt.",
+      "stop_loss": 400.0,
+      "target": 500.0
     }
   ],
   "closed": [
@@ -712,5 +730,6 @@
       "pnl_pct": -3.8,
       "lessons": "REIT sektörü faiz duyarlılığı tezi (30yr+ dividend artış) bozulmadı; fiyat aksiyonu stop'a getirdi. Disiplinli stop kayıp -%3.80 ile sınırlı kaldı. Aylık temettü gelir akışı da kesildi (ayrı maliyet).\n\nPOST-CLOSE NOT (aynı gün politika güncellemesi): Stop tetik kuralı 2-bar daily close confirmation'a yükseltildi (agent/position_manager.py, commit b4053725). Retroactive: 14 May kapanış $61.96 stop $61.50 üstü, 15 May kapanış $61.39 stop altı → yeni kural bu sabah intraday kapatma yapmazdı, 'pending' verirdi. Pzt (18 May) kapanışı da stop altı olsaydı oto kapanırdı. Karar (Zeynel, 15 May 19:30 TR): yeni kural ileriye dönük uygulanır; bu işlem kayıtta kalır. Ders: politika değişiklikleri retro değil ileri yönde."
     }
-  ]
+  ],
+  "_last_updated": "2026-05-15T20:54:06"
 }
