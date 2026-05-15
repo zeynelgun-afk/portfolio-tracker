@@ -1,5 +1,5 @@
 {
-  "_son_guncelleme": "2026-05-14 20:01",
+  "_son_guncelleme": "2026-05-15 20:01",
   "_aciklama": "Finzora AI — AI türeyen aktif tema kataloğu. Günlük dar + haftalık geniş araştırma sonucu güncellenir. Tema yaşam döngüsü: dogus → yukselis → olgun → sönüs → archived.",
   "_schema_version": "1.0",
   "_lifecycle_stages": [
@@ -44,9 +44,9 @@
       "name": "AI Hardware Supercycle",
       "description": "Yapay zekâ donanım talebindeki patlama ile yarı iletken ekipman üreticileri ve çip tasarımcıları rallide.",
       "created_at": "2026-05-14T06:28:37.132408+00:00",
-      "updated_at": "2026-05-14T20:01:52.001199+00:00",
+      "updated_at": "2026-05-15T20:01:49.686989+00:00",
       "lifecycle_stage": "yukselis",
-      "momentum_score": 92,
+      "momentum_score": 88,
       "score_history": [
         {
           "date": "2026-05-14",
@@ -57,16 +57,22 @@
           "date": "2026-05-14",
           "score": 92,
           "stage": "yukselis"
+        },
+        {
+          "date": "2026-05-15",
+          "score": 88,
+          "stage": "yukselis"
         }
       ],
       "signals": {
-        "sector_rs_4w_pct": 18.06,
-        "news_velocity_7d": 42
+        "sector_rs_4w_pct": 26.4,
+        "news_velocity_7d": 52
       },
       "related_tickers": [
         "ADI",
         "AMAT",
         "AMD",
+        "ARM",
         "ASML",
         "AVGO",
         "INTC",
@@ -104,6 +110,18 @@
         {
           "date": "2026-05-14",
           "text": "CNBC: Goldman says tech 'up crash' signals even more gains to come."
+        },
+        {
+          "date": "2026-05-15",
+          "text": "SOXX 3-month return +43.81% vs SPY +~10%"
+        },
+        {
+          "date": "2026-05-15",
+          "text": "SeekingAlpha: 'Forget Nvidia? How to Invest in AI Without Buying the Obvious Names'"
+        },
+        {
+          "date": "2026-05-15",
+          "text": "MarketWatch: '10 stocks to protect you from the risky AI trade'"
         }
       ],
       "source": "ai_thematic_discovery_daily"
@@ -113,9 +131,9 @@
       "name": "Clean Energy Renewal",
       "description": "Solar ve geniş temiz enerji ETF'leri 3 ayda %19'a varan kazançlarla yeniden ilgi odağı.",
       "created_at": "2026-05-14T06:28:37.145492+00:00",
-      "updated_at": "2026-05-14T20:01:52.030397+00:00",
+      "updated_at": "2026-05-15T20:01:49.797710+00:00",
       "lifecycle_stage": "yukselis",
-      "momentum_score": 68,
+      "momentum_score": 72,
       "score_history": [
         {
           "date": "2026-05-14",
@@ -126,16 +144,23 @@
           "date": "2026-05-14",
           "score": 68,
           "stage": "yukselis"
+        },
+        {
+          "date": "2026-05-15",
+          "score": 72,
+          "stage": "yukselis"
         }
       ],
       "signals": {
-        "sector_rs_4w_pct": 14.37,
-        "news_velocity_7d": 28
+        "sector_rs_4w_pct": 8.5,
+        "news_velocity_7d": 38
       },
       "related_tickers": [
         "ARRY",
         "BE",
         "BEP",
+        "BLNK",
+        "CHPT",
         "CSIQ",
         "ENPH",
         "FSLR",
@@ -169,6 +194,18 @@
         {
           "date": "2026-05-14",
           "text": "SeekingAlpha: Critical-mineral stocks could see AI-style momentum."
+        },
+        {
+          "date": "2026-05-15",
+          "text": "TAN 1-month +17.80%"
+        },
+        {
+          "date": "2026-05-15",
+          "text": "ICLN 3-month +16.34%"
+        },
+        {
+          "date": "2026-05-15",
+          "text": "MarketWatch: 'Don’t fear a summer stock crash'"
         }
       ],
       "source": "ai_thematic_discovery_daily"
@@ -178,9 +215,9 @@
       "name": "Fed Chair Transition",
       "description": "Kevin Warsh'ın onaylanmasıyla para politikası beklentileri değişiyor; finansal hisseler baskı altında.",
       "created_at": "2026-05-14T06:28:37.162045+00:00",
-      "updated_at": "2026-05-14T20:01:52.058816+00:00",
+      "updated_at": "2026-05-15T20:01:49.756220+00:00",
       "lifecycle_stage": "dogus",
-      "momentum_score": 55,
+      "momentum_score": 67,
       "score_history": [
         {
           "date": "2026-05-14",
@@ -191,11 +228,16 @@
           "date": "2026-05-14",
           "score": 55,
           "stage": "dogus"
+        },
+        {
+          "date": "2026-05-15",
+          "score": 67,
+          "stage": "dogus"
         }
       ],
       "signals": {
-        "sector_rs_4w_pct": -1.44,
-        "news_velocity_7d": 38
+        "sector_rs_4w_pct": -2.0,
+        "news_velocity_7d": 49
       },
       "related_tickers": [
         "AXP",
@@ -203,13 +245,16 @@
         "BK",
         "BLK",
         "C",
+        "CFG",
         "COF",
         "GS",
         "JPM",
         "KRE",
         "MS",
         "PNC",
+        "RF",
         "SCHW",
+        "STT",
         "TFC",
         "USB",
         "WFC",
@@ -239,6 +284,18 @@
         {
           "date": "2026-05-14",
           "text": "Barrons: Surging 30-yr yield at 5% casts shadow over stocks."
+        },
+        {
+          "date": "2026-05-15",
+          "text": "CNBC: 'Traders now see next Fed interest rate move as a hike'"
+        },
+        {
+          "date": "2026-05-15",
+          "text": "SocGen: 'Unhinged yields pose early test for Warsh'"
+        },
+        {
+          "date": "2026-05-15",
+          "text": "Barron’s: 'Grading Powell’s Fed'"
         }
       ],
       "source": "ai_thematic_discovery_daily"
@@ -311,9 +368,9 @@
       "name": "Biotech Recovery",
       "description": "Biyoteknoloji sektörü (XBI) 3 ayda %10.29 yükselişle dikkat çekiyor; küçük-mid cap değer.",
       "created_at": "2026-05-14T06:28:37.215086+00:00",
-      "updated_at": "2026-05-14T20:01:52.090152+00:00",
+      "updated_at": "2026-05-15T20:01:49.839940+00:00",
       "lifecycle_stage": "dogus",
-      "momentum_score": 58,
+      "momentum_score": 61,
       "score_history": [
         {
           "date": "2026-05-14",
@@ -324,11 +381,16 @@
           "date": "2026-05-14",
           "score": 58,
           "stage": "dogus"
+        },
+        {
+          "date": "2026-05-15",
+          "score": 61,
+          "stage": "dogus"
         }
       ],
       "signals": {
-        "sector_rs_4w_pct": 0.02,
-        "news_velocity_7d": 15
+        "sector_rs_4w_pct": -2.5,
+        "news_velocity_7d": 33
       },
       "related_tickers": [
         "ALNY",
@@ -365,6 +427,18 @@
         {
           "date": "2026-05-14",
           "text": "SeekingAlpha: Student-loan default surge could pressure healthcare spending."
+        },
+        {
+          "date": "2026-05-15",
+          "text": "XBI 3-month +4.85% vs XLV -7.80%"
+        },
+        {
+          "date": "2026-05-15",
+          "text": "SeekingAlpha: 'Wall Street Roundup' highlighting selective biotech value"
+        },
+        {
+          "date": "2026-05-15",
+          "text": "Barron’s defensive stock screen"
         }
       ],
       "source": "ai_thematic_discovery_daily"
@@ -374,9 +448,9 @@
       "name": "Airline Headwinds",
       "description": "Jet fuel krizi ve yüksek gaz fiyatları havayollarını (JETS) baskılamaya devam ediyor.",
       "created_at": "2026-05-14T06:28:37.251543+00:00",
-      "updated_at": "2026-05-14T20:01:52.159546+00:00",
+      "updated_at": "2026-05-15T20:01:49.926771+00:00",
       "lifecycle_stage": "sönüs",
-      "momentum_score": 18,
+      "momentum_score": 12,
       "score_history": [
         {
           "date": "2026-05-14",
@@ -387,11 +461,16 @@
           "date": "2026-05-14",
           "score": 18,
           "stage": "sönüs"
+        },
+        {
+          "date": "2026-05-15",
+          "score": 12,
+          "stage": "sönüs"
         }
       ],
       "signals": {
-        "sector_rs_4w_pct": -1.52,
-        "news_velocity_7d": 8
+        "sector_rs_4w_pct": -15.3,
+        "news_velocity_7d": 18
       },
       "related_tickers": [
         "AAL",
@@ -431,6 +510,119 @@
         {
           "date": "2026-05-14",
           "text": "SeekingAlpha: High-yield credit stress flags risk to cyclicals like airlines."
+        },
+        {
+          "date": "2026-05-15",
+          "text": "JETS 3-month -15.25%"
+        },
+        {
+          "date": "2026-05-15",
+          "text": "JETS 1-month -8.42%"
+        },
+        {
+          "date": "2026-05-15",
+          "text": "MarketWatch: 'summer stock crash' risk warnings"
+        }
+      ],
+      "source": "ai_thematic_discovery_daily"
+    },
+    "energy_supply_shock": {
+      "id": "energy_supply_shock",
+      "name": "Energy Supply Shock",
+      "description": "OPEC collapse narrative + Barron’s energy roundtable spotlight XLE leadership (+10.6% 3-mo) and natural gas breakout (FCG +17.7%).",
+      "created_at": "2026-05-15T20:01:49.723488+00:00",
+      "updated_at": "2026-05-15T20:01:49.723488+00:00",
+      "lifecycle_stage": "yukselis",
+      "momentum_score": 76,
+      "score_history": [
+        {
+          "date": "2026-05-15",
+          "score": 76,
+          "stage": "yukselis"
+        }
+      ],
+      "signals": {
+        "sector_rs_4w_pct": 10.6,
+        "news_velocity_7d": 41
+      },
+      "related_tickers": [
+        "COP",
+        "CVX",
+        "EOG",
+        "FCG",
+        "KMI",
+        "MPC",
+        "OXY",
+        "PSX",
+        "SLB",
+        "VLO",
+        "WMB",
+        "XLE",
+        "XOM"
+      ],
+      "evidence": [
+        {
+          "date": "2026-05-15",
+          "text": "Barrons: '11 Stocks to Play the Biggest Energy Supply Shock Ever'"
+        },
+        {
+          "date": "2026-05-15",
+          "text": "FoxBusiness: 'Trump vindicated as OPEC faces collapse following UAE departure'"
+        },
+        {
+          "date": "2026-05-15",
+          "text": "FCG 3-month +17.70%"
+        }
+      ],
+      "source": "ai_thematic_discovery_daily"
+    },
+    "defensive_staples_rotation": {
+      "id": "defensive_staples_rotation",
+      "name": "Defensive Staples Rotation",
+      "description": "Consumer staples (XLP +2.65% 1-mo) outperforming as yields spike and growth names stall; flight to safety theme gaining traction.",
+      "created_at": "2026-05-15T20:01:49.879803+00:00",
+      "updated_at": "2026-05-15T20:01:49.879803+00:00",
+      "lifecycle_stage": "olgun",
+      "momentum_score": 54,
+      "score_history": [
+        {
+          "date": "2026-05-15",
+          "score": 54,
+          "stage": "olgun"
+        }
+      ],
+      "signals": {
+        "sector_rs_4w_pct": 2.7,
+        "news_velocity_7d": 29
+      },
+      "related_tickers": [
+        "ADM",
+        "CHD",
+        "CL",
+        "CLX",
+        "COST",
+        "GIS",
+        "HSY",
+        "KHC",
+        "KMB",
+        "KO",
+        "PEP",
+        "PG",
+        "SJM",
+        "WMT"
+      ],
+      "evidence": [
+        {
+          "date": "2026-05-15",
+          "text": "XLP 1-month +2.65% vs XLK -1.77% daily"
+        },
+        {
+          "date": "2026-05-15",
+          "text": "Barron’s: 'Rising Rates Could Spell Trouble for Dividend Stocks'"
+        },
+        {
+          "date": "2026-05-15",
+          "text": "Zacks: Empire State survey shows slowing growth"
         }
       ],
       "source": "ai_thematic_discovery_daily"
