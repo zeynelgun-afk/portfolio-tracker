@@ -48,6 +48,18 @@ def closed_today(target_date: str) -> list[dict]:
     return [p for p in get_closed() if p.get("exit_date") == target_date]
 
 
+def _hold_days(entry_date: Optional[str], today: str) -> Optional[int]:
+    """Tutma süresi (gün) — entry_date'ten today'e kadar."""
+    if not entry_date:
+        return None
+    try:
+        ed = datetime.strptime(entry_date, "%Y-%m-%d").date()
+        td = datetime.strptime(today, "%Y-%m-%d").date()
+        return (td - ed).days
+    except (TypeError, ValueError):
+        return None
+
+
 # ---------- Day movers ----------
 
 def biggest_movers(positions: list[dict]) -> tuple[list[dict], list[dict]]:
@@ -204,80 +216,79 @@ def render_report(macro: dict, portfolio: dict, today: str) -> str:
 
 
 def render_telegram_summary(macro: dict, portfolio: dict, today: str) -> str:
-    """Concise Turkish summary for the Finzora group chat."""
+    """
+    Concise Turkish summary for the Finzora group chat.
+
+    Yeni format (2026-05-15): pozisyon bazlı detay tablosu.
+      - Her hisse için: alış fiyatı, kapanış, K/Z%, tutma süresi
+      - Sıralama: K/Z% azalan (kazançlılar üstte)
+      - ⚠ işareti: stop'a 3%'ten yakın pozisyonlar
+      - Dolar tutarları (piyasa değeri, günlük dolar değişimi) kaldırıldı
+    """
     vix_price = macro["vix"]["price"]
     spy = macro["macro"].get("SPY", {})
     qqq = macro["macro"].get("QQQ", {})
-    m = portfolio["metrics"]
     positions = portfolio["positions"]
 
-    # Today's portfolio change
-    day_dollar = 0.0
-    day_known = False
-    for p in positions:
-        chg_pct = p.get("day_change_pct")
-        mv = p.get("market_value")
-        if chg_pct is not None and mv is not None:
-            try:
-                prior = mv / (1 + chg_pct / 100)
-                day_dollar += mv - prior
-                day_known = True
-            except ZeroDivisionError:
-                pass
-    total_prior = (m.get("total_market_value", 0) or 0) - day_dollar if day_known else 0
-    day_pct = (day_dollar / total_prior * 100) if (day_known and total_prior) else None
-
     lines = [
-        f"<b>🌙 KAPANIŞ RAPORU — {today}</b>",
+        f"<b>🌙 KAPANIŞ — {today}</b>",
         "",
-        f"📊 <b>Piyasa kapanış:</b>",
-        f"  VIX: {_fmt(vix_price)} ({_vix_regime(vix_price)})",
-        f"  SPY: ${_fmt(spy.get('price'))} ({_fmt_pct(_safe_float(spy.get('changePercentage')))})",
-        f"  QQQ: ${_fmt(qqq.get('price'))} ({_fmt_pct(_safe_float(qqq.get('changePercentage')))})",
+        f"📊 VIX {_fmt(vix_price)} ({_vix_regime(vix_price)}) | "
+        f"SPY {_fmt_pct(_safe_float(spy.get('changePercentage')))} | "
+        f"QQQ {_fmt_pct(_safe_float(qqq.get('changePercentage')))}",
         "",
-        f"💼 <b>Portföy:</b>",
-        f"  Piyasa: ${m.get('total_market_value', 0):,.0f}",
     ]
-    if day_known and day_pct is not None:
-        lines.append(f"  Bugünkü değişim: {day_dollar:+,.0f} USD ({day_pct:+.2f}%)")
-    if "total_unrealized_pnl" in m:
-        lines.append(
-            f"  Toplam P&K: {m['total_unrealized_pnl']:+,.0f} USD "
-            f"({m['total_unrealized_pnl_pct']:+.2f}%)"
-        )
 
-    # Closed today
+    # Pozisyonları K/Z%'ye göre azalan sırala (kazananlar üstte)
+    sortable = [p for p in positions if p.get("unrealized_pnl_pct") is not None]
+    sortable.sort(key=lambda x: x["unrealized_pnl_pct"], reverse=True)
+
+    lines.append(f"💼 <b>{len(sortable)} açık pozisyon</b>")
+    lines.append("")
+
+    # Monospace tablo (Telegram <pre>)
+    rows: list[str] = []
+    rows.append("HİSSE  GİRİŞ → KAPANIŞ        K/Z%   GÜN")
+    rows.append("─" * 42)
+    for p in sortable:
+        sym = (p.get("symbol") or "?")
+        sym_s = sym.ljust(5)[:5]
+        ep = _safe_float(p.get("entry_price"))
+        cp = _safe_float(p.get("current_price"))
+        pct = p.get("unrealized_pnl_pct")
+        days = _hold_days(p.get("entry_date"), today)
+        # Stop'a 3%'ten yakın pozisyonları işaretle
+        stop_dist = p.get("stop_distance_pct")
+        marker = "⚠" if (stop_dist is not None and stop_dist < 3) else " "
+        entry_s = f"${ep:7.2f}" if ep is not None else "      —"
+        close_s = f"${cp:7.2f}" if cp is not None else "      —"
+        pct_s = f"{pct:+6.2f}%" if pct is not None else "    —  "
+        day_s = f"{days:>3}g" if days is not None else " — "
+        rows.append(f"{marker}{sym_s}  {entry_s} → {close_s}  {pct_s}  {day_s}")
+
+    lines.append("<pre>" + "\n".join(rows) + "</pre>")
+    lines.append("")
+
+    # Bugün kapanan pozisyonlar
     closed = closed_today(today)
     if closed:
-        lines.append("")
-        lines.append(f"🔚 <b>Bugün kapanan</b> ({len(closed)} pozisyon):")
+        lines.append(f"🔚 <b>Bugün kapanan</b> ({len(closed)} poz):")
         for c in closed[:5]:
             pnl = _safe_float(c.get("pnl_pct"))
             lines.append(
                 f"  {c.get('symbol', '?')}: {_fmt_pct(pnl)} — "
                 f"{c.get('exit_reason') or '—'}"
             )
-
-    # Top movers
-    gainers, losers = biggest_movers(positions)
-    if gainers or losers:
         lines.append("")
-        lines.append("📈 <b>Günün en hareketlileri:</b>")
-        for p in gainers[:2]:
-            lines.append(f"  ↑ {p['symbol']}: {p['day_change_pct']:+.2f}%")
-        for p in losers[:2]:
-            lines.append(f"  ↓ {p['symbol']}: {p['day_change_pct']:+.2f}%")
 
-    # Tomorrow watchlist (near stops)
-    near = [p for p in portfolio.get("stop_near", []) if p["stop_distance_pct"] < 2]
-    if near:
-        lines.append("")
-        lines.append(f"⚠️ <b>Yarın için izle</b> ({len(near)} pozisyon stop'a yakın):")
-        for p in near[:3]:
-            lines.append(
-                f"  {p['symbol']}: ${_fmt(p.get('current_price'))} → "
-                f"stop ${p['stop_loss']:.2f} ({p['stop_distance_pct']:+.2f}%)"
-            )
+    # Pozisyon-bazlı özet (dolar tutarları YOK — kasıtlı)
+    if sortable:
+        wins = sum(1 for p in sortable if p["unrealized_pnl_pct"] > 0)
+        avg = sum(p["unrealized_pnl_pct"] for p in sortable) / len(sortable)
+        lines.append(
+            f"📊 Pozitif: <b>{wins}/{len(sortable)}</b> | "
+            f"Ortalama K/Z: <b>{avg:+.2f}%</b>"
+        )
 
     lines.append("")
     lines.append("<i>Detay: reports/daily/ klasöründe</i>")
