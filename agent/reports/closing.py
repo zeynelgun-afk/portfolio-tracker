@@ -16,6 +16,7 @@ portfolio gathering helpers from agent.reports.morning to avoid duplication.
 """
 from __future__ import annotations
 
+import html
 import sys
 from datetime import datetime
 from pathlib import Path
@@ -252,7 +253,7 @@ def render_telegram_summary(macro: dict, portfolio: dict, today: str) -> str:
     rows.append("─" * 42)
     for p in sortable:
         sym = (p.get("symbol") or "?")
-        sym_s = sym.ljust(5)[:5]
+        sym_s = html.escape(sym).ljust(5)[:5]
         ep = _safe_float(p.get("entry_price"))
         cp = _safe_float(p.get("current_price"))
         pct = p.get("unrealized_pnl_pct")
@@ -275,9 +276,10 @@ def render_telegram_summary(macro: dict, portfolio: dict, today: str) -> str:
         lines.append(f"🔚 <b>Bugün kapanan</b> ({len(closed)} poz):")
         for c in closed[:5]:
             pnl = _safe_float(c.get("pnl_pct"))
+            sym = html.escape(c.get("symbol") or "?")
+            reason = html.escape(c.get("exit_reason") or "—")
             lines.append(
-                f"  {c.get('symbol', '?')}: {_fmt_pct(pnl)} — "
-                f"{c.get('exit_reason') or '—'}"
+                f"  {sym}: {_fmt_pct(pnl)} — {reason}"
             )
         lines.append("")
 

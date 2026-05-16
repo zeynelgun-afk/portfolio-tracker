@@ -202,6 +202,22 @@ def _send_message(
     return all_ok
 
 
+def _strip_html_tags(text: str) -> str:
+    """Remove HTML tags as a fallback when Telegram rejects parse_mode=HTML.
+
+    This prevents users from seeing raw <b>/<pre>/<i> tags when an upstream
+    bug forgets to html.escape() user-supplied data containing '<', '>' or '&'.
+    """
+    # Strip recognized formatting tags but preserve their text content
+    text = re.sub(r"</?(?:b|i|u|s|code|pre|strong|em)>", "", text)
+    # Strip anchor tags but keep visible text
+    text = re.sub(r'<a\s+[^>]*>', "", text)
+    text = re.sub(r"</a>", "", text)
+    # Unescape HTML entities so &amp; → &, &lt; → <
+    text = html.unescape(text)
+    return text
+
+
 def _send_chunk(
     chunk: str,
     chat_id: int,
@@ -223,10 +239,26 @@ def _send_chunk(
 
         desc = data.get("description", "")
         if "can't parse" in desc.lower():
-            # Retry as plain text
+            # HTML parse failed — strip tags so user doesn't see raw <b>/<pre>/<i>
+            # Original bug (May 16, 2026): unescaped '<' in exit_reason field
+            # caused the fallback to send the raw HTML as plain text.
             payload.pop("parse_mode", None)
+            payload["text"] = _strip_html_tags(chunk)
             r = requests.post(f"{API_BASE}/sendMessage", json=payload, timeout=30)
-            return r.json().get("ok", False)
+            ok = r.json().get("ok", False)
+            # Notify DM about the silent fallback so we can find unescaped data
+            try:
+                snippet = chunk[:200].replace("\n", " ")
+                _send_chunk(
+                    f"⚠️ HTML parse fail (chat {chat_id}): {desc}\n"
+                    f"Snippet: <code>{html.escape(snippet)}</code>",
+                    DM_CHAT_ID,
+                    "HTML",
+                    True,
+                )
+            except Exception:
+                pass  # never let the alert itself break the send
+            return ok
 
         print(f"[telegram] sendMessage failed: {desc}", file=sys.stderr)
         return False
