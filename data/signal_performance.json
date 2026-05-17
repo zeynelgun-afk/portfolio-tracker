@@ -1,11 +1,64 @@
 {
-  "_son_guncelleme": "2026-05-14 08:12",
+  "_son_guncelleme": "2026-05-17 16:00",
   "_aciklama": "Aşama 9 — Sinyal performans takibi (7g/14g/30g checkpoint)",
   "_schema_version": "1.0",
-  "signals": {},
+  "signals": {
+    "NVDA_2026-05-14_16-04": {
+      "signal_id": "NVDA_2026-05-14_16-04",
+      "symbol": "NVDA",
+      "sent_at": "2026-05-14T16:04:00.333744+00:00",
+      "entry": 235.0558,
+      "stop_loss": 195,
+      "target": 280,
+      "score": 94.0,
+      "entry_zone": "$220-225",
+      "in_zone": false,
+      "checkpoints": {},
+      "status": "tracking"
+    },
+    "LRCX_2026-05-14_16-04": {
+      "signal_id": "LRCX_2026-05-14_16-04",
+      "symbol": "LRCX",
+      "sent_at": "2026-05-14T16:04:00.711337+00:00",
+      "entry": 299.77,
+      "stop_loss": 265,
+      "target": 360,
+      "score": 88.0,
+      "entry_zone": "$290-295",
+      "in_zone": false,
+      "checkpoints": {},
+      "status": "tracking"
+    },
+    "TSM_2026-05-15_14-01": {
+      "signal_id": "TSM_2026-05-15_14-01",
+      "symbol": "TSM",
+      "sent_at": "2026-05-15T14:01:07.345443+00:00",
+      "entry": 402.14,
+      "stop_loss": 385,
+      "target": 470,
+      "score": 91.0,
+      "entry_zone": "$410-415",
+      "in_zone": false,
+      "checkpoints": {},
+      "status": "tracking"
+    },
+    "AVGO_2026-05-15_14-01": {
+      "signal_id": "AVGO_2026-05-15_14-01",
+      "symbol": "AVGO",
+      "sent_at": "2026-05-15T14:01:07.781932+00:00",
+      "entry": 424.4412,
+      "stop_loss": 400,
+      "target": 500,
+      "score": 90.0,
+      "entry_zone": "$435-440",
+      "in_zone": false,
+      "checkpoints": {},
+      "status": "tracking"
+    }
+  },
   "stats": {
-    "total_signals": 0,
-    "tracking": 0,
+    "total_signals": 4,
+    "tracking": 4,
     "completed": 0,
     "hit_target": 0,
     "hit_stop": 0,
