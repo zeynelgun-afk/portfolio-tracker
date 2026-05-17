@@ -19,6 +19,7 @@ created: 2026-05-03
 Sistem nasıl çalışır, hangi parça nereye bağlı.
 
 - [[SYSTEM_MAP]] — Tam sistem haritası: entry point'ler, 4 mod, akış
+- [[PHASE2_SCANNER_CONSOLIDATION]] — Faz 2 tasarım dokümanı (scanner paketi + Polymarket kalibratör)
 - [[DECISION_ARCHITECTURE_V2]] — Karar verme mimarisi v2
 - [[DECISION_FRAMEWORK]] — K-rule + LLM birleşim mantığı
 - [[OBSERVABILITY]] — Event logging, JSONL/SQLite şeması

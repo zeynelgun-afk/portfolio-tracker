@@ -17,6 +17,7 @@ updated: 2026-05-17
 # FINZORA AI — SİSTEM HARİTASI
 
 > Son güncelleme: 17 Mayıs 2026 (Faz 1 — Reports konsolidasyonu)
+> **Sonraki:** [[PHASE2_SCANNER_CONSOLIDATION]] — Scanner paketi + Polymarket kalibratörü (tasarım kararları kesinleşti, kod yazımı beklemede)
 > Amaç: Tüm scriptler, scheduler thread'leri, veri akışları ve dosya organizasyonunun tek bakışta görünümü.
 >
 > **Kritik dönüşüm:** 13 Mayıs 2026 — eski 3-portföy + sleeve + thematic + swing sistemi (`data/portfolios/*.json`, `data/swing/active.json`) `data/archive/2026-05-13_pre_simplification/` altına taşındı. Bunun yerine **tek `data/portfolio.json`** (positions[] + closed[]) ve `agent/` v2 modern paketi geldi.
