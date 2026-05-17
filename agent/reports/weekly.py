@@ -17,7 +17,8 @@ call per symbol. We use the `5D` field as the "week" proxy (5 trading days).
 from __future__ import annotations
 
 import sys
-from datetime import datetime, timedelta
+import json
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Optional
 
@@ -50,6 +51,163 @@ SECTOR_ETFS = {
     "XLRE": "Real Estate",
     "XLC":  "Communication Services",
 }
+
+
+# ---------- Polymarket Pulse (Faz 2 Adım 12, 17 May 2026) ----------
+
+# Performans tracker dosyası — Adım 9'da PolymarketCalibrator tarafından yazılır.
+# Pulse bölümü buradan son 7 günü okur. Dosya yoksa graceful "no data" mesajı.
+_CALIBRATOR_LOG_PATH = (
+    Path(__file__).resolve().parents[2] / "data" / "polymarket_calibrator_performance.json"
+)
+
+
+def _load_calibrator_events() -> list[dict]:
+    """Performance log'dan event listesini yükle.
+
+    Returns:
+        list[dict]: events. Dosya yoksa veya bozuksa boş liste.
+    """
+    if not _CALIBRATOR_LOG_PATH.exists():
+        return []
+    try:
+        with _CALIBRATOR_LOG_PATH.open(encoding="utf-8") as f:
+            data = json.load(f)
+        events = data.get("events", [])
+        return events if isinstance(events, list) else []
+    except Exception:
+        return []
+
+
+def _load_calibrator_started_at() -> Optional[datetime]:
+    """Tracker dosyasındaki _started_at değerini parse et."""
+    if not _CALIBRATOR_LOG_PATH.exists():
+        return None
+    try:
+        with _CALIBRATOR_LOG_PATH.open(encoding="utf-8") as f:
+            data = json.load(f)
+        ts = data.get("_started_at")
+        if isinstance(ts, str):
+            return datetime.fromisoformat(ts.replace("Z", "+00:00"))
+    except Exception:
+        pass
+    return None
+
+
+def _filter_events_last_7d(events: list[dict], now: datetime) -> list[dict]:
+    """Son 7 günkü event'leri filtrele."""
+    cutoff = now - timedelta(days=7)
+    recent = []
+    for evt in events:
+        if not isinstance(evt, dict):
+            continue
+        ts_str = evt.get("ts", "")
+        if not isinstance(ts_str, str):
+            continue
+        try:
+            ts = datetime.fromisoformat(ts_str.replace("Z", "+00:00"))
+            if ts >= cutoff:
+                recent.append(evt)
+        except (ValueError, TypeError):
+            continue
+    return recent
+
+
+def _build_polymarket_pulse_section(now: datetime) -> list[str]:
+    """Pulse bölümünün markdown satırları.
+
+    Veri yoksa graceful — "henüz event yok" notu düşer.
+    """
+    lines = ["## 6. Prediction Markets Pulse (Polymarket, son 7 gün)", ""]
+
+    events = _load_calibrator_events()
+    recent = _filter_events_last_7d(events, now)
+
+    if not recent:
+        if not events:
+            lines.append(
+                "_Henüz kalibratör event'i yok. CALIBRATOR_ENABLED açık ve "
+                "Polymarket cache dolu olduğunda buraya istatistikler gelir._"
+            )
+        else:
+            lines.append("_Son 7 günde kalibratör event'i yok._")
+        lines.append("")
+        return lines
+
+    # Özet metrikler
+    n_total = len(recent)
+    n_confirm = sum(
+        1 for e in recent
+        if str(e.get("applied_flag", "")).startswith("pm_confirm")
+    )
+    n_conflict = sum(
+        1 for e in recent
+        if str(e.get("applied_flag", "")).startswith("pm_conflict")
+    )
+
+    lines.append(
+        f"**Toplam event:** {n_total} "
+        f"({n_confirm} doğrulama, {n_conflict} çelişki)"
+    )
+    lines.append("")
+
+    # En aktif temalar (top 3)
+    theme_counts: dict[str, int] = {}
+    for e in recent:
+        theme = e.get("matched_theme")
+        if isinstance(theme, str):
+            theme_counts[theme] = theme_counts.get(theme, 0) + 1
+    if theme_counts:
+        top_themes = sorted(theme_counts.items(), key=lambda x: -x[1])[:3]
+        lines.append("**En aktif temalar:**")
+        for theme, count in top_themes:
+            lines.append(f"- `{theme}`: {count} event")
+        lines.append("")
+
+    # En sert hareketler (top 5 by |delta_24h|)
+    sorted_by_delta = sorted(
+        recent,
+        key=lambda e: abs(e.get("market_delta_24h") or 0),
+        reverse=True,
+    )[:5]
+    if sorted_by_delta:
+        lines.append("**En büyük 24h hareketler:**")
+        lines.append("")
+        lines.append("| Symbol | Tema | Bayrak | Δ24h | Çarpan |")
+        lines.append("|--------|------|--------|------|-------:|")
+        for e in sorted_by_delta:
+            symbol = e.get("candidate_symbol", "?")
+            theme = e.get("matched_theme", "?")
+            flag = str(e.get("applied_flag", "?"))
+            delta = e.get("market_delta_24h")
+            mult = e.get("applied_multiplier")
+            delta_str = (
+                f"{delta * 100:+.1f}pp"
+                if isinstance(delta, (int, float)) else "—"
+            )
+            mult_str = (
+                f"{mult:.2f}x"
+                if isinstance(mult, (int, float)) else "—"
+            )
+            icon = "🟢" if flag.startswith("pm_confirm") else "🔴"
+            lines.append(
+                f"| **{symbol}** | `{theme}` | {icon} `{flag}` | "
+                f"{delta_str} | {mult_str} |"
+            )
+        lines.append("")
+
+    # Phase 10 ön şartı: tracker kaç gün veri biriktiriyor
+    started_at = _load_calibrator_started_at()
+    if started_at is not None:
+        days = (now - started_at).total_seconds() / 86400
+        progress = min(100, days / 30 * 100)
+        lines.append(
+            f"_Tracker: {days:.1f} gün veri biriktirildi "
+            f"({progress:.0f}% — Phase 10 için 30 gün gerek)._"
+        )
+        lines.append("")
+
+    return lines
 
 
 # ---------- FMP weekly change ----------
@@ -224,6 +382,10 @@ def render_report(
     else:
         lines.append("All positions comfortably above stops.")
         lines.append("")
+
+    # ---- Section 6: Prediction Markets Pulse (Faz 2 Adım 12) ----
+    pulse_lines = _build_polymarket_pulse_section(datetime.now(timezone.utc))
+    lines.extend(pulse_lines)
 
     return "\n".join(lines)
 
