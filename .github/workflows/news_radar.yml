@@ -20,13 +20,16 @@ jobs:
         run: pip install requests 'openai>=1.40.0'
 
       - name: Haber Radarı çalıştır
-        run: python3 scripts/news_radar.py
+        # Faz 2 Adım 7 (17 May 2026): scripts/news_radar.py → agent/scanners/news.py
+        run: python3 agent/scanners/news.py
         env:
           FMP_API_KEY:          ${{ secrets.FMP_API_KEY }}
           OPENROUTER_API_KEY:   ${{ secrets.OPENROUTER_API_KEY }}
           ANTHROPIC_API_KEY:    ${{ secrets.ANTHROPIC_API_KEY }}
           TELEGRAM_BOT_TOKEN:   ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_PRIVATE_ID:  ${{ secrets.TELEGRAM_PRIVATE_ID }}
+          # Faz 2: agent.scanners.* importları için
+          PYTHONPATH: ${{ github.workspace }}:${{ github.workspace }}/agent:${{ github.workspace }}/agent/legacy
 
       - name: Log commit et
         run: |

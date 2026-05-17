@@ -61,8 +61,8 @@
       "schedule": "Periyodik"
     },
     {
-      "id": "scripts/news_radar.py",
-      "label": "news_radar.py",
+      "id": "agent/scanners/news.py",
+      "label": "scanners/news.py",
       "category": "script"
     },
     {
@@ -286,7 +286,7 @@
     },
     {
       "source": "news_radar.yml",
-      "target": "scripts/news_radar.py"
+      "target": "agent/scanners/news.py"
     },
     {
       "source": "adil_deger_panel.yml",
@@ -357,19 +357,19 @@
       "target": "agent.telegram"
     },
     {
-      "source": "scripts/news_radar.py",
+      "source": "agent/scanners/news.py",
       "target": "agent.fmp"
     },
     {
-      "source": "scripts/news_radar.py",
+      "source": "agent/scanners/news.py",
       "target": "ext.openrouter"
     },
     {
-      "source": "scripts/news_radar.py",
+      "source": "agent/scanners/news.py",
       "target": "ext.telegram"
     },
     {
-      "source": "scripts/news_radar.py",
+      "source": "agent/scanners/news.py",
       "target": "data/portfolio.json"
     },
     {

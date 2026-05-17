@@ -16,8 +16,8 @@ updated: 2026-05-17
 
 # FINZORA AI — SİSTEM HARİTASI
 
-> Son güncelleme: 17 Mayıs 2026 (Faz 1 ✅ + Faz 2 Adım 5-6 ✅)
-> **Devam ediyor:** [[PHASE2_SCANNER_CONSOLIDATION]] — Faz 2 Adım 7-9 beklemede (News / Analyst / Kalibratör)
+> Son güncelleme: 17 Mayıs 2026 (Faz 1 ✅ + Faz 2 Adım 5-7 ✅)
+> **Devam ediyor:** [[PHASE2_SCANNER_CONSOLIDATION]] — Faz 2 Adım 8-9 beklemede (Analyst / Kalibratör)
 > Amaç: Tüm scriptler, scheduler thread'leri, veri akışları ve dosya organizasyonunun tek bakışta görünümü.
 >
 > **Kritik dönüşüm:** 13 Mayıs 2026 — eski 3-portföy + sleeve + thematic + swing sistemi (`data/portfolios/*.json`, `data/swing/active.json`) `data/archive/2026-05-13_pre_simplification/` altına taşındı. Bunun yerine **tek `data/portfolio.json`** (positions[] + closed[]) ve `agent/` v2 modern paketi geldi.
@@ -101,7 +101,7 @@ portfolio-tracker/
 │   │   ├── base.py          # BaseScanner ABC + Candidate dataclass
 │   │   ├── thematic.py      # ← scripts/thematic_discovery.py [Adım 5 ✅]
 │   │   ├── fair_value.py    # ← scripts/fair_value_panel.py [Adım 6 ✅]
-│   │   ├── news.py          # ← scripts/news_radar.py [Adım 7 — beklemede]
+│   │   ├── news.py          # ← scripts/news_radar.py [Adım 7 ✅]
 │   │   ├── analyst_revisions.py  # ← legacy/analist_takip/monitor.py [Adım 8 — beklemede]
 │   │   └── calibrator.py    # Polymarket kalibratör [Adım 9 — beklemede]
 │   │
@@ -141,7 +141,7 @@ portfolio-tracker/
 │
 ├── scripts/                 # Çalıştırılabilir görev scriptleri
 │   ├── telegram_bot.py      # ANA — Railway scheduler + bot polling + 4 thread
-│   ├── news_radar.py        # 09:00 — haber tarama + LLM analiz → DM
+│   ├── news_radar.py        # → SHIM (Faz 2 Adım 7): agent/scanners/news.py'ya yönlendiriyor
 │   ├── fair_value_panel.py  # → SHIM (Faz 2 Adım 6): agent/scanners/fair_value.py'ya yönlendiriyor
 │   ├── research_tracker.py  # → SHIM (Faz 1, 17 May 2026): agent/reports/research.py'ya yönlendiriyor
 │   ├── signal_tracker.py    # 23:45 / Pzr 19:00 — sinyal performans (7/14/30 gün checkpoint)
