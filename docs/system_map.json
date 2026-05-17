@@ -78,6 +78,18 @@
       "tag": "yeni"
     },
     {
+      "id": "agent/scanners/calibrator.py",
+      "label": "scanners/calibrator.py",
+      "category": "script",
+      "tag": "yeni"
+    },
+    {
+      "id": "data/polymarket_calibrator_performance.json",
+      "label": "calibrator_performance.json",
+      "category": "data",
+      "tag": "yeni"
+    },
+    {
       "id": "agent/reports/research.py",
       "label": "reports/research.py",
       "category": "script"

@@ -16,8 +16,8 @@ updated: 2026-05-17
 
 # FINZORA AI — SİSTEM HARİTASI
 
-> Son güncelleme: 17 Mayıs 2026 (Faz 1 ✅ + Faz 2 Adım 5-8 ✅)
-> **Devam ediyor:** [[PHASE2_SCANNER_CONSOLIDATION]] — Faz 2 Adım 9 beklemede (Polymarket kalibratör + tracker)
+> Son güncelleme: 17 Mayıs 2026 (Faz 1 ✅ + Faz 2 Adım 5-9 ✅)
+> **Devam ediyor:** [[PHASE2_SCANNER_CONSOLIDATION]] — Faz 2 Adım 10-13 beklemede (hook bağlama + Pulse + stats)
 > Amaç: Tüm scriptler, scheduler thread'leri, veri akışları ve dosya organizasyonunun tek bakışta görünümü.
 >
 > **Kritik dönüşüm:** 13 Mayıs 2026 — eski 3-portföy + sleeve + thematic + swing sistemi (`data/portfolios/*.json`, `data/swing/active.json`) `data/archive/2026-05-13_pre_simplification/` altına taşındı. Bunun yerine **tek `data/portfolio.json`** (positions[] + closed[]) ve `agent/` v2 modern paketi geldi.
@@ -103,7 +103,7 @@ portfolio-tracker/
 │   │   ├── fair_value.py    # ← scripts/fair_value_panel.py [Adım 6 ✅]
 │   │   ├── news.py          # ← scripts/news_radar.py [Adım 7 ✅]
 │   │   ├── analyst_revisions.py  # ← legacy/analist_takip/monitor.py [Adım 8 ✅ — adaptör, kaynak yerinde]
-│   │   └── calibrator.py    # Polymarket kalibratör [Adım 9 — beklemede]
+│   │   └── calibrator.py    # Polymarket kalibratör [Adım 9 ✅]
 │   │
 │   ├── polymarket.py        # Gamma API client [Faz 2, 17 May 2026]
 │   │
