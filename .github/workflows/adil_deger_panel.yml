@@ -28,12 +28,15 @@ jobs:
 
       - name: Run fair value panel
         run: |
-          python3 scripts/fair_value_panel.py --target "${{ github.event.inputs.target || 'dm' }}"
+          # Faz 2 Adım 6 (17 May 2026): scripts/fair_value_panel.py → agent/scanners/fair_value.py
+          python3 agent/scanners/fair_value.py --target "${{ github.event.inputs.target || 'dm' }}"
         env:
           FMP_API_KEY: ${{ secrets.FMP_API_KEY }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_GROUP_CHAT_ID: ${{ secrets.TELEGRAM_GROUP_CHAT_ID }}
           TELEGRAM_DM_CHAT_ID: ${{ secrets.TELEGRAM_DM_CHAT_ID }}
+          # Faz 2: agent.scanners.* importları için
+          PYTHONPATH: ${{ github.workspace }}:${{ github.workspace }}/agent:${{ github.workspace }}/agent/legacy
 
       - name: Commit fair-value report
         run: |

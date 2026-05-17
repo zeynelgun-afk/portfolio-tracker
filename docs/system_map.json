@@ -66,8 +66,8 @@
       "category": "script"
     },
     {
-      "id": "scripts/fair_value_panel.py",
-      "label": "fair_value_panel.py",
+      "id": "agent/scanners/fair_value.py",
+      "label": "scanners/fair_value.py",
       "category": "script",
       "tag": "yeni"
     },
@@ -290,7 +290,7 @@
     },
     {
       "source": "adil_deger_panel.yml",
-      "target": "scripts/fair_value_panel.py"
+      "target": "agent/scanners/fair_value.py"
     },
     {
       "source": "research_tracker.yml",
@@ -373,15 +373,15 @@
       "target": "data/portfolio.json"
     },
     {
-      "source": "scripts/fair_value_panel.py",
+      "source": "agent/scanners/fair_value.py",
       "target": "agent.portfolio"
     },
     {
-      "source": "scripts/fair_value_panel.py",
+      "source": "agent/scanners/fair_value.py",
       "target": "agent.fmp"
     },
     {
-      "source": "scripts/fair_value_panel.py",
+      "source": "agent/scanners/fair_value.py",
       "target": "agent.telegram"
     },
     {
@@ -509,7 +509,7 @@
       "target": "agent/ai_gate.py"
     },
     {
-      "source": "scripts/fair_value_panel.py",
+      "source": "agent/scanners/fair_value.py",
       "target": "agent/ai_gate.py"
     },
     {
