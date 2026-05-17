@@ -51,13 +51,17 @@ jobs:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_GROUP_CHAT_ID: '-1003827034395'
           TELEGRAM_DM_CHAT_ID: '1403072107'
+          # Faz 2 (17 May 2026): agent.scanners.* importları için REPO_ROOT
+          # ve agent/legacy (themes, observability) için legacy path
+          PYTHONPATH: ${{ github.workspace }}:${{ github.workspace }}/agent:${{ github.workspace }}/agent/legacy
         run: |
           MODE="${{ github.event.inputs.mode || 'daily' }}"
           DRY="${{ github.event.inputs.dry_run || 'false' }}"
+          # Faz 2 Adım 5 (17 May 2026): scripts/thematic_discovery.py → agent/scanners/thematic.py
           if [ "$DRY" = "true" ]; then
-            python scripts/thematic_discovery.py --mode "$MODE" --dry-run
+            python agent/scanners/thematic.py --mode "$MODE" --dry-run
           else
-            python scripts/thematic_discovery.py --mode "$MODE" --dm
+            python agent/scanners/thematic.py --mode "$MODE" --dm
           fi
 
       - name: Commit thematic + watchlist changes

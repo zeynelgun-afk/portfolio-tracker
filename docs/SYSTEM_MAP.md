@@ -16,8 +16,8 @@ updated: 2026-05-17
 
 # FINZORA AI — SİSTEM HARİTASI
 
-> Son güncelleme: 17 Mayıs 2026 (Faz 1 — Reports konsolidasyonu)
-> **Sonraki:** [[PHASE2_SCANNER_CONSOLIDATION]] — Scanner paketi + Polymarket kalibratörü (tasarım kararları kesinleşti, kod yazımı beklemede)
+> Son güncelleme: 17 Mayıs 2026 (Faz 1 ✅ + Faz 2 Adım 5 ✅)
+> **Devam ediyor:** [[PHASE2_SCANNER_CONSOLIDATION]] — Faz 2 Adım 6-9 beklemede (Fair Value / News / Analyst / Kalibratör)
 > Amaç: Tüm scriptler, scheduler thread'leri, veri akışları ve dosya organizasyonunun tek bakışta görünümü.
 >
 > **Kritik dönüşüm:** 13 Mayıs 2026 — eski 3-portföy + sleeve + thematic + swing sistemi (`data/portfolios/*.json`, `data/swing/active.json`) `data/archive/2026-05-13_pre_simplification/` altına taşındı. Bunun yerine **tek `data/portfolio.json`** (positions[] + closed[]) ve `agent/` v2 modern paketi geldi.
@@ -97,6 +97,16 @@ portfolio-tracker/
 │   │   ├── research.py      # Adil Değer takibi (23:35 daily / Pzr 14:00 weekly) [Faz 1, 17 May 2026]
 │   │   └── stats.py         # Observability/FMP istatistik raporu [Faz 1, 17 May 2026]
 │   │
+│   ├── scanners/            # Scanner paketi [Faz 2, 17 May 2026]
+│   │   ├── base.py          # BaseScanner ABC + Candidate dataclass
+│   │   ├── thematic.py      # ← scripts/thematic_discovery.py [Adım 5]
+│   │   ├── fair_value.py    # ← scripts/fair_value_panel.py [Adım 6 — beklemede]
+│   │   ├── news.py          # ← scripts/news_radar.py [Adım 7 — beklemede]
+│   │   ├── analyst_revisions.py  # ← legacy/analist_takip/monitor.py [Adım 8 — beklemede]
+│   │   └── calibrator.py    # Polymarket kalibratör [Adım 9 — beklemede]
+│   │
+│   ├── polymarket.py        # Gamma API client [Faz 2, 17 May 2026]
+│   │
 │   └── legacy/              # Eski sistemin arşivi (~50 dosya)
 │       ├── analist_takip/   # AKTIF — analist revize polling alt sistemi
 │       │   ├── config.py            # PORTFOLIO_FILES, threshold'lar, FMP_BASE
@@ -135,7 +145,7 @@ portfolio-tracker/
 │   ├── fair_value_panel.py  # 12:30 — adil değer hesabı + watchlist keşif
 │   ├── research_tracker.py  # → SHIM (Faz 1, 17 May 2026): agent/reports/research.py'ya yönlendiriyor
 │   ├── signal_tracker.py    # 23:45 / Pzr 19:00 — sinyal performans (7/14/30 gün checkpoint)
-│   ├── thematic_discovery.py # 23:00 / Pzr 11:00 — LLM ile tema keşfi (Aşama 4)
+│   ├── thematic_discovery.py # → SHIM (Faz 2 Adım 5): agent/scanners/thematic.py'ya yönlendiriyor
 │   ├── ai_orchestrator.py   # 02:00 / Pzr 13:00 — gün sonu / haftalık AI sentez (Aşama 5)
 │   ├── signal_broadcaster.py # Aşama 6 — sinyalleri grup/DM'e yayma
 │   ├── risk_panel_generator.py # Günlük PNG (8 varlık, 1080×1920) → grup

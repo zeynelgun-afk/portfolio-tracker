@@ -212,8 +212,8 @@
       "tag": "AI - LLM gatekeeper"
     },
     {
-      "id": "scripts/thematic_discovery.py",
-      "label": "thematic_discovery.py",
+      "id": "agent/scanners/thematic.py",
+      "label": "scanners/thematic.py",
       "category": "script",
       "tag": "Aşama 4 — LLM tematik keşif"
     },
@@ -434,22 +434,22 @@
     },
     {
       "source": "thematic_discovery.yml",
-      "target": "scripts/thematic_discovery.py"
+      "target": "agent/scanners/thematic.py"
     },
     {
-      "source": "scripts/thematic_discovery.py",
+      "source": "agent/scanners/thematic.py",
       "target": "data/themes.json"
     },
     {
-      "source": "scripts/thematic_discovery.py",
+      "source": "agent/scanners/thematic.py",
       "target": "data/watchlist.json"
     },
     {
-      "source": "scripts/thematic_discovery.py",
+      "source": "agent/scanners/thematic.py",
       "target": "ext.fmp"
     },
     {
-      "source": "scripts/thematic_discovery.py",
+      "source": "agent/scanners/thematic.py",
       "target": "ext.openrouter"
     },
     {
