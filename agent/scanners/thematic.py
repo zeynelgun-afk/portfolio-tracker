@@ -381,6 +381,21 @@ def apply_themes(themes_payload: dict, mode: str) -> dict:
     updated_themes = 0
     watchlist_added = 0
 
+    # Faz 2 Adım 10b-iii-C-ii (17 May 2026): Polymarket kalibratör hook.
+    # Tematik'te AI Gate yok — kalibrasyon bilgisi watchlist score_components'a
+    # metadata olarak kaydedilir. Phase 10 analizinde performans takibi için.
+    # Feature flag CALIBRATOR_ENABLED kapalı default → mevcut davranış.
+    calibrator = None
+    try:
+        from agent.scanners.pipeline import is_calibrator_enabled
+        if is_calibrator_enabled():
+            from agent.scanners.calibrator import PolymarketCalibrator
+            calibrator = PolymarketCalibrator()
+            log(f"Polymarket kalibratör AKTİF (CALIBRATOR_ENABLED=true)")
+    except Exception as e:
+        log(f"Kalibratör başlatma hatası, devam ediliyor: {e}")
+        calibrator = None
+
     for t in themes_payload.get("themes", []):
         # related_tickers içinden ETF'leri ayır (tema'da kalsın ama watchlist'e gitmesin)
         all_tickers = t.get("related_tickers", [])
@@ -413,16 +428,40 @@ def apply_themes(themes_payload: dict, mode: str) -> dict:
             theme_id = t.get("id") or t.get("name", "").lower().replace(" ", "_")
             for ticker in stock_tickers:
                 try:
+                    # Faz 2 Adım 10b-iii-C-ii: ticker bazlı Polymarket kalibrasyon probe
+                    calibration_info = None
+                    if calibrator is not None:
+                        try:
+                            from agent.scanners.base import Candidate
+                            probe = Candidate(
+                                symbol=ticker,
+                                score=0.5,  # probe — gerçek skor LLM momentum_score
+                                reason="thematic probe",
+                                source="thematic",
+                            )
+                            calibrator.calibrate([probe])
+                            if probe.has_calibration:
+                                calibration_info = {
+                                    "flags": probe.calibration_flags,
+                                    "multiplier": probe.calibration_multiplier,
+                                }
+                        except Exception as e:
+                            log(f"  {ticker} kalibrasyon hatası: {e}")
+
+                    score_components_dict = {
+                        "thematic_momentum": t.get("momentum_score"),
+                        "thematic_id": theme_id,
+                        "thematic_stage": stage,
+                    }
+                    if calibration_info is not None:
+                        score_components_dict["polymarket_calibration"] = calibration_info
+
                     wl_result = watchlist_add(
                         symbol=ticker,
                         source=f"tematik_{theme_id}",
                         rationale=f"Tema: {t.get('name')} ({stage}, score {t.get('momentum_score',50)})",
                         tags=[theme_id, stage],
-                        score_components={
-                            "thematic_momentum": t.get("momentum_score"),
-                            "thematic_id": theme_id,
-                            "thematic_stage": stage,
-                        },
+                        score_components=score_components_dict,
                     )
                     if wl_result["action"] == "added":
                         watchlist_added += 1

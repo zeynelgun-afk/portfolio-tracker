@@ -16,10 +16,10 @@ updated: 2026-05-17
 
 # FINZORA AI — SİSTEM HARİTASI
 
-> Son güncelleme: 17 Mayıs 2026 (Faz 1 ✅ + Faz 2 Adım 5-9 ✅ + Adım 10a-b-i ✅ + whitelist v2 ✅ + Adım 10b-ii ✅ + Adım 10b-iii-A ✅ + Adım 10b-iii-B ✅ + Adım 10b-iii-C-i fair_value entegrasyonu ✅)
-> **Devam ediyor:** [[PHASE2_SCANNER_CONSOLIDATION]] — Faz 2 Adım 10b-iii-C-ii (thematic entegrasyon), 11-13 beklemede
+> Son güncelleme: 17 Mayıs 2026 (Faz 1 ✅ + Faz 2 Adım 5-9 ✅ + Adım 10a-b-i ✅ + whitelist v2 ✅ + Adım 10b-ii ✅ + Adım 10b-iii-A ✅ + Adım 10b-iii-B ✅ + Adım 10b-iii-C-i ✅ + Adım 10b-iii-C-ii ✅)
+> **Devam ediyor:** [[PHASE2_SCANNER_CONSOLIDATION]] — Faz 2 Adım 11-13 beklemede (Pozisyon #3 cron + Weekly Pulse + stats)
 
-⚠ İLK GERÇEK ÜRETİM AKIŞINA DOKUNAN ADIM TAMAMLANDI: `fair_value.py:discover_undervalued_tickers` artık feature flag CALIBRATOR_ENABLED=true ile Polymarket kalibratörü kullanıyor. Default kapalı — mevcut davranış değişmedi.
+⚠ İLK İKİ ÜRETİM AKIŞINA DOKUNAN ADIMLAR TAMAMLANDI: `fair_value` (AI Gate'e calibration_info) + `thematic_discovery` (score_components'a polymarket_calibration). Default kapalı. CALIBRATOR_ENABLED=true ile aktif olur.
 > Amaç: Tüm scriptler, scheduler thread'leri, veri akışları ve dosya organizasyonunun tek bakışta görünümü.
 >
 > **Kritik dönüşüm:** 13 Mayıs 2026 — eski 3-portföy + sleeve + thematic + swing sistemi (`data/portfolios/*.json`, `data/swing/active.json`) `data/archive/2026-05-13_pre_simplification/` altına taşındı. Bunun yerine **tek `data/portfolio.json`** (positions[] + closed[]) ve `agent/` v2 modern paketi geldi.
