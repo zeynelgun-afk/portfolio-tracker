@@ -108,8 +108,25 @@ def _build_default_context() -> dict:
 
 
 def _build_prompt(symbol: str, signal_type: str, signal_data: dict,
-                   context: dict) -> str:
-    """LLM prompt'u oluştur — kompakt ve odaklı."""
+                   context: dict,
+                   calibration_info: Optional[dict] = None) -> str:
+    """LLM prompt'u oluştur — kompakt ve odaklı.
+
+    Args:
+        symbol: ticker
+        signal_type: 'analist_revize' | 'fair_value_iskonto' | 'manuel' | 'tematik'
+        signal_data: kaynak ham veri
+        context: market bağlamı (watchlist, portföy, temalar)
+        calibration_info: opsiyonel Polymarket kalibrasyon. Format:
+            {
+              "flags": ["pm_confirm" | "pm_confirm_weak" |
+                        "pm_conflict" | "pm_conflict_weak"],
+              "multiplier": float (0.75-1.20),
+              "original_score": float (0-1),
+              "calibrated_score": float (0-1),
+            }
+            None ise kalibrasyon bölümü prompt'a eklenmez (geriye dönük uyumlu).
+    """
     lines = []
     lines.append(f"FİNZORA AI — WATCHLIST GATE DEĞERLENDİRMESİ")
     lines.append(f"Hisse: {symbol}")
@@ -147,6 +164,13 @@ def _build_prompt(symbol: str, signal_type: str, signal_data: dict,
         lines.append("BU SİNYAL TİPİ İÇİN REHBER:")
         lines.append(sig_guidance)
         lines.append("")
+
+    # Polymarket kalibrasyon (Faz 2 Adım 10b-iii-B, 17 May 2026)
+    if calibration_info and isinstance(calibration_info, dict):
+        cal_section = _build_calibration_section(calibration_info)
+        if cal_section:
+            lines.append(cal_section)
+            lines.append("")
 
     # Görev
     lines.append("""GÖREV:
@@ -195,6 +219,97 @@ def _get_signal_guidance(signal_type: str) -> str:
     if signal_type == "tematik":
         return "Tematik keşif sinyali. Tema aktifse (dogus/yukselis/olgun) EKLE."
     return ""
+
+
+# ────────────────────────── Polymarket Kalibrasyon ──────────────────────────
+
+
+_FLAG_LABELS = {
+    "pm_confirm": ("DOĞRULAMA (güçlü)",
+                   "Polymarket bu hisse için pozitif yönde belirgin (≥%10) hareket etti. "
+                   "Sinyal piyasa beklentisi ile uyumlu — bu DESTEKLEYİCİ veri."),
+    "pm_confirm_weak": ("DOĞRULAMA (zayıf)",
+                        "Polymarket pozitif yönde sınırlı (%3-%10) hareket etti. "
+                        "Sinyal kısmen destekleniyor."),
+    "pm_conflict": ("ÇELİŞKİ (güçlü)",
+                    "Polymarket bu hisse için OLUMSUZ yönde belirgin (≥%10) hareket etti. "
+                    "Sinyal ile piyasa beklentisi UYUŞMUYOR — tezi sorgula. "
+                    "Hisse aldığında karşılaştığın risk Polymarket tarafından fiyatlanıyor olabilir."),
+    "pm_conflict_weak": ("ÇELİŞKİ (zayıf)",
+                         "Polymarket sınırlı (%3-%10) olumsuz hareket etti. "
+                         "Sinyal hâlâ geçerli olabilir ama dikkatli incele."),
+}
+
+
+def _build_calibration_section(calibration_info: dict) -> str:
+    """Calibration_info dict'inden prompt bölümü oluştur.
+
+    Returns:
+        Çok satırlı string. Boş string ise (gösterilecek bayrak yok) bölüm
+        eklenmez.
+    """
+    flags = calibration_info.get("flags") or []
+    if not flags or not isinstance(flags, list):
+        return ""
+
+    multiplier = calibration_info.get("multiplier")
+    orig_score = calibration_info.get("original_score")
+    calib_score = calibration_info.get("calibrated_score")
+
+    lines = ["POLYMARKET KALİBRASYON SİNYALİ:"]
+
+    # Her bayrak için açıklama
+    has_conflict = False
+    has_confirm = False
+    for flag in flags:
+        if not isinstance(flag, str):
+            continue
+        label_data = _FLAG_LABELS.get(flag)
+        if label_data is None:
+            continue  # bilinmeyen bayrak, atla
+        label, desc = label_data
+        lines.append(f"  • {label}: {desc}")
+        if flag.startswith("pm_conflict"):
+            has_conflict = True
+        if flag.startswith("pm_confirm"):
+            has_confirm = True
+
+    if len(lines) == 1:
+        # Hiç bilinen bayrak yoktu, sadece başlık var → bölümü atla
+        return ""
+
+    # Skor metrikleri
+    if isinstance(multiplier, (int, float)):
+        lines.append(f"  Çarpan: {multiplier:.2f}x")
+    if isinstance(orig_score, (int, float)) and isinstance(calib_score, (int, float)):
+        lines.append(
+            f"  Skor: {orig_score:.3f} → {calib_score:.3f} (kalibre edilmiş)"
+        )
+
+    # LLM rehberi — yön bazlı
+    lines.append("")
+    if has_conflict and has_confirm:
+        lines.append(
+            "REHBER: Karışık sinyal — bazı temalar destekliyor, bazıları çelişkili. "
+            "Daha sert (çelişki) yönü öncelikle değerlendir, sinyal hâlâ "
+            "doğrulanabilir mi sorusunu sor."
+        )
+    elif has_conflict:
+        lines.append(
+            "REHBER: Polymarket çelişkisi var. Bu sinyali kabul etmeden önce: "
+            "(a) tezde gözden kaçan bir risk var mı? "
+            "(b) piyasa zaten bu hisse için olumsuz fiyatlama yapıyor mu? "
+            "Çelişki zayıfsa (weak) sinyal hâlâ geçerli olabilir; güçlüyse "
+            "(strong) ekstra şüpheci ol — 'cautions' listesine 'polymarket_conflict' ekle."
+        )
+    elif has_confirm:
+        lines.append(
+            "REHBER: Polymarket bu sinyali destekliyor. Diğer kriterler tutuyorsa "
+            "(tema, kalite) EKLE'ye eğilim güçlenir. Ancak doğrulama tek başına "
+            "yetmez — sinyal kalitesi ve value-trap riskini gözden geçirmeye devam et."
+        )
+
+    return "\n".join(lines)
 
 
 # ────────────────────────── LLM Call ──────────────────────────
@@ -249,7 +364,8 @@ def _call_llm(prompt: str) -> Optional[dict]:
 
 def evaluate_signal(symbol: str, signal_type: str,
                     signal_data: dict,
-                    market_context: Optional[dict] = None) -> dict:
+                    market_context: Optional[dict] = None,
+                    calibration_info: Optional[dict] = None) -> dict:
     """
     Bir besleyici sinyalini LLM ile değerlendir.
 
@@ -259,6 +375,12 @@ def evaluate_signal(symbol: str, signal_type: str,
                      'manuel' | 'tematik'
         signal_data: kaynağa özgü ham veri (sözlük)
         market_context: opsiyonel, verilmezse otomatik oluşturulur
+        calibration_info: opsiyonel Polymarket kalibrasyon bayrakları.
+            Format: {"flags": [...], "multiplier": float,
+                     "original_score": float, "calibrated_score": float}
+            None ise prompt'a kalibrasyon bölümü eklenmez (geriye uyumlu).
+            Faz 2 Adım 10b-iii-B — pipeline.scan_and_calibrate sonrası
+            Candidate.calibration_flags/multiplier'dan inşa edilir.
 
     Returns:
         {
@@ -290,7 +412,8 @@ def evaluate_signal(symbol: str, signal_type: str,
         market_context = _build_default_context()
 
     # 3. Prompt + LLM çağrısı
-    prompt = _build_prompt(symbol, signal_type, signal_data, market_context)
+    prompt = _build_prompt(symbol, signal_type, signal_data, market_context,
+                           calibration_info=calibration_info)
     result = _call_llm(prompt)
 
     if not result:
