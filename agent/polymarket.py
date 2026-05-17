@@ -174,18 +174,37 @@ def fetch_markets(
     """Polymarket'ten market listesi çek.
 
     Args:
-        slugs: Eğer verilirse sadece bu slug'lara filtrelenir (whitelist).
-        active_only: closed=false & archived=false marketler.
-        limit: Sayfa başı limit (Gamma default 100).
+        slugs: Eğer verilirse SADECE bu slug'lar için per-slug fetch yapılır
+            (her slug ayrı API çağrısı). Niş marketler top-100 listesinde
+            olmadığı için client-side filter yetersiz — Gamma'nın slug
+            parametresiyle birebir hedeflenmesi gerekiyor.
+        active_only: slugs=None için closed=false & archived=false filtre.
+            slugs verildiğinde Gamma kendi default davranışını kullanır
+            (resolved marketler döndürülmez).
+        limit: slugs=None için sayfa başı limit (Gamma default 100).
 
     Returns:
-        Liste dict'ler. Her dict en az: id, slug, question, outcomes, outcomePrices,
-        volume, liquidity, endDate, active, closed alanlarını içerir (Gamma şema).
+        Liste dict'ler. Her dict en az: id, slug, question, outcomes,
+        outcomePrices, volume, liquidity, endDate, active, closed alanlarını
+        içerir (Gamma şema).
 
-    NOTE: Gerçek Gamma şeması integration testte doğrulanır. Bu istemci
-    'active' / 'closed' bayrakları üzerinden filtre yapar; alan isimleri
-    değişirse adapter buradan güncellenir.
+    Note:
+        slugs verildiğinde resolved (closed=true) marketler doğal olarak
+        atlanır — Gamma slug parametresiyle aktif olmayanları döndürmüyor.
+        Whitelist'te resolved bir slug kalırsa silent skip, exception yok.
     """
+    # Per-slug fetch yolu — niş marketler için
+    if slugs is not None:
+        results: list[dict] = []
+        for slug in slugs:
+            if not isinstance(slug, str) or not slug.strip():
+                continue
+            m = fetch_market_by_slug(slug.strip())
+            if m is not None:
+                results.append(m)
+        return results
+
+    # Genel liste yolu — keşif/test için
     params: dict[str, Any] = {"limit": limit}
     if active_only:
         params["active"] = "true"
@@ -194,12 +213,7 @@ def fetch_markets(
     result = _gamma_get("markets", params)
     if not isinstance(result, list):
         return []
-
-    if slugs is None:
-        return result
-
-    slug_set = set(slugs)
-    return [m for m in result if isinstance(m, dict) and m.get("slug") in slug_set]
+    return result
 
 
 def fetch_market_by_slug(slug: str) -> Optional[dict]:

@@ -16,7 +16,7 @@ updated: 2026-05-17
 
 # FINZORA AI — SİSTEM HARİTASI
 
-> Son güncelleme: 17 Mayıs 2026 (Faz 1 ✅ + Faz 2 Adım 5-9 ✅ + Adım 10a-b-i ✅)
+> Son güncelleme: 17 Mayıs 2026 (Faz 1 ✅ + Faz 2 Adım 5-9 ✅ + Adım 10a-b-i ✅ + whitelist v2 gerçek slug ✅)
 > **Devam ediyor:** [[PHASE2_SCANNER_CONSOLIDATION]] — Faz 2 Adım 10b-ii (scanner pipeline hook), 10b-iii (AI Gate prompt), 11-13 beklemede
 > Amaç: Tüm scriptler, scheduler thread'leri, veri akışları ve dosya organizasyonunun tek bakışta görünümü.
 >

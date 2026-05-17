@@ -90,13 +90,22 @@ class TestFetchMarkets:
 
     @responses.activate
     def test_slug_filter(self):
+        # Yeni mantık: her slug için ayrı /markets?slug=... çağrısı yapılır.
+        # Mock her slug için match-edici response döndürür.
         market_a = dict(_SAMPLE_BINARY_MARKET, slug="alpha")
-        market_b = dict(_SAMPLE_BINARY_MARKET, slug="beta")
         market_c = dict(_SAMPLE_BINARY_MARKET, slug="gamma")
         responses.add(
             responses.GET,
             f"{BASE_URL}/markets",
-            json=[market_a, market_b, market_c],
+            match=[responses.matchers.query_param_matcher({"slug": "alpha", "limit": "1"})],
+            json=[market_a],
+            status=200,
+        )
+        responses.add(
+            responses.GET,
+            f"{BASE_URL}/markets",
+            match=[responses.matchers.query_param_matcher({"slug": "gamma", "limit": "1"})],
+            json=[market_c],
             status=200,
         )
         result = fetch_markets(slugs=["alpha", "gamma"])
@@ -104,6 +113,43 @@ class TestFetchMarkets:
         assert "alpha" in slugs
         assert "gamma" in slugs
         assert "beta" not in slugs
+
+    @responses.activate
+    def test_slug_filter_missing_market_skipped(self):
+        """Slug için API boş döndürürse o slug atlanır, exception yok."""
+        market_a = dict(_SAMPLE_BINARY_MARKET, slug="alpha")
+        responses.add(
+            responses.GET,
+            f"{BASE_URL}/markets",
+            match=[responses.matchers.query_param_matcher({"slug": "alpha", "limit": "1"})],
+            json=[market_a],
+            status=200,
+        )
+        responses.add(
+            responses.GET,
+            f"{BASE_URL}/markets",
+            match=[responses.matchers.query_param_matcher({"slug": "nonexistent", "limit": "1"})],
+            json=[],
+            status=200,
+        )
+        result = fetch_markets(slugs=["alpha", "nonexistent"])
+        slugs = [m["slug"] for m in result]
+        assert slugs == ["alpha"]
+
+    @responses.activate
+    def test_empty_string_slugs_skipped(self):
+        """Boş/whitespace slug'lar API call yapmadan atlanır."""
+        market_a = dict(_SAMPLE_BINARY_MARKET, slug="alpha")
+        responses.add(
+            responses.GET,
+            f"{BASE_URL}/markets",
+            match=[responses.matchers.query_param_matcher({"slug": "alpha", "limit": "1"})],
+            json=[market_a],
+            status=200,
+        )
+        result = fetch_markets(slugs=["alpha", "", "   "])
+        assert len(result) == 1
+        assert result[0]["slug"] == "alpha"
 
     @responses.activate
     def test_empty_slugs_returns_all(self):
@@ -437,13 +483,16 @@ class TestThemes:
         assert themes == {"themes": {}}
 
     def test_get_theme_slugs_aggregate(self):
-        # Gerçek seed dosyasından slug toplama
+        # v2 seed: doğrulanmış gerçek slug'lar.
+        # 5 tema, 2'si pending (boş slugs), 3'ü verified (Fed 5 + Taiwan 1 + Recession 1 = 7).
         slugs = get_theme_slugs()
         assert isinstance(slugs, set)
-        # v1 seed: 5 tema × 2 slug = 10 slug
-        assert len(slugs) >= 8  # bazıları eşsiz olmayabilir, esnek olalım
-        assert "fed-rate-decision-june-2026" in slugs
-        assert "taiwan-invasion-2026" in slugs
+        assert len(slugs) >= 6
+        # Doğrulanmış gerçek slug'lardan birkaç sanity check
+        assert "will-china-invade-taiwan-before-2027" in slugs
+        assert "us-recession-by-end-of-2026" in slugs
+        # En az bir Fed marketi (June 2026 hâlâ aktif olan core market)
+        assert any("fed-rate-cut" in s for s in slugs)
 
     def test_get_theme_slugs_empty_when_no_file(self, tmp_path, monkeypatch):
         themes_path = tmp_path / "nonexistent.json"

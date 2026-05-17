@@ -1,13 +1,23 @@
 {
-  "_version": "v1",
+  "_version": "v2",
   "_updated": "2026-05-17",
-  "_note": "v1 seed — yeni tema eklemek için ai_orchestrator LLM köprüsü ile öneri ürettir, insan onayı ile bu dosyaya işle. Tasarım: docs/PHASE2_SCANNER_CONSOLIDATION.md Bölüm 7",
-  "_slug_disclaimer": "polymarket_slugs alanlarındaki değerler tahminidir. agent/polymarket.py fetch_markets() ile gerçek aktif slug'lar listelenip buraya işlenmeli (Adım 9 öncesi).",
+  "_note": "v2 — Tahmini slug'lar yerine Gamma API ile doğrulanmış GERÇEK AKTİF marketler (Jan/Mar/Apr 2026 Fed marketleri resolved — atıldı). Doğrulanmamış temalar (iran, tariff) boş slug listesiyle pending. Tasarım: docs/PHASE2_SCANNER_CONSOLIDATION.md Bölüm 7. Araştırma notları: docs/POLYMARKET_SLUG_RESEARCH_2026-05-17.md",
+  "_min_volume_note": "Eşikler tema bazlı. Fed marketleri tipik <$300k volume; yüksek-etki temalar (china_taiwan) milyon doları aşar. Eşik manipulation guard amaçlı.",
   "themes": {
     "fed_rate_cut": {
       "label": "Fed faiz indirimi",
-      "polymarket_slugs": ["fed-rate-decision-june-2026", "fed-rate-cut-by-q3-2026"],
-      "min_volume_usd": 1000000,
+      "polymarket_slugs": [
+        "fed-rate-cut-by-june-2026-meeting",
+        "fed-rate-cut-by-july-2026-meeting-577",
+        "fed-rate-cut-by-september-2026-meeting-264-382",
+        "fed-rate-cut-by-october-2026-meeting-199-747",
+        "fed-rate-cut-by-december-2026-meeting"
+      ],
+      "_slug_status": "verified_2026-05-17",
+      "_event_slug": "fed-rate-cut-by-629",
+      "_active_markets_total_volume_usd": 591502,
+      "_note": "Tüm aktif marketler June 17 2026'da resolve olacak (FOMC meeting tarihi). En likit: June ($277k), December ($109k). Min vol $50k → tüm aktif marketler dahil olsun. Bu event resolution sonrası yenilenmeli.",
+      "min_volume_usd": 50000,
       "positive_tickers": ["IWM", "TLT", "VNQ", "XLRE", "XLU"],
       "negative_tickers": ["XLF", "USD", "KRE"],
       "confidence": 0.85,
@@ -15,18 +25,38 @@
     },
     "china_taiwan_tension": {
       "label": "Çin-Tayvan gerilimi",
-      "polymarket_slugs": ["taiwan-invasion-2026", "china-taiwan-blockade-2026"],
-      "min_volume_usd": 500000,
+      "polymarket_slugs": [
+        "will-china-invade-taiwan-before-2027"
+      ],
+      "_slug_status": "verified_2026-05-17",
+      "_market_volume_usd": 23356221,
+      "min_volume_usd": 1000000,
       "positive_tickers": ["LMT", "RTX", "NOC", "ITA"],
       "negative_tickers": ["TSM", "ASML", "NVDA", "AAPL", "AMAT", "LRCX", "KLAC"],
       "confidence": 0.90,
       "applies_to_themes": ["ai-supply-chain", "semi-equipment", "semi-foundry"],
-      "_note": "Portföyün omurgası — yüksek dikkat"
+      "_note": "Portföyün omurgası — yüksek dikkat. $23M vol, end 2026-12-31. Yes prob 7.45% (May 17), No 92.55%."
+    },
+    "us_recession_2026": {
+      "label": "ABD resesyon 2026",
+      "polymarket_slugs": [
+        "us-recession-by-end-of-2026"
+      ],
+      "_slug_status": "verified_2026-05-17",
+      "_market_volume_usd": 1461290,
+      "min_volume_usd": 500000,
+      "positive_tickers": ["TLT", "GLD", "XLP", "XLU"],
+      "negative_tickers": ["XLY", "XLI", "IYT", "KRE"],
+      "confidence": 0.75,
+      "applies_to_themes": ["defensive", "cyclical"],
+      "_note": "$1.46M vol, end 2027-01-31. NBER bazlı. Yes prob 23.5% (May 17)."
     },
     "iran_escalation": {
       "label": "İran/Orta Doğu eskalasyonu",
-      "polymarket_slugs": ["iran-israel-strike-2026", "iran-nuclear-escalation"],
-      "min_volume_usd": 500000,
+      "polymarket_slugs": [],
+      "_slug_status": "pending_research",
+      "_research_note": "Polymarket Iran kategorisinde 20 aktif market ($279M kategori vol) ama çoğu kısa vadeli 'by [tarih]' formatlı veya zaten Yes olarak çözülmüş (Mar/Jun 2026 'Israel strikes Iran' marketleri). Uzun vadeli stabil eskalasyon marketi henüz bulunmadı.",
+      "min_volume_usd": 1000000,
       "positive_tickers": ["XLE", "OIH", "LMT", "RTX", "XOP"],
       "negative_tickers": ["XAL", "LUV", "DAL", "UAL"],
       "confidence": 0.85,
@@ -34,22 +64,14 @@
     },
     "trump_tariff_action": {
       "label": "Trump tarife kararı",
-      "polymarket_slugs": ["trump-tariff-china-2026", "tariff-mexico-2026"],
+      "polymarket_slugs": [],
+      "_slug_status": "pending_research",
+      "_research_note": "Tariff kategorisinde 114 market, $23.3M total vol — çoğu RESOLVED veya Trump-Xi summit'e bağlı kısa vadeli (May 22 deadline). Uzun vadeli stabil 'tariff in effect' marketi henüz bulunmadı.",
       "min_volume_usd": 500000,
       "positive_tickers": ["X", "NUE", "STLD"],
       "negative_tickers": ["AAPL", "NKE", "WMT", "TGT", "BBY", "TSLA"],
       "confidence": 0.70,
-      "applies_to_themes": ["import-heavy-retail", "semi-import"],
-      "_note": "Mapping güvenirliği orta — etki geniş, sektör seçimi kaba"
-    },
-    "us_recession_2026": {
-      "label": "ABD resesyon 2026",
-      "polymarket_slugs": ["us-recession-2026", "nber-recession-2026"],
-      "min_volume_usd": 1000000,
-      "positive_tickers": ["TLT", "GLD", "XLP", "XLU"],
-      "negative_tickers": ["XLY", "XLI", "IYT", "KRE"],
-      "confidence": 0.75,
-      "applies_to_themes": ["defensive", "cyclical"]
+      "applies_to_themes": ["import-heavy-retail", "semi-import"]
     }
   }
 }
