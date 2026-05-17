@@ -1,0 +1,66 @@
+name: Polymarket Cache Refresh
+
+# NOT (Faz 2 Adım 10b-i, 17 May 2026):
+# Cron SCHEDULE YOK — sadece manuel tetik. Kalibratör scanner pipeline'ına
+# bağlanmadan önce (Adım 10b-ii) production fetch başlatmıyoruz.
+# Zeynel test için manuel tetikleyebilir, ya da 10b-ii sonrası burada
+# schedule eklenir.
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Cache disk yazımı yapma (sadece dryrun fetch)'
+        type: boolean
+        default: false
+      verbose:
+        description: 'Her market için ayrıntılı log'
+        type: boolean
+        default: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write  # Cache değişiklikleri commit edilecek
+
+    steps:
+      - name: Repo çek
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.PAT || secrets.GITHUB_TOKEN }}
+
+      - name: Python kur
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Bağımlılıklar
+        run: pip install requests
+
+      - name: Polymarket cache refresh çalıştır
+        run: |
+          ARGS=""
+          if [ "${{ github.event.inputs.dry_run }}" = "true" ]; then
+            ARGS="$ARGS --dry-run"
+          fi
+          if [ "${{ github.event.inputs.verbose }}" = "true" ]; then
+            ARGS="$ARGS --verbose"
+          fi
+          python3 scripts/refresh_polymarket_cache.py $ARGS
+        env:
+          # Polymarket Gamma API public — auth gerekmiyor, ama observability
+          # entegrasyonu için legacy paketi PYTHONPATH'te olmalı
+          PYTHONPATH: ${{ github.workspace }}:${{ github.workspace }}/agent:${{ github.workspace }}/agent/legacy
+
+      - name: Cache değişikliklerini commit et
+        if: ${{ github.event.inputs.dry_run != 'true' }}
+        run: |
+          git config user.name "Finzora Bot"
+          git config user.email "finzora-bot@users.noreply.github.com"
+          git add data/polymarket_cache.json || true
+          if git diff --staged --quiet; then
+            echo "Cache değişikliği yok — commit atlandı"
+          else
+            git commit -m "[bot/polymarket] Cache refresh $(date -u +'%Y-%m-%d %H:%M UTC')"
+            git push || true
+          fi

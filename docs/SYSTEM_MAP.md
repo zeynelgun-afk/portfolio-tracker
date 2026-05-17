@@ -16,8 +16,8 @@ updated: 2026-05-17
 
 # FINZORA AI — SİSTEM HARİTASI
 
-> Son güncelleme: 17 Mayıs 2026 (Faz 1 ✅ + Faz 2 Adım 5-9 ✅ + Adım 10a ✅)
-> **Devam ediyor:** [[PHASE2_SCANNER_CONSOLIDATION]] — Faz 2 Adım 10b-13 beklemede (scheduler + hook bağlama + Pulse + stats)
+> Son güncelleme: 17 Mayıs 2026 (Faz 1 ✅ + Faz 2 Adım 5-9 ✅ + Adım 10a-b-i ✅)
+> **Devam ediyor:** [[PHASE2_SCANNER_CONSOLIDATION]] — Faz 2 Adım 10b-ii (scanner pipeline hook), 10b-iii (AI Gate prompt), 11-13 beklemede
 > Amaç: Tüm scriptler, scheduler thread'leri, veri akışları ve dosya organizasyonunun tek bakışta görünümü.
 >
 > **Kritik dönüşüm:** 13 Mayıs 2026 — eski 3-portföy + sleeve + thematic + swing sistemi (`data/portfolios/*.json`, `data/swing/active.json`) `data/archive/2026-05-13_pre_simplification/` altına taşındı. Bunun yerine **tek `data/portfolio.json`** (positions[] + closed[]) ve `agent/` v2 modern paketi geldi.
