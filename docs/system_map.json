@@ -84,6 +84,12 @@
       "tag": "yeni"
     },
     {
+      "id": "agent/scanners/pipeline.py",
+      "label": "scanners/pipeline.py",
+      "category": "script",
+      "tag": "yeni"
+    },
+    {
       "id": "data/polymarket_calibrator_performance.json",
       "label": "calibrator_performance.json",
       "category": "data",
