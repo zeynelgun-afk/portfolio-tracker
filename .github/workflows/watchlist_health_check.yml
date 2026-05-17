@@ -1,0 +1,62 @@
+name: Watchlist Health Check (Polymarket çelişki uyarısı)
+
+# Faz 2 Adım 11 (17 May 2026) — Pozisyon #3 cron.
+# Watchlist'teki ticker'lar için Polymarket çelişki taraması, yeni uyarı varsa Zeynel DM.
+#
+# Cron AÇIK — TR 15:30 (UTC 12:30) günlük tarama, NYSE session öncesi.
+# State dosyası (data/watchlist_health_state.json) 24h cooldown sağlar:
+# aynı uyarı 24 saat içinde tekrar DM atılmaz.
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'DM atma, sadece konsola yazdır'
+        type: boolean
+        default: false
+  schedule:
+    - cron: '30 12 * * *'  # UTC 12:30 = TR 15:30 (NYSE session öncesi)
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write  # State dosyası commit edilir
+
+    steps:
+      - name: Repo çek
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.PAT || secrets.GITHUB_TOKEN }}
+
+      - name: Python kur
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Bağımlılıklar
+        run: pip install requests
+
+      - name: Watchlist sağlık taraması çalıştır
+        run: |
+          ARGS=""
+          if [ "${{ github.event.inputs.dry_run }}" = "true" ]; then
+            ARGS="--dry-run"
+          fi
+          python3 scripts/watchlist_health_check.py $ARGS
+        env:
+          PYTHONPATH: ${{ github.workspace }}:${{ github.workspace }}/agent:${{ github.workspace }}/agent/legacy
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_PRIVATE_ID: ${{ secrets.TELEGRAM_PRIVATE_ID }}
+
+      - name: State dosyasını commit et
+        if: ${{ github.event.inputs.dry_run != 'true' }}
+        run: |
+          git config user.name "Finzora Bot"
+          git config user.email "finzora-bot@users.noreply.github.com"
+          git add data/watchlist_health_state.json || true
+          if git diff --staged --quiet; then
+            echo "State değişikliği yok"
+          else
+            git commit -m "[bot/watchlist-health] State update $(date -u +'%Y-%m-%d %H:%M UTC')"
+            git push || true
+          fi

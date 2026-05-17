@@ -16,10 +16,10 @@ updated: 2026-05-17
 
 # FINZORA AI — SİSTEM HARİTASI
 
-> Son güncelleme: 17 Mayıs 2026 (Faz 1 ✅ + Faz 2 Adım 5-9 ✅ + Adım 10a-b-i ✅ + whitelist v2 ✅ + Adım 10b-ii ✅ + Adım 10b-iii-A ✅ + Adım 10b-iii-B ✅ + Adım 10b-iii-C-i ✅ + Adım 10b-iii-C-ii ✅)
-> **Devam ediyor:** [[PHASE2_SCANNER_CONSOLIDATION]] — Faz 2 Adım 11-13 beklemede (Pozisyon #3 cron + Weekly Pulse + stats)
+> Son güncelleme: 17 Mayıs 2026 (Faz 1 ✅ + Faz 2 Adım 5-11 ✅)
+> **Devam ediyor:** [[PHASE2_SCANNER_CONSOLIDATION]] — Faz 2 Adım 12-13 beklemede (Weekly Pulse + stats genişletme)
 
-⚠ İLK İKİ ÜRETİM AKIŞINA DOKUNAN ADIMLAR TAMAMLANDI: `fair_value` (AI Gate'e calibration_info) + `thematic_discovery` (score_components'a polymarket_calibration). Default kapalı. CALIBRATOR_ENABLED=true ile aktif olur.
+✅ FAZ 2 OMURGA + GÜNLÜK ÇALIŞAN İLK CRON HAZIR: fair_value + thematic kalibratör entegre, Pozisyon #3 watchlist sağlık cron'u günlük TR 15:30 çalışacak. Default kapalı (flag aktif olunca canlıya geçer).
 > Amaç: Tüm scriptler, scheduler thread'leri, veri akışları ve dosya organizasyonunun tek bakışta görünümü.
 >
 > **Kritik dönüşüm:** 13 Mayıs 2026 — eski 3-portföy + sleeve + thematic + swing sistemi (`data/portfolios/*.json`, `data/swing/active.json`) `data/archive/2026-05-13_pre_simplification/` altına taşındı. Bunun yerine **tek `data/portfolio.json`** (positions[] + closed[]) ve `agent/` v2 modern paketi geldi.
