@@ -11,8 +11,11 @@ Kullanım:
 
 import os
 import sys
+import json
 import argparse
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
+from typing import Optional
 
 # agent/ modüllerine ulaş
 _REPO_ROOT = Path(__file__).resolve().parents[2]
@@ -28,6 +31,245 @@ try:
 except ImportError as e:
     print(f"ERROR: observability modülü yüklenemedi: {e}")
     sys.exit(1)
+
+
+# ─────────────────────── Polymarket Kalibratör İstatistikleri ───────────────────
+# Faz 2 Adım 13 (17 May 2026). Tracker JSON'dan event analizi.
+
+_CALIBRATOR_LOG_PATH = _REPO_ROOT / "data" / "polymarket_calibrator_performance.json"
+
+
+def _load_calibrator_tracker() -> dict:
+    """Tracker dosyasını yükle. Dosya yoksa boş dict, bozuksa {}."""
+    if not _CALIBRATOR_LOG_PATH.exists():
+        return {}
+    try:
+        with _CALIBRATOR_LOG_PATH.open(encoding="utf-8") as f:
+            data = json.load(f)
+        return data if isinstance(data, dict) else {}
+    except Exception:
+        return {}
+
+
+def query_calibrator_stats(days: int) -> dict:
+    """Son `days` günkü kalibratör event'lerinin istatistiklerini çıkar.
+
+    Returns:
+        {
+          "total_events": N,
+          "by_flag": {"pm_confirm": N, "pm_confirm_weak": N, ...},
+          "by_multiplier": {"1.20x": N, "1.10x": N, "0.90x": N, "0.75x": N},
+          "by_source": {"thematic": N, "fair_value": N},
+          "top_themes": [(theme, count), ...],
+          "top_symbols": [(symbol, count), ...],
+          "days_collected": float,  # tracker _started_at'ten itibaren
+          "phase10_progress_pct": float,  # 0-100, 30 gün hedef
+          "outcome_status": "pending_phase10",  # outcome_*_d hâlâ None
+          "error": opsiyonel str,
+        }
+    """
+    tracker = _load_calibrator_tracker()
+    if not tracker:
+        return {"error": "Tracker dosyası yok veya bozuk", "total_events": 0}
+
+    events = tracker.get("events", [])
+    if not isinstance(events, list):
+        return {"error": "Events alanı geçersiz", "total_events": 0}
+
+    now = datetime.now(timezone.utc)
+    cutoff = now - timedelta(days=days)
+
+    # Filtreleme — son `days` günü
+    recent = []
+    for evt in events:
+        if not isinstance(evt, dict):
+            continue
+        ts_str = evt.get("ts", "")
+        if not isinstance(ts_str, str):
+            continue
+        try:
+            ts = datetime.fromisoformat(ts_str.replace("Z", "+00:00"))
+            if ts >= cutoff:
+                recent.append(evt)
+        except (ValueError, TypeError):
+            continue
+
+    if not recent:
+        return {
+            "total_events": 0,
+            "by_flag": {},
+            "by_multiplier": {},
+            "by_source": {},
+            "top_themes": [],
+            "top_symbols": [],
+            "days_collected": _calc_days_collected(tracker, now),
+            "phase10_progress_pct": _calc_phase10_progress(tracker, now),
+            "outcome_status": "no_data",
+        }
+
+    # Flag dağılımı
+    by_flag: dict[str, int] = {}
+    for e in recent:
+        flag = e.get("applied_flag", "unknown")
+        if isinstance(flag, str):
+            by_flag[flag] = by_flag.get(flag, 0) + 1
+
+    # Multiplier dağılımı (1.20 / 1.10 / 0.90 / 0.75)
+    by_multiplier: dict[str, int] = {}
+    for e in recent:
+        mult = e.get("applied_multiplier")
+        if isinstance(mult, (int, float)):
+            key = f"{mult:.2f}x"
+            by_multiplier[key] = by_multiplier.get(key, 0) + 1
+
+    # Source dağılımı (thematic/fair_value)
+    by_source: dict[str, int] = {}
+    for e in recent:
+        src = e.get("candidate_source", "unknown")
+        if isinstance(src, str):
+            by_source[src] = by_source.get(src, 0) + 1
+
+    # Top themes (top 5)
+    theme_counts: dict[str, int] = {}
+    for e in recent:
+        theme = e.get("matched_theme")
+        if isinstance(theme, str):
+            theme_counts[theme] = theme_counts.get(theme, 0) + 1
+    top_themes = sorted(theme_counts.items(), key=lambda x: -x[1])[:5]
+
+    # Top symbols (top 5)
+    sym_counts: dict[str, int] = {}
+    for e in recent:
+        sym = e.get("candidate_symbol")
+        if isinstance(sym, str):
+            sym_counts[sym] = sym_counts.get(sym, 0) + 1
+    top_symbols = sorted(sym_counts.items(), key=lambda x: -x[1])[:5]
+
+    # Outcome status — outcome_7d/14d/30d henüz Phase 10'da dolacak
+    outcome_filled = sum(
+        1 for e in recent
+        if e.get("outcome_7d") is not None or e.get("outcome_14d") is not None
+        or e.get("outcome_30d") is not None
+    )
+
+    return {
+        "total_events": len(recent),
+        "by_flag": by_flag,
+        "by_multiplier": by_multiplier,
+        "by_source": by_source,
+        "top_themes": top_themes,
+        "top_symbols": top_symbols,
+        "days_collected": _calc_days_collected(tracker, now),
+        "phase10_progress_pct": _calc_phase10_progress(tracker, now),
+        "outcome_status": ("pending_phase10" if outcome_filled == 0
+                           else "partial"),
+    }
+
+
+def _calc_days_collected(tracker: dict, now: datetime) -> float:
+    """_started_at'ten itibaren kaç gün geçti."""
+    started_str = tracker.get("_started_at")
+    if not isinstance(started_str, str):
+        return 0.0
+    try:
+        started = datetime.fromisoformat(started_str.replace("Z", "+00:00"))
+        return (now - started).total_seconds() / 86400
+    except (ValueError, TypeError):
+        return 0.0
+
+
+def _calc_phase10_progress(tracker: dict, now: datetime) -> float:
+    """0-100 progress (30 gün hedef)."""
+    days = _calc_days_collected(tracker, now)
+    return min(100.0, days / 30 * 100)
+
+
+def format_calibrator_section(stats: dict) -> list[str]:
+    """Markdown bölüm satırları."""
+    lines = ["\n## Polymarket Kalibratör İstatistikleri\n"]
+
+    if "error" in stats:
+        lines.append(f"⚠️ {stats['error']}")
+        lines.append(
+            "_Kalibratör henüz çalışmadı veya tracker dosyası oluşmadı. "
+            "CALIBRATOR_ENABLED=true ile aktif olduktan ve ilk eşleşme "
+            "tespit edildikten sonra dolacak._"
+        )
+        return lines
+
+    total = stats.get("total_events", 0)
+    progress = stats.get("phase10_progress_pct", 0)
+    days = stats.get("days_collected", 0)
+
+    if total == 0:
+        lines.append(f"- Toplam event: **0** (henüz yok)")
+        lines.append(
+            f"- Tracker: {days:.1f} gün ({progress:.0f}% — "
+            f"Phase 10 için 30 gün gerek)"
+        )
+        return lines
+
+    lines.append(f"- Toplam event: **{total}**")
+    lines.append(
+        f"- Tracker: {days:.1f} gün ({progress:.0f}% — "
+        f"Phase 10 için 30 gün gerek)"
+    )
+
+    # Flag dağılımı
+    by_flag = stats.get("by_flag", {})
+    if by_flag:
+        lines.append("\n### Bayrak Dağılımı\n")
+        lines.append("| Bayrak | Sayı | % |")
+        lines.append("|---|---:|---:|")
+        for flag in sorted(by_flag.keys()):
+            count = by_flag[flag]
+            pct = count / total * 100
+            lines.append(f"| `{flag}` | {count} | {pct:.1f}% |")
+
+    # Multiplier dağılımı
+    by_mult = stats.get("by_multiplier", {})
+    if by_mult:
+        lines.append("\n### Çarpan Dağılımı\n")
+        lines.append("| Çarpan | Sayı |")
+        lines.append("|---|---:|")
+        # Yüksek çarpandan düşüğe
+        for mult in sorted(by_mult.keys(), reverse=True):
+            lines.append(f"| {mult} | {by_mult[mult]} |")
+
+    # Source dağılımı
+    by_src = stats.get("by_source", {})
+    if by_src:
+        lines.append("\n### Kaynak Dağılımı (scanner)\n")
+        for src, count in sorted(by_src.items(), key=lambda x: -x[1]):
+            lines.append(f"- `{src}`: {count}")
+
+    # Top temalar
+    top_themes = stats.get("top_themes", [])
+    if top_themes:
+        lines.append("\n### En Aktif Temalar (top 5)\n")
+        for theme, count in top_themes:
+            lines.append(f"- `{theme}`: {count} event")
+
+    # Top semboller
+    top_syms = stats.get("top_symbols", [])
+    if top_syms:
+        lines.append("\n### En Çok Eşleşen Hisseler (top 5)\n")
+        for sym, count in top_syms:
+            lines.append(f"- **{sym}**: {count} event")
+
+    # Outcome durumu
+    outcome = stats.get("outcome_status", "pending_phase10")
+    lines.append("")
+    if outcome == "pending_phase10":
+        lines.append(
+            "_Hit rate: Phase 10'da hesaplanacak. outcome_7d/14d/30d "
+            "field'ları henüz boş — Phase 10 implementasyonunda price "
+            "snapshot mantığı eklenince hit rate raporlanır._"
+        )
+    elif outcome == "partial":
+        lines.append("_Hit rate: kısmi veri var, Phase 10 değerlendirmesi gerek._")
+
+    return lines
 
 
 def format_report(days: int) -> str:
@@ -86,6 +328,10 @@ def format_report(days: int) -> str:
             lines.append(
                 f"| {r['tip']} | {r['count']} | {r['executed']} | {r['rate_pct']}% |"
             )
+
+    # Polymarket Kalibratör (Faz 2 Adım 13)
+    cal_stats = query_calibrator_stats(days)
+    lines.extend(format_calibrator_section(cal_stats))
 
     return "\n".join(lines)
 
