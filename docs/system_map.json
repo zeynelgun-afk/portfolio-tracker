@@ -72,6 +72,12 @@
       "tag": "yeni"
     },
     {
+      "id": "agent/scanners/analyst_revisions.py",
+      "label": "scanners/analyst_revisions.py",
+      "category": "script",
+      "tag": "yeni"
+    },
+    {
       "id": "agent/reports/research.py",
       "label": "reports/research.py",
       "category": "script"
