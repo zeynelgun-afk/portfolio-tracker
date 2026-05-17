@@ -1,5 +1,5 @@
 {
-  "_son_guncelleme": "2026-05-15 23:03",
+  "_son_guncelleme": "2026-05-17 08:02",
   "_aciklama": "Finzora AI — Tek hisse havuzu. Tüm besleyiciler (analist_takip, fair_value_panel, tematik_keşif, ai_orchestrator, manuel) buraya yazar. Max 80 ticker. Sade şema, 13 May 2026 sıfırlandı. | 14 May 2026: limit 80→300 (tematik genişleme)",
   "_limit": 300,
   "_schema_version": "2.0",
@@ -59,7 +59,7 @@
       "last_news_check": null,
       "last_action_signal": null,
       "notes": "",
-      "last_updated": "2026-05-15T20:01:49.688777+00:00"
+      "last_updated": "2026-05-17T08:02:44.686015+00:00"
     },
     "AMD": {
       "symbol": "AMD",
@@ -94,7 +94,7 @@
       "last_news_check": null,
       "last_action_signal": null,
       "notes": "",
-      "last_updated": "2026-05-15T20:01:49.691615+00:00"
+      "last_updated": "2026-05-17T08:02:44.689563+00:00"
     },
     "LRCX": {
       "symbol": "LRCX",
@@ -129,7 +129,7 @@
       "last_news_check": null,
       "last_action_signal": null,
       "notes": "",
-      "last_updated": "2026-05-15T20:01:49.702950+00:00"
+      "last_updated": "2026-05-17T08:02:44.707273+00:00"
     },
     "TSM": {
       "symbol": "TSM",
@@ -298,7 +298,7 @@
       "last_news_check": null,
       "last_action_signal": null,
       "notes": "",
-      "last_updated": "2026-05-15T20:01:49.699997+00:00"
+      "last_updated": "2026-05-17T08:02:44.696780+00:00"
     },
     "ASML": {
       "symbol": "ASML",
@@ -333,7 +333,7 @@
       "last_news_check": null,
       "last_action_signal": null,
       "notes": "",
-      "last_updated": "2026-05-15T20:01:49.694575+00:00"
+      "last_updated": "2026-05-17T08:02:44.693176+00:00"
     },
     "ON": {
       "symbol": "ON",
@@ -425,7 +425,7 @@
       "last_news_check": null,
       "last_action_signal": null,
       "notes": "",
-      "last_updated": "2026-05-15T20:01:49.705680+00:00"
+      "last_updated": "2026-05-17T08:02:44.703907+00:00"
     },
     "MCHP": {
       "symbol": "MCHP",
@@ -470,8 +470,8 @@
         "Tema: Clean Energy Renewal (yukselis, score 72)"
       ],
       "tags": [
-        "clean_energy_renewal",
-        "yukselis"
+        "yukselis",
+        "clean_energy_renewal"
       ],
       "score": 78.0,
       "score_updated_at": "2026-05-14T23:04:24.933292+00:00",
@@ -489,7 +489,7 @@
       "last_news_check": null,
       "last_action_signal": null,
       "notes": "",
-      "last_updated": "2026-05-15T20:01:49.799511+00:00"
+      "last_updated": "2026-05-17T08:02:44.784596+00:00"
     },
     "SEDG": {
       "symbol": "SEDG",
@@ -505,8 +505,8 @@
         "Tema: Clean Energy Renewal (yukselis, score 72)"
       ],
       "tags": [
-        "clean_energy_renewal",
-        "yukselis"
+        "yukselis",
+        "clean_energy_renewal"
       ],
       "score": 75.0,
       "score_updated_at": "2026-05-14T23:04:24.935324+00:00",
@@ -524,7 +524,7 @@
       "last_news_check": null,
       "last_action_signal": null,
       "notes": "",
-      "last_updated": "2026-05-15T20:01:49.821717+00:00"
+      "last_updated": "2026-05-17T08:02:44.791409+00:00"
     },
     "FSLR": {
       "symbol": "FSLR",
@@ -540,8 +540,8 @@
         "Tema: Clean Energy Renewal (yukselis, score 72)"
       ],
       "tags": [
-        "clean_energy_renewal",
-        "yukselis"
+        "yukselis",
+        "clean_energy_renewal"
       ],
       "score": 82.0,
       "score_updated_at": "2026-05-14T06:40:39.329670+00:00",
@@ -559,7 +559,7 @@
       "last_news_check": null,
       "last_action_signal": null,
       "notes": "",
-      "last_updated": "2026-05-15T20:01:49.802725+00:00"
+      "last_updated": "2026-05-17T08:02:44.781097+00:00"
     },
     "NEE": {
       "symbol": "NEE",
@@ -603,8 +603,8 @@
         "Tema: Clean Energy Renewal (yukselis, score 72)"
       ],
       "tags": [
-        "clean_energy_renewal",
-        "yukselis"
+        "yukselis",
+        "clean_energy_renewal"
       ],
       "score": null,
       "score_updated_at": null,
@@ -616,7 +616,7 @@
       "last_news_check": null,
       "last_action_signal": null,
       "notes": "",
-      "last_updated": "2026-05-15T20:01:49.831252+00:00"
+      "last_updated": "2026-05-17T08:02:44.804979+00:00"
     },
     "BE": {
       "symbol": "BE",
@@ -632,8 +632,8 @@
         "Tema: Clean Energy Renewal (yukselis, score 72)"
       ],
       "tags": [
-        "clean_energy_renewal",
-        "yukselis"
+        "yukselis",
+        "clean_energy_renewal"
       ],
       "score": 82.0,
       "score_updated_at": "2026-05-14T23:04:24.929148+00:00",
@@ -651,7 +651,7 @@
       "last_news_check": null,
       "last_action_signal": null,
       "notes": "",
-      "last_updated": "2026-05-15T20:01:49.815374+00:00"
+      "last_updated": "2026-05-17T08:02:44.808371+00:00"
     },
     "CSIQ": {
       "symbol": "CSIQ",
@@ -667,8 +667,8 @@
         "Tema: Clean Energy Renewal (yukselis, score 72)"
       ],
       "tags": [
-        "clean_energy_renewal",
-        "yukselis"
+        "yukselis",
+        "clean_energy_renewal"
       ],
       "score": null,
       "score_updated_at": null,
@@ -680,7 +680,7 @@
       "last_news_check": null,
       "last_action_signal": null,
       "notes": "",
-      "last_updated": "2026-05-15T20:01:49.809062+00:00"
+      "last_updated": "2026-05-17T08:02:44.801574+00:00"
     },
     "JKS": {
       "symbol": "JKS",
@@ -725,8 +725,8 @@
         "Tema: Clean Energy Renewal (yukselis, score 72)"
       ],
       "tags": [
-        "clean_energy_renewal",
-        "yukselis"
+        "yukselis",
+        "clean_energy_renewal"
       ],
       "score": null,
       "score_updated_at": null,
@@ -738,7 +738,7 @@
       "last_news_check": null,
       "last_action_signal": null,
       "notes": "",
-      "last_updated": "2026-05-15T20:01:49.824894+00:00"
+      "last_updated": "2026-05-17T08:02:44.794803+00:00"
     },
     "RUN": {
       "symbol": "RUN",
@@ -754,8 +754,8 @@
         "Tema: Clean Energy Renewal (yukselis, score 72)"
       ],
       "tags": [
-        "clean_energy_renewal",
-        "yukselis"
+        "yukselis",
+        "clean_energy_renewal"
       ],
       "score": null,
       "score_updated_at": null,
@@ -767,7 +767,7 @@
       "last_news_check": null,
       "last_action_signal": null,
       "notes": "",
-      "last_updated": "2026-05-15T20:01:49.828103+00:00"
+      "last_updated": "2026-05-17T08:02:44.798152+00:00"
     },
     "NOVA": {
       "symbol": "NOVA",
@@ -811,8 +811,8 @@
         "Tema: Clean Energy Renewal (yukselis, score 72)"
       ],
       "tags": [
-        "clean_energy_renewal",
-        "yukselis"
+        "yukselis",
+        "clean_energy_renewal"
       ],
       "score": null,
       "score_updated_at": null,
@@ -824,7 +824,7 @@
       "last_news_check": null,
       "last_action_signal": null,
       "notes": "",
-      "last_updated": "2026-05-15T20:01:49.805896+00:00"
+      "last_updated": "2026-05-17T08:02:44.788011+00:00"
     },
     "BAC": {
       "symbol": "BAC",
@@ -853,7 +853,7 @@
       "last_news_check": null,
       "last_action_signal": null,
       "notes": "",
-      "last_updated": "2026-05-15T20:01:49.760978+00:00"
+      "last_updated": "2026-05-17T08:02:44.749554+00:00"
     },
     "JPM": {
       "symbol": "JPM",
@@ -882,7 +882,7 @@
       "last_news_check": null,
       "last_action_signal": null,
       "notes": "",
-      "last_updated": "2026-05-15T20:01:49.757921+00:00"
+      "last_updated": "2026-05-17T08:02:44.746156+00:00"
     },
     "WFC": {
       "symbol": "WFC",
@@ -940,7 +940,7 @@
       "last_news_check": null,
       "last_action_signal": null,
       "notes": "",
-      "last_updated": "2026-05-15T20:01:49.767148+00:00"
+      "last_updated": "2026-05-17T08:02:44.756381+00:00"
     },
     "GS": {
       "symbol": "GS",
@@ -969,7 +969,7 @@
       "last_news_check": null,
       "last_action_signal": null,
       "notes": "",
-      "last_updated": "2026-05-15T20:01:49.764064+00:00"
+      "last_updated": "2026-05-17T08:02:44.752984+00:00"
     },
     "MS": {
       "symbol": "MS",
@@ -1026,7 +1026,7 @@
       "last_news_check": null,
       "last_action_signal": null,
       "notes": "",
-      "last_updated": "2026-05-15T20:01:49.773398+00:00"
+      "last_updated": "2026-05-17T08:02:44.759775+00:00"
     },
     "AXP": {
       "symbol": "AXP",
@@ -1055,7 +1055,7 @@
       "last_news_check": null,
       "last_action_signal": null,
       "notes": "",
-      "last_updated": "2026-05-15T20:01:49.776574+00:00"
+      "last_updated": "2026-05-17T08:02:44.763232+00:00"
     },
     "USB": {
       "symbol": "USB",
@@ -1067,7 +1067,8 @@
       ],
       "rationale": "Tema: Fed Chair Transition (dogus, score 55)",
       "rationales": [
-        "Tema: Fed Chair Transition (dogus, score 55)"
+        "Tema: Fed Chair Transition (dogus, score 55)",
+        "Tema: Fed Chair Transition (dogus, score 67)"
       ],
       "tags": [
         "fed_chair_transition",
@@ -1076,14 +1077,14 @@
       "score": null,
       "score_updated_at": null,
       "score_components": {
-        "thematic_momentum": 55,
+        "thematic_momentum": 67,
         "thematic_id": "fed_chair_transition",
         "thematic_stage": "dogus"
       },
       "last_news_check": null,
       "last_action_signal": null,
       "notes": "",
-      "last_updated": "2026-05-14T20:01:52.075421+00:00"
+      "last_updated": "2026-05-17T08:02:44.769997+00:00"
     },
     "PNC": {
       "symbol": "PNC",
@@ -1095,7 +1096,8 @@
       ],
       "rationale": "Tema: Fed Chair Transition (dogus, score 55)",
       "rationales": [
-        "Tema: Fed Chair Transition (dogus, score 55)"
+        "Tema: Fed Chair Transition (dogus, score 55)",
+        "Tema: Fed Chair Transition (dogus, score 67)"
       ],
       "tags": [
         "fed_chair_transition",
@@ -1104,14 +1106,14 @@
       "score": null,
       "score_updated_at": null,
       "score_components": {
-        "thematic_momentum": 55,
+        "thematic_momentum": 67,
         "thematic_id": "fed_chair_transition",
         "thematic_stage": "dogus"
       },
       "last_news_check": null,
       "last_action_signal": null,
       "notes": "",
-      "last_updated": "2026-05-14T20:01:52.082108+00:00"
+      "last_updated": "2026-05-17T08:02:44.773370+00:00"
     },
     "TFC": {
       "symbol": "TFC",
@@ -1123,7 +1125,8 @@
       ],
       "rationale": "Tema: Fed Chair Transition (dogus, score 55)",
       "rationales": [
-        "Tema: Fed Chair Transition (dogus, score 55)"
+        "Tema: Fed Chair Transition (dogus, score 55)",
+        "Tema: Fed Chair Transition (dogus, score 67)"
       ],
       "tags": [
         "fed_chair_transition",
@@ -1132,14 +1135,14 @@
       "score": null,
       "score_updated_at": null,
       "score_components": {
-        "thematic_momentum": 55,
+        "thematic_momentum": 67,
         "thematic_id": "fed_chair_transition",
         "thematic_stage": "dogus"
       },
       "last_news_check": null,
       "last_action_signal": null,
       "notes": "",
-      "last_updated": "2026-05-14T20:01:52.084317+00:00"
+      "last_updated": "2026-05-17T08:02:44.776775+00:00"
     },
     "COF": {
       "symbol": "COF",
@@ -1168,7 +1171,7 @@
       "last_news_check": null,
       "last_action_signal": null,
       "notes": "",
-      "last_updated": "2026-05-15T20:01:49.779664+00:00"
+      "last_updated": "2026-05-17T08:02:44.766584+00:00"
     },
     "SCHW": {
       "symbol": "SCHW",
@@ -1214,9 +1217,9 @@
         "Tema: Defensive Staples Rotation (olgun, score 54)"
       ],
       "tags": [
+        "defensive_rotation",
         "defensive_staples_rotation",
-        "olgun",
-        "defensive_rotation"
+        "olgun"
       ],
       "score": null,
       "score_updated_at": null,
@@ -1228,7 +1231,7 @@
       "last_news_check": null,
       "last_action_signal": null,
       "notes": "",
-      "last_updated": "2026-05-15T20:01:49.881744+00:00"
+      "last_updated": "2026-05-17T08:02:44.812679+00:00"
     },
     "KO": {
       "symbol": "KO",
@@ -1245,9 +1248,9 @@
         "Tema: Defensive Staples Rotation (olgun, score 54)"
       ],
       "tags": [
+        "defensive_rotation",
         "defensive_staples_rotation",
-        "olgun",
-        "defensive_rotation"
+        "olgun"
       ],
       "score": null,
       "score_updated_at": null,
@@ -1259,7 +1262,7 @@
       "last_news_check": null,
       "last_action_signal": null,
       "notes": "",
-      "last_updated": "2026-05-15T20:01:49.885035+00:00"
+      "last_updated": "2026-05-17T08:02:44.816115+00:00"
     },
     "PEP": {
       "symbol": "PEP",
@@ -1276,9 +1279,9 @@
         "Tema: Defensive Staples Rotation (olgun, score 54)"
       ],
       "tags": [
+        "defensive_rotation",
         "defensive_staples_rotation",
-        "olgun",
-        "defensive_rotation"
+        "olgun"
       ],
       "score": null,
       "score_updated_at": null,
@@ -1290,7 +1293,7 @@
       "last_news_check": null,
       "last_action_signal": null,
       "notes": "",
-      "last_updated": "2026-05-15T20:01:49.888300+00:00"
+      "last_updated": "2026-05-17T08:02:44.819503+00:00"
     },
     "WMT": {
       "symbol": "WMT",
@@ -1307,9 +1310,9 @@
         "Tema: Defensive Staples Rotation (olgun, score 54)"
       ],
       "tags": [
+        "defensive_rotation",
         "defensive_staples_rotation",
-        "olgun",
-        "defensive_rotation"
+        "olgun"
       ],
       "score": null,
       "score_updated_at": null,
@@ -1321,7 +1324,7 @@
       "last_news_check": null,
       "last_action_signal": null,
       "notes": "",
-      "last_updated": "2026-05-15T20:01:49.891606+00:00"
+      "last_updated": "2026-05-17T08:02:44.823021+00:00"
     },
     "COST": {
       "symbol": "COST",
@@ -1338,9 +1341,9 @@
         "Tema: Defensive Staples Rotation (olgun, score 54)"
       ],
       "tags": [
+        "defensive_rotation",
         "defensive_staples_rotation",
-        "olgun",
-        "defensive_rotation"
+        "olgun"
       ],
       "score": null,
       "score_updated_at": null,
@@ -1352,7 +1355,7 @@
       "last_news_check": null,
       "last_action_signal": null,
       "notes": "",
-      "last_updated": "2026-05-15T20:01:49.894879+00:00"
+      "last_updated": "2026-05-17T08:02:44.826470+00:00"
     },
     "CL": {
       "symbol": "CL",
@@ -1369,9 +1372,9 @@
         "Tema: Defensive Staples Rotation (olgun, score 54)"
       ],
       "tags": [
+        "defensive_rotation",
         "defensive_staples_rotation",
-        "olgun",
-        "defensive_rotation"
+        "olgun"
       ],
       "score": null,
       "score_updated_at": null,
@@ -1383,7 +1386,7 @@
       "last_news_check": null,
       "last_action_signal": null,
       "notes": "",
-      "last_updated": "2026-05-15T20:01:49.898145+00:00"
+      "last_updated": "2026-05-17T08:02:44.829873+00:00"
     },
     "MDLZ": {
       "symbol": "MDLZ",
@@ -1458,9 +1461,9 @@
         "Tema: Defensive Staples Rotation (olgun, score 54)"
       ],
       "tags": [
+        "defensive_rotation",
         "defensive_staples_rotation",
-        "olgun",
-        "defensive_rotation"
+        "olgun"
       ],
       "score": null,
       "score_updated_at": null,
@@ -1472,7 +1475,7 @@
       "last_news_check": null,
       "last_action_signal": null,
       "notes": "",
-      "last_updated": "2026-05-15T20:01:49.904718+00:00"
+      "last_updated": "2026-05-17T08:02:44.833268+00:00"
     },
     "SJM": {
       "symbol": "SJM",
@@ -1520,9 +1523,9 @@
         "Tema: Defensive Staples Rotation (olgun, score 54)"
       ],
       "tags": [
+        "defensive_rotation",
         "defensive_staples_rotation",
-        "olgun",
-        "defensive_rotation"
+        "olgun"
       ],
       "score": null,
       "score_updated_at": null,
@@ -1534,7 +1537,7 @@
       "last_news_check": null,
       "last_action_signal": null,
       "notes": "",
-      "last_updated": "2026-05-15T20:01:49.901411+00:00"
+      "last_updated": "2026-05-17T08:02:44.843383+00:00"
     },
     "HSY": {
       "symbol": "HSY",
@@ -1551,9 +1554,9 @@
         "Tema: Defensive Staples Rotation (olgun, score 54)"
       ],
       "tags": [
+        "defensive_rotation",
         "defensive_staples_rotation",
-        "olgun",
-        "defensive_rotation"
+        "olgun"
       ],
       "score": null,
       "score_updated_at": null,
@@ -1565,7 +1568,7 @@
       "last_news_check": null,
       "last_action_signal": null,
       "notes": "",
-      "last_updated": "2026-05-15T20:01:49.907989+00:00"
+      "last_updated": "2026-05-17T08:02:44.836634+00:00"
     },
     "KHC": {
       "symbol": "KHC",
@@ -1643,8 +1646,8 @@
         "Tema: Biotech Recovery (dogus, score 61)"
       ],
       "tags": [
-        "dogus",
-        "biotech_recovery"
+        "biotech_recovery",
+        "dogus"
       ],
       "score": null,
       "score_updated_at": null,
@@ -1656,7 +1659,7 @@
       "last_news_check": null,
       "last_action_signal": null,
       "notes": "",
-      "last_updated": "2026-05-15T20:01:49.848257+00:00"
+      "last_updated": "2026-05-17T08:02:44.851123+00:00"
     },
     "AMGN": {
       "symbol": "AMGN",
@@ -1672,8 +1675,8 @@
         "Tema: Biotech Recovery (dogus, score 61)"
       ],
       "tags": [
-        "dogus",
-        "biotech_recovery"
+        "biotech_recovery",
+        "dogus"
       ],
       "score": null,
       "score_updated_at": null,
@@ -1685,7 +1688,7 @@
       "last_news_check": null,
       "last_action_signal": null,
       "notes": "",
-      "last_updated": "2026-05-15T20:01:49.841742+00:00"
+      "last_updated": "2026-05-17T08:02:44.847711+00:00"
     },
     "BIIB": {
       "symbol": "BIIB",
@@ -1701,8 +1704,8 @@
         "Tema: Biotech Recovery (dogus, score 61)"
       ],
       "tags": [
-        "dogus",
-        "biotech_recovery"
+        "biotech_recovery",
+        "dogus"
       ],
       "score": 76.0,
       "score_updated_at": "2026-05-14T06:40:39.336027+00:00",
@@ -1720,7 +1723,7 @@
       "last_news_check": null,
       "last_action_signal": null,
       "notes": "",
-      "last_updated": "2026-05-15T20:01:49.845017+00:00"
+      "last_updated": "2026-05-17T08:02:44.854482+00:00"
     },
     "REGN": {
       "symbol": "REGN",
@@ -1736,8 +1739,8 @@
         "Tema: Biotech Recovery (dogus, score 61)"
       ],
       "tags": [
-        "dogus",
-        "biotech_recovery"
+        "biotech_recovery",
+        "dogus"
       ],
       "score": null,
       "score_updated_at": null,
@@ -1749,7 +1752,7 @@
       "last_news_check": null,
       "last_action_signal": null,
       "notes": "",
-      "last_updated": "2026-05-15T20:01:49.851465+00:00"
+      "last_updated": "2026-05-17T08:02:44.857943+00:00"
     },
     "VRTX": {
       "symbol": "VRTX",
@@ -1765,8 +1768,8 @@
         "Tema: Biotech Recovery (dogus, score 61)"
       ],
       "tags": [
-        "dogus",
-        "biotech_recovery"
+        "biotech_recovery",
+        "dogus"
       ],
       "score": 78.0,
       "score_updated_at": "2026-05-14T06:40:39.333879+00:00",
@@ -1784,7 +1787,7 @@
       "last_news_check": null,
       "last_action_signal": null,
       "notes": "",
-      "last_updated": "2026-05-15T20:01:49.854719+00:00"
+      "last_updated": "2026-05-17T08:02:44.861395+00:00"
     },
     "MRNA": {
       "symbol": "MRNA",
@@ -1828,8 +1831,8 @@
         "Tema: Biotech Recovery (dogus, score 61)"
       ],
       "tags": [
-        "dogus",
-        "biotech_recovery"
+        "biotech_recovery",
+        "dogus"
       ],
       "score": null,
       "score_updated_at": null,
@@ -1841,7 +1844,7 @@
       "last_news_check": null,
       "last_action_signal": null,
       "notes": "",
-      "last_updated": "2026-05-15T20:01:49.857950+00:00"
+      "last_updated": "2026-05-17T08:02:44.864814+00:00"
     },
     "ALNY": {
       "symbol": "ALNY",
@@ -1857,8 +1860,8 @@
         "Tema: Biotech Recovery (dogus, score 61)"
       ],
       "tags": [
-        "dogus",
-        "biotech_recovery"
+        "biotech_recovery",
+        "dogus"
       ],
       "score": null,
       "score_updated_at": null,
@@ -1870,7 +1873,7 @@
       "last_news_check": null,
       "last_action_signal": null,
       "notes": "",
-      "last_updated": "2026-05-15T20:01:49.861217+00:00"
+      "last_updated": "2026-05-17T08:02:44.868246+00:00"
     },
     "SRPT": {
       "symbol": "SRPT",
@@ -1943,8 +1946,8 @@
         "Tema: Biotech Recovery (dogus, score 61)"
       ],
       "tags": [
-        "dogus",
-        "biotech_recovery"
+        "biotech_recovery",
+        "dogus"
       ],
       "score": null,
       "score_updated_at": null,
@@ -1956,7 +1959,7 @@
       "last_news_check": null,
       "last_action_signal": null,
       "notes": "",
-      "last_updated": "2026-05-15T20:01:49.864480+00:00"
+      "last_updated": "2026-05-17T08:02:44.871662+00:00"
     },
     "EDIT": {
       "symbol": "EDIT",
@@ -1972,8 +1975,8 @@
         "Tema: Biotech Recovery (dogus, score 61)"
       ],
       "tags": [
-        "dogus",
-        "biotech_recovery"
+        "biotech_recovery",
+        "dogus"
       ],
       "score": null,
       "score_updated_at": null,
@@ -1985,7 +1988,7 @@
       "last_news_check": null,
       "last_action_signal": null,
       "notes": "",
-      "last_updated": "2026-05-15T20:01:49.867740+00:00"
+      "last_updated": "2026-05-17T08:02:44.875060+00:00"
     },
     "NTLA": {
       "symbol": "NTLA",
@@ -2028,8 +2031,8 @@
         "Tema: Biotech Recovery (dogus, score 61)"
       ],
       "tags": [
-        "dogus",
-        "biotech_recovery"
+        "biotech_recovery",
+        "dogus"
       ],
       "score": null,
       "score_updated_at": null,
@@ -2041,7 +2044,7 @@
       "last_news_check": null,
       "last_action_signal": null,
       "notes": "",
-      "last_updated": "2026-05-15T20:01:49.870952+00:00"
+      "last_updated": "2026-05-17T08:02:44.878423+00:00"
     },
     "BEP": {
       "symbol": "BEP",
@@ -2199,9 +2202,9 @@
         "Tema: Defensive Staples Rotation (olgun, score 54)"
       ],
       "tags": [
+        "defensive_rotation",
         "defensive_staples_rotation",
-        "olgun",
-        "defensive_rotation"
+        "olgun"
       ],
       "score": null,
       "score_updated_at": null,
@@ -2213,7 +2216,7 @@
       "last_news_check": null,
       "last_action_signal": null,
       "notes": "",
-      "last_updated": "2026-05-15T20:01:49.917911+00:00"
+      "last_updated": "2026-05-17T08:02:44.840029+00:00"
     },
     "ARM": {
       "symbol": "ARM",
@@ -2240,7 +2243,8 @@
       },
       "last_news_check": null,
       "last_action_signal": null,
-      "notes": ""
+      "notes": "",
+      "last_updated": "2026-05-17T08:02:44.700473+00:00"
     },
     "XOM": {
       "symbol": "XOM",
@@ -2273,7 +2277,8 @@
       },
       "last_news_check": null,
       "last_action_signal": null,
-      "notes": ""
+      "notes": "",
+      "last_updated": "2026-05-17T08:02:44.711532+00:00"
     },
     "CVX": {
       "symbol": "CVX",
@@ -2306,7 +2311,8 @@
       },
       "last_news_check": null,
       "last_action_signal": null,
-      "notes": ""
+      "notes": "",
+      "last_updated": "2026-05-17T08:02:44.714928+00:00"
     },
     "COP": {
       "symbol": "COP",
@@ -2333,7 +2339,8 @@
       },
       "last_news_check": null,
       "last_action_signal": null,
-      "notes": ""
+      "notes": "",
+      "last_updated": "2026-05-17T08:02:44.721634+00:00"
     },
     "EOG": {
       "symbol": "EOG",
@@ -2360,7 +2367,8 @@
       },
       "last_news_check": null,
       "last_action_signal": null,
-      "notes": ""
+      "notes": "",
+      "last_updated": "2026-05-17T08:02:44.718275+00:00"
     },
     "SLB": {
       "symbol": "SLB",
@@ -2414,7 +2422,8 @@
       },
       "last_news_check": null,
       "last_action_signal": null,
-      "notes": ""
+      "notes": "",
+      "last_updated": "2026-05-17T08:02:44.731689+00:00"
     },
     "MPC": {
       "symbol": "MPC",
@@ -2441,7 +2450,8 @@
       },
       "last_news_check": null,
       "last_action_signal": null,
-      "notes": ""
+      "notes": "",
+      "last_updated": "2026-05-17T08:02:44.728340+00:00"
     },
     "VLO": {
       "symbol": "VLO",
@@ -2468,7 +2478,8 @@
       },
       "last_news_check": null,
       "last_action_signal": null,
-      "notes": ""
+      "notes": "",
+      "last_updated": "2026-05-17T08:02:44.738383+00:00"
     },
     "PSX": {
       "symbol": "PSX",
@@ -2495,7 +2506,8 @@
       },
       "last_news_check": null,
       "last_action_signal": null,
-      "notes": ""
+      "notes": "",
+      "last_updated": "2026-05-17T08:02:44.724999+00:00"
     },
     "KMI": {
       "symbol": "KMI",
@@ -2522,7 +2534,8 @@
       },
       "last_news_check": null,
       "last_action_signal": null,
-      "notes": ""
+      "notes": "",
+      "last_updated": "2026-05-17T08:02:44.735054+00:00"
     },
     "WMB": {
       "symbol": "WMB",
@@ -2680,6 +2693,33 @@
       "score_components": {
         "thematic_momentum": 72,
         "thematic_id": "clean_energy_renewal",
+        "thematic_stage": "yukselis"
+      },
+      "last_news_check": null,
+      "last_action_signal": null,
+      "notes": ""
+    },
+    "MRO": {
+      "symbol": "MRO",
+      "added_at": "2026-05-17T08:02:44.741850+00:00",
+      "added_price": null,
+      "source": "tematik_energy_supply_shock",
+      "sources": [
+        "tematik_energy_supply_shock"
+      ],
+      "rationale": "Tema: Energy Supply Shock (yukselis, score 76)",
+      "rationales": [
+        "Tema: Energy Supply Shock (yukselis, score 76)"
+      ],
+      "tags": [
+        "energy_supply_shock",
+        "yukselis"
+      ],
+      "score": null,
+      "score_updated_at": null,
+      "score_components": {
+        "thematic_momentum": 76,
+        "thematic_id": "energy_supply_shock",
         "thematic_stage": "yukselis"
       },
       "last_news_check": null,
