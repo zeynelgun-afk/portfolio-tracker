@@ -80,7 +80,7 @@ echo "Manuel: $(git log --author='zeynelgun@users' --since='30 days ago' --oneli
 
 10 Mayıs 2026 öncesi tüm bot commit'leri eski standartla atılmış (`zeynelgun@users` email + karışık prefix). Bunlar tarih kayıtlarında öyle kalır, geriye dönük rewrite YAPILMAYACAK (force-push riski yüksek, paylaşımlı branch). Yeni standart sadece bu tarihten sonraki commit'lere uygulanır.
 
-İstatistik script'leri (örnek `scripts/finzora_stats.py`) bu kesim noktasını dikkate almalı: 10 May 2026 öncesi bot/manuel ayrımı hatalı sonuç verecektir.
+İstatistik script'leri (örnek `agent/reports/stats.py` — eski path `scripts/finzora_stats.py` shim olarak çalışır) bu kesim noktasını dikkate almalı: 10 May 2026 öncesi bot/manuel ayrımı hatalı sonuç verecektir.
 
 ## 5. Onay ve İstisna
 

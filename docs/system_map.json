@@ -72,8 +72,8 @@
       "tag": "yeni"
     },
     {
-      "id": "scripts/research_tracker.py",
-      "label": "research_tracker.py",
+      "id": "agent/reports/research.py",
+      "label": "reports/research.py",
       "category": "script"
     },
     {
@@ -87,8 +87,8 @@
       "category": "script"
     },
     {
-      "id": "scripts/finzora_stats.py",
-      "label": "finzora_stats.py",
+      "id": "agent/reports/stats.py",
+      "label": "reports/stats.py",
       "category": "script"
     },
     {
@@ -294,7 +294,7 @@
     },
     {
       "source": "research_tracker.yml",
-      "target": "scripts/research_tracker.py"
+      "target": "agent/reports/research.py"
     },
     {
       "source": "consistency_check.yml",
@@ -306,7 +306,7 @@
     },
     {
       "source": "weekly_fmp_stats.yml",
-      "target": "scripts/finzora_stats.py"
+      "target": "agent/reports/stats.py"
     },
     {
       "source": "log_rotation.yml",
@@ -385,15 +385,15 @@
       "target": "agent.telegram"
     },
     {
-      "source": "scripts/research_tracker.py",
+      "source": "agent/reports/research.py",
       "target": "data/research/index.json"
     },
     {
-      "source": "scripts/research_tracker.py",
+      "source": "agent/reports/research.py",
       "target": "ext.fmp"
     },
     {
-      "source": "scripts/research_tracker.py",
+      "source": "agent/reports/research.py",
       "target": "ext.telegram"
     },
     {

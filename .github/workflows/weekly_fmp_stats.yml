@@ -16,6 +16,7 @@ on:
         default: true
   push:
     paths:
+      - 'agent/reports/stats.py'
       - 'scripts/finzora_stats.py'
       - '.github/workflows/weekly_fmp_stats.yml'
 
@@ -41,10 +42,11 @@ jobs:
           if [ "$SEND_TELEGRAM" = "true" ]; then
             ARGS="$ARGS --telegram"
           fi
-          echo "Çalıştırılıyor: python3 scripts/finzora_stats.py $ARGS"
-          python3 scripts/finzora_stats.py $ARGS | tee weekly_fmp_stats_output.md
+          echo "Çalıştırılıyor: python3 agent/reports/stats.py $ARGS"
+          # Faz 1 (17 May 2026): scripts/finzora_stats.py → agent/reports/stats.py
+          python3 agent/reports/stats.py $ARGS | tee weekly_fmp_stats_output.md
         env:
-          PYTHONPATH: ${{ github.workspace }}/scripts:${{ github.workspace }}/agent
+          PYTHONPATH: ${{ github.workspace }}/scripts:${{ github.workspace }}/agent:${{ github.workspace }}/agent/legacy
           FMP_API_KEY: ${{ secrets.FMP_API_KEY }}
           # Hem standart hem legacy env adları (script fallback'li)
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}

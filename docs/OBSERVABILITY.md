@@ -124,17 +124,19 @@ log_decision(
 ### Komut satırı raporu
 ```bash
 # Son 7 gün özet
-python scripts/finzora_stats.py
+python agent/reports/stats.py
 
 # Son 30 gün
-python scripts/finzora_stats.py --days 30
+python agent/reports/stats.py --days 30
 
 # Bugün
-python scripts/finzora_stats.py --today
+python agent/reports/stats.py --today
 
 # Telegram a gönder
-python scripts/finzora_stats.py --days 7 --telegram
+python agent/reports/stats.py --days 7 --telegram
 ```
+
+> Not (Faz 1, 17 May 2026): `scripts/finzora_stats.py` artık bir shim — yeni konum `agent/reports/stats.py`. Eski path hâlâ çalışır (geriye dönük uyumluluk) ama yeni script'lerde yeni yolu kullanın.
 
 ### SQL ile direkt sorgu
 ```bash

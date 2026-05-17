@@ -50,6 +50,9 @@ logs/*.log
 !logs/events.jsonl
 !logs/archive/
 
+# Test artefaktları (pytest agent/logs/ altına events.jsonl yazıyor)
+agent/logs/
+
 # Sistem
 .DS_Store
 Thumbs.db

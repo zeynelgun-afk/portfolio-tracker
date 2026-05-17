@@ -11,12 +11,12 @@ related:
   - "[[OBSERVABILITY]]"
   - "[[RAILWAY_DEPLOY]]"
   - "[[GITHUB_ACTIONS_GUIDE]]"
-updated: 2026-05-14
+updated: 2026-05-17
 ---
 
 # FINZORA AI — SİSTEM HARİTASI
 
-> Son güncelleme: 14 Mayıs 2026
+> Son güncelleme: 17 Mayıs 2026 (Faz 1 — Reports konsolidasyonu)
 > Amaç: Tüm scriptler, scheduler thread'leri, veri akışları ve dosya organizasyonunun tek bakışta görünümü.
 >
 > **Kritik dönüşüm:** 13 Mayıs 2026 — eski 3-portföy + sleeve + thematic + swing sistemi (`data/portfolios/*.json`, `data/swing/active.json`) `data/archive/2026-05-13_pre_simplification/` altına taşındı. Bunun yerine **tek `data/portfolio.json`** (positions[] + closed[]) ve `agent/` v2 modern paketi geldi.
@@ -92,7 +92,9 @@ portfolio-tracker/
 │   ├── reports/             # Rapor üreticileri
 │   │   ├── morning.py       # Sabah raporu (16:00 TR)
 │   │   ├── closing.py       # Kapanış raporu (00:30 TR)
-│   │   └── weekly.py        # Haftalık rapor (Pzr 12:00)
+│   │   ├── weekly.py        # Haftalık rapor (Pzr 12:00)
+│   │   ├── research.py      # Adil Değer takibi (23:35 daily / Pzr 14:00 weekly) [Faz 1, 17 May 2026]
+│   │   └── stats.py         # Observability/FMP istatistik raporu [Faz 1, 17 May 2026]
 │   │
 │   └── legacy/              # Eski sistemin arşivi (~50 dosya)
 │       ├── analist_takip/   # AKTIF — analist revize polling alt sistemi
@@ -130,7 +132,7 @@ portfolio-tracker/
 │   ├── telegram_bot.py      # ANA — Railway scheduler + bot polling + 4 thread
 │   ├── news_radar.py        # 09:00 — haber tarama + LLM analiz → DM
 │   ├── fair_value_panel.py  # 12:30 — adil değer hesabı + watchlist keşif
-│   ├── research_tracker.py  # 23:35 / Pzr 14:00 — araştırma takibi (v5.0)
+│   ├── research_tracker.py  # → SHIM (Faz 1, 17 May 2026): agent/reports/research.py'ya yönlendiriyor
 │   ├── signal_tracker.py    # 23:45 / Pzr 19:00 — sinyal performans (7/14/30 gün checkpoint)
 │   ├── thematic_discovery.py # 23:00 / Pzr 11:00 — LLM ile tema keşfi (Aşama 4)
 │   ├── ai_orchestrator.py   # 02:00 / Pzr 13:00 — gün sonu / haftalık AI sentez (Aşama 5)
@@ -152,7 +154,7 @@ portfolio-tracker/
 │   ├── cash_deployment_engine.py # K-22 nakit kullanım (legacy ref'li, kullanım sınırlı)
 │   ├── catalyst_compute_returns.py # Catalyst sonrası getiri hesaplama
 │   ├── daily_update.py      # Eski günlük güncelleyici (legacy bağlam)
-│   ├── finzora_stats.py     # Genel istatistik
+│   ├── finzora_stats.py     # → SHIM (Faz 1, 17 May 2026): agent/reports/stats.py'ya yönlendiriyor
 │   ├── k12_dynamic_limits.py # K-12 dinamik limitler (legacy)
 │   ├── k_rules_backtest.py  # K-kural backtest aracı
 │   ├── k_rules_common.py    # K-kural ortak fonksiyonları

@@ -40,7 +40,8 @@ jobs:
         run: |
           MODE="${{ inputs.mode }}"
           if [ -z "$MODE" ]; then MODE="daily"; fi
-          python3 scripts/research_tracker.py --$MODE --verbose
+          # Faz 1 (17 May 2026): scripts/research_tracker.py → agent/reports/research.py
+          python3 agent/reports/research.py --$MODE --verbose
         env:
           FMP_API_KEY:           ${{ secrets.FMP_API_KEY }}
           TELEGRAM_TOKEN:        ${{ secrets.TELEGRAM_BOT_TOKEN }}
