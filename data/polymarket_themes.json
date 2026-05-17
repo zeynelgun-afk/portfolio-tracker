@@ -1,0 +1,55 @@
+{
+  "_version": "v1",
+  "_updated": "2026-05-17",
+  "_note": "v1 seed — yeni tema eklemek için ai_orchestrator LLM köprüsü ile öneri ürettir, insan onayı ile bu dosyaya işle. Tasarım: docs/PHASE2_SCANNER_CONSOLIDATION.md Bölüm 7",
+  "_slug_disclaimer": "polymarket_slugs alanlarındaki değerler tahminidir. agent/polymarket.py fetch_markets() ile gerçek aktif slug'lar listelenip buraya işlenmeli (Adım 9 öncesi).",
+  "themes": {
+    "fed_rate_cut": {
+      "label": "Fed faiz indirimi",
+      "polymarket_slugs": ["fed-rate-decision-june-2026", "fed-rate-cut-by-q3-2026"],
+      "min_volume_usd": 1000000,
+      "positive_tickers": ["IWM", "TLT", "VNQ", "XLRE", "XLU"],
+      "negative_tickers": ["XLF", "USD", "KRE"],
+      "confidence": 0.85,
+      "applies_to_themes": ["rate-sensitive", "small-cap", "reits"]
+    },
+    "china_taiwan_tension": {
+      "label": "Çin-Tayvan gerilimi",
+      "polymarket_slugs": ["taiwan-invasion-2026", "china-taiwan-blockade-2026"],
+      "min_volume_usd": 500000,
+      "positive_tickers": ["LMT", "RTX", "NOC", "ITA"],
+      "negative_tickers": ["TSM", "ASML", "NVDA", "AAPL", "AMAT", "LRCX", "KLAC"],
+      "confidence": 0.90,
+      "applies_to_themes": ["ai-supply-chain", "semi-equipment", "semi-foundry"],
+      "_note": "Portföyün omurgası — yüksek dikkat"
+    },
+    "iran_escalation": {
+      "label": "İran/Orta Doğu eskalasyonu",
+      "polymarket_slugs": ["iran-israel-strike-2026", "iran-nuclear-escalation"],
+      "min_volume_usd": 500000,
+      "positive_tickers": ["XLE", "OIH", "LMT", "RTX", "XOP"],
+      "negative_tickers": ["XAL", "LUV", "DAL", "UAL"],
+      "confidence": 0.85,
+      "applies_to_themes": ["energy", "defense"]
+    },
+    "trump_tariff_action": {
+      "label": "Trump tarife kararı",
+      "polymarket_slugs": ["trump-tariff-china-2026", "tariff-mexico-2026"],
+      "min_volume_usd": 500000,
+      "positive_tickers": ["X", "NUE", "STLD"],
+      "negative_tickers": ["AAPL", "NKE", "WMT", "TGT", "BBY", "TSLA"],
+      "confidence": 0.70,
+      "applies_to_themes": ["import-heavy-retail", "semi-import"],
+      "_note": "Mapping güvenirliği orta — etki geniş, sektör seçimi kaba"
+    },
+    "us_recession_2026": {
+      "label": "ABD resesyon 2026",
+      "polymarket_slugs": ["us-recession-2026", "nber-recession-2026"],
+      "min_volume_usd": 1000000,
+      "positive_tickers": ["TLT", "GLD", "XLP", "XLU"],
+      "negative_tickers": ["XLY", "XLI", "IYT", "KRE"],
+      "confidence": 0.75,
+      "applies_to_themes": ["defensive", "cyclical"]
+    }
+  }
+}

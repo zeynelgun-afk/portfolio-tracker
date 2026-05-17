@@ -15,9 +15,10 @@ os.environ.setdefault("TELEGRAM_PRIVATE_CHAT", "x")
 os.environ.setdefault("ANTHROPIC_API_KEY", "x")
 os.environ.setdefault("GH_TOKEN", "x")
 
-# agent/ path
+# agent/ path + REPO_ROOT path (Faz 2 ile gelen agent.* importlar için)
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(REPO_ROOT, "agent"))
+sys.path.insert(0, REPO_ROOT)
 
 import pytest
 import fmp_client
