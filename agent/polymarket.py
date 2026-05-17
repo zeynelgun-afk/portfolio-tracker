@@ -22,7 +22,7 @@ from __future__ import annotations
 import json
 import os
 import time
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any, Optional
 
@@ -335,6 +335,249 @@ def _empty_cache() -> dict:
         "_ttl_seconds": 3600,
         "markets": {},
     }
+
+
+# ---------- Snapshot rotation + delta hesabı (Adım 10a) ----------
+
+# Snapshot retention: sliding window 48h
+# Cache her saatte refresh ediliyor → ~48 snapshot/market tutulur
+_SNAPSHOT_WINDOW_HOURS = 48
+_DELTA_TARGET_HOURS = 24
+
+
+def _utc_now() -> datetime:
+    return datetime.now(timezone.utc)
+
+
+def _parse_iso(ts: str) -> Optional[datetime]:
+    """Tolerant ISO parse — "Z" suffix kabul, bozuksa None."""
+    if not isinstance(ts, str):
+        return None
+    try:
+        return datetime.fromisoformat(ts.replace("Z", "+00:00"))
+    except ValueError:
+        return None
+
+
+def add_snapshot(
+    cache: dict,
+    slug: str,
+    probability: float,
+    market_data: Optional[dict] = None,
+    now: Optional[datetime] = None,
+    window_hours: int = _SNAPSHOT_WINDOW_HOURS,
+) -> dict:
+    """Cache'e yeni bir snapshot ekle. 48h+ eski snapshot'ları temizler.
+
+    Args:
+        cache: load_cache() çıktısı (yerinde mutate edilir).
+        slug: market slug
+        probability: mevcut Yes olasılığı (0.0-1.0)
+        market_data: opsiyonel market detayları (volume, question, vs).
+            Mevcut alanları korurken yenilerini günceller.
+        now: test için tarih injection; None → datetime.now(UTC)
+        window_hours: retention süresi (default 48)
+
+    Returns:
+        Mutate edilmiş cache (zincirlemek için).
+    """
+    if now is None:
+        now = _utc_now()
+    if not isinstance(cache, dict):
+        cache = _empty_cache()
+
+    markets = cache.setdefault("markets", {})
+    entry = markets.setdefault(slug, {"slug": slug})
+
+    # Market metadata güncelle (volume, question, vs)
+    if isinstance(market_data, dict):
+        for k, v in market_data.items():
+            if k == "snapshots":
+                continue  # snapshot'ları explicit yönetiyoruz
+            entry[k] = v
+
+    # Snapshot'ları al — varsa veya boş liste başlat
+    snapshots = entry.setdefault("snapshots", [])
+    if not isinstance(snapshots, list):
+        snapshots = []
+        entry["snapshots"] = snapshots
+
+    # Yeni snapshot
+    new_snap = {"ts": now.isoformat(), "probability": float(probability)}
+    snapshots.append(new_snap)
+
+    # 48h+ eski snapshot'ları temizle (sliding window)
+    cutoff = now - timedelta(hours=window_hours)
+    snapshots[:] = [
+        s for s in snapshots
+        if (parsed := _parse_iso(s.get("ts", "")))
+        and parsed >= cutoff
+    ]
+
+    # Sort by ts (defansif — out-of-order yazımları normalize)
+    snapshots.sort(key=lambda s: s.get("ts", ""))
+
+    # current_probability ve delta_24h hesapla, üst seviyeye yaz
+    entry["current_probability"] = float(probability)
+    delta_info = compute_24h_delta_from_snapshots(snapshots, now=now)
+    if delta_info is not None:
+        entry["probability_24h_ago"] = delta_info["probability_24h_ago"]
+        entry["delta_24h"] = delta_info["delta_24h"]
+    else:
+        # 24h önceki snapshot yok — alanları temizle (kalibratör no-op yapar)
+        entry.pop("probability_24h_ago", None)
+        entry.pop("delta_24h", None)
+
+    return cache
+
+
+def compute_24h_delta_from_snapshots(
+    snapshots: list,
+    now: Optional[datetime] = None,
+    target_hours: int = _DELTA_TARGET_HOURS,
+    tolerance_hours: float = 2.0,
+) -> Optional[dict]:
+    """Snapshot listesinden ~24h önceki en yakın snapshot'ı bulup delta hesapla.
+
+    Args:
+        snapshots: list[{ts, probability}]
+        now: test için tarih injection
+        target_hours: hedef geçmiş süre (default 24h)
+        tolerance_hours: target ± tolerans (default 2h). 22-26h arası snapshot kabul.
+
+    Returns:
+        {"probability_24h_ago": float, "delta_24h": float,
+         "matched_ts": str, "matched_hours_ago": float}
+        veya None (uygun snapshot yok).
+    """
+    if not isinstance(snapshots, list) or len(snapshots) < 2:
+        return None
+    if now is None:
+        now = _utc_now()
+
+    # En yeni snapshot (current)
+    parsed_snaps: list[tuple[datetime, float]] = []
+    for s in snapshots:
+        if not isinstance(s, dict):
+            continue
+        ts = _parse_iso(s.get("ts", ""))
+        prob = s.get("probability")
+        if ts is None or prob is None:
+            continue
+        try:
+            parsed_snaps.append((ts, float(prob)))
+        except (TypeError, ValueError):
+            continue
+
+    if len(parsed_snaps) < 2:
+        return None
+
+    parsed_snaps.sort(key=lambda x: x[0])
+    current_ts, current_prob = parsed_snaps[-1]
+
+    # 24h önceki hedef
+    target_ts = now - timedelta(hours=target_hours)
+    tolerance = timedelta(hours=tolerance_hours)
+    earliest_acceptable = target_ts - tolerance
+    latest_acceptable = target_ts + tolerance
+
+    # Tolerans penceresindeki en yakın snapshot
+    candidates = [
+        (ts, p) for ts, p in parsed_snaps[:-1]  # current hariç
+        if earliest_acceptable <= ts <= latest_acceptable
+    ]
+
+    if not candidates:
+        return None
+
+    # En target'a yakın olanı seç
+    best_ts, best_prob = min(candidates, key=lambda x: abs((x[0] - target_ts).total_seconds()))
+
+    hours_ago = (current_ts - best_ts).total_seconds() / 3600
+    return {
+        "probability_24h_ago": best_prob,
+        "delta_24h": current_prob - best_prob,
+        "matched_ts": best_ts.isoformat(),
+        "matched_hours_ago": round(hours_ago, 2),
+    }
+
+
+def refresh_cache_for_themes(
+    themes_config: Optional[dict] = None,
+    cache: Optional[dict] = None,
+    now: Optional[datetime] = None,
+    save: bool = True,
+) -> dict:
+    """Whitelist'teki tüm tema slug'ları için Gamma'dan fetch + snapshot kaydet.
+
+    Bu fonksiyon:
+        1. Whitelist tema slug'larını topla (themes_config veya load_themes)
+        2. Gamma API'den fetch_markets(slugs=...) ile mevcut olasılıkları çek
+        3. Her market için snapshot ekle (add_snapshot)
+        4. Cache'i save_cache ile dosyaya yaz (save=True)
+
+    Args:
+        themes_config: opsiyonel themes dict. None → load_themes()
+        cache: opsiyonel mevcut cache. None → load_cache()
+        now: test injection
+        save: True ise disk'e yaz; False ise sadece in-memory mutate (test için)
+
+    Returns:
+        Güncellenmiş cache dict.
+    """
+    if themes_config is None:
+        themes_config = load_themes()
+    if cache is None:
+        cache = load_cache()
+    if now is None:
+        now = _utc_now()
+
+    # Whitelist slug'ları topla
+    slugs: set[str] = set()
+    for theme in (themes_config.get("themes", {}) if isinstance(themes_config, dict) else {}).values():
+        if not isinstance(theme, dict):
+            continue
+        for slug in theme.get("polymarket_slugs", []):
+            if isinstance(slug, str) and slug.strip():
+                slugs.add(slug.strip())
+
+    if not slugs:
+        if save:
+            save_cache(cache)
+        return cache
+
+    # Gamma'dan fetch (whitelist filtre)
+    markets = fetch_markets(slugs=list(slugs), active_only=True)
+
+    for m in markets:
+        if not isinstance(m, dict):
+            continue
+        slug = m.get("slug")
+        if not slug:
+            continue
+
+        prob = get_yes_probability(m)
+        if prob is None:
+            continue  # binary olmayan veya bozuk market — atla
+
+        # Snapshot için tutulacak metadata
+        market_data = {
+            "id": m.get("id"),
+            "slug": slug,
+            "question": m.get("question"),
+            "volume": m.get("volume") or m.get("volumeNum"),
+            "endDate": m.get("endDate"),
+            "active": m.get("active"),
+            "closed": m.get("closed"),
+        }
+        add_snapshot(cache, slug, prob, market_data=market_data, now=now)
+
+    cache["_fetched_at"] = now.isoformat()
+    cache.setdefault("_ttl_seconds", 3600)
+
+    if save:
+        save_cache(cache)
+    return cache
 
 
 # ---------- Themes whitelist I/O ----------
