@@ -278,6 +278,21 @@ def discover_undervalued_tickers(
     if not tickers:
         return {"scanned": 0, "discovered": 0, "added": []}
 
+    # Faz 2 Adım 10b-iii-C-i (17 May 2026): Polymarket kalibratör hook.
+    # Feature flag CALIBRATOR_ENABLED açıksa, her ticker için AI Gate çağrısı
+    # öncesi bayrak çıkarımı yapılır. Default kapalı — mevcut davranış korunur.
+    calibrator = None
+    try:
+        from agent.scanners.pipeline import is_calibrator_enabled
+        if is_calibrator_enabled():
+            from agent.scanners.calibrator import PolymarketCalibrator
+            calibrator = PolymarketCalibrator()
+            print(f"[fair_value] Polymarket kalibratör AKTİF (CALIBRATOR_ENABLED=true)")
+    except Exception as e:
+        # Kalibratör başlatma hatası tarama'yı kırmamalı
+        print(f"[fair_value] Kalibratör başlatma hatası, devam ediliyor: {e}")
+        calibrator = None
+
     print(f"[fair_value] Geniş evren tarama: {len(tickers)} ticker")
     discovered = []
     added = []
@@ -306,7 +321,33 @@ def discover_undervalued_tickers(
 
             discovered.append((symbol, potential_pct, fv["fair_value"]))
 
-            # Asama 8 (14 May 2026): LLM gate — her sinyal AI'dan gecer
+            # Faz 2 Adım 10b-iii-C-i: Polymarket kalibrasyonu (flag açıksa).
+            # Tek elemanlı Candidate listesi ile probe — bayrakları çıkar,
+            # AI Gate'e calibration_info olarak ilet. Kalibratör tracker'a
+            # event yazar (Phase 10 tuning için veri toplanır).
+            calibration_info = None
+            if calibrator is not None:
+                try:
+                    from agent.scanners.base import Candidate
+                    probe = Candidate(
+                        symbol=symbol,
+                        score=0.5,  # probe score — gerçek skor AI Gate'ten gelir
+                        reason="fair_value probe",
+                        source="fair_value",
+                    )
+                    calibrator.calibrate([probe])
+                    if probe.has_calibration:
+                        calibration_info = {
+                            "flags": probe.calibration_flags,
+                            "multiplier": probe.calibration_multiplier,
+                            "original_score": probe.score,
+                            "calibrated_score": probe.calibrated_score,
+                        }
+                except Exception as e:
+                    # Kalibrasyon hatası AI Gate akışını kırmamalı
+                    print(f"[fair_value] {symbol} kalibrasyon hatası: {e}")
+
+            # Aşama 8 (14 May 2026): LLM gate — her sinyal AI'dan gecer
             try:
                 from agent.ai_gate import evaluate_signal as ai_gate_eval
                 gate_result = ai_gate_eval(
@@ -320,6 +361,7 @@ def discover_undervalued_tickers(
                         "highest_target": fv["highest_target"],
                         "sample_size": fv["sample_size"],
                     },
+                    calibration_info=calibration_info,  # Adım 10b-iii-C-i
                 )
                 if gate_result["action"] != "EKLE":
                     print(f"[fair_value] {symbol} AI gate REDDETTI: {gate_result['reason']}")
@@ -336,6 +378,25 @@ def discover_undervalued_tickers(
                 ai_cautions = ["gate_failed"]
 
             # Watchlist'e ekle (AI onayı + zenginleştirme ile)
+            # Faz 2 Adım 10b-iii-C-i: kalibrasyon bilgisi de score_components'a
+            score_components_dict = {
+                "fair_value_discount_pct": round(potential_pct, 2),
+                "fair_value_target": fv["fair_value"],
+                "fair_value_latest_target": fv["latest_target"],
+                "fair_value_highest_target": fv["highest_target"],
+                "fair_value_sample_size": fv["sample_size"],
+                "ai_gate": {
+                    "score": ai_score,
+                    "theme_match": ai_theme,
+                    "cautions": ai_cautions,
+                },
+            }
+            if calibration_info is not None:
+                score_components_dict["polymarket_calibration"] = {
+                    "flags": calibration_info["flags"],
+                    "multiplier": calibration_info["multiplier"],
+                }
+
             result = wl_add(
                 symbol=symbol,
                 source="analyst_target_discount",
@@ -344,18 +405,7 @@ def discover_undervalued_tickers(
                           f"+ AI gate: {ai_reason}",
                 price=current,
                 score=ai_score,
-                score_components={
-                    "fair_value_discount_pct": round(potential_pct, 2),
-                    "fair_value_target": fv["fair_value"],
-                    "fair_value_latest_target": fv["latest_target"],
-                    "fair_value_highest_target": fv["highest_target"],
-                    "fair_value_sample_size": fv["sample_size"],
-                    "ai_gate": {
-                        "score": ai_score,
-                        "theme_match": ai_theme,
-                        "cautions": ai_cautions,
-                    },
-                },
+                score_components=score_components_dict,
             )
             if result["action"] == "added":
                 added.append((symbol, potential_pct))
