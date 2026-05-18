@@ -1,5 +1,5 @@
 {
-  "last_run": "2026-05-18T14:00:29",
+  "last_run": "2026-05-18T14:30:46",
   "alerts": {
     "stop_near:O": "2026-05-14",
     "stop_near:DINO": "2026-05-15",
@@ -8,6 +8,7 @@
     "stop_near:PPG": "2026-05-15",
     "stop_near:GTY": "2026-05-15",
     "stop_breached:PSA": "2026-05-15",
-    "stop_near:GEV": "2026-05-18"
+    "stop_near:GEV": "2026-05-18",
+    "stop_near:AMAT": "2026-05-18"
   }
 }
