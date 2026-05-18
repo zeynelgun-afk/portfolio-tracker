@@ -1,5 +1,5 @@
 {
-  "_son_guncelleme": "2026-05-18 20:01",
+  "_son_guncelleme": "2026-05-18 23:05",
   "_aciklama": "Finzora AI — Tek hisse havuzu. Tüm besleyiciler (analist_takip, fair_value_panel, tematik_keşif, ai_orchestrator, manuel) buraya yazar. Max 80 ticker. Sade şema, 13 May 2026 sıfırlandı. | 14 May 2026: limit 80→300 (tematik genişleme)",
   "_limit": 300,
   "_schema_version": "2.0",
@@ -44,17 +44,17 @@
         "yukselis"
       ],
       "score": 94.0,
-      "score_updated_at": "2026-05-17T23:03:06.297160+00:00",
+      "score_updated_at": "2026-05-18T23:05:37.614767+00:00",
       "score_components": {
         "thematic_momentum": 88,
         "thematic_id": "ai_hardware_supercycle",
         "thematic_stage": "yukselis",
         "orchestrator_rank": 1,
-        "orchestrator_reason": "AI supercycle lideri, %4.4 düşüşle dip alım fırsatı, 5 analist PT revizyonu son 48 saatte.",
+        "orchestrator_reason": "AI süper döngüsünün amiral gemisi, 5 analist PT yükseltimi, 21 günlük ortalama üzerinde güçlü tutunma.",
         "orchestrator_entry": "$220-225",
-        "orchestrator_stop": 200,
-        "orchestrator_target": 285,
-        "orchestrator_rr": "1:2.9"
+        "orchestrator_stop": 205,
+        "orchestrator_target": 275,
+        "orchestrator_rr": "1:2.8"
       },
       "last_news_check": null,
       "last_action_signal": null,
@@ -79,17 +79,17 @@
         "yukselis"
       ],
       "score": 91.0,
-      "score_updated_at": "2026-05-17T23:03:06.300220+00:00",
+      "score_updated_at": "2026-05-18T23:05:37.617983+00:00",
       "score_components": {
         "thematic_momentum": 88,
         "thematic_id": "ai_hardware_supercycle",
         "thematic_stage": "yukselis",
         "orchestrator_rank": 2,
-        "orchestrator_reason": "AI donanım ikincisi, %5.7 düşüşle FV iskontosu 28%, yüksek beta ralli sürüyor.",
-        "orchestrator_entry": "$415-420",
-        "orchestrator_stop": 385,
+        "orchestrator_reason": "AI donanımı talebinin ikinci büyük kazananı, RSI 66 ile momentum koruma, 686B m-cap likiditesi.",
+        "orchestrator_entry": "$415-425",
+        "orchestrator_stop": 395,
         "orchestrator_target": 500,
-        "orchestrator_rr": "1:2.5"
+        "orchestrator_rr": "1:2.1"
       },
       "last_news_check": null,
       "last_action_signal": null,
@@ -113,18 +113,18 @@
         "ai_hardware_supercycle",
         "yukselis"
       ],
-      "score": 89.0,
-      "score_updated_at": "2026-05-17T23:03:06.305546+00:00",
+      "score": 87.0,
+      "score_updated_at": "2026-05-18T23:05:37.629678+00:00",
       "score_components": {
         "thematic_momentum": 88,
         "thematic_id": "ai_hardware_supercycle",
         "thematic_stage": "yukselis",
-        "orchestrator_rank": 4,
-        "orchestrator_reason": "Lam Research yarıilet makineleri, %4.8 düşüşle dip alım, AI capex döngüsü en erken kazanan.",
-        "orchestrator_entry": "$280-285",
+        "orchestrator_rank": 6,
+        "orchestrator_reason": "AI üretim ekipmanı talebinin doğrudan kazananı, 348B m-cap, RSI 53.6 ile hâlâ sağlıklı.",
+        "orchestrator_entry": "$275-280",
         "orchestrator_stop": 260,
-        "orchestrator_target": 340,
-        "orchestrator_rr": "1:2.3"
+        "orchestrator_target": 320,
+        "orchestrator_rr": "1:2.1"
       },
       "last_news_check": null,
       "last_action_signal": null,
@@ -148,18 +148,18 @@
         "ai_hardware_supercycle",
         "yukselis"
       ],
-      "score": 90.0,
-      "score_updated_at": "2026-05-17T23:03:06.302913+00:00",
+      "score": 89.0,
+      "score_updated_at": "2026-05-18T23:05:37.623825+00:00",
       "score_components": {
         "thematic_momentum": 88,
         "thematic_id": "ai_hardware_supercycle",
         "thematic_stage": "yukselis",
-        "orchestrator_rank": 3,
-        "orchestrator_reason": "Foundry monopolü, %3.2 düşüşle 21SMA testi, AI çip talebi doğrudan kaldıraç.",
-        "orchestrator_entry": "$400-405",
+        "orchestrator_rank": 4,
+        "orchestrator_reason": "AI çip üretiminin kalbi, 21 günlük ortalama testinde dip alım fırsatı, 2054B dev m-cap.",
+        "orchestrator_entry": "$390-400",
         "orchestrator_stop": 375,
-        "orchestrator_target": 465,
-        "orchestrator_rr": "1:2.2"
+        "orchestrator_target": 450,
+        "orchestrator_rr": "1:2.4"
       },
       "last_news_check": null,
       "last_action_signal": null,
@@ -184,17 +184,17 @@
         "yukselis"
       ],
       "score": 88.0,
-      "score_updated_at": "2026-05-17T23:03:06.308156+00:00",
+      "score_updated_at": "2026-05-18T23:05:37.626704+00:00",
       "score_components": {
         "thematic_momentum": 88,
         "thematic_id": "ai_hardware_supercycle",
         "thematic_stage": "yukselis",
         "orchestrator_rank": 5,
-        "orchestrator_reason": "Broadcom AI ASIC ve networking, %3.3 düşüşle FV iskontosu 22%, temettü + büyüme ikili kaldıraç.",
-        "orchestrator_entry": "$420-425",
-        "orchestrator_stop": 395,
-        "orchestrator_target": 500,
-        "orchestrator_rr": "1:2.3"
+        "orchestrator_reason": "AI hızlandırıcı çözümleri ve yarıiletken altyapı, 1992B m-cap ile güvenli likidite.",
+        "orchestrator_entry": "$415-425",
+        "orchestrator_stop": 400,
+        "orchestrator_target": 480,
+        "orchestrator_rr": "1:2.2"
       },
       "last_news_check": null,
       "last_action_signal": null,
@@ -253,18 +253,18 @@
         "ai_hardware_supercycle",
         "yukselis"
       ],
-      "score": 85.0,
-      "score_updated_at": "2026-05-14T23:04:24.927093+00:00",
+      "score": 86.0,
+      "score_updated_at": "2026-05-18T23:05:37.632614+00:00",
       "score_components": {
         "thematic_momentum": 88,
         "thematic_id": "ai_hardware_supercycle",
         "thematic_stage": "yukselis",
-        "orchestrator_rank": 6,
-        "orchestrator_reason": "AI PC ve mobildeki konumuyla düşük RSI ve negatif günlük performansı dip alım fırsatı.",
-        "orchestrator_entry": "$195-200",
-        "orchestrator_stop": 185,
-        "orchestrator_target": 230,
-        "orchestrator_rr": "1:2.5"
+        "orchestrator_rank": 7,
+        "orchestrator_reason": "Edge AI ve mobil çip talebi, günlük %1.07 yükselişle momentum, 215B m-cap.",
+        "orchestrator_entry": "$200-205",
+        "orchestrator_stop": 190,
+        "orchestrator_target": 235,
+        "orchestrator_rr": "1:2.3"
       },
       "last_news_check": null,
       "last_action_signal": null,
@@ -2282,16 +2282,16 @@
         "energy_supply_shock",
         "yukselis"
       ],
-      "score": 85.0,
-      "score_updated_at": "2026-05-17T23:03:06.316018+00:00",
+      "score": 84.0,
+      "score_updated_at": "2026-05-18T23:05:37.638424+00:00",
       "score_components": {
         "thematic_momentum": 76,
         "thematic_id": "energy_supply_shock",
         "thematic_stage": "yukselis",
-        "orchestrator_rank": 8,
-        "orchestrator_reason": "Enerji arz şoku lideri, %3.4 yükselişle momentum devam, temettü + enflasyon hedge.",
-        "orchestrator_entry": "$155-158",
-        "orchestrator_stop": 145,
+        "orchestrator_rank": 9,
+        "orchestrator_reason": "Enerji arz şoku teması 76 skor, günlük %1.63 yükseliş, 665B dev m-cap ile güvenli.",
+        "orchestrator_entry": "$159-162",
+        "orchestrator_stop": 152,
         "orchestrator_target": 180,
         "orchestrator_rr": "1:2.1"
       },
@@ -2316,18 +2316,18 @@
         "energy_supply_shock",
         "yukselis"
       ],
-      "score": 84.0,
-      "score_updated_at": "2026-05-17T23:03:06.318698+00:00",
+      "score": 83.0,
+      "score_updated_at": "2026-05-18T23:05:37.641346+00:00",
       "score_components": {
         "thematic_momentum": 76,
         "thematic_id": "energy_supply_shock",
         "thematic_stage": "yukselis",
-        "orchestrator_rank": 9,
-        "orchestrator_reason": "Entegre enerji devi, %2.4 yükselişle 50SMA testi, temettü güvenliği + AI veri merkezi enerji talebi.",
-        "orchestrator_entry": "$188-192",
-        "orchestrator_stop": 180,
-        "orchestrator_target": 215,
-        "orchestrator_rr": "1:2.4"
+        "orchestrator_rank": 10,
+        "orchestrator_reason": "Enerji teması, günlük %2.63 yükseliş, 391B m-cap, RSI 60.6 ile sağlıklı momentum.",
+        "orchestrator_entry": "$194-198",
+        "orchestrator_stop": 185,
+        "orchestrator_target": 220,
+        "orchestrator_rr": "1:2.0"
       },
       "last_news_check": null,
       "last_action_signal": null,
@@ -2771,12 +2771,18 @@
         "cybersecurity_surge",
         "yukselis"
       ],
-      "score": null,
-      "score_updated_at": null,
+      "score": 90.0,
+      "score_updated_at": "2026-05-18T23:05:37.620868+00:00",
       "score_components": {
         "thematic_momentum": 81,
         "thematic_id": "cybersecurity_surge",
-        "thematic_stage": "yukselis"
+        "thematic_stage": "yukselis",
+        "orchestrator_rank": 3,
+        "orchestrator_reason": "Siber güvenlik teması 81 skorla güçlü, günlük %4.17 yükselişle momentum taze, 158B m-cap.",
+        "orchestrator_entry": "$610-620",
+        "orchestrator_stop": 580,
+        "orchestrator_target": 700,
+        "orchestrator_rr": "1:2.6"
       },
       "last_news_check": null,
       "last_action_signal": null,
@@ -2852,12 +2858,18 @@
         "cybersecurity_surge",
         "yukselis"
       ],
-      "score": null,
-      "score_updated_at": null,
+      "score": 85.0,
+      "score_updated_at": "2026-05-18T23:05:37.635530+00:00",
       "score_components": {
         "thematic_momentum": 81,
         "thematic_id": "cybersecurity_surge",
-        "thematic_stage": "yukselis"
+        "thematic_stage": "yukselis",
+        "orchestrator_rank": 8,
+        "orchestrator_reason": "Siber güvenlik teması, günlük %3.03 yükseliş, 93B m-cap ile likidite koruma.",
+        "orchestrator_entry": "$125-128",
+        "orchestrator_stop": 118,
+        "orchestrator_target": 145,
+        "orchestrator_rr": "1:2.2"
       },
       "last_news_check": null,
       "last_action_signal": null,
