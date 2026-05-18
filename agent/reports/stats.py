@@ -35,8 +35,164 @@ except ImportError as e:
 
 # ─────────────────────── Polymarket Kalibratör İstatistikleri ───────────────────
 # Faz 2 Adım 13 (17 May 2026). Tracker JSON'dan event analizi.
+# Faz 2 C-2 (17 May 2026). Hit rate hesaplama.
 
 _CALIBRATOR_LOG_PATH = _REPO_ROOT / "data" / "polymarket_calibrator_performance.json"
+
+# Hit rate hesaplaması için outcome eşiği (0 default).
+# pm_confirm: outcome > _HIT_THRESHOLD → HIT
+# pm_conflict: outcome < -_HIT_THRESHOLD → HIT
+_HIT_THRESHOLD = 0.0
+
+# Hangi horizon'lar hesaplanır
+_OUTCOME_FIELDS = ["outcome_7d", "outcome_14d", "outcome_30d"]
+
+
+def _is_hit(flag: str, outcome: Optional[float]) -> Optional[bool]:
+    """Event'in hit/miss durumunu belirle.
+
+    Args:
+        flag: applied_flag (pm_confirm / pm_confirm_weak /
+                            pm_conflict / pm_conflict_weak)
+        outcome: outcome_Nd değeri (None ise henüz dolu değil)
+
+    Returns:
+        True (HIT), False (MISS), None (outcome dolu değil veya
+        bilinmeyen flag).
+
+    Semantik:
+        pm_confirm*  : Polymarket DESTEKLEDİ → hisse YÜKSELMELİ
+                       outcome > 0 → HIT, outcome <= 0 → MISS
+        pm_conflict* : Polymarket ÇELİŞTİ → hisse DÜŞMELİ
+                       outcome < 0 → HIT, outcome >= 0 → MISS
+    """
+    if outcome is None or not isinstance(outcome, (int, float)):
+        return None
+    if not isinstance(flag, str):
+        return None
+
+    if flag.startswith("pm_confirm"):
+        return outcome > _HIT_THRESHOLD
+    if flag.startswith("pm_conflict"):
+        return outcome < -_HIT_THRESHOLD
+    return None
+
+
+def _calc_hit_rates(events: list[dict]) -> dict:
+    """Per-flag × per-horizon hit rate'leri hesapla.
+
+    Returns:
+        {
+          "by_flag_horizon": {
+            "pm_confirm": {
+              "outcome_7d": {"hits": N, "total": N, "rate_pct": N},
+              "outcome_14d": {...},
+              "outcome_30d": {...},
+            },
+            "pm_conflict": {...},
+            ...
+          },
+          "by_source": {
+            "thematic": {
+              "outcome_7d": {"hits": N, "total": N, "rate_pct": N},
+              ...
+            },
+            "fair_value": {...},
+            ...
+          },
+          "by_theme": {
+            "china_taiwan": {
+              "outcome_7d": {...},
+              ...
+            },
+            ...
+          },
+          "overall": {
+            "outcome_7d": {"hits": N, "total": N, "rate_pct": N},
+            "outcome_14d": {...},
+            "outcome_30d": {...},
+          },
+        }
+
+    Total = outcome dolu olan event sayısı (None olanlar dahil değil).
+    rate_pct = None eğer total=0.
+    """
+    by_flag_horizon: dict[str, dict[str, dict]] = {}
+    by_source: dict[str, dict[str, dict]] = {}
+    by_theme: dict[str, dict[str, dict]] = {}
+    overall: dict[str, dict] = {h: {"hits": 0, "total": 0} for h in _OUTCOME_FIELDS}
+
+    def _ensure(d: dict, key: str) -> dict:
+        if key not in d:
+            d[key] = {h: {"hits": 0, "total": 0} for h in _OUTCOME_FIELDS}
+        return d[key]
+
+    for e in events:
+        if not isinstance(e, dict):
+            continue
+        flag = e.get("applied_flag")
+        source = e.get("candidate_source")
+        theme = e.get("matched_theme")
+
+        for h in _OUTCOME_FIELDS:
+            outcome = e.get(h)
+            hit = _is_hit(flag, outcome)
+            if hit is None:
+                continue  # outcome dolu değil veya bilinmeyen flag
+
+            # Overall
+            overall[h]["total"] += 1
+            if hit:
+                overall[h]["hits"] += 1
+
+            # Per-flag
+            if isinstance(flag, str):
+                flag_bucket = _ensure(by_flag_horizon, flag)
+                flag_bucket[h]["total"] += 1
+                if hit:
+                    flag_bucket[h]["hits"] += 1
+
+            # Per-source
+            if isinstance(source, str):
+                src_bucket = _ensure(by_source, source)
+                src_bucket[h]["total"] += 1
+                if hit:
+                    src_bucket[h]["hits"] += 1
+
+            # Per-theme
+            if isinstance(theme, str):
+                theme_bucket = _ensure(by_theme, theme)
+                theme_bucket[h]["total"] += 1
+                if hit:
+                    theme_bucket[h]["hits"] += 1
+
+    # rate_pct ekle
+    def _add_rate(buckets: dict) -> None:
+        for key, horizons in buckets.items():
+            for h, stats in horizons.items():
+                total = stats["total"]
+                if total > 0:
+                    stats["rate_pct"] = round(stats["hits"] / total * 100, 1)
+                else:
+                    stats["rate_pct"] = None
+
+    _add_rate(by_flag_horizon)
+    _add_rate(by_source)
+    _add_rate(by_theme)
+    # Overall (flat dict)
+    for h in _OUTCOME_FIELDS:
+        total = overall[h]["total"]
+        if total > 0:
+            overall[h]["rate_pct"] = round(overall[h]["hits"] / total * 100, 1)
+        else:
+            overall[h]["rate_pct"] = None
+
+    return {
+        "by_flag_horizon": by_flag_horizon,
+        "by_source": by_source,
+        "by_theme": by_theme,
+        "overall": overall,
+    }
 
 
 def _load_calibrator_tracker() -> dict:
@@ -105,6 +261,7 @@ def query_calibrator_stats(days: int) -> dict:
             "days_collected": _calc_days_collected(tracker, now),
             "phase10_progress_pct": _calc_phase10_progress(tracker, now),
             "outcome_status": "no_data",
+            "hit_rates": None,
         }
 
     # Flag dağılımı
@@ -152,6 +309,29 @@ def query_calibrator_stats(days: int) -> dict:
         or e.get("outcome_30d") is not None
     )
 
+    # Faz 2 C-2 (17 May 2026): Hit rate hesaplama
+    hit_rates = _calc_hit_rates(recent) if outcome_filled > 0 else None
+
+    # Outcome status detayı:
+    #   no_data        : hiç event yok (yukarıda erken return)
+    #   pending_phase10: event'ler var ama outcome'lar None (C-1 öncesi durum)
+    #   partial        : bazı event'lerin outcome'u dolu
+    #   phase10_ready  : 7g+ olgun event'lerin %80'inden fazlası dolu
+    if outcome_filled == 0:
+        outcome_status = "pending_phase10"
+    else:
+        # phase10_ready: 7g+ olgun olan event'lerin yeterli oranı dolu
+        mature_7d = sum(
+            1 for e in recent
+            if _parse_event_ts(e) and
+            (now - _parse_event_ts(e)).total_seconds() >= 7 * 86400
+        )
+        filled_7d = sum(1 for e in recent if e.get("outcome_7d") is not None)
+        if mature_7d > 0 and filled_7d / mature_7d >= 0.8:
+            outcome_status = "phase10_ready"
+        else:
+            outcome_status = "partial"
+
     return {
         "total_events": len(recent),
         "by_flag": by_flag,
@@ -161,9 +341,20 @@ def query_calibrator_stats(days: int) -> dict:
         "top_symbols": top_symbols,
         "days_collected": _calc_days_collected(tracker, now),
         "phase10_progress_pct": _calc_phase10_progress(tracker, now),
-        "outcome_status": ("pending_phase10" if outcome_filled == 0
-                           else "partial"),
+        "outcome_status": outcome_status,
+        "hit_rates": hit_rates,
     }
+
+
+def _parse_event_ts(event: dict) -> Optional[datetime]:
+    """Helper: event['ts']'i parse et. Bozuksa None."""
+    ts_str = event.get("ts")
+    if not isinstance(ts_str, str):
+        return None
+    try:
+        return datetime.fromisoformat(ts_str.replace("Z", "+00:00"))
+    except (ValueError, TypeError):
+        return None
 
 
 def _calc_days_collected(tracker: dict, now: datetime) -> float:
@@ -257,17 +448,102 @@ def format_calibrator_section(stats: dict) -> list[str]:
         for sym, count in top_syms:
             lines.append(f"- **{sym}**: {count} event")
 
-    # Outcome durumu
+    # Outcome durumu + hit rate raporu (Faz 2 C-2)
     outcome = stats.get("outcome_status", "pending_phase10")
+    hit_rates = stats.get("hit_rates")
     lines.append("")
+
     if outcome == "pending_phase10":
         lines.append(
             "_Hit rate: Phase 10'da hesaplanacak. outcome_7d/14d/30d "
             "field'ları henüz boş — Phase 10 implementasyonunda price "
             "snapshot mantığı eklenince hit rate raporlanır._"
         )
-    elif outcome == "partial":
+    elif outcome == "partial" and hit_rates is None:
         lines.append("_Hit rate: kısmi veri var, Phase 10 değerlendirmesi gerek._")
+    elif hit_rates is not None:
+        # Hit rate tabloları
+        lines.append(f"### Hit Rate (outcome_status: `{outcome}`)\n")
+
+        # Overall (genel toplam)
+        overall = hit_rates.get("overall", {})
+        if any(o.get("total", 0) > 0 for o in overall.values()):
+            lines.append("**Genel Hit Rate:**\n")
+            lines.append("| Horizon | Hit | Toplam | Oran |")
+            lines.append("|---|---:|---:|---:|")
+            for h in ["outcome_7d", "outcome_14d", "outcome_30d"]:
+                o = overall.get(h, {})
+                hits = o.get("hits", 0)
+                total = o.get("total", 0)
+                rate = o.get("rate_pct")
+                rate_str = f"{rate:.1f}%" if rate is not None else "—"
+                lines.append(f"| {h} | {hits} | {total} | {rate_str} |")
+            lines.append("")
+
+        # Per-flag
+        bfh = hit_rates.get("by_flag_horizon", {})
+        if bfh:
+            lines.append("**Bayrak Bazında Hit Rate (outcome_7d):**\n")
+            lines.append("| Bayrak | Hit | Toplam | Oran |")
+            lines.append("|---|---:|---:|---:|")
+            for flag in sorted(bfh.keys()):
+                o = bfh[flag].get("outcome_7d", {})
+                hits = o.get("hits", 0)
+                total = o.get("total", 0)
+                rate = o.get("rate_pct")
+                rate_str = f"{rate:.1f}%" if rate is not None else "—"
+                lines.append(f"| `{flag}` | {hits} | {total} | {rate_str} |")
+            lines.append("")
+
+        # Per-source
+        bs = hit_rates.get("by_source", {})
+        if bs:
+            lines.append("**Kaynak Bazında Hit Rate (outcome_7d):**\n")
+            lines.append("| Kaynak | Hit | Toplam | Oran |")
+            lines.append("|---|---:|---:|---:|")
+            for src in sorted(bs.keys()):
+                o = bs[src].get("outcome_7d", {})
+                hits = o.get("hits", 0)
+                total = o.get("total", 0)
+                rate = o.get("rate_pct")
+                rate_str = f"{rate:.1f}%" if rate is not None else "—"
+                lines.append(f"| `{src}` | {hits} | {total} | {rate_str} |")
+            lines.append("")
+
+        # Per-theme (top 5 by total)
+        bt = hit_rates.get("by_theme", {})
+        if bt:
+            # Toplam event sayısına göre sırala
+            theme_items = sorted(
+                bt.items(),
+                key=lambda kv: -(kv[1].get("outcome_7d", {}).get("total", 0)),
+            )[:5]
+            if any(t.get("outcome_7d", {}).get("total", 0) > 0 for _, t in theme_items):
+                lines.append("**Tema Bazında Hit Rate (top 5, outcome_7d):**\n")
+                lines.append("| Tema | Hit | Toplam | Oran |")
+                lines.append("|---|---:|---:|---:|")
+                for theme, horizons in theme_items:
+                    o = horizons.get("outcome_7d", {})
+                    hits = o.get("hits", 0)
+                    total = o.get("total", 0)
+                    if total == 0:
+                        continue
+                    rate = o.get("rate_pct")
+                    rate_str = f"{rate:.1f}%" if rate is not None else "—"
+                    lines.append(f"| `{theme}` | {hits} | {total} | {rate_str} |")
+                lines.append("")
+
+        # Yorum: yüksek vs düşük hit rate
+        if outcome == "phase10_ready":
+            lines.append(
+                "_phase10_ready: 7g olgun event'lerin ≥%80'i outcome'a sahip. "
+                "Çarpan tuning (Phase 10) için yeterli veri._"
+            )
+        else:
+            lines.append(
+                "_partial: outcome doldurma sürüyor. "
+                "phase10_ready için 7g olgun event'lerin ≥%80'inin dolu olması gerek._"
+            )
 
     return lines
 
