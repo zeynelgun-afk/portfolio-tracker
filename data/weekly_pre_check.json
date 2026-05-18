@@ -1,446 +1,446 @@
 {
-  "olusturulma": "2026-04-26 10:59",
-  "portfoy_ozet": {
+  "created_at": "2026-04-26 10:59",
+  "portfolio_summary": {
     "balanced": {
-      "toplam": 108786.08,
-      "baslangic": 100000,
-      "pl_dolar": 8786.08,
+      "total": 108786.08,
+      "start_capital": 100000,
+      "pnl_dollar": 8786.08,
       "pl_pct": 8.8,
-      "nakit": 66453.51,
-      "nakit_pct": 61.1,
-      "pozisyon_sayisi": 4
+      "cash": 66453.51,
+      "cash_pct": 61.1,
+      "position_count": 4
     },
     "aggressive": {
-      "toplam": 389706.24,
-      "baslangic": 400000,
-      "pl_dolar": -10293.76,
+      "total": 389706.24,
+      "start_capital": 400000,
+      "pnl_dollar": -10293.76,
       "pl_pct": -2.6,
-      "nakit": 186719.6,
-      "nakit_pct": 47.9,
-      "pozisyon_sayisi": 5
+      "cash": 186719.6,
+      "cash_pct": 47.9,
+      "position_count": 5
     },
     "dividend": {
-      "toplam": 141681.85,
-      "baslangic": 100000,
-      "pl_dolar": 41681.85,
+      "total": 141681.85,
+      "start_capital": 100000,
+      "pnl_dollar": 41681.85,
       "pl_pct": 41.7,
-      "nakit": 59717.0,
-      "nakit_pct": 42.1,
-      "pozisyon_sayisi": 5
+      "cash": 59717.0,
+      "cash_pct": 42.1,
+      "position_count": 5
     },
     "GENEL": {
-      "toplam": 640174.17,
-      "baslangic": 600000,
-      "pl_dolar": 40174.17,
+      "total": 640174.17,
+      "start_capital": 600000,
+      "pnl_dollar": 40174.17,
       "pl_pct": 6.7
     }
   },
-  "pozisyonlar": [
+  "positions": [
     {
-      "sembol": "CI",
-      "portfoy": "balanced",
-      "guncel_fiyat": 275.68,
+      "symbol": "CI",
+      "portfolio": "balanced",
+      "current_price": 275.68,
       "stop_loss": 258.02,
-      "hedef_fiyat": 361.0,
-      "maliyet_baz": 277.63,
+      "target_price": 361.0,
+      "cost_basis": 277.63,
       "pnl_pct": -0.7,
-      "agirlik_pct": 5.8,
-      "stop_mesafe_pct": 6.4,
-      "hatalar": [],
-      "uyarilar": [],
-      "k11_durum": null,
-      "hedef_asildi": false
+      "weight_pct": 5.8,
+      "stop_distance_pct": 6.4,
+      "errors": [],
+      "warnings": [],
+      "k11_status": null,
+      "target_exceeded": false
     },
     {
-      "sembol": "CPRX",
-      "portfoy": "balanced",
-      "guncel_fiyat": 27.37,
+      "symbol": "CPRX",
+      "portfolio": "balanced",
+      "current_price": 27.37,
       "stop_loss": 25.89,
-      "hedef_fiyat": 28.48,
-      "maliyet_baz": 25.89,
+      "target_price": 28.48,
+      "cost_basis": 25.89,
       "pnl_pct": 5.7,
-      "agirlik_pct": 7.3,
-      "stop_mesafe_pct": 5.4,
-      "hatalar": [],
-      "uyarilar": [],
-      "k11_durum": null,
-      "hedef_asildi": false
+      "weight_pct": 7.3,
+      "stop_distance_pct": 5.4,
+      "errors": [],
+      "warnings": [],
+      "k11_status": null,
+      "target_exceeded": false
     },
     {
-      "sembol": "HBM",
-      "portfoy": "balanced",
-      "guncel_fiyat": 24.35,
+      "symbol": "HBM",
+      "portfolio": "balanced",
+      "current_price": 24.35,
       "stop_loss": 21.85,
-      "hedef_fiyat": 29.11,
-      "maliyet_baz": 24.135,
+      "target_price": 29.11,
+      "cost_basis": 24.135,
       "pnl_pct": 0.9,
-      "agirlik_pct": 11.1,
-      "stop_mesafe_pct": 10.3,
-      "hatalar": [],
-      "uyarilar": [],
-      "k11_durum": null,
-      "hedef_asildi": false
+      "weight_pct": 11.1,
+      "stop_distance_pct": 10.3,
+      "errors": [],
+      "warnings": [],
+      "k11_status": null,
+      "target_exceeded": false
     },
     {
-      "sembol": "NEM",
-      "portfoy": "balanced",
-      "guncel_fiyat": 120.7,
+      "symbol": "NEM",
+      "portfolio": "balanced",
+      "current_price": 120.7,
       "stop_loss": 109.57,
-      "hedef_fiyat": 126.01,
-      "maliyet_baz": 109.5721,
+      "target_price": 126.01,
+      "cost_basis": 109.5721,
       "pnl_pct": 10.2,
-      "agirlik_pct": 14.8,
-      "stop_mesafe_pct": 9.2,
-      "hatalar": [],
-      "uyarilar": [],
-      "k11_durum": null,
-      "hedef_asildi": false
+      "weight_pct": 14.8,
+      "stop_distance_pct": 9.2,
+      "errors": [],
+      "warnings": [],
+      "k11_status": null,
+      "target_exceeded": false
     },
     {
-      "sembol": "COHR",
-      "portfoy": "aggressive",
-      "guncel_fiyat": 336.09,
+      "symbol": "COHR",
+      "portfolio": "aggressive",
+      "current_price": 336.09,
       "stop_loss": 317.16,
-      "hedef_fiyat": 330.0,
-      "maliyet_baz": 285.7482,
+      "target_price": 330.0,
+      "cost_basis": 285.7482,
       "pnl_pct": 17.6,
-      "agirlik_pct": 12.0,
-      "stop_mesafe_pct": 5.6,
-      "hatalar": [],
-      "uyarilar": [
+      "weight_pct": 12.0,
+      "stop_distance_pct": 5.6,
+      "errors": [],
+      "warnings": [
         "[UYARI] COHR: hedef_fiyat $330.00 <= güncel fiyat $336.09. Hedef aşıldı! K-11 kontrolü gerekli.",
         "[UYARI] COHR: kazanç +%17.6 (≥%15). K-11 Tier1 için RSI≥70 kontrolü gerekli."
       ],
-      "k11_durum": "izle (RSI=65, kazanç=%17.6)",
-      "hedef_asildi": true,
+      "k11_status": "izle (RSI=65, kazanç=%17.6)",
+      "target_exceeded": true,
       "rsi_14": 65.3
     },
     {
-      "sembol": "ANET",
-      "portfoy": "aggressive",
-      "guncel_fiyat": 176.91,
+      "symbol": "ANET",
+      "portfolio": "aggressive",
+      "current_price": 176.91,
       "stop_loss": 164.42,
-      "hedef_fiyat": 165.0,
-      "maliyet_baz": 146.5,
+      "target_price": 165.0,
+      "cost_basis": 146.5,
       "pnl_pct": 20.8,
-      "agirlik_pct": 12.3,
-      "stop_mesafe_pct": 7.1,
-      "hatalar": [],
-      "uyarilar": [
+      "weight_pct": 12.3,
+      "stop_distance_pct": 7.1,
+      "errors": [],
+      "warnings": [
         "[UYARI] ANET: hedef_fiyat $165.00 <= güncel fiyat $176.91. Hedef aşıldı! K-11 kontrolü gerekli.",
         "[UYARI] ANET: kazanç +%20.8 (≥%15). K-11 Tier1 için RSI≥70 kontrolü gerekli."
       ],
-      "k11_durum": "Tier1",
-      "hedef_asildi": true,
+      "k11_status": "Tier1",
+      "target_exceeded": true,
       "rsi_14": 74.2
     },
     {
-      "sembol": "MU",
-      "portfoy": "aggressive",
-      "guncel_fiyat": 496.72,
+      "symbol": "MU",
+      "portfolio": "aggressive",
+      "current_price": 496.72,
       "stop_loss": 471.88,
-      "hedef_fiyat": 470.0,
-      "maliyet_baz": 415.0,
+      "target_price": 470.0,
+      "cost_basis": 415.0,
       "pnl_pct": 19.7,
-      "agirlik_pct": 12.1,
-      "stop_mesafe_pct": 5.0,
-      "hatalar": [],
-      "uyarilar": [
+      "weight_pct": 12.1,
+      "stop_distance_pct": 5.0,
+      "errors": [],
+      "warnings": [
         "[UYARI] MU: hedef_fiyat $470.00 <= güncel fiyat $496.72. Hedef aşıldı! K-11 kontrolü gerekli.",
         "[UYARI] MU: kazanç +%19.7 (≥%15). K-11 Tier1 için RSI≥70 kontrolü gerekli."
       ],
-      "k11_durum": "izle (RSI=69, kazanç=%19.7)",
-      "hedef_asildi": true,
+      "k11_status": "izle (RSI=69, kazanç=%19.7)",
+      "target_exceeded": true,
       "rsi_14": 68.9
     },
     {
-      "sembol": "CAMT",
-      "portfoy": "aggressive",
-      "guncel_fiyat": 203,
+      "symbol": "CAMT",
+      "portfolio": "aggressive",
+      "current_price": 203,
       "stop_loss": 192.85,
-      "hedef_fiyat": 210.0,
-      "maliyet_baz": 175.0,
+      "target_price": 210.0,
+      "cost_basis": 175.0,
       "pnl_pct": 16.0,
-      "agirlik_pct": 11.8,
-      "stop_mesafe_pct": 5.0,
-      "hatalar": [],
-      "uyarilar": [
+      "weight_pct": 11.8,
+      "stop_distance_pct": 5.0,
+      "errors": [],
+      "warnings": [
         "[UYARI] CAMT: kazanç +%16.0 (≥%15). K-11 Tier1 için RSI≥70 kontrolü gerekli."
       ],
-      "k11_durum": "Tier1",
-      "hedef_asildi": false,
+      "k11_status": "Tier1",
+      "target_exceeded": false,
       "rsi_14": 72.8
     },
     {
-      "sembol": "ETN",
-      "portfoy": "aggressive",
-      "guncel_fiyat": 423.92,
+      "symbol": "ETN",
+      "portfolio": "aggressive",
+      "current_price": 423.92,
       "stop_loss": 382.78,
-      "hedef_fiyat": 457.49,
-      "maliyet_baz": 406.385,
+      "target_price": 457.49,
+      "cost_basis": 406.385,
       "pnl_pct": 4.3,
-      "agirlik_pct": 3.9,
-      "stop_mesafe_pct": 9.7,
-      "hatalar": [],
-      "uyarilar": [],
-      "k11_durum": null,
-      "hedef_asildi": false
+      "weight_pct": 3.9,
+      "stop_distance_pct": 9.7,
+      "errors": [],
+      "warnings": [],
+      "k11_status": null,
+      "target_exceeded": false
     },
     {
-      "sembol": "MO",
-      "portfoy": "dividend",
-      "guncel_fiyat": 66.88,
+      "symbol": "MO",
+      "portfolio": "dividend",
+      "current_price": 66.88,
       "stop_loss": 64.01,
-      "hedef_fiyat": 64.19,
-      "maliyet_baz": 57.31,
+      "target_price": 64.19,
+      "cost_basis": 57.31,
       "pnl_pct": 16.7,
-      "agirlik_pct": 10.3,
-      "stop_mesafe_pct": 4.3,
-      "hatalar": [],
-      "uyarilar": [
+      "weight_pct": 10.3,
+      "stop_distance_pct": 4.3,
+      "errors": [],
+      "warnings": [
         "[UYARI] MO: hedef_fiyat $64.19 <= güncel fiyat $66.88. Hedef aşıldı! K-11 kontrolü gerekli.",
         "[UYARI] MO: kazanç +%16.7 (≥%15). K-11 Tier1 için RSI≥70 kontrolü gerekli."
       ],
-      "k11_durum": "izle (RSI=56, kazanç=%16.7)",
-      "hedef_asildi": true,
+      "k11_status": "izle (RSI=56, kazanç=%16.7)",
+      "target_exceeded": true,
       "rsi_14": 55.9
     },
     {
-      "sembol": "OKE",
-      "portfoy": "dividend",
-      "guncel_fiyat": 87.52,
+      "symbol": "OKE",
+      "portfolio": "dividend",
+      "current_price": 87.52,
       "stop_loss": 78.59,
-      "hedef_fiyat": 93.0,
-      "maliyet_baz": 85.5,
+      "target_price": 93.0,
+      "cost_basis": 85.5,
       "pnl_pct": 2.4,
-      "agirlik_pct": 5.7,
-      "stop_mesafe_pct": 10.2,
-      "hatalar": [],
-      "uyarilar": [],
-      "k11_durum": null,
-      "hedef_asildi": false
+      "weight_pct": 5.7,
+      "stop_distance_pct": 10.2,
+      "errors": [],
+      "warnings": [],
+      "k11_status": null,
+      "target_exceeded": false
     },
     {
-      "sembol": "ABBV",
-      "portfoy": "dividend",
-      "guncel_fiyat": 198.71,
+      "symbol": "ABBV",
+      "portfolio": "dividend",
+      "current_price": 198.71,
       "stop_loss": 192.45,
-      "hedef_fiyat": 223.63,
-      "maliyet_baz": 202.84,
+      "target_price": 223.63,
+      "cost_basis": 202.84,
       "pnl_pct": -2.0,
-      "agirlik_pct": 17.3,
-      "stop_mesafe_pct": 3.2,
-      "hatalar": [],
-      "uyarilar": [
+      "weight_pct": 17.3,
+      "stop_distance_pct": 3.2,
+      "errors": [],
+      "warnings": [
         "[UYARI] ABBV: ağırlık %17.3 > K-12 limiti %15 (dividend)"
       ],
-      "k11_durum": null,
-      "hedef_asildi": false
+      "k11_status": null,
+      "target_exceeded": false
     },
     {
-      "sembol": "O",
-      "portfoy": "dividend",
-      "guncel_fiyat": 63.33,
+      "symbol": "O",
+      "portfolio": "dividend",
+      "current_price": 63.33,
       "stop_loss": 61.9,
-      "hedef_fiyat": 67.05,
-      "maliyet_baz": 63.62,
+      "target_price": 67.05,
+      "cost_basis": 63.62,
       "pnl_pct": -0.5,
-      "agirlik_pct": 14.0,
-      "stop_mesafe_pct": 2.3,
-      "hatalar": [],
-      "uyarilar": [],
-      "k11_durum": null,
-      "hedef_asildi": false
+      "weight_pct": 14.0,
+      "stop_distance_pct": 2.3,
+      "errors": [],
+      "warnings": [],
+      "k11_status": null,
+      "target_exceeded": false
     },
     {
-      "sembol": "GTY",
-      "portfoy": "dividend",
-      "guncel_fiyat": 33.45,
+      "symbol": "GTY",
+      "portfolio": "dividend",
+      "current_price": 33.45,
       "stop_loss": 31.88,
-      "hedef_fiyat": 36.17,
-      "maliyet_baz": 33.56,
+      "target_price": 36.17,
+      "cost_basis": 33.56,
       "pnl_pct": -0.3,
-      "agirlik_pct": 10.5,
-      "stop_mesafe_pct": 4.7,
-      "hatalar": [],
-      "uyarilar": [],
-      "k11_durum": null,
-      "hedef_asildi": false
+      "weight_pct": 10.5,
+      "stop_distance_pct": 4.7,
+      "errors": [],
+      "warnings": [],
+      "k11_status": null,
+      "target_exceeded": false
     }
   ],
-  "k11_aksiyonlar": [
+  "k11_actions": [
     {
-      "sembol": "ANET",
-      "portfoy": "aggressive",
+      "symbol": "ANET",
+      "portfolio": "aggressive",
       "tier": 1,
       "pnl_pct": 20.8,
       "rsi": 74.22856432335061,
-      "aksiyon": "Kâr kilidi aktif: %25-30 kısmi sat | Hedef AŞILDI. K-11 Tier1 (RSI 74≥70 + kazanç %20.8≥15)",
-      "oncelik": "YUKSEK"
+      "action": "Kâr kilidi aktif: %25-30 kısmi sat | Hedef AŞILDI. K-11 Tier1 (RSI 74≥70 + kazanç %20.8≥15)",
+      "priority": "YUKSEK"
     },
     {
-      "sembol": "CAMT",
-      "portfoy": "aggressive",
+      "symbol": "CAMT",
+      "portfolio": "aggressive",
       "tier": 1,
       "pnl_pct": 16.0,
       "rsi": 72.76214890858469,
-      "aksiyon": "Kâr kilidi aktif: %25-30 kısmi sat. K-11 Tier1 (RSI 73≥70 + kazanç %16.0≥15)",
-      "oncelik": "YUKSEK"
+      "action": "Kâr kilidi aktif: %25-30 kısmi sat. K-11 Tier1 (RSI 73≥70 + kazanç %16.0≥15)",
+      "priority": "YUKSEK"
     }
   ],
-  "earnings_aksiyonlar": [
+  "earnings_actions": [
     {
-      "sembol": "HBM",
-      "kapsam": "portfoy",
-      "kural": "K-16",
-      "earnings_tarihi": "2026-05-01",
-      "gun_kaldi": 5,
-      "k16_skor": 0,
-      "k16_detay": [
+      "symbol": "HBM",
+      "scope": "portfoy",
+      "rule": "K-16",
+      "earnings_date": "2026-05-01",
+      "days_left": 5,
+      "k16_score": 0,
+      "k16_detail": [
         "❌ Madde1: -5.9% (<5%)",
         "❌ Madde2: EPS rev -2%",
         "❌ Madde3: Zirveye %15.3",
         "⚠️ Madde4: Sektör manuel kontrol",
         "❌ Madde5: Short %0.0"
       ],
-      "aksiyon": "K-16 skor 0/5 → Normal tut, earnings sonrası izle",
-      "oncelik": "DUSUK",
+      "action": "K-16 skor 0/5 → Normal tut, earnings sonrası izle",
+      "priority": "DUSUK",
       "NOT": "K-05 portföy pozisyonuna UYGULANAMAZ. Swing için K-05, portföy için K-16."
     },
     {
-      "sembol": "CI",
-      "kapsam": "portfoy",
-      "kural": "K-16",
-      "earnings_tarihi": "2026-04-30",
-      "gun_kaldi": 4,
-      "k16_skor": 0,
-      "k16_detay": [
+      "symbol": "CI",
+      "scope": "portfoy",
+      "rule": "K-16",
+      "earnings_date": "2026-04-30",
+      "days_left": 4,
+      "k16_score": 0,
+      "k16_detail": [
         "❌ Madde1: -1.1% (<5%)",
         "❌ Madde2: EPS rev -4%",
         "❌ Madde3: Zirveye %21.2",
         "⚠️ Madde4: Sektör manuel kontrol",
         "❌ Madde5: Short %0.0"
       ],
-      "aksiyon": "K-16 skor 0/5 → Normal tut, earnings sonrası izle",
-      "oncelik": "DUSUK",
+      "action": "K-16 skor 0/5 → Normal tut, earnings sonrası izle",
+      "priority": "DUSUK",
       "NOT": "K-05 portföy pozisyonuna UYGULANAMAZ. Swing için K-05, portföy için K-16."
     },
     {
-      "sembol": "MO",
-      "kapsam": "portfoy",
-      "kural": "K-16",
-      "earnings_tarihi": "2026-04-30",
-      "gun_kaldi": 4,
-      "k16_skor": 0,
-      "k16_detay": [
+      "symbol": "MO",
+      "scope": "portfoy",
+      "rule": "K-16",
+      "earnings_date": "2026-04-30",
+      "days_left": 4,
+      "k16_score": 0,
+      "k16_detail": [
         "❌ Madde1: 4.2% (<5%)",
         "❌ Madde2: EPS rev -9%",
         "❌ Madde3: Zirveye %5.1",
         "⚠️ Madde4: Sektör manuel kontrol",
         "❌ Madde5: Short %0.0"
       ],
-      "aksiyon": "K-16 skor 0/5 → Normal tut, earnings sonrası izle",
-      "oncelik": "DUSUK",
+      "action": "K-16 skor 0/5 → Normal tut, earnings sonrası izle",
+      "priority": "DUSUK",
       "NOT": "K-05 portföy pozisyonuna UYGULANAMAZ. Swing için K-05, portföy için K-16."
     },
     {
-      "sembol": "CAT",
-      "kapsam": "swing",
-      "kural": "K-05",
-      "earnings_tarihi": "2026-04-30",
-      "gun_kaldi": 4,
-      "aksiyon": "Takip: 4 gün kaldı. 2 gün kala tam çıkış gerekecek.",
-      "oncelik": "ORTA"
+      "symbol": "CAT",
+      "scope": "swing",
+      "rule": "K-05",
+      "earnings_date": "2026-04-30",
+      "days_left": 4,
+      "action": "Takip: 4 gün kaldı. 2 gün kala tam çıkış gerekecek.",
+      "priority": "ORTA"
     },
     {
-      "sembol": "ABBV",
-      "kapsam": "portfoy",
-      "kural": "K-16",
-      "earnings_tarihi": "2026-04-29",
-      "gun_kaldi": 3,
-      "k16_skor": 0,
-      "k16_detay": [
+      "symbol": "ABBV",
+      "scope": "portfoy",
+      "rule": "K-16",
+      "earnings_date": "2026-04-29",
+      "days_left": 3,
+      "k16_score": 0,
+      "k16_detail": [
         "❌ Madde1: -4.6% (<5%)",
         "❌ Madde2: EPS rev 2%",
         "❌ Madde3: Zirveye %18.8",
         "⚠️ Madde4: Sektör manuel kontrol",
         "❌ Madde5: Short %0.0"
       ],
-      "aksiyon": "K-16 skor 0/5 → Normal tut, earnings sonrası izle",
-      "oncelik": "DUSUK",
+      "action": "K-16 skor 0/5 → Normal tut, earnings sonrası izle",
+      "priority": "DUSUK",
       "NOT": "K-05 portföy pozisyonuna UYGULANAMAZ. Swing için K-05, portföy için K-16."
     },
     {
-      "sembol": "KLAC",
-      "kapsam": "swing",
-      "kural": "K-05",
-      "earnings_tarihi": "2026-04-29",
-      "gun_kaldi": 3,
-      "aksiyon": "Takip: 3 gün kaldı. 2 gün kala tam çıkış gerekecek.",
-      "oncelik": "ORTA"
+      "symbol": "KLAC",
+      "scope": "swing",
+      "rule": "K-05",
+      "earnings_date": "2026-04-29",
+      "days_left": 3,
+      "action": "Takip: 3 gün kaldı. 2 gün kala tam çıkış gerekecek.",
+      "priority": "ORTA"
     },
     {
-      "sembol": "OKE",
-      "kapsam": "portfoy",
-      "kural": "K-16",
-      "earnings_tarihi": "2026-04-28",
-      "gun_kaldi": 2,
-      "k16_skor": 0,
-      "k16_detay": [
+      "symbol": "OKE",
+      "scope": "portfoy",
+      "rule": "K-16",
+      "earnings_date": "2026-04-28",
+      "days_left": 2,
+      "k16_score": 0,
+      "k16_detail": [
         "❌ Madde1: 4.8% (<5%)",
         "❌ Madde2: EPS rev 1%",
         "❌ Madde3: Zirveye %8.2",
         "⚠️ Madde4: Sektör manuel kontrol",
         "❌ Madde5: Short %0.0"
       ],
-      "aksiyon": "K-16 skor 0/5 → Normal tut, earnings sonrası izle",
-      "oncelik": "DUSUK",
+      "action": "K-16 skor 0/5 → Normal tut, earnings sonrası izle",
+      "priority": "DUSUK",
       "NOT": "K-05 portföy pozisyonuna UYGULANAMAZ. Swing için K-05, portföy için K-16."
     }
   ],
-  "sektor_dagilimi": {
+  "sector_distribution": {
     "AI Networking / Switching": {
-      "deger": 47943.0,
+      "value": 47943.0,
       "pct": 14.6
     },
     "AI Bellek / DRAM": {
-      "deger": 47188.0,
+      "value": 47188.0,
       "pct": 14.4
     },
     "AI Optik / Yarı İletken": {
-      "deger": 46717.0,
+      "value": 46717.0,
       "pct": 14.3
     },
     "Yarı İletken Ekipman / Inspection": {
-      "deger": 45878.0,
+      "value": 45878.0,
       "pct": 14.0
     },
     "Real Estate": {
-      "deger": 34804.0,
+      "value": 34804.0,
       "pct": 10.6
     },
     "Healthcare": {
-      "deger": 32351.0,
+      "value": 32351.0,
       "pct": 9.9
     },
     "Basic Materials": {
-      "deger": 28082.0,
+      "value": 28082.0,
       "pct": 8.6
     },
     "Industrials": {
-      "deger": 15261.0,
+      "value": 15261.0,
       "pct": 4.7
     },
     "Tütün": {
-      "deger": 14580.0,
+      "value": 14580.0,
       "pct": 4.5
     },
     "Enerji / Doğalgaz Pipeline": {
-      "deger": 8139.0,
+      "value": 8139.0,
       "pct": 2.5
     },
     "Saglik Sigortasi": {
-      "deger": 6341.0,
+      "value": 6341.0,
       "pct": 1.9
     }
   },
@@ -449,30 +449,30 @@
   ],
   "macro": {
     "vix": 18.71,
-    "vix_not": "NORMAL",
+    "vix_note": "NORMAL",
     "spy": {
-      "fiyat": 713.94,
-      "degisim_pct": 0.77
+      "price": 713.94,
+      "change_pct": 0.77
     },
     "qqq": {
-      "fiyat": 663.88,
-      "degisim_pct": 1.91
+      "price": 663.88,
+      "change_pct": 1.91
     },
-    "nfp_tarihi": "2026-05-01",
-    "nfp_gun_kaldi": 5,
-    "nfp_nedir": "NFP (Tarım Dışı İstihdam + İşsizlik Oranı) — piyasanın en yüksek etkili makro verisi",
-    "pce_aciklama": "PCE genellikle referans ayı bitmeden önceki son iş günü açıklanır (~30 Nis, 31 May vb.)",
-    "cpi_aciklama": "CPI genellikle her ayın 10-15'i arasında BLS tarafından açıklanır",
-    "isgucu_uyari": "İşsizlik oranını asla hafızadan yazma. FMP /economic endpoint veya BLS resmi sitesi kaynak olmalı. Son bilinen: %4.3 (BLS, Mart 2026, USDL-26-0580)",
-    "isgucu_son_bilinen": {
-      "deger": 4.3,
-      "donem": "Mart 2026",
-      "kaynak": "BLS USDL-26-0580 (3 Nisan 2026)",
-      "aciklama": "Mart 2026 NFP: +178K iş, işsizlik %4.3. U-6 geniş ölçüt: %8.0"
+    "nfp_date": "2026-05-01",
+    "nfp_days_left": 5,
+    "nfp_what_is": "NFP (Tarım Dışı İstihdam + İşsizlik Oranı) — piyasanın en yüksek etkili makro verisi",
+    "pce_description": "PCE genellikle referans ayı bitmeden önceki son iş günü açıklanır (~30 Nis, 31 May vb.)",
+    "cpi_description": "CPI genellikle her ayın 10-15'i arasında BLS tarafından açıklanır",
+    "labor_warning": "İşsizlik oranını asla hafızadan yazma. FMP /economic endpoint veya BLS resmi sitesi kaynak olmalı. Son bilinen: %4.3 (BLS, Mart 2026, USDL-26-0580)",
+    "labor_last_known": {
+      "value": 4.3,
+      "period": "Mart 2026",
+      "source": "BLS USDL-26-0580 (3 Nisan 2026)",
+      "description": "Mart 2026 NFP: +178K iş, işsizlik %4.3. U-6 geniş ölçüt: %8.0"
     }
   },
-  "blokaj_hatalari": [],
-  "uyarilar": [
+  "blocking_errors": [],
+  "warnings": [
     "[UYARI] COHR: hedef_fiyat $330.00 <= güncel fiyat $336.09. Hedef aşıldı! K-11 kontrolü gerekli.",
     "[UYARI] COHR: kazanç +%17.6 (≥%15). K-11 Tier1 için RSI≥70 kontrolü gerekli.",
     "[UYARI] ANET: hedef_fiyat $165.00 <= güncel fiyat $176.91. Hedef aşıldı! K-11 kontrolü gerekli.",
@@ -484,13 +484,13 @@
     "[UYARI] MO: kazanç +%16.7 (≥%15). K-11 Tier1 için RSI≥70 kontrolü gerekli.",
     "[UYARI] ABBV: ağırlık %17.3 > K-12 limiti %15 (dividend)"
   ],
-  "rapor_yazma_kurallari": {
+  "report_writing_rules": {
     "stop_loss": "JSON'daki stop_loss alanını oku. ASLA hedef_fiyat ile karıştırma. stop < güncel fiyat olmalı.",
-    "hedef_fiyat": "JSON'daki hedef_fiyat alanını oku. stop_loss ile aynı değil.",
-    "k05_kapsam": "K-05 SADECE swing trade. Portföy pozisyonu için K-16 kullan.",
-    "k16_kapsam": "K-16 SADECE portföy pozisyonu. Swing için K-05 kullan.",
-    "isgucu_orani": "Son bilinen: %4.3 (Mart 2026). Asla hafızadan yaz.",
-    "nfp_tarihi": "NFP: 2026-05-01. CPI: ayın ~10-15'i. PCE: ayın son iş günü.",
+    "target_price": "JSON'daki hedef_fiyat alanını oku. stop_loss ile aynı değil.",
+    "k05_scope": "K-05 SADECE swing trade. Portföy pozisyonu için K-16 kullan.",
+    "k16_scope": "K-16 SADECE portföy pozisyonu. Swing için K-05 kullan.",
+    "labor_ratio": "Son bilinen: %4.3 (Mart 2026). Asla hafızadan yaz.",
+    "nfp_date": "NFP: 2026-05-01. CPI: ayın ~10-15'i. PCE: ayın son iş günü.",
     "k11_tier1": "RSI≥70 VE kazanç≥%15 → Tier1 aktif. Bu script çalıştırılmışsa k11_aksiyonlar listesine bak."
   }
 }

@@ -280,8 +280,9 @@ CSV çıktısı manuel doldurma için: her satıra önerilen yeni isim yaz.
 | 17 May 2026 | `trade_index.json` migration (EASY, 10 key) | Sadece JSON; yazıcı arşivde | `013b271d` |
 | 17 May 2026 | `macro_intelligence.json` migration (HARD, 24 key) | Yazıcı LLM-TR-to-EN convert + 4 okuyucu shim | `d0786387` |
 | 17 May 2026 | `summary.json` migration (HARD, 22 key + 3 portföy adı) | `daily_update.py` + cash convert helper; aktif okuyucu yok | `0386370f` |
-| 17 May 2026 | `research/index.json` migration (MEDIUM/LIMITED, 26 key) | top-level + entry common + portfolio_rec + catalyst; nested LLM içeriği DOKUNMA | bu commit |
-| TBD | `weekly_pre_check.json` (HARD, sözlük migration) | 1 gün | sırada |
+| 17 May 2026 | `research/index.json` migration (MEDIUM/LIMITED, 26 key) | top-level + entry common + portfolio_rec + catalyst; nested LLM içeriği DOKUNMA | `a8cc0b6b` |
+| 17 May 2026 | `weekly_pre_check.json` migration (HARD, 50 yapısal key) | tek dosya yazıcı+okuyucu, 167 string replace; sektör ad VERİLERİ dokunulmadı | bu commit |
+| ✅ | **TÜM PLANLI MIGRATION'LAR TAMAMLANDI** | (portfolio.json scope dışı, kasıtlı) | — |
 
 **Toplam tahmini kalan**: 1-2 seans daha.
 
