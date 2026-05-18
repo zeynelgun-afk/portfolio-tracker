@@ -54,7 +54,11 @@ function classifyStatus(run) {
 
 // ---- Load system map ----
 async function loadMap() {
-  const res = await fetch("system_map.json");
+  // Cache busting: GitHub Pages CDN + browser cache'i bypass et
+  // (system_map.json güncellemelerinin anında yansıması için)
+  const res = await fetch("system_map.json?v=" + Date.now(), {
+    cache: "no-cache",
+  });
   if (!res.ok) throw new Error("system_map.json yüklenemedi");
   return await res.json();
 }
@@ -386,7 +390,7 @@ function renderDetail(nodeData) {
 }
 
 // ---- Status counts ----
-function updateStats(elements) {
+function updateStats(elements, systemMap) {
   const counts = { ok: 0, warn: 0, err: 0, gray: 0, railway: 0 };
   elements.forEach((el) => {
     if (el.data.category === "workflow") {
@@ -398,6 +402,11 @@ function updateStats(elements) {
   document.getElementById("err-count").textContent  = counts.err;
   // Railway-managed olanlar gray sayılmasın — kendi sayacı olsun
   document.getElementById("gray-count").textContent = counts.gray + " / " + counts.railway + " Railway";
+  // Harita versiyonu: node/edge sayısı (cache durumunu görmek için)
+  if (systemMap) {
+    const v = document.getElementById("map-version");
+    if (v) v.textContent = `${systemMap.nodes.length}n / ${systemMap.edges.length}e`;
+  }
 }
 
 // ---- Main render ----
@@ -445,7 +454,7 @@ async function render() {
       });
     }
 
-    updateStats(elements);
+    updateStats(elements, systemMap);
     _latestState = {
       systemMap,
       statusByWorkflow,
