@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
     inputs:
       dry_run:
-        description: 'Outcome hesapla ama tracker'a yazma'
+        description: "Outcome hesapla ama tracker'a yazma"
         type: boolean
         default: false
   schedule:
