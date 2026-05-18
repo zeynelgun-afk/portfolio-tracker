@@ -1,6 +1,4 @@
 {
-  "tarih": "2026-05-13",
-  "son_guncelleme": "2026-05-13T11:00:41.750406",
   "mod": "aggressive",
   "toplam_taranan": 1625,
   "filtre_gecen": 739,
@@ -21443,5 +21441,7 @@
       "mode": "aggressive",
       "yield_trap": false
     }
-  ]
+  ],
+  "date": "2026-05-13",
+  "last_updated": "2026-05-13T11:00:41.750406"
 }

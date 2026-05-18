@@ -551,8 +551,8 @@ def main():
         n_izle = sum(1 for s in scored if th['izle'] <= s['score'] < th['ekle'])
 
         output = {
-            'tarih':         TODAY,
-            'son_guncelleme':NOW,
+            'date':          TODAY,
+            'last_updated':  NOW,
             'mod':           mode,
             'toplam_taranan':len(all_syms),
             'filtre_gecen':  len(valid),
@@ -573,8 +573,8 @@ def main():
         bal = all_results['balanced']
         with open('data/daily_full_scan.json', 'w', encoding='utf-8') as f:
             json.dump({
-                'tarih':         TODAY,
-                'son_guncelleme':NOW,
+                'date':          TODAY,
+                'last_updated':  NOW,
                 'toplam_taranan':len(all_syms),
                 'peg_filtreli':  peg_ok,
                 'declining_eps': sum(1 for r in all_rows.values() if r.get('declining_eps')),

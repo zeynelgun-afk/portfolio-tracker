@@ -272,7 +272,35 @@ CSV çıktısı manuel doldurma için: her satıra önerilen yeni isim yaz.
 
 | Tarih | Eylem | Dosya | Commit |
 |---|---|---|---|
-| 17 May 2026 | Plan + audit script | (bu doküman + scripts/audit_json_keys.py) | TBD |
-| ? | İlk migration: summary.json | data/summary.json | TBD |
-| ? | daily_*scan*.json | 4 dosya | TBD |
+| 17 May 2026 | Plan + audit script | (bu doküman + scripts/audit_json_keys.py) | `9a56ecd8` |
+| 17 May 2026 | İlk migration: daily_scan_* dosyaları | 4 JSON + 1 Python | TBD bu commit |
+| ? | summary.json (HARD — re-kategorize edildi) | 19 unique key | TBD |
 | ... | ... | ... | ... |
+
+### Migration log
+
+**17 May 2026 — daily_scan_* dosyaları**:
+- `scripts/legacy/full_universe_screener.py` yazıcı kod güncellendi (2 yer)
+- 4 JSON dosyası migrate edildi:
+  - `data/daily_full_scan.json`
+  - `data/daily_scan_aggressive.json`
+  - `data/daily_scan_balanced.json`
+  - `data/daily_scan_dividend.json`
+- Key dönüşümleri:
+  - `tarih` → `date`
+  - `son_guncelleme` → `last_updated`
+- Okuyucu kod bulunmadı (sadece scan sonuçları okunuyor, metadata field'lara erişilmiyor) → geriye uyumluluk shim **gerek değil**
+- Test: 561 PASS (kırılma yok)
+
+### Re-kategorize edilen dosyalar (planda gözüktüğünden farklı)
+
+İlk audit (17 May) sırasında ASCII Türkçe kelimeler eksik tespit edildi — `summary.json` "trivial" gözüküyordu ama gerçekte 19 unique key var. Yeniden değerlendirme:
+
+| Dosya | Eski Kategori | Yeni Kategori | Sebep |
+|---|---|---|---|
+| `summary.json` | TRIVIAL | **HARD** | 19 unique key, tam dosya migration |
+| `daily_full_scan.json` | TRIVIAL | TRIVIAL | ✅ 17 May tamamlandı |
+| `daily_scan_*.json` | TRIVIAL | TRIVIAL | ✅ 17 May tamamlandı |
+| `backtest_summary.json` | EASY | **MEDIUM** | 5 key'in her biri tracked, yazıcı tek ama okuyucular dağınık |
+
+audit script ASCII Türkçe sözlüğü genişletildi — sonraki audit doğru kapsamı yansıtacak.

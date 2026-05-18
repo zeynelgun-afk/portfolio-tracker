@@ -29,7 +29,9 @@ _REPO_ROOT = Path(__file__).resolve().parent.parent
 _TURKISH_CHARS = set("çğıİöşüÇĞİÖŞÜ")
 
 # Türkçe kelime sözlüğü — sık geçen field/value adları
+# ASCII Türkçe (turkish characters yok) varyantları da dahil
 _TURKISH_WORDS = {
+    # NLP/value isimleri
     "tema", "temalar", "öncelikli", "önerilen", "portföy", "portfolyo",
     "güç", "skoru", "alt_dal", "kacınılacak", "kaçınılacak",
     "yüksek", "düşük", "orta", "hacim", "fiyat", "bilanço", "bülançö",
@@ -39,6 +41,21 @@ _TURKISH_WORDS = {
     "yarı", "iletken", "ekipman", "tütün", "doğalgaz",
     "temettü", "büyüme", "değer", "agresif", "dengeli",
     "uyarı", "uyarılar", "hata", "başarılı", "başarısız",
+    # ASCII Türkçe field adları (summary.json benzerleri)
+    "son_guncelleme", "guncelleme", "guncel",
+    "toplam_sermaye", "toplam_deger", "toplam_kar",
+    "kar_zarar", "kar_zarar_yuzde", "yuzde",
+    "portfolyolar", "portfolyo",  # ascii portföy
+    "pozisyon", "pozisyon_sayisi",
+    "deger", "maliyet", "miktar",
+    "nakit", "para_birimi", "agirlik", "agirlik_yuzde",
+    "isim", "dagilim", "sektor_dagilimi",
+    "gaplar", "yuksek", "dusuk", "yuksek_hacim",
+    "fiyat", "tarih", "saat",
+    "analiz_edilen_trade", "trade_index",
+    "bilanco", "bilanco_tarihi", "bulanco",
+    "satim", "alim",
+    "g1_fiyat", "g5_fiyat", "g10_fiyat", "g20_fiyat",  # backtest
 }
 
 

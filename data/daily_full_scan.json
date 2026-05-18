@@ -1,6 +1,4 @@
 {
-  "tarih": "2026-05-13",
-  "son_guncelleme": "2026-05-13T11:00:41.750406",
   "toplam_taranan": 1625,
   "peg_filtreli": 680,
   "declining_eps": 210,
@@ -19094,5 +19092,7 @@
     "FITB",
     "UAL",
     "RVMD"
-  ]
+  ],
+  "date": "2026-05-13",
+  "last_updated": "2026-05-13T11:00:41.750406"
 }
