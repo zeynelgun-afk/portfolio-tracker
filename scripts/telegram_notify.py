@@ -1,19 +1,19 @@
 #!/usr/bin/env python3
 """
 Finzora AI - Telegram Bildirim Sistemi
-Seans raporlarını ve aksiyonları Telegram kanalına gönderir.
+Aksiyonları, uyarıları ve markdown raporları Telegram'a gönderir.
 
 Kullanım:
-  python scripts/telegram_notify.py --type session       # seans içi özet
   python scripts/telegram_notify.py --type action        # tek aksiyon bildirimi
   python scripts/telegram_notify.py --type alert         # acil uyarı (stop yakın vb.)
-  python scripts/telegram_notify.py --type daily         # günlük kapanış raporu
-  python scripts/telegram_notify.py --type premarket     # seans öncesi rapor
-  python scripts/telegram_notify.py --type closing       # detaylı kapanış raporu
   python scripts/telegram_notify.py --type report --file rapor.md  # markdown rapor gönder
   python scripts/telegram_notify.py --type custom --msg "mesaj"    # özel mesaj
-  python scripts/telegram_notify.py --type winners               # kârdaki pozisyonlar vitrini
   python scripts/telegram_notify.py --type photo --image panel.png --caption "başlık"  # görsel gönder
+
+NOT (17 May 2026): session/premarket/winners/daily/closing tipleri kaldırıldı
+(13 May 2026 single portfolio.json simplification sonrası bu fonksiyonlar
+data/portfolios/* yok olan dizine bakıyordu, production'da kullanılmıyorlardı).
+Eşdeğer raporlar `--type report --file <md>` ile gönderilir.
 """
 
 import requests
@@ -200,103 +200,7 @@ def load_json(path):
         return json.load(f)
 
 
-def load_portfolios():
-    bal = load_json("data/portfolios/balanced.json")
-    agg = load_json("data/portfolios/aggressive.json")
-    div = load_json("data/portfolios/dividend.json")
-    return bal, agg, div
-
-
-def load_swing():
-    return load_json("data/swing/active.json")
-
-
-def get_all_positions():
-    bal, agg, div = load_portfolios()
-    all_pos = []
-    for tag, port in [("DNG", bal), ("AGR", agg), ("TMT", div)]:
-        for p in port["pozisyonlar"]:
-            all_pos.append({**p, "port": tag})
-    return all_pos, bal, agg, div
-
-
 # --- MESAJ FORMATLARI ---
-
-def format_session_report(theme=None):
-    """Seans içi kısa özet. pozisyon detayı yok, sadece toplam + aksiyonlar + dikkat."""
-    all_pos, bal, agg, div = get_all_positions()
-    swing = load_swing()
-
-    toplam = bal["toplam_deger"] + agg["toplam_deger"] + div["toplam_deger"]
-    toplam_pnl = toplam - 600000
-    toplam_pct = (toplam_pnl / 600000) * 100
-    now = datetime.now().strftime("%d.%m.%Y %H:%M")
-
-    msg = f"""<b>📊 FİNZORA SEANS RAPORU</b>
-<i>{now}</i>
-
-<b>💰 ${toplam:,.0f} ({toplam_pct:+.2f}%)</b>
-  Dengeli {bal['toplam_getiri_yuzde']:+.1f}% | Agresif {agg['toplam_getiri_yuzde']:+.1f}% | Temettü {div['toplam_getiri_yuzde']:+.1f}%
-"""
-    if theme:
-        msg += f"\n📌 {theme}\n"
-
-    # günün en iyi/en kötü 3'er pozisyonu
-    movers = sorted(all_pos, key=lambda x: x["gunluk_degisim_yuzde"], reverse=True)
-    best3 = [p for p in movers[:3] if p["gunluk_degisim_yuzde"] > 0]
-    worst3 = [p for p in movers[-3:] if p["gunluk_degisim_yuzde"] < 0]
-
-    if best3 or worst3:
-        msg += "\n<b>📈 Günün Öne Çıkanları</b>\n"
-        for p in best3:
-            msg += f"  🟢 {p['sembol']} {p['gunluk_degisim_yuzde']:+.1f}% (toplam {p['kar_zarar_yuzde']:+.1f}%)\n"
-        for p in reversed(worst3):
-            msg += f"  🔴 {p['sembol']} {p['gunluk_degisim_yuzde']:+.1f}% (toplam {p['kar_zarar_yuzde']:+.1f}%)\n"
-
-    # günün işlemleri (summary.json)
-    try:
-        summary = load_json("data/summary.json")
-        son_islemler = summary.get("son_islemler", [])
-        trade_islemler = [i for i in son_islemler if any(
-            t in i for t in ["SATIŞ", "ALIŞ", "SWING", "TRAILING", "STOP"]
-        )]
-        if trade_islemler:
-            msg += "\n<b>📝 Aksiyonlar</b>\n"
-            for islem in trade_islemler[:5]:
-                msg += f"  • {islem}\n"
-    except:
-        pass
-
-    # stop yakını uyarıları
-    alerts = []
-    for p in all_pos:
-        sl = p.get("stop_loss")
-        if sl and p["guncel_fiyat"] > 0:
-            dist_pct = ((p["guncel_fiyat"] - sl) / p["guncel_fiyat"]) * 100
-            if dist_pct < 3:
-                alerts.append((p["sembol"], p["port"], p["guncel_fiyat"], sl, dist_pct))
-
-    aktif = swing.get("aktif_pozisyonlar", [])
-    for p in aktif:
-        sl = p.get("stop_loss", 0)
-        if sl and p["guncel_fiyat"] > 0:
-            dist_pct = ((p["guncel_fiyat"] - sl) / p["guncel_fiyat"]) * 100
-            if dist_pct < 3:
-                alerts.append((p["sembol"], "SWG", p["guncel_fiyat"], sl, dist_pct))
-
-    if alerts:
-        msg += "\n<b>🚨 Stop Yakını</b>\n"
-        for sym, port, price, sl, dist in sorted(alerts, key=lambda x: x[4]):
-            msg += f"  {sym} ({port}) ${price:.2f} → SL ${sl:.2f} (%{dist:.1f})\n"
-
-    # swing özet (tek satır)
-    if aktif:
-        sw_summary = ", ".join(f"{p['sembol']} {p['guncel_kar_zarar_yuzde']:+.1f}%" for p in aktif)
-        msg += f"\n⚡ Swing ({len(aktif)}/8): {sw_summary}\n"
-
-    msg += "\n<i>finzora ai</i>"
-    return msg
-
 
 def format_action(action_type, symbol, price, details):
     """Tek aksiyon bildirimi."""
@@ -334,283 +238,6 @@ Mesafe: ${distance:.2f} (%{pct:.1f})
     return msg
 
 
-def format_premarket(theme=None):
-    """Seans öncesi rapor."""
-    all_pos, bal, agg, div = get_all_positions()
-    swing = load_swing()
-
-    toplam = bal["toplam_deger"] + agg["toplam_deger"] + div["toplam_deger"]
-    toplam_pct = ((toplam - 600000) / 600000) * 100
-    today = datetime.now().strftime("%d.%m.%Y")
-
-    msg = f"""<b>🌅 SEANS ÖNCESİ RAPOR</b>
-<i>{today}</i>
-"""
-    if theme:
-        msg += f"\n<b>📌 Piyasa notu:</b> {theme}\n"
-
-    msg += f"""
-<b>💼 Portföy Durumu</b>
-  Toplam: ${toplam:,.0f} ({toplam_pct:+.2f}%)
-  Dengeli: ${bal['toplam_deger']:,.0f} ({bal['toplam_getiri_yuzde']:+.2f}%)
-  Agresif: ${agg['toplam_deger']:,.0f} ({agg['toplam_getiri_yuzde']:+.2f}%)
-  Temettü: ${div['toplam_deger']:,.0f} ({div['toplam_getiri_yuzde']:+.2f}%)
-
-<b>🎯 Günün İzleme Listesi</b>
-"""
-    # Stop'a yakın
-    alerts = []
-    for p in all_pos:
-        sl = p.get("stop_loss")
-        if sl and p["guncel_fiyat"] > 0:
-            dist_pct = ((p["guncel_fiyat"] - sl) / p["guncel_fiyat"]) * 100
-            if dist_pct < 3:
-                alerts.append((p["sembol"], p["port"], p["guncel_fiyat"], sl, dist_pct))
-
-    swing_aktif = swing.get("aktif_pozisyonlar", [])
-    for p in swing_aktif:
-        sl = p.get("stop_loss", 0)
-        if sl and p["guncel_fiyat"] > 0:
-            dist_pct = ((p["guncel_fiyat"] - sl) / p["guncel_fiyat"]) * 100
-            if dist_pct < 3:
-                alerts.append((p["sembol"], "SWG", p["guncel_fiyat"], sl, dist_pct))
-
-    if alerts:
-        msg += "<b>  🚨 Stop Yakını</b>\n"
-        for sym, port, price, sl, dist in sorted(alerts, key=lambda x: x[4]):
-            msg += f"    {sym} ({port}) ${price:.2f} → SL ${sl:.2f} (%{dist:.1f})\n"
-    else:
-        msg += "  ✅ Stop'a yakın pozisyon yok\n"
-
-    # K-11 adayları
-    k11 = [p for p in all_pos if p["kar_zarar_yuzde"] >= 20]
-    if k11:
-        msg += "\n<b>  📊 K-11 Takip (%20+ kazanç)</b>\n"
-        for p in sorted(k11, key=lambda x: x["kar_zarar_yuzde"], reverse=True):
-            msg += f"    {p['sembol']} ({p['port']}) +%{p['kar_zarar_yuzde']:.1f} → RSI kontrol\n"
-
-    # Agresif durum
-    agg_nakit_pct = (agg["nakit"]["miktar"] / agg["toplam_deger"]) * 100
-    agg_slots = 10 - len(agg["pozisyonlar"])
-    msg += f"""
-<b>📋 Agresif</b>
-  Nakit: ${agg['nakit']['miktar']:,.0f} ({agg_nakit_pct:.0f}%) | Boş slot: {agg_slots}/10
-"""
-
-    # Swing
-    swing_slots = 8 - len(swing_aktif)
-    msg += f"""<b>📋 Swing</b>
-  Aktif: {len(swing_aktif)}/8 | Boş slot: {swing_slots}
-"""
-    for p in swing_aktif:
-        e = "🟢" if p["guncel_kar_zarar_yuzde"] >= 0 else "🔴"
-        msg += f"  {e} {p['sembol']} {p['guncel_kar_zarar_yuzde']:+.1f}% (gün {p['tutulan_gun']})\n"
-
-    # Watchlist
-    try:
-        wl = load_json("data/watchlist.json")
-        izleme = wl.get("izleme_listesi", [])
-        high = [w for w in izleme if w.get("urgency") == "high"]
-        if high:
-            msg += "\n<b>🔥 Yüksek Öncelik</b>\n"
-            for w in high[:5]:
-                msg += f"  {w['sembol']} ${w.get('guncel_fiyat', 0):.2f} → giriş: {w.get('hedef_giris', 'N/A')}\n"
-    except:
-        pass
-
-    msg += "\n<i>finzora ai</i>"
-    return msg
-
-
-def format_winners(theme=None):
-    """Kârdaki pozisyonların vitrin gösterimi. reklam/showcase amaçlı."""
-    all_pos, bal, agg, div = get_all_positions()
-    swing = load_swing()
-
-    toplam = bal["toplam_deger"] + agg["toplam_deger"] + div["toplam_deger"]
-    toplam_pnl = toplam - 600000
-    toplam_pct = (toplam_pnl / 600000) * 100
-    today = datetime.now().strftime("%d.%m.%Y")
-
-    # aktif kârdaki pozisyonlar (tüm portföyler)
-    winners = [p for p in all_pos if p["kar_zarar_yuzde"] > 0]
-    winners.sort(key=lambda x: x["kar_zarar_yuzde"], reverse=True)
-
-    # swing aktif kârdakiler
-    swing_aktif = swing.get("aktif_pozisyonlar", [])
-    swing_winners = [p for p in swing_aktif if p["guncel_kar_zarar_yuzde"] > 0]
-    swing_winners.sort(key=lambda x: x["guncel_kar_zarar_yuzde"], reverse=True)
-
-    # kapanmış swing kazançları
-    try:
-        closed = load_json("data/swing/closed.json")
-        closed_wins = [p for p in closed.get("kapatilan_pozisyonlar", []) if p["kar_zarar_yuzde"] > 0]
-        closed_wins.sort(key=lambda x: x["kar_zarar_yuzde"], reverse=True)
-        total_closed = len(closed.get("kapatilan_pozisyonlar", []))
-        win_rate = (len(closed_wins) / total_closed * 100) if total_closed > 0 else 0
-    except:
-        closed_wins = []
-        win_rate = 0
-        total_closed = 0
-
-    # portföy isim haritası
-    port_names = {"DNG": "Dengeli", "AGR": "Agresif", "TMT": "Temettü"}
-
-    # tutma süresi hesapla
-    def hold_days(giris):
-        try:
-            d = datetime.strptime(giris, "%Y-%m-%d")
-            return (datetime.now() - d).days
-        except:
-            return 0
-
-    # toplam realize + unrealized
-    unrealized_pnl = sum(p.get("kar_zarar", 0) for p in all_pos if p.get("kar_zarar", 0) > 0)
-
-    msg = f"""<b>🏆 KAZANANLAR VİTRİNİ</b>
-<i>{today}</i>
-"""
-    if theme:
-        msg += f"\n<b>📌</b> {theme}\n"
-
-    msg += f"""
-<b>💰 Toplam Portföy: ${toplam:,.0f} ({toplam_pct:+.2f}%)</b>
-"""
-
-    # en iyi aktif pozisyonlar
-    if winners:
-        msg += f"\n<b>📈 Aktif Kazananlar ({len(winners)} pozisyon)</b>\n"
-        for i, p in enumerate(winners):
-            # medal emojisi ilk 3 için
-            if i == 0:
-                medal = "🥇"
-            elif i == 1:
-                medal = "🥈"
-            elif i == 2:
-                medal = "🥉"
-            else:
-                medal = "🟢"
-
-            days = hold_days(p.get("giris_tarihi", ""))
-            port_label = port_names.get(p["port"], p["port"])
-            pnl_usd = p.get("kar_zarar", 0)
-            msg += f"  {medal} <b>{p['sembol']}</b> <b>+%{p['kar_zarar_yuzde']:.1f}</b>"
-            if pnl_usd > 0:
-                msg += f" (+${pnl_usd:,.0f})"
-            msg += f" | {days} gün | {port_label}\n"
-
-    # swing aktif kazananlar
-    if swing_winners:
-        msg += f"\n<b>⚡ Swing Aktif Kazananlar</b>\n"
-        for p in swing_winners:
-            msg += f"  🟢 <b>{p['sembol']}</b> <b>+%{p['guncel_kar_zarar_yuzde']:.1f}</b> | {p['tutulan_gun']} gün\n"
-
-    # kapanmış swing istatistikleri
-    if closed_wins:
-        avg_win = sum(p["kar_zarar_yuzde"] for p in closed_wins) / len(closed_wins)
-        best = closed_wins[0]
-        msg += f"\n<b>📊 Swing Geçmiş Performans</b>\n"
-        msg += f"  Kazanç oranı: <b>%{win_rate:.0f}</b> ({len(closed_wins)}/{total_closed})\n"
-        msg += f"  Ort. kazanç: <b>+%{avg_win:.1f}</b>\n"
-        msg += f"  En iyi: <b>{best['sembol']} +%{best['kar_zarar_yuzde']:.1f}</b> ({best['tutulan_gun']} gün)\n"
-
-        # son 5 kapanmış kazanç
-        msg += "\n  Son kapanmış kazançlar:\n"
-        recent = sorted(closed_wins, key=lambda x: x.get("cikis_tarihi", ""), reverse=True)[:5]
-        for p in recent:
-            msg += f"    ✅ {p['sembol']} +%{p['kar_zarar_yuzde']:.1f} | {p['tutulan_gun']} gün\n"
-
-    # portföy bazında özet
-    msg += f"\n{'─' * 25}\n"
-    msg += "<b>📋 Portföy Bazında Getiri</b>\n"
-    for label, port in [("Dengeli", bal), ("Agresif", agg), ("Temettü", div)]:
-        pct = port["toplam_getiri_yuzde"]
-        emoji = "📈" if pct >= 0 else "📉"
-        msg += f"  {emoji} {label}: <b>{pct:+.2f}%</b>\n"
-
-    msg += f"\n<i>17 şubat 2026'dan beri takip ediliyor</i>"
-    msg += "\n<i>finzora ai</i>"
-    return msg
-
-
-def format_closing(theme=None):
-    """Detaylı kapanış raporu."""
-    all_pos, bal, agg, div = get_all_positions()
-    swing = load_swing()
-
-    toplam = bal["toplam_deger"] + agg["toplam_deger"] + div["toplam_deger"]
-    toplam_pnl = toplam - 600000
-    toplam_pct = (toplam_pnl / 600000) * 100
-    today = datetime.now().strftime("%d.%m.%Y")
-
-    best = sorted(all_pos, key=lambda x: x["gunluk_degisim_yuzde"], reverse=True)[:3]
-    worst = sorted(all_pos, key=lambda x: x["gunluk_degisim_yuzde"])[:3]
-
-    msg = f"""<b>📋 KAPANIŞ RAPORU</b>
-<i>{today}</i>
-
-{'─' * 25}
-"""
-    if theme:
-        msg += f"\n<b>📌 Günün teması:</b> {theme}\n\n"
-
-    msg += f"""<b>💰 TOPLAM: ${toplam:,.0f} ({toplam_pct:+.2f}%)</b>
-  Dengeli: ${bal['toplam_deger']:,.0f} ({bal['toplam_getiri_yuzde']:+.2f}%)
-  Agresif: ${agg['toplam_deger']:,.0f} ({agg['toplam_getiri_yuzde']:+.2f}%)
-  Temettü: ${div['toplam_deger']:,.0f} ({div['toplam_getiri_yuzde']:+.2f}%)
-
-<b>📈 Günün En İyileri</b>
-"""
-    for p in best:
-        msg += f"  🟢 {p['sembol']} ({p['port']}) {p['gunluk_degisim_yuzde']:+.2f}%\n"
-
-    msg += "\n<b>📉 Günün En Kötüleri</b>\n"
-    for p in worst:
-        msg += f"  🔴 {p['sembol']} ({p['port']}) {p['gunluk_degisim_yuzde']:+.2f}%\n"
-
-    msg += f"\n{'─' * 25}\n"
-    msg += "\n<b>▸ Dengeli Portföy</b>\n"
-    for p in bal["pozisyonlar"]:
-        e = "🟢" if p["gunluk_degisim_yuzde"] >= 0 else "🔴"
-        msg += f"  {e} {p['sembol']:5} ${p['guncel_fiyat']:>8.2f} | gün:{p['gunluk_degisim_yuzde']:+5.1f}% | toplam:{p['kar_zarar_yuzde']:+6.1f}% | w:{p['agirlik_yuzde']:.1f}%\n"
-    msg += f"  💵 Nakit: ${bal['nakit']['miktar']:,.0f}\n"
-
-    msg += "\n<b>▸ Agresif Portföy</b>\n"
-    for p in agg["pozisyonlar"]:
-        e = "🟢" if p["gunluk_degisim_yuzde"] >= 0 else "🔴"
-        msg += f"  {e} {p['sembol']:5} ${p['guncel_fiyat']:>8.2f} | gün:{p['gunluk_degisim_yuzde']:+5.1f}% | toplam:{p['kar_zarar_yuzde']:+6.1f}% | w:{p['agirlik_yuzde']:.1f}%\n"
-    agg_nakit_pct = (agg["nakit"]["miktar"] / agg["toplam_deger"]) * 100
-    msg += f"  💵 Nakit: ${agg['nakit']['miktar']:,.0f} ({agg_nakit_pct:.0f}%)\n"
-
-    msg += "\n<b>▸ Temettü Portföy</b>\n"
-    for p in div["pozisyonlar"]:
-        e = "🟢" if p["gunluk_degisim_yuzde"] >= 0 else "🔴"
-        msg += f"  {e} {p['sembol']:5} ${p['guncel_fiyat']:>8.2f} | gün:{p['gunluk_degisim_yuzde']:+5.1f}% | toplam:{p['kar_zarar_yuzde']:+6.1f}% | w:{p['agirlik_yuzde']:.1f}%\n"
-    msg += f"  💵 Nakit: ${div['nakit']['miktar']:,.0f}\n"
-
-    aktif = swing.get("aktif_pozisyonlar", [])
-    if aktif:
-        msg += "\n<b>▸ Swing Trade</b>\n"
-        for p in aktif:
-            e = "🟢" if p["guncel_kar_zarar_yuzde"] >= 0 else "🔴"
-            msg += f"  {e} {p['sembol']} ${p['guncel_fiyat']:.2f} | PnL:{p['guncel_kar_zarar_yuzde']:+.1f}% | SL:${p['stop_loss']} | gün:{p['tutulan_gun']}\n"
-
-    try:
-        summary = load_json("data/summary.json")
-        son_islemler = summary.get("son_islemler", [])
-        if son_islemler:
-            msg += f"\n{'─' * 25}\n"
-            msg += "\n<b>📝 Günün İşlemleri</b>\n"
-            for islem in son_islemler[:5]:
-                msg += f"  • {islem}\n"
-    except:
-        pass
-
-    msg += f"\n{'─' * 25}\n"
-    msg += "<i>finzora ai</i>"
-    return msg
-
-
 def format_report_from_file(filepath):
     """Markdown rapor dosyasını oku ve telegram formatına çevir."""
     full_path = filepath
@@ -630,12 +257,13 @@ def format_report_from_file(filepath):
 # --- ANA FONKSİYON ---
 def main():
     parser = argparse.ArgumentParser(description="Finzora AI Telegram Bildirim")
-    parser.add_argument("--type", choices=["session", "action", "alert", "daily", "premarket", "closing", "report", "custom", "winners", "photo"], required=True)
+    parser.add_argument("--type",
+                        choices=["action", "alert", "report", "custom", "photo"],
+                        required=True)
     parser.add_argument("--msg", help="Özel mesaj (--type custom için)")
     parser.add_argument("--file", help="Markdown rapor dosyası (--type report için)")
     parser.add_argument("--image", help="Görsel dosyası (--type photo için)")
     parser.add_argument("--caption", help="Görsel altı açıklama (--type photo için)")
-    parser.add_argument("--theme", help="Piyasa teması / günün özeti (session, premarket, closing için)")
     parser.add_argument("--symbol", help="Sembol (action/alert için)")
     parser.add_argument("--price", type=float, help="Fiyat")
     parser.add_argument("--action", help="Aksiyon tipi: ALIŞ, SATIŞ, STOP, KAR_AL, UYARI")
@@ -646,15 +274,13 @@ def main():
 
     args = parser.parse_args()
 
-    # Hedef kanal kuralları (memory #9):
-    #   GRUP:  alım/satım aksiyonu, açılış/kapanış raporu, günlük özet
-    #   DM:    sistem mesajları, hata/bakım, kural güncelleme, denetim özeti
+    # Hedef kanal kuralları:
+    #   GRUP:  alım/satım aksiyonu (--type action), markdown rapor (--type report), foto
+    #   DM:    sistem mesajları, alert, custom
     #
     # custom + alert gibi belirsiz tiplerde --dm açık belirtilmediyse grup'a değil
     # DM'e düşsün (yanlış yere gidip grubu kirletme riskini kesiyoruz).
     _DM_DEFAULT_TYPES = {"alert", "custom"}   # Açık --dm olmadıkça da DM'e
-    _GROUP_SAFE_TYPES = {"action", "premarket", "closing", "daily", "report", "photo",
-                         "session", "winners"}
 
     if args.private:
         target_chat = TELEGRAM_PRIVATE_ID
@@ -670,15 +296,7 @@ def main():
         print("HATA: --private belirtildi ama TELEGRAM_PRIVATE_ID ayarlı değil.")
         sys.exit(1)
 
-    if args.type == "session":
-        msg = format_session_report(theme=args.theme)
-    elif args.type == "premarket":
-        msg = format_premarket(theme=args.theme)
-    elif args.type == "winners":
-        msg = format_winners(theme=args.theme)
-    elif args.type in ("daily", "closing"):
-        msg = format_closing(theme=args.theme)
-    elif args.type == "report":
+    if args.type == "report":
         if not args.file:
             print("report için --file gerekli")
             sys.exit(1)
