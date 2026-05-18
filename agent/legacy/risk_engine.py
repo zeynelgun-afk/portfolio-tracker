@@ -573,17 +573,23 @@ def build_risk_context(portfolios: dict) -> str:
         disc_path = _P_dis(__file__).parent.parent / "data" / "discovery_signals.json"
         if disc_path.exists():
             disc = _j_dis.load(open(disc_path))
-            adaylar = disc.get("adaylar", [])
-            if adaylar:
+            # Shim: hem eski "adaylar" hem yeni "candidates" desteği (17 May 2026
+            # migration). Production'da bir hafta gözlem sonrası eski key kaldırılacak.
+            candidates = disc.get("candidates") or disc.get("adaylar", [])
+            if candidates:
                 lines.append("--- DISCOVERY ENGINE — KALITELI YENI ADAYLAR (TOP 10) ---")
                 lines.append("Kaynak: 1240-hisse PEG-filtreli evrenin swing kalite skorlu sonuclari")
                 lines.append(f"{'Sembol':6} {'Skor':>5} {'Kar':6} {'Cpn':>5} {'Sektor':16} {'PEG':>5}")
-                for a in adaylar[:10]:
+                for a in candidates[:10]:
                     sek = (a.get("sector") or "?")[:16]
                     peg = a.get("peg")
                     peg_str = f"{peg:.2f}" if isinstance(peg, (int, float)) else "—"
-                    lines.append(f"  {a.get('sembol','?'):6} {a.get('kalite_skor', 0):>5} "
-                                 f"{a.get('kalite_karar','?'):6} {a.get('carpan', 1.0):>4.2f}x "
+                    # Shim: yeni key'ler önce, eski Türkçe key'ler fallback
+                    symbol = a.get("symbol") or a.get("sembol") or "?"
+                    score = a.get("quality_score") or a.get("kalite_skor", 0)
+                    decision = a.get("quality_decision") or a.get("kalite_karar") or "?"
+                    mult = a.get("multiplier") or a.get("carpan") or 1.0
+                    lines.append(f"  {symbol:6} {score:>5} {decision:6} {mult:>4.2f}x "
                                  f"{sek:16} {peg_str:>5}")
                 lines.append("")
     except Exception as _de:

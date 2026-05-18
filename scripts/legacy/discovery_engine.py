@@ -97,20 +97,20 @@ def discover_from_universe(limit: int = None, min_skor: int = 55,
         
         if "GİRİŞ ✅" in karar and skor >= min_skor:
             bulunan.append({
-                "sembol": sym,
-                "fiyat": r.get("price"),
+                "symbol": sym,
+                "price": r.get("price"),
                 "stop": r.get("stop"),
-                "hedef": r.get("target"),
+                "target": r.get("target"),
                 "stop_pct": r.get("stop_dist"),
                 "rsi": r.get("rsi"),
-                "kalite_skor": skor,
-                "kalite_karar": r.get("kalite_karar"),
-                "carpan": r.get("carpan"),
+                "quality_score": skor,
+                "quality_decision": r.get("kalite_karar"),
+                "multiplier": r.get("carpan"),
                 "shares": r.get("shares"),
-                "rejim": r.get("rejim"),
-                "sektor_fark": r.get("sektor_fark"),
-                "volume_rasyo": r.get("volume_rasyo"),
-                "sinyaller": [s.get("tip") for s in r.get("sinyaller", [])],
+                "regime": r.get("rejim"),
+                "sector_diff": r.get("sektor_fark"),
+                "volume_ratio": r.get("volume_rasyo"),
+                "signals": [s.get("tip") for s in r.get("sinyaller", [])],
                 # Daily scan'den
                 "company": s.get("company"),
                 "sector": s.get("sector"),
@@ -125,17 +125,17 @@ def discover_from_universe(limit: int = None, min_skor: int = 55,
             print(f"  [{i:3}/{len(aday_listesi)}] taranan...")
     
     # Skor sırasına göre sırala
-    bulunan.sort(key=lambda x: -x["kalite_skor"])
+    bulunan.sort(key=lambda x: -x["quality_score"])
     return bulunan
 
 
 def kayit_et(bulunan: list):
     out = REPO_ROOT / "data" / "discovery_signals.json"
     payload = {
-        "tarih": datetime.now(TR).isoformat(),
-        "toplam": len(bulunan),
-        "min_skor": 55,
-        "adaylar": bulunan,
+        "date": datetime.now(TR).isoformat(),
+        "total": len(bulunan),
+        "min_score": 55,
+        "candidates": bulunan,
     }
     with open(out, "w") as f:
         json.dump(payload, f, ensure_ascii=False, indent=2)
@@ -163,7 +163,7 @@ def telegram_oneri(bulunan: list, max_say: int = 10):
         sek = (b.get("sector") or "")[:6]
         peg = b.get("peg")
         peg_str = f"{peg:.2f}" if isinstance(peg, (int,float)) else "—"
-        msg += f"{b['sembol']:6} {b['kalite_skor']:>4} {b['carpan']:.1f}x {sek:6} {peg_str:>5}\n"
+        msg += f"{b['symbol']:6} {b['quality_score']:>4} {b['multiplier']:.1f}x {sek:6} {peg_str:>5}\n"
     msg += "```"
     
     try:
@@ -204,8 +204,8 @@ def main():
         sek = (b.get("sector") or "?")[:15]
         peg = b.get("peg")
         peg_str = f"{peg:.2f}" if isinstance(peg, (int,float)) else "—"
-        print(f"{b['sembol']:6} {b['kalite_skor']:>5} {b['kalite_karar']:6} "
-              f"{b['carpan']:>4.2f}x ${b['fiyat']:>7.2f} {peg_str:>5} {sek:15}")
+        print(f"{b['symbol']:6} {b['quality_score']:>5} {b['quality_decision']:6} "
+              f"{b['multiplier']:>4.2f}x ${b['price']:>7.2f} {peg_str:>5} {sek:15}")
     
     if args.save:
         kayit_et(bulunan)

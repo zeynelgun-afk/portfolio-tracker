@@ -292,6 +292,22 @@ CSV çıktısı manuel doldurma için: her satıra önerilen yeni isim yaz.
 - Okuyucu kod bulunmadı (sadece scan sonuçları okunuyor, metadata field'lara erişilmiyor) → geriye uyumluluk shim **gerek değil**
 - Test: 561 PASS (kırılma yok)
 
+**17 May 2026 — discovery_signals.json**:
+- Re-kategorize: EASY → MEDIUM (dosyada 14 unique Türkçe key vardı, sadece 2 değil)
+- `scripts/legacy/discovery_engine.py` yazıcı tamamen güncellendi:
+  - Top-level (4 key): `tarih→date`, `toplam→total`, `min_skor→min_score`, `adaylar→candidates`
+  - Candidate içi (10 key): `sembol→symbol`, `fiyat→price`, `hedef→target`,
+    `kalite_skor→quality_score`, `kalite_karar→quality_decision`,
+    `carpan→multiplier`, `rejim→regime`, `sektor_fark→sector_diff`,
+    `volume_rasyo→volume_ratio`, `sinyaller→signals`
+  - Telegram + print render bloklarında da key referansları güncellendi
+- `agent/legacy/risk_engine.py` okuyucu — **geriye uyumluluk shim** eklendi:
+  - Hem yeni `candidates` hem eski `adaylar` okunur (or fallback)
+  - Aday içi field'lar için de or-fallback (`symbol or sembol`, vb.)
+  - 1 hafta gözlem sonrası eski key fallback'i kaldırılacak
+- Mevcut `data/discovery_signals.json` (42 candidate) migrate edildi
+- Test: 561 PASS
+
 ### Re-kategorize edilen dosyalar (planda gözüktüğünden farklı)
 
 İlk audit (17 May) sırasında ASCII Türkçe kelimeler eksik tespit edildi — `summary.json` "trivial" gözüküyordu ama gerçekte 19 unique key var. Yeniden değerlendirme:
