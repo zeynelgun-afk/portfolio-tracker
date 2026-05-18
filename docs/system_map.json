@@ -289,6 +289,66 @@
       "label": "events.jsonl",
       "category": "data",
       "tag": "Sistem event log JSONL"
+    },
+    {
+      "id": "ext.polymarket",
+      "label": "Polymarket Gamma",
+      "category": "external",
+      "tag": "Prediction market API"
+    },
+    {
+      "id": "data/polymarket_themes.json",
+      "label": "polymarket_themes.json",
+      "category": "data",
+      "tag": "yeni"
+    },
+    {
+      "id": "data/polymarket_cache.json",
+      "label": "polymarket_cache.json",
+      "category": "data",
+      "tag": "yeni"
+    },
+    {
+      "id": "scripts/refresh_polymarket_cache.py",
+      "label": "refresh_polymarket_cache.py",
+      "category": "script",
+      "tag": "yeni"
+    },
+    {
+      "id": "scripts/fill_calibrator_outcomes.py",
+      "label": "fill_calibrator_outcomes.py",
+      "category": "script",
+      "tag": "yeni"
+    },
+    {
+      "id": "scripts/watchlist_health_check.py",
+      "label": "watchlist_health_check.py",
+      "category": "script",
+      "tag": "yeni"
+    },
+    {
+      "id": "scripts/scanner_dry_run.py",
+      "label": "scanner_dry_run.py",
+      "category": "script",
+      "tag": "yeni — CLI"
+    },
+    {
+      "id": "polymarket_refresh.yml",
+      "label": "polymarket_refresh.yml",
+      "category": "workflow",
+      "tag": "yeni — manuel"
+    },
+    {
+      "id": "watchlist_health_check.yml",
+      "label": "watchlist_health_check.yml",
+      "category": "workflow",
+      "tag": "yeni — TR 15:30"
+    },
+    {
+      "id": "fill_calibrator_outcomes.yml",
+      "label": "fill_calibrator_outcomes.yml",
+      "category": "workflow",
+      "tag": "yeni — TR 09:00"
     }
   ],
   "edges": [
@@ -575,6 +635,118 @@
     {
       "source": "scripts/signal_tracker.py",
       "target": "ext.telegram"
+    },
+    {
+      "source": "agent/scanners/thematic.py",
+      "target": "agent/scanners/calibrator.py"
+    },
+    {
+      "source": "agent/scanners/fair_value.py",
+      "target": "agent/scanners/calibrator.py"
+    },
+    {
+      "source": "agent/legacy/analist_takip/monitor.py",
+      "target": "agent/scanners/calibrator.py"
+    },
+    {
+      "source": "agent/scanners/calibrator.py",
+      "target": "ext.polymarket"
+    },
+    {
+      "source": "agent/scanners/calibrator.py",
+      "target": "data/polymarket_themes.json"
+    },
+    {
+      "source": "agent/scanners/calibrator.py",
+      "target": "data/polymarket_cache.json"
+    },
+    {
+      "source": "agent/scanners/calibrator.py",
+      "target": "data/polymarket_calibrator_performance.json"
+    },
+    {
+      "source": "agent/scanners/calibrator.py",
+      "target": "agent/ai_gate.py"
+    },
+    {
+      "source": "agent/scanners/thematic.py",
+      "target": "agent/scanners/pipeline.py"
+    },
+    {
+      "source": "agent/scanners/fair_value.py",
+      "target": "agent/scanners/pipeline.py"
+    },
+    {
+      "source": "agent/scanners/news.py",
+      "target": "agent/scanners/pipeline.py"
+    },
+    {
+      "source": "agent/scanners/analyst_revisions.py",
+      "target": "agent/scanners/pipeline.py"
+    },
+    {
+      "source": "agent/scanners/analyst_revisions.py",
+      "target": "agent/legacy/analist_takip/monitor.py"
+    },
+    {
+      "source": "polymarket_refresh.yml",
+      "target": "scripts/refresh_polymarket_cache.py"
+    },
+    {
+      "source": "scripts/refresh_polymarket_cache.py",
+      "target": "ext.polymarket"
+    },
+    {
+      "source": "scripts/refresh_polymarket_cache.py",
+      "target": "data/polymarket_cache.json"
+    },
+    {
+      "source": "watchlist_health_check.yml",
+      "target": "scripts/watchlist_health_check.py"
+    },
+    {
+      "source": "scripts/watchlist_health_check.py",
+      "target": "agent/scanners/calibrator.py"
+    },
+    {
+      "source": "scripts/watchlist_health_check.py",
+      "target": "data/watchlist.json"
+    },
+    {
+      "source": "fill_calibrator_outcomes.yml",
+      "target": "scripts/fill_calibrator_outcomes.py"
+    },
+    {
+      "source": "scripts/fill_calibrator_outcomes.py",
+      "target": "data/polymarket_calibrator_performance.json"
+    },
+    {
+      "source": "scripts/fill_calibrator_outcomes.py",
+      "target": "ext.fmp"
+    },
+    {
+      "source": "agent/reports/stats.py",
+      "target": "data/polymarket_calibrator_performance.json"
+    },
+    {
+      "source": "agent.reports.weekly",
+      "target": "data/polymarket_calibrator_performance.json"
+    },
+    {
+      "source": "scripts/scanner_dry_run.py",
+      "target": "agent/scanners/thematic.py"
+    },
+    {
+      "source": "scripts/scanner_dry_run.py",
+      "target": "agent/scanners/fair_value.py"
+    },
+    {
+      "source": "scripts/scanner_dry_run.py",
+      "target": "agent/scanners/news.py"
+    },
+    {
+      "source": "scripts/scanner_dry_run.py",
+      "target": "agent/scanners/calibrator.py"
     }
   ]
 }
