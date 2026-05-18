@@ -1,7 +1,7 @@
 {
-  "tarih": "2026-05-12T16:02:51.053418+03:00",
   "vix": 18.67,
-  "sektor_performans": {
+  "date": "2026-05-12T16:02:51.053418+03:00",
+  "sector_performance": {
     "Basic Materials": 1.9204965235012805,
     "Communication Services": -1.177271248050027,
     "Consumer Cyclical": 1.4933173189642934,
@@ -14,20 +14,20 @@
     "Technology": 1.0410287139578145,
     "Utilities": -2.566140243510062
   },
-  "dominant_temalar": [
+  "dominant_themes": [
     {
-      "tema_adi": "enerji_geçiş",
-      "güç_skoru": 9,
-      "neden": "Enerji sektörü %2.4 ile en güçlü performansı gösterdi ve İran savaşının enerji fiyatlarını artırması enflasyonu 3.8%'e çıkardı. [KESİN]",
-      "öncelikli_alt_dal": "güç_altyapısı",
-      "önerilen_hisseler": [
+      "theme_name": "enerji_geçiş",
+      "strength_score": 9,
+      "reason": "Enerji sektörü %2.4 ile en güçlü performansı gösterdi ve İran savaşının enerji fiyatlarını artırması enflasyonu 3.8%'e çıkardı. [KESİN]",
+      "priority_subsector": "güç_altyapısı",
+      "suggested_tickers": [
         "VRT",
         "ETN",
         "PWR"
       ],
-      "portföy": "aggressive",
-      "aciliyet": "yüksek",
-      "hisse_evreni": [
+      "portfolio": "aggressive",
+      "urgency": "yüksek",
+      "stock_universe": [
         "CEG",
         "WMB",
         "FSLR",
@@ -43,36 +43,36 @@
       ]
     },
     {
-      "tema_adi": "emtia_kaynak",
-      "güç_skoru": 8,
-      "neden": "Hammaddeler sektörü %1.9 artışla ikinci sırada yer aldı ve enflasyonist ortamda emtialar güvenli liman olarak öne çıkıyor. [KESİN]",
-      "öncelikli_alt_dal": "nadir_toprak",
-      "önerilen_hisseler": [
+      "theme_name": "emtia_kaynak",
+      "strength_score": 8,
+      "reason": "Hammaddeler sektörü %1.9 artışla ikinci sırada yer aldı ve enflasyonist ortamda emtialar güvenli liman olarak öne çıkıyor. [KESİN]",
+      "priority_subsector": "nadir_toprak",
+      "suggested_tickers": [
         "MP",
         "CCJ",
         "FCX"
       ],
-      "portföy": "aggressive",
-      "aciliyet": "yüksek",
-      "hisse_evreni": [
+      "portfolio": "aggressive",
+      "urgency": "yüksek",
+      "stock_universe": [
         "MP",
         "NOVN",
         "USA"
       ]
     },
     {
-      "tema_adi": "savunma_uzay",
-      "güç_skoru": 7,
-      "neden": "İran savaşı jeopolitik gerilimi artırıyor ve savunma harcamaları beklentilerini güçlendiriyor. [MUHTEMEL]",
-      "öncelikli_alt_dal": "hipersonik",
-      "önerilen_hisseler": [
+      "theme_name": "savunma_uzay",
+      "strength_score": 7,
+      "reason": "İran savaşı jeopolitik gerilimi artırıyor ve savunma harcamaları beklentilerini güçlendiriyor. [MUHTEMEL]",
+      "priority_subsector": "hipersonik",
+      "suggested_tickers": [
         "RTX",
         "LMT",
         "NOC"
       ],
-      "portföy": "balanced",
-      "aciliyet": "orta",
-      "hisse_evreni": [
+      "portfolio": "balanced",
+      "urgency": "orta",
+      "stock_universe": [
         "CRWD",
         "LMT",
         "RKLB",
@@ -89,15 +89,12 @@
       ]
     }
   ],
-  "kacınılacak": [
+  "avoid_sectors": [
     "Consumer Defensive",
     "Real Estate"
   ],
-  "piyasa_modu": "risk-on",
-  "aktif_kriz": {
-    "tip": "enflasyon",
-    "guven": 8,
-    "kanit": "Nisan enflasyonu 3.8%'e çıktı ve haberlerde İran savaşının enerji fiyatlarını artırdığı belirtildi. Enerji sektörü %2.4, Hammaddeler %1.9 artışla öne çıkarken Savunma tüketimi -%1.0 ile geriledi. [KESİN]",
+  "market_mode": "risk-on",
+  "active_crisis": {
     "beneficiary_sectors": [
       "Energy",
       "Basic Materials",
@@ -110,34 +107,37 @@
       "Financial Services",
       "Healthcare",
       "Industrials"
-    ]
+    ],
+    "type": "enflasyon",
+    "confidence": 8,
+    "evidence": "Nisan enflasyonu 3.8%'e çıktı ve haberlerde İran savaşının enerji fiyatlarını artırdığı belirtildi. Enerji sektörü %2.4, Hammaddeler %1.9 artışla öne çıkarken Savunma tüketimi -%1.0 ile geriledi. [KESİN]"
   },
-  "genel_yorum": "Piyasada enflasyonist baskılar öne çıkarken jeopolitik gerilim enerji ve emtia temalarını güçlendiriyor. VIX 18.7 ile risk-on modu devam ediyor ancak sektörel rotasyon belirgin. [KESİN]",
-  "haberler": [
+  "overview": "Piyasada enflasyonist baskılar öne çıkarken jeopolitik gerilim enerji ve emtia temalarını güçlendiriyor. VIX 18.7 ile risk-on modu devam ediyor ancak sektörel rotasyon belirgin. [KESİN]",
+  "news": [
     {
-      "baslik": "A Buying Opportunity In The Bond Market This Summer",
-      "kaynak": "seekingalpha.com",
-      "tarih": "2026-05-12 08:52"
+      "date": "2026-05-12 08:52",
+      "title": "A Buying Opportunity In The Bond Market This Summer",
+      "source": "seekingalpha.com"
     },
     {
-      "baslik": "Inflation continued to rise in April as Iran war impacted energy prices",
-      "kaynak": "foxbusiness.com",
-      "tarih": "2026-05-12 08:51"
+      "date": "2026-05-12 08:51",
+      "title": "Inflation continued to rise in April as Iran war impacted energy prices",
+      "source": "foxbusiness.com"
     },
     {
-      "baslik": "Inflation Approached 3-Year High In April As Energy Prices Soared",
-      "kaynak": "forbes.com",
-      "tarih": "2026-05-12 08:45"
+      "date": "2026-05-12 08:45",
+      "title": "Inflation Approached 3-Year High In April As Energy Prices Soared",
+      "source": "forbes.com"
     },
     {
-      "baslik": "US inflation jumped to 3.8% in April as war with Iran continues to drive up prices",
-      "kaynak": "theguardian.com",
-      "tarih": "2026-05-12 08:37"
+      "date": "2026-05-12 08:37",
+      "title": "US inflation jumped to 3.8% in April as war with Iran continues to drive up prices",
+      "source": "theguardian.com"
     },
     {
-      "baslik": "The End Of Long-Term Investing?",
-      "kaynak": "seekingalpha.com",
-      "tarih": "2026-05-12 08:34"
+      "date": "2026-05-12 08:34",
+      "title": "The End Of Long-Term Investing?",
+      "source": "seekingalpha.com"
     }
   ]
 }

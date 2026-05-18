@@ -60,23 +60,26 @@ def _read_macro(min_score: int, max_age_hours: int, meta: dict) -> tuple[bool, f
         return False, None
 
     yas_saat: float | None = None
-    ts = _parse_iso(data.get("tarih", ""))
+    ts = _parse_iso(data.get("date") or data.get("tarih", ""))
     if ts is not None:
         now = datetime.now(ts.tzinfo) if ts.tzinfo else datetime.now()
         yas_saat = (now - ts).total_seconds() / 3600.0
         if yas_saat > max_age_hours:
             return False, yas_saat
 
-    temalar = data.get("dominant_temalar") or []
+    temalar = data.get("dominant_themes") or data.get("dominant_temalar") or []
     eklendi = False
     for tema in temalar:
         try:
-            if int(tema.get("güç_skoru", tema.get("guc_skoru", 0))) < min_score:
+            score = tema.get("strength_score") or tema.get("güç_skoru") or tema.get("guc_skoru", 0)
+            if int(score) < min_score:
                 continue
         except (TypeError, ValueError):
             continue
-        etiket = tema.get("tema_adi") or "tema"
-        evren = tema.get("hisse_evreni") or tema.get("önerilen_hisseler") or tema.get("onerilen_hisseler") or []
+        etiket = tema.get("theme_name") or tema.get("tema_adi") or "tema"
+        evren = (tema.get("stock_universe") or tema.get("hisse_evreni")
+                 or tema.get("suggested_tickers") or tema.get("önerilen_hisseler")
+                 or tema.get("onerilen_hisseler") or [])
         for sym in evren:
             _add(meta, sym, etiket)
             eklendi = True

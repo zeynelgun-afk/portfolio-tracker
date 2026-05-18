@@ -1116,13 +1116,14 @@ def format_tema() -> str:
     except Exception as e:
         return f"Tema verisi okunamadı: {e}"
 
-    tarih = (d.get("tarih", "") or "")[:16]
+    tarih = (d.get("date") or d.get("tarih", "") or "")[:16]
     vix = d.get("vix", 0)
-    mod = d.get("piyasa_modu", "?")
-    temalar = d.get("dominant_temalar", []) or []
-    kriz = d.get("aktif_kriz", {}) or {}
-    kacin = d.get("kacınılacak", d.get("kaçınılacak", [])) or []
-    yorum = (d.get("genel_yorum", "") or "")[:300]
+    mod = d.get("market_mode") or d.get("piyasa_modu", "?")
+    temalar = d.get("dominant_themes") or d.get("dominant_temalar", []) or []
+    kriz = d.get("active_crisis") or d.get("aktif_kriz", {}) or {}
+    kacin = (d.get("avoid_sectors") or d.get("kacınılacak")
+             or d.get("kaçınılacak", []) or [])
+    yorum = (d.get("overview") or d.get("genel_yorum", "") or "")[:300]
 
     lines = [
         f"<b>🌊 Tema &amp; Piyasa Havası</b>",
@@ -1134,8 +1135,8 @@ def format_tema() -> str:
     ]
 
     # Aktif kriz
-    kriz_tip = kriz.get("tip", "yok")
-    kriz_guven = kriz.get("guven", 0)
+    kriz_tip = kriz.get("type") or kriz.get("tip", "yok")
+    kriz_guven = kriz.get("confidence") or kriz.get("guven", 0)
     if kriz_tip and kriz_tip not in ("yok", "belirsiz"):
         lines.append(f"⚠️ <b>Aktif kriz: {kriz_tip}</b> (güven: {kriz_guven}/10)")
         ben = kriz.get("beneficiary_sectors", [])
@@ -1156,12 +1157,12 @@ def format_tema() -> str:
     if temalar:
         lines.append("<b>🔥 Dominant temalar:</b>")
         for t in temalar[:5]:
-            ad = t.get("tema_adi", "?")
-            skor = t.get("güç_skoru", t.get("guc_skoru", "?"))
-            neden = (t.get("neden", "") or "")[:80]
-            hisse = t.get("önerilen_hisseler", t.get("onerilen_hisseler", [])) or []
-            pf = t.get("portföy", t.get("portfoy", "?"))
-            acil = t.get("aciliyet", "?")
+            ad = t.get("theme_name") or t.get("tema_adi", "?")
+            skor = t.get("strength_score") or t.get("güç_skoru") or t.get("guc_skoru", "?")
+            neden = (t.get("reason") or t.get("neden", "") or "")[:80]
+            hisse = t.get("suggested_tickers") or t.get("önerilen_hisseler") or t.get("onerilen_hisseler", []) or []
+            pf = t.get("portfolio") or t.get("portföy") or t.get("portfoy", "?")
+            acil = t.get("urgency") or t.get("aciliyet", "?")
             lines.append(f"  • <b>{ad}</b> ({skor}/10) [{pf}, {acil}]")
             if neden:
                 lines.append(f"    💭 {neden}")

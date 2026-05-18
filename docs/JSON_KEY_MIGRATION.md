@@ -277,9 +277,9 @@ CSV çıktısı manuel doldurma için: her satıra önerilen yeni isim yaz.
 | 17 May 2026 | `discovery_signals.json` migration (re-cat MEDIUM) | `discovery_engine.py` + shim `risk_engine.py` | `b92d204c` |
 | 17 May 2026 | `backtest_summary.json` migration (MEDIUM, 22 key) | `k_rules_backtest.py` + shim `risk_engine` + `orchestrator` | `f1ab5158` |
 | 17 May 2026 | `premarket_gaps.json` migration (EASY, 7 key) | `premarket_gap_scanner.py` (yazıcı+okuyucu aynı dosyada, shim ile) | `d79ad6d6` |
-| 17 May 2026 | `trade_index.json` migration (EASY, 10 key) | Sadece JSON; yazıcı arşivde (geri yüklemede ek migration) | bu commit |
-| TBD | `macro_intelligence.json` (HARD — 5 okuyucu + yazıcı, 10+ key) | yazıcı + 4 okuyucu shim | sırada |
-| TBD | `summary.json` (HARD, 19 key) | tam dosya | sonra |
+| 17 May 2026 | `trade_index.json` migration (EASY, 10 key) | Sadece JSON; yazıcı arşivde (geri yüklemede ek migration) | `013b271d` |
+| 17 May 2026 | `macro_intelligence.json` migration (HARD, 24 key) | Yazıcı LLM-TR-to-EN convert layer + 4 okuyucu shim | bu commit |
+| TBD | `summary.json` (HARD, 19 key) | tam dosya | sırada |
 | TBD | `research/index.json` (MEDIUM) | nested | sonra |
 | TBD | `weekly_pre_check.json` (HARD, sözlük) | 1 gün | sonra |
 

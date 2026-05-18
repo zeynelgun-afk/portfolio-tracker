@@ -47,21 +47,22 @@ def _truncate(text: str, n: int) -> str:
 
 
 def _kriz_aciklama(kriz: dict) -> str:
-    tip = kriz.get("tip", "belirsiz")
-    guven = kriz.get("guven", 0)
+    tip = kriz.get("type") or kriz.get("tip", "belirsiz")
+    guven = kriz.get("confidence") or kriz.get("guven", 0)
     if tip == "yok" or not tip:
         return f"yok (güven {guven}/10)"
     return f"{tip} (güven {guven}/10)"
 
 
 def format_message(data: dict) -> str:
-    tarih = _tarih_format(data.get("tarih", ""))
+    tarih = _tarih_format(data.get("date") or data.get("tarih", ""))
     vix = data.get("vix", 0)
-    mod = data.get("piyasa_modu", "nötr")
-    kriz = data.get("aktif_kriz", {}) or {}
-    temalar = data.get("dominant_temalar", []) or []
-    kacin = data.get("kacınılacak", []) or data.get("kaçınılacak_sektörler", []) or []
-    yorum = data.get("genel_yorum", "")
+    mod = data.get("market_mode") or data.get("piyasa_modu", "nötr")
+    kriz = data.get("active_crisis") or data.get("aktif_kriz", {}) or {}
+    temalar = data.get("dominant_themes") or data.get("dominant_temalar", []) or []
+    kacin = (data.get("avoid_sectors") or data.get("kacınılacak", [])
+             or data.get("kaçınılacak_sektörler", []) or [])
+    yorum = data.get("overview") or data.get("genel_yorum", "")
 
     lines = []
     lines.append(f"🧠 *MAKRO ZEKA — {tarih}*")
@@ -74,13 +75,15 @@ def format_message(data: dict) -> str:
         lines.append("*🎯 DOMİNANT TEMALAR*")
         lines.append("")
         for i, t in enumerate(temalar[:4], 1):
-            tema_adi = t.get("tema_adi", "?").replace("_", " ")
-            skor = t.get("güç_skoru", t.get("guc_skoru", "?"))
-            portfoy = t.get("portföy", t.get("portfoy", "?"))
-            aciliyet = t.get("aciliyet", "?")
-            hisseler = ", ".join(t.get("önerilen_hisseler", t.get("onerilen_hisseler", []))[:5])
-            alt_dal = t.get("öncelikli_alt_dal", t.get("oncelikli_alt_dal", "")).replace("_", " ")
-            neden = _truncate(t.get("neden", ""), 240)
+            tema_adi = (t.get("theme_name") or t.get("tema_adi", "?")).replace("_", " ")
+            skor = t.get("strength_score") or t.get("güç_skoru") or t.get("guc_skoru", "?")
+            portfoy = t.get("portfolio") or t.get("portföy") or t.get("portfoy", "?")
+            aciliyet = t.get("urgency") or t.get("aciliyet", "?")
+            tickers = t.get("suggested_tickers") or t.get("önerilen_hisseler") or t.get("onerilen_hisseler", [])
+            hisseler = ", ".join(tickers[:5])
+            alt = t.get("priority_subsector") or t.get("öncelikli_alt_dal") or t.get("oncelikli_alt_dal", "")
+            alt_dal = alt.replace("_", " ")
+            neden = _truncate(t.get("reason") or t.get("neden", ""), 240)
 
             lines.append(f"{i}. *{tema_adi}* ({skor}/10) · {portfoy} · {aciliyet}")
             if hisseler:
@@ -159,7 +162,7 @@ def main():
 
     # Tazelik kontrolü: 24 saatten eski veri gönderme
     try:
-        tarih = datetime.fromisoformat(data.get("tarih", ""))
+        tarih = datetime.fromisoformat(data.get("date") or data.get("tarih", ""))
         yas_saat = (datetime.now(tarih.tzinfo) - tarih).total_seconds() / 3600
         if yas_saat > 36:
             print(f"[MacroNotify] Veri {yas_saat:.0f}s eski, gönderilmedi "

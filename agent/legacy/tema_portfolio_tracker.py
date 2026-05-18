@@ -62,11 +62,11 @@ def get_active_theme_on_date(date_str: str) -> str:
         try:
             with open(macro_path, encoding="utf-8") as f:
                 data = json.load(f)
-            temalar = data.get("dominant_temalar", [])
+            temalar = data.get("dominant_themes") or data.get("dominant_temalar", [])
             if temalar:
-                # En yüksek güç_skoru temasını al
-                best = max(temalar, key=lambda t: t.get("güç_skoru", t.get("guc_skoru", 0)))
-                return best.get("tema_adi", "BILINMIYOR")
+                # En yüksek strength_score temasını al
+                best = max(temalar, key=lambda t: t.get("strength_score") or t.get("güç_skoru") or t.get("guc_skoru", 0))
+                return best.get("theme_name") or best.get("tema_adi", "BILINMIYOR")
         except Exception:
             pass
 

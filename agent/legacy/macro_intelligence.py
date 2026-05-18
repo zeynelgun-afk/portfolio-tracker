@@ -254,7 +254,7 @@ def run_macro_intelligence(vix: float = 20.0) -> dict:
     print("[Makro] AI tema analizi yapılıyor...")
     analiz = analyze_themes_with_claude(sektor, haberler, güçlü, vix)
 
-    # Her tema için hisse evrenini ekle
+    # Her tema için hisse evrenini ekle (analiz Türkçe key'lerle gelir LLM'den)
     for tema in analiz.get("dominant_temalar", []):
         tema_adi = tema.get("tema_adi", "")
         alt_dal  = tema.get("öncelikli_alt_dal", "")
@@ -270,22 +270,57 @@ def run_macro_intelligence(vix: float = 20.0) -> dict:
                     tüm.extend(hisseler)
                 tema["hisse_evreni"] = list(set(tüm))
 
-    # Sonucu kaydet
+    # LLM çıktısı Türkçe key'ler — İngilizce'ye dönüştür (17 May 2026 migration)
+    # LLM prompt'unda Türkçe key zorunluluğu var, kod tarafında EN'ye çeviriyoruz.
+    def _theme_tr_to_en(t: dict) -> dict:
+        """Tema dict'i: Türkçe LLM çıktısı → İngilizce JSON şema."""
+        return {
+            "theme_name":         t.get("tema_adi", ""),
+            "strength_score":     t.get("güç_skoru"),
+            "reason":             t.get("neden", ""),
+            "priority_subsector": t.get("öncelikli_alt_dal", ""),
+            "suggested_tickers":  t.get("önerilen_hisseler", []),
+            "portfolio":          t.get("portföy", ""),
+            "urgency":             t.get("aciliyet", ""),
+            "stock_universe":     t.get("hisse_evreni", []),
+        }
+
+    def _crisis_tr_to_en(c: dict) -> dict:
+        """aktif_kriz dict: TR → EN."""
+        if not isinstance(c, dict):
+            return {"type": "unknown", "confidence": 0}
+        return {
+            "type":                c.get("tip", "unknown"),
+            "confidence":          c.get("guven", 0),
+            "evidence":            c.get("kanit", ""),
+            "beneficiary_sectors": c.get("beneficiary_sectors", []),
+            "sensitive_sectors":   c.get("sensitive_sectors", []),
+        }
+
+    def _news_tr_to_en(n: dict) -> dict:
+        """Haber dict: TR → EN."""
+        return {
+            "date":   n.get("tarih", ""),
+            "title":  n.get("baslik", ""),
+            "source": n.get("kaynak", ""),
+        }
+
+    # Sonucu kaydet — İngilizce key'lerle
     output = {
-        "tarih":            datetime.now(TR_TZ).isoformat(),
-        "vix":              vix,
-        "sektor_performans": sektor,
-        "dominant_temalar": analiz.get("dominant_temalar", []),
-        "kacınılacak":      analiz.get("kaçınılacak_sektörler", []),
-        "piyasa_modu":      analiz.get("piyasa_modu", "nötr"),
-        "aktif_kriz":       analiz.get("aktif_kriz", {"tip": "yok", "guven": 0}),
-        "genel_yorum":      analiz.get("genel_yorum", ""),
-        "haberler":         haberler[:5],
+        "date":               datetime.now(TR_TZ).isoformat(),
+        "vix":                vix,
+        "sector_performance": sektor,
+        "dominant_themes":    [_theme_tr_to_en(t) for t in analiz.get("dominant_temalar", [])],
+        "avoid_sectors":      analiz.get("kaçınılacak_sektörler", []),
+        "market_mode":        analiz.get("piyasa_modu", "nötr"),
+        "active_crisis":      _crisis_tr_to_en(analiz.get("aktif_kriz", {})),
+        "overview":           analiz.get("genel_yorum", ""),
+        "news":               [_news_tr_to_en(n) for n in haberler[:5]],
     }
 
     out_path = REPO_ROOT / "data" / "macro_intelligence.json"
     json.dump(output, open(out_path, "w"), ensure_ascii=False, indent=2)
-    print(f"[Makro] {len(output['dominant_temalar'])} tema tespit edildi → {out_path.name}")
+    print(f"[Makro] {len(output['dominant_themes'])} tema tespit edildi → {out_path.name}")
 
     # K-13 kriz matrisini otomatik güncelle (guven ≥ 6 ise)
     _update_k13_matrix_if_changed(analiz.get("aktif_kriz", {}), vix=vix)
