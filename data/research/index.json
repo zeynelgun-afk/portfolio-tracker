@@ -1,37 +1,36 @@
 {
-  "son_guncelleme": "2026-05-11",
-  "toplam_analiz": 13,
-  "beat_tahmin": 1,
-  "miss_tahmin": 0,
-  "beklemede": 0,
-  "aktif_izleme": 9,
-  "dogru_tahmin_orani": 1.0,
-  "analizler": [
+  "last_updated": "2026-05-11",
+  "total_analyses": 13,
+  "beat_predicted": 1,
+  "miss_predicted": 0,
+  "pending": 0,
+  "active_monitoring": 9,
+  "correct_prediction_ratio": 1.0,
+  "analyses": [
     {
       "id": "BDC_2026-04-26",
       "ticker": "BDC",
-      "sirket": "Belden Inc.",
-      "sektor": "Industrial Technology",
-      "analiz_tarihi": "2026-04-26",
-      "bülançö_tarihi": "2026-04-30",
-      "analiz_turu": "bilanço_oncesi",
-      "durum": "beat",
-      "dosya": "reports/research/BDC_2026-04-26.md",
-      "on_beklenti": {
-        "eps_konsensus": 1.7,
-        "gelir_konsensus_m": 678.1,
-        "senaryo_a_olasilik": 0.4,
-        "senaryo_b_olasilik": 0.35,
-        "senaryo_c_olasilik": 0.25,
-        "beklenen_deger_pct": 3.5
-      },
       "analiz_fiyati": 134.37,
-      "portfoy_onerisi": {
-        "dengeli": "uygun",
-        "agresif": "dikkatli",
-        "temettü": "uygun_degil"
+      "company": "Belden Inc.",
+      "sector": "Industrial Technology",
+      "analysis_date": "2026-04-26",
+      "earnings_date": "2026-04-30",
+      "analysis_type": "bilanço_oncesi",
+      "status": "beat",
+      "file": "reports/research/BDC_2026-04-26.md",
+      "tags": [
+        "industrial",
+        "ai_infrastructure",
+        "cable",
+        "data_center",
+        "earnings_play"
+      ],
+      "portfolio_recommendation": {
+        "balanced": "uygun",
+        "aggressive": "dikkatli",
+        "dividend": "uygun_degil"
       },
-      "gerceklesen": {
+      "actual": {
         "eps": 1.77,
         "eps_beklenti": 1.71,
         "surpriz_pct": 3.5,
@@ -42,30 +41,63 @@
         "dogru_tahmin": true,
         "ders": "Beat | Sürpriz +3.5% | Fiyat +1.5%"
       },
-      "etiketler": [
-        "industrial",
-        "ai_infrastructure",
-        "cable",
-        "data_center",
-        "earnings_play"
-      ]
+      "expectations": {
+        "eps_konsensus": 1.7,
+        "gelir_konsensus_m": 678.1,
+        "senaryo_a_olasilik": 0.4,
+        "senaryo_b_olasilik": 0.35,
+        "senaryo_c_olasilik": 0.25,
+        "beklenen_deger_pct": 3.5
+      }
     },
     {
       "id": "CLF_DPA_2026-04-26",
       "ticker": "CLF",
-      "sirket": "Cleveland-Cliffs Inc.",
-      "sektor": "Steel / Materials",
-      "analiz_tarihi": "2026-04-26",
-      "bilanco_tarihi": null,
-      "analiz_turu": "tematik_arastirma",
-      "durum": "aktif_izleme",
-      "dosya": "reports/research/CLF_DPA_2026-04-26.md",
-      "kataliz": {
-        "olay": "Savunma Üretim Yasası — DPA Section 303",
-        "tarih": "2026-04-20",
-        "aciklama": "Trafo ve şebeke altyapısı ulusal savunma için kritik ilan edildi. CLF ABD'nin tek grain-oriented electrical steel üreticisi."
+      "analiz_fiyati": 9.76,
+      "temel_metrikler": {
+        "fiyat_defter": 0.95,
+        "fiyat_satis": 0.29,
+        "borclanma_ozkaynak": 1.33,
+        "gross_margin_ttm_pct": -2.8,
+        "q1_2026_ebitda_m": 95,
+        "q1_2026_net_zarar_m": -229,
+        "likidite_m": 3100
       },
-      "on_beklenti": {
+      "izleme_tetikleyicileri": [
+        "DPA kapsamında somut sözleşme/sipariş haberi",
+        "Çelik fiyatı HRC $700+ kalıcı geçiş",
+        "Q2 2026 pozitif FCF teyidi",
+        "Butler Works DOE fon onayı güncelleme",
+        "Posco ortaklık açıklaması"
+      ],
+      "company": "Cleveland-Cliffs Inc.",
+      "sector": "Steel / Materials",
+      "analysis_date": "2026-04-26",
+      "earnings_date": null,
+      "analysis_type": "tematik_arastirma",
+      "status": "aktif_izleme",
+      "file": "reports/research/CLF_DPA_2026-04-26.md",
+      "tags": [
+        "steel",
+        "dpa",
+        "electrical_steel",
+        "grid_infrastructure",
+        "national_security",
+        "materials",
+        "turnaround"
+      ],
+      "portfolio_recommendation": {
+        "balanced": "dikkatli",
+        "aggressive": "uygun",
+        "dividend": "uygun_degil"
+      },
+      "actual": {
+        "dpa_sozlesme": null,
+        "celik_fiyat_gelisimi": null,
+        "fiyat_tepkisi_pct": null,
+        "ders": null
+      },
+      "expectations": {
         "senaryo_boga": {
           "kosul": "DPA sözleşme + çelik fiyat toparlanma",
           "fiyat_hedef": 13.0,
@@ -82,208 +114,147 @@
           "getiri_pct": -23
         }
       },
-      "analiz_fiyati": 9.76,
-      "temel_metrikler": {
-        "fiyat_defter": 0.95,
-        "fiyat_satis": 0.29,
-        "borclanma_ozkaynak": 1.33,
-        "gross_margin_ttm_pct": -2.8,
-        "q1_2026_ebitda_m": 95,
-        "q1_2026_net_zarar_m": -229,
-        "likidite_m": 3100
-      },
-      "portfoy_onerisi": {
-        "dengeli": "dikkatli",
-        "agresif": "uygun",
-        "temettü": "uygun_degil"
-      },
-      "izleme_tetikleyicileri": [
-        "DPA kapsamında somut sözleşme/sipariş haberi",
-        "Çelik fiyatı HRC $700+ kalıcı geçiş",
-        "Q2 2026 pozitif FCF teyidi",
-        "Butler Works DOE fon onayı güncelleme",
-        "Posco ortaklık açıklaması"
-      ],
-      "gerceklesen": {
-        "dpa_sozlesme": null,
-        "celik_fiyat_gelisimi": null,
-        "fiyat_tepkisi_pct": null,
-        "ders": null
-      },
-      "etiketler": [
-        "steel",
-        "dpa",
-        "electrical_steel",
-        "grid_infrastructure",
-        "national_security",
-        "materials",
-        "turnaround"
-      ]
+      "catalyst": {
+        "event": "Savunma Üretim Yasası — DPA Section 303",
+        "date": "2026-04-20",
+        "description": "Trafo ve şebeke altyapısı ulusal savunma için kritik ilan edildi. CLF ABD'nin tek grain-oriented electrical steel üreticisi."
+      }
     },
     {
       "id": "RTX_RADAR_2026-04-26",
       "ticker": "RTX",
-      "sirket": "RTX",
-      "sektor": "Haber Radarı",
-      "analiz_tarihi": "2026-04-26",
-      "bilanco_tarihi": null,
-      "analiz_turu": "haber_radar",
-      "durum": "aktif_izleme",
-      "dosya": "reports/research/RTX_RADAR_2026-04-26.md",
-      "kataliz": {
-        "olay": "FAA 12.5 milyar dolarlık hava trafik kontrol modernizasyonu açıkladı",
-        "tarih": "2026-04-26",
-        "aciklama": "Analog sistemlerden dijitale geçiş planı henüz havacılık teknoloji hisselerine tam yansımadı"
+      "company": "RTX",
+      "sector": "Haber Radarı",
+      "analysis_date": "2026-04-26",
+      "earnings_date": null,
+      "analysis_type": "haber_radar",
+      "status": "aktif_izleme",
+      "file": "reports/research/RTX_RADAR_2026-04-26.md",
+      "tags": [
+        "haber_radar",
+        "bullish",
+        "uzun_vadeli"
+      ],
+      "portfolio_recommendation": {
+        "balanced": "izle",
+        "aggressive": "izle",
+        "dividend": "izle"
       },
-      "portfoy_onerisi": {
-        "dengeli": "izle",
-        "agresif": "izle",
-        "temettü": "izle"
-      },
-      "gerceklesen": {
+      "actual": {
         "tespit_fiyati": 173.38,
         "simdiki_fiyat": 173.99,
         "fiyat_tepkisi_pct": 0.4,
         "tez_tuttu": false,
         "ders": "5 günde +0.4%"
       },
-      "etiketler": [
-        "haber_radar",
-        "bullish",
-        "uzun_vadeli"
-      ]
+      "catalyst": {
+        "event": "FAA 12.5 milyar dolarlık hava trafik kontrol modernizasyonu açıkladı",
+        "date": "2026-04-26",
+        "description": "Analog sistemlerden dijitale geçiş planı henüz havacılık teknoloji hisselerine tam yansımadı"
+      }
     },
     {
       "id": "MP_RADAR_2026-04-26",
       "ticker": "MP",
-      "sirket": "MP",
-      "sektor": "Haber Radarı",
-      "analiz_tarihi": "2026-04-26",
-      "bilanco_tarihi": null,
-      "analiz_turu": "haber_radar",
-      "durum": "aktif_izleme",
-      "dosya": "reports/research/MP_RADAR_2026-04-26.md",
-      "kataliz": {
-        "olay": "Pentagon nadir toprak elementleri için Malezya tedarikçisi buldu",
-        "tarih": "2026-04-26",
-        "aciklama": "Çin'in tekelini kırma stratejisi belirli nadir toprak şirketlerine fayda sağlayacak"
+      "company": "MP",
+      "sector": "Haber Radarı",
+      "analysis_date": "2026-04-26",
+      "earnings_date": null,
+      "analysis_type": "haber_radar",
+      "status": "aktif_izleme",
+      "file": "reports/research/MP_RADAR_2026-04-26.md",
+      "tags": [
+        "haber_radar",
+        "bullish",
+        "orta_vadeli"
+      ],
+      "portfolio_recommendation": {
+        "balanced": "izle",
+        "aggressive": "izle",
+        "dividend": "izle"
       },
-      "portfoy_onerisi": {
-        "dengeli": "izle",
-        "agresif": "izle",
-        "temettü": "izle"
-      },
-      "gerceklesen": {
+      "actual": {
         "tespit_fiyati": 64.92,
         "simdiki_fiyat": 66.63,
         "fiyat_tepkisi_pct": 2.6,
         "tez_tuttu": true,
         "ders": "5 günde +2.6%"
       },
-      "etiketler": [
-        "haber_radar",
-        "bullish",
-        "orta_vadeli"
-      ]
+      "catalyst": {
+        "event": "Pentagon nadir toprak elementleri için Malezya tedarikçisi buldu",
+        "date": "2026-04-26",
+        "description": "Çin'in tekelini kırma stratejisi belirli nadir toprak şirketlerine fayda sağlayacak"
+      }
     },
     {
       "id": "BAC_RADAR_2026-04-26",
       "ticker": "BAC",
-      "sirket": "BAC",
-      "sektor": "Haber Radarı",
-      "analiz_tarihi": "2026-04-26",
-      "bilanco_tarihi": null,
-      "analiz_turu": "haber_radar",
-      "durum": "aktif_izleme",
-      "dosya": "reports/research/BAC_RADAR_2026-04-26.md",
-      "kataliz": {
-        "olay": "Sen. Tillis Kevin Warsh'ın Fed başkanlığı önündeki engeli kaldıracak",
-        "tarih": "2026-04-26",
-        "aciklama": "Fed politika değişimi beklentisi henüz tam olarak finansal hisselere yansımadı"
+      "company": "BAC",
+      "sector": "Haber Radarı",
+      "analysis_date": "2026-04-26",
+      "earnings_date": null,
+      "analysis_type": "haber_radar",
+      "status": "aktif_izleme",
+      "file": "reports/research/BAC_RADAR_2026-04-26.md",
+      "tags": [
+        "haber_radar",
+        "bullish",
+        "kısa_vadeli"
+      ],
+      "portfolio_recommendation": {
+        "balanced": "izle",
+        "aggressive": "izle",
+        "dividend": "izle"
       },
-      "portfoy_onerisi": {
-        "dengeli": "izle",
-        "agresif": "izle",
-        "temettü": "izle"
-      },
-      "gerceklesen": {
+      "actual": {
         "tespit_fiyati": 52.63,
         "simdiki_fiyat": 53.24,
         "fiyat_tepkisi_pct": 1.2,
         "tez_tuttu": false,
         "ders": "5 günde +1.2%"
       },
-      "etiketler": [
-        "haber_radar",
-        "bullish",
-        "kısa_vadeli"
-      ]
+      "catalyst": {
+        "event": "Sen. Tillis Kevin Warsh'ın Fed başkanlığı önündeki engeli kaldıracak",
+        "date": "2026-04-26",
+        "description": "Fed politika değişimi beklentisi henüz tam olarak finansal hisselere yansımadı"
+      }
     },
     {
       "id": "NVDA_RADAR_2026-04-26",
       "ticker": "NVDA",
-      "sirket": "NVDA",
-      "sektor": "Haber Radarı",
-      "analiz_tarihi": "2026-04-26",
-      "bilanco_tarihi": null,
-      "analiz_turu": "haber_radar",
-      "durum": "aktif_izleme",
-      "dosya": "reports/research/NVDA_RADAR_2026-04-26.md",
-      "kataliz": {
-        "olay": "Aramco Ventures yapay zeka ve sürdürülebilirlik için 7.5 milyar dolar yatırım",
-        "tarih": "2026-04-26",
-        "aciklama": "Stratejik teknoloji yatırımları henüz hedef şirketlerde tam fiyatlanmadı"
+      "company": "NVDA",
+      "sector": "Haber Radarı",
+      "analysis_date": "2026-04-26",
+      "earnings_date": null,
+      "analysis_type": "haber_radar",
+      "status": "aktif_izleme",
+      "file": "reports/research/NVDA_RADAR_2026-04-26.md",
+      "tags": [
+        "haber_radar",
+        "bullish",
+        "uzun_vadeli"
+      ],
+      "portfolio_recommendation": {
+        "balanced": "izle",
+        "aggressive": "izle",
+        "dividend": "izle"
       },
-      "portfoy_onerisi": {
-        "dengeli": "izle",
-        "agresif": "izle",
-        "temettü": "izle"
-      },
-      "gerceklesen": {
+      "actual": {
         "tespit_fiyati": 216.61,
         "simdiki_fiyat": 198.45,
         "fiyat_tepkisi_pct": -8.4,
         "tez_tuttu": false,
         "ders": "5 günde -8.4%"
       },
-      "etiketler": [
-        "haber_radar",
-        "bullish",
-        "uzun_vadeli"
-      ]
+      "catalyst": {
+        "event": "Aramco Ventures yapay zeka ve sürdürülebilirlik için 7.5 milyar dolar yatırım",
+        "date": "2026-04-26",
+        "description": "Stratejik teknoloji yatırımları henüz hedef şirketlerde tam fiyatlanmadı"
+      }
     },
     {
       "id": "CRDO_RADAR_2026-04-26",
       "ticker": "CRDO",
-      "sirket": "Credo Technology Group Holding Ltd",
-      "sektor": "Technology / Communication Equipment",
-      "analiz_tarihi": "2026-04-26",
-      "bilanco_tarihi": "2026-06-01",
-      "analiz_turu": "tematik_arastirma",
-      "durum": "aktif_izleme",
-      "dosya": "reports/research/CRDO_RADAR_2026-04-26.md",
-      "kataliz": {
-        "olay": "AI veri merkezi connectivity ivmelenmesi — AEC ve optical DSP talebi",
-        "tarih": "2026-04-26",
-        "aciklama": "Q3 FY26 gelir +%201 YoY (135M->407M dolar), 8 çeyrek üst üste analist beat. Hyperscaler AEC adopsyonu hızlanıyor. Ancak RSI 77.6 aşırı alım, insider 21M dolar net satış kırmızı bayrak."
-      },
-      "on_beklenti": {
-        "senaryo_boga": {
-          "kosul": "1 Haz Q4 beat + sektör momentum süreklilik",
-          "fiyat_hedef": 260.0,
-          "getiri_pct": 33
-        },
-        "senaryo_baz": {
-          "kosul": "Pullback 168-175 zonuna, sonra konsensüs hedefe",
-          "fiyat_hedef": 220.0,
-          "getiri_pct": 13
-        },
-        "senaryo_ayi": {
-          "kosul": "Müşteri konsantrasyon riski + büyüme yavaşlama",
-          "fiyat_hedef": 145.0,
-          "getiri_pct": -26
-        }
-      },
       "analiz_fiyati": 195.04,
       "temel_metrikler": {
         "pe_ttm": 101.3,
@@ -309,11 +280,6 @@
         "analist_hold": 1,
         "analist_sell": 0
       },
-      "portfoy_onerisi": {
-        "dengeli": "uygun_degil",
-        "agresif": "uygun_kosullu",
-        "temettü": "uygun_degil"
-      },
       "giris_plani": {
         "ideal_zon": "168-175",
         "stop_loss": 145,
@@ -331,14 +297,14 @@
         "Insider satış davranışında değişim (alım sinyali)",
         "ANET ile sektör konsantrasyon yönetimi"
       ],
-      "gerceklesen": {
-        "earnings_q4_eps": null,
-        "earnings_q4_revenue_m": null,
-        "fiyat_tepkisi_pct": null,
-        "alim_tetiklendi_mi": null,
-        "ders": null
-      },
-      "etiketler": [
+      "company": "Credo Technology Group Holding Ltd",
+      "sector": "Technology / Communication Equipment",
+      "analysis_date": "2026-04-26",
+      "earnings_date": "2026-06-01",
+      "analysis_type": "tematik_arastirma",
+      "status": "aktif_izleme",
+      "file": "reports/research/CRDO_RADAR_2026-04-26.md",
+      "tags": [
         "ai_infrastructure",
         "data_center",
         "connectivity",
@@ -350,23 +316,45 @@
         "high_growth",
         "high_valuation",
         "insider_red_flag"
-      ]
+      ],
+      "portfolio_recommendation": {
+        "balanced": "uygun_degil",
+        "aggressive": "uygun_kosullu",
+        "dividend": "uygun_degil"
+      },
+      "actual": {
+        "earnings_q4_eps": null,
+        "earnings_q4_revenue_m": null,
+        "fiyat_tepkisi_pct": null,
+        "alim_tetiklendi_mi": null,
+        "ders": null
+      },
+      "expectations": {
+        "senaryo_boga": {
+          "kosul": "1 Haz Q4 beat + sektör momentum süreklilik",
+          "fiyat_hedef": 260.0,
+          "getiri_pct": 33
+        },
+        "senaryo_baz": {
+          "kosul": "Pullback 168-175 zonuna, sonra konsensüs hedefe",
+          "fiyat_hedef": 220.0,
+          "getiri_pct": 13
+        },
+        "senaryo_ayi": {
+          "kosul": "Müşteri konsantrasyon riski + büyüme yavaşlama",
+          "fiyat_hedef": 145.0,
+          "getiri_pct": -26
+        }
+      },
+      "catalyst": {
+        "event": "AI veri merkezi connectivity ivmelenmesi — AEC ve optical DSP talebi",
+        "date": "2026-04-26",
+        "description": "Q3 FY26 gelir +%201 YoY (135M->407M dolar), 8 çeyrek üst üste analist beat. Hyperscaler AEC adopsyonu hızlanıyor. Ancak RSI 77.6 aşırı alım, insider 21M dolar net satış kırmızı bayrak."
+      }
     },
     {
       "id": "TLN_ADIL_DEGER_2026-05-08",
       "ticker": "TLN",
-      "sirket": "Talen Energy Corporation",
-      "sektor": "Utilities / Independent Power Producers",
-      "analiz_tarihi": "2026-05-08",
-      "bilanco_tarihi": "2026-05-15",
-      "analiz_turu": "adil_deger_hesabi",
-      "durum": "aktif_izleme",
-      "dosya": "reports/research/TLN_ADIL_DEGER_2026-05-08.md",
-      "kataliz": {
-        "olay": "AI veri merkezi enerji teması — AWS 1,92 GW behind-the-meter PPA + Susquehanna nükleer stratejik varlık",
-        "tarih": "2026-05-08",
-        "aciklama": "Hisse 17 ayda 220'den 451 dolara koştu, 390 civarına geri çekildi. TTM zarar (-216M dolar), borç ikiye katlandı (3.0 -> 6.8 milyar). Forward EPS 2027 30.95 dolar, 2030 49.01 dolar. Hibrit utility/AI growth profili."
-      },
       "adil_deger": {
         "yontem_v": "v3.7.2 forward-adapted",
         "kullanilabilir_yontem_sayisi": 5,
@@ -407,28 +395,6 @@
           }
         }
       },
-      "on_beklenti": {
-        "senaryo_boga": {
-          "kosul": "AWS-benzeri yeni PPA (MSFT/META) + AI power teması süreklilik + PJM kapasite premium",
-          "fiyat_hedef": 700,
-          "getiri_pct": 79
-        },
-        "senaryo_baz": {
-          "kosul": "Mevcut tez tutar, 2027 EPS estimates'a yakin gerceklesme",
-          "fiyat_hedef": 480,
-          "getiri_pct": 23
-        },
-        "senaryo_ayi": {
-          "kosul": "AI power tema sogur + multiple compression + borc refinansman zorlugu",
-          "fiyat_hedef": 310,
-          "getiri_pct": -21
-        },
-        "olasiliklar": {
-          "boga": 0.25,
-          "baz": 0.5,
-          "ayi": 0.25
-        }
-      },
       "analiz_fiyati": 390.55,
       "temel_metrikler": {
         "pe_ttm": -848.27,
@@ -460,11 +426,6 @@
         "ebitda_yoy_2025_pct": -76.6,
         "net_income_yoy_2025_pct": -121.9
       },
-      "portfoy_onerisi": {
-        "dengeli": "uygun_kosullu",
-        "agresif": "uygun_kosullu",
-        "temettü": "uygun_degil"
-      },
       "giris_plani": {
         "ideal_zon": "310-360",
         "stop_loss": 280,
@@ -491,16 +452,14 @@
         "TTM zarar nedeniyle forward bazli analiz tamamen varsayim yuklu",
         "Recency bias: AI power temasi son 6 hafta yeniden isindi, dogru fiyatlama belirsiz"
       ],
-      "gerceklesen": {
-        "tespit_fiyati": 390.55,
-        "simdiki_fiyat": 334.24,
-        "fiyat_tepkisi_pct": -14.4,
-        "tez_tuttu": null,
-        "ders": null,
-        "gun_sayisi": 9,
-        "son_kontrol": "2026-05-17 20:35"
-      },
-      "etiketler": [
+      "company": "Talen Energy Corporation",
+      "sector": "Utilities / Independent Power Producers",
+      "analysis_date": "2026-05-08",
+      "earnings_date": "2026-05-15",
+      "analysis_type": "adil_deger_hesabi",
+      "status": "aktif_izleme",
+      "file": "reports/research/TLN_ADIL_DEGER_2026-05-08.md",
+      "tags": [
         "ai_infrastructure",
         "data_center",
         "power",
@@ -517,23 +476,52 @@
         "hybrid_growth_utility",
         "watchlist",
         "no_entry_yet"
-      ]
+      ],
+      "portfolio_recommendation": {
+        "balanced": "uygun_kosullu",
+        "aggressive": "uygun_kosullu",
+        "dividend": "uygun_degil"
+      },
+      "actual": {
+        "tespit_fiyati": 390.55,
+        "simdiki_fiyat": 334.24,
+        "fiyat_tepkisi_pct": -14.4,
+        "tez_tuttu": null,
+        "ders": null,
+        "gun_sayisi": 9,
+        "son_kontrol": "2026-05-17 20:35"
+      },
+      "expectations": {
+        "senaryo_boga": {
+          "kosul": "AWS-benzeri yeni PPA (MSFT/META) + AI power teması süreklilik + PJM kapasite premium",
+          "fiyat_hedef": 700,
+          "getiri_pct": 79
+        },
+        "senaryo_baz": {
+          "kosul": "Mevcut tez tutar, 2027 EPS estimates'a yakin gerceklesme",
+          "fiyat_hedef": 480,
+          "getiri_pct": 23
+        },
+        "senaryo_ayi": {
+          "kosul": "AI power tema sogur + multiple compression + borc refinansman zorlugu",
+          "fiyat_hedef": 310,
+          "getiri_pct": -21
+        },
+        "olasiliklar": {
+          "boga": 0.25,
+          "baz": 0.5,
+          "ayi": 0.25
+        }
+      },
+      "catalyst": {
+        "event": "AI veri merkezi enerji teması — AWS 1,92 GW behind-the-meter PPA + Susquehanna nükleer stratejik varlık",
+        "date": "2026-05-08",
+        "description": "Hisse 17 ayda 220'den 451 dolara koştu, 390 civarına geri çekildi. TTM zarar (-216M dolar), borç ikiye katlandı (3.0 -> 6.8 milyar). Forward EPS 2027 30.95 dolar, 2030 49.01 dolar. Hibrit utility/AI growth profili."
+      }
     },
     {
       "id": "FLYW_ADIL_DEGER_2026-05-08",
       "ticker": "FLYW",
-      "sirket": "Flywire Corporation",
-      "sektor": "Technology / Information Technology Services (Cross-border payment + Vertical SaaS)",
-      "analiz_tarihi": "2026-05-08",
-      "bilanco_tarihi": "2026-05-15",
-      "analiz_turu": "adil_deger_hesabi",
-      "durum": "aktif_izleme",
-      "dosya": "reports/research/FLYW_ADIL_DEGER_2026-05-08.md",
-      "kataliz": {
-        "olay": "Cross-border odeme + vertical SaaS hibrit fintech, net cash pozitif bilanco",
-        "tarih": "2026-05-08",
-        "aciklama": "12 ayda dipten +%78 ralli (9.97 -> 17.73). 52 hafta zirvesinden -%2. Net cash 355M dolar (sifir borc), FCF 98.8M (+%9 YoY), Revenue +%26 YoY. TTM EPS yeni pozitife gecti (0.11). Forward EPS 2026 0.42 (8 analist), 2027 0.63 (9 analist). Agirlikli adil deger 20.50 dolar."
-      },
       "adil_deger": {
         "yontem_v": "v3.7.2 forward-adapted",
         "kullanilabilir_yontem_sayisi": 5,
@@ -574,28 +562,6 @@
           }
         }
       },
-      "on_beklenti": {
-        "senaryo_boga": {
-          "kosul": "Buyume curve devam, marj genisleme, akquizisyon premium, multiple expansion",
-          "fiyat_hedef": 32.0,
-          "getiri_pct": 80
-        },
-        "senaryo_baz": {
-          "kosul": "Mevcut tez tutar, 2026 EPS estimates yakin gerceklesme",
-          "fiyat_hedef": 20.5,
-          "getiri_pct": 16
-        },
-        "senaryo_ayi": {
-          "kosul": "Egitim segment baskisi + multiple compression + 52w zirvesinden geri cekilme",
-          "fiyat_hedef": 13.0,
-          "getiri_pct": -27
-        },
-        "olasiliklar": {
-          "boga": 0.25,
-          "baz": 0.5,
-          "ayi": 0.25
-        }
-      },
       "analiz_fiyati": 17.73,
       "temel_metrikler": {
         "pe_ttm": 161.2,
@@ -630,11 +596,6 @@
         "fcf_yoy_2025_pct": 9.1,
         "fcf_konversiyon_oranı": 7.32
       },
-      "portfoy_onerisi": {
-        "dengeli": "uygun_kosullu",
-        "agresif": "uygun_kosullu",
-        "temettü": "uygun_degil"
-      },
       "giris_plani": {
         "ideal_zon": "14-15",
         "stop_loss": 12,
@@ -663,16 +624,14 @@
         "2025 EPS surprizi 2026'ya extrapolate edilemeyebilir (dar tabandan)",
         "Net cash 165M dolar yillik eridi, 2 yilda yariya inebilir"
       ],
-      "gerceklesen": {
-        "tespit_fiyati": 17.73,
-        "simdiki_fiyat": 16.06,
-        "fiyat_tepkisi_pct": -9.4,
-        "tez_tuttu": null,
-        "ders": null,
-        "gun_sayisi": 9,
-        "son_kontrol": "2026-05-17 20:35"
-      },
-      "etiketler": [
+      "company": "Flywire Corporation",
+      "sector": "Technology / Information Technology Services (Cross-border payment + Vertical SaaS)",
+      "analysis_date": "2026-05-08",
+      "earnings_date": "2026-05-15",
+      "analysis_type": "adil_deger_hesabi",
+      "status": "aktif_izleme",
+      "file": "reports/research/FLYW_ADIL_DEGER_2026-05-08.md",
+      "tags": [
         "fintech",
         "cross_border_payment",
         "vertical_saas",
@@ -687,23 +646,52 @@
         "watchlist",
         "no_entry_yet",
         "near_52w_high"
-      ]
+      ],
+      "portfolio_recommendation": {
+        "balanced": "uygun_kosullu",
+        "aggressive": "uygun_kosullu",
+        "dividend": "uygun_degil"
+      },
+      "actual": {
+        "tespit_fiyati": 17.73,
+        "simdiki_fiyat": 16.06,
+        "fiyat_tepkisi_pct": -9.4,
+        "tez_tuttu": null,
+        "ders": null,
+        "gun_sayisi": 9,
+        "son_kontrol": "2026-05-17 20:35"
+      },
+      "expectations": {
+        "senaryo_boga": {
+          "kosul": "Buyume curve devam, marj genisleme, akquizisyon premium, multiple expansion",
+          "fiyat_hedef": 32.0,
+          "getiri_pct": 80
+        },
+        "senaryo_baz": {
+          "kosul": "Mevcut tez tutar, 2026 EPS estimates yakin gerceklesme",
+          "fiyat_hedef": 20.5,
+          "getiri_pct": 16
+        },
+        "senaryo_ayi": {
+          "kosul": "Egitim segment baskisi + multiple compression + 52w zirvesinden geri cekilme",
+          "fiyat_hedef": 13.0,
+          "getiri_pct": -27
+        },
+        "olasiliklar": {
+          "boga": 0.25,
+          "baz": 0.5,
+          "ayi": 0.25
+        }
+      },
+      "catalyst": {
+        "event": "Cross-border odeme + vertical SaaS hibrit fintech, net cash pozitif bilanco",
+        "date": "2026-05-08",
+        "description": "12 ayda dipten +%78 ralli (9.97 -> 17.73). 52 hafta zirvesinden -%2. Net cash 355M dolar (sifir borc), FCF 98.8M (+%9 YoY), Revenue +%26 YoY. TTM EPS yeni pozitife gecti (0.11). Forward EPS 2026 0.42 (8 analist), 2027 0.63 (9 analist). Agirlikli adil deger 20.50 dolar."
+      }
     },
     {
       "id": "PENG_ADIL_DEGER_2026-05-08",
       "ticker": "PENG",
-      "sirket": "Penguin Solutions, Inc.",
-      "sektor": "Technology / Hardware, Equipment & Parts",
-      "analiz_tarihi": "2026-05-08",
-      "bilanco_tarihi": "2026-07-07",
-      "analiz_turu": "adil_deger_hesabi",
-      "durum": "kapandi",
-      "dosya": "reports/research/PENG_ADIL_DEGER_2026-05-08.md",
-      "kataliz": {
-        "olay": "Q2 FY26 sonrası guidance %6 → %12 yukarı revizyonu + AI factory talebi + AMD veri merkezi sıçraması",
-        "tarih": "2026-05-08",
-        "aciklama": "Hisse 8 Mayıs'ta %9,13 sıçradı; 52 hafta zirvesi 43,23 dolar yenilendi. Son 1 yılda %122, son 30 günde %76 rally. Bilanço 7 Temmuz 2026 (Q3 FY26)."
-      },
       "adil_deger": {
         "yontem_v": "v3.7.2 forward-adapted",
         "kullanilabilir_yontem_sayisi": 7,
@@ -753,28 +741,6 @@
           }
         }
       },
-      "on_beklenti": {
-        "senaryo_boga": {
-          "kosul": "Multiple 24-28x, yeni AI factory kontratları, Q3 beat+guidance raise tekrar",
-          "fiyat_hedef": 60.0,
-          "getiri_pct": 41.0
-        },
-        "senaryo_baz": {
-          "kosul": "Forward P/E 18-22x, %12 büyüme tutuyor, AI infra ramp devam",
-          "fiyat_hedef": 45.0,
-          "getiri_pct": 5.8
-        },
-        "senaryo_ayi": {
-          "kosul": "Multiple compression, AC %20 düşüş guidance, supply constraint, beta-driven sell-off",
-          "fiyat_hedef": 26.0,
-          "getiri_pct": -38.9
-        },
-        "olasiliklar": {
-          "boga": 0.25,
-          "baz": 0.45,
-          "ayi": 0.3
-        }
-      },
       "analiz_fiyati": 42.54,
       "temel_metrikler": {
         "pe_ttm": 40.88,
@@ -800,11 +766,6 @@
         "piyasa_degeri_m": 2243,
         "enterprise_value_m": 2318,
         "hisse_adedi_m": 51.5
-      },
-      "portfoy_onerisi": {
-        "dengeli": "uygun_degil",
-        "agresif": "uygun_kosullu",
-        "temettü": "uygun_degil"
       },
       "giris_plani": {
         "ideal_zon": "32-35 dolar",
@@ -838,7 +799,27 @@
         "WACC %12 normalize varsayımı; beta 2.65 ile saf CAPM 19% verir",
         "Forward büyüme varsayımları (%20 y1, terminal %3.5) yumuşaklık riski"
       ],
-      "gerceklesen": {
+      "company": "Penguin Solutions, Inc.",
+      "sector": "Technology / Hardware, Equipment & Parts",
+      "analysis_date": "2026-05-08",
+      "earnings_date": "2026-07-07",
+      "analysis_type": "adil_deger_hesabi",
+      "status": "kapandi",
+      "file": "reports/research/PENG_ADIL_DEGER_2026-05-08.md",
+      "tags": [
+        "AI infrastructure",
+        "memory module",
+        "cyclical-to-growth transition",
+        "high beta",
+        "fully priced",
+        "watchlist"
+      ],
+      "portfolio_recommendation": {
+        "balanced": "uygun_degil",
+        "aggressive": "uygun_kosullu",
+        "dividend": "uygun_degil"
+      },
+      "actual": {
         "tespit_fiyati": 42.54,
         "simdiki_fiyat": 49.44,
         "fiyat_tepkisi_pct": 16.2,
@@ -847,30 +828,37 @@
         "gun_sayisi": 6,
         "son_kontrol": "2026-05-14 20:35"
       },
-      "etiketler": [
-        "AI infrastructure",
-        "memory module",
-        "cyclical-to-growth transition",
-        "high beta",
-        "fully priced",
-        "watchlist"
-      ]
+      "expectations": {
+        "senaryo_boga": {
+          "kosul": "Multiple 24-28x, yeni AI factory kontratları, Q3 beat+guidance raise tekrar",
+          "fiyat_hedef": 60.0,
+          "getiri_pct": 41.0
+        },
+        "senaryo_baz": {
+          "kosul": "Forward P/E 18-22x, %12 büyüme tutuyor, AI infra ramp devam",
+          "fiyat_hedef": 45.0,
+          "getiri_pct": 5.8
+        },
+        "senaryo_ayi": {
+          "kosul": "Multiple compression, AC %20 düşüş guidance, supply constraint, beta-driven sell-off",
+          "fiyat_hedef": 26.0,
+          "getiri_pct": -38.9
+        },
+        "olasiliklar": {
+          "boga": 0.25,
+          "baz": 0.45,
+          "ayi": 0.3
+        }
+      },
+      "catalyst": {
+        "event": "Q2 FY26 sonrası guidance %6 → %12 yukarı revizyonu + AI factory talebi + AMD veri merkezi sıçraması",
+        "date": "2026-05-08",
+        "description": "Hisse 8 Mayıs'ta %9,13 sıçradı; 52 hafta zirvesi 43,23 dolar yenilendi. Son 1 yılda %122, son 30 günde %76 rally. Bilanço 7 Temmuz 2026 (Q3 FY26)."
+      }
     },
     {
       "id": "TEM_ADIL_DEGER_2026-05-08",
       "ticker": "TEM",
-      "sirket": "Tempus AI, Inc.",
-      "sektor": "Healthcare / Medical - Healthcare Information Services",
-      "analiz_tarihi": "2026-05-08",
-      "bilanco_tarihi": "Q1 2026 (31 Mart) zaten açıklandı — Q2 2026 yaklaşık 5-12 Ağustos",
-      "analiz_turu": "adil_deger_hesabi",
-      "durum": "kapandi",
-      "dosya": "reports/research/TEM_ADIL_DEGER_2026-05-08.md",
-      "kataliz": {
-        "olay": "AI destekli precision medicine pure-play, 52H zirvesinden -%53,8 düşmüş, 41-43 dolar dip zonuna yaklaşma",
-        "tarih": "2026-Q2 kazanç (yaklaşık Mayıs-Haziran)",
-        "aciklama": "Q1 2026 bilanço sonrası KRİTİK MISS: EPS -0,71 vs FY tahmini -0,375 (%89 aştı tek çeyrekte). Net zarar Q4-Q1 2,3x kötüleşti. Wall Street 2026 EPS revizyonu bekleniyor. Q2 öncesi pozisyon riskli — revizyon şoku + Q2 sonuçları çift risk."
-      },
       "adil_deger": {
         "yontem_v": "v3.7.2 forward-adapted (TTM zarar — 6 yöntem iptal)",
         "kullanilabilir_yontem_sayisi": 4,
@@ -905,28 +893,6 @@
           }
         }
       },
-      "on_beklenti": {
-        "senaryo_boga": {
-          "kosul": "Hızlı kâr geçişi, Ambry sinerjisi materyalleşir, 8x EV/Sales",
-          "fiyat_hedef": 75,
-          "getiri_pct": 55.6
-        },
-        "senaryo_baz": {
-          "kosul": "Q1 mevsimsel zayıflık, Q2 toparlanma sinyali, gelir guidance korunur (1,55Mr$), EV/Sales 6x",
-          "fiyat_hedef": 43,
-          "getiri_pct": -10.8
-        },
-        "senaryo_ayi": {
-          "kosul": "Q2 yine miss, Wall St 2026 EPS -0,80'e revize, EBITDA dönüşü 2028'e kayar",
-          "fiyat_hedef": 26,
-          "getiri_pct": -46.1
-        },
-        "olasiliklar": {
-          "boga": 0.25,
-          "baz": 0.4,
-          "ayi": 0.35
-        }
-      },
       "analiz_fiyati": 48.2,
       "temel_metrikler": {
         "pe_ttm": -28.46,
@@ -954,11 +920,6 @@
         "brut_marj_ttm_pct": 71.7,
         "sbc_2025_m": 124.7,
         "goodwill_intangible_m": 825.5
-      },
-      "portfoy_onerisi": {
-        "dengeli": "uygun_degil",
-        "agresif": "uygun_degil",
-        "temettü": "uygun_degil"
       },
       "giris_plani": {
         "ideal_zon": "41-43",
@@ -994,16 +955,22 @@
         "Healthcare regülasyon riski (FDA, CMS reimbursement) modele girmedi",
         "Recency bias — düşüş momentumu sebebiyle negatif tarafa yatkın olabilirim"
       ],
-      "gerceklesen": {
-        "tespit_fiyati": 48.2,
-        "simdiki_fiyat": 48.76,
-        "fiyat_tepkisi_pct": 1.2,
-        "tez_tuttu": true,
-        "ders": "Baz hedef $48.00 3. günde tutturuldu, fiyat $48.76 (+%1.2)",
-        "gun_sayisi": 3,
-        "son_kontrol": "2026-05-11 14:08"
-      },
-      "etiketler": [
+      "ek_dosyalar": [
+        {
+          "tur": "html_dashboard",
+          "dosya": "reports/research/TEM_BILANCO_SONRASI_2026-05-08.html",
+          "aciklama": "Finzora skill v1 dashboard — 12 bölümlü, Q1 2026 bilanço sonrası analiz",
+          "skill": "finzora-stock-analysis"
+        }
+      ],
+      "company": "Tempus AI, Inc.",
+      "sector": "Healthcare / Medical - Healthcare Information Services",
+      "analysis_date": "2026-05-08",
+      "earnings_date": "Q1 2026 (31 Mart) zaten açıklandı — Q2 2026 yaklaşık 5-12 Ağustos",
+      "analysis_type": "adil_deger_hesabi",
+      "status": "kapandi",
+      "file": "reports/research/TEM_ADIL_DEGER_2026-05-08.md",
+      "tags": [
         "healthcare-ai",
         "precision-medicine",
         "diagnostic",
@@ -1017,30 +984,51 @@
         "Q1-2026-EPS-71cent",
         "konsensus-revizyon-bekleme"
       ],
-      "ek_dosyalar": [
-        {
-          "tur": "html_dashboard",
-          "dosya": "reports/research/TEM_BILANCO_SONRASI_2026-05-08.html",
-          "aciklama": "Finzora skill v1 dashboard — 12 bölümlü, Q1 2026 bilanço sonrası analiz",
-          "skill": "finzora-stock-analysis"
+      "portfolio_recommendation": {
+        "balanced": "uygun_degil",
+        "aggressive": "uygun_degil",
+        "dividend": "uygun_degil"
+      },
+      "actual": {
+        "tespit_fiyati": 48.2,
+        "simdiki_fiyat": 48.76,
+        "fiyat_tepkisi_pct": 1.2,
+        "tez_tuttu": true,
+        "ders": "Baz hedef $48.00 3. günde tutturuldu, fiyat $48.76 (+%1.2)",
+        "gun_sayisi": 3,
+        "son_kontrol": "2026-05-11 14:08"
+      },
+      "expectations": {
+        "senaryo_boga": {
+          "kosul": "Hızlı kâr geçişi, Ambry sinerjisi materyalleşir, 8x EV/Sales",
+          "fiyat_hedef": 75,
+          "getiri_pct": 55.6
+        },
+        "senaryo_baz": {
+          "kosul": "Q1 mevsimsel zayıflık, Q2 toparlanma sinyali, gelir guidance korunur (1,55Mr$), EV/Sales 6x",
+          "fiyat_hedef": 43,
+          "getiri_pct": -10.8
+        },
+        "senaryo_ayi": {
+          "kosul": "Q2 yine miss, Wall St 2026 EPS -0,80'e revize, EBITDA dönüşü 2028'e kayar",
+          "fiyat_hedef": 26,
+          "getiri_pct": -46.1
+        },
+        "olasiliklar": {
+          "boga": 0.25,
+          "baz": 0.4,
+          "ayi": 0.35
         }
-      ]
+      },
+      "catalyst": {
+        "event": "AI destekli precision medicine pure-play, 52H zirvesinden -%53,8 düşmüş, 41-43 dolar dip zonuna yaklaşma",
+        "date": "2026-Q2 kazanç (yaklaşık Mayıs-Haziran)",
+        "description": "Q1 2026 bilanço sonrası KRİTİK MISS: EPS -0,71 vs FY tahmini -0,375 (%89 aştı tek çeyrekte). Net zarar Q4-Q1 2,3x kötüleşti. Wall Street 2026 EPS revizyonu bekleniyor. Q2 öncesi pozisyon riskli — revizyon şoku + Q2 sonuçları çift risk."
+      }
     },
     {
       "id": "CBRS_ADIL_DEGER_2026-05-11",
       "ticker": "CBRS",
-      "sirket": "Cerebras Systems Inc.",
-      "sektor": "Semiconductor / AI Compute - Wafer Scale Engine pure-play",
-      "analiz_tarihi": "2026-05-11",
-      "bilanco_tarihi": "Q2 2026 (Ağustos-Eylül 2026, post-IPO ilk halka açık rapor)",
-      "analiz_turu": "adil_deger_hesabi",
-      "durum": "pre_IPO_izleme",
-      "dosya": "reports/research/CBRS_ADIL_DEGER_2026-05-11.md",
-      "kataliz": {
-        "olay": "Halka arz (IPO) 13 Mayıs 2026 pricing, 14 Mayıs işlem başlangıcı. OpenAI MRA 20B+ ($1B loan + 33.4M warrant) + AWS Bedrock partnership (Mart 2026) + Backlog $24.6B.",
-        "tarih": "2026-05-13 (pricing) / 2026-05-14 (NYSE açılış)",
-        "aciklama": "20x+ oversubscribed talep, fiyat aralığı $115-125 → $125-135 → $150-160 iki kez yukarı revize. Day-1 pop beklentisi %25-50. Hisse $190-240 zonunda açılabilir. K-13 day-1 chase yasak. Lock-up Kasım 2026 ek satış baskısı riski."
-      },
       "adil_deger": {
         "yontem_v": "v3.7.2 forward-adapted (TTM op loss — 6 yöntem iptal, GROWTH modu)",
         "kullanilabilir_yontem_sayisi": 7,
@@ -1097,28 +1085,6 @@
         },
         "cv_pct": 32.0,
         "cv_label": "🟡 Normal dağılım"
-      },
-      "on_beklenti": {
-        "senaryo_boga": {
-          "kosul": "OpenAI 1,25 GW ek opsiyon %50+ yürürlüğe, AWS Bedrock üretim ölçeği, sovereign AI sözleşmeleri (Suudi/Hindistan/AB), brüt marj %50+",
-          "fiyat_hedef": 185.0,
-          "getiri_pct_vs_ipo_top": 16.0
-        },
-        "senaryo_baz": {
-          "kosul": "Backlog S-1 takvimine sadık dönüşüm, 2026 $1,2B → 2027 $2,7B → 2028 $5,5B, brüt marj %42-45, AWS Bedrock canlı ama mega scale değil",
-          "fiyat_hedef": 127.0,
-          "getiri_pct_vs_ipo_top": -21.0
-        },
-        "senaryo_ayi": {
-          "kosul": "UAE müşteri konsantrasyon krizi, CFIUS yeniden incelemesi, NVDA fiyat baskısı, brüt marj %30 altı, backlog dönüşümü gecikir, OpenAI ilişkisi soğur",
-          "fiyat_hedef": 75.0,
-          "getiri_pct_vs_ipo_top": -53.0
-        },
-        "olasiliklar": {
-          "boga": 0.2,
-          "baz": 0.5,
-          "ayi": 0.3
-        }
       },
       "analiz_fiyati": null,
       "ipo_pricing_aralik": {
@@ -1178,12 +1144,6 @@
           "performans": "5x token kapasitesi, 10x hız vs GPU"
         }
       },
-      "portfoy_onerisi": {
-        "dengeli": "girmez",
-        "agresif": "al_kademeli_post_ipo_zonlama",
-        "temettu": "girmez",
-        "swing": "izle_post_pop_consolidation"
-      },
       "giris_plani": {
         "ideal_zon_low": 130.0,
         "ideal_zon_high": 150.0,
@@ -1210,7 +1170,14 @@
         "OpenAI 2 GW ek opsiyon vesting (8-K filing tetikleyicisi)"
       ],
       "risk_seviyesi": "YUKSEK",
-      "etiketler": [
+      "company": "Cerebras Systems Inc.",
+      "sector": "Semiconductor / AI Compute - Wafer Scale Engine pure-play",
+      "analysis_date": "2026-05-11",
+      "earnings_date": "Q2 2026 (Ağustos-Eylül 2026, post-IPO ilk halka açık rapor)",
+      "analysis_type": "adil_deger_hesabi",
+      "status": "pre_IPO_izleme",
+      "file": "reports/research/CBRS_ADIL_DEGER_2026-05-11.md",
+      "tags": [
         "AI_supply_chain",
         "AI_inference",
         "wafer_scale",
@@ -1223,17 +1190,44 @@
         "growth_mode",
         "NVIDIA_competitor",
         "backlog_visibility"
-      ]
+      ],
+      "portfolio_recommendation": {
+        "swing": "izle_post_pop_consolidation",
+        "balanced": "girmez",
+        "aggressive": "al_kademeli_post_ipo_zonlama",
+        "dividend": "girmez"
+      },
+      "expectations": {
+        "senaryo_boga": {
+          "kosul": "OpenAI 1,25 GW ek opsiyon %50+ yürürlüğe, AWS Bedrock üretim ölçeği, sovereign AI sözleşmeleri (Suudi/Hindistan/AB), brüt marj %50+",
+          "fiyat_hedef": 185.0,
+          "getiri_pct_vs_ipo_top": 16.0
+        },
+        "senaryo_baz": {
+          "kosul": "Backlog S-1 takvimine sadık dönüşüm, 2026 $1,2B → 2027 $2,7B → 2028 $5,5B, brüt marj %42-45, AWS Bedrock canlı ama mega scale değil",
+          "fiyat_hedef": 127.0,
+          "getiri_pct_vs_ipo_top": -21.0
+        },
+        "senaryo_ayi": {
+          "kosul": "UAE müşteri konsantrasyon krizi, CFIUS yeniden incelemesi, NVDA fiyat baskısı, brüt marj %30 altı, backlog dönüşümü gecikir, OpenAI ilişkisi soğur",
+          "fiyat_hedef": 75.0,
+          "getiri_pct_vs_ipo_top": -53.0
+        },
+        "olasiliklar": {
+          "boga": 0.2,
+          "baz": 0.5,
+          "ayi": 0.3
+        }
+      },
+      "catalyst": {
+        "event": "Halka arz (IPO) 13 Mayıs 2026 pricing, 14 Mayıs işlem başlangıcı. OpenAI MRA 20B+ ($1B loan + 33.4M warrant) + AWS Bedrock partnership (Mart 2026) + Backlog $24.6B.",
+        "date": "2026-05-13 (pricing) / 2026-05-14 (NYSE açılış)",
+        "description": "20x+ oversubscribed talep, fiyat aralığı $115-125 → $125-135 → $150-160 iki kez yukarı revize. Day-1 pop beklentisi %25-50. Hisse $190-240 zonunda açılabilir. K-13 day-1 chase yasak. Lock-up Kasım 2026 ek satış baskısı riski."
+      }
     },
     {
       "id": "NVDA_ADIL_DEGER_2026-05-11",
       "ticker": "NVDA",
-      "sirket": "NVIDIA Corporation",
-      "sektor": "Technology / Semiconductors",
-      "analiz_tarihi": "2026-05-11",
-      "analiz_turu": "adil_deger_hesabi",
-      "durum": "aktif_izleme",
-      "dosya": "reports/research/NVDA_ADIL_DEGER_2026-05-11.md",
       "adil_deger": {
         "yontem_v": "v5.0",
         "mod": "GROWTH",
@@ -1243,23 +1237,6 @@
         "confidence": "ORTA",
         "quality_premium": 1.396,
         "ai_mega_cap": false
-      },
-      "on_beklenti": {
-        "senaryo_boga": {
-          "fiyat_hedef": 310.68,
-          "getiri_pct": 44.4,
-          "olasilik": 0.225
-        },
-        "senaryo_baz": {
-          "fiyat_hedef": 259.25,
-          "getiri_pct": 20.5,
-          "olasilik": 0.475
-        },
-        "senaryo_ayi": {
-          "fiyat_hedef": 194.96,
-          "getiri_pct": -9.4,
-          "olasilik": 0.3
-        }
       },
       "analiz_fiyati": 215.217,
       "temel_metrikler": {
@@ -1318,11 +1295,6 @@
         "profile_key": "semicon_design_mature",
         "normalizasyon_yili": 2026
       },
-      "portfoy_onerisi": {
-        "dengeli": "uygun_kosullu",
-        "agresif": "uygun",
-        "temettu": "uygun_degil"
-      },
       "giris_plani": {
         "stop_loss": 187.24,
         "hedef_1": 259.25,
@@ -1330,7 +1302,23 @@
       },
       "karar": "🟢 AL",
       "karar_gerekce": "Mevcut fiyat normal medyan altında. İyi giriş seviyesi.",
-      "gerceklesen": {
+      "company": "NVIDIA Corporation",
+      "sector": "Technology / Semiconductors",
+      "analysis_date": "2026-05-11",
+      "analysis_type": "adil_deger_hesabi",
+      "status": "aktif_izleme",
+      "file": "reports/research/NVDA_ADIL_DEGER_2026-05-11.md",
+      "tags": [
+        "growth",
+        "v5.0_skill",
+        "semicon_design_mature"
+      ],
+      "portfolio_recommendation": {
+        "balanced": "uygun_kosullu",
+        "aggressive": "uygun",
+        "dividend": "uygun_degil"
+      },
+      "actual": {
         "tespit_fiyati": 215.217,
         "simdiki_fiyat": 225.32,
         "fiyat_tepkisi_pct": 4.7,
@@ -1339,11 +1327,23 @@
         "gun_sayisi": 6,
         "son_kontrol": "2026-05-17 20:35"
       },
-      "etiketler": [
-        "growth",
-        "v5.0_skill",
-        "semicon_design_mature"
-      ]
+      "expectations": {
+        "senaryo_boga": {
+          "fiyat_hedef": 310.68,
+          "getiri_pct": 44.4,
+          "olasilik": 0.225
+        },
+        "senaryo_baz": {
+          "fiyat_hedef": 259.25,
+          "getiri_pct": 20.5,
+          "olasilik": 0.475
+        },
+        "senaryo_ayi": {
+          "fiyat_hedef": 194.96,
+          "getiri_pct": -9.4,
+          "olasilik": 0.3
+        }
+      }
     }
   ]
 }

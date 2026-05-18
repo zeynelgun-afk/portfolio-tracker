@@ -489,10 +489,12 @@ def save_to_github(results, dry_run=False):
         raw = base64.b64decode(r.json()["content"]).decode()
         index = json.loads(raw)
     else:
-        index = {"son_guncelleme": tarih, "toplam_analiz": 0, "beklemede": 0,
-                 "aktif_izleme": 0, "dogru_tahmin_orani": None, "analizler": []}
+        index = {"last_updated": tarih, "total_analyses": 0, "pending": 0,
+                 "active_monitoring": 0, "correct_prediction_ratio": None, "analyses": []}
 
-    mevcut_idler = {a["id"] for a in index.get("analizler", [])}
+    # Geriye uyumluluk shim: eski Türkçe key'ler hala var olabilir
+    _analyses = index.get("analyses") or index.get("analizler", [])
+    mevcut_idler = {a["id"] for a in _analyses}
 
     for result in results:
         hisseler = result.get("etkilenen_hisseler", [])
@@ -522,26 +524,28 @@ def save_to_github(results, dry_run=False):
                 log(f"  GitHub MD HATA: {md_path}")
                 continue
 
-        # ── index.json güncelle ──
-        index["analizler"].append({
-            "id":           analiz_id,
-            "ticker":       ticker_id,
-            "sirket":       ticker_id,
-            "sektor":       "Haber Radarı",
-            "analiz_tarihi": tarih,
-            "bilanco_tarihi": None,
-            "analiz_turu":  "haber_radar",
-            "durum":        "aktif_izleme",
-            "dosya":        md_path,
-            "kataliz": {
-                "olay":     result.get("baslik", ""),
-                "tarih":    tarih,
-                "aciklama": result.get("neden_onemli", ""),
+        # ── index.json güncelle (İngilizce key'ler) ──
+        # NOT: "gerceklesen" key'i altındaki alt-field'lar (tez_tuttu, ders, fiyat_tepkisi_pct)
+        # LLM/result_tracker tarafından doldurulur — bu seviye DOKUNULMADI (scope dışı).
+        _analyses.append({
+            "id":             analiz_id,
+            "ticker":         ticker_id,
+            "company":        ticker_id,
+            "sector":         "Haber Radarı",
+            "analysis_date":  tarih,
+            "earnings_date":  None,
+            "analysis_type":  "haber_radar",
+            "status":         "aktif_izleme",
+            "file":           md_path,
+            "catalyst": {
+                "event":       result.get("baslik", ""),
+                "date":        tarih,
+                "description": result.get("neden_onemli", ""),
             },
-            "portfoy_onerisi": {"dengeli": "izle", "agresif": "izle", "temettü": "izle"},
-            "gerceklesen": {"fiyat_tepkisi_pct": None, "tez_tuttu": None, "ders": None},
-            "etiketler": ["haber_radar", result.get("yon", "bullish"),
-                          result.get("sure", "kısa").replace(" ", "_")],
+            "portfolio_recommendation": {"balanced": "izle", "aggressive": "izle", "dividend": "izle"},
+            "actual": {"fiyat_tepkisi_pct": None, "tez_tuttu": None, "ders": None},
+            "tags": ["haber_radar", result.get("yon", "bullish"),
+                     result.get("sure", "kısa").replace(" ", "_")],
         })
         mevcut_idler.add(analiz_id)
 
@@ -549,9 +553,15 @@ def save_to_github(results, dry_run=False):
         return
 
     # ── index.json geri yaz ──
-    index["son_guncelleme"] = tarih
-    index["toplam_analiz"]  = len(index["analizler"])
-    index["aktif_izleme"]   = sum(1 for a in index["analizler"] if a["durum"] == "aktif_izleme")
+    index["analyses"] = _analyses
+    # Eski "analizler" key'i varsa temizle (migration)
+    index.pop("analizler", None)
+    index["last_updated"]   = tarih
+    index["total_analyses"] = len(_analyses)
+    index["active_monitoring"] = sum(
+        1 for a in _analyses
+        if (a.get("status") or a.get("durum")) == "aktif_izleme"
+    )
 
     if dry_run:
         log(f"  [DRY RUN] index.json güncellenecekti ({len(index['analizler'])} kayıt)")

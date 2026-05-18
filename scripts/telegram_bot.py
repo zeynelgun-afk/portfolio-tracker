@@ -402,21 +402,25 @@ def run_adil_deger_skill_v5(ticker: str, full_mode: bool = False) -> dict | None
             index_data = json.load(f)
         
         entry_id = f"{ticker.upper()}_ADIL_DEGER_{today}"
-        entry = next((a for a in index_data.get("analizler", []) if a.get("id") == entry_id), None)
-        
+        # Shim: hem yeni "analyses" hem eski "analizler"
+        _entries = index_data.get("analyses") or index_data.get("analizler", [])
+        entry = next((a for a in _entries if a.get("id") == entry_id), None)
+
         if not entry:
             return {"error": f"Index'te giriş bulunamadı: {entry_id}"}
-        
+
         # Markdown dosyasını da hazır oku (full mode için)
-        md_path = os.path.join(repo_root, entry.get("dosya", ""))
+        # Shim: hem yeni "file" hem eski "dosya"
+        _md_rel = entry.get("file") or entry.get("dosya", "")
+        md_path = os.path.join(repo_root, _md_rel)
         md_text = None
         if full_mode and os.path.exists(md_path):
             with open(md_path, "r", encoding="utf-8") as f:
                 md_text = f.read()
-        
+
         return {
             "entry": entry,
-            "md_path": entry.get("dosya"),
+            "md_path": _md_rel,
             "md_text": md_text,
             "stdout_tail": result.stdout[-1000:] if result.stdout else "",
         }
@@ -431,23 +435,25 @@ def format_v5_telegram_summary(entry: dict, github_url: str | None = None) -> st
     index.json entry'sinden Telegram için kısa HTML özet.
     """
     ticker = entry.get("ticker", "?")
-    sirket = entry.get("sirket", "")
+    # Shim: hem yeni "company" hem eski "sirket"
+    sirket = entry.get("company") or entry.get("sirket", "")
     karar = entry.get("karar", "—")
     karar_gerekce = entry.get("karar_gerekce", "")
     fiyat = entry.get("analiz_fiyati", 0)
-    
+
     ad = entry.get("adil_deger", {})
     mod = ad.get("mod", "—")
     agirlikli = ad.get("agirlikli_adil_deger")
     confidence = ad.get("confidence", "ORTA")
     quality = ad.get("quality_premium", 1.0)
     ai_mega = ad.get("ai_mega_cap", False)
-    
-    on = entry.get("on_beklenti", {})
+
+    # Shim: hem yeni "expectations" hem eski "on_beklenti"
+    on = entry.get("expectations") or entry.get("on_beklenti", {})
     bear = on.get("senaryo_ayi", {})
     base = on.get("senaryo_baz", {})
     bull = on.get("senaryo_boga", {})
-    
+
     v5 = entry.get("v5_sinyaller", {})
     altman = v5.get("altman_z") or {}
     pio = v5.get("piotroski") or {}
@@ -456,12 +462,13 @@ def format_v5_telegram_summary(entry: dict, github_url: str | None = None) -> st
     fmp_dcf = v5.get("fmp_dcf_unlevered")
     live_pe = v5.get("canli_sektor_pe")
     wacc = v5.get("dinamik_wacc")
-    
+
     proj = entry.get("projeksiyon") or {}
     norm_year = proj.get("normalizasyon_yili")
     profile_key = proj.get("profile_key")
-    
-    portfoy = entry.get("portfoy_onerisi", {})
+
+    # Shim: hem yeni "portfolio_recommendation" hem eski "portfoy_onerisi"
+    portfoy = entry.get("portfolio_recommendation") or entry.get("portfoy_onerisi", {})
     giris = entry.get("giris_plani", {})
     
     parts = []
@@ -529,9 +536,9 @@ def format_v5_telegram_summary(entry: dict, github_url: str | None = None) -> st
     
     # Portföy
     parts.append("<b>📁 Portföy Uygunluğu:</b>")
-    parts.append(f"  Dengeli: {portfoy.get('dengeli', '—')}")
-    parts.append(f"  Agresif: {portfoy.get('agresif', '—')}")
-    parts.append(f"  Temettü: {portfoy.get('temettu', portfoy.get('temettü', '—'))}")
+    parts.append(f"  Dengeli: {portfoy.get('balanced') or portfoy.get('dengeli', '—')}")
+    parts.append(f"  Agresif: {portfoy.get('aggressive') or portfoy.get('agresif', '—')}")
+    parts.append(f"  Temettü: {portfoy.get('dividend') or portfoy.get('temettu') or portfoy.get('temettü', '—')}")
     parts.append("")
     
     # GitHub link

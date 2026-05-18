@@ -102,23 +102,29 @@ def update_entry_realized(entry, quote):
     
     # Gün sayısı
     try:
-        analiz_dt = datetime.strptime(entry.get("analiz_tarihi", ""), "%Y-%m-%d")
+        # Shim: hem yeni "analysis_date" hem eski "analiz_tarihi"
+        analiz_dt = datetime.strptime(
+            entry.get("analysis_date") or entry.get("analiz_tarihi", ""), "%Y-%m-%d"
+        )
         gun_sayisi = (datetime.now() - analiz_dt).days
     except ValueError:
         gun_sayisi = None
-    
+
     # Hedef/Stop kontrolü
     giris = entry.get("giris_plani", {}) or {}
     stop = giris.get("stop_loss")
     hedef_1 = giris.get("hedef_1")
     hedef_2 = giris.get("hedef_2")
-    
-    on = entry.get("on_beklenti", {})
+
+    # Shim: hem yeni "expectations" hem eski "on_beklenti"
+    on = entry.get("expectations") or entry.get("on_beklenti", {})
     bear_hedef = on.get("senaryo_ayi", {}).get("fiyat_hedef")
     bull_hedef = on.get("senaryo_boga", {}).get("fiyat_hedef")
-    
-    tez_tuttu = entry.get("gerceklesen", {}).get("tez_tuttu")  # mevcut durum
-    ders = entry.get("gerceklesen", {}).get("ders")
+
+    # Shim: hem yeni "actual" hem eski "gerceklesen"
+    _actual = entry.get("actual") or entry.get("gerceklesen", {})
+    tez_tuttu = _actual.get("tez_tuttu")  # mevcut durum
+    ders = _actual.get("ders")
     status_change = None
     
     if tez_tuttu is None or tez_tuttu == "belirsiz":
@@ -140,8 +146,11 @@ def update_entry_realized(entry, quote):
             ders = f"180 gün geçti, fiyat %{tepki_pct:+.1f} (${simdiki_fiyat:.2f}). Ne hedef ne stop tetiklendi — tez yavaş gelişiyor veya yanılmış"
             status_change = "180gun_belirsiz"
     
-    # Güncelle
-    g = entry.setdefault("gerceklesen", {})
+    # Güncelle — yeni şema kullan ("actual"). Eski entry'lerde "gerceklesen"
+    # de varsa, onu da migre et (in-memory) — tek source of truth tut.
+    if "gerceklesen" in entry and "actual" not in entry:
+        entry["actual"] = entry.pop("gerceklesen")
+    g = entry.setdefault("actual", {})
     g["simdiki_fiyat"] = round(simdiki_fiyat, 2)
     g["fiyat_tepkisi_pct"] = round(tepki_pct, 1)
     g["gun_sayisi"] = gun_sayisi
@@ -149,11 +158,13 @@ def update_entry_realized(entry, quote):
     g["tez_tuttu"] = tez_tuttu
     if ders:
         g["ders"] = ders
-    
-    # Durum değişikliği
+
+    # Durum değişikliği — shim ile hem yeni hem eski key destekle
     if status_change in ("stop_kirildi", "hedef_1", "hedef_2"):
-        entry["durum"] = "kapandi"
-    
+        if "durum" in entry and "status" not in entry:
+            entry["status"] = entry.pop("durum")
+        entry["status"] = "kapandi"
+
     return True, status_change
 
 
@@ -166,9 +177,14 @@ def daily_update(verbose=False):
     with open(INDEX_PATH, "r", encoding="utf-8") as f:
         index_data = json.load(f)
     
-    aktif_analizler = [a for a in index_data.get("analizler", [])
-                       if a.get("durum") in ("aktif_izleme", None)
-                       and a.get("analiz_turu") == "adil_deger_hesabi"]
+    # Shim: hem yeni "analyses" hem eski "analizler"
+    _analyses = index_data.get("analyses") or index_data.get("analizler", [])
+    # Filtre: aktif_izleme + adil_deger_hesabi (her iki şema)
+    aktif_analizler = [
+        a for a in _analyses
+        if (a.get("status") or a.get("durum")) in ("aktif_izleme", None)
+        and (a.get("analysis_type") or a.get("analiz_turu")) == "adil_deger_hesabi"
+    ]
     
     if not aktif_analizler:
         if verbose:

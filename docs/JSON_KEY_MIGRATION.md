@@ -279,9 +279,9 @@ CSV çıktısı manuel doldurma için: her satıra önerilen yeni isim yaz.
 | 17 May 2026 | `premarket_gaps.json` migration (EASY, 7 key) | `premarket_gap_scanner.py` (tek dosya, shim) | `d79ad6d6` |
 | 17 May 2026 | `trade_index.json` migration (EASY, 10 key) | Sadece JSON; yazıcı arşivde | `013b271d` |
 | 17 May 2026 | `macro_intelligence.json` migration (HARD, 24 key) | Yazıcı LLM-TR-to-EN convert + 4 okuyucu shim | `d0786387` |
-| 17 May 2026 | `summary.json` migration (HARD, 22 key + 3 portföy adı) | `daily_update.py` + cash convert helper; aktif okuyucu yok | bu commit |
-| TBD | `research/index.json` (MEDIUM) | nested | sırada |
-| TBD | `weekly_pre_check.json` (HARD, sözlük migration) | 1 gün | sonra |
+| 17 May 2026 | `summary.json` migration (HARD, 22 key + 3 portföy adı) | `daily_update.py` + cash convert helper; aktif okuyucu yok | `0386370f` |
+| 17 May 2026 | `research/index.json` migration (MEDIUM/LIMITED, 26 key) | top-level + entry common + portfolio_rec + catalyst; nested LLM içeriği DOKUNMA | bu commit |
+| TBD | `weekly_pre_check.json` (HARD, sözlük migration) | 1 gün | sırada |
 
 **Toplam tahmini kalan**: 1-2 seans daha.
 
