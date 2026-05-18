@@ -49,7 +49,10 @@ jobs:
       - name: Bağımlılıklar
         run: |
           pip install --upgrade pip
-          pip install pytz requests pytest pytest-mock
+          # Production bağımlılıkları
+          pip install -r requirements.txt
+          # Test framework + HTTP mocking (tests/ kullanır, requirements.txt'ta yok)
+          pip install pytest pytest-mock responses
 
       - name: Migration sağlık check (17 dual-schema test)
         env:
