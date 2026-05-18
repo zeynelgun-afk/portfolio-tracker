@@ -2499,7 +2499,7 @@ def main():
             (16,  0, "agent.yml",            {"mode":"morning"},    True,  False, "Agent Sabah",                   True),
             (23,  0, "thematic_discovery.yml",{"mode":"daily"},      True,  False, "Tematik Keşif Günlük",          False),  # Asama 4 (14 May 2026): gun sonu tema tarama
             (23, 35, "research_tracker.yml", {"mode":"daily"},      False, False, "Research Tracker Günlük",       True),  # v5.0 Etap 11 her gün 23:35
-            (23, 45, "signal_tracker.yml",   None,                  True,  False, "Sinyal Tracker Günlük",         False),  # Asama 9 (14 May 2026): gun sonu performans guncelleme
+            (23, 45, "signal_tracker.yml",   {},                    True,  False, "Sinyal Tracker Günlük",         False),  # Asama 9 (14 May 2026): gun sonu performans guncelleme
             # Kapanış: gece yarısı 00:30 TR (yeni güne geçmiş ama hafta içinde)
             # Pzt gecesi 00:30 = Salı sabahı, Cum gecesi 00:30 = Cmt sabahı
             # weekday(): Sal=1…Cmt=5 → 1-5 arası = gece öncesi hafta içiydi
@@ -2560,7 +2560,11 @@ def main():
                         if hft   and not is_hft:   continue
                         if pazar and not is_pazar:  continue
                         # Kapanış özel kontrolü (00:30 TR yaz / 01:30 TR kış, önceki gün hft olmalı)
-                        if wf == "agent.yml" and inputs.get("mode") == "closing":
+                        # NOT (18 May 2026): inputs None olabilir (signal_tracker.yml gibi parametresiz
+                        # workflow'lar için). `inputs and ...` ile defansif — yoksa AttributeError ile
+                        # tüm satır kaybolur, bug sessizce sürer (signal_tracker 17-18 May'de bu yüzden
+                        # 2 gün boyunca tetiklenmedi).
+                        if wf == "agent.yml" and inputs and inputs.get("mode") == "closing":
                             if not is_gece_hft: continue
 
                         key = f"{wf}:{inputs.get('mode','')}:{gun_str}:{s:02d}{d:02d}"
