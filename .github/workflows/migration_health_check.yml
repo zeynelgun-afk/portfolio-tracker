@@ -1,0 +1,79 @@
+name: Migration Sağlık Check
+
+# JSON migration shim'leri ve agent/legacy path bütünlüğü için CI doğrulama.
+# 17 May 2026'da bulunan sessiz bug'lar (agent/legacy path bug, telegram_notify
+# dead code, thesis_erosion CLI bug) gelecek bir daha birikmesin diye eklendi.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      # Kod değişiklikleri (shim'leri etkileyebilir)
+      - 'agent/**'
+      - 'scripts/**'
+      - 'tests/**'
+      # JSON şema değişiklikleri (production data bütünlüğü)
+      - 'data/macro_intelligence.json'
+      - 'data/backtest_summary.json'
+      - 'data/discovery_signals.json'
+      - 'data/premarket_gaps.json'
+      - 'data/summary.json'
+      - 'data/research/index.json'
+      - 'data/weekly_pre_check.json'
+      - 'data/episodic_memory/trade_index.json'
+      # Workflow kendisi
+      - '.github/workflows/migration_health_check.yml'
+  pull_request:
+    branches: [main]
+  workflow_dispatch:  # Manuel tetikleme
+
+jobs:
+  health-check:
+    # Bot commit'lerinde (data update only) atla — yanlış pozitif önle
+    if: |
+      !contains(github.event.head_commit.message, '[bot/') &&
+      !contains(github.event.head_commit.message, '[skip-ci]')
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Repo checkout
+        uses: actions/checkout@v4
+
+      - name: Python kurulum
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Bağımlılıklar
+        run: |
+          pip install --upgrade pip
+          pip install pytz requests pytest pytest-mock
+
+      - name: Migration sağlık check (17 dual-schema test)
+        env:
+          PYTHONPATH: ${{ github.workspace }}:${{ github.workspace }}/agent:${{ github.workspace }}/agent/legacy
+          # Production'da env zorunlu, ama health_check fixture'lar kullanıyor —
+          # config modülü import'u için stub değerler
+          FMP_API_KEY: dummy_ci_value
+          TELEGRAM_BOT_TOKEN: dummy_ci_value
+          TELEGRAM_PRIVATE_ID: dummy_ci_value
+        run: |
+          python scripts/migration_health_check.py
+
+      - name: Test suite (pytest 561 test)
+        env:
+          PYTHONPATH: ${{ github.workspace }}:${{ github.workspace }}/agent:${{ github.workspace }}/agent/legacy
+          FMP_API_KEY: dummy_ci_value
+          TELEGRAM_BOT_TOKEN: dummy_ci_value
+          TELEGRAM_PRIVATE_ID: dummy_ci_value
+        run: |
+          python -m pytest tests/ -q --tb=short
+
+      - name: Audit JSON Türkçe key tespiti (bilgi amaçlı)
+        # Failure değil, sadece rapor — bilinen tolere edilen Türkçe key'ler
+        # (sektör adları, "GENEL"/"NOT", LLM nested içerik) sözlük dışı kalabilir
+        continue-on-error: true
+        run: |
+          python scripts/audit_json_keys.py 2>&1 | tail -20
