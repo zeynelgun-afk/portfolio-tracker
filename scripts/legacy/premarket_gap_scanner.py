@@ -199,12 +199,12 @@ def scan_premarket_gaps(
             "gap_pct":    gap_pct,
             "pre_price":  q["pre_price"],
             "prev_close": q["prev_close"],
-            "gap_tip":    gap_cls["tip"],
-            "aksiyon":    gap_cls["aksiyon"],
-            "aciklama":   gap_cls["aciklama"],
+            "gap_type":   gap_cls["tip"],
+            "action":     gap_cls["aksiyon"],
+            "description":gap_cls["aciklama"],
             "trend":      trend,
             "vol_ratio":  round(vol_ratio, 2),
-            "yüksek_hacim": vol_ratio >= 1.5,
+            "high_volume":vol_ratio >= 1.5,
         }
 
         gaps.append(gap_entry)
@@ -214,9 +214,9 @@ def scan_premarket_gaps(
 
     # Kaydet
     output = {
-        "tarih":    datetime.now().isoformat(),
-        "toplam":   len(gaps),
-        "gaplar":   gaps,
+        "date":   datetime.now().isoformat(),
+        "total":  len(gaps),
+        "gaps":   gaps,
     }
     out_path = REPO_ROOT / "data" / "premarket_gaps.json"
     with open(out_path, "w", encoding="utf-8") as f:
@@ -239,19 +239,24 @@ def format_gaps_for_telegram(gaps: list[dict]) -> str:
     if yukarı:
         lines.append("🟢 Yukarı Gap:")
         for g in yukarı[:5]:
-            hacim_tag = " 📊VOL" if g["yüksek_hacim"] else ""
+            # Shim: hem yeni "high_volume" hem eski "yüksek_hacim"
+            high_vol = g.get("high_volume", g.get("yüksek_hacim", False))
+            action = g.get("action") or g.get("aksiyon", "")
+            desc = g.get("description") or g.get("aciklama", "")
+            hacim_tag = " 📊VOL" if high_vol else ""
             lines.append(
                 f"  {g['symbol']:6} {g['gap_pct']:+.1f}% "
-                f"→ ${g['pre_price']:.2f} | {g['aksiyon']}{hacim_tag}"
+                f"→ ${g['pre_price']:.2f} | {action}{hacim_tag}"
             )
-            lines.append(f"     {g['aciklama'][:70]}")
+            lines.append(f"     {desc[:70]}")
 
     if asagi:
         lines.append("\n🔴 Aşağı Gap:")
         for g in asagi[:3]:
+            action = g.get("action") or g.get("aksiyon", "")
             lines.append(
                 f"  {g['symbol']:6} {g['gap_pct']:+.1f}% "
-                f"→ ${g['pre_price']:.2f} | {g['aksiyon']}"
+                f"→ ${g['pre_price']:.2f} | {action}"
             )
 
     return "\n".join(lines)
@@ -264,17 +269,20 @@ def get_premarket_context() -> str:
         return ""
 
     data = json.load(open(path))
-    tarih = data.get("tarih", "")[:16]
-    gaplar = data.get("gaplar", [])
+    # Shim: hem yeni hem eski top-level keyler
+    tarih = (data.get("date") or data.get("tarih", ""))[:16]
+    gaplar = data.get("gaps") or data.get("gaplar", [])
 
     if not gaplar:
         return f"Pre-market ({tarih}): Gap yok"
 
     lines = [f"PRE-MARKET GAPLAR ({tarih}):"]
     for g in gaplar[:5]:
+        action = g.get("action") or g.get("aksiyon", "")
+        desc = g.get("description") or g.get("aciklama", "")
         lines.append(
             f"  {g['symbol']:6} {g['gap_pct']:+.1f}% | "
-            f"{g['aksiyon']} | {g['aciklama'][:50]}"
+            f"{action} | {desc[:50]}"
         )
 
     return "\n".join(lines)

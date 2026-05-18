@@ -275,8 +275,10 @@ CSV çıktısı manuel doldurma için: her satıra önerilen yeni isim yaz.
 | 17 May 2026 | Plan + audit script | docs + `scripts/audit_json_keys.py` | `9a56ecd8` |
 | 17 May 2026 | `daily_scan_*` migration (TRIVIAL) | 4 JSON + `full_universe_screener.py` | `a17b02d0` |
 | 17 May 2026 | `discovery_signals.json` migration (re-cat MEDIUM) | `discovery_engine.py` + shim `risk_engine.py` | `b92d204c` |
-| 17 May 2026 | `backtest_summary.json` migration (MEDIUM, 22 key) | `k_rules_backtest.py` + shim `risk_engine` + `orchestrator` | bu commit |
-| TBD | `macro_intelligence.json` (MEDIUM, 6 nested) | nested struct | sırada |
+| 17 May 2026 | `backtest_summary.json` migration (MEDIUM, 22 key) | `k_rules_backtest.py` + shim `risk_engine` + `orchestrator` | `f1ab5158` |
+| 17 May 2026 | `premarket_gaps.json` migration (EASY, 7 key) | `premarket_gap_scanner.py` (yazıcı+okuyucu aynı dosyada, shim ile) | bu commit |
+| TBD | `episodic_memory/trade_index.json` (EASY) | 30 dk | sırada |
+| TBD | `macro_intelligence.json` (MEDIUM, 6 nested) | nested struct | sonra |
 | TBD | `summary.json` (HARD, 19 key) | tam dosya | sonra |
 | TBD | `premarket_gaps.json` (EASY) | 30 dk | sonra |
 | TBD | `episodic_memory/trade_index.json` (EASY) | 30 dk | sonra |
@@ -346,6 +348,21 @@ Başlangıç:     488 occurrence Türkçe key (skip filter sonrası)
     `r.get("category") or r.get("kategori")` pattern
   - `agent/legacy/orchestrator.py` weekly backtest blok: aynı pattern
 - Mevcut `data/backtest_summary.json` (20 raporlar, ~60 example) migrate edildi
+- Test: 561 PASS
+
+**17 May 2026 — premarket_gaps.json**:
+- EASY kategori (7 unique Türkçe key)
+- `scripts/legacy/premarket_gap_scanner.py` — tek dosyada hem yazıcı hem okuyucu:
+  - Yazıcı `scan_premarket_gaps()` güncellendi:
+    - Top-level (3): `tarih→date`, `toplam→total`, `gaplar→gaps`
+    - Gap entry içi (4): `gap_tip→gap_type`, `aksiyon→action`,
+      `aciklama→description`, `yüksek_hacim→high_volume`
+  - Okuyucu `format_gaps_for_telegram()` + `get_premarket_context()`:
+    - Geriye uyumluluk shim: hem yeni hem eski key okunur
+    - `data.get("date") or data.get("tarih")`, vb.
+- Aynı dosyada yazıcı + okuyucu — shim teorik olarak gerekmez ama eski JSON
+  cache'i için güvenlik
+- Mevcut `data/premarket_gaps.json` (21 gap) migrate edildi
 - Test: 561 PASS
 
 ### Re-kategorize edilen dosyalar (planda gözüktüğünden farklı)
