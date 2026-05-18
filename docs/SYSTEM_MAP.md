@@ -24,6 +24,7 @@ updated: 2026-05-17
 - Faz 2 (Adım 1-13 + 10b-iii-C-iii news_radar hariç): scanner + calibrator + 3 üretim entegrasyonu + günlük cron + raporlar
 - Faz 2 C-serisi: outcome doldurma + hit rate + adaptive multiplier önerisi
 - Phase 10 tasarım dokümanı: [[PHASE10_DESIGN]] (storage şeması, runtime mantığı, cron, test stratejisi, risk yönetimi, rollout)
+- Morning routine konsolide: [[DAILY_SABAH_PROMPT]] (eski 3-prompt yerine tek prompt)
 - Test: 79 → 544 (+465)
 - Phase 10'da yapılacak tek iş: sabit _MULTIPLIER_FLAG_TABLE'ı adaptive_suggestions ile replace etmek (veri toplandığında)
 > Amaç: Tüm scriptler, scheduler thread'leri, veri akışları ve dosya organizasyonunun tek bakışta görünümü.
