@@ -362,8 +362,8 @@ def telegram_uyari(sonuc: dict):
     try:
         import subprocess
         subprocess.run(
-            ["python3", str(REPO_ROOT / "scripts" / "telegram_notify.py"), 
-             "--text", msg, "--dm"],
+            ["python3", str(REPO_ROOT / "scripts" / "telegram_notify.py"),
+             "--type", "custom", "--msg", msg, "--dm"],
             cwd=str(REPO_ROOT), check=False, timeout=15
         )
         print(f"[ThesisErosion] Telegram DM gonderildi: {len(riskli)} pozisyon")
