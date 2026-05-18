@@ -4,7 +4,7 @@
   "beat_predicted": 1,
   "miss_predicted": 0,
   "pending": 0,
-  "active_monitoring": 9,
+  "active_monitoring": 13,
   "correct_prediction_ratio": 1.0,
   "analyses": [
     {

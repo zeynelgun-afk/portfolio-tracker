@@ -220,9 +220,19 @@ def daily_update(verbose=False):
             if verbose:
                 print(f"  📌 {ticker}: durum değişti → {status_change}")
     
-    # Üst seviye sayaçları güncelle
-    index_data["aktif_izleme"] = sum(1 for a in index_data["analizler"]
-                                      if a.get("durum") in ("aktif_izleme", None))
+    # Üst seviye sayaçları güncelle (migration shim: 18 May 2026)
+    # research/index.json migration sonrası "analizler"→"analyses",
+    # "aktif_izleme"→"active_monitoring" çevrildi. Shim sayaç hesabını
+    # da kapsamalı (line 181'deki shim yazma tarafında uygulanmıyordu).
+    _analyses_for_count = index_data.get("analyses") or index_data.get("analizler", [])
+    active_count = sum(1 for a in _analyses_for_count
+                       if a.get("durum") in ("aktif_izleme", None)
+                       or a.get("status") in ("aktif_izleme", None))
+    # Yeni şemaya yaz
+    index_data["active_monitoring"] = active_count
+    # Geriye uyumluluk: eğer eski key hâlâ varsa o da güncellensin
+    if "aktif_izleme" in index_data:
+        index_data["aktif_izleme"] = active_count
     
     # Yaz
     with open(INDEX_PATH, "w", encoding="utf-8") as f:
