@@ -17,17 +17,135 @@ updated: 2026-05-17
 # FINZORA AI — SİSTEM HARİTASI
 
 > Son güncelleme: 17 Mayıs 2026
-> **Faz 1 ✅ + Faz 2 + Faz 2 C-serisi TAMAMLANDI**
+> **Faz 1 ✅ + Faz 2 + Faz 2 C-serisi ✅ TAMAMLANDI**
 > **Phase 10 design**: [[PHASE10_DESIGN]] hazır (implementasyon ~30g sonra)
+> **Test sayısı**: 79 → 561 (+482, 7.1× büyüdü)
+> **Toplam commit**: 25 main'de (Faz 2 + C-serisi + Phase 10 design + bakım + 2 JSON migration)
 
 🎉 **PHASE 10'A HAZIR**:
 - Faz 2 (Adım 1-13 + 10b-iii-C-iii news_radar hariç): scanner + calibrator + 3 üretim entegrasyonu + günlük cron + raporlar
 - Faz 2 C-serisi: outcome doldurma + hit rate + adaptive multiplier önerisi
 - Phase 10 tasarım dokümanı: [[PHASE10_DESIGN]] (storage şeması, runtime mantığı, cron, test stratejisi, risk yönetimi, rollout)
 - Morning routine konsolide: [[DAILY_SABAH_PROMPT]] (eski 3-prompt yerine tek prompt)
-- JSON key migration plan: [[JSON_KEY_MIGRATION]] (Türkçe → İngilizce, aşamalı, audit script ile)
-- Test: 79 → 561 (+482)
+- JSON key migration plan + 2 dosya tamamlandı: [[JSON_KEY_MIGRATION]] (Türkçe → İngilizce, aşamalı, audit script ile)
+- Polymarket Gamma API gerçek doğrulama: 7/7 market başarıyla fetch
 - Phase 10'da yapılacak tek iş: sabit _MULTIPLIER_FLAG_TABLE'ı adaptive_suggestions ile replace etmek (veri toplandığında)
+
+---
+
+## 📋 17 Mayıs 2026 — SEANS ÖZETİ (geriye dönük referans)
+
+Bu seansta tamamlanan iş — bir sonraki Claude oturumu için bağlam:
+
+### Faz 2 omurga + entegrasyon (15 commit)
+| Adım | Konu | Test | Commit |
+|---|---|---:|---|
+| Faz 1 | Reports konsolidasyonu | +0 | `a3156ab5` |
+| 2-4 | BaseScanner + Candidate + Polymarket client | +78 | `11a3d0d7` |
+| 5 | ThematicDiscoveryScanner | +18 | `0d79fa08` |
+| 6 | FairValuePanelScanner | +16 | `0c0ba1e5` |
+| 7 | NewsRadarScanner | +22 | `6e60f524` |
+| 8 | AnalystRevisionsScanner adaptörü | +31 | `aedc742e` |
+| 9 | PolymarketCalibrator + tracker | +51 | `a5621d61` |
+| 10a | Cache snapshot rotation | +23 | `d1f50d7f` |
+| 10b-i | refresh scheduler workflow | +5 | `66a7b66a` |
+| 10b-ii | pipeline helper + CALIBRATOR_ENABLED flag | +31 | `c07dc7ef` |
+| 10b-iii-A | scanner_dry_run.py CLI | +22 | `88b6d387` |
+| 10b-iii-B | AI Gate calibration_info parametresi | +20 | `cd28791f` |
+| 10b-iii-C-i | fair_value.py üretim entegrasyonu | +7 | `60943680` |
+| 10b-iii-C-ii | thematic.py üretim entegrasyonu | +8 | `69c0617d` |
+| 11 | Pozisyon #3 watchlist_health_check | +14 | `74a4300e` |
+| 12 | Weekly Pulse Section 6 | +23 | `a990bce3` |
+| 13 | finzora_stats kalibratör analizi | +21 | `4b8055e6` |
+| 10b-iii-C-iii | analyst_revisions monitor entegrasyon | +10 | `90a2cb82` |
+
+### C-serisi: Outcome → Hit rate → Adaptive (3 commit)
+| Adım | Konu | Test | Commit |
+|---|---|---:|---|
+| C-1 | Outcome doldurma altyapısı + cron | +23 | `75ce9865` |
+| C-2 | Hit rate hesaplama (per-flag/source/theme/overall) | +19 | `0c193167` |
+| C-3 | Adaptive multiplier önerisi (passive) | +21 | `287bb87c` |
+
+### Faz 2 sonrası bakım (5 commit)
+| Adım | Konu | Test | Commit |
+|---|---|---:|---|
+| docs | Phase 10 design doc (405 satır) | +0 | `0b297bb8` |
+| docs | Morning prompt konsolidasyon (281 satır) | +0 | `6d735595` |
+| docs+infra | JSON migration plan + audit script | +17 | `9a56ecd8` |
+| refactor | `daily_scan_*` migration (4 dosya, 2 key) | +0 | `a17b02d0` |
+| refactor | `discovery_signals.json` migration (14 key) | +0 | `b92d204c` |
+
+### Yeni dosyalar bu seansta
+**Dokümanlar (5)**:
+- `docs/PHASE2_SCANNER_CONSOLIDATION.md` (559 satır)
+- `docs/PHASE10_DESIGN.md` (405 satır)
+- `docs/JSON_KEY_MIGRATION.md` (322 satır)
+- `docs/prompts/DAILY_SABAH_PROMPT.md` (281 satır)
+- `docs/POLYMARKET_SLUG_RESEARCH_2026-05-17.md`
+
+**Scriptler (4)**:
+- `scripts/refresh_polymarket_cache.py` — manuel/cron cache fetch
+- `scripts/scanner_dry_run.py` — 4 scanner observability
+- `scripts/watchlist_health_check.yml` cron — Pozisyon #3
+- `scripts/fill_calibrator_outcomes.py` — outcome doldurma
+- `scripts/audit_json_keys.py` — Türkçe key audit
+
+**Workflows (3)**:
+- `.github/workflows/polymarket_refresh.yml` (manuel)
+- `.github/workflows/watchlist_health_check.yml` (günlük TR 15:30)
+- `.github/workflows/fill_calibrator_outcomes.yml` (günlük TR 09:00)
+
+**Scanner modülleri (yeni paket `agent/scanners/`)**:
+- `base.py` BaseScanner + Candidate
+- `thematic.py` ThematicDiscoveryScanner
+- `fair_value.py` FairValuePanelScanner
+- `news.py` NewsRadarScanner
+- `analyst_revisions.py` AnalystRevisionsScanner
+- `polymarket.py` Gamma client + cache rotation
+- `calibrator.py` PolymarketCalibrator + tracker
+- `pipeline.py` ortak helper
+
+### Korunan mimari prensipler (14 kural)
+1. Scanner pure transform (scan() yan etki yok)
+2. Shim disiplini (runpy.run_path + DeprecationWarning)
+3. Lazy import (test izolasyonu)
+4. PYTHONPATH 3 segment (repo + agent + agent/legacy)
+5. Feature flag disiplini (CALIBRATOR_ENABLED default false)
+6. Phase 10 tuning kilidi (_started_at + 30g, çarpan tablosu hardcoded)
+7. 3 katmanlı defensif (calibrator init / per-ticker / flag exception graceful)
+8. Sönüş/ETF kalibrasyon optimizasyonu (gereksiz API call yok)
+9. Tracker tmp yönlendirme dry-run'da (üretim verisi kirletilmez)
+10. AI Gate yön rehberi (karışık bayrakta çelişki önceliği)
+11. Idempotency state (24h cooldown — aynı uyarı tekrar DM atılmaz)
+12. Cron AÇIK ama cache boş → no-op (güvenli sıralama)
+13. JSON migration: dosya-spesifik (her dosya izole, yazıcı+okuyucu birlikte)
+14. Geriye uyumluluk shim: okuyucu varsa eski+yeni key birlikte (örn. risk_engine.py)
+
+### Şu an aktif crons (4 ana + 3 yeni)
+| Cron | Frekans | Durum |
+|---|---|---|
+| `polymarket_refresh.yml` | workflow_dispatch | Manuel — Zeynel tetikleyecek |
+| `watchlist_health_check.yml` | Günlük TR 15:30 | Aktif (cache boş → no-op) |
+| `fill_calibrator_outcomes.yml` | Günlük TR 09:00 | Aktif (tracker boş → no-op) |
+| Mevcut Railway scheduler | 7/24 | Aktif (4 daemon thread) |
+
+### Production rollout (Zeynel'in elindeki kısımlar)
+1. `gh workflow run polymarket_refresh.yml` — cache fetch başlat
+2. 24h+ sonra 2. snapshot biriksin → delta_24h hesaplanır
+3. CALIBRATOR_ENABLED=true (GitHub Secret + Railway env)
+4. scanner_dry_run.py ile 1 hafta dry-run gözlem
+5. 30 gün sonra Phase 10 implementasyon (PHASE10_DESIGN.md takip)
+
+### JSON migration ilerleme (2 dosya tamamlandı)
+| Dosya | Key sayısı | Yaklaşım | Commit |
+|---|---:|---|---|
+| `daily_scan_*` (4 dosya) | 2 | Shim YOK | `a17b02d0` |
+| `discovery_signals.json` | 14 | Shim VAR | `b92d204c` |
+
+**Kalan**: backtest_summary, macro_intelligence, summary, premarket_gaps, episodic_memory/trade_index, research/index, weekly_pre_check — 3-4 seans daha.
+
+---
+
 > Amaç: Tüm scriptler, scheduler thread'leri, veri akışları ve dosya organizasyonunun tek bakışta görünümü.
 >
 > **Kritik dönüşüm:** 13 Mayıs 2026 — eski 3-portföy + sleeve + thematic + swing sistemi (`data/portfolios/*.json`, `data/swing/active.json`) `data/archive/2026-05-13_pre_simplification/` altına taşındı. Bunun yerine **tek `data/portfolio.json`** (positions[] + closed[]) ve `agent/` v2 modern paketi geldi.

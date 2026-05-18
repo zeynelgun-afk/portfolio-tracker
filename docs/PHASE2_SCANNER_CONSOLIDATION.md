@@ -12,15 +12,37 @@ related:
   - "[[PREDICTION_MARKETS_GUIDE]]"
   - "[[OBSERVABILITY]]"
   - "[[DECISION_FRAMEWORK]]"
+  - "[[PHASE10_DESIGN]]"
 updated: 2026-05-17
-status: draft (kararlar netleşti, kod yazımı bekliyor)
+status: ✅ COMPLETE (tüm adımlar + C-serisi tamamlandı)
 ---
 
 # FAZ 2 — SCANNER KONSOLİDASYONU + POLYMARKET KALİBRATÖRÜ
 
-> **Durum:** Tasarım kararları kesinleşti — kod yazımı sonraki turlarda.
-> **Bağlam:** Faz 1 (Reports konsolidasyonu) `a3156ab5` ile tamamlandı. Bu doküman Faz 2'nin navigasyon haritası — sonraki turlarda hangi karar verildiğini yeniden tartışmamak için referans.
-> **Faz 3 ön şartı:** Phase 10 (adaptive learning) bu paketin üstüne inşa edilecek.
+> 🎉 **FAZ 2 + C-SERİSİ ✅ TAMAMLANDI (17 May 2026)**
+>
+> | Aşama | Adımlar | Test | Commit aralığı |
+> |---|---|---:|---|
+> | Faz 1 | Reports konsolidasyonu | (79 başlangıç) | `a3156ab5` |
+> | Faz 2 (1-13) | Scanner pattern + Calibrator + 2 üretim entegrasyonu + Pulse + Stats | ~471 | `11a3d0d7` → `4b8055e6` |
+> | Faz 2 ext | 10b-iii-C-iii analyst_revisions | 481 | `90a2cb82` |
+> | C-1 | Outcome doldurma altyapısı | 504 | `75ce9865` |
+> | C-2 | Hit rate hesaplama | 523 | `0c193167` |
+> | C-3 | Adaptive multiplier önerisi | 544 | `287bb87c` |
+> | Bakım (Phase 10 doc, morning prompt, JSON migration) | +17 audit testleri | 561 | `0b297bb8` → `b92d204c` |
+> | **TOPLAM** | **25 commit** | **79 → 561** | |
+>
+> Faz 2 sonu durumu:
+> - 4 scanner (`thematic`, `fair_value`, `news`, `analyst_revisions`) BaseScanner pattern'inde
+> - Polymarket calibrator (3 pozisyon: gate-sonrası, watchlist sağlık, Phase 10 tracker)
+> - 3 üretim akışı entegre (fair_value AI Gate'e, thematic score_components'a, analyst_revisions AI Gate'e)
+> - Günlük cronlar: watchlist sağlık (TR 15:30) + outcome doldurma (TR 09:00)
+> - Pazar raporu: Section 6 Prediction Markets Pulse
+> - Finzora stats: kalibratör event analizi + hit rate + adaptive öneri
+> - Phase 10 design doc tamamlandı: [[PHASE10_DESIGN]]
+>
+> **Bağlam:** Bu doküman tasarım kararlarının kayıtı — implementasyon tamamlandı, ileride referans için tutuluyor.
+> **Faz 3 ön şartı:** Phase 10 (adaptive learning) bu paketin üstüne inşa edilecek (30 gün veri biriktiğinde, [[PHASE10_DESIGN]] takip edilecek).
 
 ---
 

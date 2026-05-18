@@ -272,10 +272,30 @@ CSV çıktısı manuel doldurma için: her satıra önerilen yeni isim yaz.
 
 | Tarih | Eylem | Dosya | Commit |
 |---|---|---|---|
-| 17 May 2026 | Plan + audit script | (bu doküman + scripts/audit_json_keys.py) | `9a56ecd8` |
-| 17 May 2026 | İlk migration: daily_scan_* dosyaları | 4 JSON + 1 Python | TBD bu commit |
-| ? | summary.json (HARD — re-kategorize edildi) | 19 unique key | TBD |
-| ... | ... | ... | ... |
+| 17 May 2026 | Plan + audit script | docs + `scripts/audit_json_keys.py` | `9a56ecd8` |
+| 17 May 2026 | `daily_scan_*` migration (TRIVIAL) | 4 JSON + `full_universe_screener.py` | `a17b02d0` |
+| 17 May 2026 | `discovery_signals.json` migration (re-cat MEDIUM) | `discovery_engine.py` + shim `risk_engine.py` | `b92d204c` |
+| TBD | `backtest_summary.json` (MEDIUM, 5 key) | yazıcı + okuyucular | sırada |
+| TBD | `macro_intelligence.json` (MEDIUM, 6 nested) | nested struct | sonra |
+| TBD | `summary.json` (HARD, 19 key) | tam dosya | sonra |
+| TBD | `premarket_gaps.json` (EASY) | 30 dk | sonra |
+| TBD | `episodic_memory/trade_index.json` (EASY) | 30 dk | sonra |
+| TBD | `research/index.json` (MEDIUM) | nested | sonra |
+| TBD | `weekly_pre_check.json` (HARD, sözlük) | 1 gün | sonra |
+
+**Toplam tahmini kalan**: 3-4 seans daha.
+
+### İlerleme metriği
+
+```
+Başlangıç:     488 occurrence Türkçe key (skip filter sonrası)
+17 May seans:  - 8 occurrence (daily_scan_* x4, 2 key each)
+               - 42 occurrence (discovery_signals.json full)
+               = 50 occurrence düşüş
+Şu an:         ~438 occurrence kaldı
+```
+
+(audit script'in genişletilmiş sözlüğü sonraki çalıştırmada bu rakamı daha hassas verecek)
 
 ### Migration log
 
