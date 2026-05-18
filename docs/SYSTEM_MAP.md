@@ -25,7 +25,8 @@ updated: 2026-05-17
 - Faz 2 C-serisi: outcome doldurma + hit rate + adaptive multiplier önerisi
 - Phase 10 tasarım dokümanı: [[PHASE10_DESIGN]] (storage şeması, runtime mantığı, cron, test stratejisi, risk yönetimi, rollout)
 - Morning routine konsolide: [[DAILY_SABAH_PROMPT]] (eski 3-prompt yerine tek prompt)
-- Test: 79 → 544 (+465)
+- JSON key migration plan: [[JSON_KEY_MIGRATION]] (Türkçe → İngilizce, aşamalı, audit script ile)
+- Test: 79 → 561 (+482)
 - Phase 10'da yapılacak tek iş: sabit _MULTIPLIER_FLAG_TABLE'ı adaptive_suggestions ile replace etmek (veri toplandığında)
 > Amaç: Tüm scriptler, scheduler thread'leri, veri akışları ve dosya organizasyonunun tek bakışta görünümü.
 >
