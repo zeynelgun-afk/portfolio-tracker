@@ -17,18 +17,13 @@ updated: 2026-05-17
 # FINZORA AI — SİSTEM HARİTASI
 
 > Son güncelleme: 17 Mayıs 2026
-> **Faz 1 ✅ + Faz 2 ✅ TAMAMLANDI** (Adım 1-13)
+> **Faz 1 ✅ + Faz 2 + Faz 2 C-serisi TAMAMLANDI**
 
-🎉 **FAZ 2 OMURGA + ENTEGRASYON + RAPOR ALTYAPISI TAM**:
-- 4 scanner (thematic, fair_value, news, analyst_revisions) BaseScanner pattern'inde
-- Polymarket calibrator (3 pozisyon: gate-sonrası, watchlist sağlık, Phase 10 tracker)
-- 2 üretim akışı entegre (fair_value AI Gate'e, thematic score_components'a) — feature flag arkasında
-- Günlük cron: watchlist sağlık (TR 15:30)
-- Pazar raporu: Section 6 Prediction Markets Pulse
-- Finzora stats: kalibratör event analizi
-- Test: 79 → 471 (+392)
-
-Sırada Phase 10 (adaptive learning) — 30 gün veri biriktiği zaman.
+🎉 **PHASE 10'A HAZIR**:
+- Faz 2 (Adım 1-13 + 10b-iii-C-iii news_radar hariç): scanner + calibrator + 3 üretim entegrasyonu + günlük cron + raporlar
+- Faz 2 C-serisi: outcome doldurma + hit rate + adaptive multiplier önerisi
+- Test: 79 → 544 (+465)
+- Phase 10'da yapılacak tek iş: sabit _MULTIPLIER_FLAG_TABLE'ı adaptive_suggestions ile replace etmek (veri toplandığında)
 > Amaç: Tüm scriptler, scheduler thread'leri, veri akışları ve dosya organizasyonunun tek bakışta görünümü.
 >
 > **Kritik dönüşüm:** 13 Mayıs 2026 — eski 3-portföy + sleeve + thematic + swing sistemi (`data/portfolios/*.json`, `data/swing/active.json`) `data/archive/2026-05-13_pre_simplification/` altına taşındı. Bunun yerine **tek `data/portfolio.json`** (positions[] + closed[]) ve `agent/` v2 modern paketi geldi.

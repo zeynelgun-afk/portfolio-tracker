@@ -262,6 +262,7 @@ def query_calibrator_stats(days: int) -> dict:
             "phase10_progress_pct": _calc_phase10_progress(tracker, now),
             "outcome_status": "no_data",
             "hit_rates": None,
+            "adaptive_suggestions": [],
         }
 
     # Flag dağılımı
@@ -343,6 +344,9 @@ def query_calibrator_stats(days: int) -> dict:
         "phase10_progress_pct": _calc_phase10_progress(tracker, now),
         "outcome_status": outcome_status,
         "hit_rates": hit_rates,
+        "adaptive_suggestions": (
+            _calc_adaptive_suggestions(hit_rates) if hit_rates else []
+        ),
     }
 
 
@@ -355,6 +359,149 @@ def _parse_event_ts(event: dict) -> Optional[datetime]:
         return datetime.fromisoformat(ts_str.replace("Z", "+00:00"))
     except (ValueError, TypeError):
         return None
+
+
+# ─────────────────────── Adaptive Multiplier (C-3) ──────────────────────────
+# Faz 2 C-3 (17 May 2026). PASSIVE raporlama — sabit tablo değişmez,
+# sadece "verinin önerdiği çarpan" hesaplanır. Phase 10'da bu sayılar
+# kullanılarak _MULTIPLIER_FLAG_TABLE adaptive hale gelecek.
+
+# Mevcut sabit çarpanlar (calibrator.py:_MULTIPLIER_FLAG_TABLE'dan yansıtılır).
+_CURRENT_MULTIPLIERS = {
+    "pm_confirm":       1.20,
+    "pm_confirm_weak":  1.10,
+    "pm_conflict_weak": 0.90,
+    "pm_conflict":      0.75,
+}
+
+# Adaptive tuning parametreleri
+_REFERENCE_HIT_RATE = 60.0  # % — "kalibratör ortalama doğru" beklentisi
+_MIN_SAMPLE_SIZE = 10       # Bu altında öneri yok, "yetersiz veri"
+_MULTIPLIER_CLAMP = (0.50, 1.50)  # Aşırı uçlara gitme
+
+
+def _suggest_multiplier(flag: str, hit_rate_pct: Optional[float],
+                         sample_size: int,
+                         current: Optional[float] = None) -> dict:
+    """Bir bayrak için "verinin önerdiği çarpan"ı hesapla.
+
+    Args:
+        flag: bayrak adı (pm_confirm, pm_confirm_weak, ...)
+        hit_rate_pct: hit rate yüzdesi (0-100), None ise henüz hesaplanmadı
+        sample_size: kaç event'le hesaplandı
+        current: mevcut çarpan (None ise _CURRENT_MULTIPLIERS'tan)
+
+    Returns:
+        {
+          "flag": str,
+          "current": float | None,
+          "suggested": float | None,
+          "delta": float | None,
+          "hit_rate_pct": float | None,
+          "sample_size": int,
+          "confidence": "high" | "medium" | "low" | "insufficient",
+          "note": str,
+        }
+
+    Mantık:
+        effect = current - 1.0  (pm_confirm: +0.20, pm_conflict: -0.25)
+        suggested_effect = effect × (hit_rate / reference)
+        suggested = 1.0 + suggested_effect  (clamp [0.50, 1.50])
+
+    Confidence:
+        insufficient: sample_size < 10 (öneri None)
+        low: 10-19 sample
+        medium: 20-49 sample
+        high: 50+ sample
+    """
+    if current is None:
+        current = _CURRENT_MULTIPLIERS.get(flag)
+
+    if current is None:
+        return {
+            "flag": flag,
+            "current": None,
+            "suggested": None,
+            "delta": None,
+            "hit_rate_pct": hit_rate_pct,
+            "sample_size": sample_size,
+            "confidence": "insufficient",
+            "note": "Bilinmeyen bayrak — sabit tabloda kayıt yok",
+        }
+
+    if hit_rate_pct is None or sample_size < _MIN_SAMPLE_SIZE:
+        return {
+            "flag": flag,
+            "current": current,
+            "suggested": None,
+            "delta": None,
+            "hit_rate_pct": hit_rate_pct,
+            "sample_size": sample_size,
+            "confidence": "insufficient",
+            "note": f"Yetersiz veri ({sample_size} event, min {_MIN_SAMPLE_SIZE})",
+        }
+
+    # Adaptive hesap
+    effect = current - 1.0
+    suggested_effect = effect * (hit_rate_pct / _REFERENCE_HIT_RATE)
+    suggested_raw = 1.0 + suggested_effect
+
+    # Clamp
+    suggested = max(_MULTIPLIER_CLAMP[0],
+                    min(_MULTIPLIER_CLAMP[1], suggested_raw))
+    delta = suggested - current
+
+    # Confidence
+    if sample_size >= 50:
+        confidence = "high"
+    elif sample_size >= 20:
+        confidence = "medium"
+    else:
+        confidence = "low"
+
+    # Note
+    if abs(delta) < 0.02:
+        note = "Mevcut çarpan iyi — minimal değişiklik önerisi"
+    elif delta > 0:
+        note = f"Çarpan etkisini artırma önerisi (+{delta:.2f})"
+    else:
+        note = f"Çarpan etkisini azaltma önerisi ({delta:.2f})"
+
+    return {
+        "flag": flag,
+        "current": round(current, 4),
+        "suggested": round(suggested, 4),
+        "delta": round(delta, 4),
+        "hit_rate_pct": hit_rate_pct,
+        "sample_size": sample_size,
+        "confidence": confidence,
+        "note": note,
+    }
+
+
+def _calc_adaptive_suggestions(hit_rates: dict) -> list[dict]:
+    """Tüm bayraklar için adaptive multiplier önerileri (outcome_7d bazlı).
+
+    Returns:
+        list[dict] — her bayrak için _suggest_multiplier çıktısı.
+        Sıralama: tablo sırası (pm_confirm → pm_confirm_weak →
+        pm_conflict_weak → pm_conflict)
+    """
+    if not hit_rates:
+        return []
+
+    bfh = hit_rates.get("by_flag_horizon", {})
+    suggestions = []
+    flag_order = ["pm_confirm", "pm_confirm_weak",
+                  "pm_conflict_weak", "pm_conflict"]
+
+    for flag in flag_order:
+        bucket = bfh.get(flag, {}).get("outcome_7d", {})
+        hit_rate = bucket.get("rate_pct")
+        sample = bucket.get("total", 0)
+        suggestions.append(_suggest_multiplier(flag, hit_rate, sample))
+
+    return suggestions
 
 
 def _calc_days_collected(tracker: dict, now: datetime) -> float:
@@ -544,6 +691,58 @@ def format_calibrator_section(stats: dict) -> list[str]:
                 "_partial: outcome doldurma sürüyor. "
                 "phase10_ready için 7g olgun event'lerin ≥%80'inin dolu olması gerek._"
             )
+
+        # Adaptive multiplier önerileri (Faz 2 C-3)
+        suggestions = stats.get("adaptive_suggestions", [])
+        if suggestions:
+            lines.append("")
+            lines.append("### Adaptive Multiplier Önerileri (passive)\n")
+            lines.append(
+                "_Sabit tablo şu an değişmiyor. Aşağıdaki tablo, hit rate'lere "
+                "göre **veri-önerili** çarpanları gösterir. Phase 10'da "
+                "_MULTIPLIER_FLAG_TABLE bu sayılarla replace edilir._\n"
+            )
+            lines.append("| Bayrak | Mevcut | Veri Önerisi | Δ | Hit Rate | Sample | Güven |")
+            lines.append("|---|---:|---:|---:|---:|---:|---:|")
+            for s in suggestions:
+                flag = s.get("flag", "?")
+                current = s.get("current")
+                suggested = s.get("suggested")
+                delta = s.get("delta")
+                hit = s.get("hit_rate_pct")
+                sample = s.get("sample_size", 0)
+                conf = s.get("confidence", "?")
+
+                cur_str = f"{current:.2f}x" if isinstance(current, (int, float)) else "—"
+                if suggested is None:
+                    sug_str = "—"
+                    delta_str = "—"
+                else:
+                    sug_str = f"{suggested:.2f}x"
+                    delta_str = f"{delta:+.2f}"
+                hit_str = f"{hit:.1f}%" if isinstance(hit, (int, float)) else "—"
+                lines.append(
+                    f"| `{flag}` | {cur_str} | {sug_str} | {delta_str} | "
+                    f"{hit_str} | {sample} | `{conf}` |"
+                )
+            lines.append("")
+
+            # Genel yorum
+            has_high_confidence = any(s["confidence"] == "high" for s in suggestions)
+            has_actionable = any(
+                isinstance(s.get("delta"), (int, float)) and abs(s["delta"]) >= 0.05
+                for s in suggestions
+            )
+            if has_high_confidence and has_actionable:
+                lines.append(
+                    "_Bazı bayraklar için ≥%5 sapma var ve `high` güven seviyesinde. "
+                    "Phase 10 çarpan tuning gündeminde değerlendirilebilir._"
+                )
+            elif has_actionable:
+                lines.append(
+                    "_Bazı sapmalar görünüyor ama güven düşük — daha fazla event "
+                    "biriksin._"
+                )
 
     return lines
 
