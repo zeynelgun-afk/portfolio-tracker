@@ -1,5 +1,5 @@
 {
-  "_son_guncelleme": "2026-05-17 16:00",
+  "_son_guncelleme": "2026-05-18 20:56",
   "_aciklama": "Aşama 9 — Sinyal performans takibi (7g/14g/30g checkpoint)",
   "_schema_version": "1.0",
   "signals": {
@@ -54,11 +54,37 @@
       "in_zone": false,
       "checkpoints": {},
       "status": "tracking"
+    },
+    "NVDA_2026-05-18_14-00": {
+      "signal_id": "NVDA_2026-05-18_14-00",
+      "symbol": "NVDA",
+      "sent_at": "2026-05-18T14:00:54.165549+00:00",
+      "entry": 224.9443,
+      "stop_loss": 200,
+      "target": 285,
+      "score": 94.0,
+      "entry_zone": "$220-225",
+      "in_zone": true,
+      "checkpoints": {},
+      "status": "tracking"
+    },
+    "AMD_2026-05-18_14-00": {
+      "signal_id": "AMD_2026-05-18_14-00",
+      "symbol": "AMD",
+      "sent_at": "2026-05-18T14:00:54.676927+00:00",
+      "entry": 421.755,
+      "stop_loss": 385,
+      "target": 500,
+      "score": 91.0,
+      "entry_zone": "$415-420",
+      "in_zone": false,
+      "checkpoints": {},
+      "status": "tracking"
     }
   },
   "stats": {
-    "total_signals": 4,
-    "tracking": 4,
+    "total_signals": 6,
+    "tracking": 6,
     "completed": 0,
     "hit_target": 0,
     "hit_stop": 0,
