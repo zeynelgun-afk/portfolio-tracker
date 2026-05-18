@@ -274,25 +274,31 @@ CSV çıktısı manuel doldurma için: her satıra önerilen yeni isim yaz.
 |---|---|---|---|
 | 17 May 2026 | Plan + audit script | docs + `scripts/audit_json_keys.py` | `9a56ecd8` |
 | 17 May 2026 | `daily_scan_*` migration (TRIVIAL) | 4 JSON + `full_universe_screener.py` | `a17b02d0` |
-| 17 May 2026 | `discovery_signals.json` migration (re-cat MEDIUM) | `discovery_engine.py` + shim `risk_engine.py` | `b92d204c` |
+| 17 May 2026 | `discovery_signals.json` migration (re-cat MEDIUM, 14 key) | `discovery_engine.py` + shim `risk_engine.py` | `b92d204c` |
 | 17 May 2026 | `backtest_summary.json` migration (MEDIUM, 22 key) | `k_rules_backtest.py` + shim `risk_engine` + `orchestrator` | `f1ab5158` |
-| 17 May 2026 | `premarket_gaps.json` migration (EASY, 7 key) | `premarket_gap_scanner.py` (yazıcı+okuyucu aynı dosyada, shim ile) | `d79ad6d6` |
-| 17 May 2026 | `trade_index.json` migration (EASY, 10 key) | Sadece JSON; yazıcı arşivde (geri yüklemede ek migration) | `013b271d` |
-| 17 May 2026 | `macro_intelligence.json` migration (HARD, 24 key) | Yazıcı LLM-TR-to-EN convert layer + 4 okuyucu shim | bu commit |
-| TBD | `summary.json` (HARD, 19 key) | tam dosya | sırada |
-| TBD | `research/index.json` (MEDIUM) | nested | sonra |
-| TBD | `weekly_pre_check.json` (HARD, sözlük) | 1 gün | sonra |
+| 17 May 2026 | `premarket_gaps.json` migration (EASY, 7 key) | `premarket_gap_scanner.py` (tek dosya, shim) | `d79ad6d6` |
+| 17 May 2026 | `trade_index.json` migration (EASY, 10 key) | Sadece JSON; yazıcı arşivde | `013b271d` |
+| 17 May 2026 | `macro_intelligence.json` migration (HARD, 24 key) | Yazıcı LLM-TR-to-EN convert + 4 okuyucu shim | `d0786387` |
+| 17 May 2026 | `summary.json` migration (HARD, 22 key + 3 portföy adı) | `daily_update.py` + cash convert helper; aktif okuyucu yok | bu commit |
+| TBD | `research/index.json` (MEDIUM) | nested | sırada |
+| TBD | `weekly_pre_check.json` (HARD, sözlük migration) | 1 gün | sonra |
 
-**Toplam tahmini kalan**: 3-4 seans daha.
+**Toplam tahmini kalan**: 1-2 seans daha.
 
 ### İlerleme metriği
 
 ```
 Başlangıç:     488 occurrence Türkçe key (skip filter sonrası)
-17 May seans:  - 8 occurrence (daily_scan_* x4, 2 key each)
-               - 42 occurrence (discovery_signals.json full)
-               = 50 occurrence düşüş
-Şu an:         ~438 occurrence kaldı
+17 May seans:  Tamamlanan 7 migration commit (10 JSON dosyası):
+               - daily_scan_* (4 dosya, 2 key each) = 8
+               - discovery_signals.json full = 42
+               - backtest_summary.json full = 22+
+               - premarket_gaps.json full = 7
+               - trade_index.json full = 10
+               - macro_intelligence.json full = 24
+               - summary.json full = 22+3
+               TOPLAM: ~140+ occurrence migration
+Şu an:         ~350 occurrence kaldı (research/index + weekly_pre_check + edge case'ler)
 ```
 
 (audit script'in genişletilmiş sözlüğü sonraki çalıştırmada bu rakamı daha hassas verecek)
