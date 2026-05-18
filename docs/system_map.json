@@ -349,6 +349,26 @@
       "label": "fill_calibrator_outcomes.yml",
       "category": "workflow",
       "tag": "yeni — TR 09:00"
+    },
+    {
+      "id": "scripts/telegram_notify.py",
+      "label": "telegram_notify.py",
+      "category": "script"
+    },
+    {
+      "id": "docs/TRADING_PLAYBOOK.md",
+      "label": "TRADING_PLAYBOOK.md",
+      "category": "data"
+    },
+    {
+      "id": "docs/K_RULES_QUICK_REF.md",
+      "label": "K_RULES_QUICK_REF.md",
+      "category": "data"
+    },
+    {
+      "id": "scripts/k_rules_common.py",
+      "label": "k_rules_common.py",
+      "category": "script"
     }
   ],
   "edges": [
@@ -747,6 +767,34 @@
     {
       "source": "scripts/scanner_dry_run.py",
       "target": "agent/scanners/calibrator.py"
+    },
+    {
+      "source": "scripts/consistency_check.py",
+      "target": "scripts/telegram_notify.py"
+    },
+    {
+      "source": "scripts/consistency_check.py",
+      "target": "docs/TRADING_PLAYBOOK.md"
+    },
+    {
+      "source": "scripts/consistency_check.py",
+      "target": "docs/K_RULES_QUICK_REF.md"
+    },
+    {
+      "source": "scripts/consistency_check.py",
+      "target": "scripts/k_rules_common.py"
+    },
+    {
+      "source": "scripts/log_rotation.py",
+      "target": "logs/events.jsonl"
+    },
+    {
+      "source": "scripts/k_rules_common.py",
+      "target": "scripts/telegram_notify.py"
+    },
+    {
+      "source": "scripts/telegram_notify.py",
+      "target": "ext.telegram"
     }
   ]
 }
