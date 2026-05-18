@@ -18,10 +18,12 @@ updated: 2026-05-17
 
 > Son güncelleme: 17 Mayıs 2026
 > **Faz 1 ✅ + Faz 2 + Faz 2 C-serisi TAMAMLANDI**
+> **Phase 10 design**: [[PHASE10_DESIGN]] hazır (implementasyon ~30g sonra)
 
 🎉 **PHASE 10'A HAZIR**:
 - Faz 2 (Adım 1-13 + 10b-iii-C-iii news_radar hariç): scanner + calibrator + 3 üretim entegrasyonu + günlük cron + raporlar
 - Faz 2 C-serisi: outcome doldurma + hit rate + adaptive multiplier önerisi
+- Phase 10 tasarım dokümanı: [[PHASE10_DESIGN]] (storage şeması, runtime mantığı, cron, test stratejisi, risk yönetimi, rollout)
 - Test: 79 → 544 (+465)
 - Phase 10'da yapılacak tek iş: sabit _MULTIPLIER_FLAG_TABLE'ı adaptive_suggestions ile replace etmek (veri toplandığında)
 > Amaç: Tüm scriptler, scheduler thread'leri, veri akışları ve dosya organizasyonunun tek bakışta görünümü.
