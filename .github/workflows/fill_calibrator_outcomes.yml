@@ -1,0 +1,60 @@
+name: Fill Calibrator Outcomes (Phase 10 veri altyapısı)
+
+# Faz 2 — C-1 (17 May 2026). Tracker event'lerine outcome_7d/14d/30d doldur.
+# Phase 10 hit rate analizinin temel girdisi.
+#
+# Cron: günlük UTC 06:00 (TR 09:00 — NYSE session öncesi).
+# Tracker boş veya yeni event olgunlaşmadıysa no-op.
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Outcome hesapla ama tracker'a yazma'
+        type: boolean
+        default: false
+  schedule:
+    - cron: '0 6 * * *'  # UTC 06:00 = TR 09:00 günlük
+
+jobs:
+  fill:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write  # Tracker güncellenir + commit
+
+    steps:
+      - name: Repo çek
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.PAT || secrets.GITHUB_TOKEN }}
+
+      - name: Python kur
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Bağımlılıklar
+        run: pip install requests
+
+      - name: Outcome doldurma çalıştır
+        run: |
+          ARGS=""
+          if [ "${{ github.event.inputs.dry_run }}" = "true" ]; then
+            ARGS="--dry-run"
+          fi
+          python3 scripts/fill_calibrator_outcomes.py $ARGS
+        env:
+          PYTHONPATH: ${{ github.workspace }}:${{ github.workspace }}/agent:${{ github.workspace }}/agent/legacy
+          FMP_API_KEY: ${{ secrets.FMP_API_KEY }}
+
+      - name: Tracker güncellemesini commit et
+        if: ${{ github.event.inputs.dry_run != 'true' }}
+        run: |
+          git config user.name "Finzora Bot"
+          git config user.email "finzora-bot@users.noreply.github.com"
+          git add data/polymarket_calibrator_performance.json || true
+          if git diff --staged --quiet; then
+            echo "Tracker değişikliği yok"
+          else
+            git commit -m "[bot/outcomes] Outcome update $(date -u +'%Y-%m-%d %H:%M UTC')"
+            git push || true
+          fi
