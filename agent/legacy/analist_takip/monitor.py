@@ -192,6 +192,20 @@ def _run_polling_cycle(
     signals_found = 0
     decisions_sent = 0
 
+    # Faz 2 Adım 10b-iii-C-iii (17 May 2026): Polymarket kalibratör hook.
+    # CALIBRATOR_ENABLED=true ve STRONG_BUY decision olduğunda AI Gate'e
+    # calibration_info iletilir. Default kapalı — mevcut davranış değişmedi.
+    calibrator = None
+    try:
+        from agent.scanners.pipeline import is_calibrator_enabled
+        if is_calibrator_enabled():
+            from agent.scanners.calibrator import PolymarketCalibrator
+            calibrator = PolymarketCalibrator()
+            _log(f"{label}: Polymarket kalibratör AKTİF (CALIBRATOR_ENABLED=true)")
+    except Exception as e:
+        _log(f"{label}: Kalibratör başlatma hatası, devam ediliyor: {e}")
+        calibrator = None
+
     for ticker in tickers:
         try:
             # 1. Sinyalleri çek
@@ -294,6 +308,28 @@ def _run_polling_cycle(
                         avg_pct = decision.get("avg_revision_pct")
                         raised_count = decision.get("raised_count")
 
+                        # Faz 2 Adım 10b-iii-C-iii: Polymarket kalibrasyon probe
+                        calibration_info = None
+                        if calibrator is not None:
+                            try:
+                                from agent.scanners.base import Candidate
+                                probe = Candidate(
+                                    symbol=ticker,
+                                    score=0.5,  # probe — gerçek skor AI Gate'ten
+                                    reason="analyst_revisions probe",
+                                    source="analyst_revisions",
+                                )
+                                calibrator.calibrate([probe])
+                                if probe.has_calibration:
+                                    calibration_info = {
+                                        "flags": probe.calibration_flags,
+                                        "multiplier": probe.calibration_multiplier,
+                                        "original_score": probe.score,
+                                        "calibrated_score": probe.calibrated_score,
+                                    }
+                            except Exception as e:
+                                _log(f"{ticker} kalibrasyon hatası: {e}")
+
                         # Asama 8 (14 May 2026): LLM gate — her sinyal AI'dan gecer
                         gate_result = ai_gate_eval(
                             symbol=ticker,
@@ -306,6 +342,7 @@ def _run_polling_cycle(
                                 "decision_confidence": decision.get("confidence"),
                                 "current_price": current_price,
                             },
+                            calibration_info=calibration_info,  # Adım 10b-iii-C-iii
                         )
 
                         if gate_result["action"] != "EKLE":
@@ -318,24 +355,32 @@ def _run_polling_cycle(
                             + (f", avg +{avg_pct:.1f}%" if avg_pct else "")
                             + f") + AI gate: {gate_result['reason']}"
                         )
+                        # Faz 2 Adım 10b-iii-C-iii: kalibrasyon metadata score_components'a
+                        score_components_dict = {
+                            "analist_takip": {
+                                "raised_count": raised_count,
+                                "avg_revision_pct": avg_pct,
+                                "decision_confidence": decision.get("confidence"),
+                            },
+                            "ai_gate": {
+                                "score": gate_result["score"],
+                                "theme_match": gate_result.get("theme_match"),
+                                "cautions": gate_result.get("cautions", []),
+                            },
+                        }
+                        if calibration_info is not None:
+                            score_components_dict["polymarket_calibration"] = {
+                                "flags": calibration_info["flags"],
+                                "multiplier": calibration_info["multiplier"],
+                            }
+
                         result = pool_add(
                             symbol=ticker,
                             source="analist_takip_strong_buy",
                             rationale=rationale,
                             price=current_price,
                             score=gate_result["score"],  # AI'nin verdigi skor
-                            score_components={
-                                "analist_takip": {
-                                    "raised_count": raised_count,
-                                    "avg_revision_pct": avg_pct,
-                                    "decision_confidence": decision.get("confidence"),
-                                },
-                                "ai_gate": {
-                                    "score": gate_result["score"],
-                                    "theme_match": gate_result.get("theme_match"),
-                                    "cautions": gate_result.get("cautions", []),
-                                },
-                            },
+                            score_components=score_components_dict,
                         )
                         if result["action"] in ("added", "updated"):
                             _log(f"{ticker} ana havuza eklendi/güncellendi (AI score {gate_result['score']}): {result['action']}")
