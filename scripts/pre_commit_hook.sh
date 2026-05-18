@@ -57,10 +57,13 @@ fi
 
 # Migration health check (5-10 saniye)
 export PYTHONPATH="$REPO_ROOT:$REPO_ROOT/agent:$REPO_ROOT/agent/legacy:${PYTHONPATH:-}"
-# Stub env (modüller config import ederken hata vermesin)
-export FMP_API_KEY="${FMP_API_KEY:-dummy_hook_value}"
-export TELEGRAM_BOT_TOKEN="${TELEGRAM_BOT_TOKEN:-dummy_hook_value}"
-export TELEGRAM_PRIVATE_ID="${TELEGRAM_PRIVATE_ID:-dummy_hook_value}"
+# Stub env — production'da gerçek değerler vardır, hook ortamında bunlar olmazsa
+# config modülü import'unda ImportError. test_key_dummy seçildi çünkü
+# tests/conftest.py:12 os.environ.setdefault aynı değeri set ediyor — testlerle
+# çakışma yaratmaz (bkz. test_apikey_added_to_params).
+export FMP_API_KEY="${FMP_API_KEY:-test_key_dummy}"
+export TELEGRAM_BOT_TOKEN="${TELEGRAM_BOT_TOKEN:-test_token_dummy}"
+export TELEGRAM_PRIVATE_ID="${TELEGRAM_PRIVATE_ID:-0}"
 
 if python3 scripts/migration_health_check.py > /tmp/health_check.log 2>&1; then
     PASS_LINE=$(grep -oE '[0-9]+/[0-9]+ test PASS' /tmp/health_check.log | head -1)

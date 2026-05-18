@@ -452,6 +452,83 @@ def _classify_macro_move(sym: str, chg: Optional[float]) -> str:
     return "↔ flat"
 
 
+# ---------- Macro intelligence pipeline (17 May 2026 — restore) ----------
+#
+# 13 May simplification taşımasında eski agent/legacy/orchestrator.py yerini
+# yeni agent/reports/morning.py aldı, ama orchestrator'ın run_macro_intelligence()
+# çağrısı taşınmadı. Sonuç: data/macro_intelligence.json 5+ gün güncellenmedi,
+# watchlist feeder zinciri (theme_filter → tema_portfolio_tracker → discovery)
+# stale data ile çalıştı.
+#
+# Bu fonksiyon morning.py akışı içinde çağrılır:
+#   - macro_intelligence.json 12 saatten eski ise yeniler (Claude LLM call)
+#   - Hata durumunda eski veriyi koruyup morning.py'ın çalışmaya devam etmesini
+#     sağlar (defansif: morning kritik akış, macro accent sağlayıcı)
+#
+# Side effects: data/macro_intelligence.json yazılır, K-13 matris güncellenebilir.
+
+
+def update_macro_intelligence(vix_price: Optional[float]) -> dict:
+    """Macro intelligence pipeline'ı 12h cache'li çalıştır.
+
+    Returns:
+        {refreshed: bool, age_hours: float | None, theme_count: int,
+         reason: str | None}
+    """
+    import json as _json
+    macro_path = _REPO_ROOT / "data" / "macro_intelligence.json"
+    age_hours: Optional[float] = None
+
+    # 1) Mevcut veri taze mi?
+    if macro_path.exists():
+        try:
+            current = _json.load(open(macro_path, encoding="utf-8"))
+            last_str = current.get("date", "") or current.get("tarih", "")
+            if last_str:
+                # ISO 8601 — timezone-aware veya naive olabilir
+                last_dt = datetime.fromisoformat(last_str.replace("Z", "+00:00"))
+                now_dt = datetime.now(last_dt.tzinfo) if last_dt.tzinfo else datetime.now()
+                age_hours = (now_dt - last_dt).total_seconds() / 3600
+        except Exception as e:
+            print(f"[macro] Mevcut JSON parse hatası: {e}")
+
+    # 12 saatten taze ise atla (LLM call tasarrufu)
+    if age_hours is not None and age_hours < 12:
+        return {
+            "refreshed": False,
+            "age_hours": round(age_hours, 1),
+            "theme_count": 0,
+            "reason": "cache_fresh",
+        }
+
+    # 2) Yenileme — defansif
+    try:
+        # agent/legacy modülü direkt import için sys.path
+        legacy_dir = _REPO_ROOT / "agent" / "legacy"
+        if str(legacy_dir) not in sys.path:
+            sys.path.insert(0, str(legacy_dir))
+        from macro_intelligence import run_macro_intelligence  # type: ignore
+
+        vix = float(vix_price) if vix_price is not None else 20.0
+        result = run_macro_intelligence(vix=vix)
+        theme_count = len(result.get("dominant_themes", []))
+        return {
+            "refreshed": True,
+            "age_hours": age_hours,
+            "theme_count": theme_count,
+            "reason": "refreshed_ok",
+        }
+    except Exception as e:
+        # Morning report kritik akış — macro refresh patlatması fail etmemeli
+        print(f"[macro] Yenileme hatası, eski veri korundu: {e}")
+        return {
+            "refreshed": False,
+            "age_hours": age_hours,
+            "theme_count": 0,
+            "reason": f"refresh_error: {type(e).__name__}",
+        }
+
+
 # ---------- Main entry point ----------
 
 def generate_morning_report(send_telegram: bool = False) -> dict:
@@ -461,10 +538,19 @@ def generate_morning_report(send_telegram: bool = False) -> dict:
     Side effects:
       - writes reports/daily/DAILY_MORNING_<date>.md
       - if send_telegram: posts a Turkish summary to the Finzora group
+      - REFRESHES data/macro_intelligence.json if older than 12h (LLM call)
     """
     today = datetime.now().strftime("%Y-%m-%d")
 
     macro = gather_macro()
+
+    # 17 May 2026: macro_intelligence pipeline restore — VIX zaten gather_macro
+    # içinde alındı, onu reuse et (extra FMP call gerekmez).
+    macro_refresh = update_macro_intelligence(
+        vix_price=macro.get("vix", {}).get("price")
+    )
+    print(f"[morning] macro refresh: {macro_refresh}")
+
     portfolio = gather_portfolio()
 
     report_md = render_report(macro, portfolio, today)
@@ -483,6 +569,7 @@ def generate_morning_report(send_telegram: bool = False) -> dict:
         "report_size_chars": len(report_md),
         "telegram_sent": sent_to_group,
         "telegram_preview_lines": telegram_summary.count("\n") + 1,
+        "macro_refresh": macro_refresh,
     }
 
 
