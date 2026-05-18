@@ -56,18 +56,18 @@ jobs:
           PYTHONPATH: ${{ github.workspace }}:${{ github.workspace }}/agent:${{ github.workspace }}/agent/legacy
           # Production'da env zorunlu, ama health_check fixture'lar kullanıyor —
           # config modülü import'u için stub değerler
-          FMP_API_KEY: dummy_ci_value
-          TELEGRAM_BOT_TOKEN: dummy_ci_value
-          TELEGRAM_PRIVATE_ID: dummy_ci_value
+          FMP_API_KEY: test_key_dummy
+          TELEGRAM_BOT_TOKEN: test_token_dummy
+          TELEGRAM_PRIVATE_ID: "0"
         run: |
           python scripts/migration_health_check.py
 
       - name: Test suite (pytest 561 test)
         env:
           PYTHONPATH: ${{ github.workspace }}:${{ github.workspace }}/agent:${{ github.workspace }}/agent/legacy
-          FMP_API_KEY: dummy_ci_value
-          TELEGRAM_BOT_TOKEN: dummy_ci_value
-          TELEGRAM_PRIVATE_ID: dummy_ci_value
+          FMP_API_KEY: test_key_dummy
+          TELEGRAM_BOT_TOKEN: test_token_dummy
+          TELEGRAM_PRIVATE_ID: "0"
         run: |
           python -m pytest tests/ -q --tb=short
 

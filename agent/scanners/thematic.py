@@ -71,6 +71,14 @@ SECTOR_ETFS = {
 SUB_SECTOR_ETFS = {
     "SMH": "Semiconductors",
     "SOXX": "Semiconductors (alt)",
+    # Yazılım sektörü — 17 May 2026 ekleme (Faz 2)
+    # XLK içinde yazılım Apple/Microsoft/Nvidia ile karışık görünüyordu;
+    # bu ETF'ler saf yazılım/SaaS/cybersec momentum'u izole eder.
+    "IGV":  "Software (Expanded Tech)",
+    "XSW":  "Software & Services",
+    "CIBR": "Cybersecurity",
+    "IGPT": "AI Software & Next Gen",
+    "HACK": "Cybersecurity (alt)",
     "ARKK": "Innovation",
     "ICLN": "Clean Energy",
     "XBI": "Biotech",
