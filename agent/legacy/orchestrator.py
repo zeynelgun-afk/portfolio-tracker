@@ -2213,8 +2213,12 @@ def run_weekly(ctx: dict):
                 if _bt_path.exists():
                     _bts = _j_bt.load(open(_bt_path))
                     _bt_lines = ["📊 K-KURALLARI HAFTALIK BACKTEST"]
-                    for _r in _bts.get("raporlar", []):
-                        if _r.get("sayi", 0) == 0:
+                    # Shim: hem yeni "reports" hem eski "raporlar"
+                    _bt_reports = _bts.get("reports") or _bts.get("raporlar", [])
+                    for _r in _bt_reports:
+                        # Shim: hem yeni hem eski key
+                        _bt_count = _r.get("count", _r.get("sayi", 0))
+                        if _bt_count == 0:
                             continue
                         _g5 = _r.get("g5_avg_pct")
                         _g20 = _r.get("g20_avg_pct")
@@ -2222,7 +2226,8 @@ def run_weekly(ctx: dict):
                             continue
                         _g5s = f"{_g5:+.1f}%"
                         _g20s = f"{_g20:+.1f}%" if _g20 is not None else "—"
-                        _bt_lines.append(f"  {_r['kategori']:14} ({_r['sayi']:>2}): 5g {_g5s} | 20g {_g20s}")
+                        _bt_cat = _r.get("category") or _r.get("kategori")
+                        _bt_lines.append(f"  {_bt_cat:14} ({_bt_count:>2}): 5g {_g5s} | 20g {_g20s}")
                     print("\n".join(_bt_lines))
             except Exception as _bts_e:
                 print(f"[Weekly] Backtest ozet uyarisi: {_bts_e}")

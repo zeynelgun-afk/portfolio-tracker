@@ -355,16 +355,18 @@ def _backtest_dersler_blogu() -> str:
     except Exception:
         return ""
 
-    raporlar = s.get("raporlar", [])
+    # Shim: hem yeni "reports" hem eski "raporlar" (17 May 2026 migration)
+    raporlar = s.get("reports") or s.get("raporlar", [])
     if not raporlar:
         return ""
 
     lines = ["--- K-KURALLARI BACKTEST DERSLERI (189 islem) ---"]
     for r in raporlar:
-        if r.get("sayi", 0) == 0:
+        # Shim: hem yeni hem eski key
+        sayi = r.get("count", r.get("sayi", 0))
+        if sayi == 0:
             continue
-        kategori = r["kategori"]
-        sayi = r["sayi"]
+        kategori = r.get("category") or r.get("kategori")
         g5 = r.get("g5_avg_pct")
         g20 = r.get("g20_avg_pct")
         if g5 is None:

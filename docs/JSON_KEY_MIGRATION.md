@@ -275,8 +275,8 @@ CSV çıktısı manuel doldurma için: her satıra önerilen yeni isim yaz.
 | 17 May 2026 | Plan + audit script | docs + `scripts/audit_json_keys.py` | `9a56ecd8` |
 | 17 May 2026 | `daily_scan_*` migration (TRIVIAL) | 4 JSON + `full_universe_screener.py` | `a17b02d0` |
 | 17 May 2026 | `discovery_signals.json` migration (re-cat MEDIUM) | `discovery_engine.py` + shim `risk_engine.py` | `b92d204c` |
-| TBD | `backtest_summary.json` (MEDIUM, 5 key) | yazıcı + okuyucular | sırada |
-| TBD | `macro_intelligence.json` (MEDIUM, 6 nested) | nested struct | sonra |
+| 17 May 2026 | `backtest_summary.json` migration (MEDIUM, 22 key) | `k_rules_backtest.py` + shim `risk_engine` + `orchestrator` | bu commit |
+| TBD | `macro_intelligence.json` (MEDIUM, 6 nested) | nested struct | sırada |
 | TBD | `summary.json` (HARD, 19 key) | tam dosya | sonra |
 | TBD | `premarket_gaps.json` (EASY) | 30 dk | sonra |
 | TBD | `episodic_memory/trade_index.json` (EASY) | 30 dk | sonra |
@@ -326,6 +326,26 @@ Başlangıç:     488 occurrence Türkçe key (skip filter sonrası)
   - Aday içi field'lar için de or-fallback (`symbol or sembol`, vb.)
   - 1 hafta gözlem sonrası eski key fallback'i kaldırılacak
 - Mevcut `data/discovery_signals.json` (42 candidate) migrate edildi
+- Test: 561 PASS
+
+**17 May 2026 — backtest_summary.json**:
+- Re-kategorize: MEDIUM (15+ Türkçe key, audit'in 5'ten fazlasını yakaladığı)
+- `scripts/k_rules_backtest.py` yazıcı tamamen güncellendi:
+  - Top-level (2 key): `tarih→date`, `raporlar→reports`
+  - Report içi (8 key): `kategori→category`, `sayi→count`, `veri→data_count`,
+    `g5_yukselen→g5_rising`, `g5_dusen→g5_falling`,
+    `g5_toplam_kazan→g5_total_gain`, `g20_toplam_kazan→g20_total_gain`,
+    `ornek→examples`
+  - Example içi (12 key): `sembol→symbol`, `tarih→date`, `satis→sell_price`,
+    `alis→buy_price`, `g{1,5,10,20}_fiyat→g{N}_price`,
+    `g{1,5,10,20}_kazan→g{N}_gain`
+  - `yorumla()` fonksiyonu + main print/markdown blokları stat key referansları güncellendi
+- 2 okuyucu — **geriye uyumluluk shim** eklendi:
+  - `agent/legacy/risk_engine.py:_backtest_dersler_blogu()`:
+    `s.get("reports") or s.get("raporlar")`, `r.get("count", r.get("sayi"))`,
+    `r.get("category") or r.get("kategori")` pattern
+  - `agent/legacy/orchestrator.py` weekly backtest blok: aynı pattern
+- Mevcut `data/backtest_summary.json` (20 raporlar, ~60 example) migrate edildi
 - Test: 561 PASS
 
 ### Re-kategorize edilen dosyalar (planda gözüktüğünden farklı)

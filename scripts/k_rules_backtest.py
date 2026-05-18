@@ -81,7 +81,7 @@ def what_if_satis(satis_tarihi: str, sembol: str, satis_fiyati: float,
     hist_asc = sorted(hist, key=lambda x: x.get("date", ""))
     after = [h for h in hist_asc if h.get("date", "") > satis_tarihi]
     
-    sonuc = {"sembol": sembol, "tarih": satis_tarihi, "satis": satis_fiyati}
+    sonuc = {"symbol": sembol, "date": satis_tarihi, "sell_price": satis_fiyati}
     for g in gunler:
         if len(after) >= g:
             fiyat = after[g - 1].get("close")
@@ -89,8 +89,8 @@ def what_if_satis(satis_tarihi: str, sembol: str, satis_fiyati: float,
                 pct = (fiyat - satis_fiyati) / satis_fiyati * 100
                 kac_kazan = (fiyat - satis_fiyati) * shares
                 sonuc[f"g{g}_pct"] = round(pct, 2)
-                sonuc[f"g{g}_kazan"] = round(kac_kazan, 2)
-                sonuc[f"g{g}_fiyat"] = round(fiyat, 2)
+                sonuc[f"g{g}_gain"] = round(kac_kazan, 2)
+                sonuc[f"g{g}_price"] = round(fiyat, 2)
     return sonuc
 
 
@@ -108,7 +108,7 @@ def what_if_alis(alis_tarihi: str, sembol: str, alis_fiyati: float,
     hist_asc = sorted(hist, key=lambda x: x.get("date", ""))
     after = [h for h in hist_asc if h.get("date", "") > alis_tarihi]
     
-    sonuc = {"sembol": sembol, "tarih": alis_tarihi, "alis": alis_fiyati}
+    sonuc = {"symbol": sembol, "date": alis_tarihi, "buy_price": alis_fiyati}
     for g in gunler:
         if len(after) >= g:
             fiyat = after[g - 1].get("close")
@@ -116,7 +116,7 @@ def what_if_alis(alis_tarihi: str, sembol: str, alis_fiyati: float,
                 pct = (fiyat - alis_fiyati) / alis_fiyati * 100
                 kazan = (fiyat - alis_fiyati) * shares
                 sonuc[f"g{g}_pct"] = round(pct, 2)
-                sonuc[f"g{g}_kazan"] = round(kazan, 2)
+                sonuc[f"g{g}_gain"] = round(kazan, 2)
     return sonuc
 
 
@@ -162,28 +162,28 @@ def kategori_analiz(rows: list, kategori: str, action_filter: str = "SELL") -> d
         return sum(1 for s in sonuclar if s.get(key, 0) > 0)
     
     return {
-        "kategori": kategori,
+        "category": kategori,
         "action": action_filter,
-        "sayi": len(iliskili),
-        "veri": len(sonuclar),
+        "count": len(iliskili),
+        "data_count": len(sonuclar),
         "g1_avg_pct": safe_avg("g1_pct"),
         "g5_avg_pct": safe_avg("g5_pct"),
         "g10_avg_pct": safe_avg("g10_pct"),
         "g20_avg_pct": safe_avg("g20_pct"),
-        "g5_yukselen": yuksek_say("g5_pct"),
-        "g5_dusen": len(sonuclar) - yuksek_say("g5_pct"),
-        "g5_toplam_kazan": safe_sum("g5_kazan"),
-        "g20_toplam_kazan": safe_sum("g20_kazan"),
-        "ornek": sonuclar[:3],
+        "g5_rising": yuksek_say("g5_pct"),
+        "g5_falling": len(sonuclar) - yuksek_say("g5_pct"),
+        "g5_total_gain": safe_sum("g5_gain"),
+        "g20_total_gain": safe_sum("g20_gain"),
+        "examples": sonuclar[:3],
     }
 
 
 def yorumla(stat: dict) -> str:
     """Istatistiklere bakip kuraldan ne ders cikiyor?"""
-    if stat["sayi"] == 0:
+    if stat["count"] == 0:
         return "Yeterli veri yok."
-    
-    k = stat["kategori"]
+
+    k = stat["category"]
     g5 = stat.get("g5_avg_pct")
     g20 = stat.get("g20_avg_pct")
     
@@ -262,18 +262,18 @@ def main():
         print(f"\n>>> {k} (SATIS analizi)")
         s = kategori_analiz(rows, k, "SELL")
         raporlar.append(s)
-        if s["sayi"] == 0:
+        if s["count"] == 0:
             print(f"  Yeterli veri yok.")
             continue
-        print(f"  Toplam {k} satisi: {s['sayi']} | analiz edildi: {s['veri']}")
+        print(f"  Toplam {k} satisi: {s['count']} | analiz edildi: {s['data_count']}")
         if s.get("g5_avg_pct") is not None:
             print(f"  Satis sonrasi ort %:")
             print(f"    1 gun:  {s['g1_avg_pct']:+6.2f}%")
             print(f"    5 gun:  {s['g5_avg_pct']:+6.2f}%")
             print(f"    10 gun: {s['g10_avg_pct']:+6.2f}%" if s.get('g10_avg_pct') else "")
             print(f"    20 gun: {s['g20_avg_pct']:+6.2f}%" if s.get('g20_avg_pct') else "")
-            print(f"  5g sonra YUKSELDI: {s['g5_yukselen']}/{s['veri']} ({s['g5_yukselen']/s['veri']*100:.0f}%)")
-            print(f"  5g sonra DUSTU: {s['g5_dusen']}/{s['veri']} ({s['g5_dusen']/s['veri']*100:.0f}%)")
+            print(f"  5g sonra YUKSELDI: {s['g5_rising']}/{s['data_count']} ({s['g5_rising']/s['data_count']*100:.0f}%)")
+            print(f"  5g sonra DUSTU: {s['g5_falling']}/{s['data_count']} ({s['g5_falling']/s['data_count']*100:.0f}%)")
             print(f"  Yorum: {yorumla(s)}")
     
     # BUY analizleri
@@ -281,9 +281,9 @@ def main():
         print(f"\n>>> {k} (ALIM analizi)")
         s = kategori_analiz(rows, k, "BUY")
         raporlar.append(s)
-        if s["sayi"] == 0:
+        if s["count"] == 0:
             continue
-        print(f"  Toplam {k} alimi: {s['sayi']} | analiz edildi: {s['veri']}")
+        print(f"  Toplam {k} alimi: {s['count']} | analiz edildi: {s['data_count']}")
         if s.get("g5_avg_pct") is not None:
             print(f"  Alim sonrasi ort %:")
             print(f"    1 gun:  {s['g1_avg_pct']:+6.2f}%")
@@ -299,7 +299,7 @@ def main():
     print(f"{'Kural':12} {'Sayi':>6} {'5g %':>10} {'20g %':>10} {'Karar':30}")
     print("-" * 70)
     for s in raporlar:
-        if s["sayi"] == 0:
+        if s["count"] == 0:
             continue
         karar = ""
         g5 = s.get("g5_avg_pct")
@@ -315,7 +315,7 @@ def main():
         g5_str = f"{g5:+.2f}%" if g5 is not None else "—"
         g20 = s.get("g20_avg_pct")
         g20_str = f"{g20:+.2f}%" if g20 is not None else "—"
-        print(f"{s['kategori']:12} {s['sayi']:>6} {g5_str:>10} {g20_str:>10} {karar:30}")
+        print(f"{s['category']:12} {s['count']:>6} {g5_str:>10} {g20_str:>10} {karar:30}")
     
     # Markdown rapor olustur
     if args.save:
@@ -332,7 +332,7 @@ def main():
             f.write("| Kural | Islem Sayisi | 5g Sonra Ort % | 20g Sonra Ort % | Karar |\n")
             f.write("|-------|---|---|---|---|\n")
             for s in raporlar:
-                if s["sayi"] == 0:
+                if s["count"] == 0:
                     continue
                 g5 = s.get("g5_avg_pct")
                 g20 = s.get("g20_avg_pct")
@@ -345,15 +345,15 @@ def main():
                     if g5 > 5: karar = "✅ Mukemmel"
                     elif g5 > 0: karar = "⚠️ Iyi"
                     else: karar = "🔴 Zayif"
-                f.write(f"| {s['kategori']} | {s['sayi']} | {g5:+.2f}% | {g20:+.2f}% | {karar} |\n" 
+                f.write(f"| {s['category']} | {s['count']} | {g5:+.2f}% | {g20:+.2f}% | {karar} |\n" 
                         if g5 is not None and g20 is not None else
-                        f"| {s['kategori']} | {s['sayi']} | — | — | — |\n")
+                        f"| {s['category']} | {s['count']} | — | — | — |\n")
             
             f.write("\n## Detayli Yorumlar\n\n")
             for s in raporlar:
-                if s["sayi"] == 0:
+                if s["count"] == 0:
                     continue
-                f.write(f"### {s['kategori']} ({s['sayi']} islem)\n\n")
+                f.write(f"### {s['category']} ({s['count']} islem)\n\n")
                 f.write(f"**Yorum:** {yorumla(s)}\n\n")
         
         print(f"\nRapor kaydedildi: {out_path}")
@@ -361,7 +361,7 @@ def main():
     # JSON ozet
     out_json = REPO_ROOT / "data" / "backtest_summary.json"
     with open(out_json, "w") as f:
-        json.dump({"tarih": datetime.now().isoformat(), "raporlar": raporlar}, f, indent=2)
+        json.dump({"date": datetime.now().isoformat(), "reports": raporlar}, f, indent=2)
     print(f"\nJSON ozet: {out_json}")
 
 
