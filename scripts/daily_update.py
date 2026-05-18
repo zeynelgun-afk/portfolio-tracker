@@ -732,45 +732,56 @@ def update_summary():
     total_pnl = total_value - total_capital
     total_pnl_pct = (total_pnl / total_capital) * 100
 
+    # Cash inner field convert: kaynak portfolio Türkçe (nakit.miktar/para_birimi/
+    # agirlik_yuzde) — summary.json'a İngilizce şema yaz
+    def _cash_to_en(c):
+        if not isinstance(c, dict):
+            return {"amount": 0}
+        return {
+            "amount":     c.get("miktar", c.get("amount", 0)),
+            "currency":   c.get("para_birimi", c.get("currency", "USD")),
+            "weight_pct": c.get("agirlik_yuzde", c.get("weight_pct", 0)),
+        }
+
     summary = {
-        "son_guncelleme": datetime.now().strftime('%Y-%m-%d'),
-        "toplam_sermaye": total_capital,
-        "toplam_deger": round(total_value, 2),
-        "toplam_kar_zarar": round(total_pnl, 2),
-        "toplam_kar_zarar_yuzde": round(total_pnl_pct, 2),
-        "portfolyolar": {
-            "dengeli": {
-                "isim": "Dengeli Portföy",
-                "deger": balanced['toplam_deger'],
-                "maliyet": balanced['baslangic_sermaye'],
-                "kar_zarar": balanced['toplam_deger'] - balanced['baslangic_sermaye'],
-                "kar_zarar_yuzde": balanced['toplam_getiri_yuzde'],
-                "pozisyon_sayisi": len(balanced['pozisyonlar']),
-                "nakit": balanced.get('nakit', {"miktar": 0})
+        "last_updated": datetime.now().strftime('%Y-%m-%d'),
+        "total_capital": total_capital,
+        "total_value": round(total_value, 2),
+        "total_pnl": round(total_pnl, 2),
+        "total_pnl_pct": round(total_pnl_pct, 2),
+        "portfolios": {
+            "balanced": {
+                "name": "Dengeli Portföy",
+                "value": balanced['toplam_deger'],
+                "cost": balanced['baslangic_sermaye'],
+                "pnl": balanced['toplam_deger'] - balanced['baslangic_sermaye'],
+                "pnl_pct": balanced['toplam_getiri_yuzde'],
+                "position_count": len(balanced['pozisyonlar']),
+                "cash": _cash_to_en(balanced.get('nakit', {}))
             },
-            "agresif": {
-                "isim": "Agresif Büyüme Portföyü",
-                "deger": aggressive['toplam_deger'],
-                "maliyet": aggressive['baslangic_sermaye'],
-                "kar_zarar": aggressive['toplam_deger'] - aggressive['baslangic_sermaye'],
-                "kar_zarar_yuzde": aggressive['toplam_getiri_yuzde'],
-                "pozisyon_sayisi": len(aggressive['pozisyonlar']),
-                "nakit": aggressive.get('nakit', {"miktar": 0})
+            "aggressive": {
+                "name": "Agresif Büyüme Portföyü",
+                "value": aggressive['toplam_deger'],
+                "cost": aggressive['baslangic_sermaye'],
+                "pnl": aggressive['toplam_deger'] - aggressive['baslangic_sermaye'],
+                "pnl_pct": aggressive['toplam_getiri_yuzde'],
+                "position_count": len(aggressive['pozisyonlar']),
+                "cash": _cash_to_en(aggressive.get('nakit', {}))
             },
-            "temettü": {
-                "isim": "Değer + Temettü Portföyü",
-                "deger": dividend['toplam_deger'],
-                "maliyet": dividend['baslangic_sermaye'],
-                "kar_zarar": dividend['toplam_deger'] - dividend['baslangic_sermaye'],
-                "kar_zarar_yuzde": dividend['toplam_getiri_yuzde'],
-                "pozisyon_sayisi": len(dividend['pozisyonlar']),
-                "nakit": dividend.get('nakit', {"miktar": 0})
+            "dividend": {
+                "name": "Değer + Temettü Portföyü",
+                "value": dividend['toplam_deger'],
+                "cost": dividend['baslangic_sermaye'],
+                "pnl": dividend['toplam_deger'] - dividend['baslangic_sermaye'],
+                "pnl_pct": dividend['toplam_getiri_yuzde'],
+                "position_count": len(dividend['pozisyonlar']),
+                "cash": _cash_to_en(dividend.get('nakit', {}))
             },
             "swing_trade": {
-                "isim": "Swing Trade",
-                "pozisyon_sayisi": len(swing_pozisyonlar),
-                "bos_slot": swing_slot_max - len(swing_pozisyonlar),
-                "durum": f"{len(swing_pozisyonlar)}/{swing_slot_max} pozisyon aktif"
+                "name": "Swing Trade",
+                "position_count": len(swing_pozisyonlar),
+                "empty_slots": swing_slot_max - len(swing_pozisyonlar),
+                "status": f"{len(swing_pozisyonlar)}/{swing_slot_max} pozisyon aktif"
             }
         }
     }

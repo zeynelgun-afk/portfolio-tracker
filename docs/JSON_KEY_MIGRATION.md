@@ -272,10 +272,16 @@ CSV çıktısı manuel doldurma için: her satıra önerilen yeni isim yaz.
 
 | Tarih | Eylem | Dosya | Commit |
 |---|---|---|---|
-| 17 May 2026 | Plan + audit script | (bu doküman + scripts/audit_json_keys.py) | `9a56ecd8` |
-| 17 May 2026 | İlk migration: daily_scan_* dosyaları | 4 JSON + 1 Python | TBD bu commit |
-| ? | summary.json (HARD — re-kategorize edildi) | 19 unique key | TBD |
-| ... | ... | ... | ... |
+| 17 May 2026 | Plan + audit script | docs + `scripts/audit_json_keys.py` | `9a56ecd8` |
+| 17 May 2026 | `daily_scan_*` migration (TRIVIAL) | 4 JSON + `full_universe_screener.py` | `a17b02d0` |
+| 17 May 2026 | `discovery_signals.json` migration (re-cat MEDIUM, 14 key) | `discovery_engine.py` + shim `risk_engine.py` | `b92d204c` |
+| 17 May 2026 | `backtest_summary.json` migration (MEDIUM, 22 key) | `k_rules_backtest.py` + shim `risk_engine` + `orchestrator` | `f1ab5158` |
+| 17 May 2026 | `premarket_gaps.json` migration (EASY, 7 key) | `premarket_gap_scanner.py` (tek dosya, shim) | `d79ad6d6` |
+| 17 May 2026 | `trade_index.json` migration (EASY, 10 key) | Sadece JSON; yazıcı arşivde | `013b271d` |
+| 17 May 2026 | `macro_intelligence.json` migration (HARD, 24 key) | Yazıcı LLM-TR-to-EN convert + 4 okuyucu shim | `d0786387` |
+| 17 May 2026 | `summary.json` migration (HARD, 22 key + 3 portföy adı) | `daily_update.py` + cash convert helper; aktif okuyucu yok | bu commit |
+| TBD | `research/index.json` (MEDIUM) | nested | sırada |
+| TBD | `weekly_pre_check.json` (HARD, sözlük migration) | 1 gün | sonra |
 
 ### Migration log
 

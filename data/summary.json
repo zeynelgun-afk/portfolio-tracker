@@ -1,54 +1,54 @@
 {
-  "son_guncelleme": "2026-05-12",
-  "toplam_sermaye": 600000,
-  "toplam_deger": 644637.43,
-  "toplam_kar_zarar": 44637.43,
-  "toplam_kar_zarar_yuzde": 7.44,
-  "portfolyolar": {
-    "dengeli": {
-      "isim": "Dengeli Portföy",
-      "deger": 110592.94,
-      "maliyet": 100000,
-      "kar_zarar": 10592.940000000002,
-      "kar_zarar_yuzde": 10.59,
-      "pozisyon_sayisi": 5,
-      "nakit": {
-        "miktar": 37719.84,
-        "para_birimi": "USD",
-        "agirlik_yuzde": 34.11
-      }
-    },
-    "agresif": {
-      "isim": "Agresif Büyüme Portföyü",
-      "deger": 389335.47,
-      "maliyet": 400000,
-      "kar_zarar": -10664.530000000028,
-      "kar_zarar_yuzde": -2.67,
-      "pozisyon_sayisi": 4,
-      "nakit": {
-        "miktar": 143293.83,
-        "para_birimi": "USD",
-        "agirlik_yuzde": 36.8
-      }
-    },
-    "temettü": {
-      "isim": "Değer + Temettü Portföyü",
-      "deger": 144709.02,
-      "maliyet": 100000,
-      "kar_zarar": 44709.01999999999,
-      "kar_zarar_yuzde": 44.71,
-      "pozisyon_sayisi": 6,
-      "nakit": {
-        "miktar": 60134.02,
-        "para_birimi": "USD",
-        "agirlik_yuzde": 41.56
-      }
-    },
+  "last_updated": "2026-05-12",
+  "total_capital": 600000,
+  "total_value": 644637.43,
+  "total_pnl": 44637.43,
+  "total_pnl_pct": 7.44,
+  "portfolios": {
     "swing_trade": {
-      "isim": "Swing Trade",
-      "pozisyon_sayisi": 5,
-      "bos_slot": 0,
-      "durum": "5/5 pozisyon aktif"
+      "name": "Swing Trade",
+      "position_count": 5,
+      "empty_slots": 0,
+      "status": "5/5 pozisyon aktif"
+    },
+    "balanced": {
+      "name": "Dengeli Portföy",
+      "value": 110592.94,
+      "cost": 100000,
+      "pnl": 10592.940000000002,
+      "pnl_pct": 10.59,
+      "position_count": 5,
+      "cash": {
+        "amount": 37719.84,
+        "currency": "USD",
+        "weight_pct": 34.11
+      }
+    },
+    "aggressive": {
+      "name": "Agresif Büyüme Portföyü",
+      "value": 389335.47,
+      "cost": 400000,
+      "pnl": -10664.530000000028,
+      "pnl_pct": -2.67,
+      "position_count": 4,
+      "cash": {
+        "amount": 143293.83,
+        "currency": "USD",
+        "weight_pct": 36.8
+      }
+    },
+    "dividend": {
+      "name": "Değer + Temettü Portföyü",
+      "value": 144709.02,
+      "cost": 100000,
+      "pnl": 44709.01999999999,
+      "pnl_pct": 44.71,
+      "position_count": 6,
+      "cash": {
+        "amount": 60134.02,
+        "currency": "USD",
+        "weight_pct": 41.56
+      }
     }
   }
 }
