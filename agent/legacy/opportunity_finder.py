@@ -22,7 +22,7 @@ from datetime import datetime
 from pathlib import Path
 import sys
 
-REPO_ROOT = Path(__file__).parent.parent
+REPO_ROOT = Path(__file__).parent.parent.parent
 sys.path.insert(0, str(REPO_ROOT / "agent"))
 
 FMP_KEY  = os.environ.get("FMP_API_KEY", "")

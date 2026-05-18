@@ -21,7 +21,7 @@ from datetime import datetime
 from collections import defaultdict
 import pytz
 
-REPO_ROOT = Path(__file__).parent.parent
+REPO_ROOT = Path(__file__).parent.parent.parent
 TR_TZ     = pytz.timezone("Europe/Istanbul")
 FMP_KEY   = os.environ.get("FMP_API_KEY", "")
 FMP_BASE  = "https://financialmodelingprep.com/stable"
@@ -347,7 +347,7 @@ def _backtest_dersler_blogu() -> str:
     """
     import json
     from pathlib import Path
-    summary_path = Path(__file__).parent.parent / "data" / "backtest_summary.json"
+    summary_path = Path(__file__).parent.parent.parent / "data" / "backtest_summary.json"
     if not summary_path.exists():
         return ""
     try:

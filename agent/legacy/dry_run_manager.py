@@ -20,7 +20,7 @@ from datetime import datetime, timedelta
 from pathlib import Path
 import pytz
 
-REPO_ROOT  = Path(__file__).parent.parent
+REPO_ROOT  = Path(__file__).parent.parent.parent
 MEMORY_DIR = Path(__file__).parent / "memory"
 TR_TZ      = pytz.timezone("Europe/Istanbul")
 

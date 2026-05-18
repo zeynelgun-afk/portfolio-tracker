@@ -41,7 +41,7 @@ except Exception:
 # LLM client (OpenRouter / Kimi)
 from llm_client import chat as _llm_chat, DEFAULT_MODEL as _DEFAULT_MODEL, get_api_key as _get_api_key
 
-REPO_ROOT = Path(__file__).parent.parent
+REPO_ROOT = Path(__file__).parent.parent.parent
 
 # Public model name — kept under CLAUDE_MODEL var name for env compatibility
 # (also accepts KIMI_MODEL via llm_client.DEFAULT_MODEL).

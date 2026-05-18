@@ -14,7 +14,7 @@ import json
 import csv
 import requests
 import sys as _sys
-_sys.path.insert(0, str(__import__("pathlib").Path(__file__).parent.parent / "scripts"))
+_sys.path.insert(0, str(__import__("pathlib").Path(__file__).parent.parent.parent / "scripts"))
 try:
     from event_logger import log as _log
     _log.kaynak = "swing_manager"
@@ -27,7 +27,7 @@ import sys
 from datetime import datetime, timedelta
 from pathlib import Path
 
-REPO_ROOT = Path(__file__).parent.parent
+REPO_ROOT = Path(__file__).parent.parent.parent
 FMP_BASE  = "https://financialmodelingprep.com/stable"
 FMP_KEY   = os.environ.get("FMP_API_KEY", "")
 

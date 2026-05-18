@@ -29,7 +29,7 @@ from tools import send_private_telegram
 from memory_manager import append_learning
 from learning_engine import update_k_rule_stats, auto_extract_lessons
 
-REPO_ROOT  = Path(__file__).parent.parent
+REPO_ROOT  = Path(__file__).parent.parent.parent
 MEMORY_DIR = Path(__file__).parent / "memory"
 
 

@@ -26,7 +26,7 @@ from datetime import datetime
 from pathlib import Path
 import sys
 
-REPO_ROOT  = Path(__file__).parent.parent
+REPO_ROOT  = Path(__file__).parent.parent.parent
 MEMORY_DIR = Path(__file__).parent / "memory"
 MATRIX_PATH = MEMORY_DIR / "tema_portfolio_matrix.json"
 MEMORY_DIR.mkdir(exist_ok=True)

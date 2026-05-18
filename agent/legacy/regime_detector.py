@@ -21,7 +21,7 @@ from pathlib import Path
 import pytz
 from datetime import datetime
 
-REPO_ROOT  = Path(__file__).parent.parent
+REPO_ROOT  = Path(__file__).parent.parent.parent
 MEMORY_DIR = Path(__file__).parent / "memory"
 FMP_KEY    = os.environ.get("FMP_API_KEY", "")
 TR_TZ      = pytz.timezone("Europe/Istanbul")

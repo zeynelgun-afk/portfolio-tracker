@@ -19,7 +19,7 @@ from pathlib import Path
 import pytz
 
 # Olay kaydı
-sys.path.insert(0, str(Path(__file__).parent.parent / "scripts"))
+sys.path.insert(0, str(Path(__file__).parent.parent.parent / "scripts"))
 try:
     from event_logger import log as _log
     _log.kaynak = "orchestrator"
@@ -126,7 +126,7 @@ except ImportError:
     build_thematic_context = lambda *a, **kw: ""
     check_thematic_event = lambda *a, **kw: (None, None)
 
-REPO_ROOT = Path(__file__).parent.parent
+REPO_ROOT = Path(__file__).parent.parent.parent
 TR_TZ     = pytz.timezone("Europe/Istanbul")
 
 # ── Zaman dilimi tespiti ──────────────────────────────────────────────────────

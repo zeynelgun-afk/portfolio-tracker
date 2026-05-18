@@ -8,7 +8,7 @@ Phase 1: Tüm fonksiyonlar sadece OKUR, yazmaz.
 
 # --- olay kaydı ---
 import sys as _sys
-_sys.path.insert(0, str(__import__('pathlib').Path(__file__).parent.parent / 'scripts'))
+_sys.path.insert(0, str(__import__('pathlib').Path(__file__).parent.parent.parent / 'scripts'))
 try:
     from event_logger import log as _log
     _log.kaynak = 'tools'
@@ -41,7 +41,7 @@ except ImportError:
         or "1403072107"
     )
 
-REPO_ROOT = Path(__file__).parent.parent
+REPO_ROOT = Path(__file__).parent.parent.parent
 
 
 # ── FMP Yardımcısı ────────────────────────────────────────────────────────────
@@ -213,7 +213,7 @@ def _old_get_real_vix_legacy_reference() -> dict:
                 try:
                     import json as _jc
                     _jc.dump(vix_result, open(
-                        str(Path(__file__).parent.parent / "data" / "vix_cache.json"), "w"))
+                        str(Path(__file__).parent.parent.parent / "data" / "vix_cache.json"), "w"))
                 except Exception:
                     pass
                 return vix_result
@@ -243,7 +243,7 @@ def _old_get_real_vix_legacy_reference() -> dict:
 
     # ── 3. Cache ──────────────────────────────────────────────────────────────
     try:
-        cache_path = Path(__file__).parent.parent / "data" / "vix_cache.json"
+        cache_path = Path(__file__).parent.parent.parent / "data" / "vix_cache.json"
         if cache_path.exists():
             import json as _j
             cached = _j.load(open(cache_path))
